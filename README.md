@@ -28,10 +28,15 @@ the response.
    * `.update(customer_id, updates)` - update a customer; `updates` is an object with new parameters
    * `.del(customer_id)` - mark the customer deleted
 
-
 ## TODO
 
 See the [issue tracker](http://github.com/abh/node-stripe).
+
+## Tests
+
+To run the tests, install vows with `npm install vows` and then run
+
+   STRIPE_API=your-test-api-key vows tests/*
 
 ## Author
 
