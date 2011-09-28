@@ -13,8 +13,16 @@ Access to the [Stripe](https://stripe.com/) [API](http://stripe.com/api).
     var api_key = 'abc';  // secret stripe API key
     var stripe = require('stripe')(api_key);
 
-    var customer = stripe.customers.create({ email: 'foobar@example.org' });
-    console.log("customer id", customer.id);
+    stripe.customers.create(
+       { email: 'foobar@example.org' },
+       function(err, customer) {
+          if (err) {
+             console.log("Couldn't create the customer record");
+             return;
+          }
+          console.log("customer id", customer.id);
+       }
+     );
 
 
 ## API
