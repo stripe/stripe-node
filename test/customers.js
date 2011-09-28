@@ -33,10 +33,19 @@ vows.describe("Customer API").addBatch({
         },
         'Update customer' : {
             topic: function(create_err, customer) {
-                stripe.customers.update(customer.id, { description: "test"}, this.callback);
+                stripe.customers.update(customer.id, {
+                    description: "test",
+                    card: { number: "4111111111111111",
+                            exp_month: 12,
+                            exp_year:  2020,
+                            name: "T. Ester"
+                    }
+                }, this.callback);
             },
             'Customer updated' : function (err, response) {
                 assert.equal(response.description, 'test');
+                assert.equal(response.active_card.exp_year, 2020);
+                assert.equal(response.active_card.type, 'Visa');
                 assert.equal(response.email, 'foo@example.com');
             },
             'Delete customer' : {
