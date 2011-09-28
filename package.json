@@ -2,7 +2,7 @@
   "author": "Ask Bjørn Hansen <ask@develooper.com> (http://www.askask.com/)",
   "name": "stripe",
   "description": "Stripe API wrapper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/abh/node-stripe",
   "repository": {
     "type": "git",

@@ -27,6 +27,9 @@ the response.
    * `.retrieve(customer_id)` - retrieve a customer by customer id
    * `.update(customer_id, updates)` - update a customer; `updates` is an object with new parameters
    * `.del(customer_id)` - mark the customer deleted
+* `stripe.tokens` - [Tokens API](https://stripe.com/api/docs#tokens)
+   * `.create(card_data)` - [create a token](https://stripe.com/api/docs#create_token)
+   * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/api/docs#retrieve_token)
 
 ## TODO
 
