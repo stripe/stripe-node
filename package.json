@@ -1,0 +1,17 @@
+{
+  "author": "Ask Bjørn Hansen <ask@develooper.com> (http://www.askask.com/)",
+  "name": "stripe",
+  "description": "Stripe API wrapper",
+  "version": "0.0.1",
+  "homepage": "https://github.com/abh/node-stripe",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/abh/node-stripe.git"
+  },
+  "engines": {
+    "node": ">= v0.4.10"
+  },
+  "main": "lib/main.js",
+  "dependencies": {},
+  "devDependencies": {}
+}
