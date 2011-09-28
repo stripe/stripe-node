@@ -27,14 +27,15 @@ Access to the [Stripe](https://stripe.com/) [API](http://stripe.com/api).
 
 ## API
 
-All methods takes a callback as their last parameter. The callback is called with an error code (if any) and then
-the response.
+All methods takes a callback as their last parameter. The callback is
+called with an error code (if any) and then the response.
 
 * `stripe.customers` - create, retrieve, update and delete customers
    * `.create(customer)` - create a customer, takes the data as an object
-   * `.retrieve(customer_id)` - retrieve a customer by customer id
+   * `.retrieve(customer_id)` - retrieve a customer by customer id.
    * `.update(customer_id, updates)` - update a customer; `updates` is an object with new parameters
    * `.del(customer_id)` - mark the customer deleted
+   * `.list(count, offset)` - [List customers](https://stripe.com/api/docs#list_customers)
 * `stripe.tokens` - [Tokens API](https://stripe.com/api/docs#tokens)
    * `.create(card_data)` - [create a token](https://stripe.com/api/docs#create_token)
    * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/api/docs#retrieve_token)

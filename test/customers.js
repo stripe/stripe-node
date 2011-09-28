@@ -13,7 +13,7 @@ var stripe = require('./../lib/main.js')(api_key);
 
 vows.describe("Customer API").addBatch({
    'Create customer' : {
-        topic: function() { 
+        topic: function() {
            stripe.customers.create({email: "foo@example.com"}, this.callback);
         },
         'returns a customer': function(err, response) {
@@ -61,4 +61,12 @@ vows.describe("Customer API").addBatch({
             },
         },
    },
+   'Customer list' : {
+       topic: function() {
+           stripe.customers.list(5, 0, this.callback);
+       },
+       'Got count': function(err, response) {
+           assert.isNumber(response.count);
+       },
+   }
 }).export(module, {error: false});
