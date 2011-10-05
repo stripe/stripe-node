@@ -30,6 +30,11 @@ Access to the [Stripe](https://stripe.com/) [API](http://stripe.com/api).
 All methods takes a callback as their last parameter. The callback is
 called with an error code (if any) and then the response.
 
+* `stripe.charges` - create, retrieve, refund and list charges
+	 * `.create(charge) - create a charge
+	 * `.retrieve(charge_id) - retrieve a charge by charge id
+	 * `.refund(charge_id, amount) - refund a given charge, amount in cents
+	 * `.list(data) - [List charges](https://stripe.com/api/docs#list_charges)
 * `stripe.customers` - create, retrieve, update and delete customers
    * `.create(customer)` - create a customer, takes the data as an object
    * `.retrieve(customer_id)` - retrieve a customer by customer id.
@@ -53,7 +58,6 @@ To run the tests, install vows with `npm install vows` and then run
 ## Author
 
 Ask Bjørn Hansen (ask@develooper.com). Development was sponsored by [YellowBot](http://www.yellowbot.com/).
-
 
 ## License
 
