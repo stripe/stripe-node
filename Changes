@@ -1,0 +1,6 @@
+0.0.3 October 5, 2011
+  - Add Charges API (issue #1, brackishlake)
+  - Add customers.list API
+
+0.0.2 September 28, 2011
+  - Initial release with customers and tokens APIs
