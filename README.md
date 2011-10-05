@@ -34,7 +34,7 @@ called with an error code (if any) and then the response.
 	 * `.create(charge) - create a charge
 	 * `.retrieve(charge_id) - retrieve a charge by charge id
 	 * `.refund(charge_id, amount) - refund a given charge, amount in cents
-	 * `.list(count, offset, customer_id) - list of charges; all parameters optional where default count is 10 and default offset is 0
+	 * `.list(data) - [List charges](https://stripe.com/api/docs#list_charges)
 * `stripe.customers` - create, retrieve, update and delete customers
    * `.create(customer)` - create a customer, takes the data as an object
    * `.retrieve(customer_id)` - retrieve a customer by customer id.
