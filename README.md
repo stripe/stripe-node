@@ -1,6 +1,6 @@
 # node-stripe
 
-Access to the [Stripe](https://stripe.com/) [API](http://stripe.com/api).
+Access to the [Stripe](https://stripe.com/) [API](https://stripe.com/docs/api).
 
 
 ## Installation
@@ -31,19 +31,19 @@ All methods takes a callback as their last parameter. The callback is
 called with an error code (if any) and then the response.
 
 * `stripe.charges` - create, retrieve, refund and list charges
-   * `.create(charge)` - [create a charge](https://stripe.com/api/docs#create_charge)
-   * `.retrieve(charge_id)` - [retrieve a charge](https://stripe.com/api/docs#retrieve_charge) by charge id
-   * `.refund(charge_id, amount)` - [refund a given charge](https://stripe.com/api/docs#refund_charge), amount in cents
-   * `.list(data)` - [list charges](https://stripe.com/api/docs#list_charges)
+   * `.create(charge)` - [create a charge](https://stripe.com/docs/api#create_charge)
+   * `.retrieve(charge_id)` - [retrieve a charge](https://stripe.com/docs/api#retrieve_charge) by charge id
+   * `.refund(charge_id, amount)` - [refund a given charge](https://stripe.com/docs/api#refund_charge), amount in cents
+   * `.list(data)` - [list charges](https://stripe.com/docs/api#list_charges)
 * `stripe.customers` - create, retrieve, update and delete customers
-   * `.create(customer)` - [create a customer](https://stripe.com/api/docs#create_customer), takes the data as an object
-   * `.retrieve(customer_id)` - [retrieve a customer](https://stripe.com/api/docs#retrieve_customer) by customer id.
-   * `.update(customer_id, updates)` - [update a customer](https://stripe.com/api/docs#update_customer); `updates` is an object with new parameters
-   * `.del(customer_id)` - [delete a customer](https://stripe.com/api/docs#delete_customer)
-   * `.list(count, offset)` - [list customers](https://stripe.com/api/docs#list_customers)
-* `stripe.tokens` - [Tokens API](https://stripe.com/api/docs#tokens)
-   * `.create(card_data)` - [create a token](https://stripe.com/api/docs#create_token)
-   * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/api/docs#retrieve_token)
+   * `.create(customer)` - [create a customer](https://stripe.com/docs/api#create_customer), takes the data as an object
+   * `.retrieve(customer_id)` - [retrieve a customer](https://stripe.com/docs/api#retrieve_customer) by customer id.
+   * `.update(customer_id, updates)` - [update a customer](https://stripe.com/docs/api#update_customer); `updates` is an object with new parameters
+   * `.del(customer_id)` - [delete a customer](https://stripe.com/docs/api#delete_customer)
+   * `.list(count, offset)` - [list customers](https://stripe.com/docs/api#list_customers)
+* `stripe.tokens` - [Tokens API](https://stripe.com/docs/api#tokens)
+   * `.create(card_data)` - [create a token](https://stripe.com/docs/api#create_token)
+   * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/docs/api#retrieve_token)
 
 ## TODO
 
