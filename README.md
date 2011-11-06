@@ -5,7 +5,7 @@ Access to the [Stripe](https://stripe.com/) [API](https://stripe.com/docs/api).
 
 ## Installation
 
-`npm install node-strip`
+`npm install stripe`
 
 ## Usage overview
 
