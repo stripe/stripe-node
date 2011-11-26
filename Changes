@@ -1,3 +1,14 @@
+
+  - Add Subscription API (John Ku, #3)
+  - Add Invoices API (Chris Winn, #6)
+  - Fix a bug where callback could be called twice, if the callback()
+    threw an error itself (Peteris Krumins)
+  - Change documentation links (Stripe changed their URL structure)
+  - Make tests pass again (error in callback is null instead of 0 if all is well)
+  - Amount in stripe.charges.refund is optional (Branko Vukelic)
+  - Various documentation fixes (Xavi)
+  - Only require node 0.4.0
+
 0.0.3 October 5, 2011
   - Add Charges API (issue #1, brackishlake)
   - Add customers.list API
