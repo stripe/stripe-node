@@ -55,7 +55,7 @@ See the [issue tracker](http://github.com/abh/node-stripe).
 
 To run the tests, install vows with `npm install vows` and then run
 
-   STRIPE_API=your-test-api-key vows tests/*
+   STRIPE_API=your-test-api-key vows test/*
 
 ## Author
 
