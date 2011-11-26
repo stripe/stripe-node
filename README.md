@@ -41,6 +41,8 @@ called with an error code (if any) and then the response.
    * `.update(customer_id, updates)` - [update a customer](https://stripe.com/docs/api#update_customer); `updates` is an object with new parameters
    * `.del(customer_id)` - [delete a customer](https://stripe.com/docs/api#delete_customer)
    * `.list(count, offset)` - [list customers](https://stripe.com/docs/api#list_customers)
+   * `.update_subscription(customer_id, data)` - [update subscription](https://stripe.com/docs/api#update_subscription)
+   * `.cancel_subscription(customer_id, at_period_end)` - [cancel subscription](https://stripe.com/docs/api#cancel_subscription)
 * `stripe.token` - [Tokens API](https://stripe.com/docs/api#tokens)
    * `.create(card_data)` - [create a token](https://stripe.com/docs/api#create_token)
    * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/docs/api#retrieve_token)
