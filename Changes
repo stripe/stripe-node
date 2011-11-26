@@ -1,8 +1,9 @@
-
+0.0.5 November 26th, 2011
   - Add Subscription API (John Ku, #3)
   - Add Invoices API (Chris Winn, #6)
   - Fix a bug where callback could be called twice, if the callback()
     threw an error itself (Peteris Krumins)
+  - Fix bug in tokens.retrieve API (Xavi)
   - Change documentation links (Stripe changed their URL structure)
   - Make tests pass again (error in callback is null instead of 0 if all is well)
   - Amount in stripe.charges.refund is optional (Branko Vukelic)
