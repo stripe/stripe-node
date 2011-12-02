@@ -35,7 +35,7 @@ called with an error code (if any) and then the response.
    * `.retrieve(charge_id)` - [retrieve a charge](https://stripe.com/docs/api#retrieve_charge) by charge id
    * `.refund(charge_id, amount)` - [refund a given charge](https://stripe.com/docs/api#refund_charge), amount in cents
    * `.list(data)` - [list charges](https://stripe.com/docs/api#list_charges)
-* `stripe.customers` - create, retrieve, update and delete customers
+* `stripe.customers` - create, retrieve, update, delete and list customers
    * `.create(customer)` - [create a customer](https://stripe.com/docs/api#create_customer), takes the data as an object
    * `.retrieve(customer_id)` - [retrieve a customer](https://stripe.com/docs/api#retrieve_customer) by customer id.
    * `.update(customer_id, updates)` - [update a customer](https://stripe.com/docs/api#update_customer); `updates` is an object with new parameters
@@ -47,6 +47,12 @@ called with an error code (if any) and then the response.
    * `.retrieve(invoice_id)` - [retrieve an existing invoice](https://stripe.com/docs/api?lang=curl#retrieve_invoice)
    * `.upcoming(customer_id)` - [retrieve the upcoming invoice for a customer](https://stripe.com/docs/api?lang=curl#retrieve_customer_invoice)
    * `.list(parameters)` - [list invoices](https://stripe.com/docs/api#list_customer_invoices)
+* `stripe.invoice_items` - create, retrieve, update, delete and list invoice items
+   * `.create(invoice_item)` - [create a invoice item](https://stripe.com/docs/api#create_invoiceitem), takes the data as an object
+   * `.retrieve(invoice_item_id)` - [retrieve a invoice item](https://stripe.com/docs/api#retrieve_invoiceitem) by invoice item id.
+   * `.update(invoice_item_id, updates)` - [update a invoice item](https://stripe.com/docs/api#update_invoiceitem); `updates` is an object with new parameters
+   * `.del(invoice_item_id)` - [delete a invoice item](https://stripe.com/docs/api#delete_invoiceitem)
+   * `.list(customer_id, count, offset)` - [list invoice items](https://stripe.com/docs/api#list_invoiceitems); all parameters are optional
 * `stripe.token` - [Tokens API](https://stripe.com/docs/api#tokens)
    * `.create(card_data)` - [create a token](https://stripe.com/docs/api#create_token)
    * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/docs/api#retrieve_token)
