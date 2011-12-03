@@ -43,6 +43,11 @@ called with an error code (if any) and then the response.
    * `.list(count, offset)` - [list customers](https://stripe.com/docs/api#list_customers)
    * `.update_subscription(customer_id, data)` - [update subscription](https://stripe.com/docs/api#update_subscription)
    * `.cancel_subscription(customer_id, at_period_end)` - [cancel subscription](https://stripe.com/docs/api#cancel_subscription)
+* `stripe.plans` - create, retrieve, delete and list subscription plans
+   * `.create(plan)` - [create a plan](https://stripe.com/docs/api#create_plan), takes the data as an object
+   * `.retrieve(plan_id)` - [retrieve a plan](https://stripe.com/docs/api#retrieve_plan) by plan id.
+   * `.del(plan_id)` - [delete a plan](https://stripe.com/docs/api#delete_plan)
+   * `.list(count, offset)` - [list plans](https://stripe.com/docs/api#list_plans)
 * `stripe.invoices` - [Invoices API](https://stripe.com/docs/api#invoices)
    * `.retrieve(invoice_id)` - [retrieve an existing invoice](https://stripe.com/docs/api?lang=curl#retrieve_invoice)
    * `.upcoming(customer_id)` - [retrieve the upcoming invoice for a customer](https://stripe.com/docs/api?lang=curl#retrieve_customer_invoice)
