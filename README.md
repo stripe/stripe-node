@@ -58,6 +58,11 @@ called with an error code (if any) and then the response.
    * `.update(invoice_item_id, updates)` - [update a invoice item](https://stripe.com/docs/api#update_invoiceitem); `updates` is an object with new parameters
    * `.del(invoice_item_id)` - [delete a invoice item](https://stripe.com/docs/api#delete_invoiceitem)
    * `.list(customer_id, count, offset)` - [list invoice items](https://stripe.com/docs/api#list_invoiceitems); all parameters are optional
+* `stripe.coupons` - create, retrieve, delete and list coupons
+   * `.create(coupon)` - [create a coupon](https://stripe.com/docs/api#create_coupon), takes the data as an object
+   * `.retrieve(coupon_id)` - [retrieve a coupon](https://stripe.com/docs/api#retrieve_coupon) by coupon id.
+   * `.del(coupon_id)` - [delete a coupon](https://stripe.com/docs/api#delete_coupon)
+   * `.list(count, offset)` - [list coupons](https://stripe.com/docs/api#list_coupons)
 * `stripe.token` - [Tokens API](https://stripe.com/docs/api#tokens)
    * `.create(card_data)` - [create a token](https://stripe.com/docs/api#create_token)
    * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/docs/api#retrieve_token)
