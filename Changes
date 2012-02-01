@@ -1,4 +1,6 @@
-1.0.1 February 1st, 2012
+1.1.0 February 1st, 2012
+  - Add Coupons API (Ryan)
+  - Pass a more robust error object to the callback (Ryan)
   - Fix duplicate callbacks from some functions when called incorrectly
     (bug #24, reported by Kishore Nallan)
 
