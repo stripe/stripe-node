@@ -1,3 +1,7 @@
+1.0.1 February 1st, 2012
+  - Fix duplicate callbacks from some functions when called incorrectly
+    (bug #24, reported by Kishore Nallan)
+
 1.0.0 December 6th, 2011
   - Add APIs and tests for Plans and "Invoice Items"
     (both changes by Ryan Ettipio)
