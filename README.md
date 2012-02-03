@@ -66,6 +66,9 @@ called with an error code (if any) and then the response.
 * `stripe.token` - [Tokens API](https://stripe.com/docs/api#tokens)
    * `.create(card_data)` - [create a token](https://stripe.com/docs/api#create_token)
    * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/docs/api#retrieve_token)
+* `stripe.events` - retrieve and list events
+   * `.retrieve(id)` - [retrieve an event](https://stripe.com/docs/api#retrieve_event)
+   * `.list()` - [list all events](https://stripe.com/docs/api#list_events)
 
 ## TODO
 
