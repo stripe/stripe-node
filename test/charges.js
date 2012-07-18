@@ -26,7 +26,6 @@ vows.describe("Charges API").addBatch({
         },
         'returns a charge' : function(err, response) {
             assert.isNull(err);
-            console.log("response", response);
             assert.isDefined(response);
             assert.equal(response.object, 'charge');
             assert.isDefined(response.id);
