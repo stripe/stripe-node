@@ -18,7 +18,6 @@ vows.describe("Customer API").addBatch({
         },
         'returns a customer': function(err, response) {
             assert.isNull(err);
-            console.log("response", response);
             assert.isDefined(response);
             assert.equal(response.object, 'customer');
             assert.equal(response.email, "foo@example.com");
@@ -50,11 +49,9 @@ vows.describe("Customer API").addBatch({
             },
             'Delete customer' : {
                 topic: function(create_err, customer) {
-                    console.log("customer for deletion", customer);
                     stripe.customers.del(customer.id, this.callback);
                 },
                 'Customer was deleted': function(err,response) {
-                    console.log("response", response);
                     assert.isNull(err);
                     assert.isTrue(response.deleted);
                 }

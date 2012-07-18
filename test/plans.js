@@ -36,7 +36,6 @@ vows.describe("Subscription Plans API").addBatch({
         },
         'returns a plan': function(err, response) {
             assert.isNull(err);
-            console.log('response', response);
             assert.isDefined(response);
             assert.equal(response.object, 'plan');
             assert.equal(response.id, 'foobarbaz_plan');
@@ -53,7 +52,6 @@ vows.describe("Subscription Plans API").addBatch({
                 var p = getFirstPlan();
 
                 assert.isNull(err);
-                console.log('response', response);
                 assert.isDefined(response);
                 assert.equal(response.id, p.id);
             }
@@ -70,7 +68,6 @@ vows.describe("Subscription Plans API").addBatch({
             },
             'returns a plan': function(err, response) {
                 assert.isNull(err);
-                console.log('response', response);
                 assert.isDefined(response);
                 assert.equal(response.object, 'plan');
                 assert.equal(response.id, 'bazbarfoo_plan');
@@ -85,7 +82,6 @@ vows.describe("Subscription Plans API").addBatch({
                 },
                 'returns a list of plans': function(err, response) {
                     assert.isNull(err);
-                    console.log('response', response);
 
                     assert.isDefined(response);
                     assert.isNumber(response.count);
@@ -102,7 +98,6 @@ vows.describe("Subscription Plans API").addBatch({
 
                         var p = getFirstPlan(true);
 
-                        console.log('response', response);
                         assert.isDefined(response);
                         assert.isTrue(response.deleted);
                         assert.equal(response.id, p.id);
@@ -118,7 +113,6 @@ vows.describe("Subscription Plans API").addBatch({
 
                             var p = getFirstPlan(true);
 
-                            console.log('response', response);
                             assert.isDefined(response);
                             assert.isTrue(response.deleted);
                             assert.equal(response.id, p.id);
