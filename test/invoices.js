@@ -27,7 +27,6 @@ vows.describe("Invoice API").addBatch({
         'returns a plan': function(err, response) {
             assert.isNull(err);
 
-            console.log('response', response);
             assert.isDefined(response);
             assert.equal(response.object, 'plan');
             assert.equal(response.id, 'foobarbaz_plan');
@@ -40,7 +39,7 @@ vows.describe("Invoice API").addBatch({
                 stripe.customers.create({
                     email: "foo@example.com",
                     plan: plan.id,
-                    card: { number: "4111111111111111",
+                    card: { number: "4242424242424242",
                             exp_month: d.getMonth() + 1,
                             exp_year:  d.getFullYear() + 1,
                             name: "T. Ester"
@@ -50,7 +49,6 @@ vows.describe("Invoice API").addBatch({
             'returns a customer': function(err, response) {
                 assert.isNull(err);
 
-                console.log("response", response);
                 assert.isDefined(response);
                 assert.equal(response.object, 'customer');
                 assert.equal(response.email, "foo@example.com");
@@ -68,7 +66,6 @@ vows.describe("Invoice API").addBatch({
                 'created a charge': function(err, response) {
                     assert.isNull(err);
                     
-                    console.log('response', response);
                     assert.isDefined(response);
                     assert.equal(response.object, 'charge');
                     assert.equal(response.paid, true);
@@ -80,7 +77,6 @@ vows.describe("Invoice API").addBatch({
                     'receives a list of invoices': function(err, response) {
                         assert.isNull(err);
 
-                        console.log('response', response);
                         assert.isDefined(response);
                         assert.isArray(response.data);
                         assert.strictEqual(response.data.length > 0, true);
@@ -97,7 +93,6 @@ vows.describe("Invoice API").addBatch({
                         'received invoice': function(err, response) {
                             assert.isNull(err);
 
-                            console.log('response', response);
                             assert.isDefined(response);
                             assert.equal(response.object, 'invoice');
                             assert.strictEqual(response.total > 0, true);
@@ -109,7 +104,6 @@ vows.describe("Invoice API").addBatch({
                             'received upcoming invoice': function(err, response) {
                                 assert.isNull(err);
 
-                                console.log('response', response);
                                 assert.isDefined(response);
                                 assert.equal(response.object, 'invoice');
                                 assert.strictEqual(response.total > 0, true);
@@ -121,7 +115,6 @@ vows.describe("Invoice API").addBatch({
                                 'customer deleted': function(err, response) {
                                     assert.isNull(err);
 
-                                    console.log('response', response);
                                     assert.isDefined(response);
                                     assert.isTrue(response.deleted);
                                 },
@@ -132,7 +125,6 @@ vows.describe("Invoice API").addBatch({
                                     'deleted the subscription plan': function(err, response) {
                                         assert.isNull(err);
 
-                                        console.log('response', response);
                                         assert.isDefined(response);
                                         assert.isTrue(response.deleted);
                                     }
