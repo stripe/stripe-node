@@ -18,7 +18,7 @@ vows.describe("Tokens API").addBatch({
    'Create token' : {
         topic: function() {
             stripe.token.create({
-                card: { number: "4111111111111111",
+                card: { number: "4242424242424242",
                    exp_month: 1,
                    exp_year: 2021,
                    name: "J. Ester"
