@@ -46,6 +46,7 @@ called with an error code (if any) and then the response.
 * `stripe.plans` - create, retrieve, delete and list subscription plans
    * `.create(plan)` - [create a plan](https://stripe.com/docs/api#create_plan), takes the data as an object
    * `.retrieve(plan_id)` - [retrieve a plan](https://stripe.com/docs/api#retrieve_plan) by plan id.
+   * `.update(plan_id, data)` - [update plan](https://stripe.com/docs/api#update_plan)
    * `.del(plan_id)` - [delete a plan](https://stripe.com/docs/api#delete_plan)
    * `.list(count, offset)` - [list plans](https://stripe.com/docs/api#list_plans)
 * `stripe.invoices` - [Invoices API](https://stripe.com/docs/api#invoices)
