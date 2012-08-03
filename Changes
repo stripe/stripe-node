@@ -1,3 +1,8 @@
+1.2.0 August 3rd, 2012
+  - Added events API (Jonathan Hollinger)
+  - Added plans update API (Pavan Kumar Sunkara)
+  - Various test fixes, node 0.8.x tweaks (Jan Lehnardt)
+
 1.1.0 February 1st, 2012
   - Add Coupons API (Ryan)
   - Pass a more robust error object to the callback (Ryan)
