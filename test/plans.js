@@ -1,11 +1,11 @@
 var vows = require('vows'),
     assert = require('assert'),
-    sys = require('sys');
+    util = require('util');
 
 var api_key = process.env.STRIPE_API;
 
 if (!api_key) {
-    sys.puts('To run vows, you must have a STRIPE_API environment variable with a test api key');
+    util.puts('To run vows, you must have a STRIPE_API environment variable with a test api key');
     process.exit(2)
 }
 
