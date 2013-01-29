@@ -17,7 +17,7 @@ Access to the [Stripe](https://stripe.com/) [API](https://stripe.com/docs/api).
        { email: 'foobar@example.org' },
        function(err, customer) {
           if (err) {
-             console.log("Couldn't create the customer record");
+             console.log(err.message);
              return;
           }
           console.log("customer id", customer.id);
@@ -28,7 +28,7 @@ Access to the [Stripe](https://stripe.com/) [API](https://stripe.com/docs/api).
 ## API
 
 All methods takes a callback as their last parameter. The callback is
-called with an error code (if any) and then the response.
+called with a Javascript `Error` (if any) and then the response.
 
 * `stripe.charges` - create, retrieve, refund and list charges
    * `.create(charge)` - [create a charge](https://stripe.com/docs/api#create_charge)
