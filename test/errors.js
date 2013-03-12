@@ -17,9 +17,12 @@ vows.describe("Error handling").addBatch({
             stripe.plans.retrieve("unknown_plan_" + Date.now(), this.callback);
         },
         'returns an error' : function(err, response) {
+            console.log(err);
             assert.isNull(response);
             assert.instanceOf(err, Error);
             assert.equal(err.name, 'invalid_request_error');
+            assert.equal(err.code, undefined);
+            assert.equal(err.param, 'id');
             assert.isNotNull(err.message);
         },
     },
