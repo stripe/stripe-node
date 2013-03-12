@@ -71,6 +71,17 @@ called with a Javascript `Error` (if any) and then the response.
    * `.retrieve(id)` - [retrieve an event](https://stripe.com/docs/api#retrieve_event)
    * `.list()` - [list all events](https://stripe.com/docs/api#list_events)
 
+## Errors
+
+Errors returned take the following format. [Stripe Errors](https://stripe.com/docs/api#errors)
+
+    {
+      name: "Stripe error type",
+      code: "Stripe error code",
+      param: "Stripe error param",
+      message: "Stripe error message"
+    }
+
 ## TODO
 
 See the [issue tracker](http://github.com/abh/node-stripe).
