@@ -20,6 +20,8 @@ vows.describe("Error handling").addBatch({
             assert.isNull(response);
             assert.instanceOf(err, Error);
             assert.equal(err.name, 'invalid_request_error');
+            assert.equal(err.code, undefined);
+            assert.equal(err.param, 'id');
             assert.isNotNull(err.message);
         },
     },
