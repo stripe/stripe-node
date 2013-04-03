@@ -12,6 +12,8 @@
     "node": ">= v0.4.0"
   },
   "main": "lib/main.js",
-  "dependencies": {},
+  "dependencies": {
+    "vows": "~0.7.0"
+  },
   "devDependencies": {}
 }
