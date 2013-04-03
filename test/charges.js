@@ -52,6 +52,79 @@ vows.describe("Charges API").addBatch({
             },
         },
     },
+    'Create an uncaptured charge' : {
+        topic: function() {
+            stripe.charges.create({
+                amount: "50",
+                capture: false,
+                currency: "usd",
+                card: { number: "4242424242424242",
+                    exp_month: 12,
+                    exp_year:  2020,
+                    name: "T. Ester"
+                }
+            }, this.callback);
+        },
+        'returns an uncaptured charge' : function(err, response) {
+            assert.isNull(err);
+            assert.isDefined(response);
+            assert.equal(response.object, 'charge');
+            assert.isDefined(response.id);
+            assert.equal(response.captured, false);
+            assert.equal(response.uncaptured, true);
+        },
+        'Capture a charge fully' : {
+            topic: function(create_err, charge) {
+                stripe.charges.capture(charge.id, this.callback);
+            },
+            'Got a charge' : function(err, response) {
+                assert.isNull(err);
+                assert.isDefined(response);
+                assert.equal(response.object, 'charge');
+                assert.isDefined(response.id);
+                assert.equal(response.amount_refunded, 0);
+                assert.equal(response.captured, true);
+                assert.equal(response.uncaptured, false);
+            }
+        }
+    },
+
+    'Create an other uncaptured charge' : {
+        topic: function() {
+            stripe.charges.create({
+                amount: "100",
+                capture: false,
+                currency: "usd",
+                card: { number: "4242424242424242",
+                    exp_month: 12,
+                    exp_year:  2020,
+                    name: "T. Ester"
+                }
+            }, this.callback);
+        },
+        'returns an uncaptured charge' : function(err, response) {
+            assert.isNull(err);
+            assert.isDefined(response);
+            assert.equal(response.object, 'charge');
+            assert.isDefined(response.id);
+            assert.equal(response.captured, false);
+            assert.equal(response.uncaptured, true);
+        },
+        'Capture part of a charge' : {
+            topic: function(create_err, charge) {
+                stripe.charges.capture(charge.id, {amount: 50}, this.callback);
+            },
+            'Got a charge' : function(err, response) {
+                assert.isNull(err);
+                assert.isDefined(response);
+                assert.equal(response.object, 'charge');
+                assert.isDefined(response.id);
+                assert.equal(response.amount_refunded, 50);
+                assert.equal(response.captured, true);
+                assert.equal(response.uncaptured, false);
+            }
+        }
+    },
     'Charge list' : {
         topic: function() {
             stripe.charges.list({}, this.callback);

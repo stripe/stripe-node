@@ -31,6 +31,7 @@ All methods takes a callback as their last parameter. The callback is
 called with a Javascript `Error` (if any) and then the response.
 
 * `stripe.charges` - create, retrieve, refund and list charges
+   * `.capture(charge_id, data)` - [capture a charge](https://stripe.com/docs/api#charge_capture), takes the optional parameter data (amount, application_fee)
    * `.create(charge)` - [create a charge](https://stripe.com/docs/api#create_charge)
    * `.retrieve(charge_id)` - [retrieve a charge](https://stripe.com/docs/api#retrieve_charge) by charge id
    * `.refund(charge_id, amount)` - [refund a given charge](https://stripe.com/docs/api#refund_charge), amount in cents
