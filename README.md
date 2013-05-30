@@ -71,6 +71,12 @@ called with a Javascript `Error` (if any) and then the response.
 * `stripe.events` - retrieve and list events
    * `.retrieve(id)` - [retrieve an event](https://stripe.com/docs/api#retrieve_event)
    * `.list()` - [list all events](https://stripe.com/docs/api#list_events)
+* `stripe.transfers` - [Transfers API](https://stripe.com/docs/api#transfers)
+   * `.retrieve(id)` - [retrieve a transfer](https://stripe.com/docs/api#retrieve_transfer)
+   * `.list({count:x,offset:y})` - [list tranfers](https://stripe.com/docs/api#list_transfers)
+* `stripe.balance` - [Balance API](https://stripe.com/docs/api#balance)
+   * `.get()` - [retrieve current balance](https://stripe.com/docs/api#retrieve_balance)
+   * `.history({count:x,offset:y})` - [list balance history](https://stripe.com/docs/api#balance_history)
 
 ## Errors
 
