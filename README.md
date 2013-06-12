@@ -70,7 +70,7 @@ called with a Javascript `Error` (if any) and then the response.
    * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/docs/api#retrieve_token)
 * `stripe.events` - retrieve and list events
    * `.retrieve(id)` - [retrieve an event](https://stripe.com/docs/api#retrieve_event)
-   * `.list()` - [list all events](https://stripe.com/docs/api#list_events)
+   * `.list(parameters)` - [list all events](https://stripe.com/docs/api#list_events), `parameters` is an object of options
 
 ## Errors
 
