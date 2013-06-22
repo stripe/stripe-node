@@ -82,6 +82,9 @@ called with a Javascript `Error` (if any) and then the response.
    * `.retrieve(transfer_id)` - [retrieve a transfer](https://stripe.com/docs/api#retrieve_transfer) by transfer id.
    * `.cancel(transfer_id)` - [cancel a transfer](https://stripe.com/docs/api#cancel_transfer)
    * `.list({count:x,offset:y})` - [list transfers](https://stripe.com/docs/api#list_transfers)
+* `stripe.balance` - retrieve and list balance
+   * `.retrieve()` - [retrieve balance](https://stripe.com/docs/api#retrieve_balance)
+   * `.list({count:x,offset:y})` - [list balance history](https://stripe.com/docs/api#balance_history)
 
 ## Errors
 
