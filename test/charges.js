@@ -71,7 +71,6 @@ vows.describe("Charges API").addBatch({
             assert.equal(response.object, 'charge');
             assert.isDefined(response.id);
             assert.equal(response.captured, false);
-            assert.equal(response.uncaptured, true);
         },
         'Capture a charge fully' : {
             topic: function(create_err, charge) {
@@ -84,7 +83,6 @@ vows.describe("Charges API").addBatch({
                 assert.isDefined(response.id);
                 assert.equal(response.amount_refunded, 0);
                 assert.equal(response.captured, true);
-                assert.equal(response.uncaptured, false);
             }
         }
     },
@@ -108,7 +106,6 @@ vows.describe("Charges API").addBatch({
             assert.equal(response.object, 'charge');
             assert.isDefined(response.id);
             assert.equal(response.captured, false);
-            assert.equal(response.uncaptured, true);
         },
         'Capture part of a charge' : {
             topic: function(create_err, charge) {
@@ -121,7 +118,6 @@ vows.describe("Charges API").addBatch({
                 assert.isDefined(response.id);
                 assert.equal(response.amount_refunded, 50);
                 assert.equal(response.captured, true);
-                assert.equal(response.uncaptured, false);
             }
         }
     },
