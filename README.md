@@ -71,6 +71,20 @@ called with a Javascript `Error` (if any) and then the response.
 * `stripe.events` - retrieve and list events
    * `.retrieve(id)` - [retrieve an event](https://stripe.com/docs/api#retrieve_event)
    * `.list()` - [list all events](https://stripe.com/docs/api#list_events)
+* `stripe.recipients` - create, retrieve, update, delete and list recipients
+   * `.create(recipient)` - [create a recipient](https://stripe.com/docs/api#create_recipient), takes the data as an object
+   * `.retrieve(recipient_id)` - [retrieve a recipient](https://stripe.com/docs/api#retrieve_recipient) by recipient id.
+   * `.update(recipient_id, data)` - [update a recipient](https://stripe.com/docs/api#update_recipient)
+   * `.del(recipient_id)` - [delete a recipient](https://stripe.com/docs/api#delete_recipient)
+   * `.list({count:x,offset:y})` - [list recipients](https://stripe.com/docs/api#list_recipients)
+* `stripe.transfers` - create, retrieve, cancel and list transfers
+   * `.create(transfer)` - [create a transfer](https://stripe.com/docs/api#create_transfer), takes the data as an object
+   * `.retrieve(transfer_id)` - [retrieve a transfer](https://stripe.com/docs/api#retrieve_transfer) by transfer id.
+   * `.cancel(transfer_id)` - [cancel a transfer](https://stripe.com/docs/api#cancel_transfer)
+   * `.list({count:x,offset:y})` - [list transfers](https://stripe.com/docs/api#list_transfers)
+* `stripe.balance` - retrieve and list balance
+   * `.retrieve()` - [retrieve balance](https://stripe.com/docs/api#retrieve_balance)
+   * `.list({count:x,offset:y})` - [list balance history](https://stripe.com/docs/api#balance_history)
 
 ## Errors
 
