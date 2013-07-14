@@ -51,9 +51,11 @@ called with a Javascript `Error` (if any) and then the response.
    * `.del(plan_id)` - [delete a plan](https://stripe.com/docs/api#delete_plan)
    * `.list({count:x,offset:y})` - [list plans](https://stripe.com/docs/api#list_plans)
 * `stripe.invoices` - [Invoices API](https://stripe.com/docs/api#invoices)
+   * `.create(customer_id)` - [create an invoice](https://stripe.com/docs/api#create_invoice) by customer id.
    * `.retrieve(invoice_id)` - [retrieve an existing invoice](https://stripe.com/docs/api?lang=curl#retrieve_invoice)
    * `.upcoming(customer_id)` - [retrieve the upcoming invoice for a customer](https://stripe.com/docs/api?lang=curl#retrieve_customer_invoice)
    * `.list(parameters)` - [list invoices](https://stripe.com/docs/api#list_customer_invoices)
+   * `.pay(invoice_id)` - [pay an invoice](https://stripe.com/docs/api#pay_invoice) by invoice id.
 * `stripe.invoice_items` - create, retrieve, update, delete and list invoice items
    * `.create(invoice_item)` - [create a invoice item](https://stripe.com/docs/api#create_invoiceitem), takes the data as an object
    * `.retrieve(invoice_item_id)` - [retrieve a invoice item](https://stripe.com/docs/api#retrieve_invoiceitem) by invoice item id.
