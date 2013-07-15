@@ -11,7 +11,7 @@ if (!api_key) {
 
 var stripe = require('./../lib/main.js')(api_key);
 
-var customer, plan, charge;
+var customer, plan, charge, invoice;
 
 vows.describe("Invoice API").addBatch({
     'Create a subscription plan': {
@@ -130,6 +130,83 @@ vows.describe("Invoice API").addBatch({
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}).addBatch({
+    'Create a customer': {
+        topic: function() {
+            var d = new Date();
+            stripe.customers.create({
+                email: "foo@example.com",
+                card: { number: "4242424242424242",
+                        exp_month: d.getMonth() + 1,
+                        exp_year:  d.getFullYear() + 1,
+                        name: "T. Ester"
+                }
+            }, this.callback);
+        },
+        'returns a customer': function(err, response) {
+            assert.isNull(err);
+
+            assert.isDefined(response);
+            assert.equal(response.object, 'customer');
+            assert.equal(response.email, "foo@example.com");
+
+            customer = response;
+        },
+        'Create an invoice item': {
+            topic: function(cus_err, customer){
+                stripe.invoice_items.create({
+                    amount: 300,
+                    currency: 'usd',
+                    customer: customer.id,
+                }, this.callback);
+            },
+            'returns invoice item': function(err, response){
+                assert.isNull(err);
+
+                assert.isDefined(response);
+                assert.equal(response.object, 'invoiceitem');
+                assert.strictEqual(response.amount === 300, true);
+            },
+            'Create an invoice': {
+                topic: function(item_err, invoiceitem){
+                    stripe.invoices.create(customer.id, this.callback);
+                },
+                'returns an invoice': function(err, response){
+                    assert.isNull(err);
+
+                    assert.isDefined(response);
+                    assert.equal(response.object, 'invoice');
+                    assert.strictEqual(response.total === 300, true);
+
+                    invoice = response;
+                },
+                'Pay an invoice': {
+                    topic: function(inv_err, invoice){
+                        stripe.invoices.pay(invoice.id, this.callback);
+                    },
+                    'returns paid invoice': function(err, response){
+                        assert.isNull(err);
+
+                        assert.isDefined(response);
+                        assert.equal(response.object, 'invoice');
+                        assert.strictEqual(response.total > 0, true);
+                        assert.isTrue(response.paid);
+                    },
+                    'Delete the customer': {
+                        topic: function() {
+                            stripe.customers.del(customer.id, this.callback);
+                        },
+                        'customer deleted': function(err, response) {
+                            assert.isNull(err);
+
+                            assert.isDefined(response);
+                            assert.isTrue(response.deleted);
                         }
                     }
                 }
