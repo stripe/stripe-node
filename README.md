@@ -24,6 +24,11 @@ Access to the [Stripe](https://stripe.com/) [API](https://stripe.com/docs/api).
        }
      );
 
+`options` is an optional second argument. Currently only `timeout` is supported,
+which sets the socket to timeout after the given number of milliseconds of
+inactivity.
+
+    var stripe = require('stripe')(api_key, {timeout: 5000}); // timeout after 5 seconds
 
 ## API
 
