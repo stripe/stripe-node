@@ -21,6 +21,8 @@ vows.describe("Customer API").addBatch({
             assert.isDefined(response);
             assert.equal(response.object, 'customer');
             assert.equal(response.email, "foo@example.com");
+
+            customer = response;
         },
         'Retrieve customer' : {
             topic: function(create_err, customer) {
@@ -29,32 +31,93 @@ vows.describe("Customer API").addBatch({
             'Got customer' : function(err, response) {
                 assert.equal( response.email, 'foo@example.com' );
             },
-        },
-        'Update customer' : {
-            topic: function(create_err, customer) {
-                stripe.customers.update(customer.id, {
-                    description: "test",
-                    card: { number: "4242424242424242",
-                            exp_month: 12,
-                            exp_year:  2020,
-                            name: "T. Ester"
-                    }
-                }, this.callback);
-            },
-            'Customer updated' : function (err, response) {
-                assert.equal(response.description, 'test');
-                assert.equal(response.active_card.exp_year, 2020);
-                assert.equal(response.active_card.type, 'Visa');
-                assert.equal(response.email, 'foo@example.com');
-            },
-            'Delete customer' : {
+            'Create card' : {
                 topic: function(create_err, customer) {
-                    stripe.customers.del(customer.id, this.callback);
+                    stripe.customers.cards.create(customer.id, {
+                        card: { number: "4242424242424242",
+                                exp_month: 12,
+                                exp_year:  2020,
+                                name: "J. Doe"}
+                        }, this.callback);
                 },
-                'Customer was deleted': function(err,response) {
+                'returns a card': function(err, response, customer) {
                     assert.isNull(err);
-                    assert.isTrue(response.deleted);
-                }
+                    assert.isDefined(response);
+                    assert.equal(response.object, 'card');
+                    assert.equal(response.type, 'Visa');
+                    assert.equal(response.exp_year, 2020);
+                },
+                'Retrieve card' : {
+                    topic: function(err, card) {
+                        stripe.customers.cards.retrieve(customer.id, card.id, this.callback);
+                    },
+                    'Got card': function(err, response) {
+                        assert.isNull(err);
+                        assert.isDefined(response);
+                        assert.equal(response.object, 'card');
+                        assert.equal(response.type, 'Visa');
+                        assert.equal(response.name, "J. Doe");
+                    },
+                    'Card updated' : {
+                        topic: function(err, card) {
+                            stripe.customers.cards.update(customer.id, card.id,
+                                {name: "Jane Doe"}, this.callback);
+                        },
+                        'Got card': function(err, response) {
+                            assert.isNull(err);
+                            assert.isDefined(response);
+                            assert.equal(response.object, 'card');
+                            assert.equal(response.type, 'Visa');
+                            assert.equal(response.name, 'Jane Doe');
+                            assert.equal(response.exp_year, 2020);
+                        },
+                        'Delete card' : {
+                            topic: function(create_err, card) {
+                                stripe.customers.cards.del(customer.id, card.id, this.callback);
+                            },
+                            'Card was deleted': function(err,response) {
+                                assert.isNull(err);
+                                assert.isTrue(response.deleted);
+                            }
+                        },
+                        'Card list' : {
+                            topic: function() {
+                                stripe.customers.cards.list(customer.id, 5, 0, this.callback);
+                            },
+                            'Got count': function(err, response) {
+                                assert.isNumber(response.count);
+                            },
+                            'Update customer' : {
+                                topic: function(create_err, card) {
+                                    stripe.customers.update(customer.id, {
+                                        description: "test",
+                                        card: { number: "4242424242424242",
+                                            exp_month: 12,
+                                            exp_year:  2020,
+                                            name: "T. Ester"
+                                        }
+                                    }, this.callback);
+                                },
+                                'Customer updated' : function (err, response) {
+                                    assert.equal(response.description, 'test');
+                                    assert.equal(response.active_card.exp_year, 2020);
+                                    assert.equal(response.active_card.name, "T. Ester");
+                                    assert.equal(response.active_card.type, 'Visa');
+                                    assert.equal(response.email, 'foo@example.com');
+                                },
+                                'Delete customer' : {
+                                    topic: function(create_err, customer) {
+                                        stripe.customers.del(customer.id, this.callback);
+                                    },
+                                    'Customer was deleted': function(err,response) {
+                                        assert.isNull(err);
+                                        assert.isTrue(response.deleted);
+                                    }
+                                },
+                            },
+                        },
+                    },
+                },
             },
         },
    },

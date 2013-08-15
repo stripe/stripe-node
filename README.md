@@ -30,6 +30,8 @@ Access to the [Stripe](https://stripe.com/) [API](https://stripe.com/docs/api).
 All methods takes a callback as their last parameter. The callback is
 called with a Javascript `Error` (if any) and then the response.
 
+**Note**: Any parameters in braces (`{}`) are optional. Pass in a falsy value (e.g. `undefined`, `null`) unless you require a count or offset.
+
 * `stripe.charges` - create, retrieve, refund and list charges
    * `.capture(charge_id, data)` - [capture a charge](https://stripe.com/docs/api#charge_capture), takes the optional parameter data (amount, application_fee)
    * `.create(charge)` - [create a charge](https://stripe.com/docs/api#create_charge)
@@ -44,6 +46,11 @@ called with a Javascript `Error` (if any) and then the response.
    * `.list({count:x,offset:y})` - [list customers](https://stripe.com/docs/api#list_customers)
    * `.update_subscription(customer_id, data)` - [update subscription](https://stripe.com/docs/api#update_subscription)
    * `.cancel_subscription(customer_id, at_period_end)` - [cancel subscription](https://stripe.com/docs/api#cancel_subscription)
+   * `.cards.create(customer_id, data)` - [create a card](https://stripe.com/docs/api#create_card), for customer.
+   * `.cards.retrieve(customer_id, card_id)` - [retrieve a card](https://stripe.com/docs/api#retrieve_card) by customer and card id.
+   * `.cards.update(customer_id, card_id, data)` - [update a card](https://stripe.com/docs/api#update_card)
+   * `.cards.del(customer_id, card_id)` - [delete a card](https://stripe.com/docs/api#delete_card)
+   * `.cards.list(customer_id, {count:x, offset:y})` - [list cards](https://stripe.com/docs/api#list_cards), customer id is required.
 * `stripe.plans` - create, retrieve, delete and list subscription plans
    * `.create(plan)` - [create a plan](https://stripe.com/docs/api#create_plan), takes the data as an object
    * `.retrieve(plan_id)` - [retrieve a plan](https://stripe.com/docs/api#retrieve_plan) by plan id.
