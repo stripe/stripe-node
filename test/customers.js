@@ -33,7 +33,7 @@ vows.describe("Customer API").addBatch({
             },
             'Create card' : {
                 topic: function(create_err, customer) {
-                    stripe.customers.card.create(customer.id, {
+                    stripe.customers.cards.create(customer.id, {
                         card: { number: "4242424242424242",
                                 exp_month: 12,
                                 exp_year:  2020,
@@ -49,7 +49,7 @@ vows.describe("Customer API").addBatch({
                 },
                 'Retrieve card' : {
                     topic: function(err, card) {
-                        stripe.customers.card.retrieve(customer.id, card.id, this.callback);
+                        stripe.customers.cards.retrieve(customer.id, card.id, this.callback);
                     },
                     'Got card': function(err, response) {
                         assert.isNull(err);
@@ -60,7 +60,7 @@ vows.describe("Customer API").addBatch({
                     },
                     'Card updated' : {
                         topic: function(err, card) {
-                            stripe.customers.card.update(customer.id, card.id,
+                            stripe.customers.cards.update(customer.id, card.id,
                                 {name: "Jane Doe"}, this.callback);
                         },
                         'Got card': function(err, response) {
@@ -73,7 +73,7 @@ vows.describe("Customer API").addBatch({
                         },
                         'Delete card' : {
                             topic: function(create_err, card) {
-                                stripe.customers.card.del(customer.id, card.id, this.callback);
+                                stripe.customers.cards.del(customer.id, card.id, this.callback);
                             },
                             'Card was deleted': function(err,response) {
                                 assert.isNull(err);
@@ -82,7 +82,7 @@ vows.describe("Customer API").addBatch({
                         },
                         'Card list' : {
                             topic: function() {
-                                stripe.customers.card.list(customer.id, 5, 0, this.callback);
+                                stripe.customers.cards.list(customer.id, 5, 0, this.callback);
                             },
                             'Got count': function(err, response) {
                                 assert.isNumber(response.count);
