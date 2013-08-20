@@ -65,68 +65,79 @@ vows.describe("Invoice API").addBatch({
                 },
                 'created a charge': function(err, response) {
                     assert.isNull(err);
-                    
+
                     assert.isDefined(response);
                     assert.equal(response.object, 'charge');
                     assert.equal(response.paid, true);
                 },
-                'List invoices': {
-                    topic: function() {
-                        stripe.invoices.list({ customer: customer.id }, this.callback);
+                'Retrieve charge with expanded customer' : {
+                    topic: function(create_err, charge) {
+                        stripe.expand('customer').charges.retrieve(charge.id, this.callback);
                     },
-                    'receives a list of invoices': function(err, response) {
+                    'Got a charge' : function(err, response) {
                         assert.isNull(err);
-
                         assert.isDefined(response);
-                        assert.isArray(response.data);
-                        assert.strictEqual(response.data.length > 0, true);
-
-                        var invoice = response.data[0];
-                        assert.isObject(invoice);
-                        assert.equal(invoice.object, 'invoice');
+                        assert.isObject(response.customer);
                     },
-                    'Retrieve an existing invoice': {
-                        topic: function(list_err, list) {
-                            var invoice = list.data[0];
-                            stripe.invoices.retrieve(invoice.id, this.callback);
+                    'List invoices': {
+                        topic: function() {
+                            stripe.invoices.list({ customer: customer.id }, this.callback);
                         },
-                        'received invoice': function(err, response) {
+                        'receives a list of invoices': function(err, response) {
                             assert.isNull(err);
 
                             assert.isDefined(response);
-                            assert.equal(response.object, 'invoice');
-                            assert.strictEqual(response.total > 0, true);
-                        },
-                        'Retrieve an upcoming invoice': {
-                            topic: function() {
-                                stripe.invoices.upcoming(customer.id, this.callback);
-                            },
-                            'received upcoming invoice': function(err, response) {
-                                assert.isNull(err);
+                            assert.isArray(response.data);
+                            assert.strictEqual(response.data.length > 0, true);
 
+                            var invoice = response.data[0];
+                            assert.isObject(invoice);
+                            assert.equal(invoice.object, 'invoice');
+                        },
+                        'Retrieve an existing invoice with multiple expanded attributes': {
+                            topic: function(list_err, list) {
+                                var invoice = list.data[0];
+                                stripe.expand('customer','charge').invoices.retrieve(invoice.id, this.callback);
+                            },
+                            'received invoice': function(err, response) {
+                                assert.isNull(err);
                                 assert.isDefined(response);
                                 assert.equal(response.object, 'invoice');
+                                assert.isObject(response.customer);
+                                assert.isObject(response.charge);
                                 assert.strictEqual(response.total > 0, true);
                             },
-                            'Delete the customer': {
+                            'Retrieve an upcoming invoice': {
                                 topic: function() {
-                                    stripe.customers.del(customer.id, this.callback);
+                                    stripe.invoices.upcoming(customer.id, this.callback);
                                 },
-                                'customer deleted': function(err, response) {
+                                'received upcoming invoice': function(err, response) {
                                     assert.isNull(err);
 
                                     assert.isDefined(response);
-                                    assert.isTrue(response.deleted);
+                                    assert.equal(response.object, 'invoice');
+                                    assert.strictEqual(response.total > 0, true);
                                 },
-                                'Delete the subscription plan': {
+                                'Delete the customer': {
                                     topic: function() {
-                                        stripe.plans.del(plan.id, this.callback);
+                                        stripe.customers.del(customer.id, this.callback);
                                     },
-                                    'deleted the subscription plan': function(err, response) {
+                                    'customer deleted': function(err, response) {
                                         assert.isNull(err);
 
                                         assert.isDefined(response);
                                         assert.isTrue(response.deleted);
+                                    },
+                                    'Delete the subscription plan': {
+                                        topic: function() {
+                                            stripe.plans.del(plan.id, this.callback);
+                                        },
+                                        'deleted the subscription plan': function(err, response) {
+                                            assert.isNull(err);
+
+                                            assert.isDefined(response);
+                                            assert.isTrue(response.deleted);
+                                        }
                                     }
                                 }
                             }
