@@ -12,8 +12,7 @@
     "node": ">= v0.4.0"
   },
   "main": "lib/stripe.js",
-  "dependencies": {
-    "vows": "~0.7.0"
-  },
-  "devDependencies": {}
+  "devDependencies": {
+    "mocha": "~1.12.1"
+  }
 }
