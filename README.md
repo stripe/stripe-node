@@ -6,7 +6,7 @@
 
 ## Documentation
 
-Please see https://stripe.com/docs/api for the most up-to-date documentation.
+Please see https://stripe.com/docs/api/node for the most up-to-date documentation.
 
 ## Development
 
