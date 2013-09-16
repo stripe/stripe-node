@@ -28,7 +28,7 @@ Access to the [Stripe](https://stripe.com/) [API](https://stripe.com/docs/api).
 ## API
 
 All methods takes a callback as their last parameter. The callback is
-called with a Javascript `Error` (if any) and then the response.
+called with a Javascript `Error` (if any) and then the response. If parameters are excluded, Stripe API will populate with default data. 
 
 * `stripe.charges` - create, retrieve, refund and list charges
    * `.capture(charge_id, data)` - [capture a charge](https://stripe.com/docs/api#charge_capture), takes the optional parameter data (amount, application_fee)
@@ -72,7 +72,7 @@ called with a Javascript `Error` (if any) and then the response.
    * `.retrieve(token_id)` - [retrieve a card token](https://stripe.com/docs/api#retrieve_token)
 * `stripe.events` - retrieve and list events
    * `.retrieve(id)` - [retrieve an event](https://stripe.com/docs/api#retrieve_event)
-   * `.list()` - [list all events](https://stripe.com/docs/api#list_events)
+   * `.list({count:x,offset:y,type:z})` - [list all events](https://stripe.com/docs/api#list_events)
 * `stripe.recipients` - create, retrieve, update, delete and list recipients
    * `.create(recipient)` - [create a recipient](https://stripe.com/docs/api#create_recipient), takes the data as an object
    * `.retrieve(recipient_id)` - [retrieve a recipient](https://stripe.com/docs/api#retrieve_recipient) by recipient id.
