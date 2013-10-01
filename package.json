@@ -13,6 +13,12 @@
   },
   "main": "lib/stripe.js",
   "devDependencies": {
-    "mocha": "~1.12.1"
+    "mocha": "~1.13.0",
+    "chai": "~1.8.0",
+    "chai-as-promised": "~4.0.0",
+    "mocha-as-promised": "~1.4.0"
+  },
+  "dependencies": {
+    "when": "~2.4.0"
   }
 }

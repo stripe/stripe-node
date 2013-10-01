@@ -10,10 +10,14 @@ Please see https://stripe.com/docs/api/node for the most up-to-date documentatio
 
 ## Development
 
-To run the tests, install vows with `npm install vows` and then run
+To run the tests you'll need a Stripe *Test* API key (from your [Stripe Dashboard](https://manage.stripe.com)):
 
-   STRIPE_API=your-test-api-key vows test/*
+```bash
+$ npm install -g mocha
+$ export STRIPE_TEST_API_KEY="sk_test_..."
+$ mocha ./specs
+```
 
 ## Author
 
-Originally by Ask Bjørn Hansen (ask@develooper.com). Development was sponsored by YellowBot. Now officially maintained by Stripe.
+Originally by [Ask Bjørn Hansen](https://github.com/abh) (ask@develooper.com). Development was sponsored by YellowBot. Now officially maintained by Stripe.
