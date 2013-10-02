@@ -56,13 +56,16 @@ var utils = module.exports = {
    */
   CleanupUtility: (function() {
 
-    function CleanupUtility() {
+    CleanupUtility.DEFAULT_TIMEOUT = 20000;
+
+    function CleanupUtility(timeout) {
       var self = this;
       this._cleanupFns = [];
       this._stripe = require('../lib/stripe')(
         utils.getUserStripeKey()
       );
       afterEach(function(done) {
+        this.timeout(timeout || CleanupUtility.DEFAULT_TIMEOUT);
         return self.doCleanup(done);
       });
     }
