@@ -3,16 +3,16 @@
 var stripe = require('./testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Customer Resource', function() {
+describe('Charge Resource', function() {
 
   describe('retrieve', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.customer.retrieve('cus_2dkAb792h1mfa4');
+      stripe.charges.retrieve('chargeIdFoo123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/customers/cus_2dkAb792h1mfa4',
+        url: '/v1/charges/chargeIdFoo123',
         data: {}
       });
 
@@ -24,43 +24,13 @@ describe('Customer Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.customer.create({ description: 'Some customer' });
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'POST',
-        url: '/v1/customers',
-        data: { description: 'Some customer' }
-      });
-
-    });
-
-  });
-
-  describe('update', function() {
-
-    it('Sends the correct request', function() {
-
-      stripe.customer.update('cus_2dkAb792h1mfa4', {
-        description: 'Foo "baz"'
+      stripe.charges.create({
+        amount: '1500', currency: 'usd'
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/customers/cus_2dkAb792h1mfa4',
-        data: { description: 'Foo "baz"' }
-      });
-
-    });
-
-  });
-
-  describe('del', function() {
-
-    it('Sends the correct request', function() {
-
-      stripe.customer.del('cus_2dkAb792h1mfa4');
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'DELETE',
-        url: '/v1/customers/cus_2dkAb792h1mfa4',
-        data: {}
+        url: '/v1/charges',
+        data: { amount: '1500', currency: 'usd' }
       });
 
     });
@@ -71,10 +41,40 @@ describe('Customer Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.customer.list();
+      stripe.charges.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/customers',
+        url: '/v1/charges',
+        data: {}
+      });
+
+    });
+
+  });
+
+  describe('capture', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.charges.capture('chargeIdExample3242');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/charges/chargeIdExample3242/capture',
+        data: {}
+      });
+
+    });
+
+  });
+
+  describe('refund', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.charges.refund('chargeIdExample3242');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/charges/chargeIdExample3242/refund',
         data: {}
       });
 

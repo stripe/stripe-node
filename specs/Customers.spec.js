@@ -3,16 +3,16 @@
 var stripe = require('./testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Card Resource', function() {
+describe('Customers Resource', function() {
 
   describe('retrieve', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.card.retrieve('customerIdFoo321', 'cardIdFoo456');
+      stripe.customers.retrieve('cus_2dkAb792h1mfa4');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/customers/customerIdFoo321/cards/cardIdFoo456',
+        url: '/v1/customers/cus_2dkAb792h1mfa4',
         data: {}
       });
 
@@ -24,13 +24,11 @@ describe('Card Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.card.create('customerIdFoo321', {
-        number: '123456', exp_month: '12'
-      });
+      stripe.customers.create({ description: 'Some customer' });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/customers/customerIdFoo321/cards',
-        data: { number: '123456', exp_month: '12' }
+        url: '/v1/customers',
+        data: { description: 'Some customer' }
       });
 
     });
@@ -41,13 +39,13 @@ describe('Card Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.card.update('customerIdFoo321', 'cardIdFoo456', {
-        name: 'Bob M. Baz'
+      stripe.customers.update('cus_2dkAb792h1mfa4', {
+        description: 'Foo "baz"'
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/customers/customerIdFoo321/cards/cardIdFoo456',
-        data: { name: 'Bob M. Baz' }
+        url: '/v1/customers/cus_2dkAb792h1mfa4',
+        data: { description: 'Foo "baz"' }
       });
 
     });
@@ -58,10 +56,10 @@ describe('Card Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.card.del('customerIdFoo321', 'cardIdFoo456');
+      stripe.customers.del('cus_2dkAb792h1mfa4');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
-        url: '/v1/customers/customerIdFoo321/cards/cardIdFoo456',
+        url: '/v1/customers/cus_2dkAb792h1mfa4',
         data: {}
       });
 
@@ -73,10 +71,10 @@ describe('Card Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.card.list('customerIdFoo321');
+      stripe.customers.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/customers/customerIdFoo321/cards',
+        url: '/v1/customers',
         data: {}
       });
 

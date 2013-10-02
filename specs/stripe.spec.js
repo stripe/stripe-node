@@ -31,7 +31,7 @@ describe('Stripe Module', function() {
       it('allows me to: create Customer', function(done) {
 
         return expect(
-          stripe.customer.create(customerDetails)
+          stripe.customers.create(customerDetails)
             .then(function(customer) {
               addedCustomerIDs.push(customer.id);
               return customer;
@@ -45,7 +45,7 @@ describe('Stripe Module', function() {
       it('allows me to: create a customer and list their cards', function() {
 
         return expect(
-          stripe.customer.create(customerDetails)
+          stripe.customers.create(customerDetails)
             .then(function(customer) {
               addedCustomerIDs.push(customer.id);
               return customer.cards.list();
@@ -61,7 +61,7 @@ describe('Stripe Module', function() {
       it('gives me an error if I incorrectly try to create a new card', function() {
         var customerId = addedCustomerIDs[0]; // re-use previously created cust
         return expect(
-          stripe.card.create(customerId, {
+          stripe.cards.create(customerId, {
             card: {
               number: 'invalid!',
               exp_month: '12',
@@ -75,7 +75,7 @@ describe('Stripe Module', function() {
       it('allows me to add an additional card', function() {
         var customerId = addedCustomerIDs[0]; // re-use previously created cust
         return expect(
-          stripe.card.create(customerId, {
+          stripe.cards.create(customerId, {
             card: {
               number: '4242424242424242',
               exp_month: '12',
@@ -89,7 +89,7 @@ describe('Stripe Module', function() {
 
         return expect(
           when.map(addedCustomerIDs, function(custId) {
-            return stripe.customer.del(custId);
+            return stripe.customers.del(custId);
           })
         ).to.eventually.deep.equal([
           {
