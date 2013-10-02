@@ -1,5 +1,5 @@
 {
-  "author": "Stripe <michelle@stripe.com> (https://stripe.com/)",
+  "author": "Stripe <james@stripe.com> (https://stripe.com/)",
   "name": "stripe",
   "description": "Stripe API wrapper",
   "version": "2.0.0",
@@ -9,7 +9,7 @@
     "url": "git://github.com/stripe/stripe-node.git"
   },
   "engines": {
-    "node": ">= v0.4.0"
+    "node": ">= v0.8.0"
   },
   "main": "lib/stripe.js",
   "devDependencies": {

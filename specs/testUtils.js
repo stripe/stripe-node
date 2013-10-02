@@ -6,7 +6,7 @@
 require('mocha-as-promised')();
 require('chai').use(require('chai-as-promised'));
 
-module.exports = {
+var utils = module.exports = {
 
   getUserStripeKey: function() {
     var key = process.env.STRIPE_TEST_API_KEY;
@@ -47,7 +47,63 @@ module.exports = {
 
     return stripeInstance;
 
-  }
+  },
+
+  /**
+   * A utility where cleanup functions can be registered to be called post-spec.
+   * CleanupUtility will automatically register on the mocha afterEach hook,
+   * ensuring its called after each descendent-describe block.
+   */
+  CleanupUtility: (function() {
+
+    function CleanupUtility() {
+      var self = this;
+      this._cleanupFns = [];
+      this._stripe = require('../lib/stripe')(
+        utils.getUserStripeKey()
+      );
+      afterEach(function(done) {
+        return self.doCleanup(done);
+      });
+    }
+
+    CleanupUtility.prototype = {
+
+      doCleanup: function(done) {
+        var cleanups = this._cleanupFns;
+        var total = cleanups.length;
+        var completed = 0;
+        for (var fn; fn = cleanups.shift();) {
+          fn.call(this).then(function() {
+            // cleanup successful
+            ++completed;
+            if (completed === total) {
+              done();
+            }
+          }, function(err) {
+            // not successful
+            throw err;
+          });
+        }
+      },
+      add: function(fn) {
+        this._cleanupFns.push(fn);
+      },
+      deleteCustomer: function(custId) {
+        this.add(function() {
+          return this._stripe.customers.del(custId);
+        });
+      },
+      deletePlan: function(custId) {
+        this.add(function() {
+          return this._stripe.plans.del(custId);
+        });
+      }
+    };
+
+    return CleanupUtility;
+
+  }())
 
 };
 
