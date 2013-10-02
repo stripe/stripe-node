@@ -79,7 +79,7 @@ describe('Stripe Module', function() {
           stripe.customers.create(CUSTOMER_DETAILS)
             .then(function(customer) {
               cleanup.deleteCustomer(customer.id);
-              return stripe.cards.create(customer.id, {
+              return customer.cards.create({
                 card: {
                   number: '4242424242424242',
                   exp_month: '12',

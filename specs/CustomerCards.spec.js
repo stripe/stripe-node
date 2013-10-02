@@ -13,7 +13,7 @@ var customerCard = new resources.CustomerCards(
 );
 
 // Use spy from existing resource:
-customerCard._request = stripe.cards._request;
+customerCard._request = stripe.customers._request;
 
 describe('CustomerCard Resource', function() {
 
