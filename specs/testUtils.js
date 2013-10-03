@@ -88,6 +88,7 @@ var utils = module.exports = {
             throw err;
           });
         }
+        if (total === 0) done();
       },
       add: function(fn) {
         this._cleanupFns.push(fn);
