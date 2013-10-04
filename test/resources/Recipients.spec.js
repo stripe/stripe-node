@@ -1,18 +1,18 @@
 'use strict';
 
-var stripe = require('./testUtils').getSpyableStripe();
+var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('InvoiceItems Resource', function() {
+describe('Recipients Resource', function() {
 
   describe('retrieve', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.invoiceItems.retrieve('invoiceItemIdTesting123');
+      stripe.recipients.retrieve('recipientId1');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/invoiceitems/invoiceItemIdTesting123',
+        url: '/v1/recipients/recipientId1',
         data: {}
       });
 
@@ -24,13 +24,13 @@ describe('InvoiceItems Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.invoiceItems.create({
-        customer: 'cust_id_888'
+      stripe.recipients.create({
+        name: 'Bob', type: 'individual'
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/invoiceitems',
-        data: { customer: 'cust_id_888' }
+        url: '/v1/recipients',
+        data: { name: 'Bob', type: 'individual' }
       });
 
     });
@@ -41,13 +41,13 @@ describe('InvoiceItems Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.invoiceItems.update('invoiceItemId1', {
-        amount: 1900
+      stripe.recipients.update('recipientId3', {
+        name: 'Bob Smith'
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/invoiceitems/invoiceItemId1',
-        data: { amount: 1900 }
+        url: '/v1/recipients/recipientId3',
+        data: { name: 'Bob Smith' }
       });
 
     });
@@ -58,10 +58,10 @@ describe('InvoiceItems Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.invoiceItems.del('invoiceItemId2');
+      stripe.recipients.del('recipientId4');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
-        url: '/v1/invoiceitems/invoiceItemId2',
+        url: '/v1/recipients/recipientId4',
         data: {}
       });
 
@@ -73,10 +73,10 @@ describe('InvoiceItems Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.invoiceItems.list();
+      stripe.recipients.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/invoiceitems',
+        url: '/v1/recipients',
         data: {}
       });
 

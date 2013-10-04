@@ -1,18 +1,18 @@
 'use strict';
 
-var stripe = require('./testUtils').getSpyableStripe();
+var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Transfers Resource', function() {
+describe('Plans Resource', function() {
 
   describe('retrieve', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.transfers.retrieve('transferId1');
+      stripe.plans.retrieve('planId1');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/transfers/transferId1',
+        url: '/v1/plans/planId1',
         data: {}
       });
 
@@ -24,27 +24,44 @@ describe('Transfers Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.transfers.create({
-        amount: 200, currency: 'usd', recipient: {}
+      stripe.plans.create({
+        amount: 200, currency: 'usd'
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/transfers',
-        data: { amount: 200, currency: 'usd', recipient: {} }
+        url: '/v1/plans',
+        data: { amount: 200, currency: 'usd' }
       });
 
     });
 
   });
 
-  describe('cancel', function() {
+  describe('update', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.transfers.cancel('transferId4');
+      stripe.plans.update('planId3', {
+        amount: 1900, currency: 'usd'
+      });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/transfers/transferId4/cancel',
+        url: '/v1/plans/planId3',
+        data: { amount: 1900, currency: 'usd' }
+      });
+
+    });
+
+  });
+
+  describe('del', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.plans.del('planId4');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'DELETE',
+        url: '/v1/plans/planId4',
         data: {}
       });
 
@@ -56,10 +73,10 @@ describe('Transfers Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.transfers.list();
+      stripe.plans.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/transfers',
+        url: '/v1/plans',
         data: {}
       });
 

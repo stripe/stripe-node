@@ -1,7 +1,7 @@
 'use strict';
 
-var resources = require('../lib/stripe').resources;
-var stripe = require('./testUtils').getSpyableStripe();
+var resources = require('../../lib/stripe').resources;
+var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
 var CUSTOMER_TEST_ID = 'customerIdTest999';
@@ -9,6 +9,7 @@ var CUSTOMER_TEST_ID = 'customerIdTest999';
 // Create new CustomerCard instance with pre-filled customerId:
 var customerCard = new resources.CustomerCards(
   stripe._auth,
+  stripe._version,
   { customerId: CUSTOMER_TEST_ID }
 );
 
