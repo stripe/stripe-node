@@ -82,4 +82,34 @@ describe('Charge Resource', function() {
 
   });
 
+  describe('updateDispute', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.charges.updateDispute('chargeIdExample3242', { evidence: 'foo' });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/charges/chargeIdExample3242/dispute',
+        data: { evidence: 'foo' }
+      });
+
+    });
+
+  });
+
+  describe('closeDispute', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.charges.closeDispute('chargeIdExample3242', {});
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/charges/chargeIdExample3242/dispute/close',
+        data: {}
+      });
+
+    });
+
+  });
+
 });

@@ -99,7 +99,7 @@ describe('Stripe Module', function() {
         return expect(
           when.join(
             stripe.plans.create({
-              id: 'goldSuperAmazing',
+              id: 'plan' + +new Date,
               amount: 1700,
               currency: 'usd',
               interval: 'month',
@@ -127,19 +127,67 @@ describe('Stripe Module', function() {
 
         return expect(
           stripe.customers.create(CUSTOMER_DETAILS)
-          .then(function(customer) {
+            .then(function(customer) {
 
-            cleanup.deleteCustomer(customer.id);
+              cleanup.deleteCustomer(customer.id);
 
-            return stripe.customers.updateSubscription(customer.id, {
-              plan: 'someNonExistentPlan'
-            });
+              return stripe.customers.updateSubscription(customer.id, {
+                plan: 'someNonExistentPlan' + +new Date
+              });
 
-          })
+            })
         ).to.be.eventually.rejected;
 
       });
 
+    });
+
+    describe('Metadata flow', function() {
+      it('Can save and retrieve metadata', function() {
+        var customer;
+        return expect(
+          stripe.customers.create(CUSTOMER_DETAILS)
+            .then(function(cust) {
+              customer = cust;
+              cleanup.deleteCustomer(cust.id);
+              return stripe.customers.setMetadata(cust.id, { foo: "123" })
+            })
+            .then(function() {
+              return stripe.customers.getMetadata(customer.id);
+            })
+        ).to.eventually.deep.equal({ foo: "123" });
+      });
+      it('Can reset metadata', function() {
+        var customer;
+        return expect(
+          stripe.customers.create(CUSTOMER_DETAILS)
+            .then(function(cust) {
+              customer = cust;
+              cleanup.deleteCustomer(cust.id);
+              return stripe.customers.setMetadata(cust.id, { baz: "123" })
+            })
+            .then(function() {
+              return stripe.customers.setMetadata(customer.id, null);
+            })
+            .then(function() {
+              return stripe.customers.getMetadata(customer.id);
+            })
+        ).to.eventually.deep.equal({});
+      });
+      it('Resets metadata when setting new metadata', function() {
+        var customer;
+        return expect(
+          stripe.customers.create(CUSTOMER_DETAILS)
+            .then(function(cust) {
+              customer = cust;
+              cleanup.deleteCustomer(cust.id);
+              return stripe.customers.setMetadata(cust.id, { foo: "123" })
+            })
+            .then(function() {
+              return stripe.customers.setMetadata(customer.id, { baz: "456" });
+            })
+        ).to.eventually.deep.equal({ baz: "456" });
+      });
     });
 
   });

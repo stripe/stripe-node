@@ -44,6 +44,11 @@ describe('utils', function() {
         'nested%5Ba%20n%20o%20t%20h%20e%20r%5D='
       ].join('&'));
     });
+    it('Ensures empty objects are represented', function() {
+      expect(utils.stringifyRequestData({
+        test: {}
+      })).to.equal('test=');
+    });
   });
 
 });

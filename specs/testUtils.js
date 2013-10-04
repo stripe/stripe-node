@@ -1,10 +1,12 @@
 'use strict';
 
-// testUtils should be require'd before anything else in each spec file!
+// NOTE: testUtils should be require'd before anything else in each spec file!
 
 // Ensure we are using the 'as promised' libs before any tests are run:
 require('mocha-as-promised')();
 require('chai').use(require('chai-as-promised'));
+
+var when = require('when');
 
 var utils = module.exports = {
 
@@ -29,17 +31,23 @@ var utils = module.exports = {
     var Stripe = require('../lib/stripe');
     var stripeInstance = Stripe('fakeAuthToken');
 
+    stripeInstance.REQUESTS = [];
+
     for (var i in stripeInstance) {
       if (stripeInstance[i] instanceof Stripe.StripeResource) {
 
         // Override each _request method so we can make the params
-        // avaialable to consuming tests:
+        // avaialable to consuming tests (revealing requests made on
+        // REQUESTS and LAST_REQUEST):
         stripeInstance[i]._request = function(method, url, data, cb) {
-          stripeInstance.LAST_REQUEST = {
-            method: method,
-            url: url,
-            data: data
-          };
+          stripeInstance.REQUESTS.push(
+            stripeInstance.LAST_REQUEST = {
+              method: method,
+              url: url,
+              data: data
+            }
+          );
+          cb(null, {});
         };
 
       }

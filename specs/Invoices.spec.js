@@ -69,11 +69,11 @@ describe('Invoices Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.invoices.retrieveUpcoming('customerId1');
+      stripe.invoices.retrieveUpcoming({ customer: 'customerId1' });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/invoices/upcoming?customer=customerId1',
-        data: {}
+        url: '/v1/invoices/upcoming',
+        data: { customer: 'customerId1' }
       });
 
     });

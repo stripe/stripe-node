@@ -2,6 +2,7 @@
 
 var stripe = require('./testUtils').getSpyableStripe();
 var expect = require('chai').expect;
+var when = require('when');
 
 describe('Customers Resource', function() {
 
@@ -137,9 +138,73 @@ describe('Customers Resource', function() {
 
   });
 
+  describe('Metadata methods', function() {
+
+    describe('setMetadata', function() {
+
+      describe('When deleting metadata', function() {
+
+        it('Sends the correct request', function() {
+
+          stripe.customers.setMetadata('customerIdFoo321', null);
+          expect(stripe.LAST_REQUEST).to.deep.equal({
+            method: 'POST',
+            url: '/v1/customers/customerIdFoo321',
+            data: {
+              metadata: {}
+            }
+          });
+
+        });
+
+      });
+
+      describe('When setting new metadata', function() {
+
+        it('Sends one request to clear, and another to set new data', function() {
+
+          var defer = when.defer();
+
+          stripe.customers.setMetadata('customerIdFoo321', {
+            foo: 123,
+            baz: 456
+          }).then(function() {
+            var reqs = stripe.REQUESTS;
+            defer.resolve([
+              // Last two requests
+              reqs[reqs.length-2],
+              reqs[reqs.length-1]
+            ]);
+          });
+
+          return expect(defer.promise).to.eventually.deep.equal([
+            {
+              method: 'POST',
+              url: '/v1/customers/customerIdFoo321',
+              data: {
+                metadata: {}
+              }
+            },
+            {
+              method: 'POST',
+              url: '/v1/customers/customerIdFoo321',
+              data: {
+                metadata: { foo: 123, baz: 456 }
+              }
+            }
+          ]);
+
+        });
+
+      });
+
+    });
+
+  });
+
   describe('Card methods', function() {
 
-    describe('retrieveCards', function() {
+    describe('retrieveCard', function() {
 
       it('Sends the correct request', function() {
 
