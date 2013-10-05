@@ -44,6 +44,12 @@ called with a Javascript `Error` (if any) and then the response.
    * `.list({count:x,offset:y})` - [list customers](https://stripe.com/docs/api#list_customers)
    * `.update_subscription(customer_id, data)` - [update subscription](https://stripe.com/docs/api#update_subscription)
    * `.cancel_subscription(customer_id, at_period_end)` - [cancel subscription](https://stripe.com/docs/api#cancel_subscription)
+*  stripe.cards  - create, retrieve, update, delete and list cards
+   *  .create(customer_id, card)  - [create a card](https://stripe.com/docs/api#create_card)
+   *  .retrieve(card_id, customer_id)  - [retrieve a card](https://stripe.com/docs/api#retrieve_card)
+   *  .update(card_id, customer_id, card)  - [update card](https://stripe.com/docs/api#update_card)
+   *  .del(card_id, customer_id)  - [delete a card](https://stripe.com/docs/api#delete_card)
+   *  .list(customer_id)  - [list cards](https://stripe.com/docs/api#list_cards)
 * `stripe.plans` - create, retrieve, delete and list subscription plans
    * `.create(plan)` - [create a plan](https://stripe.com/docs/api#create_plan), takes the data as an object
    * `.retrieve(plan_id)` - [retrieve a plan](https://stripe.com/docs/api#retrieve_plan) by plan id.
