@@ -161,7 +161,7 @@ describe('Customers Resource', function() {
 
       describe('When setting new metadata', function() {
 
-        it('Sends one request to clear, and another to set new data', function() {
+        it('Sends one request to get current, and another to set new data', function() {
 
           var defer = when.defer();
 
@@ -179,11 +179,9 @@ describe('Customers Resource', function() {
 
           return expect(defer.promise).to.eventually.deep.equal([
             {
-              method: 'POST',
+              method: 'GET',
               url: '/v1/customers/customerIdFoo321',
-              data: {
-                metadata: {}
-              }
+              data: {}
             },
             {
               method: 'POST',

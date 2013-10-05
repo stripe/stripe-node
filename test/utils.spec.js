@@ -35,13 +35,17 @@ describe('utils', function() {
         nested: {
           1: 2,
           'a n o t h e r': null
-        }
+        },
+        arr: [1, 2, 3]
       })).to.equal([
         'test=1',
         'foo=baz',
         'somethingElse=%3A%3A%22%22%25%26',
         'nested%5B1%5D=2', // Unencoded: nested[1]=2
-        'nested%5Ba%20n%20o%20t%20h%20e%20r%5D='
+        'nested%5Ba%20n%20o%20t%20h%20e%20r%5D=',
+        'arr%5B%5D=1',
+        'arr%5B%5D=2',
+        'arr%5B%5D=3'
       ].join('&'));
     });
     it('Ensures empty objects are represented', function() {

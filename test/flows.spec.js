@@ -22,7 +22,7 @@ describe('Flows', function() {
 
   var cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
-  
+
   describe('Customer+Card flow', function() {
 
     it('allows me to: create Customer', function(done) {
@@ -185,6 +185,23 @@ describe('Flows', function() {
             return stripe.customers.setMetadata(customer.id, { baz: "456" });
           })
       ).to.eventually.deep.equal({ baz: "456" });
+    });
+  });
+
+  describe('Expanding a customer within a charge', function() {
+    it('Allows you to expand a customer object', function() {
+      return expect(
+        stripe.customers.create(CUSTOMER_DETAILS)
+          .then(function(cust) {
+            cleanup.deleteCustomer(cust.id);
+            return stripe.charges.create({
+              customer: cust.id,
+              amount: 1700,
+              currency: 'usd',
+              expand: ['customer']
+            });
+          })
+      ).to.eventually.have.deep.property('customer.created');
     });
   });
 

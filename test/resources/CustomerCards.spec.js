@@ -8,8 +8,7 @@ var CUSTOMER_TEST_ID = 'customerIdTest999';
 
 // Create new CustomerCard instance with pre-filled customerId:
 var customerCard = new resources.CustomerCards(
-  stripe._auth,
-  stripe._version,
+  stripe,
   { customerId: CUSTOMER_TEST_ID }
 );
 
