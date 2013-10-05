@@ -78,7 +78,7 @@ vows.describe("Subscription Plans API").addBatch({
             },
             'List plans': {
                 topic: function() {
-                    stripe.plans.list(null, null, this.callback);
+                    stripe.plans.list(10, 0, this.callback);
                 },
                 'returns a list of plans': function(err, response) {
                     assert.isNull(err);
