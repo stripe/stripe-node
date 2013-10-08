@@ -86,7 +86,6 @@ vows.describe("Card API").addBatch({
                                 stripe.customers.del(customer.id, this.callback); 
                             }, 
                             'Customer was deleted': function(err, response) {
-                                console.log(err)
                                 assert.isNull(err); 
                                 assert.isTrue(response.deleted); 
                             }
