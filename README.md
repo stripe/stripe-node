@@ -39,17 +39,83 @@ stripe.customers.create({
 ### Available resources:
 
  * account
+  * `retrieve()`
  * balance
+  * `retrieve()`
+  * `listTransactions()`
+  * `retrieveTransaction(transactionId)`
  * charges
+  * `create({...})`
+  * `list()`
+  * `retrieve(chargeId)`
+  * `capture(chargeId)`
+  * `refund(chargeId)`
+  * `updateDispute(chargeId, {...})`
+  * `closeDispute(chargeId, {...})`
+  * `setMetadata(chargeId, {...})`
+  * `getMetadata(chargeId, {...})`
  * coupons
+  * `create({...})`
+  * `list()`
+  * `retrieve(chargeId)`
+  * `del(chargeId)`
  * customers
+  * `create({...})`
+  * `list()`
+  * `update(customerId, {...})`
+  * `retrieve(customerId)`
+  * `del(customerId)`
+  * `setMetadata(customerId, {...})`
+  * `getMetadata(customerId, {...})`
+  * `updateSubscription(customerId, {...})`
+  * `cancelSubscription(customerId)`
+  * `createCard(customerId, {...})`
+  * `listCards(customerId)`
+  * `retrieveCard(customerId, cardId)`
+  * `updateCard(customerId, cardId, {...})`
+  * `deleteCard(customerId, cardId)`
+  * `deleteDiscount(customerId, discountId)`
  * events
+  * `list()`
+  * `retrieve(eventId)`
  * invoiceItems
+  * `create({...})`
+  * `list()`
+  * `update(invoiceItemId, {...})`
+  * `retrieve(invoiceItemId)`
+  * `del(invoiceItemId)`
  * invoices
+  * `create({...})`
+  * `list()`
+  * `update(invoiceId, {...})`
+  * `retrieve(invoiceId)`
+  * `retrieveLines(invoiceId)`
+  * `retrieveUpcoming()`
+  * `pay(invoiceId)`
  * plans
+  * `create({...})`
+  * `list()`
+  * `update(planId, {...})`
+  * `retrieve(planId)`
+  * `del(planId)`
  * recipient
+  * `create({...})`
+  * `list()`
+  * `update(recipientId, {...})`
+  * `retrieve(recipientId)`
+  * `del(recipientId)`
+  * `setMetadata(recipientId, {...})`
+  * `getMetadata(recipientId, {...})`
  * tokens
+  * `create({...})`
+  * `retrieve(tokenId)`
  * transfers
+  * `create({...})`
+  * `list()`
+  * `retrieve(transferId)`
+  * `cancel(transferId)`
+  * `setMetadata(transferId, {...})`
+  * `getMetadata(transferId, {...})`
 
 ## Development
 
