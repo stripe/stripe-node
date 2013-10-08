@@ -17,7 +17,7 @@ describe('Error', function() {
     it('Generates specific instance depending on error-type', function() {
       expect(Error.StripeError.generate({ type: 'card_error' })).to.be.instanceOf(Error.StripeCardError);
       expect(Error.StripeError.generate({ type: 'invalid_request_error' })).to.be.instanceOf(Error.StripeInvalidRequestError);
-      expect(Error.StripeError.generate({ type: 'api_error' })).to.be.instanceOf(Error.StripeConnectionError);
+      expect(Error.StripeError.generate({ type: 'api_error' })).to.be.instanceOf(Error.StripeAPIError);
     });
   });
 
