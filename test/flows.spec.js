@@ -18,10 +18,25 @@ var CUSTOMER_DETAILS = {
   }
 };
 
+var CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
+
 describe('Flows', function() {
+
+  // Note: These tests must be run as one so we can retrieve the 
+  // default_currency (required in subsequent tests);
 
   var cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
+
+  it('Allows me to retrieve default_currency', function() {
+    return expect(
+      stripe.account.retrieve()
+        .then(function(acct) {
+          CURRENCY = acct.default_currency;
+          return acct;
+        })
+    ).to.eventually.have.deep.property('default_currency');
+  });
 
   describe('Customer+Card flow', function() {
 
@@ -99,7 +114,7 @@ describe('Flows', function() {
           stripe.plans.create({
             id: 'plan' + +new Date,
             amount: 1700,
-            currency: 'usd',
+            currency: CURRENCY,
             interval: 'month',
             name: 'Gold Super Amazing Tier'
           }),
@@ -197,11 +212,19 @@ describe('Flows', function() {
             return stripe.charges.create({
               customer: cust.id,
               amount: 1700,
-              currency: 'usd',
+              currency: CURRENCY,
               expand: ['customer']
             });
           })
       ).to.eventually.have.deep.property('customer.created');
+    });
+  });
+
+  describe('Getting balance', function() {
+    it('Allows me to do so', function() {
+      return expect(
+        stripe.balance.retrieve()
+      ).to.eventually.have.property('object', 'balance');
     });
   });
 
