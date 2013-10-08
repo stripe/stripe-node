@@ -155,7 +155,7 @@ describe('Flows', function() {
 
   });
 
-  describe.only('Coupon flow', function() {
+  describe('Coupon flow', function() {
 
     it('Allows me to: Create a coupon and subcribe a customer to it', function() {
 
