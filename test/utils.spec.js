@@ -55,7 +55,7 @@ describe('utils', function() {
     });
   });
 
-  describe.only('protoExtend', function() {
+  describe('protoExtend', function() {
     it('Provides an extension mechanism', function() {
       function A() {}
       A.extend = utils.protoExtend;
