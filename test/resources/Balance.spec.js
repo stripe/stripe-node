@@ -9,10 +9,10 @@ describe('Balance Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.balance.retrieve('balanceIdFoo');
+      stripe.balance.retrieve();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/balance/balanceIdFoo',
+        url: '/v1/balance',
         data: {}
       });
 

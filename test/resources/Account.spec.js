@@ -9,10 +9,10 @@ describe('Account Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.account.retrieve('accountIdFoo');
+      stripe.account.retrieve();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/account/accountIdFoo',
+        url: '/v1/account',
         data: {}
       });
 

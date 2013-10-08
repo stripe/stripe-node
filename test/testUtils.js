@@ -85,7 +85,11 @@ var utils = module.exports = {
         var total = cleanups.length;
         var completed = 0;
         for (var fn; fn = cleanups.shift();) {
-          fn.call(this).then(function() {
+          var promise = fn.call(this);
+          if (!promise || !promise.then) {
+            throw new Error('CleanupUtility expects cleanup functions to return promises!');
+          }
+          promise.then(function() {
             // cleanup successful
             ++completed;
             if (completed === total) {
