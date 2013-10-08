@@ -110,9 +110,14 @@ var utils = module.exports = {
           return this._stripe.customers.del(custId);
         });
       },
-      deletePlan: function(custId) {
+      deletePlan: function(pId) {
         this.add(function() {
-          return this._stripe.plans.del(custId);
+          return this._stripe.plans.del(pId);
+        });
+      },
+      deleteCoupon: function(cId) {
+        this.add(function() {
+          return this._stripe.coupons.del(cId);
         });
       }
     };

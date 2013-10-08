@@ -155,6 +155,39 @@ describe('Flows', function() {
 
   });
 
+  describe.only('Coupon flow', function() {
+
+    it('Allows me to: Create a coupon and subcribe a customer to it', function() {
+
+      var couponId = 'coupon' + +new Date;
+
+      return expect(
+        when.join(
+          stripe.coupons.create({
+            percent_off: 20,
+            id: couponId,
+            duration: 'once'
+          }),
+          stripe.customers.create(CUSTOMER_DETAILS)
+        ).then(function(j) {
+
+          var coupon = j[0];
+          var customer = j[1];
+
+          cleanup.deleteCustomer(customer.id);
+          cleanup.deleteCoupon(coupon.id);
+
+          return stripe.customers.update(customer.id, {
+            coupon: coupon.id
+          });
+
+        })
+      ).to.eventually.have.deep.property('discount.coupon.id', couponId);
+
+    });
+
+  });
+
   describe('Metadata flow', function() {
     it('Can save and retrieve metadata', function() {
       var customer;
