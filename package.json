@@ -1,13 +1,20 @@
 {
-  "author": "Stripe <james@stripe.com> (https://stripe.com/)",
   "name": "stripe",
-  "description": "Stripe API wrapper",
   "version": "2.0.0",
+  "description": "Stripe API wrapper",
   "homepage": "https://github.com/stripe/stripe-node",
+  "author": "Stripe <james@stripe.com> (https://stripe.com/)",
+  "contributors": [
+    "Ask Bjørn Hansen <ask@develooper.com> (http://www.askask.com/)",
+    "Michelle Bu <michelle@stripe.com>",
+    "Alex Sexton <alex@stripe.com",
+    "James Padolsey <james@stripe.com"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/stripe/stripe-node.git"
   },
+  "bugs:": "https://github.com/stripe/stripe-node/issues",
   "engines": {
     "node": ">= v0.8.0"
   },
