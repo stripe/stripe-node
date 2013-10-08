@@ -55,4 +55,20 @@ describe('utils', function() {
     });
   });
 
+  describe.only('protoExtend', function() {
+    it('Provides an extension mechanism', function() {
+      function A() {}
+      A.extend = utils.protoExtend;
+      var B = A.extend({
+        constructor: function() {
+          this.called = true;
+        }
+      });
+      expect(new B()).to.be.an.instanceof(A);
+      expect(new B()).to.be.an.instanceof(B);
+      expect(new B().called).to.equal(true);
+      expect(B.extend === utils.protoExtend).to.equal(true);
+    });
+  });
+
 });
