@@ -48,7 +48,6 @@ vows.describe("Coupon API").addBatch({
                 'Got coupons': function(err, response) {
                     assert.isNull(err); 
                     assert.isNumber(response.count); 
-                    console.log(response.data)
                 }
             }
         }
