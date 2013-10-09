@@ -12,11 +12,12 @@ if (!api_key) {
 var stripe = require('./../lib/main.js')(api_key);
 
 var coupon;
+var id = parseInt(Math.random()*88888).toString(); 
 
 vows.describe("Coupon API").addBatch({
         'Create a coupon': {
             topic: function() {
-                stripe.coupons.create({id: "coupon4", 
+                stripe.coupons.create({id: id, 
                                        duration: "forever", 
                                        percent_off:50}, this.callback);
             },
@@ -24,7 +25,7 @@ vows.describe("Coupon API").addBatch({
                 assert.isNull(err);
 
                 assert.isDefined(response);
-                assert.equal(response.id, "coupon4");
+                assert.equal(response.id, id);
                 assert.equal(response.duration, "forever"); 
             },
             'Retrieve a coupon': {
@@ -35,7 +36,7 @@ vows.describe("Coupon API").addBatch({
                     assert.isNull(err);
                     
                     assert.isDefined(response);
-                    assert.equal(response.id, 'coupon4');
+                    assert.equal(response.id, id);
 
                     coupon = response; 
                 }
@@ -47,16 +48,31 @@ vows.describe("Coupon API").addBatch({
                 'Got coupons': function(err, response) {
                     assert.isNull(err); 
                     assert.isNumber(response.count); 
-                }, 
-                'Delete coupon': {
-                    topic: function() {
-                        stripe.coupons.del(coupon.id, this.callback); 
-                    }, 
-                    'Coupon deleted': function(err, response) {
-                        assert.isNull(err); 
-                        assert.isTrue(response.deleted)
-                    }
+                    console.log(response.data)
                 }
-            } 
+            }
         }
-    }).export(module, {error: false});
+}).addBatch({
+    'Retrieve a coupon': {
+        topic: function() {
+            stripe.coupons.retrieve(id, this.callback); 
+        },
+        'got a coupon': function(err, response) {
+            assert.isNull(err);
+                  
+            assert.isDefined(response);
+            assert.equal(response.id, id);
+
+            coupon = response; 
+        }, 
+        'Delete coupon': {
+            topic: function() {
+                stripe.coupons.del(coupon.id, this.callback); 
+            }, 
+            'Coupon deleted': function(err, response) {
+                assert.isNull(err); 
+                assert.isTrue(response.deleted)
+            }
+        }
+    } 
+}).export(module, {error: false});
