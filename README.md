@@ -1,5 +1,7 @@
 # node-stripe
 
+[![Build Status](https://travis-ci.org/davidrivera/node-stripe.png?branch=master)](https://travis-ci.org/davidrivera/node-stripe)
+
 Access to the [Stripe](https://stripe.com/) [API](https://stripe.com/docs/api).
 
 
