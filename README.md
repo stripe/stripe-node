@@ -44,6 +44,9 @@ called with a Javascript `Error` (if any) and then the response.
    * `.list({count:x,offset:y})` - [list customers](https://stripe.com/docs/api#list_customers)
    * `.update_subscription(customer_id, data)` - [update subscription](https://stripe.com/docs/api#update_subscription)
    * `.cancel_subscription(customer_id, at_period_end)` - [cancel subscription](https://stripe.com/docs/api#cancel_subscription)
+* `stipe.subscriptions`  - update, delete
+   * `.update(customer_id, data)` - [update a subscription](https://stripe.com/docs/api/curl#update_subscription)
+   * `.del(customer_id, data)` - [cancel a subscription](https://stripe.com/docs/api/curl#cancel_subscription)
 *  `stripe.cards`  - create, retrieve, update, delete and list cards
    *  `.create(customer_id, card)`  - [create a card](https://stripe.com/docs/api#create_card)
    *  `.retrieve(card_id, customer_id)`  - [retrieve a card](https://stripe.com/docs/api#retrieve_card)
@@ -61,6 +64,8 @@ called with a Javascript `Error` (if any) and then the response.
    * `.retrieve(coupon_id)` - [retrieve a coupon](https://stripe.com/docs/api#retrieve_coupon) by coupon id.
    * `.del(coupon_id)` - [delete a coupon](https://stripe.com/docs/api#delete_coupon)
    * `.list({count:x,offset:y})` - [list coupons](https://stripe.com/docs/api#list_coupons)
+* `stripe.discounts`  - del
+   * `.del(customer_id)`  - [delete a discount](https://stripe.com/docs/api/curl#delete_discount)
 * `stripe.invoices` - [Invoices API](https://stripe.com/docs/api#invoices)
    * `.create(customer_id)` - [create an invoice](https://stripe.com/docs/api#create_invoice) by customer id.
    * `.retrieve(invoice_id)` - [retrieve an existing invoice](https://stripe.com/docs/api?lang=curl#retrieve_invoice)
@@ -73,6 +78,9 @@ called with a Javascript `Error` (if any) and then the response.
    * `.update(invoice_item_id, updates)` - [update a invoice item](https://stripe.com/docs/api#update_invoiceitem); `updates` is an object with new parameters
    * `.del(invoice_item_id)` - [delete a invoice item](https://stripe.com/docs/api#delete_invoiceitem)
    * `.list(customer_id, {count:x,offset:y})` - [list invoice items](https://stripe.com/docs/api#list_invoiceitems); all parameters are optional
+* `stripe.disputes`  - close, update
+   * `.close(charge_id)`  - [close a dispute](https://stripe.com/docs/api/curl#close_dispute)
+   * `.update(charge_id, {evidence:x})`  - [update a dispute](https://stripe.com/docs/api/curl#update_dispute)
 * `stripe.transfers` - create, retrieve, cancel and list transfers
    * `.create(transfer)` - [create a transfer](https://stripe.com/docs/api#create_transfer), takes the data as an object
    * `.retrieve(transfer_id)` - [retrieve a transfer](https://stripe.com/docs/api#retrieve_transfer) by transfer id.
@@ -88,7 +96,7 @@ called with a Javascript `Error` (if any) and then the response.
    * `.retrieve()`  - [retrieve your account](https://stripe.com/docs/api/curl#retrieve_account)
 * `stripe.balance` - retrieve and list balance
    * `.retrieve()` - [retrieve balance](https://stripe.com/docs/api#retrieve_balance)
-   * `.transaction`  - [retrieve a balance transaction](https://stripe.com/docs/api/curl#retrieve_balance_transaction)
+   * `.transaction(transaction_id)`  - [retrieve a balance transaction](https://stripe.com/docs/api/curl#retrieve_balance_transaction)
    * `.list({count:x,offset:y})` - [list balance history](https://stripe.com/docs/api#balance_history)
 * `stripe.events` - retrieve and list events
    * `.retrieve(id)` - [retrieve an event](https://stripe.com/docs/api#retrieve_event)
