@@ -8,35 +8,47 @@
 
 **Documentation is forthcoming** and will eventually be available at https://stripe.com/docs/api/node.
 
-## Overview
+## API Overview
 
-### Example
+Every resource is accessed via your `stripe` instance:
 
 ```js
 var stripe = require('stripe')(' your stripe API key ');
+// stripe.{ RESOURCE_NAME }.{ METHOD_NAME }
+```
 
-// Callback pattern
-stripe.customers.create({
-  email: 'foo-customer@foo-website.com'
-}, function(err, customer) {
-  if (err) {
-    // Deal with error
-  } else {
-    customer; // => The created customer data object
+Every resource method accepts an optional callback as the last argument:
+
+```js
+stripe.customers.create(
+  { email: 'customer@example.com' },
+  function(err, customer) {
+    err; // null if no error occurred
+    customer; // the created customer object
   }
-});
+);
+```
 
-// Promise pattern
+Additionally, every resource method returns a promise, so you don't have to use the regular callback. E.g.
+
+```js
+// Create a new customer and then a new charge for that customer:
 stripe.customers.create({
-  email: 'foo-customer@foo-website.com'
+  email: 'foo-customer@example.com'
 }).then(function(customer) {
-  customer; // => The created customer data object
+  return stripe.charges.create({
+    amount: 1600,
+    currency: 'usd',
+    customer: customer.id
+  });
+}).then(function(charge) {
+  // New charge created on a new customer
 }, function(err) {
-  // Deal with error
+  // Deal with an error
 });
 ```
 
-### Available resources:
+### Available resources & methods
 
  * account
   * `retrieve()`
