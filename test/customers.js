@@ -43,8 +43,8 @@ vows.describe("Customer API").addBatch({
             },
             'Customer updated' : function (err, response) {
                 assert.equal(response.description, 'test');
-                assert.equal(response.active_card.exp_year, 2020);
-                assert.equal(response.active_card.type, 'Visa');
+                assert.equal(response.cards.data[0].exp_year, 2020);
+                assert.equal(response.cards.data[0].type, 'Visa');
                 assert.equal(response.email, 'foo@example.com');
             },
             'Delete customer' : {
