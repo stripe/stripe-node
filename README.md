@@ -50,6 +50,8 @@ stripe.customers.create({
 
 ### Available resources & methods
 
+*Where you see `params` it is a plain JavaScript object, e.g. `{ email: 'foo@example.com' }`*
+
  * account
   * `retrieve()`
  * balance
@@ -57,77 +59,77 @@ stripe.customers.create({
   * `listTransactions()`
   * `retrieveTransaction(transactionId)`
  * charges
-  * `create({...})`
+  * `create(params)`
   * `list()`
   * `retrieve(chargeId)`
   * `capture(chargeId)`
   * `refund(chargeId)`
-  * `updateDispute(chargeId, {...})`
-  * `closeDispute(chargeId, {...})`
-  * `setMetadata(chargeId, {...})`
-  * `getMetadata(chargeId, {...})`
+  * `updateDispute(chargeId[, params])`
+  * `closeDispute(chargeId[, params])`
+  * `setMetadata(chargeId[, params])`
+  * `getMetadata(chargeId[, params])`
  * coupons
-  * `create({...})`
+  * `create(params)`
   * `list()`
   * `retrieve(chargeId)`
   * `del(chargeId)`
  * customers
-  * `create({...})`
+  * `create(params)`
   * `list()`
-  * `update(customerId, {...})`
+  * `update(customerId[, params])`
   * `retrieve(customerId)`
   * `del(customerId)`
-  * `setMetadata(customerId, {...})`
-  * `getMetadata(customerId, {...})`
-  * `updateSubscription(customerId, {...})`
+  * `setMetadata(customerId[, params])`
+  * `getMetadata(customerId[, params])`
+  * `updateSubscription(customerId[, params])`
   * `cancelSubscription(customerId)`
-  * `createCard(customerId, {...})`
+  * `createCard(customerId[, params])`
   * `listCards(customerId)`
   * `retrieveCard(customerId, cardId)`
-  * `updateCard(customerId, cardId, {...})`
+  * `updateCard(customerId, cardId[, params])`
   * `deleteCard(customerId, cardId)`
   * `deleteDiscount(customerId, discountId)`
  * events
   * `list()`
   * `retrieve(eventId)`
  * invoiceItems
-  * `create({...})`
+  * `create(params)`
   * `list()`
-  * `update(invoiceItemId, {...})`
+  * `update(invoiceItemId[, params])`
   * `retrieve(invoiceItemId)`
   * `del(invoiceItemId)`
  * invoices
-  * `create({...})`
+  * `create(params)`
   * `list()`
-  * `update(invoiceId, {...})`
+  * `update(invoiceId[, params])`
   * `retrieve(invoiceId)`
   * `retrieveLines(invoiceId)`
   * `retrieveUpcoming()`
   * `pay(invoiceId)`
  * plans
-  * `create({...})`
+  * `create(params)`
   * `list()`
-  * `update(planId, {...})`
+  * `update(planId[, params])`
   * `retrieve(planId)`
   * `del(planId)`
  * recipient
-  * `create({...})`
+  * `create(params)`
   * `list()`
-  * `update(recipientId, {...})`
+  * `update(recipientId[, params])`
   * `retrieve(recipientId)`
   * `del(recipientId)`
-  * `setMetadata(recipientId, {...})`
-  * `getMetadata(recipientId, {...})`
+  * `setMetadata(recipientId[, params])`
+  * `getMetadata(recipientId[, params])`
  * tokens
-  * `create({...})`
+  * `create(params)`
   * `retrieve(tokenId)`
  * transfers
-  * `create({...})`
+  * `create(params)`
   * `list()`
   * `retrieve(transferId)`
   * `cancel(transferId)`
-  * `setMetadata(transferId, {...})`
-  * `getMetadata(transferId, {...})`
+  * `setMetadata(transferId[, params])`
+  * `getMetadata(transferId[, params])`
 
 ## Development
 
