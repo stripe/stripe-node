@@ -2,7 +2,7 @@
 
 ## PLEASE NOTE
 
-This repo has just been transferred to Stripe (**[more info here](https://github.com/stripe/stripe-node/wiki/Version-2.0.0)**). We'll be going through the backlogged issues in the next few days.
+This repo has just been transferred to Stripe (**[more info here](https://github.com/stripe/stripe-node/wiki/Version-2)**). We'll be going through the backlogged issues in the next few days.
 
 ## Installation
 
@@ -108,7 +108,7 @@ stripe.customers.create({
   * `update(invoiceId[, params])`
   * `retrieve(invoiceId)`
   * `retrieveLines(invoiceId)`
-  * `retrieveUpcoming()`
+  * `retrieveUpcoming(customerId)`
   * `pay(invoiceId)`
  * plans
   * `create(params)`
