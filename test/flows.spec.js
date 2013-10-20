@@ -26,7 +26,7 @@ describe('Flows', function() {
   // default_currency (required in subsequent tests);
 
   var cleanup = new testUtils.CleanupUtility();
-  this.timeout(20000);
+  this.timeout(30000);
 
   it('Allows me to retrieve default_currency', function() {
     return expect(
@@ -129,7 +129,7 @@ describe('Flows', function() {
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, { foo: "123" })
+            return stripe.customers.setMetadata(cust.id, { foo: "123" });
           })
           .then(function() {
             return stripe.customers.getMetadata(customer.id);
@@ -143,7 +143,7 @@ describe('Flows', function() {
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, { baz: "123" })
+            return stripe.customers.setMetadata(cust.id, { baz: "123" });
           })
           .then(function() {
             return stripe.customers.setMetadata(customer.id, null);
@@ -160,12 +160,58 @@ describe('Flows', function() {
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, { foo: "123" })
+            return stripe.customers.setMetadata(cust.id, { foo: "123" });
           })
           .then(function() {
             return stripe.customers.setMetadata(customer.id, { baz: "456" });
           })
       ).to.eventually.deep.equal({ baz: "456" });
+    });
+    it('Can set individual key/value pairs', function() {
+      var customer;
+      return expect(
+        stripe.customers.create(CUSTOMER_DETAILS)
+          .then(function(cust) {
+            customer = cust;
+            cleanup.deleteCustomer(cust.id);
+          })
+          .then(function() {
+            return stripe.customers.setMetadata(customer.id, 'baz', 456);
+          })
+          .then(function() {
+            return stripe.customers.setMetadata(customer.id, '_other_', 999);
+          })
+          .then(function() {
+            return stripe.customers.setMetadata(customer.id, 'foo', 123);
+          })
+          .then(function() {
+            // Change foo
+            return stripe.customers.setMetadata(customer.id, 'foo', 222);
+          })
+          .then(function() {
+            // Delete baz
+            return stripe.customers.setMetadata(customer.id, 'baz', null);
+          })
+          .then(function() {
+            return stripe.customers.getMetadata(customer.id);
+          })
+      ).to.eventually.deep.equal({ _other_: "999", foo: "222" });
+    });
+    it('Can get individual metadata keys', function() {
+      var customer;
+      return expect(
+        stripe.customers.create(CUSTOMER_DETAILS)
+          .then(function(cust) {
+            customer = cust;
+            cleanup.deleteCustomer(cust.id);
+          })
+          .then(function() {
+            return stripe.customers.setMetadata(customer.id, 'baz', '444');
+          })
+          .then(function() {
+            return stripe.customers.getMetadata(customer.id, 'baz');
+          })
+      ).to.eventually.become('444');
     });
   });
 
