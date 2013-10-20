@@ -197,6 +197,22 @@ describe('Flows', function() {
           })
       ).to.eventually.deep.equal({ _other_: "999", foo: "222" });
     });
+    it('Can get individual metadata keys', function() {
+      var customer;
+      return expect(
+        stripe.customers.create(CUSTOMER_DETAILS)
+          .then(function(cust) {
+            customer = cust;
+            cleanup.deleteCustomer(cust.id);
+          })
+          .then(function() {
+            return stripe.customers.setMetadata(customer.id, 'baz', '444');
+          })
+          .then(function() {
+            return stripe.customers.getMetadata(customer.id, 'baz');
+          })
+      ).to.eventually.become('444');
+    });
   });
 
   describe('Expanding a customer within a charge', function() {
