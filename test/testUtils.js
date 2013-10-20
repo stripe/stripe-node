@@ -47,7 +47,7 @@ var utils = module.exports = {
               data: data
             }
           );
-          cb(null, {});
+          cb.call(this, null, {});
         };
 
       }

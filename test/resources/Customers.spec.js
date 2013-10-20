@@ -151,7 +151,7 @@ describe('Customers Resource', function() {
             method: 'POST',
             url: '/v1/customers/customerIdFoo321',
             data: {
-              metadata: {}
+              metadata: null
             }
           });
 
@@ -179,11 +179,13 @@ describe('Customers Resource', function() {
 
           return expect(defer.promise).to.eventually.deep.equal([
             {
-              method: 'GET',
+              // First reset metadata:
+              method: 'POST',
               url: '/v1/customers/customerIdFoo321',
-              data: {}
+              data: { metadata: null }
             },
             {
+              // Then set new metadata:
               method: 'POST',
               url: '/v1/customers/customerIdFoo321',
               data: {
