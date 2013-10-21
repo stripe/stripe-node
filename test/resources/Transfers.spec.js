@@ -37,6 +37,23 @@ describe('Transfers Resource', function() {
 
   });
 
+  describe('update', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.transfers.update('transferId6654', {
+        amount: 300
+      });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/transfers/transferId6654',
+        data: { amount: 300 }
+      });
+
+    });
+
+  });
+
   describe('cancel', function() {
 
     it('Sends the correct request', function() {
