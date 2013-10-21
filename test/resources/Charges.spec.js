@@ -56,11 +56,11 @@ describe('Charge Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.charges.capture('chargeIdExample3242');
+      stripe.charges.capture('chargeIdExample3242', { amount: 23 });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/capture',
-        data: {}
+        data: { amount: 23 }
       });
 
     });
@@ -86,11 +86,11 @@ describe('Charge Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.charges.refund('chargeIdExample3242');
+      stripe.charges.refund('chargeIdExample3242', { amount: 23 });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/refund',
-        data: {}
+        data: { amount: 23 }
       });
 
     });
