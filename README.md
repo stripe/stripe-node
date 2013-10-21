@@ -10,7 +10,7 @@ This repo has just been transferred to Stripe. Alongside this transfer, Stripe h
 
 ## Documentation
 
-**Documentation is forthcoming** and will eventually be available at https://stripe.com/docs/api/node.
+Documentation is available at https://stripe.com/docs/api/node.
 
 ## API Overview
 
