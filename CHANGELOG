@@ -1,3 +1,8 @@
+2.1.0 October 21st, 2013
+  - Support single key/value setting on setMetadata method
+  - Fix Windows url-path issue
+  - Add missing stripe.charges.update method
+
 2.0.0 October 18th, 2013
   - API overhaul and refactor, including addition of promises.
   - Release of version 2.0.0

@@ -57,83 +57,85 @@ stripe.customers.create({
 *Where you see `params` it is a plain JavaScript object, e.g. `{ email: 'foo@example.com' }`*
 
  * account
-  * `retrieve()`
+  * [`retrieve()`](https://stripe.com/docs/api/node#retrieve_account)
  * balance
-  * `retrieve()`
-  * `listTransactions()`
-  * `retrieveTransaction(transactionId)`
+  * [`retrieve()`](https://stripe.com/docs/api/node#retrieve_balance)
+  * [`listTransactions([params])`](https://stripe.com/docs/api/node#balance_history)
+  * [`retrieveTransaction(transactionId)`](https://stripe.com/docs/api/node#retrieve_balance_transaction)
  * charges
-  * `create(params)`
-  * `list()`
-  * `retrieve(chargeId)`
-  * `capture(chargeId)`
-  * `refund(chargeId)`
-  * `updateDispute(chargeId[, params])`
-  * `closeDispute(chargeId[, params])`
-  * `setMetadata(chargeId[, params])`
-  * `getMetadata(chargeId[, params])`
+  * [`create(params)`](https://stripe.com/docs/api/node#create_charge)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_charges)
+  * [`retrieve(chargeId)`](https://stripe.com/docs/api/node#retrieve_charge)
+  * [`capture(chargeId)`](https://stripe.com/docs/api/node#charge_capture)
+  * [`refund(chargeId)`](https://stripe.com/docs/api/node#refund_charge)
+  * [`update(chargeId[, params])`](https://stripe.com/docs/api/node#update_charge)
+  * [`updateDispute(chargeId[, params])`](https://stripe.com/docs/api/node#update_dispute)
+  * [`closeDispute(chargeId[, params])`](https://stripe.com/docs/api/node#close_dispute)
+  * `setMetadata(chargeId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `getMetadata(chargeId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
  * coupons
-  * `create(params)`
-  * `list()`
-  * `retrieve(chargeId)`
-  * `del(chargeId)`
+  * [`create(params)`](https://stripe.com/docs/api/node#create_coupon)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_coupons)
+  * [`retrieve(chargeId)`](https://stripe.com/docs/api/node#retrieve_coupon)
+  * [`del(chargeId)`](https://stripe.com/docs/api/node#delete_coupon)
  * customers
-  * `create(params)`
-  * `list()`
-  * `update(customerId[, params])`
-  * `retrieve(customerId)`
-  * `del(customerId)`
-  * `setMetadata(customerId[, params])`
-  * `getMetadata(customerId[, params])`
-  * `updateSubscription(customerId[, params])`
-  * `cancelSubscription(customerId)`
-  * `createCard(customerId[, params])`
-  * `listCards(customerId)`
-  * `retrieveCard(customerId, cardId)`
-  * `updateCard(customerId, cardId[, params])`
-  * `deleteCard(customerId, cardId)`
-  * `deleteDiscount(customerId, discountId)`
- * events
-  * `list()`
-  * `retrieve(eventId)`
+  * [`create(params)`](https://stripe.com/docs/api/node#create_customer)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_customers)
+  * [`update(customerId[, params])`](https://stripe.com/docs/api/node#update_customer)
+  * [`retrieve(customerId)`](https://stripe.com/docs/api/node#retrieve_customer)
+  * [`del(customerId)`](https://stripe.com/docs/api/node#delete_customer)
+  * `setMetadata(customerId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `getMetadata(customerId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * [`updateSubscription(customerId[, params])`](https://stripe.com/docs/api/node#update_subscription)
+  * [`cancelSubscription(customerId)`](https://stripe.com/docs/api/node#cancel_subscription)
+  * [`createCard(customerId[, params])`](https://stripe.com/docs/api/node#create_card)
+  * [`listCards(customerId)`](https://stripe.com/docs/api/node#list_cards)
+  * [`retrieveCard(customerId, cardId)`](https://stripe.com/docs/api/node#retrieve_card)
+  * [`updateCard(customerId, cardId[, params])`](https://stripe.com/docs/api/node#update_card)
+  * [`deleteCard(customerId, cardId)`](https://stripe.com/docs/api/node#delete_card)
+  * [`deleteDiscount(customerId, discountId)`](https://stripe.com/docs/api/node#delete_discount)
+ * events (*[types of events](https://stripe.com/docs/api/node#event_types)*)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_events)
+  * [`retrieve(eventId)`](https://stripe.com/docs/api/node#retrieve_event)
  * invoiceItems
-  * `create(params)`
-  * `list()`
-  * `update(invoiceItemId[, params])`
-  * `retrieve(invoiceItemId)`
-  * `del(invoiceItemId)`
+  * [`create(params)`](https://stripe.com/docs/api/node#create_invoiceitem)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_invoiceitems)
+  * [`update(invoiceItemId[, params])`](https://stripe.com/docs/api/node#update_invoiceitem)
+  * [`retrieve(invoiceItemId)`](https://stripe.com/docs/api/node#retrieve_invoiceitem)
+  * [`del(invoiceItemId)`](https://stripe.com/docs/api/node#delete_invoiceitem)
  * invoices
-  * `create(params)`
-  * `list()`
-  * `update(invoiceId[, params])`
-  * `retrieve(invoiceId)`
-  * `retrieveLines(invoiceId)`
-  * `retrieveUpcoming(customerId)`
-  * `pay(invoiceId)`
+  * [`create(params)`](https://stripe.com/docs/api/node#create_invoice)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_customer_invoices)
+  * [`update(invoiceId[, params])`](https://stripe.com/docs/api/node#update_invoice)
+  * [`retrieve(invoiceId)`](https://stripe.com/docs/api/node#retrieve_invoice)
+  * [`retrieveLines(invoiceId)`](https://stripe.com/docs/api/node#invoice_lines)
+  * [`retrieveUpcoming(customerId)`](https://stripe.com/docs/api/node#retrieve_customer_invoice)
+  * [`pay(invoiceId)`](https://stripe.com/docs/api/node#pay_invoice)
  * plans
-  * `create(params)`
-  * `list()`
-  * `update(planId[, params])`
-  * `retrieve(planId)`
-  * `del(planId)`
+  * [`create(params)`](https://stripe.com/docs/api/node#create_plan)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_plans)
+  * [`update(planId[, params])`](https://stripe.com/docs/api/node#update_plan)
+  * [`retrieve(planId)`](https://stripe.com/docs/api/node#retrieve_plan)
+  * [`del(planId)`](https://stripe.com/docs/api/node#delete_plan)
  * recipient
-  * `create(params)`
-  * `list()`
-  * `update(recipientId[, params])`
-  * `retrieve(recipientId)`
-  * `del(recipientId)`
-  * `setMetadata(recipientId[, params])`
-  * `getMetadata(recipientId[, params])`
+  * [`create(params)`](https://stripe.com/docs/api/node#create_recipient)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_recipients)
+  * [`update(recipientId[, params])`](https://stripe.com/docs/api/node#update_recipient)
+  * [`retrieve(recipientId)`](https://stripe.com/docs/api/node#retrieve_recipient)
+  * [`del(recipientId)`](https://stripe.com/docs/api/node#delete_recipient)
+  * `setMetadata(recipientId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `getMetadata(recipientId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
  * tokens
-  * `create(params)`
-  * `retrieve(tokenId)`
+  * [`create(params)`](https://stripe.com/docs/api/node#create_card_token)
+  * [`retrieve(tokenId)`](https://stripe.com/docs/api/node#retrieve_token)
  * transfers
-  * `create(params)`
-  * `list()`
-  * `retrieve(transferId)`
-  * `cancel(transferId)`
-  * `setMetadata(transferId[, params])`
-  * `getMetadata(transferId[, params])`
+  * [`create(params)`](https://stripe.com/docs/api/node#create_transfer)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_transfers)
+  * [`retrieve(transferId)`](https://stripe.com/docs/api/node#retrieve_transfer)
+  * [`update(transferId[, params])`](https://stripe.com/docs/api/node#update_transfer)
+  * [`cancel(transferId)`](https://stripe.com/docs/api/node#cancel_transfer)
+  * `setMetadata(transferId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `getMetadata(transferId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
 
 ## Development
 
@@ -145,6 +147,10 @@ $ npm install
 $ export STRIPE_TEST_API_KEY="sk_test_..."
 $ mocha
 ```
+
+*Note: On Windows use `SET` isntead of `export` for setting the `STRIPE_TEST_API_KEY` environment variable.*
+
+If you don't have a prefixed key (in the form `sk_test_...`) you can get one by rolling your "Test Secret Key". This can be done under your dashboard (*Account Setting -> API Keys -> Click the roll icon next to the "test secret key"*). This should give you a new prefixed key ('sk_test_..'), which will then be usable by the node mocha tests.
 
 ## Author
 
