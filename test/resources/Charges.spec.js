@@ -67,6 +67,21 @@ describe('Charge Resource', function() {
 
   });
 
+  describe('update', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.charges.update('chargeIdExample3242', { description: 'foo321' });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/charges/chargeIdExample3242',
+        data: { description: 'foo321' }
+      });
+
+    });
+
+  });
+
   describe('refund', function() {
 
     it('Sends the correct request', function() {
