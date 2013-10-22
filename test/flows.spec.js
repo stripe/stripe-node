@@ -197,8 +197,9 @@ describe('Flows', function() {
           })
       ).to.eventually.deep.equal({ _other_: "999", foo: "222" });
     });
-    it('Can get individual metadata keys', function() {
+    it('Can set individual key/value pairs [with per request token]', function() {
       var customer;
+      var authToken = testUtils.getUserStripeKey();
       return expect(
         stripe.customers.create(CUSTOMER_DETAILS)
           .then(function(cust) {
@@ -206,12 +207,26 @@ describe('Flows', function() {
             cleanup.deleteCustomer(cust.id);
           })
           .then(function() {
-            return stripe.customers.setMetadata(customer.id, 'baz', '444');
+            return stripe.customers.setMetadata(customer.id, {'baz': 456}, authToken);
           })
           .then(function() {
-            return stripe.customers.getMetadata(customer.id, 'baz');
+            return stripe.customers.setMetadata(customer.id, '_other_', 999, authToken);
           })
-      ).to.eventually.become('444');
+          .then(function() {
+            return stripe.customers.setMetadata(customer.id, 'foo', 123, authToken);
+          })
+          .then(function() {
+            // Change foo
+            return stripe.customers.setMetadata(customer.id, 'foo', 222, authToken);
+          })
+          .then(function() {
+            // Delete baz
+            return stripe.customers.setMetadata(customer.id, 'baz', null, authToken);
+          })
+          .then(function() {
+            return stripe.customers.getMetadata(customer.id, authToken);
+          })
+      ).to.eventually.deep.equal({ _other_: "999", foo: "222" });
     });
   });
 
@@ -236,6 +251,11 @@ describe('Flows', function() {
     it('Allows me to do so', function() {
       return expect(
         stripe.balance.retrieve()
+      ).to.eventually.have.property('object', 'balance');
+    });
+    it('Allows me to do so with specified auth key', function() {
+      return expect(
+        stripe.balance.retrieve(testUtils.getUserStripeKey())
       ).to.eventually.have.property('object', 'balance');
     });
   });

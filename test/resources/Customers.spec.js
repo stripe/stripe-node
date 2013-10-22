@@ -19,6 +19,18 @@ describe('Customers Resource', function() {
 
     });
 
+    it('Sends the correct request [with specified auth]', function() {
+
+      stripe.customers.retrieve('cus_2dkAb792h1mfa4', 'Auth482');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/customers/cus_2dkAb792h1mfa4',
+        data: {},
+        auth: 'Auth482'
+      });
+
+    });
+
   });
 
   describe('create', function() {
@@ -30,6 +42,18 @@ describe('Customers Resource', function() {
         method: 'POST',
         url: '/v1/customers',
         data: { description: 'Some customer' }
+      });
+
+    });
+
+    it('Sends the correct request [with specified auth]', function() {
+
+      stripe.customers.create({ description: 'Some customer' }, 'Auth324');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/customers',
+        data: { description: 'Some customer' },
+        auth: 'Auth324'
       });
 
     });
@@ -81,6 +105,18 @@ describe('Customers Resource', function() {
 
     });
 
+    it('Sends the correct request [with specified auth]', function() {
+
+      stripe.customers.list('Auth842');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/customers',
+        data: {},
+        auth: 'Auth842'
+      });
+
+    });
+
   });
 
   describe('Subscription methods', function() {
@@ -96,6 +132,20 @@ describe('Customers Resource', function() {
           method: 'POST',
           url: '/v1/customers/customerIdFoo321/subscription',
           data: { plan: 'fooPlan' }
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.updateSubscription('customerIdFoo321', {
+          plan: 'fooPlan'
+        }, 'auth981');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/subscription',
+          data: { plan: 'fooPlan' },
+          auth: 'auth981'
         });
 
       });
@@ -198,6 +248,38 @@ describe('Customers Resource', function() {
 
       });
 
+      describe('When setting with an auth key', function() {
+        it('Sends the correct request, including the specified auth key', function() {
+          stripe.customers.setMetadata('customerIdFoo321', null, 'authKey133');
+          expect(stripe.LAST_REQUEST).to.deep.equal({
+            method: 'POST',
+            url: '/v1/customers/customerIdFoo321',
+            data: {
+              metadata: null
+            },
+            auth: 'authKey133'
+          });
+          stripe.customers.setMetadata('customerIdFoo321', 'a', '1234', 'authKey133');
+          expect(stripe.LAST_REQUEST).to.deep.equal({
+            method: 'POST',
+            url: '/v1/customers/customerIdFoo321',
+            data: {
+              metadata: { a: '1234' }
+            },
+            auth: 'authKey133'
+          });
+          stripe.customers.setMetadata('customerIdFoo321', 'a', null, 'authKey133');
+          expect(stripe.LAST_REQUEST).to.deep.equal({
+            method: 'POST',
+            url: '/v1/customers/customerIdFoo321',
+            data: {
+              metadata: { a: null }
+            },
+            auth: 'authKey133'
+          });
+        });
+      });
+
     });
 
   });
@@ -217,6 +299,18 @@ describe('Customers Resource', function() {
 
       });
 
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.retrieveCard('customerIdFoo321', 'cardIdFoo456', 'auth123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/cards/cardIdFoo456',
+          data: {},
+          auth: 'auth123'
+        });
+
+      });
+
     });
 
     describe('createCard', function() {
@@ -230,6 +324,20 @@ describe('Customers Resource', function() {
           method: 'POST',
           url: '/v1/customers/customerIdFoo321/cards',
           data: { number: '123456', exp_month: '12' }
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.createCard('customerIdFoo321', {
+          number: '123456', exp_month: '12'
+        }, 'auth555');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/cards',
+          data: { number: '123456', exp_month: '12' },
+          auth: 'auth555'
         });
 
       });
@@ -266,6 +374,18 @@ describe('Customers Resource', function() {
 
       });
 
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.deleteCard('customerIdFoo321', 'cardIdFoo456', 'auth921');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/cards/cardIdFoo456',
+          data: {},
+          auth: 'auth921'
+        });
+
+      });
+
     });
 
     describe('listCards', function() {
@@ -277,6 +397,18 @@ describe('Customers Resource', function() {
           method: 'GET',
           url: '/v1/customers/customerIdFoo321/cards',
           data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.listCards('customerIdFoo321', 'auth771');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/cards',
+          data: {},
+          auth: 'auth771'
         });
 
       });

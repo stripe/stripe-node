@@ -71,8 +71,9 @@ stripe.customers.create({
   * [`update(chargeId[, params])`](https://stripe.com/docs/api/node#update_charge)
   * [`updateDispute(chargeId[, params])`](https://stripe.com/docs/api/node#update_dispute)
   * [`closeDispute(chargeId[, params])`](https://stripe.com/docs/api/node#close_dispute)
-  * `setMetadata(chargeId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
-  * `getMetadata(chargeId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `setMetadata(chargeId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `setMetadata(chargeId, key, value)`
+  * `getMetadata(chargeId)`
  * coupons
   * [`create(params)`](https://stripe.com/docs/api/node#create_coupon)
   * [`list([params])`](https://stripe.com/docs/api/node#list_coupons)
@@ -84,8 +85,9 @@ stripe.customers.create({
   * [`update(customerId[, params])`](https://stripe.com/docs/api/node#update_customer)
   * [`retrieve(customerId)`](https://stripe.com/docs/api/node#retrieve_customer)
   * [`del(customerId)`](https://stripe.com/docs/api/node#delete_customer)
-  * `setMetadata(customerId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
-  * `getMetadata(customerId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `setMetadata(customerId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `setMetadata(customerId, key, value)`
+  * `getMetadata(customerId)`
   * [`updateSubscription(customerId[, params])`](https://stripe.com/docs/api/node#update_subscription)
   * [`cancelSubscription(customerId)`](https://stripe.com/docs/api/node#cancel_subscription)
   * [`createCard(customerId[, params])`](https://stripe.com/docs/api/node#create_card)
@@ -123,8 +125,9 @@ stripe.customers.create({
   * [`update(recipientId[, params])`](https://stripe.com/docs/api/node#update_recipient)
   * [`retrieve(recipientId)`](https://stripe.com/docs/api/node#retrieve_recipient)
   * [`del(recipientId)`](https://stripe.com/docs/api/node#delete_recipient)
-  * `setMetadata(recipientId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
-  * `getMetadata(recipientId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `setMetadata(recipientId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `setMetadata(recipientId, key, value)`
+  * `getMetadata(recipientId)`
  * tokens
   * [`create(params)`](https://stripe.com/docs/api/node#create_card_token)
   * [`retrieve(tokenId)`](https://stripe.com/docs/api/node#retrieve_token)
@@ -134,8 +137,9 @@ stripe.customers.create({
   * [`retrieve(transferId)`](https://stripe.com/docs/api/node#retrieve_transfer)
   * [`update(transferId[, params])`](https://stripe.com/docs/api/node#update_transfer)
   * [`cancel(transferId)`](https://stripe.com/docs/api/node#cancel_transfer)
-  * `setMetadata(transferId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
-  * `getMetadata(transferId[, params])` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `setMetadata(transferId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
+  * `setMetadata(transferId, key, value)`
+  * `getMetadata(transferId)`
 
 ## Development
 
