@@ -23,6 +23,16 @@ describe('Stripe Module', function() {
   var cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
 
+  describe('ClientUserAgent', function() {
+    it('Should return a user-agent serialized JSON object', function() {
+      var d = when.defer();
+      stripe.getClientUserAgent(function(c) {
+        d.resolve(JSON.parse(c));
+      });
+      return expect(d.promise).to.eventually.have.property('lang', 'node');
+    });
+  });
+
   describe('Callback support', function() {
 
     describe('Any given endpoint', function() {
