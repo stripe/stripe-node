@@ -141,6 +141,14 @@ stripe.customers.create({
   * `setMetadata(transferId, key, value)`
   * `getMetadata(transferId)`
 
+## More information / wikis
+
+ * **[In-depth Documentation](https://stripe.com/docs/api/node.)**
+ * [Version 2 Overview](https://github.com/stripe/stripe-node/wiki/Version-2)
+ * [REST API Version](https://github.com/stripe/stripe-node/wiki/REST-API-Version)
+ * [Error Handling](https://github.com/stripe/stripe-node/wiki/Error-Handling)
+ * [Using Stripe Connect](https://github.com/stripe/stripe-node/wiki/Using-Stripe-Connect-with-node.js)
+
 ## Development
 
 To run the tests you'll need a Stripe *Test* API key (from your [Stripe Dashboard](https://manage.stripe.com)):
