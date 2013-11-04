@@ -143,7 +143,7 @@ stripe.customers.create({
 
 ## More information / wikis
 
- * **[In-depth Documentation](https://stripe.com/docs/api/node.)**
+ * **[In-depth Documentation](https://stripe.com/docs/api/node)**
  * [Version 2 Overview](https://github.com/stripe/stripe-node/wiki/Version-2)
  * [REST API Version](https://github.com/stripe/stripe-node/wiki/REST-API-Version)
  * [Error Handling](https://github.com/stripe/stripe-node/wiki/Error-Handling)
