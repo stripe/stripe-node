@@ -1,8 +1,9 @@
-2.1.0 October 21st, 2013 (Impending)
+2.1.0 Nov 7th, 2013
   - Support single key/value setting on setMetadata method
   - Fix Windows url-path issue
   - Add missing stripe.charges.update method
   - Support setting auth_token per request (useful in Connect)
+  - Remove global 'resources' variable
 
 2.0.0 October 18th, 2013
   - API overhaul and refactor, including addition of promises.

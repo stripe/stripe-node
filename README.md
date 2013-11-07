@@ -2,7 +2,7 @@
 
 ## Version 2 Update Notice
 
-This repo has just been transferred to Stripe. Alongside this transfer, Stripe has released version 2.0.0 of the bindings. **[Read about Version 2 here](https://github.com/stripe/stripe-node/wiki/Version-2)**. We'll be going through the backlogged issues in the next few days.
+This repo has just been transferred to Stripe. Alongside this transfer, Stripe has released version 2.x of the bindings. **[Read about Version 2 here](https://github.com/stripe/stripe-node/wiki/Version-2)**. We'll be going through the backlogged issues in the next few days.
 
 ## Installation
 
