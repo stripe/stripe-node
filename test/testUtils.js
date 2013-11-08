@@ -119,6 +119,11 @@ var utils = module.exports = {
         this.add(function() {
           return this._stripe.coupons.del(cId);
         });
+      },
+      deleteInvoiceItem: function(iiId) {
+        this.add(function() {
+          return this._stripe.invoiceItems.del(iiId);
+        });
       }
     };
 
