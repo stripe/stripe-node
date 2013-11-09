@@ -141,6 +141,11 @@ stripe.customers.create({
   * `setMetadata(transferId, key, value)`
   * `getMetadata(transferId)`
 
+## Configuration
+
+ * `stripe.setApiKey(' your secret api key ');`
+ * `stripe.setTimeout(20000); // in ms` (default is node's default: `120000ms`)
+
 ## More information / wikis
 
  * **[In-depth Documentation](https://stripe.com/docs/api/node)**
