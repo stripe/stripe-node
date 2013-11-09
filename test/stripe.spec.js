@@ -33,6 +33,20 @@ describe('Stripe Module', function() {
     });
   });
 
+  describe('setTimeout', function() {
+    it('Should define a default equal to the node default', function() {
+      expect(stripe.getApiField('timeout')).to.equal(require('http').createServer().timeout);
+    });
+    it('Should allow me to set a custom timeout', function() {
+      stripe.setTimeout(900);
+      expect(stripe.getApiField('timeout')).to.equal(900);
+    });
+    it('Should allow me to set null, to reset to the default', function() {
+      stripe.setTimeout(null);
+      expect(stripe.getApiField('timeout')).to.equal(require('http').createServer().timeout);
+    });
+  });
+
   describe('Callback support', function() {
 
     describe('Any given endpoint', function() {

@@ -79,10 +79,16 @@ describe('Flows', function() {
 
             return stripe.customers.updateSubscription(customer.id, {
               plan: 'someNonExistentPlan' + +new Date
+            }).then(null, function(err) {
+              // Resolve with the error so we can inspect it below
+              return err;
             });
 
           })
-      ).to.be.eventually.rejected;
+      ).to.eventually.satisfy(function(err) {
+        return err.type === 'StripeInvalidRequest' &&
+          err.rawType === 'invalid_request_error';
+      });
 
     });
 

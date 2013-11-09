@@ -1,3 +1,7 @@
+2.2.0 Nov 9th, 2013
+  - Add support for setTimeout
+  - Add specs for invoice-item listing/querying via timestamp
+
 2.1.0 Nov 7th, 2013
   - Support single key/value setting on setMetadata method
   - Fix Windows url-path issue
