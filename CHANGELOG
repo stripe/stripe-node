@@ -1,3 +1,6 @@
+2.2.1
+ - Fix user-agent header issue (see issue #75)
+
 2.2.0 Nov 9th, 2013
   - Add support for setTimeout
   - Add specs for invoice-item listing/querying via timestamp
