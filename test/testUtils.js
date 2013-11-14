@@ -17,10 +17,6 @@ var utils = module.exports = {
       throw new Error('Expected environment variable STRIPE_TEST_API_KEY to be set.');
     }
 
-    if (!/^sk_test_/.test(key)) {
-      throw new Error('Expected STRIPE_TEST_API_KEY to be of the form "sk_test_[...]".');
-    }
-
     return key;
   },
 
