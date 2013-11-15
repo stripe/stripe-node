@@ -160,7 +160,6 @@ To run the tests you'll need a Stripe *Test* API key (from your [Stripe Dashboar
 
 ```bash
 $ npm install -g mocha
-$ export STRIPE_TEST_API_KEY="sk_test_..."
 $ npm test
 ```
 

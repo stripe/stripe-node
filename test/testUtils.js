@@ -11,11 +11,7 @@ var when = require('when');
 var utils = module.exports = {
 
   getUserStripeKey: function() {
-    var key = process.env.STRIPE_TEST_API_KEY;
-
-    if (!key) {
-      throw new Error('Expected environment variable STRIPE_TEST_API_KEY to be set.');
-    }
+    var key = process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
 
     return key;
   },
