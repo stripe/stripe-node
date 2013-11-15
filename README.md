@@ -1,4 +1,4 @@
-# Stripe node.js bindings
+# Stripe node.js bindings [![Build Status](https://travis-ci.org/stripe/stripe-node.png?branch=master)](https://travis-ci.org/stripe/stripe-node)
 
 ## Version 2 Update Notice
 
