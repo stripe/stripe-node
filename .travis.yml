@@ -3,3 +3,4 @@
    - "0.10"
    - "0.8"
    - "0.6"
+env: STRIPE_TEST_API_KEY=sk_test_mkGsLqEW6SLnZa487HYfJVLf
