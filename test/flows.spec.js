@@ -96,33 +96,52 @@ describe('Flows', function() {
 
   describe('Coupon flow', function() {
 
-    it('Allows me to: Create a coupon and subcribe a customer to it', function() {
+    var customer;
+    var coupon;
 
-      var couponId = 'coupon' + +new Date;
-
-      return expect(
-        when.join(
-          stripe.coupons.create({
-            percent_off: 20,
-            id: couponId,
-            duration: 'once'
-          }),
-          stripe.customers.create(CUSTOMER_DETAILS)
-        ).then(function(j) {
-
-          var coupon = j[0];
-          var customer = j[1];
-
-          cleanup.deleteCustomer(customer.id);
-          cleanup.deleteCoupon(coupon.id);
-
-          return stripe.customers.update(customer.id, {
-            coupon: coupon.id
+    describe('When I create a coupon & customer', function() {
+      it('Does so', function() {
+        return expect(
+          when.join(
+            stripe.coupons.create({
+              percent_off: 20,
+              duration: 'once'
+            }),
+            stripe.customers.create(CUSTOMER_DETAILS)
+          ).then(function(joined) {
+            coupon = joined[0];
+            customer = joined[1];
+          })
+        ).to.not.be.eventually.rejected;
+      });
+      describe('And I apply the coupon to the customer', function() {
+        it('Does so', function() {
+          return expect(
+            stripe.customers.update(customer.id, {
+              coupon: coupon.id
+            })
+          ).to.not.be.eventually.rejected;
+        });
+        it('Can be retrieved from that customer', function() {
+          return expect(
+            stripe.customers.retrieve(customer.id)
+          ).to.eventually.have.deep.property('discount.coupon.id', coupon.id);
+        });
+        describe('The resulting discount', function() {
+          it('Can be removed', function() {
+            return expect(
+              stripe.customers.deleteDiscount(customer.id)
+            ).to.eventually.have.property('deleted', true);
           });
-
-        })
-      ).to.eventually.have.deep.property('discount.coupon.id', couponId);
-
+          describe('Re-querying it', function() {
+            it('Does indeed indicate that it is deleted', function() {
+              return expect(
+                stripe.customers.retrieve(customer.id)
+              ).to.eventually.have.deep.property('discount', null);
+            });
+          });
+        });
+      });
     });
 
   });

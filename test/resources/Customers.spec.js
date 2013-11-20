@@ -175,10 +175,10 @@ describe('Customers Resource', function() {
 
       it('Sends the correct request', function() {
 
-        stripe.customers.deleteDiscount('customerIdFoo321', 'discountIdFoo456');
+        stripe.customers.deleteDiscount('customerIdFoo321');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
-          url: '/v1/customers/customerIdFoo321/discounts/discountIdFoo456',
+          url: '/v1/customers/customerIdFoo321/discount',
           data: {}
         });
 
