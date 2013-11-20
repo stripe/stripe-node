@@ -95,7 +95,7 @@ stripe.customers.create({
   * [`retrieveCard(customerId, cardId)`](https://stripe.com/docs/api/node#retrieve_card)
   * [`updateCard(customerId, cardId[, params])`](https://stripe.com/docs/api/node#update_card)
   * [`deleteCard(customerId, cardId)`](https://stripe.com/docs/api/node#delete_card)
-  * [`deleteDiscount(customerId, discountId)`](https://stripe.com/docs/api/node#delete_discount)
+  * [`deleteDiscount(customerId)`](https://stripe.com/docs/api/node#delete_discount)
  * events (*[types of events](https://stripe.com/docs/api/node#event_types)*)
   * [`list([params])`](https://stripe.com/docs/api/node#list_events)
   * [`retrieve(eventId)`](https://stripe.com/docs/api/node#retrieve_event)
