@@ -1,3 +1,6 @@
+2.2.2 Nov 20th, 2013
+ - Fix incorrect deleteDiscount method & related spec(s)
+
 2.2.1
  - Fix user-agent header issue (see issue #75)
 
