@@ -1,8 +1,11 @@
+2.3.2 Dec 2nd, 2013
+  - Add application fees API
+
 2.2.2 Nov 20th, 2013
- - Fix incorrect deleteDiscount method & related spec(s)
+  - Fix incorrect deleteDiscount method & related spec(s)
 
 2.2.1
- - Fix user-agent header issue (see issue #75)
+  - Fix user-agent header issue (see issue #75)
 
 2.2.0 Nov 9th, 2013
   - Add support for setTimeout
