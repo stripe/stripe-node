@@ -18,7 +18,7 @@ var CUSTOMER_DETAILS = {
   }
 };
 
-var CURRENCY = 'USD';
+var CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
 
 describe('Flows', function() {
 
