@@ -1,3 +1,6 @@
+2.3.3 Jan 10th 2013
+  - Document cancelSubscription method params and add specs for `at_period_end`
+
 2.3.2 Dec 2nd, 2013
   - Add application fees API
 

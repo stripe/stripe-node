@@ -165,6 +165,19 @@ describe('Customers Resource', function() {
 
       });
 
+      describe('With at_period_end defined', function() {
+        it('Sends the correct request', function() {
+
+          stripe.customers.cancelSubscription('customerIdFoo321', {at_period_end: true});
+          expect(stripe.LAST_REQUEST).to.deep.equal({
+            method: 'DELETE',
+            url: '/v1/customers/customerIdFoo321/subscription',
+            data: { at_period_end: true }
+          });
+
+        });
+      });
+
     });
 
   });

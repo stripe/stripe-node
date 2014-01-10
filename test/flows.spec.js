@@ -18,7 +18,7 @@ var CUSTOMER_DETAILS = {
   }
 };
 
-var CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
+var CURRENCY = 'USD';
 
 describe('Flows', function() {
 
@@ -89,6 +89,39 @@ describe('Flows', function() {
         return err.type === 'StripeInvalidRequest' &&
           err.rawType === 'invalid_request_error';
       });
+
+    });
+
+    it('Allows me to: subscribe then cancel with `at_period_end` defined', function() {
+
+      return expect(
+        when.join(
+          stripe.plans.create({
+            id: 'plan' + +new Date,
+            amount: 1700,
+            currency: CURRENCY,
+            interval: 'month',
+            name: 'Silver Super Amazing Tier'
+          }),
+          stripe.customers.create(CUSTOMER_DETAILS)
+        ).then(function(j) {
+
+          var plan = j[0];
+          var customer = j[1];
+
+          cleanup.deleteCustomer(customer.id);
+          cleanup.deletePlan(plan.id);
+
+          return stripe.customers.updateSubscription(customer.id, {
+            plan: plan.id
+          });
+
+        }).then(function(subscription) {
+          return stripe.customers.cancelSubscription(subscription.customer, {
+            at_period_end: true
+          });
+        })
+      ).to.eventually.have.property('cancel_at_period_end', true);
 
     });
 
