@@ -1,4 +1,7 @@
-2.3.3 Jan 10th 2013
+2.3.4 Jan 11th, 2014
+  - Fix #76, pass latest as version to api & fix constructor arg signature
+
+2.3.3 Jan 10th, 2014
   - Document cancelSubscription method params and add specs for `at_period_end`
 
 2.3.2 Dec 2nd, 2013
