@@ -4,7 +4,8 @@ var testUtils = require('./testUtils');
 var chai = require('chai');
 var when = require('when');
 var stripe = require('../lib/stripe')(
-  testUtils.getUserStripeKey()
+  testUtils.getUserStripeKey(),
+  'latest'
 );
 
 var expect = chai.expect;

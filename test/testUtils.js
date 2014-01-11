@@ -62,7 +62,8 @@ var utils = module.exports = {
       var self = this;
       this._cleanupFns = [];
       this._stripe = require('../lib/stripe')(
-        utils.getUserStripeKey()
+        utils.getUserStripeKey(),
+        'latest'
       );
       afterEach(function(done) {
         this.timeout(timeout || CleanupUtility.DEFAULT_TIMEOUT);

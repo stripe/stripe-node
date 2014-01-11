@@ -4,7 +4,8 @@ var testUtils = require('./testUtils');
 var chai = require('chai');
 var when = require('when');
 var stripe = require('../lib/stripe')(
-  testUtils.getUserStripeKey()
+  testUtils.getUserStripeKey(),
+  'latest'
 );
 
 var expect = chai.expect;
@@ -22,7 +23,7 @@ var CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
 
 describe('Flows', function() {
 
-  // Note: These tests must be run as one so we can retrieve the 
+  // Note: These tests must be run as one so we can retrieve the
   // default_currency (required in subsequent tests);
 
   var cleanup = new testUtils.CleanupUtility();
