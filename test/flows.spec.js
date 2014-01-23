@@ -70,6 +70,41 @@ describe('Flows', function() {
 
     });
 
+      it('Allows me to: Create a plan and subcribe a customer to it, and update subscription (multi-subs API)', function() {
+          var plan;
+          return expect(
+              when.join(
+                      stripe.plans.create({
+                          id: 'plan' + +new Date,
+                          amount: 1700,
+                          currency: CURRENCY,
+                          interval: 'month',
+                          name: 'Gold Super Amazing Tier'
+                      }),
+                      stripe.customers.create(CUSTOMER_DETAILS)
+                  ).then(function(j) {
+
+                      plan = j[0];
+                      var customer = j[1];
+
+                      cleanup.deleteCustomer(customer.id);
+                      cleanup.deletePlan(plan.id);
+
+                      return stripe.customers.createSubscription(customer.id, {
+                          plan: plan.id
+                      });
+
+                }).then(function(subscription) {
+                      return stripe.customers.updateSubscription(subscription.customer, subscription.id, {
+                        plan: plan.id, quantity: '3'
+                      });
+                }).then(function(subscription) {
+                  return [subscription.status, subscription.quantity];
+                })
+          ).to.eventually.deep.equal(['active', 3]);
+
+      });
+
     it('Errors when I attempt to subcribe a customer to a non-existent plan', function() {
 
       return expect(
