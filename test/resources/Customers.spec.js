@@ -225,6 +225,21 @@ describe('Customers Resource', function() {
 
     });
 
+    describe('deleteSubscriptionDiscount', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.deleteSubscriptionDiscount('customerIdFoo321', 'subscriptionIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456/discount',
+          data: {}
+        });
+
+      });
+
+    });
+
   });
 
   describe('Metadata methods', function() {
