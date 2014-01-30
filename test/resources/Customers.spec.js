@@ -165,6 +165,18 @@ describe('Customers Resource', function() {
 
       });
 
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.cancelSubscription('customerIdFoo321', 'sk_foo');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/subscription',
+          data: { },
+          auth: 'sk_foo'
+        });
+
+      });
+
       describe('With at_period_end defined', function() {
         it('Sends the correct request', function() {
 
@@ -173,6 +185,20 @@ describe('Customers Resource', function() {
             method: 'DELETE',
             url: '/v1/customers/customerIdFoo321/subscription',
             data: { at_period_end: true }
+          });
+
+        });
+      });
+
+      describe('With at_period_end defined [with specified auth]', function() {
+        it('Sends the correct request', function() {
+
+          stripe.customers.cancelSubscription('customerIdFoo321', {at_period_end: true}, 'sk_foo');
+          expect(stripe.LAST_REQUEST).to.deep.equal({
+            method: 'DELETE',
+            url: '/v1/customers/customerIdFoo321/subscription',
+            data: { at_period_end: true },
+            auth: 'sk_foo'
           });
 
         });
@@ -192,6 +218,21 @@ describe('Customers Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/customers/customerIdFoo321/discount',
+          data: {}
+        });
+
+      });
+
+    });
+
+    describe('deleteSubscriptionDiscount', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.deleteSubscriptionDiscount('customerIdFoo321', 'subscriptionIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456/discount',
           data: {}
         });
 
@@ -420,6 +461,180 @@ describe('Customers Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/customers/customerIdFoo321/cards',
+          data: {},
+          auth: 'auth771'
+        });
+
+      });
+
+    });
+
+  });
+
+  describe('Subscription methods', function() {
+
+    describe('retrieveSubscription', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.retrieveSubscription('customerIdFoo321', 'subscriptionIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.retrieveSubscription('customerIdFoo321', 'subscriptionIdFoo456', 'auth123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
+          data: {},
+          auth: 'auth123'
+        });
+
+      });
+
+    });
+
+    describe('createSubscription', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.createSubscription('customerIdFoo321', {
+          plan: 'gold', quantity: '12'
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/subscriptions',
+          data: { plan: 'gold', quantity: '12' }
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.createSubscription('customerIdFoo321', {
+          plan: 'gold', quantity: '12'
+        }, 'auth555');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/subscriptions',
+          data: { plan: 'gold', quantity: '12' },
+          auth: 'auth555'
+        });
+
+      });
+
+    });
+
+    describe('updateSubscription (new-style api)', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.updateSubscription('customerIdFoo321', 'subscriptionIdFoo456', {
+          quantity: '2'
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
+          data: { quantity: '2' }
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.updateSubscription('customerIdFoo321', 'subscriptionIdFoo456', {
+          quantity: '2'
+        }, 'sk_foo');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
+          data: { quantity: '2' },
+          auth: 'sk_foo'
+        });
+
+      });
+
+    });
+
+    describe('cancelSubscription (new-style api)', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.cancelSubscription('customerIdFoo321', 'subscriptionIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.cancelSubscription('customerIdFoo321', 'subscriptionIdFoo456', 'auth921');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
+          data: {},
+          auth: 'auth921'
+        });
+
+      });
+
+      describe('With at_period_end defined', function() {
+        it('Sends the correct request', function() {
+
+          stripe.customers.cancelSubscription('customerIdFoo321', 'subscriptionIdFoo456', {at_period_end: true});
+          expect(stripe.LAST_REQUEST).to.deep.equal({
+            method: 'DELETE',
+            url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
+            data: { at_period_end: true }
+          });
+
+        });
+      });
+
+      describe('With at_period_end defined [with specified auth]', function() {
+        it('Sends the correct request', function() {
+
+          stripe.customers.cancelSubscription('customerIdFoo321', 'subscriptionIdFoo456', {at_period_end: true}, 'sk_foo');
+          expect(stripe.LAST_REQUEST).to.deep.equal({
+            method: 'DELETE',
+            url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
+            data: { at_period_end: true },
+            auth: 'sk_foo'
+          });
+
+        });
+      });
+
+    });
+
+    describe('listSubscriptions', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.listSubscriptions('customerIdFoo321');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/subscriptions',
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.listSubscriptions('customerIdFoo321', 'auth771');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/subscriptions',
           data: {},
           auth: 'auth771'
         });
