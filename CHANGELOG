@@ -1,3 +1,6 @@
+2.4.0 Jan 29th, 2014
+  - Support multiple subscriptions per customer
+
 2.3.4 Jan 11th, 2014
   - Fix #76, pass latest as version to api & fix constructor arg signature
 
