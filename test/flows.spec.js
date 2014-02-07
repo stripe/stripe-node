@@ -341,6 +341,25 @@ describe('Flows', function() {
     });
   });
 
+  describe('Charge', function() {
+    it('Allows you to create a charge', function() {
+      return expect(
+        stripe.charges.create({
+          amount: 1234,
+          currency: CURRENCY,
+          card: {
+            number: '4000000000000002',
+            exp_month: 12,
+            exp_year: 2020,
+            cvc: 123
+          }
+        }).then(null, function(error) {
+          return error;
+        })
+      ).to.eventually.have.deep.property('raw.charge');
+    });
+  });
+
   describe('Getting balance', function() {
     it('Allows me to do so', function() {
       return expect(
