@@ -1,3 +1,6 @@
+2.4.1 Feb 7th, 2014
+  - Ensure raw error object is accessible on the generated StripeError
+
 2.4.0 Jan 29th, 2014
   - Support multiple subscriptions per customer
 
