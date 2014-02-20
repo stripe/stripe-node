@@ -84,4 +84,19 @@ describe('Transfers Resource', function() {
 
   });
 
+  describe.only('listTransactions', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.transfers.listTransactions('tr_14222');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/transfers/tr_14222/transactions',
+        data: {}
+      });
+
+    });
+
+  });
+
 });

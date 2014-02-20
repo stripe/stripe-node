@@ -137,7 +137,7 @@ stripe.customers.create({
   * [`retrieve(transferId)`](https://stripe.com/docs/api/node#retrieve_transfer)
   * [`update(transferId[, params])`](https://stripe.com/docs/api/node#update_transfer)
   * [`cancel(transferId)`](https://stripe.com/docs/api/node#cancel_transfer)
-  * [`transactions(transferId[, params])`](https://stripe.com/docs/api/curl#list_transfers)
+  * [`listTransactions(transferId[, params])`](https://stripe.com/docs/api/curl#list_transfers)
   * `setMetadata(transferId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
   * `setMetadata(transferId, key, value)`
   * `getMetadata(transferId)`
