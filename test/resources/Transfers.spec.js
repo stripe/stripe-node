@@ -84,7 +84,7 @@ describe('Transfers Resource', function() {
 
   });
 
-  describe.only('listTransactions', function() {
+  describe('listTransactions', function() {
 
     it('Sends the correct request', function() {
 
