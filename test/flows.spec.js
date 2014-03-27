@@ -41,7 +41,7 @@ describe('Flows', function() {
 
   describe('Plan+Subscription flow', function() {
 
-    it('Allows me to: Create a plan and subcribe a customer to it', function() {
+    it('Allows me to: Create a plan and subscribe a customer to it', function() {
 
       return expect(
         when.join(
@@ -70,42 +70,42 @@ describe('Flows', function() {
 
     });
 
-      it('Allows me to: Create a plan and subcribe a customer to it, and update subscription (multi-subs API)', function() {
-          var plan;
-          return expect(
-              when.join(
-                      stripe.plans.create({
-                          id: 'plan' + +new Date,
-                          amount: 1700,
-                          currency: CURRENCY,
-                          interval: 'month',
-                          name: 'Gold Super Amazing Tier'
-                      }),
-                      stripe.customers.create(CUSTOMER_DETAILS)
-                  ).then(function(j) {
+    it('Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)', function() {
+      var plan;
+      return expect(
+        when.join(
+          stripe.plans.create({
+            id: 'plan' + +new Date,
+            amount: 1700,
+            currency: CURRENCY,
+            interval: 'month',
+            name: 'Gold Super Amazing Tier'
+          }),
+          stripe.customers.create(CUSTOMER_DETAILS)
+        ).then(function(j) {
 
-                      plan = j[0];
-                      var customer = j[1];
+          plan = j[0];
+          var customer = j[1];
 
-                      cleanup.deleteCustomer(customer.id);
-                      cleanup.deletePlan(plan.id);
+          cleanup.deleteCustomer(customer.id);
+          cleanup.deletePlan(plan.id);
 
-                      return stripe.customers.createSubscription(customer.id, {
-                          plan: plan.id
-                      });
+          return stripe.customers.createSubscription(customer.id, {
+            plan: plan.id
+          });
 
-                }).then(function(subscription) {
-                      return stripe.customers.updateSubscription(subscription.customer, subscription.id, {
-                        plan: plan.id, quantity: '3'
-                      });
-                }).then(function(subscription) {
-                  return [subscription.status, subscription.quantity];
-                })
-          ).to.eventually.deep.equal(['active', 3]);
+        }).then(function(subscription) {
+          return stripe.customers.updateSubscription(subscription.customer, subscription.id, {
+            plan: plan.id, quantity: '3'
+          });
+        }).then(function(subscription) {
+          return [subscription.status, subscription.quantity];
+        })
+      ).to.eventually.deep.equal(['active', 3]);
 
-      });
+    });
 
-    it('Errors when I attempt to subcribe a customer to a non-existent plan', function() {
+    it('Errors when I attempt to subscribe a customer to a non-existent plan', function() {
 
       return expect(
         stripe.customers.create(CUSTOMER_DETAILS)
@@ -159,6 +159,31 @@ describe('Flows', function() {
         })
       ).to.eventually.have.property('cancel_at_period_end', true);
 
+    });
+
+    describe('Plan name variations', function() {
+      [
+        '34535 355453' + +new Date,
+        'TEST 239291' + +new Date,
+        'TEST_a-i' + +new Date,
+        'foobarbazteston###etwothree' + +new Date
+      ].forEach(function(planID) {
+        it('Allows me to create and retrieve plan with ID: ' + planID, function() {
+          var plan;
+          return expect(
+            stripe.plans.create({
+              id: planID,
+              amount: 1700,
+              currency: CURRENCY,
+              interval: 'month',
+              name: 'generic'
+            }).then(function() {
+              cleanup.deletePlan(planID);
+              return stripe.plans.retrieve(planID);
+            })
+          ).to.eventually.have.property('id', planID);
+        });
+      });
     });
 
   });

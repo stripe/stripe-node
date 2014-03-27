@@ -7,9 +7,9 @@ var expect = require('chai').expect;
 
 describe('utils', function() {
 
-  describe('makeInterpolator', function() {
+  describe('makeURLInterpolator', function() {
     it('Interpolates values into a prepared template', function() {
-      var template = utils.makeInterpolator('/some/url/{foo}/{baz}?ok=1');
+      var template = utils.makeURLInterpolator('/some/url/{foo}/{baz}?ok=1');
 
       expect(
         template({foo: 1, baz: 2})
@@ -20,8 +20,9 @@ describe('utils', function() {
       ).to.equal('/some/url//?ok=1');
 
       expect(
+        // Test encoding:
         template({foo: 'FOO', baz: '__::baz::__'})
-      ).to.equal('/some/url/FOO/__::baz::__?ok=1');
+      ).to.equal('/some/url/FOO/__%3A%3Abaz%3A%3A__?ok=1');
 
     });
   });
