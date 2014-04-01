@@ -88,8 +88,8 @@ stripe.customers.create({
   * `setMetadata(customerId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
   * `setMetadata(customerId, key, value)`
   * `getMetadata(customerId)`
-  * [`updateSubscription(customerId[, params])`](https://stripe.com/docs/api/node#update_subscription)
-  * [`cancelSubscription(customerId[, params])`](https://stripe.com/docs/api/node#cancel_subscription)
+  * [`updateSubscription(customerId, subscriptionId, [, params])`](https://stripe.com/docs/api/node#update_subscription)
+  * [`cancelSubscription(customerId, subscriptionId, [, params])`](https://stripe.com/docs/api/node#cancel_subscription)
   * [`createCard(customerId[, params])`](https://stripe.com/docs/api/node#create_card)
   * [`listCards(customerId)`](https://stripe.com/docs/api/node#list_cards)
   * [`retrieveCard(customerId, cardId)`](https://stripe.com/docs/api/node#retrieve_card)
