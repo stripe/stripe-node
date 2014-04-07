@@ -95,6 +95,12 @@ describe('Charge Resource', function() {
 
     });
 
+    it('Throws an error on incorrect arguments', function() {
+      expect(function() {
+        stripe.charges.refund('chargeIdExample123', 39392);
+      }).to.throw(/unknown arguments/i);
+    });
+
   });
 
   describe('updateDispute', function() {
