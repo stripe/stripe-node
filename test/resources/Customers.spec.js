@@ -4,6 +4,8 @@ var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 var when = require('when');
 
+var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
+
 describe('Customers Resource', function() {
 
   describe('retrieve', function() {
@@ -21,12 +23,12 @@ describe('Customers Resource', function() {
 
     it('Sends the correct request [with specified auth]', function() {
 
-      stripe.customers.retrieve('cus_2dkAb792h1mfa4', 'Auth482');
+      stripe.customers.retrieve('cus_2dkAb792h1mfa4', TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/customers/cus_2dkAb792h1mfa4',
         data: {},
-        auth: 'Auth482'
+        auth: TEST_AUTH_KEY
       });
 
     });
@@ -48,12 +50,12 @@ describe('Customers Resource', function() {
 
     it('Sends the correct request [with specified auth]', function() {
 
-      stripe.customers.create({ description: 'Some customer' }, 'Auth324');
+      stripe.customers.create({ description: 'Some customer' }, TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers',
         data: { description: 'Some customer' },
-        auth: 'Auth324'
+        auth: TEST_AUTH_KEY
       });
 
     });
@@ -107,12 +109,12 @@ describe('Customers Resource', function() {
 
     it('Sends the correct request [with specified auth]', function() {
 
-      stripe.customers.list('Auth842');
+      stripe.customers.list(TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/customers',
         data: {},
-        auth: 'Auth842'
+        auth: TEST_AUTH_KEY
       });
 
     });
@@ -140,12 +142,12 @@ describe('Customers Resource', function() {
 
         stripe.customers.updateSubscription('customerIdFoo321', {
           plan: 'fooPlan'
-        }, 'auth981');
+        }, TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/customers/customerIdFoo321/subscription',
           data: { plan: 'fooPlan' },
-          auth: 'auth981'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -167,12 +169,12 @@ describe('Customers Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.customers.cancelSubscription('customerIdFoo321', 'sk_foo');
+        stripe.customers.cancelSubscription('customerIdFoo321', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/customers/customerIdFoo321/subscription',
           data: { },
-          auth: 'sk_foo'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -193,12 +195,12 @@ describe('Customers Resource', function() {
       describe('With at_period_end defined [with specified auth]', function() {
         it('Sends the correct request', function() {
 
-          stripe.customers.cancelSubscription('customerIdFoo321', {at_period_end: true}, 'sk_foo');
+          stripe.customers.cancelSubscription('customerIdFoo321', {at_period_end: true}, TEST_AUTH_KEY);
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'DELETE',
             url: '/v1/customers/customerIdFoo321/subscription',
             data: { at_period_end: true },
-            auth: 'sk_foo'
+            auth: TEST_AUTH_KEY
           });
 
         });
@@ -304,32 +306,32 @@ describe('Customers Resource', function() {
 
       describe('When setting with an auth key', function() {
         it('Sends the correct request, including the specified auth key', function() {
-          stripe.customers.setMetadata('customerIdFoo321', null, 'authKey133');
+          stripe.customers.setMetadata('customerIdFoo321', null, TEST_AUTH_KEY);
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'POST',
             url: '/v1/customers/customerIdFoo321',
             data: {
               metadata: null
             },
-            auth: 'authKey133'
+            auth: TEST_AUTH_KEY
           });
-          stripe.customers.setMetadata('customerIdFoo321', 'a', '1234', 'authKey133');
+          stripe.customers.setMetadata('customerIdFoo321', 'a', '1234', TEST_AUTH_KEY);
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'POST',
             url: '/v1/customers/customerIdFoo321',
             data: {
               metadata: { a: '1234' }
             },
-            auth: 'authKey133'
+            auth: TEST_AUTH_KEY
           });
-          stripe.customers.setMetadata('customerIdFoo321', 'a', null, 'authKey133');
+          stripe.customers.setMetadata('customerIdFoo321', 'a', null, TEST_AUTH_KEY);
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'POST',
             url: '/v1/customers/customerIdFoo321',
             data: {
               metadata: { a: null }
             },
-            auth: 'authKey133'
+            auth: TEST_AUTH_KEY
           });
         });
       });
@@ -355,12 +357,12 @@ describe('Customers Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.customers.retrieveCard('customerIdFoo321', 'cardIdFoo456', 'auth123');
+        stripe.customers.retrieveCard('customerIdFoo321', 'cardIdFoo456', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/customers/customerIdFoo321/cards/cardIdFoo456',
           data: {},
-          auth: 'auth123'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -386,12 +388,12 @@ describe('Customers Resource', function() {
 
         stripe.customers.createCard('customerIdFoo321', {
           number: '123456', exp_month: '12'
-        }, 'auth555');
+        }, TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/customers/customerIdFoo321/cards',
           data: { number: '123456', exp_month: '12' },
-          auth: 'auth555'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -430,12 +432,12 @@ describe('Customers Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.customers.deleteCard('customerIdFoo321', 'cardIdFoo456', 'auth921');
+        stripe.customers.deleteCard('customerIdFoo321', 'cardIdFoo456', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/customers/customerIdFoo321/cards/cardIdFoo456',
           data: {},
-          auth: 'auth921'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -457,12 +459,12 @@ describe('Customers Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.customers.listCards('customerIdFoo321', 'auth771');
+        stripe.customers.listCards('customerIdFoo321', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/customers/customerIdFoo321/cards',
           data: {},
-          auth: 'auth771'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -488,12 +490,12 @@ describe('Customers Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.customers.retrieveSubscription('customerIdFoo321', 'subscriptionIdFoo456', 'auth123');
+        stripe.customers.retrieveSubscription('customerIdFoo321', 'subscriptionIdFoo456', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
           data: {},
-          auth: 'auth123'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -519,12 +521,12 @@ describe('Customers Resource', function() {
 
         stripe.customers.createSubscription('customerIdFoo321', {
           plan: 'gold', quantity: '12'
-        }, 'auth555');
+        }, TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/customers/customerIdFoo321/subscriptions',
           data: { plan: 'gold', quantity: '12' },
-          auth: 'auth555'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -550,12 +552,12 @@ describe('Customers Resource', function() {
 
         stripe.customers.updateSubscription('customerIdFoo321', 'subscriptionIdFoo456', {
           quantity: '2'
-        }, 'sk_foo');
+        }, TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
           data: { quantity: '2' },
-          auth: 'sk_foo'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -577,12 +579,12 @@ describe('Customers Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.customers.cancelSubscription('customerIdFoo321', 'subscriptionIdFoo456', 'auth921');
+        stripe.customers.cancelSubscription('customerIdFoo321', 'subscriptionIdFoo456', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
           data: {},
-          auth: 'auth921'
+          auth: TEST_AUTH_KEY
         });
 
       });
@@ -603,12 +605,12 @@ describe('Customers Resource', function() {
       describe('With at_period_end defined [with specified auth]', function() {
         it('Sends the correct request', function() {
 
-          stripe.customers.cancelSubscription('customerIdFoo321', 'subscriptionIdFoo456', {at_period_end: true}, 'sk_foo');
+          stripe.customers.cancelSubscription('customerIdFoo321', 'subscriptionIdFoo456', {at_period_end: true}, TEST_AUTH_KEY);
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'DELETE',
             url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdFoo456',
             data: { at_period_end: true },
-            auth: 'sk_foo'
+            auth: TEST_AUTH_KEY
           });
 
         });
@@ -631,12 +633,12 @@ describe('Customers Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.customers.listSubscriptions('customerIdFoo321', 'auth771');
+        stripe.customers.listSubscriptions('customerIdFoo321', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/customers/customerIdFoo321/subscriptions',
           data: {},
-          auth: 'auth771'
+          auth: TEST_AUTH_KEY
         });
 
       });

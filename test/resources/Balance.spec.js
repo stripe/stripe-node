@@ -20,12 +20,12 @@ describe('Balance Resource', function() {
 
     it('Sends the correct request [with specified auth]', function() {
 
-      stripe.balance.retrieve('auth38838111');
+      stripe.balance.retrieve('aGN0bIwXnHdw5645VABjPdSn8nWY7G11');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/balance',
         data: {},
-        auth: 'auth38838111'
+        auth: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11'
       });
 
     });
@@ -47,12 +47,12 @@ describe('Balance Resource', function() {
 
     it('Sends the correct request [with specified auth]', function() {
 
-      stripe.balance.listTransactions('auth4733234');
+      stripe.balance.listTransactions('aGN0bIwXnHdw5645VABjPdSn8nWY7G11');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/balance/history',
         data: {},
-        auth: 'auth4733234'
+        auth: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11'
       });
 
     });
@@ -74,12 +74,12 @@ describe('Balance Resource', function() {
 
     it('Sends the correct request [with specified auth]', function() {
 
-      stripe.balance.retrieveTransaction('transactionIdFoo', 'auth9132432424');
+      stripe.balance.retrieveTransaction('transactionIdFoo', 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/balance/history/transactionIdFoo',
         data: {},
-        auth: 'auth9132432424'
+        auth: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11'
       });
 
     });
