@@ -1,3 +1,7 @@
+2.4.5 Apr 8th, 2014
+ - Add better checks for incorrect arguments (throw exceptions accordingly).
+ - Validate the Connect Auth key, if passed
+
 2.4.4 Mar 27th, 2014
  - Fix URL encoding issue (not encoding interpolated URL params, see issue #93)
 
