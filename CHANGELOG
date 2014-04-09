@@ -1,4 +1,4 @@
-2.5.5 Apr 9th, 2014
+2.5.0 Apr 9th, 2014
  - Ensure we prevent requests using revoked SSL certs
 
 2.4.5 Apr 8th, 2014
