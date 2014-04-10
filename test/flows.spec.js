@@ -367,20 +367,42 @@ describe('Flows', function() {
     });
   });
 
-  describe('Expanding a customer within a charge', function() {
-    it('Allows you to expand a customer object', function() {
-      return expect(
-        stripe.customers.create(CUSTOMER_DETAILS)
-          .then(function(cust) {
-            cleanup.deleteCustomer(cust.id);
-            return stripe.charges.create({
-              customer: cust.id,
-              amount: 1700,
-              currency: CURRENCY,
-              expand: ['customer']
-            });
+  describe('Expanding', function() {
+    describe('A customer within a charge', function() {
+      it('Allows you to expand a customer object', function() {
+        return expect(
+          stripe.customers.create(CUSTOMER_DETAILS)
+            .then(function(cust) {
+              cleanup.deleteCustomer(cust.id);
+              return stripe.charges.create({
+                customer: cust.id,
+                amount: 1700,
+                currency: CURRENCY,
+                expand: ['customer']
+              });
+            })
+        ).to.eventually.have.deep.property('customer.created');
+      });
+    });
+    describe('A customer\'s default card', function() {
+      it('Allows you to expand a default_card', function() {
+        return expect(
+          stripe.customers.create({
+            description: 'Some customer',
+            card: {
+              number: '4242424242424242',
+              exp_month: 12,
+              exp_year: 2015
+            },
+            expand: ['default_card']
           })
-      ).to.eventually.have.deep.property('customer.created');
+            .then(function(cust) {
+              cleanup.deleteCustomer(cust.id);
+              return cust;
+            })
+        // Confirm it's expanded by checking that some prop (e.g. exp_year) exists:
+        ).to.eventually.have.deep.property('default_card.exp_year');
+      });
     });
   });
 
