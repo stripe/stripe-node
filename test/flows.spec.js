@@ -32,11 +32,11 @@ describe('Flows', function() {
   describe('Using revoked.stripe.com', function() {
 
     before(function() {
-      stripe.setHost('revoked.stripe.com', 443);
+      stripe.setHost('revoked.stripe.com', 444);
     });
 
     after(function() {
-      stripe.setHost('api.stripe.com');
+      stripe.setHost('api.stripe.com', 443);
     });
 
     it('Throws "revoked ssl cert" correctly', function() {

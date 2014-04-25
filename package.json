@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Stripe API wrapper",
   "homepage": "https://github.com/stripe/stripe-node",
   "author": "Stripe <james@stripe.com> (https://stripe.com/)",
@@ -26,7 +26,7 @@
     "mocha-as-promised": "~1.4.0"
   },
   "dependencies": {
-    "when": "~2.4.0"
+    "when": "^3.1.0"
   },
   "scripts": {
     "test": "mocha"
