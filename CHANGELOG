@@ -1,3 +1,7 @@
+2.5.1 Apr 25th, 2014
+ - Fix revoked-ssl check
+ - Upgrade when.js to 3.1.0
+
 2.5.0 Apr 9th, 2014
  - Ensure we prevent requests using revoked SSL certs
 
