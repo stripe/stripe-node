@@ -35,6 +35,24 @@ describe('Coupons Resource', function() {
 
   });
 
+  describe('update', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.coupons.update('couponId123', {
+        metadata: { a: '1234' }
+      });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/coupons/couponId123',
+        data: {
+          metadata: { a: '1234' }
+        }
+      });
+    });
+
+  });
+
   describe('create', function() {
 
     it('Sends the correct request', function() {
