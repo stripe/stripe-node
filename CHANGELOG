@@ -1,3 +1,6 @@
+2.5.3 May 16th, 2014
+ - Allow the `update` method on coupons for metadata changes
+
 2.5.2 Apr 28th, 2014
  - Fix when.js version string in package.json to support older npm versions
 
