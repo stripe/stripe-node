@@ -3,6 +3,8 @@
 var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
+var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
+
 describe('Recipients Resource', function() {
 
   describe('retrieve', function() {
@@ -78,6 +80,139 @@ describe('Recipients Resource', function() {
         method: 'GET',
         url: '/v1/recipients',
         data: {}
+      });
+
+    });
+
+  });
+
+  describe('Card methods', function() {
+
+    describe('retrieveCard', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.recipients.retrieveCard('recipientIdFoo321', 'cardIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.recipients.retrieveCard('recipientIdFoo321', 'cardIdFoo456', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          data: {},
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+    describe('createCard', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.recipients.createCard('recipientIdFoo321', {
+          number: '123456', exp_month: '12'
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/recipients/recipientIdFoo321/cards',
+          data: { number: '123456', exp_month: '12' }
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.recipients.createCard('recipientIdFoo321', {
+          number: '123456', exp_month: '12'
+        }, TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/recipients/recipientIdFoo321/cards',
+          data: { number: '123456', exp_month: '12' },
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+    describe('updateCard', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.recipients.updateCard('recipientIdFoo321', 'cardIdFoo456', {
+          name: 'Bob M. Baz'
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          data: { name: 'Bob M. Baz' }
+        });
+
+      });
+
+    });
+
+    describe('deleteCard', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.recipients.deleteCard('recipientIdFoo321', 'cardIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.recipients.deleteCard('recipientIdFoo321', 'cardIdFoo456', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          data: {},
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+    describe('listCards', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.recipients.listCards('recipientIdFoo321');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/recipients/recipientIdFoo321/cards',
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.recipients.listCards('recipientIdFoo321', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/recipients/recipientIdFoo321/cards',
+          data: {},
+          auth: TEST_AUTH_KEY
+        });
+
       });
 
     });
