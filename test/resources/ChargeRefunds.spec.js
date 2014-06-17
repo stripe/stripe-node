@@ -5,6 +5,7 @@ var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
 var CHARGE_TEST_ID = 'chargeIdTest999';
+var REFUND_TEST_ID = 'refundIdTest999';
 
 // Create new CustomerCard instance with pre-filled customerId:
 var chargeRefund = new resources.ChargeRefunds(
@@ -21,10 +22,10 @@ describe('ChargeRefund Resource', function() {
 
     it('Sends the correct request', function() {
 
-      chargeRefund.retrieve('refundIdFoo456');
+      chargeRefund.retrieve(REFUND_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/charges/' + CHARGE_TEST_ID + '/refunds/refundIdFoo456',
+        url: '/v1/charges/' + CHARGE_TEST_ID + '/refunds/' + REFUND_TEST_ID,
         data: {}
       });
 
@@ -53,12 +54,12 @@ describe('ChargeRefund Resource', function() {
 
     it('Sends the correct request', function() {
 
-      chargeRefund.update('refundIdFoo456', {
+      chargeRefund.update(REFUND_TEST_ID, {
         metadata: {key: 'value'}
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/charges/' + CHARGE_TEST_ID + '/refunds/refundIdFoo456',
+        url: '/v1/charges/' + CHARGE_TEST_ID + '/refunds/' + REFUND_TEST_ID,
         data: { metadata: {key: 'value'}}
       });
 
