@@ -103,6 +103,61 @@ describe('Charge Resource', function() {
 
   });
 
+  describe('refunds', function() {
+
+    it('Sends the correct update request', function() {
+
+      stripe.charges.updateRefund(
+        'chargeIdExample3242',
+        'refundIdExample2312',
+        { metadata: {key: 'value'}}
+      );
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/charges/chargeIdExample3242/refunds/refundIdExample2312',
+        data: { metadata: {key: 'value'}}
+      });
+
+    });
+
+    it('Sends the correct create request', function() {
+
+      stripe.charges.createRefund(
+        'chargeIdExample3242',
+        { amount: 100 }
+      );
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/charges/chargeIdExample3242/refunds',
+        data: { amount: 100 }
+      });
+    });
+
+    it('Sends the correct list request', function() {
+      stripe.charges.listRefunds(
+        'chargeIdExample3242'
+      );
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/charges/chargeIdExample3242/refunds',
+        data: {}
+      });
+    });
+
+    it('Sends the correct retrieve request', function() {
+      stripe.charges.retrieveRefund(
+        'chargeIdExample3242',
+        'refundIdExample2312'
+      );
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/charges/chargeIdExample3242/refunds/refundIdExample2312',
+        data: {}
+      });
+    });
+  });
+
+
   describe('updateDispute', function() {
 
     it('Sends the correct request', function() {
