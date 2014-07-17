@@ -1,3 +1,7 @@
+2.7.4 July 17th, 2014
+ - Fix lack of subscription param in `invoices#retrieveUpcoming` method
+ - Add support for an `optional!` annotation on `urlParams`
+
 2.7.3 June 17th, 2014
  - Add metadata to disputes and refunds
 
