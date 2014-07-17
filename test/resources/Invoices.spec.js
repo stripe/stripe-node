@@ -67,15 +67,30 @@ describe('Invoices Resource', function() {
 
   describe('retrieveUpcoming', function() {
 
-    it('Sends the correct request', function() {
+    describe('With just a customer ID', function() {
+      it('Sends the correct request', function() {
 
-      stripe.invoices.retrieveUpcoming('customerId1');
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'GET',
-        url: '/v1/invoices/upcoming?customer=customerId1',
-        data: {}
+        stripe.invoices.retrieveUpcoming('customerId1');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/invoices/upcoming?customer=customerId1',
+          data: {}
+        });
+
       });
+    });
 
+    describe('With a subscription ID in addition to a customer ID', function() {
+      it('Sends the correct request', function() {
+
+        stripe.invoices.retrieveUpcoming('customerId1', 'subscriptionId123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/invoices/upcoming?customer=customerId1&subscription=subscriptionId123',
+          data: {}
+        });
+
+      });
     });
 
   });
