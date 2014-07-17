@@ -111,7 +111,7 @@ stripe.customers.create({
   * [`update(invoiceId[, params])`](https://stripe.com/docs/api/node#update_invoice)
   * [`retrieve(invoiceId)`](https://stripe.com/docs/api/node#retrieve_invoice)
   * [`retrieveLines(invoiceId)`](https://stripe.com/docs/api/node#invoice_lines)
-  * [`retrieveUpcoming(customerId)`](https://stripe.com/docs/api/node#retrieve_customer_invoice)
+  * [`retrieveUpcoming(customerId[, subscriptionId])`](https://stripe.com/docs/api/node#retrieve_customer_invoice)
   * [`pay(invoiceId)`](https://stripe.com/docs/api/node#pay_invoice)
  * plans
   * [`create(params)`](https://stripe.com/docs/api/node#create_plan)
