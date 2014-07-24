@@ -164,7 +164,7 @@ $ npm install -g mocha
 $ npm test
 ```
 
-*Note: On Windows use `SET` isntead of `export` for setting the `STRIPE_TEST_API_KEY` environment variable.*
+*Note: On Windows use `SET` instead of `export` for setting the `STRIPE_TEST_API_KEY` environment variable.*
 
 If you don't have a prefixed key (in the form `sk_test_...`) you can get one by rolling your "Test Secret Key". This can be done under your dashboard (*Account Setting -> API Keys -> Click the roll icon next to the "test secret key"*). This should give you a new prefixed key ('sk_test_..'), which will then be usable by the node mocha tests.
 
