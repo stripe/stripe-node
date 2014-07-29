@@ -1,3 +1,6 @@
+2.8.0 July 26th, 2014
+_-Make application fee refunds a list instead of array
+
 2.7.4 July 17th, 2014
  - Fix lack of subscription param in `invoices#retrieveUpcoming` method
  - Add support for an `optional!` annotation on `urlParams`
