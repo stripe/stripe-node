@@ -11,6 +11,7 @@ describe('Error', function() {
     var e = new Error('FooError', 'Foo happened');
     expect(e).to.have.property('type', 'FooError');
     expect(e).to.have.property('message', 'Foo happened');
+    expect(e).to.have.property('stack');
   });
 
   describe('StripeError', function() {
