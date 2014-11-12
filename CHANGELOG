@@ -1,8 +1,9 @@
 2.9.0 Nov 12th, 2014
  - Allow setting of HTTP agent (proxy) (issue #124)
+ - Add stack traces to all Stripe Errors
 
 2.8.0 July 26th, 2014
-_-Make application fee refunds a list instead of array
+ - Make application fee refunds a list instead of array
 
 2.7.4 July 17th, 2014
  - Fix lack of subscription param in `invoices#retrieveUpcoming` method
