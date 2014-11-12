@@ -1,3 +1,6 @@
+2.9.0 Nov 12th, 2014
+ - Allow setting of HTTP agent (proxy) (issue #124)
+
 2.8.0 July 26th, 2014
 _-Make application fee refunds a list instead of array
 

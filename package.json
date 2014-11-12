@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "2.8.0",
+  "version": "2.9.0",
   "description": "Stripe API wrapper",
   "homepage": "https://github.com/stripe/stripe-node",
   "author": "Stripe <james@stripe.com> (https://stripe.com/)",
