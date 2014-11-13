@@ -119,7 +119,7 @@ stripe.customers.create({
   * [`update(planId[, params])`](https://stripe.com/docs/api/node#update_plan)
   * [`retrieve(planId)`](https://stripe.com/docs/api/node#retrieve_plan)
   * [`del(planId)`](https://stripe.com/docs/api/node#delete_plan)
- * recipient
+ * recipients
   * [`create(params)`](https://stripe.com/docs/api/node#create_recipient)
   * [`list([params])`](https://stripe.com/docs/api/node#list_recipients)
   * [`update(recipientId[, params])`](https://stripe.com/docs/api/node#update_recipient)
