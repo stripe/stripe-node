@@ -1,3 +1,6 @@
+2.9.1 Nov 18th, 2014
+ - Fix `stringifyRequestData` to deal with nested objs correctly
+
 2.9.0 Nov 12th, 2014
  - Allow setting of HTTP agent (proxy) (issue #124)
  - Add stack traces to all Stripe Errors
