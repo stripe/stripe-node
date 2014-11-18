@@ -1,5 +1,6 @@
-2.9.1 Nov 18th, 2014
+3.0.0 Nov 18th, 2014
  - Fix `stringifyRequestData` to deal with nested objs correctly
+ - Bump MAJOR as we're no longer supporting Node 0.8
 
 2.9.0 Nov 12th, 2014
  - Allow setting of HTTP agent (proxy) (issue #124)
