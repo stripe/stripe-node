@@ -417,6 +417,12 @@ describe('Flows', function() {
             exp_month: 12,
             exp_year: 2020,
             cvc: 123
+          },
+          shipping: {
+            name: 'Bobby Tables',
+            address: {
+              line1: '1 Foo St.'
+            }
           }
         }).then(null, function(error) {
           return error;

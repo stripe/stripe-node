@@ -28,6 +28,26 @@ describe('utils', function() {
   });
 
   describe('stringifyRequestData', function() {
+
+    it('Handles basic types', function() {
+      expect(utils.stringifyRequestData({
+        a: 1,
+        b: 'foo'
+      })).to.equal('a=1&b=foo');
+    });
+
+    it('Handles deeply nested object', function() {
+      expect(utils.stringifyRequestData({
+        a: {
+          b: {
+            c: {
+              d: 2
+            }
+          }
+        }
+      })).to.equal('a%5Bb%5D%5Bc%5D%5Bd%5D=2');
+    });
+
     it('Creates a string from an object, handling shallow nested objects', function() {
       expect(utils.stringifyRequestData({
         test: 1,
@@ -36,23 +56,14 @@ describe('utils', function() {
         nested: {
           1: 2,
           'a n o t h e r': null
-        },
-        arr: [1, 2, 3]
+        }
       })).to.equal([
         'test=1',
         'foo=baz',
         'somethingElse=%3A%3A%22%22%25%26',
         'nested%5B1%5D=2', // Unencoded: nested[1]=2
-        'nested%5Ba%20n%20o%20t%20h%20e%20r%5D=',
-        'arr%5B%5D=1',
-        'arr%5B%5D=2',
-        'arr%5B%5D=3'
+        'nested%5Ba%20n%20o%20t%20h%20e%20r%5D='
       ].join('&'));
-    });
-    it('Ensures empty objects are represented', function() {
-      expect(utils.stringifyRequestData({
-        test: {}
-      })).to.equal('test=');
     });
   });
 

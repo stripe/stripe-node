@@ -25,12 +25,26 @@ describe('Charge Resource', function() {
     it('Sends the correct request', function() {
 
       stripe.charges.create({
-        amount: '1500', currency: 'usd'
+        amount: '1500',
+        currency: 'usd',
+        shipping: {
+          address: {
+            line1: 'foo'
+          }
+        }
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges',
-        data: { amount: '1500', currency: 'usd' }
+        data: {
+          amount: '1500',
+          currency: 'usd',
+          shipping: {
+            address: {
+              line1: 'foo'
+            }
+          }
+        }
       });
 
     });
