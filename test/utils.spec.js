@@ -65,6 +65,16 @@ describe('utils', function() {
         'nested%5Ba%20n%20o%20t%20h%20e%20r%5D='
       ].join('&'));
     });
+
+    describe('Stripe-specific cases', function() {
+
+      it('Handles the `expand` array correctly (producing the form `expand[]=_` for each item', function() {
+        expect(utils.stringifyRequestData({
+          expand: ['a', 'foo', 'a.b.c']
+        })).to.equal('expand%5B%5D=a&expand%5B%5D=foo&expand%5B%5D=a.b.c');
+      });
+
+    });
   });
 
   describe('protoExtend', function() {
