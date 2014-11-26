@@ -1,5 +1,8 @@
-3.0.1 Nov 26th, 2014
+3.0.2 Nov 26th, 2014
  - Fix issue where multiple expand params were not getting passed through (#130)
+
+3.0.1 Nov 26th, 2014
+ - (Version skipped due to npm mishap)
 
 3.0.0 Nov 18th, 2014
  - Fix `stringifyRequestData` to deal with nested objs correctly
