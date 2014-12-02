@@ -473,6 +473,157 @@ describe('Customers Resource', function() {
 
   });
 
+  describe('BankAccounts methods', function() {
+
+    describe('retrieveBankAccount', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.retrieveBankAccount('customerIdFoo321', 'bankAccountIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/bank_accounts/bankAccountIdFoo456',
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.retrieveBankAccount('customerIdFoo321', 'bankAccountIdFoo456', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/bank_accounts/bankAccountIdFoo456',
+          data: {},
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+    describe('createBankAccount', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.createBankAccount('customerIdFoo321', {
+          country: "US",
+          routing_number: "110000000",
+          account_number: "000123456789"
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/bank_accounts',
+          data: {
+            country: "US",
+            routing_number: "110000000",
+            account_number: "000123456789"
+          }
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.createBankAccount('customerIdFoo321', {
+          country: "US",
+          routing_number: "110000000",
+          account_number: "000123456789"
+        }, TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/bank_accounts',
+          data: {
+            country: "US",
+            routing_number: "110000000",
+            account_number: "000123456789"
+          },
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+    describe('updateBankAccount', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.updateBankAccount('customerIdFoo321', 'bankAccountIdFoo456', {
+          metadata: {
+            'name': 'Bob M. Baz'
+          }
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/bank_accounts/bankAccountIdFoo456',
+          data: {
+            metadata: {
+              'name': 'Bob M. Baz'
+            }
+          }
+        });
+
+      });
+
+    });
+
+    describe('deleteBankAccount', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.deleteBankAccount('customerIdFoo321', 'bankAccountIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/bank_accounts/bankAccountIdFoo456',
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.deleteBankAccount('customerIdFoo321', 'bankAccountIdFoo456', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/bank_accounts/bankAccountIdFoo456',
+          data: {},
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+    describe('listBankAccounts', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.listBankAccounts('customerIdFoo321');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/bank_accounts',
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.listBankAccounts('customerIdFoo321', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/bank_accounts',
+          data: {},
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+  });
+
   describe('Subscription methods', function() {
 
     describe('retrieveSubscription', function() {
