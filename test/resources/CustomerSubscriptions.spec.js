@@ -25,6 +25,7 @@ describe('CustomerSubscription Resource', function() {
             expect(stripe.LAST_REQUEST).to.deep.equal({
                 method: 'GET',
                 url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions/subscriptionIdFoo456',
+                headers: {},
                 data: {}
             });
 
@@ -42,6 +43,7 @@ describe('CustomerSubscription Resource', function() {
             expect(stripe.LAST_REQUEST).to.deep.equal({
                 method: 'POST',
                 url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions',
+                headers: {},
                 data: { plan: 'gold', quantity: '12' }
             });
 
@@ -59,6 +61,7 @@ describe('CustomerSubscription Resource', function() {
             expect(stripe.LAST_REQUEST).to.deep.equal({
                 method: 'POST',
                 url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions/subscriptionIdFoo456',
+                headers: {},
                 data: { name: 'Bob M. Baz' }
             });
 
@@ -74,6 +77,7 @@ describe('CustomerSubscription Resource', function() {
             expect(stripe.LAST_REQUEST).to.deep.equal({
                 method: 'DELETE',
                 url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions/subscriptionIdFoo456',
+                headers: {},
                 data: {}
             });
 
@@ -89,6 +93,7 @@ describe('CustomerSubscription Resource', function() {
             expect(stripe.LAST_REQUEST).to.deep.equal({
                 method: 'GET',
                 url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions',
+                headers: {},
                 data: {}
             });
 
@@ -106,6 +111,7 @@ describe('CustomerSubscription Resource', function() {
                 expect(stripe.LAST_REQUEST).to.deep.equal({
                     method: 'DELETE',
                     url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdBar654/discount',
+                    headers: {},
                     data: {}
                 });
 

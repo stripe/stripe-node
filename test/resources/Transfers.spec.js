@@ -13,6 +13,7 @@ describe('Transfers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/transfers/transferId1',
+        headers: {},
         data: {}
       });
 
@@ -30,6 +31,7 @@ describe('Transfers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/transfers',
+        headers: {},
         data: { amount: 200, currency: 'usd', recipient: {} }
       });
 
@@ -47,6 +49,7 @@ describe('Transfers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/transfers/transferId6654',
+        headers: {},
         data: { amount: 300 }
       });
 
@@ -62,6 +65,7 @@ describe('Transfers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/transfers/transferId4/cancel',
+        headers: {},
         data: {}
       });
 
@@ -77,6 +81,7 @@ describe('Transfers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/transfers',
+        headers: {},
         data: {}
       });
 
@@ -92,6 +97,7 @@ describe('Transfers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/transfers/tr_14222/transactions',
+        headers: {},
         data: {}
       });
 

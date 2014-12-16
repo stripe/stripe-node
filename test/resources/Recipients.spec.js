@@ -15,6 +15,7 @@ describe('Recipients Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/recipients/recipientId1',
+        headers: {},
         data: {}
       });
 
@@ -32,6 +33,7 @@ describe('Recipients Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/recipients',
+        headers: {},
         data: { name: 'Bob', type: 'individual' }
       });
 
@@ -49,6 +51,7 @@ describe('Recipients Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/recipients/recipientId3',
+        headers: {},
         data: { name: 'Bob Smith' }
       });
 
@@ -64,6 +67,7 @@ describe('Recipients Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
         url: '/v1/recipients/recipientId4',
+        headers: {},
         data: {}
       });
 
@@ -79,6 +83,7 @@ describe('Recipients Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/recipients',
+        headers: {},
         data: {}
       });
 
@@ -96,6 +101,7 @@ describe('Recipients Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          headers: {},
           data: {}
         });
 
@@ -107,6 +113,7 @@ describe('Recipients Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          headers: {},
           data: {},
           auth: TEST_AUTH_KEY
         });
@@ -125,6 +132,7 @@ describe('Recipients Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/recipients/recipientIdFoo321/cards',
+          headers: {},
           data: { number: '123456', exp_month: '12' }
         });
 
@@ -138,6 +146,7 @@ describe('Recipients Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/recipients/recipientIdFoo321/cards',
+          headers: {},
           data: { number: '123456', exp_month: '12' },
           auth: TEST_AUTH_KEY
         });
@@ -156,6 +165,7 @@ describe('Recipients Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          headers: {},
           data: { name: 'Bob M. Baz' }
         });
 
@@ -171,6 +181,7 @@ describe('Recipients Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          headers: {},
           data: {}
         });
 
@@ -182,6 +193,7 @@ describe('Recipients Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
+          headers: {},
           data: {},
           auth: TEST_AUTH_KEY
         });
@@ -198,6 +210,7 @@ describe('Recipients Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/recipients/recipientIdFoo321/cards',
+          headers: {},
           data: {}
         });
 
@@ -209,6 +222,7 @@ describe('Recipients Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/recipients/recipientIdFoo321/cards',
+          headers: {},
           data: {},
           auth: TEST_AUTH_KEY
         });

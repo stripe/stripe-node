@@ -15,6 +15,7 @@ describe('Tokens Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/tokens',
+        headers: {},
         data: { card: { number: 123 } }
       });
 
@@ -30,6 +31,7 @@ describe('Tokens Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/tokens/tokenId1',
+        headers: {},
         data: {}
       });
 

@@ -13,6 +13,7 @@ describe('Coupons Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/coupons/couponId123',
+        headers: {},
         data: {}
       });
 
@@ -28,6 +29,7 @@ describe('Coupons Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
         url: '/v1/coupons/couponId123',
+        headers: {},
         data: {}
       });
 
@@ -45,6 +47,7 @@ describe('Coupons Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/coupons/couponId123',
+        headers: {},
         data: {
           metadata: { a: '1234' }
         }
@@ -66,6 +69,7 @@ describe('Coupons Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/coupons',
+        headers: {},
         data: {
           percent_off: 25,
           duration: 'repeating',
@@ -85,6 +89,7 @@ describe('Coupons Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/coupons',
+        headers: {},
         data: {}
       });
 
