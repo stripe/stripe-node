@@ -74,6 +74,8 @@ stripe.customers.create({
   * `setMetadata(chargeId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
   * `setMetadata(chargeId, key, value)`
   * `getMetadata(chargeId)`
+  * `markAsSafe(chargeId)`
+  * `markAsFraudulent(chargeId)`
  * coupons
   * [`create(params)`](https://stripe.com/docs/api/node#create_coupon)
   * [`list([params])`](https://stripe.com/docs/api/node#list_coupons)

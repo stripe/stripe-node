@@ -202,4 +202,33 @@ describe('Charge Resource', function() {
 
   });
 
+  describe('markAsFraudulent', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.charges.markAsFraudulent('chargeIdExample3242');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/charges/chargeIdExample3242',
+        data: { 'fraud_details': {'user_report': 'fraudulent' }}
+      });
+
+    });
+
+  });
+
+  describe('markAsSafe', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.charges.markAsSafe('chargeIdExample3242');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/charges/chargeIdExample3242',
+        data: { 'fraud_details': {'user_report': 'safe' }}
+      });
+
+    });
+
+  });
 });
