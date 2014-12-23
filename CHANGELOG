@@ -1,3 +1,6 @@
+3.0.3 Dec 23rd, 2014
+ - Adding file uploads as a resource.
+
 3.0.2 Nov 26th, 2014
  - Fix issue where multiple expand params were not getting passed through (#130)
 
