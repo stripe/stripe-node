@@ -37,6 +37,19 @@ describe('File Uploads Resource', function() {
 
   });
 
+  describe('list', function() {
+
+    it ('Sends the correct request', function() {
+      stripe.fileUploads.list();
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/files',
+        data: {},
+      });
+    });
+
+  });
+
   describe('create', function() {
 
     it('Sends the correct file upload request', function() {
