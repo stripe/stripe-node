@@ -13,7 +13,8 @@ describe('Account Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/account',
-        data: {}
+        data: {},
+        headers: {},
       });
 
     });

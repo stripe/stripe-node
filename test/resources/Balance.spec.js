@@ -13,7 +13,8 @@ describe('Balance Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/balance',
-        data: {}
+        data: {},
+        headers: {},
       });
 
     });
@@ -25,7 +26,8 @@ describe('Balance Resource', function() {
         method: 'GET',
         url: '/v1/balance',
         data: {},
-        auth: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11'
+        auth: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11',
+        headers: {},
       });
 
     });
@@ -40,7 +42,8 @@ describe('Balance Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/balance/history',
-        data: {}
+        data: {},
+        headers: {},
       });
 
     });
@@ -52,6 +55,7 @@ describe('Balance Resource', function() {
         method: 'GET',
         url: '/v1/balance/history',
         data: {},
+        headers: {},
         auth: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11'
       });
 
@@ -67,7 +71,8 @@ describe('Balance Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/balance/history/transactionIdFoo',
-        data: {}
+        data: {},
+        headers: {},
       });
 
     });
@@ -79,6 +84,7 @@ describe('Balance Resource', function() {
         method: 'GET',
         url: '/v1/balance/history/transactionIdFoo',
         data: {},
+        headers: {},
         auth: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11'
       });
 

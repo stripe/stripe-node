@@ -25,6 +25,7 @@ describe('CustomerCard Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/customers/' + CUSTOMER_TEST_ID + '/cards/cardIdFoo456',
+        headers: {},
         data: {}
       });
 
@@ -42,6 +43,7 @@ describe('CustomerCard Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers/' + CUSTOMER_TEST_ID + '/cards',
+        headers: {},
         data: { number: '123456', exp_month: '12' }
       });
 
@@ -59,6 +61,7 @@ describe('CustomerCard Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers/' + CUSTOMER_TEST_ID + '/cards/cardIdFoo456',
+        headers: {},
         data: { name: 'Bob M. Baz' }
       });
 
@@ -74,6 +77,7 @@ describe('CustomerCard Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
         url: '/v1/customers/' + CUSTOMER_TEST_ID + '/cards/cardIdFoo456',
+        headers: {},
         data: {}
       });
 
@@ -89,6 +93,7 @@ describe('CustomerCard Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/customers/' + CUSTOMER_TEST_ID + '/cards',
+        headers: {},
         data: {}
       });
 

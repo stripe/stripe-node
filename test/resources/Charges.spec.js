@@ -13,7 +13,8 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/charges/chargeIdFoo123',
-        data: {}
+        data: {},
+        headers: {},
       });
 
     });
@@ -44,7 +45,8 @@ describe('Charge Resource', function() {
               line1: 'foo'
             }
           }
-        }
+        },
+        headers: {},
       });
 
     });
@@ -59,7 +61,8 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/charges',
-        data: {}
+        data: {},
+        headers: {},
       });
 
     });
@@ -74,6 +77,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/capture',
+        headers: {},
         data: { amount: 23 }
       });
 
@@ -89,6 +93,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242',
+        headers: {},
         data: { description: 'foo321' }
       });
 
@@ -104,6 +109,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/refund',
+        headers: {},
         data: { amount: 23 }
       });
 
@@ -129,6 +135,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/refunds/refundIdExample2312',
+        headers: {},
         data: { metadata: {key: 'value'}}
       });
 
@@ -143,6 +150,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/refunds',
+        headers: {},
         data: { amount: 100 }
       });
     });
@@ -154,6 +162,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/charges/chargeIdExample3242/refunds',
+        headers: {},
         data: {}
       });
     });
@@ -166,6 +175,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/charges/chargeIdExample3242/refunds/refundIdExample2312',
+        headers: {},
         data: {}
       });
     });
@@ -180,6 +190,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/dispute',
+        headers: {},
         data: { evidence: 'foo' }
       });
 
@@ -195,6 +206,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/dispute/close',
+        headers: {},
         data: {}
       });
 
@@ -210,7 +222,8 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242',
-        data: { 'fraud_details': {'user_report': 'fraudulent' }}
+        data: { 'fraud_details': {'user_report': 'fraudulent' }},
+        headers: {}
       });
 
     });
@@ -225,7 +238,8 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242',
-        data: { 'fraud_details': {'user_report': 'safe' }}
+        data: { 'fraud_details': {'user_report': 'safe' }},
+        headers: {}
       });
 
     });

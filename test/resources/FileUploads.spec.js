@@ -18,6 +18,7 @@ describe('File Uploads Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/files/fil_12345',
+        headers: {},
         data: {}
       });
 
@@ -29,6 +30,7 @@ describe('File Uploads Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/files/fil_12345',
+        headers: {},
         data: {},
         auth: TEST_AUTH_KEY
       });
@@ -44,6 +46,7 @@ describe('File Uploads Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/files',
+        headers: {},
         data: {},
       });
     });

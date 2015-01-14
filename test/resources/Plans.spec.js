@@ -13,6 +13,7 @@ describe('Plans Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/plans/planId1',
+        headers: {},
         data: {}
       });
 
@@ -30,6 +31,7 @@ describe('Plans Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/plans',
+        headers: {},
         data: { amount: 200, currency: 'usd' }
       });
 
@@ -47,6 +49,7 @@ describe('Plans Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/plans/planId3',
+        headers: {},
         data: { amount: 1900, currency: 'usd' }
       });
 
@@ -62,6 +65,7 @@ describe('Plans Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
         url: '/v1/plans/planId4',
+        headers: {},
         data: {}
       });
 
@@ -77,6 +81,7 @@ describe('Plans Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/plans',
+        headers: {},
         data: {}
       });
 

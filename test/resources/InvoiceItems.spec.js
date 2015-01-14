@@ -13,6 +13,7 @@ describe('InvoiceItems Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/invoiceitems/invoiceItemIdTesting123',
+        headers: {},
         data: {}
       });
 
@@ -30,6 +31,7 @@ describe('InvoiceItems Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/invoiceitems',
+        headers: {},
         data: { customer: 'cust_id_888' }
       });
 
@@ -47,6 +49,7 @@ describe('InvoiceItems Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/invoiceitems/invoiceItemId1',
+        headers: {},
         data: { amount: 1900 }
       });
 
@@ -62,6 +65,7 @@ describe('InvoiceItems Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
         url: '/v1/invoiceitems/invoiceItemId2',
+        headers: {},
         data: {}
       });
 
@@ -77,6 +81,7 @@ describe('InvoiceItems Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/invoiceitems',
+        headers: {},
         data: {}
       });
 

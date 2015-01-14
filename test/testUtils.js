@@ -35,7 +35,8 @@ var utils = module.exports = {
           var req = stripeInstance.LAST_REQUEST = {
             method: method,
             url: url,
-            data: data
+            data: data,
+            headers: options.headers || {},
           };
           if (auth) req.auth = auth;
           stripeInstance.REQUESTS.push(req);

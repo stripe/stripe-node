@@ -13,6 +13,7 @@ describe('Events Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/events/eventIdBaz',
+        headers: {},
         data: {}
       });
 
@@ -28,6 +29,7 @@ describe('Events Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/events',
+        headers: {},
         data: { count: 25 }
       });
 

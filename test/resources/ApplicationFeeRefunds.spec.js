@@ -26,7 +26,8 @@ describe('ApplicationFeeRefund Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/application_fees/' + APPFEE_TEST_ID + '/refunds/' + REFUND_TEST_ID,
-        data: {}
+        data: {},
+        headers: {},
       });
 
     });
@@ -43,7 +44,8 @@ describe('ApplicationFeeRefund Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/application_fees/' + APPFEE_TEST_ID + '/refunds/' + REFUND_TEST_ID,
-        data: { metadata: {key: 'value'}}
+        data: { metadata: {key: 'value'}},
+        headers: {},
       });
 
     });
@@ -58,7 +60,8 @@ describe('ApplicationFeeRefund Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/application_fees/' + APPFEE_TEST_ID + '/refunds',
-        data: {}
+        data: {},
+        headers: {},
       });
 
     });

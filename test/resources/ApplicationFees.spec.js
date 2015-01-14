@@ -12,7 +12,8 @@ describe('ApplicationFee Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/application_fees',
-        data: {}
+        data: {},
+        headers: {},
       });
 
     });
@@ -27,7 +28,8 @@ describe('ApplicationFee Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/application_fees/applicationFeeIdExample3242/refund',
-        data: { amount: 23 }
+        data: { amount: 23 },
+        headers: {},
       });
 
     });
@@ -46,7 +48,8 @@ describe('ApplicationFee Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
-        data: { metadata: {key: 'value'}}
+        data: { metadata: {key: 'value'}},
+        headers: {},
       });
 
     });
@@ -60,7 +63,8 @@ describe('ApplicationFee Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/application_fees/appFeeIdExample3242/refunds',
-        data: { amount: 100 }
+        data: { amount: 100 },
+        headers: {},
       });
     });
 
@@ -71,7 +75,8 @@ describe('ApplicationFee Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/application_fees/appFeeIdExample3242/refunds',
-        data: {}
+        data: {},
+        headers: {},
       });
     });
 
@@ -83,7 +88,8 @@ describe('ApplicationFee Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
-        data: {}
+        data: {},
+        headers: {},
       });
     });
   });

@@ -93,4 +93,87 @@ describe('utils', function() {
     });
   });
 
+  describe('getDataFromArgs', function() {
+    it('handles an empty list', function() {
+      expect(utils.getDataFromArgs([])).to.deep.equal({});
+    });
+    it('handles an list with no object', function() {
+      var args = [1, 3];
+      expect(utils.getDataFromArgs(args)).to.deep.equal({});
+      expect(args.length).to.equal(2);
+    });
+    it('ignores an options hash', function() {
+      var args = [{api_key: 'foo'}];
+      expect(utils.getDataFromArgs(args)).to.deep.equal({});
+      expect(args.length).to.equal(1);
+    });
+    it('finds the data', function() {
+      var args = [{foo: 'bar'}, {api_key: 'foo'}];
+      expect(utils.getDataFromArgs(args)).to.deep.equal({foo: 'bar'});
+      expect(args.length).to.equal(1);
+    });
+  });
+
+  describe('getOptsFromArgs', function() {
+    it('handles an empty list', function() {
+      expect(utils.getOptionsFromArgs([])).to.deep.equal({
+        auth: null,
+        headers: {},
+      });
+    });
+    it('handles an list with no object', function() {
+      var args = [1, 3];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: null,
+        headers: {},
+      });
+      expect(args.length).to.equal(2);
+    });
+    it('ignores a non-options object', function() {
+      var args = [{foo: 'bar'}];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: null,
+        headers: {},
+      });
+      expect(args.length).to.equal(1);
+    });
+    it('parses an api key', function() {
+      var args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        headers: {},
+      });
+      expect(args.length).to.equal(0);
+    });
+    it('parse an idempotency key', function() {
+      var args = [{foo: 'bar'}, {idempotency_key: 'foo'}];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: null,
+        headers: {'Idempotency-Key': 'foo'},
+      });
+      expect(args.length).to.equal(1);
+    });
+    it('parse an idempotency key and api key (with data)', function() {
+      var args = [{foo: 'bar'}, {
+        api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        idempotency_key: 'foo'
+      }];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        headers: {'Idempotency-Key': 'foo'},
+      });
+      expect(args.length).to.equal(1);
+    });
+    it('parse an idempotency key and api key', function() {
+      var args = [{
+        api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        idempotency_key: 'foo'
+      }];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        headers: {'Idempotency-Key': 'foo'},
+      });
+      expect(args.length).to.equal(0);
+    });
+  });
 });
