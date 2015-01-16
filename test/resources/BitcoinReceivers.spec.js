@@ -51,4 +51,23 @@ describe('BitcoinReceivers Resource', function() {
     });
 
   });
+
+  describe('listBitcoinTransactions', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.bitcoinReceivers.listBitcoinTransactions('receiverId', {
+        limit: 1
+      });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/bitcoin/receivers/receiverId/transactions',
+        data: {
+          limit: 1
+        }
+      })
+
+    });
+
+  });
 });
