@@ -52,11 +52,11 @@ describe('BitcoinReceivers Resource', function() {
 
   });
 
-  describe('listBitcoinTransactions', function() {
+  describe('listTransactions', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.bitcoinReceivers.listBitcoinTransactions('receiverId', {
+      stripe.bitcoinReceivers.listTransactions('receiverId', {
         limit: 1
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({

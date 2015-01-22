@@ -145,6 +145,11 @@ stripe.customers.create({
   * `setMetadata(transferId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
   * `setMetadata(transferId, key, value)`
   * `getMetadata(transferId)`
+ * bitcoinReceivers
+  * [`create(params)`](https://stripe.com/docs/api/node#create_bitcoin_receiver)
+  * [`retrieve(receiverId)`](https://stripe.com/docs/api/node#retrieve_bitcoin_receiver)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_bitcoin_receivers)
+  * `getMetadata(receiverId)`
 
 ## Configuration
 
