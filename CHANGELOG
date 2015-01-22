@@ -1,3 +1,6 @@
+3.1.0 Jan 21st, 2015
+ - Support making bitcoin charges through BitcoinReceiver source object
+
 3.0.3 Dec 23rd, 2014
  - Adding file uploads as a resource.
 
