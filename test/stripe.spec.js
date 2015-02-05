@@ -1,14 +1,13 @@
 'use strict';
 
 var testUtils = require('./testUtils');
-var chai = require('chai');
-var when = require('when');
+var Promise = require('bluebird');
 var stripe = require('../lib/stripe')(
   testUtils.getUserStripeKey(),
   'latest'
 );
 
-var expect = chai.expect;
+var expect = require('chai').expect;
 
 var CUSTOMER_DETAILS = {
   description: 'Some customer',
@@ -26,7 +25,7 @@ describe('Stripe Module', function() {
 
   describe('ClientUserAgent', function() {
     it('Should return a user-agent serialized JSON object', function() {
-      var d = when.defer();
+      var d = Promise.defer();
       stripe.getClientUserAgent(function(c) {
         d.resolve(JSON.parse(c));
       });
@@ -52,10 +51,9 @@ describe('Stripe Module', function() {
 
     describe('Any given endpoint', function() {
 
-      it('Will call a callback if successful', function(done) {
+      it('Will call a callback if successful', function() {
 
-        var defer = when.defer();
-
+        var defer = Promise.defer();
         stripe.customers.create({
           description: 'Some customer',
           card: {
@@ -68,12 +66,12 @@ describe('Stripe Module', function() {
           defer.resolve('Called!');
         });
 
-        return expect(defer.promise).to.eventually.become('Called!');
+        return expect(defer.promise).to.eventually.equal('Called!');
       });
 
       it('Given an error the callback will receive it', function() {
 
-        var defer = when.defer();
+        var defer = Promise.defer();
 
         stripe.customers.createCard('nonExistentCustId', { card: {} }, function(err, customer) {
           if (err) {

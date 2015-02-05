@@ -2,7 +2,7 @@
 
 var testUtils = require('./testUtils');
 var chai = require('chai');
-var when = require('when');
+var Promise = require('bluebird');
 var stripe = require('../lib/stripe')(
   testUtils.getUserStripeKey(),
   'latest'
@@ -62,7 +62,7 @@ describe('Flows', function() {
     it('Allows me to: Create a plan and subscribe a customer to it', function() {
 
       return expect(
-        when.join(
+        Promise.join(
           stripe.plans.create({
             id: 'plan' + +new Date,
             amount: 1700,
@@ -91,7 +91,7 @@ describe('Flows', function() {
     it('Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)', function() {
       var plan;
       return expect(
-        when.join(
+        Promise.join(
           stripe.plans.create({
             id: 'plan' + +new Date,
             amount: 1700,
@@ -149,7 +149,7 @@ describe('Flows', function() {
     it('Allows me to: subscribe then cancel with `at_period_end` defined', function() {
 
       return expect(
-        when.join(
+        Promise.join(
           stripe.plans.create({
             id: 'plan' + +new Date,
             amount: 1700,
@@ -214,7 +214,7 @@ describe('Flows', function() {
     describe('When I create a coupon & customer', function() {
       it('Does so', function() {
         return expect(
-          when.join(
+          Promise.join(
             stripe.coupons.create({
               percent_off: 20,
               duration: 'once'
@@ -463,10 +463,10 @@ describe('Flows', function() {
             invoiceItemId = ii.id
             cleanup.deleteInvoiceItem(ii.id);
 
-            var deferred = when.defer();
+            var deferred = Promise.defer();
 
             // Return found invoiceItem description for two searches:
-            return when.join(
+            return Promise.join(
               // This search should give us our invoice-item:
               stripe.invoiceItems.list({
                 created: {

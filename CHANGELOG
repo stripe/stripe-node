@@ -1,3 +1,8 @@
+3.2.0 Feb 5th, 2015
+ - Fix incorrect failing tests for headers support
+ - Update all dependencies (remove mocha-as-promised)
+ - Switch to bluebird for promises
+
 3.1.0 Jan 21st, 2015
  - Support making bitcoin charges through BitcoinReceiver source object
 

@@ -2,7 +2,7 @@
 
 var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
-var when = require('when');
+var Promise = require('bluebird');
 
 var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
@@ -353,7 +353,7 @@ describe('Customers Resource', function() {
 
         it('Sends one request to get current, and another to set new data', function() {
 
-          var defer = when.defer();
+          var defer = Promise.defer();
 
           stripe.customers.setMetadata('customerIdFoo321', {
             foo: 123,

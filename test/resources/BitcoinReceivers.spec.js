@@ -13,6 +13,7 @@ describe('BitcoinReceivers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/bitcoin/receivers/receiverId1',
+        headers: {},
         data: {}
       });
 
@@ -30,6 +31,7 @@ describe('BitcoinReceivers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/bitcoin/receivers',
+        headers: {},
         data: { amount: 200, currency: 'usd', description: 'some details' }
       });
 
@@ -45,6 +47,7 @@ describe('BitcoinReceivers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/bitcoin/receivers',
+        headers: {},
         data: {}
       });
 
@@ -62,6 +65,7 @@ describe('BitcoinReceivers Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/bitcoin/receivers/receiverId/transactions',
+        headers: {},
         data: {
           limit: 1
         }

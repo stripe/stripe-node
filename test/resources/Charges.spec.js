@@ -68,6 +68,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges',
+        headers: {},
         data: {
           amount: receiver.amount,
           currency: receiver.currency,
