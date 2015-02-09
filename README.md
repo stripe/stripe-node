@@ -67,7 +67,7 @@ stripe.customers.create({
   * [`list([params])`](https://stripe.com/docs/api/node#list_charges)
   * [`retrieve(chargeId)`](https://stripe.com/docs/api/node#retrieve_charge)
   * [`capture(chargeId[, params])`](https://stripe.com/docs/api/node#charge_capture)
-  * [`refund(chargeId[, params])`](https://stripe.com/docs/api/node#refund_charge)
+  * [`refund(chargeId[, params])`](https://stripe.com/docs/api/node#create_refund)
   * [`update(chargeId[, params])`](https://stripe.com/docs/api/node#update_charge)
   * [`updateDispute(chargeId[, params])`](https://stripe.com/docs/api/node#update_dispute)
   * [`closeDispute(chargeId[, params])`](https://stripe.com/docs/api/node#close_dispute)
