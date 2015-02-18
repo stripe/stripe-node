@@ -384,24 +384,25 @@ describe('Flows', function() {
         ).to.eventually.have.deep.property('customer.created');
       });
     });
-    describe('A customer\'s default card', function() {
-      it('Allows you to expand a default_card', function() {
+    describe('A customer\'s default source', function() {
+      it('Allows you to expand a default_source', function() {
         return expect(
           stripe.customers.create({
             description: 'Some customer',
-            card: {
+            source: {
+              object: 'card',
               number: '4242424242424242',
               exp_month: 12,
               exp_year: 2015
             },
-            expand: ['default_card']
+            expand: ['default_source']
           })
             .then(function(cust) {
               cleanup.deleteCustomer(cust.id);
               return cust;
             })
         // Confirm it's expanded by checking that some prop (e.g. exp_year) exists:
-        ).to.eventually.have.deep.property('default_card.exp_year');
+        ).to.eventually.have.deep.property('default_source.exp_year');
       });
     });
   });

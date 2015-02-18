@@ -55,6 +55,25 @@ describe('BitcoinReceivers Resource', function() {
 
   });
 
+  describe('update', function() {
+
+    it('Sends the correct request to the top-level API', function() {
+
+      stripe.bitcoinReceivers.update(
+        'btcrcv_123',
+        { metadata: {key: 'value'}}
+      );
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/bitcoin/receivers/btcrcv_123',
+        data: { metadata: {key: 'value'}},
+        headers: {},
+      });
+
+    });
+
+  });
+
   describe('listTransactions', function() {
 
     it('Sends the correct request', function() {

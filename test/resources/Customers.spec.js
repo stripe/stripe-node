@@ -571,6 +571,148 @@ describe('Customers Resource', function() {
 
   });
 
+  describe('Source methods', function() {
+
+    describe('retrieveSource', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.retrieveSource('customerIdFoo321', 'cardIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/sources/cardIdFoo456',
+          headers: {},
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.retrieveSource('customerIdFoo321', 'cardIdFoo456', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/sources/cardIdFoo456',
+          headers: {},
+          data: {},
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+    describe('createSource', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.createSource('customerIdFoo321', {
+          object: 'card', number: '123456', exp_month: '12'
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/sources',
+          headers: {},
+          data: { object: 'card', number: '123456', exp_month: '12' }
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.createSource('customerIdFoo321', {
+          object: 'card', number: '123456', exp_month: '12'
+        }, TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/sources',
+          headers: {},
+          data: { object: 'card', number: '123456', exp_month: '12' },
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+    describe('updateSource', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.updateSource('customerIdFoo321', 'cardIdFoo456', {
+          name: 'Bob M. Baz'
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/sources/cardIdFoo456',
+          headers: {},
+          data: { name: 'Bob M. Baz' }
+        });
+
+      });
+
+    });
+
+    describe('deleteSource', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.deleteSource('customerIdFoo321', 'cardIdFoo456');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/sources/cardIdFoo456',
+          headers: {},
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.deleteSource('customerIdFoo321', 'cardIdFoo456', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/customers/customerIdFoo321/sources/cardIdFoo456',
+          headers: {},
+          data: {},
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+    describe('listSources', function() {
+
+      it('Sends the correct request', function() {
+
+        stripe.customers.listSources('customerIdFoo321');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/sources',
+          headers: {},
+          data: {}
+        });
+
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+
+        stripe.customers.listSources('customerIdFoo321', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/customerIdFoo321/sources',
+          headers: {},
+          data: {},
+          auth: TEST_AUTH_KEY
+        });
+
+      });
+
+    });
+
+  });
+
   describe('Subscription methods', function() {
 
     describe('retrieveSubscription', function() {
