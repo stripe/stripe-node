@@ -1,3 +1,7 @@
+3.3.0 Feb 19th, 2015
+ - Support BitcoinReceiver update & delete actions
+ - Add methods for manipulating customer sources as per 2015-02-18 API version
+
 3.2.0 Feb 5th, 2015
  - Fix incorrect failing tests for headers support
  - Update all dependencies (remove mocha-as-promised)
