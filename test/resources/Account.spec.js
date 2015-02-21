@@ -45,8 +45,8 @@ describe('Account Resource', function() {
     });
 
     it('Sends the correct request with a callback', function() {
-      
-      stripe.account.retrieve(function (err, account){});
+
+      stripe.account.retrieve(function(err, account) {});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/account',
