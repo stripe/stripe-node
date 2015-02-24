@@ -73,6 +73,22 @@ describe('Transfers Resource', function() {
 
   });
 
+  describe('reverse', function() {
+
+    it('Sends the correct request', function() {
+
+      stripe.transfers.reverse('transferId4');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/transfers/transferId4/reversals',
+        headers: {},
+        data: {}
+      });
+
+    });
+
+  });
+
   describe('list', function() {
 
     it('Sends the correct request', function() {
