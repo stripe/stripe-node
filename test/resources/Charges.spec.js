@@ -55,7 +55,8 @@ describe('Charge Resource', function() {
       var receiver = stripe.bitcoinReceivers.create({
         amount: 100,
         currency: 'usd',
-        description: 'some details'
+        description: 'some details',
+        email: 'do+fill_now@stripe.com'
       })
 
       var charge = stripe.charges.create({
