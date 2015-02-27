@@ -26,13 +26,21 @@ describe('BitcoinReceivers Resource', function() {
     it('Sends the correct request', function() {
 
       stripe.bitcoinReceivers.create({
-        amount: 200, currency: 'usd', description: 'some details'
+        amount: 200,
+        currency: 'usd',
+        description: 'some details',
+        email: 'do+fill_now@stripe.com'
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/bitcoin/receivers',
         headers: {},
-        data: { amount: 200, currency: 'usd', description: 'some details' }
+        data: {
+          amount: 200,
+          currency: 'usd',
+          description: 'some details',
+          email: 'do+fill_now@stripe.com'
+        }
       });
 
     });
