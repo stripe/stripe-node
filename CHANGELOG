@@ -1,3 +1,6 @@
+3.3.2 Feb 24th, 2015
+ - Support transfer reversals.
+
 3.3.1 Feb 21st, 2015
  - [BUGFIX] Fix passing in only a callback to the Account resource. (Matthew
  Arkin)
