@@ -84,6 +84,20 @@ describe('Stripe Module', function() {
         return expect(defer.promise).to.eventually.become('ErrorWasPassed')
       });
 
+      it('Will return the HTTP response status code', function() {
+        var defer = Promise.defer();
+
+        stripe.customers.createCard('nonExistentCustId', { card: {} }, function(err, customer) {
+          if (err) {
+            defer.resolve(err);
+          } else {
+            defer.reject(customer);
+          }
+        });
+
+        return expect(defer.promise).to.eventually.have.property('code', 400)
+      });
+
     });
   });
 
