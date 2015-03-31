@@ -1,3 +1,6 @@
+3.3.3 Mar 31st, 2015
+ - [BUGFIX] Fix support for both stripe.account and stripe.accounts 
+
 3.3.2 Feb 24th, 2015
  - Support transfer reversals.
 
