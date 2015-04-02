@@ -29,24 +29,6 @@ describe('Flows', function() {
   var cleanup = new testUtils.CleanupUtility();
   this.timeout(30000);
 
-  describe('Using revoked.stripe.com', function() {
-
-    before(function() {
-      stripe.setHost('revoked.stripe.com', 444);
-    });
-
-    after(function() {
-      stripe.setHost('api.stripe.com', 443);
-    });
-
-    it('Throws "revoked ssl cert" correctly', function() {
-      return expect(
-        stripe.account.retrieve()
-      ).to.eventually.be.rejectedWith('Revoked SSL Certificate');
-    });
-
-  });
-
   it('Allows me to retrieve default_currency', function() {
     return expect(
       stripe.account.retrieve()
