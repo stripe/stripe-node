@@ -52,6 +52,19 @@ stripe.customers.create({
 });
 ```
 
+To use the `Stripe-Account` header, simply pass an extra options hash:
+
+```js
+// Retrieve the balance for a connected account:
+stripe.balance.retrieve({
+  stripe_account: "acct_foo"
+}).then(function(balance) {
+  // The balance object for the connected account
+}, function(err) {
+  // Error
+});
+```
+
 ### Available resources & methods
 
 *Where you see `params` it is a plain JavaScript object, e.g. `{ email: 'foo@example.com' }`*
