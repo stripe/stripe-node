@@ -1,5 +1,5 @@
 3.3.4 Apr 2nd, 2015
-- DESCRIBE CHANGES HERE (try to use the same style, tense, etc. as the other entries) 
+- Remove SSL revocation tests and check
 
 3.3.3 Mar 31st, 2015
  - [BUGFIX] Fix support for both stripe.account and stripe.accounts 
