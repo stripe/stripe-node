@@ -2,6 +2,12 @@
   "name": "stripe",
   "version": "3.3.4",
   "description": "Stripe API wrapper",
+  "keywords": [
+    "stripe",
+    "payment processing",
+    "credit cards",
+    "api"
+  ],
   "homepage": "https://github.com/stripe/stripe-node",
   "author": "Stripe <james@stripe.com> (https://stripe.com/)",
   "contributors": [
