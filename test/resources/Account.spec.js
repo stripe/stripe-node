@@ -60,16 +60,16 @@ describe('Account Resource', function() {
 
   });
 
-  describe('Bank account methods', function() {
+  describe('External account methods', function() {
 
-    describe('retrieveBankAccount', function() {
+    describe('retrieveExternalAccount', function() {
 
       it('Sends the correct request', function() {
 
-        stripe.account.retrieveBankAccount('accountIdFoo321', 'bankAccountIdFoo456');
+        stripe.account.retrieveExternalAccount('accountIdFoo321', 'externalAccountIdFoo456');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/accounts/accountIdFoo321/bank_accounts/bankAccountIdFoo456',
+          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {}
         });
@@ -78,10 +78,10 @@ describe('Account Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.account.retrieveBankAccount('accountIdFoo321', 'bankAccountIdFoo456', TEST_AUTH_KEY);
+        stripe.account.retrieveExternalAccount('accountIdFoo321', 'externalAccountIdFoo456', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/accounts/accountIdFoo321/bank_accounts/bankAccountIdFoo456',
+          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY
@@ -91,16 +91,16 @@ describe('Account Resource', function() {
 
     });
 
-    describe('createBankAccount', function() {
+    describe('createExternalAccount', function() {
 
       it('Sends the correct request', function() {
 
-        stripe.account.createBankAccount('accountIdFoo321', {
+        stripe.account.createExternalAccount('accountIdFoo321', {
           number: '123456', currency: 'usd', country: 'US'
         });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
-          url: '/v1/accounts/accountIdFoo321/bank_accounts',
+          url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
           data: { number: '123456', currency: 'usd', country: 'US' }
         });
@@ -109,12 +109,12 @@ describe('Account Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.account.createBankAccount('accountIdFoo321', {
+        stripe.account.createExternalAccount('accountIdFoo321', {
           number: '123456', currency: 'usd', country: 'US'
         }, TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
-          url: '/v1/accounts/accountIdFoo321/bank_accounts',
+          url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
           data: { number: '123456', currency: 'usd', country: 'US' },
           auth: TEST_AUTH_KEY
@@ -124,16 +124,16 @@ describe('Account Resource', function() {
 
     });
 
-    describe('updateBankAccount', function() {
+    describe('updateExternalAccount', function() {
 
       it('Sends the correct request', function() {
 
-        stripe.account.updateBankAccount('accountIdFoo321', 'bankAccountIdFoo456', {
+        stripe.account.updateExternalAccount('accountIdFoo321', 'externalAccountIdFoo456', {
           default_for_currency: true
         });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
-          url: '/v1/accounts/accountIdFoo321/bank_accounts/bankAccountIdFoo456',
+          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: { default_for_currency: true }
         });
@@ -142,14 +142,14 @@ describe('Account Resource', function() {
 
     });
 
-    describe('deleteBankAccount', function() {
+    describe('deleteExternalAccount', function() {
 
       it('Sends the correct request', function() {
 
-        stripe.account.deleteBankAccount('accountIdFoo321', 'bankAccountIdFoo456');
+        stripe.account.deleteExternalAccount('accountIdFoo321', 'externalAccountIdFoo456');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
-          url: '/v1/accounts/accountIdFoo321/bank_accounts/bankAccountIdFoo456',
+          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {}
         });
@@ -158,10 +158,10 @@ describe('Account Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.account.deleteBankAccount('accountIdFoo321', 'bankAccountIdFoo456', TEST_AUTH_KEY);
+        stripe.account.deleteExternalAccount('accountIdFoo321', 'externalAccountIdFoo456', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
-          url: '/v1/accounts/accountIdFoo321/bank_accounts/bankAccountIdFoo456',
+          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY
@@ -171,14 +171,14 @@ describe('Account Resource', function() {
 
     });
 
-    describe('listBankAccounts', function() {
+    describe('listExternalAccounts', function() {
 
       it('Sends the correct request', function() {
 
-        stripe.account.listBankAccounts('accountIdFoo321');
+        stripe.account.listExternalAccounts('accountIdFoo321');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/accounts/accountIdFoo321/bank_accounts',
+          url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
           data: {}
         });
@@ -187,10 +187,10 @@ describe('Account Resource', function() {
 
       it('Sends the correct request [with specified auth]', function() {
 
-        stripe.account.listBankAccounts('accountIdFoo321', TEST_AUTH_KEY);
+        stripe.account.listExternalAccounts('accountIdFoo321', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/accounts/accountIdFoo321/bank_accounts',
+          url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY
