@@ -107,7 +107,7 @@ stripe.balance.retrieve({
   * [`updateSubscription(customerId, subscriptionId, [, params])`](https://stripe.com/docs/api/node#update_subscription)
   * [`cancelSubscription(customerId, subscriptionId, [, params])`](https://stripe.com/docs/api/node#cancel_subscription)
   * [`listSubscriptions(params)`](https://stripe.com/docs/api/node#list_subscriptions)
-  * [`createCard(customerId[, params])`](https://stripe.com/docs/api/node#create_card)
+  * [`createSource(customerId[, params])`](https://stripe.com/docs/api/node#create_card)
   * [`listCards(customerId)`](https://stripe.com/docs/api/node#list_cards)
   * [`retrieveCard(customerId, cardId)`](https://stripe.com/docs/api/node#retrieve_card)
   * [`updateCard(customerId, cardId[, params])`](https://stripe.com/docs/api/node#update_card)
