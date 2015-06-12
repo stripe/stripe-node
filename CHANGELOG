@@ -1,5 +1,6 @@
 3.5.0 Jun 11th, 2015
-- DESCRIBE CHANGES HERE (try to use the same style, tense, etc. as the other entries) 
+- Added support for optional parameters when retrieving an upcoming invoice
+(Matthew Arkin)
 
 3.4.0 Jun 10th, 2015
 - Added support for bank accounts and debit cards in managed accounts
