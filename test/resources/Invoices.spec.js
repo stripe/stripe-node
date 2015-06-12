@@ -99,6 +99,20 @@ describe('Invoices Resource', function() {
       });
     });
 
+    describe('With a options object in addition to a customer ID', function() {
+      it('Sends the correct request', function() {
+
+        stripe.invoices.retrieveUpcoming('customerId1', { plan:'planId123' });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/invoices/upcoming?customer=customerId1&plan=planId123',
+          headers: {},
+          data: {}
+        });
+
+      });
+    });
+
   });
 
   describe('pay', function() {
