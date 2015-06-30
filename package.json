@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "bluebird": "^2.9.6",
-    "qs": "^2.3.3",
+    "qs": "^2.4.1",
     "lodash": "^3.1.0"
   },
   "license": "MIT",
