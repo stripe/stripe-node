@@ -37,7 +37,7 @@ describe('utils', function() {
     });
 
     it('Handles deeply nested object', function() {
-      expect(utils.stringifyRequestData({
+      expect(decodeURI(utils.stringifyRequestData({
         a: {
           b: {
             c: {
@@ -45,8 +45,17 @@ describe('utils', function() {
             }
           }
         }
-      })).to.equal('a%5Bb%5D%5Bc%5D%5Bd%5D=2');
+      }))).to.equal('a[b][c][d]=2');
     });
+
+    it('Handles arrays of objects', function() {
+      expect(decodeURI(utils.stringifyRequestData({
+        a: [
+          { b: 'c' },
+          { b: 'd' },
+        ]
+      }))).to.equal('a[][b]=c&a[][b]=d');
+    })
 
     it('Creates a string from an object, handling shallow nested objects', function() {
       expect(utils.stringifyRequestData({
@@ -69,9 +78,9 @@ describe('utils', function() {
     describe('Stripe-specific cases', function() {
 
       it('Handles the `expand` array correctly (producing the form `expand[]=_` for each item', function() {
-        expect(utils.stringifyRequestData({
+        expect(decodeURI(utils.stringifyRequestData({
           expand: ['a', 'foo', 'a.b.c']
-        })).to.equal('expand%5B%5D=a&expand%5B%5D=foo&expand%5B%5D=a.b.c');
+        }))).to.equal('expand[]=a&expand[]=foo&expand[]=a.b.c');
       });
 
     });
