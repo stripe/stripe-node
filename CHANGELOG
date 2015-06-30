@@ -1,3 +1,6 @@
+3.5.1 Jun 30th, 2015
+- [BUGFIX] Fixed issue with passing arrays of objects
+
 3.5.0 Jun 11th, 2015
 - Added support for optional parameters when retrieving an upcoming invoice
 (Matthew Arkin)
