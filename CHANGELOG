@@ -1,3 +1,6 @@
+3.6.0 Jul 7th, 2015
+- Added request IDs to all Stripe errors
+
 3.5.2 Jun 30th, 2015
 - [BUGFIX] Fixed issue with uploading binary files (Gabriel Chagas Marques)
 
