@@ -20,6 +20,10 @@ describe('Error', function() {
       expect(Error.StripeError.generate({ type: 'invalid_request_error' })).to.be.instanceOf(Error.StripeInvalidRequestError);
       expect(Error.StripeError.generate({ type: 'api_error' })).to.be.instanceOf(Error.StripeAPIError);
     });
-  });
 
+    it('Pulls in request IDs', function() {
+      var e = Error.StripeError.generate({ type: 'card_error', requestId: 'foo'});
+      expect(e).to.have.property('requestId', 'foo');
+    });
+  });
 });
