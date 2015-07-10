@@ -2,7 +2,7 @@
 
 require('./testUtils');
 
-var Error = require('../lib/Error');
+var Error = require('../lib/StripeError');
 var expect = require('chai').expect;
 
 describe('Error', function() {
