@@ -6,6 +6,37 @@ var expect = require('chai').expect;
 var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
 describe('Account Resource', function() {
+  function uniqueEmail() {
+    return Math.random() + 'bob@example.com';
+  }
+  describe('create', function() {
+    it('Sends the correct request', function() {
+      var data = {
+        managed: false,
+        country: 'US',
+        email: uniqueEmail()
+      };
+      stripe.account.create(data);
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/accounts',
+        data: data,
+        headers: {},
+      });
+    });
+  });
+
+  describe('delete', function() {
+    it('deletes an account successfully', function() {
+      stripe.account.del('acct_16Tzq6DBahdM4C8s');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'DELETE',
+        url: '/v1/accounts/acct_16Tzq6DBahdM4C8s',
+        data: {},
+        headers: {},
+      });
+    });
+  });
 
   describe('retrieve', function() {
 
@@ -35,7 +66,7 @@ describe('Account Resource', function() {
 
     it('Sends the correct request with secret key', function() {
 
-      var key = 'sk_12345678901234567890123456789012'
+      var key = 'sk_12345678901234567890123456789012';
       stripe.account.retrieve(key);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         auth: key,
