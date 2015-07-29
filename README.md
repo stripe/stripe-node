@@ -70,7 +70,10 @@ stripe.balance.retrieve({
 *Where you see `params` it is a plain JavaScript object, e.g. `{ email: 'foo@example.com' }`*
 
  * account
-  * [`retrieve()`](https://stripe.com/docs/api/node#retrieve_account)
+  * [`retrieve(accountId)`](https://stripe.com/docs/api/node#retrieve_account)
+  * [`create([params])`](https://stripe.com/docs/api/node#create_account)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_accounts)
+  * [`update([params])`](https://stripe.com/docs/api/node#update_account)
  * balance
   * [`retrieve()`](https://stripe.com/docs/api/node#retrieve_balance)
   * [`listTransactions([params])`](https://stripe.com/docs/api/node#balance_history)
@@ -180,10 +183,17 @@ stripe.balance.retrieve({
 
 ## Development
 
-To run the tests you'll need a Stripe *Test* API key (from your [Stripe Dashboard](https://manage.stripe.com)):
+Run the tests using [`npm`](https://www.npmjs.com/):
 
 ```bash
-$ npm install -g mocha
+$ npm install
+$ npm test
+```
+
+If you wish, you may run tests using your Stripe *Test* API key by setting the environment variable `STRIPE_TEST_API_KEY` before running tests:
+
+```bash
+$ export STRIPE_TEST_API_KEY='sk_test....'
 $ npm test
 ```
 
