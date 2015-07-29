@@ -183,10 +183,17 @@ stripe.balance.retrieve({
 
 ## Development
 
-To run the tests you'll need a Stripe *Test* API key (from your [Stripe Dashboard](https://manage.stripe.com)):
+Run the tests using [`npm`](https://www.npmjs.com/):
 
 ```bash
-$ npm install -g mocha
+$ npm install
+$ npm test
+```
+
+If you wish, you may run tests using your Stripe *Test* API key by setting the environment variable `STRIPE_TEST_API_KEY` before running tests:
+
+```bash
+$ export STRIPE_TEST_API_KEY='sk_test....'
 $ npm test
 ```
 
