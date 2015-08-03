@@ -1,3 +1,7 @@
+3.7.0 Aug 3rd, 2015
+- Added managed account deletion
+- Added dispute listing and retrieval
+
 3.6.0 Jul 7th, 2015
 - Added request IDs to all Stripe errors
 
