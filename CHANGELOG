@@ -1,3 +1,6 @@
+3.8.0 Sep 11th, 2015
+- Added rate limiting responses
+
 3.7.1 Aug 17th, 2015
 - Added refund object with listing, retrieval, updating, and creation.
 
