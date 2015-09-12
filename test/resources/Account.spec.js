@@ -67,9 +67,22 @@ describe('Account Resource', function() {
     it('Sends the correct request with secret key', function() {
 
       var key = 'sk_12345678901234567890123456789012';
-      stripe.account.retrieve(key);
+      stripe.account.retrieve(null, key);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         auth: key,
+        method: 'GET',
+        url: '/v1/account',
+        data: {},
+        headers: {},
+      });
+    });
+    
+    it('Sends the correct request with secret key as first object', function() {
+
+      var params = {api_key: 'sk_12345678901234567890123456789012'};
+      stripe.account.retrieve(params);
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        auth: params.api_key,
         method: 'GET',
         url: '/v1/account',
         data: {},
