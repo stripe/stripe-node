@@ -76,8 +76,10 @@ describe('Order Resource', function() {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/orders?limit=3',
-        data: {},
+        url: '/v1/orders',
+        data: {
+          limit: 3
+        },
         headers: {},
       });
 
@@ -90,8 +92,10 @@ describe('Order Resource', function() {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/orders?active=true',
-        data: {},
+        url: '/v1/orders',
+        data: {
+          status: 'active'
+        },
         headers: {},
       });
 
@@ -103,7 +107,7 @@ describe('Order Resource', function() {
 
     it('Sends the correct request', function() {
 
-      stripe.orders.capture('orderIdFoo3242', { 
+      stripe.orders.pay('orderIdFoo3242', { 
         source: 'tok_FooBar'
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
