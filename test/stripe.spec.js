@@ -83,7 +83,6 @@ describe('Stripe Module', function() {
 
         return expect(defer.promise).to.eventually.become('ErrorWasPassed')
       });
-
     });
   });
 

@@ -25,5 +25,10 @@ describe('Error', function() {
       var e = Error.StripeError.generate({ type: 'card_error', requestId: 'foo'});
       expect(e).to.have.property('requestId', 'foo');
     });
+
+    it('Pulls in HTTP status code', function() {
+      var e = Error.StripeError.generate({ type: 'card_error', statusCode: 400 });
+      expect(e).to.have.property('statusCode', 400);
+    });
   });
 });
