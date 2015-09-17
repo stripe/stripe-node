@@ -1,3 +1,7 @@
+4.0.0 Sep 17th, 2015
+- Remove ability for API keys to be passed as 1st param to acct.retrieve
+- Rename StripeInvalidRequest to StripeInvalidRequestError
+
 3.9.0 Sep 14th, 2015
 - Add Relay resources: Products, SKUs, and Orders
 
