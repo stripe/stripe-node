@@ -122,7 +122,7 @@ describe('Flows', function() {
 
           })
       ).to.eventually.satisfy(function(err) {
-        return err.type === 'StripeInvalidRequest' &&
+        return err.type === 'StripeInvalidRequestError' &&
           err.rawType === 'invalid_request_error';
       });
 
