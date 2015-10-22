@@ -248,12 +248,12 @@ describe('Flows', function() {
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, { foo: "123" });
+            return stripe.customers.setMetadata(cust.id, { foo: '123' });
           })
           .then(function() {
             return stripe.customers.getMetadata(customer.id);
           })
-      ).to.eventually.deep.equal({ foo: "123" });
+      ).to.eventually.deep.equal({ foo: '123' });
     });
     it('Can reset metadata', function() {
       var customer;
@@ -262,7 +262,7 @@ describe('Flows', function() {
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, { baz: "123" });
+            return stripe.customers.setMetadata(cust.id, { baz: '123' });
           })
           .then(function() {
             return stripe.customers.setMetadata(customer.id, null);
@@ -279,12 +279,12 @@ describe('Flows', function() {
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, { foo: "123" });
+            return stripe.customers.setMetadata(cust.id, { foo: '123' });
           })
           .then(function() {
-            return stripe.customers.setMetadata(customer.id, { baz: "456" });
+            return stripe.customers.setMetadata(customer.id, { baz: '456' });
           })
-      ).to.eventually.deep.equal({ baz: "456" });
+      ).to.eventually.deep.equal({ baz: '456' });
     });
     it('Can set individual key/value pairs', function() {
       var customer;
@@ -314,7 +314,7 @@ describe('Flows', function() {
           .then(function() {
             return stripe.customers.getMetadata(customer.id);
           })
-      ).to.eventually.deep.equal({ _other_: "999", foo: "222" });
+      ).to.eventually.deep.equal({ _other_: '999', foo: '222' });
     });
     it('Can set individual key/value pairs [with per request token]', function() {
       var customer;
@@ -345,7 +345,7 @@ describe('Flows', function() {
           .then(function() {
             return stripe.customers.getMetadata(customer.id, authToken);
           })
-      ).to.eventually.deep.equal({ _other_: "999", foo: "222" });
+      ).to.eventually.deep.equal({ _other_: '999', foo: '222' });
     });
   });
 
