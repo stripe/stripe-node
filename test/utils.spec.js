@@ -6,7 +6,6 @@ var utils = require('../lib/utils');
 var expect = require('chai').expect;
 
 describe('utils', function() {
-
   describe('makeURLInterpolator', function() {
     it('Interpolates values into a prepared template', function() {
       var template = utils.makeURLInterpolator('/some/url/{foo}/{baz}?ok=1');
@@ -23,16 +22,14 @@ describe('utils', function() {
         // Test encoding:
         template({foo: 'FOO', baz: '__::baz::__'})
       ).to.equal('/some/url/FOO/__%3A%3Abaz%3A%3A__?ok=1');
-
     });
   });
 
   describe('stringifyRequestData', function() {
-
     it('Handles basic types', function() {
       expect(utils.stringifyRequestData({
         a: 1,
-        b: 'foo'
+        b: 'foo',
       })).to.equal('a=1&b=foo');
     });
 
@@ -41,19 +38,19 @@ describe('utils', function() {
         a: {
           b: {
             c: {
-              d: 2
-            }
-          }
-        }
+              d: 2,
+            },
+          },
+        },
       }))).to.equal('a[b][c][d]=2');
     });
 
     it('Handles arrays of objects', function() {
       expect(decodeURI(utils.stringifyRequestData({
         a: [
-          { b: 'c' },
-          { b: 'd' },
-        ]
+          {b: 'c'},
+          {b: 'd'},
+        ],
       }))).to.equal('a[][b]=c&a[][b]=d');
     })
 
@@ -64,25 +61,23 @@ describe('utils', function() {
         somethingElse: '::""%&',
         nested: {
           1: 2,
-          'a n o t h e r': null
-        }
+          'a n o t h e r': null,
+        },
       })).to.equal([
         'test=1',
         'foo=baz',
         'somethingElse=%3A%3A%22%22%25%26',
         'nested%5B1%5D=2', // Unencoded: nested[1]=2
-        'nested%5Ba%20n%20o%20t%20h%20e%20r%5D='
+        'nested%5Ba%20n%20o%20t%20h%20e%20r%5D=',
       ].join('&'));
     });
 
     describe('Stripe-specific cases', function() {
-
       it('Handles the `expand` array correctly (producing the form `expand[]=_` for each item', function() {
         expect(decodeURI(utils.stringifyRequestData({
-          expand: ['a', 'foo', 'a.b.c']
+          expand: ['a', 'foo', 'a.b.c'],
         }))).to.equal('expand[]=a&expand[]=foo&expand[]=a.b.c');
       });
-
     });
   });
 
@@ -93,7 +88,7 @@ describe('utils', function() {
       var B = A.extend({
         constructor: function() {
           this.called = true;
-        }
+        },
       });
       expect(new B()).to.be.an.instanceof(A);
       expect(new B()).to.be.an.instanceof(B);
@@ -165,8 +160,8 @@ describe('utils', function() {
     it('parse an idempotency key and api key (with data)', function() {
       var args = [{foo: 'bar'}, {
         api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-        idempotency_key: 'foo'
-      }];
+        idempotency_key: 'foo',
+      },];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         headers: {'Idempotency-Key': 'foo'},
@@ -176,8 +171,8 @@ describe('utils', function() {
     it('parse an idempotency key and api key', function() {
       var args = [{
         api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-        idempotency_key: 'foo'
-      }];
+        idempotency_key: 'foo',
+      },];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         headers: {'Idempotency-Key': 'foo'},
