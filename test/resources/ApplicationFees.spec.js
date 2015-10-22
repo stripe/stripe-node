@@ -4,9 +4,7 @@ var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
 describe('ApplicationFee Resource', function() {
-
   describe('list', function() {
-
     it('Sends the correct request', function() {
       stripe.applicationFees.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -15,55 +13,45 @@ describe('ApplicationFee Resource', function() {
         data: {},
         headers: {},
       });
-
     });
-
   });
 
   describe('refund', function() {
-
     it('Sends the correct request', function() {
-
-      stripe.applicationFees.refund('applicationFeeIdExample3242', { amount: 23 });
+      stripe.applicationFees.refund('applicationFeeIdExample3242', {amount: 23});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/application_fees/applicationFeeIdExample3242/refund',
-        data: { amount: 23 },
+        data: {amount: 23},
         headers: {},
       });
-
     });
-
   });
 
   describe('refunds', function() {
-
     it('Sends the correct update request', function() {
-
       stripe.applicationFees.updateRefund(
         'appFeeIdExample3242',
         'refundIdExample2312',
-        { metadata: {key: 'value'}}
+        {metadata: {key: 'value'}}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
-        data: { metadata: {key: 'value'}},
+        data: {metadata: {key: 'value'}},
         headers: {},
       });
-
     });
 
     it('Sends the correct create request', function() {
-
       stripe.applicationFees.createRefund(
         'appFeeIdExample3242',
-        { amount: 100 }
+        {amount: 100}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/application_fees/appFeeIdExample3242/refunds',
-        data: { amount: 100 },
+        data: {amount: 100},
         headers: {},
       });
     });
@@ -93,5 +81,4 @@ describe('ApplicationFee Resource', function() {
       });
     });
   });
-
 });

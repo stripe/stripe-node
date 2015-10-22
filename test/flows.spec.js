@@ -15,14 +15,13 @@ var CUSTOMER_DETAILS = {
   card: {
     number: '4242424242424242',
     exp_month: 12,
-    exp_year: 2015
-  }
+    exp_year: 2015,
+  },
 };
 
 var CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
 
 describe('Flows', function() {
-
   // Note: These tests must be run as one so we can retrieve the
   // default_currency (required in subsequent tests);
 
@@ -40,21 +39,18 @@ describe('Flows', function() {
   });
 
   describe('Plan+Subscription flow', function() {
-
     it('Allows me to: Create a plan and subscribe a customer to it', function() {
-
       return expect(
         Promise.join(
           stripe.plans.create({
-            id: 'plan' + +new Date,
+            id: 'plan' + (new Date()).getTime(),
             amount: 1700,
             currency: CURRENCY,
             interval: 'month',
-            name: 'Gold Super Amazing Tier'
+            name: 'Gold Super Amazing Tier',
           }),
           stripe.customers.create(CUSTOMER_DETAILS)
         ).then(function(j) {
-
           var plan = j[0];
           var customer = j[1];
 
@@ -62,86 +58,78 @@ describe('Flows', function() {
           cleanup.deletePlan(plan.id);
 
           return stripe.customers.updateSubscription(customer.id, {
-            plan: plan.id
+            plan: plan.id,
           });
-
         })
       ).to.eventually.have.property('status', 'active');
-
     });
 
-    it('Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)', function() {
-      var plan;
-      return expect(
-        Promise.join(
-          stripe.plans.create({
-            id: 'plan' + +new Date,
-            amount: 1700,
-            currency: CURRENCY,
-            interval: 'month',
-            name: 'Gold Super Amazing Tier'
-          }),
-          stripe.customers.create(CUSTOMER_DETAILS)
-        ).then(function(j) {
+    it(
+      'Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)',
+      function() {
+        var plan;
+        return expect(
+          Promise.join(
+            stripe.plans.create({
+              id: 'plan' + (new Date()).getTime(),
+              amount: 1700,
+              currency: CURRENCY,
+              interval: 'month',
+              name: 'Gold Super Amazing Tier',
+            }),
+            stripe.customers.create(CUSTOMER_DETAILS)
+          ).then(function(j) {
+            plan = j[0];
+            var customer = j[1];
 
-          plan = j[0];
-          var customer = j[1];
+            cleanup.deleteCustomer(customer.id);
+            cleanup.deletePlan(plan.id);
 
-          cleanup.deleteCustomer(customer.id);
-          cleanup.deletePlan(plan.id);
-
-          return stripe.customers.createSubscription(customer.id, {
-            plan: plan.id
-          });
-
-        }).then(function(subscription) {
-          return stripe.customers.updateSubscription(subscription.customer, subscription.id, {
-            plan: plan.id, quantity: '3'
-          });
-        }).then(function(subscription) {
-          return [subscription.status, subscription.quantity];
-        })
-      ).to.eventually.deep.equal(['active', 3]);
-
-    });
+            return stripe.customers.createSubscription(customer.id, {
+              plan: plan.id,
+            });
+          }).then(function(subscription) {
+            return stripe.customers.updateSubscription(subscription.customer, subscription.id, {
+              plan: plan.id, quantity: '3',
+            });
+          }).then(function(subscription) {
+            return [subscription.status, subscription.quantity];
+          })
+        ).to.eventually.deep.equal(['active', 3]);
+      }
+    );
 
     it('Errors when I attempt to subscribe a customer to a non-existent plan', function() {
-
       return expect(
         stripe.customers.create(CUSTOMER_DETAILS)
           .then(function(customer) {
-
             cleanup.deleteCustomer(customer.id);
 
             return stripe.customers.updateSubscription(customer.id, {
-              plan: 'someNonExistentPlan' + +new Date
+              plan: 'someNonExistentPlan' + (new Date()).getTime(),
             }).then(null, function(err) {
               // Resolve with the error so we can inspect it below
               return err;
             });
-
           })
       ).to.eventually.satisfy(function(err) {
         return err.type === 'StripeInvalidRequestError' &&
           err.rawType === 'invalid_request_error';
       });
-
     });
 
     it('Allows me to: subscribe then cancel with `at_period_end` defined', function() {
-
       return expect(
         Promise.join(
           stripe.plans.create({
-            id: 'plan' + +new Date,
+            id: 'plan' + (new Date()).getTime(),
             amount: 1700,
             currency: CURRENCY,
             interval: 'month',
-            name: 'Silver Super Amazing Tier'
+            name: 'Silver Super Amazing Tier',
           }),
           stripe.customers.create(CUSTOMER_DETAILS)
         ).then(function(j) {
-
           var plan = j[0];
           var customer = j[1];
 
@@ -149,24 +137,22 @@ describe('Flows', function() {
           cleanup.deletePlan(plan.id);
 
           return stripe.customers.updateSubscription(customer.id, {
-            plan: plan.id
+            plan: plan.id,
           });
-
         }).then(function(subscription) {
           return stripe.customers.cancelSubscription(subscription.customer, {
-            at_period_end: true
+            at_period_end: true,
           });
         })
       ).to.eventually.have.property('cancel_at_period_end', true);
-
     });
 
     describe('Plan name variations', function() {
       [
-        '34535 355453' + +new Date,
-        'TEST 239291' + +new Date,
-        'TEST_a-i' + +new Date,
-        'foobarbazteston###etwothree' + +new Date
+        '34535 355453' + (new Date()).getTime(),
+        'TEST 239291' + (new Date()).getTime(),
+        'TEST_a-i' + (new Date()).getTime(),
+        'foobarbazteston###etwothree' + (new Date()).getTime(),
       ].forEach(function(planID) {
         it('Allows me to create and retrieve plan with ID: ' + planID, function() {
           var plan;
@@ -176,7 +162,7 @@ describe('Flows', function() {
               amount: 1700,
               currency: CURRENCY,
               interval: 'month',
-              name: 'generic'
+              name: 'generic',
             }).then(function() {
               cleanup.deletePlan(planID);
               return stripe.plans.retrieve(planID);
@@ -185,11 +171,9 @@ describe('Flows', function() {
         });
       });
     });
-
   });
 
   describe('Coupon flow', function() {
-
     var customer;
     var coupon;
 
@@ -199,7 +183,7 @@ describe('Flows', function() {
           Promise.join(
             stripe.coupons.create({
               percent_off: 20,
-              duration: 'once'
+              duration: 'once',
             }),
             stripe.customers.create(CUSTOMER_DETAILS)
           ).then(function(joined) {
@@ -212,7 +196,7 @@ describe('Flows', function() {
         it('Does so', function() {
           return expect(
             stripe.customers.update(customer.id, {
-              coupon: coupon.id
+              coupon: coupon.id,
             })
           ).to.not.be.eventually.rejected;
         });
@@ -237,7 +221,6 @@ describe('Flows', function() {
         });
       });
     });
-
   });
 
   describe('Metadata flow', function() {
@@ -248,12 +231,12 @@ describe('Flows', function() {
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, { foo: '123' });
+            return stripe.customers.setMetadata(cust.id, {foo: '123'});
           })
           .then(function() {
             return stripe.customers.getMetadata(customer.id);
           })
-      ).to.eventually.deep.equal({ foo: '123' });
+      ).to.eventually.deep.equal({foo: '123'});
     });
     it('Can reset metadata', function() {
       var customer;
@@ -262,7 +245,7 @@ describe('Flows', function() {
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, { baz: '123' });
+            return stripe.customers.setMetadata(cust.id, {baz: '123'});
           })
           .then(function() {
             return stripe.customers.setMetadata(customer.id, null);
@@ -279,12 +262,12 @@ describe('Flows', function() {
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, { foo: '123' });
+            return stripe.customers.setMetadata(cust.id, {foo: '123'});
           })
           .then(function() {
-            return stripe.customers.setMetadata(customer.id, { baz: '456' });
+            return stripe.customers.setMetadata(customer.id, {baz: '456'});
           })
-      ).to.eventually.deep.equal({ baz: '456' });
+      ).to.eventually.deep.equal({baz: '456'});
     });
     it('Can set individual key/value pairs', function() {
       var customer;
@@ -314,7 +297,7 @@ describe('Flows', function() {
           .then(function() {
             return stripe.customers.getMetadata(customer.id);
           })
-      ).to.eventually.deep.equal({ _other_: '999', foo: '222' });
+      ).to.eventually.deep.equal({_other_: '999', foo: '222'});
     });
     it('Can set individual key/value pairs [with per request token]', function() {
       var customer;
@@ -345,7 +328,7 @@ describe('Flows', function() {
           .then(function() {
             return stripe.customers.getMetadata(customer.id, authToken);
           })
-      ).to.eventually.deep.equal({ _other_: '999', foo: '222' });
+      ).to.eventually.deep.equal({_other_: '999', foo: '222'});
     });
   });
 
@@ -360,7 +343,7 @@ describe('Flows', function() {
                 customer: cust.id,
                 amount: 1700,
                 currency: CURRENCY,
-                expand: ['customer']
+                expand: ['customer'],
               });
             })
         ).to.eventually.have.deep.property('customer.created');
@@ -375,9 +358,9 @@ describe('Flows', function() {
               object: 'card',
               number: '4242424242424242',
               exp_month: 12,
-              exp_year: 2015
+              exp_year: 2015,
             },
-            expand: ['default_source']
+            expand: ['default_source'],
           })
             .then(function(cust) {
               cleanup.deleteCustomer(cust.id);
@@ -399,14 +382,14 @@ describe('Flows', function() {
             number: '4000000000000002',
             exp_month: 12,
             exp_year: 2020,
-            cvc: 123
+            cvc: 123,
           },
           shipping: {
             name: 'Bobby Tables',
             address: {
-              line1: '1 Foo St.'
-            }
-          }
+              line1: '1 Foo St.',
+            },
+          },
         }).then(null, function(error) {
           return error;
         })
@@ -426,5 +409,4 @@ describe('Flows', function() {
       ).to.eventually.have.property('object', 'balance');
     });
   });
-
 });
