@@ -57,7 +57,7 @@ describe('File Uploads Resource', function() {
 
     it('Sends the correct file upload request', function() {
 
-      var testFilename = path.join(__dirname, "data/minimal.pdf");
+      var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.readFileSync(testFilename);
 
       stripe.fileUploads.create({
@@ -76,7 +76,7 @@ describe('File Uploads Resource', function() {
 
     it('Sends the correct file upload request [with specified auth]', function() {
 
-      var testFilename = path.join(__dirname, "data/minimal.pdf");
+      var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.readFileSync(testFilename);
 
       stripe.fileUploads.create({
