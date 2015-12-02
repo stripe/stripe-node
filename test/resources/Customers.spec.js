@@ -572,6 +572,21 @@ describe('Customers Resource', function() {
         });
       });
     });
+
+    describe('verifySource', function() {
+      it('Sends the correct request', function() {
+        var data = {amounts: [32,45]}
+
+        stripe.customers.verifySource('customerIdFoo321', 'cardIdFoo456', data, TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/customerIdFoo321/sources/cardIdFoo456/verify',
+          headers: {},
+          data: data,
+          auth: TEST_AUTH_KEY,
+        })
+      });
+    });
   });
 
   describe('Subscription methods', function() {
