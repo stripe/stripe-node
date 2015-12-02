@@ -1,3 +1,6 @@
+4.1.0 Dec 2nd, 2015
+- Add a verification routine for external accounts
+
 4.0.0 Sep 17th, 2015
 - Remove ability for API keys to be passed as 1st param to acct.retrieve
 - Rename StripeInvalidRequest to StripeInvalidRequestError
