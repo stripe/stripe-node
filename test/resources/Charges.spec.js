@@ -119,10 +119,10 @@ describe('Charge Resource', function() {
       });
     });
 
-    it('Throws an error on incorrect arguments', function() {
-      expect(function() {
-        stripe.charges.refund('chargeIdExample123', 39392);
-      }).to.throw(/unknown arguments/i);
+    it('Incorrect arguments result in an error', function() {
+      expect(
+        stripe.charges.refund('chargeIdExample123', 39392)
+      ).to.be.eventually.rejectedWith(/unknown arguments/i);
     });
   });
 
