@@ -17,8 +17,8 @@ var CUSTOMER_DETAILS = {
   card: {
     number: '4242424242424242',
     exp_month: 12,
-    exp_year: exp_year
-  }
+    exp_year: exp_year,
+  },
 };
 
 var CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
@@ -299,7 +299,7 @@ describe('Flows', function() {
           .then(function() {
             return stripe.customers.getMetadata(customer.id);
           })
-      ).to.eventually.deep.equal({ _other_: "999", foo: "222" });
+      ).to.eventually.deep.equal({_other_: '999', foo: '222'});
     });
     it('Can set individual key/value pairs [with per request token]', function() {
       var customer;
@@ -360,7 +360,7 @@ describe('Flows', function() {
               object: 'card',
               number: '4242424242424242',
               exp_month: 12,
-              exp_year:  exp_year
+              exp_year:  exp_year,
             },
             expand: ['default_source'],
           })
@@ -384,7 +384,7 @@ describe('Flows', function() {
             number: '4000000000000002',
             exp_month: 12,
             exp_year: exp_year,
-            cvc: 123
+            cvc: 123,
           },
           shipping: {
             name: 'Bobby Tables',
@@ -411,5 +411,4 @@ describe('Flows', function() {
       ).to.eventually.have.property('object', 'balance');
     });
   });
-
 });
