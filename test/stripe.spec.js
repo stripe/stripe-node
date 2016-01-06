@@ -9,12 +9,14 @@ var stripe = require('../lib/stripe')(
 
 var expect = require('chai').expect;
 
+var exp_year = new Date().getFullYear() + 1;
+
 var CUSTOMER_DETAILS = {
   description: 'Some customer',
   card: {
     number: '4242424242424242',
     exp_month: 12,
-    exp_year: 2015,
+    exp_year: exp_year,
   },
 };
 
@@ -55,7 +57,7 @@ describe('Stripe Module', function() {
           card: {
             number: '4242424242424242',
             exp_month: 12,
-            exp_year: 2015,
+            exp_year: exp_year,
           },
         }, function(err, customer) {
           cleanup.deleteCustomer(customer.id);
