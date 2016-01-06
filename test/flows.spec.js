@@ -10,12 +10,14 @@ var stripe = require('../lib/stripe')(
 
 var expect = chai.expect;
 
+var exp_year = new Date().getFullYear() + 1;
+
 var CUSTOMER_DETAILS = {
   description: 'Some customer',
   card: {
     number: '4242424242424242',
     exp_month: 12,
-    exp_year: new Date().getFullYear() + 1
+    exp_year: exp_year
   }
 };
 
@@ -375,7 +377,7 @@ describe('Flows', function() {
               object: 'card',
               number: '4242424242424242',
               exp_month: 12,
-              exp_year:  new Date().getFullYear() + 1
+              exp_year:  exp_year
             },
             expand: ['default_source']
           })
@@ -398,7 +400,7 @@ describe('Flows', function() {
           card: {
             number: '4000000000000002',
             exp_month: 12,
-            exp_year: 2020,
+            exp_year: exp_year,
             cvc: 123
           },
           shipping: {
