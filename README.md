@@ -47,7 +47,7 @@ stripe.customers.create({
   });
 }).then(function(charge) {
   // New charge created on a new customer
-}, function(err) {
+}).catch(function(err) {
   // Deal with an error
 });
 ```
@@ -60,7 +60,7 @@ stripe.balance.retrieve({
   stripe_account: "acct_foo"
 }).then(function(balance) {
   // The balance object for the connected account
-}, function(err) {
+}).catch(function(err) {
   // Error
 });
 ```
