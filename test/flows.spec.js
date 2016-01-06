@@ -15,7 +15,7 @@ var CUSTOMER_DETAILS = {
   card: {
     number: '4242424242424242',
     exp_month: 12,
-    exp_year: 2015
+    exp_year: new Date().getFullYear() + 1
   }
 };
 
@@ -375,7 +375,7 @@ describe('Flows', function() {
               object: 'card',
               number: '4242424242424242',
               exp_month: 12,
-              exp_year: 2015
+              exp_year:  new Date().getFullYear() + 1
             },
             expand: ['default_source']
           })
