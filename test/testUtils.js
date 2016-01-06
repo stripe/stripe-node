@@ -25,7 +25,6 @@ var utils = module.exports = {
 
     for (var i in stripeInstance) {
       if (stripeInstance[i] instanceof Stripe.StripeResource) {
-
         // Override each _request method so we can make the params
         // available to consuming tests (revealing requests made on
         // REQUESTS and LAST_REQUEST):
@@ -36,16 +35,16 @@ var utils = module.exports = {
             data: data,
             headers: options.headers || {},
           };
-          if (auth) req.auth = auth;
+          if (auth) {
+            req.auth = auth;
+          }
           stripeInstance.REQUESTS.push(req);
           cb.call(this, null, {});
         };
-
       }
     }
 
     return stripeInstance;
-
   },
 
   /**
@@ -54,7 +53,6 @@ var utils = module.exports = {
    * ensuring its called after each descendent-describe block.
    */
   CleanupUtility: (function() {
-
     CleanupUtility.DEFAULT_TIMEOUT = 20000;
 
     function CleanupUtility(timeout) {
@@ -92,7 +90,9 @@ var utils = module.exports = {
             throw err;
           });
         }
-        if (total === 0) done();
+        if (total === 0) {
+          done();
+        }
       },
       add: function(fn) {
         this._cleanupFns.push(fn);
@@ -116,14 +116,11 @@ var utils = module.exports = {
         this.add(function() {
           return this._stripe.invoiceItems.del(iiId);
         });
-      }
+      },
     };
 
     return CleanupUtility;
-
-  }())
+  }()),
 
 };
-
-
 

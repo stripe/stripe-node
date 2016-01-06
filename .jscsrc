@@ -1,0 +1,8 @@
+{
+  "plugins": ["stripe-javascript-style"],
+  "preset": "stripe",
+  "disallowKeywords": ["with"],
+  "requireSpread": false,
+  "requireTemplateStrings": false,
+  "requireCamelCaseOrUpperCaseIdentifiers": false
+}

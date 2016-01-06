@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "3.8.0",
+  "version": "4.1.0",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -9,12 +9,12 @@
     "api"
   ],
   "homepage": "https://github.com/stripe/stripe-node",
-  "author": "Stripe <james@stripe.com> (https://stripe.com/)",
+  "author": "Stripe <support@stripe.com> (https://stripe.com/)",
   "contributors": [
     "Ask Bjørn Hansen <ask@develooper.com> (http://www.askask.com/)",
     "Michelle Bu <michelle@stripe.com>",
     "Alex Sexton <alex@stripe.com>",
-    "James Padolsey <james@stripe.com>"
+    "James Padolsey"
   ],
   "repository": {
     "type": "git",
@@ -28,7 +28,9 @@
   "devDependencies": {
     "chai": "~1.10.0",
     "chai-as-promised": "~4.1.1",
-    "mocha": "~2.1.0"
+    "jscs": "^2.3.5",
+    "mocha": "~2.1.0",
+    "stripe-javascript-style": "^1.0.1"
   },
   "dependencies": {
     "bluebird": "^2.9.6",
@@ -37,6 +39,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "mocha"
+    "test": "npm run lint && mocha",
+    "lint": "jscs ."
   }
 }

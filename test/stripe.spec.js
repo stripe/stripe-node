@@ -9,17 +9,18 @@ var stripe = require('../lib/stripe')(
 
 var expect = require('chai').expect;
 
+var exp_year = new Date().getFullYear() + 1;
+
 var CUSTOMER_DETAILS = {
   description: 'Some customer',
   card: {
     number: '4242424242424242',
     exp_month: 12,
-    exp_year: 2015
-  }
+    exp_year: exp_year,
+  },
 };
 
 describe('Stripe Module', function() {
-
   var cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
 
@@ -48,19 +49,16 @@ describe('Stripe Module', function() {
   });
 
   describe('Callback support', function() {
-
     describe('Any given endpoint', function() {
-
       it('Will call a callback if successful', function() {
-
         var defer = Promise.defer();
         stripe.customers.create({
           description: 'Some customer',
           card: {
             number: '4242424242424242',
             exp_month: 12,
-            exp_year: 2015
-          }
+            exp_year: exp_year,
+          },
         }, function(err, customer) {
           cleanup.deleteCustomer(customer.id);
           defer.resolve('Called!');
@@ -70,10 +68,9 @@ describe('Stripe Module', function() {
       });
 
       it('Given an error the callback will receive it', function() {
-
         var defer = Promise.defer();
 
-        stripe.customers.createCard('nonExistentCustId', { card: {} }, function(err, customer) {
+        stripe.customers.createCard('nonExistentCustId', {card: {}}, function(err, customer) {
           if (err) {
             defer.resolve('ErrorWasPassed');
           } else {
@@ -83,8 +80,6 @@ describe('Stripe Module', function() {
 
         return expect(defer.promise).to.eventually.become('ErrorWasPassed')
       });
-
     });
   });
-
 });
