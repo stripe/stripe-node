@@ -67,6 +67,25 @@ describe('Stripe Module', function() {
         return expect(defer.promise).to.eventually.equal('Called!');
       });
 
+      it('Will expose HTTP response object', function() {
+        var defer = Promise.defer();
+        stripe.customers.create({
+          description: 'Some customer',
+          card: {
+            number: '4242424242424242',
+            exp_month: 12,
+            exp_year: exp_year,
+          },
+        }, function(err, customer) {
+          cleanup.deleteCustomer(customer.id);
+          var headers = customer.lastResponse.headers;
+          expect(headers).to.contain.keys('request-id');
+          defer.resolve('Called!');
+        });
+
+        return expect(defer.promise).to.eventually.equal('Called!');
+      });
+
       it('Given an error the callback will receive it', function() {
         var defer = Promise.defer();
 
