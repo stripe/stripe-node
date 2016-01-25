@@ -81,4 +81,16 @@ describe('SKU Resource', function() {
       });
     });
   });
+
+  describe('del', function() {
+    it('Sends the correct request', function() {
+      stripe.skus.del('skuIdFoo3242');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'DELETE',
+        url: '/v1/skus/skuIdFoo3242',
+        headers: {},
+        data: {},
+      });
+    });
+  });
 });

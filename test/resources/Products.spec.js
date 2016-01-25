@@ -75,4 +75,16 @@ describe('Product Resource', function() {
       });
     });
   });
+
+  describe('del', function() {
+    it('Sends the correct request', function() {
+      stripe.products.del('productIdFoo3242');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'DELETE',
+        url: '/v1/products/productIdFoo3242',
+        headers: {},
+        data: {},
+      });
+    });
+  });
 });
