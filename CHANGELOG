@@ -1,3 +1,6 @@
+4.3.0 Jan 26th, 2016
+- Add support for deleting Relay SKUs and products
+
 4.2.0 Jan 13th, 2016
 - Add `lastResponse` property on `StripeResource` objects
 - Return usage errors of `stripeMethod` through callback instead of raising
