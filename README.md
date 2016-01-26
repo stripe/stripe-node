@@ -140,6 +140,12 @@ stripe.balance.retrieve({
   * [`update(planId[, params])`](https://stripe.com/docs/api/node#update_plan)
   * [`retrieve(planId)`](https://stripe.com/docs/api/node#retrieve_plan)
   * [`del(planId)`](https://stripe.com/docs/api/node#delete_plan)
+ * products
+  * [`create(params)`](https://stripe.com/docs/api/node#create_product)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_products)
+  * [`update(productId[, params])`](https://stripe.com/docs/api/node#update_product)
+  * [`retrieve(productId)`](https://stripe.com/docs/api/node#retrieve_product)
+  * [`del(productId)`](https://stripe.com/docs/api/node#delete_product)
  * recipients
   * [`create(params)`](https://stripe.com/docs/api/node#create_recipient)
   * [`list([params])`](https://stripe.com/docs/api/node#list_recipients)
@@ -149,6 +155,12 @@ stripe.balance.retrieve({
   * `setMetadata(recipientId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
   * `setMetadata(recipientId, key, value)`
   * `getMetadata(recipientId)`
+ * skus
+  * [`create(params)`](https://stripe.com/docs/api/node#create_sku)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_skus)
+  * [`update(skuId[, params])`](https://stripe.com/docs/api/node#update_sku)
+  * [`retrieve(skuId)`](https://stripe.com/docs/api/node#retrieve_sku)
+  * [`del(skuId)`](https://stripe.com/docs/api/node#delete_sku)
  * tokens
   * [`create(params)`](https://stripe.com/docs/api/node#create_card_token)
   * [`retrieve(tokenId)`](https://stripe.com/docs/api/node#retrieve_token)
