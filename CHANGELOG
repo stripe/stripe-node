@@ -1,3 +1,6 @@
+4.4.0 Feb 8th, 2016
+- Add `CountrySpec` model for looking up country payment information
+
 4.3.0 Jan 26th, 2016
 - Add support for deleting Relay SKUs and products
 
