@@ -38,6 +38,18 @@ describe('Account Resource', function() {
     });
   });
 
+  describe('reject', function() {
+    it('rejects an account successfully', function() {
+      stripe.account.reject('acct_16Tzq6DBahdM4C8s', {reason: 'fraud'});
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/accounts/acct_16Tzq6DBahdM4C8s/reject',
+        data: {reason: 'fraud'},
+        headers: {},
+      });
+    });
+  });
+
   describe('retrieve', function() {
     it('Sends the correct request with no params', function() {
       stripe.account.retrieve();
