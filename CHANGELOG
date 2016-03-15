@@ -1,3 +1,6 @@
+4.5.0 Mar 15th, 2016
+* Add `reject` on `Account` to support the new API feature
+
 4.4.0 Feb 8th, 2016
 - Add `CountrySpec` model for looking up country payment information
 
