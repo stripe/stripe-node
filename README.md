@@ -161,6 +161,12 @@ stripe.balance.retrieve({
   * [`update(skuId[, params])`](https://stripe.com/docs/api/node#update_sku)
   * [`retrieve(skuId)`](https://stripe.com/docs/api/node#retrieve_sku)
   * [`del(skuId)`](https://stripe.com/docs/api/node#delete_sku)
+ * subscriptions
+  * [`create(params)`](https://stripe.com/docs/api/node#create_subscription_beta)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_subscription_beta)
+  * [`update(subscriptionID[, params])`](https://stripe.com/docs/api/node#update_subscription_beta)
+  * [`retrieve(subscriptionId)`](https://stripe.com/docs/api/node#retrieve_subscription_beta)
+  * [`del(subscriptionId)`](https://stripe.com/docs/api/node#delete_subscription_beta)
  * tokens
   * [`create(params)`](https://stripe.com/docs/api/node#create_card_token)
   * [`retrieve(tokenId)`](https://stripe.com/docs/api/node#retrieve_token)
