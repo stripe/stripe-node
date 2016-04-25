@@ -33,9 +33,9 @@
     "stripe-javascript-style": "^1.0.1"
   },
   "dependencies": {
-    "bluebird": "^2.9.6",
-    "qs": "^2.4.1",
-    "lodash": "^3.1.0"
+    "bluebird": "^2.10.2",
+    "lodash": "^4.11.1",
+    "qs": "^2.4.2"
   },
   "license": "MIT",
   "scripts": {
