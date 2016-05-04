@@ -1,3 +1,6 @@
+4.6.0 May 4th, 2016
+- Add `update`, `create`, `retrieve`, `list` and `del` methods to `stripe.subscriptions`
+
 4.5.0 Mar 15th, 2016
 - Add `reject` on `Account` to support the new API feature
 
