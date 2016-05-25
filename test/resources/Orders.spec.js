@@ -104,7 +104,7 @@ describe('Order Resource', function() {
 
   describe('order_return', function() {
     it('Sends the correct request', function() {
-      stripe.orders.order_return('orderIdFoo3242', {
+      stripe.orders.returnOrder('orderIdFoo3242', {
         items: [
           {parent: 'sku_123'},
         ],
