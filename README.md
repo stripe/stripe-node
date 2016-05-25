@@ -134,6 +134,15 @@ stripe.balance.retrieve({
   * [`retrieveLines(invoiceId)`](https://stripe.com/docs/api/node#invoice_lines)
   * [`retrieveUpcoming(customerId[, params])`](https://stripe.com/docs/api/node#retrieve_customer_invoice)
   * [`pay(invoiceId)`](https://stripe.com/docs/api/node#pay_invoice)
+ * orders
+  * [`create(params)`](https://stripe.com/docs/api/node#create_order)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_order)
+  * [`update(orderId[, params])`](https://stripe.com/docs/api/node#update_order)
+  * [`retrieve(orderId)`](https://stripe.com/docs/api/node#retrieve_order)
+  * [`pay(orderId)`](https://stripe.com/docs/api/node#pay_order)
+ * orderReturns
+  * [`list([params])`](https://stripe.com/docs/api/node#list_order_returns)
+  * [`retrieve(orderId)`](https://stripe.com/docs/api/node#retrieve_order_return)
  * plans
   * [`create(params)`](https://stripe.com/docs/api/node#create_plan)
   * [`list([params])`](https://stripe.com/docs/api/node#list_plans)

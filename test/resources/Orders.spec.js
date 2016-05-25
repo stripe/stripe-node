@@ -102,6 +102,22 @@ describe('Order Resource', function() {
     });
   });
 
+  describe('returnOrder', function() {
+    it('Sends the correct request', function() {
+      stripe.orders.returnOrder('orderIdFoo3242', {
+        items: [
+          {parent: 'sku_123'},
+        ],
+      });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/orders/orderIdFoo3242/returns',
+        headers: {},
+        data: {items: [{parent: 'sku_123'}]},
+      });
+    });
+  });
+
   describe('update', function() {
     it('Sends the correct request', function() {
       stripe.orders.update('orderIdFoo3242', {status: 'fulfilled'});
