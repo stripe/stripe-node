@@ -1,3 +1,6 @@
+4.7.0 May 25th, 2016
+- Add support for returning Relay orders
+
 4.6.0 May 4th, 2016
 - Add `update`, `create`, `retrieve`, `list` and `del` methods to `stripe.subscriptions`
 
