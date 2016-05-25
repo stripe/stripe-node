@@ -102,7 +102,7 @@ describe('Order Resource', function() {
     });
   });
 
-  describe('order_return', function() {
+  describe('returnOrder', function() {
     it('Sends the correct request', function() {
       stripe.orders.returnOrder('orderIdFoo3242', {
         items: [
