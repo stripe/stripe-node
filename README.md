@@ -207,6 +207,7 @@ stripe.balance.retrieve({
  * [Version 2 Overview](https://github.com/stripe/stripe-node/wiki/Version-2)
  * [REST API Version](https://github.com/stripe/stripe-node/wiki/REST-API-Version)
  * [Error Handling](https://github.com/stripe/stripe-node/wiki/Error-Handling)
+ * [Passing Options](https://github.com/stripe/stripe-node/wiki/Passing-Options)
  * [Using Stripe Connect](https://github.com/stripe/stripe-node/wiki/Using-Stripe-Connect-with-node.js)
 
 ## Development
