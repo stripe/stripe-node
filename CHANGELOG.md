@@ -1,3 +1,6 @@
+4.8.0 Jul 14th, 2016
+- Add `ThreeDSecure` model for 3-D secure payments
+
 4.7.0 May 25th, 2016
 - Add support for returning Relay orders
 
