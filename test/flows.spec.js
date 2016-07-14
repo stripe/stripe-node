@@ -411,4 +411,27 @@ describe('Flows', function() {
       ).to.eventually.have.property('object', 'balance');
     });
   });
+
+  describe('Creating a ThreeDSecure object', function() {
+    it('Allows me to do so', function() {
+      return expect(
+        stripe.tokens.create({
+          card: {
+            object: 'card',
+            number: '4242424242424242',
+            exp_month: 8,
+            exp_year: 2018,
+            cvc: '999',
+          },
+        }).then(function(token) {
+          return stripe.threeDSecure.create({
+            card: token.id,
+            amount: 1500,
+            currency: 'usd',
+            return_url: 'https://example.org/3d-secure-result',
+          })
+        })
+      ).to.eventually.have.property('object', 'three_d_secure');
+    });
+  });
 });

@@ -179,6 +179,8 @@ stripe.balance.retrieve({
  * tokens
   * [`create(params)`](https://stripe.com/docs/api/node#create_card_token)
   * [`retrieve(tokenId)`](https://stripe.com/docs/api/node#retrieve_token)
+ * threeDSecure
+  * [`create(params)`](https://stripe.com/docs/api/node#create_three_d_secure)
  * transfers
   * [`create(params)`](https://stripe.com/docs/api/node#create_transfer)
   * [`list([params])`](https://stripe.com/docs/api/node#list_transfers)
