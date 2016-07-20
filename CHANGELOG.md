@@ -1,3 +1,6 @@
+4.9.0 Jul 19th, 2016
+- Add `Source` model for generic payment sources support (not yet released)
+
 4.8.0 Jul 14th, 2016
 - Add `ThreeDSecure` model for 3-D secure payments
 
