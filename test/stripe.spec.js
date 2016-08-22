@@ -24,7 +24,7 @@ describe('Stripe Module', function() {
   var cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
 
-  describe('ClientUserAgent', function() {
+  describe('GetClientUserAgent', function() {
     it('Should return a user-agent serialized JSON object', function() {
       var d = Promise.defer();
       stripe.getClientUserAgent(function(c) {
@@ -32,6 +32,26 @@ describe('Stripe Module', function() {
       });
       return expect(d.promise).to.eventually.have.property('lang', 'node');
     });
+  });
+
+  describe('GetClientUserAgentSeeded', function() {
+    it('Should return a user-agent serialized JSON object', function() {
+      var userAgent = {lang: 'node'};
+      var d = Promise.defer();
+      stripe.getClientUserAgentSeeded(userAgent, function(c) {
+        d.resolve(JSON.parse(c));
+      });
+      return expect(d.promise).to.eventually.have.property('lang', 'node');
+    });
+
+    it('Should URI-encode user-agent fields', function() {
+      var userAgent = {lang: 'ï'};
+      var d = Promise.defer();
+      stripe.getClientUserAgentSeeded(userAgent, function(c) {
+        d.resolve(JSON.parse(c));
+      });
+      return expect(d.promise).to.eventually.have.property('lang', '%C3%AF');
+    })
   });
 
   describe('setTimeout', function() {
