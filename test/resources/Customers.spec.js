@@ -278,21 +278,19 @@ describe('Customers Resource', function() {
 
       describe('When setting new metadata', function() {
         it('Sends one request to get current, and another to set new data', function() {
-          var defer = Promise.defer();
-
-          stripe.customers.setMetadata('customerIdFoo321', {
-            foo: 123,
-            baz: 456,
-          }).then(function() {
-            var reqs = stripe.REQUESTS;
-            defer.resolve([
-              // Last two requests
-              reqs[reqs.length - 2],
-              reqs[reqs.length - 1],
-            ]);
-          });
-
-          return expect(defer.promise).to.eventually.deep.equal([
+          return expect(new Promise(function(resolve, reject) {
+            stripe.customers.setMetadata('customerIdFoo321', {
+              foo: 123,
+              baz: 456,
+            }).then(function() {
+              var reqs = stripe.REQUESTS;
+              resolve([
+                // Last two requests
+                reqs[reqs.length - 2],
+                reqs[reqs.length - 1],
+              ]);
+            });
+          })).to.eventually.deep.equal([
             {
               // First reset metadata:
               method: 'POST',
