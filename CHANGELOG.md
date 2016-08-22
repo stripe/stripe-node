@@ -1,3 +1,6 @@
+4.9.1 Aug 22nd, 2016
+- URI-encode unames for Stripe user agents so we don't fail on special characters
+
 4.9.0 Jul 19th, 2016
 - Add `Source` model for generic payment sources support (experimental)
 
