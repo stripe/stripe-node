@@ -26,11 +26,11 @@ describe('Stripe Module', function() {
 
   describe('GetClientUserAgent', function() {
     it('Should return a user-agent serialized JSON object', function() {
-      var d = Promise.defer();
-      stripe.getClientUserAgent(function(c) {
-        d.resolve(JSON.parse(c));
-      });
-      return expect(d.promise).to.eventually.have.property('lang', 'node');
+      return expect(new Promise(function(resolve, reject) {
+        stripe.getClientUserAgent(function(c) {
+          resolve(JSON.parse(c));
+        });
+      })).to.eventually.have.property('lang', 'node');
     });
   });
 
@@ -71,53 +71,49 @@ describe('Stripe Module', function() {
   describe('Callback support', function() {
     describe('Any given endpoint', function() {
       it('Will call a callback if successful', function() {
-        var defer = Promise.defer();
-        stripe.customers.create({
-          description: 'Some customer',
-          card: {
-            number: '4242424242424242',
-            exp_month: 12,
-            exp_year: exp_year,
-          },
-        }, function(err, customer) {
-          cleanup.deleteCustomer(customer.id);
-          defer.resolve('Called!');
-        });
-
-        return expect(defer.promise).to.eventually.equal('Called!');
+        return expect(new Promise(function(resolve, reject) {
+          stripe.customers.create({
+            description: 'Some customer',
+            card: {
+              number: '4242424242424242',
+              exp_month: 12,
+              exp_year: exp_year,
+            },
+          }, function(err, customer) {
+            cleanup.deleteCustomer(customer.id);
+            resolve('Called!');
+          });
+        })).to.eventually.equal('Called!');
       });
 
       it('Will expose HTTP response object', function() {
-        var defer = Promise.defer();
-        stripe.customers.create({
-          description: 'Some customer',
-          card: {
-            number: '4242424242424242',
-            exp_month: 12,
-            exp_year: exp_year,
-          },
-        }, function(err, customer) {
-          cleanup.deleteCustomer(customer.id);
-          var headers = customer.lastResponse.headers;
-          expect(headers).to.contain.keys('request-id');
-          defer.resolve('Called!');
-        });
-
-        return expect(defer.promise).to.eventually.equal('Called!');
+        return expect(new Promise(function(resolve, reject) {
+          stripe.customers.create({
+            description: 'Some customer',
+            card: {
+              number: '4242424242424242',
+              exp_month: 12,
+              exp_year: exp_year,
+            },
+          }, function(err, customer) {
+            cleanup.deleteCustomer(customer.id);
+            var headers = customer.lastResponse.headers;
+            expect(headers).to.contain.keys('request-id');
+            resolve('Called!');
+          });
+        })).to.eventually.equal('Called!');
       });
 
       it('Given an error the callback will receive it', function() {
-        var defer = Promise.defer();
-
-        stripe.customers.createCard('nonExistentCustId', {card: {}}, function(err, customer) {
-          if (err) {
-            defer.resolve('ErrorWasPassed');
-          } else {
-            defer.reject('NoErrorPassed');
-          }
-        });
-
-        return expect(defer.promise).to.eventually.become('ErrorWasPassed')
+        return expect(new Promise(function(resolve, reject) {
+          stripe.customers.createCard('nonExistentCustId', {card: {}}, function(err, customer) {
+            if (err) {
+              resolve('ErrorWasPassed');
+            } else {
+              reject('NoErrorPassed');
+            }
+          });
+        })).to.eventually.become('ErrorWasPassed');
       });
     });
   });
