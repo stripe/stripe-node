@@ -1,3 +1,6 @@
+4.10.0 Aug 29th, 2016
+- Refactor deprecated uses of Bluebird's `Promise.defer`
+
 4.9.1 Aug 22nd, 2016
 - URI-encode unames for Stripe user agents so we don't fail on special characters
 
