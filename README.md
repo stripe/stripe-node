@@ -74,6 +74,11 @@ stripe.balance.retrieve({
   * [`create([params])`](https://stripe.com/docs/api/node#create_account)
   * [`list([params])`](https://stripe.com/docs/api/node#list_accounts)
   * [`update([params])`](https://stripe.com/docs/api/node#update_account)
+ * applePayDomains
+  * [`create(params)`](https://stripe.com/docs/api/node#create_apple_pay_domain)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_apple_pay_domains)
+  * [`retrieve(chargeId)`](https://stripe.com/docs/api/node#retrieve_apple_pay_domain)
+  * [`del(chargeId)`](https://stripe.com/docs/api/node#delete_apple_pay_domain)
  * balance
   * [`retrieve()`](https://stripe.com/docs/api/node#retrieve_balance)
   * [`listTransactions([params])`](https://stripe.com/docs/api/node#balance_history)
