@@ -31,7 +31,7 @@ describe('ApplePayDomains Resource', function() {
   describe('create', function() {
     it('Sends the correct request', function() {
       stripe.applePayDomains.create({
-        domain_name: 'jackshack.website',
+        domain_name: 'example.com',
       });
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -39,7 +39,7 @@ describe('ApplePayDomains Resource', function() {
         url: '/v1/apple_pay/domains',
         headers: {},
         data: {
-          domain_name: 'jackshack.website',
+          domain_name: 'example.com',
         },
       });
     });
