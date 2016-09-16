@@ -1,3 +1,6 @@
+4.11.0 Sep 16th, 2016
+- Add support for Apple Pay domains
+
 4.10.0 Aug 29th, 2016
 - Refactor deprecated uses of Bluebird's `Promise.defer`
 
