@@ -100,8 +100,9 @@ stripe.balance.retrieve({
  * coupons
   * [`create(params)`](https://stripe.com/docs/api/node#create_coupon)
   * [`list([params])`](https://stripe.com/docs/api/node#list_coupons)
-  * [`retrieve(chargeId)`](https://stripe.com/docs/api/node#retrieve_coupon)
-  * [`del(chargeId)`](https://stripe.com/docs/api/node#delete_coupon)
+  * [`update(couponId[, params])`](https://stripe.com/docs/api/node#update_coupon)
+  * [`retrieve(couponId)`](https://stripe.com/docs/api/node#retrieve_coupon)
+  * [`del(couponId)`](https://stripe.com/docs/api/node#delete_coupon)
  * customers
   * [`create(params)`](https://stripe.com/docs/api/node#create_customer)
   * [`list([params])`](https://stripe.com/docs/api/node#list_customers)
@@ -176,11 +177,11 @@ stripe.balance.retrieve({
   * [`retrieve(skuId)`](https://stripe.com/docs/api/node#retrieve_sku)
   * [`del(skuId)`](https://stripe.com/docs/api/node#delete_sku)
  * subscriptions
-  * [`create(params)`](https://stripe.com/docs/api/node#create_subscription_beta)
-  * [`list([params])`](https://stripe.com/docs/api/node#list_subscription_beta)
-  * [`update(subscriptionID[, params])`](https://stripe.com/docs/api/node#update_subscription_beta)
-  * [`retrieve(subscriptionId)`](https://stripe.com/docs/api/node#retrieve_subscription_beta)
-  * [`del(subscriptionId)`](https://stripe.com/docs/api/node#delete_subscription_beta)
+  * [`create(params)`](https://stripe.com/docs/api/node#create_subscription)
+  * [`list([params])`](https://stripe.com/docs/api/node#list_subscription)
+  * [`update(subscriptionID[, params])`](https://stripe.com/docs/api/node#update_subscription)
+  * [`retrieve(subscriptionId)`](https://stripe.com/docs/api/node#retrieve_subscription)
+  * [`del(subscriptionId)`](https://stripe.com/docs/api/node#delete_subscription)
  * tokens
   * [`create(params)`](https://stripe.com/docs/api/node#create_card_token)
   * [`retrieve(tokenId)`](https://stripe.com/docs/api/node#retrieve_token)
