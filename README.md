@@ -100,8 +100,8 @@ stripe.balance.retrieve({
  * coupons
   * [`create(params)`](https://stripe.com/docs/api/node#create_coupon)
   * [`list([params])`](https://stripe.com/docs/api/node#list_coupons)
-  * [`retrieve(chargeId)`](https://stripe.com/docs/api/node#retrieve_coupon)
-  * [`del(chargeId)`](https://stripe.com/docs/api/node#delete_coupon)
+  * [`retrieve(couponId)`](https://stripe.com/docs/api/node#retrieve_coupon)
+  * [`del(couponId)`](https://stripe.com/docs/api/node#delete_coupon)
  * customers
   * [`create(params)`](https://stripe.com/docs/api/node#create_customer)
   * [`list([params])`](https://stripe.com/docs/api/node#list_customers)
