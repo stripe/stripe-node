@@ -6,6 +6,30 @@ var utils = require('../lib/utils');
 var expect = require('chai').expect;
 
 describe('utils', function() {
+  // Vendored from lodash's own testing implementation with very minor changes.
+  describe('isObjectLike', function() {
+    expect(utils.isObjectLike([1, 2, 3])).to.equal(true);
+    expect(utils.isObjectLike(Object(false))).to.equal(true);
+    expect(utils.isObjectLike(new Date)).to.equal(true);
+    expect(utils.isObjectLike(new Error)).to.equal(true);
+    expect(utils.isObjectLike({'a': 1})).to.equal(true);
+    expect(utils.isObjectLike(Object(0))).to.equal(true);
+    expect(utils.isObjectLike(/x/)).to.equal(true);
+    expect(utils.isObjectLike(Object('a'))).to.equal(true);
+    expect(utils.isObjectLike(null)).to.equal(false);
+  });
+
+  // Vendored from lodash's own testing implementation with very minor changes.
+  describe('isPlainObject', function() {
+    // Note that I'm using `expect` as a non-plain object here for convenience
+    // sake.
+    expect(utils.isPlainObject({})).to.equal(true);
+    expect(utils.isPlainObject({'a': 1})).to.equal(true);
+    expect(utils.isPlainObject({'constructor': expect})).to.equal(true);
+    expect(utils.isPlainObject([1, 2, 3])).to.equal(false);
+    expect(utils.isPlainObject(expect)).to.equal(false);
+  });
+
   describe('makeURLInterpolator', function() {
     it('Interpolates values into a prepared template', function() {
       var template = utils.makeURLInterpolator('/some/url/{foo}/{baz}?ok=1');
