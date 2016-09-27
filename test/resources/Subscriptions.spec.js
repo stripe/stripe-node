@@ -63,6 +63,112 @@ describe('subscriptions Resource', function() {
     });
   });
 
+  describe('update with items array', function() {
+    it('Sends the correct request', function() {
+      stripe.subscriptions.update('test_sub', {
+        items: [
+          {
+            plan: 'foo',
+            quantity: 2,
+          },
+        ],
+      });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/subscriptions/test_sub',
+        headers: {},
+        data: {
+          items: {
+            '0': {
+              'plan': 'foo',
+              'quantity': 2,
+            },
+          },
+        },
+      });
+    });
+  });
+
+  describe('create with items array', function() {
+    it('Sends the correct request', function() {
+      stripe.subscriptions.create({
+        items: [
+          {
+            plan: 'foo',
+            quantity: 2,
+          },
+        ],
+      });
+
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/subscriptions',
+        headers: {},
+        data: {
+          items: {
+            '0': {
+              'plan': 'foo',
+              'quantity': 2,
+            },
+          },
+        },
+      });
+    });
+  });
+
+  describe('update with items object', function() {
+    it('Sends the correct request', function() {
+      stripe.subscriptions.update('test_sub', {
+        items: {
+          '0': {
+            plan: 'foo',
+            quantity: 2,
+          },
+        },
+      });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/subscriptions/test_sub',
+        headers: {},
+        data: {
+          items: {
+            '0': {
+              'plan': 'foo',
+              'quantity': 2,
+            },
+          },
+        },
+      });
+    });
+  });
+
+  describe('create with items object', function() {
+    it('Sends the correct request', function() {
+      stripe.subscriptions.create({
+        items: {
+          '0': {
+            plan: 'foo',
+            quantity: 2,
+          },
+        },
+      });
+
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/subscriptions',
+        headers: {},
+        data: {
+          items: {
+            '0': {
+              'plan': 'foo',
+              'quantity': 2,
+            },
+          },
+        },
+      });
+    });
+  });
+
   describe('list', function() {
     it('Sends the correct request', function() {
       stripe.subscriptions.list({
