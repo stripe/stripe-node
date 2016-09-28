@@ -180,4 +180,18 @@ describe('utils', function() {
       expect(args.length).to.equal(0);
     });
   });
+
+  describe('arrayToObject', function() {
+    it('handles an empty array', function() {
+      expect(utils.arrayToObject([])).to.deep.equal({});
+    });
+    it('handles an array of integers', function() {
+      var arr = [1, 3];
+      expect(utils.arrayToObject(arr)).to.deep.equal({'0': 1, '1': 3});
+    });
+    it('ignores passes non-array data through', function() {
+      var arr = '3';
+      expect(utils.arrayToObject(arr)).to.deep.equal('3');
+    });
+  });
 });
