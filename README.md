@@ -1,12 +1,18 @@
 # Stripe node.js bindings [![Build Status](https://travis-ci.org/stripe/stripe-node.png?branch=master)](https://travis-ci.org/stripe/stripe-node)
 
+## These are serverside bindings only
+
+If you're looking to install stripe.js, our clientside tokenization library - this is not it. These are serverside node.js bindings only.
+
+These stripe-node bindings are intended to deal with secret keys, and to take actions that should not occur in the browser without compromising security. Additionally, stripe.js is not offered as an npm package, primarily for compliance reasons. We work very hard to have extremely high availability around the world and constant backwards compatibility when stripe.js is updated. You should include stripe.js (in most cases asyncronous script injection is a great choice) with the following url: https://js.stripe.com/v2/
+
 ## Version 2 Update Notice
 
 **[Read about Version 2 here](https://github.com/stripe/stripe-node/wiki/Version-2)** (Released October 18th, 2013)
 
 ## Installation
 
-`npm install stripe`
+`npm install stripe --save`
 
 ## Documentation
 
