@@ -1,3 +1,6 @@
+4.12.0 Oct 18th, 2016
+- Support for 403 status codes (permission denied)
+
 4.11.0 Sep 16th, 2016
 - Add support for Apple Pay domains
 
