@@ -226,11 +226,23 @@ stripe.balance.retrieve({
 
 ## Development
 
-Run the tests using [`npm`](https://www.npmjs.com/):
+Run all tests:
 
 ```bash
 $ npm install
 $ npm test
+```
+
+Run a single test suite:
+
+```bash
+$ npm run mocha -- test/Error.spec.js
+```
+
+Run a single test (case sensitive):
+
+```bash
+$ npm run mocha -- test/Error.spec.js --grep 'Populates with type'
 ```
 
 If you wish, you may run tests using your Stripe *Test* API key by setting the environment variable `STRIPE_TEST_API_KEY` before running tests:

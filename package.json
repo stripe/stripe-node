@@ -40,6 +40,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "mocha": "mocha",
     "test": "npm run lint && mocha",
     "lint": "jscs ."
   }
