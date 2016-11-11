@@ -116,6 +116,7 @@ stripe.balance.retrieve({
   * [`retrieve(customerId)`](https://stripe.com/docs/api/node#retrieve_customer)
   * [`del(customerId)`](https://stripe.com/docs/api/node#delete_customer)
   * `listSources(customerId)`
+  * `deleteSource(customerId, {source: 'source_token'})`
   * `setMetadata(customerId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
   * `setMetadata(customerId, key, value)`
   * `getMetadata(customerId)`
