@@ -45,11 +45,19 @@ Additionally, every resource method returns a promise, so you don't have to use 
 // Create a new customer and then a new charge for that customer:
 stripe.customers.create({
   email: 'foo-customer@example.com'
-}).then(function(customer) {
+}).then(function(customer){
+  return stripe.customers.createSource(customer.id, {
+    object: 'card',
+    exp_month: 10,
+    exp_year: 2018,
+    number: '4242 4242 4242 4242',
+    cvc: 100
+  });
+}).then(function(source) {
   return stripe.charges.create({
     amount: 1600,
     currency: 'usd',
-    customer: customer.id
+    customer: source.customer
   });
 }).then(function(charge) {
   // New charge created on a new customer
