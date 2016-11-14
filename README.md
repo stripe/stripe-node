@@ -18,12 +18,19 @@ These stripe-node bindings are intended to deal with secret keys, and to take ac
 
 Documentation is available at https://stripe.com/docs/api/node.
 
+## Configuration
+
+Set your secret API key. This is available in [your dashboard](https://dashboard.stripe.com/account/apikeys).
+
+```js
+var stripe = require('stripe')(' your stripe API key ');
+```
+
 ## API Overview
 
 Every resource is accessed via your `stripe` instance:
 
 ```js
-var stripe = require('stripe')(' your stripe API key ');
 // stripe.{ RESOURCE_NAME }.{ METHOD_NAME }
 ```
 
@@ -122,6 +129,8 @@ stripe.balance.retrieve({
   * [`update(customerId[, params])`](https://stripe.com/docs/api/node#update_customer)
   * [`retrieve(customerId)`](https://stripe.com/docs/api/node#retrieve_customer)
   * [`del(customerId)`](https://stripe.com/docs/api/node#delete_customer)
+  * `listSources(customerId)`
+  * `deleteSource(customerId, {source: 'source_token'})`
   * `setMetadata(customerId, metadataObject)` ([metadata info](https://stripe.com/docs/api/node#metadata))
   * `setMetadata(customerId, key, value)`
   * `getMetadata(customerId)`
