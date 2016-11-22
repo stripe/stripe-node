@@ -1,3 +1,6 @@
+4.13.0 Nov 21st, 2016
+- Add retrieve method for 3-D Secure resources
+
 4.12.0 Oct 18th, 2016
 - Support for 403 status codes (permission denied)
 
