@@ -90,7 +90,7 @@ stripe.balance.retrieve({
 
 *Where you see `params` it is a plain JavaScript object, e.g. `{ email: 'foo@example.com' }`*
 
- * account
+ * accounts
   * [`retrieve(accountId)`](https://stripe.com/docs/api/node#retrieve_account)
   * [`create([params])`](https://stripe.com/docs/api/node#create_account)
   * [`list([params])`](https://stripe.com/docs/api/node#list_accounts)
