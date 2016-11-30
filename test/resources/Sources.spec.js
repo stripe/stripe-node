@@ -45,4 +45,16 @@ describe('Sources Resource', function() {
       });
     });
   });
+
+  describe('verify', function() {
+    it('Sends the correct request', function() {
+      stripe.sources.verify('src_foo', {values: [32, 45]});
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/sources/src_foo/verify',
+        headers: {},
+        data: {values: [32, 45]},
+      });
+    });
+  });
 });
