@@ -1,3 +1,6 @@
+4.14.0 Dec 1st, 2016
+- Add support for verifying sources
+
 4.13.0 Nov 21st, 2016
 - Add retrieve method for 3-D Secure resources
 
