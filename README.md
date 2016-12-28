@@ -54,11 +54,13 @@ stripe.customers.create({
   email: 'foo-customer@example.com'
 }).then(function(customer){
   return stripe.customers.createSource(customer.id, {
-    object: 'card',
-    exp_month: 10,
-    exp_year: 2018,
-    number: '4242 4242 4242 4242',
-    cvc: 100
+    source: {
+       object: 'card',
+       exp_month: 10,
+       exp_year: 2018,
+       number: '4242 4242 4242 4242',
+       cvc: 100
+    }
   });
 }).then(function(source) {
   return stripe.charges.create({
