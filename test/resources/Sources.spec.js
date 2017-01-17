@@ -46,6 +46,20 @@ describe('Sources Resource', function() {
     });
   });
 
+  describe('update', function() {
+    it('Sends the correct request', function() {
+      stripe.sources.update('src_foo', {
+        metadata: {foo: 'bar'},
+      });
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/sources/src_foo',
+        headers: {},
+        data: {metadata: {foo: 'bar'}},
+      });
+    });
+  });
+
   describe('verify', function() {
     it('Sends the correct request', function() {
       stripe.sources.verify('src_foo', {values: [32, 45]});
