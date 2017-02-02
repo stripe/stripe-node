@@ -98,13 +98,6 @@ stripe.balance.retrieve({
 
 See the [Node API docs](https://stripe.com/docs/api/node#intro).
 
-## More Information
-
- * [REST API Version](https://github.com/stripe/stripe-node/wiki/REST-API-Version)
- * [Error Handling](https://github.com/stripe/stripe-node/wiki/Error-Handling)
- * [Passing Options](https://github.com/stripe/stripe-node/wiki/Passing-Options)
- * [Using Stripe Connect](https://github.com/stripe/stripe-node/wiki/Using-Stripe-Connect-with-node.js)
-
 ## Development
 
 Run all tests:
