@@ -26,6 +26,11 @@ Set your secret API key. This is available in [your dashboard](https://dashboard
 var stripe = require('stripe')(' your stripe API key ');
 ```
 
+These settings are also available:
+
+ * `stripe.setApiKey(' your secret api key ');`
+ * `stripe.setTimeout(20000); // in ms` (default is node's default: `120000ms`)
+
 ## API Overview
 
 Every resource is accessed via your `stripe` instance:
