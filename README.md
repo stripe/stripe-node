@@ -29,6 +29,7 @@ var stripe = require('stripe')(' your stripe API key ');
 These settings are also available:
 
  * `stripe.setApiKey(' your secret api key ');`
+ * `stripe.setApiVersion('2017-01-27');`
  * `stripe.setTimeout(20000); // in ms` (default is node's default: `120000ms`)
 
 ## API Overview
