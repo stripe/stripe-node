@@ -30,14 +30,14 @@
     "chai-as-promised": "~4.1.1",
     "jscs": "^2.3.5",
     "mocha": "~2.1.0",
-    "qs": "~6.0.2",
+    "qs": "~6.0.4",
     "stripe-javascript-style": "^1.0.1"
   },
   "dependencies": {
     "bluebird": "^2.10.2",
     "lodash.isplainobject": "^4.0.6",
     "object-assign": "^4.1.0",
-    "qs": "~6.0.2"
+    "qs": "~6.0.4"
   },
   "license": "MIT",
   "scripts": {
