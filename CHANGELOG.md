@@ -1,3 +1,6 @@
+4.15.1 Mar 8th, 2017
+- Update required version of "qs" dependency to 6.0.4+
+
 4.15.0 Jan 18th, 2017
 - Add support for updating sources
 
