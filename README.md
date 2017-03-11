@@ -93,6 +93,27 @@ stripe.balance.retrieve({
 });
 ```
 
+To use stripe behind a proxy you can pass [https-proxy-agent](https://github.com/TooTallNate/node-http-proxy-agent) to sdk:
+ES6 syntaxis:
+```js
+import stripeSDK from 'stripe';
+
+const stripe = stripeSDK('your-stripe-api-key');
+if (process.env.http_proxy) {
+  const ProxyAgent = require('https-proxy-agent');
+  stripe.setHttpAgent(new ProxyAgent(process.env.http_proxy));
+}
+```
+ES5 syntaxis:
+```js
+var stripe require('stripe')('your-stripe-api-key');
+
+if (process.env.http_proxy) {
+  var ProxyAgent = require('https-proxy-agent');
+  stripe.setHttpAgent(new ProxyAgent(process.env.http_proxy));
+}
+```
+
 ## Documentation
 
 See the [Node API docs](https://stripe.com/docs/api/node#intro).
