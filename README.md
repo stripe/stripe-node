@@ -1,47 +1,32 @@
-# Stripe node.js bindings [![Build Status](https://travis-ci.org/stripe/stripe-node.png?branch=master)](https://travis-ci.org/stripe/stripe-node)
+# Stripe Node.js SDK [![Build Status](https://travis-ci.org/stripe/stripe-node.png?branch=master)](https://travis-ci.org/stripe/stripe-node)
 
-## These are serverside bindings only
+The Stripe Node SDK provides a package for convenient access to the Stripe API
+from applications written in server-side JavaScript.
 
-If you're looking to install stripe.js, our clientside tokenization library - this is not it. These are serverside node.js bindings only.
-
-These stripe-node bindings are intended to deal with secret keys, and to take actions that should not occur in the browser without compromising security. Additionally, stripe.js is not offered as an npm package, primarily for compliance reasons. We work very hard to have extremely high availability around the world and constant backwards compatibility when stripe.js is updated. You should include stripe.js (in most cases asyncronous script injection is a great choice) with the following url: https://js.stripe.com/v2/
-
-## Version 2 Update Notice
-
-**[Read about Version 2 here](https://github.com/stripe/stripe-node/wiki/Version-2)** (Released October 18th, 2013)
-
-## Installation
-
-`npm install stripe --save`
+Please keep in mind that this package is for use with server-side Node that
+uses Stripe secret keys. To maintain PCI compliance, tokenization of credit
+card information should always be done with [Stripe.js][stripe-js] on the
+client side. This package should not be used for that purpose.
 
 ## Documentation
 
-Documentation is available at https://stripe.com/docs/api/node.
+See the [Node API docs](https://stripe.com/docs/api/node#intro).
 
-## Configuration
+## Installation
 
-Set your secret API key. This is available in [your dashboard](https://dashboard.stripe.com/account/apikeys).
+Install the package with:
 
-```js
-var stripe = require('stripe')(' your stripe API key ');
-```
+    npm install stripe --save
 
-These settings are also available:
+## Usage
 
- * `stripe.setApiKey(' your secret api key ');`
- * `stripe.setTimeout(20000); // in ms` (default is node's default: `120000ms`)
+The package needs to be configured with your account's secret key which is
+available in your [Stripe Dashboard][dashboard]. Require it with the key's
+value:
 
-## API Overview
+``` js
+var stripe = require('stripe')('sk_test_...');
 
-Every resource is accessed via your `stripe` instance:
-
-```js
-// stripe.{ RESOURCE_NAME }.{ METHOD_NAME }
-```
-
-Every resource method accepts an optional callback as the last argument:
-
-```js
 stripe.customers.create(
   { email: 'customer@example.com' },
   function(err, customer) {
@@ -51,9 +36,19 @@ stripe.customers.create(
 );
 ```
 
-Additionally, every resource method returns a promise, so you don't have to use the regular callback. E.g.
+On ES6, this looks more like:
 
-```js
+``` js
+import stripePackage from 'stripe';
+const stripe = stripePackage('sk_test_...');
+```
+
+### Using Promises
+
+Every method returns a chainable promise which can be used instead of a regular
+callback:
+
+``` js
 // Create a new customer and then a new charge for that customer:
 stripe.customers.create({
   email: 'foo-customer@example.com'
@@ -80,9 +75,20 @@ stripe.customers.create({
 });
 ```
 
-To use the `Stripe-Account` header, simply pass an extra options hash:
+### Configuring Timeout
 
-```js
+Request timeout is configurable (the default is Node's default of 120 seconds):
+
+``` js
+stripe.setTimeout(20000); // in ms (this is 20 seconds)
+```
+
+### Configuring For Connect
+
+A per-request `Stripe-Account` header for use with [Stripe Connect][connect]
+can be added to any method:
+
+``` js
 // Retrieve the balance for a connected account:
 stripe.balance.retrieve({
   stripe_account: "acct_foo"
@@ -93,30 +99,19 @@ stripe.balance.retrieve({
 });
 ```
 
-To use stripe behind a proxy you can pass [https-proxy-agent](https://github.com/TooTallNate/node-http-proxy-agent) to sdk:
-ES6 syntaxis:
-```js
-import stripeSDK from 'stripe';
+### Configuring a Proxy
 
-const stripe = stripeSDK('your-stripe-api-key');
+An [https-proxy-agent][https-proxy-agent] can be configured with
+`setHttpAgent`.
+
+To use stripe behind a proxy you can pass  to sdk:
+
+```js
 if (process.env.http_proxy) {
   const ProxyAgent = require('https-proxy-agent');
   stripe.setHttpAgent(new ProxyAgent(process.env.http_proxy));
 }
 ```
-ES5 syntaxis:
-```js
-var stripe require('stripe')('your-stripe-api-key');
-
-if (process.env.http_proxy) {
-  var ProxyAgent = require('https-proxy-agent');
-  stripe.setHttpAgent(new ProxyAgent(process.env.http_proxy));
-}
-```
-
-## Documentation
-
-See the [Node API docs](https://stripe.com/docs/api/node#intro).
 
 ## More Information
 
@@ -146,17 +141,15 @@ Run a single test (case sensitive):
 $ npm run mocha -- test/Error.spec.js --grep 'Populates with type'
 ```
 
-If you wish, you may run tests using your Stripe *Test* API key by setting the environment variable `STRIPE_TEST_API_KEY` before running tests:
+If you wish, you may run tests using your Stripe *Test* API key by setting the
+environment variable `STRIPE_TEST_API_KEY` before running the tests:
 
 ```bash
 $ export STRIPE_TEST_API_KEY='sk_test....'
 $ npm test
 ```
 
-*Note: On Windows use `SET` instead of `export` for setting the `STRIPE_TEST_API_KEY` environment variable.*
-
-If you don't have a prefixed key (in the form `sk_test_...`) you can get one by rolling your "Test Secret Key". This can be done under your dashboard (*Account Setting -> API Keys -> Click the roll icon next to the "test secret key"*). This should give you a new prefixed key ('sk_test_..'), which will then be usable by the node mocha tests.
-
-## Author
-
-Originally by [Ask Bjørn Hansen](https://github.com/abh) (ask@develooper.com). Development was sponsored by YellowBot. Now officially maintained by Stripe.
+[connect]: https://stripe.com/connect
+[dashboard]: https://dashboard.stripe.com/account
+[https-proxy-agent]: https://github.com/TooTallNate/node-https-proxy-agent
+[stripe-js]: https://stripe.com/docs/stripe.js
