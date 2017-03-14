@@ -1,7 +1,7 @@
-# Stripe Node.js SDK [![Build Status](https://travis-ci.org/stripe/stripe-node.png?branch=master)](https://travis-ci.org/stripe/stripe-node)
+# Stripe Node.js Library [![Build Status](https://travis-ci.org/stripe/stripe-node.png?branch=master)](https://travis-ci.org/stripe/stripe-node)
 
-The Stripe Node SDK provides a package for convenient access to the Stripe API
-from applications written in server-side JavaScript.
+The Stripe Node library provides convenient access to the Stripe API from
+applications written in server-side JavaScript.
 
 Please keep in mind that this package is for use with server-side Node that
 uses Stripe secret keys. To maintain PCI compliance, tokenization of credit
