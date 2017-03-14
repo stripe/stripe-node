@@ -21,7 +21,7 @@ Install the package with:
 ## Usage
 
 The package needs to be configured with your account's secret key which is
-available in your [Stripe Dashboard][dashboard]. Require it with the key's
+available in your [Stripe Dashboard][api-keys]. Require it with the key's
 value:
 
 ``` js
@@ -149,7 +149,7 @@ $ export STRIPE_TEST_API_KEY='sk_test....'
 $ npm test
 ```
 
+[api-keys]: https://dashboard.stripe.com/account/apikeys
 [connect]: https://stripe.com/connect
-[dashboard]: https://dashboard.stripe.com/account
 [https-proxy-agent]: https://github.com/TooTallNate/node-https-proxy-agent
 [stripe-js]: https://stripe.com/docs/stripe.js
