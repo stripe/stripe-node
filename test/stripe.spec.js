@@ -97,8 +97,13 @@ describe('Stripe Module', function() {
             },
           }, function(err, customer) {
             cleanup.deleteCustomer(customer.id);
+
             var headers = customer.lastResponse.headers;
             expect(headers).to.contain.keys('request-id');
+
+            expect(customer.lastResponse.requestId).to.match(/^req_/);
+            expect(customer.lastResponse.statusCode).to.equal(200);
+
             resolve('Called!');
           });
         })).to.eventually.equal('Called!');
