@@ -1,3 +1,6 @@
+4.16.0 Mar 22nd, 2017
+- Make `requestId` available on resource `lastResponse` objects
+
 4.15.1 Mar 8th, 2017
 - Update required version of "qs" dependency to 6.0.4+
 
