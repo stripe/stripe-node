@@ -168,3 +168,7 @@ $ npm test
 [connect]: https://stripe.com/connect
 [https-proxy-agent]: https://github.com/TooTallNate/node-https-proxy-agent
 [stripe-js]: https://stripe.com/docs/stripe.js
+
+<!--
+# vim: set tw=79:
+-->
