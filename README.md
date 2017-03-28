@@ -118,6 +118,16 @@ if (process.env.http_proxy) {
 }
 ```
 
+### Examining Responses
+
+Some information about the response which generated a resource is available
+with the `lastResponse` property:
+
+```js
+charge.lastResponse.requestId // see: https://stripe.com/docs/api/python#request_ids
+charge.lastResponse.statusCode
+```
+
 ## More Information
 
  * [REST API Version](https://github.com/stripe/stripe-node/wiki/REST-API-Version)
