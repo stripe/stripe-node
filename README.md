@@ -124,7 +124,7 @@ Some information about the response which generated a resource is available
 with the `lastResponse` property:
 
 ```js
-charge.lastResponse.requestId // see: https://stripe.com/docs/api/python#request_ids
+charge.lastResponse.requestId // see: https://stripe.com/docs/api/node#request_ids
 charge.lastResponse.statusCode
 ```
 
