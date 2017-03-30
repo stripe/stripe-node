@@ -1,3 +1,6 @@
+4.16.1 Mar 30th, 2017
+- Fix bad reference to `requestId` when initializing errors
+
 4.16.0 Mar 22nd, 2017
 - Make `requestId` available on resource `lastResponse` objects
 
