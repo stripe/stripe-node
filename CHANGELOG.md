@@ -1,3 +1,6 @@
+4.17.0 Mar 31st, 2017
+- Add support for payouts
+
 4.16.1 Mar 30th, 2017
 - Fix bad reference to `requestId` when initializing errors
 
