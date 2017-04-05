@@ -1,3 +1,6 @@
+4.17.1 Apr 5th, 2017
+- Fix paths in error messages on bad arguments
+
 4.17.0 Mar 31st, 2017
 - Add support for payouts
 
