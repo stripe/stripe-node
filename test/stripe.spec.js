@@ -13,11 +13,7 @@ var exp_year = new Date().getFullYear() + 1;
 
 var CUSTOMER_DETAILS = {
   description: 'Some customer',
-  card: {
-    number: '4242424242424242',
-    exp_month: 12,
-    exp_year: exp_year,
-  },
+  card: 'tok_visa',
 };
 
 describe('Stripe Module', function() {
@@ -162,14 +158,7 @@ describe('Stripe Module', function() {
     describe('Any given endpoint', function() {
       it('Will call a callback if successful', function() {
         return expect(new Promise(function(resolve, reject) {
-          stripe.customers.create({
-            description: 'Some customer',
-            card: {
-              number: '4242424242424242',
-              exp_month: 12,
-              exp_year: exp_year,
-            },
-          }, function(err, customer) {
+          stripe.customers.create(CUSTOMER_DETAILS, function(err, customer) {
             cleanup.deleteCustomer(customer.id);
             resolve('Called!');
           });
@@ -178,14 +167,7 @@ describe('Stripe Module', function() {
 
       it('Will expose HTTP response object', function() {
         return expect(new Promise(function(resolve, reject) {
-          stripe.customers.create({
-            description: 'Some customer',
-            card: {
-              number: '4242424242424242',
-              exp_month: 12,
-              exp_year: exp_year,
-            },
-          }, function(err, customer) {
+          stripe.customers.create(CUSTOMER_DETAILS, function(err, customer) {
             cleanup.deleteCustomer(customer.id);
 
             var headers = customer.lastResponse.headers;

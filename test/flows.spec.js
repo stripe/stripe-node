@@ -14,11 +14,7 @@ var exp_year = new Date().getFullYear() + 1;
 
 var CUSTOMER_DETAILS = {
   description: 'Some customer',
-  card: {
-    number: '4242424242424242',
-    exp_month: 12,
-    exp_year: exp_year,
-  },
+  card: 'tok_visa',
 };
 
 var CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
@@ -356,12 +352,7 @@ describe('Flows', function() {
         return expect(
           stripe.customers.create({
             description: 'Some customer',
-            source: {
-              object: 'card',
-              number: '4242424242424242',
-              exp_month: 12,
-              exp_year: exp_year,
-            },
+            source: 'tok_visa',
             expand: ['default_source'],
           })
             .then(function(cust) {
@@ -380,12 +371,7 @@ describe('Flows', function() {
         stripe.charges.create({
           amount: 1234,
           currency: CURRENCY,
-          card: {
-            number: '4000000000000002',
-            exp_month: 12,
-            exp_year: exp_year,
-            cvc: 123,
-          },
+          card: 'tok_chargeDeclined',
           shipping: {
             name: 'Bobby Tables',
             address: {
@@ -415,21 +401,11 @@ describe('Flows', function() {
   describe('Creating a ThreeDSecure object', function() {
     it('Allows me to do so', function() {
       return expect(
-        stripe.tokens.create({
-          card: {
-            object: 'card',
-            number: '4242424242424242',
-            exp_month: 8,
-            exp_year: 2018,
-            cvc: '999',
-          },
-        }).then(function(token) {
-          return stripe.threeDSecure.create({
-            card: token.id,
-            amount: 1500,
-            currency: 'usd',
-            return_url: 'https://example.org/3d-secure-result',
-          })
+        stripe.threeDSecure.create({
+          card: 'tok_visa',
+          amount: 1500,
+          currency: 'usd',
+          return_url: 'https://example.org/3d-secure-result',
         })
       ).to.eventually.have.property('object', 'three_d_secure');
     });
