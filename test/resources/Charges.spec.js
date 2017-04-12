@@ -123,6 +123,14 @@ describe('Charge Resource', function() {
       expect(
         stripe.charges.refund('chargeIdExample123', 39392)
       ).to.be.eventually.rejectedWith(/unknown arguments/i);
+
+      expect(
+        stripe.charges.refund({potato: 'chargeIdExample123'})
+      ).to.be.eventually.rejectedWith(/must be a string, but got: object/i);
+
+      expect(
+        stripe.charges.refund(442)
+      ).to.be.eventually.rejectedWith(/must be a string, but got: number/i);
     });
   });
 
