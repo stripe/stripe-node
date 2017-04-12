@@ -1,3 +1,6 @@
+4.18.0 Apr 12th, 2017
+- Reject ID parameters that don't look like strings
+
 4.17.1 Apr 5th, 2017
 - Fix paths in error messages on bad arguments
 
