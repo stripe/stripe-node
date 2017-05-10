@@ -1,0 +1,15 @@
+{
+  "name": "webhook-signing-example-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "morgan": "^1.8.1",
+    "stripe": "^4.18.0"
+  }
+}
