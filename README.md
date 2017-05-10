@@ -132,7 +132,15 @@ charge.lastResponse.statusCode
 
 Stripe can optionally sign the webhook events it sends to your endpoint, allowing you to validate that they were not sent by a third-party.  You can read more about it [here](https://stripe.com/docs/webhooks#signatures).
 
-You can find an example of how to use this with [Express](https://expressjs.com/) in the [`examples/webhook-signing`](examples/webhook-signing) folder.
+You can find an example of how to use this with [Express](https://expressjs.com/) in the [`examples/webhook-signing`](examples/webhook-signing) folder, but here's what it looks like:
+
+```js
+event = stripe.webhooks.constructEvent(
+  webhookRawBody,
+  webhookStripeSignatureHeader,
+  webhookSecret
+);
+```
 
 ## More Information
 
