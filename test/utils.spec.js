@@ -194,4 +194,18 @@ describe('utils', function() {
       expect(utils.arrayToObject(arr)).to.deep.equal('3');
     });
   });
+
+  describe('secureCompare', function() {
+    it('returns true given two equal things', function() {
+      expect(utils.secureCompare('potato', 'potato')).to.equal(true);
+    });
+
+    it('returns false given two unequal things', function() {
+      expect(utils.secureCompare('potato', 'tomato')).to.equal(false);
+    });
+
+    it('throws an error if not given two things to compare', function() {
+      expect(function() { utils.secureCompare('potato'); }).to.throw();
+    });
+  });
 });
