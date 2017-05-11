@@ -1,3 +1,6 @@
+4.19.0 May 11th, 2017
+- Support for checking webhook signatures
+
 4.18.0 Apr 12th, 2017
 - Reject ID parameters that don't look like strings
 
