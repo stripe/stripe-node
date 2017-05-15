@@ -68,6 +68,71 @@ describe('Stripe Module', function() {
     });
   });
 
+  describe('setAppInfo', function() {
+    it('should set name, version and url of stripe._appInfo', function() {
+      expect(stripe._appInfo).to.be.undefined;
+
+      stripe.setAppInfo({});
+      expect(stripe._appInfo).to.be.undefined;
+
+      stripe.setAppInfo({
+        species: 'cats',
+      });
+      expect(stripe._appInfo).to.be.undefined;
+
+      stripe.setAppInfo({
+        name: 'MyAwesomeApp',
+      });
+      expect(stripe._appInfo).to.eql({
+        name: 'MyAwesomeApp',
+      });
+
+      stripe.setAppInfo({
+        version: '1.2.345',
+      });
+      expect(stripe._appInfo).to.eql({
+        version: '1.2.345',
+      });
+
+      stripe.setAppInfo({
+        url: 'https://myawesomeapp.info',
+      });
+      expect(stripe._appInfo).to.eql({
+        url: 'https://myawesomeapp.info',
+      });
+
+      stripe.setAppInfo({
+        name: 'MyAwesomeApp',
+        version: '1.2.345',
+        url: 'https://myawesomeapp.info',
+        countOfRadishes: 512,
+      });
+      expect(stripe._appInfo).to.eql({
+        name: 'MyAwesomeApp',
+        version: '1.2.345',
+        url: 'https://myawesomeapp.info',
+      });
+    });
+
+    it('should be included in the ClientUserAgent and be adddd to the UserAgent String', function(done) {
+      var appInfo = {
+        name: Math.random().toString(36).slice(2),
+        version: '1.2.345',
+        url: 'https://myawesomeapp.info',
+      };
+
+      stripe.setAppInfo(appInfo);
+
+      stripe.getClientUserAgent(function(uaString) {
+        expect(JSON.parse(uaString).application).to.eql(appInfo);
+
+        expect(stripe.getAppInfoAsString()).to.eql(appInfo.name + '/' + appInfo.version + ' (' + appInfo.url + ')');
+
+        done();
+      });
+    });
+  });
+
   describe('Callback support', function() {
     describe('Any given endpoint', function() {
       it('Will call a callback if successful', function() {
