@@ -149,8 +149,8 @@ If you're writing a plugin that uses the library, we'd appreciate it if you iden
 ```js
 stripe.setAppInfo({
   name: MyAwesomePlugin,
-  version: '1.2.34',
-  url: 'https://myawesomeplugin.info',
+  version: '1.2.34', // Optional
+  url: 'https://myawesomeplugin.info', // Optional
 });
 ```
 
