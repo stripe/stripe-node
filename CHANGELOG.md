@@ -1,3 +1,6 @@
+4.19.1 May 18th, 2017
+- Tweak class initialization for compatibility with divergent JS engines
+
 4.19.0 May 11th, 2017
 - Support for checking webhook signatures
 
