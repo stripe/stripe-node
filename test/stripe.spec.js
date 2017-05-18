@@ -73,26 +73,26 @@ describe('Stripe Module', function() {
       it('should unset stripe._appInfo', function() {
         stripe.setAppInfo();
         expect(stripe._appInfo).to.be.undefined;
-
-        stripe.setAppInfo({});
-        expect(stripe._appInfo).to.be.undefined;
       });
     });
 
-    describe('when given a non-empty object with no `name`', function() {
+    describe('when given an object with no `name`', function() {
       it('should throw an error', function() {
+        expect(function() {
+          stripe.setAppInfo({});
+        }).to.throw(/AppInfo.name is required/);
+
         expect(function() {
           stripe.setAppInfo({
             version: '1.2.3',
           });
         }).to.throw(/AppInfo.name is required/);
-      });
 
-      it('should ignore any invalid properties', function() {
-        stripe.setAppInfo({
-          species: 'cats',
-        });
-        expect(stripe._appInfo).to.be.undefined;
+        expect(function() {
+          stripe.setAppInfo({
+            cats: '42',
+          });
+        }).to.throw(/AppInfo.name is required/);
       });
     });
 
