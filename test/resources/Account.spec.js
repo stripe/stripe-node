@@ -217,4 +217,18 @@ describe('Account Resource', function() {
       });
     });
   });
+
+  describe('LoginLink methods', function() {
+    describe('createLoginLink', function() {
+      it('Sends the correct request', function() {
+        stripe.account.createLoginLink('acct_EXPRESS');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/accounts/acct_EXPRESS/login_links',
+          headers: {},
+          data: {},
+        });
+      });
+    });
+  });
 });
