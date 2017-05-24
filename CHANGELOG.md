@@ -1,3 +1,6 @@
+4.20.0 May 24th, 2017
+- Add `stripe.setAppInfo` for plugin authors to register app information
+
 4.19.1 May 18th, 2017
 - Tweak class initialization for compatibility with divergent JS engines
 
