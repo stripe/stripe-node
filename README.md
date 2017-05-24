@@ -142,6 +142,20 @@ event = stripe.webhooks.constructEvent(
 );
 ```
 
+### Writing a Plugin
+
+If you're writing a plugin that uses the library, we'd appreciate it if you identified using `stripe.setAppInfo()`:
+
+```js
+stripe.setAppInfo({
+  name: MyAwesomePlugin,
+  version: '1.2.34', // Optional
+  url: 'https://myawesomeplugin.info', // Optional
+});
+```
+
+This information is passed along when the library makes calls to the Stripe API.
+
 ## More Information
 
  * [REST API Version](https://github.com/stripe/stripe-node/wiki/REST-API-Version)
