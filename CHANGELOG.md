@@ -1,3 +1,6 @@
+4.21.0 May 25th, 2017
+- Add support for account login links
+
 4.20.0 May 24th, 2017
 - Add `stripe.setAppInfo` for plugin authors to register app information
 
