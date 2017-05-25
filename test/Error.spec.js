@@ -22,6 +22,12 @@ describe('Error', function() {
       expect(Error.StripeError.generate({type: 'api_error'})).to.be.instanceOf(Error.StripeAPIError);
     });
 
+    it('Pulls in headers', function() {
+      var headers = {'Request-Id': '123'};
+      var e = Error.StripeError.generate({type: 'card_error', headers: headers});
+      expect(e).to.have.property('headers', headers);
+    });
+
     it('Pulls in request IDs', function() {
       var e = Error.StripeError.generate({type: 'card_error', requestId: 'foo'});
       expect(e).to.have.property('requestId', 'foo');
