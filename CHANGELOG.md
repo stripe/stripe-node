@@ -1,3 +1,6 @@
+4.22.0 May 25th, 2017
+- Make response headers accessible on error objects
+
 4.21.0 May 25th, 2017
 - Add support for account login links
 
