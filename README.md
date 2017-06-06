@@ -96,7 +96,7 @@ can be added to any method:
 ``` js
 // Retrieve the balance for a connected account:
 stripe.balance.retrieve({
-  stripe_account: "acct_foo"
+  stripe_account: 'acct_foo'
 }).then(function(balance) {
   // The balance object for the connected account
 }).catch(function(err) {
@@ -148,7 +148,7 @@ If you're writing a plugin that uses the library, we'd appreciate it if you iden
 
 ```js
 stripe.setAppInfo({
-  name: MyAwesomePlugin,
+  name: 'MyAwesomePlugin',
   version: '1.2.34', // Optional
   url: 'https://myawesomeplugin.info', // Optional
 });
