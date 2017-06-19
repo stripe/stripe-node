@@ -18,7 +18,7 @@ const stripe = Stripe(apiKey);
 
 const router = Express.Router();
 
-// Add the raw body of hte request to the `request` object
+// Add the raw text body of the request to the `request` object
 function addRawBody(req, res, next) {
   req.setEncoding('utf8');
 
@@ -41,7 +41,7 @@ function addRawBody(req, res, next) {
 // router.use(addRawBody);
 
 /**
- * ...add it directly as middleware to the route.
+ * ...or add it directly as middleware to the route.
  */
 router.post('/webhooks', addRawBody, function(request, response) {
   var event;
