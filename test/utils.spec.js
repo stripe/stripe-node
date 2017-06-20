@@ -149,7 +149,7 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(0);
     });
-    it('parse an idempotency key', function() {
+    it('parses an idempotency key', function() {
       var args = [{foo: 'bar'}, {idempotency_key: 'foo'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
@@ -157,25 +157,41 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(1);
     });
-    it('parse an idempotency key and api key (with data)', function() {
-      var args = [{foo: 'bar'}, {
-        api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-        idempotency_key: 'foo',
-      },];
+    it('parses an api version', function() {
+      var args = [{foo: 'bar'}, {stripe_version: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-        headers: {'Idempotency-Key': 'foo'},
+        auth: null,
+        headers: {'Stripe-Version': '2003-03-30'},
       });
       expect(args.length).to.equal(1);
     });
-    it('parse an idempotency key and api key', function() {
-      var args = [{
+    it('parses an idempotency key and api key and api version (with data)', function() {
+      var args = [{foo: 'bar'}, {
         api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         idempotency_key: 'foo',
+        stripe_version: '2010-01-10',
       },];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-        headers: {'Idempotency-Key': 'foo'},
+        headers: {
+          'Idempotency-Key': 'foo',
+          'Stripe-Version': '2010-01-10',
+        },
+      });
+      expect(args.length).to.equal(1);
+    });
+    it('parses an idempotency key and api key and api version', function() {
+      var args = [{
+        api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        idempotency_key: 'foo',
+        stripe_version: 'hunter2',
+      },];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        headers: {
+          'Idempotency-Key': 'foo',
+          'Stripe-Version': 'hunter2',
+        },
       });
       expect(args.length).to.equal(0);
     });
