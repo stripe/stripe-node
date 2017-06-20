@@ -1,3 +1,6 @@
+4.23.0 Jun 20th, 2017
+- Add support for ephemeral keys
+
 4.22.1 Jun 20th, 2017
 - Fix usage of hasOwnProperty in utils
 
