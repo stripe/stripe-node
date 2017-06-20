@@ -1,3 +1,6 @@
+4.22.1 Jun 20th, 2017
+- Fix usage of hasOwnProperty in utils
+
 4.22.0 May 25th, 2017
 - Make response headers accessible on error objects
 
