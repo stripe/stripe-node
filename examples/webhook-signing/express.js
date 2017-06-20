@@ -2,7 +2,6 @@
 
 const Stripe = require('stripe');
 const Express = require('express');
-const bodyParser = require('body-parser')
 
 /**
  * You'll need to make sure this is externally accessible.  ngrok (https://ngrok.com/)
@@ -17,17 +16,34 @@ const webhookSecret = process.env['WEBHOOK_SECRET']
 
 const stripe = Stripe(apiKey);
 
-// We use a router here so it can use its own `bodyParser` instance to add
-// the raw POST data to the `request`
 const router = Express.Router();
 
-router.use(bodyParser.json({
-  verify: function(request, response, buffer) {
-    request.rawBody = buffer.toString();
-  },
-}));
+// Add the raw text body of the request to the `request` object
+function addRawBody(req, res, next) {
+  req.setEncoding('utf8');
 
-router.post('/webhooks', function(request, response) {
+  var data = '';
+
+  req.on('data', function(chunk) {
+    data += chunk;
+  });
+
+  req.on('end', function() {
+    req.rawBody = data;
+
+    next();
+  });
+}
+
+/**
+ * You can either `use()` addRawBody on the Router...
+ */
+// router.use(addRawBody);
+
+/**
+ * ...or add it directly as middleware to the route.
+ */
+router.post('/webhooks', addRawBody, function(request, response) {
   var event;
 
   try {
