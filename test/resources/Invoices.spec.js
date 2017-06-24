@@ -77,6 +77,25 @@ describe('Invoices Resource', function() {
       });
     });
 
+    describe('With a options object that includes `subscription_items`', function() {
+      it('Sends the correct request', function() {
+        stripe.invoices.retrieveUpcoming('customerId1', {
+          subscription_items: [
+            {plan: 'potato'},
+            {plan: 'rutabaga'},
+          ],
+        });
+
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/invoices/upcoming?customer=customerId1&' +
+            'subscription_items%5B0%5D%5Bplan%5D=potato&subscription_items%5B1%5D%5Bplan%5D=rutabaga',
+          headers: {},
+          data: {},
+        });
+      });
+    });
+
     describe('With a options object in addition to a customer ID', function() {
       it('Sends the correct request', function() {
         stripe.invoices.retrieveUpcoming('customerId1', {plan: 'planId123'});
