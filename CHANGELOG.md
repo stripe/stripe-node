@@ -1,3 +1,6 @@
+4.23.1 Jun 24th, 2017
+- Properly encode subscription items when retrieving upcoming invoice
+
 4.23.0 Jun 20th, 2017
 - Add support for ephemeral keys
 
