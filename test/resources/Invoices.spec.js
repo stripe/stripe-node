@@ -111,12 +111,14 @@ describe('Invoices Resource', function() {
 
   describe('pay', function() {
     it('Sends the correct request', function() {
-      stripe.invoices.pay('invoiceId6');
+      stripe.invoices.pay('invoiceId6', {
+        source: 'tok_FooBar',
+      });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/invoices/invoiceId6/pay',
         headers: {},
-        data: {},
+        data: {source: 'tok_FooBar'},
       });
     });
   });
