@@ -1,3 +1,6 @@
+4.23.2 Aug 3rd, 2017
+- Handle `Buffer.from` incompatibility for Node versions prior to 4.5.x
+
 4.23.1 Jun 24th, 2017
 - Properly encode subscription items when retrieving upcoming invoice
 
