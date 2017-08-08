@@ -106,10 +106,14 @@ describe('utils', function() {
       expect(utils.getDataFromArgs(args)).to.deep.equal({});
       expect(args.length).to.equal(2);
     });
-    it('ignores an options hash', function() {
+    it('ignores a hash with only options', function() {
       var args = [{api_key: 'foo'}];
       expect(utils.getDataFromArgs(args)).to.deep.equal({});
       expect(args.length).to.equal(1);
+    });
+    it('throws an error if the hash contains both data and options', function() {
+      var args = [{foo: 'bar', api_key: 'foo', idempotency_key: 'baz'}];
+      expect(function() { utils.getDataFromArgs(args); }).to.throw(/Options found in arguments/);
     });
     it('finds the data', function() {
       var args = [{foo: 'bar'}, {api_key: 'foo'}];
