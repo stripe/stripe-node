@@ -137,7 +137,7 @@ describe('Stripe Module', function() {
 
     it('should be included in the ClientUserAgent and be added to the UserAgent String', function(done) {
       var appInfo = {
-        name: Math.random().toString(36).slice(2),
+        name: testUtils.getRandomString(),
         version: '1.2.345',
         url: 'https://myawesomeapp.info',
       };

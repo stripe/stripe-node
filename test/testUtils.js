@@ -122,5 +122,11 @@ var utils = module.exports = {
     return CleanupUtility;
   }()),
 
-};
+  /**
+  * Get a random string for test Object creation
+  */
+  getRandomString: function() {
+    return Math.random().toString(36).slice(2);
+  },
 
+};

@@ -41,7 +41,7 @@ describe('Flows', function() {
       return expect(
         Promise.join(
           stripe.plans.create({
-            id: 'plan' + (new Date()).getTime(),
+            id: 'plan' + testUtils.getRandomString(),
             amount: 1700,
             currency: CURRENCY,
             interval: 'month',
@@ -69,7 +69,7 @@ describe('Flows', function() {
         return expect(
           Promise.join(
             stripe.plans.create({
-              id: 'plan' + (new Date()).getTime(),
+              id: 'plan' + testUtils.getRandomString(),
               amount: 1700,
               currency: CURRENCY,
               interval: 'month',
@@ -104,7 +104,7 @@ describe('Flows', function() {
             cleanup.deleteCustomer(customer.id);
 
             return stripe.customers.updateSubscription(customer.id, {
-              plan: 'someNonExistentPlan' + (new Date()).getTime(),
+              plan: 'someNonExistentPlan' + testUtils.getRandomString(),
             }).then(null, function(err) {
               // Resolve with the error so we can inspect it below
               return err;
@@ -120,7 +120,7 @@ describe('Flows', function() {
       return expect(
         Promise.join(
           stripe.plans.create({
-            id: 'plan' + (new Date()).getTime(),
+            id: 'plan' + testUtils.getRandomString(),
             amount: 1700,
             currency: CURRENCY,
             interval: 'month',
@@ -147,10 +147,10 @@ describe('Flows', function() {
 
     describe('Plan name variations', function() {
       [
-        '34535 355453' + (new Date()).getTime(),
-        'TEST 239291' + (new Date()).getTime(),
-        'TEST_a-i' + (new Date()).getTime(),
-        'foobarbazteston###etwothree' + (new Date()).getTime(),
+        '34535 355453' + testUtils.getRandomString(),
+        'TEST 239291' + testUtils.getRandomString(),
+        'TEST_a-i' + testUtils.getRandomString(),
+        'foobarbazteston###etwothree' + testUtils.getRandomString(),
       ].forEach(function(planID) {
         it('Allows me to create and retrieve plan with ID: ' + planID, function() {
           var plan;
