@@ -139,10 +139,11 @@ function onRequest(request) {
   // Do something.
 }
 
+// Add the event handler function:
 stripe.on('request', onRequest);
 
-stripe.removeListener('request', onRequest);
-// OR: stripe.off('request', onRequest);
+// Remove the event handler function:
+stripe.off('request', onRequest);
 ```
 
 #### `request` object
@@ -166,7 +167,7 @@ stripe.removeListener('request', onRequest);
   path: '/v1/charges',
   status: 402,
   request_id: 'req_Ghc9r26ts73DRf',
-  elapsed: 445
+  elapsed: 445                // Elapsed time in milliseconds
 }
 ```
 

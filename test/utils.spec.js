@@ -226,7 +226,7 @@ describe('utils', function() {
   });
 
   describe('removeEmpty', function() {
-    it('removes empty properties and leave non-empty ones', function() {
+    it('removes empty properties and leaves non-empty ones', function() {
       expect(utils.removeEmpty({
         cat: 3,
         dog: false,
