@@ -1,3 +1,6 @@
+4.24.0 Aug 10th, 2017
+- Support informational events with `Stripe.on` (see README for details)
+
 4.23.2 Aug 3rd, 2017
 - Handle `Buffer.from` incompatibility for Node versions prior to 4.5.x
 
