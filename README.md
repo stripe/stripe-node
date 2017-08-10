@@ -128,6 +128,49 @@ charge.lastResponse.requestId // see: https://stripe.com/docs/api/node#request_i
 charge.lastResponse.statusCode
 ```
 
+### `request` and `response` events
+
+The Stripe object emits `request` and `response` events.  You can use them like this:
+
+```js
+var stripe = require('stripe')('sk_test_...');
+
+function onRequest(request) {
+  // Do something.
+}
+
+// Add the event handler function:
+stripe.on('request', onRequest);
+
+// Remove the event handler function:
+stripe.off('request', onRequest);
+```
+
+#### `request` object
+```js
+{
+  api_version: 'latest',
+  account: 'acct_TEST',       // Only present if provided
+  idempotency_key: 'abc123',  // Only present if provided
+  method: 'POST',
+  path: '/v1/charges'
+}
+```
+
+#### `response` object
+```js
+{
+  api_version: 'latest',
+  account: 'acct_TEST',       // Only present if provided
+  idempotency_key: 'abc123',  // Only present if provided
+  method: 'POST',
+  path: '/v1/charges',
+  status: 402,
+  request_id: 'req_Ghc9r26ts73DRf',
+  elapsed: 445                // Elapsed time in milliseconds
+}
+```
+
 ### Webhook signing
 
 Stripe can optionally sign the webhook events it sends to your endpoint, allowing you to validate that they were not sent by a third-party.  You can read more about it [here](https://stripe.com/docs/webhooks#signatures).

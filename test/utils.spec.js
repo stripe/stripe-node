@@ -224,4 +224,22 @@ describe('utils', function() {
       expect(function() { utils.secureCompare('potato'); }).to.throw();
     });
   });
+
+  describe('removeEmpty', function() {
+    it('removes empty properties and leaves non-empty ones', function() {
+      expect(utils.removeEmpty({
+        cat: 3,
+        dog: false,
+        rabbit: undefined,
+        pointer: null,
+      })).to.eql({
+        cat: 3,
+        dog: false,
+      });
+    });
+
+    it('throws an error if not given two things to compare', function() {
+      expect(function() { utils.removeEmpty('potato'); }).to.throw();
+    });
+  });
 });

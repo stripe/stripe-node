@@ -410,4 +410,115 @@ describe('Flows', function() {
       ).to.eventually.have.property('object', 'three_d_secure');
     });
   });
+
+  describe('Request/Response Events', function() {
+    var connectedAccountId;
+
+    before(function(done) {
+      // Pick a random connected account to use in the `Stripe-Account` header
+      stripe.accounts.list({
+        limit: 1,
+      }).then(function(accounts) {
+        if (accounts.data.length < 1) {
+          return done(
+            new Error('Test requires at least one Connected Account in the Test Account')
+          );
+        }
+
+        connectedAccountId = accounts.data[0].id;
+
+        done();
+      });
+    });
+
+    it('should emit a `request` event to listeners on request', function(done) {
+      var apiVersion = '2017-06-05';
+      var idempotencyKey = Math.random().toString(36).slice(2);
+
+      function onRequest(request) {
+        stripe.off('request', onRequest);
+
+        expect(request).to.eql({
+          api_version: 'latest',
+          idempotency_key: idempotencyKey,
+          method: 'POST',
+          path: '/v1/charges',
+          account: connectedAccountId,
+        });
+
+        done();
+      }
+
+      stripe.on('request', onRequest);
+
+      stripe.charges.create({
+        amount: 1234,
+        currency: 'usd',
+        card: 'tok_chargeDeclined',
+      }, {
+        api_version: apiVersion,
+        idempotency_key: idempotencyKey,
+        stripe_account: connectedAccountId,
+      }).then(null, function() {
+        // I expect there to be an error here.
+      });
+    });
+
+    it('should emit a `response` event to listeners on response', function(done) {
+      var apiVersion = '2017-06-05';
+      var idempotencyKey = Math.random().toString(36).slice(2);
+
+      function onResponse(response) {
+        // On the off chance we're picking up a response from a differentrequest
+        // then just ignore this and wait for the right one:
+        if (response.idempotency_key !== idempotencyKey) {
+          return;
+        }
+
+        stripe.off('response', onResponse);
+
+        expect(response.api_version).to.equal(apiVersion);
+        expect(response.idempotency_key).to.equal(idempotencyKey);
+        expect(response.account).to.equal(connectedAccountId);
+        expect(response.method).to.equal('POST');
+        expect(response.path).to.equal('/v1/charges');
+        expect(response.request_id).to.match(/req_[\w\d]/);
+        expect(response.status).to.equal(402);
+        expect(response.elapsed).to.be.within(50, 30000);;
+
+        done();
+      }
+
+      stripe.on('response', onResponse);
+
+      stripe.charges.create({
+        amount: 1234,
+        currency: 'usd',
+        card: 'tok_chargeDeclined',
+      }, {
+        api_version: apiVersion,
+        idempotency_key: idempotencyKey,
+        stripe_account: connectedAccountId,
+      }).then(null, function() {
+        // I expect there to be an error here.
+      });
+    });
+
+    it('should not emit a `response` event to removed listeners on response', function(done) {
+      function onResponse(response) {
+        done(new Error('How did you get here?'));
+      }
+
+      stripe.on('response', onResponse);
+      stripe.off('response', onResponse);
+
+      stripe.charges.create({
+        amount: 1234,
+        currency: 'usd',
+        card: 'tok_visa',
+      }).then(function() {
+        done();
+      });
+    });
+  });
 });
