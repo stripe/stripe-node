@@ -432,7 +432,7 @@ describe('Flows', function() {
     });
 
     it('should emit a `request` event to listeners on request', function(done) {
-      var apiVersion = '2017-06-05';
+      var apiVersion = '2017-08-15';
       var idempotencyKey = Math.random().toString(36).slice(2);
 
       function onRequest(request) {
@@ -465,7 +465,7 @@ describe('Flows', function() {
     });
 
     it('should emit a `response` event to listeners on response', function(done) {
-      var apiVersion = '2017-06-05';
+      var apiVersion = '2017-08-15';
       var idempotencyKey = Math.random().toString(36).slice(2);
 
       function onResponse(response) {
