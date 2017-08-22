@@ -198,4 +198,41 @@ describe('Stripe Module', function() {
       });
     });
   });
+
+  describe.only('setLogLevel', function() {
+    describe('having never been called', function() {
+      it('should mean `stripe._logLevel` is set to `undefined`', function() {
+        expect(stripe._logLevel).to.be.undefined;
+      });
+    });
+
+    describe('when given nothing (null, undefined)', function() {
+      it('should set `stripe._logLevel` to `null`', function() {
+        stripe.setLogLevel();
+        expect(stripe._logLevel).to.be.null;
+      });
+    });
+
+    describe('when given "info"', function() {
+      it('should set `stripe._logLevel` to "info"', function() {
+        stripe.setLogLevel('info');
+        expect(stripe._logLevel).to.equal('info');
+      });
+    });
+
+    describe('when given "debug"', function() {
+      it('should set `stripe._logLevel` to "debug"', function() {
+        stripe.setLogLevel('debug');
+        expect(stripe._logLevel).to.equal('debug');
+      });
+    });
+
+    describe('when given "garbage"', function() {
+      it('should throw an error', function() {
+        expect(function() {
+          stripe.setLogLevel('garbage');
+        }).to.throw('Log Level should only be set to `debug`, `info` or null/undefined');
+      });
+    });
+  });
 });

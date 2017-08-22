@@ -165,6 +165,24 @@ stripe.off('request', onRequest);
 }
 ```
 
+### Logging
+
+The library can be configured to emit logging that will give you better insight into what it's doing. The `info` logging level is usually most appropriate for production use, but `debug` is also available for more verbosity.
+
+There are a few options for enabling it:
+
+1. Set the environment variable `STRIPE_LOG` to the value `debug` or `info`:
+    ```sh
+    $ export STRIPE_LOG=info
+    ```
+
+2. Use `stripe.setLogLevel()`:
+    ```js
+    stripe.setLogLevel('info');
+    ```
+
+You can also of course wire up your own logger to the [`request` and `response` events](#request-and-response-events) as well!
+
 ### Webhook signing
 
 Stripe can optionally sign the webhook events it sends to your endpoint, allowing you to validate that they were not sent by a third-party.  You can read more about it [here](https://stripe.com/docs/webhooks#signatures).
