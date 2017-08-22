@@ -456,7 +456,7 @@ describe('Flows', function() {
         currency: 'usd',
         card: 'tok_chargeDeclined',
       }, {
-        api_version: apiVersion,
+        stripe_version: apiVersion,
         idempotency_key: idempotencyKey,
         stripe_account: connectedAccountId,
       }).then(null, function() {
@@ -496,7 +496,7 @@ describe('Flows', function() {
         currency: 'usd',
         card: 'tok_chargeDeclined',
       }, {
-        api_version: apiVersion,
+        stripe_version: apiVersion,
         idempotency_key: idempotencyKey,
         stripe_account: connectedAccountId,
       }).then(null, function() {
