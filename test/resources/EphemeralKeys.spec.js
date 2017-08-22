@@ -12,7 +12,7 @@ function errorsOnNoStripeVersion() {
 function sendsCorrectStripeVersion() {
   stripe.ephemeralKeys.create(
     {customer: 'cus_123'},
-    {stripe_version: '2017-06-05'}
+    {stripe_version: '2017-08-15'}
   );
 
   expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -22,7 +22,7 @@ function sendsCorrectStripeVersion() {
       customer: 'cus_123',
     },
     headers: {
-      'Stripe-Version': '2017-06-05',
+      'Stripe-Version': '2017-08-15',
     },
   });
 }
