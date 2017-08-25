@@ -1,3 +1,6 @@
+4.24.1 Aug 25th, 2017
+- Specify UTF-8 encoding when verifying HMAC-SHA256 payloads
+
 4.24.0 Aug 10th, 2017
 - Support informational events with `Stripe.on` (see README for details)
 
