@@ -20,6 +20,12 @@ describe('Stripe Module', function() {
   var cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
 
+  describe('setApiKey', function() {
+    it('uses Bearer auth', function() {
+      expect(stripe.getApiField('auth')).to.equal('Bearer ' + testUtils.getUserStripeKey());
+    });
+  });
+
   describe('GetClientUserAgent', function() {
     it('Should return a user-agent serialized JSON object', function() {
       return expect(new Promise(function(resolve, reject) {
