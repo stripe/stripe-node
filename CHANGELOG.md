@@ -1,3 +1,6 @@
+4.25.0 Sep 5th, 2017
+- Switch to Bearer token authentication on API requests
+
 4.24.1 Aug 25th, 2017
 - Specify UTF-8 encoding when verifying HMAC-SHA256 payloads
 
