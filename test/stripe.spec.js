@@ -191,7 +191,7 @@ describe('Stripe Module', function() {
             if (err) {
               resolve('ErrorWasPassed');
             } else {
-              reject('NoErrorPassed');
+              reject(new Error('NoErrorPassed'));
             }
           });
         })).to.eventually.become('ErrorWasPassed');

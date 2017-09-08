@@ -11,8 +11,8 @@ const Express = require('express');
  * STRIPE_API_KEY=sk_test_XXX WEBHOOK_SECRET=whsec_XXX node express.js
  */
 
-const apiKey = process.env['STRIPE_API_KEY'];
-const webhookSecret = process.env['WEBHOOK_SECRET']
+const apiKey = process.env.STRIPE_API_KEY;
+const webhookSecret = process.env.WEBHOOK_SECRET;
 
 const stripe = Stripe(apiKey);
 
