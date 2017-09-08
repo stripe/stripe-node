@@ -264,7 +264,6 @@ describe('Customers Resource', function() {
       describe('When deleting metadata', function() {
         it('Sends the correct request', function() {
           stripe.customers.setMetadata('customerIdFoo321', null);
-          console.log(stripe.LAST_REQUEST);
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'POST',
             url: '/v1/customers/customerIdFoo321',

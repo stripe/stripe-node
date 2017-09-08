@@ -18,13 +18,13 @@ var utils = module.exports = {
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
 
-    var Stripe = require('../lib/stripe');
-    var stripeInstance = Stripe('fakeAuthToken');
+    var stripe = require('../lib/stripe');
+    var stripeInstance = stripe('fakeAuthToken');
 
     stripeInstance.REQUESTS = [];
 
     for (var i in stripeInstance) {
-      if (stripeInstance[i] instanceof Stripe.StripeResource) {
+      if (stripeInstance[i] instanceof stripe.StripeResource) {
         // Override each _request method so we can make the params
         // available to consuming tests (revealing requests made on
         // REQUESTS and LAST_REQUEST):
@@ -74,7 +74,7 @@ var utils = module.exports = {
         var cleanups = this._cleanupFns;
         var total = cleanups.length;
         var completed = 0;
-        for (var fn; fn = cleanups.shift();) {
+        for (var fn; (fn = cleanups.shift());) {
           var promise = fn.call(this);
           if (!promise || !promise.then) {
             throw new Error('CleanupUtility expects cleanup functions to return promises!');
