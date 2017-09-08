@@ -45,7 +45,7 @@ describe('Webhooks', function() {
 
   describe('.verifySignatureHeader', function() {
     it('should raise a SignatureVerificationError when the header does not have the expected format', function() {
-      var header = "I'm not even a real signature header";
+      var header = 'I\'m not even a real signature header';
 
       var expectedMessage = /Unable to extract timestamp and signatures from header/;
 
