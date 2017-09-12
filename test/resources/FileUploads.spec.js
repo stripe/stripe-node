@@ -1,15 +1,15 @@
-'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
-var fs = require('fs');
-var path = require('path');
 
-var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
+const stripe = require('../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
+const fs = require('fs');
+const path = require('path');
 
-describe('File Uploads Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
+
+describe('File Uploads Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.fileUploads.retrieve('fil_12345');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -19,7 +19,7 @@ describe('File Uploads Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth]', function() {
+    it('Sends the correct request [with specified auth]', () => {
       stripe.fileUploads.retrieve('fil_12345', TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -31,8 +31,8 @@ describe('File Uploads Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.fileUploads.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -43,10 +43,10 @@ describe('File Uploads Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct file upload request', function() {
-      var testFilename = path.join(__dirname, 'data/minimal.pdf');
-      var f = fs.readFileSync(testFilename);
+  describe('create', () => {
+    it('Sends the correct file upload request', () => {
+      const testFilename = path.join(__dirname, 'data/minimal.pdf');
+      const f = fs.readFileSync(testFilename);
 
       stripe.fileUploads.create({
         purpose: 'dispute_evidence',
@@ -61,9 +61,9 @@ describe('File Uploads Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
     });
 
-    it('Sends the correct file upload request [with specified auth]', function() {
-      var testFilename = path.join(__dirname, 'data/minimal.pdf');
-      var f = fs.readFileSync(testFilename);
+    it('Sends the correct file upload request [with specified auth]', () => {
+      const testFilename = path.join(__dirname, 'data/minimal.pdf');
+      const f = fs.readFileSync(testFilename);
 
       stripe.fileUploads.create({
         purpose: 'dispute_evidence',

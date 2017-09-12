@@ -1,4 +1,4 @@
-'use strict';
+
 
 const Stripe = require('stripe');
 const Express = require('express');
@@ -22,13 +22,13 @@ const router = Express.Router();
 function addRawBody(req, res, next) {
   req.setEncoding('utf8');
 
-  var data = '';
+  let data = '';
 
-  req.on('data', function(chunk) {
+  req.on('data', (chunk) => {
     data += chunk;
   });
 
-  req.on('end', function() {
+  req.on('end', () => {
     req.rawBody = data;
 
     next();
@@ -43,27 +43,27 @@ function addRawBody(req, res, next) {
 /**
  * ...or add it directly as middleware to the route.
  */
-router.post('/webhooks', addRawBody, function(request, response) {
-  var event;
+router.post('/webhooks', addRawBody, (request, response) => {
+  let event;
 
   try {
     // Try adding the Event as `request.event`
     event = stripe.webhooks.constructEvent(
       request.rawBody,
       request.headers['stripe-signature'],
-      webhookSecret
+      webhookSecret,
     );
   } catch (e) {
     // If `constructEvent` throws an error, respond with the message and return.
     console.log('Error', e.message);
 
-    return response.status(400).send('Webhook Error:' + e.message);
+    return response.status(400).send(`Webhook Error:${e.message}`);
   }
 
   console.log('Success', event.id);
 
   // Event was 'constructed', so we can respond with a 200 OK
-  response.status(200).send('Signed Webhook Received: ' + event.id);
+  response.status(200).send(`Signed Webhook Received: ${event.id}`);
 });
 
 // You could either create this app, or just return the `Router` for use in an
@@ -71,6 +71,6 @@ router.post('/webhooks', addRawBody, function(request, response) {
 
 const app = Express();
 app.use(router);
-app.listen(3000, function() {
-  console.log('Example app listening on port 3000!')
+app.listen(3000, () => {
+  console.log('Example app listening on port 3000!');
 });

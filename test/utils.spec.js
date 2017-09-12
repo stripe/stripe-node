@@ -1,39 +1,34 @@
-'use strict';
+
 
 require('./testUtils');
 
-var utils = require('../lib/utils');
-var expect = require('chai').expect;
+const utils = require('../lib/utils');
+const expect = require('chai').expect;
 
-describe('utils', function() {
-  describe('makeURLInterpolator', function() {
-    it('Interpolates values into a prepared template', function() {
-      var template = utils.makeURLInterpolator('/some/url/{foo}/{baz}?ok=1');
+describe('utils', () => {
+  describe('makeURLInterpolator', () => {
+    it('Interpolates values into a prepared template', () => {
+      const template = utils.makeURLInterpolator('/some/url/{foo}/{baz}?ok=1');
 
-      expect(
-        template({foo: 1, baz: 2})
-      ).to.equal('/some/url/1/2?ok=1');
+      expect(template({ foo: 1, baz: 2 })).to.equal('/some/url/1/2?ok=1');
 
-      expect(
-        template({foo: '', baz: ''})
-      ).to.equal('/some/url//?ok=1');
+      expect(template({ foo: '', baz: '' })).to.equal('/some/url//?ok=1');
 
       expect(
         // Test encoding:
-        template({foo: 'FOO', baz: '__::baz::__'})
-      ).to.equal('/some/url/FOO/__%3A%3Abaz%3A%3A__?ok=1');
+        template({ foo: 'FOO', baz: '__::baz::__' })).to.equal('/some/url/FOO/__%3A%3Abaz%3A%3A__?ok=1');
     });
   });
 
-  describe('stringifyRequestData', function() {
-    it('Handles basic types', function() {
+  describe('stringifyRequestData', () => {
+    it('Handles basic types', () => {
       expect(utils.stringifyRequestData({
         a: 1,
         b: 'foo',
       })).to.equal('a=1&b=foo');
     });
 
-    it('Handles deeply nested object', function() {
+    it('Handles deeply nested object', () => {
       expect(decodeURI(utils.stringifyRequestData({
         a: {
           b: {
@@ -45,16 +40,16 @@ describe('utils', function() {
       }))).to.equal('a[b][c][d]=2');
     });
 
-    it('Handles arrays of objects', function() {
+    it('Handles arrays of objects', () => {
       expect(decodeURI(utils.stringifyRequestData({
         a: [
-          {b: 'c'},
-          {b: 'd'},
+          { b: 'c' },
+          { b: 'd' },
         ],
       }))).to.equal('a[][b]=c&a[][b]=d');
-    })
+    });
 
-    it('Creates a string from an object, handling shallow nested objects', function() {
+    it('Creates a string from an object, handling shallow nested objects', () => {
       expect(utils.stringifyRequestData({
         test: 1,
         foo: 'baz',
@@ -72,8 +67,8 @@ describe('utils', function() {
       ].join('&'));
     });
 
-    describe('Stripe-specific cases', function() {
-      it('Handles the `expand` array correctly (producing the form `expand[]=_` for each item', function() {
+    describe('Stripe-specific cases', () => {
+      it('Handles the `expand` array correctly (producing the form `expand[]=_` for each item', () => {
         expect(decodeURI(utils.stringifyRequestData({
           expand: ['a', 'foo', 'a.b.c'],
         }))).to.equal('expand[]=a&expand[]=foo&expand[]=a.b.c');
@@ -81,12 +76,12 @@ describe('utils', function() {
     });
   });
 
-  describe('protoExtend', function() {
-    it('Provides an extension mechanism', function() {
+  describe('protoExtend', () => {
+    it('Provides an extension mechanism', () => {
       function A() {}
       A.extend = utils.protoExtend;
-      var B = A.extend({
-        constructor: function() {
+      const B = A.extend({
+        constructor() {
           this.called = true;
         },
       });
@@ -97,80 +92,80 @@ describe('utils', function() {
     });
   });
 
-  describe('getDataFromArgs', function() {
-    it('handles an empty list', function() {
+  describe('getDataFromArgs', () => {
+    it('handles an empty list', () => {
       expect(utils.getDataFromArgs([])).to.deep.equal({});
     });
-    it('handles an list with no object', function() {
-      var args = [1, 3];
+    it('handles an list with no object', () => {
+      const args = [1, 3];
       expect(utils.getDataFromArgs(args)).to.deep.equal({});
       expect(args.length).to.equal(2);
     });
-    it('ignores an options hash', function() {
-      var args = [{api_key: 'foo'}];
+    it('ignores an options hash', () => {
+      const args = [{ api_key: 'foo' }];
       expect(utils.getDataFromArgs(args)).to.deep.equal({});
       expect(args.length).to.equal(1);
     });
-    it('finds the data', function() {
-      var args = [{foo: 'bar'}, {api_key: 'foo'}];
-      expect(utils.getDataFromArgs(args)).to.deep.equal({foo: 'bar'});
+    it('finds the data', () => {
+      const args = [{ foo: 'bar' }, { api_key: 'foo' }];
+      expect(utils.getDataFromArgs(args)).to.deep.equal({ foo: 'bar' });
       expect(args.length).to.equal(1);
     });
   });
 
-  describe('getOptsFromArgs', function() {
-    it('handles an empty list', function() {
+  describe('getOptsFromArgs', () => {
+    it('handles an empty list', () => {
       expect(utils.getOptionsFromArgs([])).to.deep.equal({
         auth: null,
         headers: {},
       });
     });
-    it('handles an list with no object', function() {
-      var args = [1, 3];
+    it('handles an list with no object', () => {
+      const args = [1, 3];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
         headers: {},
       });
       expect(args.length).to.equal(2);
     });
-    it('ignores a non-options object', function() {
-      var args = [{foo: 'bar'}];
+    it('ignores a non-options object', () => {
+      const args = [{ foo: 'bar' }];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
         headers: {},
       });
       expect(args.length).to.equal(1);
     });
-    it('parses an api key', function() {
-      var args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
+    it('parses an api key', () => {
+      const args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         headers: {},
       });
       expect(args.length).to.equal(0);
     });
-    it('parses an idempotency key', function() {
-      var args = [{foo: 'bar'}, {idempotency_key: 'foo'}];
+    it('parses an idempotency key', () => {
+      const args = [{ foo: 'bar' }, { idempotency_key: 'foo' }];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
-        headers: {'Idempotency-Key': 'foo'},
+        headers: { 'Idempotency-Key': 'foo' },
       });
       expect(args.length).to.equal(1);
     });
-    it('parses an api version', function() {
-      var args = [{foo: 'bar'}, {stripe_version: '2003-03-30'}];
+    it('parses an api version', () => {
+      const args = [{ foo: 'bar' }, { stripe_version: '2003-03-30' }];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
-        headers: {'Stripe-Version': '2003-03-30'},
+        headers: { 'Stripe-Version': '2003-03-30' },
       });
       expect(args.length).to.equal(1);
     });
-    it('parses an idempotency key and api key and api version (with data)', function() {
-      var args = [{foo: 'bar'}, {
+    it('parses an idempotency key and api key and api version (with data)', () => {
+      const args = [{ foo: 'bar' }, {
         api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         idempotency_key: 'foo',
         stripe_version: '2010-01-10',
-      },];
+      }];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         headers: {
@@ -180,12 +175,12 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(1);
     });
-    it('parses an idempotency key and api key and api version', function() {
-      var args = [{
+    it('parses an idempotency key and api key and api version', () => {
+      const args = [{
         api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         idempotency_key: 'foo',
         stripe_version: 'hunter2',
-      },];
+      }];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         headers: {
@@ -197,36 +192,36 @@ describe('utils', function() {
     });
   });
 
-  describe('arrayToObject', function() {
-    it('handles an empty array', function() {
+  describe('arrayToObject', () => {
+    it('handles an empty array', () => {
       expect(utils.arrayToObject([])).to.deep.equal({});
     });
-    it('handles an array of integers', function() {
-      var arr = [1, 3];
-      expect(utils.arrayToObject(arr)).to.deep.equal({'0': 1, '1': 3});
+    it('handles an array of integers', () => {
+      const arr = [1, 3];
+      expect(utils.arrayToObject(arr)).to.deep.equal({ 0: 1, 1: 3 });
     });
-    it('ignores passes non-array data through', function() {
-      var arr = '3';
+    it('ignores passes non-array data through', () => {
+      const arr = '3';
       expect(utils.arrayToObject(arr)).to.deep.equal('3');
     });
   });
 
-  describe('secureCompare', function() {
-    it('returns true given two equal things', function() {
+  describe('secureCompare', () => {
+    it('returns true given two equal things', () => {
       expect(utils.secureCompare('potato', 'potato')).to.equal(true);
     });
 
-    it('returns false given two unequal things', function() {
+    it('returns false given two unequal things', () => {
       expect(utils.secureCompare('potato', 'tomato')).to.equal(false);
     });
 
-    it('throws an error if not given two things to compare', function() {
-      expect(function() { utils.secureCompare('potato'); }).to.throw();
+    it('throws an error if not given two things to compare', () => {
+      expect(() => { utils.secureCompare('potato'); }).to.throw();
     });
   });
 
-  describe('removeEmpty', function() {
-    it('removes empty properties and leaves non-empty ones', function() {
+  describe('removeEmpty', () => {
+    it('removes empty properties and leaves non-empty ones', () => {
       expect(utils.removeEmpty({
         cat: 3,
         dog: false,
@@ -238,8 +233,8 @@ describe('utils', function() {
       });
     });
 
-    it('throws an error if not given two things to compare', function() {
-      expect(function() { utils.removeEmpty('potato'); }).to.throw();
+    it('throws an error if not given two things to compare', () => {
+      expect(() => { utils.removeEmpty('potato'); }).to.throw();
     });
   });
 });

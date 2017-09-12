@@ -1,11 +1,11 @@
-'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
 
-describe('InvoiceItems Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+const stripe = require('../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
+
+describe('InvoiceItems Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.retrieve('invoiceItemIdTesting123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('InvoiceItems Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.create({
         customer: 'cust_id_888',
       });
@@ -25,13 +25,13 @@ describe('InvoiceItems Resource', function() {
         method: 'POST',
         url: '/v1/invoiceitems',
         headers: {},
-        data: {customer: 'cust_id_888'},
+        data: { customer: 'cust_id_888' },
       });
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.update('invoiceItemId1', {
         amount: 1900,
       });
@@ -39,13 +39,13 @@ describe('InvoiceItems Resource', function() {
         method: 'POST',
         url: '/v1/invoiceitems/invoiceItemId1',
         headers: {},
-        data: {amount: 1900},
+        data: { amount: 1900 },
       });
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.del('invoiceItemId2');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -56,8 +56,8 @@ describe('InvoiceItems Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

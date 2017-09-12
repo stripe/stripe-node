@@ -1,25 +1,25 @@
-'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
 
-var PAYOUT_TEST_ID = 'po_testid1';
+const stripe = require('../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-describe('Payouts Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+const PAYOUT_TEST_ID = 'po_testid1';
+
+describe('Payouts Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.retrieve(PAYOUT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/payouts/' + PAYOUT_TEST_ID,
+        url: `/v1/payouts/${PAYOUT_TEST_ID}`,
         headers: {},
         data: {},
       });
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.create({
         amount: 200, currency: 'usd',
       });
@@ -27,39 +27,39 @@ describe('Payouts Resource', function() {
         method: 'POST',
         url: '/v1/payouts',
         headers: {},
-        data: {amount: 200, currency: 'usd'},
+        data: { amount: 200, currency: 'usd' },
       });
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.update(PAYOUT_TEST_ID, {
-        metadata: {key: 'value'},
+        metadata: { key: 'value' },
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payouts/' + PAYOUT_TEST_ID,
+        url: `/v1/payouts/${PAYOUT_TEST_ID}`,
         headers: {},
-        data: {metadata: {key: 'value'}},
+        data: { metadata: { key: 'value' } },
       });
     });
   });
 
-  describe('cancel', function() {
-    it('Sends the correct request', function() {
+  describe('cancel', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.cancel(PAYOUT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payouts/' + PAYOUT_TEST_ID + '/cancel',
+        url: `/v1/payouts/${PAYOUT_TEST_ID}/cancel`,
         headers: {},
         data: {},
       });
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -70,12 +70,12 @@ describe('Payouts Resource', function() {
     });
   });
 
-  describe('listTransactions', function() {
-    it('Sends the correct request', function() {
+  describe('listTransactions', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.listTransactions(PAYOUT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/payouts/' + PAYOUT_TEST_ID + '/transactions',
+        url: `/v1/payouts/${PAYOUT_TEST_ID}/transactions`,
         headers: {},
         data: {},
       });

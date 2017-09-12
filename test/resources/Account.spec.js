@@ -1,17 +1,17 @@
-'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
 
-var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
+const stripe = require('../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-describe('Account Resource', function() {
+const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
+
+describe('Account Resource', () => {
   function uniqueEmail() {
-    return Math.random() + 'bob@example.com';
+    return `${Math.random()}bob@example.com`;
   }
-  describe('create', function() {
-    it('Sends the correct request', function() {
-      var data = {
+  describe('create', () => {
+    it('Sends the correct request', () => {
+      const data = {
         managed: false,
         country: 'US',
         email: uniqueEmail(),
@@ -20,14 +20,14 @@ describe('Account Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/accounts',
-        data: data,
+        data,
         headers: {},
       });
     });
   });
 
-  describe('delete', function() {
-    it('deletes an account successfully', function() {
+  describe('delete', () => {
+    it('deletes an account successfully', () => {
       stripe.account.del('acct_16Tzq6DBahdM4C8s');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -38,20 +38,20 @@ describe('Account Resource', function() {
     });
   });
 
-  describe('reject', function() {
-    it('rejects an account successfully', function() {
-      stripe.account.reject('acct_16Tzq6DBahdM4C8s', {reason: 'fraud'});
+  describe('reject', () => {
+    it('rejects an account successfully', () => {
+      stripe.account.reject('acct_16Tzq6DBahdM4C8s', { reason: 'fraud' });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/accounts/acct_16Tzq6DBahdM4C8s/reject',
-        data: {reason: 'fraud'},
+        data: { reason: 'fraud' },
         headers: {},
       });
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request with no params', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request with no params', () => {
       stripe.account.retrieve();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -61,7 +61,7 @@ describe('Account Resource', function() {
       });
     });
 
-    it('Sends the correct request with ID param', function() {
+    it('Sends the correct request with ID param', () => {
       stripe.account.retrieve('foo');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -71,8 +71,8 @@ describe('Account Resource', function() {
       });
     });
 
-    it('Sends the correct request with secret key', function() {
-      var key = 'sk_12345678901234567890123456789012';
+    it('Sends the correct request with secret key', () => {
+      const key = 'sk_12345678901234567890123456789012';
       stripe.account.retrieve(null, key);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         auth: key,
@@ -83,8 +83,8 @@ describe('Account Resource', function() {
       });
     });
 
-    it('Sends the correct request with secret key as first object', function() {
-      var params = {api_key: 'sk_12345678901234567890123456789012'};
+    it('Sends the correct request with secret key as first object', () => {
+      const params = { api_key: 'sk_12345678901234567890123456789012' };
       stripe.account.retrieve(params);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         auth: params.api_key,
@@ -95,8 +95,8 @@ describe('Account Resource', function() {
       });
     });
 
-    it('Sends the correct request with a callback', function() {
-      stripe.account.retrieve(function(err, account) {});
+    it('Sends the correct request with a callback', () => {
+      stripe.account.retrieve((err, account) => {});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/account',
@@ -106,9 +106,9 @@ describe('Account Resource', function() {
     });
   });
 
-  describe('External account methods', function() {
-    describe('retrieveExternalAccount', function() {
-      it('Sends the correct request', function() {
+  describe('External account methods', () => {
+    describe('retrieveExternalAccount', () => {
+      it('Sends the correct request', () => {
         stripe.account.retrieveExternalAccount('accountIdFoo321', 'externalAccountIdFoo456');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -118,7 +118,7 @@ describe('Account Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.account.retrieveExternalAccount('accountIdFoo321', 'externalAccountIdFoo456', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -130,8 +130,8 @@ describe('Account Resource', function() {
       });
     });
 
-    describe('createExternalAccount', function() {
-      it('Sends the correct request', function() {
+    describe('createExternalAccount', () => {
+      it('Sends the correct request', () => {
         stripe.account.createExternalAccount('accountIdFoo321', {
           number: '123456', currency: 'usd', country: 'US',
         });
@@ -139,11 +139,11 @@ describe('Account Resource', function() {
           method: 'POST',
           url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
-          data: {number: '123456', currency: 'usd', country: 'US'},
+          data: { number: '123456', currency: 'usd', country: 'US' },
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.account.createExternalAccount('accountIdFoo321', {
           number: '123456', currency: 'usd', country: 'US',
         }, TEST_AUTH_KEY);
@@ -151,14 +151,14 @@ describe('Account Resource', function() {
           method: 'POST',
           url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
-          data: {number: '123456', currency: 'usd', country: 'US'},
+          data: { number: '123456', currency: 'usd', country: 'US' },
           auth: TEST_AUTH_KEY,
         });
       });
     });
 
-    describe('updateExternalAccount', function() {
-      it('Sends the correct request', function() {
+    describe('updateExternalAccount', () => {
+      it('Sends the correct request', () => {
         stripe.account.updateExternalAccount('accountIdFoo321', 'externalAccountIdFoo456', {
           default_for_currency: true,
         });
@@ -166,13 +166,13 @@ describe('Account Resource', function() {
           method: 'POST',
           url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
-          data: {default_for_currency: true},
+          data: { default_for_currency: true },
         });
       });
     });
 
-    describe('deleteExternalAccount', function() {
-      it('Sends the correct request', function() {
+    describe('deleteExternalAccount', () => {
+      it('Sends the correct request', () => {
         stripe.account.deleteExternalAccount('accountIdFoo321', 'externalAccountIdFoo456');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -182,7 +182,7 @@ describe('Account Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.account.deleteExternalAccount('accountIdFoo321', 'externalAccountIdFoo456', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -194,8 +194,8 @@ describe('Account Resource', function() {
       });
     });
 
-    describe('listExternalAccounts', function() {
-      it('Sends the correct request', function() {
+    describe('listExternalAccounts', () => {
+      it('Sends the correct request', () => {
         stripe.account.listExternalAccounts('accountIdFoo321');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -205,7 +205,7 @@ describe('Account Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.account.listExternalAccounts('accountIdFoo321', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -218,9 +218,9 @@ describe('Account Resource', function() {
     });
   });
 
-  describe('LoginLink methods', function() {
-    describe('createLoginLink', function() {
-      it('Sends the correct request', function() {
+  describe('LoginLink methods', () => {
+    describe('createLoginLink', () => {
+      it('Sends the correct request', () => {
         stripe.account.createLoginLink('acct_EXPRESS');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',

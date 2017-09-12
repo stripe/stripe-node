@@ -1,4 +1,4 @@
-'use strict';
+
 
 // NOTE: testUtils should be require'd before anything else in each spec file!
 
@@ -8,31 +8,31 @@ require('chai').use(require('chai-as-promised'));
 
 var utils = module.exports = {
 
-  getUserStripeKey: function() {
-    var key = process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
+  getUserStripeKey() {
+    const key = process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
 
     return key;
   },
 
-  getSpyableStripe: function() {
+  getSpyableStripe() {
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
 
-    var stripe = require('../lib/stripe');
-    var stripeInstance = stripe('fakeAuthToken');
+    const stripe = require('../lib/stripe');
+    const stripeInstance = stripe('fakeAuthToken');
 
     stripeInstance.REQUESTS = [];
 
-    for (var i in stripeInstance) {
+    for (const i in stripeInstance) {
       if (stripeInstance[i] instanceof stripe.StripeResource) {
         // Override each _request method so we can make the params
         // available to consuming tests (revealing requests made on
         // REQUESTS and LAST_REQUEST):
-        stripeInstance[i]._request = function(method, url, data, auth, options, cb) {
-          var req = stripeInstance.LAST_REQUEST = {
-            method: method,
-            url: url,
-            data: data,
+        stripeInstance[i]._request = function (method, url, data, auth, options, cb) {
+          const req = stripeInstance.LAST_REQUEST = {
+            method,
+            url,
+            data,
             headers: options.headers || {},
           };
           if (auth) {
@@ -52,17 +52,17 @@ var utils = module.exports = {
    * CleanupUtility will automatically register on the mocha afterEach hook,
    * ensuring its called after each descendent-describe block.
    */
-  CleanupUtility: (function() {
+  CleanupUtility: (function () {
     CleanupUtility.DEFAULT_TIMEOUT = 20000;
 
     function CleanupUtility(timeout) {
-      var self = this;
+      const self = this;
       this._cleanupFns = [];
       this._stripe = require('../lib/stripe')(
         utils.getUserStripeKey(),
-        'latest'
+        'latest',
       );
-      afterEach(function(done) {
+      afterEach(function (done) {
         this.timeout(timeout || CleanupUtility.DEFAULT_TIMEOUT);
         return self.doCleanup(done);
       });
@@ -70,22 +70,22 @@ var utils = module.exports = {
 
     CleanupUtility.prototype = {
 
-      doCleanup: function(done) {
-        var cleanups = this._cleanupFns;
-        var total = cleanups.length;
-        var completed = 0;
+      doCleanup(done) {
+        const cleanups = this._cleanupFns;
+        const total = cleanups.length;
+        let completed = 0;
         for (var fn; (fn = cleanups.shift());) {
-          var promise = fn.call(this);
+          const promise = fn.call(this);
           if (!promise || !promise.then) {
             throw new Error('CleanupUtility expects cleanup functions to return promises!');
           }
-          promise.then(function() {
+          promise.then(() => {
             // cleanup successful
             completed += 1;
             if (completed === total) {
               done();
             }
-          }, function(err) {
+          }, (err) => {
             // not successful
             throw err;
           });
@@ -94,26 +94,26 @@ var utils = module.exports = {
           done();
         }
       },
-      add: function(fn) {
+      add(fn) {
         this._cleanupFns.push(fn);
       },
-      deleteCustomer: function(custId) {
-        this.add(function() {
+      deleteCustomer(custId) {
+        this.add(function () {
           return this._stripe.customers.del(custId);
         });
       },
-      deletePlan: function(pId) {
-        this.add(function() {
+      deletePlan(pId) {
+        this.add(function () {
           return this._stripe.plans.del(pId);
         });
       },
-      deleteCoupon: function(cId) {
-        this.add(function() {
+      deleteCoupon(cId) {
+        this.add(function () {
           return this._stripe.coupons.del(cId);
         });
       },
-      deleteInvoiceItem: function(iiId) {
-        this.add(function() {
+      deleteInvoiceItem(iiId) {
+        this.add(function () {
           return this._stripe.invoiceItems.del(iiId);
         });
       },
@@ -125,7 +125,7 @@ var utils = module.exports = {
   /**
   * Get a random string for test Object creation
   */
-  getRandomString: function() {
+  getRandomString() {
     return Math.random().toString(36).slice(2);
   },
 

@@ -1,11 +1,11 @@
-'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
 
-describe('Charge Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+const stripe = require('../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
+
+describe('Charge Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.charges.retrieve('chargeIdFoo123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.charges.create({
         amount: '1500',
         currency: 'usd',
@@ -43,13 +43,13 @@ describe('Charge Resource', function() {
       });
     });
 
-    it('Sends the correct request for Bitcoin', function() {
-      var receiver = stripe.bitcoinReceivers.create({
+    it('Sends the correct request for Bitcoin', () => {
+      const receiver = stripe.bitcoinReceivers.create({
         amount: 100,
         currency: 'usd',
         description: 'some details',
         email: 'do+fill_now@stripe.com',
-      })
+      });
 
       stripe.charges.create({
         amount: receiver.amount,
@@ -68,12 +68,12 @@ describe('Charge Resource', function() {
           description: receiver.description,
           source: receiver.id,
         },
-      })
+      });
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.charges.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -84,88 +84,80 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('capture', function() {
-    it('Sends the correct request', function() {
-      stripe.charges.capture('chargeIdExample3242', {amount: 23});
+  describe('capture', () => {
+    it('Sends the correct request', () => {
+      stripe.charges.capture('chargeIdExample3242', { amount: 23 });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/capture',
         headers: {},
-        data: {amount: 23},
+        data: { amount: 23 },
       });
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
-      stripe.charges.update('chargeIdExample3242', {description: 'foo321'});
+  describe('update', () => {
+    it('Sends the correct request', () => {
+      stripe.charges.update('chargeIdExample3242', { description: 'foo321' });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242',
         headers: {},
-        data: {description: 'foo321'},
+        data: { description: 'foo321' },
       });
     });
   });
 
-  describe('refund', function() {
-    it('Sends the correct request', function() {
-      stripe.charges.refund('chargeIdExample3242', {amount: 23});
+  describe('refund', () => {
+    it('Sends the correct request', () => {
+      stripe.charges.refund('chargeIdExample3242', { amount: 23 });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/refund',
         headers: {},
-        data: {amount: 23},
+        data: { amount: 23 },
       });
     });
 
-    it('Incorrect arguments result in an error', function() {
-      expect(
-        stripe.charges.refund('chargeIdExample123', 39392)
-      ).to.be.eventually.rejectedWith(/unknown arguments/i);
+    it('Incorrect arguments result in an error', () => {
+      expect(stripe.charges.refund('chargeIdExample123', 39392)).to.be.eventually.rejectedWith(/unknown arguments/i);
 
-      expect(
-        stripe.charges.refund({potato: 'chargeIdExample123'})
-      ).to.be.eventually.rejectedWith(/must be a string, but got: object/i);
+      expect(stripe.charges.refund({ potato: 'chargeIdExample123' })).to.be.eventually.rejectedWith(/must be a string, but got: object/i);
 
-      expect(
-        stripe.charges.refund(442)
-      ).to.be.eventually.rejectedWith(/must be a string, but got: number/i);
+      expect(stripe.charges.refund(442)).to.be.eventually.rejectedWith(/must be a string, but got: number/i);
     });
   });
 
-  describe('refunds', function() {
-    it('Sends the correct update request', function() {
+  describe('refunds', () => {
+    it('Sends the correct update request', () => {
       stripe.charges.updateRefund(
         'chargeIdExample3242',
         'refundIdExample2312',
-        {metadata: {key: 'value'}}
+        { metadata: { key: 'value' } },
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/refunds/refundIdExample2312',
         headers: {},
-        data: {metadata: {key: 'value'}},
+        data: { metadata: { key: 'value' } },
       });
     });
 
-    it('Sends the correct create request', function() {
+    it('Sends the correct create request', () => {
       stripe.charges.createRefund(
         'chargeIdExample3242',
-        {amount: 100}
+        { amount: 100 },
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/refunds',
         headers: {},
-        data: {amount: 100},
+        data: { amount: 100 },
       });
     });
 
-    it('Sends the correct list request', function() {
-      stripe.charges.listRefunds(
-        'chargeIdExample3242'
-      );
+    it('Sends the correct list request', () => {
+      stripe.charges.listRefunds('chargeIdExample3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/charges/chargeIdExample3242/refunds',
@@ -174,10 +166,10 @@ describe('Charge Resource', function() {
       });
     });
 
-    it('Sends the correct retrieve request', function() {
+    it('Sends the correct retrieve request', () => {
       stripe.charges.retrieveRefund(
         'chargeIdExample3242',
-        'refundIdExample2312'
+        'refundIdExample2312',
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -188,20 +180,20 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('updateDispute', function() {
-    it('Sends the correct request', function() {
-      stripe.charges.updateDispute('chargeIdExample3242', {evidence: 'foo'});
+  describe('updateDispute', () => {
+    it('Sends the correct request', () => {
+      stripe.charges.updateDispute('chargeIdExample3242', { evidence: 'foo' });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/dispute',
         headers: {},
-        data: {evidence: 'foo'},
+        data: { evidence: 'foo' },
       });
     });
   });
 
-  describe('closeDispute', function() {
-    it('Sends the correct request', function() {
+  describe('closeDispute', () => {
+    it('Sends the correct request', () => {
       stripe.charges.closeDispute('chargeIdExample3242', {});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -212,25 +204,25 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('markAsFraudulent', function() {
-    it('Sends the correct request', function() {
+  describe('markAsFraudulent', () => {
+    it('Sends the correct request', () => {
       stripe.charges.markAsFraudulent('chargeIdExample3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242',
-        data: {'fraud_details': {'user_report': 'fraudulent'}},
+        data: { fraud_details: { user_report: 'fraudulent' } },
         headers: {},
       });
     });
   });
 
-  describe('markAsSafe', function() {
-    it('Sends the correct request', function() {
+  describe('markAsSafe', () => {
+    it('Sends the correct request', () => {
       stripe.charges.markAsSafe('chargeIdExample3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242',
-        data: {'fraud_details': {'user_report': 'safe'}},
+        data: { fraud_details: { user_report: 'safe' } },
         headers: {},
       });
     });

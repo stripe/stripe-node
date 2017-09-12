@@ -1,11 +1,11 @@
-'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
 
-describe('Events Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+const stripe = require('../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
+
+describe('Events Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.events.retrieve('eventIdBaz');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,14 +16,14 @@ describe('Events Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
-      stripe.events.list({count: 25});
+  describe('list', () => {
+    it('Sends the correct request', () => {
+      stripe.events.list({ count: 25 });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/events',
         headers: {},
-        data: {count: 25},
+        data: { count: 25 },
       });
     });
   });

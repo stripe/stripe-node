@@ -1,11 +1,11 @@
-'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
 
-describe('Plans Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+const stripe = require('../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
+
+describe('Plans Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.plans.retrieve('planId1');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Plans Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.plans.create({
         amount: 200, currency: 'usd',
       });
@@ -25,13 +25,13 @@ describe('Plans Resource', function() {
         method: 'POST',
         url: '/v1/plans',
         headers: {},
-        data: {amount: 200, currency: 'usd'},
+        data: { amount: 200, currency: 'usd' },
       });
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.plans.update('planId3', {
         amount: 1900, currency: 'usd',
       });
@@ -39,13 +39,13 @@ describe('Plans Resource', function() {
         method: 'POST',
         url: '/v1/plans/planId3',
         headers: {},
-        data: {amount: 1900, currency: 'usd'},
+        data: { amount: 1900, currency: 'usd' },
       });
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.plans.del('planId4');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -56,8 +56,8 @@ describe('Plans Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.plans.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

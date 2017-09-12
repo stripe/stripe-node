@@ -1,11 +1,11 @@
-'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
 
-describe('Sources Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+const stripe = require('../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
+
+describe('Sources Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.sources.retrieve('sourceId1');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Sources Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.sources.create({
         amount: 200,
         currency: 'usd',
@@ -46,28 +46,28 @@ describe('Sources Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.sources.update('src_foo', {
-        metadata: {foo: 'bar'},
+        metadata: { foo: 'bar' },
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/sources/src_foo',
         headers: {},
-        data: {metadata: {foo: 'bar'}},
+        data: { metadata: { foo: 'bar' } },
       });
     });
   });
 
-  describe('verify', function() {
-    it('Sends the correct request', function() {
-      stripe.sources.verify('src_foo', {values: [32, 45]});
+  describe('verify', () => {
+    it('Sends the correct request', () => {
+      stripe.sources.verify('src_foo', { values: [32, 45] });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/sources/src_foo/verify',
         headers: {},
-        data: {values: [32, 45]},
+        data: { values: [32, 45] },
       });
     });
   });
