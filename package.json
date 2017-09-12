@@ -47,6 +47,7 @@
   "scripts": {
     "mocha": "mocha",
     "test": "npm run lint && mocha",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lintfix": "eslint . --fix"
   }
 }

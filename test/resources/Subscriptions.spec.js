@@ -1,55 +1,55 @@
-'use strict';
+'use strict'
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+var stripe = require('../testUtils').getSpyableStripe()
+var expect = require('chai').expect
 
-describe('subscriptions Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
-      stripe.subscriptions.retrieve('test_sub');
+describe('subscriptions Resource', function () {
+  describe('retrieve', function () {
+    it('Sends the correct request', function () {
+      stripe.subscriptions.retrieve('test_sub')
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/subscriptions/test_sub',
         headers: {},
-        data: {},
-      });
-    });
-  });
+        data: {}
+      })
+    })
+  })
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
-      stripe.subscriptions.del('test_sub');
+  describe('del', function () {
+    it('Sends the correct request', function () {
+      stripe.subscriptions.del('test_sub')
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
         url: '/v1/subscriptions/test_sub',
         headers: {},
-        data: {},
-      });
-    });
-  });
+        data: {}
+      })
+    })
+  })
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', function () {
+    it('Sends the correct request', function () {
       stripe.subscriptions.update('test_sub', {
-        metadata: {a: '1234'},
-      });
+        metadata: {a: '1234'}
+      })
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/subscriptions/test_sub',
         headers: {},
         data: {
-          metadata: {a: '1234'},
-        },
-      });
-    });
-  });
+          metadata: {a: '1234'}
+        }
+      })
+    })
+  })
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', function () {
+    it('Sends the correct request', function () {
       stripe.subscriptions.create({
         customer: 'test_cus',
-        plan: 'gold',
-      });
+        plan: 'gold'
+      })
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -57,22 +57,22 @@ describe('subscriptions Resource', function() {
         headers: {},
         data: {
           customer: 'test_cus',
-          plan: 'gold',
-        },
-      });
-    });
-  });
+          plan: 'gold'
+        }
+      })
+    })
+  })
 
-  describe('update with items array', function() {
-    it('Sends the correct request', function() {
+  describe('update with items array', function () {
+    it('Sends the correct request', function () {
       stripe.subscriptions.update('test_sub', {
         items: [
           {
             plan: 'foo',
-            quantity: 2,
-          },
-        ],
-      });
+            quantity: 2
+          }
+        ]
+      })
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/subscriptions/test_sub',
@@ -81,24 +81,24 @@ describe('subscriptions Resource', function() {
           items: {
             '0': {
               'plan': 'foo',
-              'quantity': 2,
-            },
-          },
-        },
-      });
-    });
-  });
+              'quantity': 2
+            }
+          }
+        }
+      })
+    })
+  })
 
-  describe('create with items array', function() {
-    it('Sends the correct request', function() {
+  describe('create with items array', function () {
+    it('Sends the correct request', function () {
       stripe.subscriptions.create({
         items: [
           {
             plan: 'foo',
-            quantity: 2,
-          },
-        ],
-      });
+            quantity: 2
+          }
+        ]
+      })
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -108,24 +108,24 @@ describe('subscriptions Resource', function() {
           items: {
             '0': {
               'plan': 'foo',
-              'quantity': 2,
-            },
-          },
-        },
-      });
-    });
-  });
+              'quantity': 2
+            }
+          }
+        }
+      })
+    })
+  })
 
-  describe('update with items object', function() {
-    it('Sends the correct request', function() {
+  describe('update with items object', function () {
+    it('Sends the correct request', function () {
       stripe.subscriptions.update('test_sub', {
         items: {
           '0': {
             plan: 'foo',
-            quantity: 2,
-          },
-        },
-      });
+            quantity: 2
+          }
+        }
+      })
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/subscriptions/test_sub',
@@ -134,24 +134,24 @@ describe('subscriptions Resource', function() {
           items: {
             '0': {
               'plan': 'foo',
-              'quantity': 2,
-            },
-          },
-        },
-      });
-    });
-  });
+              'quantity': 2
+            }
+          }
+        }
+      })
+    })
+  })
 
-  describe('create with items object', function() {
-    it('Sends the correct request', function() {
+  describe('create with items object', function () {
+    it('Sends the correct request', function () {
       stripe.subscriptions.create({
         items: {
           '0': {
             plan: 'foo',
-            quantity: 2,
-          },
-        },
-      });
+            quantity: 2
+          }
+        }
+      })
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -161,21 +161,21 @@ describe('subscriptions Resource', function() {
           items: {
             '0': {
               'plan': 'foo',
-              'quantity': 2,
-            },
-          },
-        },
-      });
-    });
-  });
+              'quantity': 2
+            }
+          }
+        }
+      })
+    })
+  })
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', function () {
+    it('Sends the correct request', function () {
       stripe.subscriptions.list({
         limit: 3,
         customer: 'test_cus',
-        plan: 'gold',
-      });
+        plan: 'gold'
+      })
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/subscriptions',
@@ -183,23 +183,23 @@ describe('subscriptions Resource', function() {
         data: {
           limit: 3,
           customer: 'test_cus',
-          plan: 'gold',
-        },
-      });
-    });
-  });
+          plan: 'gold'
+        }
+      })
+    })
+  })
 
-  describe('Discount methods', function() {
-    describe('deleteDiscount', function() {
-      it('Sends the correct request', function() {
-        stripe.subscriptions.deleteDiscount('test_sub');
+  describe('Discount methods', function () {
+    describe('deleteDiscount', function () {
+      it('Sends the correct request', function () {
+        stripe.subscriptions.deleteDiscount('test_sub')
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/subscriptions/test_sub/discount',
           headers: {},
-          data: {},
-        });
-      });
-    });
-  });
-});
+          data: {}
+        })
+      })
+    })
+  })
+})

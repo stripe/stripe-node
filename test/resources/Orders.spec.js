@@ -1,39 +1,39 @@
-'use strict';
+'use strict'
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+var stripe = require('../testUtils').getSpyableStripe()
+var expect = require('chai').expect
 
-describe('Order Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
-      stripe.orders.retrieve('orderIdFoo123');
+describe('Order Resource', function () {
+  describe('retrieve', function () {
+    it('Sends the correct request', function () {
+      stripe.orders.retrieve('orderIdFoo123')
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/orders/orderIdFoo123',
         data: {},
-        headers: {},
-      });
-    });
-  });
+        headers: {}
+      })
+    })
+  })
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', function () {
+    it('Sends the correct request', function () {
       stripe.orders.create({
         currency: 'usd',
         items: [
           {
             type: 'sku',
-            parent: 'skuIdFoo123',
-          },
+            parent: 'skuIdFoo123'
+          }
         ],
         shipping: {
           name: 'Jane Rosen',
           address: {
-            line1: 'foo',
-          },
+            line1: 'foo'
+          }
         },
-        email: 'jane@ros.en',
-      });
+        email: 'jane@ros.en'
+      })
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/orders',
@@ -42,91 +42,91 @@ describe('Order Resource', function() {
           items: [
             {
               type: 'sku',
-              parent: 'skuIdFoo123',
-            },
+              parent: 'skuIdFoo123'
+            }
           ],
           shipping: {
             name: 'Jane Rosen',
             address: {
-              line1: 'foo',
-            },
+              line1: 'foo'
+            }
           },
-          email: 'jane@ros.en',
+          email: 'jane@ros.en'
         },
-        headers: {},
-      });
-    });
+        headers: {}
+      })
+    })
   })
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', function () {
+    it('Sends the correct request', function () {
       stripe.orders.list({
-        limit: 3,
-      });
+        limit: 3
+      })
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/orders',
         data: {
-          limit: 3,
+          limit: 3
         },
-        headers: {},
-      });
-    });
+        headers: {}
+      })
+    })
 
-    it('Supports filtering by status', function() {
+    it('Supports filtering by status', function () {
       stripe.orders.list({
-        status: 'active',
-      });
+        status: 'active'
+      })
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/orders',
         data: {
-          status: 'active',
+          status: 'active'
         },
-        headers: {},
-      });
-    });
-  });
+        headers: {}
+      })
+    })
+  })
 
-  describe('pay', function() {
-    it('Sends the correct request', function() {
+  describe('pay', function () {
+    it('Sends the correct request', function () {
       stripe.orders.pay('orderIdFoo3242', {
-        source: 'tok_FooBar',
-      });
+        source: 'tok_FooBar'
+      })
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/orders/orderIdFoo3242/pay',
         headers: {},
-        data: {source: 'tok_FooBar'},
-      });
-    });
-  });
+        data: {source: 'tok_FooBar'}
+      })
+    })
+  })
 
-  describe('returnOrder', function() {
-    it('Sends the correct request', function() {
+  describe('returnOrder', function () {
+    it('Sends the correct request', function () {
       stripe.orders.returnOrder('orderIdFoo3242', {
         items: [
-          {parent: 'sku_123'},
-        ],
-      });
+          {parent: 'sku_123'}
+        ]
+      })
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/orders/orderIdFoo3242/returns',
         headers: {},
-        data: {items: [{parent: 'sku_123'}]},
-      });
-    });
-  });
+        data: {items: [{parent: 'sku_123'}]}
+      })
+    })
+  })
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
-      stripe.orders.update('orderIdFoo3242', {status: 'fulfilled'});
+  describe('update', function () {
+    it('Sends the correct request', function () {
+      stripe.orders.update('orderIdFoo3242', {status: 'fulfilled'})
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/orders/orderIdFoo3242',
         headers: {},
-        data: {status: 'fulfilled'},
-      });
-    });
-  });
-});
+        data: {status: 'fulfilled'}
+      })
+    })
+  })
+})

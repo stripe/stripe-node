@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-const Stripe = require('stripe');
-const Express = require('express');
+const Stripe = require('stripe')
+const Express = require('express')
 
 /**
  * You'll need to make sure this is externally accessible.  ngrok (https://ngrok.com/)
@@ -11,28 +11,28 @@ const Express = require('express');
  * STRIPE_API_KEY=sk_test_XXX WEBHOOK_SECRET=whsec_XXX node express.js
  */
 
-const apiKey = process.env.STRIPE_API_KEY;
-const webhookSecret = process.env.WEBHOOK_SECRET;
+const apiKey = process.env.STRIPE_API_KEY
+const webhookSecret = process.env.WEBHOOK_SECRET
 
-const stripe = Stripe(apiKey);
+const stripe = Stripe(apiKey)
 
-const router = Express.Router();
+const router = Express.Router()
 
 // Add the raw text body of the request to the `request` object
-function addRawBody(req, res, next) {
-  req.setEncoding('utf8');
+function addRawBody (req, res, next) {
+  req.setEncoding('utf8')
 
-  var data = '';
+  var data = ''
 
-  req.on('data', function(chunk) {
-    data += chunk;
-  });
+  req.on('data', function (chunk) {
+    data += chunk
+  })
 
-  req.on('end', function() {
-    req.rawBody = data;
+  req.on('end', function () {
+    req.rawBody = data
 
-    next();
-  });
+    next()
+  })
 }
 
 /**
@@ -43,8 +43,8 @@ function addRawBody(req, res, next) {
 /**
  * ...or add it directly as middleware to the route.
  */
-router.post('/webhooks', addRawBody, function(request, response) {
-  var event;
+router.post('/webhooks', addRawBody, function (request, response) {
+  var event
 
   try {
     // Try adding the Event as `request.event`
@@ -52,25 +52,25 @@ router.post('/webhooks', addRawBody, function(request, response) {
       request.rawBody,
       request.headers['stripe-signature'],
       webhookSecret
-    );
+    )
   } catch (e) {
     // If `constructEvent` throws an error, respond with the message and return.
-    console.log('Error', e.message);
+    console.log('Error', e.message)
 
-    return response.status(400).send('Webhook Error:' + e.message);
+    return response.status(400).send('Webhook Error:' + e.message)
   }
 
-  console.log('Success', event.id);
+  console.log('Success', event.id)
 
   // Event was 'constructed', so we can respond with a 200 OK
-  response.status(200).send('Signed Webhook Received: ' + event.id);
-});
+  response.status(200).send('Signed Webhook Received: ' + event.id)
+})
 
 // You could either create this app, or just return the `Router` for use in an
 // existing Express app - up to you!
 
-const app = Express();
-app.use(router);
-app.listen(3000, function() {
+const app = Express()
+app.use(router)
+app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
-});
+})
