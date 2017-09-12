@@ -51,7 +51,7 @@ describe('Charge Resource', function() {
         email: 'do+fill_now@stripe.com',
       })
 
-      var charge = stripe.charges.create({
+      stripe.charges.create({
         amount: receiver.amount,
         currency: receiver.currency,
         description: receiver.description,

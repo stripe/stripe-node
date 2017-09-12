@@ -81,7 +81,7 @@ var utils = module.exports = {
           }
           promise.then(function() {
             // cleanup successful
-            ++completed;
+            completed += 1;
             if (completed === total) {
               done();
             }

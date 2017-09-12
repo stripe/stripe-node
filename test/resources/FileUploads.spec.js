@@ -2,7 +2,6 @@
 
 var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
-var Promise = require('bluebird');
 var fs = require('fs');
 var path = require('path');
 
