@@ -1,3 +1,6 @@
+5.0.0 Sep 12th, 2017
+- Drop support for Node 0.x (minimum required version is now > 4)
+
 4.25.0 Sep 5th, 2017
 - Switch to Bearer token authentication on API requests
 
