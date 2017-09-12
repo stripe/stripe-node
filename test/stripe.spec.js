@@ -9,8 +9,6 @@ var stripe = require('../lib/stripe')(
 
 var expect = require('chai').expect;
 
-var exp_year = new Date().getFullYear() + 1;
-
 var CUSTOMER_DETAILS = {
   description: 'Some customer',
   card: 'tok_visa',

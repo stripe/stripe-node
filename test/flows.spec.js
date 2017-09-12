@@ -10,8 +10,6 @@ var stripe = require('../lib/stripe')(
 
 var expect = chai.expect;
 
-var exp_year = new Date().getFullYear() + 1;
-
 var CUSTOMER_DETAILS = {
   description: 'Some customer',
   card: 'tok_visa',
@@ -153,7 +151,6 @@ describe('Flows', function() {
         'foobarbazteston###etwothree' + testUtils.getRandomString(),
       ].forEach(function(planID) {
         it('Allows me to create and retrieve plan with ID: ' + planID, function() {
-          var plan;
           return expect(
             stripe.plans.create({
               id: planID,
