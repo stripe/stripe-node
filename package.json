@@ -22,7 +22,7 @@
   },
   "bugs:": "https://github.com/stripe/stripe-node/issues",
   "engines": {
-    "node": ">= v0.10.0"
+    "node": ">=4"
   },
   "main": "lib/stripe.js",
   "devDependencies": {
