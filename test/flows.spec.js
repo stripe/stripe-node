@@ -481,7 +481,7 @@ describe('Flows', function() {
         expect(response.path).to.equal('/v1/charges');
         expect(response.request_id).to.match(/req_[\w\d]/);
         expect(response.status).to.equal(402);
-        expect(response.elapsed).to.be.within(50, 30000);;
+        expect(response.elapsed).to.be.within(50, 30000);
 
         done();
       }
