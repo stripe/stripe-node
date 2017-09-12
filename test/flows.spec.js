@@ -33,7 +33,7 @@ describe('Flows', function() {
           CURRENCY = acct.default_currency;
           return acct;
         })
-    ).to.eventually.have.deep.property('default_currency');
+    ).to.eventually.have.property('default_currency');
   });
 
   describe('Plan+Subscription flow', function() {
@@ -201,7 +201,7 @@ describe('Flows', function() {
         it('Can be retrieved from that customer', function() {
           return expect(
             stripe.customers.retrieve(customer.id)
-          ).to.eventually.have.deep.property('discount.coupon.id', coupon.id);
+          ).to.eventually.have.nested.property('discount.coupon.id', coupon.id);
         });
         describe('The resulting discount', function() {
           it('Can be removed', function() {
@@ -213,7 +213,7 @@ describe('Flows', function() {
             it('Does indeed indicate that it is deleted', function() {
               return expect(
                 stripe.customers.retrieve(customer.id)
-              ).to.eventually.have.deep.property('discount', null);
+              ).to.eventually.have.property('discount', null);
             });
           });
         });
@@ -344,7 +344,7 @@ describe('Flows', function() {
                 expand: ['customer'],
               });
             })
-        ).to.eventually.have.deep.property('customer.created');
+        ).to.eventually.have.nested.property('customer.created');
       });
     });
     describe('A customer\'s default source', function() {
@@ -360,7 +360,7 @@ describe('Flows', function() {
               return cust;
             })
         // Confirm it's expanded by checking that some prop (e.g. exp_year) exists:
-        ).to.eventually.have.deep.property('default_source.exp_year');
+        ).to.eventually.have.nested.property('default_source.exp_year');
       });
     });
   });
@@ -381,7 +381,7 @@ describe('Flows', function() {
         }).then(null, function(error) {
           return error;
         })
-      ).to.eventually.have.deep.property('raw.charge');
+      ).to.eventually.have.nested.property('raw.charge');
     });
   });
 
