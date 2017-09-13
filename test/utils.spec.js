@@ -14,9 +14,8 @@ describe('utils', () => {
 
       expect(template({ foo: '', baz: '' })).to.equal('/some/url//?ok=1');
 
-      expect(
-        // Test encoding:
-        template({ foo: 'FOO', baz: '__::baz::__' })).to.equal('/some/url/FOO/__%3A%3Abaz%3A%3A__?ok=1');
+      // Test encoding:
+      expect(template({ foo: 'FOO', baz: '__::baz::__' })).to.equal('/some/url/FOO/__%3A%3Abaz%3A%3A__?ok=1');
     });
   });
 
