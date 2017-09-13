@@ -6,7 +6,7 @@ require('mocha');
 // Ensure we are using the 'as promised' libs before any tests are run:
 require('chai').use(require('chai-as-promised'));
 
-var utils = module.exports = {
+const utils = {
 
   getUserStripeKey() {
     const key = process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
@@ -29,7 +29,7 @@ var utils = module.exports = {
         // available to consuming tests (revealing requests made on
         // REQUESTS and LAST_REQUEST):
         stripeInstance[i].request = (method, url, data, auth, options, cb) => {
-          const req = stripeInstance.LAST_REQUEST = {
+          const req = {
             method,
             url,
             data,
@@ -38,6 +38,7 @@ var utils = module.exports = {
           if (auth) {
             req.auth = auth;
           }
+          stripeInstance.LAST_REQUEST = req;
           stripeInstance.REQUESTS.push(req);
           cb.call(this, null, {});
         };
@@ -74,7 +75,7 @@ var utils = module.exports = {
         const cleanups = this.cleanupFns;
         const total = cleanups.length;
         let completed = 0;
-        for (var fn; (fn = cleanups.shift());) {
+        for (let fn; (fn = cleanups.shift());) {
           const promise = fn.call(this);
           if (!promise || !promise.then) {
             throw new Error('CleanupUtility expects cleanup functions to return promises!');
@@ -130,3 +131,5 @@ var utils = module.exports = {
   },
 
 };
+
+module.exports = utils;
