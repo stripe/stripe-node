@@ -17,7 +17,7 @@ const CUSTOMER_DETAILS = {
 
 let CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
 
-describe('Flows', function () {
+describe('Flows', function flows() {
   // Note: These tests must be run as one so we can retrieve the
   // default_currency (required in subsequent tests);
 

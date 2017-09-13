@@ -28,7 +28,7 @@ var utils = module.exports = {
         // Override each _request method so we can make the params
         // available to consuming tests (revealing requests made on
         // REQUESTS and LAST_REQUEST):
-        stripeInstance[i]._request = function (method, url, data, auth, options, cb) {
+        stripeInstance[i]._request = (method, url, data, auth, options, cb) => {
           const req = stripeInstance.LAST_REQUEST = {
             method,
             url,
@@ -52,7 +52,7 @@ var utils = module.exports = {
    * CleanupUtility will automatically register on the mocha afterEach hook,
    * ensuring its called after each descendent-describe block.
    */
-  CleanupUtility: (function () {
+  CleanupUtility: (function CleanupUtility() {
     CleanupUtility.DEFAULT_TIMEOUT = 20000;
 
     function CleanupUtility(timeout) {
@@ -62,7 +62,7 @@ var utils = module.exports = {
         utils.getUserStripeKey(),
         'latest',
       );
-      afterEach(function (done) {
+      afterEach(function cleanup(done) {
         this.timeout(timeout || CleanupUtility.DEFAULT_TIMEOUT);
         return self.doCleanup(done);
       });
@@ -98,22 +98,22 @@ var utils = module.exports = {
         this._cleanupFns.push(fn);
       },
       deleteCustomer(custId) {
-        this.add(function () {
+        this.add(function deleteCustomer() {
           return this._stripe.customers.del(custId);
         });
       },
       deletePlan(pId) {
-        this.add(function () {
+        this.add(function deletePlan() {
           return this._stripe.plans.del(pId);
         });
       },
       deleteCoupon(cId) {
-        this.add(function () {
+        this.add(function deleteCoupon() {
           return this._stripe.coupons.del(cId);
         });
       },
       deleteInvoiceItem(iiId) {
-        this.add(function () {
+        this.add(function deleteInvoiceItem() {
           return this._stripe.invoiceItems.del(iiId);
         });
       },

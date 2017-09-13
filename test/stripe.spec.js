@@ -14,7 +14,7 @@ const CUSTOMER_DETAILS = {
   card: 'tok_visa',
 };
 
-describe('Stripe Module', function () {
+describe('Stripe Module', function stripeModule() {
   const cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
 
