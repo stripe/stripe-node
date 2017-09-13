@@ -63,7 +63,7 @@ router.post('/webhooks', addRawBody, (request, response) => {
   console.log('Success', event.id);
 
   // Event was 'constructed', so we can respond with a 200 OK
-  response.status(200).send(`Signed Webhook Received: ${event.id}`);
+  return response.status(200).send(`Signed Webhook Received: ${event.id}`);
 });
 
 // You could either create this app, or just return the `Router` for use in an

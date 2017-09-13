@@ -307,7 +307,7 @@ describe('Flows', function flows() {
 
         connectedAccountId = accounts.data[0].id;
 
-        done();
+        return done();
       });
     });
 
