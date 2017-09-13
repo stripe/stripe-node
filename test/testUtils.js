@@ -23,7 +23,7 @@ var utils = module.exports = {
 
     stripeInstance.REQUESTS = [];
 
-    for (const i in stripeInstance) {
+    Object.keys(stripeInstance).forEach((i) => {
       if (stripeInstance[i] instanceof stripe.StripeResource) {
         // Override each _request method so we can make the params
         // available to consuming tests (revealing requests made on
@@ -42,7 +42,7 @@ var utils = module.exports = {
           cb.call(this, null, {});
         };
       }
-    }
+    });
 
     return stripeInstance;
   },
