@@ -127,7 +127,8 @@ describe('Webhooks', () => {
           timestamp: (Date.now() / 1000),
         });
 
-        expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET, 10)).to.equal(true);
+        expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET, 10))
+          .to.equal(true);
       },
     );
 
@@ -138,7 +139,8 @@ describe('Webhooks', () => {
 
       header += ',v1=potato';
 
-      expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET, 10)).to.equal(true);
+      expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET, 10))
+        .to.equal(true);
     });
 
     it(
@@ -149,7 +151,8 @@ describe('Webhooks', () => {
           timestamp: 12345,
         });
 
-        expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET)).to.equal(true);
+        expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET))
+          .to.equal(true);
       },
     );
   });

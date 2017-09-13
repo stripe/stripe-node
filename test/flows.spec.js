@@ -56,6 +56,7 @@ describe('Flows', function flows() {
       'Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)',
       () => {
         let plan;
+        let customer;
         return expect(Promise.join(
           stripe.plans.create({
             id: `plan${testUtils.getRandomString()}`,
@@ -66,8 +67,7 @@ describe('Flows', function flows() {
           }),
           stripe.customers.create(CUSTOMER_DETAILS),
         ).then((j) => {
-          [plan] = j;
-          const customer = j[1];
+          [plan, customer] = j;
 
           cleanup.deleteCustomer(customer.id);
           cleanup.deletePlan(plan.id);
@@ -75,9 +75,11 @@ describe('Flows', function flows() {
           return stripe.customers.createSubscription(customer.id, {
             plan: plan.id,
           });
-        }).then(subscription => stripe.customers.updateSubscription(subscription.customer, subscription.id, {
-          plan: plan.id, quantity: '3',
-        })).then(subscription => [subscription.status, subscription.quantity])).to.eventually.deep.equal(['active', 3]);
+        }).then(subscription =>
+          stripe.customers.updateSubscription(subscription.customer, subscription.id, {
+            plan: plan.id,
+            quantity: '3',
+          })).then(subscription => [subscription.status, subscription.quantity])).to.eventually.deep.equal(['active', 3]);
       },
     );
 
