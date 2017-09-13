@@ -14,7 +14,7 @@ const transferReversal = new resources.TransferReversals(
 );
 
 // Use spy from existing resource:
-transferReversal._request = stripe.customers._request;
+transferReversal.request = stripe.customers.request;
 
 describe('TransferReversal Resource', () => {
   describe('retrieve', () => {

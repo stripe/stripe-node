@@ -13,7 +13,7 @@ const recipientCard = new resources.RecipientCards(
 );
 
 // Use spy from existing resource:
-recipientCard._request = stripe.recipients._request;
+recipientCard.request = stripe.recipients.request;
 
 describe('RecipientCard Resource', () => {
   describe('retrieve', () => {

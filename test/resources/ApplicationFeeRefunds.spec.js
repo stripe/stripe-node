@@ -14,7 +14,7 @@ const appFeeRefund = new resources.ApplicationFeeRefunds(
 );
 
 // Use spy from existing resource:
-appFeeRefund._request = stripe.customers._request;
+appFeeRefund.request = stripe.customers.request;
 
 describe('ApplicationFeeRefund Resource', () => {
   describe('retrieve', () => {

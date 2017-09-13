@@ -68,9 +68,9 @@ describe('Stripe Module', function stripeModule() {
 
   describe('setAppInfo', () => {
     describe('when given nothing or an empty object', () => {
-      it('should unset stripe._appInfo', () => {
+      it('should unset stripe.appInfo', () => {
         stripe.setAppInfo();
-        expect(stripe._appInfo).to.be.undefined;
+        expect(stripe.appInfo).to.be.undefined;
       });
     });
 
@@ -95,11 +95,11 @@ describe('Stripe Module', function stripeModule() {
     });
 
     describe('when given at least a `name`', () => {
-      it('should set name, version and url of stripe._appInfo', () => {
+      it('should set name, version and url of stripe.appInfo', () => {
         stripe.setAppInfo({
           name: 'MyAwesomeApp',
         });
-        expect(stripe._appInfo).to.eql({
+        expect(stripe.appInfo).to.eql({
           name: 'MyAwesomeApp',
         });
 
@@ -107,7 +107,7 @@ describe('Stripe Module', function stripeModule() {
           name: 'MyAwesomeApp',
           version: '1.2.345',
         });
-        expect(stripe._appInfo).to.eql({
+        expect(stripe.appInfo).to.eql({
           name: 'MyAwesomeApp',
           version: '1.2.345',
         });
@@ -116,7 +116,7 @@ describe('Stripe Module', function stripeModule() {
           name: 'MyAwesomeApp',
           url: 'https://myawesomeapp.info',
         });
-        expect(stripe._appInfo).to.eql({
+        expect(stripe.appInfo).to.eql({
           name: 'MyAwesomeApp',
           url: 'https://myawesomeapp.info',
         });
@@ -129,7 +129,7 @@ describe('Stripe Module', function stripeModule() {
           url: 'https://myawesomeapp.info',
           countOfRadishes: 512,
         });
-        expect(stripe._appInfo).to.eql({
+        expect(stripe.appInfo).to.eql({
           name: 'MyAwesomeApp',
           version: '1.2.345',
           url: 'https://myawesomeapp.info',

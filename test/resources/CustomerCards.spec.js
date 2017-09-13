@@ -13,7 +13,7 @@ const customerCard = new resources.CustomerCards(
 );
 
 // Use spy from existing resource:
-customerCard._request = stripe.customers._request;
+customerCard.request = stripe.customers.request;
 
 describe('CustomerCard Resource', () => {
   describe('retrieve', () => {

@@ -28,7 +28,7 @@ var utils = module.exports = {
         // Override each _request method so we can make the params
         // available to consuming tests (revealing requests made on
         // REQUESTS and LAST_REQUEST):
-        stripeInstance[i]._request = (method, url, data, auth, options, cb) => {
+        stripeInstance[i].request = (method, url, data, auth, options, cb) => {
           const req = stripeInstance.LAST_REQUEST = {
             method,
             url,
@@ -57,8 +57,8 @@ var utils = module.exports = {
 
     function CleanupUtility(timeout) {
       const self = this;
-      this._cleanupFns = [];
-      this._stripe = require('../lib/stripe')(
+      this.cleanupFns = [];
+      this.stripe = require('../lib/stripe')(
         utils.getUserStripeKey(),
         'latest',
       );
@@ -71,7 +71,7 @@ var utils = module.exports = {
     CleanupUtility.prototype = {
 
       doCleanup(done) {
-        const cleanups = this._cleanupFns;
+        const cleanups = this.cleanupFns;
         const total = cleanups.length;
         let completed = 0;
         for (var fn; (fn = cleanups.shift());) {
@@ -95,26 +95,26 @@ var utils = module.exports = {
         }
       },
       add(fn) {
-        this._cleanupFns.push(fn);
+        this.cleanupFns.push(fn);
       },
       deleteCustomer(custId) {
         this.add(function deleteCustomer() {
-          return this._stripe.customers.del(custId);
+          return this.stripe.customers.del(custId);
         });
       },
       deletePlan(pId) {
         this.add(function deletePlan() {
-          return this._stripe.plans.del(pId);
+          return this.stripe.plans.del(pId);
         });
       },
       deleteCoupon(cId) {
         this.add(function deleteCoupon() {
-          return this._stripe.coupons.del(cId);
+          return this.stripe.coupons.del(cId);
         });
       },
       deleteInvoiceItem(iiId) {
         this.add(function deleteInvoiceItem() {
-          return this._stripe.invoiceItems.del(iiId);
+          return this.stripe.invoiceItems.del(iiId);
         });
       },
     };

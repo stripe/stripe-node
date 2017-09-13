@@ -13,7 +13,7 @@ const loginLink = new resources.LoginLinks(
 );
 
 // Use spy from existing resource:
-loginLink._request = stripe.customers._request;
+loginLink.request = stripe.customers.request;
 
 describe('LoginLink Resource', () => {
   describe('create', () => {

@@ -13,7 +13,7 @@ const customerSubscription = new resources.CustomerSubscriptions(
 );
 
 // Use spy from existing resource:
-customerSubscription._request = stripe.customers._request;
+customerSubscription.request = stripe.customers.request;
 
 describe('CustomerSubscription Resource', () => {
   describe('retrieve', () => {

@@ -145,7 +145,7 @@ function generateHeaderString(opts) {
   opts.scheme = opts.scheme || stripe.webhooks.signature.EXPECTED_SCHEME;
 
   opts.signature = opts.signature ||
-    stripe.webhooks.signature._computeSignature(`${opts.timestamp}.${opts.payload}`, opts.secret);
+    stripe.webhooks.signature.computeSignature(`${opts.timestamp}.${opts.payload}`, opts.secret);
 
   const generatedHeader = [
     `t=${opts.timestamp}`,

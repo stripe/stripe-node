@@ -14,7 +14,7 @@ const chargeRefund = new resources.ChargeRefunds(
 );
 
 // Use spy from existing resource:
-chargeRefund._request = stripe.customers._request;
+chargeRefund.request = stripe.customers.request;
 
 describe('ChargeRefund Resource', () => {
   describe('retrieve', () => {
