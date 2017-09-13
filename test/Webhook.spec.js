@@ -11,6 +11,25 @@ const EVENT_PAYLOAD_STRING = JSON.stringify(EVENT_PAYLOAD, null, 2);
 
 const SECRET = 'whsec_test_secret';
 
+function generateHeaderString(opts) {
+  opts = opts || {};
+
+  opts.timestamp = Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
+  opts.payload = opts.payload || EVENT_PAYLOAD_STRING;
+  opts.secret = opts.secret || SECRET;
+  opts.scheme = opts.scheme || stripe.webhooks.signature.EXPECTED_SCHEME;
+
+  opts.signature = opts.signature ||
+    stripe.webhooks.signature.computeSignature(`${opts.timestamp}.${opts.payload}`, opts.secret);
+
+  const generatedHeader = [
+    `t=${opts.timestamp}`,
+    `${opts.scheme}=${opts.signature}`,
+  ].join(',');
+
+  return generatedHeader;
+}
+
 describe('Webhooks', () => {
   describe('.constructEvent', () => {
     it('should return an Event instance from a valid JSON payload and valid signature header', () => {
@@ -135,22 +154,3 @@ describe('Webhooks', () => {
     );
   });
 });
-
-function generateHeaderString(opts) {
-  opts = opts || {};
-
-  opts.timestamp = Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
-  opts.payload = opts.payload || EVENT_PAYLOAD_STRING;
-  opts.secret = opts.secret || SECRET;
-  opts.scheme = opts.scheme || stripe.webhooks.signature.EXPECTED_SCHEME;
-
-  opts.signature = opts.signature ||
-    stripe.webhooks.signature.computeSignature(`${opts.timestamp}.${opts.payload}`, opts.secret);
-
-  const generatedHeader = [
-    `t=${opts.timestamp}`,
-    `${opts.scheme}=${opts.signature}`,
-  ].join(',');
-
-  return generatedHeader;
-}

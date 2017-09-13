@@ -53,8 +53,6 @@ var utils = module.exports = {
    * ensuring its called after each descendent-describe block.
    */
   CleanupUtility: (function CleanupUtility() {
-    CleanupUtility.DEFAULT_TIMEOUT = 20000;
-
     function CleanupUtility(timeout) {
       const self = this;
       this.cleanupFns = [];
@@ -67,6 +65,8 @@ var utils = module.exports = {
         return self.doCleanup(done);
       });
     }
+
+    CleanupUtility.DEFAULT_TIMEOUT = 20000;
 
     CleanupUtility.prototype = {
 
