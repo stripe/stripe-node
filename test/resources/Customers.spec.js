@@ -1,7 +1,7 @@
 
 
 const stripe = require('../testUtils').getSpyableStripe();
-const expect = require('chai').expect;
+const { expect } = require('chai');
 const Promise = require('bluebird');
 
 const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';

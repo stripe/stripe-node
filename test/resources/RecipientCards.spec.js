@@ -1,8 +1,8 @@
 
 
-const resources = require('../../lib/stripe').resources;
+const { resources } = require('../../lib/stripe');
 const stripe = require('../testUtils').getSpyableStripe();
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const RECIPIENT_TEST_ID = 'recipientIdTest999';
 

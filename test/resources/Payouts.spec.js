@@ -1,7 +1,7 @@
 
 
 const stripe = require('../testUtils').getSpyableStripe();
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const PAYOUT_TEST_ID = 'po_testid1';
 

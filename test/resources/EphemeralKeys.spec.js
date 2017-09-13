@@ -1,7 +1,7 @@
 
 
 const stripe = require('../testUtils').getSpyableStripe();
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 function errorsOnNoStripeVersion() {
   return expect(stripe.ephemeralKeys.create({ customer: 'cus_123' })).to.be.eventually.rejectedWith(/stripe_version must be specified/i);

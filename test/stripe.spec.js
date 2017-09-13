@@ -7,7 +7,7 @@ const stripe = require('../lib/stripe')(
   'latest',
 );
 
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 const CUSTOMER_DETAILS = {
   description: 'Some customer',
@@ -169,7 +169,7 @@ describe('Stripe Module', function () {
         stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
           cleanup.deleteCustomer(customer.id);
 
-          const headers = customer.lastResponse.headers;
+          const { headers } = customer.lastResponse;
           expect(headers).to.contain.keys('request-id');
 
           expect(customer.lastResponse.requestId).to.match(/^req_/);

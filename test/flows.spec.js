@@ -8,7 +8,7 @@ const stripe = require('../lib/stripe')(
   'latest',
 );
 
-const expect = chai.expect;
+const { expect } = chai;
 
 const CUSTOMER_DETAILS = {
   description: 'Some customer',
@@ -66,7 +66,7 @@ describe('Flows', function () {
           }),
           stripe.customers.create(CUSTOMER_DETAILS),
         ).then((j) => {
-          plan = j[0];
+          [ plan ] = j;
           const customer = j[1];
 
           cleanup.deleteCustomer(customer.id);
@@ -149,8 +149,7 @@ describe('Flows', function () {
         }),
         stripe.customers.create(CUSTOMER_DETAILS),
       ).then((joined) => {
-        coupon = joined[0];
-        customer = joined[1];
+        [ coupon, customer ] = joined;
       })).to.not.be.eventually.rejected);
       describe('And I apply the coupon to the customer', () => {
         it('Does so', () => expect(stripe.customers.update(customer.id, {

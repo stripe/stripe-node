@@ -3,7 +3,7 @@
 require('./testUtils');
 
 const Error = require('../lib/Error');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 describe('Error', () => {
   it('Populates with type and message params', () => {

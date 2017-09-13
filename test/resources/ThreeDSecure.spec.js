@@ -1,7 +1,7 @@
 
 
 const stripe = require('../testUtils').getSpyableStripe();
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 describe('ThreeDSecure Resource', () => {
   describe('retrieve', () => {
