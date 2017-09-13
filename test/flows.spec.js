@@ -66,7 +66,7 @@ describe('Flows', function () {
           }),
           stripe.customers.create(CUSTOMER_DETAILS),
         ).then((j) => {
-          [ plan ] = j;
+          [plan] = j;
           const customer = j[1];
 
           cleanup.deleteCustomer(customer.id);
@@ -149,7 +149,7 @@ describe('Flows', function () {
         }),
         stripe.customers.create(CUSTOMER_DETAILS),
       ).then((joined) => {
-        [ coupon, customer ] = joined;
+        [coupon, customer] = joined;
       })).to.not.be.eventually.rejected);
       describe('And I apply the coupon to the customer', () => {
         it('Does so', () => expect(stripe.customers.update(customer.id, {
