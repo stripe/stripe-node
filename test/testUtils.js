@@ -2,6 +2,8 @@
 
 // NOTE: testUtils should be require'd before anything else in each spec file!
 
+const stripe = require('../lib/stripe');
+
 require('mocha');
 // Ensure we are using the 'as promised' libs before any tests are run:
 require('chai').use(require('chai-as-promised'));
@@ -18,7 +20,6 @@ const utils = {
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
 
-    const stripe = require('../lib/stripe');
     const stripeInstance = stripe('fakeAuthToken');
 
     stripeInstance.REQUESTS = [];
@@ -57,7 +58,7 @@ const utils = {
     function CleanupUtility(timeout) {
       const self = this;
       this.cleanupFns = [];
-      this.stripe = require('../lib/stripe')(
+      this.stripe = stripe(
         utils.getUserStripeKey(),
         'latest',
       );

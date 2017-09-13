@@ -1,5 +1,6 @@
 
 
+const http = require('http');
 const testUtils = require('./testUtils');
 const Promise = require('bluebird');
 const stripe = require('../lib/stripe')(
@@ -54,7 +55,7 @@ describe('Stripe Module', function stripeModule() {
 
   describe('setTimeout', () => {
     it('Should define a default equal to the node default', () => {
-      expect(stripe.getApiField('timeout')).to.equal(require('http').createServer().timeout);
+      expect(stripe.getApiField('timeout')).to.equal(http.createServer().timeout);
     });
     it('Should allow me to set a custom timeout', () => {
       stripe.setTimeout(900);
@@ -62,7 +63,7 @@ describe('Stripe Module', function stripeModule() {
     });
     it('Should allow me to set null, to reset to the default', () => {
       stripe.setTimeout(null);
-      expect(stripe.getApiField('timeout')).to.equal(require('http').createServer().timeout);
+      expect(stripe.getApiField('timeout')).to.equal(http.createServer().timeout);
     });
   });
 
