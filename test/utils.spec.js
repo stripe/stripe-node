@@ -113,7 +113,20 @@ describe('utils', function() {
     });
     it('throws an error if the hash contains both data and options', function() {
       var args = [{foo: 'bar', api_key: 'foo', idempotency_key: 'baz'}];
-      expect(function() { utils.getDataFromArgs(args); }).to.throw(/Options found in arguments/);
+
+      // Hack to make sure we're logging to console.warn here:
+      var _warn = console.warn;
+
+      console.warn = function(message) {
+        expect(message).to.equal(
+          'Stripe: Options found in arguments (api_key, idempotency_key).' +
+            ' Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options.'
+        );
+      };
+
+      utils.getDataFromArgs(args);
+
+      console.warn = _warn;
     });
     it('finds the data', function() {
       var args = [{foo: 'bar'}, {api_key: 'foo'}];
