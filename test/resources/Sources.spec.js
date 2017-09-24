@@ -60,6 +60,18 @@ describe('Sources Resource', function() {
     });
   });
 
+  describe('listSourceTransactions', function() {
+    it('Sends the correct request', function() {
+      stripe.sources.listSourceTransactions('src_foo');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/sources/src_foo/source_transactions',
+        headers: {},
+        data: {},
+      });
+    });
+  });
+
   describe('verify', function() {
     it('Sends the correct request', function() {
       stripe.sources.verify('src_foo', {values: [32, 45]});
