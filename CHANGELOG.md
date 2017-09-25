@@ -1,3 +1,9 @@
+5.1.0 Sep 25th, 2017
+- Add check for when options are accidentally included in an arguments object
+- Use safe-buffer package instead of building our own code
+- Remove dependency on object-assign package
+- Bump required versions of bluebird and qs
+
 5.0.0 Sep 12th, 2017
 - Drop support for Node 0.x (minimum required version is now >= 4)
 
