@@ -1,3 +1,6 @@
+5.1.1 Oct 4th, 2017
+- [#394] Fix improper warning for requests that have options but no parameters
+
 5.1.0 Sep 25th, 2017
 - Add check for when options are accidentally included in an arguments object
 - Use safe-buffer package instead of building our own code
