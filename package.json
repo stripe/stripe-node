@@ -28,9 +28,9 @@
   "devDependencies": {
     "chai": "~4.1.2",
     "chai-as-promised": "~7.1.1",
-    "jscs": "^2.3.5",
-    "mocha": "~3.5.3",
-    "stripe-javascript-style": "^1.0.1"
+    "eslint": "^4.6.1",
+    "eslint-plugin-chai-friendly": "^0.4.0",
+    "mocha": "~3.5.3"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -42,6 +42,6 @@
   "scripts": {
     "mocha": "mocha",
     "test": "npm run lint && mocha",
-    "lint": "jscs ."
+    "lint": "eslint ."
   }
 }

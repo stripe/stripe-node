@@ -261,6 +261,7 @@ describe('utils', function() {
   });
 });
 
+/* eslint-disable no-console */
 function handleConsoleWarns(doWithShimmedConsoleWarn, onWarn) {
   // Shim `console.warn`
   var _warn = console.warn;
@@ -272,3 +273,4 @@ function handleConsoleWarns(doWithShimmedConsoleWarn, onWarn) {
   // Un-shim `console.warn`
   console.warn = _warn;
 }
+/* eslint-enable no-console */
