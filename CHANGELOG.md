@@ -1,294 +1,292 @@
-### 5.1.1 Oct 4th, 2017
-* [#394] Fix improper warning for requests that have options but no parameters
+# CHANGELOG
 
-### 5.1.0 Sep 25th, 2017
+## 5.1.1 - 2017-10-04
+* [#394](https://github.com/stripe/stripe-node/pull/394) Fix improper warning for requests that have options but no parameters
+
+## 5.1.0 - 2017-09-25
 * Add check for when options are accidentally included in an arguments object
 * Use safe-buffer package instead of building our own code
 * Remove dependency on object-assign package
 * Bump required versions of bluebird and qs
 
-### 5.0.0 Sep 12th, 2017
+## 5.0.0 - 2017-09-12
 * Drop support for Node 0.x (minimum required version is now >= 4)
 
-### 4.25.0 Sep 5th, 2017
+## 4.25.0 - 2017-09-05
 * Switch to Bearer token authentication on API requests
 
-### 4.24.1 Aug 25th, 2017
+## 4.24.1 - 2017-08-25
 * Specify UTF-8 encoding when verifying HMAC-SHA256 payloads
 
-### 4.24.0 Aug 10th, 2017
+## 4.24.0 - 2017-08-10
 * Support informational events with `Stripe.on` (see README for details)
 
-### 4.23.2 Aug 3rd, 2017
+## 4.23.2 - 2017-08-03
 * Handle `Buffer.from` incompatibility for Node versions prior to 4.5.x
 
-### 4.23.1 Jun 24th, 2017
+## 4.23.1 - 2017-06-24
 * Properly encode subscription items when retrieving upcoming invoice
 
-### 4.23.0 Jun 20th, 2017
+## 4.23.0 - 2017-06-20
 * Add support for ephemeral keys
 
-### 4.22.1 Jun 20th, 2017
+## 4.22.1 - 2017-06-20
 * Fix usage of hasOwnProperty in utils
 
-### 4.22.0 May 25th, 2017
+## 4.22.0 - 2017-05-25
 * Make response headers accessible on error objects
 
-### 4.21.0 May 25th, 2017
+## 4.21.0 - 2017-05-25
 * Add support for account login links
 
-### 4.20.0 May 24th, 2017
+## 4.20.0 - 2017-05-24
 * Add `stripe.setAppInfo` for plugin authors to register app information
 
-### 4.19.1 May 18th, 2017
+## 4.19.1 - 2017-05-18
 * Tweak class initialization for compatibility with divergent JS engines
 
-### 4.19.0 May 11th, 2017
+## 4.19.0 - 2017-05-11
 * Support for checking webhook signatures
 
-### 4.18.0 Apr 12th, 2017
+## 4.18.0 - 2017-04-12
 * Reject ID parameters that don't look like strings
 
-### 4.17.1 Apr 5th, 2017
+## 4.17.1 - 2017-04-05
 * Fix paths in error messages on bad arguments
 
-### 4.17.0 Mar 31st, 2017
+## 4.17.0 - 2017-03-31
 * Add support for payouts
 
-### 4.16.1 Mar 30th, 2017
+## 4.16.1 - 2017-03-30
 * Fix bad reference to `requestId` when initializing errors
 
-### 4.16.0 Mar 22nd, 2017
+## 4.16.0 - 2017-03-22
 * Make `requestId` available on resource `lastResponse` objects
 
-### 4.15.1 Mar 8th, 2017
+## 4.15.1 - 2017-03-08
 * Update required version of "qs" dependency to 6.0.4+
 
-### 4.15.0 Jan 18th, 2017
+## 4.15.0 - 2017-01-18
 * Add support for updating sources
 
-### 4.14.0 Dec 1st, 2016
+## 4.14.0 - 2016-12-01
 * Add support for verifying sources
 
-### 4.13.0 Nov 21st, 2016
+## 4.13.0 - 2016-11-21
 * Add retrieve method for 3-D Secure resources
 
-### 4.12.0 Oct 18th, 2016
+## 4.12.0 - 2016-10-18
 * Support for 403 status codes (permission denied)
 
-### 4.11.0 Sep 16th, 2016
+## 4.11.0 - 2016-09-16
 * Add support for Apple Pay domains
 
-### 4.10.0 Aug 29th, 2016
+## 4.10.0 - 2016-08-29
 * Refactor deprecated uses of Bluebird's `Promise.defer`
 
-### 4.9.1 Aug 22nd, 2016
+## 4.9.1 - 2016-08-22
 * URI-encode unames for Stripe user agents so we don't fail on special characters
 
-### 4.9.0 Jul 19th, 2016
+## 4.9.0 - 2016-07-19
 * Add `Source` model for generic payment sources support (experimental)
 
-### 4.8.0 Jul 14th, 2016
+## 4.8.0 - 2016-07-14
 * Add `ThreeDSecure` model for 3-D secure payments
 
-### 4.7.0 May 25th, 2016
+## 4.7.0 - 2016-05-25
 * Add support for returning Relay orders
 
-### 4.6.0 May 4th, 2016
+## 4.6.0 - 2016-05-04
 * Add `update`, `create`, `retrieve`, `list` and `del` methods to `stripe.subscriptions`
 
-### 4.5.0 Mar 15th, 2016
+## 4.5.0 - 2016-03-15
 * Add `reject` on `Account` to support the new API feature
 
-### 4.4.0 Feb 8th, 2016
+## 4.4.0 - 2016-02-08
 * Add `CountrySpec` model for looking up country payment information
 
-### 4.3.0 Jan 26th, 2016
+## 4.3.0 - 2016-01-26
 * Add support for deleting Relay SKUs and products
 
-### 4.2.0 Jan 13th, 2016
+## 4.2.0 - 2016-01-13
 * Add `lastResponse` property on `StripeResource` objects
 * Return usage errors of `stripeMethod` through callback instead of raising
 * Use latest year for expiry years in tests to avoid new year problems
 
-### 4.1.0 Dec 2nd, 2015
+## 4.1.0 - 2015-12-02
 * Add a verification routine for external accounts
 
-### 4.0.0 Sep 17th, 2015
+## 4.0.0 - 2015-09-17
 * Remove ability for API keys to be passed as 1st param to acct.retrieve
 * Rename StripeInvalidRequest to StripeInvalidRequestError
 
-### 3.9.0 Sep 14th, 2015
+## 3.9.0 - 2015-09-14
 * Add Relay resources: Products, SKUs, and Orders
 
-### 3.8.0 Sep 11th, 2015
+## 3.8.0 - 2015-09-11
 * Added rate limiting responses
 
-### 3.7.1 Aug 17th, 2015
+## 3.7.1 - 2015-08-17
 * Added refund object with listing, retrieval, updating, and creation.
 
-### 3.7.0 Aug 3rd, 2015
+## 3.7.0 - 2015-08-03
 * Added managed account deletion
 * Added dispute listing and retrieval
 
-### 3.6.0 Jul 7th, 2015
+## 3.6.0 - 2015-07-07
 * Added request IDs to all Stripe errors
 
-### 3.5.2 Jun 30th, 2015
+## 3.5.2 - 2015-06-30
 * [BUGFIX] Fixed issue with uploading binary files (Gabriel Chagas Marques)
 
-### 3.5.1 Jun 30th, 2015
+## 3.5.1 - 2015-06-30
 * [BUGFIX] Fixed issue with passing arrays of objects
 
-### 3.5.0 Jun 11th, 2015
+## 3.5.0 - 2015-06-11
 * Added support for optional parameters when retrieving an upcoming invoice
 (Matthew Arkin)
 
-### 3.4.0 Jun 10th, 2015
+## 3.4.0 - 2015-06-10
 * Added support for bank accounts and debit cards in managed accounts
 
-### 3.3.4 Apr 2nd, 2015
+## 3.3.4 - 2015-04-02
 * Remove SSL revocation tests and check
 
-### 3.3.3 Mar 31st, 2015
+## 3.3.3 - 2015-03-31
 * [BUGFIX] Fix support for both stripe.account and stripe.accounts
 
-### 3.3.2 Feb 24th, 2015
+## 3.3.2 - 2015-02-24
 * Support transfer reversals.
 
-### 3.3.1 Feb 21st, 2015
-* [BUGFIX] Fix passing in only a callback to the Account resource. (Matthew
-Arkin)
+## 3.3.1 - 2015-02-21
+* [BUGFIX] Fix passing in only a callback to the Account resource. (Matthew Arkin)
 
-### 3.3.0 Feb 19th, 2015
+## 3.3.0 - 2015-02-19
 * Support BitcoinReceiver update & delete actions
 * Add methods for manipulating customer sources as per 2015-02-18 API version
-* The Account resource will now take an account ID. However, legacy use of
-the resource (without an account ID) will still work.
+* The Account resource will now take an account ID. However, legacy use of the resource (without an account ID) will still work.
 
-### 3.2.0 Feb 5th, 2015
+## 3.2.0 - 2015-02-05
 * [BUGFIX] Fix incorrect failing tests for headers support
 * Update all dependencies (remove mocha-as-promised)
 * Switch to bluebird for promises
 
-### 3.1.0 Jan 21st, 2015
+## 3.1.0 - 2015-01-21
 * Support making bitcoin charges through BitcoinReceiver source object
 
-### 3.0.3 Dec 23rd, 2014
+## 3.0.3 - 2014-12-23
 * Adding file uploads as a resource.
 
-### 3.0.2 Nov 26th, 2014
+## 3.0.2 - 2014-11-26
 * [BUGFIX] Fix issue where multiple expand params were not getting passed through (#130)
 
-### 3.0.1 Nov 26th, 2014
+## 3.0.1 - 2014-11-26
 * (Version skipped due to npm mishap)
 
-### 3.0.0 Nov 18th, 2014
+## 3.0.0 - 2014-11-18
 * [BUGFIX] Fix `stringifyRequestData` to deal with nested objs correctly
 * Bump MAJOR as we're no longer supporting Node 0.8
 
-### 2.9.0 Nov 12th, 2014
+## 2.9.0 - 2014-11-12
 * Allow setting of HTTP agent (proxy) (issue #124)
 * Add stack traces to all Stripe Errors
 
-### 2.8.0 July 26th, 2014
+## 2.8.0 - 2014-07-26
 * Make application fee refunds a list instead of array
 
-### 2.7.4 July 17th, 2014
+## 2.7.4 - 2014-07-17
 * [BUGFIX] Fix lack of subscription param in `invoices#retrieveUpcoming` method
 * Add support for an `optional!` annotation on `urlParams`
 
-### 2.7.3 June 17th, 2014
+## 2.7.3 - 2014-06-17
 * Add metadata to disputes and refunds
 
-### 2.6.3 May 21st, 2014
+## 2.6.3 - 2014-05-21
 * Support cards for recipients.
 
-### 2.5.3 May 16th, 2014
+## 2.5.3 - 2014-05-16
 * Allow the `update` method on coupons for metadata changes
 
-### 2.5.2 Apr 28th, 2014
+## 2.5.2 - 2014-04-28
 * [BUGFIX] Fix when.js version string in package.json to support older npm versions
 
-### 2.5.1 Apr 25th, 2014
+## 2.5.1 - 2014-04-25
 * [BUGFIX] Fix revoked-ssl check
 * Upgrade when.js to 3.1.0
 
-### 2.5.0 Apr 9th, 2014
+## 2.5.0 - 2014-04-09
 * Ensure we prevent requests using revoked SSL certs
 
-### 2.4.5 Apr 8th, 2014
+## 2.4.5 - 2014-04-08
 * Add better checks for incorrect arguments (throw exceptions accordingly).
 * Validate the Connect Auth key, if passed
 
-### 2.4.4 Mar 27th, 2014
+## 2.4.4 - 2014-03-27
 * [BUGFIX] Fix URL encoding issue (not encoding interpolated URL params, see issue #93)
 
-### 2.4.3 Mar 27th, 2014
+## 2.4.3 - 2014-03-27
 * Add more debug information to the case of a failed `JSON.parse()`
 
-### 2.4.2 Feb 20th, 2014
+## 2.4.2 - 2014-02-20
 * Add binding for `transfers/{tr_id}/transactions` endpoint
 
-### 2.4.1 Feb 7th, 2014
+## 2.4.1 - 2014-02-07
 * Ensure raw error object is accessible on the generated StripeError
 
-### 2.4.0 Jan 29th, 2014
+## 2.4.0 - 2014-01-29
 * Support multiple subscriptions per customer
 
-### 2.3.4 Jan 11th, 2014
+## 2.3.4 - 2014-01-11
 * [BUGFIX] Fix #76, pass latest as version to api & fix constructor arg signature
 
-### 2.3.3 Jan 10th, 2014
+## 2.3.3 - 2014-01-10
 * Document cancelSubscription method params and add specs for `at_period_end`
 
-### 2.3.2 Dec 2nd, 2013
+## 2.3.2 - 2013-12-02
 * Add application fees API
 
-### 2.2.2 Nov 20th, 2013
+## 2.2.2 - 2013-11-20
 * [BUGFIX] Fix incorrect deleteDiscount method & related spec(s)
 
 ### 2.2.1
 * [BUGFIX] Fix user-agent header issue (see issue #75)
 
-### 2.2.0 Nov 9th, 2013
+## 2.2.0 - 2013-11-09
 * Add support for setTimeout
 * Add specs for invoice-item listing/querying via timestamp
 
-### 2.1.0 Nov 7th, 2013
+## 2.1.0 - 2013-11-07
 * Support single key/value setting on setMetadata method
 * [BUGFIX] Fix Windows url-path issue
 * Add missing stripe.charges.update method
 * Support setting auth_token per request (useful in Connect)
 * Remove global 'resources' variable
 
-### 2.0.0 October 18th, 2013
+## 2.0.0 - 2013-10-18
 * API overhaul and refactor, including addition of promises.
 * Release of version 2.0.0
 
-### 1.3.0 January 30th, 2013
+## 1.3.0 - 2013-01-30
 * Requests return Javascript Errors (Guillaume Flandre)
 
-### 1.2.0 August 3rd, 2012
+## 1.2.0 - 2012-08-03
 * Added events API (Jonathan Hollinger)
 * Added plans update API (Pavan Kumar Sunkara)
 * Various test fixes, node 0.8.x tweaks (Jan Lehnardt)
 
-### 1.1.0 February 1st, 2012
+## 1.1.0 - 2012-02-01
 * Add Coupons API (Ryan)
 * Pass a more robust error object to the callback (Ryan)
-* Fix duplicate callbacks from some functions when called incorrectly
-(bug #24, reported by Kishore Nallan)
+* Fix duplicate callbacks from some functions when called incorrectly (bug #24, reported by Kishore Nallan)
 
-### 1.0.0 December 6th, 2011
+## 1.0.0 - 2011-12-06
 * Add APIs and tests for Plans and "Invoice Items"
 (both changes by Ryan Ettipio)
 
-### 0.0.5 November 26th, 2011
+## 0.0.5 - 2011-11-26
 * Add Subscription API (John Ku, #3)
 * Add Invoices API (Chris Winn, #6)
-* [BUGFIX] Fix a bug where callback could be called twice, if the callback()
-threw an error itself (Peteris Krumins)
+* [BUGFIX] Fix a bug where callback could be called twice, if the callback() threw an error itself (Peteris Krumins)
 * [BUGFIX] Fix bug in tokens.retrieve API (Xavi)
 * Change documentation links (Stripe changed their URL structure)
 * Make tests pass again (error in callback is null instead of 0 if all is well)
@@ -296,9 +294,9 @@ threw an error itself (Peteris Krumins)
 * Various documentation fixes (Xavi)
 * Only require node 0.4.0
 
-### 0.0.3 October 5, 2011
+## 0.0.3 - 2011-10-05
 * Add Charges API (issue #1, brackishlake)
 * Add customers.list API
 
-### 0.0.2 September 28, 2011
+## 0.0.2 - 2011-09-28
 * Initial release with customers and tokens APIs
