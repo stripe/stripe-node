@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.2.0 - 2017-10-26
+* [#404](https://github.com/stripe/stripe-node/pull/404) Support for listing source transactions
+
 ## 5.1.1 - 2017-10-04
 * [#394](https://github.com/stripe/stripe-node/pull/394) Fix improper warning for requests that have options but no parameters
 
