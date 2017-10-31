@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.3.0 - 2017-10-31
+* [#405](https://github.com/stripe/stripe-node/pull/405) Support for exchange rates APIs
+
 ## 5.2.0 - 2017-10-26
 * [#404](https://github.com/stripe/stripe-node/pull/404) Support for listing source transactions
 
