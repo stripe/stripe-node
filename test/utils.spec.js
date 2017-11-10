@@ -158,6 +158,22 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(1);
     });
+    it('parses and drops an undefined parameter', function() {
+      var args = [undefined];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: null,
+        headers: {},
+      });
+      expect(args.length).to.equal(0);
+    });
+    it('parses and drops a null parameter', function() {
+      var args = [null];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: null,
+        headers: {},
+      });
+      expect(args.length).to.equal(0);
+    });
     it('parses an api key', function() {
       var args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
