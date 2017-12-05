@@ -20,6 +20,7 @@ describe('Error', function() {
         Error.StripeInvalidRequestError
       );
       expect(Error.StripeError.generate({type: 'api_error'})).to.be.instanceOf(Error.StripeAPIError);
+      expect(Error.StripeError.generate({type: 'idempotency_error'})).to.be.instanceOf(Error.StripeIdempotencyError);
     });
 
     it('Pulls in headers', function() {
