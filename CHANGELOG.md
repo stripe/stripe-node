@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.4.0 - 2017-12-05
+* [#412](https://github.com/stripe/stripe-node/pull/412) Add `StripeIdempotencyError` type for new kind of stripe error
+
 ## 5.3.0 - 2017-10-31
 * [#405](https://github.com/stripe/stripe-node/pull/405) Support for exchange rates APIs
 
