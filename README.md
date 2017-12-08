@@ -32,6 +32,16 @@ value:
 ``` js
 var stripe = require('stripe')('sk_test_...');
 
+var customer = await stripe.customers.create(
+  { email: 'customer@example.com' }
+);
+```
+
+Or with versions of Node.js prior to v7.9:
+
+``` js
+var stripe = require('stripe')('sk_test_...');
+
 stripe.customers.create(
   { email: 'customer@example.com' },
   function(err, customer) {
@@ -41,11 +51,12 @@ stripe.customers.create(
 );
 ```
 
-On ES6, this looks more like:
+Or using ES modules, this looks more like:
 
 ``` js
 import stripePackage from 'stripe';
 const stripe = stripePackage('sk_test_...');
+//…
 ```
 
 ### Using Promises
