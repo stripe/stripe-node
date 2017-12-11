@@ -7,3 +7,4 @@ node_js:
   - "7"
   - "8"
 sudo: false
+after_success: npm run report && npm run coveralls
