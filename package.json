@@ -28,9 +28,11 @@
   "devDependencies": {
     "chai": "~4.1.2",
     "chai-as-promised": "~7.1.1",
+    "coveralls": "^3.0.0",
     "eslint": "^4.6.1",
     "eslint-plugin-chai-friendly": "^0.4.0",
-    "mocha": "~3.5.3"
+    "mocha": "~3.5.3",
+    "nyc": "^11.3.0"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
@@ -40,8 +42,11 @@
   },
   "license": "MIT",
   "scripts": {
-    "mocha": "mocha",
-    "test": "npm run lint && mocha",
-    "lint": "eslint ."
+    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage",
+    "mocha": "nyc mocha",
+    "test": "npm run lint && npm run mocha",
+    "lint": "eslint .",
+    "report": "nyc -r text -r lcov report",
+    "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   }
 }
