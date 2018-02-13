@@ -43,7 +43,10 @@ describe('Flows', function() {
             amount: 1700,
             currency: CURRENCY,
             interval: 'month',
-            name: 'Gold Super Amazing Tier',
+            nickname: 'Gold Super Amazing Tier',
+            product: {
+              name: 'product' + testUtils.getRandomString(),
+            },
           }),
           stripe.customers.create(CUSTOMER_DETAILS)
         ).then(function(j) {
@@ -71,7 +74,10 @@ describe('Flows', function() {
               amount: 1700,
               currency: CURRENCY,
               interval: 'month',
-              name: 'Gold Super Amazing Tier',
+              nickname: 'Gold Super Amazing Tier',
+              product: {
+                name: 'product' + testUtils.getRandomString(),
+              },
             }),
             stripe.customers.create(CUSTOMER_DETAILS)
           ).then(function(j) {
@@ -122,7 +128,10 @@ describe('Flows', function() {
             amount: 1700,
             currency: CURRENCY,
             interval: 'month',
-            name: 'Silver Super Amazing Tier',
+            nickname: 'Silver Super Amazing Tier',
+            product: {
+              name: 'product' + testUtils.getRandomString(),
+            },
           }),
           stripe.customers.create(CUSTOMER_DETAILS)
         ).then(function(j) {
@@ -157,7 +166,10 @@ describe('Flows', function() {
               amount: 1700,
               currency: CURRENCY,
               interval: 'month',
-              name: 'generic',
+              nickname: 'generic',
+              product: {
+                name: 'product' + testUtils.getRandomString(),
+              },
             }).then(function() {
               cleanup.deletePlan(planID);
               return stripe.plans.retrieve(planID);

@@ -21,6 +21,7 @@ describe('Product Resource', function() {
       stripe.products.create({
         name: 'Llamas',
         active: true,
+        type: 'good',
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -28,6 +29,7 @@ describe('Product Resource', function() {
         data: {
           name: 'Llamas',
           active: true,
+          type: 'good',
         },
         headers: {},
       });
