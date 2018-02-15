@@ -407,19 +407,6 @@ describe('Flows', function() {
     });
   });
 
-  describe('Creating a ThreeDSecure object', function() {
-    it('Allows me to do so', function() {
-      return expect(
-        stripe.threeDSecure.create({
-          card: 'tok_visa',
-          amount: 1500,
-          currency: 'usd',
-          return_url: 'https://example.org/3d-secure-result',
-        })
-      ).to.eventually.have.property('object', 'three_d_secure');
-    });
-  });
-
   describe('Request/Response Events', function() {
     var connectedAccountId;
 
