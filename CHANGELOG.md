@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.5.0 - 2018-02-21
+* [#425](https://github.com/stripe/stripe-node/pull/425) Add support for topups
+
 ## 5.4.0 - 2017-12-05
 * [#412](https://github.com/stripe/stripe-node/pull/412) Add `StripeIdempotencyError` type for new kind of stripe error
 
