@@ -60,6 +60,15 @@ const stripe = stripePackage('sk_test_...');
 //…
 ```
 
+
+Or using TypeScript:
+
+``` ts
+import * as Stripe from 'stripe';
+const stripe = new Stripe('sk_test_...');
+//…
+```
+
 ### Using Promises
 
 Every method returns a chainable promise which can be used instead of a regular
