@@ -2,7 +2,6 @@
 
 var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
-var Promise = require('bluebird');
 
 var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 

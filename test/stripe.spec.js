@@ -1,7 +1,6 @@
 'use strict';
 
 var testUtils = require('./testUtils');
-var Promise = require('bluebird');
 var stripe = require('../lib/stripe')(
   testUtils.getUserStripeKey(),
   'latest'
@@ -37,20 +36,20 @@ describe('Stripe Module', function() {
   describe('GetClientUserAgentSeeded', function() {
     it('Should return a user-agent serialized JSON object', function() {
       var userAgent = {lang: 'node'};
-      var d = Promise.defer();
-      stripe.getClientUserAgentSeeded(userAgent, function(c) {
-        d.resolve(JSON.parse(c));
-      });
-      return expect(d.promise).to.eventually.have.property('lang', 'node');
+      return expect(new Promise(function(resolve, reject) {
+        stripe.getClientUserAgentSeeded(userAgent, function(c) {
+          resolve(JSON.parse(c));
+        });
+      })).to.eventually.have.property('lang', 'node');
     });
 
     it('Should URI-encode user-agent fields', function() {
       var userAgent = {lang: 'ï'};
-      var d = Promise.defer();
-      stripe.getClientUserAgentSeeded(userAgent, function(c) {
-        d.resolve(JSON.parse(c));
-      });
-      return expect(d.promise).to.eventually.have.property('lang', '%C3%AF');
+      return expect(new Promise(function(resolve, reject) {
+        stripe.getClientUserAgentSeeded(userAgent, function(c) {
+          resolve(JSON.parse(c));
+        });
+      })).to.eventually.have.property('lang', '%C3%AF');
     })
   });
 

@@ -2,7 +2,6 @@
 
 var testUtils = require('./testUtils');
 var chai = require('chai');
-var Promise = require('bluebird');
 var stripe = require('../lib/stripe')(
   testUtils.getUserStripeKey(),
   'latest'
@@ -37,7 +36,7 @@ describe('Flows', function() {
   describe('Plan+Subscription flow', function() {
     it('Allows me to: Create a plan and subscribe a customer to it', function() {
       return expect(
-        Promise.join(
+        Promise.all([
           stripe.plans.create({
             id: 'plan' + testUtils.getRandomString(),
             amount: 1700,
@@ -49,7 +48,7 @@ describe('Flows', function() {
             },
           }),
           stripe.customers.create(CUSTOMER_DETAILS)
-        ).then(function(j) {
+        ]).then(function(j) {
           var plan = j[0];
           var customer = j[1];
 
@@ -68,7 +67,7 @@ describe('Flows', function() {
       function() {
         var plan;
         return expect(
-          Promise.join(
+          Promise.all([
             stripe.plans.create({
               id: 'plan' + testUtils.getRandomString(),
               amount: 1700,
@@ -80,7 +79,7 @@ describe('Flows', function() {
               },
             }),
             stripe.customers.create(CUSTOMER_DETAILS)
-          ).then(function(j) {
+          ]).then(function(j) {
             plan = j[0];
             var customer = j[1];
 
@@ -122,7 +121,7 @@ describe('Flows', function() {
 
     it('Allows me to: subscribe then cancel with `at_period_end` defined', function() {
       return expect(
-        Promise.join(
+        Promise.all([
           stripe.plans.create({
             id: 'plan' + testUtils.getRandomString(),
             amount: 1700,
@@ -134,7 +133,7 @@ describe('Flows', function() {
             },
           }),
           stripe.customers.create(CUSTOMER_DETAILS)
-        ).then(function(j) {
+        ]).then(function(j) {
           var plan = j[0];
           var customer = j[1];
 
@@ -187,13 +186,13 @@ describe('Flows', function() {
     describe('When I create a coupon & customer', function() {
       it('Does so', function() {
         return expect(
-          Promise.join(
+          Promise.all([
             stripe.coupons.create({
               percent_off: 20,
               duration: 'once',
             }),
             stripe.customers.create(CUSTOMER_DETAILS)
-          ).then(function(joined) {
+          ]).then(function(joined) {
             coupon = joined[0];
             customer = joined[1];
           })
