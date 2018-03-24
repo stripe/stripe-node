@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.6.0 - 2018-03-24
+* [#439](https://github.com/stripe/stripe-node/pull/439) Drop Bluebird dependency and use native ES6 promises
+
 ## 5.5.0 - 2018-02-21
 * [#425](https://github.com/stripe/stripe-node/pull/425) Add support for topups
 
