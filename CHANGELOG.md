@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.6.1 - 2018-03-25
+* [#437](https://github.com/stripe/stripe-node/pull/437) Fix error message when passing invalid parameters to some API methods
+
 ## 5.6.0 - 2018-03-24
 * [#439](https://github.com/stripe/stripe-node/pull/439) Drop Bluebird dependency and use native ES6 promises
 
