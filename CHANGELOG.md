@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.7.0 - 2018-04-02
+* [#441](https://github.com/stripe/stripe-node/pull/441) Write directly to a connection that's known to be still open
+
 ## 5.6.1 - 2018-03-25
 * [#437](https://github.com/stripe/stripe-node/pull/437) Fix error message when passing invalid parameters to some API methods
 
