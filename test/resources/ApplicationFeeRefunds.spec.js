@@ -9,8 +9,8 @@ var REFUND_TEST_ID = 'refundIdTest999';
 
 // Create new CustomerCard instance with pre-filled customerId:
 var appFeeRefund = new resources.ApplicationFeeRefunds(
-    stripe,
-    {feeId: APPFEE_TEST_ID}
+  stripe,
+  {feeId: APPFEE_TEST_ID}
 );
 
 // Use spy from existing resource:
