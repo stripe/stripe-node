@@ -367,7 +367,7 @@ describe('Flows', function() {
               cleanup.deleteCustomer(cust.id);
               return cust;
             })
-        // Confirm it's expanded by checking that some prop (e.g. exp_year) exists:
+          // Confirm it's expanded by checking that some prop (e.g. exp_year) exists:
         ).to.eventually.have.nested.property('default_source.exp_year');
       });
     });

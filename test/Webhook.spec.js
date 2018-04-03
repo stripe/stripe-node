@@ -98,13 +98,13 @@ describe('Webhooks', function() {
 
     it('should return true when the header contains a valid signature and ' +
       'the timestamp is within the tolerance',
-      function() {
-        var header = generateHeaderString({
-          timestamp: (Date.now() / 1000),
-        });
-
-        expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET, 10)).to.equal(true);
+    function() {
+      var header = generateHeaderString({
+        timestamp: (Date.now() / 1000),
       });
+
+      expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET, 10)).to.equal(true);
+    });
 
     it('should return true when the header contains at least one valid signature', function() {
       var header = generateHeaderString({
@@ -118,13 +118,13 @@ describe('Webhooks', function() {
 
     it('should return true when the header contains a valid signature ' +
       'and the timestamp is off but no tolerance is provided',
-      function() {
-        var header = generateHeaderString({
-          timestamp: 12345,
-        });
-
-        expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET)).to.equal(true);
+    function() {
+      var header = generateHeaderString({
+        timestamp: 12345,
       });
+
+      expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET)).to.equal(true);
+    });
   });
 });
 

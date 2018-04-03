@@ -8,8 +8,8 @@ var CUSTOMER_TEST_ID = 'customerIdTest999';
 
 // Create new CustomerSubscription instance with pre-filled customerId:
 var customerSubscription = new resources.CustomerSubscriptions(
-    stripe,
-    {customerId: CUSTOMER_TEST_ID}
+  stripe,
+  {customerId: CUSTOMER_TEST_ID}
 );
 
 // Use spy from existing resource:
