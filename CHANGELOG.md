@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.8.0 - 2018-04-04
+* [#444](https://github.com/stripe/stripe-node/pull/444) Introduce flexible billing primitives for subscriptions
+
 ## 5.7.0 - 2018-04-02
 * [#441](https://github.com/stripe/stripe-node/pull/441) Write directly to a connection that's known to be still open
 
