@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 5.9.0 - 2018-05-09
+* [#456](https://github.com/stripe/stripe-node/pull/456) Add support for issuer fraud records
+
 ## 5.8.0 - 2018-04-04
 * [#444](https://github.com/stripe/stripe-node/pull/444) Introduce flexible billing primitives for subscriptions
 
