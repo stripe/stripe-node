@@ -15,8 +15,7 @@ describe('IssuerFraudRecord Resource', function() {
       });
     });
     it('Sends the correct request for charge ID', function() {
-      stripe.issuerFraudRecords.retrieveFromCharge('ch_123456789');
-      console.log(stripe);
+      stripe.issuerFraudRecords.listFromCharge('ch_123456789');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/issuer_fraud_records?charge=ch_123456789',
