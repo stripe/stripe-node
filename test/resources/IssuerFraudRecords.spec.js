@@ -5,7 +5,7 @@ var expect = require('chai').expect;
 
 describe('IssuerFraudRecord Resource', function() {
   describe('retrieve', function() {
-    it('Sends the correct request for issfr ID', function() {
+    it('Sends the correct request', function() {
       stripe.issuerFraudRecords.retrieve('issfr_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -23,15 +23,6 @@ describe('IssuerFraudRecord Resource', function() {
         method: 'GET',
         url: '/v1/issuer_fraud_records',
         data: {},
-        headers: {},
-      });
-    });
-    it('Sends the correct request for charge ID', function() {
-      stripe.issuerFraudRecords.list({charge: 'ch_123456789'});
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'GET',
-        url: '/v1/issuer_fraud_records',
-        data: {charge: 'ch_123456789'},
         headers: {},
       });
     });
