@@ -515,5 +515,11 @@ describe('Flows', function() {
         done();
       });
     });
+
+    it('Exports errors as types', function() {
+      expect(new stripe.errors.StripeInvalidRequestError({
+        message: 'error'
+      }).type).to.equal('StripeInvalidRequestError');
+    });
   });
 });
