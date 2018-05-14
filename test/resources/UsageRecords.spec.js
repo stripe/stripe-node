@@ -6,8 +6,7 @@ var expect = require('chai').expect;
 describe('UsageRecords Resource', function() {
   describe('create', function() {
     it('Sends the correct request', function() {
-      stripe.usageRecords.create({
-        subscription_item: 'si_123',
+      stripe.usageRecords.create('si_123', {
         quantity: 123,
         timestamp: 123321,
         action: 'increment'
@@ -26,8 +25,7 @@ describe('UsageRecords Resource', function() {
     });
 
     it('Includes any options that were provided', function(done) {
-      stripe.usageRecords.create({
-        subscription_item: 'si_123',
+      stripe.usageRecords.create('si_123', {
         quantity: 123,
         timestamp: 123321,
         action: 'increment'
@@ -52,8 +50,7 @@ describe('UsageRecords Resource', function() {
     });
 
     it('Calls a given callback', function(done) {
-      stripe.usageRecords.create({
-        subscription_item: 'si_123',
+      stripe.usageRecords.create('si_123', {
         quantity: 123,
         timestamp: 123321,
         action: 'increment'
