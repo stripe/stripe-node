@@ -153,10 +153,10 @@ describe('Flows', function() {
 
     describe('Plan name variations', function() {
       [
-        '34535 355453' + testUtils.getRandomString(),
-        'TEST 239291' + testUtils.getRandomString(),
+        '34535_355453' + testUtils.getRandomString(),
+        'TEST_239291' + testUtils.getRandomString(),
         'TEST_a-i' + testUtils.getRandomString(),
-        'foobarbazteston###etwothree' + testUtils.getRandomString(),
+        'foobarbazteston___etwothree' + testUtils.getRandomString(),
       ].forEach(function(planID) {
         it('Allows me to create and retrieve plan with ID: ' + planID, function() {
           return expect(
