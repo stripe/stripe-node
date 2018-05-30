@@ -106,26 +106,30 @@ describe('utils', function() {
       expect(utils.getDataFromArgs(args)).to.deep.equal({});
       expect(args.length).to.equal(2);
     });
-    it('ignores a hash with only options', function() {
+    it('ignores a hash with only options', function(done) {
       var args = [{api_key: 'foo'}];
 
-      handleConsoleWarns(function() {
+      handleWarnings(function() {
         expect(utils.getDataFromArgs(args)).to.deep.equal({});
         expect(args.length).to.equal(1);
+
+        done();
       }, function(message) {
         throw new Error('Should not have warned, but did: ' + message);
       });
     });
-    it('warns if the hash contains both data and options', function() {
+    it('warns if the hash contains both data and options', function(done) {
       var args = [{foo: 'bar', api_key: 'foo', idempotency_key: 'baz'}];
 
-      handleConsoleWarns(function() {
+      handleWarnings(function() {
         utils.getDataFromArgs(args);
       }, function(message) {
         expect(message).to.equal(
           'Stripe: Options found in arguments (api_key, idempotency_key).' +
             ' Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options.'
         );
+
+        done();
       });
     });
     it('finds the data', function() {
@@ -212,6 +216,25 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(0);
     });
+    it('warns if the hash contains something that does not belong', function(done) {
+      var args = [{foo: 'bar'}, {
+        api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        idempotency_key: 'foo',
+        stripe_version: '2010-01-10',
+        fishsticks: true,
+        custard: true,
+      },];
+
+      handleWarnings(function() {
+        utils.getOptionsFromArgs(args);
+      }, function(message) {
+        expect(message).to.equal(
+          'Stripe: Invalid options found (fishsticks, custard); ignoring.'
+        );
+
+        done();
+      });
+    });
   });
 
   describe('arrayToObject', function() {
@@ -262,15 +285,30 @@ describe('utils', function() {
 });
 
 /* eslint-disable no-console */
-function handleConsoleWarns(doWithShimmedConsoleWarn, onWarn) {
-  // Shim `console.warn`
-  var _warn = console.warn;
+function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
+  /* eslint-disable no-console */
+  if (typeof process.emitWarning !== 'function') {
+    // Shim `console.warn`
+    var _warn = console.warn;
+    console.warn = onWarn;
 
-  console.warn = onWarn;
+    doWithShimmedConsoleWarn();
 
-  doWithShimmedConsoleWarn();
+    // Un-shim `console.warn`,
+    console.warn = _warn;
+  } else {
+    /* eslint-disable no-inner-declarations */
+    function onProcessWarn(warning) {
+      onWarn(warning.name + ': ' + warning.message);
+    }
 
-  // Un-shim `console.warn`
-  console.warn = _warn;
+    process.on('warning', onProcessWarn);
+
+    doWithShimmedConsoleWarn();
+
+    process.nextTick(function() {
+      process.removeListener('warning', onProcessWarn);
+    })
+  }
 }
 /* eslint-enable no-console */
