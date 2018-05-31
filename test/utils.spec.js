@@ -296,6 +296,8 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
 
     // Un-shim `console.warn`,
     console.warn = _warn;
+
+    /* eslint-enable no-console */
   } else {
     /* eslint-disable no-inner-declarations */
     function onProcessWarn(warning) {
@@ -311,4 +313,3 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
     })
   }
 }
-/* eslint-enable no-console */
