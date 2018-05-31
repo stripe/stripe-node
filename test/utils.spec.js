@@ -284,10 +284,10 @@ describe('utils', function() {
   });
 });
 
-/* eslint-disable no-console */
 function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
-  /* eslint-disable no-console */
   if (typeof process.emitWarning !== 'function') {
+    /* eslint-disable no-console */
+
     // Shim `console.warn`
     var _warn = console.warn;
     console.warn = onWarn;
@@ -299,8 +299,7 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
 
     /* eslint-enable no-console */
   } else {
-    /* eslint-disable no-inner-declarations */
-    function onProcessWarn(warning) {
+    function onProcessWarn(warning) { /* eslint-disable-line no-inner-declarations */
       onWarn(warning.name + ': ' + warning.message);
     }
 
