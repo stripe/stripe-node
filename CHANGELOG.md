@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.1.0 - 2018-06-01
+* [#465](https://github.com/stripe/stripe-node/pull/465) Warn when unknown options are passed to functions
+
 ## 6.0.0 - 2018-05-14
 * [#453](https://github.com/stripe/stripe-node/pull/453) Re-implement usage record's `create` so that it correctly passes all arguments (this is a very minor breaking change)
 
