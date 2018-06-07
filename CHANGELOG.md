@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.1.1 - 2018-06-07
+* [#469](https://github.com/stripe/stripe-node/pull/469) Add `.npmignore` to create a lighter package (minus examples and tests)
+
 ## 6.1.0 - 2018-06-01
 * [#465](https://github.com/stripe/stripe-node/pull/465) Warn when unknown options are passed to functions
 
