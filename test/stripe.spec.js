@@ -96,7 +96,7 @@ describe('Stripe Module', function() {
     });
 
     describe('when given at least a `name`', function() {
-      it('should set name, version and url of stripe._appInfo', function() {
+      it('should set name, partner ID, url, and version of stripe._appInfo', function() {
         stripe.setAppInfo({
           name: 'MyAwesomeApp',
         });
@@ -121,17 +121,29 @@ describe('Stripe Module', function() {
           name: 'MyAwesomeApp',
           url: 'https://myawesomeapp.info',
         });
+
+        stripe.setAppInfo({
+          name: 'MyAwesomeApp',
+          partner_id: 'partner_1234',
+        });
+        expect(stripe._appInfo).to.eql({
+          name: 'MyAwesomeApp',
+          partner_id: 'partner_1234',
+        });
+
       });
 
       it('should ignore any invalid properties', function() {
         stripe.setAppInfo({
           name: 'MyAwesomeApp',
+          partner_id: 'partner_1234',
           version: '1.2.345',
           url: 'https://myawesomeapp.info',
           countOfRadishes: 512,
         });
         expect(stripe._appInfo).to.eql({
           name: 'MyAwesomeApp',
+          partner_id: 'partner_1234',
           version: '1.2.345',
           url: 'https://myawesomeapp.info',
         });
