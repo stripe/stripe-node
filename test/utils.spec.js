@@ -54,6 +54,15 @@ describe('utils', function() {
       }))).to.equal('a[][b]=c&a[][b]=d');
     })
 
+    it('Handles indexed arrays', function() {
+      expect(decodeURI(utils.stringifyRequestData({
+        a: {
+          0: 'c',
+          1: 'd',
+        },
+      }))).to.equal('a[0]=c&a[1]=d');
+    })
+
     it('Creates a string from an object, handling shallow nested objects', function() {
       expect(utils.stringifyRequestData({
         test: 1,
@@ -234,6 +243,26 @@ describe('utils', function() {
 
         done();
       });
+    });
+  });
+
+  describe('encodeParamWithIntegerIndexes', function() {
+    it('handles param not existing in data', function() {
+      var data = {'someParam': ['foo']};
+      expect(utils.encodeParamWithIntegerIndexes('anotherParam', data)).to.deep.equal(data);
+    });
+
+    it('encodes just the specified param with integer indexes', function() {
+      var data = {'paramToEncode': ['value1', 'value2'], 'anotherParam': ['foo']};
+      var expectedData = {'paramToEncode': {'0': 'value1', '1': 'value2'}, 'anotherParam': ['foo']};
+      expect(utils.encodeParamWithIntegerIndexes('paramToEncode', data)).to.deep.equal(expectedData);
+    });
+
+    it('encodes just the specified param with integer indexes when used via partial application', function() {
+      var data = {'paramToEncode': ['value1', 'value2'], 'anotherParam': ['foo']};
+      var expectedData = {'paramToEncode': {'0': 'value1', '1': 'value2'}, 'anotherParam': ['foo']};
+      var partial = utils.encodeParamWithIntegerIndexes.bind(null, 'paramToEncode');
+      expect(partial(data)).to.deep.equal(expectedData);
     });
   });
 
