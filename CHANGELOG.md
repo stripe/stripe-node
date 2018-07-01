@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.2.0 - 2018-06-28
+* [#473](https://github.com/stripe/stripe-node/pull/473) Add support for payment intents
+
 ## 6.1.1 - 2018-06-07
 * [#469](https://github.com/stripe/stripe-node/pull/469) Add `.npmignore` to create a lighter package (minus examples and tests)
 
