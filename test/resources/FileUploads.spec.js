@@ -90,11 +90,10 @@ describe('File Uploads Resource', function() {
           name: 'minimal.pdf',
           type: 'application/octet-stream',
         },
-      })
-        .then(function() {
-          expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
-          expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
-        });
+      }).then(function() {
+        expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
+        expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
+      });
     });
 
     it('Streams a file and sends the correct file upload request [with specified auth]', function() {
@@ -108,12 +107,11 @@ describe('File Uploads Resource', function() {
           name: 'minimal.pdf',
           type: 'application/octet-stream',
         },
-      }, TEST_AUTH_KEY)
-        .then(function() {
-          expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
-          expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
-          expect(stripe.LAST_REQUEST).to.deep.property('auth', TEST_AUTH_KEY);
-        });
+      }, TEST_AUTH_KEY).then(function() {
+        expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
+        expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
+        expect(stripe.LAST_REQUEST).to.deep.property('auth', TEST_AUTH_KEY);
+      });
     });
   });
 });
