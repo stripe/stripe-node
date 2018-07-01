@@ -6,7 +6,8 @@ var stripe = require('../lib/stripe')(
   testUtils.getUserStripeKey(),
   'latest'
 );
-
+var fs = require('fs');
+var path = require('path');
 var expect = chai.expect;
 
 var CUSTOMER_DETAILS = {
@@ -520,6 +521,26 @@ describe('Flows', function() {
       expect(new stripe.errors.StripeInvalidRequestError({
         message: 'error'
       }).type).to.equal('StripeInvalidRequestError');
+    });
+  });
+
+  describe('FileUpload', function() {
+    it('Allows you to upload a file as a stream', function() {
+      var testFilename = path.join(__dirname, 'resources/data/minimal.pdf');
+      var f = fs.createReadStream(testFilename);
+
+      return expect(
+        stripe.fileUploads.create({
+          purpose: 'dispute_evidence',
+          file: {
+            data: f,
+            name: 'minimal.pdf',
+            type: 'application/octet-stream',
+          },
+        }).then(null, function(error) {
+          return error;
+        })
+      ).to.eventually.have.nested.property('size', 739);
     });
   });
 });
