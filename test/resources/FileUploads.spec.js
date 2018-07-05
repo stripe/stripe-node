@@ -83,7 +83,7 @@ describe('File Uploads Resource', function() {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.createReadStream(testFilename);
 
-      stripe.fileUploads.create({
+      return stripe.fileUploads.create({
         purpose: 'dispute_evidence',
         file: {
           data: f,
@@ -100,7 +100,7 @@ describe('File Uploads Resource', function() {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.createReadStream(testFilename);
 
-      stripe.fileUploads.create({
+      return stripe.fileUploads.create({
         purpose: 'dispute_evidence',
         file: {
           data: f,
