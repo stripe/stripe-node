@@ -77,7 +77,7 @@ describe('Invoices Resource', function() {
       });
     });
 
-    describe('With a options object that includes `subscription_items`', function() {
+    describe('With an options object that includes `subscription_items`', function() {
       it('Sends the correct request', function() {
         stripe.invoices.retrieveUpcoming('customerId1', {
           subscription_items: [
@@ -92,6 +92,41 @@ describe('Invoices Resource', function() {
             'subscription_items%5B0%5D%5Bplan%5D=potato&subscription_items%5B1%5D%5Bplan%5D=rutabaga',
           headers: {},
           data: {},
+        });
+      });
+    });
+
+    describe('With an options object that includes `subscription_items` in addition to a subscription ID', function() {
+      it('Sends the correct request', function() {
+        stripe.invoices.retrieveUpcoming('customerId1', 'subscriptionID1',
+          {
+            subscription_items: [
+              {plan: 'potato'},
+              {plan: 'rutabaga'},
+              {id: 'SOME_ID', deleted: true},
+            ],
+            subscription_prorate: true,
+          });
+
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/invoices/upcoming?customer=customerId1&subscription=subscriptionID1',
+          headers: {},
+          data: {
+            subscription_items: {
+              0: {
+                plan: 'potato',
+              },
+              1: {
+                plan: 'rutabaga',
+              },
+              2: {
+                deleted: true,
+                id: 'SOME_ID',
+              },
+            },
+            subscription_prorate: true,
+          },
         });
       });
     });

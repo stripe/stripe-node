@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.2.1 - 2018-07-03
+* [#475](https://github.com/stripe/stripe-node/pull/475) Fixes array encoding of subscription items for the upcoming invoices endpoint.
+
 ## 6.2.0 - 2018-06-28
 * [#473](https://github.com/stripe/stripe-node/pull/473) Add support for payment intents
 
