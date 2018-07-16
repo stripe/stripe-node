@@ -8,6 +8,7 @@ var stripe = require('../lib/stripe')(
 );
 var fs = require('fs');
 var path = require('path');
+var stream = require('stream');
 var expect = chai.expect;
 
 var CUSTOMER_DETAILS = {
@@ -541,6 +542,49 @@ describe('Flows', function() {
           return error;
         })
       ).to.eventually.have.nested.property('size', 739);
+    });
+
+    it('Allows you to upload a file synchronously', function() {
+      var testFilename = path.join(__dirname, 'resources/data/minimal.pdf');
+      var f = fs.readFileSync(testFilename);
+
+      return expect(
+        stripe.fileUploads.create({
+          purpose: 'dispute_evidence',
+          file: {
+            data: f,
+            name: 'minimal.pdf',
+            type: 'application/octet-stream',
+          },
+        }).then(null, function(error) {
+          return error;
+        })
+      ).to.eventually.have.nested.property('size', 739);
+    });
+
+    it('Surfaces stream errors correctly', function(done) {
+      var mockedStream = new stream.Readable();
+      mockedStream._read = function() {};
+
+      var fakeError = new Error('I am a fake error');
+
+      process.nextTick(function() {
+        mockedStream.emit('error', fakeError);
+      });
+
+      stripe.fileUploads.create({
+        purpose: 'dispute_evidence',
+        file: {
+          data: mockedStream,
+          name: 'minimal.pdf',
+          type: 'application/octet-stream',
+        },
+      }).catch(function(error) {
+        expect(error.message).to.equal('An error occurred while attempting to process the file for upload.');
+        expect(error.detail).to.equal(fakeError);
+
+        done();
+      });
     });
   });
 });
