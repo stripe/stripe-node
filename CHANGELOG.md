@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.3.0 - 2018-07-18
+* [#471](https://github.com/stripe/stripe-node/pull/471) Add support for streams in file uploads
+
 ## 6.2.1 - 2018-07-03
 * [#475](https://github.com/stripe/stripe-node/pull/475) Fixes array encoding of subscription items for the upcoming invoices endpoint.
 
