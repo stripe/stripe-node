@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.4.0 - 2018-07-26
+* [#481](https://github.com/stripe/stripe-node/pull/481) Add support for Stripe Issuing
+
 ## 6.3.0 - 2018-07-18
 * [#471](https://github.com/stripe/stripe-node/pull/471) Add support for streams in file uploads
 
