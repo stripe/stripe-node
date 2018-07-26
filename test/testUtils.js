@@ -6,6 +6,8 @@ require('mocha');
 // Ensure we are using the 'as promised' libs before any tests are run:
 require('chai').use(require('chai-as-promised'));
 
+var ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
+
 var utils = module.exports = {
 
   getUserStripeKey: function() {
@@ -24,24 +26,35 @@ var utils = module.exports = {
     stripeInstance.REQUESTS = [];
 
     for (var i in stripeInstance) {
-      if (stripeInstance[i] instanceof stripe.StripeResource) {
-        // Override each _request method so we can make the params
-        // available to consuming tests (revealing requests made on
-        // REQUESTS and LAST_REQUEST):
-        stripeInstance[i]._request = function(method, url, data, auth, options, cb) {
-          var req = stripeInstance.LAST_REQUEST = {
-            method: method,
-            url: url,
-            data: data,
-            headers: options.headers || {},
-          };
-          if (auth) {
-            req.auth = auth;
-          }
-          stripeInstance.REQUESTS.push(req);
-          cb.call(this, null, {});
-        };
+      makeInstanceSpyable(stripeInstance, stripeInstance[i]);
+    }
+
+    function makeInstanceSpyable(stripeInstance, thisInstance) {
+      if (thisInstance instanceof stripe.StripeResource) {
+        patchRequest(stripeInstance, thisInstance);
+      } else if (thisInstance instanceof ResourceNamespace) {
+        var namespace = thisInstance;
+
+        for (var j in namespace) {
+          makeInstanceSpyable(stripeInstance, namespace[j]);
+        }
       }
+    }
+
+    function patchRequest(stripeInstance, instance) {
+      instance._request = function(method, url, data, auth, options, cb) {
+        var req = stripeInstance.LAST_REQUEST = {
+          method: method,
+          url: url,
+          data: data,
+          headers: options.headers || {},
+        };
+        if (auth) {
+          req.auth = auth;
+        }
+        stripeInstance.REQUESTS.push(req);
+        cb.call(this, null, {});
+      };
     }
 
     return stripeInstance;
