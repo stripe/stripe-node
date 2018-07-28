@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.5.0 - 2018-07-28
+* [#482](https://github.com/stripe/stripe-node/pull/482) Add support for Sigma scheduled query runs
+
 ## 6.4.0 - 2018-07-26
 * [#481](https://github.com/stripe/stripe-node/pull/481) Add support for Stripe Issuing
 
