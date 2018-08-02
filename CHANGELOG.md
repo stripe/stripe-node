@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.6.0 - 2018-08-02
+* [#483](https://github.com/stripe/stripe-node/pull/483) Add support for file links
+
 ## 6.5.0 - 2018-07-28
 * [#482](https://github.com/stripe/stripe-node/pull/482) Add support for Sigma scheduled query runs
 
