@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.7.0 - 2018-08-03
+* [#485](https://github.com/stripe/stripe-node/pull/485) Add support for `cancel` on topups
+
 ## 6.6.0 - 2018-08-02
 * [#483](https://github.com/stripe/stripe-node/pull/483) Add support for file links
 
