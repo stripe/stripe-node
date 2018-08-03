@@ -52,6 +52,18 @@ describe('Topup Resource', function() {
     });
   });
 
+  describe('cancel', function() {
+    it('Sends the correct request', function() {
+      stripe.topups.cancel('tu_123');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/topups/tu_123/cancel',
+        headers: {},
+        data: {},
+      });
+    });
+  });
+
   describe('update', function() {
     it('Sends the correct request', function() {
       stripe.topups.update('tu_123', {metadata: {'key': 'value'}});
