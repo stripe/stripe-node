@@ -16,28 +16,6 @@ describe('BitcoinReceivers Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
-      stripe.bitcoinReceivers.create({
-        amount: 200,
-        currency: 'usd',
-        description: 'some details',
-        email: 'do+fill_now@stripe.com',
-      });
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'POST',
-        url: '/v1/bitcoin/receivers',
-        headers: {},
-        data: {
-          amount: 200,
-          currency: 'usd',
-          description: 'some details',
-          email: 'do+fill_now@stripe.com',
-        },
-      });
-    });
-  });
-
   describe('list', function() {
     it('Sends the correct request', function() {
       stripe.bitcoinReceivers.list();
@@ -46,21 +24,6 @@ describe('BitcoinReceivers Resource', function() {
         url: '/v1/bitcoin/receivers',
         headers: {},
         data: {},
-      });
-    });
-  });
-
-  describe('update', function() {
-    it('Sends the correct request to the top-level API', function() {
-      stripe.bitcoinReceivers.update(
-        'btcrcv_123',
-        {metadata: {key: 'value'}}
-      );
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'POST',
-        url: '/v1/bitcoin/receivers/btcrcv_123',
-        data: {metadata: {key: 'value'}},
-        headers: {},
       });
     });
   });

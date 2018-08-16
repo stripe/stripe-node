@@ -42,34 +42,6 @@ describe('Charge Resource', function() {
         headers: {},
       });
     });
-
-    it('Sends the correct request for Bitcoin', function() {
-      var receiver = stripe.bitcoinReceivers.create({
-        amount: 100,
-        currency: 'usd',
-        description: 'some details',
-        email: 'do+fill_now@stripe.com',
-      })
-
-      stripe.charges.create({
-        amount: receiver.amount,
-        currency: receiver.currency,
-        description: receiver.description,
-        source: receiver.id,
-      });
-
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'POST',
-        url: '/v1/charges',
-        headers: {},
-        data: {
-          amount: receiver.amount,
-          currency: receiver.currency,
-          description: receiver.description,
-          source: receiver.id,
-        },
-      })
-    });
   });
 
   describe('list', function() {
