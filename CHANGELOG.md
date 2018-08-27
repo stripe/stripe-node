@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.8.0 - 2018-08-27
+* [#488](https://github.com/stripe/stripe-node/pull/488) Remove support for `BitcoinReceivers` write-actions
+
 ## 6.7.0 - 2018-08-03
 * [#485](https://github.com/stripe/stripe-node/pull/485) Add support for `cancel` on topups
 
