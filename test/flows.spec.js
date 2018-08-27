@@ -121,7 +121,7 @@ describe('Flows', function() {
       });
     });
 
-    it('Allows me to: subscribe then cancel with `at_period_end` defined', function() {
+    it('Allows me to: subscribe then update with `cancel_at_period_end` defined', function() {
       return expect(
         Promise.all([
           stripe.plans.create({
@@ -144,10 +144,7 @@ describe('Flows', function() {
 
           return stripe.customers.updateSubscription(customer.id, {
             plan: plan.id,
-          });
-        }).then(function(subscription) {
-          return stripe.customers.cancelSubscription(subscription.customer, {
-            at_period_end: true,
+            cancel_at_period_end: true,
           });
         })
       ).to.eventually.have.property('cancel_at_period_end', true);
