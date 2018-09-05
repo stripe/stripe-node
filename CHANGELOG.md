@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 6.9.0 - 2018-09-05
+* [#493](https://github.com/stripe/stripe-node/pull/493) Add support for reporting resources
+* [#491](https://github.com/stripe/stripe-node/pull/491) Add support for usage record summaries
+
 ## 6.8.0 - 2018-08-27
 * [#488](https://github.com/stripe/stripe-node/pull/488) Remove support for `BitcoinReceivers` write-actions
 
