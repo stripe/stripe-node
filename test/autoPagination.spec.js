@@ -149,4 +149,51 @@ describe('auto pagination', function() {
       }, []));
     });
   });
+
+  describe('autoPagingToArray', function() {
+    it('returns a promise of an array', function() {
+      return expect(new Promise(function(resolve, reject) {
+        stripe.customers.list({limit: 3}).autoPagingToArray({max: LIMIT})
+          .then(function (customers) {
+            return customers.map(function(customer) { return customer.id; });
+          })
+          .then(resolve)
+          .catch(reject);
+      })).to.eventually.deep.equal(realCustomerIds);
+    });
+
+    it('accepts an onDone callback, passing an array', function() {
+      return expect(new Promise(function(resolve, reject) {
+        stripe.customers.list({limit: 3}).autoPagingToArray({max: LIMIT}, function (err, customers) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(customers.map(function(customer) { return customer.id; }));
+          }
+        });
+      })).to.eventually.deep.equal(realCustomerIds);
+    });
+
+    it('enforces a `max` arg', function() {
+      return expect(new Promise(function(resolve, reject) {
+        try {
+          stripe.customers.list({limit: 3}).autoPagingToArray();
+          reject(Error('Should have thrown.'));
+        } catch (err) {
+          resolve(err.message);
+        }
+      })).to.eventually.equal('You must pass a `max` option to autoPagingToArray, eg; `autoPagingToArray({max: 1000});`.');
+    });
+
+    it('caps the `max` arg to a reasonable ceiling', function() {
+      return expect(new Promise(function(resolve, reject) {
+        try {
+          stripe.customers.list({limit: 3}).autoPagingToArray({max: 1000000});
+          reject(Error('Should have thrown.'));
+        } catch (err) {
+          resolve(err.message);
+        }
+      })).to.eventually.equal('You cannot specify a max of more than 10,000 items to fetch in `autoPagingToArray`; use `autoPagingEach` to iterate through longer lists.');
+    });
+  });
 });
