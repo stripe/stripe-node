@@ -1,7 +1,7 @@
 'use strict';
 
 var resources = require('../../lib/stripe').resources;
-var stripe = require('../testUtils').getSpyableStripe();
+var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
 var CHARGE_TEST_ID = 'chargeIdTest999';
