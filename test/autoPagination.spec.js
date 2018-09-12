@@ -11,19 +11,33 @@ var stripe = require('../lib/stripe')(
 var expect = require('chai').expect;
 
 var LIMIT = 7;
+var TOTAL_OBJECTS = 8;
 
 describe('auto pagination', function() {
   this.timeout(20000);
 
+  var email = 'test.' + Date.now() + '@example.com';
   var realCustomerIds;
-  beforeEach(function() {
+  before(function() {
     return new Promise(function(resolve) {
-      stripe.customers.list({limit: LIMIT}).then(function(customers) {
-        realCustomerIds = customers.data.map(function(item) {
-          return item.id;
-        });
-        resolve();
-      });
+      var createReqs = [];
+      for (var i = 0; i < TOTAL_OBJECTS; i++) {
+        createReqs.push(stripe.customers.create({email: email}));
+      }
+      return Promise.all(createReqs).then(function() {
+        // re-fetch to ensure correct order
+        return stripe.customers.list({email: email}).then(function(customers) {
+          realCustomerIds = customers.data.map(function(customer) {return customer.id});
+        })
+      }).then(resolve);
+    });
+  });
+
+  after(function() {
+    return new Promise(function(resolve) {
+      Promise.all(realCustomerIds.map(function(customerId) {
+        return stripe.customers.del(customerId);
+      })).then(resolve);
     });
   });
 
@@ -40,11 +54,16 @@ describe('auto pagination', function() {
           }
         }
         function onDone(err) {
-          resolve(customerIds);
+          if (err) {
+            reject(err);
+          } else {
+            resolve(customerIds);
+          }
         }
 
-        stripe.customers.list({limit: 3}).autoPagingEach(onCustomer, onDone);
-      })).to.eventually.deep.equal(realCustomerIds);
+        stripe.customers.list({limit: 3, email: email})
+          .autoPagingEach(onCustomer, onDone);
+      })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
     it('lets you ignore the second arg and `return false` to break', function() {
@@ -57,11 +76,109 @@ describe('auto pagination', function() {
           }
         }
         function onDone(err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(customerIds);
+          }
+        }
+
+        stripe.customers.list({limit: 3, email: email})
+          .autoPagingEach(onCustomer, onDone);
+      })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
+    });
+
+    it('can use a promise instead of a callback for onDone', function() {
+      return expect(new Promise(function(resolve, reject) {
+        var customerIds = [];
+        function onCustomer(customer) {
+          customerIds.push(customer.id);
+        }
+        function onDone() {
           resolve(customerIds);
         }
 
-        stripe.customers.list({limit: 3}).autoPagingEach(onCustomer, onDone);
+        stripe.customers.list({limit: 3, email: email})
+          .autoPagingEach(onCustomer)
+          .then(onDone)
+          .catch(reject);
       })).to.eventually.deep.equal(realCustomerIds);
+    });
+
+    it('handles the end of a list properly when the last page is full', function() {
+      return expect(new Promise(function(resolve, reject) {
+        var customerIds = [];
+        return stripe.customers.list({email: email, limit: TOTAL_OBJECTS / 2})
+          .autoPagingEach(function(customer) { customerIds.push(customer.id); })
+          .catch(reject)
+          .then(function() {
+            resolve(customerIds);
+          });
+      })).to.eventually.deep.equal(realCustomerIds);
+    });
+
+    it('handles the end of a list properly when the last page is not full', function() {
+      return expect(new Promise(function(resolve, reject) {
+        var customerIds = [];
+        return stripe.customers.list({email: email, limit: TOTAL_OBJECTS - 2})
+          .autoPagingEach(function(customer) { customerIds.push(customer.id); })
+          .catch(reject)
+          .then(function() {
+            resolve(customerIds);
+          });
+      })).to.eventually.deep.equal(realCustomerIds);
+    });
+
+    it('handles a list which is shorter than the page size properly', function() {
+      return expect(new Promise(function(resolve, reject) {
+        var customerIds = [];
+        return stripe.customers.list({email: email, limit: TOTAL_OBJECTS + 2})
+          .autoPagingEach(function(customer) { customerIds.push(customer.id); })
+          .catch(reject)
+          .then(function() {
+            resolve(customerIds);
+          });
+      })).to.eventually.deep.equal(realCustomerIds);
+    });
+
+    it('handles errors after the first page correctly (callback)', function() {
+      return expect(new Promise(function(resolve, reject) {
+        var i = 0;
+        function onCustomer() {
+          i += 1;
+          if (i > 4) {
+            throw Error('Simulated error');
+          }
+        }
+        return stripe.customers.list({email: email, limit: 3})
+          .autoPagingEach(onCustomer, function(err) {
+            if (err) {
+              resolve(err.message);
+            } else {
+              reject(Error('Expected an error, did not get one.'));
+            }
+          });
+      })).to.eventually.deep.equal('Simulated error');
+    });
+
+    it('handles errors after the first page correctly (promise)', function() {
+      return expect(new Promise(function(resolve, reject) {
+        var i = 0;
+        function onCustomer() {
+          i += 1;
+          if (i > 4) {
+            throw Error('Simulated error');
+          }
+        }
+        return stripe.customers.list({email: email, limit: 3})
+          .autoPagingEach(onCustomer)
+          .then(function() {
+            reject(Error('Expected an error, did not get one.'));
+          })
+          .catch(function(err) {
+            resolve(err.message);
+          });
+      })).to.eventually.deep.equal('Simulated error');
     });
   });
 
@@ -72,12 +189,23 @@ describe('auto pagination', function() {
       // so we must conditionally require it.
       var forAwaitUntil = require('../testUtils/forAwait.node10').forAwaitUntil;
 
-      it('works with `for await` when that feature exists', function() {
+      it('works with `for await` when that feature exists (user break)', function() {
         return expect(new Promise(function(resolve, reject) {
-          forAwaitUntil(stripe.customers.list({limit: 3}).autoPagingEach(), LIMIT).then(function(customers) {
-            expect(stripe.REQUESTS.length).to.equal(3);
-            resolve(customers.map(function(customer) { return customer.id; }));
-          });
+          forAwaitUntil(stripe.customers.list({limit: 3, email: email}).autoPagingEach(), LIMIT)
+            .then(function(customers) {
+              resolve(customers.map(function(customer) { return customer.id; }));
+            })
+            .catch(reject)
+        })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
+      });
+
+      it('works with `for await` when that feature exists (end of list)', function() {
+        return expect(new Promise(function(resolve, reject) {
+          forAwaitUntil(stripe.customers.list({limit: 3, email: email}).autoPagingEach(), TOTAL_OBJECTS + 1)
+            .then(function(customers) {
+              resolve(customers.map(function(customer) { return customer.id; }));
+            })
+            .catch(reject);
         })).to.eventually.deep.equal(realCustomerIds);
       });
     }
@@ -88,16 +216,36 @@ describe('auto pagination', function() {
 
       it('works with `await` and a while loop when await exists', function() {
         return expect(new Promise(function(resolve, reject) {
-          awaitUntil(stripe.customers.list({limit: 3}).autoPagingEach(), LIMIT).then(function(customers) {
-            resolve(customers.map(function(customer) { return customer.id; }));
-          });
-        })).to.eventually.deep.equal(realCustomerIds);
+          awaitUntil(stripe.customers.list({limit: 3, email: email}).autoPagingEach(), LIMIT)
+            .then(function(customers) {
+              resolve(customers.map(function(customer) { return customer.id; }));
+            })
+            .catch(reject);
+        })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
       });
     }
 
+    it('returns an empty object from .return() so that `break;` works in for-await', function() {
+      return expect(new Promise(function(resolve, reject) {
+        var iter = stripe.customers.list({limit: 3, email: email})
+          .autoPagingEach();
+
+        var customerIds = [];
+        function handleIter(result) {
+          customerIds.push(result.value.id);
+          expect(iter.return()).to.deep.equal({});
+        }
+
+        iter.next().then(handleIter).then(function() {
+          resolve(customerIds);
+        }).catch(reject);
+      })).to.eventually.deep.equal(realCustomerIds.slice(0, 1));
+    });
+
     it('works when you call it sequentially', function() {
       return expect(new Promise(function(resolve, reject) {
-        var iter = stripe.customers.list({limit: 3}).autoPagingEach();
+        var iter = stripe.customers.list({limit: 3, email: email})
+          .autoPagingEach();
 
         var customerIds = [];
         function handleIter(result) {
@@ -108,13 +256,14 @@ describe('auto pagination', function() {
         }
         iter.next().then(handleIter).then(function() {
           resolve(customerIds);
-        });
-      })).to.eventually.deep.equal(realCustomerIds);
+        }).catch(reject);
+      })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
     it('gives you the same result each time when you call it multiple times in parallel', function() {
       return expect(new Promise(function(resolve, reject) {
-        var iter = stripe.customers.list({limit: 3}).autoPagingEach();
+        var iter = stripe.customers.list({limit: 3, email: email})
+          .autoPagingEach();
 
         var customerIds = []
         function handleIter(result) {
@@ -141,7 +290,7 @@ describe('auto pagination', function() {
           })
         ]).then(function() {
           resolve(customerIds);
-        });
+        }).catch(reject);
       })).to.eventually.deep.equal(realCustomerIds.slice(0, 4).reduce(function(acc, x) {
         acc.push(x);
         acc.push(x);
@@ -153,31 +302,36 @@ describe('auto pagination', function() {
   describe('autoPagingToArray', function() {
     it('returns a promise of an array', function() {
       return expect(new Promise(function(resolve, reject) {
-        stripe.customers.list({limit: 3}).autoPagingToArray({max: LIMIT})
-          .then(function (customers) {
+        stripe.customers.list({limit: 3, email: email})
+          .autoPagingToArray({max: LIMIT})
+          .then(function(customers) {
             return customers.map(function(customer) { return customer.id; });
           })
           .then(resolve)
           .catch(reject);
-      })).to.eventually.deep.equal(realCustomerIds);
+      })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
     it('accepts an onDone callback, passing an array', function() {
       return expect(new Promise(function(resolve, reject) {
-        stripe.customers.list({limit: 3}).autoPagingToArray({max: LIMIT}, function (err, customers) {
+        function onDone(err, customers) {
           if (err) {
             reject(err);
           } else {
             resolve(customers.map(function(customer) { return customer.id; }));
           }
-        });
-      })).to.eventually.deep.equal(realCustomerIds);
+        }
+
+        stripe.customers.list({limit: 3, email: email})
+          .autoPagingToArray({max: LIMIT}, onDone);
+      })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
     it('enforces a `max` arg', function() {
       return expect(new Promise(function(resolve, reject) {
         try {
-          stripe.customers.list({limit: 3}).autoPagingToArray();
+          stripe.customers.list({limit: 3, email: email})
+            .autoPagingToArray();
           reject(Error('Should have thrown.'));
         } catch (err) {
           resolve(err.message);
@@ -188,7 +342,8 @@ describe('auto pagination', function() {
     it('caps the `max` arg to a reasonable ceiling', function() {
       return expect(new Promise(function(resolve, reject) {
         try {
-          stripe.customers.list({limit: 3}).autoPagingToArray({max: 1000000});
+          stripe.customers.list({limit: 3, email: email})
+            .autoPagingToArray({max: 1000000});
           reject(Error('Should have thrown.'));
         } catch (err) {
           resolve(err.message);
