@@ -300,6 +300,18 @@ describe('auto pagination', function() {
   });
 
   describe('autoPagingToArray', function() {
+    it('can go to the end', function() {
+      return expect(new Promise(function(resolve, reject) {
+        stripe.customers.list({limit: 3, email: email})
+          .autoPagingToArray({max: TOTAL_OBJECTS + 1})
+          .then(function(customers) {
+            return customers.map(function(customer) { return customer.id; });
+          })
+          .then(resolve)
+          .catch(reject);
+      })).to.eventually.deep.equal(realCustomerIds);
+    });
+
     it('returns a promise of an array', function() {
       return expect(new Promise(function(resolve, reject) {
         stripe.customers.list({limit: 3, email: email})
@@ -350,5 +362,77 @@ describe('auto pagination', function() {
         }
       })).to.eventually.equal('You cannot specify a max of more than 10,000 items to fetch in `autoPagingToArray`; use `autoPagingEach` to iterate through longer lists.');
     });
+  });
+
+  describe('api compat edge cases', function() {
+    it('lets you listen to the first request as its own promise, and separately each item, but only sends one request for the first page.', function() {
+      return expect(new Promise(function(resolve, reject) {
+        // Count requests: we want one for the first page (not two), and then one for the second page.
+        var reqCount = 0;
+        function onRequest() {
+          reqCount += 1;
+        }
+        stripe.on('request', onRequest);
+
+        var customerIds = [];
+        var p = stripe.customers.list({email: email, limit: 4})
+        Promise.all([
+          p,
+          p.autoPagingEach(function(customer) { customerIds.push(customer.id); }),
+        ]).then(function(results) {
+          stripe.off('request', onRequest);
+          expect(reqCount).to.equal(2); // not 3.
+
+          resolve({
+            firstReq: results[0].data.map(function(customer) { return customer.id; }),
+            paginated: customerIds,
+          });
+        }).catch(reject);
+      })).to.eventually.deep.equal({
+        firstReq: realCustomerIds.slice(0, 4),
+        paginated: realCustomerIds,
+      });
+    });
+
+    it('gives a helpful error message when you call .then without passing an `onItem` callback', function() {
+      return expect(new Promise(function(resolve, reject) {
+        try {
+          stripe.customers.list({limit: 3, email: email})
+            .autoPagingEach()
+            .then(function() {});
+          reject(Error('Should have thrown.'));
+        } catch (err) {
+          resolve(err.message);
+        }
+      })).to.eventually.equal('`autoPagingEach` does not return a promise unless you pass it an `onItem` callback; did you want `autoPagingToArray`?');
+    });
+
+    it('gives a helpful error message when you try to use an `onItem` callback _and_ an iterator', function() {
+      return expect(new Promise(function(resolve, reject) {
+        try {
+          stripe.customers.list({limit: 3, email: email})
+            .autoPagingEach(function() {})
+            .next();
+          reject(Error('Should have thrown.'));
+        } catch (err) {
+          resolve(err.message);
+        }
+      })).to.eventually.equal('`autoPagingEach` does not return an iterator when you pass it an `onItem` callback; you must choose one or the other.');
+    });
+
+    if (testUtils.envSupportsForAwait()) {
+      it('gives a helpful error message when you try to use an `onItem` callback _and_ an iterator (with async iterators)', function() {
+        return expect(new Promise(function(resolve, reject) {
+          try {
+            stripe.customers.list({limit: 3, email: email})
+              .autoPagingEach(function() {})[Symbol.asyncIterator]()
+              .next();
+            reject(Error('Should have thrown.'));
+          } catch (err) {
+            resolve(err.message);
+          }
+        })).to.eventually.equal('`autoPagingEach` does not return an iterator when you pass it an `onItem` callback; you must choose one or the other.');
+      });
+    }
   });
 });
