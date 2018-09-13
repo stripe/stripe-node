@@ -47,9 +47,10 @@ describe('auto pagination', function() {
         var customerIds = [];
         function onCustomer(customer, next) {
           customerIds.push(customer.id);
-          if (customerIds.length >= LIMIT) {
+          if (customerIds.length === LIMIT) {
             next(false);
           } else {
+            expect(customerIds.length).to.be.lessThan(LIMIT);
             next();
           }
         }
@@ -71,8 +72,10 @@ describe('auto pagination', function() {
         var customerIds = [];
         function onCustomer(customer) {
           customerIds.push(customer.id);
-          if (customerIds.length >= LIMIT) {
+          if (customerIds.length === LIMIT) {
             return false;
+          } else {
+            expect(customerIds.length).to.be.lessThan(LIMIT);
           }
         }
         function onDone(err) {
