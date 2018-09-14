@@ -306,7 +306,7 @@ describe('auto pagination', function() {
     it('can go to the end', function() {
       return expect(new Promise(function(resolve, reject) {
         stripe.customers.list({limit: 3, email: email})
-          .autoPagingToArray({max: TOTAL_OBJECTS + 1})
+          .autoPagingToArray({limit: TOTAL_OBJECTS + 1})
           .then(function(customers) {
             return customers.map(function(customer) { return customer.id; });
           })
@@ -318,7 +318,7 @@ describe('auto pagination', function() {
     it('returns a promise of an array', function() {
       return expect(new Promise(function(resolve, reject) {
         stripe.customers.list({limit: 3, email: email})
-          .autoPagingToArray({max: LIMIT})
+          .autoPagingToArray({limit: LIMIT})
           .then(function(customers) {
             return customers.map(function(customer) { return customer.id; });
           })
@@ -338,11 +338,11 @@ describe('auto pagination', function() {
         }
 
         stripe.customers.list({limit: 3, email: email})
-          .autoPagingToArray({max: LIMIT}, onDone);
+          .autoPagingToArray({limit: LIMIT}, onDone);
       })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
-    it('enforces a `max` arg', function() {
+    it('enforces a `limit` arg', function() {
       return expect(new Promise(function(resolve, reject) {
         try {
           stripe.customers.list({limit: 3, email: email})
@@ -351,19 +351,19 @@ describe('auto pagination', function() {
         } catch (err) {
           resolve(err.message);
         }
-      })).to.eventually.equal('You must pass a `max` option to autoPagingToArray, eg; `autoPagingToArray({max: 1000});`.');
+      })).to.eventually.equal('You must pass a `limit` option to autoPagingToArray, eg; `autoPagingToArray({limit: 1000});`.');
     });
 
-    it('caps the `max` arg to a reasonable ceiling', function() {
+    it('caps the `limit` arg to a reasonable ceiling', function() {
       return expect(new Promise(function(resolve, reject) {
         try {
           stripe.customers.list({limit: 3, email: email})
-            .autoPagingToArray({max: 1000000});
+            .autoPagingToArray({limit: 1000000});
           reject(Error('Should have thrown.'));
         } catch (err) {
           resolve(err.message);
         }
-      })).to.eventually.equal('You cannot specify a max of more than 10,000 items to fetch in `autoPagingToArray`; use `autoPagingEach` to iterate through longer lists.');
+      })).to.eventually.equal('You cannot specify a limit of more than 10,000 items to fetch in `autoPagingToArray`; use `autoPagingEach` to iterate through longer lists.');
     });
   });
 
