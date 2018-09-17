@@ -194,7 +194,7 @@ describe('auto pagination', function() {
 
       it('works with `for await` when that feature exists (user break)', function() {
         return expect(new Promise(function(resolve, reject) {
-          forAwaitUntil(stripe.customers.list({limit: 3, email: email}).autoPagingEach(), LIMIT)
+          forAwaitUntil(stripe.customers.list({limit: 3, email: email}), LIMIT)
             .then(function(customers) {
               resolve(customers.map(function(customer) { return customer.id; }));
             })
@@ -204,7 +204,7 @@ describe('auto pagination', function() {
 
       it('works with `for await` when that feature exists (end of list)', function() {
         return expect(new Promise(function(resolve, reject) {
-          forAwaitUntil(stripe.customers.list({limit: 3, email: email}).autoPagingEach(), TOTAL_OBJECTS + 1)
+          forAwaitUntil(stripe.customers.list({limit: 3, email: email}), TOTAL_OBJECTS + 1)
             .then(function(customers) {
               resolve(customers.map(function(customer) { return customer.id; }));
             })
@@ -219,7 +219,7 @@ describe('auto pagination', function() {
 
       it('works with `await` and a while loop when await exists', function() {
         return expect(new Promise(function(resolve, reject) {
-          awaitUntil(stripe.customers.list({limit: 3, email: email}).autoPagingEach(), LIMIT)
+          awaitUntil(stripe.customers.list({limit: 3, email: email}), LIMIT)
             .then(function(customers) {
               resolve(customers.map(function(customer) { return customer.id; }));
             })
@@ -230,8 +230,7 @@ describe('auto pagination', function() {
 
     it('returns an empty object from .return() so that `break;` works in for-await', function() {
       return expect(new Promise(function(resolve, reject) {
-        var iter = stripe.customers.list({limit: 3, email: email})
-          .autoPagingEach();
+        var iter = stripe.customers.list({limit: 3, email: email});
 
         var customerIds = [];
         function handleIter(result) {
@@ -247,8 +246,7 @@ describe('auto pagination', function() {
 
     it('works when you call it sequentially', function() {
       return expect(new Promise(function(resolve, reject) {
-        var iter = stripe.customers.list({limit: 3, email: email})
-          .autoPagingEach();
+        var iter = stripe.customers.list({limit: 3, email: email});
 
         var customerIds = [];
         function handleIter(result) {
@@ -265,8 +263,7 @@ describe('auto pagination', function() {
 
     it('gives you the same result each time when you call it multiple times in parallel', function() {
       return expect(new Promise(function(resolve, reject) {
-        var iter = stripe.customers.list({limit: 3, email: email})
-          .autoPagingEach();
+        var iter = stripe.customers.list({limit: 3, email: email});
 
         var customerIds = []
         function handleIter(result) {
@@ -396,46 +393,5 @@ describe('auto pagination', function() {
         paginated: realCustomerIds,
       });
     });
-
-    it('gives a helpful error message when you call .then without passing an `onItem` callback', function() {
-      return expect(new Promise(function(resolve, reject) {
-        try {
-          stripe.customers.list({limit: 3, email: email})
-            .autoPagingEach()
-            .then(function() {});
-          reject(Error('Should have thrown.'));
-        } catch (err) {
-          resolve(err.message);
-        }
-      })).to.eventually.equal('`autoPagingEach` does not return a promise unless you pass it an `onItem` callback; did you want `autoPagingToArray`?');
-    });
-
-    it('gives a helpful error message when you try to use an `onItem` callback _and_ an iterator', function() {
-      return expect(new Promise(function(resolve, reject) {
-        try {
-          stripe.customers.list({limit: 3, email: email})
-            .autoPagingEach(function() {})
-            .next();
-          reject(Error('Should have thrown.'));
-        } catch (err) {
-          resolve(err.message);
-        }
-      })).to.eventually.equal('`autoPagingEach` does not return an iterator when you pass it an `onItem` callback; you must choose one or the other.');
-    });
-
-    if (testUtils.envSupportsForAwait()) {
-      it('gives a helpful error message when you try to use an `onItem` callback _and_ an iterator (with async iterators)', function() {
-        return expect(new Promise(function(resolve, reject) {
-          try {
-            stripe.customers.list({limit: 3, email: email})
-              .autoPagingEach(function() {})[Symbol.asyncIterator]()
-              .next();
-            reject(Error('Should have thrown.'));
-          } catch (err) {
-            resolve(err.message);
-          }
-        })).to.eventually.equal('`autoPagingEach` does not return an iterator when you pass it an `onItem` callback; you must choose one or the other.');
-      });
-    }
   });
 });
