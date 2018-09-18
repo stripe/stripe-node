@@ -1,6 +1,6 @@
 'use strict';
 
-var testUtils = require('./testUtils');
+var testUtils = require('../testUtils');
 var chai = require('chai');
 var stripe = require('../lib/stripe')(
   testUtils.getUserStripeKey(),

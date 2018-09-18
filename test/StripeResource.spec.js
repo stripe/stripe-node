@@ -1,8 +1,8 @@
 'use strict';
 
-require('./testUtils');
+require('../testUtils');
 
-var stripe = require('./testUtils').getSpyableStripe();
+var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
 describe('StripeResource', function() {

@@ -1,6 +1,6 @@
 'use strict';
 
-require('./testUtils');
+require('../testUtils');
 
 var Error = require('../lib/Error');
 var expect = require('chai').expect;

@@ -1,6 +1,6 @@
 'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
+var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
 describe('Refund Resource', function() {

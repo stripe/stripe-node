@@ -142,4 +142,17 @@ var utils = module.exports = {
     return Math.random().toString(36).slice(2);
   },
 
+  envSupportsForAwait: function() {
+    return typeof Symbol !== 'undefined' && Symbol.asyncIterator;
+  },
+
+  envSupportsAwait: function() {
+    try {
+      eval('(async function() {})'); // eslint-disable-line no-eval
+      return true;
+    } catch (err) {
+      return false;
+    }
+  },
+
 };

@@ -216,6 +216,87 @@ stripe.setAppInfo({
 
 This information is passed along when the library makes calls to the Stripe API.
 
+### Auto-pagination
+
+As of stripe-node 6.11.0, you may auto-paginate list methods.
+We provide a few different APIs for this to aid with a variety of node versions and styles.
+
+
+#### Async iterators (`for-await-of`)
+
+If you are in a Node environment that has support for [async iteration](https://github.com/tc39/proposal-async-iteration#the-async-iteration-statement-for-await-of),
+such as Node 10+ or [babel](https://babeljs.io/docs/en/babel-plugin-transform-async-generator-functions),
+the following will auto-paginate:
+
+```js
+for await (const customer of stripe.customers.list()) {
+  doSomething(customer);
+  if (shouldStop()) {
+    break;
+  }
+}
+```
+
+#### `autoPagingEach`
+
+```js
+stripe.customers.list().autoPagingEach(function onItem(customer) {
+  doSomething(customer);
+  if (shouldStop()) {
+    return false;
+  }
+}).then(function() {
+  console.log('Done iterating.');
+}).catch(handleError);
+```
+
+If you need to perform asynchronous work before continuing to the next item in the list,
+you may use a `next()` callback, like so:
+
+```js
+stripe.customers.list().autoPagingEach(function onItem(customer, next) {
+  doSomething(customer, function(result) {
+    if (shouldStop(result)) {
+      next(false); // Passing `false` breaks out of the loop.
+    } else {
+      next();
+    }
+  });
+}).then(function() {
+  console.log('Done iterating.');
+}).catch(handleError);
+```
+
+If you prefer callbacks to promises, you may also use a second `onDone` callback:
+
+```js
+stripe.customers.list().autoPagingEach(
+  function onItem(customer, next) {
+    /** ... */
+  },
+  function onDone(err) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.all('Done iterating.');
+    }
+  }
+)
+```
+
+#### `autoPagingToArray`
+
+This is a convenience for cases where you expect the number of items
+to be relatively small; accordingly, you must pass a `limit` option
+to prevent runaway list growth from consuming too much memory.
+
+Returns a promise of an array of all items across pages for a list request.
+
+```js
+const allNewCustomers = await stripe.customers.list({created: {gt: lastMonth}})
+  .autoPagingToArray({limit: 10000});
+```
+
 ## More Information
 
  * [REST API Version](https://github.com/stripe/stripe-node/wiki/REST-API-Version)
