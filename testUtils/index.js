@@ -42,7 +42,7 @@ var utils = module.exports = {
     }
 
     function patchRequest(stripeInstance, instance) {
-      instance._request = function(method, url, data, auth, options, cb) {
+      instance._request = function(method, host, url, data, auth, options, cb) {
         var req = stripeInstance.LAST_REQUEST = {
           method: method,
           url: url,
@@ -51,6 +51,9 @@ var utils = module.exports = {
         };
         if (auth) {
           req.auth = auth;
+        }
+        if (host) {
+          req.host = host;
         }
         stripeInstance.REQUESTS.push(req);
         cb.call(this, null, {});

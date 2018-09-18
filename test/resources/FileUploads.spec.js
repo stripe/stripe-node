@@ -16,6 +16,7 @@ describe('File Uploads Resource', function() {
         url: '/v1/files/fil_12345',
         headers: {},
         data: {},
+        host: 'uploads.stripe.com',
       });
     });
 
@@ -27,6 +28,7 @@ describe('File Uploads Resource', function() {
         headers: {},
         data: {},
         auth: TEST_AUTH_KEY,
+        host: 'uploads.stripe.com',
       });
     });
   });
@@ -39,6 +41,7 @@ describe('File Uploads Resource', function() {
         url: '/v1/files',
         headers: {},
         data: {},
+        host: 'uploads.stripe.com',
       });
     });
   });
@@ -57,6 +60,7 @@ describe('File Uploads Resource', function() {
         },
       });
 
+      expect(stripe.LAST_REQUEST).to.deep.property('host', 'uploads.stripe.com');
       expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
       expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
     });
@@ -74,6 +78,7 @@ describe('File Uploads Resource', function() {
         },
       }, TEST_AUTH_KEY);
 
+      expect(stripe.LAST_REQUEST).to.deep.property('host', 'uploads.stripe.com');
       expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
       expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
       expect(stripe.LAST_REQUEST).to.deep.property('auth', TEST_AUTH_KEY);
@@ -91,6 +96,7 @@ describe('File Uploads Resource', function() {
           type: 'application/octet-stream',
         },
       }).then(function() {
+        expect(stripe.LAST_REQUEST).to.deep.property('host', 'uploads.stripe.com');
         expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
         expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
       });
@@ -108,6 +114,7 @@ describe('File Uploads Resource', function() {
           type: 'application/octet-stream',
         },
       }, TEST_AUTH_KEY).then(function() {
+        expect(stripe.LAST_REQUEST).to.deep.property('host', 'uploads.stripe.com');
         expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
         expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
         expect(stripe.LAST_REQUEST).to.deep.property('auth', TEST_AUTH_KEY);
