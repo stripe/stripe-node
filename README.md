@@ -218,13 +218,13 @@ This information is passed along when the library makes calls to the Stripe API.
 
 ### Auto-pagination
 
-As of stripe-node 6.11.0, you may auto-paginate list api methods.
-We provide a few different API's for this to aid with a variety of node versions and styles.
+As of stripe-node 6.11.0, you may auto-paginate list methods.
+We provide a few different APIs for this to aid with a variety of node versions and styles.
 
 
 #### Async iterators (`for-await-of`)
 
-If you are in a node environment that has support for [async iteration](https://github.com/tc39/proposal-async-iteration#the-async-iteration-statement-for-await-of),
+If you are in a Node environment that has support for [async iteration](https://github.com/tc39/proposal-async-iteration#the-async-iteration-statement-for-await-of),
 such as Node 10+ or [babel](https://babeljs.io/docs/en/babel-plugin-transform-async-generator-functions),
 the following will auto-paginate:
 
