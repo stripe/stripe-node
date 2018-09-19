@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.11.0 - 2018-09-18
+* [#496](https://github.com/stripe/stripe-node/pull/496) Add auto-pagination
+
 ## 6.10.0 - 2018-09-05
 * [#491](https://github.com/stripe/stripe-node/pull/491) Add support for usage record summaries
 
