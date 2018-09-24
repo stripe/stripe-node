@@ -7,10 +7,10 @@ var path = require('path');
 
 var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
-describe('File Uploads Resource', function() {
+describe('Files Resource', function() {
   describe('retrieve', function() {
     it('Sends the correct request', function() {
-      stripe.fileUploads.retrieve('fil_12345');
+      stripe.files.retrieve('fil_12345');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/files/fil_12345',
@@ -20,7 +20,7 @@ describe('File Uploads Resource', function() {
     });
 
     it('Sends the correct request [with specified auth]', function() {
-      stripe.fileUploads.retrieve('fil_12345', TEST_AUTH_KEY);
+      stripe.files.retrieve('fil_12345', TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/files/fil_12345',
@@ -33,7 +33,7 @@ describe('File Uploads Resource', function() {
 
   describe('list', function() {
     it('Sends the correct request', function() {
-      stripe.fileUploads.list();
+      stripe.files.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/files',
@@ -48,7 +48,7 @@ describe('File Uploads Resource', function() {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.readFileSync(testFilename);
 
-      stripe.fileUploads.create({
+      stripe.files.create({
         purpose: 'dispute_evidence',
         file: {
           data: f,
@@ -66,7 +66,7 @@ describe('File Uploads Resource', function() {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.readFileSync(testFilename);
 
-      stripe.fileUploads.create({
+      stripe.files.create({
         purpose: 'dispute_evidence',
         file: {
           data: f,
@@ -85,7 +85,7 @@ describe('File Uploads Resource', function() {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.createReadStream(testFilename);
 
-      return stripe.fileUploads.create({
+      return stripe.files.create({
         purpose: 'dispute_evidence',
         file: {
           data: f,
@@ -103,7 +103,7 @@ describe('File Uploads Resource', function() {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.createReadStream(testFilename);
 
-      return stripe.fileUploads.create({
+      return stripe.files.create({
         purpose: 'dispute_evidence',
         file: {
           data: f,
