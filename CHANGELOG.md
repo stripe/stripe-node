@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.12.1 - 2018-09-24
+* [#502](https://github.com/stripe/stripe-node/pull/502) Fix test suite
+
 ## 6.12.0 - 2018-09-24
 * [#498](https://github.com/stripe/stripe-node/pull/498) Add support for Stripe Terminal
 * [#500](https://github.com/stripe/stripe-node/pull/500) Rename `FileUploads` to `Files`
