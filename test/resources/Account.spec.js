@@ -231,4 +231,129 @@ describe('Account Resource', function() {
       });
     });
   });
+
+  describe('Person methods', function() {
+    describe('retrievePerson', function() {
+      it('Sends the correct request', function() {
+        stripe.account.retrievePerson('acct_123', 'person_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/accounts/acct_123/persons/person_123',
+          headers: {},
+          data: {},
+        });
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+        stripe.account.retrievePerson('acct_123', 'person_123', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/accounts/acct_123/persons/person_123',
+          headers: {},
+          data: {},
+          auth: TEST_AUTH_KEY,
+        });
+      });
+    });
+
+    describe('createPerson', function() {
+      it('Sends the correct request', function() {
+        stripe.account.createPerson('acct_123', {
+          first_name: 'John',
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/accounts/acct_123/persons',
+          headers: {},
+          data: {first_name: 'John'},
+        });
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+        stripe.account.createPerson('acct_123', {
+          first_name: 'John',
+        }, TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/accounts/acct_123/persons',
+          headers: {},
+          data: {first_name: 'John'},
+          auth: TEST_AUTH_KEY,
+        });
+      });
+    });
+
+    describe('updatePerson', function() {
+      it('Sends the correct request', function() {
+        stripe.account.updatePerson('acct_123', 'person_123', {
+          first_name: 'John',
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/accounts/acct_123/persons/person_123',
+          headers: {},
+          data: {first_name: 'John'},
+        });
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+        stripe.account.updatePerson('acct_123', 'person_123', {
+          first_name: 'John',
+        }, TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/accounts/acct_123/persons/person_123',
+          headers: {},
+          data: {first_name: 'John'},
+          auth: TEST_AUTH_KEY,
+        });
+      });
+    });
+
+    describe('deletePerson', function() {
+      it('Sends the correct request', function() {
+        stripe.account.deletePerson('acct_123', 'person_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/accounts/acct_123/persons/person_123',
+          headers: {},
+          data: {},
+        });
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+        stripe.account.deletePerson('acct_123', 'person_123', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/accounts/acct_123/persons/person_123',
+          headers: {},
+          data: {},
+          auth: TEST_AUTH_KEY,
+        });
+      });
+    });
+
+    describe('listPersons', function() {
+      it('Sends the correct request', function() {
+        stripe.account.listPersons('acct_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/accounts/acct_123/persons',
+          headers: {},
+          data: {},
+        });
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+        stripe.account.listPersons('acct_123', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/accounts/acct_123/persons',
+          headers: {},
+          data: {},
+          auth: TEST_AUTH_KEY,
+        });
+      });
+    });
+  });
 });
