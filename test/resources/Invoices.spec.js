@@ -6,10 +6,10 @@ var expect = require('chai').expect;
 describe('Invoices Resource', function() {
   describe('retrieve', function() {
     it('Sends the correct request', function() {
-      stripe.invoices.retrieve('invoiceId1');
+      stripe.invoices.retrieve('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/invoices/invoiceId1',
+        url: '/v1/invoices/in_123',
         headers: {},
         data: {},
       });
@@ -28,24 +28,48 @@ describe('Invoices Resource', function() {
     });
   });
 
+  describe('list', function() {
+    it('Sends the correct request', function() {
+      stripe.invoices.list({count: 25});
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/invoices',
+        headers: {},
+        data: {count: 25},
+      });
+    });
+  });
+
   describe('update', function() {
     it('Sends the correct request', function() {
-      stripe.invoices.update('invoiceId1', {application_fee: 200});
+      stripe.invoices.update('in_123', {application_fee: 200});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/invoices/invoiceId1',
+        url: '/v1/invoices/in_123',
         headers: {},
         data: {application_fee: 200},
       });
     });
   });
 
+  describe('del', function() {
+    it('Sends the correct request', function() {
+      stripe.invoices.del('in_123');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'DELETE',
+        url: '/v1/invoices/in_123',
+        headers: {},
+        data: {},
+      });
+    });
+  });
+
   describe('retrieveLines', function() {
     it('Sends the correct request', function() {
-      stripe.invoices.retrieveLines('invoiceId2');
+      stripe.invoices.retrieveLines('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/invoices/invoiceId2/lines',
+        url: '/v1/invoices/in_123/lines',
         headers: {},
         data: {},
       });
@@ -55,10 +79,10 @@ describe('Invoices Resource', function() {
   describe('retrieveUpcoming', function() {
     describe('With just a customer ID', function() {
       it('Sends the correct request', function() {
-        stripe.invoices.retrieveUpcoming('customerId1');
+        stripe.invoices.retrieveUpcoming('cus_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/invoices/upcoming?customer=customerId1',
+          url: '/v1/invoices/upcoming?customer=cus_123',
           headers: {},
           data: {},
         });
@@ -67,10 +91,10 @@ describe('Invoices Resource', function() {
 
     describe('With a subscription ID in addition to a customer ID', function() {
       it('Sends the correct request', function() {
-        stripe.invoices.retrieveUpcoming('customerId1', 'subscriptionId123');
+        stripe.invoices.retrieveUpcoming('cus_123', 'sub_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/invoices/upcoming?customer=customerId1&subscription=subscriptionId123',
+          url: '/v1/invoices/upcoming?customer=cus_123&subscription=sub_123',
           headers: {},
           data: {},
         });
@@ -79,7 +103,7 @@ describe('Invoices Resource', function() {
 
     describe('With an options object that includes `subscription_items`', function() {
       it('Sends the correct request', function() {
-        stripe.invoices.retrieveUpcoming('customerId1', {
+        stripe.invoices.retrieveUpcoming('cus_123', {
           subscription_items: [
             {plan: 'potato'},
             {plan: 'rutabaga'},
@@ -88,7 +112,7 @@ describe('Invoices Resource', function() {
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/invoices/upcoming?customer=customerId1&' +
+          url: '/v1/invoices/upcoming?customer=cus_123&' +
             'subscription_items%5B0%5D%5Bplan%5D=potato&subscription_items%5B1%5D%5Bplan%5D=rutabaga',
           headers: {},
           data: {},
@@ -98,7 +122,7 @@ describe('Invoices Resource', function() {
 
     describe('With an options object that includes `subscription_items` in addition to a subscription ID', function() {
       it('Sends the correct request', function() {
-        stripe.invoices.retrieveUpcoming('customerId1', 'subscriptionID1',
+        stripe.invoices.retrieveUpcoming('cus_123', 'sub_123',
           {
             subscription_items: [
               {plan: 'potato'},
@@ -110,7 +134,7 @@ describe('Invoices Resource', function() {
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/invoices/upcoming?customer=customerId1&subscription=subscriptionID1',
+          url: '/v1/invoices/upcoming?customer=cus_123&subscription=sub_123',
           headers: {},
           data: {
             subscription_items: {
@@ -133,10 +157,10 @@ describe('Invoices Resource', function() {
 
     describe('With a options object in addition to a customer ID', function() {
       it('Sends the correct request', function() {
-        stripe.invoices.retrieveUpcoming('customerId1', {plan: 'planId123'});
+        stripe.invoices.retrieveUpcoming('cus_123', {plan: 'planId123'});
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/invoices/upcoming?customer=customerId1&plan=planId123',
+          url: '/v1/invoices/upcoming?customer=cus_123&plan=planId123',
           headers: {},
           data: {},
         });
@@ -144,28 +168,65 @@ describe('Invoices Resource', function() {
     });
   });
 
+  describe('finalizeInvoice', function() {
+    it('Sends the correct request', function() {
+      stripe.invoices.finalizeInvoice('in_123');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/invoices/in_123/finalize',
+        headers: {},
+        data: {}
+      });
+    });
+  });
+
+  describe('mark uncollectible', function() {
+    it('Sends the correct request', function() {
+      stripe.invoices.markUncollectible('in_123');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/invoices/in_123/mark_uncollectible',
+        headers: {},
+        data: {}
+      });
+    });
+  });
+
+
   describe('pay', function() {
     it('Sends the correct request', function() {
-      stripe.invoices.pay('invoiceId6', {
+      stripe.invoices.pay('in_123', {
         source: 'tok_FooBar',
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/invoices/invoiceId6/pay',
+        url: '/v1/invoices/in_123/pay',
         headers: {},
         data: {source: 'tok_FooBar'},
       });
     });
   });
 
-  describe('list', function() {
+  describe('sendInvoice', function() {
     it('Sends the correct request', function() {
-      stripe.invoices.list({count: 25});
+      stripe.invoices.sendInvoice('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'GET',
-        url: '/v1/invoices',
+        method: 'POST',
+        url: '/v1/invoices/in_123/send',
         headers: {},
-        data: {count: 25},
+        data: {}
+      });
+    });
+  });
+
+  describe('voidInvoice', function() {
+    it('Sends the correct request', function() {
+      stripe.invoices.voidInvoice('in_123');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/invoices/in_123/void',
+        headers: {},
+        data: {}
       });
     });
   });
