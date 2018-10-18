@@ -78,7 +78,7 @@ callback:
 // Create a new customer and then a new charge for that customer:
 stripe.customers.create({
   email: 'foo-customer@example.com'
-}).then(function(customer){
+}).then(function(customer) {
   return stripe.customers.createSource(customer.id, {
     source: 'tok_visa'
   });
@@ -239,27 +239,26 @@ for await (const customer of stripe.customers.list()) {
 
 #### `autoPagingEach`
 
+If you are in a Node environment that has support for `await`, such as Node 7.9 and greater,
+you may pass an async function to `.autoPagingEach`:
+
 ```js
-stripe.customers.list().autoPagingEach(function onItem(customer) {
-  doSomething(customer);
-  if (shouldStop()) {
+await stripe.customers.list().autoPagingEach(async (customer) => {
+  await doSomething(customer);
+  if (shouldBreak()) {
     return false;
   }
-}).then(function() {
-  console.log('Done iterating.');
-}).catch(handleError);
+})
+console.log('Done iterating.');
 ```
 
-If you need to perform asynchronous work before continuing to the next item in the list,
-you may use a `next()` callback, like so:
+Equivalently, without `await`, you may return a Promise, which can resolve to `false` to break:
 
 ```js
-stripe.customers.list().autoPagingEach(function onItem(customer, next) {
-  doSomething(customer, function(result) {
-    if (shouldStop(result)) {
-      next(false); // Passing `false` breaks out of the loop.
-    } else {
-      next();
+stripe.customers.list().autoPagingEach(function onItem(customer) {
+  return doSomething(customer).then(function() {
+    if (shouldBreak()) {
+      return false;
     }
   });
 }).then(function() {
@@ -267,22 +266,31 @@ stripe.customers.list().autoPagingEach(function onItem(customer, next) {
 }).catch(handleError);
 ```
 
-If you prefer callbacks to promises, you may also use a second `onDone` callback:
+If you prefer callbacks to promises, you may also use a `next` callback and a second `onDone` callback:
 
 ```js
 stripe.customers.list().autoPagingEach(
   function onItem(customer, next) {
-    /** ... */
+    doSomething(customer, function(err, result) {
+      if (shouldStop(result)) {
+        next(false); // Passing `false` breaks out of the loop.
+      } else {
+        next();
+      }
+    });
   },
   function onDone(err) {
     if (err) {
       console.error(err);
     } else {
-      console.all('Done iterating.');
+      console.log('Done iterating.');
     }
   }
 )
 ```
+
+If your `onItem` function does not accept a `next` callback parameter _or_ return a Promise,
+the return value is used to decide whether to continue (`false` breaks, anything else continues).
 
 #### `autoPagingToArray`
 
