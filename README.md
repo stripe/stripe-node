@@ -31,11 +31,11 @@ available in your [Stripe Dashboard][api-keys]. Require it with the key's
 value:
 
 ``` js
-var stripe = require('stripe')('sk_test_...');
+const stripe = require('stripe')('sk_test_...');
 
-var customer = await stripe.customers.create(
-  { email: 'customer@example.com' }
-);
+const customer = await stripe.customers.create({
+  email: 'customer@example.com'
+});
 ```
 
 Or with versions of Node.js prior to v7.9:
@@ -54,16 +54,16 @@ stripe.customers.create(
 
 Or using ES modules, this looks more like:
 
-``` js
-import stripePackage from 'stripe';
-const stripe = stripePackage('sk_test_...');
+```js
+import Stripe from 'stripe';
+const stripe = Stripe('sk_test_...');
 //…
 ```
 
 
 Or using TypeScript:
 
-``` ts
+```ts
 import * as Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
 //…
@@ -74,23 +74,23 @@ const stripe = new Stripe('sk_test_...');
 Every method returns a chainable promise which can be used instead of a regular
 callback:
 
-``` js
+```js
 // Create a new customer and then a new charge for that customer:
 stripe.customers.create({
   email: 'foo-customer@example.com'
-}).then(function(customer) {
+}).then((customer) => {
   return stripe.customers.createSource(customer.id, {
     source: 'tok_visa'
   });
-}).then(function(source) {
+}).then((source) => {
   return stripe.charges.create({
     amount: 1600,
     currency: 'usd',
     customer: source.customer
   });
-}).then(function(charge) {
+}).then((charge) => {
   // New charge created on a new customer
-}).catch(function(err) {
+}).catch((err) => {
   // Deal with an error
 });
 ```
@@ -112,9 +112,9 @@ can be added to any method:
 // Retrieve the balance for a connected account:
 stripe.balance.retrieve({
   stripe_account: 'acct_foo'
-}).then(function(balance) {
+}).then((balance) => {
   // The balance object for the connected account
-}).catch(function(err) {
+}).catch((err) => {
   // Error
 });
 ```
@@ -148,9 +148,9 @@ charge.lastResponse.statusCode
 The Stripe object emits `request` and `response` events.  You can use them like this:
 
 ```js
-var stripe = require('stripe')('sk_test_...');
+const stripe = require('stripe')('sk_test_...');
 
-function onRequest(request) {
+const onRequest = (request) => {
   // Do something.
 }
 
@@ -195,7 +195,7 @@ Please note that you must pass the _raw_ request body, exactly as received from 
 You can find an example of how to use this with [Express](https://expressjs.com/) in the [`examples/webhook-signing`](examples/webhook-signing) folder, but here's what it looks like:
 
 ```js
-event = stripe.webhooks.constructEvent(
+const event = stripe.webhooks.constructEvent(
   webhookRawBody,
   webhookStripeSignatureHeader,
   webhookSecret
@@ -255,13 +255,13 @@ console.log('Done iterating.');
 Equivalently, without `await`, you may return a Promise, which can resolve to `false` to break:
 
 ```js
-stripe.customers.list().autoPagingEach(function onItem(customer) {
-  return doSomething(customer).then(function() {
+stripe.customers.list().autoPagingEach((customer) => {
+  return doSomething(customer).then(() => {
     if (shouldBreak()) {
       return false;
     }
   });
-}).then(function() {
+}).then(() => {
   console.log('Done iterating.');
 }).catch(handleError);
 ```
