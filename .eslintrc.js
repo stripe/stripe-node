@@ -23,7 +23,6 @@ module.exports = {
                 "allowSingleLine": true
             }
         ],
-        "callback-return": "error",
         "camelcase": [
             "error",
             {

@@ -91,6 +91,31 @@ describe('auto pagination', function() {
       })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
+    it('lets you ignore the second arg and return a Promise which returns `false` to break', function() {
+      return expect(new Promise(function(resolve, reject) {
+        var customerIds = [];
+        function onCustomer(customer) {
+          customerIds.push(customer.id);
+          if (customerIds.length === LIMIT) {
+            return Promise.resolve(false);
+          } else {
+            expect(customerIds.length).to.be.lessThan(LIMIT);
+            return Promise.resolve();
+          }
+        }
+        function onDone(err) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(customerIds);
+          }
+        }
+
+        stripe.customers.list({limit: 3, email: email})
+          .autoPagingEach(onCustomer, onDone);
+      })).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
+    });
+
     it('can use a promise instead of a callback for onDone', function() {
       return expect(new Promise(function(resolve, reject) {
         var customerIds = [];
