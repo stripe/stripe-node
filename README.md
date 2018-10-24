@@ -78,8 +78,7 @@ To use:
 import * as Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
 
-// Types are exposed under the `StripeNode` namespace:
-const customer: Promise<StripeNode.customers.ICustomer> = stripe.customers.create(/* ... */);
+const customer: Promise<Stripe.customers.ICustomer> = stripe.customers.create(/* ... */);
 ```
 
 ### Using Promises
