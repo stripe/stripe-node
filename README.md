@@ -60,13 +60,25 @@ const stripe = Stripe('sk_test_...');
 //…
 ```
 
+### Usage with TypeScript
 
-Or using TypeScript:
+Stripe does not currently maintain typings for this package, but there are 
+community typings available from DefinitelyTyped. 
+
+To install:
+
+```sh
+npm install --dev @types/stripe
+```
+
+To use:
 
 ```ts
+// Note `* as` and `new Stripe` for TypeScript:
 import * as Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
-//…
+
+const customer: Promise<Stripe.customers.ICustomer> = stripe.customers.create(/* ... */);
 ```
 
 ### Using Promises
