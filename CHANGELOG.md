@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 6.13.0 - 2018-10-30
+* [#507](https://github.com/stripe/stripe-node/pull/507) Add support for persons
+* [#510](https://github.com/stripe/stripe-node/pull/510) Add support for webhook endpoints
+
 ## 6.12.1 - 2018-09-24
 * [#502](https://github.com/stripe/stripe-node/pull/502) Fix test suite
 
