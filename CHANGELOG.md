@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.14.0 - 2018-11-09
+* [#509](https://github.com/stripe/stripe-node/pull/509) Add support for new `Invoice` methods
+
 ## 6.13.0 - 2018-10-30
 * [#507](https://github.com/stripe/stripe-node/pull/507) Add support for persons
 * [#510](https://github.com/stripe/stripe-node/pull/510) Add support for webhook endpoints
