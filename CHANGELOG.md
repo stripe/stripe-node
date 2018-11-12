@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.15.0 - 2018-11-12
+* [#474](https://github.com/stripe/stripe-node/pull/474) Add support for `partner_id` in `setAppInfo` 
+
 ## 6.14.0 - 2018-11-09
 * [#509](https://github.com/stripe/stripe-node/pull/509) Add support for new `Invoice` methods
 
