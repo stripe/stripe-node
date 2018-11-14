@@ -15,7 +15,7 @@
 
 ## 6.12.0 - 2018-09-24
 * [#498](https://github.com/stripe/stripe-node/pull/498) Add support for Stripe Terminal
-* [#500](https://github.com/stripe/stripe-node/pull/500) Rename `FileUploads` to `Files`
+* [#500](https://github.com/stripe/stripe-node/pull/500) Rename `FileUploads` to `Files`. For backwards compatibility, `Files` is aliased to `FileUploads`. `FileUploads` is deprecated and will be removed from the next major version.
 
 ## 6.11.0 - 2018-09-18
 * [#496](https://github.com/stripe/stripe-node/pull/496) Add auto-pagination
