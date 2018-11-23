@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.15.1 - 2018-11-23
+* [#523](https://github.com/stripe/stripe-node/pull/523) Handle `Buffer` instances in `Webhook.constructEvent`
+
 ## 6.15.0 - 2018-11-12
 * [#474](https://github.com/stripe/stripe-node/pull/474) Add support for `partner_id` in `setAppInfo` 
 
