@@ -2,6 +2,7 @@
 
 var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
+var Buffer = require('safe-buffer').Buffer;
 
 var EVENT_PAYLOAD = {
   id: 'evt_test_webhook',
@@ -124,6 +125,14 @@ describe('Webhooks', function() {
       });
 
       expect(stripe.webhooks.signature.verifyHeader(EVENT_PAYLOAD_STRING, header, SECRET)).to.equal(true);
+    });
+
+    it('should accept Buffer instances for the payload and header', function() {
+      var header = generateHeaderString({
+        timestamp: (Date.now() / 1000),
+      });
+
+      expect(stripe.webhooks.signature.verifyHeader(new Buffer(EVENT_PAYLOAD_STRING), new Buffer(header), SECRET, 10)).to.equal(true);
     });
   });
 });
