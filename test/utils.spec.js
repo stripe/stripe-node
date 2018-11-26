@@ -264,6 +264,14 @@ describe('utils', function() {
       var partial = utils.encodeParamWithIntegerIndexes.bind(null, 'paramToEncode');
       expect(partial(data)).to.deep.equal(expectedData);
     });
+
+    it('does not mutate input variables', function() {
+      var data = {'paramToEncode': ['value1']};
+      var expectedData = {'paramToEncode': {'0': 'value1'}};
+      expect(utils.encodeParamWithIntegerIndexes('paramToEncode', data)).to.deep.equal(expectedData);
+      expect(data).not.to.deep.equal(expectedData);
+      expect(Array.isArray(data.paramToEncode)).to.equal(true);
+    });
   });
 
   describe('arrayToObject', function() {
