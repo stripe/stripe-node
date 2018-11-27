@@ -1,7 +1,10 @@
 # CHANGELOG
 
+## 6.16.0 - 2018-11-27
+* [#515](https://github.com/stripe/stripe-node/pull/515) Add support for `ValueLists` and `ValueListItems` for Radar
+
 ## 6.15.2 - 2018-11-26
-* [#999](https://github.com/stripe/stripe-node/pull/999) Fixes an accidental mutation of input in rare cases
+* [#526](https://github.com/stripe/stripe-node/pull/526) Fixes an accidental mutation of input in rare cases
 
 ## 6.15.1 - 2018-11-23
 * [#523](https://github.com/stripe/stripe-node/pull/523) Handle `Buffer` instances in `Webhook.constructEvent`
