@@ -1,7 +1,10 @@
 # CHANGELOG
 
+## 6.18.0 - 2018-12-06
+* [#530](https://github.com/stripe/stripe-node/pull/530) Export errors on root Stripe object
+
 ## 6.17.0 - 2018-11-28
-* [#705](https://github.com/stripe/stripe-node/pull/705) Add support for the `Review` APIs
+* [#527](https://github.com/stripe/stripe-node/pull/527) Add support for the `Review` APIs
 
 ## 6.16.0 - 2018-11-27
 * [#515](https://github.com/stripe/stripe-node/pull/515) Add support for `ValueLists` and `ValueListItems` for Radar
