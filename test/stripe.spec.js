@@ -209,4 +209,13 @@ describe('Stripe Module', function() {
       });
     });
   });
+
+  describe('errors', function() {
+    it('Exports errors as types', function() {
+      var Stripe = require('../lib/stripe');
+      expect(new Stripe.errors.StripeInvalidRequestError({
+        message: 'error'
+      }).type).to.equal('StripeInvalidRequestError');
+    });
+  });
 });
