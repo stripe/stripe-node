@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.18.1 - 2018-12-07
+* [#534](https://github.com/stripe/stripe-node/pull/534) Fix iterating on `files.list` method
+
 ## 6.18.0 - 2018-12-06
 * [#530](https://github.com/stripe/stripe-node/pull/530) Export errors on root Stripe object
 
