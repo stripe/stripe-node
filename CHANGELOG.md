@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.19.0 - 2018-12-10
+* [#535](https://github.com/stripe/stripe-node/pull/535) Add support for account links
+
 ## 6.18.1 - 2018-12-07
 * [#534](https://github.com/stripe/stripe-node/pull/534) Fix iterating on `files.list` method
 
