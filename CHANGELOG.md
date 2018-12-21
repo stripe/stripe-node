@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.20.0 - 2018-12-21
+* [#539](https://github.com/stripe/stripe-node/pull/539) Add support for the `CheckoutSession` resource
+
 ## 6.19.0 - 2018-12-10
 * [#535](https://github.com/stripe/stripe-node/pull/535) Add support for account links
 
