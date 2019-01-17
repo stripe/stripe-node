@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.20.1 - 2019-01-17
+* [#552](https://github.com/stripe/stripe-node/pull/552) Fix `Buffer` deprecation warnings
+
 ## 6.20.0 - 2018-12-21
 * [#539](https://github.com/stripe/stripe-node/pull/539) Add support for the `CheckoutSession` resource
 
