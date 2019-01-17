@@ -132,7 +132,7 @@ describe('Webhooks', function() {
         timestamp: (Date.now() / 1000),
       });
 
-      expect(stripe.webhooks.signature.verifyHeader(new Buffer(EVENT_PAYLOAD_STRING), new Buffer(header), SECRET, 10)).to.equal(true);
+      expect(stripe.webhooks.signature.verifyHeader(Buffer.from(EVENT_PAYLOAD_STRING), Buffer.from(header), SECRET, 10)).to.equal(true);
     });
   });
 });
