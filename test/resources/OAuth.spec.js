@@ -7,21 +7,21 @@ var expect = require('chai').expect;
 
 describe('OAuth', function() {
   describe('authorize', function() {
-    describe('when a default clientId is not set', function() {
+    describe('when a default client_id is not set', function() {
       beforeEach(function() {
         stripe.clientId = '';
       });
 
-      describe('without an explicitly provided clientId', function() {
-        it('Prompts the user to set a default clientId or provide one explicitly', function() {
+      describe('without an explicitly provided client_id', function() {
+        it('Prompts the user to set a default client_id or provide one explicitly', function() {
           expect(stripe.oAuth.authorizeUrl.bind(stripe.oAuth)).to.throw(Error,
-            'Please set stripe.clientId or pass it as a parameter when calling this method. ' +
-            'You can find your clientId at https://dashboard.stripe.com/account/applications/settings.'
+            'Please set stripe.clientId or pass client_id as a parameter when calling this method. ' +
+            'You can find your client_id at https://dashboard.stripe.com/account/applications/settings.'
           );
         });
       });
 
-      describe('with an explicitly provided clientId', function() {
+      describe('with an explicitly provided client_id', function() {
         it('Generates the correct URL', function() {
           var url = stripe.oAuth.authorizeUrl({client_id: '123abc'});
 
@@ -32,7 +32,7 @@ describe('OAuth', function() {
       })
     });
 
-    describe('when a default clientId is set', function() {
+    describe('when a default client_id is set', function() {
       beforeEach(function() {
         stripe.clientId = 'default_client_id';
       });
@@ -139,6 +139,47 @@ describe('OAuth', function() {
         data: {
           code: '123abc',
           grant_type: 'authorization_code'
+        },
+      });
+    });
+  });
+
+  describe('deauthorize', function() {
+    beforeEach(function() {
+      stripe.clientId = 'default_client_id';
+    });
+
+    it('Sends the correct request without explicit client_id', function() {
+      stripe.oAuth.deauthorize({
+        stripe_user_id: 'some_user_id',
+      });
+
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        host: 'connect.stripe.com',
+        url: '/oauth/deauthorize',
+        headers: {},
+        data: {
+          client_id: stripe.clientId,
+          stripe_user_id: 'some_user_id'
+        },
+      });
+    });
+
+    it('Sends the correct request with explicit client_id', function() {
+      stripe.oAuth.deauthorize({
+        stripe_user_id: 'some_user_id',
+        client_id: '123abc',
+      });
+
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        host: 'connect.stripe.com',
+        url: '/oauth/deauthorize',
+        headers: {},
+        data: {
+          client_id: '123abc',
+          stripe_user_id: 'some_user_id'
         },
       });
     });
