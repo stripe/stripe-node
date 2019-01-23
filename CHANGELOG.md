@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.21.0 - 2019-01-23
+* [#551](https://github.com/stripe/stripe-node/pull/551) Rename `CheckoutSession` to `Session` and move it under the `checkout` namespace. This is a breaking change, but we've reached out to affected merchants and all new merchants would use the new approach.
+
 ## 6.20.1 - 2019-01-17
 * [#552](https://github.com/stripe/stripe-node/pull/552) Fix `Buffer` deprecation warnings
 
