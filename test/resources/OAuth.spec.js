@@ -14,10 +14,7 @@ describe('OAuth', function() {
 
       describe('without an explicitly provided client_id', function() {
         it('Prompts the user to set a default client_id or provide one explicitly', function() {
-          expect(stripe.oAuth.authorizeUrl.bind(stripe.oAuth)).to.throw(Error,
-            'Please set stripe.clientId or pass client_id as a parameter when calling this method. ' +
-            'You can find your client_id at https://dashboard.stripe.com/account/applications/settings.'
-          );
+          expect(stripe.oAuth.authorizeUrl.bind(stripe.oAuth)).to.throw(Error, stripe.ERROR_CLIENT_ID_NOT_SET);
         });
       });
 
