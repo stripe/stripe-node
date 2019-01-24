@@ -1,7 +1,6 @@
 'use strict';
 
 var stripe = require('../../testUtils').getSpyableStripe();
-stripe.clientId = 'default_client_id';
 
 var expect = require('chai').expect;
 
@@ -9,7 +8,7 @@ describe('OAuth', function() {
   describe('authorize', function() {
     describe('when a default client_id is not set', function() {
       beforeEach(function() {
-        stripe.clientId = '';
+        stripe.setClientId('');
       });
 
       describe('without an explicitly provided client_id', function() {
@@ -31,7 +30,7 @@ describe('OAuth', function() {
 
     describe('when a default client_id is set', function() {
       beforeEach(function() {
-        stripe.clientId = 'default_client_id';
+        stripe.setClientId('default_client_id');
       });
 
       describe('when required parameters are not provided', function() {
@@ -143,7 +142,7 @@ describe('OAuth', function() {
 
   describe('deauthorize', function() {
     beforeEach(function() {
-      stripe.clientId = 'default_client_id';
+      stripe.setClientId('default_client_id');
     });
 
     it('Sends the correct request without explicit client_id', function() {
@@ -157,7 +156,7 @@ describe('OAuth', function() {
         url: '/oauth/deauthorize',
         headers: {},
         data: {
-          client_id: stripe.clientId,
+          client_id: stripe.getClientId(),
           stripe_user_id: 'some_user_id'
         },
       });
