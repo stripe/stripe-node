@@ -3,112 +3,58 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
+var URL = require('url');
+var qs = require('qs');
 
 describe('OAuth', function() {
   describe('authorize', function() {
-    describe('when a default client_id is not set', function() {
-      beforeEach(function() {
-        stripe.setClientId('');
-      });
-
-      describe('with an explicitly provided client_id', function() {
-        it('Generates the correct URL', function() {
-          var url = stripe.oAuth.authorizeUrl({client_id: '123abc'});
-
-          var expectedUrl = 'https://connect.stripe.com/oauth/authorize?client_id=123abc&response_type=code&scope=read_write';
-
-          expect(url).to.equal(expectedUrl);
-        });
-      })
-    });
-
     describe('when a default client_id is set', function() {
       beforeEach(function() {
         stripe.setClientId('default_client_id');
       });
 
-      describe('when required parameters are not provided', function() {
-        it('Generates the correct URL', function() {
-          var url = stripe.oAuth.authorizeUrl();
+      it('Uses the correct host', function() {
+        var url = stripe.oAuth.authorizeUrl();
 
-          var expectedUrl = 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=default_client_id&scope=read_write';
+        var host = URL.parse(url).hostname;
 
-          expect(url).to.equal(expectedUrl);
-        });
-
-        it('Generates the correct URL with state provided', function() {
-          var url = stripe.oAuth.authorizeUrl({state: 'some_state'});
-
-          var expectedUrl = 'https://connect.stripe.com/oauth/authorize?state=some_state&response_type=code&client_id=default_client_id&scope=read_write';
-
-          expect(url).to.equal(expectedUrl);
-        });
+        expect(host).to.equal('connect.stripe.com');
       });
 
-      describe('for non-Express account', function() {
-        it('Generates the correct URL', function() {
-          var url = stripe.oAuth.authorizeUrl(
-            {
-              response_type: 'code',
-              client_id: '123abc',
-              scope: 'read_write',
-            }
-          );
+      it('Uses the correct path', function() {
+        var url = stripe.oAuth.authorizeUrl({state: 'some_state'});
 
-          var expectedUrl = 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=123abc&scope=read_write';
+        var pathname = URL.parse(url).pathname;
 
-          expect(url).to.equal(expectedUrl);
-        });
+        expect(pathname).to.equal('/oauth/authorize');
+      });
 
-        it('Generates the correct URL with state provided', function() {
-          var url = stripe.oAuth.authorizeUrl(
-            {
-              response_type: 'code',
-              client_id: '123abc',
-              scope: 'read_write',
-            }
-          );
+      it('Uses the correct query', function() {
+        var url = stripe.oAuth.authorizeUrl({state: 'some_state'});
 
-          var expectedUrl = 'https://connect.stripe.com/oauth/authorize?response_type=code&client_id=123abc&scope=read_write';
+        var query = qs.parse(URL.parse(url).query)
 
-          expect(url).to.equal(expectedUrl);
-        });
+        expect(query.client_id).to.equal('default_client_id');
+        expect(query.response_type).to.equal('code');
+        expect(query.scope).to.equal('read_write');
+        expect(query.state).to.equal('some_state');
+      });
+
+      it('Uses a provided client_id instead of the default', function() {
+        var url = stripe.oAuth.authorizeUrl({client_id: '123abc'});
+
+        var query = qs.parse(URL.parse(url).query)
+
+        expect(query.client_id).to.equal('123abc');
       });
 
       describe('for Express account', function() {
-        it('Generates the correct URL', function() {
-          var url = stripe.oAuth.authorizeUrl(
-            {
-              response_type: 'code',
-              client_id: '123abc',
-              scope: 'read_write',
-            },
-            {
-              express: true,
-            }
-          );
+        it('Uses the correct path', function() {
+          var url = stripe.oAuth.authorizeUrl({}, {express: true});
 
-          var expectedUrl = 'https://connect.stripe.com/express/oauth/authorize?response_type=code&client_id=123abc&scope=read_write';
+          var pathname = URL.parse(url).pathname;
 
-          expect(url).to.equal(expectedUrl);
-        });
-
-        it('Generates the correct URL with state provided', function() {
-          var url = stripe.oAuth.authorizeUrl(
-            {
-              response_type: 'code',
-              client_id: '123abc',
-              scope: 'read_write',
-              state: 'some_state',
-            },
-            {
-              express: true,
-            }
-          );
-
-          var expectedUrl = 'https://connect.stripe.com/express/oauth/authorize?response_type=code&client_id=123abc&scope=read_write&state=some_state';
-
-          expect(url).to.equal(expectedUrl);
+          expect(pathname).to.equal('/express/oauth/authorize');
         });
       });
     });
