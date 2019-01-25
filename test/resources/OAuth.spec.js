@@ -11,12 +11,6 @@ describe('OAuth', function() {
         stripe.setClientId('');
       });
 
-      describe('without an explicitly provided client_id', function() {
-        it('Prompts the user to set a default client_id or provide one explicitly', function() {
-          expect(stripe.oAuth.authorizeUrl.bind(stripe.oAuth)).to.throw(Error, stripe.ERROR_CLIENT_ID_NOT_SET);
-        });
-      });
-
       describe('with an explicitly provided client_id', function() {
         it('Generates the correct URL', function() {
           var url = stripe.oAuth.authorizeUrl({client_id: '123abc'});
