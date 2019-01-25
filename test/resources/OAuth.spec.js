@@ -14,7 +14,7 @@ describe('OAuth', function() {
       });
 
       it('Uses the correct host', function() {
-        var url = stripe.oAuth.authorizeUrl();
+        var url = stripe.oauth.authorizeUrl();
 
         var host = URL.parse(url).hostname;
 
@@ -22,7 +22,7 @@ describe('OAuth', function() {
       });
 
       it('Uses the correct path', function() {
-        var url = stripe.oAuth.authorizeUrl({state: 'some_state'});
+        var url = stripe.oauth.authorizeUrl({state: 'some_state'});
 
         var pathname = URL.parse(url).pathname;
 
@@ -30,7 +30,7 @@ describe('OAuth', function() {
       });
 
       it('Uses the correct query', function() {
-        var url = stripe.oAuth.authorizeUrl({state: 'some_state'});
+        var url = stripe.oauth.authorizeUrl({state: 'some_state'});
 
         var query = qs.parse(URL.parse(url).query)
 
@@ -41,7 +41,7 @@ describe('OAuth', function() {
       });
 
       it('Uses a provided client_id instead of the default', function() {
-        var url = stripe.oAuth.authorizeUrl({client_id: '123abc'});
+        var url = stripe.oauth.authorizeUrl({client_id: '123abc'});
 
         var query = qs.parse(URL.parse(url).query)
 
@@ -50,7 +50,7 @@ describe('OAuth', function() {
 
       describe('for Express account', function() {
         it('Uses the correct path', function() {
-          var url = stripe.oAuth.authorizeUrl({}, {express: true});
+          var url = stripe.oauth.authorizeUrl({}, {express: true});
 
           var pathname = URL.parse(url).pathname;
 
@@ -62,7 +62,7 @@ describe('OAuth', function() {
 
   describe('token', function() {
     it('Sends the correct request', function() {
-      stripe.oAuth.token({
+      stripe.oauth.token({
         code: '123abc',
         grant_type: 'authorization_code'
       });
@@ -86,7 +86,7 @@ describe('OAuth', function() {
     });
 
     it('Sends the correct request without explicit client_id', function() {
-      stripe.oAuth.deauthorize({
+      stripe.oauth.deauthorize({
         stripe_user_id: 'some_user_id',
       });
 
@@ -103,7 +103,7 @@ describe('OAuth', function() {
     });
 
     it('Sends the correct request with explicit client_id', function() {
-      stripe.oAuth.deauthorize({
+      stripe.oauth.deauthorize({
         stripe_user_id: 'some_user_id',
         client_id: '123abc',
       });
