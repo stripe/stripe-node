@@ -50,12 +50,14 @@ describe('StripeResource', function() {
     };
 
     afterEach(function() {
-      nock.cleanAll();
+      realStripe.setMaxNetworkRetries(0);
+      stripe.setMaxNetworkRetries(0);
     });
 
     describe('_request', function() {
       // mock the 500
       nock('https://' + options.host)
+        .persist()
         .post(options.path, options.data)
         .replyWithError({
           type: 'StripeConnectionError'
@@ -67,6 +69,15 @@ describe('StripeResource', function() {
             type: 'StripeConnectionError'
           });
 
+          done();
+        });
+      });
+
+      it('should retry the connection if max retries are set', function(done) {
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.charges.create(options.data, function(err) {
+          expect(err.message).to.equal('An error occurred with our connection to Stripe. Request was retried 1 times.');
           done();
         });
       });
@@ -95,6 +106,21 @@ describe('StripeResource', function() {
         }, 0);
 
         expect(res).to.equal(false);
+      });
+    });
+
+    describe('_getSleepTime', function() {
+      it('should not exceed the maximum or minimum values', function() {
+        var sleepSeconds;
+        var max = stripe.getMaxNetworkRetryDelay();
+        var min = stripe.getInitialNetworkRetryDelay();
+
+        for (var i = 0; i < 10; i++) {
+          sleepSeconds = stripe.invoices._getSleepTime(i);
+
+          expect(sleepSeconds).to.be.at.most(max);
+          expect(sleepSeconds).to.be.at.least(min);
+        }
       });
     });
   });
