@@ -1,6 +1,8 @@
 'use strict';
 
-require('../testUtils');
+var utils = require('../testUtils');
+
+var nock = require('nock');
 
 var stripe = require('../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
@@ -30,6 +32,34 @@ describe('StripeResource', function() {
     it('does not the set the Stripe-Version header if no API version is provided', function() {
       var headers = stripe.invoices._defaultHeaders(null, 0, null);
       expect(headers).to.not.include.keys('Stripe-Version');
+    });
+  });
+
+  describe('_request', function() {
+    it('throws an error on connection failure', function() {
+      var stripe = require('../lib/stripe')(utils.getUserStripeKey());
+
+      var options = {
+        method: 'POST',
+        host: stripe.getConstant('DEFAULT_HOST'),
+        path: '/v1/charges',
+        data: {
+          amount: 1000,
+          currency: 'usd',
+          source: 'tok_visa',
+          description: 'test'
+        }
+      };
+
+      nock('https://' + options.host)
+        .get(options.path)
+        .reply(500, {
+          error: 'foo errors'
+        });
+
+      stripe.charges.create(options.data, function(err, charge) {
+        expect(err.message).to.equal('An error occurred with our connection to Stripe');
+      });
     });
   });
 });
