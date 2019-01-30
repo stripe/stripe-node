@@ -186,7 +186,7 @@ describe('StripeResource', function() {
       });
 
       it('should return false if the status is 200', function() {
-        stripe.setMaxNetworkRetries(1);
+        stripe.setMaxNetworkRetries(2);
 
         // mocking that we're on our 2nd request
         var res = stripe.invoices._shouldRetry({
