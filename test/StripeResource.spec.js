@@ -65,14 +65,10 @@ describe('StripeResource', function() {
         // mock the 500
         nock('https://' + options.host)
           .post(options.path, options.data)
-          .replyWithError({
-            type: 'StripeConnectionError'
-          });
+          .replyWithError('bad stuff');
 
         realStripe.charges.create(options.data, function(err, charge) {
-          expect(err.detail).to.deep.equal({
-            type: 'StripeConnectionError'
-          });
+          expect(err.detail.message).to.deep.equal('bad stuff');
 
           done();
         });
@@ -81,9 +77,7 @@ describe('StripeResource', function() {
       it('should retry the connection if max retries are set', function(done) {
         nock('https://' + options.host)
           .post(options.path, options.data)
-          .replyWithError({
-            type: 'StripeConnectionError'
-          });
+          .replyWithError('bad stuff');
 
         realStripe.setMaxNetworkRetries(1);
 
@@ -99,9 +93,7 @@ describe('StripeResource', function() {
         // fail the first request but succeed on the 2nd
         nock('https://' + options.host)
           .post(options.path, options.data)
-          .replyWithError({
-            type: 'StripeConnectionError'
-          })
+          .replyWithError('bad stuff')
           .post(options.path, options.data)
           .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
@@ -127,9 +119,7 @@ describe('StripeResource', function() {
 
         nock('https://' + options.host)
           .post(options.path, options.data)
-          .replyWithError({
-            type: 'StripeConnectionError'
-          })
+          .replyWithError('bad stuff')
           .post(options.path, options.data)
           .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
@@ -159,18 +149,22 @@ describe('StripeResource', function() {
 
       it('should return true if we have more retries available', function() {
         stripe.setMaxNetworkRetries(1);
-        var res = stripe.invoices._shouldRetry({
-          type: 'StripeConnectionError'
-        }, 0);
+        var res = stripe.invoices._shouldRetry({}, 0);
 
         expect(res).to.equal(true);
       });
 
-      it('should return false if the error is not an API or connection error', function() {
+      it('should return false if the error code is either 409 or 429', function() {
         stripe.setMaxNetworkRetries(1);
         var res = stripe.invoices._shouldRetry({
-          type: 'foo'
-        }, 0);
+          code: 409
+        }, 0)
+
+        expect(res).to.equal(false);
+
+        res = stripe.invoices._shouldRetry({
+          code: 429
+        }, 0)
 
         expect(res).to.equal(false);
       });
