@@ -174,13 +174,24 @@ describe('StripeResource', function() {
         stripe.setMaxNetworkRetries(1);
         var res = stripe.invoices._shouldRetry({
           statusCode: 409
-        }, 0)
+        }, 0);
 
         expect(res).to.equal(false);
 
         res = stripe.invoices._shouldRetry({
           statusCode: 429
-        }, 0)
+        }, 0);
+
+        expect(res).to.equal(false);
+      });
+
+      it('should return false if the status is 200', function() {
+        stripe.setMaxNetworkRetries(1);
+
+        // mocking that we're on our 2nd request
+        var res = stripe.invoices._shouldRetry({
+          statusCode: 200
+        }, 1);
 
         expect(res).to.equal(false);
       });
