@@ -54,6 +54,10 @@ describe('StripeResource', function() {
       stripe.setMaxNetworkRetries(0);
     });
 
+    after(function() {
+      nock.cleanAll();
+    })
+
     describe('_request', function() {
       // mock the 500
       nock('https://' + options.host)
