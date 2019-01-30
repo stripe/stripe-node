@@ -37,7 +37,7 @@ describe('StripeResource', function() {
   });
 
   describe('Retry Network Requests', function() {
-    // use a real instance of stripe as we're mocking the http.request responses
+    // Use a real instance of stripe as we're mocking the http.request responses.
     var realStripe = require('../lib/stripe')(utils.getUserStripeKey());
     var options = {
       host: stripe.getConstant('DEFAULT_HOST'),
@@ -62,7 +62,7 @@ describe('StripeResource', function() {
 
     describe('_request', function() {
       it('throws an error on connection failure', function(done) {
-        // mock the connection error
+        // Mock the connection error.
         nock('https://' + options.host)
           .post(options.path, options.params)
           .replyWithError('bad stuff');
@@ -166,7 +166,7 @@ describe('StripeResource', function() {
       it('should add an idempotency key for retries using the POST method', function(done) {
         var headers;
 
-        // fail the first request but succeed on the 2nd
+        // Fail the first request but succeed on the 2nd.
         nock('https://' + options.host)
           .post(options.path, options.params)
           .replyWithError('bad stuff')
