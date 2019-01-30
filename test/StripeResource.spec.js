@@ -1,6 +1,7 @@
 'use strict';
 
 var utils = require('../testUtils');
+var uuid = require('../lib/utils').getUUID;
 
 var nock = require('nock');
 
@@ -59,15 +60,15 @@ describe('StripeResource', function() {
     })
 
     describe('_request', function() {
-      // mock the 500
-      nock('https://' + options.host)
-        .persist()
-        .post(options.path, options.data)
-        .replyWithError({
-          type: 'StripeConnectionError'
-        });
 
       it('throws an error on connection failure', function(done) {
+        // mock the 500
+        nock('https://' + options.host)
+          .post(options.path, options.data)
+          .replyWithError({
+            type: 'StripeConnectionError'
+          });
+
         realStripe.charges.create(options.data, function(err, charge) {
           expect(err.detail).to.deep.equal({
             type: 'StripeConnectionError'
@@ -78,10 +79,72 @@ describe('StripeResource', function() {
       });
 
       it('should retry the connection if max retries are set', function(done) {
+        nock('https://' + options.host)
+          .post(options.path, options.data)
+          .replyWithError({
+            type: 'StripeConnectionError'
+          });
+
         realStripe.setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, function(err) {
           expect(err.message).to.equal('An error occurred with our connection to Stripe. Request was retried 1 times.');
+          done();
+        });
+      });
+
+      it('should add an idempotency key for retries using the POST method', function(done) {
+        var headers;
+
+        // fail the first request but succeed on the 2nd
+        nock('https://' + options.host)
+          .post(options.path, options.data)
+          .replyWithError({
+            type: 'StripeConnectionError'
+          })
+          .post(options.path, options.data)
+          .reply(function(uri, requestBody, cb) {
+            headers = this.req.headers;
+
+            return cb(null, [200, {
+              id: 'ch_123"',
+              object: 'charge',
+              amount: 1000,
+            }]);
+          });
+
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.charges.create(options.data, function(err, charge) {
+          expect(headers).to.have.property('idempotency-key');
+          done();
+        });
+      });
+
+      it('should reuse the given idempotency key provided for retries', function(done) {
+        var key = uuid();
+        var headers;
+
+        nock('https://' + options.host)
+          .post(options.path, options.data)
+          .replyWithError({
+            type: 'StripeConnectionError'
+          })
+          .post(options.path, options.data)
+          .reply(function(uri, requestBody, cb) {
+            headers = this.req.headers;
+
+            return cb(null, [200, {
+              id: 'ch_123"',
+              object: 'charge',
+              amount: 1000,
+            }]);
+          });
+
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.charges.create(options.data, {idempotency_key: key}, function(err, charge) {
+          expect(headers['idempotency-key']).to.equal(key);
           done();
         });
       });
