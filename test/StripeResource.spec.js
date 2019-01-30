@@ -62,14 +62,13 @@ describe('StripeResource', function() {
     describe('_request', function() {
 
       it('throws an error on connection failure', function(done) {
-        // mock the 500
+        // mock the connection error
         nock('https://' + options.host)
           .post(options.path, options.data)
           .replyWithError('bad stuff');
 
         realStripe.charges.create(options.data, function(err, charge) {
           expect(err.detail.message).to.deep.equal('bad stuff');
-
           done();
         });
       });
@@ -83,6 +82,23 @@ describe('StripeResource', function() {
 
         realStripe.charges.create(options.data, function(err) {
           expect(err.message).to.equal('An error occurred with our connection to Stripe. Request was retried 1 times.');
+          done();
+        });
+      });
+
+      it('shouldn\'t retry on rate limit error', function(done) {
+        nock('https://' + options.host)
+          .post(options.path, options.data)
+          .reply(429, {
+            error: {
+              message: 'Rate limited'
+            }
+          });
+
+        realStripe.getMaxNetworkRetries(1);
+
+        realStripe.charges.create(options.data, function(err, charge) {
+          expect(err.type).to.equal('StripeRateLimitError');
           done();
         });
       });
@@ -157,13 +173,13 @@ describe('StripeResource', function() {
       it('should return false if the error code is either 409 or 429', function() {
         stripe.setMaxNetworkRetries(1);
         var res = stripe.invoices._shouldRetry({
-          code: 409
+          statusCode: 409
         }, 0)
 
         expect(res).to.equal(false);
 
         res = stripe.invoices._shouldRetry({
-          code: 429
+          statusCode: 429
         }, 0)
 
         expect(res).to.equal(false);
