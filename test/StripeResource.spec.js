@@ -47,7 +47,8 @@ describe('StripeResource', function() {
         currency: 'usd',
         source: 'tok_visa',
         description: 'test'
-      }
+      },
+      params: 'amount=1000&currency=usd&source=tok_visa&description=test'
     };
 
     afterEach(function() {
@@ -60,11 +61,10 @@ describe('StripeResource', function() {
     })
 
     describe('_request', function() {
-
       it('throws an error on connection failure', function(done) {
         // mock the connection error
         nock('https://' + options.host)
-          .post(options.path, options.data)
+          .post(options.path, options.params)
           .replyWithError('bad stuff');
 
         realStripe.charges.create(options.data, function(err, charge) {
@@ -75,42 +75,101 @@ describe('StripeResource', function() {
 
       it('should retry the connection if max retries are set', function(done) {
         nock('https://' + options.host)
-          .post(options.path, options.data)
-          .replyWithError('bad stuff');
+          .post(options.path, options.params)
+          .replyWithError('bad stuff')
+          .post(options.path, options.params)
+          .replyWithError('worse stuff');
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, function(err) {
+        realStripe.charges.create(options.data, function(err, charge) {
           expect(err.message).to.equal('An error occurred with our connection to Stripe. Request was retried 1 times.');
           done();
         });
       });
 
-      it('shouldn\'t retry on rate limit error', function(done) {
+      it('should stop retrying after a successful retry', function(done) {
         nock('https://' + options.host)
-          .post(options.path, options.data)
+          .post(options.path, options.params)
+          .replyWithError('bad stuff')
+          .post(options.path, options.params)
+          .reply(200, {
+            id: 'ch_123',
+            object: 'charge',
+            amount: 1000,
+          });
+
+        realStripe.setMaxNetworkRetries(2);
+
+        realStripe.charges.create(options.data, function(err, charge) {
+          expect(charge.id).to.equal('ch_123');
+          done();
+        });
+      });
+
+      it('should retry on rate limit error', function(done) {
+        nock('https://' + options.host)
+          .post(options.path, options.params)
           .reply(429, {
             error: {
               message: 'Rate limited'
             }
+          })
+          .post(options.path, options.params)
+          .reply(200, {
+            id: 'ch_123',
+            object: 'charge',
+            amount: 1000,
           });
 
-        realStripe.getMaxNetworkRetries(1);
+        realStripe.setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, function(err, charge) {
-          expect(err.type).to.equal('StripeRateLimitError');
+          expect(charge.id).to.equal('ch_123');
           done();
         });
       });
+
+      it('should not retry on a 400 error', function(done) {
+        nock('https://' + options.host)
+          .post(options.path, options.params)
+          .reply(400, {
+            error: {
+              message: 'You goofed'
+            }
+          });
+
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.charges.create(options.data, function(err, charge) {
+          expect(err).to.not.be.null;
+          done();
+        });
+      });
+
+      it('should not retry on a 500 error', function(done) {
+        nock('https://' + options.host)
+          .post(options.path, options.params)
+          .reply(500, {
+            error: {
+              message: 'We goofed'
+            }
+          });
+
+        realStripe.charges.create(options.data, function(err, charge) {
+          expect(err).to.not.be.null;
+          done();
+        });
+      })
 
       it('should add an idempotency key for retries using the POST method', function(done) {
         var headers;
 
         // fail the first request but succeed on the 2nd
         nock('https://' + options.host)
-          .post(options.path, options.data)
+          .post(options.path, options.params)
           .replyWithError('bad stuff')
-          .post(options.path, options.data)
+          .post(options.path, options.params)
           .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
 
@@ -134,9 +193,9 @@ describe('StripeResource', function() {
         var headers;
 
         nock('https://' + options.host)
-          .post(options.path, options.data)
+          .post(options.path, options.params)
           .replyWithError('bad stuff')
-          .post(options.path, options.data)
+          .post(options.path, options.params)
           .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
 
@@ -158,31 +217,35 @@ describe('StripeResource', function() {
 
     describe('_shouldRetry', function() {
       it('should return false if we\'ve reached maximum retries', function() {
-        var res = stripe.invoices._shouldRetry({}, 0);
+        var res = stripe.invoices._shouldRetry({
+          statusCode: 429
+        }, 0);
 
         expect(res).to.equal(false);
       });
 
       it('should return true if we have more retries available', function() {
         stripe.setMaxNetworkRetries(1);
-        var res = stripe.invoices._shouldRetry({}, 0);
+        var res = stripe.invoices._shouldRetry({
+          statusCode: 429
+        }, 0);
 
         expect(res).to.equal(true);
       });
 
-      it('should return false if the error code is either 409 or 429', function() {
+      it('should return true if the error code is either 409 or 429', function() {
         stripe.setMaxNetworkRetries(1);
         var res = stripe.invoices._shouldRetry({
           statusCode: 409
         }, 0);
 
-        expect(res).to.equal(false);
+        expect(res).to.equal(true);
 
         res = stripe.invoices._shouldRetry({
           statusCode: 429
         }, 0);
 
-        expect(res).to.equal(false);
+        expect(res).to.equal(true);
       });
 
       it('should return false if the status is 200', function() {
