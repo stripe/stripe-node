@@ -1,7 +1,7 @@
 'use strict';
 
 var utils = require('../testUtils');
-var uuid = require('../lib/utils').getUUID;
+var uuid = require('uuid/v4');
 
 var nock = require('nock');
 
@@ -67,7 +67,7 @@ describe('StripeResource', function() {
           .post(options.path, options.params)
           .replyWithError('bad stuff');
 
-        realStripe.charges.create(options.data, function(err, charge) {
+        realStripe.charges.create(options.data, function(err) {
           expect(err.detail.message).to.deep.equal('bad stuff');
           done();
         });
@@ -82,8 +82,9 @@ describe('StripeResource', function() {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, function(err, charge) {
-          expect(err.message).to.equal('An error occurred with our connection to Stripe. Request was retried 1 times.');
+        realStripe.charges.create(options.data, function(err) {
+          var errorMessage = realStripe.invoices._generateConnectionErrorMessage(1);
+          expect(err.message).to.equal(errorMessage);
           done();
         });
       });
@@ -141,7 +142,7 @@ describe('StripeResource', function() {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, function(err, charge) {
+        realStripe.charges.create(options.data, function(err) {
           expect(err).to.not.be.null;
           done();
         });
@@ -156,7 +157,7 @@ describe('StripeResource', function() {
             }
           });
 
-        realStripe.charges.create(options.data, function(err, charge) {
+        realStripe.charges.create(options.data, function(err) {
           expect(err).to.not.be.null;
           done();
         });
@@ -182,7 +183,7 @@ describe('StripeResource', function() {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, function(err, charge) {
+        realStripe.charges.create(options.data, function() {
           expect(headers).to.have.property('idempotency-key');
           done();
         });
@@ -208,7 +209,7 @@ describe('StripeResource', function() {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, {idempotency_key: key}, function(err, charge) {
+        realStripe.charges.create(options.data, {idempotency_key: key}, function() {
           expect(headers['idempotency-key']).to.equal(key);
           done();
         });
