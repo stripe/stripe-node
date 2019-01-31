@@ -73,7 +73,7 @@ describe('StripeResource', function() {
         });
       });
 
-      it('should retry the connection if max retries are set', function(done) {
+      it('should retry the request if max retries are set', function(done) {
         nock('https://' + options.host)
           .post(options.path, options.params)
           .replyWithError('bad stuff')
@@ -85,6 +85,7 @@ describe('StripeResource', function() {
         realStripe.charges.create(options.data, function(err) {
           var errorMessage = realStripe.invoices._generateConnectionErrorMessage(1);
           expect(err.message).to.equal(errorMessage);
+          expect(err.detail.message).to.deep.equal('worse stuff');
           done();
         });
       });
@@ -136,14 +137,14 @@ describe('StripeResource', function() {
           .post(options.path, options.params)
           .reply(400, {
             error: {
-              message: 'You goofed'
+              type: 'card_error'
             }
           });
 
         realStripe.setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, function(err) {
-          expect(err).to.not.be.null;
+          expect(err.type).to.equal('StripeCardError');
           done();
         });
       });
@@ -153,12 +154,12 @@ describe('StripeResource', function() {
           .post(options.path, options.params)
           .reply(500, {
             error: {
-              message: 'We goofed'
+              type: 'api_error'
             }
           });
 
         realStripe.charges.create(options.data, function(err) {
-          expect(err).to.not.be.null;
+          expect(err.type).to.equal('StripeAPIError');
           done();
         });
       })
@@ -185,6 +186,31 @@ describe('StripeResource', function() {
 
         realStripe.charges.create(options.data, function() {
           expect(headers).to.have.property('idempotency-key');
+          done();
+        });
+      });
+
+      it('should not add idempotency key for retries using the GET method', function(done) {
+        var headers;
+
+        nock('https://' + options.host)
+          .get(options.path + '/ch_123')
+          .replyWithError('bad stuff')
+          .get(options.path + '/ch_123')
+          .reply(function(uri, requestBody, cb) {
+            headers = this.req.headers;
+
+            return cb(null, [200, {
+              id: 'ch_123"',
+              object: 'charge',
+              amount: 1000,
+            }]);
+          });
+
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.charges.retrieve('ch_123', function() {
+          expect(headers).to.not.have.property('idempotency-key');
           done();
         });
       });
@@ -218,9 +244,10 @@ describe('StripeResource', function() {
 
     describe('_shouldRetry', function() {
       it('should return false if we\'ve reached maximum retries', function() {
+        stripe.setMaxNetworkRetries(1);
         var res = stripe.invoices._shouldRetry({
           statusCode: 429
-        }, 0);
+        }, 1);
 
         expect(res).to.equal(false);
       });
