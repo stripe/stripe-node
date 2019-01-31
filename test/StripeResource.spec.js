@@ -261,14 +261,14 @@ describe('StripeResource', function() {
       });
     });
 
-    describe('_getSleepTime', function() {
+    describe('_getSleepTimeInMS', function() {
       it('should not exceed the maximum or minimum values', function() {
         var sleepSeconds;
         var max = stripe.getMaxNetworkRetryDelay();
         var min = stripe.getInitialNetworkRetryDelay();
 
         for (var i = 0; i < 10; i++) {
-          sleepSeconds = stripe.invoices._getSleepTime(i);
+          sleepSeconds = stripe.invoices._getSleepTimeInMS(i) / 1000;
 
           expect(sleepSeconds).to.be.at.most(max);
           expect(sleepSeconds).to.be.at.least(min);
