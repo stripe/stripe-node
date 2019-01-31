@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.23.0 - 2019-01-30
+* [#557](https://github.com/stripe/stripe-node/pull/557) Add configurable telemetry to gather information on client-side request latency
+
 ## 6.22.0 - 2019-01-25
 * [#555](https://github.com/stripe/stripe-node/pull/555) Add support for OAuth methods
 
