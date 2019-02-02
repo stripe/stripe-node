@@ -9,9 +9,9 @@ describe('Payment Intents Resource', function() {
   describe('create', function() {
     it('Sends the correct request', function() {
       var params = {
-        allowed_source_types: ['card'],
         amount: 200,
         currency: 'usd',
+        payment_method_types: ['card'],
       };
       stripe.paymentIntents.create(params);
       expect(stripe.LAST_REQUEST).to.deep.equal({
