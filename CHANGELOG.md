@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.23.1 - 2019-02-04
+* [#560](https://github.com/stripe/stripe-node/pull/560) Enable persistent connections by default
+
 ## 6.23.0 - 2019-01-30
 * [#557](https://github.com/stripe/stripe-node/pull/557) Add configurable telemetry to gather information on client-side request latency
 
