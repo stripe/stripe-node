@@ -147,14 +147,12 @@ if (process.env.http_proxy) {
 
 ### Network retries
 
-Network retry amount can be added with `setMaxNetworkRetries`. This will automatically retry a request `n` amount of times if it failed due to a connection, conflict or rate limiting error.
+Automatic network retries can be enabled with `setMaxNetworkRetries`. This will retry requests `n` times with exponential backoff if they fail due to connection, conflict or rate limiting errors. [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
 ```js
 // Retry a request once before giving up
 stripe.setMaxNetworkRetries(1);
 ```
-
-For POST requests, this will automatically add a [idempotency key](https://stripe.com/docs/api/idempotent_requests) if one is not already set to prevent duplication.
 
 ### Examining Responses
 
