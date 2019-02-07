@@ -149,7 +149,7 @@ describe('StripeResource', function() {
         });
       });
 
-      it('should not retry on a 500 error', function(done) {
+      it('should not retry on a 500 error when the method is POST', function(done) {
         nock('https://' + options.host)
           .post(options.path, options.params)
           .reply(500, {
@@ -158,11 +158,59 @@ describe('StripeResource', function() {
             }
           });
 
+        realStripe.setMaxNetworkRetries(1);
+
         realStripe.charges.create(options.data, function(err) {
           expect(err.type).to.equal('StripeAPIError');
           done();
         });
-      })
+      });
+
+      it('should retry on a 503 error when the method is POST', function(done) {
+        nock('https://' + options.host)
+          .post(options.path, options.params)
+          .reply(503, {
+            error: {
+              message: 'Service unavailable'
+            }
+          })
+          .post(options.path, options.params)
+          .reply(200, {
+            id: 'ch_123',
+            object: 'charge',
+            amount: 1000,
+          });
+
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.charges.create(options.data, function(err, charge) {
+          expect(charge.id).to.equal('ch_123');
+          done();
+        });
+      });
+
+      it('should retry on a 500 error when the method is GET', function(done) {
+        nock('https://' + options.host)
+          .get(options.path + '/ch_123')
+          .reply(500, {
+            error: {
+              type: 'api_error'
+            }
+          })
+          .get(options.path + '/ch_123')
+          .reply(200, {
+            id: 'ch_123',
+            object: 'charge',
+            amount: 1000,
+          });
+
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.charges.retrieve('ch_123', function(err, charge) {
+          expect(charge.id).to.equal('ch_123');
+          done();
+        });
+      });
 
       it('should add an idempotency key for retries using the POST method', function(done) {
         var headers;
@@ -281,7 +329,8 @@ describe('StripeResource', function() {
 
         // mocking that we're on our 2nd request
         var res = stripe.invoices._shouldRetry({
-          statusCode: 200
+          statusCode: 200,
+          req: {_requestEvent: {method: 'POST'}}
         }, 1);
 
         expect(res).to.equal(false);
