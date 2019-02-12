@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.24.0 - 2019-02-12
+* [#562](https://github.com/stripe/stripe-node/pull/562) Add support for `SubscriptionSchedule` and `SubscriptionScheduleRevision`
+
 ## 6.23.1 - 2019-02-04
 * [#560](https://github.com/stripe/stripe-node/pull/560) Enable persistent connections by default
 
