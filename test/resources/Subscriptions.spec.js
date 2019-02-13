@@ -78,12 +78,12 @@ describe('subscriptions Resource', function() {
         url: '/v1/subscriptions/test_sub',
         headers: {},
         data: {
-          items: {
-            '0': {
-              'plan': 'foo',
-              'quantity': 2,
+          items: [
+            {
+              plan: 'foo',
+              quantity: 2,
             },
-          },
+          ],
         },
       });
     });
@@ -105,12 +105,12 @@ describe('subscriptions Resource', function() {
         url: '/v1/subscriptions',
         headers: {},
         data: {
-          items: {
-            '0': {
-              'plan': 'foo',
-              'quantity': 2,
+          items: [
+            {
+              plan: 'foo',
+              quantity: 2,
             },
-          },
+          ],
         },
       });
     });
