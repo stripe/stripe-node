@@ -39,6 +39,12 @@ describe('StripeResource', function() {
   describe('Retry Network Requests', function() {
     // Use a real instance of stripe as we're mocking the http.request responses.
     var realStripe = require('../lib/stripe')(utils.getUserStripeKey());
+
+    // Override the sleep timer to speed up tests
+    realStripe.charges._getSleepTimeInMS = function() {
+      return 0;
+    };
+
     var options = {
       host: stripe.getConstant('DEFAULT_HOST'),
       path: '/v1/charges',
