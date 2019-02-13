@@ -115,12 +115,12 @@ describe('StripeResource', function() {
         });
       });
 
-      it('should retry on rate limit error', function(done) {
+      it('should retry on a 409 error', function(done) {
         nock('https://' + options.host)
           .post(options.path, options.params)
-          .reply(429, {
+          .reply(409, {
             error: {
-              message: 'Rate limited'
+              message: 'Conflict'
             }
           })
           .post(options.path, options.params)
@@ -300,7 +300,7 @@ describe('StripeResource', function() {
       it('should return false if we\'ve reached maximum retries', function() {
         stripe.setMaxNetworkRetries(1);
         var res = stripe.invoices._shouldRetry({
-          statusCode: 429
+          statusCode: 409
         }, 1);
 
         expect(res).to.equal(false);
@@ -309,13 +309,13 @@ describe('StripeResource', function() {
       it('should return true if we have more retries available', function() {
         stripe.setMaxNetworkRetries(1);
         var res = stripe.invoices._shouldRetry({
-          statusCode: 429
+          statusCode: 409
         }, 0);
 
         expect(res).to.equal(true);
       });
 
-      it('should return true if the error code is either 409 or 429', function() {
+      it('should return true if the error code is either 409 or 503', function() {
         stripe.setMaxNetworkRetries(1);
         var res = stripe.invoices._shouldRetry({
           statusCode: 409
@@ -324,7 +324,7 @@ describe('StripeResource', function() {
         expect(res).to.equal(true);
 
         res = stripe.invoices._shouldRetry({
-          statusCode: 429
+          statusCode: 503
         }, 0);
 
         expect(res).to.equal(true);
