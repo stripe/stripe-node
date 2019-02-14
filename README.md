@@ -147,7 +147,7 @@ if (process.env.http_proxy) {
 
 ### Network retries
 
-Automatic network retries can be enabled with `setMaxNetworkRetries`. This will retry requests `n` times with exponential backoff if they fail due to connection or conflict errors. [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
+Automatic network retries can be enabled with `setMaxNetworkRetries`. This will retry requests `n` times with exponential backoff if they fail due to an intermittent network problem. [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
 ```js
 // Retry a request once before giving up
