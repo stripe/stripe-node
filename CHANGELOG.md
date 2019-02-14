@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.25.0 - 2019-02-13
+* [#559](https://github.com/stripe/stripe-node/pull/559) Add `stripe.setMaxNetworkRetries(n)` for automatic network retries
+
 ## 6.24.0 - 2019-02-12
 * [#562](https://github.com/stripe/stripe-node/pull/562) Add support for `SubscriptionSchedule` and `SubscriptionScheduleRevision`
 
