@@ -34,7 +34,7 @@ describe('utils', function() {
     });
 
     it('Handles deeply nested object', function() {
-      expect(decodeURI(utils.stringifyRequestData({
+      expect(utils.stringifyRequestData({
         a: {
           b: {
             c: {
@@ -42,25 +42,25 @@ describe('utils', function() {
             },
           },
         },
-      }))).to.equal('a[b][c][d]=2');
+      })).to.equal('a[b][c][d]=2');
     });
 
     it('Handles arrays of objects', function() {
-      expect(decodeURI(utils.stringifyRequestData({
+      expect(utils.stringifyRequestData({
         a: [
           {b: 'c'},
           {b: 'd'},
         ],
-      }))).to.equal('a[][b]=c&a[][b]=d');
+      })).to.equal('a[0][b]=c&a[1][b]=d');
     })
 
     it('Handles indexed arrays', function() {
-      expect(decodeURI(utils.stringifyRequestData({
+      expect(utils.stringifyRequestData({
         a: {
-          0: 'c',
-          1: 'd',
+          0: {b: 'c'},
+          1: {b: 'd'},
         },
-      }))).to.equal('a[0]=c&a[1]=d');
+      })).to.equal('a[0][b]=c&a[1][b]=d');
     })
 
     it('Creates a string from an object, handling shallow nested objects', function() {
@@ -76,17 +76,9 @@ describe('utils', function() {
         'test=1',
         'foo=baz',
         'somethingElse=%3A%3A%22%22%25%26',
-        'nested%5B1%5D=2', // Unencoded: nested[1]=2
-        'nested%5Ba%20n%20o%20t%20h%20e%20r%5D=',
+        'nested[1]=2',
+        'nested[a%20n%20o%20t%20h%20e%20r]=',
       ].join('&'));
-    });
-
-    describe('Stripe-specific cases', function() {
-      it('Handles the `expand` array correctly (producing the form `expand[]=_` for each item', function() {
-        expect(decodeURI(utils.stringifyRequestData({
-          expand: ['a', 'foo', 'a.b.c'],
-        }))).to.equal('expand[]=a&expand[]=foo&expand[]=a.b.c');
-      });
     });
   });
 
@@ -243,48 +235,6 @@ describe('utils', function() {
 
         done();
       });
-    });
-  });
-
-  describe('encodeParamWithIntegerIndexes', function() {
-    it('handles param not existing in data', function() {
-      var data = {'someParam': ['foo']};
-      expect(utils.encodeParamWithIntegerIndexes('anotherParam', data)).to.deep.equal(data);
-    });
-
-    it('encodes just the specified param with integer indexes', function() {
-      var data = {'paramToEncode': ['value1', 'value2'], 'anotherParam': ['foo']};
-      var expectedData = {'paramToEncode': {'0': 'value1', '1': 'value2'}, 'anotherParam': ['foo']};
-      expect(utils.encodeParamWithIntegerIndexes('paramToEncode', data)).to.deep.equal(expectedData);
-    });
-
-    it('encodes just the specified param with integer indexes when used via partial application', function() {
-      var data = {'paramToEncode': ['value1', 'value2'], 'anotherParam': ['foo']};
-      var expectedData = {'paramToEncode': {'0': 'value1', '1': 'value2'}, 'anotherParam': ['foo']};
-      var partial = utils.encodeParamWithIntegerIndexes.bind(null, 'paramToEncode');
-      expect(partial(data)).to.deep.equal(expectedData);
-    });
-
-    it('does not mutate input variables', function() {
-      var data = {'paramToEncode': ['value1']};
-      var expectedData = {'paramToEncode': {'0': 'value1'}};
-      expect(utils.encodeParamWithIntegerIndexes('paramToEncode', data)).to.deep.equal(expectedData);
-      expect(data).not.to.deep.equal(expectedData);
-      expect(Array.isArray(data.paramToEncode)).to.equal(true);
-    });
-  });
-
-  describe('arrayToObject', function() {
-    it('handles an empty array', function() {
-      expect(utils.arrayToObject([])).to.deep.equal({});
-    });
-    it('handles an array of integers', function() {
-      var arr = [1, 3];
-      expect(utils.arrayToObject(arr)).to.deep.equal({'0': 1, '1': 3});
-    });
-    it('ignores passes non-array data through', function() {
-      var arr = '3';
-      expect(utils.arrayToObject(arr)).to.deep.equal('3');
     });
   });
 

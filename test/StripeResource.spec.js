@@ -36,6 +36,64 @@ describe('StripeResource', function() {
     });
   });
 
+  describe('Parameter encoding', function() {
+    // Use a real instance of stripe as we're mocking the http.request responses.
+    var realStripe = require('../lib/stripe')(utils.getUserStripeKey());
+
+    after(function() {
+      nock.cleanAll();
+    })
+
+    describe('_request', function() {
+      it('encodes the query string in GET requests', function(done) {
+        var options = {
+          host: stripe.getConstant('DEFAULT_HOST'),
+          path: '/v1/invoices/upcoming',
+          data: {
+            subscription_items: [
+              {plan: 'foo', quantity: 2},
+              {id: 'si_123', deleted: true},
+            ],
+          },
+        };
+
+        const scope = nock('https://' + options.host)
+          .get(options.path)
+          .query(Object.assign({customer: 'cus_123'}, options.data))
+          .reply(200, '{}');
+
+        realStripe.invoices.retrieveUpcoming('cus_123', options.data, function(err, response) {
+          done();
+          scope.done();
+        });
+      });
+
+      it('encodes the body in POST requests', function(done) {
+        var options = {
+          host: stripe.getConstant('DEFAULT_HOST'),
+          path: '/v1/subscriptions/sub_123',
+          data: {
+            customer: 'cus_123',
+            items: [
+              {plan: 'foo', quantity: 2},
+              {id: 'si_123', deleted: true},
+            ],
+          },
+          body: 'customer=cus_123&items[0][plan]=foo&items[0][quantity]=2&items[1][id]=si_123&items[1][deleted]=true',
+        };
+
+        const scope = nock('https://' + options.host)
+          .post(options.path, options.body)
+          .reply(200, '{}');
+
+        realStripe.subscriptions.update('sub_123', options.data, function(err, response) {
+          done();
+          scope.done();
+        });
+      });
+    });
+  });
+
   describe('Retry Network Requests', function() {
     // Use a real instance of stripe as we're mocking the http.request responses.
     var realStripe = require('../lib/stripe')(utils.getUserStripeKey());

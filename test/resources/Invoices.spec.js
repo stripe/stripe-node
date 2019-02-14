@@ -113,7 +113,7 @@ describe('Invoices Resource', function() {
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/invoices/upcoming?customer=cus_123&' +
-            'subscription_items%5B0%5D%5Bplan%5D=potato&subscription_items%5B1%5D%5Bplan%5D=rutabaga',
+            'subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
           headers: {},
           data: {},
         });
@@ -137,18 +137,11 @@ describe('Invoices Resource', function() {
           url: '/v1/invoices/upcoming?customer=cus_123&subscription=sub_123',
           headers: {},
           data: {
-            subscription_items: {
-              0: {
-                plan: 'potato',
-              },
-              1: {
-                plan: 'rutabaga',
-              },
-              2: {
-                deleted: true,
-                id: 'SOME_ID',
-              },
-            },
+            subscription_items: [
+              {plan: 'potato'},
+              {plan: 'rutabaga'},
+              {id: 'SOME_ID', deleted: true},
+            ],
             subscription_prorate: true,
           },
         });
