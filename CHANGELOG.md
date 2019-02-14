@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.25.1 - 2019-02-14
+* [#565](https://github.com/stripe/stripe-node/pull/565) Always encode arrays as integer-indexed hashes
+
 ## 6.25.0 - 2019-02-13
 * [#559](https://github.com/stripe/stripe-node/pull/559) Add `stripe.setMaxNetworkRetries(n)` for automatic network retries
 
