@@ -251,4 +251,18 @@ describe('Stripe Module', function() {
       }).type).to.equal('StripeInvalidRequestError');
     });
   });
+
+  describe('setMaxNetworkRetries', function() {
+    describe('when given an empty or non-number variable', function() {
+      it('should error', function() {
+        expect(function() {
+          stripe.setMaxNetworkRetries('foo');
+        }).to.throw(/maxNetworkRetries must be a number/);
+
+        expect(function() {
+          stripe.setMaxNetworkRetries();
+        }).to.throw(/maxNetworkRetries must be a number/);
+      });
+    });
+  });
 });

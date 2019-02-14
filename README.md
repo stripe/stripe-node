@@ -62,8 +62,8 @@ const stripe = Stripe('sk_test_...');
 
 ### Usage with TypeScript
 
-Stripe does not currently maintain typings for this package, but there are 
-community typings available from DefinitelyTyped. 
+Stripe does not currently maintain typings for this package, but there are
+community typings available from DefinitelyTyped.
 
 To install:
 
@@ -143,6 +143,15 @@ if (process.env.http_proxy) {
   const ProxyAgent = require('https-proxy-agent');
   stripe.setHttpAgent(new ProxyAgent(process.env.http_proxy));
 }
+```
+
+### Network retries
+
+Automatic network retries can be enabled with `setMaxNetworkRetries`. This will retry requests `n` times with exponential backoff if they fail due to connection, conflict or rate limiting errors. [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
+
+```js
+// Retry a request once before giving up
+stripe.setMaxNetworkRetries(1);
 ```
 
 ### Examining Responses

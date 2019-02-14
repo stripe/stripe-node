@@ -32,12 +32,14 @@
     "eslint": "^4.19.1",
     "eslint-plugin-chai-friendly": "^0.4.0",
     "mocha": "~5.0.5",
+    "nock": "^9.0.0",
     "nyc": "^11.3.0"
   },
   "dependencies": {
     "lodash.isplainobject": "^4.0.6",
     "qs": "~6.5.1",
-    "safe-buffer": "^5.1.1"
+    "safe-buffer": "^5.1.1",
+    "uuid": "^3.3.2"
   },
   "license": "MIT",
   "scripts": {
