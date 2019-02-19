@@ -75,7 +75,7 @@ To use:
 
 ```ts
 // Note `* as` and `new Stripe` for TypeScript:
-import * as Stripe from 'stripe';
+import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
 
 const customer: Promise<Stripe.customers.ICustomer> = stripe.customers.create(/* ... */);
