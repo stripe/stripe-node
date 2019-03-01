@@ -33,6 +33,20 @@ describe('utils', function() {
       })).to.equal('a=1&b=foo');
     });
 
+    it('Handles Dates', function() {
+      expect(utils.stringifyRequestData({
+        date: new Date('2009-02-13T23:31:30Z'),
+        created: {
+          gte: new Date('2009-02-13T23:31:30Z'),
+          lt: new Date('2044-05-01T01:28:21Z'),
+        },
+      })).to.equal([
+        'date=1234567890',
+        'created[gte]=1234567890',
+        'created[lt]=2345678901'
+      ].join('&'));
+    });
+
     it('Handles deeply nested object', function() {
       expect(utils.stringifyRequestData({
         a: {
