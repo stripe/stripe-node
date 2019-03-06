@@ -39,5 +39,17 @@ describe('Checkout', function () {
         });
       });
     });
+
+    describe('retrieve', function() {
+      it('Sends the correct request', function() {
+        stripe.checkout.sessions.retrieve('cs_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/checkout/sessions/cs_123',
+          data: {},
+          headers: {},
+        });
+      });
+    });
   });
 });
