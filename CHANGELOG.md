@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.26.0 - 2019-03-11
+* [#574](https://github.com/stripe/stripe-node/pull/574) Encode `Date`s as Unix timestamps
+
 ## 6.25.1 - 2019-02-14
 * [#565](https://github.com/stripe/stripe-node/pull/565) Always encode arrays as integer-indexed hashes
 
