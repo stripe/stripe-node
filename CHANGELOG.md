@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.26.1 - 2019-03-14
+* [#580](https://github.com/stripe/stripe-node/pull/580) Fix support for HTTPS proxies
+
 ## 6.26.0 - 2019-03-11
 * [#574](https://github.com/stripe/stripe-node/pull/574) Encode `Date`s as Unix timestamps
 
