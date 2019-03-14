@@ -7,7 +7,6 @@ var stripe = require('../lib/stripe')(
 );
 
 var http = require('http');
-var https = require('https');
 
 var expect = require('chai').expect;
 
@@ -23,36 +22,6 @@ describe('Stripe Module', function() {
   describe('setApiKey', function() {
     it('uses Bearer auth', function() {
       expect(stripe.getApiField('auth')).to.equal('Bearer ' + testUtils.getUserStripeKey());
-    });
-  });
-
-  describe('setHttpAgent', function() {
-    var origHttpAgent, origHttpsAgent;
-    beforeEach(function() {
-      origHttpAgent = stripe.getApiField('http_agent');
-      origHttpsAgent = stripe.getApiField('https_agent');
-      stripe._setApiField('http_agent', null);
-      stripe._setApiField('https_agent', null);
-    });
-    afterEach(function() {
-      stripe._setApiField('http_agent', origHttpAgent);
-      stripe._setApiField('https_agent', origHttpsAgent);
-    });
-    describe('when given an https.Agent', function() {
-      it('should save the agent as https_agent', function() {
-        var agent = new https.Agent();
-        stripe.setHttpAgent(agent);
-        expect(stripe.getApiField('https_agent')).to.equal(agent);
-        expect(stripe.getApiField('http_agent')).to.be.null;
-      });
-    });
-    describe('when given an http.Agent', function() {
-      it('should save the agent as http_agent', function() {
-        var agent = new http.Agent();
-        stripe.setHttpAgent(agent);
-        expect(stripe.getApiField('http_agent')).to.equal(agent);
-        expect(stripe.getApiField('https_agent')).to.be.null;
-      });
     });
   });
 
