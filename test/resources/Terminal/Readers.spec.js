@@ -37,6 +37,18 @@ describe('Terminal', function () {
       });
     });
 
+    describe('del', function() {
+      it('Sends the correct request', function() {
+        stripe.terminal.readers.del('rdr_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'DELETE',
+          url: '/v1/terminal/readers/rdr_123',
+          headers: {},
+          data: {},
+        });
+      });
+    });
+
     describe('update', function () {
       it('Sends the correct request', function () {
         stripe.terminal.readers.update('rdr_123', {
