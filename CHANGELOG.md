@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.27.0 - 2019-03-15
+* [#581](https://github.com/stripe/stripe-node/pull/581) Add support for deleting Terminal `Location` and `Reader`
+
 ## 6.26.1 - 2019-03-14
 * [#580](https://github.com/stripe/stripe-node/pull/580) Fix support for HTTPS proxies
 
