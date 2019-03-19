@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 6.28.0 - 2019-03-18
+* [#570](https://github.com/stripe/stripe-node/pull/570) Add support for the `PaymentMethod` resource and APIs
+* [#578](https://github.com/stripe/stripe-node/pull/578) Add support for retrieving a Checkout `Session`
+
 ## 6.27.0 - 2019-03-15
 * [#581](https://github.com/stripe/stripe-node/pull/581) Add support for deleting Terminal `Location` and `Reader`
 
