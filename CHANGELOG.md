@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.29.0 - 2019-04-18
+* [#585](https://github.com/stripe/stripe-node/pull/585) Add support for the `CreditNote` resource and APIs
+
 ## 6.28.0 - 2019-03-18
 * [#570](https://github.com/stripe/stripe-node/pull/570) Add support for the `PaymentMethod` resource and APIs
 * [#578](https://github.com/stripe/stripe-node/pull/578) Add support for retrieving a Checkout `Session`
