@@ -120,6 +120,26 @@ describe('Invoices Resource', function() {
       });
     });
 
+    describe('Without a customer id but options', function() {
+      it('Sends the correct request', function() {
+        stripe.invoices.retrieveUpcoming({
+          customer: 'cus_abc',
+          subscription_items: [
+            {plan: 'potato'},
+            {plan: 'rutabaga'},
+          ],
+        });
+
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/invoices/upcoming?customer=cus_abc&' +
+            'subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
+          headers: {},
+          data: {},
+        });
+      });
+    });
+
     describe('With an options object that includes `subscription_items` in addition to a subscription ID', function() {
       it('Sends the correct request', function() {
         stripe.invoices.retrieveUpcoming('cus_123', 'sub_123',
