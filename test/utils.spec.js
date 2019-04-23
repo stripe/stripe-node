@@ -283,6 +283,61 @@ describe('utils', function() {
       expect(function() { utils.removeEmpty('potato'); }).to.throw();
     });
   });
+
+  describe('safeExec', function() {
+    var origExec;
+    beforeEach(function() {
+      origExec = utils._exec;
+    });
+    afterEach(function() {
+      utils._exec = origExec;
+    });
+
+    it('runs exec', function() {
+      var calls = [];
+      utils._exec = function(cmd, cb) {
+        calls.push([cmd, cb]);
+      }
+
+      function myCb() {}
+      utils.safeExec('hello', myCb);
+      expect(calls).to.deep.equal([
+        ['hello', myCb],
+      ]);
+    });
+
+    it('passes along normal errors', function() {
+      var myErr = Error('hi');
+      utils._exec = function(cmd, cb) {
+        cb(myErr, null)
+      }
+
+      var calls = [];
+      function myCb(err, x) {
+        calls.push([err, x]);
+      }
+      utils.safeExec('hello', myCb);
+      expect(calls).to.deep.equal([
+        [myErr, null],
+      ]);
+    });
+
+    it('passes along thrown errors as normal callback errors', function() {
+      var myErr = Error('hi');
+      utils._exec = function(cmd, cb) {
+        throw myErr;
+      }
+
+      var calls = [];
+      function myCb(err, x) {
+        calls.push([err, x]);
+      }
+      utils.safeExec('hello', myCb);
+      expect(calls).to.deep.equal([
+        [myErr, null],
+      ]);
+    });
+  })
 });
 
 function handleWarnings(doWithShimmedConsoleWarn, onWarn) {

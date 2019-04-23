@@ -1,6 +1,7 @@
 'use strict';
 
 var testUtils = require('../testUtils');
+var utils = require('../lib/utils');
 var stripe = require('../lib/stripe')(
   testUtils.getUserStripeKey(),
   'latest'
@@ -52,7 +53,39 @@ describe('Stripe Module', function() {
           resolve(JSON.parse(c));
         });
       })).to.eventually.have.property('lang', '%C3%AF');
-    })
+    });
+
+    describe('uname', function() {
+      var origExec;
+      beforeEach(function() {
+        origExec = utils.safeExec;
+      });
+      afterEach(function() {
+        utils.safeExec = origExec;
+      });
+
+      it('gets added to the user-agent', function() {
+        utils.safeExec = function(cmd, cb) {
+          cb(null, 'foøname')
+        };
+        return expect(new Promise(function(resolve, reject) {
+          stripe.getClientUserAgentSeeded({lang: 'node'}, function(c) {
+            resolve(JSON.parse(c));
+          });
+        })).to.eventually.have.property('uname', 'fo%C3%B8name');
+      });
+
+      it('sets uname to UNKOWN in case of an error', function() {
+        utils.safeExec = function(cmd, cb) {
+          cb(new Error('security'), null)
+        };
+        return expect(new Promise(function(resolve, reject) {
+          stripe.getClientUserAgentSeeded({lang: 'node'}, function(c) {
+            resolve(JSON.parse(c));
+          });
+        })).to.eventually.have.property('uname', 'UNKNOWN');
+      });
+    });
   });
 
   describe('setTimeout', function() {
