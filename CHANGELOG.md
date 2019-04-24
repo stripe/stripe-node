@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.31.0 - 2019-04-24
+* [#588](https://github.com/stripe/stripe-node/pull/588) Add support for the `TaxRate` resource and APIs
+
 ## 6.30.0 - 2019-04-22
 * [#589](https://github.com/stripe/stripe-node/pull/589) Add support for the `TaxId` resource and APIs
 * [#593](https://github.com/stripe/stripe-node/pull/593) `retrieveUpcoming` on `Invoice` can now take one hash as parameter instead of requiring a customer id.
