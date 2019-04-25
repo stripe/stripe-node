@@ -13,20 +13,21 @@ const bodyParser = require('body-parser');
 const webhookSecret = process.env.WEBHOOK_SECRET;
 const app = express();
 
-app.use(bodyParser.raw({type: '*/*'}));
-
-app.post('/webhooks', (req, res) => {
+// Stripe requires the raw body to construct the event
+app.post('/webhooks', bodyParser.raw({type: 'application/json'}), (req, res) => {
   const sig = req.headers['stripe-signature'];
 
+  let event;
+
   try {
-    const event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
-
-    // Do something with event
-
+    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err) {
     // On error, return the error message
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
+
+  // Do something with event
+  console.log('Success:', event.id);
 
   // Return a response to acknowledge receipt of the event
   res.json({received: true});
