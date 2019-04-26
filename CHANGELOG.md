@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.31.1 - 2019-04-26
+* [#600](https://github.com/stripe/stripe-node/pull/600) Fix encoding of nested parameters in multipart requests
+
 ## 6.31.0 - 2019-04-24
 * [#588](https://github.com/stripe/stripe-node/pull/588) Add support for the `TaxRate` resource and APIs
 

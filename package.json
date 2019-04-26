@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "6.31.0",
+  "version": "6.31.1",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
