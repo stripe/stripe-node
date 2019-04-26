@@ -55,6 +55,7 @@ describe('File Uploads Resource', function() {
           name: 'minimal.pdf',
           type: 'application/octet-stream',
         },
+        file_link_data: {create: true},
       });
 
       expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
@@ -73,6 +74,7 @@ describe('File Uploads Resource', function() {
           name: 'minimal.pdf',
           type: 'application/octet-stream',
         },
+        file_link_data: {create: true},
       }, TEST_AUTH_KEY);
 
       expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
@@ -92,6 +94,7 @@ describe('File Uploads Resource', function() {
           name: 'minimal.pdf',
           type: 'application/octet-stream',
         },
+        file_link_data: {create: true},
       }).then(function() {
         expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
         expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
@@ -110,6 +113,7 @@ describe('File Uploads Resource', function() {
           name: 'minimal.pdf',
           type: 'application/octet-stream',
         },
+        file_link_data: {create: true},
       }, TEST_AUTH_KEY).then(function() {
         expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
         expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
