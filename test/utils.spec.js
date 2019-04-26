@@ -4,6 +4,7 @@ require('../testUtils');
 
 var utils = require('../lib/utils');
 var expect = require('chai').expect;
+var Buffer = require('safe-buffer').Buffer;
 
 describe('utils', function() {
   describe('makeURLInterpolator', function() {
@@ -338,6 +339,51 @@ describe('utils', function() {
       ]);
     });
   })
+
+  describe('flattenAndStringify', function() {
+    it('Stringifies primitive types', function() {
+      expect(utils.flattenAndStringify({
+        a: 1,
+        b: 'foo',
+        c: true,
+        d: null,
+      })).to.eql({'a': '1', 'b': 'foo', 'c': 'true', 'd': 'null'});
+    });
+
+    it('Flattens nested values', function() {
+      expect(utils.flattenAndStringify({
+        x: {
+          a: 1,
+          b: 'foo',
+        },
+      })).to.eql({'x[a]': '1', 'x[b]': 'foo'});
+    });
+
+    it('Does not flatten File objects', function() {
+      expect(utils.flattenAndStringify({
+        file: {
+          data: 'foo'
+        },
+        x: {
+          a: 1,
+        },
+      })).to.eql({'file': {data: 'foo'}, 'x[a]': '1'});
+    });
+
+    it('Does not flatten Buffer objects', function() {
+      var buf = Buffer.from('Hi!');
+      var flattened = utils.flattenAndStringify({
+        buf: buf,
+        x: {
+          a: 1,
+        },
+      });
+      expect(flattened).to.have.property('buf');
+      expect(flattened.buf).to.deep.equal(buf);
+      expect(flattened).to.have.property('x[a]');
+      expect(flattened['x[a]']).to.equal('1');
+    });
+  });
 });
 
 function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
