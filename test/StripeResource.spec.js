@@ -230,6 +230,22 @@ describe('StripeResource', function() {
         });
       });
 
+      it('should handle OAuth errors gracefully', function (done) {
+        nock('https://connect.stripe.com')
+          .post('/oauth/token')
+          .reply(400, {
+            error: 'invalid_grant',
+            error_description: 'This authorization code has already been used. All tokens issued with this code have been revoked.'
+          });
+
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.oauth.token(options.data, function (err) {
+          expect(err.type).to.equal('StripeInvalidGrantError');
+          done();
+        });
+      });
+
       it('should retry on a 503 error when the method is POST', function(done) {
         nock('https://' + options.host)
           .post(options.path, options.params)
