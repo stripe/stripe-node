@@ -433,8 +433,8 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
 
     /* eslint-enable no-console */
   } else {
+    /* eslint-disable-next-line no-inner-declarations */
     function onProcessWarn(warning) {
-      /* eslint-disable-line no-inner-declarations */
       onWarn(warning.name + ': ' + warning.message);
     }
 
