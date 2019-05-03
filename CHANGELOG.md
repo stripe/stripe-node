@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.31.2 - 2019-05-03
+* [#602](https://github.com/stripe/stripe-node/pull/602) Handle errors from the oauth/token endpoint
+
 ## 6.31.1 - 2019-04-26
 * [#600](https://github.com/stripe/stripe-node/pull/600) Fix encoding of nested parameters in multipart requests
 
@@ -75,7 +78,7 @@
 * [#523](https://github.com/stripe/stripe-node/pull/523) Handle `Buffer` instances in `Webhook.constructEvent`
 
 ## 6.15.0 - 2018-11-12
-* [#474](https://github.com/stripe/stripe-node/pull/474) Add support for `partner_id` in `setAppInfo` 
+* [#474](https://github.com/stripe/stripe-node/pull/474) Add support for `partner_id` in `setAppInfo`
 
 ## 6.14.0 - 2018-11-09
 * [#509](https://github.com/stripe/stripe-node/pull/509) Add support for new `Invoice` methods
