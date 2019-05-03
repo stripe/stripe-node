@@ -66,12 +66,12 @@ describe('Topup Resource', function() {
 
   describe('update', function() {
     it('Sends the correct request', function() {
-      stripe.topups.update('tu_123', {metadata: {'key': 'value'}});
+      stripe.topups.update('tu_123', {metadata: {key: 'value'}});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/topups/tu_123',
         headers: {},
-        data: {metadata: {'key': 'value'}},
+        data: {metadata: {key: 'value'}},
       });
     });
   });

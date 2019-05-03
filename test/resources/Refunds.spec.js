@@ -9,7 +9,7 @@ describe('Refund Resource', function() {
       stripe.refunds.create({
         amount: '300',
         charge: 'ch_123',
-      })
+      });
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

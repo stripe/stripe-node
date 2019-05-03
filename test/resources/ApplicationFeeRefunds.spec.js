@@ -8,10 +8,9 @@ var APPFEE_TEST_ID = 'appFeeIdTest999';
 var REFUND_TEST_ID = 'refundIdTest999';
 
 // Create new CustomerCard instance with pre-filled customerId:
-var appFeeRefund = new resources.ApplicationFeeRefunds(
-  stripe,
-  {feeId: APPFEE_TEST_ID}
-);
+var appFeeRefund = new resources.ApplicationFeeRefunds(stripe, {
+  feeId: APPFEE_TEST_ID,
+});
 
 // Use spy from existing resource:
 appFeeRefund._request = stripe.customers._request;
@@ -22,7 +21,11 @@ describe('ApplicationFeeRefund Resource', function() {
       appFeeRefund.retrieve(REFUND_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/application_fees/' + APPFEE_TEST_ID + '/refunds/' + REFUND_TEST_ID,
+        url:
+          '/v1/application_fees/' +
+          APPFEE_TEST_ID +
+          '/refunds/' +
+          REFUND_TEST_ID,
         data: {},
         headers: {},
       });
@@ -36,7 +39,11 @@ describe('ApplicationFeeRefund Resource', function() {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/application_fees/' + APPFEE_TEST_ID + '/refunds/' + REFUND_TEST_ID,
+        url:
+          '/v1/application_fees/' +
+          APPFEE_TEST_ID +
+          '/refunds/' +
+          REFUND_TEST_ID,
         data: {metadata: {key: 'value'}},
         headers: {},
       });

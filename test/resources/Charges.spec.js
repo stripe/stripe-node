@@ -93,16 +93,16 @@ describe('Charge Resource', function() {
 
     it('Incorrect arguments result in an error', function() {
       expect(
-        stripe.charges.refund('chargeIdExample123', 39392)
+        stripe.charges.refund('chargeIdExample123', 39392),
       ).to.be.eventually.rejectedWith(/unknown arguments/i);
 
       expect(
-        stripe.charges.refund({potato: 'chargeIdExample123'})
+        stripe.charges.refund({potato: 'chargeIdExample123'}),
       ).to.be.eventually.rejectedWith(/must be a string, but got: object/i);
 
-      expect(
-        stripe.charges.refund(442)
-      ).to.be.eventually.rejectedWith(/must be a string, but got: number/i);
+      expect(stripe.charges.refund(442)).to.be.eventually.rejectedWith(
+        /must be a string, but got: number/i,
+      );
     });
   });
 
@@ -111,7 +111,7 @@ describe('Charge Resource', function() {
       stripe.charges.updateRefund(
         'chargeIdExample3242',
         'refundIdExample2312',
-        {metadata: {key: 'value'}}
+        {metadata: {key: 'value'}},
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -122,10 +122,7 @@ describe('Charge Resource', function() {
     });
 
     it('Sends the correct create request', function() {
-      stripe.charges.createRefund(
-        'chargeIdExample3242',
-        {amount: 100}
-      );
+      stripe.charges.createRefund('chargeIdExample3242', {amount: 100});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242/refunds',
@@ -135,9 +132,7 @@ describe('Charge Resource', function() {
     });
 
     it('Sends the correct list request', function() {
-      stripe.charges.listRefunds(
-        'chargeIdExample3242'
-      );
+      stripe.charges.listRefunds('chargeIdExample3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/charges/chargeIdExample3242/refunds',
@@ -149,7 +144,7 @@ describe('Charge Resource', function() {
     it('Sends the correct retrieve request', function() {
       stripe.charges.retrieveRefund(
         'chargeIdExample3242',
-        'refundIdExample2312'
+        'refundIdExample2312',
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -190,7 +185,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242',
-        data: {'fraud_details': {'user_report': 'fraudulent'}},
+        data: {fraud_details: {user_report: 'fraudulent'}},
         headers: {},
       });
     });
@@ -202,7 +197,7 @@ describe('Charge Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/charges/chargeIdExample3242',
-        data: {'fraud_details': {'user_report': 'safe'}},
+        data: {fraud_details: {user_report: 'safe'}},
         headers: {},
       });
     });

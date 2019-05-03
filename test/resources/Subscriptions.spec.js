@@ -133,8 +133,8 @@ describe('subscriptions Resource', function() {
         data: {
           items: {
             '0': {
-              'plan': 'foo',
-              'quantity': 2,
+              plan: 'foo',
+              quantity: 2,
             },
           },
         },
@@ -160,8 +160,8 @@ describe('subscriptions Resource', function() {
         data: {
           items: {
             '0': {
-              'plan': 'foo',
-              'quantity': 2,
+              plan: 'foo',
+              quantity: 2,
             },
           },
         },

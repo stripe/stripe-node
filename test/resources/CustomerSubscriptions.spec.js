@@ -7,10 +7,9 @@ var expect = require('chai').expect;
 var CUSTOMER_TEST_ID = 'customerIdTest999';
 
 // Create new CustomerSubscription instance with pre-filled customerId:
-var customerSubscription = new resources.CustomerSubscriptions(
-  stripe,
-  {customerId: CUSTOMER_TEST_ID}
-);
+var customerSubscription = new resources.CustomerSubscriptions(stripe, {
+  customerId: CUSTOMER_TEST_ID,
+});
 
 // Use spy from existing resource:
 customerSubscription._request = stripe.customers._request;
@@ -21,7 +20,10 @@ describe('CustomerSubscription Resource', function() {
       customerSubscription.retrieve('subscriptionIdFoo456');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions/subscriptionIdFoo456',
+        url:
+          '/v1/customers/' +
+          CUSTOMER_TEST_ID +
+          '/subscriptions/subscriptionIdFoo456',
         headers: {},
         data: {},
       });
@@ -31,7 +33,8 @@ describe('CustomerSubscription Resource', function() {
   describe('create', function() {
     it('Sends the correct request', function() {
       customerSubscription.create({
-        plan: 'gold', quantity: '12',
+        plan: 'gold',
+        quantity: '12',
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -49,7 +52,10 @@ describe('CustomerSubscription Resource', function() {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions/subscriptionIdFoo456',
+        url:
+          '/v1/customers/' +
+          CUSTOMER_TEST_ID +
+          '/subscriptions/subscriptionIdFoo456',
         headers: {},
         data: {name: 'Bob M. Baz'},
       });
@@ -61,7 +67,10 @@ describe('CustomerSubscription Resource', function() {
       customerSubscription.del('subscriptionIdFoo456');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
-        url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions/subscriptionIdFoo456',
+        url:
+          '/v1/customers/' +
+          CUSTOMER_TEST_ID +
+          '/subscriptions/subscriptionIdFoo456',
         headers: {},
         data: {},
       });
@@ -83,10 +92,14 @@ describe('CustomerSubscription Resource', function() {
   describe('Discount methods', function() {
     describe('deleteDiscount', function() {
       it('Sends the correct request', function() {
-        customerSubscription.deleteDiscount('customerIdFoo321', 'subscriptionIdBar654');
+        customerSubscription.deleteDiscount(
+          'customerIdFoo321',
+          'subscriptionIdBar654',
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
-          url: '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdBar654/discount',
+          url:
+            '/v1/customers/customerIdFoo321/subscriptions/subscriptionIdBar654/discount',
           headers: {},
           data: {},
         });

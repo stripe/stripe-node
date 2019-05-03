@@ -23,7 +23,11 @@ describe('StripeResource', function() {
       expect(headers.Authorization).to.equal('Bearer fakeAuthToken');
     });
     it('sets the Authorization header with Bearer auth using the specified API key', function() {
-      var headers = stripe.invoices._defaultHeaders('anotherFakeAuthToken', 0, null);
+      var headers = stripe.invoices._defaultHeaders(
+        'anotherFakeAuthToken',
+        0,
+        null,
+      );
       expect(headers.Authorization).to.equal('Bearer anotherFakeAuthToken');
     });
     it('sets the Stripe-Version header if an API version is provided', function() {
@@ -42,7 +46,7 @@ describe('StripeResource', function() {
 
     after(function() {
       nock.cleanAll();
-    })
+    });
 
     describe('_request', function() {
       it('encodes the query string in GET requests', function(done) {
@@ -62,7 +66,10 @@ describe('StripeResource', function() {
           .query(Object.assign({customer: 'cus_123'}, options.data))
           .reply(200, '{}');
 
-        realStripe.invoices.retrieveUpcoming('cus_123', options.data, function(err, response) {
+        realStripe.invoices.retrieveUpcoming('cus_123', options.data, function(
+          err,
+          response,
+        ) {
           done();
           scope.done();
         });
@@ -74,19 +81,20 @@ describe('StripeResource', function() {
           path: '/v1/subscriptions/sub_123',
           data: {
             customer: 'cus_123',
-            items: [
-              {plan: 'foo', quantity: 2},
-              {id: 'si_123', deleted: true},
-            ],
+            items: [{plan: 'foo', quantity: 2}, {id: 'si_123', deleted: true}],
           },
-          body: 'customer=cus_123&items[0][plan]=foo&items[0][quantity]=2&items[1][id]=si_123&items[1][deleted]=true',
+          body:
+            'customer=cus_123&items[0][plan]=foo&items[0][quantity]=2&items[1][id]=si_123&items[1][deleted]=true',
         };
 
         const scope = nock('https://' + options.host)
           .post(options.path, options.body)
           .reply(200, '{}');
 
-        realStripe.subscriptions.update('sub_123', options.data, function(err, response) {
+        realStripe.subscriptions.update('sub_123', options.data, function(
+          err,
+          response,
+        ) {
           done();
           scope.done();
         });
@@ -110,9 +118,9 @@ describe('StripeResource', function() {
         amount: 1000,
         currency: 'usd',
         source: 'tok_visa',
-        description: 'test'
+        description: 'test',
       },
-      params: 'amount=1000&currency=usd&source=tok_visa&description=test'
+      params: 'amount=1000&currency=usd&source=tok_visa&description=test',
     };
 
     afterEach(function() {
@@ -122,7 +130,7 @@ describe('StripeResource', function() {
 
     after(function() {
       nock.cleanAll();
-    })
+    });
 
     describe('_request', function() {
       it('throws an error on connection failure', function(done) {
@@ -147,7 +155,9 @@ describe('StripeResource', function() {
         realStripe.setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, function(err) {
-          var errorMessage = realStripe.invoices._generateConnectionErrorMessage(1);
+          var errorMessage = realStripe.invoices._generateConnectionErrorMessage(
+            1,
+          );
           expect(err.message).to.equal(errorMessage);
           expect(err.detail.message).to.deep.equal('worse stuff');
           done();
@@ -178,8 +188,8 @@ describe('StripeResource', function() {
           .post(options.path, options.params)
           .reply(409, {
             error: {
-              message: 'Conflict'
-            }
+              message: 'Conflict',
+            },
           })
           .post(options.path, options.params)
           .reply(200, {
@@ -201,8 +211,8 @@ describe('StripeResource', function() {
           .post(options.path, options.params)
           .reply(400, {
             error: {
-              type: 'card_error'
-            }
+              type: 'card_error',
+            },
           });
 
         realStripe.setMaxNetworkRetries(1);
@@ -218,8 +228,8 @@ describe('StripeResource', function() {
           .post(options.path, options.params)
           .reply(500, {
             error: {
-              type: 'api_error'
-            }
+              type: 'api_error',
+            },
           });
 
         realStripe.setMaxNetworkRetries(1);
@@ -230,17 +240,18 @@ describe('StripeResource', function() {
         });
       });
 
-      it('should handle OAuth errors gracefully', function (done) {
+      it('should handle OAuth errors gracefully', function(done) {
         nock('https://connect.stripe.com')
           .post('/oauth/token')
           .reply(400, {
             error: 'invalid_grant',
-            error_description: 'This authorization code has already been used. All tokens issued with this code have been revoked.'
+            error_description:
+              'This authorization code has already been used. All tokens issued with this code have been revoked.',
           });
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.oauth.token(options.data, function (err) {
+        realStripe.oauth.token(options.data, function(err) {
           expect(err.type).to.equal('StripeInvalidGrantError');
           done();
         });
@@ -251,8 +262,8 @@ describe('StripeResource', function() {
           .post(options.path, options.params)
           .reply(503, {
             error: {
-              message: 'Service unavailable'
-            }
+              message: 'Service unavailable',
+            },
           })
           .post(options.path, options.params)
           .reply(200, {
@@ -274,8 +285,8 @@ describe('StripeResource', function() {
           .get(options.path + '/ch_123')
           .reply(500, {
             error: {
-              type: 'api_error'
-            }
+              type: 'api_error',
+            },
           })
           .get(options.path + '/ch_123')
           .reply(200, {
@@ -303,11 +314,14 @@ describe('StripeResource', function() {
           .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
 
-            return cb(null, [200, {
-              id: 'ch_123"',
-              object: 'charge',
-              amount: 1000,
-            }]);
+            return cb(null, [
+              200,
+              {
+                id: 'ch_123"',
+                object: 'charge',
+                amount: 1000,
+              },
+            ]);
           });
 
         realStripe.setMaxNetworkRetries(1);
@@ -328,11 +342,14 @@ describe('StripeResource', function() {
           .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
 
-            return cb(null, [200, {
-              id: 'ch_123"',
-              object: 'charge',
-              amount: 1000,
-            }]);
+            return cb(null, [
+              200,
+              {
+                id: 'ch_123"',
+                object: 'charge',
+                amount: 1000,
+              },
+            ]);
           });
 
         realStripe.setMaxNetworkRetries(1);
@@ -354,52 +371,71 @@ describe('StripeResource', function() {
           .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
 
-            return cb(null, [200, {
-              id: 'ch_123"',
-              object: 'charge',
-              amount: 1000,
-            }]);
+            return cb(null, [
+              200,
+              {
+                id: 'ch_123"',
+                object: 'charge',
+                amount: 1000,
+              },
+            ]);
           });
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, {idempotency_key: key}, function() {
-          expect(headers['idempotency-key']).to.equal(key);
-          done();
-        });
+        realStripe.charges.create(
+          options.data,
+          {idempotency_key: key},
+          function() {
+            expect(headers['idempotency-key']).to.equal(key);
+            done();
+          },
+        );
       });
     });
 
     describe('_shouldRetry', function() {
-      it('should return false if we\'ve reached maximum retries', function() {
+      it("should return false if we've reached maximum retries", function() {
         stripe.setMaxNetworkRetries(1);
-        var res = stripe.invoices._shouldRetry({
-          statusCode: 409
-        }, 1);
+        var res = stripe.invoices._shouldRetry(
+          {
+            statusCode: 409,
+          },
+          1,
+        );
 
         expect(res).to.equal(false);
       });
 
       it('should return true if we have more retries available', function() {
         stripe.setMaxNetworkRetries(1);
-        var res = stripe.invoices._shouldRetry({
-          statusCode: 409
-        }, 0);
+        var res = stripe.invoices._shouldRetry(
+          {
+            statusCode: 409,
+          },
+          0,
+        );
 
         expect(res).to.equal(true);
       });
 
       it('should return true if the error code is either 409 or 503', function() {
         stripe.setMaxNetworkRetries(1);
-        var res = stripe.invoices._shouldRetry({
-          statusCode: 409
-        }, 0);
+        var res = stripe.invoices._shouldRetry(
+          {
+            statusCode: 409,
+          },
+          0,
+        );
 
         expect(res).to.equal(true);
 
-        res = stripe.invoices._shouldRetry({
-          statusCode: 503
-        }, 0);
+        res = stripe.invoices._shouldRetry(
+          {
+            statusCode: 503,
+          },
+          0,
+        );
 
         expect(res).to.equal(true);
       });
@@ -408,10 +444,13 @@ describe('StripeResource', function() {
         stripe.setMaxNetworkRetries(2);
 
         // mocking that we're on our 2nd request
-        var res = stripe.invoices._shouldRetry({
-          statusCode: 200,
-          req: {_requestEvent: {method: 'POST'}}
-        }, 1);
+        var res = stripe.invoices._shouldRetry(
+          {
+            statusCode: 200,
+            req: {_requestEvent: {method: 'POST'}},
+          },
+          1,
+        );
 
         expect(res).to.equal(false);
       });

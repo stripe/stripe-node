@@ -69,7 +69,7 @@ describe('PaymentMethods Resource', function() {
         method: 'POST',
         url: '/v1/payment_methods/pm_123/attach',
         headers: {},
-        data: {customer: 'cus_123'}
+        data: {customer: 'cus_123'},
       });
     });
   });
@@ -81,7 +81,7 @@ describe('PaymentMethods Resource', function() {
         method: 'POST',
         url: '/v1/payment_methods/pm_123/detach',
         headers: {},
-        data: {}
+        data: {},
       });
     });
   });

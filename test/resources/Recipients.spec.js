@@ -21,7 +21,8 @@ describe('Recipients Resource', function() {
   describe('create', function() {
     it('Sends the correct request', function() {
       stripe.recipients.create({
-        name: 'Bob', type: 'individual',
+        name: 'Bob',
+        type: 'individual',
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -83,7 +84,11 @@ describe('Recipients Resource', function() {
       });
 
       it('Sends the correct request [with specified auth]', function() {
-        stripe.recipients.retrieveCard('recipientIdFoo321', 'cardIdFoo456', TEST_AUTH_KEY);
+        stripe.recipients.retrieveCard(
+          'recipientIdFoo321',
+          'cardIdFoo456',
+          TEST_AUTH_KEY,
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
@@ -97,7 +102,8 @@ describe('Recipients Resource', function() {
     describe('createCard', function() {
       it('Sends the correct request', function() {
         stripe.recipients.createCard('recipientIdFoo321', {
-          number: '123456', exp_month: '12',
+          number: '123456',
+          exp_month: '12',
         });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -108,9 +114,14 @@ describe('Recipients Resource', function() {
       });
 
       it('Sends the correct request [with specified auth]', function() {
-        stripe.recipients.createCard('recipientIdFoo321', {
-          number: '123456', exp_month: '12',
-        }, TEST_AUTH_KEY);
+        stripe.recipients.createCard(
+          'recipientIdFoo321',
+          {
+            number: '123456',
+            exp_month: '12',
+          },
+          TEST_AUTH_KEY,
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/recipients/recipientIdFoo321/cards',
@@ -147,7 +158,11 @@ describe('Recipients Resource', function() {
       });
 
       it('Sends the correct request [with specified auth]', function() {
-        stripe.recipients.deleteCard('recipientIdFoo321', 'cardIdFoo456', TEST_AUTH_KEY);
+        stripe.recipients.deleteCard(
+          'recipientIdFoo321',
+          'cardIdFoo456',
+          TEST_AUTH_KEY,
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',

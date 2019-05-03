@@ -7,10 +7,9 @@ var expect = require('chai').expect;
 var RECIPIENT_TEST_ID = 'recipientIdTest999';
 
 // Create new recipientCard instance with pre-filled recipientId:
-var recipientCard = new resources.RecipientCards(
-  stripe,
-  {recipientId: RECIPIENT_TEST_ID}
-);
+var recipientCard = new resources.RecipientCards(stripe, {
+  recipientId: RECIPIENT_TEST_ID,
+});
 
 // Use spy from existing resource:
 recipientCard._request = stripe.recipients._request;
@@ -31,7 +30,8 @@ describe('RecipientCard Resource', function() {
   describe('create', function() {
     it('Sends the correct request', function() {
       recipientCard.create({
-        number: '123456', exp_month: '12',
+        number: '123456',
+        exp_month: '12',
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

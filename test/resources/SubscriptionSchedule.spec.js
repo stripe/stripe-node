@@ -11,7 +11,7 @@ describe('Subscription Schedule Resource', function() {
     it('Sends the correct request', function() {
       var data = {
         invoice_now: true,
-      }
+      };
       stripe.subscriptionSchedules.cancel(SCHEDULE_TEST_ID, data);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -53,7 +53,7 @@ describe('Subscription Schedule Resource', function() {
     it('Sends the correct request', function() {
       var data = {
         preserve_cancel_date: true,
-      }
+      };
       stripe.subscriptionSchedules.release(SCHEDULE_TEST_ID, data);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -92,10 +92,17 @@ describe('Subscription Schedule Resource', function() {
   describe('Revision methods', function() {
     describe('retrieveRevision', function() {
       it('Sends the correct request', function() {
-        stripe.subscriptionSchedules.retrieveRevision(SCHEDULE_TEST_ID, REVISION_TEST_ID);
+        stripe.subscriptionSchedules.retrieveRevision(
+          SCHEDULE_TEST_ID,
+          REVISION_TEST_ID,
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/subscription_schedules/' + SCHEDULE_TEST_ID + '/revisions/' + REVISION_TEST_ID,
+          url:
+            '/v1/subscription_schedules/' +
+            SCHEDULE_TEST_ID +
+            '/revisions/' +
+            REVISION_TEST_ID,
           headers: {},
           data: {},
         });
