@@ -67,15 +67,18 @@ describe('Files Resource', function() {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.readFileSync(testFilename);
 
-      stripe.files.create({
-        purpose: 'dispute_evidence',
-        file: {
-          data: f,
-          name: 'minimal.pdf',
-          type: 'application/octet-stream',
+      stripe.files.create(
+        {
+          purpose: 'dispute_evidence',
+          file: {
+            data: f,
+            name: 'minimal.pdf',
+            type: 'application/octet-stream',
+          },
+          file_link_data: {create: true},
         },
-        file_link_data: {create: true},
-      }, TEST_AUTH_KEY);
+        TEST_AUTH_KEY
+      );
 
       expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
       expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
@@ -87,39 +90,52 @@ describe('Files Resource', function() {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.createReadStream(testFilename);
 
-      return stripe.files.create({
-        purpose: 'dispute_evidence',
-        file: {
-          data: f,
-          name: 'minimal.pdf',
-          type: 'application/octet-stream',
-        },
-        file_link_data: {create: true},
-      }).then(function() {
-        expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
-        expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
-        expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
-      });
+      return stripe.files
+        .create({
+          purpose: 'dispute_evidence',
+          file: {
+            data: f,
+            name: 'minimal.pdf',
+            type: 'application/octet-stream',
+          },
+          file_link_data: {create: true},
+        })
+        .then(function() {
+          expect(stripe.LAST_REQUEST).to.deep.property(
+            'host',
+            'files.stripe.com'
+          );
+          expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
+          expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
+        });
     });
 
     it('Streams a file and sends the correct file upload request [with specified auth]', function() {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.createReadStream(testFilename);
 
-      return stripe.files.create({
-        purpose: 'dispute_evidence',
-        file: {
-          data: f,
-          name: 'minimal.pdf',
-          type: 'application/octet-stream',
-        },
-        file_link_data: {create: true},
-      }, TEST_AUTH_KEY).then(function() {
-        expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
-        expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
-        expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
-        expect(stripe.LAST_REQUEST).to.deep.property('auth', TEST_AUTH_KEY);
-      });
+      return stripe.files
+        .create(
+          {
+            purpose: 'dispute_evidence',
+            file: {
+              data: f,
+              name: 'minimal.pdf',
+              type: 'application/octet-stream',
+            },
+            file_link_data: {create: true},
+          },
+          TEST_AUTH_KEY
+        )
+        .then(function() {
+          expect(stripe.LAST_REQUEST).to.deep.property(
+            'host',
+            'files.stripe.com'
+          );
+          expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
+          expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
+          expect(stripe.LAST_REQUEST).to.deep.property('auth', TEST_AUTH_KEY);
+        });
     });
   });
 });

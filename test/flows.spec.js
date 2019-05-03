@@ -2,10 +2,7 @@
 
 var testUtils = require('../testUtils');
 var chai = require('chai');
-var stripe = require('../lib/stripe')(
-  testUtils.getUserStripeKey(),
-  'latest'
-);
+var stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 var fs = require('fs');
 var path = require('path');
 var stream = require('stream');
@@ -27,11 +24,10 @@ describe('Flows', function() {
 
   it('Allows me to retrieve default_currency', function() {
     return expect(
-      stripe.account.retrieve()
-        .then(function(acct) {
-          CURRENCY = acct.default_currency;
-          return acct;
-        })
+      stripe.account.retrieve().then(function(acct) {
+        CURRENCY = acct.default_currency;
+        return acct;
+      })
     ).to.eventually.have.property('default_currency');
   });
 
@@ -49,7 +45,7 @@ describe('Flows', function() {
               name: 'product' + testUtils.getRandomString(),
             },
           }),
-          stripe.customers.create(CUSTOMER_DETAILS)
+          stripe.customers.create(CUSTOMER_DETAILS),
         ]).then(function(j) {
           var plan = j[0];
           var customer = j[1];
@@ -64,24 +60,23 @@ describe('Flows', function() {
       ).to.eventually.have.property('status', 'active');
     });
 
-    it(
-      'Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)',
-      function() {
-        var plan;
-        return expect(
-          Promise.all([
-            stripe.plans.create({
-              id: 'plan' + testUtils.getRandomString(),
-              amount: 1700,
-              currency: CURRENCY,
-              interval: 'month',
-              nickname: 'Gold Super Amazing Tier',
-              product: {
-                name: 'product' + testUtils.getRandomString(),
-              },
-            }),
-            stripe.customers.create(CUSTOMER_DETAILS)
-          ]).then(function(j) {
+    it('Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)', function() {
+      var plan;
+      return expect(
+        Promise.all([
+          stripe.plans.create({
+            id: 'plan' + testUtils.getRandomString(),
+            amount: 1700,
+            currency: CURRENCY,
+            interval: 'month',
+            nickname: 'Gold Super Amazing Tier',
+            product: {
+              name: 'product' + testUtils.getRandomString(),
+            },
+          }),
+          stripe.customers.create(CUSTOMER_DETAILS),
+        ])
+          .then(function(j) {
             plan = j[0];
             var customer = j[1];
 
@@ -91,33 +86,42 @@ describe('Flows', function() {
             return stripe.customers.createSubscription(customer.id, {
               plan: plan.id,
             });
-          }).then(function(subscription) {
-            return stripe.customers.updateSubscription(subscription.customer, subscription.id, {
-              plan: plan.id, quantity: '3',
-            });
-          }).then(function(subscription) {
+          })
+          .then(function(subscription) {
+            return stripe.customers.updateSubscription(
+              subscription.customer,
+              subscription.id,
+              {
+                plan: plan.id,
+                quantity: '3',
+              }
+            );
+          })
+          .then(function(subscription) {
             return [subscription.status, subscription.quantity];
           })
-        ).to.eventually.deep.equal(['active', 3]);
-      }
-    );
+      ).to.eventually.deep.equal(['active', 3]);
+    });
 
     it('Errors when I attempt to subscribe a customer to a non-existent plan', function() {
       return expect(
-        stripe.customers.create(CUSTOMER_DETAILS)
-          .then(function(customer) {
-            cleanup.deleteCustomer(customer.id);
+        stripe.customers.create(CUSTOMER_DETAILS).then(function(customer) {
+          cleanup.deleteCustomer(customer.id);
 
-            return stripe.customers.updateSubscription(customer.id, {
+          return stripe.customers
+            .updateSubscription(customer.id, {
               plan: 'someNonExistentPlan' + testUtils.getRandomString(),
-            }).then(null, function(err) {
+            })
+            .then(null, function(err) {
               // Resolve with the error so we can inspect it below
               return err;
             });
-          })
+        })
       ).to.eventually.satisfy(function(err) {
-        return err.type === 'StripeInvalidRequestError' &&
-          err.rawType === 'invalid_request_error';
+        return (
+          err.type === 'StripeInvalidRequestError' &&
+          err.rawType === 'invalid_request_error'
+        );
       });
     });
 
@@ -134,7 +138,7 @@ describe('Flows', function() {
               name: 'product' + testUtils.getRandomString(),
             },
           }),
-          stripe.customers.create(CUSTOMER_DETAILS)
+          stripe.customers.create(CUSTOMER_DETAILS),
         ]).then(function(j) {
           var plan = j[0];
           var customer = j[1];
@@ -157,23 +161,28 @@ describe('Flows', function() {
         'TEST_a-i' + testUtils.getRandomString(),
         'foobarbazteston___etwothree' + testUtils.getRandomString(),
       ].forEach(function(planID) {
-        it('Allows me to create and retrieve plan with ID: ' + planID, function() {
-          return expect(
-            stripe.plans.create({
-              id: planID,
-              amount: 1700,
-              currency: CURRENCY,
-              interval: 'month',
-              nickname: 'generic',
-              product: {
-                name: 'product' + testUtils.getRandomString(),
-              },
-            }).then(function() {
-              cleanup.deletePlan(planID);
-              return stripe.plans.retrieve(planID);
-            })
-          ).to.eventually.have.property('id', planID);
-        });
+        it(
+          'Allows me to create and retrieve plan with ID: ' + planID,
+          function() {
+            return expect(
+              stripe.plans
+                .create({
+                  id: planID,
+                  amount: 1700,
+                  currency: CURRENCY,
+                  interval: 'month',
+                  nickname: 'generic',
+                  product: {
+                    name: 'product' + testUtils.getRandomString(),
+                  },
+                })
+                .then(function() {
+                  cleanup.deletePlan(planID);
+                  return stripe.plans.retrieve(planID);
+                })
+            ).to.eventually.have.property('id', planID);
+          }
+        );
       });
     });
   });
@@ -190,7 +199,7 @@ describe('Flows', function() {
               percent_off: 20,
               duration: 'once',
             }),
-            stripe.customers.create(CUSTOMER_DETAILS)
+            stripe.customers.create(CUSTOMER_DETAILS),
           ]).then(function(joined) {
             coupon = joined[0];
             customer = joined[1];
@@ -232,7 +241,8 @@ describe('Flows', function() {
     it('Can save and retrieve metadata', function() {
       var customer;
       return expect(
-        stripe.customers.create(CUSTOMER_DETAILS)
+        stripe.customers
+          .create(CUSTOMER_DETAILS)
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
@@ -246,7 +256,8 @@ describe('Flows', function() {
     it('Can reset metadata', function() {
       var customer;
       return expect(
-        stripe.customers.create(CUSTOMER_DETAILS)
+        stripe.customers
+          .create(CUSTOMER_DETAILS)
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
@@ -263,7 +274,8 @@ describe('Flows', function() {
     it('Resets metadata when setting new metadata', function() {
       var customer;
       return expect(
-        stripe.customers.create(CUSTOMER_DETAILS)
+        stripe.customers
+          .create(CUSTOMER_DETAILS)
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
@@ -277,7 +289,8 @@ describe('Flows', function() {
     it('Can set individual key/value pairs', function() {
       var customer;
       return expect(
-        stripe.customers.create(CUSTOMER_DETAILS)
+        stripe.customers
+          .create(CUSTOMER_DETAILS)
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
@@ -308,27 +321,52 @@ describe('Flows', function() {
       var customer;
       var authToken = testUtils.getUserStripeKey();
       return expect(
-        stripe.customers.create(CUSTOMER_DETAILS)
+        stripe.customers
+          .create(CUSTOMER_DETAILS)
           .then(function(cust) {
             customer = cust;
             cleanup.deleteCustomer(cust.id);
           })
           .then(function() {
-            return stripe.customers.setMetadata(customer.id, {'baz': 456}, authToken);
+            return stripe.customers.setMetadata(
+              customer.id,
+              {baz: 456},
+              authToken
+            );
           })
           .then(function() {
-            return stripe.customers.setMetadata(customer.id, '_other_', 999, authToken);
+            return stripe.customers.setMetadata(
+              customer.id,
+              '_other_',
+              999,
+              authToken
+            );
           })
           .then(function() {
-            return stripe.customers.setMetadata(customer.id, 'foo', 123, authToken);
+            return stripe.customers.setMetadata(
+              customer.id,
+              'foo',
+              123,
+              authToken
+            );
           })
           .then(function() {
             // Change foo
-            return stripe.customers.setMetadata(customer.id, 'foo', 222, authToken);
+            return stripe.customers.setMetadata(
+              customer.id,
+              'foo',
+              222,
+              authToken
+            );
           })
           .then(function() {
             // Delete baz
-            return stripe.customers.setMetadata(customer.id, 'baz', null, authToken);
+            return stripe.customers.setMetadata(
+              customer.id,
+              'baz',
+              null,
+              authToken
+            );
           })
           .then(function() {
             return stripe.customers.getMetadata(customer.id, authToken);
@@ -341,27 +379,27 @@ describe('Flows', function() {
     describe('A customer within a charge', function() {
       it('Allows you to expand a customer object', function() {
         return expect(
-          stripe.customers.create(CUSTOMER_DETAILS)
-            .then(function(cust) {
-              cleanup.deleteCustomer(cust.id);
-              return stripe.charges.create({
-                customer: cust.id,
-                amount: 1700,
-                currency: CURRENCY,
-                expand: ['customer'],
-              });
-            })
+          stripe.customers.create(CUSTOMER_DETAILS).then(function(cust) {
+            cleanup.deleteCustomer(cust.id);
+            return stripe.charges.create({
+              customer: cust.id,
+              amount: 1700,
+              currency: CURRENCY,
+              expand: ['customer'],
+            });
+          })
         ).to.eventually.have.nested.property('customer.created');
       });
     });
-    describe('A customer\'s default source', function() {
+    describe("A customer's default source", function() {
       it('Allows you to expand a default_source', function() {
         return expect(
-          stripe.customers.create({
-            description: 'Some customer',
-            source: 'tok_visa',
-            expand: ['default_source'],
-          })
+          stripe.customers
+            .create({
+              description: 'Some customer',
+              source: 'tok_visa',
+              expand: ['default_source'],
+            })
             .then(function(cust) {
               cleanup.deleteCustomer(cust.id);
               return cust;
@@ -375,28 +413,31 @@ describe('Flows', function() {
   describe('Charge', function() {
     it('Allows you to create a charge', function() {
       return expect(
-        stripe.charges.create({
-          amount: 1234,
-          currency: CURRENCY,
-          card: 'tok_chargeDeclined',
-          shipping: {
-            name: 'Bobby Tables',
-            address: {
-              line1: '1 Foo St.',
+        stripe.charges
+          .create({
+            amount: 1234,
+            currency: CURRENCY,
+            card: 'tok_chargeDeclined',
+            shipping: {
+              name: 'Bobby Tables',
+              address: {
+                line1: '1 Foo St.',
+              },
             },
-          },
-        }).then(null, function(error) {
-          return error;
-        })
+          })
+          .then(null, function(error) {
+            return error;
+          })
       ).to.eventually.have.nested.property('raw.charge');
     });
   });
 
   describe('Getting balance', function() {
     it('Allows me to do so', function() {
-      return expect(
-        stripe.balance.retrieve()
-      ).to.eventually.have.property('object', 'balance');
+      return expect(stripe.balance.retrieve()).to.eventually.have.property(
+        'object',
+        'balance'
+      );
     });
     it('Allows me to do so with specified auth key', function() {
       return expect(
@@ -410,24 +451,30 @@ describe('Flows', function() {
 
     before(function(done) {
       // Pick a random connected account to use in the `Stripe-Account` header
-      stripe.accounts.list({
-        limit: 1,
-      }).then(function(accounts) {
-        if (accounts.data.length < 1) {
-          return done(
-            new Error('Test requires at least one Connected Account in the Test Account')
-          );
-        }
+      stripe.accounts
+        .list({
+          limit: 1,
+        })
+        .then(function(accounts) {
+          if (accounts.data.length < 1) {
+            return done(
+              new Error(
+                'Test requires at least one Connected Account in the Test Account'
+              )
+            );
+          }
 
-        connectedAccountId = accounts.data[0].id;
+          connectedAccountId = accounts.data[0].id;
 
-        done();
-      });
+          done();
+        });
     });
 
     it('should emit a `request` event to listeners on request', function(done) {
       var apiVersion = '2017-06-05';
-      var idempotencyKey = Math.random().toString(36).slice(2);
+      var idempotencyKey = Math.random()
+        .toString(36)
+        .slice(2);
 
       function onRequest(request) {
         stripe.off('request', onRequest);
@@ -445,22 +492,29 @@ describe('Flows', function() {
 
       stripe.on('request', onRequest);
 
-      stripe.charges.create({
-        amount: 1234,
-        currency: 'usd',
-        card: 'tok_chargeDeclined',
-      }, {
-        stripe_version: apiVersion,
-        idempotency_key: idempotencyKey,
-        stripe_account: connectedAccountId,
-      }).then(null, function() {
-        // I expect there to be an error here.
-      });
+      stripe.charges
+        .create(
+          {
+            amount: 1234,
+            currency: 'usd',
+            card: 'tok_chargeDeclined',
+          },
+          {
+            stripe_version: apiVersion,
+            idempotency_key: idempotencyKey,
+            stripe_account: connectedAccountId,
+          }
+        )
+        .then(null, function() {
+          // I expect there to be an error here.
+        });
     });
 
     it('should emit a `response` event to listeners on response', function(done) {
       var apiVersion = '2017-06-05';
-      var idempotencyKey = Math.random().toString(36).slice(2);
+      var idempotencyKey = Math.random()
+        .toString(36)
+        .slice(2);
 
       function onResponse(response) {
         // On the off chance we're picking up a response from a differentrequest
@@ -485,17 +539,22 @@ describe('Flows', function() {
 
       stripe.on('response', onResponse);
 
-      stripe.charges.create({
-        amount: 1234,
-        currency: 'usd',
-        card: 'tok_chargeDeclined',
-      }, {
-        stripe_version: apiVersion,
-        idempotency_key: idempotencyKey,
-        stripe_account: connectedAccountId,
-      }).then(null, function() {
-        // I expect there to be an error here.
-      });
+      stripe.charges
+        .create(
+          {
+            amount: 1234,
+            currency: 'usd',
+            card: 'tok_chargeDeclined',
+          },
+          {
+            stripe_version: apiVersion,
+            idempotency_key: idempotencyKey,
+            stripe_account: connectedAccountId,
+          }
+        )
+        .then(null, function() {
+          // I expect there to be an error here.
+        });
     });
 
     it('should not emit a `response` event to removed listeners on response', function(done) {
@@ -506,13 +565,15 @@ describe('Flows', function() {
       stripe.on('response', onResponse);
       stripe.off('response', onResponse);
 
-      stripe.charges.create({
-        amount: 1234,
-        currency: 'usd',
-        card: 'tok_visa',
-      }).then(function() {
-        done();
-      });
+      stripe.charges
+        .create({
+          amount: 1234,
+          currency: 'usd',
+          card: 'tok_visa',
+        })
+        .then(function() {
+          done();
+        });
     });
   });
 
@@ -522,16 +583,18 @@ describe('Flows', function() {
       var f = fs.createReadStream(testFilename);
 
       return expect(
-        stripe.fileUploads.create({
-          purpose: 'dispute_evidence',
-          file: {
-            data: f,
-            name: 'minimal.pdf',
-            type: 'application/octet-stream',
-          },
-        }).then(null, function(error) {
-          return error;
-        })
+        stripe.fileUploads
+          .create({
+            purpose: 'dispute_evidence',
+            file: {
+              data: f,
+              name: 'minimal.pdf',
+              type: 'application/octet-stream',
+            },
+          })
+          .then(null, function(error) {
+            return error;
+          })
       ).to.eventually.have.nested.property('size', 739);
     });
 
@@ -540,16 +603,18 @@ describe('Flows', function() {
       var f = fs.readFileSync(testFilename);
 
       return expect(
-        stripe.fileUploads.create({
-          purpose: 'dispute_evidence',
-          file: {
-            data: f,
-            name: 'minimal.pdf',
-            type: 'application/octet-stream',
-          },
-        }).then(null, function(error) {
-          return error;
-        })
+        stripe.fileUploads
+          .create({
+            purpose: 'dispute_evidence',
+            file: {
+              data: f,
+              name: 'minimal.pdf',
+              type: 'application/octet-stream',
+            },
+          })
+          .then(null, function(error) {
+            return error;
+          })
       ).to.eventually.have.nested.property('size', 739);
     });
 
@@ -563,19 +628,23 @@ describe('Flows', function() {
         mockedStream.emit('error', fakeError);
       });
 
-      stripe.fileUploads.create({
-        purpose: 'dispute_evidence',
-        file: {
-          data: mockedStream,
-          name: 'minimal.pdf',
-          type: 'application/octet-stream',
-        },
-      }).catch(function(error) {
-        expect(error.message).to.equal('An error occurred while attempting to process the file for upload.');
-        expect(error.detail).to.equal(fakeError);
+      stripe.fileUploads
+        .create({
+          purpose: 'dispute_evidence',
+          file: {
+            data: mockedStream,
+            name: 'minimal.pdf',
+            type: 'application/octet-stream',
+          },
+        })
+        .catch(function(error) {
+          expect(error.message).to.equal(
+            'An error occurred while attempting to process the file for upload.'
+          );
+          expect(error.detail).to.equal(fakeError);
 
-        done();
-      });
+          done();
+        });
     });
   });
 });

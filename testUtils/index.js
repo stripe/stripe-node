@@ -8,9 +8,10 @@ require('chai').use(require('chai-as-promised'));
 
 var ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
 
-var utils = module.exports = {
+var utils = (module.exports = {
   getUserStripeKey: function() {
-    var key = process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
+    var key =
+      process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
 
     return key;
   },
@@ -42,12 +43,12 @@ var utils = module.exports = {
 
     function patchRequest(stripeInstance, instance) {
       instance._request = function(method, host, url, data, auth, options, cb) {
-        var req = stripeInstance.LAST_REQUEST = {
+        var req = (stripeInstance.LAST_REQUEST = {
           method: method,
           url: url,
           data: data,
           headers: options.headers || {},
-        };
+        });
         if (auth) {
           req.auth = auth;
         }
@@ -84,26 +85,31 @@ var utils = module.exports = {
     }
 
     CleanupUtility.prototype = {
-
       doCleanup: function(done) {
         var cleanups = this._cleanupFns;
         var total = cleanups.length;
         var completed = 0;
-        for (var fn; (fn = cleanups.shift());) {
+        var fn;
+        while ((fn = cleanups.shift())) {
           var promise = fn.call(this);
           if (!promise || !promise.then) {
-            throw new Error('CleanupUtility expects cleanup functions to return promises!');
+            throw new Error(
+              'CleanupUtility expects cleanup functions to return promises!'
+            );
           }
-          promise.then(function() {
-            // cleanup successful
-            completed += 1;
-            if (completed === total) {
-              done();
+          promise.then(
+            function() {
+              // cleanup successful
+              completed += 1;
+              if (completed === total) {
+                done();
+              }
+            },
+            function(err) {
+              // not successful
+              throw err;
             }
-          }, function(err) {
-            // not successful
-            throw err;
-          });
+          );
         }
         if (total === 0) {
           done();
@@ -135,13 +141,15 @@ var utils = module.exports = {
     };
 
     return CleanupUtility;
-  }()),
+  })(),
 
   /**
-  * Get a random string for test Object creation
-  */
+   * Get a random string for test Object creation
+   */
   getRandomString: function() {
-    return Math.random().toString(36).slice(2);
+    return Math.random()
+      .toString(36)
+      .slice(2);
   },
 
   envSupportsForAwait: function() {
@@ -156,4 +164,4 @@ var utils = module.exports = {
       return false;
     }
   },
-};
+});

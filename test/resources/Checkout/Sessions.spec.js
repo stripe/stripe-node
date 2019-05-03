@@ -4,8 +4,8 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Checkout', function () {
-  describe('Sessions Resource', function () {
+describe('Checkout', function() {
+  describe('Sessions Resource', function() {
     describe('create', function() {
       it('Sends the correct request', function() {
         var params = {
@@ -16,9 +16,7 @@ describe('Checkout', function () {
               amount: 123,
               currency: 'usd',
               description: 'item 1',
-              images: [
-                'https://stripe.com/img1',
-              ],
+              images: ['https://stripe.com/img1'],
               name: 'name',
               quantity: 2,
             },

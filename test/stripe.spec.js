@@ -2,10 +2,7 @@
 
 var testUtils = require('../testUtils');
 var utils = require('../lib/utils');
-var stripe = require('../lib/stripe')(
-  testUtils.getUserStripeKey(),
-  'latest'
-);
+var stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 
 var http = require('http');
 
@@ -22,37 +19,45 @@ describe('Stripe Module', function() {
 
   describe('setApiKey', function() {
     it('uses Bearer auth', function() {
-      expect(stripe.getApiField('auth')).to.equal('Bearer ' + testUtils.getUserStripeKey());
+      expect(stripe.getApiField('auth')).to.equal(
+        'Bearer ' + testUtils.getUserStripeKey()
+      );
     });
   });
 
   describe('GetClientUserAgent', function() {
     it('Should return a user-agent serialized JSON object', function() {
-      return expect(new Promise(function(resolve, reject) {
-        stripe.getClientUserAgent(function(c) {
-          resolve(JSON.parse(c));
-        });
-      })).to.eventually.have.property('lang', 'node');
+      return expect(
+        new Promise(function(resolve, reject) {
+          stripe.getClientUserAgent(function(c) {
+            resolve(JSON.parse(c));
+          });
+        })
+      ).to.eventually.have.property('lang', 'node');
     });
   });
 
   describe('GetClientUserAgentSeeded', function() {
     it('Should return a user-agent serialized JSON object', function() {
       var userAgent = {lang: 'node'};
-      return expect(new Promise(function(resolve, reject) {
-        stripe.getClientUserAgentSeeded(userAgent, function(c) {
-          resolve(JSON.parse(c));
-        });
-      })).to.eventually.have.property('lang', 'node');
+      return expect(
+        new Promise(function(resolve, reject) {
+          stripe.getClientUserAgentSeeded(userAgent, function(c) {
+            resolve(JSON.parse(c));
+          });
+        })
+      ).to.eventually.have.property('lang', 'node');
     });
 
     it('Should URI-encode user-agent fields', function() {
       var userAgent = {lang: 'ï'};
-      return expect(new Promise(function(resolve, reject) {
-        stripe.getClientUserAgentSeeded(userAgent, function(c) {
-          resolve(JSON.parse(c));
-        });
-      })).to.eventually.have.property('lang', '%C3%AF');
+      return expect(
+        new Promise(function(resolve, reject) {
+          stripe.getClientUserAgentSeeded(userAgent, function(c) {
+            resolve(JSON.parse(c));
+          });
+        })
+      ).to.eventually.have.property('lang', '%C3%AF');
     });
 
     describe('uname', function() {
@@ -66,31 +71,37 @@ describe('Stripe Module', function() {
 
       it('gets added to the user-agent', function() {
         utils.safeExec = function(cmd, cb) {
-          cb(null, 'foøname')
+          cb(null, 'foøname');
         };
-        return expect(new Promise(function(resolve, reject) {
-          stripe.getClientUserAgentSeeded({lang: 'node'}, function(c) {
-            resolve(JSON.parse(c));
-          });
-        })).to.eventually.have.property('uname', 'fo%C3%B8name');
+        return expect(
+          new Promise(function(resolve, reject) {
+            stripe.getClientUserAgentSeeded({lang: 'node'}, function(c) {
+              resolve(JSON.parse(c));
+            });
+          })
+        ).to.eventually.have.property('uname', 'fo%C3%B8name');
       });
 
       it('sets uname to UNKOWN in case of an error', function() {
         utils.safeExec = function(cmd, cb) {
-          cb(new Error('security'), null)
+          cb(new Error('security'), null);
         };
-        return expect(new Promise(function(resolve, reject) {
-          stripe.getClientUserAgentSeeded({lang: 'node'}, function(c) {
-            resolve(JSON.parse(c));
-          });
-        })).to.eventually.have.property('uname', 'UNKNOWN');
+        return expect(
+          new Promise(function(resolve, reject) {
+            stripe.getClientUserAgentSeeded({lang: 'node'}, function(c) {
+              resolve(JSON.parse(c));
+            });
+          })
+        ).to.eventually.have.property('uname', 'UNKNOWN');
       });
     });
   });
 
   describe('setTimeout', function() {
     it('Should define a default equal to the node default', function() {
-      expect(stripe.getApiField('timeout')).to.equal(http.createServer().timeout);
+      expect(stripe.getApiField('timeout')).to.equal(
+        http.createServer().timeout
+      );
     });
     it('Should allow me to set a custom timeout', function() {
       stripe.setTimeout(900);
@@ -98,7 +109,9 @@ describe('Stripe Module', function() {
     });
     it('Should allow me to set null, to reset to the default', function() {
       stripe.setTimeout(null);
-      expect(stripe.getApiField('timeout')).to.equal(http.createServer().timeout);
+      expect(stripe.getApiField('timeout')).to.equal(
+        http.createServer().timeout
+      );
     });
   });
 
@@ -165,7 +178,6 @@ describe('Stripe Module', function() {
           name: 'MyAwesomeApp',
           partner_id: 'partner_1234',
         });
-
       });
 
       it('should ignore any invalid properties', function() {
@@ -197,7 +209,9 @@ describe('Stripe Module', function() {
       stripe.getClientUserAgent(function(uaString) {
         expect(JSON.parse(uaString).application).to.eql(appInfo);
 
-        expect(stripe.getAppInfoAsString()).to.eql(appInfo.name + '/' + appInfo.version + ' (' + appInfo.url + ')');
+        expect(stripe.getAppInfoAsString()).to.eql(
+          appInfo.name + '/' + appInfo.version + ' (' + appInfo.url + ')'
+        );
 
         done();
       });
@@ -207,40 +221,47 @@ describe('Stripe Module', function() {
   describe('Callback support', function() {
     describe('Any given endpoint', function() {
       it('Will call a callback if successful', function() {
-        return expect(new Promise(function(resolve, reject) {
-          stripe.customers.create(CUSTOMER_DETAILS, function(err, customer) {
-            cleanup.deleteCustomer(customer.id);
-            resolve('Called!');
-          });
-        })).to.eventually.equal('Called!');
+        return expect(
+          new Promise(function(resolve, reject) {
+            stripe.customers.create(CUSTOMER_DETAILS, function(err, customer) {
+              cleanup.deleteCustomer(customer.id);
+              resolve('Called!');
+            });
+          })
+        ).to.eventually.equal('Called!');
       });
 
       it('Will expose HTTP response object', function() {
-        return expect(new Promise(function(resolve, reject) {
-          stripe.customers.create(CUSTOMER_DETAILS, function(err, customer) {
-            cleanup.deleteCustomer(customer.id);
+        return expect(
+          new Promise(function(resolve, reject) {
+            stripe.customers.create(CUSTOMER_DETAILS, function(err, customer) {
+              cleanup.deleteCustomer(customer.id);
 
-            var headers = customer.lastResponse.headers;
-            expect(headers).to.contain.keys('request-id');
+              var headers = customer.lastResponse.headers;
+              expect(headers).to.contain.keys('request-id');
 
-            expect(customer.lastResponse.requestId).to.match(/^req_/);
-            expect(customer.lastResponse.statusCode).to.equal(200);
+              expect(customer.lastResponse.requestId).to.match(/^req_/);
+              expect(customer.lastResponse.statusCode).to.equal(200);
 
-            resolve('Called!');
-          });
-        })).to.eventually.equal('Called!');
-      });
-
-      it('Given an error the callback will receive it', function() {
-        return expect(new Promise(function(resolve, reject) {
-          stripe.customers.createCard('nonExistentCustId', {card: {}}, function(err, customer) {
-            if (err) {
-              resolve('ErrorWasPassed');
-            } else {
-              reject(new Error('NoErrorPassed'));
-            }
-          });
-        })).to.eventually.become('ErrorWasPassed');
+              resolve('Called!');
+            });
+          })
+        ).to.eventually.equal('Called!');
+        return expect(
+          new Promise(function(resolve, reject) {
+            stripe.customers.createCard(
+              'nonExistentCustId',
+              {card: {}},
+              function(err, customer) {
+                if (err) {
+                  resolve('ErrorWasPassed');
+                } else {
+                  reject(new Error('NoErrorPassed'));
+                }
+              }
+            );
+          })
+        ).to.eventually.become('ErrorWasPassed');
       });
     });
   });
@@ -248,9 +269,11 @@ describe('Stripe Module', function() {
   describe('errors', function() {
     it('Exports errors as types', function() {
       var Stripe = require('../lib/stripe');
-      expect(new Stripe.errors.StripeInvalidRequestError({
-        message: 'error'
-      }).type).to.equal('StripeInvalidRequestError');
+      expect(
+        new Stripe.errors.StripeInvalidRequestError({
+          message: 'error',
+        }).type
+      ).to.equal('StripeInvalidRequestError');
     });
   });
 

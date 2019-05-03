@@ -32,7 +32,7 @@ describe('OAuth', function() {
       it('Uses the correct query', function() {
         var url = stripe.oauth.authorizeUrl({state: 'some_state'});
 
-        var query = qs.parse(URL.parse(url).query)
+        var query = qs.parse(URL.parse(url).query);
 
         expect(query.client_id).to.equal('default_client_id');
         expect(query.response_type).to.equal('code');
@@ -43,7 +43,7 @@ describe('OAuth', function() {
       it('Uses a provided client_id instead of the default', function() {
         var url = stripe.oauth.authorizeUrl({client_id: '123abc'});
 
-        var query = qs.parse(URL.parse(url).query)
+        var query = qs.parse(URL.parse(url).query);
 
         expect(query.client_id).to.equal('123abc');
       });
@@ -64,7 +64,7 @@ describe('OAuth', function() {
     it('Sends the correct request', function() {
       stripe.oauth.token({
         code: '123abc',
-        grant_type: 'authorization_code'
+        grant_type: 'authorization_code',
       });
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -74,7 +74,7 @@ describe('OAuth', function() {
         headers: {},
         data: {
           code: '123abc',
-          grant_type: 'authorization_code'
+          grant_type: 'authorization_code',
         },
       });
     });
@@ -97,7 +97,7 @@ describe('OAuth', function() {
         headers: {},
         data: {
           client_id: stripe.getClientId(),
-          stripe_user_id: 'some_user_id'
+          stripe_user_id: 'some_user_id',
         },
       });
     });
@@ -115,7 +115,7 @@ describe('OAuth', function() {
         headers: {},
         data: {
           client_id: '123abc',
-          stripe_user_id: 'some_user_id'
+          stripe_user_id: 'some_user_id',
         },
       });
     });

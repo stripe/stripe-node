@@ -4,10 +4,10 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Radar', function () {
-  describe('ValueLists Resource', function () {
-    describe('retrieve', function () {
-      it('Sends the correct request', function () {
+describe('Radar', function() {
+  describe('ValueLists Resource', function() {
+    describe('retrieve', function() {
+      it('Sends the correct request', function() {
         stripe.radar.valueLists.retrieve('rsl_123');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -19,8 +19,8 @@ describe('Radar', function () {
       });
     });
 
-    describe('create', function () {
-      it('Sends the correct request', function () {
+    describe('create', function() {
+      it('Sends the correct request', function() {
         stripe.radar.valueLists.create({
           alias: 'alias',
           name: 'name',
@@ -37,8 +37,8 @@ describe('Radar', function () {
       });
     });
 
-    describe('list', function () {
-      it('Sends the correct request', function () {
+    describe('list', function() {
+      it('Sends the correct request', function() {
         stripe.radar.valueLists.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

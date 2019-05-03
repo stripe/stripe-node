@@ -34,7 +34,7 @@ describe('Product Resource', function() {
         headers: {},
       });
     });
-  })
+  });
 
   describe('list', function() {
     it('Sends the correct request', function() {

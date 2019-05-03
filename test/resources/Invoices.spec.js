@@ -128,15 +128,13 @@ describe('Invoices Resource', function() {
     describe('With an options object that includes `subscription_items`', function() {
       it('Sends the correct request', function() {
         stripe.invoices.retrieveUpcoming('cus_123', {
-          subscription_items: [
-            {plan: 'potato'},
-            {plan: 'rutabaga'},
-          ],
+          subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
         });
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/invoices/upcoming?customer=cus_123&' +
+          url:
+            '/v1/invoices/upcoming?customer=cus_123&' +
             'subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
           headers: {},
           data: {},
@@ -148,15 +146,13 @@ describe('Invoices Resource', function() {
       it('Sends the correct request', function() {
         stripe.invoices.retrieveUpcoming({
           customer: 'cus_abc',
-          subscription_items: [
-            {plan: 'potato'},
-            {plan: 'rutabaga'},
-          ],
+          subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
         });
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/invoices/upcoming?customer=cus_abc&' +
+          url:
+            '/v1/invoices/upcoming?customer=cus_abc&' +
             'subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
           headers: {},
           data: {},
@@ -166,15 +162,14 @@ describe('Invoices Resource', function() {
 
     describe('With an options object that includes `subscription_items` in addition to a subscription ID', function() {
       it('Sends the correct request', function() {
-        stripe.invoices.retrieveUpcoming('cus_123', 'sub_123',
-          {
-            subscription_items: [
-              {plan: 'potato'},
-              {plan: 'rutabaga'},
-              {id: 'SOME_ID', deleted: true},
-            ],
-            subscription_prorate: true,
-          });
+        stripe.invoices.retrieveUpcoming('cus_123', 'sub_123', {
+          subscription_items: [
+            {plan: 'potato'},
+            {plan: 'rutabaga'},
+            {id: 'SOME_ID', deleted: true},
+          ],
+          subscription_prorate: true,
+        });
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -212,7 +207,7 @@ describe('Invoices Resource', function() {
         method: 'POST',
         url: '/v1/invoices/in_123/finalize',
         headers: {},
-        data: {}
+        data: {},
       });
     });
   });
@@ -224,11 +219,10 @@ describe('Invoices Resource', function() {
         method: 'POST',
         url: '/v1/invoices/in_123/mark_uncollectible',
         headers: {},
-        data: {}
+        data: {},
       });
     });
   });
-
 
   describe('pay', function() {
     it('Sends the correct request', function() {
@@ -251,7 +245,7 @@ describe('Invoices Resource', function() {
         method: 'POST',
         url: '/v1/invoices/in_123/send',
         headers: {},
-        data: {}
+        data: {},
       });
     });
   });
@@ -263,7 +257,7 @@ describe('Invoices Resource', function() {
         method: 'POST',
         url: '/v1/invoices/in_123/void',
         headers: {},
-        data: {}
+        data: {},
       });
     });
   });

@@ -30,26 +30,12 @@ The package needs to be configured with your account's secret key which is
 available in your [Stripe Dashboard][api-keys]. Require it with the key's
 value:
 
-``` js
+```js
 const stripe = require('stripe')('sk_test_...');
 
 const customer = await stripe.customers.create({
-  email: 'customer@example.com'
+  email: 'customer@example.com',
 });
-```
-
-Or with versions of Node.js prior to v7.9:
-
-``` js
-var stripe = require('stripe')('sk_test_...');
-
-stripe.customers.create(
-  { email: 'customer@example.com' },
-  function(err, customer) {
-    err; // null if no error occurred
-    customer; // the created customer object
-  }
-);
 ```
 
 Or using ES modules, this looks more like:
@@ -59,6 +45,9 @@ import Stripe from 'stripe';
 const stripe = Stripe('sk_test_...');
 //…
 ```
+
+On older versions of Node, you can use [promises](#using-promises)
+or [callbacks](#using-callbacks) instead of `async`/`await`.
 
 ### Usage with TypeScript
 
@@ -78,7 +67,9 @@ To use:
 import * as Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
 
-const customer: Promise<Stripe.customers.ICustomer> = stripe.customers.create(/* ... */);
+const customer: Promise<
+  Stripe.customers.ICustomer
+> = stripe.customers.create(/* ... */);
 ```
 
 ### Using Promises
@@ -88,30 +79,57 @@ callback:
 
 ```js
 // Create a new customer and then a new charge for that customer:
-stripe.customers.create({
-  email: 'foo-customer@example.com'
-}).then((customer) => {
-  return stripe.customers.createSource(customer.id, {
-    source: 'tok_visa'
+stripe.customers
+  .create({
+    email: 'foo-customer@example.com',
+  })
+  .then((customer) => {
+    return stripe.customers.createSource(customer.id, {
+      source: 'tok_visa',
+    });
+  })
+  .then((source) => {
+    return stripe.charges.create({
+      amount: 1600,
+      currency: 'usd',
+      customer: source.customer,
+    });
+  })
+  .then((charge) => {
+    // New charge created on a new customer
+  })
+  .catch((err) => {
+    // Deal with an error
   });
-}).then((source) => {
-  return stripe.charges.create({
-    amount: 1600,
-    currency: 'usd',
-    customer: source.customer
-  });
-}).then((charge) => {
-  // New charge created on a new customer
-}).catch((err) => {
-  // Deal with an error
-});
+```
+
+### Using callbacks
+
+On versions of Node.js prior to v7.9:
+
+```js
+var stripe = require('stripe')('sk_test_...');
+
+stripe.customers.create(
+  {
+    email: 'customer@example.com',
+  },
+  function(err, customer) {
+    if (err) {
+      // Deal with an error (will be `null` if no error occurred).
+    }
+
+    // Do something with created customer object
+    console.log(customer.id);
+  }
+);
 ```
 
 ### Configuring Timeout
 
 Request timeout is configurable (the default is Node's default of 120 seconds):
 
-``` js
+```js
 stripe.setTimeout(20000); // in ms (this is 20 seconds)
 ```
 
@@ -120,15 +138,18 @@ stripe.setTimeout(20000); // in ms (this is 20 seconds)
 A per-request `Stripe-Account` header for use with [Stripe Connect][connect]
 can be added to any method:
 
-``` js
+```js
 // Retrieve the balance for a connected account:
-stripe.balance.retrieve({
-  stripe_account: 'acct_foo'
-}).then((balance) => {
-  // The balance object for the connected account
-}).catch((err) => {
-  // Error
-});
+stripe.balance
+  .retrieve({
+    stripe_account: 'acct_foo',
+  })
+  .then((balance) => {
+    // The balance object for the connected account
+  })
+  .catch((err) => {
+    // Error
+  });
 ```
 
 ### Configuring a Proxy
@@ -136,7 +157,7 @@ stripe.balance.retrieve({
 An [https-proxy-agent][https-proxy-agent] can be configured with
 `setHttpAgent`.
 
-To use stripe behind a proxy you can pass  to sdk:
+To use stripe behind a proxy you can pass to sdk:
 
 ```js
 if (process.env.http_proxy) {
@@ -147,7 +168,9 @@ if (process.env.http_proxy) {
 
 ### Network retries
 
-Automatic network retries can be enabled with `setMaxNetworkRetries`. This will retry requests `n` times with exponential backoff if they fail due to an intermittent network problem. [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
+Automatic network retries can be enabled with `setMaxNetworkRetries`.
+This will retry requests `n` times with exponential backoff if they fail due to an intermittent network problem.
+[Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
 ```js
 // Retry a request once before giving up
@@ -160,20 +183,20 @@ Some information about the response which generated a resource is available
 with the `lastResponse` property:
 
 ```js
-charge.lastResponse.requestId // see: https://stripe.com/docs/api/node#request_ids
-charge.lastResponse.statusCode
+charge.lastResponse.requestId; // see: https://stripe.com/docs/api/node#request_ids
+charge.lastResponse.statusCode;
 ```
 
 ### `request` and `response` events
 
-The Stripe object emits `request` and `response` events.  You can use them like this:
+The Stripe object emits `request` and `response` events. You can use them like this:
 
 ```js
 const stripe = require('stripe')('sk_test_...');
 
 const onRequest = (request) => {
   // Do something.
-}
+};
 
 // Add the event handler function:
 stripe.on('request', onRequest);
@@ -183,6 +206,7 @@ stripe.off('request', onRequest);
 ```
 
 #### `request` object
+
 ```js
 {
   api_version: 'latest',
@@ -194,6 +218,7 @@ stripe.off('request', onRequest);
 ```
 
 #### `response` object
+
 ```js
 {
   api_version: 'latest',
@@ -209,7 +234,7 @@ stripe.off('request', onRequest);
 
 ### Webhook signing
 
-Stripe can optionally sign the webhook events it sends to your endpoint, allowing you to validate that they were not sent by a third-party.  You can read more about it [here](https://stripe.com/docs/webhooks#signatures).
+Stripe can optionally sign the webhook events it sends to your endpoint, allowing you to validate that they were not sent by a third-party. You can read more about it [here](https://stripe.com/docs/webhooks#signatures).
 
 Please note that you must pass the _raw_ request body, exactly as received from Stripe, to the `constructEvent()` function; this will not work with a parsed (i.e., JSON) request body.
 
@@ -266,7 +291,6 @@ This information is passed along when the library makes calls to the Stripe API.
 As of stripe-node 6.11.0, you may auto-paginate list methods.
 We provide a few different APIs for this to aid with a variety of node versions and styles.
 
-
 #### Async iterators (`for-await-of`)
 
 If you are in a Node environment that has support for [async iteration](https://github.com/tc39/proposal-async-iteration#the-async-iteration-statement-for-await-of),
@@ -293,22 +317,26 @@ await stripe.customers.list().autoPagingEach(async (customer) => {
   if (shouldBreak()) {
     return false;
   }
-})
+});
 console.log('Done iterating.');
 ```
 
 Equivalently, without `await`, you may return a Promise, which can resolve to `false` to break:
 
 ```js
-stripe.customers.list().autoPagingEach((customer) => {
-  return doSomething(customer).then(() => {
-    if (shouldBreak()) {
-      return false;
-    }
-  });
-}).then(() => {
-  console.log('Done iterating.');
-}).catch(handleError);
+stripe.customers
+  .list()
+  .autoPagingEach((customer) => {
+    return doSomething(customer).then(() => {
+      if (shouldBreak()) {
+        return false;
+      }
+    });
+  })
+  .then(() => {
+    console.log('Done iterating.');
+  })
+  .catch(handleError);
 ```
 
 If you prefer callbacks to promises, you may also use a `next` callback and a second `onDone` callback:
@@ -331,7 +359,7 @@ stripe.customers.list().autoPagingEach(
       console.log('Done iterating.');
     }
   }
-)
+);
 ```
 
 If your `onItem` function does not accept a `next` callback parameter _or_ return a Promise,
@@ -346,44 +374,55 @@ to prevent runaway list growth from consuming too much memory.
 Returns a promise of an array of all items across pages for a list request.
 
 ```js
-const allNewCustomers = await stripe.customers.list({created: {gt: lastMonth}})
+const allNewCustomers = await stripe.customers
+  .list({created: {gt: lastMonth}})
   .autoPagingToArray({limit: 10000});
 ```
 
 ## More Information
 
- * [REST API Version](https://github.com/stripe/stripe-node/wiki/REST-API-Version)
- * [Error Handling](https://github.com/stripe/stripe-node/wiki/Error-Handling)
- * [Passing Options](https://github.com/stripe/stripe-node/wiki/Passing-Options)
- * [Using Stripe Connect](https://github.com/stripe/stripe-node/wiki/Using-Stripe-Connect-with-node.js)
+- [REST API Version](https://github.com/stripe/stripe-node/wiki/REST-API-Version)
+- [Error Handling](https://github.com/stripe/stripe-node/wiki/Error-Handling)
+- [Passing Options](https://github.com/stripe/stripe-node/wiki/Passing-Options)
+- [Using Stripe Connect](https://github.com/stripe/stripe-node/wiki/Using-Stripe-Connect-with-node.js)
 
 ## Development
 
 Run all tests:
 
 ```bash
-$ npm install
-$ npm test
+$ yarn install
+$ yarn test
 ```
+
+If you do not have `yarn` installed, you can get it with `npm install --global yarn`.
 
 Run a single test suite:
 
 ```bash
-$ npm run mocha -- test/Error.spec.js
+$ yarn mocha test/Error.spec.js
 ```
 
 Run a single test (case sensitive):
 
 ```bash
-$ npm run mocha -- test/Error.spec.js --grep 'Populates with type'
+$ yarn mocha test/Error.spec.js --grep 'Populates with type'
 ```
 
-If you wish, you may run tests using your Stripe *Test* API key by setting the
+If you wish, you may run tests using your Stripe _Test_ API key by setting the
 environment variable `STRIPE_TEST_API_KEY` before running the tests:
 
 ```bash
 $ export STRIPE_TEST_API_KEY='sk_test....'
-$ npm test
+$ yarn test
+```
+
+Run prettier:
+
+Add an [editor integration](https://prettier.io/docs/en/editors.html) or:
+
+```bash
+$ yarn fix
 ```
 
 [api-keys]: https://dashboard.stripe.com/account/apikeys
