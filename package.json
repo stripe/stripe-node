@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "6.31.2",
+  "version": "7.0.0",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -22,7 +22,7 @@
   },
   "bugs:": "https://github.com/stripe/stripe-node/issues",
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "main": "lib/stripe.js",
   "devDependencies": {
