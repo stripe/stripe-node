@@ -12,25 +12,31 @@ describe('UsageRecordSummaries Resource', function() {
         method: 'GET',
         url: '/v1/subscription_items/si_123/usage_record_summaries',
         headers: {},
-        data: {}
+        data: {},
       });
     });
 
     it('Includes any options that were provided', function(done) {
-      stripe.usageRecordSummaries.list('si_123', {}, {
-        stripe_account: 'acct_456',
-      }).then(function(record) {
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url: '/v1/subscription_items/si_123/usage_record_summaries',
-          headers: {
-            'Stripe-Account': 'acct_456'
+      stripe.usageRecordSummaries
+        .list(
+          'si_123',
+          {},
+          {
+            stripe_account: 'acct_456',
           },
-          data: {}
-        });
+        )
+        .then(function(record) {
+          expect(stripe.LAST_REQUEST).to.deep.equal({
+            method: 'GET',
+            url: '/v1/subscription_items/si_123/usage_record_summaries',
+            headers: {
+              'Stripe-Account': 'acct_456',
+            },
+            data: {},
+          });
 
-        done();
-      });
+          done();
+        });
     });
 
     it('Calls a given callback', function(done) {

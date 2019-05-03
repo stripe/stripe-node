@@ -21,7 +21,8 @@ describe('Payouts Resource', function() {
   describe('create', function() {
     it('Sends the correct request', function() {
       stripe.payouts.create({
-        amount: 200, currency: 'usd',
+        amount: 200,
+        currency: 'usd',
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

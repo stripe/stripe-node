@@ -8,10 +8,9 @@ var CHARGE_TEST_ID = 'chargeIdTest999';
 var REFUND_TEST_ID = 'refundIdTest999';
 
 // Create new CustomerCard instance with pre-filled customerId:
-var chargeRefund = new resources.ChargeRefunds(
-  stripe,
-  {chargeId: CHARGE_TEST_ID}
-);
+var chargeRefund = new resources.ChargeRefunds(stripe, {
+  chargeId: CHARGE_TEST_ID,
+});
 
 // Use spy from existing resource:
 chargeRefund._request = stripe.customers._request;

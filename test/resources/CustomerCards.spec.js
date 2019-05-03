@@ -7,10 +7,9 @@ var expect = require('chai').expect;
 var CUSTOMER_TEST_ID = 'customerIdTest999';
 
 // Create new CustomerCard instance with pre-filled customerId:
-var customerCard = new resources.CustomerCards(
-  stripe,
-  {customerId: CUSTOMER_TEST_ID}
-);
+var customerCard = new resources.CustomerCards(stripe, {
+  customerId: CUSTOMER_TEST_ID,
+});
 
 // Use spy from existing resource:
 customerCard._request = stripe.customers._request;
@@ -31,7 +30,8 @@ describe('CustomerCard Resource', function() {
   describe('create', function() {
     it('Sends the correct request', function() {
       customerCard.create({
-        number: '123456', exp_month: '12',
+        number: '123456',
+        exp_month: '12',
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

@@ -56,7 +56,7 @@ describe('Order Resource', function() {
         headers: {},
       });
     });
-  })
+  });
 
   describe('list', function() {
     it('Sends the correct request', function() {
@@ -105,9 +105,7 @@ describe('Order Resource', function() {
   describe('returnOrder', function() {
     it('Sends the correct request', function() {
       stripe.orders.returnOrder('orderIdFoo3242', {
-        items: [
-          {parent: 'sku_123'},
-        ],
+        items: [{parent: 'sku_123'}],
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
