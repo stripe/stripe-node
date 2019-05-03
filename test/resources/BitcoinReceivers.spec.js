@@ -40,7 +40,7 @@ describe('BitcoinReceivers Resource', function() {
         data: {
           limit: 1,
         },
-      })
+      });
     });
   });
 });

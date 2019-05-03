@@ -19,7 +19,9 @@ describe('Transfers Resource', function() {
   describe('create', function() {
     it('Sends the correct request', function() {
       stripe.transfers.create({
-        amount: 200, currency: 'usd', recipient: {},
+        amount: 200,
+        currency: 'usd',
+        recipient: {},
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

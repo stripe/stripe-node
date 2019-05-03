@@ -4,10 +4,10 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Terminal', function () {
-  describe('Readers Resource', function () {
-    describe('retrieve', function () {
-      it('Sends the correct request', function () {
+describe('Terminal', function() {
+  describe('Readers Resource', function() {
+    describe('retrieve', function() {
+      it('Sends the correct request', function() {
         stripe.terminal.readers.retrieve('rdr_123');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -19,8 +19,8 @@ describe('Terminal', function () {
       });
     });
 
-    describe('create', function () {
-      it('Sends the correct request', function () {
+    describe('create', function() {
+      it('Sends the correct request', function() {
         stripe.terminal.readers.create({
           registration_code: 'a-b-c',
           label: 'name',
@@ -49,10 +49,10 @@ describe('Terminal', function () {
       });
     });
 
-    describe('update', function () {
-      it('Sends the correct request', function () {
+    describe('update', function() {
+      it('Sends the correct request', function() {
         stripe.terminal.readers.update('rdr_123', {
-          label: 'name'
+          label: 'name',
         });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -65,8 +65,8 @@ describe('Terminal', function () {
       });
     });
 
-    describe('list', function () {
-      it('Sends the correct request', function () {
+    describe('list', function() {
+      it('Sends the correct request', function() {
         stripe.terminal.readers.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
