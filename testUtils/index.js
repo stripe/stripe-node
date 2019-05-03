@@ -89,7 +89,8 @@ var utils = (module.exports = {
         var cleanups = this._cleanupFns;
         var total = cleanups.length;
         var completed = 0;
-        for (var fn; (fn = cleanups.shift()); ) {
+        var fn;
+        while ((fn = cleanups.shift())) {
           var promise = fn.call(this);
           if (!promise || !promise.then) {
             throw new Error(
