@@ -93,15 +93,15 @@ describe('Charge Resource', function() {
 
     it('Incorrect arguments result in an error', function() {
       expect(
-        stripe.charges.refund('chargeIdExample123', 39392),
+        stripe.charges.refund('chargeIdExample123', 39392)
       ).to.be.eventually.rejectedWith(/unknown arguments/i);
 
       expect(
-        stripe.charges.refund({potato: 'chargeIdExample123'}),
+        stripe.charges.refund({potato: 'chargeIdExample123'})
       ).to.be.eventually.rejectedWith(/must be a string, but got: object/i);
 
       expect(stripe.charges.refund(442)).to.be.eventually.rejectedWith(
-        /must be a string, but got: number/i,
+        /must be a string, but got: number/i
       );
     });
   });
@@ -111,7 +111,7 @@ describe('Charge Resource', function() {
       stripe.charges.updateRefund(
         'chargeIdExample3242',
         'refundIdExample2312',
-        {metadata: {key: 'value'}},
+        {metadata: {key: 'value'}}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -144,7 +144,7 @@ describe('Charge Resource', function() {
     it('Sends the correct retrieve request', function() {
       stripe.charges.retrieveRefund(
         'chargeIdExample3242',
-        'refundIdExample2312',
+        'refundIdExample2312'
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

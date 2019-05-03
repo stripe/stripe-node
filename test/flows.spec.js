@@ -27,7 +27,7 @@ describe('Flows', function() {
       stripe.account.retrieve().then(function(acct) {
         CURRENCY = acct.default_currency;
         return acct;
-      }),
+      })
     ).to.eventually.have.property('default_currency');
   });
 
@@ -56,7 +56,7 @@ describe('Flows', function() {
           return stripe.customers.updateSubscription(customer.id, {
             plan: plan.id,
           });
-        }),
+        })
       ).to.eventually.have.property('status', 'active');
     });
 
@@ -94,12 +94,12 @@ describe('Flows', function() {
               {
                 plan: plan.id,
                 quantity: '3',
-              },
+              }
             );
           })
           .then(function(subscription) {
             return [subscription.status, subscription.quantity];
-          }),
+          })
       ).to.eventually.deep.equal(['active', 3]);
     });
 
@@ -116,7 +116,7 @@ describe('Flows', function() {
               // Resolve with the error so we can inspect it below
               return err;
             });
-        }),
+        })
       ).to.eventually.satisfy(function(err) {
         return (
           err.type === 'StripeInvalidRequestError' &&
@@ -150,7 +150,7 @@ describe('Flows', function() {
             plan: plan.id,
             cancel_at_period_end: true,
           });
-        }),
+        })
       ).to.eventually.have.property('cancel_at_period_end', true);
     });
 
@@ -179,9 +179,9 @@ describe('Flows', function() {
                 .then(function() {
                   cleanup.deletePlan(planID);
                   return stripe.plans.retrieve(planID);
-                }),
+                })
             ).to.eventually.have.property('id', planID);
-          },
+          }
         );
       });
     });
@@ -203,7 +203,7 @@ describe('Flows', function() {
           ]).then(function(joined) {
             coupon = joined[0];
             customer = joined[1];
-          }),
+          })
         ).to.not.be.eventually.rejected;
       });
       describe('And I apply the coupon to the customer', function() {
@@ -211,24 +211,24 @@ describe('Flows', function() {
           return expect(
             stripe.customers.update(customer.id, {
               coupon: coupon.id,
-            }),
+            })
           ).to.not.be.eventually.rejected;
         });
         it('Can be retrieved from that customer', function() {
           return expect(
-            stripe.customers.retrieve(customer.id),
+            stripe.customers.retrieve(customer.id)
           ).to.eventually.have.nested.property('discount.coupon.id', coupon.id);
         });
         describe('The resulting discount', function() {
           it('Can be removed', function() {
             return expect(
-              stripe.customers.deleteDiscount(customer.id),
+              stripe.customers.deleteDiscount(customer.id)
             ).to.eventually.have.property('deleted', true);
           });
           describe('Re-querying it', function() {
             it('Does indeed indicate that it is deleted', function() {
               return expect(
-                stripe.customers.retrieve(customer.id),
+                stripe.customers.retrieve(customer.id)
               ).to.eventually.have.property('discount', null);
             });
           });
@@ -250,7 +250,7 @@ describe('Flows', function() {
           })
           .then(function() {
             return stripe.customers.getMetadata(customer.id);
-          }),
+          })
       ).to.eventually.deep.equal({foo: '123'});
     });
     it('Can reset metadata', function() {
@@ -268,7 +268,7 @@ describe('Flows', function() {
           })
           .then(function() {
             return stripe.customers.getMetadata(customer.id);
-          }),
+          })
       ).to.eventually.deep.equal({});
     });
     it('Resets metadata when setting new metadata', function() {
@@ -283,7 +283,7 @@ describe('Flows', function() {
           })
           .then(function() {
             return stripe.customers.setMetadata(customer.id, {baz: '456'});
-          }),
+          })
       ).to.eventually.deep.equal({baz: '456'});
     });
     it('Can set individual key/value pairs', function() {
@@ -314,7 +314,7 @@ describe('Flows', function() {
           })
           .then(function() {
             return stripe.customers.getMetadata(customer.id);
-          }),
+          })
       ).to.eventually.deep.equal({_other_: '999', foo: '222'});
     });
     it('Can set individual key/value pairs [with per request token]', function() {
@@ -331,7 +331,7 @@ describe('Flows', function() {
             return stripe.customers.setMetadata(
               customer.id,
               {baz: 456},
-              authToken,
+              authToken
             );
           })
           .then(function() {
@@ -339,7 +339,7 @@ describe('Flows', function() {
               customer.id,
               '_other_',
               999,
-              authToken,
+              authToken
             );
           })
           .then(function() {
@@ -347,7 +347,7 @@ describe('Flows', function() {
               customer.id,
               'foo',
               123,
-              authToken,
+              authToken
             );
           })
           .then(function() {
@@ -356,7 +356,7 @@ describe('Flows', function() {
               customer.id,
               'foo',
               222,
-              authToken,
+              authToken
             );
           })
           .then(function() {
@@ -365,12 +365,12 @@ describe('Flows', function() {
               customer.id,
               'baz',
               null,
-              authToken,
+              authToken
             );
           })
           .then(function() {
             return stripe.customers.getMetadata(customer.id, authToken);
-          }),
+          })
       ).to.eventually.deep.equal({_other_: '999', foo: '222'});
     });
   });
@@ -387,7 +387,7 @@ describe('Flows', function() {
               currency: CURRENCY,
               expand: ['customer'],
             });
-          }),
+          })
         ).to.eventually.have.nested.property('customer.created');
       });
     });
@@ -403,7 +403,7 @@ describe('Flows', function() {
             .then(function(cust) {
               cleanup.deleteCustomer(cust.id);
               return cust;
-            }),
+            })
           // Confirm it's expanded by checking that some prop (e.g. exp_year) exists:
         ).to.eventually.have.nested.property('default_source.exp_year');
       });
@@ -427,7 +427,7 @@ describe('Flows', function() {
           })
           .then(null, function(error) {
             return error;
-          }),
+          })
       ).to.eventually.have.nested.property('raw.charge');
     });
   });
@@ -436,12 +436,12 @@ describe('Flows', function() {
     it('Allows me to do so', function() {
       return expect(stripe.balance.retrieve()).to.eventually.have.property(
         'object',
-        'balance',
+        'balance'
       );
     });
     it('Allows me to do so with specified auth key', function() {
       return expect(
-        stripe.balance.retrieve(testUtils.getUserStripeKey()),
+        stripe.balance.retrieve(testUtils.getUserStripeKey())
       ).to.eventually.have.property('object', 'balance');
     });
   });
@@ -459,8 +459,8 @@ describe('Flows', function() {
           if (accounts.data.length < 1) {
             return done(
               new Error(
-                'Test requires at least one Connected Account in the Test Account',
-              ),
+                'Test requires at least one Connected Account in the Test Account'
+              )
             );
           }
 
@@ -503,7 +503,7 @@ describe('Flows', function() {
             stripe_version: apiVersion,
             idempotency_key: idempotencyKey,
             stripe_account: connectedAccountId,
-          },
+          }
         )
         .then(null, function() {
           // I expect there to be an error here.
@@ -550,7 +550,7 @@ describe('Flows', function() {
             stripe_version: apiVersion,
             idempotency_key: idempotencyKey,
             stripe_account: connectedAccountId,
-          },
+          }
         )
         .then(null, function() {
           // I expect there to be an error here.
@@ -594,7 +594,7 @@ describe('Flows', function() {
           })
           .then(null, function(error) {
             return error;
-          }),
+          })
       ).to.eventually.have.nested.property('size', 739);
     });
 
@@ -614,7 +614,7 @@ describe('Flows', function() {
           })
           .then(null, function(error) {
             return error;
-          }),
+          })
       ).to.eventually.have.nested.property('size', 739);
     });
 
@@ -639,7 +639,7 @@ describe('Flows', function() {
         })
         .catch(function(error) {
           expect(error.message).to.equal(
-            'An error occurred while attempting to process the file for upload.',
+            'An error occurred while attempting to process the file for upload.'
           );
           expect(error.detail).to.equal(fakeError);
 

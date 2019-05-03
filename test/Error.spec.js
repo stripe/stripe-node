@@ -16,16 +16,16 @@ describe('Error', function() {
   describe('StripeError', function() {
     it('Generates specific instance depending on error-type', function() {
       expect(Error.StripeError.generate({type: 'card_error'})).to.be.instanceOf(
-        Error.StripeCardError,
+        Error.StripeCardError
       );
       expect(
-        Error.StripeError.generate({type: 'invalid_request_error'}),
+        Error.StripeError.generate({type: 'invalid_request_error'})
       ).to.be.instanceOf(Error.StripeInvalidRequestError);
       expect(Error.StripeError.generate({type: 'api_error'})).to.be.instanceOf(
-        Error.StripeAPIError,
+        Error.StripeAPIError
       );
       expect(
-        Error.StripeError.generate({type: 'idempotency_error'}),
+        Error.StripeError.generate({type: 'idempotency_error'})
       ).to.be.instanceOf(Error.StripeIdempotencyError);
     });
 

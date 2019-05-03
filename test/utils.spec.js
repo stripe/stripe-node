@@ -17,7 +17,7 @@ describe('utils', function() {
 
       expect(
         // Test encoding:
-        template({foo: 'FOO', baz: '__::baz::__'}),
+        template({foo: 'FOO', baz: '__::baz::__'})
       ).to.equal('/some/url/FOO/__%3A%3Abaz%3A%3A__?ok=1');
     });
   });
@@ -28,7 +28,7 @@ describe('utils', function() {
         utils.stringifyRequestData({
           a: 1,
           b: 'foo',
-        }),
+        })
       ).to.equal('a=1&b=foo');
     });
 
@@ -40,13 +40,13 @@ describe('utils', function() {
             gte: new Date('2009-02-13T23:31:30Z'),
             lt: new Date('2044-05-01T01:28:21Z'),
           },
-        }),
+        })
       ).to.equal(
         [
           'date=1234567890',
           'created[gte]=1234567890',
           'created[lt]=2345678901',
-        ].join('&'),
+        ].join('&')
       );
     });
 
@@ -60,7 +60,7 @@ describe('utils', function() {
               },
             },
           },
-        }),
+        })
       ).to.equal('a[b][c][d]=2');
     });
 
@@ -68,7 +68,7 @@ describe('utils', function() {
       expect(
         utils.stringifyRequestData({
           a: [{b: 'c'}, {b: 'd'}],
-        }),
+        })
       ).to.equal('a[0][b]=c&a[1][b]=d');
     });
 
@@ -79,7 +79,7 @@ describe('utils', function() {
             0: {b: 'c'},
             1: {b: 'd'},
           },
-        }),
+        })
       ).to.equal('a[0][b]=c&a[1][b]=d');
     });
 
@@ -93,7 +93,7 @@ describe('utils', function() {
             1: 2,
             'a n o t h e r': null,
           },
-        }),
+        })
       ).to.equal(
         [
           'test=1',
@@ -101,7 +101,7 @@ describe('utils', function() {
           'somethingElse=%3A%3A%22%22%25%26',
           'nested[1]=2',
           'nested[a%20n%20o%20t%20h%20e%20r]=',
-        ].join('&'),
+        ].join('&')
       );
     });
   });
@@ -143,7 +143,7 @@ describe('utils', function() {
         },
         function(message) {
           throw new Error('Should not have warned, but did: ' + message);
-        },
+        }
       );
     });
     it('warns if the hash contains both data and options', function(done) {
@@ -156,11 +156,11 @@ describe('utils', function() {
         function(message) {
           expect(message).to.equal(
             'Stripe: Options found in arguments (api_key, idempotency_key).' +
-              ' Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options.',
+              ' Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options.'
           );
 
           done();
-        },
+        }
       );
     });
     it('finds the data', function() {
@@ -270,11 +270,11 @@ describe('utils', function() {
         },
         function(message) {
           expect(message).to.equal(
-            'Stripe: Invalid options found (fishsticks, custard); ignoring.',
+            'Stripe: Invalid options found (fishsticks, custard); ignoring.'
           );
 
           done();
-        },
+        }
       );
     });
   });
@@ -303,7 +303,7 @@ describe('utils', function() {
           dog: false,
           rabbit: undefined,
           pointer: null,
-        }),
+        })
       ).to.eql({
         cat: 3,
         dog: false,
@@ -374,7 +374,7 @@ describe('utils', function() {
           b: 'foo',
           c: true,
           d: null,
-        }),
+        })
       ).to.eql({a: '1', b: 'foo', c: 'true', d: 'null'});
     });
 
@@ -385,7 +385,7 @@ describe('utils', function() {
             a: 1,
             b: 'foo',
           },
-        }),
+        })
       ).to.eql({'x[a]': '1', 'x[b]': 'foo'});
     });
 
@@ -398,7 +398,7 @@ describe('utils', function() {
           x: {
             a: 1,
           },
-        }),
+        })
       ).to.eql({file: {data: 'foo'}, 'x[a]': '1'});
     });
 

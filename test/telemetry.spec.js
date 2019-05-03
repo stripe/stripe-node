@@ -16,7 +16,7 @@ function createTestServer(handlerFunc, cb) {
       res.end(
         JSON.stringify({
           error: {type: 'invalid_request_error', message: e.message},
-        }),
+        })
       );
     }
   });
@@ -58,7 +58,7 @@ describe('Client Telemetry', function() {
       },
       function(host, port) {
         const stripe = require('../lib/stripe')(
-          'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
+          'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
         stripe.setHost(host, port, 'http');
 
@@ -72,7 +72,7 @@ describe('Client Telemetry', function() {
             done();
           })
           .catch(done);
-      },
+      }
     );
   });
 
@@ -92,7 +92,7 @@ describe('Client Telemetry', function() {
           case 2:
             expect(telemetry).to.exist;
             expect(
-              JSON.parse(telemetry).last_request_metrics.request_id,
+              JSON.parse(telemetry).last_request_metrics.request_id
             ).to.equal('req_1');
             break;
           default:
@@ -105,7 +105,7 @@ describe('Client Telemetry', function() {
       },
       function(host, port) {
         const stripe = require('../lib/stripe')(
-          'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
+          'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
         stripe.setTelemetryEnabled(true);
         stripe.setHost(host, port, 'http');
@@ -120,7 +120,7 @@ describe('Client Telemetry', function() {
             done();
           })
           .catch(done);
-      },
+      }
     );
   });
 
@@ -142,7 +142,7 @@ describe('Client Telemetry', function() {
           case 4:
             expect(telemetry).to.exist;
             expect(
-              JSON.parse(telemetry).last_request_metrics.request_id,
+              JSON.parse(telemetry).last_request_metrics.request_id
             ).to.be.oneOf(['req_1', 'req_2']);
             break;
           default:
@@ -155,7 +155,7 @@ describe('Client Telemetry', function() {
       },
       function(host, port) {
         const stripe = require('../lib/stripe')(
-          'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
+          'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
         stripe.setTelemetryEnabled(true);
         stripe.setHost(host, port, 'http');
@@ -172,7 +172,7 @@ describe('Client Telemetry', function() {
             done();
           })
           .catch(done);
-      },
+      }
     );
   });
 });

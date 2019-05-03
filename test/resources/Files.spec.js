@@ -77,7 +77,7 @@ describe('Files Resource', function() {
           },
           file_link_data: {create: true},
         },
-        TEST_AUTH_KEY,
+        TEST_AUTH_KEY
       );
 
       expect(stripe.LAST_REQUEST).to.deep.property('host', 'files.stripe.com');
@@ -103,7 +103,7 @@ describe('Files Resource', function() {
         .then(function() {
           expect(stripe.LAST_REQUEST).to.deep.property(
             'host',
-            'files.stripe.com',
+            'files.stripe.com'
           );
           expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
           expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
@@ -125,12 +125,12 @@ describe('Files Resource', function() {
             },
             file_link_data: {create: true},
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         )
         .then(function() {
           expect(stripe.LAST_REQUEST).to.deep.property(
             'host',
-            'files.stripe.com',
+            'files.stripe.com'
           );
           expect(stripe.LAST_REQUEST).to.deep.property('method', 'POST');
           expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');

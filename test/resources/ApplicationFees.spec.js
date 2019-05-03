@@ -35,7 +35,7 @@ describe('ApplicationFee Resource', function() {
       stripe.applicationFees.updateRefund(
         'appFeeIdExample3242',
         'refundIdExample2312',
-        {metadata: {key: 'value'}},
+        {metadata: {key: 'value'}}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -69,7 +69,7 @@ describe('ApplicationFee Resource', function() {
     it('Sends the correct retrieve request', function() {
       stripe.applicationFees.retrieveRefund(
         'appFeeIdExample3242',
-        'refundIdExample2312',
+        'refundIdExample2312'
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

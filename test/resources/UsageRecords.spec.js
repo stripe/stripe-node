@@ -35,7 +35,7 @@ describe('UsageRecords Resource', function() {
           },
           {
             stripe_account: 'acct_456',
-          },
+          }
         )
         .then(function(record) {
           expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -65,7 +65,7 @@ describe('UsageRecords Resource', function() {
         },
         function(error, record) {
           done(error);
-        },
+        }
       );
     });
   });

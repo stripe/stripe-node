@@ -64,7 +64,7 @@ describe('Balance Resource', function() {
     it('Sends the correct request [with specified auth]', function() {
       stripe.balance.retrieveTransaction(
         'transactionIdFoo',
-        'aGN0bIwXnHdw5645VABjPdSn8nWY7G11',
+        'aGN0bIwXnHdw5645VABjPdSn8nWY7G11'
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

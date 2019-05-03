@@ -41,7 +41,7 @@ describe('auto pagination', function() {
       Promise.all(
         realCustomerIds.map(function(customerId) {
           return stripe.customers.del(customerId);
-        }),
+        })
       ).then(resolve);
     });
   });
@@ -71,7 +71,7 @@ describe('auto pagination', function() {
           stripe.customers
             .list({limit: 3, email: email})
             .autoPagingEach(onCustomer, onDone);
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
@@ -98,7 +98,7 @@ describe('auto pagination', function() {
           stripe.customers
             .list({limit: 3, email: email})
             .autoPagingEach(onCustomer, onDone);
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
@@ -126,7 +126,7 @@ describe('auto pagination', function() {
           stripe.customers
             .list({limit: 3, email: email})
             .autoPagingEach(onCustomer, onDone);
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
@@ -146,7 +146,7 @@ describe('auto pagination', function() {
             .autoPagingEach(onCustomer)
             .then(onDone)
             .catch(reject);
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds);
     });
 
@@ -163,7 +163,7 @@ describe('auto pagination', function() {
             .then(function() {
               resolve(customerIds);
             });
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds);
     });
 
@@ -180,7 +180,7 @@ describe('auto pagination', function() {
             .then(function() {
               resolve(customerIds);
             });
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds);
     });
 
@@ -197,7 +197,7 @@ describe('auto pagination', function() {
             .then(function() {
               resolve(customerIds);
             });
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds);
     });
 
@@ -220,7 +220,7 @@ describe('auto pagination', function() {
                 reject(Error('Expected an error, did not get one.'));
               }
             });
-        }),
+        })
       ).to.eventually.deep.equal('Simulated error');
     });
 
@@ -243,7 +243,7 @@ describe('auto pagination', function() {
             .catch(function(err) {
               resolve(err.message);
             });
-        }),
+        })
       ).to.eventually.deep.equal('Simulated error');
     });
   });
@@ -259,17 +259,17 @@ describe('auto pagination', function() {
           new Promise(function(resolve, reject) {
             forAwaitUntil(
               stripe.customers.list({limit: 3, email: email}),
-              LIMIT,
+              LIMIT
             )
               .then(function(customers) {
                 resolve(
                   customers.map(function(customer) {
                     return customer.id;
-                  }),
+                  })
                 );
               })
               .catch(reject);
-          }),
+          })
         ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
       });
 
@@ -278,17 +278,17 @@ describe('auto pagination', function() {
           new Promise(function(resolve, reject) {
             forAwaitUntil(
               stripe.customers.list({limit: 3, email: email}),
-              TOTAL_OBJECTS + 1,
+              TOTAL_OBJECTS + 1
             )
               .then(function(customers) {
                 resolve(
                   customers.map(function(customer) {
                     return customer.id;
-                  }),
+                  })
                 );
               })
               .catch(reject);
-          }),
+          })
         ).to.eventually.deep.equal(realCustomerIds);
       });
     }
@@ -305,11 +305,11 @@ describe('auto pagination', function() {
                 resolve(
                   customers.map(function(customer) {
                     return customer.id;
-                  }),
+                  })
                 );
               })
               .catch(reject);
-          }),
+          })
         ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
       });
     }
@@ -332,7 +332,7 @@ describe('auto pagination', function() {
               resolve(customerIds);
             })
             .catch(reject);
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, 1));
     });
 
@@ -355,7 +355,7 @@ describe('auto pagination', function() {
               resolve(customerIds);
             })
             .catch(reject);
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
@@ -397,13 +397,13 @@ describe('auto pagination', function() {
               resolve(customerIds);
             })
             .catch(reject);
-        }),
+        })
       ).to.eventually.deep.equal(
         realCustomerIds.slice(0, 4).reduce(function(acc, x) {
           acc.push(x);
           acc.push(x);
           return acc;
-        }, []),
+        }, [])
       );
     });
   });
@@ -422,7 +422,7 @@ describe('auto pagination', function() {
             })
             .then(resolve)
             .catch(reject);
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds);
     });
 
@@ -439,7 +439,7 @@ describe('auto pagination', function() {
             })
             .then(resolve)
             .catch(reject);
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
@@ -453,7 +453,7 @@ describe('auto pagination', function() {
               resolve(
                 customers.map(function(customer) {
                   return customer.id;
-                }),
+                })
               );
             }
           }
@@ -461,7 +461,7 @@ describe('auto pagination', function() {
           stripe.customers
             .list({limit: 3, email: email})
             .autoPagingToArray({limit: LIMIT}, onDone);
-        }),
+        })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT));
     });
 
@@ -474,9 +474,9 @@ describe('auto pagination', function() {
           } catch (err) {
             resolve(err.message);
           }
-        }),
+        })
       ).to.eventually.equal(
-        'You must pass a `limit` option to autoPagingToArray, eg; `autoPagingToArray({limit: 1000});`.',
+        'You must pass a `limit` option to autoPagingToArray, eg; `autoPagingToArray({limit: 1000});`.'
       );
     });
 
@@ -491,9 +491,9 @@ describe('auto pagination', function() {
           } catch (err) {
             resolve(err.message);
           }
-        }),
+        })
       ).to.eventually.equal(
-        'You cannot specify a limit of more than 10,000 items to fetch in `autoPagingToArray`; use `autoPagingEach` to iterate through longer lists.',
+        'You cannot specify a limit of more than 10,000 items to fetch in `autoPagingToArray`; use `autoPagingEach` to iterate through longer lists.'
       );
     });
   });
@@ -529,7 +529,7 @@ describe('auto pagination', function() {
               });
             })
             .catch(reject);
-        }),
+        })
       ).to.eventually.deep.equal({
         firstReq: realCustomerIds.slice(0, 4),
         paginated: realCustomerIds,

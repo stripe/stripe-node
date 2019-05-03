@@ -65,7 +65,7 @@ describe('Customers Resource', function() {
     it('Sends the correct request [with specified idempotency_key in options]', function() {
       stripe.customers.create(
         {description: 'Some customer'},
-        {idempotency_key: 'foo'},
+        {idempotency_key: 'foo'}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -78,7 +78,7 @@ describe('Customers Resource', function() {
     it('Sends the correct request [with specified auth in options]', function() {
       stripe.customers.create(
         {description: 'Some customer'},
-        {api_key: TEST_AUTH_KEY},
+        {api_key: TEST_AUTH_KEY}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -92,7 +92,7 @@ describe('Customers Resource', function() {
     it('Sends the correct request [with specified auth and idempotent key in options]', function() {
       stripe.customers.create(
         {description: 'Some customer'},
-        {api_key: TEST_AUTH_KEY, idempotency_key: 'foo'},
+        {api_key: TEST_AUTH_KEY, idempotency_key: 'foo'}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -184,7 +184,7 @@ describe('Customers Resource', function() {
           {
             plan: 'fooPlan',
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -235,7 +235,7 @@ describe('Customers Resource', function() {
           stripe.customers.cancelSubscription(
             'cus_123',
             {at_period_end: true},
-            TEST_AUTH_KEY,
+            TEST_AUTH_KEY
           );
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'DELETE',
@@ -308,7 +308,7 @@ describe('Customers Resource', function() {
                     reqs[reqs.length - 1],
                   ]);
                 });
-            }),
+            })
           ).to.eventually.deep.equal([
             {
               // First reset metadata:
@@ -412,7 +412,7 @@ describe('Customers Resource', function() {
             number: '123456',
             exp_month: '12',
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -532,7 +532,7 @@ describe('Customers Resource', function() {
             number: '123456',
             exp_month: '12',
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -612,7 +612,7 @@ describe('Customers Resource', function() {
           'cus_123',
           'card_123',
           data,
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -641,7 +641,7 @@ describe('Customers Resource', function() {
         stripe.customers.retrieveSubscription(
           'cus_123',
           'sub_123',
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -674,7 +674,7 @@ describe('Customers Resource', function() {
             plan: 'gold',
             quantity: '12',
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -706,7 +706,7 @@ describe('Customers Resource', function() {
           {
             quantity: '2',
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -733,7 +733,7 @@ describe('Customers Resource', function() {
         stripe.customers.cancelSubscription(
           'cus_123',
           'sub_123',
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -764,7 +764,7 @@ describe('Customers Resource', function() {
             'cus_123',
             'sub_123',
             {at_period_end: true},
-            TEST_AUTH_KEY,
+            TEST_AUTH_KEY
           );
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'DELETE',

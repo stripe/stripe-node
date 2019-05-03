@@ -34,7 +34,7 @@ app.post(
 
     // Return a response to acknowledge receipt of the event
     res.json({received: true});
-  },
+  }
 );
 
 app.listen(3000, function() {

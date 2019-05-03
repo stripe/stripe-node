@@ -22,7 +22,7 @@ describe('Webhooks', function() {
       var event = stripe.webhooks.constructEvent(
         EVENT_PAYLOAD_STRING,
         header,
-        SECRET,
+        SECRET
       );
 
       expect(event.id).to.equal(EVENT_PAYLOAD.id);
@@ -36,7 +36,7 @@ describe('Webhooks', function() {
         stripe.webhooks.constructEvent(
           '} I am not valid JSON; 123][',
           header,
-          SECRET,
+          SECRET
         );
       }).to.throw(/Unexpected token/);
     });
@@ -60,7 +60,7 @@ describe('Webhooks', function() {
         stripe.webhooks.signature.verifyHeader(
           EVENT_PAYLOAD_STRING,
           header,
-          SECRET,
+          SECRET
         );
       }).to.throw(expectedMessage);
 
@@ -68,7 +68,7 @@ describe('Webhooks', function() {
         stripe.webhooks.signature.verifyHeader(
           EVENT_PAYLOAD_STRING,
           null,
-          SECRET,
+          SECRET
         );
       }).to.throw(expectedMessage);
 
@@ -76,7 +76,7 @@ describe('Webhooks', function() {
         stripe.webhooks.signature.verifyHeader(
           EVENT_PAYLOAD_STRING,
           undefined,
-          SECRET,
+          SECRET
         );
       }).to.throw(expectedMessage);
 
@@ -84,7 +84,7 @@ describe('Webhooks', function() {
         stripe.webhooks.signature.verifyHeader(
           EVENT_PAYLOAD_STRING,
           '',
-          SECRET,
+          SECRET
         );
       }).to.throw(expectedMessage);
     });
@@ -98,7 +98,7 @@ describe('Webhooks', function() {
         stripe.webhooks.signature.verifyHeader(
           EVENT_PAYLOAD_STRING,
           header,
-          SECRET,
+          SECRET
         );
       }).to.throw(/No signatures found with expected scheme/);
     });
@@ -112,10 +112,10 @@ describe('Webhooks', function() {
         stripe.webhooks.signature.verifyHeader(
           EVENT_PAYLOAD_STRING,
           header,
-          SECRET,
+          SECRET
         );
       }).to.throw(
-        /No signatures found matching the expected signature for payload/,
+        /No signatures found matching the expected signature for payload/
       );
     });
 
@@ -129,7 +129,7 @@ describe('Webhooks', function() {
           EVENT_PAYLOAD_STRING,
           header,
           SECRET,
-          10,
+          10
         );
       }).to.throw(/Timestamp outside the tolerance zone/);
     });
@@ -147,10 +147,10 @@ describe('Webhooks', function() {
             EVENT_PAYLOAD_STRING,
             header,
             SECRET,
-            10,
-          ),
+            10
+          )
         ).to.equal(true);
-      },
+      }
     );
 
     it('should return true when the header contains at least one valid signature', function() {
@@ -165,8 +165,8 @@ describe('Webhooks', function() {
           EVENT_PAYLOAD_STRING,
           header,
           SECRET,
-          10,
-        ),
+          10
+        )
       ).to.equal(true);
     });
 
@@ -182,10 +182,10 @@ describe('Webhooks', function() {
           stripe.webhooks.signature.verifyHeader(
             EVENT_PAYLOAD_STRING,
             header,
-            SECRET,
-          ),
+            SECRET
+          )
         ).to.equal(true);
-      },
+      }
     );
 
     it('should accept Buffer instances for the payload and header', function() {
@@ -198,8 +198,8 @@ describe('Webhooks', function() {
           Buffer.from(EVENT_PAYLOAD_STRING),
           Buffer.from(header),
           SECRET,
-          10,
-        ),
+          10
+        )
       ).to.equal(true);
     });
   });
@@ -217,7 +217,7 @@ function generateHeaderString(opts) {
     opts.signature ||
     stripe.webhooks.signature._computeSignature(
       opts.timestamp + '.' + opts.payload,
-      opts.secret,
+      opts.secret
     );
 
   var generatedHeader = [

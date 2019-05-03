@@ -94,7 +94,7 @@ describe('CustomerSubscription Resource', function() {
       it('Sends the correct request', function() {
         customerSubscription.deleteDiscount(
           'customerIdFoo321',
-          'subscriptionIdBar654',
+          'subscriptionIdBar654'
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
