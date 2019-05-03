@@ -76,7 +76,7 @@ var utils = (module.exports = {
       this._cleanupFns = [];
       this._stripe = require('../lib/stripe')(
         utils.getUserStripeKey(),
-        'latest',
+        'latest'
       );
       afterEach(function(done) {
         this.timeout(timeout || CleanupUtility.DEFAULT_TIMEOUT);
@@ -93,7 +93,7 @@ var utils = (module.exports = {
           var promise = fn.call(this);
           if (!promise || !promise.then) {
             throw new Error(
-              'CleanupUtility expects cleanup functions to return promises!',
+              'CleanupUtility expects cleanup functions to return promises!'
             );
           }
           promise.then(
@@ -107,7 +107,7 @@ var utils = (module.exports = {
             function(err) {
               // not successful
               throw err;
-            },
+            }
           );
         }
         if (total === 0) {

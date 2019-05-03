@@ -111,7 +111,7 @@ describe('Account Resource', function() {
       it('Sends the correct request', function() {
         stripe.account.retrieveExternalAccount(
           'accountIdFoo321',
-          'externalAccountIdFoo456',
+          'externalAccountIdFoo456'
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -126,7 +126,7 @@ describe('Account Resource', function() {
         stripe.account.retrieveExternalAccount(
           'accountIdFoo321',
           'externalAccountIdFoo456',
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -162,7 +162,7 @@ describe('Account Resource', function() {
             currency: 'usd',
             country: 'US',
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -181,7 +181,7 @@ describe('Account Resource', function() {
           'externalAccountIdFoo456',
           {
             default_for_currency: true,
-          },
+          }
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -197,7 +197,7 @@ describe('Account Resource', function() {
       it('Sends the correct request', function() {
         stripe.account.deleteExternalAccount(
           'accountIdFoo321',
-          'externalAccountIdFoo456',
+          'externalAccountIdFoo456'
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -212,7 +212,7 @@ describe('Account Resource', function() {
         stripe.account.deleteExternalAccount(
           'accountIdFoo321',
           'externalAccountIdFoo456',
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -306,7 +306,7 @@ describe('Account Resource', function() {
           {
             first_name: 'John',
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -338,7 +338,7 @@ describe('Account Resource', function() {
           {
             first_name: 'John',
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',

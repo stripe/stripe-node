@@ -26,7 +26,7 @@ describe('StripeResource', function() {
       var headers = stripe.invoices._defaultHeaders(
         'anotherFakeAuthToken',
         0,
-        null,
+        null
       );
       expect(headers.Authorization).to.equal('Bearer anotherFakeAuthToken');
     });
@@ -68,7 +68,7 @@ describe('StripeResource', function() {
 
         realStripe.invoices.retrieveUpcoming('cus_123', options.data, function(
           err,
-          response,
+          response
         ) {
           done();
           scope.done();
@@ -93,7 +93,7 @@ describe('StripeResource', function() {
 
         realStripe.subscriptions.update('sub_123', options.data, function(
           err,
-          response,
+          response
         ) {
           done();
           scope.done();
@@ -156,7 +156,7 @@ describe('StripeResource', function() {
 
         realStripe.charges.create(options.data, function(err) {
           var errorMessage = realStripe.invoices._generateConnectionErrorMessage(
-            1,
+            1
           );
           expect(err.message).to.equal(errorMessage);
           expect(err.detail.message).to.deep.equal('worse stuff');
@@ -389,7 +389,7 @@ describe('StripeResource', function() {
           function() {
             expect(headers['idempotency-key']).to.equal(key);
             done();
-          },
+          }
         );
       });
     });
@@ -401,7 +401,7 @@ describe('StripeResource', function() {
           {
             statusCode: 409,
           },
-          1,
+          1
         );
 
         expect(res).to.equal(false);
@@ -413,7 +413,7 @@ describe('StripeResource', function() {
           {
             statusCode: 409,
           },
-          0,
+          0
         );
 
         expect(res).to.equal(true);
@@ -425,7 +425,7 @@ describe('StripeResource', function() {
           {
             statusCode: 409,
           },
-          0,
+          0
         );
 
         expect(res).to.equal(true);
@@ -434,7 +434,7 @@ describe('StripeResource', function() {
           {
             statusCode: 503,
           },
-          0,
+          0
         );
 
         expect(res).to.equal(true);
@@ -449,7 +449,7 @@ describe('StripeResource', function() {
             statusCode: 200,
             req: {_requestEvent: {method: 'POST'}},
           },
-          1,
+          1
         );
 
         expect(res).to.equal(false);

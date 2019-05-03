@@ -23,7 +23,7 @@ describe('UsageRecordSummaries Resource', function() {
           {},
           {
             stripe_account: 'acct_456',
-          },
+          }
         )
         .then(function(record) {
           expect(stripe.LAST_REQUEST).to.deep.equal({

@@ -94,7 +94,7 @@ describe('Subscription Schedule Resource', function() {
       it('Sends the correct request', function() {
         stripe.subscriptionSchedules.retrieveRevision(
           SCHEDULE_TEST_ID,
-          REVISION_TEST_ID,
+          REVISION_TEST_ID
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

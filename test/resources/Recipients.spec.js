@@ -87,7 +87,7 @@ describe('Recipients Resource', function() {
         stripe.recipients.retrieveCard(
           'recipientIdFoo321',
           'cardIdFoo456',
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -120,7 +120,7 @@ describe('Recipients Resource', function() {
             number: '123456',
             exp_month: '12',
           },
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -161,7 +161,7 @@ describe('Recipients Resource', function() {
         stripe.recipients.deleteCard(
           'recipientIdFoo321',
           'cardIdFoo456',
-          TEST_AUTH_KEY,
+          TEST_AUTH_KEY
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',

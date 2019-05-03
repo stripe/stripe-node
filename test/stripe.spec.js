@@ -20,7 +20,7 @@ describe('Stripe Module', function() {
   describe('setApiKey', function() {
     it('uses Bearer auth', function() {
       expect(stripe.getApiField('auth')).to.equal(
-        'Bearer ' + testUtils.getUserStripeKey(),
+        'Bearer ' + testUtils.getUserStripeKey()
       );
     });
   });
@@ -32,7 +32,7 @@ describe('Stripe Module', function() {
           stripe.getClientUserAgent(function(c) {
             resolve(JSON.parse(c));
           });
-        }),
+        })
       ).to.eventually.have.property('lang', 'node');
     });
   });
@@ -45,7 +45,7 @@ describe('Stripe Module', function() {
           stripe.getClientUserAgentSeeded(userAgent, function(c) {
             resolve(JSON.parse(c));
           });
-        }),
+        })
       ).to.eventually.have.property('lang', 'node');
     });
 
@@ -56,7 +56,7 @@ describe('Stripe Module', function() {
           stripe.getClientUserAgentSeeded(userAgent, function(c) {
             resolve(JSON.parse(c));
           });
-        }),
+        })
       ).to.eventually.have.property('lang', '%C3%AF');
     });
 
@@ -78,7 +78,7 @@ describe('Stripe Module', function() {
             stripe.getClientUserAgentSeeded({lang: 'node'}, function(c) {
               resolve(JSON.parse(c));
             });
-          }),
+          })
         ).to.eventually.have.property('uname', 'fo%C3%B8name');
       });
 
@@ -91,7 +91,7 @@ describe('Stripe Module', function() {
             stripe.getClientUserAgentSeeded({lang: 'node'}, function(c) {
               resolve(JSON.parse(c));
             });
-          }),
+          })
         ).to.eventually.have.property('uname', 'UNKNOWN');
       });
     });
@@ -100,7 +100,7 @@ describe('Stripe Module', function() {
   describe('setTimeout', function() {
     it('Should define a default equal to the node default', function() {
       expect(stripe.getApiField('timeout')).to.equal(
-        http.createServer().timeout,
+        http.createServer().timeout
       );
     });
     it('Should allow me to set a custom timeout', function() {
@@ -110,7 +110,7 @@ describe('Stripe Module', function() {
     it('Should allow me to set null, to reset to the default', function() {
       stripe.setTimeout(null);
       expect(stripe.getApiField('timeout')).to.equal(
-        http.createServer().timeout,
+        http.createServer().timeout
       );
     });
   });
@@ -210,7 +210,7 @@ describe('Stripe Module', function() {
         expect(JSON.parse(uaString).application).to.eql(appInfo);
 
         expect(stripe.getAppInfoAsString()).to.eql(
-          appInfo.name + '/' + appInfo.version + ' (' + appInfo.url + ')',
+          appInfo.name + '/' + appInfo.version + ' (' + appInfo.url + ')'
         );
 
         done();
@@ -227,7 +227,7 @@ describe('Stripe Module', function() {
               cleanup.deleteCustomer(customer.id);
               resolve('Called!');
             });
-          }),
+          })
         ).to.eventually.equal('Called!');
       });
 
@@ -245,7 +245,7 @@ describe('Stripe Module', function() {
 
               resolve('Called!');
             });
-          }),
+          })
         ).to.eventually.equal('Called!');
       });
 
@@ -261,9 +261,9 @@ describe('Stripe Module', function() {
                 } else {
                   reject(new Error('NoErrorPassed'));
                 }
-              },
+              }
             );
-          }),
+          })
         ).to.eventually.become('ErrorWasPassed');
       });
     });
@@ -275,7 +275,7 @@ describe('Stripe Module', function() {
       expect(
         new Stripe.errors.StripeInvalidRequestError({
           message: 'error',
-        }).type,
+        }).type
       ).to.equal('StripeInvalidRequestError');
     });
   });
