@@ -3,7 +3,7 @@
 var stripe = require('../../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Issuing', function () {
+describe('Issuing', function() {
   describe('Authorization Resource', function() {
     describe('retrieve', function() {
       it('Sends the correct request', function() {
@@ -34,7 +34,7 @@ describe('Issuing', function () {
         stripe.issuing.authorizations.update('iauth_123', {
           metadata: {
             thing1: true,
-            thing2: 'yes'
+            thing2: 'yes',
           },
         });
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -44,7 +44,7 @@ describe('Issuing', function () {
           data: {
             metadata: {
               thing1: true,
-              thing2: 'yes'
+              thing2: 'yes',
             },
           },
         });

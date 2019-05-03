@@ -5,9 +5,9 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
 describe('Terminal', function() {
-  describe('ConnectionToken Resource', function () {
+  describe('ConnectionToken Resource', function() {
     describe('create', function() {
-      it('Sends the correct request', function () {
+      it('Sends the correct request', function() {
         stripe.terminal.connectionTokens.create({});
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',

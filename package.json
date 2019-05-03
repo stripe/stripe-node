@@ -26,14 +26,19 @@
   },
   "main": "lib/stripe.js",
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "chai": "~4.1.2",
     "chai-as-promised": "~7.1.1",
     "coveralls": "^3.0.0",
-    "eslint": "^4.19.1",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-flowtype": "^3.4.2",
+    "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-chai-friendly": "^0.4.0",
     "mocha": "~5.0.5",
     "nock": "^9.0.0",
-    "nyc": "^11.3.0"
+    "nyc": "^11.3.0",
+    "prettier": "^1.16.4"
   },
   "dependencies": {
     "lodash.isplainobject": "^4.0.6",
@@ -46,7 +51,8 @@
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage",
     "mocha": "nyc mocha",
     "test": "npm run lint && npm run mocha",
-    "lint": "eslint .",
+    "lint": "eslint --ext .js,.jsx .",
+    "fix": "yarn lint --fix",
     "report": "nyc -r text -r lcov report",
     "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   }

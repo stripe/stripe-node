@@ -3,7 +3,7 @@
 var stripe = require('../../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Sigma', function () {
+describe('Sigma', function() {
   describe('ScheduledQueryRun Resource', function() {
     describe('retrieve', function() {
       it('Sends the correct request', function() {

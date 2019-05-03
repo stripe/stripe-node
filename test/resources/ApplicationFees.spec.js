@@ -18,7 +18,9 @@ describe('ApplicationFee Resource', function() {
 
   describe('refund', function() {
     it('Sends the correct request', function() {
-      stripe.applicationFees.refund('applicationFeeIdExample3242', {amount: 23});
+      stripe.applicationFees.refund('applicationFeeIdExample3242', {
+        amount: 23,
+      });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/application_fees/applicationFeeIdExample3242/refund',
@@ -37,17 +39,15 @@ describe('ApplicationFee Resource', function() {
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
+        url:
+          '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
         data: {metadata: {key: 'value'}},
         headers: {},
       });
     });
 
     it('Sends the correct create request', function() {
-      stripe.applicationFees.createRefund(
-        'appFeeIdExample3242',
-        {amount: 100}
-      );
+      stripe.applicationFees.createRefund('appFeeIdExample3242', {amount: 100});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/application_fees/appFeeIdExample3242/refunds',
@@ -57,9 +57,7 @@ describe('ApplicationFee Resource', function() {
     });
 
     it('Sends the correct list request', function() {
-      stripe.applicationFees.listRefunds(
-        'appFeeIdExample3242'
-      );
+      stripe.applicationFees.listRefunds('appFeeIdExample3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/application_fees/appFeeIdExample3242/refunds',
@@ -75,7 +73,8 @@ describe('ApplicationFee Resource', function() {
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
+        url:
+          '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
         data: {},
         headers: {},
       });

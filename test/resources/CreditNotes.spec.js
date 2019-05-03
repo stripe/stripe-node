@@ -64,7 +64,7 @@ describe('CreditNotes Resource', function() {
         method: 'POST',
         url: '/v1/credit_notes/cn_123/void',
         headers: {},
-        data: {}
+        data: {},
       });
     });
   });

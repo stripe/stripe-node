@@ -4,10 +4,10 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Terminal', function () {
-  describe('Locations Resource', function () {
-    describe('retrieve', function () {
-      it('Sends the correct request', function () {
+describe('Terminal', function() {
+  describe('Locations Resource', function() {
+    describe('retrieve', function() {
+      it('Sends the correct request', function() {
         stripe.terminal.locations.retrieve('loc_123');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -19,8 +19,8 @@ describe('Terminal', function () {
       });
     });
 
-    describe('create', function () {
-      it('Sends the correct request', function () {
+    describe('create', function() {
+      it('Sends the correct request', function() {
         stripe.terminal.locations.create({
           display_name: 'name',
           address: {
@@ -61,10 +61,10 @@ describe('Terminal', function () {
       });
     });
 
-    describe('update', function () {
-      it('Sends the correct request', function () {
+    describe('update', function() {
+      it('Sends the correct request', function() {
         stripe.terminal.locations.update('loc_123', {
-          display_name: 'name'
+          display_name: 'name',
         });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -77,8 +77,8 @@ describe('Terminal', function () {
       });
     });
 
-    describe('list', function () {
-      it('Sends the correct request', function () {
+    describe('list', function() {
+      it('Sends the correct request', function() {
         stripe.terminal.locations.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

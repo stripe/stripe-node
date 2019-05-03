@@ -109,20 +109,29 @@ describe('Account Resource', function() {
   describe('External account methods', function() {
     describe('retrieveExternalAccount', function() {
       it('Sends the correct request', function() {
-        stripe.account.retrieveExternalAccount('accountIdFoo321', 'externalAccountIdFoo456');
+        stripe.account.retrieveExternalAccount(
+          'accountIdFoo321',
+          'externalAccountIdFoo456'
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
         });
       });
 
       it('Sends the correct request [with specified auth]', function() {
-        stripe.account.retrieveExternalAccount('accountIdFoo321', 'externalAccountIdFoo456', TEST_AUTH_KEY);
+        stripe.account.retrieveExternalAccount(
+          'accountIdFoo321',
+          'externalAccountIdFoo456',
+          TEST_AUTH_KEY
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
@@ -133,7 +142,9 @@ describe('Account Resource', function() {
     describe('createExternalAccount', function() {
       it('Sends the correct request', function() {
         stripe.account.createExternalAccount('accountIdFoo321', {
-          number: '123456', currency: 'usd', country: 'US',
+          number: '123456',
+          currency: 'usd',
+          country: 'US',
         });
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -144,9 +155,15 @@ describe('Account Resource', function() {
       });
 
       it('Sends the correct request [with specified auth]', function() {
-        stripe.account.createExternalAccount('accountIdFoo321', {
-          number: '123456', currency: 'usd', country: 'US',
-        }, TEST_AUTH_KEY);
+        stripe.account.createExternalAccount(
+          'accountIdFoo321',
+          {
+            number: '123456',
+            currency: 'usd',
+            country: 'US',
+          },
+          TEST_AUTH_KEY
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/accounts/accountIdFoo321/external_accounts',
@@ -159,12 +176,17 @@ describe('Account Resource', function() {
 
     describe('updateExternalAccount', function() {
       it('Sends the correct request', function() {
-        stripe.account.updateExternalAccount('accountIdFoo321', 'externalAccountIdFoo456', {
-          default_for_currency: true,
-        });
+        stripe.account.updateExternalAccount(
+          'accountIdFoo321',
+          'externalAccountIdFoo456',
+          {
+            default_for_currency: true,
+          }
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {default_for_currency: true},
         });
@@ -173,20 +195,29 @@ describe('Account Resource', function() {
 
     describe('deleteExternalAccount', function() {
       it('Sends the correct request', function() {
-        stripe.account.deleteExternalAccount('accountIdFoo321', 'externalAccountIdFoo456');
+        stripe.account.deleteExternalAccount(
+          'accountIdFoo321',
+          'externalAccountIdFoo456'
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
         });
       });
 
       it('Sends the correct request [with specified auth]', function() {
-        stripe.account.deleteExternalAccount('accountIdFoo321', 'externalAccountIdFoo456', TEST_AUTH_KEY);
+        stripe.account.deleteExternalAccount(
+          'accountIdFoo321',
+          'externalAccountIdFoo456',
+          TEST_AUTH_KEY
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
@@ -270,9 +301,13 @@ describe('Account Resource', function() {
       });
 
       it('Sends the correct request [with specified auth]', function() {
-        stripe.account.createPerson('acct_123', {
-          first_name: 'John',
-        }, TEST_AUTH_KEY);
+        stripe.account.createPerson(
+          'acct_123',
+          {
+            first_name: 'John',
+          },
+          TEST_AUTH_KEY
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/accounts/acct_123/persons',
@@ -297,9 +332,14 @@ describe('Account Resource', function() {
       });
 
       it('Sends the correct request [with specified auth]', function() {
-        stripe.account.updatePerson('acct_123', 'person_123', {
-          first_name: 'John',
-        }, TEST_AUTH_KEY);
+        stripe.account.updatePerson(
+          'acct_123',
+          'person_123',
+          {
+            first_name: 'John',
+          },
+          TEST_AUTH_KEY
+        );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/accounts/acct_123/persons/person_123',
