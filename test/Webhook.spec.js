@@ -205,9 +205,7 @@ describe('Webhooks', () => {
   });
 });
 
-function generateHeaderString(opts) {
-  opts = opts || {};
-
+function generateHeaderString(opts = {}) {
   opts.timestamp = Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
   opts.payload = opts.payload || EVENT_PAYLOAD_STRING;
   opts.secret = opts.secret || SECRET;
