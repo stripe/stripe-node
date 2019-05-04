@@ -222,8 +222,8 @@ describe('Stripe Module', function() {
       it('Will call a callback if successful', () =>
         expect(
           new Promise((resolve, reject) => {
-            stripe.customers.create(CUSTOMER_DETAILS, (err, {id}) => {
-              cleanup.deleteCustomer(id);
+            stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
+              cleanup.deleteCustomer(customer.id);
               resolve('Called!');
             });
           })
@@ -232,20 +232,17 @@ describe('Stripe Module', function() {
       it('Will expose HTTP response object', () =>
         expect(
           new Promise((resolve, reject) => {
-            stripe.customers.create(
-              CUSTOMER_DETAILS,
-              (err, {id, lastResponse}) => {
-                cleanup.deleteCustomer(id);
+            stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
+              cleanup.deleteCustomer(customer.id);
 
-                const headers = lastResponse.headers;
-                expect(headers).to.contain.keys('request-id');
+              const headers = customer.lastResponse.headers;
+              expect(headers).to.contain.keys('request-id');
 
-                expect(lastResponse.requestId).to.match(/^req_/);
-                expect(lastResponse.statusCode).to.equal(200);
+              expect(customer.lastResponse.requestId).to.match(/^req_/);
+              expect(customer.lastResponse.statusCode).to.equal(200);
 
-                resolve('Called!');
-              }
-            );
+              resolve('Called!');
+            });
           })
         ).to.eventually.equal('Called!'));
 

@@ -85,23 +85,27 @@ describe('Flows', function() {
               plan: plan.id,
             });
           })
-          .then(({customer, id}) =>
-            stripe.customers.updateSubscription(customer, id, {
-              plan: plan.id,
-              quantity: '3',
-            })
+          .then((subscription) =>
+            stripe.customers.updateSubscription(
+              subscription.customer,
+              subscription.id,
+              {
+                plan: plan.id,
+                quantity: '3',
+              }
+            )
           )
-          .then(({status, quantity}) => [status, quantity])
+          .then((subscription) => [subscription.status, subscription.quantity])
       ).to.eventually.deep.equal(['active', 3]);
     });
 
     it('Errors when I attempt to subscribe a customer to a non-existent plan', () =>
       expect(
-        stripe.customers.create(CUSTOMER_DETAILS).then(({id}) => {
-          cleanup.deleteCustomer(id);
+        stripe.customers.create(CUSTOMER_DETAILS).then((customer) => {
+          cleanup.deleteCustomer(customer.id);
 
           return stripe.customers
-            .updateSubscription(id, {
+            .updateSubscription(customer.id, {
               plan: `someNonExistentPlan${testUtils.getRandomString()}`,
             })
             .then(
@@ -112,9 +116,9 @@ describe('Flows', function() {
             );
         })
       ).to.eventually.satisfy(
-        ({type, rawType}) =>
-          type === 'StripeInvalidRequestError' &&
-          rawType === 'invalid_request_error'
+        (err) =>
+          err.type === 'StripeInvalidRequestError' &&
+          err.rawType === 'invalid_request_error'
       ));
 
     it('Allows me to: subscribe then update with `cancel_at_period_end` defined', () =>
@@ -322,10 +326,10 @@ describe('Flows', function() {
     describe('A customer within a charge', () => {
       it('Allows you to expand a customer object', () =>
         expect(
-          stripe.customers.create(CUSTOMER_DETAILS).then(({id}) => {
-            cleanup.deleteCustomer(id);
+          stripe.customers.create(CUSTOMER_DETAILS).then((cust) => {
+            cleanup.deleteCustomer(cust.id);
             return stripe.charges.create({
-              customer: id,
+              customer: cust.id,
               amount: 1700,
               currency: CURRENCY,
               expand: ['customer'],
@@ -391,8 +395,8 @@ describe('Flows', function() {
         .list({
           limit: 1,
         })
-        .then(({data}) => {
-          if (data.length < 1) {
+        .then((accounts) => {
+          if (accounts.data.length < 1) {
             return done(
               new Error(
                 'Test requires at least one Connected Account in the Test Account'
@@ -400,7 +404,7 @@ describe('Flows', function() {
             );
           }
 
-          connectedAccountId = data[0].id;
+          connectedAccountId = accounts.data[0].id;
 
           done();
         });
@@ -569,11 +573,11 @@ describe('Flows', function() {
             type: 'application/octet-stream',
           },
         })
-        .catch(({message, detail}) => {
-          expect(message).to.equal(
+        .catch((error) => {
+          expect(error.message).to.equal(
             'An error occurred while attempting to process the file for upload.'
           );
-          expect(detail).to.equal(fakeError);
+          expect(error.detail).to.equal(fakeError);
 
           done();
         });
