@@ -2,12 +2,12 @@
 
 require('../testUtils');
 
-var Error = require('../lib/Error');
-var expect = require('chai').expect;
+const Error = require('../lib/Error');
+const expect = require('chai').expect;
 
 describe('Error', () => {
   it('Populates with type and message params', () => {
-    var e = new Error('FooError', 'Foo happened');
+    const e = new Error('FooError', 'Foo happened');
     expect(e).to.have.property('type', 'FooError');
     expect(e).to.have.property('message', 'Foo happened');
     expect(e).to.have.property('stack');
@@ -30,8 +30,8 @@ describe('Error', () => {
     });
 
     it('Pulls in headers', () => {
-      var headers = {'Request-Id': '123'};
-      var e = Error.StripeError.generate({
+      const headers = {'Request-Id': '123'};
+      const e = Error.StripeError.generate({
         type: 'card_error',
         headers,
       });
@@ -39,7 +39,7 @@ describe('Error', () => {
     });
 
     it('Pulls in request IDs', () => {
-      var e = Error.StripeError.generate({
+      const e = Error.StripeError.generate({
         type: 'card_error',
         requestId: 'foo',
       });
@@ -47,7 +47,10 @@ describe('Error', () => {
     });
 
     it('Pulls in HTTP status code', () => {
-      var e = Error.StripeError.generate({type: 'card_error', statusCode: 400});
+      const e = Error.StripeError.generate({
+        type: 'card_error',
+        statusCode: 400,
+      });
       expect(e).to.have.property('statusCode', 400);
     });
   });

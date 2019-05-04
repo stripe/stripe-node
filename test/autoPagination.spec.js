@@ -2,24 +2,24 @@
 
 /* eslint-disable callback-return */
 
-var testUtils = require('../testUtils');
-var stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
+const testUtils = require('../testUtils');
+const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
-var LIMIT = 7;
-var TOTAL_OBJECTS = 8;
+const LIMIT = 7;
+const TOTAL_OBJECTS = 8;
 
 describe('auto pagination', function() {
   this.timeout(20000);
 
-  var email = 'test.' + Date.now() + '@example.com';
-  var realCustomerIds;
+  const email = 'test.' + Date.now() + '@example.com';
+  let realCustomerIds;
   before(
     () =>
       new Promise((resolve) => {
-        var createReqs = [];
-        for (var i = 0; i < TOTAL_OBJECTS; i++) {
+        const createReqs = [];
+        for (let i = 0; i < TOTAL_OBJECTS; i++) {
           createReqs.push(stripe.customers.create({email}));
         }
         return Promise.all(createReqs)
@@ -46,7 +46,7 @@ describe('auto pagination', function() {
     it('lets you call `next()` to iterate and `next(false)` to break', () =>
       expect(
         new Promise((resolve, reject) => {
-          var customerIds = [];
+          const customerIds = [];
           function onCustomer(customer, next) {
             customerIds.push(customer.id);
             if (customerIds.length === LIMIT) {
@@ -73,7 +73,7 @@ describe('auto pagination', function() {
     it('lets you ignore the second arg and `return false` to break', () =>
       expect(
         new Promise((resolve, reject) => {
-          var customerIds = [];
+          const customerIds = [];
           function onCustomer(customer) {
             customerIds.push(customer.id);
             if (customerIds.length === LIMIT) {
@@ -99,7 +99,7 @@ describe('auto pagination', function() {
     it('lets you ignore the second arg and return a Promise which returns `false` to break', () =>
       expect(
         new Promise((resolve, reject) => {
-          var customerIds = [];
+          const customerIds = [];
           function onCustomer(customer) {
             customerIds.push(customer.id);
             if (customerIds.length === LIMIT) {
@@ -126,7 +126,7 @@ describe('auto pagination', function() {
     it('can use a promise instead of a callback for onDone', () =>
       expect(
         new Promise((resolve, reject) => {
-          var customerIds = [];
+          const customerIds = [];
           function onCustomer(customer) {
             customerIds.push(customer.id);
           }
@@ -145,7 +145,7 @@ describe('auto pagination', function() {
     it('handles the end of a list properly when the last page is full', () =>
       expect(
         new Promise((resolve, reject) => {
-          var customerIds = [];
+          const customerIds = [];
           return stripe.customers
             .list({email, limit: TOTAL_OBJECTS / 2})
             .autoPagingEach((customer) => {
@@ -161,7 +161,7 @@ describe('auto pagination', function() {
     it('handles the end of a list properly when the last page is not full', () =>
       expect(
         new Promise((resolve, reject) => {
-          var customerIds = [];
+          const customerIds = [];
           return stripe.customers
             .list({email, limit: TOTAL_OBJECTS - 2})
             .autoPagingEach((customer) => {
@@ -177,7 +177,7 @@ describe('auto pagination', function() {
     it('handles a list which is shorter than the page size properly', () =>
       expect(
         new Promise((resolve, reject) => {
-          var customerIds = [];
+          const customerIds = [];
           return stripe.customers
             .list({email, limit: TOTAL_OBJECTS + 2})
             .autoPagingEach((customer) => {
@@ -193,7 +193,7 @@ describe('auto pagination', function() {
     it('handles errors after the first page correctly (callback)', () =>
       expect(
         new Promise((resolve, reject) => {
-          var i = 0;
+          let i = 0;
           function onCustomer() {
             i += 1;
             if (i > 4) {
@@ -215,7 +215,7 @@ describe('auto pagination', function() {
     it('handles errors after the first page correctly (promise)', () =>
       expect(
         new Promise((resolve, reject) => {
-          var i = 0;
+          let i = 0;
           function onCustomer() {
             i += 1;
             if (i > 4) {
@@ -239,7 +239,8 @@ describe('auto pagination', function() {
     if (testUtils.envSupportsForAwait()) {
       // `for await` throws a syntax error everywhere but node 10,
       // so we must conditionally require it.
-      var forAwaitUntil = require('../testUtils/forAwait.node10').forAwaitUntil;
+      const forAwaitUntil = require('../testUtils/forAwait.node10')
+        .forAwaitUntil;
 
       it('works with `for await` when that feature exists (user break)', () =>
         expect(
@@ -269,7 +270,7 @@ describe('auto pagination', function() {
 
     if (testUtils.envSupportsAwait()) {
       // Similarly, `await` throws a syntax error below Node 7.6.
-      var awaitUntil = require('../testUtils/await.node7').awaitUntil;
+      const awaitUntil = require('../testUtils/await.node7').awaitUntil;
 
       it('works with `await` and a while loop when await exists', () =>
         expect(
@@ -286,9 +287,9 @@ describe('auto pagination', function() {
     it('returns an empty object from .return() so that `break;` works in for-await', () =>
       expect(
         new Promise((resolve, reject) => {
-          var iter = stripe.customers.list({limit: 3, email});
+          const iter = stripe.customers.list({limit: 3, email});
 
-          var customerIds = [];
+          const customerIds = [];
           function handleIter(result) {
             customerIds.push(result.value.id);
             expect(iter.return()).to.deep.equal({});
@@ -307,9 +308,9 @@ describe('auto pagination', function() {
     it('works when you call it sequentially', () =>
       expect(
         new Promise((resolve, reject) => {
-          var iter = stripe.customers.list({limit: 3, email});
+          const iter = stripe.customers.list({limit: 3, email});
 
-          var customerIds = [];
+          const customerIds = [];
           function handleIter(result) {
             customerIds.push(result.value.id);
             if (customerIds.length < 7) {
@@ -329,9 +330,9 @@ describe('auto pagination', function() {
     it('gives you the same result each time when you call it multiple times in parallel', () =>
       expect(
         new Promise((resolve, reject) => {
-          var iter = stripe.customers.list({limit: 3, email});
+          const iter = stripe.customers.list({limit: 3, email});
 
-          var customerIds = [];
+          const customerIds = [];
           function handleIter(result) {
             customerIds.push(result.value.id);
           }
@@ -452,14 +453,14 @@ describe('auto pagination', function() {
       expect(
         new Promise((resolve, reject) => {
           // Count requests: we want one for the first page (not two), and then one for the second page.
-          var reqCount = 0;
+          let reqCount = 0;
           function onRequest() {
             reqCount += 1;
           }
           stripe.on('request', onRequest);
 
-          var customerIds = [];
-          var p = stripe.customers.list({email, limit: 4});
+          const customerIds = [];
+          const p = stripe.customers.list({email, limit: 4});
           Promise.all([
             p,
             p.autoPagingEach((customer) => {

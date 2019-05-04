@@ -1,9 +1,9 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
+const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
 describe('Account Resource', () => {
   function uniqueEmail() {
@@ -11,7 +11,7 @@ describe('Account Resource', () => {
   }
   describe('create', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         managed: false,
         country: 'US',
         email: uniqueEmail(),
@@ -72,7 +72,7 @@ describe('Account Resource', () => {
     });
 
     it('Sends the correct request with secret key', () => {
-      var key = 'sk_12345678901234567890123456789012';
+      const key = 'sk_12345678901234567890123456789012';
       stripe.account.retrieve(null, key);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         auth: key,
@@ -84,7 +84,7 @@ describe('Account Resource', () => {
     });
 
     it('Sends the correct request with secret key as first object', () => {
-      var params = {api_key: 'sk_12345678901234567890123456789012'};
+      const params = {api_key: 'sk_12345678901234567890123456789012'};
       stripe.account.retrieve(params);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         auth: params.api_key,

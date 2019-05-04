@@ -1,25 +1,25 @@
 'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
-var Buffer = require('safe-buffer').Buffer;
+const stripe = require('../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
+const Buffer = require('safe-buffer').Buffer;
 
-var EVENT_PAYLOAD = {
+const EVENT_PAYLOAD = {
   id: 'evt_test_webhook',
   object: 'event',
 };
-var EVENT_PAYLOAD_STRING = JSON.stringify(EVENT_PAYLOAD, null, 2);
+const EVENT_PAYLOAD_STRING = JSON.stringify(EVENT_PAYLOAD, null, 2);
 
-var SECRET = 'whsec_test_secret';
+const SECRET = 'whsec_test_secret';
 
 describe('Webhooks', () => {
   describe('.constructEvent', () => {
     it('should return an Event instance from a valid JSON payload and valid signature header', () => {
-      var header = generateHeaderString({
+      const header = generateHeaderString({
         payload: EVENT_PAYLOAD_STRING,
       });
 
-      var event = stripe.webhooks.constructEvent(
+      const event = stripe.webhooks.constructEvent(
         EVENT_PAYLOAD_STRING,
         header,
         SECRET
@@ -29,7 +29,7 @@ describe('Webhooks', () => {
     });
 
     it('should raise a JSON error from invalid JSON payload', () => {
-      var header = generateHeaderString({
+      const header = generateHeaderString({
         payload: '} I am not valid JSON; 123][',
       });
       expect(() => {
@@ -42,7 +42,7 @@ describe('Webhooks', () => {
     });
 
     it('should raise a SignatureVerificationError from a valid JSON payload and an invalid signature header', () => {
-      var header = 'bad_header';
+      const header = 'bad_header';
 
       expect(() => {
         stripe.webhooks.constructEvent(EVENT_PAYLOAD_STRING, header, SECRET);
@@ -52,9 +52,9 @@ describe('Webhooks', () => {
 
   describe('.verifySignatureHeader', () => {
     it('should raise a SignatureVerificationError when the header does not have the expected format', () => {
-      var header = "I'm not even a real signature header";
+      const header = "I'm not even a real signature header";
 
-      var expectedMessage = /Unable to extract timestamp and signatures from header/;
+      const expectedMessage = /Unable to extract timestamp and signatures from header/;
 
       expect(() => {
         stripe.webhooks.signature.verifyHeader(
@@ -90,7 +90,7 @@ describe('Webhooks', () => {
     });
 
     it('should raise a SignatureVerificationError when there are no signatures with the expected scheme', () => {
-      var header = generateHeaderString({
+      const header = generateHeaderString({
         scheme: 'v0',
       });
 
@@ -104,7 +104,7 @@ describe('Webhooks', () => {
     });
 
     it('should raise a SignatureVerificationError when there are no valid signatures for the payload', () => {
-      var header = generateHeaderString({
+      const header = generateHeaderString({
         signature: 'bad_signature',
       });
 
@@ -120,7 +120,7 @@ describe('Webhooks', () => {
     });
 
     it('should raise a SignatureVerificationError when the timestamp is not within the tolerance', () => {
-      var header = generateHeaderString({
+      const header = generateHeaderString({
         timestamp: Date.now() / 1000 - 15,
       });
 
@@ -138,7 +138,7 @@ describe('Webhooks', () => {
       'should return true when the header contains a valid signature and ' +
         'the timestamp is within the tolerance',
       () => {
-        var header = generateHeaderString({
+        const header = generateHeaderString({
           timestamp: Date.now() / 1000,
         });
 
@@ -154,7 +154,7 @@ describe('Webhooks', () => {
     );
 
     it('should return true when the header contains at least one valid signature', () => {
-      var header = generateHeaderString({
+      let header = generateHeaderString({
         timestamp: Date.now() / 1000,
       });
 
@@ -174,7 +174,7 @@ describe('Webhooks', () => {
       'should return true when the header contains a valid signature ' +
         'and the timestamp is off but no tolerance is provided',
       () => {
-        var header = generateHeaderString({
+        const header = generateHeaderString({
           timestamp: 12345,
         });
 
@@ -189,7 +189,7 @@ describe('Webhooks', () => {
     );
 
     it('should accept Buffer instances for the payload and header', () => {
-      var header = generateHeaderString({
+      const header = generateHeaderString({
         timestamp: Date.now() / 1000,
       });
 
@@ -220,7 +220,7 @@ function generateHeaderString(opts) {
       opts.secret
     );
 
-  var generatedHeader = [
+  const generatedHeader = [
     't=' + opts.timestamp,
     opts.scheme + '=' + opts.signature,
   ].join(',');

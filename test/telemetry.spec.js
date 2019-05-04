@@ -1,13 +1,13 @@
 'use strict';
 
 require('../testUtils');
-var http = require('http');
+const http = require('http');
 
-var expect = require('chai').expect;
-var testServer = null;
+const expect = require('chai').expect;
+let testServer = null;
 
 function createTestServer(handlerFunc, cb) {
-  var host = '127.0.0.1';
+  const host = '127.0.0.1';
   testServer = http.createServer((req, res) => {
     try {
       handlerFunc(req, res);
@@ -21,7 +21,7 @@ function createTestServer(handlerFunc, cb) {
     }
   });
   testServer.listen(0, host, () => {
-    var port = testServer.address().port;
+    const port = testServer.address().port;
     cb(host, port);
   });
 }
@@ -35,13 +35,13 @@ describe('Client Telemetry', () => {
   });
 
   it('Does not send telemetry when disabled', (done) => {
-    var numRequests = 0;
+    let numRequests = 0;
 
     createTestServer(
       (req, res) => {
         numRequests += 1;
 
-        var telemetry = req.headers['x-stripe-client-telemetry'];
+        const telemetry = req.headers['x-stripe-client-telemetry'];
 
         switch (numRequests) {
           case 1:
@@ -75,13 +75,13 @@ describe('Client Telemetry', () => {
   });
 
   it('Sends client telemetry on the second request when enabled', (done) => {
-    var numRequests = 0;
+    let numRequests = 0;
 
     createTestServer(
       (req, res) => {
         numRequests += 1;
 
-        var telemetry = req.headers['x-stripe-client-telemetry'];
+        const telemetry = req.headers['x-stripe-client-telemetry'];
 
         switch (numRequests) {
           case 1:
@@ -121,13 +121,13 @@ describe('Client Telemetry', () => {
   });
 
   it('Buffers metrics on concurrent requests', (done) => {
-    var numRequests = 0;
+    let numRequests = 0;
 
     createTestServer(
       (req, res) => {
         numRequests += 1;
 
-        var telemetry = req.headers['x-stripe-client-telemetry'];
+        const telemetry = req.headers['x-stripe-client-telemetry'];
 
         switch (numRequests) {
           case 1:

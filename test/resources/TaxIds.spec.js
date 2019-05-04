@@ -1,13 +1,13 @@
 'use strict';
 
-var resources = require('../../lib/stripe').resources;
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const resources = require('../../lib/stripe').resources;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var CUSTOMER_TEST_ID = 'cus_123';
-var TAX_ID_TEST_ID = 'txi_123';
+const CUSTOMER_TEST_ID = 'cus_123';
+const TAX_ID_TEST_ID = 'txi_123';
 
-var taxId = new resources.TaxIds(stripe, {customerId: CUSTOMER_TEST_ID});
+const taxId = new resources.TaxIds(stripe, {customerId: CUSTOMER_TEST_ID});
 
 // Use spy from existing resource:
 taxId._request = stripe.customers._request;
@@ -15,7 +15,7 @@ taxId._request = stripe.customers._request;
 describe('TaxId Resource', () => {
   describe('create', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         type: 'eu_vat',
         value: '11111',
       };

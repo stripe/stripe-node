@@ -1,14 +1,14 @@
 'use strict';
 
-var resources = require('../../lib/stripe').resources;
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const resources = require('../../lib/stripe').resources;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var APPFEE_TEST_ID = 'appFeeIdTest999';
-var REFUND_TEST_ID = 'refundIdTest999';
+const APPFEE_TEST_ID = 'appFeeIdTest999';
+const REFUND_TEST_ID = 'refundIdTest999';
 
 // Create new CustomerCard instance with pre-filled customerId:
-var appFeeRefund = new resources.ApplicationFeeRefunds(stripe, {
+const appFeeRefund = new resources.ApplicationFeeRefunds(stripe, {
   feeId: APPFEE_TEST_ID,
 });
 

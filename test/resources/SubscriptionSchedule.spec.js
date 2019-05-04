@@ -1,15 +1,15 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var SCHEDULE_TEST_ID = 'sub_sched_123';
-var REVISION_TEST_ID = 'sub_sched_rev_123';
+const SCHEDULE_TEST_ID = 'sub_sched_123';
+const REVISION_TEST_ID = 'sub_sched_rev_123';
 
 describe('Subscription Schedule Resource', () => {
   describe('cancel', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         invoice_now: true,
       };
       stripe.subscriptionSchedules.cancel(SCHEDULE_TEST_ID, data);
@@ -24,7 +24,7 @@ describe('Subscription Schedule Resource', () => {
 
   describe('create', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         customer: 'cus_123',
       };
       stripe.subscriptionSchedules.create(data);
@@ -51,7 +51,7 @@ describe('Subscription Schedule Resource', () => {
 
   describe('release', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         preserve_cancel_date: true,
       };
       stripe.subscriptionSchedules.release(SCHEDULE_TEST_ID, data);
@@ -78,7 +78,7 @@ describe('Subscription Schedule Resource', () => {
 
   describe('update', () => {
     it('Sends the correct request', () => {
-      var data = {metadata: {key: 'value'}};
+      const data = {metadata: {key: 'value'}};
       stripe.subscriptionSchedules.update(SCHEDULE_TEST_ID, data);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

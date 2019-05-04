@@ -1,9 +1,9 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var PAYOUT_TEST_ID = 'po_testid1';
+const PAYOUT_TEST_ID = 'po_testid1';
 
 describe('Payouts Resource', () => {
   describe('retrieve', () => {

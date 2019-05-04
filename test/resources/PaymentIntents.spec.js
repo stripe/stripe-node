@@ -1,14 +1,14 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var PAYMENT_INTENT_TEST_ID = 'pi_123';
+const PAYMENT_INTENT_TEST_ID = 'pi_123';
 
 describe('Payment Intents Resource', () => {
   describe('create', () => {
     it('Sends the correct request', () => {
-      var params = {
+      const params = {
         amount: 200,
         currency: 'usd',
         payment_method_types: ['card'],

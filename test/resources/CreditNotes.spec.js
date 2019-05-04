@@ -1,7 +1,7 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
 describe('CreditNotes Resource', () => {
   describe('retrieve', () => {
@@ -18,7 +18,7 @@ describe('CreditNotes Resource', () => {
 
   describe('create', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         amount: 100,
         invoice: 'in_123',
         reason: 'duplicate',

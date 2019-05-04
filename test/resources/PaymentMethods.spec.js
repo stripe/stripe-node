@@ -1,7 +1,7 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
 describe('PaymentMethods Resource', () => {
   describe('retrieve', () => {
@@ -18,7 +18,7 @@ describe('PaymentMethods Resource', () => {
 
   describe('create', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         type: 'card',
       };
       stripe.paymentMethods.create(data);
@@ -33,7 +33,7 @@ describe('PaymentMethods Resource', () => {
 
   describe('list', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         customer: 'cus_123',
         type: 'card',
       };
@@ -49,7 +49,7 @@ describe('PaymentMethods Resource', () => {
 
   describe('update', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         metadata: {key: 'value'},
       };
       stripe.paymentMethods.update('pm_123', data);

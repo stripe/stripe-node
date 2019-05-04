@@ -1,14 +1,14 @@
 'use strict';
 
-var resources = require('../../lib/stripe').resources;
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const resources = require('../../lib/stripe').resources;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var ACCOUNT_TEST_ID = 'acct_123';
-var PERSON_TEST_ID = 'person_123';
+const ACCOUNT_TEST_ID = 'acct_123';
+const PERSON_TEST_ID = 'person_123';
 
 // Create new Person instance with pre-filled accountId:
-var person = new resources.Persons(stripe, {accountId: ACCOUNT_TEST_ID});
+const person = new resources.Persons(stripe, {accountId: ACCOUNT_TEST_ID});
 
 // Use spy from existing resource:
 person._request = stripe.customers._request;

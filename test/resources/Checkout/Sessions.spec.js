@@ -1,14 +1,14 @@
 'use strict';
 
-var stripe = require('../../../testUtils').getSpyableStripe();
+const stripe = require('../../../testUtils').getSpyableStripe();
 
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
 describe('Checkout', () => {
   describe('Sessions Resource', () => {
     describe('create', () => {
       it('Sends the correct request', () => {
-        var params = {
+        const params = {
           cancel_url: 'https://stripe.com/cancel',
           client_reference_id: '1234',
           line_items: [

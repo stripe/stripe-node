@@ -1,7 +1,7 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
 describe('TaxRates Resource', () => {
   describe('retrieve', () => {
@@ -18,7 +18,7 @@ describe('TaxRates Resource', () => {
 
   describe('update', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         metadata: {a: '1234'},
       };
       stripe.taxRates.update('txr_123', data);
@@ -33,7 +33,7 @@ describe('TaxRates Resource', () => {
 
   describe('create', () => {
     it('Sends the correct request', () => {
-      var data = {
+      const data = {
         display_name: 'name',
         inclusive: false,
         percentage: 10.15,

@@ -1,9 +1,9 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
+const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
 describe('Customers Resource', () => {
   describe('retrieve', () => {
@@ -301,7 +301,7 @@ describe('Customers Resource', () => {
                   baz: 456,
                 })
                 .then(() => {
-                  var reqs = stripe.REQUESTS;
+                  const reqs = stripe.REQUESTS;
                   resolve([
                     // Last two requests
                     reqs[reqs.length - 2],
@@ -605,7 +605,7 @@ describe('Customers Resource', () => {
 
     describe('verifySource', () => {
       it('Sends the correct request', () => {
-        var data = {amounts: [32, 45]};
+        const data = {amounts: [32, 45]};
 
         stripe.customers.verifySource(
           'cus_123',
@@ -815,7 +815,7 @@ describe('Customers Resource', () => {
 
     describe('createTaxId', () => {
       it('Sends the correct request', () => {
-        var data = {
+        const data = {
           type: 'eu_vat',
           value: '11111',
         };

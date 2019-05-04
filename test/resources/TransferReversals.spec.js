@@ -1,14 +1,14 @@
 'use strict';
 
-var resources = require('../../lib/stripe').resources;
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const resources = require('../../lib/stripe').resources;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var TRANSFER_TEST_ID = 'transferIdTest999';
-var REVERSAL_TEST_ID = 'reversalIdTest999';
+const TRANSFER_TEST_ID = 'transferIdTest999';
+const REVERSAL_TEST_ID = 'reversalIdTest999';
 
 // Create new CustomerCard instance with pre-filled customerId:
-var transferReversal = new resources.TransferReversals(stripe, {
+const transferReversal = new resources.TransferReversals(stripe, {
   transferId: TRANSFER_TEST_ID,
 });
 

@@ -1,14 +1,14 @@
 'use strict';
 
-var resources = require('../../lib/stripe').resources;
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const resources = require('../../lib/stripe').resources;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var SCHEDULE_TEST_ID = 'sub_sched_123';
-var REVISION_TEST_ID = 'sub_sched_rev_123';
+const SCHEDULE_TEST_ID = 'sub_sched_123';
+const REVISION_TEST_ID = 'sub_sched_rev_123';
 
 // Create new SubscriptionScheduleRevision instance with pre-filled scheduleId:
-var revision = new resources.SubscriptionScheduleRevisions(stripe, {
+const revision = new resources.SubscriptionScheduleRevisions(stripe, {
   scheduleId: SCHEDULE_TEST_ID,
 });
 

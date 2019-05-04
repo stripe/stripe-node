@@ -1,25 +1,25 @@
 'use strict';
 
-var testUtils = require('../testUtils');
-var chai = require('chai');
-var stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
-var fs = require('fs');
-var path = require('path');
-var stream = require('stream');
-var expect = chai.expect;
+const testUtils = require('../testUtils');
+const chai = require('chai');
+const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
+const fs = require('fs');
+const path = require('path');
+const stream = require('stream');
+const expect = chai.expect;
 
-var CUSTOMER_DETAILS = {
+const CUSTOMER_DETAILS = {
   description: 'Some customer',
   card: 'tok_visa',
 };
 
-var CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
+let CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
 
 describe('Flows', function() {
   // Note: These tests must be run as one so we can retrieve the
   // default_currency (required in subsequent tests);
 
-  var cleanup = new testUtils.CleanupUtility();
+  const cleanup = new testUtils.CleanupUtility();
   this.timeout(30000);
 
   it('Allows me to retrieve default_currency', () =>
@@ -46,8 +46,8 @@ describe('Flows', function() {
           }),
           stripe.customers.create(CUSTOMER_DETAILS),
         ]).then((j) => {
-          var plan = j[0];
-          var customer = j[1];
+          const plan = j[0];
+          const customer = j[1];
 
           cleanup.deleteCustomer(customer.id);
           cleanup.deletePlan(plan.id);
@@ -59,7 +59,7 @@ describe('Flows', function() {
       ).to.eventually.have.property('status', 'active'));
 
     it('Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)', () => {
-      var plan;
+      let plan;
       return expect(
         Promise.all([
           stripe.plans.create({
@@ -76,7 +76,7 @@ describe('Flows', function() {
         ])
           .then((j) => {
             plan = j[0];
-            var customer = j[1];
+            const customer = j[1];
 
             cleanup.deleteCustomer(customer.id);
             cleanup.deletePlan(plan.id);
@@ -136,8 +136,8 @@ describe('Flows', function() {
           }),
           stripe.customers.create(CUSTOMER_DETAILS),
         ]).then((j) => {
-          var plan = j[0];
-          var customer = j[1];
+          const plan = j[0];
+          const customer = j[1];
 
           cleanup.deleteCustomer(customer.id);
           cleanup.deletePlan(plan.id);
@@ -180,8 +180,8 @@ describe('Flows', function() {
   });
 
   describe('Coupon flow', () => {
-    var customer;
-    var coupon;
+    let customer;
+    let coupon;
 
     describe('When I create a coupon & customer', () => {
       it('Does so', () =>
@@ -229,7 +229,7 @@ describe('Flows', function() {
 
   describe('Metadata flow', () => {
     it('Can save and retrieve metadata', () => {
-      var customer;
+      let customer;
       return expect(
         stripe.customers
           .create(CUSTOMER_DETAILS)
@@ -242,7 +242,7 @@ describe('Flows', function() {
       ).to.eventually.deep.equal({foo: '123'});
     });
     it('Can reset metadata', () => {
-      var customer;
+      let customer;
       return expect(
         stripe.customers
           .create(CUSTOMER_DETAILS)
@@ -256,7 +256,7 @@ describe('Flows', function() {
       ).to.eventually.deep.equal({});
     });
     it('Resets metadata when setting new metadata', () => {
-      var customer;
+      let customer;
       return expect(
         stripe.customers
           .create(CUSTOMER_DETAILS)
@@ -269,7 +269,7 @@ describe('Flows', function() {
       ).to.eventually.deep.equal({baz: '456'});
     });
     it('Can set individual key/value pairs', () => {
-      var customer;
+      let customer;
       return expect(
         stripe.customers
           .create(CUSTOMER_DETAILS)
@@ -292,8 +292,8 @@ describe('Flows', function() {
       ).to.eventually.deep.equal({_other_: '999', foo: '222'});
     });
     it('Can set individual key/value pairs [with per request token]', () => {
-      var customer;
-      var authToken = testUtils.getUserStripeKey();
+      let customer;
+      const authToken = testUtils.getUserStripeKey();
       return expect(
         stripe.customers
           .create(CUSTOMER_DETAILS)
@@ -388,7 +388,7 @@ describe('Flows', function() {
   });
 
   describe('Request/Response Events', () => {
-    var connectedAccountId;
+    let connectedAccountId;
 
     before((done) => {
       // Pick a random connected account to use in the `Stripe-Account` header
@@ -412,8 +412,8 @@ describe('Flows', function() {
     });
 
     it('should emit a `request` event to listeners on request', (done) => {
-      var apiVersion = '2017-06-05';
-      var idempotencyKey = Math.random()
+      const apiVersion = '2017-06-05';
+      const idempotencyKey = Math.random()
         .toString(36)
         .slice(2);
 
@@ -452,8 +452,8 @@ describe('Flows', function() {
     });
 
     it('should emit a `response` event to listeners on response', (done) => {
-      var apiVersion = '2017-06-05';
-      var idempotencyKey = Math.random()
+      const apiVersion = '2017-06-05';
+      const idempotencyKey = Math.random()
         .toString(36)
         .slice(2);
 
@@ -520,8 +520,8 @@ describe('Flows', function() {
 
   describe('FileUpload', () => {
     it('Allows you to upload a file as a stream', () => {
-      var testFilename = path.join(__dirname, 'resources/data/minimal.pdf');
-      var f = fs.createReadStream(testFilename);
+      const testFilename = path.join(__dirname, 'resources/data/minimal.pdf');
+      const f = fs.createReadStream(testFilename);
 
       return expect(
         stripe.fileUploads
@@ -538,8 +538,8 @@ describe('Flows', function() {
     });
 
     it('Allows you to upload a file synchronously', () => {
-      var testFilename = path.join(__dirname, 'resources/data/minimal.pdf');
-      var f = fs.readFileSync(testFilename);
+      const testFilename = path.join(__dirname, 'resources/data/minimal.pdf');
+      const f = fs.readFileSync(testFilename);
 
       return expect(
         stripe.fileUploads
@@ -556,10 +556,10 @@ describe('Flows', function() {
     });
 
     it('Surfaces stream errors correctly', (done) => {
-      var mockedStream = new stream.Readable();
+      const mockedStream = new stream.Readable();
       mockedStream._read = () => {};
 
-      var fakeError = new Error('I am a fake error');
+      const fakeError = new Error('I am a fake error');
 
       process.nextTick(() => {
         mockedStream.emit('error', fakeError);

@@ -1,10 +1,10 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
+const stripe = require('../../testUtils').getSpyableStripe();
 
-var expect = require('chai').expect;
-var URL = require('url');
-var qs = require('qs');
+const expect = require('chai').expect;
+const URL = require('url');
+const qs = require('qs');
 
 describe('OAuth', () => {
   describe('authorize', () => {
@@ -14,25 +14,25 @@ describe('OAuth', () => {
       });
 
       it('Uses the correct host', () => {
-        var url = stripe.oauth.authorizeUrl();
+        const url = stripe.oauth.authorizeUrl();
 
-        var host = URL.parse(url).hostname;
+        const host = URL.parse(url).hostname;
 
         expect(host).to.equal('connect.stripe.com');
       });
 
       it('Uses the correct path', () => {
-        var url = stripe.oauth.authorizeUrl({state: 'some_state'});
+        const url = stripe.oauth.authorizeUrl({state: 'some_state'});
 
-        var pathname = URL.parse(url).pathname;
+        const pathname = URL.parse(url).pathname;
 
         expect(pathname).to.equal('/oauth/authorize');
       });
 
       it('Uses the correct query', () => {
-        var url = stripe.oauth.authorizeUrl({state: 'some_state'});
+        const url = stripe.oauth.authorizeUrl({state: 'some_state'});
 
-        var query = qs.parse(URL.parse(url).query);
+        const query = qs.parse(URL.parse(url).query);
 
         expect(query.client_id).to.equal('default_client_id');
         expect(query.response_type).to.equal('code');
@@ -41,18 +41,18 @@ describe('OAuth', () => {
       });
 
       it('Uses a provided client_id instead of the default', () => {
-        var url = stripe.oauth.authorizeUrl({client_id: '123abc'});
+        const url = stripe.oauth.authorizeUrl({client_id: '123abc'});
 
-        var query = qs.parse(URL.parse(url).query);
+        const query = qs.parse(URL.parse(url).query);
 
         expect(query.client_id).to.equal('123abc');
       });
 
       describe('for Express account', () => {
         it('Uses the correct path', () => {
-          var url = stripe.oauth.authorizeUrl({}, {express: true});
+          const url = stripe.oauth.authorizeUrl({}, {express: true});
 
-          var pathname = URL.parse(url).pathname;
+          const pathname = URL.parse(url).pathname;
 
           expect(pathname).to.equal('/express/oauth/authorize');
         });

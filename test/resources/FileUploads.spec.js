@@ -1,11 +1,11 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
-var fs = require('fs');
-var path = require('path');
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
+const fs = require('fs');
+const path = require('path');
 
-var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
+const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
 describe('File Uploads Resource', () => {
   describe('retrieve', () => {
@@ -45,8 +45,8 @@ describe('File Uploads Resource', () => {
 
   describe('create', () => {
     it('Sends the correct file upload request', () => {
-      var testFilename = path.join(__dirname, 'data/minimal.pdf');
-      var f = fs.readFileSync(testFilename);
+      const testFilename = path.join(__dirname, 'data/minimal.pdf');
+      const f = fs.readFileSync(testFilename);
 
       stripe.fileUploads.create({
         purpose: 'dispute_evidence',
@@ -64,8 +64,8 @@ describe('File Uploads Resource', () => {
     });
 
     it('Sends the correct file upload request [with specified auth]', () => {
-      var testFilename = path.join(__dirname, 'data/minimal.pdf');
-      var f = fs.readFileSync(testFilename);
+      const testFilename = path.join(__dirname, 'data/minimal.pdf');
+      const f = fs.readFileSync(testFilename);
 
       stripe.fileUploads.create(
         {
@@ -87,8 +87,8 @@ describe('File Uploads Resource', () => {
     });
 
     it('Streams a file and sends the correct file upload request', () => {
-      var testFilename = path.join(__dirname, 'data/minimal.pdf');
-      var f = fs.createReadStream(testFilename);
+      const testFilename = path.join(__dirname, 'data/minimal.pdf');
+      const f = fs.createReadStream(testFilename);
 
       return stripe.fileUploads
         .create({
@@ -111,8 +111,8 @@ describe('File Uploads Resource', () => {
     });
 
     it('Streams a file and sends the correct file upload request [with specified auth]', () => {
-      var testFilename = path.join(__dirname, 'data/minimal.pdf');
-      var f = fs.createReadStream(testFilename);
+      const testFilename = path.join(__dirname, 'data/minimal.pdf');
+      const f = fs.createReadStream(testFilename);
 
       return stripe.fileUploads
         .create(

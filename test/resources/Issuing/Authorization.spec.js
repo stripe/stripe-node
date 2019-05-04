@@ -1,7 +1,7 @@
 'use strict';
 
-var stripe = require('../../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
 describe('Issuing', () => {
   describe('Authorization Resource', () => {

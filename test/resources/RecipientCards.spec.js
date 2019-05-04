@@ -1,13 +1,13 @@
 'use strict';
 
-var resources = require('../../lib/stripe').resources;
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const resources = require('../../lib/stripe').resources;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var RECIPIENT_TEST_ID = 'recipientIdTest999';
+const RECIPIENT_TEST_ID = 'recipientIdTest999';
 
 // Create new recipientCard instance with pre-filled recipientId:
-var recipientCard = new resources.RecipientCards(stripe, {
+const recipientCard = new resources.RecipientCards(stripe, {
   recipientId: RECIPIENT_TEST_ID,
 });
 

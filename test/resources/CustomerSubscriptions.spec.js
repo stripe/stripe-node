@@ -1,13 +1,13 @@
 'use strict';
 
-var resources = require('../../lib/stripe').resources;
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const resources = require('../../lib/stripe').resources;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var CUSTOMER_TEST_ID = 'customerIdTest999';
+const CUSTOMER_TEST_ID = 'customerIdTest999';
 
 // Create new CustomerSubscription instance with pre-filled customerId:
-var customerSubscription = new resources.CustomerSubscriptions(stripe, {
+const customerSubscription = new resources.CustomerSubscriptions(stripe, {
   customerId: CUSTOMER_TEST_ID,
 });
 

@@ -2,14 +2,14 @@
 
 require('../testUtils');
 
-var utils = require('../lib/utils');
-var expect = require('chai').expect;
-var Buffer = require('safe-buffer').Buffer;
+const utils = require('../lib/utils');
+const expect = require('chai').expect;
+const Buffer = require('safe-buffer').Buffer;
 
 describe('utils', () => {
   describe('makeURLInterpolator', () => {
     it('Interpolates values into a prepared template', () => {
-      var template = utils.makeURLInterpolator('/some/url/{foo}/{baz}?ok=1');
+      const template = utils.makeURLInterpolator('/some/url/{foo}/{baz}?ok=1');
 
       expect(template({foo: 1, baz: 2})).to.equal('/some/url/1/2?ok=1');
 
@@ -110,7 +110,7 @@ describe('utils', () => {
     it('Provides an extension mechanism', () => {
       function A() {}
       A.extend = utils.protoExtend;
-      var B = A.extend({
+      const B = A.extend({
         constructor: function() {
           this.called = true;
         },
@@ -127,12 +127,12 @@ describe('utils', () => {
       expect(utils.getDataFromArgs([])).to.deep.equal({});
     });
     it('handles a list with no object', () => {
-      var args = [1, 3];
+      const args = [1, 3];
       expect(utils.getDataFromArgs(args)).to.deep.equal({});
       expect(args.length).to.equal(2);
     });
     it('ignores a hash with only options', (done) => {
-      var args = [{api_key: 'foo'}];
+      const args = [{api_key: 'foo'}];
 
       handleWarnings(
         () => {
@@ -147,7 +147,7 @@ describe('utils', () => {
       );
     });
     it('warns if the hash contains both data and options', (done) => {
-      var args = [{foo: 'bar', api_key: 'foo', idempotency_key: 'baz'}];
+      const args = [{foo: 'bar', api_key: 'foo', idempotency_key: 'baz'}];
 
       handleWarnings(
         () => {
@@ -164,7 +164,7 @@ describe('utils', () => {
       );
     });
     it('finds the data', () => {
-      var args = [{foo: 'bar'}, {api_key: 'foo'}];
+      const args = [{foo: 'bar'}, {api_key: 'foo'}];
       expect(utils.getDataFromArgs(args)).to.deep.equal({foo: 'bar'});
       expect(args.length).to.equal(1);
     });
@@ -178,7 +178,7 @@ describe('utils', () => {
       });
     });
     it('handles an list with no object', () => {
-      var args = [1, 3];
+      const args = [1, 3];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
         headers: {},
@@ -186,7 +186,7 @@ describe('utils', () => {
       expect(args.length).to.equal(2);
     });
     it('ignores a non-options object', () => {
-      var args = [{foo: 'bar'}];
+      const args = [{foo: 'bar'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
         headers: {},
@@ -194,7 +194,7 @@ describe('utils', () => {
       expect(args.length).to.equal(1);
     });
     it('parses an api key', () => {
-      var args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
+      const args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         headers: {},
@@ -202,7 +202,7 @@ describe('utils', () => {
       expect(args.length).to.equal(0);
     });
     it('parses an idempotency key', () => {
-      var args = [{foo: 'bar'}, {idempotency_key: 'foo'}];
+      const args = [{foo: 'bar'}, {idempotency_key: 'foo'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
         headers: {'Idempotency-Key': 'foo'},
@@ -210,7 +210,7 @@ describe('utils', () => {
       expect(args.length).to.equal(1);
     });
     it('parses an api version', () => {
-      var args = [{foo: 'bar'}, {stripe_version: '2003-03-30'}];
+      const args = [{foo: 'bar'}, {stripe_version: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
         headers: {'Stripe-Version': '2003-03-30'},
@@ -218,7 +218,7 @@ describe('utils', () => {
       expect(args.length).to.equal(1);
     });
     it('parses an idempotency key and api key and api version (with data)', () => {
-      var args = [
+      const args = [
         {foo: 'bar'},
         {
           api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
@@ -236,7 +236,7 @@ describe('utils', () => {
       expect(args.length).to.equal(1);
     });
     it('parses an idempotency key and api key and api version', () => {
-      var args = [
+      const args = [
         {
           api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
           idempotency_key: 'foo',
@@ -253,7 +253,7 @@ describe('utils', () => {
       expect(args.length).to.equal(0);
     });
     it('warns if the hash contains something that does not belong', (done) => {
-      var args = [
+      const args = [
         {foo: 'bar'},
         {
           api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
@@ -318,7 +318,7 @@ describe('utils', () => {
   });
 
   describe('safeExec', () => {
-    var origExec;
+    let origExec;
     beforeEach(() => {
       origExec = utils._exec;
     });
@@ -327,7 +327,7 @@ describe('utils', () => {
     });
 
     it('runs exec', () => {
-      var calls = [];
+      const calls = [];
       utils._exec = (cmd, cb) => {
         calls.push([cmd, cb]);
       };
@@ -338,12 +338,12 @@ describe('utils', () => {
     });
 
     it('passes along normal errors', () => {
-      var myErr = Error('hi');
+      const myErr = Error('hi');
       utils._exec = (cmd, cb) => {
         cb(myErr, null);
       };
 
-      var calls = [];
+      const calls = [];
       function myCb(err, x) {
         calls.push([err, x]);
       }
@@ -352,12 +352,12 @@ describe('utils', () => {
     });
 
     it('passes along thrown errors as normal callback errors', () => {
-      var myErr = Error('hi');
+      const myErr = Error('hi');
       utils._exec = (cmd, cb) => {
         throw myErr;
       };
 
-      var calls = [];
+      const calls = [];
       function myCb(err, x) {
         calls.push([err, x]);
       }
@@ -403,8 +403,8 @@ describe('utils', () => {
     });
 
     it('Does not flatten Buffer objects', () => {
-      var buf = Buffer.from('Hi!');
-      var flattened = utils.flattenAndStringify({
+      const buf = Buffer.from('Hi!');
+      const flattened = utils.flattenAndStringify({
         buf,
         x: {
           a: 1,
@@ -423,7 +423,7 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
     /* eslint-disable no-console */
 
     // Shim `console.warn`
-    var _warn = console.warn;
+    const _warn = console.warn;
     console.warn = onWarn;
 
     doWithShimmedConsoleWarn();

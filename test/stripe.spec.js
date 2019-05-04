@@ -1,20 +1,20 @@
 'use strict';
 
-var testUtils = require('../testUtils');
-var utils = require('../lib/utils');
-var stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
+const testUtils = require('../testUtils');
+const utils = require('../lib/utils');
+const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 
-var http = require('http');
+const http = require('http');
 
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
-var CUSTOMER_DETAILS = {
+const CUSTOMER_DETAILS = {
   description: 'Some customer',
   card: 'tok_visa',
 };
 
 describe('Stripe Module', function() {
-  var cleanup = new testUtils.CleanupUtility();
+  const cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
 
   describe('setApiKey', () => {
@@ -38,7 +38,7 @@ describe('Stripe Module', function() {
 
   describe('GetClientUserAgentSeeded', () => {
     it('Should return a user-agent serialized JSON object', () => {
-      var userAgent = {lang: 'node'};
+      const userAgent = {lang: 'node'};
       return expect(
         new Promise((resolve, reject) => {
           stripe.getClientUserAgentSeeded(userAgent, (c) => {
@@ -49,7 +49,7 @@ describe('Stripe Module', function() {
     });
 
     it('Should URI-encode user-agent fields', () => {
-      var userAgent = {lang: 'ï'};
+      const userAgent = {lang: 'ï'};
       return expect(
         new Promise((resolve, reject) => {
           stripe.getClientUserAgentSeeded(userAgent, (c) => {
@@ -60,7 +60,7 @@ describe('Stripe Module', function() {
     });
 
     describe('uname', () => {
-      var origExec;
+      let origExec;
       beforeEach(() => {
         origExec = utils.safeExec;
       });
@@ -197,7 +197,7 @@ describe('Stripe Module', function() {
     });
 
     it('should be included in the ClientUserAgent and be added to the UserAgent String', (done) => {
-      var appInfo = {
+      const appInfo = {
         name: testUtils.getRandomString(),
         version: '1.2.345',
         url: 'https://myawesomeapp.info',
@@ -235,7 +235,7 @@ describe('Stripe Module', function() {
             stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
               cleanup.deleteCustomer(customer.id);
 
-              var headers = customer.lastResponse.headers;
+              const headers = customer.lastResponse.headers;
               expect(headers).to.contain.keys('request-id');
 
               expect(customer.lastResponse.requestId).to.match(/^req_/);
@@ -267,7 +267,7 @@ describe('Stripe Module', function() {
 
   describe('errors', () => {
     it('Exports errors as types', () => {
-      var Stripe = require('../lib/stripe');
+      const Stripe = require('../lib/stripe');
       expect(
         new Stripe.errors.StripeInvalidRequestError({
           message: 'error',

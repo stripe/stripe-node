@@ -6,11 +6,11 @@ require('mocha');
 // Ensure we are using the 'as promised' libs before any tests are run:
 require('chai').use(require('chai-as-promised'));
 
-var ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
+const ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
 
-var utils = (module.exports = {
+const utils = (module.exports = {
   getUserStripeKey() {
-    var key =
+    const key =
       process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
 
     return key;
@@ -20,12 +20,12 @@ var utils = (module.exports = {
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
 
-    var stripe = require('../lib/stripe');
-    var stripeInstance = stripe('fakeAuthToken');
+    const stripe = require('../lib/stripe');
+    const stripeInstance = stripe('fakeAuthToken');
 
     stripeInstance.REQUESTS = [];
 
-    for (var i in stripeInstance) {
+    for (const i in stripeInstance) {
       makeInstanceSpyable(stripeInstance, stripeInstance[i]);
     }
 
@@ -33,9 +33,9 @@ var utils = (module.exports = {
       if (thisInstance instanceof stripe.StripeResource) {
         patchRequest(stripeInstance, thisInstance);
       } else if (thisInstance instanceof ResourceNamespace) {
-        var namespace = thisInstance;
+        const namespace = thisInstance;
 
-        for (var j in namespace) {
+        for (const j in namespace) {
           makeInstanceSpyable(stripeInstance, namespace[j]);
         }
       }
@@ -43,7 +43,7 @@ var utils = (module.exports = {
 
     function patchRequest(stripeInstance, instance) {
       instance._request = function(method, host, url, data, auth, options, cb) {
-        var req = (stripeInstance.LAST_REQUEST = {
+        const req = (stripeInstance.LAST_REQUEST = {
           method,
           url,
           data,
@@ -72,7 +72,7 @@ var utils = (module.exports = {
     CleanupUtility.DEFAULT_TIMEOUT = 20000;
 
     function CleanupUtility(timeout) {
-      var self = this;
+      const self = this;
       this._cleanupFns = [];
       this._stripe = require('../lib/stripe')(
         utils.getUserStripeKey(),
@@ -86,12 +86,12 @@ var utils = (module.exports = {
 
     CleanupUtility.prototype = {
       doCleanup(done) {
-        var cleanups = this._cleanupFns;
-        var total = cleanups.length;
-        var completed = 0;
-        var fn;
+        const cleanups = this._cleanupFns;
+        const total = cleanups.length;
+        let completed = 0;
+        let fn;
         while ((fn = cleanups.shift())) {
-          var promise = fn.call(this);
+          const promise = fn.call(this);
           if (!promise || !promise.then) {
             throw new Error(
               'CleanupUtility expects cleanup functions to return promises!'

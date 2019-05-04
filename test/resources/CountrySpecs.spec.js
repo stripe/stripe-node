@@ -1,7 +1,7 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
 describe('CountrySpecs Resource', () => {
   describe('list', () => {
@@ -18,7 +18,7 @@ describe('CountrySpecs Resource', () => {
 
   describe('retrieve', () => {
     it('Sends the correct request', () => {
-      var country = 'US';
+      const country = 'US';
       stripe.countrySpecs.retrieve(country);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
