@@ -14,9 +14,9 @@ var recipientCard = new resources.RecipientCards(stripe, {
 // Use spy from existing resource:
 recipientCard._request = stripe.recipients._request;
 
-describe('RecipientCard Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('RecipientCard Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       recipientCard.retrieve('cardIdFoo456');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -27,8 +27,8 @@ describe('RecipientCard Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       recipientCard.create({
         number: '123456',
         exp_month: '12',
@@ -42,8 +42,8 @@ describe('RecipientCard Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       recipientCard.update('cardIdFoo456', {
         name: 'Bob M. Baz',
       });
@@ -56,8 +56,8 @@ describe('RecipientCard Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       recipientCard.del('cardIdFoo456');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -68,8 +68,8 @@ describe('RecipientCard Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       recipientCard.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

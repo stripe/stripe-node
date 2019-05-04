@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Sources Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Sources Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.sources.retrieve('sourceId1');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Sources Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.sources.create({
         amount: 200,
         currency: 'usd',
@@ -46,8 +46,8 @@ describe('Sources Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.sources.update('src_foo', {
         metadata: {foo: 'bar'},
       });
@@ -60,8 +60,8 @@ describe('Sources Resource', function() {
     });
   });
 
-  describe('listSourceTransactions', function() {
-    it('Sends the correct request', function() {
+  describe('listSourceTransactions', () => {
+    it('Sends the correct request', () => {
       stripe.sources.listSourceTransactions('src_foo');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -72,8 +72,8 @@ describe('Sources Resource', function() {
     });
   });
 
-  describe('verify', function() {
-    it('Sends the correct request', function() {
+  describe('verify', () => {
+    it('Sends the correct request', () => {
       stripe.sources.verify('src_foo', {values: [32, 45]});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

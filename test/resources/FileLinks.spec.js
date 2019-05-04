@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('FileLinks Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('FileLinks Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.fileLinks.retrieve('link_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('FileLinks Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.fileLinks.create({file: 'file_123'});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -28,8 +28,8 @@ describe('FileLinks Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.fileLinks.update('link_123', {metadata: {key: 'value'}});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -40,8 +40,8 @@ describe('FileLinks Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.fileLinks.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Order Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Order Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.orders.retrieve('orderIdFoo123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Order Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.orders.create({
         currency: 'usd',
         items: [
@@ -58,8 +58,8 @@ describe('Order Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.orders.list({
         limit: 3,
       });
@@ -73,7 +73,7 @@ describe('Order Resource', function() {
       });
     });
 
-    it('Supports filtering by status', function() {
+    it('Supports filtering by status', () => {
       stripe.orders.list({
         status: 'active',
       });
@@ -88,8 +88,8 @@ describe('Order Resource', function() {
     });
   });
 
-  describe('pay', function() {
-    it('Sends the correct request', function() {
+  describe('pay', () => {
+    it('Sends the correct request', () => {
       stripe.orders.pay('orderIdFoo3242', {
         source: 'tok_FooBar',
       });
@@ -102,8 +102,8 @@ describe('Order Resource', function() {
     });
   });
 
-  describe('returnOrder', function() {
-    it('Sends the correct request', function() {
+  describe('returnOrder', () => {
+    it('Sends the correct request', () => {
       stripe.orders.returnOrder('orderIdFoo3242', {
         items: [{parent: 'sku_123'}],
       });
@@ -116,8 +116,8 @@ describe('Order Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.orders.update('orderIdFoo3242', {status: 'fulfilled'});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

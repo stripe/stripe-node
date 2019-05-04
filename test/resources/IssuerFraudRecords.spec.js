@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('IssuerFraudRecord Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('IssuerFraudRecord Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.issuerFraudRecords.retrieve('issfr_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('IssuerFraudRecord Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.issuerFraudRecords.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('OrderReturn Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('OrderReturn Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.orderReturns.retrieve('orderReturnIdFoo123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('OrderReturn Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.orderReturns.list({
         limit: 3,
       });
@@ -31,7 +31,7 @@ describe('OrderReturn Resource', function() {
       });
     });
 
-    it('Supports filtering by order', function() {
+    it('Supports filtering by order', () => {
       stripe.orderReturns.list({
         order: 'orderIdFoo123',
       });

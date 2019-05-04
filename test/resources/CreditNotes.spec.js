@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('CreditNotes Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('CreditNotes Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.creditNotes.retrieve('cn_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('CreditNotes Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       var data = {
         amount: 100,
         invoice: 'in_123',
@@ -33,8 +33,8 @@ describe('CreditNotes Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.creditNotes.list({count: 25});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -45,8 +45,8 @@ describe('CreditNotes Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.creditNotes.update('cn_123', {application_fee: 200});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -57,8 +57,8 @@ describe('CreditNotes Resource', function() {
     });
   });
 
-  describe('voidCreditNote', function() {
-    it('Sends the correct request', function() {
+  describe('voidCreditNote', () => {
+    it('Sends the correct request', () => {
       stripe.creditNotes.voidCreditNote('cn_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

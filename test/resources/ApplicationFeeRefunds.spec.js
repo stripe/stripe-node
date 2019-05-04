@@ -15,9 +15,9 @@ var appFeeRefund = new resources.ApplicationFeeRefunds(stripe, {
 // Use spy from existing resource:
 appFeeRefund._request = stripe.customers._request;
 
-describe('ApplicationFeeRefund Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('ApplicationFeeRefund Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       appFeeRefund.retrieve(REFUND_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -32,8 +32,8 @@ describe('ApplicationFeeRefund Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       appFeeRefund.update(REFUND_TEST_ID, {
         metadata: {key: 'value'},
       });
@@ -50,8 +50,8 @@ describe('ApplicationFeeRefund Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       appFeeRefund.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

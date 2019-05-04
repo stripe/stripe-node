@@ -5,16 +5,16 @@ require('../testUtils');
 var Error = require('../lib/Error');
 var expect = require('chai').expect;
 
-describe('Error', function() {
-  it('Populates with type and message params', function() {
+describe('Error', () => {
+  it('Populates with type and message params', () => {
     var e = new Error('FooError', 'Foo happened');
     expect(e).to.have.property('type', 'FooError');
     expect(e).to.have.property('message', 'Foo happened');
     expect(e).to.have.property('stack');
   });
 
-  describe('StripeError', function() {
-    it('Generates specific instance depending on error-type', function() {
+  describe('StripeError', () => {
+    it('Generates specific instance depending on error-type', () => {
       expect(Error.StripeError.generate({type: 'card_error'})).to.be.instanceOf(
         Error.StripeCardError
       );
@@ -29,7 +29,7 @@ describe('Error', function() {
       ).to.be.instanceOf(Error.StripeIdempotencyError);
     });
 
-    it('Pulls in headers', function() {
+    it('Pulls in headers', () => {
       var headers = {'Request-Id': '123'};
       var e = Error.StripeError.generate({
         type: 'card_error',
@@ -38,7 +38,7 @@ describe('Error', function() {
       expect(e).to.have.property('headers', headers);
     });
 
-    it('Pulls in request IDs', function() {
+    it('Pulls in request IDs', () => {
       var e = Error.StripeError.generate({
         type: 'card_error',
         requestId: 'foo',
@@ -46,11 +46,8 @@ describe('Error', function() {
       expect(e).to.have.property('requestId', 'foo');
     });
 
-    it('Pulls in HTTP status code', function() {
-      var e = Error.StripeError.generate({
-        type: 'card_error',
-        statusCode: 400,
-      });
+    it('Pulls in HTTP status code', () => {
+      var e = Error.StripeError.generate({type: 'card_error', statusCode: 400});
       expect(e).to.have.property('statusCode', 400);
     });
   });

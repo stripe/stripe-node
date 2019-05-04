@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Dispute Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Dispute Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.disputes.retrieve('dp_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Dispute Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.disputes.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -28,8 +28,8 @@ describe('Dispute Resource', function() {
     });
   });
 
-  describe('close', function() {
-    it('Sends the correct request', function() {
+  describe('close', () => {
+    it('Sends the correct request', () => {
       stripe.disputes.close('dp_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -40,8 +40,8 @@ describe('Dispute Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.disputes.update('dp_123', {evidence: {customer_name: 'Bob'}});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

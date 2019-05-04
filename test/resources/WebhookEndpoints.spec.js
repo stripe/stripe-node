@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('WebhookEndpoints Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('WebhookEndpoints Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.webhookEndpoints.retrieve('we_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('WebhookEndpoints Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.webhookEndpoints.del('we_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -28,8 +28,8 @@ describe('WebhookEndpoints Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.webhookEndpoints.update('we_123', {
         enabled_events: ['charge.succeeded'],
       });
@@ -44,8 +44,8 @@ describe('WebhookEndpoints Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.webhookEndpoints.create({
         enabled_events: ['charge.succeeded'],
         url: 'https://stripe.com',
@@ -63,8 +63,8 @@ describe('WebhookEndpoints Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.webhookEndpoints.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

@@ -8,7 +8,7 @@ var testServer = null;
 
 function createTestServer(handlerFunc, cb) {
   var host = '127.0.0.1';
-  testServer = http.createServer(function(req, res) {
+  testServer = http.createServer((req, res) => {
     try {
       handlerFunc(req, res);
     } catch (e) {
@@ -20,25 +20,25 @@ function createTestServer(handlerFunc, cb) {
       );
     }
   });
-  testServer.listen(0, host, function() {
+  testServer.listen(0, host, () => {
     var port = testServer.address().port;
     cb(host, port);
   });
 }
 
-describe('Client Telemetry', function() {
-  afterEach(function() {
+describe('Client Telemetry', () => {
+  afterEach(() => {
     if (testServer) {
       testServer.close();
       testServer = null;
     }
   });
 
-  it('Does not send telemetry when disabled', function(done) {
+  it('Does not send telemetry when disabled', (done) => {
     var numRequests = 0;
 
     createTestServer(
-      function(req, res) {
+      (req, res) => {
         numRequests += 1;
 
         var telemetry = req.headers['x-stripe-client-telemetry'];
@@ -56,7 +56,7 @@ describe('Client Telemetry', function() {
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end('{}');
       },
-      function(host, port) {
+      (host, port) => {
         const stripe = require('../lib/stripe')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
@@ -64,10 +64,8 @@ describe('Client Telemetry', function() {
 
         stripe.balance
           .retrieve()
-          .then(function(res) {
-            return stripe.balance.retrieve();
-          })
-          .then(function(res) {
+          .then((res) => stripe.balance.retrieve())
+          .then((res) => {
             expect(numRequests).to.equal(2);
             done();
           })
@@ -76,11 +74,11 @@ describe('Client Telemetry', function() {
     );
   });
 
-  it('Sends client telemetry on the second request when enabled', function(done) {
+  it('Sends client telemetry on the second request when enabled', (done) => {
     var numRequests = 0;
 
     createTestServer(
-      function(req, res) {
+      (req, res) => {
         numRequests += 1;
 
         var telemetry = req.headers['x-stripe-client-telemetry'];
@@ -103,7 +101,7 @@ describe('Client Telemetry', function() {
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end('{}');
       },
-      function(host, port) {
+      (host, port) => {
         const stripe = require('../lib/stripe')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
@@ -112,10 +110,8 @@ describe('Client Telemetry', function() {
 
         stripe.balance
           .retrieve()
-          .then(function(res) {
-            return stripe.balance.retrieve();
-          })
-          .then(function(res) {
+          .then((res) => stripe.balance.retrieve())
+          .then((res) => {
             expect(numRequests).to.equal(2);
             done();
           })
@@ -124,11 +120,11 @@ describe('Client Telemetry', function() {
     );
   });
 
-  it('Buffers metrics on concurrent requests', function(done) {
+  it('Buffers metrics on concurrent requests', (done) => {
     var numRequests = 0;
 
     createTestServer(
-      function(req, res) {
+      (req, res) => {
         numRequests += 1;
 
         var telemetry = req.headers['x-stripe-client-telemetry'];
@@ -153,7 +149,7 @@ describe('Client Telemetry', function() {
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end('{}');
       },
-      function(host, port) {
+      (host, port) => {
         const stripe = require('../lib/stripe')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
@@ -161,13 +157,10 @@ describe('Client Telemetry', function() {
         stripe.setHost(host, port, 'http');
 
         Promise.all([stripe.balance.retrieve(), stripe.balance.retrieve()])
-          .then(function() {
-            return Promise.all([
-              stripe.balance.retrieve(),
-              stripe.balance.retrieve(),
-            ]);
-          })
-          .then(function() {
+          .then(() =>
+            Promise.all([stripe.balance.retrieve(), stripe.balance.retrieve()])
+          )
+          .then(() => {
             expect(numRequests).to.equal(4);
             done();
           })

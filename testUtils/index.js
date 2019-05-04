@@ -68,7 +68,7 @@ var utils = (module.exports = {
    * CleanupUtility will automatically register on the mocha afterEach hook,
    * ensuring its called after each descendent-describe block.
    */
-  CleanupUtility: (function() {
+  CleanupUtility: (() => {
     CleanupUtility.DEFAULT_TIMEOUT = 20000;
 
     function CleanupUtility(timeout) {
@@ -98,14 +98,14 @@ var utils = (module.exports = {
             );
           }
           promise.then(
-            function() {
+            () => {
               // cleanup successful
               completed += 1;
               if (completed === total) {
                 done();
               }
             },
-            function(err) {
+            (err) => {
               // not successful
               throw err;
             }

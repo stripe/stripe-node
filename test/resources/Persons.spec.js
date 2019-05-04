@@ -13,9 +13,9 @@ var person = new resources.Persons(stripe, {accountId: ACCOUNT_TEST_ID});
 // Use spy from existing resource:
 person._request = stripe.customers._request;
 
-describe('Person Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
+describe('Person Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       person.create({
         first_name: 'John',
       });
@@ -28,8 +28,8 @@ describe('Person Resource', function() {
     });
   });
 
-  describe('delete', function() {
-    it('Sends the correct request', function() {
+  describe('delete', () => {
+    it('Sends the correct request', () => {
       person.del(PERSON_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -40,8 +40,8 @@ describe('Person Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       person.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -52,8 +52,8 @@ describe('Person Resource', function() {
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       person.retrieve(PERSON_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -64,8 +64,8 @@ describe('Person Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       person.update(PERSON_TEST_ID, {
         first_name: 'John',
       });

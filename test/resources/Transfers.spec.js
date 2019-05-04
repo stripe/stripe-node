@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Transfers Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Transfers Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.transfers.retrieve('transferId1');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Transfers Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.transfers.create({
         amount: 200,
         currency: 'usd',
@@ -32,8 +32,8 @@ describe('Transfers Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.transfers.update('transferId6654', {
         amount: 300,
       });
@@ -46,8 +46,8 @@ describe('Transfers Resource', function() {
     });
   });
 
-  describe('cancel', function() {
-    it('Sends the correct request', function() {
+  describe('cancel', () => {
+    it('Sends the correct request', () => {
       stripe.transfers.cancel('transferId4');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -58,8 +58,8 @@ describe('Transfers Resource', function() {
     });
   });
 
-  describe('reverse', function() {
-    it('Sends the correct request', function() {
+  describe('reverse', () => {
+    it('Sends the correct request', () => {
       stripe.transfers.reverse('transferId4');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -70,8 +70,8 @@ describe('Transfers Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.transfers.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -82,8 +82,8 @@ describe('Transfers Resource', function() {
     });
   });
 
-  describe('listTransactions', function() {
-    it('Sends the correct request', function() {
+  describe('listTransactions', () => {
+    it('Sends the correct request', () => {
       stripe.transfers.listTransactions('tr_14222');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

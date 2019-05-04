@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Refund Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
+describe('Refund Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.refunds.create({
         amount: '300',
         charge: 'ch_123',
@@ -23,8 +23,8 @@ describe('Refund Resource', function() {
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.refunds.retrieve('re_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -35,8 +35,8 @@ describe('Refund Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.refunds.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -47,8 +47,8 @@ describe('Refund Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.refunds.update('re_123', {metadata: {key: 'abcd'}});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

@@ -4,10 +4,10 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Reporting', function() {
-  describe('ReportTypes Resource', function() {
-    describe('retrieve', function() {
-      it('Sends the correct request', function() {
+describe('Reporting', () => {
+  describe('ReportTypes Resource', () => {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.reporting.reportTypes.retrieve('activity.summary.1');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -19,8 +19,8 @@ describe('Reporting', function() {
       });
     });
 
-    describe('list', function() {
-      it('Sends the correct request', function() {
+    describe('list', () => {
+      it('Sends the correct request', () => {
         stripe.reporting.reportTypes.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

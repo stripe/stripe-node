@@ -3,10 +3,10 @@
 var stripe = require('../../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Issuing', function() {
-  describe('Authorization Resource', function() {
-    describe('retrieve', function() {
-      it('Sends the correct request', function() {
+describe('Issuing', () => {
+  describe('Authorization Resource', () => {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.authorizations.retrieve('iauth_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -17,8 +17,8 @@ describe('Issuing', function() {
       });
     });
 
-    describe('list', function() {
-      it('Sends the correct request', function() {
+    describe('list', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.authorizations.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -29,8 +29,8 @@ describe('Issuing', function() {
       });
     });
 
-    describe('update', function() {
-      it('Sends the correct request', function() {
+    describe('update', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.authorizations.update('iauth_123', {
           metadata: {
             thing1: true,
@@ -51,8 +51,8 @@ describe('Issuing', function() {
       });
     });
 
-    describe('approve', function() {
-      it('Sends the correct request', function() {
+    describe('approve', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.authorizations.approve('iauth_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
@@ -63,8 +63,8 @@ describe('Issuing', function() {
       });
     });
 
-    describe('decline', function() {
-      it('Sends the correct request', function() {
+    describe('decline', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.authorizations.decline('iauth_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',

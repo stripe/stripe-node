@@ -7,9 +7,9 @@ var path = require('path');
 
 var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
-describe('Files Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Files Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.files.retrieve('fil_12345');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -19,7 +19,7 @@ describe('Files Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth]', function() {
+    it('Sends the correct request [with specified auth]', () => {
       stripe.files.retrieve('fil_12345', TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -31,8 +31,8 @@ describe('Files Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.files.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -43,8 +43,8 @@ describe('Files Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct file upload request', function() {
+  describe('create', () => {
+    it('Sends the correct file upload request', () => {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.readFileSync(testFilename);
 
@@ -63,7 +63,7 @@ describe('Files Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.property('url', '/v1/files');
     });
 
-    it('Sends the correct file upload request [with specified auth]', function() {
+    it('Sends the correct file upload request [with specified auth]', () => {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.readFileSync(testFilename);
 
@@ -86,7 +86,7 @@ describe('Files Resource', function() {
       expect(stripe.LAST_REQUEST).to.deep.property('auth', TEST_AUTH_KEY);
     });
 
-    it('Streams a file and sends the correct file upload request', function() {
+    it('Streams a file and sends the correct file upload request', () => {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.createReadStream(testFilename);
 
@@ -100,7 +100,7 @@ describe('Files Resource', function() {
           },
           file_link_data: {create: true},
         })
-        .then(function() {
+        .then(() => {
           expect(stripe.LAST_REQUEST).to.deep.property(
             'host',
             'files.stripe.com'
@@ -110,7 +110,7 @@ describe('Files Resource', function() {
         });
     });
 
-    it('Streams a file and sends the correct file upload request [with specified auth]', function() {
+    it('Streams a file and sends the correct file upload request [with specified auth]', () => {
       var testFilename = path.join(__dirname, 'data/minimal.pdf');
       var f = fs.createReadStream(testFilename);
 
@@ -127,7 +127,7 @@ describe('Files Resource', function() {
           },
           TEST_AUTH_KEY
         )
-        .then(function() {
+        .then(() => {
           expect(stripe.LAST_REQUEST).to.deep.property(
             'host',
             'files.stripe.com'

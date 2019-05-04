@@ -5,9 +5,9 @@ var expect = require('chai').expect;
 
 var PAYMENT_INTENT_TEST_ID = 'pi_123';
 
-describe('Payment Intents Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
+describe('Payment Intents Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       var params = {
         amount: 200,
         currency: 'usd',
@@ -23,8 +23,8 @@ describe('Payment Intents Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -35,8 +35,8 @@ describe('Payment Intents Resource', function() {
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.retrieve(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -47,8 +47,8 @@ describe('Payment Intents Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.update(PAYMENT_INTENT_TEST_ID, {
         metadata: {key: 'value'},
       });
@@ -61,8 +61,8 @@ describe('Payment Intents Resource', function() {
     });
   });
 
-  describe('cancel', function() {
-    it('Sends the correct request', function() {
+  describe('cancel', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.cancel(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -73,8 +73,8 @@ describe('Payment Intents Resource', function() {
     });
   });
 
-  describe('capture', function() {
-    it('Sends the correct request', function() {
+  describe('capture', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.capture(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -85,8 +85,8 @@ describe('Payment Intents Resource', function() {
     });
   });
 
-  describe('confirm', function() {
-    it('Sends the correct request', function() {
+  describe('confirm', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.confirm(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

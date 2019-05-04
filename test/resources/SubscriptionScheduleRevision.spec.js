@@ -15,9 +15,9 @@ var revision = new resources.SubscriptionScheduleRevisions(stripe, {
 // Use spy from existing resource:
 revision._request = stripe.customers._request;
 
-describe('SubscriptionScheduleRevision Resource', function() {
-  describe('list', function() {
-    it('Sends the correct request', function() {
+describe('SubscriptionScheduleRevision Resource', () => {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       revision.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -28,8 +28,8 @@ describe('SubscriptionScheduleRevision Resource', function() {
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       revision.retrieve(REVISION_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

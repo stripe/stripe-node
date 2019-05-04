@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('ApplicationFee Resource', function() {
-  describe('list', function() {
-    it('Sends the correct request', function() {
+describe('ApplicationFee Resource', () => {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.applicationFees.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('ApplicationFee Resource', function() {
     });
   });
 
-  describe('refund', function() {
-    it('Sends the correct request', function() {
+  describe('refund', () => {
+    it('Sends the correct request', () => {
       stripe.applicationFees.refund('applicationFeeIdExample3242', {
         amount: 23,
       });
@@ -30,8 +30,8 @@ describe('ApplicationFee Resource', function() {
     });
   });
 
-  describe('refunds', function() {
-    it('Sends the correct update request', function() {
+  describe('refunds', () => {
+    it('Sends the correct update request', () => {
       stripe.applicationFees.updateRefund(
         'appFeeIdExample3242',
         'refundIdExample2312',
@@ -46,7 +46,7 @@ describe('ApplicationFee Resource', function() {
       });
     });
 
-    it('Sends the correct create request', function() {
+    it('Sends the correct create request', () => {
       stripe.applicationFees.createRefund('appFeeIdExample3242', {amount: 100});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -56,7 +56,7 @@ describe('ApplicationFee Resource', function() {
       });
     });
 
-    it('Sends the correct list request', function() {
+    it('Sends the correct list request', () => {
       stripe.applicationFees.listRefunds('appFeeIdExample3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -66,7 +66,7 @@ describe('ApplicationFee Resource', function() {
       });
     });
 
-    it('Sends the correct retrieve request', function() {
+    it('Sends the correct retrieve request', () => {
       stripe.applicationFees.retrieveRefund(
         'appFeeIdExample3242',
         'refundIdExample2312'

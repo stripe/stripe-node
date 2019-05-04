@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('InvoiceItems Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('InvoiceItems Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.retrieve('invoiceItemIdTesting123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('InvoiceItems Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.create({
         customer: 'cust_id_888',
       });
@@ -30,8 +30,8 @@ describe('InvoiceItems Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.update('invoiceItemId1', {
         amount: 1900,
       });
@@ -44,8 +44,8 @@ describe('InvoiceItems Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.del('invoiceItemId2');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -56,8 +56,8 @@ describe('InvoiceItems Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.invoiceItems.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

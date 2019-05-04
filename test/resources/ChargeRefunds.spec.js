@@ -15,9 +15,9 @@ var chargeRefund = new resources.ChargeRefunds(stripe, {
 // Use spy from existing resource:
 chargeRefund._request = stripe.customers._request;
 
-describe('ChargeRefund Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('ChargeRefund Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       chargeRefund.retrieve(REFUND_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -28,8 +28,8 @@ describe('ChargeRefund Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       chargeRefund.create({
         amount: 100,
       });
@@ -42,8 +42,8 @@ describe('ChargeRefund Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       chargeRefund.update(REFUND_TEST_ID, {
         metadata: {key: 'value'},
       });
@@ -56,8 +56,8 @@ describe('ChargeRefund Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       chargeRefund.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

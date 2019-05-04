@@ -5,9 +5,9 @@ var expect = require('chai').expect;
 
 var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
-describe('Recipients Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Recipients Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.recipients.retrieve('recipientId1');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -18,8 +18,8 @@ describe('Recipients Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.recipients.create({
         name: 'Bob',
         type: 'individual',
@@ -33,8 +33,8 @@ describe('Recipients Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.recipients.update('recipientId3', {
         name: 'Bob Smith',
       });
@@ -47,8 +47,8 @@ describe('Recipients Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.recipients.del('recipientId4');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -59,8 +59,8 @@ describe('Recipients Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.recipients.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -71,9 +71,9 @@ describe('Recipients Resource', function() {
     });
   });
 
-  describe('Card methods', function() {
-    describe('retrieveCard', function() {
-      it('Sends the correct request', function() {
+  describe('Card methods', () => {
+    describe('retrieveCard', () => {
+      it('Sends the correct request', () => {
         stripe.recipients.retrieveCard('recipientIdFoo321', 'cardIdFoo456');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -83,7 +83,7 @@ describe('Recipients Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.recipients.retrieveCard(
           'recipientIdFoo321',
           'cardIdFoo456',
@@ -99,8 +99,8 @@ describe('Recipients Resource', function() {
       });
     });
 
-    describe('createCard', function() {
-      it('Sends the correct request', function() {
+    describe('createCard', () => {
+      it('Sends the correct request', () => {
         stripe.recipients.createCard('recipientIdFoo321', {
           number: '123456',
           exp_month: '12',
@@ -113,7 +113,7 @@ describe('Recipients Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.recipients.createCard(
           'recipientIdFoo321',
           {
@@ -132,8 +132,8 @@ describe('Recipients Resource', function() {
       });
     });
 
-    describe('updateCard', function() {
-      it('Sends the correct request', function() {
+    describe('updateCard', () => {
+      it('Sends the correct request', () => {
         stripe.recipients.updateCard('recipientIdFoo321', 'cardIdFoo456', {
           name: 'Bob M. Baz',
         });
@@ -146,8 +146,8 @@ describe('Recipients Resource', function() {
       });
     });
 
-    describe('deleteCard', function() {
-      it('Sends the correct request', function() {
+    describe('deleteCard', () => {
+      it('Sends the correct request', () => {
         stripe.recipients.deleteCard('recipientIdFoo321', 'cardIdFoo456');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -157,7 +157,7 @@ describe('Recipients Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.recipients.deleteCard(
           'recipientIdFoo321',
           'cardIdFoo456',
@@ -173,8 +173,8 @@ describe('Recipients Resource', function() {
       });
     });
 
-    describe('listCards', function() {
-      it('Sends the correct request', function() {
+    describe('listCards', () => {
+      it('Sends the correct request', () => {
         stripe.recipients.listCards('recipientIdFoo321');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -184,7 +184,7 @@ describe('Recipients Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.recipients.listCards('recipientIdFoo321', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

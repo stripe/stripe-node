@@ -6,9 +6,9 @@ var expect = require('chai').expect;
 var SCHEDULE_TEST_ID = 'sub_sched_123';
 var REVISION_TEST_ID = 'sub_sched_rev_123';
 
-describe('Subscription Schedule Resource', function() {
-  describe('cancel', function() {
-    it('Sends the correct request', function() {
+describe('Subscription Schedule Resource', () => {
+  describe('cancel', () => {
+    it('Sends the correct request', () => {
       var data = {
         invoice_now: true,
       };
@@ -22,8 +22,8 @@ describe('Subscription Schedule Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       var data = {
         customer: 'cus_123',
       };
@@ -37,8 +37,8 @@ describe('Subscription Schedule Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptionSchedules.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -49,8 +49,8 @@ describe('Subscription Schedule Resource', function() {
     });
   });
 
-  describe('release', function() {
-    it('Sends the correct request', function() {
+  describe('release', () => {
+    it('Sends the correct request', () => {
       var data = {
         preserve_cancel_date: true,
       };
@@ -64,8 +64,8 @@ describe('Subscription Schedule Resource', function() {
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptionSchedules.retrieve(SCHEDULE_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -76,8 +76,8 @@ describe('Subscription Schedule Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       var data = {metadata: {key: 'value'}};
       stripe.subscriptionSchedules.update(SCHEDULE_TEST_ID, data);
       expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -89,9 +89,9 @@ describe('Subscription Schedule Resource', function() {
     });
   });
 
-  describe('Revision methods', function() {
-    describe('retrieveRevision', function() {
-      it('Sends the correct request', function() {
+  describe('Revision methods', () => {
+    describe('retrieveRevision', () => {
+      it('Sends the correct request', () => {
         stripe.subscriptionSchedules.retrieveRevision(
           SCHEDULE_TEST_ID,
           REVISION_TEST_ID
@@ -109,8 +109,8 @@ describe('Subscription Schedule Resource', function() {
       });
     });
 
-    describe('listRevisions', function() {
-      it('Sends the correct request', function() {
+    describe('listRevisions', () => {
+      it('Sends the correct request', () => {
         stripe.subscriptionSchedules.listRevisions(SCHEDULE_TEST_ID);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

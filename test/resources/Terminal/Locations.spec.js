@@ -4,10 +4,10 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Terminal', function() {
-  describe('Locations Resource', function() {
-    describe('retrieve', function() {
-      it('Sends the correct request', function() {
+describe('Terminal', () => {
+  describe('Locations Resource', () => {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.terminal.locations.retrieve('loc_123');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -19,8 +19,8 @@ describe('Terminal', function() {
       });
     });
 
-    describe('create', function() {
-      it('Sends the correct request', function() {
+    describe('create', () => {
+      it('Sends the correct request', () => {
         stripe.terminal.locations.create({
           display_name: 'name',
           address: {
@@ -49,8 +49,8 @@ describe('Terminal', function() {
       });
     });
 
-    describe('del', function() {
-      it('Sends the correct request', function() {
+    describe('del', () => {
+      it('Sends the correct request', () => {
         stripe.terminal.locations.del('loc_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -61,8 +61,8 @@ describe('Terminal', function() {
       });
     });
 
-    describe('update', function() {
-      it('Sends the correct request', function() {
+    describe('update', () => {
+      it('Sends the correct request', () => {
         stripe.terminal.locations.update('loc_123', {
           display_name: 'name',
         });
@@ -77,8 +77,8 @@ describe('Terminal', function() {
       });
     });
 
-    describe('list', function() {
-      it('Sends the correct request', function() {
+    describe('list', () => {
+      it('Sends the correct request', () => {
         stripe.terminal.locations.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

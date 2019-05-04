@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('SKU Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('SKU Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.skus.retrieve('skuIdFoo123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('SKU Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.skus.create({
         currency: 'usd',
         inventory: {type: 'finite', quantity: 500},
@@ -40,8 +40,8 @@ describe('SKU Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.skus.list({
         limit: 3,
       });
@@ -55,7 +55,7 @@ describe('SKU Resource', function() {
       });
     });
 
-    it('Supports filtering by product', function() {
+    it('Supports filtering by product', () => {
       stripe.skus.list({
         product: 'prodId123',
       });
@@ -70,8 +70,8 @@ describe('SKU Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.skus.update('skuIdFoo3242', {caption: 'test'});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -82,8 +82,8 @@ describe('SKU Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.skus.del('skuIdFoo3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',

@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('SubscriptionItems Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('SubscriptionItems Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptionItems.retrieve('test_sub_item');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('SubscriptionItems Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptionItems.del('test_sub_item');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -28,8 +28,8 @@ describe('SubscriptionItems Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptionItems.update('test_sub_item', {
         plan: 'gold',
       });
@@ -44,8 +44,8 @@ describe('SubscriptionItems Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptionItems.create({
         subscription: 'test_sub',
         plan: 'gold',
@@ -63,8 +63,8 @@ describe('SubscriptionItems Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptionItems.list({
         limit: 3,
         subscription: 'test_sub',

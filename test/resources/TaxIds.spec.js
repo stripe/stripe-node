@@ -12,9 +12,9 @@ var taxId = new resources.TaxIds(stripe, {customerId: CUSTOMER_TEST_ID});
 // Use spy from existing resource:
 taxId._request = stripe.customers._request;
 
-describe('TaxId Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
+describe('TaxId Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       var data = {
         type: 'eu_vat',
         value: '11111',
@@ -29,8 +29,8 @@ describe('TaxId Resource', function() {
     });
   });
 
-  describe('delete', function() {
-    it('Sends the correct request', function() {
+  describe('delete', () => {
+    it('Sends the correct request', () => {
       taxId.del(TAX_ID_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -41,8 +41,8 @@ describe('TaxId Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       taxId.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -53,8 +53,8 @@ describe('TaxId Resource', function() {
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       taxId.retrieve(TAX_ID_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

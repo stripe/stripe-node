@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Product Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Product Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.products.retrieve('productIdFoo123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Product Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.products.create({
         name: 'Llamas',
         active: true,
@@ -36,8 +36,8 @@ describe('Product Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.products.list({
         limit: 3,
       });
@@ -51,7 +51,7 @@ describe('Product Resource', function() {
       });
     });
 
-    it('Supports filtering by shippable', function() {
+    it('Supports filtering by shippable', () => {
       stripe.products.list({
         shippable: true,
       });
@@ -66,8 +66,8 @@ describe('Product Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.products.update('productIdFoo3242', {caption: 'test'});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -78,8 +78,8 @@ describe('Product Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.products.del('productIdFoo3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',

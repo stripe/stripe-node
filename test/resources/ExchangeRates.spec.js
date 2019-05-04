@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('ExchangeRates Resource', function() {
-  describe('list', function() {
-    it('Sends the correct request', function() {
+describe('ExchangeRates Resource', () => {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.exchangeRates.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('ExchangeRates Resource', function() {
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       var currency = 'USD';
       stripe.exchangeRates.retrieve(currency);
       expect(stripe.LAST_REQUEST).to.deep.equal({

@@ -4,10 +4,10 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Checkout', function() {
-  describe('Sessions Resource', function() {
-    describe('create', function() {
-      it('Sends the correct request', function() {
+describe('Checkout', () => {
+  describe('Sessions Resource', () => {
+    describe('create', () => {
+      it('Sends the correct request', () => {
         var params = {
           cancel_url: 'https://stripe.com/cancel',
           client_reference_id: '1234',
@@ -38,8 +38,8 @@ describe('Checkout', function() {
       });
     });
 
-    describe('retrieve', function() {
-      it('Sends the correct request', function() {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.checkout.sessions.retrieve('cs_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

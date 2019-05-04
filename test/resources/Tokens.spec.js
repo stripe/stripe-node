@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Tokens Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
+describe('Tokens Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.tokens.create({
         card: {number: 123},
       });
@@ -18,8 +18,8 @@ describe('Tokens Resource', function() {
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.tokens.retrieve('tokenId1');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

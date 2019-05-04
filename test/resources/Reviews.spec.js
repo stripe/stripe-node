@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Review Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Review Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.reviews.retrieve('prv_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Review Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.reviews.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -28,8 +28,8 @@ describe('Review Resource', function() {
     });
   });
 
-  describe('approve', function() {
-    it('Sends the correct request', function() {
+  describe('approve', () => {
+    it('Sends the correct request', () => {
       stripe.reviews.approve('prv_123', {amount: 23});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

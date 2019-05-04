@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('ApplePayDomains Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('ApplePayDomains Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.applePayDomains.retrieve('apwc_retrieve');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('ApplePayDomains Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.applePayDomains.del('apwc_delete');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -28,8 +28,8 @@ describe('ApplePayDomains Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.applePayDomains.create({
         domain_name: 'example.com',
       });
@@ -45,8 +45,8 @@ describe('ApplePayDomains Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.applePayDomains.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

@@ -3,10 +3,10 @@
 var stripe = require('../../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Sigma', function() {
-  describe('ScheduledQueryRun Resource', function() {
-    describe('retrieve', function() {
-      it('Sends the correct request', function() {
+describe('Sigma', () => {
+  describe('ScheduledQueryRun Resource', () => {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.sigma.scheduledQueryRuns.retrieve('sqr_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -17,8 +17,8 @@ describe('Sigma', function() {
       });
     });
 
-    describe('list', function() {
-      it('Sends the correct request', function() {
+    describe('list', () => {
+      it('Sends the correct request', () => {
         stripe.sigma.scheduledQueryRuns.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

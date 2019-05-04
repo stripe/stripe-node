@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Balance Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Balance Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.balance.retrieve();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -15,7 +15,7 @@ describe('Balance Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth]', function() {
+    it('Sends the correct request [with specified auth]', () => {
       stripe.balance.retrieve('aGN0bIwXnHdw5645VABjPdSn8nWY7G11');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -27,8 +27,8 @@ describe('Balance Resource', function() {
     });
   });
 
-  describe('listTransactions', function() {
-    it('Sends the correct request', function() {
+  describe('listTransactions', () => {
+    it('Sends the correct request', () => {
       stripe.balance.listTransactions();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -38,7 +38,7 @@ describe('Balance Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth]', function() {
+    it('Sends the correct request [with specified auth]', () => {
       stripe.balance.listTransactions('aGN0bIwXnHdw5645VABjPdSn8nWY7G11');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -50,8 +50,8 @@ describe('Balance Resource', function() {
     });
   });
 
-  describe('retrieveTransaction', function() {
-    it('Sends the correct request', function() {
+  describe('retrieveTransaction', () => {
+    it('Sends the correct request', () => {
       stripe.balance.retrieveTransaction('transactionIdFoo');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -61,7 +61,7 @@ describe('Balance Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth]', function() {
+    it('Sends the correct request [with specified auth]', () => {
       stripe.balance.retrieveTransaction(
         'transactionIdFoo',
         'aGN0bIwXnHdw5645VABjPdSn8nWY7G11'

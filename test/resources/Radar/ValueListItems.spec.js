@@ -4,10 +4,10 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Radar', function() {
-  describe('ValueLists Resource', function() {
-    describe('retrieve', function() {
-      it('Sends the correct request', function() {
+describe('Radar', () => {
+  describe('ValueLists Resource', () => {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.radar.valueListItems.retrieve('rsli_123');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -19,8 +19,8 @@ describe('Radar', function() {
       });
     });
 
-    describe('create', function() {
-      it('Sends the correct request', function() {
+    describe('create', () => {
+      it('Sends the correct request', () => {
         stripe.radar.valueListItems.create({
           value_list: 'rsl_123',
           value: 'value',
@@ -37,8 +37,8 @@ describe('Radar', function() {
       });
     });
 
-    describe('list', function() {
-      it('Sends the correct request', function() {
+    describe('list', () => {
+      it('Sends the correct request', () => {
         stripe.radar.valueListItems.list({
           value_list: 'rsl_123',
         });
@@ -53,8 +53,8 @@ describe('Radar', function() {
       });
     });
 
-    describe('del', function() {
-      it('Sends the correct request', function() {
+    describe('del', () => {
+      it('Sends the correct request', () => {
         stripe.radar.valueListItems.del('rsli_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',

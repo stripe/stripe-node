@@ -15,9 +15,9 @@ var transferReversal = new resources.TransferReversals(stripe, {
 // Use spy from existing resource:
 transferReversal._request = stripe.customers._request;
 
-describe('TransferReversal Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('TransferReversal Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       transferReversal.retrieve(REVERSAL_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -32,8 +32,8 @@ describe('TransferReversal Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       transferReversal.create({
         amount: 100,
       });
@@ -46,8 +46,8 @@ describe('TransferReversal Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       transferReversal.update(REVERSAL_TEST_ID, {
         metadata: {key: 'value'},
       });
@@ -64,8 +64,8 @@ describe('TransferReversal Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       transferReversal.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

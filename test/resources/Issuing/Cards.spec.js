@@ -4,10 +4,10 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Issuing', function() {
-  describe('Cards Resource', function() {
-    describe('retrieve', function() {
-      it('Sends the correct request', function() {
+describe('Issuing', () => {
+  describe('Cards Resource', () => {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.cards.retrieve('ic_123');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -19,8 +19,8 @@ describe('Issuing', function() {
       });
     });
 
-    describe('create', function() {
-      it('Sends the correct request', function() {
+    describe('create', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.cards.create({
           currency: 'usd',
           type: 'physical',
@@ -37,8 +37,8 @@ describe('Issuing', function() {
       });
     });
 
-    describe('update', function() {
-      it('Sends the correct request', function() {
+    describe('update', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.cards.update('ic_123', {
           metadata: {
             thing1: true,
@@ -59,8 +59,8 @@ describe('Issuing', function() {
       });
     });
 
-    describe('list', function() {
-      it('Sends the correct request', function() {
+    describe('list', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.cards.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -72,9 +72,9 @@ describe('Issuing', function() {
     });
   });
 
-  describe('Virtual Cards Resource', function() {
-    describe('retrieve', function() {
-      it('Sends the correct request', function() {
+  describe('Virtual Cards Resource', () => {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.cards.retrieveDetails('ic_123');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({

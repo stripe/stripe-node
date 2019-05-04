@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('BitcoinReceivers Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('BitcoinReceivers Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.bitcoinReceivers.retrieve('receiverId1');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('BitcoinReceivers Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.bitcoinReceivers.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -28,8 +28,8 @@ describe('BitcoinReceivers Resource', function() {
     });
   });
 
-  describe('listTransactions', function() {
-    it('Sends the correct request', function() {
+  describe('listTransactions', () => {
+    it('Sends the correct request', () => {
       stripe.bitcoinReceivers.listTransactions('receiverId', {
         limit: 1,
       });

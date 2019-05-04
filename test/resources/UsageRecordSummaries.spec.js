@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('UsageRecordSummaries Resource', function() {
-  describe('list', function() {
-    it('Sends the correct request', function() {
+describe('UsageRecordSummaries Resource', () => {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.usageRecordSummaries.list('si_123', {});
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -16,7 +16,7 @@ describe('UsageRecordSummaries Resource', function() {
       });
     });
 
-    it('Includes any options that were provided', function(done) {
+    it('Includes any options that were provided', (done) => {
       stripe.usageRecordSummaries
         .list(
           'si_123',
@@ -25,7 +25,7 @@ describe('UsageRecordSummaries Resource', function() {
             stripe_account: 'acct_456',
           }
         )
-        .then(function(record) {
+        .then((record) => {
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'GET',
             url: '/v1/subscription_items/si_123/usage_record_summaries',
@@ -39,8 +39,8 @@ describe('UsageRecordSummaries Resource', function() {
         });
     });
 
-    it('Calls a given callback', function(done) {
-      stripe.usageRecordSummaries.list('si_123', {}, function(error, record) {
+    it('Calls a given callback', (done) => {
+      stripe.usageRecordSummaries.list('si_123', {}, (error, record) => {
         done(error);
       });
     });

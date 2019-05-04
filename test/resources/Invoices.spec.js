@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Invoices Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Invoices Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.retrieve('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.create({application_fee: 111});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -28,8 +28,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.list({count: 25});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -40,8 +40,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.update('in_123', {application_fee: 200});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -52,8 +52,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.del('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -64,8 +64,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('retrieveLines', function() {
-    it('Sends the correct request', function() {
+  describe('retrieveLines', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.retrieveLines('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -76,9 +76,9 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('retrieveUpcoming', function() {
-    describe('With just a customer ID', function() {
-      it('Sends the correct request', function() {
+  describe('retrieveUpcoming', () => {
+    describe('With just a customer ID', () => {
+      it('Sends the correct request', () => {
         stripe.invoices.retrieveUpcoming('cus_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -89,8 +89,8 @@ describe('Invoices Resource', function() {
       });
     });
 
-    describe('With a subscription ID in addition to a customer ID', function() {
-      it('Sends the correct request', function() {
+    describe('With a subscription ID in addition to a customer ID', () => {
+      it('Sends the correct request', () => {
         stripe.invoices.retrieveUpcoming('cus_123', 'sub_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -101,8 +101,8 @@ describe('Invoices Resource', function() {
       });
     });
 
-    describe('With an options object that includes `subscription_items`', function() {
-      it('Sends the correct request', function() {
+    describe('With an options object that includes `subscription_items`', () => {
+      it('Sends the correct request', () => {
         stripe.invoices.retrieveUpcoming('cus_123', {
           subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
         });
@@ -118,8 +118,8 @@ describe('Invoices Resource', function() {
       });
     });
 
-    describe('Without a customer id but options', function() {
-      it('Sends the correct request', function() {
+    describe('Without a customer id but options', () => {
+      it('Sends the correct request', () => {
         stripe.invoices.retrieveUpcoming({
           customer: 'cus_abc',
           subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
@@ -136,8 +136,8 @@ describe('Invoices Resource', function() {
       });
     });
 
-    describe('With an options object that includes `subscription_items` in addition to a subscription ID', function() {
-      it('Sends the correct request', function() {
+    describe('With an options object that includes `subscription_items` in addition to a subscription ID', () => {
+      it('Sends the correct request', () => {
         stripe.invoices.retrieveUpcoming('cus_123', 'sub_123', {
           subscription_items: [
             {plan: 'potato'},
@@ -163,8 +163,8 @@ describe('Invoices Resource', function() {
       });
     });
 
-    describe('With a options object in addition to a customer ID', function() {
-      it('Sends the correct request', function() {
+    describe('With a options object in addition to a customer ID', () => {
+      it('Sends the correct request', () => {
         stripe.invoices.retrieveUpcoming('cus_123', {plan: 'planId123'});
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -176,8 +176,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('finalizeInvoice', function() {
-    it('Sends the correct request', function() {
+  describe('finalizeInvoice', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.finalizeInvoice('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -188,8 +188,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('mark uncollectible', function() {
-    it('Sends the correct request', function() {
+  describe('mark uncollectible', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.markUncollectible('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -200,8 +200,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('pay', function() {
-    it('Sends the correct request', function() {
+  describe('pay', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.pay('in_123', {
         source: 'tok_FooBar',
       });
@@ -214,8 +214,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('sendInvoice', function() {
-    it('Sends the correct request', function() {
+  describe('sendInvoice', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.sendInvoice('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -226,8 +226,8 @@ describe('Invoices Resource', function() {
     });
   });
 
-  describe('voidInvoice', function() {
-    it('Sends the correct request', function() {
+  describe('voidInvoice', () => {
+    it('Sends the correct request', () => {
       stripe.invoices.voidInvoice('in_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

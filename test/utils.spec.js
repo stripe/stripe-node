@@ -6,9 +6,9 @@ var utils = require('../lib/utils');
 var expect = require('chai').expect;
 var Buffer = require('safe-buffer').Buffer;
 
-describe('utils', function() {
-  describe('makeURLInterpolator', function() {
-    it('Interpolates values into a prepared template', function() {
+describe('utils', () => {
+  describe('makeURLInterpolator', () => {
+    it('Interpolates values into a prepared template', () => {
       var template = utils.makeURLInterpolator('/some/url/{foo}/{baz}?ok=1');
 
       expect(template({foo: 1, baz: 2})).to.equal('/some/url/1/2?ok=1');
@@ -22,8 +22,8 @@ describe('utils', function() {
     });
   });
 
-  describe('stringifyRequestData', function() {
-    it('Handles basic types', function() {
+  describe('stringifyRequestData', () => {
+    it('Handles basic types', () => {
       expect(
         utils.stringifyRequestData({
           a: 1,
@@ -32,7 +32,7 @@ describe('utils', function() {
       ).to.equal('a=1&b=foo');
     });
 
-    it('Handles Dates', function() {
+    it('Handles Dates', () => {
       expect(
         utils.stringifyRequestData({
           date: new Date('2009-02-13T23:31:30Z'),
@@ -50,7 +50,7 @@ describe('utils', function() {
       );
     });
 
-    it('Handles deeply nested object', function() {
+    it('Handles deeply nested object', () => {
       expect(
         utils.stringifyRequestData({
           a: {
@@ -64,7 +64,7 @@ describe('utils', function() {
       ).to.equal('a[b][c][d]=2');
     });
 
-    it('Handles arrays of objects', function() {
+    it('Handles arrays of objects', () => {
       expect(
         utils.stringifyRequestData({
           a: [{b: 'c'}, {b: 'd'}],
@@ -72,7 +72,7 @@ describe('utils', function() {
       ).to.equal('a[0][b]=c&a[1][b]=d');
     });
 
-    it('Handles indexed arrays', function() {
+    it('Handles indexed arrays', () => {
       expect(
         utils.stringifyRequestData({
           a: {
@@ -83,7 +83,7 @@ describe('utils', function() {
       ).to.equal('a[0][b]=c&a[1][b]=d');
     });
 
-    it('Creates a string from an object, handling shallow nested objects', function() {
+    it('Creates a string from an object, handling shallow nested objects', () => {
       expect(
         utils.stringifyRequestData({
           test: 1,
@@ -106,8 +106,8 @@ describe('utils', function() {
     });
   });
 
-  describe('protoExtend', function() {
-    it('Provides an extension mechanism', function() {
+  describe('protoExtend', () => {
+    it('Provides an extension mechanism', () => {
       function A() {}
       A.extend = utils.protoExtend;
       var B = A.extend({
@@ -122,38 +122,38 @@ describe('utils', function() {
     });
   });
 
-  describe('getDataFromArgs', function() {
-    it('handles an empty list', function() {
+  describe('getDataFromArgs', () => {
+    it('handles an empty list', () => {
       expect(utils.getDataFromArgs([])).to.deep.equal({});
     });
-    it('handles a list with no object', function() {
+    it('handles a list with no object', () => {
       var args = [1, 3];
       expect(utils.getDataFromArgs(args)).to.deep.equal({});
       expect(args.length).to.equal(2);
     });
-    it('ignores a hash with only options', function(done) {
+    it('ignores a hash with only options', (done) => {
       var args = [{api_key: 'foo'}];
 
       handleWarnings(
-        function() {
+        () => {
           expect(utils.getDataFromArgs(args)).to.deep.equal({});
           expect(args.length).to.equal(1);
 
           done();
         },
-        function(message) {
+        (message) => {
           throw new Error('Should not have warned, but did: ' + message);
         }
       );
     });
-    it('warns if the hash contains both data and options', function(done) {
+    it('warns if the hash contains both data and options', (done) => {
       var args = [{foo: 'bar', api_key: 'foo', idempotency_key: 'baz'}];
 
       handleWarnings(
-        function() {
+        () => {
           utils.getDataFromArgs(args);
         },
-        function(message) {
+        (message) => {
           expect(message).to.equal(
             'Stripe: Options found in arguments (api_key, idempotency_key).' +
               ' Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options.'
@@ -163,21 +163,21 @@ describe('utils', function() {
         }
       );
     });
-    it('finds the data', function() {
+    it('finds the data', () => {
       var args = [{foo: 'bar'}, {api_key: 'foo'}];
       expect(utils.getDataFromArgs(args)).to.deep.equal({foo: 'bar'});
       expect(args.length).to.equal(1);
     });
   });
 
-  describe('getOptsFromArgs', function() {
-    it('handles an empty list', function() {
+  describe('getOptsFromArgs', () => {
+    it('handles an empty list', () => {
       expect(utils.getOptionsFromArgs([])).to.deep.equal({
         auth: null,
         headers: {},
       });
     });
-    it('handles an list with no object', function() {
+    it('handles an list with no object', () => {
       var args = [1, 3];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
@@ -185,7 +185,7 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(2);
     });
-    it('ignores a non-options object', function() {
+    it('ignores a non-options object', () => {
       var args = [{foo: 'bar'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
@@ -193,7 +193,7 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(1);
     });
-    it('parses an api key', function() {
+    it('parses an api key', () => {
       var args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
@@ -201,7 +201,7 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(0);
     });
-    it('parses an idempotency key', function() {
+    it('parses an idempotency key', () => {
       var args = [{foo: 'bar'}, {idempotency_key: 'foo'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
@@ -209,7 +209,7 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(1);
     });
-    it('parses an api version', function() {
+    it('parses an api version', () => {
       var args = [{foo: 'bar'}, {stripe_version: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
@@ -217,7 +217,7 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(1);
     });
-    it('parses an idempotency key and api key and api version (with data)', function() {
+    it('parses an idempotency key and api key and api version (with data)', () => {
       var args = [
         {foo: 'bar'},
         {
@@ -235,7 +235,7 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(1);
     });
-    it('parses an idempotency key and api key and api version', function() {
+    it('parses an idempotency key and api key and api version', () => {
       var args = [
         {
           api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
@@ -252,7 +252,7 @@ describe('utils', function() {
       });
       expect(args.length).to.equal(0);
     });
-    it('warns if the hash contains something that does not belong', function(done) {
+    it('warns if the hash contains something that does not belong', (done) => {
       var args = [
         {foo: 'bar'},
         {
@@ -265,10 +265,10 @@ describe('utils', function() {
       ];
 
       handleWarnings(
-        function() {
+        () => {
           utils.getOptionsFromArgs(args);
         },
-        function(message) {
+        (message) => {
           expect(message).to.equal(
             'Stripe: Invalid options found (fishsticks, custard); ignoring.'
           );
@@ -279,24 +279,24 @@ describe('utils', function() {
     });
   });
 
-  describe('secureCompare', function() {
-    it('returns true given two equal things', function() {
+  describe('secureCompare', () => {
+    it('returns true given two equal things', () => {
       expect(utils.secureCompare('potato', 'potato')).to.equal(true);
     });
 
-    it('returns false given two unequal things', function() {
+    it('returns false given two unequal things', () => {
       expect(utils.secureCompare('potato', 'tomato')).to.equal(false);
     });
 
-    it('throws an error if not given two things to compare', function() {
-      expect(function() {
+    it('throws an error if not given two things to compare', () => {
+      expect(() => {
         utils.secureCompare('potato');
       }).to.throw();
     });
   });
 
-  describe('removeEmpty', function() {
-    it('removes empty properties and leaves non-empty ones', function() {
+  describe('removeEmpty', () => {
+    it('removes empty properties and leaves non-empty ones', () => {
       expect(
         utils.removeEmpty({
           cat: 3,
@@ -310,25 +310,25 @@ describe('utils', function() {
       });
     });
 
-    it('throws an error if not given two things to compare', function() {
-      expect(function() {
+    it('throws an error if not given two things to compare', () => {
+      expect(() => {
         utils.removeEmpty('potato');
       }).to.throw();
     });
   });
 
-  describe('safeExec', function() {
+  describe('safeExec', () => {
     var origExec;
-    beforeEach(function() {
+    beforeEach(() => {
       origExec = utils._exec;
     });
-    afterEach(function() {
+    afterEach(() => {
       utils._exec = origExec;
     });
 
-    it('runs exec', function() {
+    it('runs exec', () => {
       var calls = [];
-      utils._exec = function(cmd, cb) {
+      utils._exec = (cmd, cb) => {
         calls.push([cmd, cb]);
       };
 
@@ -337,9 +337,9 @@ describe('utils', function() {
       expect(calls).to.deep.equal([['hello', myCb]]);
     });
 
-    it('passes along normal errors', function() {
+    it('passes along normal errors', () => {
       var myErr = Error('hi');
-      utils._exec = function(cmd, cb) {
+      utils._exec = (cmd, cb) => {
         cb(myErr, null);
       };
 
@@ -351,9 +351,9 @@ describe('utils', function() {
       expect(calls).to.deep.equal([[myErr, null]]);
     });
 
-    it('passes along thrown errors as normal callback errors', function() {
+    it('passes along thrown errors as normal callback errors', () => {
       var myErr = Error('hi');
-      utils._exec = function(cmd, cb) {
+      utils._exec = (cmd, cb) => {
         throw myErr;
       };
 
@@ -366,8 +366,8 @@ describe('utils', function() {
     });
   });
 
-  describe('flattenAndStringify', function() {
-    it('Stringifies primitive types', function() {
+  describe('flattenAndStringify', () => {
+    it('Stringifies primitive types', () => {
       expect(
         utils.flattenAndStringify({
           a: 1,
@@ -378,7 +378,7 @@ describe('utils', function() {
       ).to.eql({a: '1', b: 'foo', c: 'true', d: 'null'});
     });
 
-    it('Flattens nested values', function() {
+    it('Flattens nested values', () => {
       expect(
         utils.flattenAndStringify({
           x: {
@@ -389,7 +389,7 @@ describe('utils', function() {
       ).to.eql({'x[a]': '1', 'x[b]': 'foo'});
     });
 
-    it('Does not flatten File objects', function() {
+    it('Does not flatten File objects', () => {
       expect(
         utils.flattenAndStringify({
           file: {
@@ -402,7 +402,7 @@ describe('utils', function() {
       ).to.eql({file: {data: 'foo'}, 'x[a]': '1'});
     });
 
-    it('Does not flatten Buffer objects', function() {
+    it('Does not flatten Buffer objects', () => {
       var buf = Buffer.from('Hi!');
       var flattened = utils.flattenAndStringify({
         buf: buf,
@@ -442,7 +442,7 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
 
     doWithShimmedConsoleWarn();
 
-    process.nextTick(function() {
+    process.nextTick(() => {
       process.removeListener('warning', onProcessWarn);
     });
   }

@@ -27,9 +27,9 @@ function sendsCorrectStripeVersion() {
   });
 }
 
-describe('EphemeralKey Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
+describe('EphemeralKey Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.ephemeralKeys.create(
         {customer: 'cus_123'},
         {stripe_version: '2017-05-25'}
@@ -46,7 +46,7 @@ describe('EphemeralKey Resource', function() {
       });
     });
 
-    describe('when an api version is set', function() {
+    describe('when an api version is set', () => {
       beforeEach(function() {
         this.oldVersion = stripe.getApiField('version');
         stripe.setApiVersion('2017-05-25');
@@ -56,16 +56,15 @@ describe('EphemeralKey Resource', function() {
         stripe.setApiVersion(this.oldVersion);
       });
 
-      it('Errors if no stripe-version is specified', function() {
-        return errorsOnNoStripeVersion();
-      });
+      it('Errors if no stripe-version is specified', () =>
+        errorsOnNoStripeVersion());
 
-      it('Sends the correct stripe-version', function() {
+      it('Sends the correct stripe-version', () => {
         sendsCorrectStripeVersion();
       });
     });
 
-    describe('when no api version is set', function() {
+    describe('when no api version is set', () => {
       beforeEach(function() {
         this.oldVersion = stripe.getApiField('version');
         stripe.setApiVersion(null);
@@ -75,18 +74,17 @@ describe('EphemeralKey Resource', function() {
         stripe.setApiVersion(this.oldVersion);
       });
 
-      it('Errors if no stripe-version is specified', function() {
-        return errorsOnNoStripeVersion();
-      });
+      it('Errors if no stripe-version is specified', () =>
+        errorsOnNoStripeVersion());
 
-      it('Sends the correct stripe-version', function() {
+      it('Sends the correct stripe-version', () => {
         sendsCorrectStripeVersion();
       });
     });
   });
 
-  describe('delete', function() {
-    it('Sends the correct request', function() {
+  describe('delete', () => {
+    it('Sends the correct request', () => {
       stripe.ephemeralKeys.del('ephkey_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',

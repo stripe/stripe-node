@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('subscriptions Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('subscriptions Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptions.retrieve('test_sub');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('subscriptions Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptions.del('test_sub');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -28,8 +28,8 @@ describe('subscriptions Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptions.update('test_sub', {
         metadata: {a: '1234'},
       });
@@ -44,8 +44,8 @@ describe('subscriptions Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptions.create({
         customer: 'test_cus',
         plan: 'gold',
@@ -63,8 +63,8 @@ describe('subscriptions Resource', function() {
     });
   });
 
-  describe('update with items array', function() {
-    it('Sends the correct request', function() {
+  describe('update with items array', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptions.update('test_sub', {
         items: [
           {
@@ -89,8 +89,8 @@ describe('subscriptions Resource', function() {
     });
   });
 
-  describe('create with items array', function() {
-    it('Sends the correct request', function() {
+  describe('create with items array', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptions.create({
         items: [
           {
@@ -116,8 +116,8 @@ describe('subscriptions Resource', function() {
     });
   });
 
-  describe('update with items object', function() {
-    it('Sends the correct request', function() {
+  describe('update with items object', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptions.update('test_sub', {
         items: {
           '0': {
@@ -142,8 +142,8 @@ describe('subscriptions Resource', function() {
     });
   });
 
-  describe('create with items object', function() {
-    it('Sends the correct request', function() {
+  describe('create with items object', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptions.create({
         items: {
           '0': {
@@ -169,8 +169,8 @@ describe('subscriptions Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.subscriptions.list({
         limit: 3,
         customer: 'test_cus',
@@ -189,9 +189,9 @@ describe('subscriptions Resource', function() {
     });
   });
 
-  describe('Discount methods', function() {
-    describe('deleteDiscount', function() {
-      it('Sends the correct request', function() {
+  describe('Discount methods', () => {
+    describe('deleteDiscount', () => {
+      it('Sends the correct request', () => {
         stripe.subscriptions.deleteDiscount('test_sub');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',

@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('TaxRates Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('TaxRates Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.taxRates.retrieve('txr_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('TaxRates Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       var data = {
         metadata: {a: '1234'},
       };
@@ -31,8 +31,8 @@ describe('TaxRates Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       var data = {
         display_name: 'name',
         inclusive: false,
@@ -49,8 +49,8 @@ describe('TaxRates Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.taxRates.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

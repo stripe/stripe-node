@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('UsageRecords Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
+describe('UsageRecords Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.usageRecords.create('si_123', {
         quantity: 123,
         timestamp: 123321,
@@ -24,7 +24,7 @@ describe('UsageRecords Resource', function() {
       });
     });
 
-    it('Includes any options that were provided', function(done) {
+    it('Includes any options that were provided', (done) => {
       stripe.usageRecords
         .create(
           'si_123',
@@ -37,7 +37,7 @@ describe('UsageRecords Resource', function() {
             stripe_account: 'acct_456',
           }
         )
-        .then(function(record) {
+        .then((record) => {
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'POST',
             url: '/v1/subscription_items/si_123/usage_records',
@@ -55,7 +55,7 @@ describe('UsageRecords Resource', function() {
         });
     });
 
-    it('Calls a given callback', function(done) {
+    it('Calls a given callback', (done) => {
       stripe.usageRecords.create(
         'si_123',
         {
@@ -63,7 +63,7 @@ describe('UsageRecords Resource', function() {
           timestamp: 123321,
           action: 'increment',
         },
-        function(error, record) {
+        (error, record) => {
           done(error);
         }
       );

@@ -12,9 +12,9 @@ var loginLink = new resources.LoginLinks(stripe, {accountId: ACCOUNT_ID});
 // Use spy from existing resource:
 loginLink._request = stripe.customers._request;
 
-describe('LoginLink Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
+describe('LoginLink Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       loginLink.create();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

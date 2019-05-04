@@ -5,9 +5,9 @@ var expect = require('chai').expect;
 
 var TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
-describe('Customers Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Customers Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.customers.retrieve('cus_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -17,7 +17,7 @@ describe('Customers Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth]', function() {
+    it('Sends the correct request [with specified auth]', () => {
       stripe.customers.retrieve('cus_123', TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -29,8 +29,8 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.customers.create({description: 'Some customer'});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -40,7 +40,7 @@ describe('Customers Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth]', function() {
+    it('Sends the correct request [with specified auth]', () => {
       stripe.customers.create({description: 'Some customer'}, TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -51,7 +51,7 @@ describe('Customers Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth and no body]', function() {
+    it('Sends the correct request [with specified auth and no body]', () => {
       stripe.customers.create(TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -62,7 +62,7 @@ describe('Customers Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified idempotency_key in options]', function() {
+    it('Sends the correct request [with specified idempotency_key in options]', () => {
       stripe.customers.create(
         {description: 'Some customer'},
         {idempotency_key: 'foo'}
@@ -75,7 +75,7 @@ describe('Customers Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth in options]', function() {
+    it('Sends the correct request [with specified auth in options]', () => {
       stripe.customers.create(
         {description: 'Some customer'},
         {api_key: TEST_AUTH_KEY}
@@ -89,7 +89,7 @@ describe('Customers Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth and idempotent key in options]', function() {
+    it('Sends the correct request [with specified auth and idempotent key in options]', () => {
       stripe.customers.create(
         {description: 'Some customer'},
         {api_key: TEST_AUTH_KEY, idempotency_key: 'foo'}
@@ -103,7 +103,7 @@ describe('Customers Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth in options and no body]', function() {
+    it('Sends the correct request [with specified auth in options and no body]', () => {
       stripe.customers.create({api_key: TEST_AUTH_KEY});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -115,8 +115,8 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.customers.update('cus_123', {
         description: 'Foo "baz"',
       });
@@ -129,8 +129,8 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.customers.del('cus_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -141,8 +141,8 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.customers.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -152,7 +152,7 @@ describe('Customers Resource', function() {
       });
     });
 
-    it('Sends the correct request [with specified auth]', function() {
+    it('Sends the correct request [with specified auth]', () => {
       stripe.customers.list(TEST_AUTH_KEY);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -164,9 +164,9 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('Subscription methods', function() {
-    describe('updateSubscription', function() {
-      it('Sends the correct request', function() {
+  describe('Subscription methods', () => {
+    describe('updateSubscription', () => {
+      it('Sends the correct request', () => {
         stripe.customers.updateSubscription('cus_123', {
           plan: 'fooPlan',
         });
@@ -178,7 +178,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.updateSubscription(
           'cus_123',
           {
@@ -196,8 +196,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('cancelSubscription', function() {
-      it('Sends the correct request', function() {
+    describe('cancelSubscription', () => {
+      it('Sends the correct request', () => {
         stripe.customers.cancelSubscription('cus_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -207,7 +207,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.cancelSubscription('cus_123', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -218,8 +218,8 @@ describe('Customers Resource', function() {
         });
       });
 
-      describe('With at_period_end defined', function() {
-        it('Sends the correct request', function() {
+      describe('With at_period_end defined', () => {
+        it('Sends the correct request', () => {
           stripe.customers.cancelSubscription('cus_123', {at_period_end: true});
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'DELETE',
@@ -230,8 +230,8 @@ describe('Customers Resource', function() {
         });
       });
 
-      describe('With at_period_end defined [with specified auth]', function() {
-        it('Sends the correct request', function() {
+      describe('With at_period_end defined [with specified auth]', () => {
+        it('Sends the correct request', () => {
           stripe.customers.cancelSubscription(
             'cus_123',
             {at_period_end: true},
@@ -249,9 +249,9 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('Discount methods', function() {
-    describe('deleteDiscount', function() {
-      it('Sends the correct request', function() {
+  describe('Discount methods', () => {
+    describe('deleteDiscount', () => {
+      it('Sends the correct request', () => {
         stripe.customers.deleteDiscount('cus_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -262,8 +262,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('deleteSubscriptionDiscount', function() {
-      it('Sends the correct request', function() {
+    describe('deleteSubscriptionDiscount', () => {
+      it('Sends the correct request', () => {
         stripe.customers.deleteSubscriptionDiscount('cus_123', 'sub_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -275,10 +275,10 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('Metadata methods', function() {
-    describe('setMetadata', function() {
-      describe('When deleting metadata', function() {
-        it('Sends the correct request', function() {
+  describe('Metadata methods', () => {
+    describe('setMetadata', () => {
+      describe('When deleting metadata', () => {
+        it('Sends the correct request', () => {
           stripe.customers.setMetadata('cus_123', null);
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'POST',
@@ -291,16 +291,16 @@ describe('Customers Resource', function() {
         });
       });
 
-      describe('When setting new metadata', function() {
-        it('Sends one request to get current, and another to set new data', function() {
-          return expect(
-            new Promise(function(resolve, reject) {
+      describe('When setting new metadata', () => {
+        it('Sends one request to get current, and another to set new data', () =>
+          expect(
+            new Promise((resolve, reject) => {
               stripe.customers
                 .setMetadata('cus_123', {
                   foo: 123,
                   baz: 456,
                 })
-                .then(function() {
+                .then(() => {
                   var reqs = stripe.REQUESTS;
                   resolve([
                     // Last two requests
@@ -326,12 +326,11 @@ describe('Customers Resource', function() {
                 metadata: {foo: 123, baz: 456},
               },
             },
-          ]);
-        });
+          ]));
       });
 
-      describe('When setting with an auth key', function() {
-        it('Sends the correct request, including the specified auth key', function() {
+      describe('When setting with an auth key', () => {
+        it('Sends the correct request, including the specified auth key', () => {
           stripe.customers.setMetadata('cus_123', null, TEST_AUTH_KEY);
           expect(stripe.LAST_REQUEST).to.deep.equal({
             method: 'POST',
@@ -367,9 +366,9 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('Card methods', function() {
-    describe('retrieveCard', function() {
-      it('Sends the correct request', function() {
+  describe('Card methods', () => {
+    describe('retrieveCard', () => {
+      it('Sends the correct request', () => {
         stripe.customers.retrieveCard('cus_123', 'card_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -379,7 +378,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.retrieveCard('cus_123', 'card_123', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -391,8 +390,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('createCard', function() {
-      it('Sends the correct request', function() {
+    describe('createCard', () => {
+      it('Sends the correct request', () => {
         stripe.customers.createCard('cus_123', {
           number: '123456',
           exp_month: '12',
@@ -405,7 +404,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.createCard(
           'cus_123',
           {
@@ -424,8 +423,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('updateCard', function() {
-      it('Sends the correct request', function() {
+    describe('updateCard', () => {
+      it('Sends the correct request', () => {
         stripe.customers.updateCard('cus_123', 'card_123', {
           name: 'Bob M. Baz',
         });
@@ -438,8 +437,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('deleteCard', function() {
-      it('Sends the correct request', function() {
+    describe('deleteCard', () => {
+      it('Sends the correct request', () => {
         stripe.customers.deleteCard('cus_123', 'card_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -449,7 +448,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.deleteCard('cus_123', 'card_123', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -461,8 +460,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('listCards', function() {
-      it('Sends the correct request', function() {
+    describe('listCards', () => {
+      it('Sends the correct request', () => {
         stripe.customers.listCards('cus_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -472,7 +471,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.listCards('cus_123', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -485,9 +484,9 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('Source methods', function() {
-    describe('retrieveSource', function() {
-      it('Sends the correct request', function() {
+  describe('Source methods', () => {
+    describe('retrieveSource', () => {
+      it('Sends the correct request', () => {
         stripe.customers.retrieveSource('cus_123', 'card_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -497,7 +496,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.retrieveSource('cus_123', 'card_123', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -509,8 +508,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('createSource', function() {
-      it('Sends the correct request', function() {
+    describe('createSource', () => {
+      it('Sends the correct request', () => {
         stripe.customers.createSource('cus_123', {
           object: 'card',
           number: '123456',
@@ -524,7 +523,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.createSource(
           'cus_123',
           {
@@ -544,8 +543,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('updateSource', function() {
-      it('Sends the correct request', function() {
+    describe('updateSource', () => {
+      it('Sends the correct request', () => {
         stripe.customers.updateSource('cus_123', 'card_123', {
           name: 'Bob M. Baz',
         });
@@ -558,8 +557,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('deleteSource', function() {
-      it('Sends the correct request', function() {
+    describe('deleteSource', () => {
+      it('Sends the correct request', () => {
         stripe.customers.deleteSource('cus_123', 'card_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -569,7 +568,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.deleteSource('cus_123', 'card_123', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -581,8 +580,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('listSources', function() {
-      it('Sends the correct request', function() {
+    describe('listSources', () => {
+      it('Sends the correct request', () => {
         stripe.customers.listSources('cus_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -592,7 +591,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.listSources('cus_123', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -604,8 +603,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('verifySource', function() {
-      it('Sends the correct request', function() {
+    describe('verifySource', () => {
+      it('Sends the correct request', () => {
         var data = {amounts: [32, 45]};
 
         stripe.customers.verifySource(
@@ -625,9 +624,9 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('Subscription methods', function() {
-    describe('retrieveSubscription', function() {
-      it('Sends the correct request', function() {
+  describe('Subscription methods', () => {
+    describe('retrieveSubscription', () => {
+      it('Sends the correct request', () => {
         stripe.customers.retrieveSubscription('cus_123', 'sub_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -637,7 +636,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.retrieveSubscription(
           'cus_123',
           'sub_123',
@@ -653,8 +652,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('createSubscription', function() {
-      it('Sends the correct request', function() {
+    describe('createSubscription', () => {
+      it('Sends the correct request', () => {
         stripe.customers.createSubscription('cus_123', {
           plan: 'gold',
           quantity: '12',
@@ -667,7 +666,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.createSubscription(
           'cus_123',
           {
@@ -686,8 +685,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('updateSubscription (new-style api)', function() {
-      it('Sends the correct request', function() {
+    describe('updateSubscription (new-style api)', () => {
+      it('Sends the correct request', () => {
         stripe.customers.updateSubscription('cus_123', 'sub_123', {
           quantity: '2',
         });
@@ -699,7 +698,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.updateSubscription(
           'cus_123',
           'sub_123',
@@ -718,8 +717,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('cancelSubscription (new-style api)', function() {
-      it('Sends the correct request', function() {
+    describe('cancelSubscription (new-style api)', () => {
+      it('Sends the correct request', () => {
         stripe.customers.cancelSubscription('cus_123', 'sub_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -729,7 +728,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.cancelSubscription(
           'cus_123',
           'sub_123',
@@ -744,8 +743,8 @@ describe('Customers Resource', function() {
         });
       });
 
-      describe('With at_period_end defined', function() {
-        it('Sends the correct request', function() {
+      describe('With at_period_end defined', () => {
+        it('Sends the correct request', () => {
           stripe.customers.cancelSubscription('cus_123', 'sub_123', {
             at_period_end: true,
           });
@@ -758,8 +757,8 @@ describe('Customers Resource', function() {
         });
       });
 
-      describe('With at_period_end defined [with specified auth]', function() {
-        it('Sends the correct request', function() {
+      describe('With at_period_end defined [with specified auth]', () => {
+        it('Sends the correct request', () => {
           stripe.customers.cancelSubscription(
             'cus_123',
             'sub_123',
@@ -777,8 +776,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('listSubscriptions', function() {
-      it('Sends the correct request', function() {
+    describe('listSubscriptions', () => {
+      it('Sends the correct request', () => {
         stripe.customers.listSubscriptions('cus_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -788,7 +787,7 @@ describe('Customers Resource', function() {
         });
       });
 
-      it('Sends the correct request [with specified auth]', function() {
+      it('Sends the correct request [with specified auth]', () => {
         stripe.customers.listSubscriptions('cus_123', TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -801,9 +800,9 @@ describe('Customers Resource', function() {
     });
   });
 
-  describe('TaxId methods', function() {
-    describe('retrieveTaxId', function() {
-      it('Sends the correct request', function() {
+  describe('TaxId methods', () => {
+    describe('retrieveTaxId', () => {
+      it('Sends the correct request', () => {
         stripe.customers.retrieveTaxId('cus_123', 'txi_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
@@ -814,8 +813,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('createTaxId', function() {
-      it('Sends the correct request', function() {
+    describe('createTaxId', () => {
+      it('Sends the correct request', () => {
         var data = {
           type: 'eu_vat',
           value: '11111',
@@ -830,8 +829,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('deleteTaxId', function() {
-      it('Sends the correct request', function() {
+    describe('deleteTaxId', () => {
+      it('Sends the correct request', () => {
         stripe.customers.deleteTaxId('cus_123', 'txi_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
@@ -842,8 +841,8 @@ describe('Customers Resource', function() {
       });
     });
 
-    describe('listTaxIds', function() {
-      it('Sends the correct request', function() {
+    describe('listTaxIds', () => {
+      it('Sends the correct request', () => {
         stripe.customers.listTaxIds('cus_123');
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Coupons Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Coupons Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.coupons.retrieve('couponId123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Coupons Resource', function() {
     });
   });
 
-  describe('del', function() {
-    it('Sends the correct request', function() {
+  describe('del', () => {
+    it('Sends the correct request', () => {
       stripe.coupons.del('couponId123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
@@ -28,8 +28,8 @@ describe('Coupons Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.coupons.update('couponId123', {
         metadata: {a: '1234'},
       });
@@ -44,8 +44,8 @@ describe('Coupons Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.coupons.create({
         percent_off: 25,
         duration: 'repeating',
@@ -65,8 +65,8 @@ describe('Coupons Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.coupons.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

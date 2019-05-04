@@ -4,10 +4,10 @@ var stripe = require('../../../testUtils').getSpyableStripe();
 
 var expect = require('chai').expect;
 
-describe('Issuing', function() {
-  describe('Transactions Resource', function() {
-    describe('retrieve', function() {
-      it('Sends the correct request', function() {
+describe('Issuing', () => {
+  describe('Transactions Resource', () => {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.transactions.retrieve('ipi_123');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -19,8 +19,8 @@ describe('Issuing', function() {
       });
     });
 
-    describe('update', function() {
-      it('Sends the correct request', function() {
+    describe('update', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.transactions.update('ipi_123', {
           metadata: {
             thing1: true,
@@ -41,8 +41,8 @@ describe('Issuing', function() {
       });
     });
 
-    describe('list', function() {
-      it('Sends the correct request', function() {
+    describe('list', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.transactions.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',

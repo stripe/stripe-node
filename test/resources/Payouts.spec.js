@@ -5,9 +5,9 @@ var expect = require('chai').expect;
 
 var PAYOUT_TEST_ID = 'po_testid1';
 
-describe('Payouts Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Payouts Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.retrieve(PAYOUT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -18,8 +18,8 @@ describe('Payouts Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.create({
         amount: 200,
         currency: 'usd',
@@ -33,8 +33,8 @@ describe('Payouts Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.update(PAYOUT_TEST_ID, {
         metadata: {key: 'value'},
       });
@@ -47,8 +47,8 @@ describe('Payouts Resource', function() {
     });
   });
 
-  describe('cancel', function() {
-    it('Sends the correct request', function() {
+  describe('cancel', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.cancel(PAYOUT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -59,8 +59,8 @@ describe('Payouts Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -71,8 +71,8 @@ describe('Payouts Resource', function() {
     });
   });
 
-  describe('listTransactions', function() {
-    it('Sends the correct request', function() {
+  describe('listTransactions', () => {
+    it('Sends the correct request', () => {
       stripe.payouts.listTransactions(PAYOUT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',

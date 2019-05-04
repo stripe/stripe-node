@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Topup Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Topup Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.topups.retrieve('tu_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Topup Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.topups.create({
         source: 'src_123',
         amount: '1500',
@@ -40,8 +40,8 @@ describe('Topup Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.topups.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -52,8 +52,8 @@ describe('Topup Resource', function() {
     });
   });
 
-  describe('cancel', function() {
-    it('Sends the correct request', function() {
+  describe('cancel', () => {
+    it('Sends the correct request', () => {
       stripe.topups.cancel('tu_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -64,8 +64,8 @@ describe('Topup Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.topups.update('tu_123', {metadata: {key: 'value'}});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

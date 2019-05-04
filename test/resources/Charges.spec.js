@@ -3,9 +3,9 @@
 var stripe = require('../../testUtils').getSpyableStripe();
 var expect = require('chai').expect;
 
-describe('Charge Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('Charge Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.charges.retrieve('chargeIdFoo123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.charges.create({
         amount: '1500',
         currency: 'usd',
@@ -44,8 +44,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.charges.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -56,8 +56,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('capture', function() {
-    it('Sends the correct request', function() {
+  describe('capture', () => {
+    it('Sends the correct request', () => {
       stripe.charges.capture('chargeIdExample3242', {amount: 23});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -68,8 +68,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.charges.update('chargeIdExample3242', {description: 'foo321'});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -80,8 +80,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('refund', function() {
-    it('Sends the correct request', function() {
+  describe('refund', () => {
+    it('Sends the correct request', () => {
       stripe.charges.refund('chargeIdExample3242', {amount: 23});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -91,7 +91,7 @@ describe('Charge Resource', function() {
       });
     });
 
-    it('Incorrect arguments result in an error', function() {
+    it('Incorrect arguments result in an error', () => {
       expect(
         stripe.charges.refund('chargeIdExample123', 39392)
       ).to.be.eventually.rejectedWith(/unknown arguments/i);
@@ -106,8 +106,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('refunds', function() {
-    it('Sends the correct update request', function() {
+  describe('refunds', () => {
+    it('Sends the correct update request', () => {
       stripe.charges.updateRefund(
         'chargeIdExample3242',
         'refundIdExample2312',
@@ -121,7 +121,7 @@ describe('Charge Resource', function() {
       });
     });
 
-    it('Sends the correct create request', function() {
+    it('Sends the correct create request', () => {
       stripe.charges.createRefund('chargeIdExample3242', {amount: 100});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -131,7 +131,7 @@ describe('Charge Resource', function() {
       });
     });
 
-    it('Sends the correct list request', function() {
+    it('Sends the correct list request', () => {
       stripe.charges.listRefunds('chargeIdExample3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -141,7 +141,7 @@ describe('Charge Resource', function() {
       });
     });
 
-    it('Sends the correct retrieve request', function() {
+    it('Sends the correct retrieve request', () => {
       stripe.charges.retrieveRefund(
         'chargeIdExample3242',
         'refundIdExample2312'
@@ -155,8 +155,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('updateDispute', function() {
-    it('Sends the correct request', function() {
+  describe('updateDispute', () => {
+    it('Sends the correct request', () => {
       stripe.charges.updateDispute('chargeIdExample3242', {evidence: 'foo'});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -167,8 +167,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('closeDispute', function() {
-    it('Sends the correct request', function() {
+  describe('closeDispute', () => {
+    it('Sends the correct request', () => {
       stripe.charges.closeDispute('chargeIdExample3242', {});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -179,8 +179,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('markAsFraudulent', function() {
-    it('Sends the correct request', function() {
+  describe('markAsFraudulent', () => {
+    it('Sends the correct request', () => {
       stripe.charges.markAsFraudulent('chargeIdExample3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -191,8 +191,8 @@ describe('Charge Resource', function() {
     });
   });
 
-  describe('markAsSafe', function() {
-    it('Sends the correct request', function() {
+  describe('markAsSafe', () => {
+    it('Sends the correct request', () => {
       stripe.charges.markAsSafe('chargeIdExample3242');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
