@@ -22,7 +22,7 @@ describe('TaxId Resource', () => {
       taxId.create(data);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/customers/' + CUSTOMER_TEST_ID + '/tax_ids',
+        url: `/v1/customers/${CUSTOMER_TEST_ID}/tax_ids`,
         data,
         headers: {},
       });
@@ -34,7 +34,7 @@ describe('TaxId Resource', () => {
       taxId.del(TAX_ID_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
-        url: '/v1/customers/' + CUSTOMER_TEST_ID + '/tax_ids/' + TAX_ID_TEST_ID,
+        url: `/v1/customers/${CUSTOMER_TEST_ID}/tax_ids/${TAX_ID_TEST_ID}`,
         data: {},
         headers: {},
       });
@@ -46,7 +46,7 @@ describe('TaxId Resource', () => {
       taxId.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/customers/' + CUSTOMER_TEST_ID + '/tax_ids',
+        url: `/v1/customers/${CUSTOMER_TEST_ID}/tax_ids`,
         data: {},
         headers: {},
       });
@@ -58,7 +58,7 @@ describe('TaxId Resource', () => {
       taxId.retrieve(TAX_ID_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/customers/' + CUSTOMER_TEST_ID + '/tax_ids/' + TAX_ID_TEST_ID,
+        url: `/v1/customers/${CUSTOMER_TEST_ID}/tax_ids/${TAX_ID_TEST_ID}`,
         data: {},
         headers: {},
       });

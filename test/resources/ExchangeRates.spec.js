@@ -22,7 +22,7 @@ describe('ExchangeRates Resource', () => {
       stripe.exchangeRates.retrieve(currency);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/exchange_rates/' + currency,
+        url: `/v1/exchange_rates/${currency}`,
         data: {},
         headers: {},
       });

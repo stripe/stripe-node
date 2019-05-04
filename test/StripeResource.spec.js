@@ -61,7 +61,7 @@ describe('StripeResource', () => {
           },
         };
 
-        const scope = nock('https://' + options.host)
+        const scope = nock(`https://${options.host}`)
           .get(options.path)
           .query(Object.assign({customer: 'cus_123'}, options.data))
           .reply(200, '{}');
@@ -88,7 +88,7 @@ describe('StripeResource', () => {
             'customer=cus_123&items[0][plan]=foo&items[0][quantity]=2&items[1][id]=si_123&items[1][deleted]=true',
         };
 
-        const scope = nock('https://' + options.host)
+        const scope = nock(`https://${options.host}`)
           .post(options.path, options.body)
           .reply(200, '{}');
 
@@ -135,7 +135,7 @@ describe('StripeResource', () => {
     describe('_request', () => {
       it('throws an error on connection failure', (done) => {
         // Mock the connection error.
-        nock('https://' + options.host)
+        nock(`https://${options.host}`)
           .post(options.path, options.params)
           .replyWithError('bad stuff');
 
@@ -146,7 +146,7 @@ describe('StripeResource', () => {
       });
 
       it('should retry the request if max retries are set', (done) => {
-        nock('https://' + options.host)
+        nock(`https://${options.host}`)
           .post(options.path, options.params)
           .replyWithError('bad stuff')
           .post(options.path, options.params)
@@ -165,7 +165,7 @@ describe('StripeResource', () => {
       });
 
       it('should stop retrying after a successful retry', (done) => {
-        nock('https://' + options.host)
+        nock(`https://${options.host}`)
           .post(options.path, options.params)
           .replyWithError('bad stuff')
           .post(options.path, options.params)
@@ -184,7 +184,7 @@ describe('StripeResource', () => {
       });
 
       it('should retry on a 409 error', (done) => {
-        nock('https://' + options.host)
+        nock(`https://${options.host}`)
           .post(options.path, options.params)
           .reply(409, {
             error: {
@@ -207,7 +207,7 @@ describe('StripeResource', () => {
       });
 
       it('should not retry on a 400 error', (done) => {
-        nock('https://' + options.host)
+        nock(`https://${options.host}`)
           .post(options.path, options.params)
           .reply(400, {
             error: {
@@ -224,7 +224,7 @@ describe('StripeResource', () => {
       });
 
       it('should not retry on a 500 error when the method is POST', (done) => {
-        nock('https://' + options.host)
+        nock(`https://${options.host}`)
           .post(options.path, options.params)
           .reply(500, {
             error: {
@@ -258,7 +258,7 @@ describe('StripeResource', () => {
       });
 
       it('should retry on a 503 error when the method is POST', (done) => {
-        nock('https://' + options.host)
+        nock(`https://${options.host}`)
           .post(options.path, options.params)
           .reply(503, {
             error: {
@@ -281,14 +281,14 @@ describe('StripeResource', () => {
       });
 
       it('should retry on a 500 error when the method is GET', (done) => {
-        nock('https://' + options.host)
-          .get(options.path + '/ch_123')
+        nock(`https://${options.host}`)
+          .get(`${options.path}/ch_123`)
           .reply(500, {
             error: {
               type: 'api_error',
             },
           })
-          .get(options.path + '/ch_123')
+          .get(`${options.path}/ch_123`)
           .reply(200, {
             id: 'ch_123',
             object: 'charge',
@@ -307,7 +307,7 @@ describe('StripeResource', () => {
         let headers;
 
         // Fail the first request but succeed on the 2nd.
-        nock('https://' + options.host)
+        nock(`https://${options.host}`)
           .post(options.path, options.params)
           .replyWithError('bad stuff')
           .post(options.path, options.params)
@@ -335,10 +335,10 @@ describe('StripeResource', () => {
       it('should not add idempotency key for retries using the GET method', (done) => {
         let headers;
 
-        nock('https://' + options.host)
-          .get(options.path + '/ch_123')
+        nock(`https://${options.host}`)
+          .get(`${options.path}/ch_123`)
           .replyWithError('bad stuff')
-          .get(options.path + '/ch_123')
+          .get(`${options.path}/ch_123`)
           .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
 
@@ -364,7 +364,7 @@ describe('StripeResource', () => {
         const key = uuid();
         let headers;
 
-        nock('https://' + options.host)
+        nock(`https://${options.host}`)
           .post(options.path, options.params)
           .replyWithError('bad stuff')
           .post(options.path, options.params)

@@ -35,13 +35,13 @@ describe('Flows', function() {
       expect(
         Promise.all([
           stripe.plans.create({
-            id: 'plan' + testUtils.getRandomString(),
+            id: `plan${testUtils.getRandomString()}`,
             amount: 1700,
             currency: CURRENCY,
             interval: 'month',
             nickname: 'Gold Super Amazing Tier',
             product: {
-              name: 'product' + testUtils.getRandomString(),
+              name: `product${testUtils.getRandomString()}`,
             },
           }),
           stripe.customers.create(CUSTOMER_DETAILS),
@@ -63,13 +63,13 @@ describe('Flows', function() {
       return expect(
         Promise.all([
           stripe.plans.create({
-            id: 'plan' + testUtils.getRandomString(),
+            id: `plan${testUtils.getRandomString()}`,
             amount: 1700,
             currency: CURRENCY,
             interval: 'month',
             nickname: 'Gold Super Amazing Tier',
             product: {
-              name: 'product' + testUtils.getRandomString(),
+              name: `product${testUtils.getRandomString()}`,
             },
           }),
           stripe.customers.create(CUSTOMER_DETAILS),
@@ -106,7 +106,7 @@ describe('Flows', function() {
 
           return stripe.customers
             .updateSubscription(customer.id, {
-              plan: 'someNonExistentPlan' + testUtils.getRandomString(),
+              plan: `someNonExistentPlan${testUtils.getRandomString()}`,
             })
             .then(
               null,
@@ -125,13 +125,13 @@ describe('Flows', function() {
       expect(
         Promise.all([
           stripe.plans.create({
-            id: 'plan' + testUtils.getRandomString(),
+            id: `plan${testUtils.getRandomString()}`,
             amount: 1700,
             currency: CURRENCY,
             interval: 'month',
             nickname: 'Silver Super Amazing Tier',
             product: {
-              name: 'product' + testUtils.getRandomString(),
+              name: `product${testUtils.getRandomString()}`,
             },
           }),
           stripe.customers.create(CUSTOMER_DETAILS),
@@ -151,12 +151,12 @@ describe('Flows', function() {
 
     describe('Plan name variations', () => {
       [
-        '34535_355453' + testUtils.getRandomString(),
-        'TEST_239291' + testUtils.getRandomString(),
-        'TEST_a-i' + testUtils.getRandomString(),
-        'foobarbazteston___etwothree' + testUtils.getRandomString(),
+        `34535_355453${testUtils.getRandomString()}`,
+        `TEST_239291${testUtils.getRandomString()}`,
+        `TEST_a-i${testUtils.getRandomString()}`,
+        `foobarbazteston___etwothree${testUtils.getRandomString()}`,
       ].forEach((planID) => {
-        it('Allows me to create and retrieve plan with ID: ' + planID, () =>
+        it(`Allows me to create and retrieve plan with ID: ${planID}`, () =>
           expect(
             stripe.plans
               .create({
@@ -166,15 +166,14 @@ describe('Flows', function() {
                 interval: 'month',
                 nickname: 'generic',
                 product: {
-                  name: 'product' + testUtils.getRandomString(),
+                  name: `product${testUtils.getRandomString()}`,
                 },
               })
               .then(() => {
                 cleanup.deletePlan(planID);
                 return stripe.plans.retrieve(planID);
               })
-          ).to.eventually.have.property('id', planID)
-        );
+          ).to.eventually.have.property('id', planID));
       });
     });
   });

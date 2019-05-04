@@ -22,7 +22,7 @@ describe('CountrySpecs Resource', () => {
       stripe.countrySpecs.retrieve(country);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/country_specs/' + country,
+        url: `/v1/country_specs/${country}`,
         data: {},
         headers: {},
       });

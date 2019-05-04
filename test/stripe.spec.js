@@ -20,7 +20,7 @@ describe('Stripe Module', function() {
   describe('setApiKey', () => {
     it('uses Bearer auth', () => {
       expect(stripe.getApiField('auth')).to.equal(
-        'Bearer ' + testUtils.getUserStripeKey()
+        `Bearer ${testUtils.getUserStripeKey()}`
       );
     });
   });
@@ -209,7 +209,7 @@ describe('Stripe Module', function() {
         expect(JSON.parse(uaString).application).to.eql(appInfo);
 
         expect(stripe.getAppInfoAsString()).to.eql(
-          appInfo.name + '/' + appInfo.version + ' (' + appInfo.url + ')'
+          `${appInfo.name}/${appInfo.version} (${appInfo.url})`
         );
 
         done();

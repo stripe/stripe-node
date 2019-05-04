@@ -18,7 +18,7 @@ describe('LoginLink Resource', () => {
       loginLink.create();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/accounts/' + ACCOUNT_ID + '/login_links',
+        url: `/v1/accounts/${ACCOUNT_ID}/login_links`,
         headers: {},
         data: {},
       });

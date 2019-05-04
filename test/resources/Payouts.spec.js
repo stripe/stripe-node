@@ -11,7 +11,7 @@ describe('Payouts Resource', () => {
       stripe.payouts.retrieve(PAYOUT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/payouts/' + PAYOUT_TEST_ID,
+        url: `/v1/payouts/${PAYOUT_TEST_ID}`,
         headers: {},
         data: {},
       });
@@ -40,7 +40,7 @@ describe('Payouts Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payouts/' + PAYOUT_TEST_ID,
+        url: `/v1/payouts/${PAYOUT_TEST_ID}`,
         headers: {},
         data: {metadata: {key: 'value'}},
       });
@@ -52,7 +52,7 @@ describe('Payouts Resource', () => {
       stripe.payouts.cancel(PAYOUT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payouts/' + PAYOUT_TEST_ID + '/cancel',
+        url: `/v1/payouts/${PAYOUT_TEST_ID}/cancel`,
         headers: {},
         data: {},
       });
@@ -76,7 +76,7 @@ describe('Payouts Resource', () => {
       stripe.payouts.listTransactions(PAYOUT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/payouts/' + PAYOUT_TEST_ID + '/transactions',
+        url: `/v1/payouts/${PAYOUT_TEST_ID}/transactions`,
         headers: {},
         data: {},
       });

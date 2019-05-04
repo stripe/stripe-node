@@ -21,11 +21,7 @@ describe('TransferReversal Resource', () => {
       transferReversal.retrieve(REVERSAL_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url:
-          '/v1/transfers/' +
-          TRANSFER_TEST_ID +
-          '/reversals/' +
-          REVERSAL_TEST_ID,
+        url: `/v1/transfers/${TRANSFER_TEST_ID}/reversals/${REVERSAL_TEST_ID}`,
         data: {},
         headers: {},
       });
@@ -39,7 +35,7 @@ describe('TransferReversal Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/transfers/' + TRANSFER_TEST_ID + '/reversals',
+        url: `/v1/transfers/${TRANSFER_TEST_ID}/reversals`,
         data: {amount: 100},
         headers: {},
       });
@@ -53,11 +49,7 @@ describe('TransferReversal Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url:
-          '/v1/transfers/' +
-          TRANSFER_TEST_ID +
-          '/reversals/' +
-          REVERSAL_TEST_ID,
+        url: `/v1/transfers/${TRANSFER_TEST_ID}/reversals/${REVERSAL_TEST_ID}`,
         data: {metadata: {key: 'value'}},
         headers: {},
       });
@@ -69,7 +61,7 @@ describe('TransferReversal Resource', () => {
       transferReversal.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/transfers/' + TRANSFER_TEST_ID + '/reversals',
+        url: `/v1/transfers/${TRANSFER_TEST_ID}/reversals`,
         data: {},
         headers: {},
       });

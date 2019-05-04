@@ -40,7 +40,7 @@ describe('Payment Intents Resource', () => {
       stripe.paymentIntents.retrieve(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID,
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}`,
         headers: {},
         data: {},
       });
@@ -54,7 +54,7 @@ describe('Payment Intents Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID,
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}`,
         headers: {},
         data: {metadata: {key: 'value'}},
       });
@@ -66,7 +66,7 @@ describe('Payment Intents Resource', () => {
       stripe.paymentIntents.cancel(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID + '/cancel',
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}/cancel`,
         headers: {},
         data: {},
       });
@@ -78,7 +78,7 @@ describe('Payment Intents Resource', () => {
       stripe.paymentIntents.capture(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID + '/capture',
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}/capture`,
         headers: {},
         data: {},
       });
@@ -90,7 +90,7 @@ describe('Payment Intents Resource', () => {
       stripe.paymentIntents.confirm(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID + '/confirm',
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}/confirm`,
         headers: {},
         data: {},
       });

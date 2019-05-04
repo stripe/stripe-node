@@ -7,7 +7,7 @@ const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
 describe('Account Resource', () => {
   function uniqueEmail() {
-    return Math.random() + 'bob@example.com';
+    return `${Math.random()}bob@example.com`;
   }
   describe('create', () => {
     it('Sends the correct request', () => {

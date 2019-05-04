@@ -21,11 +21,7 @@ describe('ApplicationFeeRefund Resource', () => {
       appFeeRefund.retrieve(REFUND_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url:
-          '/v1/application_fees/' +
-          APPFEE_TEST_ID +
-          '/refunds/' +
-          REFUND_TEST_ID,
+        url: `/v1/application_fees/${APPFEE_TEST_ID}/refunds/${REFUND_TEST_ID}`,
         data: {},
         headers: {},
       });
@@ -39,11 +35,7 @@ describe('ApplicationFeeRefund Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url:
-          '/v1/application_fees/' +
-          APPFEE_TEST_ID +
-          '/refunds/' +
-          REFUND_TEST_ID,
+        url: `/v1/application_fees/${APPFEE_TEST_ID}/refunds/${REFUND_TEST_ID}`,
         data: {metadata: {key: 'value'}},
         headers: {},
       });
@@ -55,7 +47,7 @@ describe('ApplicationFeeRefund Resource', () => {
       appFeeRefund.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/application_fees/' + APPFEE_TEST_ID + '/refunds',
+        url: `/v1/application_fees/${APPFEE_TEST_ID}/refunds`,
         data: {},
         headers: {},
       });

@@ -21,7 +21,7 @@ describe('SubscriptionScheduleRevision Resource', () => {
       revision.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/subscription_schedules/' + SCHEDULE_TEST_ID + '/revisions',
+        url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/revisions`,
         data: {},
         headers: {},
       });
@@ -33,11 +33,7 @@ describe('SubscriptionScheduleRevision Resource', () => {
       revision.retrieve(REVISION_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url:
-          '/v1/subscription_schedules/' +
-          SCHEDULE_TEST_ID +
-          '/revisions/' +
-          REVISION_TEST_ID,
+        url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/revisions/${REVISION_TEST_ID}`,
         data: {},
         headers: {},
       });

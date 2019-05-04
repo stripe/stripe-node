@@ -21,7 +21,7 @@ describe('Person Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/accounts/' + ACCOUNT_TEST_ID + '/persons',
+        url: `/v1/accounts/${ACCOUNT_TEST_ID}/persons`,
         data: {first_name: 'John'},
         headers: {},
       });
@@ -33,7 +33,7 @@ describe('Person Resource', () => {
       person.del(PERSON_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
-        url: '/v1/accounts/' + ACCOUNT_TEST_ID + '/persons/' + PERSON_TEST_ID,
+        url: `/v1/accounts/${ACCOUNT_TEST_ID}/persons/${PERSON_TEST_ID}`,
         data: {},
         headers: {},
       });
@@ -45,7 +45,7 @@ describe('Person Resource', () => {
       person.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/accounts/' + ACCOUNT_TEST_ID + '/persons',
+        url: `/v1/accounts/${ACCOUNT_TEST_ID}/persons`,
         data: {},
         headers: {},
       });
@@ -57,7 +57,7 @@ describe('Person Resource', () => {
       person.retrieve(PERSON_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/accounts/' + ACCOUNT_TEST_ID + '/persons/' + PERSON_TEST_ID,
+        url: `/v1/accounts/${ACCOUNT_TEST_ID}/persons/${PERSON_TEST_ID}`,
         data: {},
         headers: {},
       });
@@ -71,7 +71,7 @@ describe('Person Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/accounts/' + ACCOUNT_TEST_ID + '/persons/' + PERSON_TEST_ID,
+        url: `/v1/accounts/${ACCOUNT_TEST_ID}/persons/${PERSON_TEST_ID}`,
         data: {first_name: 'John'},
         headers: {},
       });

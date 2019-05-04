@@ -20,10 +20,7 @@ describe('CustomerSubscription Resource', () => {
       customerSubscription.retrieve('subscriptionIdFoo456');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url:
-          '/v1/customers/' +
-          CUSTOMER_TEST_ID +
-          '/subscriptions/subscriptionIdFoo456',
+        url: `/v1/customers/${CUSTOMER_TEST_ID}/subscriptions/subscriptionIdFoo456`,
         headers: {},
         data: {},
       });
@@ -38,7 +35,7 @@ describe('CustomerSubscription Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions',
+        url: `/v1/customers/${CUSTOMER_TEST_ID}/subscriptions`,
         headers: {},
         data: {plan: 'gold', quantity: '12'},
       });
@@ -52,10 +49,7 @@ describe('CustomerSubscription Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url:
-          '/v1/customers/' +
-          CUSTOMER_TEST_ID +
-          '/subscriptions/subscriptionIdFoo456',
+        url: `/v1/customers/${CUSTOMER_TEST_ID}/subscriptions/subscriptionIdFoo456`,
         headers: {},
         data: {name: 'Bob M. Baz'},
       });
@@ -67,10 +61,7 @@ describe('CustomerSubscription Resource', () => {
       customerSubscription.del('subscriptionIdFoo456');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
-        url:
-          '/v1/customers/' +
-          CUSTOMER_TEST_ID +
-          '/subscriptions/subscriptionIdFoo456',
+        url: `/v1/customers/${CUSTOMER_TEST_ID}/subscriptions/subscriptionIdFoo456`,
         headers: {},
         data: {},
       });
@@ -82,7 +73,7 @@ describe('CustomerSubscription Resource', () => {
       customerSubscription.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/customers/' + CUSTOMER_TEST_ID + '/subscriptions',
+        url: `/v1/customers/${CUSTOMER_TEST_ID}/subscriptions`,
         headers: {},
         data: {},
       });

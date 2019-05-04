@@ -142,7 +142,7 @@ describe('utils', () => {
           done();
         },
         (message) => {
-          throw new Error('Should not have warned, but did: ' + message);
+          throw new Error(`Should not have warned, but did: ${message}`);
         }
       );
     });
@@ -435,7 +435,7 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
   } else {
     /* eslint-disable-next-line no-inner-declarations */
     function onProcessWarn(warning) {
-      onWarn(warning.name + ': ' + warning.message);
+      onWarn(`${warning.name}: ${warning.message}`);
     }
 
     process.on('warning', onProcessWarn);

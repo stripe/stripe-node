@@ -216,13 +216,13 @@ function generateHeaderString(opts) {
   opts.signature =
     opts.signature ||
     stripe.webhooks.signature._computeSignature(
-      opts.timestamp + '.' + opts.payload,
+      `${opts.timestamp}.${opts.payload}`,
       opts.secret
     );
 
   const generatedHeader = [
-    't=' + opts.timestamp,
-    opts.scheme + '=' + opts.signature,
+    `t=${opts.timestamp}`,
+    `${opts.scheme}=${opts.signature}`,
   ].join(',');
 
   return generatedHeader;

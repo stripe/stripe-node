@@ -21,7 +21,7 @@ describe('ChargeRefund Resource', () => {
       chargeRefund.retrieve(REFUND_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/charges/' + CHARGE_TEST_ID + '/refunds/' + REFUND_TEST_ID,
+        url: `/v1/charges/${CHARGE_TEST_ID}/refunds/${REFUND_TEST_ID}`,
         data: {},
         headers: {},
       });
@@ -35,7 +35,7 @@ describe('ChargeRefund Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/charges/' + CHARGE_TEST_ID + '/refunds',
+        url: `/v1/charges/${CHARGE_TEST_ID}/refunds`,
         data: {amount: 100},
         headers: {},
       });
@@ -49,7 +49,7 @@ describe('ChargeRefund Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/charges/' + CHARGE_TEST_ID + '/refunds/' + REFUND_TEST_ID,
+        url: `/v1/charges/${CHARGE_TEST_ID}/refunds/${REFUND_TEST_ID}`,
         data: {metadata: {key: 'value'}},
         headers: {},
       });
@@ -61,7 +61,7 @@ describe('ChargeRefund Resource', () => {
       chargeRefund.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/charges/' + CHARGE_TEST_ID + '/refunds',
+        url: `/v1/charges/${CHARGE_TEST_ID}/refunds`,
         data: {},
         headers: {},
       });

@@ -13,7 +13,7 @@ const TOTAL_OBJECTS = 8;
 describe('auto pagination', function() {
   this.timeout(20000);
 
-  const email = 'test.' + Date.now() + '@example.com';
+  const email = `test.${Date.now()}@example.com`;
   let realCustomerIds;
   before(
     () =>

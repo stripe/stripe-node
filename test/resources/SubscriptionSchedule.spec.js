@@ -15,7 +15,7 @@ describe('Subscription Schedule Resource', () => {
       stripe.subscriptionSchedules.cancel(SCHEDULE_TEST_ID, data);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/subscription_schedules/' + SCHEDULE_TEST_ID + '/cancel',
+        url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/cancel`,
         data,
         headers: {},
       });
@@ -57,7 +57,7 @@ describe('Subscription Schedule Resource', () => {
       stripe.subscriptionSchedules.release(SCHEDULE_TEST_ID, data);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/subscription_schedules/' + SCHEDULE_TEST_ID + '/release',
+        url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/release`,
         data,
         headers: {},
       });
@@ -82,7 +82,7 @@ describe('Subscription Schedule Resource', () => {
       stripe.subscriptionSchedules.update(SCHEDULE_TEST_ID, data);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/subscription_schedules/' + SCHEDULE_TEST_ID,
+        url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}`,
         data,
         headers: {},
       });
@@ -98,11 +98,7 @@ describe('Subscription Schedule Resource', () => {
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url:
-            '/v1/subscription_schedules/' +
-            SCHEDULE_TEST_ID +
-            '/revisions/' +
-            REVISION_TEST_ID,
+          url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/revisions/${REVISION_TEST_ID}`,
           headers: {},
           data: {},
         });
@@ -114,7 +110,7 @@ describe('Subscription Schedule Resource', () => {
         stripe.subscriptionSchedules.listRevisions(SCHEDULE_TEST_ID);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/subscription_schedules/' + SCHEDULE_TEST_ID + '/revisions',
+          url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/revisions`,
           headers: {},
           data: {},
         });
