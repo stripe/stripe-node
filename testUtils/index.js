@@ -9,14 +9,14 @@ require('chai').use(require('chai-as-promised'));
 var ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
 
 var utils = (module.exports = {
-  getUserStripeKey: function() {
+  getUserStripeKey() {
     var key =
       process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
 
     return key;
   },
 
-  getSpyableStripe: function() {
+  getSpyableStripe() {
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
 
@@ -85,7 +85,7 @@ var utils = (module.exports = {
     }
 
     CleanupUtility.prototype = {
-      doCleanup: function(done) {
+      doCleanup(done) {
         var cleanups = this._cleanupFns;
         var total = cleanups.length;
         var completed = 0;
@@ -115,25 +115,25 @@ var utils = (module.exports = {
           done();
         }
       },
-      add: function(fn) {
+      add(fn) {
         this._cleanupFns.push(fn);
       },
-      deleteCustomer: function(custId) {
+      deleteCustomer(custId) {
         this.add(function() {
           return this._stripe.customers.del(custId);
         });
       },
-      deletePlan: function(pId) {
+      deletePlan(pId) {
         this.add(function() {
           return this._stripe.plans.del(pId);
         });
       },
-      deleteCoupon: function(cId) {
+      deleteCoupon(cId) {
         this.add(function() {
           return this._stripe.coupons.del(cId);
         });
       },
-      deleteInvoiceItem: function(iiId) {
+      deleteInvoiceItem(iiId) {
         this.add(function() {
           return this._stripe.invoiceItems.del(iiId);
         });
@@ -146,17 +146,17 @@ var utils = (module.exports = {
   /**
    * Get a random string for test Object creation
    */
-  getRandomString: function() {
+  getRandomString() {
     return Math.random()
       .toString(36)
       .slice(2);
   },
 
-  envSupportsForAwait: function() {
+  envSupportsForAwait() {
     return typeof Symbol !== 'undefined' && Symbol.asyncIterator;
   },
 
-  envSupportsAwait: function() {
+  envSupportsAwait() {
     try {
       eval('(async function() {})'); // eslint-disable-line no-eval
       return true;
