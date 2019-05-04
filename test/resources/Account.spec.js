@@ -20,7 +20,7 @@ describe('Account Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/accounts',
-        data: data,
+        data,
         headers: {},
       });
     });

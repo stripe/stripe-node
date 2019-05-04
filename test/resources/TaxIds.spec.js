@@ -23,7 +23,7 @@ describe('TaxId Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers/' + CUSTOMER_TEST_ID + '/tax_ids',
-        data: data,
+        data,
         headers: {},
       });
     });

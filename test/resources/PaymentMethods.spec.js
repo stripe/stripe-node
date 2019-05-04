@@ -26,7 +26,7 @@ describe('PaymentMethods Resource', () => {
         method: 'POST',
         url: '/v1/payment_methods',
         headers: {},
-        data: data,
+        data,
       });
     });
   });
@@ -42,7 +42,7 @@ describe('PaymentMethods Resource', () => {
         method: 'GET',
         url: '/v1/payment_methods',
         headers: {},
-        data: data,
+        data,
       });
     });
   });
@@ -57,7 +57,7 @@ describe('PaymentMethods Resource', () => {
         method: 'POST',
         url: '/v1/payment_methods/pm_123',
         headers: {},
-        data: data,
+        data,
       });
     });
   });

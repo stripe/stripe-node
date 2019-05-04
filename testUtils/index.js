@@ -44,9 +44,9 @@ var utils = (module.exports = {
     function patchRequest(stripeInstance, instance) {
       instance._request = function(method, host, url, data, auth, options, cb) {
         var req = (stripeInstance.LAST_REQUEST = {
-          method: method,
-          url: url,
-          data: data,
+          method,
+          url,
+          data,
           headers: options.headers || {},
         });
         if (auth) {

@@ -28,7 +28,7 @@ describe('CreditNotes Resource', () => {
         method: 'POST',
         url: '/v1/credit_notes',
         headers: {},
-        data: data,
+        data,
       });
     });
   });

@@ -405,7 +405,7 @@ describe('utils', () => {
     it('Does not flatten Buffer objects', () => {
       var buf = Buffer.from('Hi!');
       var flattened = utils.flattenAndStringify({
-        buf: buf,
+        buf,
         x: {
           a: 1,
         },

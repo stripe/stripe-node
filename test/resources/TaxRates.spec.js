@@ -26,7 +26,7 @@ describe('TaxRates Resource', () => {
         method: 'POST',
         url: '/v1/tax_rates/txr_123',
         headers: {},
-        data: data,
+        data,
       });
     });
   });
@@ -44,7 +44,7 @@ describe('TaxRates Resource', () => {
         method: 'POST',
         url: '/v1/tax_rates',
         headers: {},
-        data: data,
+        data,
       });
     });
   });

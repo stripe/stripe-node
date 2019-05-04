@@ -617,7 +617,7 @@ describe('Customers Resource', () => {
           method: 'POST',
           url: '/v1/customers/cus_123/sources/card_123/verify',
           headers: {},
-          data: data,
+          data,
           auth: TEST_AUTH_KEY,
         });
       });
@@ -824,7 +824,7 @@ describe('Customers Resource', () => {
           method: 'POST',
           url: '/v1/customers/cus_123/tax_ids',
           headers: {},
-          data: data,
+          data,
         });
       });
     });

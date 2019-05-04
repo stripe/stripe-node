@@ -16,7 +16,7 @@ describe('Subscription Schedule Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/subscription_schedules/' + SCHEDULE_TEST_ID + '/cancel',
-        data: data,
+        data,
         headers: {},
       });
     });
@@ -31,7 +31,7 @@ describe('Subscription Schedule Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/subscription_schedules',
-        data: data,
+        data,
         headers: {},
       });
     });
@@ -58,7 +58,7 @@ describe('Subscription Schedule Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/subscription_schedules/' + SCHEDULE_TEST_ID + '/release',
-        data: data,
+        data,
         headers: {},
       });
     });
@@ -83,7 +83,7 @@ describe('Subscription Schedule Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/subscription_schedules/' + SCHEDULE_TEST_ID,
-        data: data,
+        data,
         headers: {},
       });
     });

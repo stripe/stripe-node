@@ -20,12 +20,12 @@ describe('auto pagination', function() {
       new Promise((resolve) => {
         var createReqs = [];
         for (var i = 0; i < TOTAL_OBJECTS; i++) {
-          createReqs.push(stripe.customers.create({email: email}));
+          createReqs.push(stripe.customers.create({email}));
         }
         return Promise.all(createReqs)
           .then(() =>
             // re-fetch to ensure correct order
-            stripe.customers.list({email: email}).then((customers) => {
+            stripe.customers.list({email}).then((customers) => {
               realCustomerIds = customers.data.map((customer) => customer.id);
             })
           )
@@ -65,7 +65,7 @@ describe('auto pagination', function() {
           }
 
           stripe.customers
-            .list({limit: 3, email: email})
+            .list({limit: 3, email})
             .autoPagingEach(onCustomer, onDone);
         })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT)));
@@ -91,7 +91,7 @@ describe('auto pagination', function() {
           }
 
           stripe.customers
-            .list({limit: 3, email: email})
+            .list({limit: 3, email})
             .autoPagingEach(onCustomer, onDone);
         })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT)));
@@ -118,7 +118,7 @@ describe('auto pagination', function() {
           }
 
           stripe.customers
-            .list({limit: 3, email: email})
+            .list({limit: 3, email})
             .autoPagingEach(onCustomer, onDone);
         })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT)));
@@ -135,7 +135,7 @@ describe('auto pagination', function() {
           }
 
           stripe.customers
-            .list({limit: 3, email: email})
+            .list({limit: 3, email})
             .autoPagingEach(onCustomer)
             .then(onDone)
             .catch(reject);
@@ -147,7 +147,7 @@ describe('auto pagination', function() {
         new Promise((resolve, reject) => {
           var customerIds = [];
           return stripe.customers
-            .list({email: email, limit: TOTAL_OBJECTS / 2})
+            .list({email, limit: TOTAL_OBJECTS / 2})
             .autoPagingEach((customer) => {
               customerIds.push(customer.id);
             })
@@ -163,7 +163,7 @@ describe('auto pagination', function() {
         new Promise((resolve, reject) => {
           var customerIds = [];
           return stripe.customers
-            .list({email: email, limit: TOTAL_OBJECTS - 2})
+            .list({email, limit: TOTAL_OBJECTS - 2})
             .autoPagingEach((customer) => {
               customerIds.push(customer.id);
             })
@@ -179,7 +179,7 @@ describe('auto pagination', function() {
         new Promise((resolve, reject) => {
           var customerIds = [];
           return stripe.customers
-            .list({email: email, limit: TOTAL_OBJECTS + 2})
+            .list({email, limit: TOTAL_OBJECTS + 2})
             .autoPagingEach((customer) => {
               customerIds.push(customer.id);
             })
@@ -201,7 +201,7 @@ describe('auto pagination', function() {
             }
           }
           return stripe.customers
-            .list({email: email, limit: 3})
+            .list({email, limit: 3})
             .autoPagingEach(onCustomer, (err) => {
               if (err) {
                 resolve(err.message);
@@ -223,7 +223,7 @@ describe('auto pagination', function() {
             }
           }
           return stripe.customers
-            .list({email: email, limit: 3})
+            .list({email, limit: 3})
             .autoPagingEach(onCustomer)
             .then(() => {
               reject(Error('Expected an error, did not get one.'));
@@ -244,10 +244,7 @@ describe('auto pagination', function() {
       it('works with `for await` when that feature exists (user break)', () =>
         expect(
           new Promise((resolve, reject) => {
-            forAwaitUntil(
-              stripe.customers.list({limit: 3, email: email}),
-              LIMIT
-            )
+            forAwaitUntil(stripe.customers.list({limit: 3, email}), LIMIT)
               .then((customers) => {
                 resolve(customers.map((customer) => customer.id));
               })
@@ -259,7 +256,7 @@ describe('auto pagination', function() {
         expect(
           new Promise((resolve, reject) => {
             forAwaitUntil(
-              stripe.customers.list({limit: 3, email: email}),
+              stripe.customers.list({limit: 3, email}),
               TOTAL_OBJECTS + 1
             )
               .then((customers) => {
@@ -277,7 +274,7 @@ describe('auto pagination', function() {
       it('works with `await` and a while loop when await exists', () =>
         expect(
           new Promise((resolve, reject) => {
-            awaitUntil(stripe.customers.list({limit: 3, email: email}), LIMIT)
+            awaitUntil(stripe.customers.list({limit: 3, email}), LIMIT)
               .then((customers) => {
                 resolve(customers.map((customer) => customer.id));
               })
@@ -289,7 +286,7 @@ describe('auto pagination', function() {
     it('returns an empty object from .return() so that `break;` works in for-await', () =>
       expect(
         new Promise((resolve, reject) => {
-          var iter = stripe.customers.list({limit: 3, email: email});
+          var iter = stripe.customers.list({limit: 3, email});
 
           var customerIds = [];
           function handleIter(result) {
@@ -310,7 +307,7 @@ describe('auto pagination', function() {
     it('works when you call it sequentially', () =>
       expect(
         new Promise((resolve, reject) => {
-          var iter = stripe.customers.list({limit: 3, email: email});
+          var iter = stripe.customers.list({limit: 3, email});
 
           var customerIds = [];
           function handleIter(result) {
@@ -332,7 +329,7 @@ describe('auto pagination', function() {
     it('gives you the same result each time when you call it multiple times in parallel', () =>
       expect(
         new Promise((resolve, reject) => {
-          var iter = stripe.customers.list({limit: 3, email: email});
+          var iter = stripe.customers.list({limit: 3, email});
 
           var customerIds = [];
           function handleIter(result) {
@@ -382,7 +379,7 @@ describe('auto pagination', function() {
       expect(
         new Promise((resolve, reject) => {
           stripe.customers
-            .list({limit: 3, email: email})
+            .list({limit: 3, email})
             .autoPagingToArray({limit: TOTAL_OBJECTS + 1})
             .then((customers) => customers.map((customer) => customer.id))
             .then(resolve)
@@ -394,7 +391,7 @@ describe('auto pagination', function() {
       expect(
         new Promise((resolve, reject) => {
           stripe.customers
-            .list({limit: 3, email: email})
+            .list({limit: 3, email})
             .autoPagingToArray({limit: LIMIT})
             .then((customers) => customers.map((customer) => customer.id))
             .then(resolve)
@@ -414,7 +411,7 @@ describe('auto pagination', function() {
           }
 
           stripe.customers
-            .list({limit: 3, email: email})
+            .list({limit: 3, email})
             .autoPagingToArray({limit: LIMIT}, onDone);
         })
       ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT)));
@@ -423,7 +420,7 @@ describe('auto pagination', function() {
       expect(
         new Promise((resolve, reject) => {
           try {
-            stripe.customers.list({limit: 3, email: email}).autoPagingToArray();
+            stripe.customers.list({limit: 3, email}).autoPagingToArray();
             reject(Error('Should have thrown.'));
           } catch (err) {
             resolve(err.message);
@@ -438,7 +435,7 @@ describe('auto pagination', function() {
         new Promise((resolve, reject) => {
           try {
             stripe.customers
-              .list({limit: 3, email: email})
+              .list({limit: 3, email})
               .autoPagingToArray({limit: 1000000});
             reject(Error('Should have thrown.'));
           } catch (err) {
@@ -462,7 +459,7 @@ describe('auto pagination', function() {
           stripe.on('request', onRequest);
 
           var customerIds = [];
-          var p = stripe.customers.list({email: email, limit: 4});
+          var p = stripe.customers.list({email, limit: 4});
           Promise.all([
             p,
             p.autoPagingEach((customer) => {

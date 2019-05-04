@@ -33,7 +33,7 @@ describe('Error', () => {
       var headers = {'Request-Id': '123'};
       var e = Error.StripeError.generate({
         type: 'card_error',
-        headers: headers,
+        headers,
       });
       expect(e).to.have.property('headers', headers);
     });
