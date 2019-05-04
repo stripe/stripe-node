@@ -139,8 +139,8 @@ describe('StripeResource', () => {
           .post(options.path, options.params)
           .replyWithError('bad stuff');
 
-        realStripe.charges.create(options.data, (err) => {
-          expect(err.detail.message).to.deep.equal('bad stuff');
+        realStripe.charges.create(options.data, ({detail}) => {
+          expect(detail.message).to.deep.equal('bad stuff');
           done();
         });
       });
@@ -154,12 +154,12 @@ describe('StripeResource', () => {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, (err) => {
+        realStripe.charges.create(options.data, ({message, detail}) => {
           const errorMessage = realStripe.invoices._generateConnectionErrorMessage(
             1
           );
-          expect(err.message).to.equal(errorMessage);
-          expect(err.detail.message).to.deep.equal('worse stuff');
+          expect(message).to.equal(errorMessage);
+          expect(detail.message).to.deep.equal('worse stuff');
           done();
         });
       });
@@ -177,8 +177,8 @@ describe('StripeResource', () => {
 
         realStripe.setMaxNetworkRetries(2);
 
-        realStripe.charges.create(options.data, (err, charge) => {
-          expect(charge.id).to.equal('ch_123');
+        realStripe.charges.create(options.data, (err, {id}) => {
+          expect(id).to.equal('ch_123');
           done();
         });
       });
@@ -200,8 +200,8 @@ describe('StripeResource', () => {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, (err, charge) => {
-          expect(charge.id).to.equal('ch_123');
+        realStripe.charges.create(options.data, (err, {id}) => {
+          expect(id).to.equal('ch_123');
           done();
         });
       });
@@ -217,8 +217,8 @@ describe('StripeResource', () => {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, (err) => {
-          expect(err.type).to.equal('StripeCardError');
+        realStripe.charges.create(options.data, ({type}) => {
+          expect(type).to.equal('StripeCardError');
           done();
         });
       });
@@ -234,8 +234,8 @@ describe('StripeResource', () => {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, (err) => {
-          expect(err.type).to.equal('StripeAPIError');
+        realStripe.charges.create(options.data, ({type}) => {
+          expect(type).to.equal('StripeAPIError');
           done();
         });
       });
@@ -251,8 +251,8 @@ describe('StripeResource', () => {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.oauth.token(options.data, (err) => {
-          expect(err.type).to.equal('StripeInvalidGrantError');
+        realStripe.oauth.token(options.data, ({type}) => {
+          expect(type).to.equal('StripeInvalidGrantError');
           done();
         });
       });
@@ -274,8 +274,8 @@ describe('StripeResource', () => {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, (err, charge) => {
-          expect(charge.id).to.equal('ch_123');
+        realStripe.charges.create(options.data, (err, {id}) => {
+          expect(id).to.equal('ch_123');
           done();
         });
       });
@@ -297,8 +297,8 @@ describe('StripeResource', () => {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.retrieve('ch_123', (err, charge) => {
-          expect(charge.id).to.equal('ch_123');
+        realStripe.charges.retrieve('ch_123', (err, {id}) => {
+          expect(id).to.equal('ch_123');
           done();
         });
       });

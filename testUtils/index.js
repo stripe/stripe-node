@@ -42,12 +42,20 @@ const utils = (module.exports = {
     }
 
     function patchRequest(stripeInstance, instance) {
-      instance._request = function(method, host, url, data, auth, options, cb) {
+      instance._request = function(
+        method,
+        host,
+        url,
+        data,
+        auth,
+        {headers},
+        cb
+      ) {
         const req = (stripeInstance.LAST_REQUEST = {
           method,
           url,
           data,
-          headers: options.headers || {},
+          headers: headers || {},
         });
         if (auth) {
           req.auth = auth;

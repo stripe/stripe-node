@@ -38,10 +38,10 @@ describe('Client Telemetry', () => {
     let numRequests = 0;
 
     createTestServer(
-      (req, res) => {
+      ({headers}, res) => {
         numRequests += 1;
 
-        const telemetry = req.headers['x-stripe-client-telemetry'];
+        const telemetry = headers['x-stripe-client-telemetry'];
 
         switch (numRequests) {
           case 1:
@@ -78,10 +78,10 @@ describe('Client Telemetry', () => {
     let numRequests = 0;
 
     createTestServer(
-      (req, res) => {
+      ({headers}, res) => {
         numRequests += 1;
 
-        const telemetry = req.headers['x-stripe-client-telemetry'];
+        const telemetry = headers['x-stripe-client-telemetry'];
 
         switch (numRequests) {
           case 1:
@@ -124,10 +124,10 @@ describe('Client Telemetry', () => {
     let numRequests = 0;
 
     createTestServer(
-      (req, res) => {
+      ({headers}, res) => {
         numRequests += 1;
 
-        const telemetry = req.headers['x-stripe-client-telemetry'];
+        const telemetry = headers['x-stripe-client-telemetry'];
 
         switch (numRequests) {
           case 1:

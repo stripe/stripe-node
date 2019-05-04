@@ -17,13 +17,13 @@ const app = express();
 app.post(
   '/webhooks',
   bodyParser.raw({type: 'application/json'}),
-  (req, res) => {
-    const sig = req.headers['stripe-signature'];
+  ({headers, body}, res) => {
+    const sig = headers['stripe-signature'];
 
     let event;
 
     try {
-      event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+      event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
     } catch (err) {
       // On error, return the error message
       return res.status(400).send(`Webhook Error: ${err.message}`);

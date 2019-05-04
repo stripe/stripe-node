@@ -434,8 +434,8 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
     /* eslint-enable no-console */
   } else {
     /* eslint-disable-next-line no-inner-declarations */
-    function onProcessWarn(warning) {
-      onWarn(`${warning.name}: ${warning.message}`);
+    function onProcessWarn({name, message}) {
+      onWarn(`${name}: ${message}`);
     }
 
     process.on('warning', onProcessWarn);
