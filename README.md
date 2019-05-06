@@ -115,8 +115,12 @@ stripe.customers.create(
     email: 'customer@example.com',
   },
   function(err, customer) {
-    err; // null if no error occurred
-    customer; // the created customer object
+    if (err) {
+      // Deal with an error (will be `null` if no error occurred).
+    }
+
+    // Do something with created customer object
+    console.log(customer.id);
   }
 );
 ```
