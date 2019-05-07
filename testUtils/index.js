@@ -9,14 +9,14 @@ require('chai').use(require('chai-as-promised'));
 const ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
 
 const utils = (module.exports = {
-  getUserStripeKey() {
+  getUserStripeKey: () => {
     const key =
       process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
 
     return key;
   },
 
-  getSpyableStripe() {
+  getSpyableStripe: () => {
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
 
@@ -146,17 +146,17 @@ const utils = (module.exports = {
   /**
    * Get a random string for test Object creation
    */
-  getRandomString() {
+  getRandomString: () => {
     return Math.random()
       .toString(36)
       .slice(2);
   },
 
-  envSupportsForAwait() {
+  envSupportsForAwait: () => {
     return typeof Symbol !== 'undefined' && Symbol.asyncIterator;
   },
 
-  envSupportsAwait() {
+  envSupportsAwait: () => {
     try {
       eval('(async function() {})'); // eslint-disable-line no-eval
       return true;
