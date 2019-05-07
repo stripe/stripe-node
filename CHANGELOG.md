@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.32.0 - 2019-05-07
+* [#612](https://github.com/stripe/stripe-node/pull/612) Add `balanceTransactions` resource
+
 ## 6.31.2 - 2019-05-03
 * [#602](https://github.com/stripe/stripe-node/pull/602) Handle errors from the oauth/token endpoint
 
