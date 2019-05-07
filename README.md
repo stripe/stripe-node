@@ -223,6 +223,29 @@ const event = stripe.webhooks.constructEvent(
 );
 ```
 
+#### Testing Webhook signing
+
+You can use `generateWebhookHeaderString` to mock webhook events that come from Stripe:
+
+```js
+const payload = {
+  id: 'evt_test_webhook',
+  object: 'event',
+};
+
+const payloadString = JSON.stringify(payload, null, 2);
+const secret = 'whsec_test_secret';
+
+const header = stripe.generateWebhookHeaderString({
+  payload: payloadString,
+});
+
+const event = stripe.webhooks.constructEvent(payloadString, header, secret);
+
+// Do something with mocked signed event
+expect(event.id).to.equal(payload.id);
+```
+
 ### Writing a Plugin
 
 If you're writing a plugin that uses the library, we'd appreciate it if you identified using `stripe.setAppInfo()`:
