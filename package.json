@@ -50,6 +50,7 @@
   "scripts": {
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage",
     "mocha": "nyc mocha",
+    "mocha-only": "mocha",
     "test": "npm run lint && npm run mocha",
     "lint": "eslint --ext .js,.jsx .",
     "fix": "yarn lint --fix",
