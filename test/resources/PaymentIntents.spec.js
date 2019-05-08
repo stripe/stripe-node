@@ -1,14 +1,14 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-var PAYMENT_INTENT_TEST_ID = 'pi_123';
+const PAYMENT_INTENT_TEST_ID = 'pi_123';
 
-describe('Payment Intents Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
-      var params = {
+describe('Payment Intents Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
+      const params = {
         amount: 200,
         currency: 'usd',
         payment_method_types: ['card'],
@@ -23,8 +23,8 @@ describe('Payment Intents Resource', function() {
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -35,62 +35,62 @@ describe('Payment Intents Resource', function() {
     });
   });
 
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.retrieve(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID,
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}`,
         headers: {},
         data: {},
       });
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
+  describe('update', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.update(PAYMENT_INTENT_TEST_ID, {
         metadata: {key: 'value'},
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID,
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}`,
         headers: {},
         data: {metadata: {key: 'value'}},
       });
     });
   });
 
-  describe('cancel', function() {
-    it('Sends the correct request', function() {
+  describe('cancel', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.cancel(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID + '/cancel',
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}/cancel`,
         headers: {},
         data: {},
       });
     });
   });
 
-  describe('capture', function() {
-    it('Sends the correct request', function() {
+  describe('capture', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.capture(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID + '/capture',
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}/capture`,
         headers: {},
         data: {},
       });
     });
   });
 
-  describe('confirm', function() {
-    it('Sends the correct request', function() {
+  describe('confirm', () => {
+    it('Sends the correct request', () => {
       stripe.paymentIntents.confirm(PAYMENT_INTENT_TEST_ID);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/payment_intents/' + PAYMENT_INTENT_TEST_ID + '/confirm',
+        url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}/confirm`,
         headers: {},
         data: {},
       });

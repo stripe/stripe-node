@@ -1,11 +1,11 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-describe('AccountLinks Resource', function() {
-  describe('create', function() {
-    it('Sends the correct request', function() {
+describe('AccountLinks Resource', () => {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.accountLinks.create({
         account: 'acct_123',
         failure_url: 'https://stripe.com/failure',
