@@ -249,7 +249,7 @@ describe('Stripe Module', function() {
       it('Given an error the callback will receive it', () =>
         expect(
           new Promise((resolve, reject) => {
-            stripe.customers.createCard(
+            stripe.customers.createSource(
               'nonExistentCustId',
               {card: {}},
               (err, customer) => {
