@@ -1,6 +1,12 @@
 # CHANGELOG
 
-## 6.33.0 - 2019-05-08
+## 6.34.0 - 2019-05-08
+* [#619](https://github.com/stripe/stripe-node/pull/619) Move `generateTestHeaderString` to stripe.webhooks (fixes a bug in 6.33.0)
+
+## 6.33.0 - 2019-05-08 - UNRELEASED
+
+**Important**: This version is non-functional and has been yanked in favor of 6.32.0.
+
 * [#609](https://github.com/stripe/stripe-node/pull/609) Add `generateWebhookHeaderString` to make it easier to mock webhook events
 
 ## 6.32.0 - 2019-05-07

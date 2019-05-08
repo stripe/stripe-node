@@ -225,7 +225,7 @@ const event = stripe.webhooks.constructEvent(
 
 #### Testing Webhook signing
 
-You can use `generateWebhookHeaderString` to mock webhook events that come from Stripe:
+You can use `stripe.webhooks.generateTestHeaderString` to mock webhook events that come from Stripe:
 
 ```js
 const payload = {
