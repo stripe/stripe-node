@@ -1,16 +1,14 @@
 'use strict';
 
-var stripe = require('../testUtils').getSpyableStripe();
+var testUtils = require('../testUtils');
+var stripe = testUtils.getSpyableStripe();
+var generateHeaderString = testUtils.generateHeaderString;
 var expect = require('chai').expect;
 var Buffer = require('safe-buffer').Buffer;
 
-var EVENT_PAYLOAD = {
-  id: 'evt_test_webhook',
-  object: 'event',
-};
-var EVENT_PAYLOAD_STRING = JSON.stringify(EVENT_PAYLOAD, null, 2);
-
-var SECRET = 'whsec_test_secret';
+var EVENT_PAYLOAD = testUtils.EVENT_PAYLOAD;
+var EVENT_PAYLOAD_STRING = testUtils.EVENT_PAYLOAD_STRING;
+var SECRET = testUtils.WEBHOOK_SECRET;
 
 describe('Webhooks', function() {
   describe('.constructEvent', function() {
@@ -136,22 +134,3 @@ describe('Webhooks', function() {
     });
   });
 });
-
-function generateHeaderString(opts) {
-  opts = opts || {};
-
-  opts.timestamp = Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
-  opts.payload = opts.payload || EVENT_PAYLOAD_STRING;
-  opts.secret = opts.secret || SECRET;
-  opts.scheme = opts.scheme || stripe.webhooks.signature.EXPECTED_SCHEME;
-
-  opts.signature = opts.signature ||
-    stripe.webhooks.signature._computeSignature(opts.timestamp + '.' + opts.payload, opts.secret);
-
-  var generatedHeader = [
-    't=' + opts.timestamp,
-    opts.scheme + '=' + opts.signature,
-  ].join(',');
-
-  return generatedHeader;
-}
