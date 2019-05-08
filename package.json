@@ -22,22 +22,22 @@
   },
   "bugs:": "https://github.com/stripe/stripe-node/issues",
   "engines": {
-    "node": "6 || >=8.1"
+    "node": "^6 || ^8.1 || >=10.*"
   },
   "main": "lib/stripe.js",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "chai": "~4.1.2",
+    "chai": "~4.2.0",
     "chai-as-promised": "~7.1.1",
     "coveralls": "^3.0.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-flowtype": "^3.4.2",
-    "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-chai-friendly": "^0.4.0",
-    "mocha": "~5.0.5",
-    "nock": "^9.0.0",
-    "nyc": "^11.3.0",
+    "eslint-plugin-flowtype": "^3.8.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "mocha": "~6.1.4",
+    "nock": "^10.0.6",
+    "nyc": "^14.1.0",
     "prettier": "^1.16.4"
   },
   "dependencies": {
