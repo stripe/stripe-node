@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.33.0 - 2019-05-08
+* [#609](https://github.com/stripe/stripe-node/pull/609) Add `generateWebhookHeaderString` to make it easier to mock webhook events
+
 ## 6.32.0 - 2019-05-07
 * [#612](https://github.com/stripe/stripe-node/pull/612) Add `balanceTransactions` resource
 
