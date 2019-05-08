@@ -70,16 +70,4 @@ describe('Payouts Resource', () => {
       });
     });
   });
-
-  describe('listTransactions', () => {
-    it('Sends the correct request', () => {
-      stripe.payouts.listTransactions(PAYOUT_TEST_ID);
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'GET',
-        url: `/v1/payouts/${PAYOUT_TEST_ID}/transactions`,
-        headers: {},
-        data: {},
-      });
-    });
-  });
 });
