@@ -1,11 +1,11 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-describe('TaxRates Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('TaxRates Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.taxRates.retrieve('txr_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,9 +16,9 @@ describe('TaxRates Resource', function() {
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
-      var data = {
+  describe('update', () => {
+    it('Sends the correct request', () => {
+      const data = {
         metadata: {a: '1234'},
       };
       stripe.taxRates.update('txr_123', data);
@@ -26,14 +26,14 @@ describe('TaxRates Resource', function() {
         method: 'POST',
         url: '/v1/tax_rates/txr_123',
         headers: {},
-        data: data,
+        data,
       });
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
-      var data = {
+  describe('create', () => {
+    it('Sends the correct request', () => {
+      const data = {
         display_name: 'name',
         inclusive: false,
         percentage: 10.15,
@@ -44,13 +44,13 @@ describe('TaxRates Resource', function() {
         method: 'POST',
         url: '/v1/tax_rates',
         headers: {},
-        data: data,
+        data,
       });
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
+  describe('list', () => {
+    it('Sends the correct request', () => {
       stripe.taxRates.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
