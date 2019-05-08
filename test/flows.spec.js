@@ -52,13 +52,14 @@ describe('Flows', function() {
           cleanup.deleteCustomer(customer.id);
           cleanup.deletePlan(plan.id);
 
-          return stripe.customers.updateSubscription(customer.id, {
+          return stripe.subscriptions.create({
+            customer: customer.id,
             plan: plan.id,
           });
         })
       ).to.eventually.have.property('status', 'active'));
 
-    it('Allows me to: Create a plan and subscribe a customer to it, and update subscription (multi-subs API)', () => {
+    it('Allows me to: Create a plan and subscribe a customer to it, and update subscription', () => {
       let plan;
       return expect(
         Promise.all([
@@ -81,19 +82,16 @@ describe('Flows', function() {
             cleanup.deleteCustomer(customer.id);
             cleanup.deletePlan(plan.id);
 
-            return stripe.customers.createSubscription(customer.id, {
+            return stripe.subscriptions.create({
+              customer: customer.id,
               plan: plan.id,
             });
           })
           .then((subscription) =>
-            stripe.customers.updateSubscription(
-              subscription.customer,
-              subscription.id,
-              {
-                plan: plan.id,
-                quantity: '3',
-              }
-            )
+            stripe.subscriptions.update(subscription.id, {
+              plan: plan.id,
+              quantity: 3,
+            })
           )
           .then((subscription) => [subscription.status, subscription.quantity])
       ).to.eventually.deep.equal(['active', 3]);
@@ -104,8 +102,9 @@ describe('Flows', function() {
         stripe.customers.create(CUSTOMER_DETAILS).then((customer) => {
           cleanup.deleteCustomer(customer.id);
 
-          return stripe.customers
-            .updateSubscription(customer.id, {
+          return stripe.subscriptions
+            .create({
+              customer: customer.id,
               plan: `someNonExistentPlan${testUtils.getRandomString()}`,
             })
             .then(
@@ -135,18 +134,24 @@ describe('Flows', function() {
             },
           }),
           stripe.customers.create(CUSTOMER_DETAILS),
-        ]).then((j) => {
-          const plan = j[0];
-          const customer = j[1];
+        ])
+          .then((j) => {
+            const plan = j[0];
+            const customer = j[1];
 
-          cleanup.deleteCustomer(customer.id);
-          cleanup.deletePlan(plan.id);
+            cleanup.deleteCustomer(customer.id);
+            cleanup.deletePlan(plan.id);
 
-          return stripe.customers.updateSubscription(customer.id, {
-            plan: plan.id,
-            cancel_at_period_end: true,
-          });
-        })
+            return stripe.subscriptions.create({
+              customer: customer.id,
+              plan: plan.id,
+            });
+          })
+          .then((subscription) =>
+            stripe.subscriptions.update(subscription.id, {
+              cancel_at_period_end: true,
+            })
+          )
       ).to.eventually.have.property('cancel_at_period_end', true));
 
     describe('Plan name variations', () => {
@@ -223,102 +228,6 @@ describe('Flows', function() {
           });
         });
       });
-    });
-  });
-
-  describe('Metadata flow', () => {
-    it('Can save and retrieve metadata', () => {
-      let customer;
-      return expect(
-        stripe.customers
-          .create(CUSTOMER_DETAILS)
-          .then((cust) => {
-            customer = cust;
-            cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, {foo: '123'});
-          })
-          .then(() => stripe.customers.getMetadata(customer.id))
-      ).to.eventually.deep.equal({foo: '123'});
-    });
-    it('Can reset metadata', () => {
-      let customer;
-      return expect(
-        stripe.customers
-          .create(CUSTOMER_DETAILS)
-          .then((cust) => {
-            customer = cust;
-            cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, {baz: '123'});
-          })
-          .then(() => stripe.customers.setMetadata(customer.id, null))
-          .then(() => stripe.customers.getMetadata(customer.id))
-      ).to.eventually.deep.equal({});
-    });
-    it('Resets metadata when setting new metadata', () => {
-      let customer;
-      return expect(
-        stripe.customers
-          .create(CUSTOMER_DETAILS)
-          .then((cust) => {
-            customer = cust;
-            cleanup.deleteCustomer(cust.id);
-            return stripe.customers.setMetadata(cust.id, {foo: '123'});
-          })
-          .then(() => stripe.customers.setMetadata(customer.id, {baz: '456'}))
-      ).to.eventually.deep.equal({baz: '456'});
-    });
-    it('Can set individual key/value pairs', () => {
-      let customer;
-      return expect(
-        stripe.customers
-          .create(CUSTOMER_DETAILS)
-          .then((cust) => {
-            customer = cust;
-            cleanup.deleteCustomer(cust.id);
-          })
-          .then(() => stripe.customers.setMetadata(customer.id, 'baz', 456))
-          .then(() => stripe.customers.setMetadata(customer.id, '_other_', 999))
-          .then(() => stripe.customers.setMetadata(customer.id, 'foo', 123))
-          .then(() =>
-            // Change foo
-            stripe.customers.setMetadata(customer.id, 'foo', 222)
-          )
-          .then(() =>
-            // Delete baz
-            stripe.customers.setMetadata(customer.id, 'baz', null)
-          )
-          .then(() => stripe.customers.getMetadata(customer.id))
-      ).to.eventually.deep.equal({_other_: '999', foo: '222'});
-    });
-    it('Can set individual key/value pairs [with per request token]', () => {
-      let customer;
-      const authToken = testUtils.getUserStripeKey();
-      return expect(
-        stripe.customers
-          .create(CUSTOMER_DETAILS)
-          .then((cust) => {
-            customer = cust;
-            cleanup.deleteCustomer(cust.id);
-          })
-          .then(() =>
-            stripe.customers.setMetadata(customer.id, {baz: 456}, authToken)
-          )
-          .then(() =>
-            stripe.customers.setMetadata(customer.id, '_other_', 999, authToken)
-          )
-          .then(() =>
-            stripe.customers.setMetadata(customer.id, 'foo', 123, authToken)
-          )
-          .then(() =>
-            // Change foo
-            stripe.customers.setMetadata(customer.id, 'foo', 222, authToken)
-          )
-          .then(() =>
-            // Delete baz
-            stripe.customers.setMetadata(customer.id, 'baz', null, authToken)
-          )
-          .then(() => stripe.customers.getMetadata(customer.id, authToken))
-      ).to.eventually.deep.equal({_other_: '999', foo: '222'});
     });
   });
 
@@ -517,13 +426,13 @@ describe('Flows', function() {
     });
   });
 
-  describe('FileUpload', () => {
+  describe('File', () => {
     it('Allows you to upload a file as a stream', () => {
       const testFilename = path.join(__dirname, 'resources/data/minimal.pdf');
       const f = fs.createReadStream(testFilename);
 
       return expect(
-        stripe.fileUploads
+        stripe.files
           .create({
             purpose: 'dispute_evidence',
             file: {
@@ -541,7 +450,7 @@ describe('Flows', function() {
       const f = fs.readFileSync(testFilename);
 
       return expect(
-        stripe.fileUploads
+        stripe.files
           .create({
             purpose: 'dispute_evidence',
             file: {
@@ -564,7 +473,7 @@ describe('Flows', function() {
         mockedStream.emit('error', fakeError);
       });
 
-      stripe.fileUploads
+      stripe.files
         .create({
           purpose: 'dispute_evidence',
           file: {

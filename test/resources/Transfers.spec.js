@@ -46,48 +46,12 @@ describe('Transfers Resource', () => {
     });
   });
 
-  describe('cancel', () => {
-    it('Sends the correct request', () => {
-      stripe.transfers.cancel('transferId4');
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'POST',
-        url: '/v1/transfers/transferId4/cancel',
-        headers: {},
-        data: {},
-      });
-    });
-  });
-
-  describe('reverse', () => {
-    it('Sends the correct request', () => {
-      stripe.transfers.reverse('transferId4');
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'POST',
-        url: '/v1/transfers/transferId4/reversals',
-        headers: {},
-        data: {},
-      });
-    });
-  });
-
   describe('list', () => {
     it('Sends the correct request', () => {
       stripe.transfers.list();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/transfers',
-        headers: {},
-        data: {},
-      });
-    });
-  });
-
-  describe('listTransactions', () => {
-    it('Sends the correct request', () => {
-      stripe.transfers.listTransactions('tr_14222');
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'GET',
-        url: '/v1/transfers/tr_14222/transactions',
         headers: {},
         data: {},
       });

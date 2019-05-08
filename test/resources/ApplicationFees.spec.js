@@ -16,20 +16,6 @@ describe('ApplicationFee Resource', () => {
     });
   });
 
-  describe('refund', () => {
-    it('Sends the correct request', () => {
-      stripe.applicationFees.refund('applicationFeeIdExample3242', {
-        amount: 23,
-      });
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'POST',
-        url: '/v1/application_fees/applicationFeeIdExample3242/refund',
-        data: {amount: 23},
-        headers: {},
-      });
-    });
-  });
-
   describe('refunds', () => {
     it('Sends the correct update request', () => {
       stripe.applicationFees.updateRefund(
