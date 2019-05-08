@@ -9,18 +9,6 @@ require('chai').use(require('chai-as-promised'));
 var ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
 
 var utils = module.exports = {
-
-  EVENT_PAYLOAD: {
-    id: 'evt_test_webhook',
-    object: 'event',
-  },
-
-  get EVENT_PAYLOAD_STRING() {
-    return JSON.stringify(this.EVENT_PAYLOAD, null, 2);
-  },
-
-  WEBHOOK_SECRET: 'whsec_test_secret',
-
   getUserStripeKey: function() {
     var key = process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
 
@@ -167,36 +155,5 @@ var utils = module.exports = {
     } catch (err) {
       return false;
     }
-  },
-
-  /**
-   * Generates a header to be used for webhook mocking
-   *
-   * @typedef {object} opts
-   * @property {object} stripe - Instance of Stripe to use. Defaults to a spyable instance for testing.
-   * @property {number} timestamp - Timestamp of the header. Defaults to Date.now()
-   * @property {string} payload - JSON stringified payload object, containing the 'id' and 'object' parameters
-   * @property {string} secret - Stripe webhook secret 'whsec_...'
-   * @property {string} scheme - Version of API to hit. Defaults to 'v1'.
-   * @property {string} signature - Computed webhook signature
-   */
-  generateHeaderString: function(opts) {
-    opts = opts || {};
-
-    opts.stripe = opts.stripe || utils.getSpyableStripe();
-    opts.timestamp = Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
-    opts.payload = opts.payload || utils.EVENT_PAYLOAD_STRING;
-    opts.secret = opts.secret || utils.WEBHOOK_SECRET;
-    opts.scheme = opts.scheme || opts.stripe.webhooks.signature.EXPECTED_SCHEME;
-
-    opts.signature = opts.signature ||
-      opts.stripe.webhooks.signature._computeSignature(opts.timestamp + '.' + opts.payload, opts.secret);
-
-    var generatedHeader = [
-      't=' + opts.timestamp,
-      opts.scheme + '=' + opts.signature,
-    ].join(',');
-
-    return generatedHeader;
   },
 };
