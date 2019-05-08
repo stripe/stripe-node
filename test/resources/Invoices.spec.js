@@ -88,114 +88,42 @@ describe('Invoices Resource', () => {
     });
   });
 
-  describe('retrieveLines', () => {
+  describe('retrieveUpcoming', () => {
     it('Sends the correct request', () => {
-      stripe.invoices.retrieveLines('in_123');
+      stripe.invoices.retrieveUpcoming({
+        customer: 'cus_abc',
+        subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
+      });
+
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/invoices/in_123/lines',
+        url: '/v1/invoices/upcoming',
         headers: {},
-        data: {},
+        data: {
+          customer: 'cus_abc',
+          subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
+        },
       });
     });
   });
 
-  describe('retrieveUpcoming', () => {
-    describe('With just a customer ID', () => {
-      it('Sends the correct request', () => {
-        stripe.invoices.retrieveUpcoming('cus_123');
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url: '/v1/invoices/upcoming?customer=cus_123',
-          headers: {},
-          data: {},
-        });
+  describe('listUpcomingLineItems', () => {
+    it('Sends the correct request', () => {
+      stripe.invoices.listUpcomingLineItems({
+        customer: 'cus_abc',
+        subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
+        limit: 5,
       });
-    });
 
-    describe('With a subscription ID in addition to a customer ID', () => {
-      it('Sends the correct request', () => {
-        stripe.invoices.retrieveUpcoming('cus_123', 'sub_123');
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url: '/v1/invoices/upcoming?customer=cus_123&subscription=sub_123',
-          headers: {},
-          data: {},
-        });
-      });
-    });
-
-    describe('With an options object that includes `subscription_items`', () => {
-      it('Sends the correct request', () => {
-        stripe.invoices.retrieveUpcoming('cus_123', {
-          subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
-        });
-
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url:
-            '/v1/invoices/upcoming?customer=cus_123&' +
-            'subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
-          headers: {},
-          data: {},
-        });
-      });
-    });
-
-    describe('Without a customer id but options', () => {
-      it('Sends the correct request', () => {
-        stripe.invoices.retrieveUpcoming({
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/invoices/upcoming/lines',
+        headers: {},
+        data: {
           customer: 'cus_abc',
           subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
-        });
-
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url:
-            '/v1/invoices/upcoming?customer=cus_abc&' +
-            'subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
-          headers: {},
-          data: {},
-        });
-      });
-    });
-
-    describe('With an options object that includes `subscription_items` in addition to a subscription ID', () => {
-      it('Sends the correct request', () => {
-        stripe.invoices.retrieveUpcoming('cus_123', 'sub_123', {
-          subscription_items: [
-            {plan: 'potato'},
-            {plan: 'rutabaga'},
-            {id: 'SOME_ID', deleted: true},
-          ],
-          subscription_prorate: true,
-        });
-
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url: '/v1/invoices/upcoming?customer=cus_123&subscription=sub_123',
-          headers: {},
-          data: {
-            subscription_items: [
-              {plan: 'potato'},
-              {plan: 'rutabaga'},
-              {id: 'SOME_ID', deleted: true},
-            ],
-            subscription_prorate: true,
-          },
-        });
-      });
-    });
-
-    describe('With a options object in addition to a customer ID', () => {
-      it('Sends the correct request', () => {
-        stripe.invoices.retrieveUpcoming('cus_123', {plan: 'planId123'});
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url: '/v1/invoices/upcoming?customer=cus_123&plan=planId123',
-          headers: {},
-          data: {},
-        });
+          limit: 5,
+        },
       });
     });
   });
