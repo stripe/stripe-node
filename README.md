@@ -236,8 +236,9 @@ const payload = {
 const payloadString = JSON.stringify(payload, null, 2);
 const secret = 'whsec_test_secret';
 
-const header = stripe.generateWebhookHeaderString({
+const header = stripe.webhooks.generateTestHeaderString({
   payload: payloadString,
+  secret,
 });
 
 const event = stripe.webhooks.constructEvent(payloadString, header, secret);
