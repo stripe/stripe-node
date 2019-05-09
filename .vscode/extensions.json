@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    // JS Language plugins (~required)
+    "dbaeumer.vscode-eslint",
+    "joshpeng.sublime-babel-vscode",
+    "esbenp.prettier-vscode",
+
+    // Highly recommended
+    "EditorConfig.editorconfig"
+  ]
+}
