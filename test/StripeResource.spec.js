@@ -49,11 +49,12 @@ describe('StripeResource', () => {
     });
 
     describe('_request', () => {
-      it('encodes the query string in GET requests', (done) => {
+      it('encodes the body in GET requests', (done) => {
         const options = {
           host: stripe.getConstant('DEFAULT_HOST'),
           path: '/v1/invoices/upcoming',
           data: {
+            customer: 'cus_123',
             subscription_items: [
               {plan: 'foo', quantity: 2},
               {id: 'si_123', deleted: true},
@@ -62,18 +63,13 @@ describe('StripeResource', () => {
         };
 
         const scope = nock(`https://${options.host}`)
-          .get(options.path)
-          .query(Object.assign({customer: 'cus_123'}, options.data))
+          .get(options.path, options.data)
           .reply(200, '{}');
 
-        realStripe.invoices.retrieveUpcoming(
-          'cus_123',
-          options.data,
-          (err, response) => {
-            done();
-            scope.done();
-          }
-        );
+        realStripe.invoices.retrieveUpcoming(options.data, (err, response) => {
+          done();
+          scope.done();
+        });
       });
 
       it('encodes the body in POST requests', (done) => {
