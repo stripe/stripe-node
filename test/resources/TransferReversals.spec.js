@@ -9,7 +9,7 @@ const REVERSAL_TEST_ID = 'reversalIdTest999';
 
 // Create new CustomerCard instance with pre-filled customerId:
 const transferReversal = new resources.TransferReversals(stripe, {
-  transferId: TRANSFER_TEST_ID,
+  id: TRANSFER_TEST_ID,
 });
 
 // Use spy from existing resource:

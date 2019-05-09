@@ -9,7 +9,7 @@ const REVISION_TEST_ID = 'sub_sched_rev_123';
 
 // Create new SubscriptionScheduleRevision instance with pre-filled scheduleId:
 const revision = new resources.SubscriptionScheduleRevisions(stripe, {
-  scheduleId: SCHEDULE_TEST_ID,
+  schedule: SCHEDULE_TEST_ID,
 });
 
 // Use spy from existing resource:

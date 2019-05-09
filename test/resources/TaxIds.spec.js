@@ -7,7 +7,7 @@ const expect = require('chai').expect;
 const CUSTOMER_TEST_ID = 'cus_123';
 const TAX_ID_TEST_ID = 'txi_123';
 
-const taxId = new resources.TaxIds(stripe, {customerId: CUSTOMER_TEST_ID});
+const taxId = new resources.TaxIds(stripe, {customer: CUSTOMER_TEST_ID});
 
 // Use spy from existing resource:
 taxId._request = stripe.customers._request;

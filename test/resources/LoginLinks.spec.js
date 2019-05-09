@@ -7,7 +7,7 @@ const expect = require('chai').expect;
 const ACCOUNT_ID = 'acct_EXPRESS';
 
 // Create new LoginLink instance with pre-filled accountId:
-const loginLink = new resources.LoginLinks(stripe, {accountId: ACCOUNT_ID});
+const loginLink = new resources.LoginLinks(stripe, {account: ACCOUNT_ID});
 
 // Use spy from existing resource:
 loginLink._request = stripe.customers._request;
