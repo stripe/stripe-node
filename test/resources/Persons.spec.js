@@ -8,7 +8,7 @@ const ACCOUNT_TEST_ID = 'acct_123';
 const PERSON_TEST_ID = 'person_123';
 
 // Create new Person instance with pre-filled accountId:
-const person = new resources.Persons(stripe, {account: ACCOUNT_TEST_ID});
+const person = new resources.Persons(stripe, {accountId: ACCOUNT_TEST_ID});
 
 // Use spy from existing resource:
 person._request = stripe.customers._request;
