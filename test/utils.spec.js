@@ -22,6 +22,16 @@ describe('utils', () => {
     });
   });
 
+  describe('extractUrlParams', () => {
+    it('works with multiple params', () => {
+      expect(
+        utils.extractUrlParams(
+          'accounts/{accountId}/external_accounts/{externalAccountId}'
+        )
+      ).to.deep.equal(['accountId', 'externalAccountId']);
+    });
+  });
+
   describe('stringifyRequestData', () => {
     it('Handles basic types', () => {
       expect(
