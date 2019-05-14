@@ -106,6 +106,81 @@ describe('Account Resource', function() {
     });
   });
 
+  describe('Capability methods', function() {
+    describe('listCapabilities', function() {
+      it('Sends the correct request', function() {
+        stripe.account.listCapabilities('acct_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/accounts/acct_123/capabilities',
+          headers: {},
+          data: {},
+        });
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+        stripe.account.listCapabilities('acct_123', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/accounts/acct_123/capabilities',
+          headers: {},
+          data: {},
+          auth: TEST_AUTH_KEY,
+        });
+      });
+    });
+
+    describe('retrieveCapability', function() {
+      it('Sends the correct request', function() {
+        stripe.account.retrieveCapability('acct_123', 'acap_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/accounts/acct_123/capabilities/acap_123',
+          headers: {},
+          data: {},
+        });
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+        stripe.account.retrieveCapability('acct_123', 'acap_123', TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/accounts/acct_123/capabilities/acap_123',
+          headers: {},
+          data: {},
+          auth: TEST_AUTH_KEY,
+        });
+      });
+    });
+
+    describe('updateCapability', function() {
+      it('Sends the correct request', function() {
+        stripe.account.updateCapability('acct_123', 'acap_123', {
+          first_name: 'John',
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/accounts/acct_123/capabilities/acap_123',
+          headers: {},
+          data: {first_name: 'John'},
+        });
+      });
+
+      it('Sends the correct request [with specified auth]', function() {
+        stripe.account.updateCapability('acct_123', 'acap_123', {
+          first_name: 'John',
+        }, TEST_AUTH_KEY);
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/accounts/acct_123/capabilities/acap_123',
+          headers: {},
+          data: {first_name: 'John'},
+          auth: TEST_AUTH_KEY,
+        });
+      });
+    });
+  });
+
   describe('External account methods', function() {
     describe('retrieveExternalAccount', function() {
       it('Sends the correct request', function() {
