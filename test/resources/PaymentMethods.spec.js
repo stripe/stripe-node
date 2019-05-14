@@ -1,11 +1,11 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-describe('PaymentMethods Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('PaymentMethods Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.paymentMethods.retrieve('pm_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,9 +16,9 @@ describe('PaymentMethods Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
-      var data = {
+  describe('create', () => {
+    it('Sends the correct request', () => {
+      const data = {
         type: 'card',
       };
       stripe.paymentMethods.create(data);
@@ -26,14 +26,14 @@ describe('PaymentMethods Resource', function() {
         method: 'POST',
         url: '/v1/payment_methods',
         headers: {},
-        data: data,
+        data,
       });
     });
   });
 
-  describe('list', function() {
-    it('Sends the correct request', function() {
-      var data = {
+  describe('list', () => {
+    it('Sends the correct request', () => {
+      const data = {
         customer: 'cus_123',
         type: 'card',
       };
@@ -42,14 +42,14 @@ describe('PaymentMethods Resource', function() {
         method: 'GET',
         url: '/v1/payment_methods',
         headers: {},
-        data: data,
+        data,
       });
     });
   });
 
-  describe('update', function() {
-    it('Sends the correct request', function() {
-      var data = {
+  describe('update', () => {
+    it('Sends the correct request', () => {
+      const data = {
         metadata: {key: 'value'},
       };
       stripe.paymentMethods.update('pm_123', data);
@@ -57,31 +57,31 @@ describe('PaymentMethods Resource', function() {
         method: 'POST',
         url: '/v1/payment_methods/pm_123',
         headers: {},
-        data: data,
+        data,
       });
     });
   });
 
-  describe('attach', function() {
-    it('Sends the correct request', function() {
+  describe('attach', () => {
+    it('Sends the correct request', () => {
       stripe.paymentMethods.attach('pm_123', {customer: 'cus_123'});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/payment_methods/pm_123/attach',
         headers: {},
-        data: {customer: 'cus_123'}
+        data: {customer: 'cus_123'},
       });
     });
   });
 
-  describe('detach', function() {
-    it('Sends the correct request', function() {
+  describe('detach', () => {
+    it('Sends the correct request', () => {
       stripe.paymentMethods.detach('pm_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/payment_methods/pm_123/detach',
         headers: {},
-        data: {}
+        data: {},
       });
     });
   });

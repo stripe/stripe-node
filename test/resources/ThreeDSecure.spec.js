@@ -1,11 +1,11 @@
 'use strict';
 
-var stripe = require('../../testUtils').getSpyableStripe();
-var expect = require('chai').expect;
+const stripe = require('../../testUtils').getSpyableStripe();
+const expect = require('chai').expect;
 
-describe('ThreeDSecure Resource', function() {
-  describe('retrieve', function() {
-    it('Sends the correct request', function() {
+describe('ThreeDSecure Resource', () => {
+  describe('retrieve', () => {
+    it('Sends the correct request', () => {
       stripe.threeDSecure.retrieve('tdsrc_id');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
@@ -16,8 +16,8 @@ describe('ThreeDSecure Resource', function() {
     });
   });
 
-  describe('create', function() {
-    it('Sends the correct request', function() {
+  describe('create', () => {
+    it('Sends the correct request', () => {
       stripe.threeDSecure.create({
         card: 'tok_test',
         amount: 1500,

@@ -1,13 +1,13 @@
 'use strict';
 
-var stripe = require('../../../testUtils').getSpyableStripe();
+const stripe = require('../../../testUtils').getSpyableStripe();
 
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
-describe('Issuing', function () {
-  describe('Disputes Resource', function () {
-    describe('retrieve', function () {
-      it('Sends the correct request', function () {
+describe('Issuing', () => {
+  describe('Disputes Resource', () => {
+    describe('retrieve', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.disputes.retrieve('idp_123');
 
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -19,8 +19,8 @@ describe('Issuing', function () {
       });
     });
 
-    describe('create', function () {
-      it('Sends the correct request', function () {
+    describe('create', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.disputes.create({
           transaction: 'ipi_123',
         });
@@ -35,12 +35,12 @@ describe('Issuing', function () {
       });
     });
 
-    describe('update', function () {
-      it('Sends the correct request', function () {
+    describe('update', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.disputes.update('idp_123', {
           metadata: {
             thing1: true,
-            thing2: 'yes'
+            thing2: 'yes',
           },
         });
         expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -50,15 +50,15 @@ describe('Issuing', function () {
           data: {
             metadata: {
               thing1: true,
-              thing2: 'yes'
+              thing2: 'yes',
             },
           },
         });
       });
     });
 
-    describe('list', function () {
-      it('Sends the correct request', function () {
+    describe('list', () => {
+      it('Sends the correct request', () => {
         stripe.issuing.disputes.list();
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
