@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.36.0 - 2019-05-14
+* [#622](https://github.com/stripe/stripe-node/pull/622) Add support for the `Capability` resource and APIs
+
 ## 6.35.0 - 2019-05-14
 * [#627](https://github.com/stripe/stripe-node/pull/627) Add `listLineItems` and `listUpcomingLineItems` methods to `Invoice`
 
