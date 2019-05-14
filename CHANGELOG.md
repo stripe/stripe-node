@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 6.35.0 - 2019-05-14
+* [#627](https://github.com/stripe/stripe-node/pull/627) Add `listLineItems` and `listUpcomingLineItems` methods to `Invoice`
+
 ## 6.34.0 - 2019-05-08
 * [#619](https://github.com/stripe/stripe-node/pull/619) Move `generateTestHeaderString` to stripe.webhooks (fixes a bug in 6.33.0)
 
