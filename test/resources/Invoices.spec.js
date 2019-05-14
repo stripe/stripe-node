@@ -64,6 +64,30 @@ describe('Invoices Resource', function() {
     });
   });
 
+  describe('listLineItems', function() {
+    it('Sends the correct request', function() {
+      stripe.invoices.listLineItems('in_123');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/invoices/in_123/lines',
+        headers: {},
+        data: {},
+      });
+    });
+  });
+
+  describe('listUpcomingLineItems', function() {
+    it('Sends the correct request', function() {
+      stripe.invoices.listUpcomingLineItems();
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/invoices/upcoming/lines',
+        headers: {},
+        data: {},
+      });
+    });
+  });
+
   describe('retrieveLines', function() {
     it('Sends the correct request', function() {
       stripe.invoices.retrieveLines('in_123');
