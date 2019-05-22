@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 7.0.1 - 2019-05-22
+* [#631](https://github.com/stripe/stripe-node/pull/631) Make autopagination functions work for `listLineItems` and `listUpcomingLineItems`
+
 ## 7.0.0 - 2019-05-14
 
 Major version release. [The migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v7) contains a detailed list of backwards-incompatible changes with upgrade instructions.
