@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 7.1.0 - 2019-05-23
+* [#632](https://github.com/stripe/stripe-node/pull/632) Add support for `radar.early_fraud_warning` resource
+
 ## 7.0.1 - 2019-05-22
 * [#631](https://github.com/stripe/stripe-node/pull/631) Make autopagination functions work for `listLineItems` and `listUpcomingLineItems`
 
