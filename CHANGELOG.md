@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 7.2.0 - 2019-06-17
+* [#608](https://github.com/stripe/stripe-node/pull/608) Add support for `CustomerBalanceTransaction` resource and APIs
+
 ## 7.1.0 - 2019-05-23
 * [#632](https://github.com/stripe/stripe-node/pull/632) Add support for `radar.early_fraud_warning` resource
 
