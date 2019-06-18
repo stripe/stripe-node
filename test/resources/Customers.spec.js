@@ -371,4 +371,59 @@ describe('Customers Resource', () => {
       });
     });
   });
+
+  describe('BalanceTransaction methods', () => {
+    describe('retrieveBalanceTransaction', () => {
+      it('Sends the correct request', () => {
+        stripe.customers.retrieveBalanceTransaction('cus_123', 'cbtxn_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/cus_123/balance_transactions/cbtxn_123',
+          headers: {},
+          data: {},
+        });
+      });
+    });
+
+    describe('createBalanceTransaction', () => {
+      it('Sends the correct request', () => {
+        stripe.customers.createBalanceTransaction('cus_123', {
+          amount: 123,
+          currency: 'usd',
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/cus_123/balance_transactions',
+          headers: {},
+          data: {amount: 123, currency: 'usd'},
+        });
+      });
+    });
+
+    describe('updateBalanceTransaction', () => {
+      it('Sends the correct request', () => {
+        stripe.customers.updateBalanceTransaction('cus_123', 'cbtxn_123', {
+          description: 'description',
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/customers/cus_123/balance_transactions/cbtxn_123',
+          headers: {},
+          data: {description: 'description'},
+        });
+      });
+    });
+
+    describe('listBalanceTransactions', () => {
+      it('Sends the correct request', () => {
+        stripe.customers.listBalanceTransactions('cus_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/customers/cus_123/balance_transactions',
+          headers: {},
+          data: {},
+        });
+      });
+    });
+  });
 });
