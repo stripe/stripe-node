@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 7.3.0 - 2019-06-24
+* [#649](https://github.com/stripe/stripe-node/pull/649) Enable request latency telemetry by default
+
 ## 7.2.0 - 2019-06-17
 * [#608](https://github.com/stripe/stripe-node/pull/608) Add support for `CustomerBalanceTransaction` resource and APIs
 
