@@ -22,7 +22,9 @@ See the [Node API docs](https://stripe.com/docs/api/node#intro).
 
 Install the package with:
 
-    npm install stripe --save
+```sh
+npm install stripe --save
+```
 
 ## Usage
 
@@ -377,6 +379,17 @@ Returns a promise of an array of all items across pages for a list request.
 const allNewCustomers = await stripe.customers
   .list({created: {gt: lastMonth}})
   .autoPagingToArray({limit: 10000});
+```
+
+### Request latency telemetry
+
+By default, the library sends request latency telemetry to Stripe. These
+numbers help Stripe improve the overall latency of its API for all users.
+
+You can disable this behavior if you prefer:
+
+```js
+stripe.setTelemetryEnabled(false);
 ```
 
 ## More Information

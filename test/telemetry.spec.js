@@ -60,6 +60,7 @@ describe('Client Telemetry', () => {
         const stripe = require('../lib/stripe')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
+        stripe.setTelemetryEnabled(false);
         stripe.setHost(host, port, 'http');
 
         stripe.balance
