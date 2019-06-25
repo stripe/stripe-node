@@ -74,10 +74,9 @@ const utils = (module.exports = {
     function CleanupUtility(timeout) {
       const self = this;
       this._cleanupFns = [];
-      this._stripe = require('../lib/stripe')(
-        utils.getUserStripeKey(),
-        'latest'
-      );
+      this._stripe = require('../lib/stripe')(utils.getUserStripeKey(), {
+        apiVersion: 'latest',
+      });
       afterEach(function(done) {
         this.timeout(timeout || CleanupUtility.DEFAULT_TIMEOUT);
         return self.doCleanup(done);

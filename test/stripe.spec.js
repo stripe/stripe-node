@@ -2,7 +2,10 @@
 
 const testUtils = require('../testUtils');
 const utils = require('../lib/utils');
-const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
+const Stripe = require('../lib/stripe');
+const stripe = new Stripe(testUtils.getUserStripeKey(), {
+  apiVersion: 'latest',
+});
 
 const http = require('http');
 
@@ -16,6 +19,27 @@ const CUSTOMER_DETAILS = {
 describe('Stripe Module', function() {
   const cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
+
+  describe('config object', () => {
+    it('should only accept an object', () => {
+      expect(() => {
+        /* eslint-disable new-cap */
+        Stripe(testUtils.getUserStripeKey(), 'latest');
+        /* eslint-enable new-cap */
+      }).to.throw(/Config must be an object/);
+    });
+
+    it('should only contain allowed properties', () => {
+      expect(() => {
+        /* eslint-disable new-cap */
+        Stripe(testUtils.getUserStripeKey(), {
+          foo: 'bar',
+          apiVersion: 'latest',
+        });
+        /* eslint-enable new-cap */
+      }).to.throw(/Config object may only contain the following:/);
+    });
+  });
 
   describe('setApiKey', () => {
     it('uses Bearer auth', () => {
