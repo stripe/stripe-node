@@ -3,7 +3,9 @@
 /* eslint-disable callback-return */
 
 const testUtils = require('../testUtils');
-const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
+const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), {
+  apiVersion: 'latest',
+});
 
 const expect = require('chai').expect;
 
