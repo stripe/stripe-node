@@ -39,6 +39,14 @@ describe('Stripe Module', function() {
         /* eslint-enable new-cap */
       }).to.throw(/Config object may only contain the following:/);
     });
+
+    it('should use defaults when no config object is provided', () => {
+      const defaultStripe = new Stripe(testUtils.getUserStripeKey());
+
+      expect(defaultStripe.getApiField('version')).to.equal(
+        Stripe.DEFAULT_API_VERSION
+      );
+    });
   });
 
   describe('setApiKey', () => {
