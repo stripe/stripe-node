@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 7.4.0 - 2019-06-27
+* [#652](https://github.com/stripe/stripe-node/pull/652) Add support for the `SetupIntent` resource and APIs
+
 ## 7.3.0 - 2019-06-24
 * [#649](https://github.com/stripe/stripe-node/pull/649) Enable request latency telemetry by default
 
