@@ -47,6 +47,15 @@ describe('Stripe Module', function() {
         Stripe.DEFAULT_API_VERSION
       );
     });
+
+    it('should use the options set in the config object', () => {
+      const version = '2019-02-11';
+      const optionsStripe = new Stripe(testUtils.getUserStripeKey(), {
+        apiVersion: version,
+      });
+
+      expect(optionsStripe.getApiField('version')).to.equal(version);
+    });
   });
 
   describe('setApiKey', () => {
