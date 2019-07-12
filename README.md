@@ -175,7 +175,7 @@ This will retry requests `n` times with exponential backoff if they fail due to 
 [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
 ```js
-// Retry a request once before giving up
+ // Retry a request twice before giving up
 stripe.setMaxNetworkRetries(2);
 ```
 
