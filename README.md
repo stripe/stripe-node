@@ -176,7 +176,7 @@ This will retry requests `n` times with exponential backoff if they fail due to 
 
 ```js
 // Retry a request once before giving up
-stripe.setMaxNetworkRetries(1);
+stripe.setMaxNetworkRetries(2);
 ```
 
 ### Examining Responses
