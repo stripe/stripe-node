@@ -211,6 +211,14 @@ describe('utils', () => {
       });
       expect(args.length).to.equal(0);
     });
+    it('assumes any string is an api key', () => {
+      const args = ['yolo'];
+      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+        auth: 'yolo',
+        headers: {},
+      });
+      expect(args.length).to.equal(0);
+    });
     it('parses an idempotency key', () => {
       const args = [{foo: 'bar'}, {idempotency_key: 'foo'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
