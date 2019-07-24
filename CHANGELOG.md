@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 7.5.0 - 2019-07-24
+* [#660](https://github.com/stripe/stripe-node/pull/660) Interpret any string in args as API Key instead of a regex
+  - ⚠️ Careful: passing strings which are not API Keys as as the final argument to a request previously would have ignored those strings, and would now result in the request failing with an authentication error.
+  - ⚠️ Careful: The private api `utils.isAuthKey` was removed.
+* [#658](https://github.com/stripe/stripe-node/pull/658) Update README retry code sample to use two retries
+* [#653](https://github.com/stripe/stripe-node/pull/653) Reorder customer methods
+
 ## 7.4.0 - 2019-06-27
 * [#652](https://github.com/stripe/stripe-node/pull/652) Add support for the `SetupIntent` resource and APIs
 
