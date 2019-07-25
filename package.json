@@ -43,7 +43,6 @@
   "dependencies": {
     "lodash.isplainobject": "^4.0.6",
     "qs": "^6.6.0",
-    "safe-buffer": "^5.1.1",
     "uuid": "^3.3.2"
   },
   "license": "MIT",
