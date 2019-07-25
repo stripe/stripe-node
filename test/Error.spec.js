@@ -7,8 +7,8 @@ const expect = require('chai').expect;
 
 describe('Error', () => {
   it('Populates with type and message params', () => {
-    const e = new Error('FooError', 'Foo happened');
-    expect(e).to.have.property('type', 'FooError');
+    const e = new Error.GenericError('Foo happened');
+    expect(e).to.have.property('type', 'GenericError');
     expect(e).to.have.property('message', 'Foo happened');
     expect(e).to.have.property('stack');
   });
