@@ -4,7 +4,6 @@ require('../testUtils');
 
 const utils = require('../lib/utils');
 const expect = require('chai').expect;
-const Buffer = require('safe-buffer').Buffer;
 
 describe('utils', () => {
   describe('makeURLInterpolator', () => {
