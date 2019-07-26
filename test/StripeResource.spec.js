@@ -8,6 +8,8 @@ const nock = require('nock');
 const stripe = require('../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 
+const Headers = require('../lib/http-headers');
+
 describe('StripeResource', () => {
   describe('createResourcePathWithSymbols', () => {
     it('Generates a path', () => {
@@ -32,11 +34,11 @@ describe('StripeResource', () => {
     });
     it('sets the Stripe-Version header if an API version is provided', () => {
       const headers = stripe.invoices._defaultHeaders(null, 0, '1970-01-01');
-      expect(headers['Stripe-Version']).to.equal('1970-01-01');
+      expect(headers[Headers.STRIPE_VERSION]).to.equal('1970-01-01');
     });
     it('does not the set the Stripe-Version header if no API version is provided', () => {
       const headers = stripe.invoices._defaultHeaders(null, 0, null);
-      expect(headers).to.not.include.keys('Stripe-Version');
+      expect(headers).to.not.include.keys(Headers.STRIPE_VERSION);
     });
   });
 
@@ -323,7 +325,7 @@ describe('StripeResource', () => {
         realStripe.setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, () => {
-          expect(headers).to.have.property('idempotency-key');
+          expect(headers).to.have.property(Headers.IDEMPOTENCY_KEY);
           done();
         });
       });
@@ -351,7 +353,7 @@ describe('StripeResource', () => {
         realStripe.setMaxNetworkRetries(1);
 
         realStripe.charges.retrieve('ch_123', () => {
-          expect(headers).to.not.have.property('idempotency-key');
+          expect(headers).to.not.have.property(Headers.IDEMPOTENCY_KEY);
           done();
         });
       });
@@ -380,7 +382,7 @@ describe('StripeResource', () => {
         realStripe.setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, {idempotency_key: key}, () => {
-          expect(headers['idempotency-key']).to.equal(key);
+          expect(headers[Headers.IDEMPOTENCY_KEY]).to.equal(key);
           done();
         });
       });
