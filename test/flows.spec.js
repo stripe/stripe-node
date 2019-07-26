@@ -412,7 +412,6 @@ describe('Flows', function() {
       }
 
       stripe.once('response', onResponse);
-      stripe.off('response', onResponse);
 
       stripe.charges
         .create({
