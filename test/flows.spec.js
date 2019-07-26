@@ -339,7 +339,7 @@ describe('Flows', function() {
         done();
       }
 
-      stripe.on('request', onRequest);
+      stripe.once('request', onRequest);
 
       stripe.charges
         .create(
@@ -386,7 +386,7 @@ describe('Flows', function() {
         done();
       }
 
-      stripe.on('response', onResponse);
+      stripe.once('response', onResponse);
 
       stripe.charges
         .create(
@@ -411,7 +411,7 @@ describe('Flows', function() {
         done(new Error('How did you get here?'));
       }
 
-      stripe.on('response', onResponse);
+      stripe.once('response', onResponse);
       stripe.off('response', onResponse);
 
       stripe.charges
