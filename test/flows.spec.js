@@ -326,8 +326,6 @@ describe('Flows', function() {
         .slice(2);
 
       function onRequest(request) {
-        stripe.off('request', onRequest);
-
         expect(request).to.eql({
           api_version: 'latest',
           idempotency_key: idempotencyKey,
@@ -371,8 +369,6 @@ describe('Flows', function() {
         if (response.idempotency_key !== idempotencyKey) {
           return;
         }
-
-        stripe.off('response', onResponse);
 
         expect(response.api_version).to.equal(apiVersion);
         expect(response.idempotency_key).to.equal(idempotencyKey);
