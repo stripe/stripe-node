@@ -5,6 +5,7 @@ require('../testUtils');
 const utils = require('../lib/utils');
 const expect = require('chai').expect;
 const Buffer = require('safe-buffer').Buffer;
+const Headers = require('../lib/http-headers');
 
 describe('utils', () => {
   describe('makeURLInterpolator', () => {
@@ -223,7 +224,7 @@ describe('utils', () => {
       const args = [{foo: 'bar'}, {idempotency_key: 'foo'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
-        headers: {'Idempotency-Key': 'foo'},
+        headers: {[Headers.IDEMPOTENCY_KEY]: 'foo'},
       });
       expect(args.length).to.equal(1);
     });
@@ -231,7 +232,7 @@ describe('utils', () => {
       const args = [{foo: 'bar'}, {stripe_version: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
-        headers: {'Stripe-Version': '2003-03-30'},
+        headers: {[Headers.STRIPE_VERSION]: '2003-03-30'},
       });
       expect(args.length).to.equal(1);
     });
@@ -247,8 +248,8 @@ describe('utils', () => {
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         headers: {
-          'Idempotency-Key': 'foo',
-          'Stripe-Version': '2010-01-10',
+          [Headers.IDEMPOTENCY_KEY]: 'foo',
+          [Headers.STRIPE_VERSION]: '2010-01-10',
         },
       });
       expect(args.length).to.equal(1);
@@ -264,8 +265,8 @@ describe('utils', () => {
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
         headers: {
-          'Idempotency-Key': 'foo',
-          'Stripe-Version': 'hunter2',
+          [Headers.IDEMPOTENCY_KEY]: 'foo',
+          [Headers.STRIPE_VERSION]: 'hunter2',
         },
       });
       expect(args.length).to.equal(0);
@@ -432,6 +433,23 @@ describe('utils', () => {
       expect(flattened.buf).to.deep.equal(buf);
       expect(flattened).to.have.property('x[a]');
       expect(flattened['x[a]']).to.equal('1');
+    });
+  });
+
+  describe('getCaseInsensitiveProperty', () => {
+    it('returns undefined for non object', () => {
+      expect(utils.getCaseInsensitiveProperty(false, 'ogogo')).to.be.undefined;
+    });
+    it('return undefined if there is no such property in object', () => {
+      expect(utils.getCaseInsensitiveProperty({a: 'b'}, 'c')).to.be.undefined;
+    });
+    it('returns property value for any case name', () => {
+      expect(
+        utils.getCaseInsensitiveProperty(
+          {thisCaseProperty: 'yeeep'},
+          'THISCASEProperty'
+        )
+      ).to.equal('yeeep');
     });
   });
 });
