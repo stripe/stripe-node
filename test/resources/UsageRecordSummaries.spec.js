@@ -2,6 +2,7 @@
 
 const stripe = require('../../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
+const Headers = require('../../lib/http-headers');
 
 describe('UsageRecordSummaries Resource', () => {
   describe('list', () => {
@@ -30,7 +31,7 @@ describe('UsageRecordSummaries Resource', () => {
             method: 'GET',
             url: '/v1/subscription_items/si_123/usage_record_summaries',
             headers: {
-              'Stripe-Account': 'acct_456',
+              [Headers.STRIPE_ACCOUNT]: 'acct_456',
             },
             data: {},
           });

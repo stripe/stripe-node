@@ -2,6 +2,7 @@
 
 const stripe = require('../../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
+const Headers = require('../../lib/http-headers');
 
 const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 
@@ -70,7 +71,7 @@ describe('Customers Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers',
-        headers: {'Idempotency-Key': 'foo'},
+        headers: {[Headers.IDEMPOTENCY_KEY]: 'foo'},
         data: {description: 'Some customer'},
       });
     });
@@ -97,7 +98,7 @@ describe('Customers Resource', () => {
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers',
-        headers: {'Idempotency-Key': 'foo'},
+        headers: {[Headers.IDEMPOTENCY_KEY]: 'foo'},
         data: {description: 'Some customer'},
         auth: TEST_AUTH_KEY,
       });

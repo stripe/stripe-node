@@ -2,6 +2,7 @@
 
 const stripe = require('../../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
+const Headers = require('../../lib/http-headers');
 
 function errorsOnNoStripeVersion() {
   return expect(
@@ -22,7 +23,7 @@ function sendsCorrectStripeVersion() {
       customer: 'cus_123',
     },
     headers: {
-      'Stripe-Version': '2017-06-05',
+      [Headers.STRIPE_VERSION]: '2017-06-05',
     },
   });
 }
@@ -41,7 +42,7 @@ describe('EphemeralKey Resource', () => {
           customer: 'cus_123',
         },
         headers: {
-          'Stripe-Version': '2017-05-25',
+          [Headers.STRIPE_VERSION]: '2017-05-25',
         },
       });
     });
