@@ -370,6 +370,8 @@ describe('Flows', function() {
           return;
         }
 
+        stripe.off('response', onResponse);
+
         expect(response.api_version).to.equal(apiVersion);
         expect(response.idempotency_key).to.equal(idempotencyKey);
         expect(response.account).to.equal(connectedAccountId);
@@ -382,7 +384,7 @@ describe('Flows', function() {
         done();
       }
 
-      stripe.once('response', onResponse);
+      stripe.on('response', onResponse);
 
       stripe.charges
         .create(
@@ -408,6 +410,7 @@ describe('Flows', function() {
       }
 
       stripe.once('response', onResponse);
+      stripe.off('response', onResponse);
 
       stripe.charges
         .create({
