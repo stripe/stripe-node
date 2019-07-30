@@ -62,7 +62,6 @@ module.exports = {
     ],
     'line-comment-position': 'off',
     'linebreak-style': ['error', 'unix'],
-    'lines-around-comment': ['error', { "allowClassStart": true }],
     'lines-around-directive': 'error',
     'max-depth': 'error',
     'max-len': 'off',
