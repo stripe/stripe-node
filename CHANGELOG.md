@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.5.2 - 2019-07-30
+
+- [#664](https://github.com/stripe/stripe-node/pull/664) Expose and use `once`
+
 ## 7.5.1 - 2019-07-30
 
 - [#662](https://github.com/stripe/stripe-node/pull/662) Remove `safe-buffer` dependency
