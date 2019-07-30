@@ -1,26 +1,38 @@
 # CHANGELOG
 
+## 7.5.1 - 2019-07-30
+
+- [#662](https://github.com/stripe/stripe-node/pull/662) Remove `safe-buffer` dependency
+- [#666](https://github.com/stripe/stripe-node/pull/666) Bump lodash from 4.17.11 to 4.17.15
+- [#668](https://github.com/stripe/stripe-node/pull/668) Move Balance History to /v1/balance_transactions
+
 ## 7.5.0 - 2019-07-24
-* [#660](https://github.com/stripe/stripe-node/pull/660) Interpret any string in args as API Key instead of a regex
+
+- [#660](https://github.com/stripe/stripe-node/pull/660) Interpret any string in args as API Key instead of a regex
   - ⚠️ Careful: passing strings which are not API Keys as as the final argument to a request previously would have ignored those strings, and would now result in the request failing with an authentication error.
   - ⚠️ Careful: The private api `utils.isAuthKey` was removed.
-* [#658](https://github.com/stripe/stripe-node/pull/658) Update README retry code sample to use two retries
-* [#653](https://github.com/stripe/stripe-node/pull/653) Reorder customer methods
+- [#658](https://github.com/stripe/stripe-node/pull/658) Update README retry code sample to use two retries
+- [#653](https://github.com/stripe/stripe-node/pull/653) Reorder customer methods
 
 ## 7.4.0 - 2019-06-27
-* [#652](https://github.com/stripe/stripe-node/pull/652) Add support for the `SetupIntent` resource and APIs
+
+- [#652](https://github.com/stripe/stripe-node/pull/652) Add support for the `SetupIntent` resource and APIs
 
 ## 7.3.0 - 2019-06-24
-* [#649](https://github.com/stripe/stripe-node/pull/649) Enable request latency telemetry by default
+
+- [#649](https://github.com/stripe/stripe-node/pull/649) Enable request latency telemetry by default
 
 ## 7.2.0 - 2019-06-17
-* [#608](https://github.com/stripe/stripe-node/pull/608) Add support for `CustomerBalanceTransaction` resource and APIs
+
+- [#608](https://github.com/stripe/stripe-node/pull/608) Add support for `CustomerBalanceTransaction` resource and APIs
 
 ## 7.1.0 - 2019-05-23
-* [#632](https://github.com/stripe/stripe-node/pull/632) Add support for `radar.early_fraud_warning` resource
+
+- [#632](https://github.com/stripe/stripe-node/pull/632) Add support for `radar.early_fraud_warning` resource
 
 ## 7.0.1 - 2019-05-22
-* [#631](https://github.com/stripe/stripe-node/pull/631) Make autopagination functions work for `listLineItems` and `listUpcomingLineItems`
+
+- [#631](https://github.com/stripe/stripe-node/pull/631) Make autopagination functions work for `listLineItems` and `listUpcomingLineItems`
 
 ## 7.0.0 - 2019-05-14
 
