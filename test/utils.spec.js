@@ -312,10 +312,10 @@ describe('utils', () => {
     });
   });
 
-  describe('removeEmpty', () => {
+  describe('removeNullish', () => {
     it('removes empty properties and leaves non-empty ones', () => {
       expect(
-        utils.removeEmpty({
+        utils.removeNullish({
           cat: 3,
           dog: false,
           rabbit: undefined,
@@ -327,9 +327,9 @@ describe('utils', () => {
       });
     });
 
-    it('throws an error if not given two things to compare', () => {
+    it('throws an error if not given an object', () => {
       expect(() => {
-        utils.removeEmpty('potato');
+        utils.removeNullish('potato');
       }).to.throw();
     });
   });

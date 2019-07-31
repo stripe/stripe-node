@@ -175,7 +175,7 @@ This will retry requests `n` times with exponential backoff if they fail due to 
 [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
 ```js
- // Retry a request twice before giving up
+// Retry a request twice before giving up
 stripe.setMaxNetworkRetries(2);
 ```
 
@@ -410,16 +410,16 @@ $ yarn test
 
 If you do not have `yarn` installed, you can get it with `npm install --global yarn`.
 
-Run a single test suite:
+Run a single test suite without a coverage report:
 
 ```bash
-$ yarn mocha test/Error.spec.js
+$ yarn mocha-only test/Error.spec.js
 ```
 
-Run a single test (case sensitive):
+Run a single test (case sensitive) in watch mode:
 
 ```bash
-$ yarn mocha test/Error.spec.js --grep 'Populates with type'
+$ yarn mocha-only test/Error.spec.js --grep 'Populates with type' --watch
 ```
 
 If you wish, you may run tests using your Stripe _Test_ API key by setting the
