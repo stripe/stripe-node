@@ -7,8 +7,8 @@ const expect = require('chai').expect;
 
 describe('Error', () => {
   it('Populates with type and message params', () => {
-    const e = new Error.GenericError('Foo happened');
-    expect(e).to.have.property('type', 'GenericError');
+    const e = new Error('FooError', 'Foo happened');
+    expect(e).to.have.property('type', 'FooError');
     expect(e).to.have.property('message', 'Foo happened');
     expect(e).to.have.property('stack');
   });
@@ -55,9 +55,9 @@ describe('Error', () => {
     });
 
     it('can be extended via .extend method', () => {
-      const Custom = Error.GenericError.extend({type: 'MyCustomErrorType'});
+      const Custom = Error.extend({type: 'MyCustomErrorType'});
       const err = new Custom({message: 'byaka'});
-      expect(err).to.be.instanceOf(Error.GenericError);
+      expect(err).to.be.instanceOf(Error.StripeError);
       expect(err).to.have.property('type', 'MyCustomErrorType');
       expect(err).to.have.property('name', 'MyCustomErrorType');
       expect(err).to.have.property('message', 'byaka');
@@ -74,7 +74,7 @@ describe('Error', () => {
       const err = new Custom({
         message: 'ee',
       });
-      expect(err).to.be.instanceOf(Error.GenericError);
+      expect(err).to.be.instanceOf(Error.StripeError);
       expect(err).to.have.property('type', 'MyCardError');
       expect(err).to.have.property('name', 'MyCardError');
       expect(err).to.have.property('message', 'ee');
