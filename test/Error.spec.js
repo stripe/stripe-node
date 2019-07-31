@@ -81,5 +81,25 @@ describe('Error', () => {
       expect(err).to.have.property('detail', 'hello');
       expect(err).to.have.property('customField', 'hi');
     });
+
+    it('ignores invalid constructor parameters for StripeError', () => {
+      const std = new TypeError(false, 'a string');
+
+      const a = new Error.StripeError(false, 'a string');
+      expect(a).to.be.instanceOf(Error.StripeError);
+      expect(a).to.have.property('type', 'StripeError');
+      expect(a).to.have.property('message', std.message);
+
+      const b = new Error.StripeError('a string');
+      expect(b).to.be.instanceOf(Error.StripeError);
+      expect(b).to.have.property('type', 'StripeError');
+      expect(b).to.have.property('message', 'a string');
+
+      const std1 = new ReferenceError({some: 'object'}, {another: 'object'});
+      const c = new Error.StripeError({some: 'object'}, {another: 'object'});
+      expect(c).to.be.instanceOf(Error.StripeError);
+      expect(c).to.have.property('type', 'StripeError');
+      expect(c).to.have.property('message', std1.message);
+    });
   });
 });
