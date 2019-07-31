@@ -67,7 +67,7 @@ describe('StripeResource', () => {
           .reply(200, '{}');
 
         realStripe.invoices.retrieveUpcoming(options.data, (err, response) => {
-          done();
+          done(err);
           scope.done();
         });
       });
@@ -92,7 +92,7 @@ describe('StripeResource', () => {
           'sub_123',
           options.data,
           (err, response) => {
-            done();
+            done(err);
             scope.done();
           }
         );
@@ -175,7 +175,7 @@ describe('StripeResource', () => {
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
-          done();
+          done(err);
         });
       });
 
@@ -198,7 +198,7 @@ describe('StripeResource', () => {
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
-          done();
+          done(err);
         });
       });
 
@@ -272,7 +272,7 @@ describe('StripeResource', () => {
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
-          done();
+          done(err);
         });
       });
 
@@ -295,7 +295,7 @@ describe('StripeResource', () => {
 
         realStripe.charges.retrieve('ch_123', (err, charge) => {
           expect(charge.id).to.equal('ch_123');
-          done();
+          done(err);
         });
       });
 
@@ -322,9 +322,9 @@ describe('StripeResource', () => {
 
         realStripe.setMaxNetworkRetries(1);
 
-        realStripe.charges.create(options.data, () => {
+        realStripe.charges.create(options.data, (err) => {
           expect(headers).to.have.property('idempotency-key');
-          done();
+          done(err);
         });
       });
 
