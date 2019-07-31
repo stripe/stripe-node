@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.5.3 - 2019-07-31
+
+- [#667](https://github.com/stripe/stripe-node/pull/667) Refactor request headers, allowing any header to be overridden.
+
 ## 7.5.2 - 2019-07-30
 
 - [#664](https://github.com/stripe/stripe-node/pull/664) Expose and use `once`
