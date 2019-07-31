@@ -17,13 +17,13 @@ describe('StripeResource', () => {
     });
   });
 
-  describe('_defaultHeaders', () => {
+  describe('_makeHeaders', () => {
     it('sets the Authorization header with Bearer auth using the global API key', () => {
-      const headers = stripe.invoices._defaultHeaders(null, 0, null);
+      const headers = stripe.invoices._makeHeaders(null, 0, null);
       expect(headers.Authorization).to.equal('Bearer fakeAuthToken');
     });
     it('sets the Authorization header with Bearer auth using the specified API key', () => {
-      const headers = stripe.invoices._defaultHeaders(
+      const headers = stripe.invoices._makeHeaders(
         'anotherFakeAuthToken',
         0,
         null
@@ -31,11 +31,11 @@ describe('StripeResource', () => {
       expect(headers.Authorization).to.equal('Bearer anotherFakeAuthToken');
     });
     it('sets the Stripe-Version header if an API version is provided', () => {
-      const headers = stripe.invoices._defaultHeaders(null, 0, '1970-01-01');
+      const headers = stripe.invoices._makeHeaders(null, 0, '1970-01-01');
       expect(headers['Stripe-Version']).to.equal('1970-01-01');
     });
     it('does not the set the Stripe-Version header if no API version is provided', () => {
-      const headers = stripe.invoices._defaultHeaders(null, 0, null);
+      const headers = stripe.invoices._makeHeaders(null, 0, null);
       expect(headers).to.not.include.keys('Stripe-Version');
     });
   });
