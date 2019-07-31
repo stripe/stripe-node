@@ -42,8 +42,7 @@
   },
   "dependencies": {
     "lodash.isplainobject": "^4.0.6",
-    "qs": "^6.6.0",
-    "uuid": "^3.3.2"
+    "qs": "^6.6.0"
   },
   "license": "MIT",
   "scripts": {
