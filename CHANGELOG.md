@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.5.4 - 2019-08-01
+
+- [#671](https://github.com/stripe/stripe-node/pull/671) Include a prefix in generated idempotency keys and remove uuid dependency.
+
 ## 7.5.3 - 2019-07-31
 
 - [#667](https://github.com/stripe/stripe-node/pull/667) Refactor request headers, allowing any header to be overridden.
