@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "7.5.0",
+  "version": "7.5.3",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -41,8 +41,7 @@
     "prettier": "^1.16.4"
   },
   "dependencies": {
-    "qs": "^6.6.0",
-    "uuid": "^3.3.2"
+    "qs": "^6.6.0"
   },
   "license": "MIT",
   "scripts": {

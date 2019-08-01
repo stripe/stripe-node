@@ -326,8 +326,6 @@ describe('Flows', function() {
         .slice(2);
 
       function onRequest(request) {
-        stripe.off('request', onRequest);
-
         expect(request).to.eql({
           api_version: 'latest',
           idempotency_key: idempotencyKey,
@@ -339,7 +337,7 @@ describe('Flows', function() {
         done();
       }
 
-      stripe.on('request', onRequest);
+      stripe.once('request', onRequest);
 
       stripe.charges
         .create(
@@ -411,7 +409,7 @@ describe('Flows', function() {
         done(new Error('How did you get here?'));
       }
 
-      stripe.on('response', onResponse);
+      stripe.once('response', onResponse);
       stripe.off('response', onResponse);
 
       stripe.charges
