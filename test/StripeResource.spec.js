@@ -1,7 +1,6 @@
 'use strict';
 
 const utils = require('../testUtils');
-const uuid = require('uuid/v4');
 
 const nock = require('nock');
 
@@ -357,7 +356,7 @@ describe('StripeResource', () => {
       });
 
       it('should reuse the given idempotency key provided for retries', (done) => {
-        const key = uuid();
+        const key = 'i-am-a-key';
         let headers;
 
         nock(`https://${options.host}`)
