@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.5.5 - 2019-08-02
+
+- [#665](https://github.com/stripe/stripe-node/pull/665) Remove `lodash.isplainobject`.
+
 ## 7.5.4 - 2019-08-01
 
 - [#671](https://github.com/stripe/stripe-node/pull/671) Include a prefix in generated idempotency keys and remove uuid dependency.
