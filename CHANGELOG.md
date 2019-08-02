@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 7.6.0 - 2019-08-02
+
+- [#661](https://github.com/stripe/stripe-node/pull/661) Refactor errors to ES6 classes.
+- [#672](https://github.com/stripe/stripe-node/pull/672) Refinements to error ES6 classes.
+
 ## 7.5.5 - 2019-08-02
 
 - [#665](https://github.com/stripe/stripe-node/pull/665) Remove `lodash.isplainobject`.
