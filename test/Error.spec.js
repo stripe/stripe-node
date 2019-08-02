@@ -6,11 +6,42 @@ const Error = require('../lib/Error');
 const expect = require('chai').expect;
 
 describe('Error', () => {
-  it('Populates with type and message params', () => {
-    const e = new Error('FooError', 'Foo happened');
-    expect(e).to.have.property('type', 'FooError');
-    expect(e).to.have.property('message', 'Foo happened');
-    expect(e).to.have.property('stack');
+  describe('Deprecated base export (DEPRECATED)', () => {
+    it('Populates with type and message params (DEPRECATED)', () => {
+      const e = new Error('FooError', 'Foo happened');
+      expect(e).to.have.property('type', 'FooError');
+      expect(e).to.have.property('message', 'Foo happened');
+      expect(e).to.have.property('stack');
+    });
+
+    it('can be extended via .extend method, with a weird signature (DEPRECATED)', () => {
+      const Custom = Error.extend({type: 'MyCustomErrorType'});
+      const err = new Custom('MyOverriddenCustomErrorType', 'byaka');
+      expect(err).to.be.instanceOf(Error);
+      expect(err).to.have.property('type', 'MyOverriddenCustomErrorType');
+      expect(err).to.have.property('message', 'byaka');
+    });
+
+    it('can be extended via .extend method, with `populate` overridden (DEPRECATED)', () => {
+      let populateArgs;
+      const Custom = Error.extend({
+        type: 'MyCardError',
+        populate(...args) {
+          populateArgs = args;
+          this.message = 'overridden message';
+          this.detail = args[0].hello;
+          this.customField = 'hi';
+        },
+      });
+      const err = new Custom({hello: 'ee'}, 'foo', 'bar');
+      expect(populateArgs).to.deep.equal([{hello: 'ee'}, 'foo', 'bar']);
+      expect(err).to.be.instanceOf(Error);
+      expect(err).to.have.property('type', 'MyCardError');
+      expect(err).to.have.property('name', 'Error');
+      expect(err).to.have.property('message', 'overridden message');
+      expect(err).to.have.property('detail', 'ee');
+      expect(err).to.have.property('customField', 'hi');
+    });
   });
 
   describe('StripeError', () => {
@@ -54,48 +85,37 @@ describe('Error', () => {
       expect(e).to.have.property('statusCode', 400);
     });
 
-    it('can be extended via .extend method', () => {
-      const Custom = Error.extend({type: 'MyCustomErrorType'});
+    it('has subclasses which provide `.type` as their name', () => {
+      class Foo extends Error.StripeError {}
+      const err = new Foo({message: 'hi'});
+      expect(err).to.have.property('type', 'Foo');
+    });
+
+    it('can be extended via .extend method (DEPRECATED)', () => {
+      const Custom = Error.StripeError.extend({type: 'MyCustomErrorType'});
       const err = new Custom({message: 'byaka'});
       expect(err).to.be.instanceOf(Error.StripeError);
       expect(err).to.have.property('type', 'MyCustomErrorType');
-      expect(err).to.have.property('name', 'MyCustomErrorType');
       expect(err).to.have.property('message', 'byaka');
     });
 
-    it('can create custom error via `extend` export', () => {
-      const Custom = Error.extend({
+    it('can create custom error via `extend` export (DEPRECATED)', () => {
+      let populateArgs;
+      const Custom = Error.StripeError.extend({
         type: 'MyCardError',
-        populate(raw) {
+        populate(...args) {
+          populateArgs = args;
           this.detail = 'hello';
           this.customField = 'hi';
         },
       });
-      const err = new Custom({
-        message: 'ee',
-      });
+      const err = new Custom({message: 'ee'}, 'wat');
+      expect(populateArgs).to.deep.equal([{message: 'ee'}, 'wat']);
       expect(err).to.be.instanceOf(Error.StripeError);
       expect(err).to.have.property('type', 'MyCardError');
-      expect(err).to.have.property('name', 'MyCardError');
       expect(err).to.have.property('message', 'ee');
       expect(err).to.have.property('detail', 'hello');
       expect(err).to.have.property('customField', 'hi');
-    });
-
-    it('ignores invalid constructor parameters for StripeError', () => {
-      const a = new Error.StripeError(false, 'a string');
-      expect(a).to.be.instanceOf(Error.StripeError);
-      expect(a).to.have.property('type', 'StripeError');
-      expect(a).to.have.property('message', '');
-
-      const b = new Error.StripeError('a string');
-      expect(b).to.be.instanceOf(Error.StripeError);
-      expect(b).to.have.property('type', 'StripeError');
-      expect(b).to.have.property('message', '');
-
-      const c = new Error.StripeError({some: 'object'}, {another: 'object'});
-      expect(c).to.be.instanceOf(Error.StripeError);
-      expect(c).to.have.property('type', 'StripeError');
     });
   });
 });
