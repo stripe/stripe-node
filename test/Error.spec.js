@@ -53,5 +53,49 @@ describe('Error', () => {
       });
       expect(e).to.have.property('statusCode', 400);
     });
+
+    it('can be extended via .extend method', () => {
+      const Custom = Error.extend({type: 'MyCustomErrorType'});
+      const err = new Custom({message: 'byaka'});
+      expect(err).to.be.instanceOf(Error.StripeError);
+      expect(err).to.have.property('type', 'MyCustomErrorType');
+      expect(err).to.have.property('name', 'MyCustomErrorType');
+      expect(err).to.have.property('message', 'byaka');
+    });
+
+    it('can create custom error via `extend` export', () => {
+      const Custom = Error.extend({
+        type: 'MyCardError',
+        populate(raw) {
+          this.detail = 'hello';
+          this.customField = 'hi';
+        },
+      });
+      const err = new Custom({
+        message: 'ee',
+      });
+      expect(err).to.be.instanceOf(Error.StripeError);
+      expect(err).to.have.property('type', 'MyCardError');
+      expect(err).to.have.property('name', 'MyCardError');
+      expect(err).to.have.property('message', 'ee');
+      expect(err).to.have.property('detail', 'hello');
+      expect(err).to.have.property('customField', 'hi');
+    });
+
+    it('ignores invalid constructor parameters for StripeError', () => {
+      const a = new Error.StripeError(false, 'a string');
+      expect(a).to.be.instanceOf(Error.StripeError);
+      expect(a).to.have.property('type', 'StripeError');
+      expect(a).to.have.property('message', '');
+
+      const b = new Error.StripeError('a string');
+      expect(b).to.be.instanceOf(Error.StripeError);
+      expect(b).to.have.property('type', 'StripeError');
+      expect(b).to.have.property('message', '');
+
+      const c = new Error.StripeError({some: 'object'}, {another: 'object'});
+      expect(c).to.be.instanceOf(Error.StripeError);
+      expect(c).to.have.property('type', 'StripeError');
+    });
   });
 });

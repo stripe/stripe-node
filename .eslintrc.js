@@ -62,7 +62,6 @@ module.exports = {
     ],
     'line-comment-position': 'off',
     'linebreak-style': ['error', 'unix'],
-    'lines-around-comment': 'error',
     'lines-around-directive': 'error',
     'max-depth': 'error',
     'max-len': 'off',
@@ -245,7 +244,9 @@ module.exports = {
     'yield-star-spacing': 'error',
     yoda: ['error', 'never'],
   },
-  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaVersion: 2018,
+  },
   plugins: ['prettier'],
   extends: ['plugin:prettier/recommended'],
 };
