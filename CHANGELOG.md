@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.6.1 - 2019-08-08
+
+- [#673](https://github.com/stripe/stripe-node/pull/673) Add request start and end time to request and response events
+
 ## 7.6.0 - 2019-08-02
 
 - [#661](https://github.com/stripe/stripe-node/pull/661) Refactor errors to ES6 classes.
