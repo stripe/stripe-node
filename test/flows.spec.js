@@ -324,15 +324,18 @@ describe('Flows', function() {
       const idempotencyKey = Math.random()
         .toString(36)
         .slice(2);
+      const lowerBoundStartTime = Date.now();
 
       function onRequest(request) {
-        expect(request).to.eql({
-          api_version: 'latest',
-          idempotency_key: idempotencyKey,
-          method: 'POST',
-          path: '/v1/charges',
-          account: connectedAccountId,
-        });
+        expect(request.api_version).to.equal('latest');
+        expect(request.idempotency_key).to.equal(idempotencyKey);
+        expect(request.account).to.equal(connectedAccountId);
+        expect(request.method).to.equal('POST');
+        expect(request.path).to.equal('/v1/charges');
+        expect(request.request_start_time).to.be.within(
+          lowerBoundStartTime,
+          Date.now()
+        );
 
         done();
       }
@@ -379,7 +382,13 @@ describe('Flows', function() {
         expect(response.path).to.equal('/v1/charges');
         expect(response.request_id).to.match(/req_[\w\d]/);
         expect(response.status).to.equal(402);
-        expect(response.elapsed).to.be.within(50, 30000);
+        expect(response.elapsed).to.equal(
+          response.request_end_time - response.request_start_time
+        );
+        expect(response.request_end_time).to.be.within(
+          response.request_end_time,
+          Date.now()
+        );
 
         done();
       }

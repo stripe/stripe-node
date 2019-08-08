@@ -212,10 +212,11 @@ stripe.off('request', onRequest);
 ```js
 {
   api_version: 'latest',
-  account: 'acct_TEST',       // Only present if provided
-  idempotency_key: 'abc123',  // Only present if provided
+  account: 'acct_TEST',              // Only present if provided
+  idempotency_key: 'abc123',         // Only present if provided
   method: 'POST',
-  path: '/v1/charges'
+  path: '/v1/charges',
+  request_start_time: 1565125303932  // Unix timestamp in milliseconds
 }
 ```
 
@@ -224,13 +225,15 @@ stripe.off('request', onRequest);
 ```js
 {
   api_version: 'latest',
-  account: 'acct_TEST',       // Only present if provided
-  idempotency_key: 'abc123',  // Only present if provided
+  account: 'acct_TEST',              // Only present if provided
+  idempotency_key: 'abc123',         // Only present if provided
   method: 'POST',
   path: '/v1/charges',
   status: 402,
   request_id: 'req_Ghc9r26ts73DRf',
-  elapsed: 445                // Elapsed time in milliseconds
+  elapsed: 445                       // Elapsed time in milliseconds
+  request_start_time: 1565125303932  // Unix timestamp in milliseconds
+  request_end_time: 1565125304377    // Unix timestamp in milliseconds
 }
 ```
 
