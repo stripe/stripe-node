@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.7.0 - 2019-08-09
+
+- [#675](https://github.com/stripe/stripe-node/pull/675) Remove subscription schedule revisions
+
 ## 7.6.2 - 2019-08-09
 
 - [#674](https://github.com/stripe/stripe-node/pull/674) Refactor requestDataProcessor for File out into its own file
