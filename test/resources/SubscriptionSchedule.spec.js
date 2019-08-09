@@ -4,7 +4,6 @@ const stripe = require('../../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 
 const SCHEDULE_TEST_ID = 'sub_sched_123';
-const REVISION_TEST_ID = 'sub_sched_rev_123';
 
 describe('Subscription Schedule Resource', () => {
   describe('cancel', () => {
@@ -85,35 +84,6 @@ describe('Subscription Schedule Resource', () => {
         url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}`,
         data,
         headers: {},
-      });
-    });
-  });
-
-  describe('Revision methods', () => {
-    describe('retrieveRevision', () => {
-      it('Sends the correct request', () => {
-        stripe.subscriptionSchedules.retrieveRevision(
-          SCHEDULE_TEST_ID,
-          REVISION_TEST_ID
-        );
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/revisions/${REVISION_TEST_ID}`,
-          headers: {},
-          data: {},
-        });
-      });
-    });
-
-    describe('listRevisions', () => {
-      it('Sends the correct request', () => {
-        stripe.subscriptionSchedules.listRevisions(SCHEDULE_TEST_ID);
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/revisions`,
-          headers: {},
-          data: {},
-        });
       });
     });
   });
