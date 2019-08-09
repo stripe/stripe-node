@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.6.2 - 2019-08-09
+
+- [#674](https://github.com/stripe/stripe-node/pull/674) Refactor requestDataProcessor for File out into its own file
+
 ## 7.6.1 - 2019-08-08
 
 - [#673](https://github.com/stripe/stripe-node/pull/673) Add request start and end time to request and response events
