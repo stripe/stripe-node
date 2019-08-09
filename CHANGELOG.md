@@ -3,6 +3,7 @@
 ## 7.7.0 - 2019-08-09
 
 - [#675](https://github.com/stripe/stripe-node/pull/675) Remove subscription schedule revisions
+  - This is technically a breaking change. We've chosen to release it as a minor vesion bump because the associated API is unused.
 
 ## 7.6.2 - 2019-08-09
 
