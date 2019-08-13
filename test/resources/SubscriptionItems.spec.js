@@ -80,4 +80,21 @@ describe('SubscriptionItems Resource', () => {
       });
     });
   });
+
+  describe('createUsageRecord', () => {
+    it('Sends the correct request', () => {
+      const data = {
+        quantity: 123,
+        timestamp: 123321,
+        action: 'increment',
+      };
+      stripe.subscriptionItems.createUsageRecord('si_123', data);
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: '/v1/subscription_items/si_123/usage_records',
+        headers: {},
+        data,
+      });
+    });
+  });
 });
