@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 7.8.0 - 2019-08-12
+* [#678](https://github.com/stripe/stripe-node/pull/678) Add `subscriptionItems.createUsageRecord()` method
+
 ## 7.7.0 - 2019-08-09
 
 - [#675](https://github.com/stripe/stripe-node/pull/675) Remove subscription schedule revisions
