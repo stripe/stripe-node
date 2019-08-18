@@ -9,6 +9,8 @@
 The Stripe Node library provides convenient access to the Stripe API from
 applications written in server-side JavaScript.
 
+Adding change here for demonstration purposes.
+
 Please keep in mind that this package is for use with server-side Node that
 uses Stripe secret keys. To maintain PCI compliance, tokenization of credit
 card information should always be done with [Stripe.js][stripe-js] on the
