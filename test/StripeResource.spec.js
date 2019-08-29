@@ -4,6 +4,7 @@ const utils = require('../testUtils');
 
 const nock = require('nock');
 
+const Error = require('../lib/Error');
 const stripe = require('../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 
@@ -215,6 +216,30 @@ describe('StripeResource', () => {
         realStripe.charges.create(options.data, (err) => {
           expect(err.type).to.equal('StripeCardError');
           done();
+        });
+      });
+
+      it('should retry a 429 lock_timeout', (done) => {
+        nock(`https://${options.host}`)
+          .get(`${options.path}/ch_123`)
+          .reply(429, {
+            error: {
+              type: 'invalid_request_error',
+              code: 'lock_timeout',
+            },
+          })
+          .get(`${options.path}/ch_123`)
+          .reply(200, {
+            id: 'ch_123',
+            object: 'charge',
+            amount: 1000,
+          });
+
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.charges.retrieve('ch_123', (err, charge) => {
+          expect(charge.id).to.equal('ch_123');
+          done(err);
         });
       });
 
@@ -443,6 +468,68 @@ describe('StripeResource', () => {
           1
         );
 
+        expect(res).to.equal(false);
+      });
+    });
+
+    describe('_shouldRetryError', () => {
+      beforeEach(() => {
+        stripe.setMaxNetworkRetries(1);
+      });
+
+      it("should return false if we didn't error", () => {
+        const res = stripe.invoices._shouldRetryError(null, 0);
+        expect(res).to.equal(false);
+      });
+
+      it("should return false if we've reached maximum retries", () => {
+        const res = stripe.invoices._shouldRetryError(null, 1);
+        expect(res).to.equal(false);
+      });
+
+      it('should return false if this is not a retry-able error', () => {
+        let res = stripe.invoices._shouldRetryError(
+          new Error.StripeInvalidRequestError({
+            statusCode: 400,
+            type: 'invalid_request_error',
+            code: 'incorrect_zip',
+          }),
+          0
+        );
+        expect(res).to.equal(false);
+
+        res = stripe.invoices._shouldRetryError(
+          new Error.StripeInvalidRequestError({
+            statusCode: 429,
+            type: 'invalid_request_error',
+            code: 'rate_limit',
+          }),
+          0
+        );
+        expect(res).to.equal(false);
+      });
+
+      it('should return true if this is a 429 lock_timeout', () => {
+        const res = stripe.invoices._shouldRetryError(
+          new Error.StripeInvalidRequestError({
+            statusCode: 429,
+            type: 'invalid_request_error',
+            code: 'lock_timeout',
+          }),
+          0
+        );
+        expect(res).to.equal(true);
+      });
+
+      it("should return false if we've reached maximum retries", () => {
+        const res = stripe.invoices._shouldRetryError(
+          new Error.StripeInvalidRequestError({
+            statusCode: 429,
+            type: 'invalid_request_error',
+            code: 'lock_timeout',
+          }),
+          1
+        );
         expect(res).to.equal(false);
       });
     });
