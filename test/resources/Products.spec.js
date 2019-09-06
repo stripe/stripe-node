@@ -43,10 +43,8 @@ describe('Product Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/products',
-        data: {
-          limit: 3,
-        },
+        url: '/v1/products?limit=3',
+        data: {},
         headers: {},
       });
     });
@@ -57,10 +55,8 @@ describe('Product Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/products',
-        data: {
-          shippable: true,
-        },
+        url: '/v1/products?shippable=true',
+        data: {},
         headers: {},
       });
     });

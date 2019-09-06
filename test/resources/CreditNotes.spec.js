@@ -38,9 +38,9 @@ describe('CreditNotes Resource', () => {
       stripe.creditNotes.list({count: 25});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/credit_notes',
+        url: '/v1/credit_notes?count=25',
         headers: {},
-        data: {count: 25},
+        data: {},
       });
     });
   });

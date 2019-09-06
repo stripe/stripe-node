@@ -33,9 +33,9 @@ describe('Invoices Resource', () => {
       stripe.invoices.list({count: 25});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/invoices',
+        url: '/v1/invoices?count=25',
         headers: {},
-        data: {count: 25},
+        data: {},
       });
     });
   });
@@ -97,12 +97,10 @@ describe('Invoices Resource', () => {
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/invoices/upcoming',
+        url:
+          '/v1/invoices/upcoming?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
         headers: {},
-        data: {
-          customer: 'cus_abc',
-          subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
-        },
+        data: {},
       });
     });
   });
@@ -117,13 +115,10 @@ describe('Invoices Resource', () => {
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/invoices/upcoming/lines',
+        url:
+          '/v1/invoices/upcoming/lines?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga&limit=5',
         headers: {},
-        data: {
-          customer: 'cus_abc',
-          subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
-          limit: 5,
-        },
+        data: {},
       });
     });
   });

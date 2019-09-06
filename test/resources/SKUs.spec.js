@@ -47,10 +47,8 @@ describe('SKU Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/skus',
-        data: {
-          limit: 3,
-        },
+        url: '/v1/skus?limit=3',
+        data: {},
         headers: {},
       });
     });
@@ -61,10 +59,8 @@ describe('SKU Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/skus',
-        data: {
-          product: 'prodId123',
-        },
+        url: '/v1/skus?product=prodId123',
+        data: {},
         headers: {},
       });
     });
