@@ -82,7 +82,6 @@ describe('StripeResource', () => {
           foo: 'bar',
         };
         const host = stripe.getConstant('DEFAULT_HOST');
-        const path = '/v1/invoiceitems/invoiceItemId1?foo=bar';
 
         const scope = nock(`https://${host}`)
           .delete(/.*/)
