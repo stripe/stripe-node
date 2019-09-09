@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.9.0 - 2019-09-09
+* [#691](https://github.com/stripe/stripe-node/pull/691) GET and DELETE requests data: body->queryParams
+* [#684](https://github.com/stripe/stripe-node/pull/684) Bump eslint-utils from 1.3.1 to 1.4.2
+
 ## 7.8.0 - 2019-08-12
 * [#678](https://github.com/stripe/stripe-node/pull/678) Add `subscriptionItems.createUsageRecord()` method
 
