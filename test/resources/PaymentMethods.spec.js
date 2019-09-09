@@ -40,9 +40,9 @@ describe('PaymentMethods Resource', () => {
       stripe.paymentMethods.list(data);
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/payment_methods',
+        url: '/v1/payment_methods?customer=cus_123&type=card',
         headers: {},
-        data,
+        data: {},
       });
     });
   });

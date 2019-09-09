@@ -71,12 +71,9 @@ describe('SubscriptionItems Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/subscription_items',
+        url: '/v1/subscription_items?limit=3&subscription=test_sub',
         headers: {},
-        data: {
-          limit: 3,
-          subscription: 'test_sub',
-        },
+        data: {},
       });
     });
   });

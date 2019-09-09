@@ -178,13 +178,9 @@ describe('subscriptions Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/subscriptions',
+        url: '/v1/subscriptions?limit=3&customer=test_cus&plan=gold',
         headers: {},
-        data: {
-          limit: 3,
-          customer: 'test_cus',
-          plan: 'gold',
-        },
+        data: {},
       });
     });
   });

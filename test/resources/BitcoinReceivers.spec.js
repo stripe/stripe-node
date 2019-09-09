@@ -35,11 +35,9 @@ describe('BitcoinReceivers Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/bitcoin/receivers/receiverId/transactions',
+        url: '/v1/bitcoin/receivers/receiverId/transactions?limit=1',
         headers: {},
-        data: {
-          limit: 1,
-        },
+        data: {},
       });
     });
   });

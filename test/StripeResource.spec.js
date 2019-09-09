@@ -48,24 +48,46 @@ describe('StripeResource', () => {
     });
 
     describe('_request', () => {
-      it('encodes the body in GET requests', (done) => {
+      it('encodes data for GET requests as query params', (done) => {
+        const data = {
+          customer: 'cus_123',
+          subscription_items: [
+            {plan: 'foo', quantity: 2},
+            {id: 'si_123', deleted: true},
+          ],
+        };
         const options = {
           host: stripe.getConstant('DEFAULT_HOST'),
           path: '/v1/invoices/upcoming',
-          data: {
-            customer: 'cus_123',
-            subscription_items: [
-              {plan: 'foo', quantity: 2},
-              {id: 'si_123', deleted: true},
-            ],
-          },
+          data,
         };
 
         const scope = nock(`https://${options.host}`)
-          .get(options.path, options.data)
+          .get(
+            `${
+              options.path
+            }?customer=cus_123&subscription_items[0][plan]=foo&subscription_items[0][quantity]=2&subscription_items[1][id]=si_123&subscription_items[1][deleted]=true`,
+            ''
+          )
           .reply(200, '{}');
 
         realStripe.invoices.retrieveUpcoming(options.data, (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('encodes data for DELETE requests as query params', (done) => {
+        const data = {
+          foo: 'bar',
+        };
+        const host = stripe.getConstant('DEFAULT_HOST');
+
+        const scope = nock(`https://${host}`)
+          .delete(/.*/)
+          .reply(200, '{}');
+
+        realStripe.invoiceItems.del('invoiceItemId1', data, (err, response) => {
           done(err);
           scope.done();
         });

@@ -65,10 +65,8 @@ describe('Order Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/orders',
-        data: {
-          limit: 3,
-        },
+        url: '/v1/orders?limit=3',
+        data: {},
         headers: {},
       });
     });
@@ -79,10 +77,8 @@ describe('Order Resource', () => {
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/orders',
-        data: {
-          status: 'active',
-        },
+        url: '/v1/orders?status=active',
+        data: {},
         headers: {},
       });
     });
