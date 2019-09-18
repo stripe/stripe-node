@@ -240,20 +240,47 @@ describe('StripeResource', () => {
         });
       });
 
-      it('should not retry on a 500 error when the method is POST', (done) => {
+      it('should not retry when a header says not to', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
-          .reply(500, {
-            error: {
-              type: 'api_error',
+          .reply(
+            500,
+            {
+              error: {
+                type: 'api_error',
+              },
             },
-          });
+            {'stripe-should-retry': 'false'}
+          );
 
         realStripe.setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, (err) => {
           expect(err.type).to.equal('StripeAPIError');
           done();
+        });
+      });
+
+      it('should retry when a header says it should, even on status codes we ordinarily wouldnt', (done) => {
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .reply(
+            400,
+            {error: {type: 'your_fault'}},
+            {'stripe-should-retry': 'true'}
+          )
+          .post(options.path, options.params)
+          .reply(200, {
+            id: 'ch_123',
+            object: 'charge',
+            amount: 1000,
+          });
+
+        realStripe.setMaxNetworkRetries(1);
+
+        realStripe.charges.create(options.data, (err, charge) => {
+          expect(charge.id).to.equal('ch_123');
+          done(err);
         });
       });
 
@@ -471,16 +498,28 @@ describe('StripeResource', () => {
 
     describe('_getSleepTimeInMS', () => {
       it('should not exceed the maximum or minimum values', () => {
-        let sleepSeconds;
         const max = stripe.getMaxNetworkRetryDelay();
         const min = stripe.getInitialNetworkRetryDelay();
 
         for (let i = 0; i < 10; i++) {
-          sleepSeconds = stripe.invoices._getSleepTimeInMS(i) / 1000;
+          const sleepSeconds = stripe.invoices._getSleepTimeInMS(i) / 1000;
 
           expect(sleepSeconds).to.be.at.most(max);
           expect(sleepSeconds).to.be.at.least(min);
         }
+      });
+
+      it('should allow a maximum override', () => {
+        const maxSec = stripe.getMaxNetworkRetryDelay();
+        const minMS = stripe.getInitialNetworkRetryDelay() * 1000;
+
+        expect(stripe.invoices._getSleepTimeInMS(3, 0)).to.be.gt(minMS);
+        expect(stripe.invoices._getSleepTimeInMS(2, 3)).to.equal(3000);
+        expect(stripe.invoices._getSleepTimeInMS(0, 3)).to.equal(3000);
+        expect(stripe.invoices._getSleepTimeInMS(0, 0)).to.equal(minMS);
+        expect(stripe.invoices._getSleepTimeInMS(0, maxSec * 2)).to.equal(
+          maxSec * 2 * 1000
+        );
       });
     });
   });
