@@ -67,6 +67,7 @@ describe('Error', () => {
       });
       expect(e).to.have.property('charge', 'foo');
       expect(e).not.to.have.property('unknown_prop', 'bar');
+      expect(e).not.to.have.property('decline_code', 'xyzzy');
     });
 
     it('Pulls in headers', () => {
