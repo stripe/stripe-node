@@ -64,9 +64,7 @@ describe('StripeResource', () => {
 
         const scope = nock(`https://${options.host}`)
           .get(
-            `${
-              options.path
-            }?customer=cus_123&subscription_items[0][plan]=foo&subscription_items[0][quantity]=2&subscription_items[1][id]=si_123&subscription_items[1][deleted]=true`,
+            `${options.path}?customer=cus_123&subscription_items[0][plan]=foo&subscription_items[0][quantity]=2&subscription_items[1][id]=si_123&subscription_items[1][deleted]=true`,
             ''
           )
           .reply(200, '{}');
