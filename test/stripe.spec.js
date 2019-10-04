@@ -1,7 +1,10 @@
+/* eslint-disable new-cap */
+
 'use strict';
 
 const testUtils = require('../testUtils');
 const utils = require('../lib/utils');
+const Stripe = require('../lib/stripe');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 
 const http = require('http');
@@ -16,6 +19,55 @@ const CUSTOMER_DETAILS = {
 describe('Stripe Module', function() {
   const cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
+
+  describe('config object', () => {
+    it('should only accept either an object or a string', () => {
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), 123);
+      }).to.throw(/Config must either be an object or a string/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), ['2019-12-12']);
+      }).to.throw(/Config must either be an object or a string/);
+    });
+
+    it('should only accept strings in the format "yyyy-mm-dd" or "latest"', () => {
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), 'foo');
+      }).to.throw(
+        /Api version string should be in the format YYYY-MM-DD or "latest"/
+      );
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), '2019-12-12 foo');
+      }).to.throw(
+        /Api version string should be in the format YYYY-MM-DD or "latest"/
+      );
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), '2019-12-12');
+      }).to.not.throw();
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), 'latest');
+      }).to.not.throw();
+    });
+
+    it('should only contain allowed properties', () => {
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          foo: 'bar',
+          apiVersion: 'latest',
+        });
+      }).to.throw(/Config object may only contain the following:/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          apiVersion: '2019-12-12',
+        });
+      }).to.not.throw();
+    });
+  });
 
   describe('setApiKey', () => {
     it('uses Bearer auth', () => {
