@@ -12,6 +12,7 @@ describe('Topup Resource', () => {
         url: '/v1/topups/tu_123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -36,6 +37,7 @@ describe('Topup Resource', () => {
           statement_descriptor: 'creating a topup',
         },
         headers: {},
+        settings: {},
       });
     });
   });
@@ -48,6 +50,7 @@ describe('Topup Resource', () => {
         url: '/v1/topups',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -60,6 +63,7 @@ describe('Topup Resource', () => {
         url: '/v1/topups/tu_123/cancel',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -72,6 +76,7 @@ describe('Topup Resource', () => {
         url: '/v1/topups/tu_123',
         headers: {},
         data: {metadata: {key: 'value'}},
+        settings: {},
       });
     });
   });

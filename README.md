@@ -51,6 +51,36 @@ const stripe = Stripe('sk_test_...');
 On older versions of Node, you can use [promises](#using-promises)
 or [callbacks](#using-callbacks) instead of `async`/`await`.
 
+## Initialize with config object
+
+The package can be initialized with several options:
+
+```js
+import ProxyAgent from 'https-proxy-agent';
+
+const stripe = Stripe('sk_test_...', {
+  apiVersion: '2019-08-08',
+  maxNetworkRetries: 1,
+  httpAgent: new ProxyAgent(process.env.http_proxy),
+  timeout: 1000,
+  host: 'api.example.com',
+  port: 123,
+  telemetry: true,
+});
+```
+
+| Option              | Default                       | Description                                                                           |
+| ------------------- | ----------------------------- | ------------------------------------------------------------------------------------- |
+| `apiVersion`        | `null`                        | Stripe API version to be used. If not set the account's default version will be used. |
+| `maxNetworkRetries` | 0                             | The amount of times a request should be [retried](#network-retries).                  |
+| `httpAgent`         | `null`                        | [Proxy](#configuring-a-proxy) agent to be used by the library.                        |
+| `timeout`           | 120000 (Node default timeout) | [Maximum time each request can take in ms.](#configuring-timeout)                     |
+| `host`              | `'api.stripe.com'`            | Host that requests are made to.                                                       |
+| `port`              | 443                           | Port that requests are made to.                                                       |
+| `telemetry`         | `true`                        | Allow Stripe to send latency [telemetry](#request-latency-telemetry)                  |
+
+Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis. `timeout` can be updated at any time with [`stripe.setTimeout`](#configuring-timeout).
+
 ### Usage with TypeScript
 
 Stripe does not currently maintain typings for this package, but there are
@@ -135,6 +165,29 @@ Request timeout is configurable (the default is Node's default of 120 seconds):
 stripe.setTimeout(20000); // in ms (this is 20 seconds)
 ```
 
+Timeout can also be set globally via the config object:
+
+```js
+const stripe = Stripe('sk_test_...', {
+  timeout: 2000,
+});
+```
+
+And on a per-request basis:
+
+```js
+stripe.customers.create(
+  {
+    email: 'customer@example.com',
+  },
+  {
+    timeout: 1000,
+  }
+);
+```
+
+If `timeout` is set globally via the config object, the value set in a per-request basis will be favored.
+
 ### Configuring For Connect
 
 A per-request `Stripe-Account` header for use with [Stripe Connect][connect]
@@ -144,7 +197,7 @@ can be added to any method:
 // Retrieve the balance for a connected account:
 stripe.balance
   .retrieve({
-    stripe_account: 'acct_foo',
+    stripeAccount: 'acct_foo',
   })
   .then((balance) => {
     // The balance object for the connected account
@@ -159,24 +212,41 @@ stripe.balance
 An [https-proxy-agent][https-proxy-agent] can be configured with
 `setHttpAgent`.
 
-To use stripe behind a proxy you can pass to sdk:
+To use stripe behind a proxy you can pass to sdk on initialization:
 
 ```js
 if (process.env.http_proxy) {
   const ProxyAgent = require('https-proxy-agent');
-  stripe.setHttpAgent(new ProxyAgent(process.env.http_proxy));
+
+  const stripe = Stripe('sk_test_...', {
+    httpProxy: new ProxyAgent(process.env.http_proxy),
+  });
 }
 ```
 
 ### Network retries
 
-Automatic network retries can be enabled with `setMaxNetworkRetries`.
+Automatic network retries can be enabled with the `maxNetworkRetries` config option.
 This will retry requests `n` times with exponential backoff if they fail due to an intermittent network problem.
 [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
 ```js
-// Retry a request twice before giving up
-stripe.setMaxNetworkRetries(2);
+const stripe = Stripe('sk_test_...', {
+  maxNetworkRetries: 2, // Retry a request twice before giving up
+});
+```
+
+Network retries can also be set on a per-request basis:
+
+```js
+stripe.customers.create(
+  {
+    email: 'customer@example.com',
+  },
+  {
+    maxNetworkRetries: 2, // Retry this specific request twice before giving up
+  }
+);
 ```
 
 ### Examining Responses
@@ -185,7 +255,7 @@ Some information about the response which generated a resource is available
 with the `lastResponse` property:
 
 ```js
-charge.lastResponse.requestId; // see: https://stripe.com/docs/api/node#request_ids
+charge.lastResponse.requestId; // see: https://stripe.com/docs/api/request_ids?lang=node
 charge.lastResponse.statusCode;
 ```
 

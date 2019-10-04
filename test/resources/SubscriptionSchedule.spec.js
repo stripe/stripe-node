@@ -17,6 +17,7 @@ describe('Subscription Schedule Resource', () => {
         url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/cancel`,
         data,
         headers: {},
+        settings: {},
       });
     });
   });
@@ -32,6 +33,7 @@ describe('Subscription Schedule Resource', () => {
         url: '/v1/subscription_schedules',
         data,
         headers: {},
+        settings: {},
       });
     });
   });
@@ -44,6 +46,7 @@ describe('Subscription Schedule Resource', () => {
         url: '/v1/subscription_schedules',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -59,6 +62,7 @@ describe('Subscription Schedule Resource', () => {
         url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}/release`,
         data,
         headers: {},
+        settings: {},
       });
     });
   });
@@ -71,6 +75,7 @@ describe('Subscription Schedule Resource', () => {
         url: '/v1/subscription_schedules/sub_sched_123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -84,6 +89,7 @@ describe('Subscription Schedule Resource', () => {
         url: `/v1/subscription_schedules/${SCHEDULE_TEST_ID}`,
         data,
         headers: {},
+        settings: {},
       });
     });
   });

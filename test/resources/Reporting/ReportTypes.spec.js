@@ -15,6 +15,7 @@ describe('Reporting', () => {
           url: '/v1/reporting/report_types/activity.summary.1',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -27,6 +28,7 @@ describe('Reporting', () => {
           url: '/v1/reporting/report_types',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

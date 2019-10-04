@@ -19,6 +19,7 @@ describe('Payment Intents Resource', () => {
         url: '/v1/payment_intents',
         headers: {},
         data: params,
+        settings: {},
       });
     });
   });
@@ -31,6 +32,7 @@ describe('Payment Intents Resource', () => {
         url: '/v1/payment_intents',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -43,6 +45,7 @@ describe('Payment Intents Resource', () => {
         url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}`,
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -57,6 +60,7 @@ describe('Payment Intents Resource', () => {
         url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}`,
         headers: {},
         data: {metadata: {key: 'value'}},
+        settings: {},
       });
     });
   });
@@ -69,6 +73,7 @@ describe('Payment Intents Resource', () => {
         url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}/cancel`,
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -81,6 +86,7 @@ describe('Payment Intents Resource', () => {
         url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}/capture`,
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -93,6 +99,7 @@ describe('Payment Intents Resource', () => {
         url: `/v1/payment_intents/${PAYMENT_INTENT_TEST_ID}/confirm`,
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

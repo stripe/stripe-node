@@ -48,6 +48,7 @@ const utils = (module.exports = {
           url,
           data,
           headers: options.headers || {},
+          settings: options.settings || {},
         });
         if (auth) {
           req.auth = auth;

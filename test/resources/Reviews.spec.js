@@ -12,6 +12,7 @@ describe('Review Resource', () => {
         url: '/v1/reviews/prv_123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('Review Resource', () => {
         url: '/v1/reviews',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -36,6 +38,7 @@ describe('Review Resource', () => {
         url: '/v1/reviews/prv_123/approve',
         headers: {},
         data: {amount: 23},
+        settings: {},
       });
     });
   });

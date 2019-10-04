@@ -14,6 +14,7 @@ describe('Tokens Resource', () => {
         url: '/v1/tokens',
         headers: {},
         data: {card: {number: 123}},
+        settings: {},
       });
     });
   });
@@ -26,6 +27,7 @@ describe('Tokens Resource', () => {
         url: '/v1/tokens/tokenId1',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
