@@ -174,6 +174,14 @@ describe('Stripe Module', function() {
       });
     });
 
+    describe('when given a non-object variable', () => {
+      it('should throw an error', () => {
+        expect(() => {
+          stripe.setAppInfo('foo');
+        }).to.throw(/AppInfo must be an object./);
+      });
+    });
+
     describe('when given an object with no `name`', () => {
       it('should throw an error', () => {
         expect(() => {
