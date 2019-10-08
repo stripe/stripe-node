@@ -39,17 +39,17 @@ describe('Stripe Module', function() {
       );
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), '2019-12-12 foo');
-      }).to.throw(
-        /Api version string should be in the format YYYY-MM-DD or "latest"/
-      );
-
-      expect(() => {
         Stripe(testUtils.getUserStripeKey(), '2019-12-12');
       }).to.not.throw();
 
       expect(() => {
         Stripe(testUtils.getUserStripeKey(), 'latest');
+      }).to.not.throw();
+    });
+
+    it('but allow additional flags', () => {
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), '2019-12-12 foo_beta=v1');
       }).to.not.throw();
     });
 
@@ -66,6 +66,21 @@ describe('Stripe Module', function() {
           apiVersion: '2019-12-12',
         });
       }).to.not.throw();
+    });
+
+    it('should perform a no-op if null, undefined or empty values are passed', () => {
+      const cases = [null, undefined, '', {}];
+
+      cases.forEach((item) => {
+        expect(() => {
+          Stripe(testUtils.getUserStripeKey(), item);
+        }).to.not.throw();
+      });
+
+      cases.forEach((item) => {
+        const stripe = Stripe(testUtils.getUserStripeKey(), item);
+        expect(stripe.getApiField('version')).to.equal(null);
+      });
     });
   });
 

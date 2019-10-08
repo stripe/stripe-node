@@ -440,14 +440,14 @@ describe('utils', () => {
       latest: true,
       '2019/12/12': false,
       '12-12-2019': false,
-      '2019-12-12 foo': false,
+      '2019-12-12 foo_beta=v1': true,
       foo: false,
       'foo 2019-12-12': false,
-      'latest ': false,
+      'latest ': true,
       'la test': false,
     };
 
-    it('only accepts strings in the form YYYY-MM-DD or "latest"', () => {
+    it('only accepts strings in the form YYYY-MM-DD or "latest" with additional flags', () => {
       Object.keys(cases).forEach((item) =>
         expect(utils.validateApiVersion(item)).to.equal(cases[item])
       );
