@@ -60,6 +60,16 @@ describe('Error', () => {
       ).to.be.instanceOf(Error.StripeIdempotencyError);
     });
 
+    it('copies whitelisted properties', () => {
+      const e = new Error.StripeError({
+        charge: 'foo',
+        unknown_prop: 'bar',
+      });
+      expect(e).to.have.property('charge', 'foo');
+      expect(e).not.to.have.property('unknown_prop', 'bar');
+      expect(e).not.to.have.property('decline_code', 'xyzzy');
+    });
+
     it('Pulls in headers', () => {
       const headers = {'Request-Id': '123'};
       const e = Error.StripeError.generate({
