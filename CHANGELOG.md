@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 7.10.0 - 2019-10-08
+* [#699](https://github.com/stripe/stripe-node/pull/699) Add request-specific fields from raw error to top level error
+
 ## 7.9.1 - 2019-09-17
 
 - [#692](https://github.com/stripe/stripe-node/pull/692) Retry based on `Stripe-Should-Retry` and `Retry-After` headers
