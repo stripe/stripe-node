@@ -29,27 +29,15 @@ describe('Stripe Module', function() {
       expect(() => {
         Stripe(testUtils.getUserStripeKey(), ['2019-12-12']);
       }).to.throw(/Config must either be an object or a string/);
-    });
-
-    it('should only accept strings in the format "yyyy-mm-dd" or "latest"', () => {
-      expect(() => {
-        Stripe(testUtils.getUserStripeKey(), 'foo');
-      }).to.throw(
-        /Api version string should be in the format YYYY-MM-DD or "latest"/
-      );
 
       expect(() => {
         Stripe(testUtils.getUserStripeKey(), '2019-12-12');
       }).to.not.throw();
 
       expect(() => {
-        Stripe(testUtils.getUserStripeKey(), 'latest');
-      }).to.not.throw();
-    });
-
-    it('but allow additional flags', () => {
-      expect(() => {
-        Stripe(testUtils.getUserStripeKey(), '2019-12-12 foo_beta=v1');
+        Stripe(testUtils.getUserStripeKey(), {
+          apiVersion: 'latest',
+        });
       }).to.not.throw();
     });
 
