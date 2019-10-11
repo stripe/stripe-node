@@ -1,7 +1,10 @@
+/* eslint-disable new-cap */
+
 'use strict';
 
 const testUtils = require('../testUtils');
 const utils = require('../lib/utils');
+const Stripe = require('../lib/stripe');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 
 const http = require('http');
@@ -16,6 +19,58 @@ const CUSTOMER_DETAILS = {
 describe('Stripe Module', function() {
   const cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
+
+  describe('config object', () => {
+    it('should only accept either an object or a string', () => {
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), 123);
+      }).to.throw(/Config must either be an object or a string/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), ['2019-12-12']);
+      }).to.throw(/Config must either be an object or a string/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), '2019-12-12');
+      }).to.not.throw();
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          apiVersion: 'latest',
+        });
+      }).to.not.throw();
+    });
+
+    it('should only contain allowed properties', () => {
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          foo: 'bar',
+          apiVersion: 'latest',
+        });
+      }).to.throw(/Config object may only contain the following:/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          apiVersion: '2019-12-12',
+        });
+      }).to.not.throw();
+    });
+
+    it('should perform a no-op if null, undefined or empty values are passed', () => {
+      const cases = [null, undefined, '', {}];
+
+      cases.forEach((item) => {
+        expect(() => {
+          Stripe(testUtils.getUserStripeKey(), item);
+        }).to.not.throw();
+      });
+
+      cases.forEach((item) => {
+        const stripe = Stripe(testUtils.getUserStripeKey(), item);
+        expect(stripe.getApiField('version')).to.equal(null);
+      });
+    });
+  });
 
   describe('setApiKey', () => {
     it('uses Bearer auth', () => {
@@ -119,6 +174,14 @@ describe('Stripe Module', function() {
       it('should unset stripe._appInfo', () => {
         stripe.setAppInfo();
         expect(stripe._appInfo).to.be.undefined;
+      });
+    });
+
+    describe('when given a non-object variable', () => {
+      it('should throw an error', () => {
+        expect(() => {
+          stripe.setAppInfo('foo');
+        }).to.throw(/AppInfo must be an object./);
       });
     });
 
