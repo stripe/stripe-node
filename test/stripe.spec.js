@@ -53,6 +53,10 @@ describe('Stripe Module', function() {
         Stripe(testUtils.getUserStripeKey(), {
           apiVersion: '2019-12-12',
           maxNetworkRetries: 2,
+          httpAgent: 'agent',
+          timeout: 123,
+          host: 'foo.stripe.com',
+          port: 321,
         });
       }).to.not.throw();
     });
@@ -344,11 +348,11 @@ describe('Stripe Module', function() {
     describe('when given an empty or non-number variable', () => {
       it('should error', () => {
         expect(() => {
-          stripe.setMaxNetworkRetries('foo');
+          stripe._setMaxNetworkRetries('foo');
         }).to.throw(/maxNetworkRetries must be a number/);
 
         expect(() => {
-          stripe.setMaxNetworkRetries();
+          stripe._setMaxNetworkRetries();
         }).to.throw(/maxNetworkRetries must be a number/);
       });
     });
