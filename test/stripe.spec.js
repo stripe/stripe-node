@@ -52,6 +52,7 @@ describe('Stripe Module', function() {
       expect(() => {
         Stripe(testUtils.getUserStripeKey(), {
           apiVersion: '2019-12-12',
+          maxNetworkRetries: 2,
         });
       }).to.not.throw();
     });
@@ -349,6 +350,38 @@ describe('Stripe Module', function() {
         expect(() => {
           stripe.setMaxNetworkRetries();
         }).to.throw(/maxNetworkRetries must be a number/);
+      });
+    });
+
+    describe('when passed in via the config object', () => {
+      it('should only accept numbers', () => {
+        expect(() => {
+          Stripe(testUtils.getUserStripeKey(), {
+            maxNetworkRetries: 'foo',
+          });
+        }).to.throw(/maxNetworkRetries must be a number/);
+
+        expect(() => {
+          Stripe(testUtils.getUserStripeKey(), {
+            maxNetworkRetries: 2,
+          });
+        }).to.not.throw();
+      });
+
+      it('should correctly set the amount of network retries', () => {
+        const newStripe = Stripe(testUtils.getUserStripeKey(), {
+          maxNetworkRetries: 5,
+        });
+
+        expect(newStripe.getMaxNetworkRetries()).to.equal(5);
+      });
+    });
+
+    describe('when not set', () => {
+      it('should use the default', () => {
+        const newStripe = Stripe(testUtils.getUserStripeKey());
+
+        expect(newStripe.getMaxNetworkRetries()).to.equal(0);
       });
     });
   });
