@@ -75,6 +75,31 @@ describe('Stripe Module', function() {
         expect(stripe.getApiField('version')).to.equal(null);
       });
     });
+
+    it('should enable telemetry if not explicitly set', () => {
+      const newStripe = Stripe(testUtils.getUserStripeKey());
+
+      expect(newStripe.getTelemetryEnabled()).to.equal(true);
+    });
+
+    it('should enable telemetry if anything but "false" is set', () => {
+      const vals = ['foo', null, undefined];
+      let newStripe;
+
+      vals.forEach((val) => {
+        newStripe = Stripe(testUtils.getUserStripeKey(), {
+          telemetry: val,
+        });
+
+        expect(newStripe.getTelemetryEnabled()).to.equal(true);
+      });
+
+      newStripe = Stripe(testUtils.getUserStripeKey(), {
+        telemetry: false,
+      });
+
+      expect(newStripe.getTelemetryEnabled()).to.equal(false);
+    });
   });
 
   describe('setApiKey', () => {
