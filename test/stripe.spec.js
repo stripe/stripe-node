@@ -182,6 +182,12 @@ describe('Stripe Module', function() {
       });
     });
 
+    describe('when not set', () => {
+      it('should return empty string', () => {
+        expect(stripe.getAppInfoAsString()).to.equal('');
+      });
+    });
+
     describe('when given a non-object variable', () => {
       it('should throw an error', () => {
         expect(() => {
