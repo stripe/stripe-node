@@ -52,6 +52,11 @@ describe('Stripe Module', function() {
       expect(() => {
         Stripe(testUtils.getUserStripeKey(), {
           apiVersion: '2019-12-12',
+          maxNetworkRetries: 2,
+          httpAgent: 'agent',
+          timeout: 123,
+          host: 'foo.stripe.com',
+          port: 321,
         });
       }).to.not.throw();
     });
@@ -69,6 +74,31 @@ describe('Stripe Module', function() {
         const stripe = Stripe(testUtils.getUserStripeKey(), item);
         expect(stripe.getApiField('version')).to.equal(null);
       });
+    });
+
+    it('should enable telemetry if not explicitly set', () => {
+      const newStripe = Stripe(testUtils.getUserStripeKey());
+
+      expect(newStripe.getTelemetryEnabled()).to.equal(true);
+    });
+
+    it('should enable telemetry if anything but "false" is set', () => {
+      const vals = ['foo', null, undefined];
+      let newStripe;
+
+      vals.forEach((val) => {
+        newStripe = Stripe(testUtils.getUserStripeKey(), {
+          telemetry: val,
+        });
+
+        expect(newStripe.getTelemetryEnabled()).to.equal(true);
+      });
+
+      newStripe = Stripe(testUtils.getUserStripeKey(), {
+        telemetry: false,
+      });
+
+      expect(newStripe.getTelemetryEnabled()).to.equal(false);
     });
   });
 
@@ -174,6 +204,12 @@ describe('Stripe Module', function() {
       it('should unset stripe._appInfo', () => {
         stripe.setAppInfo();
         expect(stripe._appInfo).to.be.undefined;
+      });
+    });
+
+    describe('when not set', () => {
+      it('should return empty string', () => {
+        expect(stripe.getAppInfoAsString()).to.equal('');
       });
     });
 
@@ -343,12 +379,44 @@ describe('Stripe Module', function() {
     describe('when given an empty or non-number variable', () => {
       it('should error', () => {
         expect(() => {
-          stripe.setMaxNetworkRetries('foo');
+          stripe._setMaxNetworkRetries('foo');
         }).to.throw(/maxNetworkRetries must be a number/);
 
         expect(() => {
-          stripe.setMaxNetworkRetries();
+          stripe._setMaxNetworkRetries();
         }).to.throw(/maxNetworkRetries must be a number/);
+      });
+    });
+
+    describe('when passed in via the config object', () => {
+      it('should only accept numbers', () => {
+        expect(() => {
+          Stripe(testUtils.getUserStripeKey(), {
+            maxNetworkRetries: 'foo',
+          });
+        }).to.throw(/maxNetworkRetries must be a number/);
+
+        expect(() => {
+          Stripe(testUtils.getUserStripeKey(), {
+            maxNetworkRetries: 2,
+          });
+        }).to.not.throw();
+      });
+
+      it('should correctly set the amount of network retries', () => {
+        const newStripe = Stripe(testUtils.getUserStripeKey(), {
+          maxNetworkRetries: 5,
+        });
+
+        expect(newStripe.getMaxNetworkRetries()).to.equal(5);
+      });
+    });
+
+    describe('when not set', () => {
+      it('should use the default', () => {
+        const newStripe = Stripe(testUtils.getUserStripeKey());
+
+        expect(newStripe.getMaxNetworkRetries()).to.equal(0);
       });
     });
   });
