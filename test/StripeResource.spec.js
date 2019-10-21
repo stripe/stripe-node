@@ -141,8 +141,8 @@ describe('StripeResource', () => {
     };
 
     afterEach(() => {
-      realStripe.setMaxNetworkRetries(0);
-      stripe.setMaxNetworkRetries(0);
+      realStripe._setMaxNetworkRetries(0);
+      stripe._setMaxNetworkRetries(0);
     });
 
     after(() => {
@@ -169,7 +169,7 @@ describe('StripeResource', () => {
           .post(options.path, options.params)
           .replyWithError('worse stuff');
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, (err) => {
           const errorMessage = realStripe.invoices._generateConnectionErrorMessage(
@@ -192,7 +192,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(2);
+        realStripe._setMaxNetworkRetries(2);
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -215,7 +215,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -232,7 +232,7 @@ describe('StripeResource', () => {
             },
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, (err) => {
           expect(err.type).to.equal('StripeCardError');
@@ -253,7 +253,7 @@ describe('StripeResource', () => {
             {'stripe-should-retry': 'false'}
           );
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, (err) => {
           expect(err.type).to.equal('StripeAPIError');
@@ -276,7 +276,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -293,7 +293,7 @@ describe('StripeResource', () => {
               'This authorization code has already been used. All tokens issued with this code have been revoked.',
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.oauth.token(options.data, (err) => {
           expect(err.type).to.equal('StripeInvalidGrantError');
@@ -316,7 +316,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -339,7 +339,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.retrieve('ch_123', (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -368,7 +368,7 @@ describe('StripeResource', () => {
             ]);
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, (err) => {
           expect(headers).to.have.property('idempotency-key');
@@ -396,7 +396,7 @@ describe('StripeResource', () => {
             ]);
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.retrieve('ch_123', () => {
           expect(headers).to.not.have.property('idempotency-key');
@@ -425,7 +425,7 @@ describe('StripeResource', () => {
             ]);
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setMaxNetworkRetries(1);
 
         realStripe.charges.create(options.data, {idempotency_key: key}, () => {
           expect(headers['idempotency-key']).to.equal(key);
@@ -433,7 +433,7 @@ describe('StripeResource', () => {
         });
       });
 
-      it('should allow the setting of network retries on a per-request basis', () => {
+      it('should allow the setting of network retries on a per-request basis', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
           .replyWithError('bad stuff')
@@ -454,7 +454,35 @@ describe('StripeResource', () => {
           {networkRetries: 1},
           (err, charge) => {
             expect(charge.id).to.equal('ch_123');
-            done(err);
+            done();
+          }
+        );
+      });
+
+      it('should pick the per-request network retry setting if a global setting is set', (done) => {
+        realStripe._setMaxNetworkRetries(0);
+
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .replyWithError('bad stuff')
+          .post(options.path, options.params)
+          .reply((uri, requestBody, cb) => {
+            return cb(null, [
+              200,
+              {
+                id: 'ch_123',
+                object: 'charge',
+                amount: 1000,
+              },
+            ]);
+          });
+
+        realStripe.charges.create(
+          options.data,
+          {networkRetries: 1},
+          (err, charge) => {
+            expect(charge.id).to.equal('ch_123');
+            done();
           }
         );
       });
@@ -522,6 +550,48 @@ describe('StripeResource', () => {
         expect(stripe.invoices._getSleepTimeInMS(0, maxSec * 2)).to.equal(
           maxSec * 2 * 1000
         );
+      });
+    });
+  });
+
+  describe('Request Timeout', () => {
+    // Use a real instance of stripe as we're mocking the http.request responses.
+    const realStripe = require('../lib/stripe')(utils.getUserStripeKey(), {
+      timeout: 10,
+    });
+
+    const options = {
+      host: stripe.getConstant('DEFAULT_HOST'),
+      path: '/v1/charges',
+      data: {
+        amount: 1000,
+        currency: 'usd',
+        source: 'tok_visa',
+        description: 'test',
+      },
+      params: 'amount=1000&currency=usd&source=tok_visa&description=test',
+    };
+
+    it('should allow the setting of a request timeout on a per-request basis', (done) => {
+      nock(`https://${options.host}`)
+        .post(options.path, options.params)
+        .delay(1000)
+        .socketDelay(1000)
+        .reply((uri, requestBody, cb) => {
+          return cb(null, [
+            200,
+            {
+              id: 'ch_123',
+              object: 'charge',
+              amount: 1000,
+            },
+          ]);
+        });
+
+      realStripe.charges.create(options.data, (err, charge) => {
+        console.log(err);
+        expect(charge.id).to.equal('ch_123');
+        done();
       });
     });
   });

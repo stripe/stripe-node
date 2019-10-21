@@ -143,7 +143,7 @@ describe('utils', () => {
     });
 
     it('ignores a hash with only options', (done) => {
-      const args = [{api_key: 'foo'}];
+      const args = [{apiKey: 'foo'}];
 
       handleWarnings(
         () => {
@@ -159,7 +159,7 @@ describe('utils', () => {
     });
 
     it('warns if the hash contains both data and options', (done) => {
-      const args = [{foo: 'bar', api_key: 'foo', idempotency_key: 'baz'}];
+      const args = [{foo: 'bar', apiKey: 'foo', idempotencyKey: 'baz'}];
 
       handleWarnings(
         () => {
@@ -167,7 +167,7 @@ describe('utils', () => {
         },
         (message) => {
           expect(message).to.equal(
-            'Stripe: Options found in arguments (api_key, idempotency_key).' +
+            'Stripe: Options found in arguments (apiKey, idempotencyKey).' +
               ' Did you mean to pass an options object? See https://github.com/stripe/stripe-node/wiki/Passing-Options.'
           );
 
