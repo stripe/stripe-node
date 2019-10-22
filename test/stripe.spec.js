@@ -379,11 +379,11 @@ describe('Stripe Module', function() {
     describe('when given an empty or non-number variable', () => {
       it('should error', () => {
         expect(() => {
-          stripe._setMaxNetworkRetries('foo');
+          stripe._setApiNumberField('maxNetworkRetries', 'foo');
         }).to.throw(/maxNetworkRetries must be a number/);
 
         expect(() => {
-          stripe._setMaxNetworkRetries();
+          stripe._setApiNumberField('maxNetworkRetries');
         }).to.throw(/maxNetworkRetries must be a number/);
       });
     });
