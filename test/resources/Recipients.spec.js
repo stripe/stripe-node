@@ -14,6 +14,7 @@ describe('Recipients Resource', () => {
         url: '/v1/recipients/recipientId1',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -29,6 +30,7 @@ describe('Recipients Resource', () => {
         url: '/v1/recipients',
         headers: {},
         data: {name: 'Bob', type: 'individual'},
+        settings: {},
       });
     });
   });
@@ -43,6 +45,7 @@ describe('Recipients Resource', () => {
         url: '/v1/recipients/recipientId3',
         headers: {},
         data: {name: 'Bob Smith'},
+        settings: {},
       });
     });
   });
@@ -55,6 +58,7 @@ describe('Recipients Resource', () => {
         url: '/v1/recipients/recipientId4',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -67,6 +71,7 @@ describe('Recipients Resource', () => {
         url: '/v1/recipients',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -80,6 +85,7 @@ describe('Recipients Resource', () => {
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -95,6 +101,7 @@ describe('Recipients Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -110,6 +117,7 @@ describe('Recipients Resource', () => {
           url: '/v1/recipients/recipientIdFoo321/cards',
           headers: {},
           data: {number: '123456', exp_month: '12'},
+          settings: {},
         });
       });
 
@@ -128,6 +136,7 @@ describe('Recipients Resource', () => {
           headers: {},
           data: {number: '123456', exp_month: '12'},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -142,6 +151,7 @@ describe('Recipients Resource', () => {
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
           headers: {},
           data: {name: 'Bob M. Baz'},
+          settings: {},
         });
       });
     });
@@ -154,6 +164,7 @@ describe('Recipients Resource', () => {
           url: '/v1/recipients/recipientIdFoo321/cards/cardIdFoo456',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -169,6 +180,7 @@ describe('Recipients Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -181,6 +193,7 @@ describe('Recipients Resource', () => {
           url: '/v1/recipients/recipientIdFoo321/cards',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -192,6 +205,7 @@ describe('Recipients Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });

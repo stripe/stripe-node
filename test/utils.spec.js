@@ -294,7 +294,7 @@ describe('utils', () => {
     it('parses additional per-request settings', () => {
       const args = [
         {
-          networkRetries: 5,
+          maxNetworkRetries: 5,
           timeout: 1000,
         },
       ];
@@ -303,7 +303,7 @@ describe('utils', () => {
         auth: null,
         headers: {},
         settings: {
-          networkRetries: 5,
+          maxNetworkRetries: 5,
           timeout: 1000,
         },
       });

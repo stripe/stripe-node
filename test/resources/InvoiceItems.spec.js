@@ -12,6 +12,7 @@ describe('InvoiceItems Resource', () => {
         url: '/v1/invoiceitems/invoiceItemIdTesting123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -26,6 +27,7 @@ describe('InvoiceItems Resource', () => {
         url: '/v1/invoiceitems',
         headers: {},
         data: {customer: 'cust_id_888'},
+        settings: {},
       });
     });
   });
@@ -40,6 +42,7 @@ describe('InvoiceItems Resource', () => {
         url: '/v1/invoiceitems/invoiceItemId1',
         headers: {},
         data: {amount: 1900},
+        settings: {},
       });
     });
   });
@@ -52,6 +55,7 @@ describe('InvoiceItems Resource', () => {
         url: '/v1/invoiceitems/invoiceItemId2',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -64,6 +68,7 @@ describe('InvoiceItems Resource', () => {
         url: '/v1/invoiceitems',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

@@ -12,6 +12,7 @@ describe('Balance Resource', () => {
         url: '/v1/balance',
         data: {},
         headers: {},
+        settings: {},
       });
     });
 
@@ -23,6 +24,7 @@ describe('Balance Resource', () => {
         data: {},
         auth: 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11',
         headers: {},
+        settings: {},
       });
     });
   });

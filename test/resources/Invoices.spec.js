@@ -12,6 +12,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/in_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices',
         headers: {},
         data: {application_fee: 111},
+        settings: {},
       });
     });
   });
@@ -36,6 +38,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices?count=25',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -48,6 +51,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/in_123',
         headers: {},
         data: {application_fee: 200},
+        settings: {},
       });
     });
   });
@@ -60,6 +64,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/in_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -72,6 +77,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/in_123/lines',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -84,6 +90,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/upcoming/lines',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -101,6 +108,7 @@ describe('Invoices Resource', () => {
           '/v1/invoices/upcoming?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -119,6 +127,7 @@ describe('Invoices Resource', () => {
           '/v1/invoices/upcoming/lines?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga&limit=5',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -131,6 +140,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/in_123/finalize',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -143,6 +153,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/in_123/mark_uncollectible',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -157,6 +168,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/in_123/pay',
         headers: {},
         data: {source: 'tok_FooBar'},
+        settings: {},
       });
     });
   });
@@ -169,6 +181,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/in_123/send',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -181,6 +194,7 @@ describe('Invoices Resource', () => {
         url: '/v1/invoices/in_123/void',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

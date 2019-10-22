@@ -13,6 +13,7 @@ describe('Radar', () => {
           url: '/v1/radar/early_fraud_warnings/issfr_123',
           data: {},
           headers: {},
+          settings: {},
         });
       });
     });
@@ -25,6 +26,7 @@ describe('Radar', () => {
           url: '/v1/radar/early_fraud_warnings',
           data: {},
           headers: {},
+          settings: {},
         });
       });
     });

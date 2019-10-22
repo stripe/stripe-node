@@ -12,6 +12,7 @@ describe('ApplicationFee Resource', () => {
         url: '/v1/application_fees',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -29,6 +30,7 @@ describe('ApplicationFee Resource', () => {
           '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
         data: {metadata: {key: 'value'}},
         headers: {},
+        settings: {},
       });
     });
 
@@ -39,6 +41,7 @@ describe('ApplicationFee Resource', () => {
         url: '/v1/application_fees/appFeeIdExample3242/refunds',
         data: {amount: 100},
         headers: {},
+        settings: {},
       });
     });
 
@@ -49,6 +52,7 @@ describe('ApplicationFee Resource', () => {
         url: '/v1/application_fees/appFeeIdExample3242/refunds',
         data: {},
         headers: {},
+        settings: {},
       });
     });
 
@@ -63,6 +67,7 @@ describe('ApplicationFee Resource', () => {
           '/v1/application_fees/appFeeIdExample3242/refunds/refundIdExample2312',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });

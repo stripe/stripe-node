@@ -12,6 +12,7 @@ describe('Dispute Resource', () => {
         url: '/v1/disputes/dp_123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('Dispute Resource', () => {
         url: '/v1/disputes',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -36,6 +38,7 @@ describe('Dispute Resource', () => {
         url: '/v1/disputes/dp_123/close',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -48,6 +51,7 @@ describe('Dispute Resource', () => {
         url: '/v1/disputes/dp_123',
         headers: {},
         data: {evidence: {customer_name: 'Bob'}},
+        settings: {},
       });
     });
   });

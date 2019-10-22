@@ -12,6 +12,7 @@ describe('Sources Resource', () => {
         url: '/v1/sources/sourceId1',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -42,6 +43,7 @@ describe('Sources Resource', () => {
             refund_address: 'refundAddress1',
           },
         },
+        settings: {},
       });
     });
   });
@@ -56,6 +58,7 @@ describe('Sources Resource', () => {
         url: '/v1/sources/src_foo',
         headers: {},
         data: {metadata: {foo: 'bar'}},
+        settings: {},
       });
     });
   });
@@ -68,6 +71,7 @@ describe('Sources Resource', () => {
         url: '/v1/sources/src_foo/source_transactions',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -80,6 +84,7 @@ describe('Sources Resource', () => {
         url: '/v1/sources/src_foo/verify',
         headers: {},
         data: {values: [32, 45]},
+        settings: {},
       });
     });
   });

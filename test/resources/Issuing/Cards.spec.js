@@ -15,6 +15,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/cards/ic_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -33,6 +34,7 @@ describe('Issuing', () => {
             currency: 'usd',
             type: 'physical',
           },
+          settings: {},
         });
       });
     });
@@ -55,6 +57,7 @@ describe('Issuing', () => {
               thing2: 'yes',
             },
           },
+          settings: {},
         });
       });
     });
@@ -67,6 +70,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/cards',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -82,6 +86,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/cards/ic_123/details',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

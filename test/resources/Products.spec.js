@@ -12,6 +12,7 @@ describe('Product Resource', () => {
         url: '/v1/products/productIdFoo123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -32,6 +33,7 @@ describe('Product Resource', () => {
           type: 'good',
         },
         headers: {},
+        settings: {},
       });
     });
   });
@@ -46,6 +48,7 @@ describe('Product Resource', () => {
         url: '/v1/products?limit=3',
         data: {},
         headers: {},
+        settings: {},
       });
     });
 
@@ -58,6 +61,7 @@ describe('Product Resource', () => {
         url: '/v1/products?shippable=true',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -70,6 +74,7 @@ describe('Product Resource', () => {
         url: '/v1/products/productIdFoo3242',
         headers: {},
         data: {caption: 'test'},
+        settings: {},
       });
     });
   });
@@ -82,6 +87,7 @@ describe('Product Resource', () => {
         url: '/v1/products/productIdFoo3242',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

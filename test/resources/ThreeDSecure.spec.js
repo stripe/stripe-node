@@ -12,6 +12,7 @@ describe('ThreeDSecure Resource', () => {
         url: '/v1/3d_secure/tdsrc_id',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -35,6 +36,7 @@ describe('ThreeDSecure Resource', () => {
           currency: 'usd',
           return_url: 'https://example.org/3d-secure-result',
         },
+        settings: {},
       });
     });
   });

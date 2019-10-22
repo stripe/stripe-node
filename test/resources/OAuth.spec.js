@@ -76,6 +76,7 @@ describe('OAuth', () => {
           code: '123abc',
           grant_type: 'authorization_code',
         },
+        settings: {},
       });
     });
   });
@@ -99,6 +100,7 @@ describe('OAuth', () => {
           client_id: stripe.getClientId(),
           stripe_user_id: 'some_user_id',
         },
+        settings: {},
       });
     });
 
@@ -117,6 +119,7 @@ describe('OAuth', () => {
           client_id: '123abc',
           stripe_user_id: 'some_user_id',
         },
+        settings: {},
       });
     });
   });

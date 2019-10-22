@@ -12,6 +12,7 @@ describe('CountrySpecs Resource', () => {
         url: '/v1/country_specs',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -25,6 +26,7 @@ describe('CountrySpecs Resource', () => {
         url: `/v1/country_specs/${country}`,
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
