@@ -16,7 +16,7 @@ client side. This package should not be used for that purpose.
 
 ## Documentation
 
-See the [Node API docs](https://stripe.com/docs/api/node#intro).
+See the [`stripe-node` API docs](https://stripe.com/docs/api/node#intro) for Node.js.
 
 ## Installation
 
