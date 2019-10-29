@@ -494,6 +494,41 @@ describe('utils', () => {
       expect(flattened['x[a]']).to.equal('1');
     });
   });
+
+  describe('validateInteger', () => {
+    it("Returns the given value if it's a valid integer", () => {
+      const cases = [1, 0x123, 1e3, Number.MAX_SAFE_INTEGER];
+
+      cases.forEach((int) => {
+        expect(utils.validateInteger('magicNumber', int)).to.equal(int);
+      });
+    });
+
+    it('Throws an error if the value is not an integer', () => {
+      const cases = ['foo', 1.2, Number.POSITIVE_INFINITY];
+
+      cases.forEach((val) => {
+        expect(() => {
+          utils.validateInteger('magicNumber', val);
+        }).to.throw();
+      });
+    });
+
+    it('Returns a default value if n is not provided', () => {
+      const expected = 1000;
+      [null, undefined].forEach((t) => {
+        expect(utils.validateInteger('magicNumber', t, expected)).to.equal(
+          expected
+        );
+      });
+    });
+
+    it('Throws if neither value nor default is set', () => {
+      expect(() => {
+        utils.validateInteger('magicNumber');
+      }).to.throw();
+    });
+  });
 });
 
 function handleWarnings(doWithShimmedConsoleWarn, onWarn) {

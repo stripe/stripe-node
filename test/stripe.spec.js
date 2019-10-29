@@ -380,21 +380,21 @@ describe('Stripe Module', function() {
       it('should error', () => {
         expect(() => {
           stripe._setApiNumberField('maxNetworkRetries', 'foo');
-        }).to.throw(/maxNetworkRetries must be a number/);
+        }).to.throw(/maxNetworkRetries must be an integer/);
 
         expect(() => {
           stripe._setApiNumberField('maxNetworkRetries');
-        }).to.throw(/maxNetworkRetries must be a number/);
+        }).to.throw(/maxNetworkRetries must be an integer/);
       });
     });
 
     describe('when passed in via the config object', () => {
-      it('should only accept numbers', () => {
-        expect(() => {
-          Stripe(testUtils.getUserStripeKey(), {
-            maxNetworkRetries: 'foo',
-          });
-        }).to.throw(/maxNetworkRetries must be a number/);
+      it('should default to 0 if a non-integer is passed', () => {
+        const newStripe = Stripe(testUtils.getUserStripeKey(), {
+          maxNetworkRetries: 'foo',
+        });
+
+        expect(newStripe.getMaxNetworkRetries()).to.equal(0);
 
         expect(() => {
           Stripe(testUtils.getUserStripeKey(), {
