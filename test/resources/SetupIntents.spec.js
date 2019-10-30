@@ -17,6 +17,7 @@ describe('Setup Intents Resource', () => {
         url: '/v1/setup_intents',
         headers: {},
         data: params,
+        settings: {},
       });
     });
   });
@@ -29,6 +30,7 @@ describe('Setup Intents Resource', () => {
         url: '/v1/setup_intents',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -41,6 +43,7 @@ describe('Setup Intents Resource', () => {
         url: `/v1/setup_intents/${SETUP_INTENT_TEST_ID}`,
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -55,6 +58,7 @@ describe('Setup Intents Resource', () => {
         url: `/v1/setup_intents/${SETUP_INTENT_TEST_ID}`,
         headers: {},
         data: {metadata: {key: 'value'}},
+        settings: {},
       });
     });
   });
@@ -67,6 +71,7 @@ describe('Setup Intents Resource', () => {
         url: `/v1/setup_intents/${SETUP_INTENT_TEST_ID}/cancel`,
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -79,6 +84,7 @@ describe('Setup Intents Resource', () => {
         url: `/v1/setup_intents/${SETUP_INTENT_TEST_ID}/confirm`,
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

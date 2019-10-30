@@ -21,6 +21,7 @@ describe('UsageRecords Resource', () => {
           timestamp: 123321,
           action: 'increment',
         },
+        settings: {},
       });
     });
 
@@ -49,6 +50,7 @@ describe('UsageRecords Resource', () => {
               timestamp: 123321,
               action: 'increment',
             },
+            settings: {},
           });
 
           done();

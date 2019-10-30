@@ -12,6 +12,7 @@ describe('ExchangeRates Resource', () => {
         url: '/v1/exchange_rates',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -25,6 +26,7 @@ describe('ExchangeRates Resource', () => {
         url: `/v1/exchange_rates/${currency}`,
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });

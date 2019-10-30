@@ -15,6 +15,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/cardholders/ich_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -35,6 +36,7 @@ describe('Issuing', () => {
             name: 'Tim Testperson',
             type: 'individual',
           },
+          settings: {},
         });
       });
     });
@@ -57,6 +59,7 @@ describe('Issuing', () => {
               thing2: 'yes',
             },
           },
+          settings: {},
         });
       });
     });
@@ -69,6 +72,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/cardholders',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

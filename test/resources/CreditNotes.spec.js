@@ -12,6 +12,7 @@ describe('CreditNotes Resource', () => {
         url: '/v1/credit_notes/cn_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -29,6 +30,7 @@ describe('CreditNotes Resource', () => {
         url: '/v1/credit_notes',
         headers: {},
         data,
+        settings: {},
       });
     });
   });
@@ -41,6 +43,7 @@ describe('CreditNotes Resource', () => {
         url: '/v1/credit_notes?count=25',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -53,6 +56,7 @@ describe('CreditNotes Resource', () => {
         url: '/v1/credit_notes/cn_123',
         headers: {},
         data: {application_fee: 200},
+        settings: {},
       });
     });
   });
@@ -65,6 +69,7 @@ describe('CreditNotes Resource', () => {
         url: '/v1/credit_notes/cn_123/void',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

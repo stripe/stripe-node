@@ -141,8 +141,8 @@ describe('StripeResource', () => {
     };
 
     afterEach(() => {
-      realStripe.setMaxNetworkRetries(0);
-      stripe.setMaxNetworkRetries(0);
+      realStripe._setApiNumberField('maxNetworkRetries', 0);
+      stripe._setApiNumberField('maxNetworkRetries', 0);
     });
 
     after(() => {
@@ -169,7 +169,7 @@ describe('StripeResource', () => {
           .post(options.path, options.params)
           .replyWithError('worse stuff');
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err) => {
           const errorMessage = realStripe.invoices._generateConnectionErrorMessage(
@@ -192,7 +192,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(2);
+        realStripe._setApiNumberField('maxNetworkRetries', 2);
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -215,7 +215,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -232,7 +232,7 @@ describe('StripeResource', () => {
             },
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err) => {
           expect(err.type).to.equal('StripeCardError');
@@ -253,7 +253,7 @@ describe('StripeResource', () => {
             {'stripe-should-retry': 'false'}
           );
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err) => {
           expect(err.type).to.equal('StripeAPIError');
@@ -276,7 +276,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -293,7 +293,7 @@ describe('StripeResource', () => {
               'This authorization code has already been used. All tokens issued with this code have been revoked.',
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.oauth.token(options.data, (err) => {
           expect(err.type).to.equal('StripeInvalidGrantError');
@@ -316,7 +316,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -339,7 +339,7 @@ describe('StripeResource', () => {
             amount: 1000,
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.retrieve('ch_123', (err, charge) => {
           expect(charge.id).to.equal('ch_123');
@@ -361,14 +361,14 @@ describe('StripeResource', () => {
             return cb(null, [
               200,
               {
-                id: 'ch_123"',
+                id: 'ch_123',
                 object: 'charge',
                 amount: 1000,
               },
             ]);
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err) => {
           expect(headers).to.have.property('idempotency-key');
@@ -389,14 +389,14 @@ describe('StripeResource', () => {
             return cb(null, [
               200,
               {
-                id: 'ch_123"',
+                id: 'ch_123',
                 object: 'charge',
                 amount: 1000,
               },
             ]);
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.retrieve('ch_123', () => {
           expect(headers).to.not.have.property('idempotency-key');
@@ -418,78 +418,108 @@ describe('StripeResource', () => {
             return cb(null, [
               200,
               {
-                id: 'ch_123"',
+                id: 'ch_123',
                 object: 'charge',
                 amount: 1000,
               },
             ]);
           });
 
-        realStripe.setMaxNetworkRetries(1);
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, {idempotency_key: key}, () => {
           expect(headers['idempotency-key']).to.equal(key);
           done();
         });
       });
+
+      it('should allow the setting of network retries on a per-request basis', (done) => {
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .replyWithError('bad stuff')
+          .post(options.path, options.params)
+          .reply((uri, requestBody, cb) => {
+            return cb(null, [
+              200,
+              {
+                id: 'ch_123',
+                object: 'charge',
+                amount: 1000,
+              },
+            ]);
+          });
+
+        realStripe.charges.create(
+          options.data,
+          {maxNetworkRetries: 1},
+          (err, charge) => {
+            expect(charge.id).to.equal('ch_123');
+            done();
+          }
+        );
+      });
+
+      it('should pick the per-request network retry setting if a global setting is set', (done) => {
+        realStripe._setApiNumberField('maxNetworkRetries', 0);
+
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .replyWithError('bad stuff')
+          .post(options.path, options.params)
+          .reply((uri, requestBody, cb) => {
+            return cb(null, [
+              200,
+              {
+                id: 'ch_123',
+                object: 'charge',
+                amount: 1000,
+              },
+            ]);
+          });
+
+        realStripe.charges.create(
+          options.data,
+          {maxNetworkRetries: 1},
+          (err, charge) => {
+            expect(charge.id).to.equal('ch_123');
+            done();
+          }
+        );
+      });
     });
 
     describe('_shouldRetry', () => {
       it("should return false if we've reached maximum retries", () => {
-        stripe.setMaxNetworkRetries(1);
-        const res = stripe.invoices._shouldRetry(
-          {
-            statusCode: 409,
-          },
-          1
-        );
+        const res = stripe.invoices._shouldRetry({statusCode: 409}, 1, 1);
 
         expect(res).to.equal(false);
       });
 
       it('should return true if we have more retries available', () => {
-        stripe.setMaxNetworkRetries(1);
-        const res = stripe.invoices._shouldRetry(
-          {
-            statusCode: 409,
-          },
-          0
-        );
+        const res = stripe.invoices._shouldRetry({statusCode: 409}, 0, 1);
 
         expect(res).to.equal(true);
       });
 
       it('should return true if the error code is either 409 or 503', () => {
-        stripe.setMaxNetworkRetries(1);
-        let res = stripe.invoices._shouldRetry(
-          {
-            statusCode: 409,
-          },
-          0
-        );
+        let res = stripe.invoices._shouldRetry({statusCode: 409}, 0, 1);
 
         expect(res).to.equal(true);
 
-        res = stripe.invoices._shouldRetry(
-          {
-            statusCode: 503,
-          },
-          0
-        );
+        res = stripe.invoices._shouldRetry({statusCode: 503}, 0, 1);
 
         expect(res).to.equal(true);
       });
 
       it('should return false if the status is 200', () => {
-        stripe.setMaxNetworkRetries(2);
-
         // mocking that we're on our 2nd request
         const res = stripe.invoices._shouldRetry(
           {
             statusCode: 200,
             req: {_requestEvent: {method: 'POST'}},
           },
-          1
+          1,
+          2
         );
 
         expect(res).to.equal(false);
@@ -521,6 +551,23 @@ describe('StripeResource', () => {
           maxSec * 2 * 1000
         );
       });
+    });
+  });
+
+  describe('Request Timeout', () => {
+    it('should allow the setting of a request timeout on a per-request basis', (done) => {
+      stripe.setTimeout(1000);
+
+      stripe.charges.create({});
+
+      expect(stripe.LAST_REQUEST.settings).to.deep.equal({});
+
+      stripe.charges.create({}, {timeout: 10});
+
+      expect(stripe.LAST_REQUEST.settings).to.deep.equal({
+        timeout: 10,
+      });
+      done();
     });
   });
 });

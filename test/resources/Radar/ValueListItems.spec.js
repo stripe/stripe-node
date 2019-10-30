@@ -15,6 +15,7 @@ describe('Radar', () => {
           url: '/v1/radar/value_list_items/rsli_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -33,6 +34,7 @@ describe('Radar', () => {
             value_list: 'rsl_123',
             value: 'value',
           },
+          settings: {},
         });
       });
     });
@@ -47,6 +49,7 @@ describe('Radar', () => {
           url: '/v1/radar/value_list_items?value_list=rsl_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -59,6 +62,7 @@ describe('Radar', () => {
           url: '/v1/radar/value_list_items/rsli_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

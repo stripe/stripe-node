@@ -16,6 +16,7 @@ describe('Files Resource', () => {
         url: '/v1/files/fil_12345',
         headers: {},
         data: {},
+        settings: {},
       });
     });
 
@@ -27,6 +28,7 @@ describe('Files Resource', () => {
         headers: {},
         data: {},
         auth: TEST_AUTH_KEY,
+        settings: {},
       });
     });
   });
@@ -39,6 +41,7 @@ describe('Files Resource', () => {
         url: '/v1/files',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

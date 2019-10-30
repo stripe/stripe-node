@@ -12,6 +12,7 @@ describe('PaymentMethods Resource', () => {
         url: '/v1/payment_methods/pm_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -27,6 +28,7 @@ describe('PaymentMethods Resource', () => {
         url: '/v1/payment_methods',
         headers: {},
         data,
+        settings: {},
       });
     });
   });
@@ -43,6 +45,7 @@ describe('PaymentMethods Resource', () => {
         url: '/v1/payment_methods?customer=cus_123&type=card',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -58,6 +61,7 @@ describe('PaymentMethods Resource', () => {
         url: '/v1/payment_methods/pm_123',
         headers: {},
         data,
+        settings: {},
       });
     });
   });
@@ -70,6 +74,7 @@ describe('PaymentMethods Resource', () => {
         url: '/v1/payment_methods/pm_123/attach',
         headers: {},
         data: {customer: 'cus_123'},
+        settings: {},
       });
     });
   });
@@ -82,6 +87,7 @@ describe('PaymentMethods Resource', () => {
         url: '/v1/payment_methods/pm_123/detach',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

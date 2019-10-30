@@ -13,6 +13,7 @@ describe('Sigma', () => {
           url: '/v1/sigma/scheduled_query_runs/sqr_123',
           data: {},
           headers: {},
+          settings: {},
         });
       });
     });
@@ -25,6 +26,7 @@ describe('Sigma', () => {
           url: '/v1/sigma/scheduled_query_runs',
           data: {},
           headers: {},
+          settings: {},
         });
       });
     });

@@ -12,6 +12,7 @@ describe('FileLinks Resource', () => {
         url: '/v1/file_links/link_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('FileLinks Resource', () => {
         url: '/v1/file_links',
         headers: {},
         data: {file: 'file_123'},
+        settings: {},
       });
     });
   });
@@ -36,6 +38,7 @@ describe('FileLinks Resource', () => {
         url: '/v1/file_links/link_123',
         headers: {},
         data: {metadata: {key: 'value'}},
+        settings: {},
       });
     });
   });
@@ -48,6 +51,7 @@ describe('FileLinks Resource', () => {
         url: '/v1/file_links',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

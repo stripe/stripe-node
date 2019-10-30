@@ -12,6 +12,7 @@ describe('Events Resource', () => {
         url: '/v1/events/eventIdBaz',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('Events Resource', () => {
         url: '/v1/events?count=25',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

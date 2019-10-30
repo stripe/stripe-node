@@ -12,6 +12,7 @@ describe('Plans Resource', () => {
         url: '/v1/plans/planId1',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -27,6 +28,7 @@ describe('Plans Resource', () => {
         url: '/v1/plans',
         headers: {},
         data: {amount: 200, currency: 'usd'},
+        settings: {},
       });
     });
 
@@ -41,6 +43,7 @@ describe('Plans Resource', () => {
         url: '/v1/plans',
         headers: {},
         data: {amount: 200, currency: 'usd', usage_type: 'metered'},
+        settings: {},
       });
     });
 
@@ -61,6 +64,7 @@ describe('Plans Resource', () => {
           tiers: [{up_to: 123, amount: 100}, {up_to: 'inf', amount: 200}],
           tiers_mode: 'volume',
         },
+        settings: {},
       });
     });
 
@@ -79,6 +83,7 @@ describe('Plans Resource', () => {
           currency: 'usd',
           transform_usage: {divide_by: 123, round: 'up'},
         },
+        settings: {},
       });
     });
   });
@@ -94,6 +99,7 @@ describe('Plans Resource', () => {
         url: '/v1/plans/planId3',
         headers: {},
         data: {amount: 1900, currency: 'usd'},
+        settings: {},
       });
     });
   });
@@ -106,6 +112,7 @@ describe('Plans Resource', () => {
         url: '/v1/plans/planId4',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -118,6 +125,7 @@ describe('Plans Resource', () => {
         url: '/v1/plans',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

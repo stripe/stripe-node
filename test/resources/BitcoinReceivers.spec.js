@@ -12,6 +12,7 @@ describe('BitcoinReceivers Resource', () => {
         url: '/v1/bitcoin/receivers/receiverId1',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('BitcoinReceivers Resource', () => {
         url: '/v1/bitcoin/receivers',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -38,6 +40,7 @@ describe('BitcoinReceivers Resource', () => {
         url: '/v1/bitcoin/receivers/receiverId/transactions?limit=1',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

@@ -14,6 +14,7 @@ describe('Customers Resource', () => {
         url: '/v1/customers/cus_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
 
@@ -25,6 +26,7 @@ describe('Customers Resource', () => {
         headers: {},
         data: {},
         auth: TEST_AUTH_KEY,
+        settings: {},
       });
     });
   });
@@ -37,6 +39,7 @@ describe('Customers Resource', () => {
         url: '/v1/customers',
         headers: {},
         data: {description: 'Some customer'},
+        settings: {},
       });
     });
 
@@ -48,6 +51,7 @@ describe('Customers Resource', () => {
         headers: {},
         data: {description: 'Some customer'},
         auth: TEST_AUTH_KEY,
+        settings: {},
       });
     });
 
@@ -59,6 +63,7 @@ describe('Customers Resource', () => {
         headers: {},
         data: {},
         auth: TEST_AUTH_KEY,
+        settings: {},
       });
     });
 
@@ -72,6 +77,7 @@ describe('Customers Resource', () => {
         url: '/v1/customers',
         headers: {'Idempotency-Key': 'foo'},
         data: {description: 'Some customer'},
+        settings: {},
       });
     });
 
@@ -86,6 +92,7 @@ describe('Customers Resource', () => {
         headers: {},
         data: {description: 'Some customer'},
         auth: TEST_AUTH_KEY,
+        settings: {},
       });
     });
 
@@ -100,6 +107,7 @@ describe('Customers Resource', () => {
         headers: {'Idempotency-Key': 'foo'},
         data: {description: 'Some customer'},
         auth: TEST_AUTH_KEY,
+        settings: {},
       });
     });
 
@@ -111,6 +119,7 @@ describe('Customers Resource', () => {
         headers: {},
         data: {},
         auth: TEST_AUTH_KEY,
+        settings: {},
       });
     });
   });
@@ -125,6 +134,7 @@ describe('Customers Resource', () => {
         url: '/v1/customers/cus_123',
         headers: {},
         data: {description: 'Foo "baz"'},
+        settings: {},
       });
     });
   });
@@ -137,6 +147,7 @@ describe('Customers Resource', () => {
         url: '/v1/customers/cus_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -149,6 +160,7 @@ describe('Customers Resource', () => {
         url: '/v1/customers',
         headers: {},
         data: {},
+        settings: {},
       });
     });
 
@@ -160,6 +172,7 @@ describe('Customers Resource', () => {
         headers: {},
         data: {},
         auth: TEST_AUTH_KEY,
+        settings: {},
       });
     });
   });
@@ -173,6 +186,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/discount',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -187,6 +201,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/sources/card_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -198,6 +213,7 @@ describe('Customers Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -214,6 +230,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/sources',
           headers: {},
           data: {object: 'card', number: '123456', exp_month: '12'},
+          settings: {},
         });
       });
 
@@ -233,6 +250,7 @@ describe('Customers Resource', () => {
           headers: {},
           data: {object: 'card', number: '123456', exp_month: '12'},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -247,6 +265,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/sources/card_123',
           headers: {},
           data: {name: 'Bob M. Baz'},
+          settings: {},
         });
       });
     });
@@ -259,6 +278,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/sources/card_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -270,6 +290,7 @@ describe('Customers Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -282,6 +303,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/sources',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -293,6 +315,7 @@ describe('Customers Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -313,6 +336,7 @@ describe('Customers Resource', () => {
           headers: {},
           data,
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -327,6 +351,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/tax_ids/txi_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -342,6 +367,7 @@ describe('Customers Resource', () => {
           method: 'POST',
           url: '/v1/customers/cus_123/tax_ids',
           headers: {},
+          settings: {},
           data,
         });
       });
@@ -355,6 +381,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/tax_ids/txi_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -367,6 +394,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/tax_ids',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -381,6 +409,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/balance_transactions/cbtxn_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -396,6 +425,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/balance_transactions',
           headers: {},
           data: {amount: 123, currency: 'usd'},
+          settings: {},
         });
       });
     });
@@ -410,6 +440,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/balance_transactions/cbtxn_123',
           headers: {},
           data: {description: 'description'},
+          settings: {},
         });
       });
     });
@@ -422,6 +453,7 @@ describe('Customers Resource', () => {
           url: '/v1/customers/cus_123/balance_transactions',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
