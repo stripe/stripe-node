@@ -59,17 +59,27 @@ The package can be initialized with several options:
 import ProxyAgent from 'https-proxy-agent';
 
 const stripe = Stripe('sk_test_...', {
-  apiVersion: '2019-08-08', // Specify an API version
-  maxNetworkRetries: 1, // The amount of times a request should be retried
-  httpAgent: new ProxyAgent(process.env.http_proxy), // Set a proxy agent
-  timeout: 1000, // Amount of time in ms before a request times out
-  host: 'api.example.com', // Host that requests are made to
-  port: 123, // Port that requests are made to
-  telemetry: true, // Request latency telemetry
+  apiVersion: '2019-08-08',
+  maxNetworkRetries: 1,
+  httpAgent: new ProxyAgent(process.env.http_proxy),
+  timeout: 1000,
+  host: 'api.example.com',
+  port: 123,
+  telemetry: true,
 });
 ```
 
-Note: Both `setMaxNetworkRetries` and `timeout` can be set on a per-request basis. `timeout` can be updated at any time with `stripe.setTimeout`.
+| Option              | Default                       | Description                                                                           |
+| ------------------- | ----------------------------- | ------------------------------------------------------------------------------------- |
+| `apiVersion`        | `null`                        | Stripe API version to be used. If not set the account's default version will be used. |
+| `maxNetworkRetries` | 0                             | The amount of times a request should be [retried](#network-retries).                  |
+| `httpAgent`         | `null`                        | [Proxy](#configuring-a-proxy) agent to be used by the library.                        |
+| `timeout`           | 120000 (Node default timeout) | [Maximum time each request can take in ms.](#configuring-timeout)                     |
+| `host`              | `'api.stripe.com'`            | Host that requests are made to.                                                       |
+| `port`              | 443                           | Port that requests are made to.                                                       |
+| `telemetry`         | `true`                        | Allow Stripe to send latency [telemetry](#request-latency-telemetry)                  |
+
+Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis. `timeout` can be updated at any time with [`stripe.setTimeout`](#configuring-timeout).
 
 ### Usage with TypeScript
 
@@ -216,7 +226,7 @@ if (process.env.http_proxy) {
 
 ### Network retries
 
-Automatic network retries can be enabled with `setMaxNetworkRetries` in the config object.
+Automatic network retries can be enabled with the `maxNetworkRetries` config option.
 This will retry requests `n` times with exponential backoff if they fail due to an intermittent network problem.
 [Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
 
@@ -239,15 +249,13 @@ stripe.customers.create(
 );
 ```
 
-If `maxNetworkRetries` is set globally via the config object, the value set in a per-request basis will be favored.
-
 ### Examining Responses
 
 Some information about the response which generated a resource is available
 with the `lastResponse` property:
 
 ```js
-charge.lastResponse.requestId; // see: https://stripe.com/docs/api/node#request_ids
+charge.lastResponse.requestId; // see: https://stripe.com/docs/api/request_ids?lang=node
 charge.lastResponse.statusCode;
 ```
 
