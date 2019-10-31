@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 7.11.0 - 2019-10-31
+* [#719](https://github.com/stripe/stripe-node/pull/719) Define 'type' as a property on errors rather than a getter
+* [#709](https://github.com/stripe/stripe-node/pull/709) README: imply context of stripe-node
+* [#717](https://github.com/stripe/stripe-node/pull/717) Contributor Convenant
+
 ## 7.10.0 - 2019-10-08
 * [#699](https://github.com/stripe/stripe-node/pull/699) Add request-specific fields from raw error to top level error
 
