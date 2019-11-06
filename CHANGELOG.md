@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 7.12.0 - 2019-11-05
+* [#724](https://github.com/stripe/stripe-node/pull/724) Add support for `Mandate`
+
 ## 7.11.0 - 2019-10-31
 * [#719](https://github.com/stripe/stripe-node/pull/719) Define 'type' as a property on errors rather than a getter
 * [#709](https://github.com/stripe/stripe-node/pull/709) README: imply context of stripe-node
