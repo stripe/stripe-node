@@ -34,6 +34,7 @@ describe('Checkout', () => {
           url: '/v1/checkout/sessions',
           headers: {},
           data: params,
+          settings: {},
         });
       });
     });
@@ -46,6 +47,7 @@ describe('Checkout', () => {
           url: '/v1/checkout/sessions/cs_123',
           data: {},
           headers: {},
+          settings: {},
         });
       });
     });

@@ -15,6 +15,7 @@ describe('Reporting', () => {
           url: '/v1/reporting/report_runs/frr_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -37,6 +38,7 @@ describe('Reporting', () => {
             },
             report_type: 'activity.summary.1',
           },
+          settings: {},
         });
       });
     });
@@ -49,6 +51,7 @@ describe('Reporting', () => {
           url: '/v1/reporting/report_runs',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

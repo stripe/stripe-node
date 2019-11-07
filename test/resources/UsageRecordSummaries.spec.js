@@ -13,6 +13,7 @@ describe('UsageRecordSummaries Resource', () => {
         url: '/v1/subscription_items/si_123/usage_record_summaries',
         headers: {},
         data: {},
+        settings: {},
       });
     });
 
@@ -33,6 +34,7 @@ describe('UsageRecordSummaries Resource', () => {
               'Stripe-Account': 'acct_456',
             },
             data: {},
+            settings: {},
           });
 
           done();

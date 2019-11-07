@@ -1,7 +1,10 @@
+/* eslint-disable new-cap */
+
 'use strict';
 
 const testUtils = require('../testUtils');
 const utils = require('../lib/utils');
+const Stripe = require('../lib/stripe');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 
 const http = require('http');
@@ -16,6 +19,88 @@ const CUSTOMER_DETAILS = {
 describe('Stripe Module', function() {
   const cleanup = new testUtils.CleanupUtility();
   this.timeout(20000);
+
+  describe('config object', () => {
+    it('should only accept either an object or a string', () => {
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), 123);
+      }).to.throw(/Config must either be an object or a string/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), ['2019-12-12']);
+      }).to.throw(/Config must either be an object or a string/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), '2019-12-12');
+      }).to.not.throw();
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          apiVersion: 'latest',
+        });
+      }).to.not.throw();
+    });
+
+    it('should only contain allowed properties', () => {
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          foo: 'bar',
+          apiVersion: 'latest',
+        });
+      }).to.throw(/Config object may only contain the following:/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          apiVersion: '2019-12-12',
+          maxNetworkRetries: 2,
+          httpAgent: 'agent',
+          timeout: 123,
+          host: 'foo.stripe.com',
+          port: 321,
+        });
+      }).to.not.throw();
+    });
+
+    it('should perform a no-op if null, undefined or empty values are passed', () => {
+      const cases = [null, undefined, '', {}];
+
+      cases.forEach((item) => {
+        expect(() => {
+          Stripe(testUtils.getUserStripeKey(), item);
+        }).to.not.throw();
+      });
+
+      cases.forEach((item) => {
+        const stripe = Stripe(testUtils.getUserStripeKey(), item);
+        expect(stripe.getApiField('version')).to.equal(null);
+      });
+    });
+
+    it('should enable telemetry if not explicitly set', () => {
+      const newStripe = Stripe(testUtils.getUserStripeKey());
+
+      expect(newStripe.getTelemetryEnabled()).to.equal(true);
+    });
+
+    it('should enable telemetry if anything but "false" is set', () => {
+      const vals = ['foo', null, undefined];
+      let newStripe;
+
+      vals.forEach((val) => {
+        newStripe = Stripe(testUtils.getUserStripeKey(), {
+          telemetry: val,
+        });
+
+        expect(newStripe.getTelemetryEnabled()).to.equal(true);
+      });
+
+      newStripe = Stripe(testUtils.getUserStripeKey(), {
+        telemetry: false,
+      });
+
+      expect(newStripe.getTelemetryEnabled()).to.equal(false);
+    });
+  });
 
   describe('setApiKey', () => {
     it('uses Bearer auth', () => {
@@ -119,6 +204,20 @@ describe('Stripe Module', function() {
       it('should unset stripe._appInfo', () => {
         stripe.setAppInfo();
         expect(stripe._appInfo).to.be.undefined;
+      });
+    });
+
+    describe('when not set', () => {
+      it('should return empty string', () => {
+        expect(stripe.getAppInfoAsString()).to.equal('');
+      });
+    });
+
+    describe('when given a non-object variable', () => {
+      it('should throw an error', () => {
+        expect(() => {
+          stripe.setAppInfo('foo');
+        }).to.throw(/AppInfo must be an object./);
       });
     });
 
@@ -280,12 +379,44 @@ describe('Stripe Module', function() {
     describe('when given an empty or non-number variable', () => {
       it('should error', () => {
         expect(() => {
-          stripe.setMaxNetworkRetries('foo');
-        }).to.throw(/maxNetworkRetries must be a number/);
+          stripe._setApiNumberField('maxNetworkRetries', 'foo');
+        }).to.throw(/maxNetworkRetries must be an integer/);
 
         expect(() => {
-          stripe.setMaxNetworkRetries();
-        }).to.throw(/maxNetworkRetries must be a number/);
+          stripe._setApiNumberField('maxNetworkRetries');
+        }).to.throw(/maxNetworkRetries must be an integer/);
+      });
+    });
+
+    describe('when passed in via the config object', () => {
+      it('should default to 0 if a non-integer is passed', () => {
+        const newStripe = Stripe(testUtils.getUserStripeKey(), {
+          maxNetworkRetries: 'foo',
+        });
+
+        expect(newStripe.getMaxNetworkRetries()).to.equal(0);
+
+        expect(() => {
+          Stripe(testUtils.getUserStripeKey(), {
+            maxNetworkRetries: 2,
+          });
+        }).to.not.throw();
+      });
+
+      it('should correctly set the amount of network retries', () => {
+        const newStripe = Stripe(testUtils.getUserStripeKey(), {
+          maxNetworkRetries: 5,
+        });
+
+        expect(newStripe.getMaxNetworkRetries()).to.equal(5);
+      });
+    });
+
+    describe('when not set', () => {
+      it('should use the default', () => {
+        const newStripe = Stripe(testUtils.getUserStripeKey());
+
+        expect(newStripe.getMaxNetworkRetries()).to.equal(0);
       });
     });
   });

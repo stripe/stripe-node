@@ -24,6 +24,7 @@ function sendsCorrectStripeVersion() {
     headers: {
       'Stripe-Version': '2017-06-05',
     },
+    settings: {},
   });
 }
 
@@ -43,6 +44,7 @@ describe('EphemeralKey Resource', () => {
         headers: {
           'Stripe-Version': '2017-05-25',
         },
+        settings: {},
       });
     });
 
@@ -91,6 +93,7 @@ describe('EphemeralKey Resource', () => {
         url: '/v1/ephemeral_keys/ephkey_123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });

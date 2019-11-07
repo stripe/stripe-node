@@ -12,6 +12,7 @@ describe('BalanceTransactions Resource', function() {
         url: '/v1/balance_transactions/txn_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('BalanceTransactions Resource', function() {
         url: '/v1/balance_transactions',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

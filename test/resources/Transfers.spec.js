@@ -12,6 +12,7 @@ describe('Transfers Resource', () => {
         url: '/v1/transfers/transferId1',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -28,6 +29,7 @@ describe('Transfers Resource', () => {
         url: '/v1/transfers',
         headers: {},
         data: {amount: 200, currency: 'usd', recipient: {}},
+        settings: {},
       });
     });
   });
@@ -42,6 +44,7 @@ describe('Transfers Resource', () => {
         url: '/v1/transfers/transferId6654',
         headers: {},
         data: {amount: 300},
+        settings: {},
       });
     });
   });
@@ -54,6 +57,7 @@ describe('Transfers Resource', () => {
         url: '/v1/transfers',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

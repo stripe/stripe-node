@@ -15,6 +15,7 @@ describe('Radar', () => {
           url: '/v1/radar/value_lists/rsl_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -33,6 +34,7 @@ describe('Radar', () => {
             alias: 'alias',
             name: 'name',
           },
+          settings: {},
         });
       });
     });
@@ -45,6 +47,7 @@ describe('Radar', () => {
           url: '/v1/radar/value_lists',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -57,6 +60,7 @@ describe('Radar', () => {
           url: '/v1/radar/value_lists/rsl_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -73,6 +77,7 @@ describe('Radar', () => {
           data: {
             metadata: {a: '1234'},
           },
+          settings: {},
         });
       });
     });

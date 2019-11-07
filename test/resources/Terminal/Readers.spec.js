@@ -15,6 +15,7 @@ describe('Terminal', () => {
           url: '/v1/terminal/readers/rdr_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -33,6 +34,7 @@ describe('Terminal', () => {
             registration_code: 'a-b-c',
             label: 'name',
           },
+          settings: {},
         });
       });
     });
@@ -45,6 +47,7 @@ describe('Terminal', () => {
           url: '/v1/terminal/readers/rdr_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -61,6 +64,7 @@ describe('Terminal', () => {
           data: {
             label: 'name',
           },
+          settings: {},
         });
       });
     });
@@ -73,6 +77,7 @@ describe('Terminal', () => {
           url: '/v1/terminal/readers',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

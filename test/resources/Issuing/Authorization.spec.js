@@ -13,6 +13,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/authorizations/iauth_123',
           data: {},
           headers: {},
+          settings: {},
         });
       });
     });
@@ -25,6 +26,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/authorizations',
           data: {},
           headers: {},
+          settings: {},
         });
       });
     });
@@ -47,6 +49,7 @@ describe('Issuing', () => {
               thing2: 'yes',
             },
           },
+          settings: {},
         });
       });
     });
@@ -59,6 +62,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/authorizations/iauth_123/approve',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -71,6 +75,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/authorizations/iauth_123/decline',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

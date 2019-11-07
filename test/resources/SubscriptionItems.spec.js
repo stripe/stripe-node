@@ -12,6 +12,7 @@ describe('SubscriptionItems Resource', () => {
         url: '/v1/subscription_items/test_sub_item',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('SubscriptionItems Resource', () => {
         url: '/v1/subscription_items/test_sub_item',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -40,6 +42,7 @@ describe('SubscriptionItems Resource', () => {
         data: {
           plan: 'gold',
         },
+        settings: {},
       });
     });
   });
@@ -59,6 +62,7 @@ describe('SubscriptionItems Resource', () => {
           subscription: 'test_sub',
           plan: 'gold',
         },
+        settings: {},
       });
     });
   });
@@ -74,6 +78,7 @@ describe('SubscriptionItems Resource', () => {
         url: '/v1/subscription_items?limit=3&subscription=test_sub',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -91,6 +96,7 @@ describe('SubscriptionItems Resource', () => {
         url: '/v1/subscription_items/si_123/usage_records',
         headers: {},
         data,
+        settings: {},
       });
     });
   });

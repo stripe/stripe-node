@@ -12,6 +12,7 @@ describe('WebhookEndpoints Resource', () => {
         url: '/v1/webhook_endpoints/we_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('WebhookEndpoints Resource', () => {
         url: '/v1/webhook_endpoints/we_123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -40,6 +42,7 @@ describe('WebhookEndpoints Resource', () => {
         data: {
           enabled_events: ['charge.succeeded'],
         },
+        settings: {},
       });
     });
   });
@@ -59,6 +62,7 @@ describe('WebhookEndpoints Resource', () => {
           enabled_events: ['charge.succeeded'],
           url: 'https://stripe.com',
         },
+        settings: {},
       });
     });
   });
@@ -71,6 +75,7 @@ describe('WebhookEndpoints Resource', () => {
         url: '/v1/webhook_endpoints',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

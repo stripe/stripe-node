@@ -19,6 +19,7 @@ describe('Refund Resource', () => {
           amount: '300',
           charge: 'ch_123',
         },
+        settings: {},
       });
     });
   });
@@ -31,6 +32,7 @@ describe('Refund Resource', () => {
         url: '/v1/refunds/re_123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -43,6 +45,7 @@ describe('Refund Resource', () => {
         url: '/v1/refunds',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -55,6 +58,7 @@ describe('Refund Resource', () => {
         url: '/v1/refunds/re_123',
         headers: {},
         data: {metadata: {key: 'abcd'}},
+        settings: {},
       });
     });
   });

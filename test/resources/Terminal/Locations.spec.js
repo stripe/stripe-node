@@ -15,6 +15,7 @@ describe('Terminal', () => {
           url: '/v1/terminal/locations/loc_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -45,6 +46,7 @@ describe('Terminal', () => {
               city: 'San Francisco',
             },
           },
+          settings: {},
         });
       });
     });
@@ -57,6 +59,7 @@ describe('Terminal', () => {
           url: '/v1/terminal/locations/loc_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -73,6 +76,7 @@ describe('Terminal', () => {
           data: {
             display_name: 'name',
           },
+          settings: {},
         });
       });
     });
@@ -85,6 +89,7 @@ describe('Terminal', () => {
           url: '/v1/terminal/locations',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

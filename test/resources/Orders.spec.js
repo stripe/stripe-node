@@ -12,6 +12,7 @@ describe('Order Resource', () => {
         url: '/v1/orders/orderIdFoo123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -54,6 +55,7 @@ describe('Order Resource', () => {
           email: 'jane@ros.en',
         },
         headers: {},
+        settings: {},
       });
     });
   });
@@ -68,6 +70,7 @@ describe('Order Resource', () => {
         url: '/v1/orders?limit=3',
         data: {},
         headers: {},
+        settings: {},
       });
     });
 
@@ -80,6 +83,7 @@ describe('Order Resource', () => {
         url: '/v1/orders?status=active',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -94,6 +98,7 @@ describe('Order Resource', () => {
         url: '/v1/orders/orderIdFoo3242/pay',
         headers: {},
         data: {source: 'tok_FooBar'},
+        settings: {},
       });
     });
   });
@@ -108,6 +113,7 @@ describe('Order Resource', () => {
         url: '/v1/orders/orderIdFoo3242/returns',
         headers: {},
         data: {items: [{parent: 'sku_123'}]},
+        settings: {},
       });
     });
   });
@@ -120,6 +126,7 @@ describe('Order Resource', () => {
         url: '/v1/orders/orderIdFoo3242',
         headers: {},
         data: {status: 'fulfilled'},
+        settings: {},
       });
     });
   });

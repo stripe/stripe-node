@@ -12,6 +12,7 @@ describe('Charge Resource', () => {
         url: '/v1/charges/chargeIdFoo123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -40,6 +41,7 @@ describe('Charge Resource', () => {
           },
         },
         headers: {},
+        settings: {},
       });
     });
   });
@@ -52,6 +54,7 @@ describe('Charge Resource', () => {
         url: '/v1/charges',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -64,6 +67,7 @@ describe('Charge Resource', () => {
         url: '/v1/charges/chargeIdExample3242/capture',
         headers: {},
         data: {amount: 23},
+        settings: {},
       });
     });
   });
@@ -76,6 +80,7 @@ describe('Charge Resource', () => {
         url: '/v1/charges/chargeIdExample3242',
         headers: {},
         data: {description: 'foo321'},
+        settings: {},
       });
     });
   });

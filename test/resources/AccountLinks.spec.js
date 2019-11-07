@@ -23,6 +23,7 @@ describe('AccountLinks Resource', () => {
           success_url: 'https://stripe.com/success',
           type: 'custom_account_verification',
         },
+        settings: {},
       });
     });
   });

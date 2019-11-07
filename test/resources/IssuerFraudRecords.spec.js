@@ -12,6 +12,7 @@ describe('IssuerFraudRecord Resource', () => {
         url: '/v1/issuer_fraud_records/issfr_123',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('IssuerFraudRecord Resource', () => {
         url: '/v1/issuer_fraud_records',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });

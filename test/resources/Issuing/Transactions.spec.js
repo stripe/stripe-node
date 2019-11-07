@@ -15,6 +15,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/transactions/ipi_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -37,6 +38,7 @@ describe('Issuing', () => {
               thing2: 'yes',
             },
           },
+          settings: {},
         });
       });
     });
@@ -49,6 +51,7 @@ describe('Issuing', () => {
           url: '/v1/issuing/transactions',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

@@ -14,6 +14,7 @@ describe('Terminal', () => {
           url: '/v1/terminal/connection_tokens',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });

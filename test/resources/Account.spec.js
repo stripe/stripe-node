@@ -22,6 +22,7 @@ describe('Account Resource', () => {
         url: '/v1/accounts',
         data,
         headers: {},
+        settings: {},
       });
     });
   });
@@ -34,6 +35,7 @@ describe('Account Resource', () => {
         url: '/v1/accounts/acct_16Tzq6DBahdM4C8s',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -46,6 +48,7 @@ describe('Account Resource', () => {
         url: '/v1/accounts/acct_16Tzq6DBahdM4C8s/reject',
         data: {reason: 'fraud'},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -58,6 +61,7 @@ describe('Account Resource', () => {
         url: '/v1/account',
         data: {},
         headers: {},
+        settings: {},
       });
     });
 
@@ -68,6 +72,7 @@ describe('Account Resource', () => {
         url: '/v1/accounts/foo',
         data: {},
         headers: {},
+        settings: {},
       });
     });
 
@@ -80,6 +85,7 @@ describe('Account Resource', () => {
         url: '/v1/account',
         data: {},
         headers: {},
+        settings: {},
       });
     });
 
@@ -92,6 +98,7 @@ describe('Account Resource', () => {
         url: '/v1/account',
         data: {},
         headers: {},
+        settings: {},
       });
     });
 
@@ -102,6 +109,7 @@ describe('Account Resource', () => {
         url: '/v1/account',
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
@@ -115,6 +123,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/acct_123/capabilities',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -126,6 +135,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -138,6 +148,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/acct_123/capabilities/acap_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -153,6 +164,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -167,6 +179,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/acct_123/capabilities/acap_123',
           headers: {},
           data: {first_name: 'John'},
+          settings: {},
         });
       });
 
@@ -185,6 +198,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {first_name: 'John'},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -203,6 +217,7 @@ describe('Account Resource', () => {
             '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -219,6 +234,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -235,6 +251,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
           data: {number: '123456', currency: 'usd', country: 'US'},
+          settings: {},
         });
       });
 
@@ -254,6 +271,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {number: '123456', currency: 'usd', country: 'US'},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -273,6 +291,7 @@ describe('Account Resource', () => {
             '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {default_for_currency: true},
+          settings: {},
         });
       });
     });
@@ -289,6 +308,7 @@ describe('Account Resource', () => {
             '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -305,6 +325,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -317,6 +338,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/accountIdFoo321/external_accounts',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -328,6 +350,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -342,6 +365,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/acct_EXPRESS/login_links',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
@@ -356,6 +380,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/acct_123/persons/person_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -367,6 +392,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -381,6 +407,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/acct_123/persons',
           headers: {},
           data: {first_name: 'John'},
+          settings: {},
         });
       });
 
@@ -398,6 +425,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {first_name: 'John'},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -412,6 +440,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/acct_123/persons/person_123',
           headers: {},
           data: {first_name: 'John'},
+          settings: {},
         });
       });
 
@@ -430,6 +459,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {first_name: 'John'},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -442,6 +472,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/acct_123/persons/person_123',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -453,6 +484,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });
@@ -465,6 +497,7 @@ describe('Account Resource', () => {
           url: '/v1/accounts/acct_123/persons',
           headers: {},
           data: {},
+          settings: {},
         });
       });
 
@@ -476,6 +509,7 @@ describe('Account Resource', () => {
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
+          settings: {},
         });
       });
     });

@@ -12,6 +12,7 @@ describe('Coupons Resource', () => {
         url: '/v1/coupons/couponId123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('Coupons Resource', () => {
         url: '/v1/coupons/couponId123',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -40,6 +42,7 @@ describe('Coupons Resource', () => {
         data: {
           metadata: {a: '1234'},
         },
+        settings: {},
       });
     });
   });
@@ -61,6 +64,7 @@ describe('Coupons Resource', () => {
           duration: 'repeating',
           duration_in_months: 4,
         },
+        settings: {},
       });
     });
   });
@@ -73,6 +77,7 @@ describe('Coupons Resource', () => {
         url: '/v1/coupons',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });

@@ -12,6 +12,7 @@ describe('subscriptions Resource', () => {
         url: '/v1/subscriptions/test_sub',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -24,6 +25,7 @@ describe('subscriptions Resource', () => {
         url: '/v1/subscriptions/test_sub',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -40,6 +42,7 @@ describe('subscriptions Resource', () => {
         data: {
           metadata: {a: '1234'},
         },
+        settings: {},
       });
     });
   });
@@ -59,6 +62,7 @@ describe('subscriptions Resource', () => {
           customer: 'test_cus',
           plan: 'gold',
         },
+        settings: {},
       });
     });
   });
@@ -85,6 +89,7 @@ describe('subscriptions Resource', () => {
             },
           ],
         },
+        settings: {},
       });
     });
   });
@@ -112,6 +117,7 @@ describe('subscriptions Resource', () => {
             },
           ],
         },
+        settings: {},
       });
     });
   });
@@ -138,6 +144,7 @@ describe('subscriptions Resource', () => {
             },
           },
         },
+        settings: {},
       });
     });
   });
@@ -165,6 +172,7 @@ describe('subscriptions Resource', () => {
             },
           },
         },
+        settings: {},
       });
     });
   });
@@ -181,6 +189,7 @@ describe('subscriptions Resource', () => {
         url: '/v1/subscriptions?limit=3&customer=test_cus&plan=gold',
         headers: {},
         data: {},
+        settings: {},
       });
     });
   });
@@ -194,6 +203,7 @@ describe('subscriptions Resource', () => {
           url: '/v1/subscriptions/test_sub/discount',
           headers: {},
           data: {},
+          settings: {},
         });
       });
     });
