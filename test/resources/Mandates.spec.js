@@ -14,6 +14,7 @@ describe('Mandate Resource', () => {
         url: `/v1/mandates/${MANDATE_TEST_ID}`,
         data: {},
         headers: {},
+        settings: {},
       });
     });
   });
