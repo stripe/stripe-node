@@ -34,6 +34,7 @@
     "eslint-plugin-chai-friendly": "^0.4.0",
     "eslint-plugin-prettier": "^3.0.1",
     "mocha": "~6.1.4",
+    "mocha-junit-reporter": "^1.23.1",
     "nock": "^10.0.6",
     "nyc": "^14.1.0",
     "prettier": "^1.16.4"
