@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.13.1 - 2019-11-22
+
+- [#728](https://github.com/stripe/stripe-node/pull/728) Remove duplicate export
+
 ## 7.13.0 - 2019-11-06
 
 - [#703](https://github.com/stripe/stripe-node/pull/703) New config object
