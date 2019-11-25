@@ -551,6 +551,734 @@ declare namespace Stripe {
 
   namespace Account {
     /**
+     * With [Connect](https://stripe.com/docs/connect), you can create Stripe accounts for your users.
+     * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
+     *
+     * For Standard accounts, parameters other than country, email, and type
+     * are used to prefill the account application that we ask the account holder to complete.
+     */
+    interface CreateParams {
+      /**
+       * An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
+       */
+      account_token?: string;
+
+      /**
+       * Non-essential business information about the account
+       */
+      business_profile?: {
+        /**
+         * The merchant category code for the account. MCCs are used to classify businesses based on the goods or services they provide.
+         */
+        mcc?: string;
+
+        /**
+         * The customer-facing business name.
+         */
+        name?: string;
+
+        /**
+         * Internal-only description of the product sold by, or service provided by, the business. Used by Stripe for risk and underwriting purposes.
+         */
+        product_description?: string;
+
+        /**
+         * A publicly available email address for sending support issues to.
+         */
+        support_email?: string;
+
+        /**
+         * A publicly available phone number to call with support issues.
+         */
+        support_phone?: string;
+
+        /**
+         * A publicly available website for handling support issues.
+         */
+        support_url?: string;
+
+        /**
+         * The business's publicly available website.
+         */
+        url?: string;
+      };
+
+      /**
+       * The business type. Can be `individual` or `company`.
+       */
+      business_type?: string;
+
+      /**
+       * Information about the company or business. This field is null unless `business_type` is set to `company`.
+       */
+      company?: {
+        /**
+         * The company's primary address.
+         */
+        address?: {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        };
+
+        /**
+         * The Kana variation of the company's primary address (Japan only).
+         */
+        address_kana?: {
+          /**
+           * City or ward.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Block or building number.
+           */
+          line1?: string;
+
+          /**
+           * Building details.
+           */
+          line2?: string;
+
+          /**
+           * Postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Prefecture.
+           */
+          state?: string;
+
+          /**
+           * Town or cho-me.
+           */
+          town?: string;
+        };
+
+        /**
+         * The Kanji variation of the company's primary address (Japan only).
+         */
+        address_kanji?: {
+          /**
+           * City or ward.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Block or building number.
+           */
+          line1?: string;
+
+          /**
+           * Building details.
+           */
+          line2?: string;
+
+          /**
+           * Postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Prefecture.
+           */
+          state?: string;
+
+          /**
+           * Town or cho-me.
+           */
+          town?: string;
+        };
+
+        /**
+         * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
+         */
+        directors_provided?: boolean;
+
+        /**
+         * The company's legal name.
+         */
+        name?: string;
+
+        /**
+         * The Kana variation of the company's legal name (Japan only).
+         */
+        name_kana?: string;
+
+        /**
+         * The Kanji variation of the company's legal name (Japan only).
+         */
+        name_kanji?: string;
+
+        /**
+         * Whether the company's owners have been provided. Set this Boolean to `true` after creating all the company's owners with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.owner` requirement.
+         */
+        owners_provided?: boolean;
+
+        /**
+         * The company's phone number (used for verification).
+         */
+        phone?: string;
+
+        /**
+         * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
+         */
+        tax_id?: string;
+
+        /**
+         * The jurisdiction in which the `tax_id` is registered (Germany-based companies only).
+         */
+        tax_id_registrar?: string;
+
+        /**
+         * The VAT number of the company.
+         */
+        vat_id?: string;
+
+        /**
+         * Information on the verification state of the company.
+         */
+        verification?: {
+          /**
+           * A document verifying the business.
+           */
+          document?: {
+            /**
+             * The back of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            back?: string;
+
+            /**
+             * The front of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            front?: string;
+          };
+        };
+      };
+
+      /**
+       * The country in which the account holder resides, or in which the business is legally established. This should be an ISO 3166-1 alpha-2 country code. For example, if you are in the United States and the business for which you're creating an account is legally represented in Canada, you would use `CA` as the country for the account being created.
+       */
+      country?: string;
+
+      /**
+       * Three-letter ISO currency code representing the default currency for the account. This must be a currency that [Stripe supports in the account's country](https://stripe.com/docs/payouts).
+       */
+      default_currency?: string;
+
+      /**
+       * The email address of the account holder. For Custom accounts, this is only to make the account easier to identify to you: Stripe will never directly email your users.
+       */
+      email?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A card or bank account to attach to the account. You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation.
+       *
+       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
+       */
+      external_account?: string;
+
+      /**
+       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
+       */
+      individual?: {
+        /**
+         * The individual's primary address.
+         */
+        address?: {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        };
+
+        /**
+         * The Kana variation of the the individual's primary address (Japan only).
+         */
+        address_kana?: {
+          /**
+           * City or ward.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Block or building number.
+           */
+          line1?: string;
+
+          /**
+           * Building details.
+           */
+          line2?: string;
+
+          /**
+           * Postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Prefecture.
+           */
+          state?: string;
+
+          /**
+           * Town or cho-me.
+           */
+          town?: string;
+        };
+
+        /**
+         * The Kanji variation of the the individual's primary address (Japan only).
+         */
+        address_kanji?: {
+          /**
+           * City or ward.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Block or building number.
+           */
+          line1?: string;
+
+          /**
+           * Building details.
+           */
+          line2?: string;
+
+          /**
+           * Postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Prefecture.
+           */
+          state?: string;
+
+          /**
+           * Town or cho-me.
+           */
+          town?: string;
+        };
+
+        /**
+         * The individual's date of birth.
+         */
+        dob?:
+          | {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+          | '';
+
+        email?: string;
+
+        /**
+         * The individual's first name.
+         */
+        first_name?: string;
+
+        /**
+         * The Kana variation of the the individual's first name (Japan only).
+         */
+        first_name_kana?: string;
+
+        /**
+         * The Kanji variation of the individual's first name (Japan only).
+         */
+        first_name_kanji?: string;
+
+        /**
+         * The individual's gender (International regulations require either "male" or "female").
+         */
+        gender?: string;
+
+        /**
+         * The government-issued ID number of the individual, as appropriate for the representative's country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
+         */
+        id_number?: string;
+
+        /**
+         * The individual's last name.
+         */
+        last_name?: string;
+
+        /**
+         * The Kana varation of the individual's last name (Japan only).
+         */
+        last_name_kana?: string;
+
+        /**
+         * The Kanji varation of the individual's last name (Japan only).
+         */
+        last_name_kanji?: string;
+
+        /**
+         * The individual's maiden name.
+         */
+        maiden_name?: string;
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: {
+          [key: string]: string;
+        };
+
+        /**
+         * The individual's phone number.
+         */
+        phone?: string;
+
+        /**
+         * The last four digits of the individual's Social Security Number (U.S. only).
+         */
+        ssn_last_4?: string;
+
+        /**
+         * The individual's verification document information.
+         */
+        verification?: {
+          /**
+           * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
+           */
+          additional_document?: {
+            /**
+             * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            back?: string;
+
+            /**
+             * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            front?: string;
+          };
+
+          /**
+           * An identifying document, either a passport or local ID card.
+           */
+          document?: {
+            /**
+             * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            back?: string;
+
+            /**
+             * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            front?: string;
+          };
+        };
+      };
+
+      /**
+       * A set of key-value pairs that you can attach to an `Account` object. This can be useful for storing additional information about the account in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
+       */
+      requested_capabilities?: Array<
+        | 'card_issuing'
+        | 'card_payments'
+        | 'legacy_payments'
+        | 'transfers'>;
+
+      /**
+       * Options for customizing how the account functions within Stripe.
+       */
+      settings?: {
+        /**
+         * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
+         */
+        branding?: {
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be square and at least 128px x 128px.
+           */
+          icon?: string;
+
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) A logo for the account that will be used in Checkout instead of the icon and without the account's name next to it if provided. Must be at least 128px x 128px.
+           */
+          logo?: string;
+
+          /**
+           * A CSS hex color value representing the primary branding color for this account.
+           */
+          primary_color?: string;
+        };
+
+        /**
+         * Settings specific to card charging on the account.
+         */
+        card_payments?: {
+          /**
+           * Automatically declines certain charge types regardless of whether the card issuer accepted or declined the charge.
+           */
+          decline_on?: {
+            /**
+             * Whether Stripe automatically declines charges with an incorrect ZIP or postal code. This setting only applies when a ZIP or postal code is provided and they fail bank verification.
+             */
+            avs_failure?: boolean;
+
+            /**
+             * Whether Stripe automatically declines charges with an incorrect CVC. This setting only applies when a CVC is provided and it fails bank verification.
+             */
+            cvc_failure?: boolean;
+          };
+
+          /**
+           * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix?: string;
+        };
+
+        /**
+         * Settings that apply across payment methods for charging on the account.
+         */
+        payments?: {
+          /**
+           * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
+           */
+          statement_descriptor?: string;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only).
+           */
+          statement_descriptor_kana?: string;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only).
+           */
+          statement_descriptor_kanji?: string;
+        };
+
+        /**
+         * Settings specific to the account's payouts.
+         */
+        payouts?: {
+          /**
+           * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances).
+           */
+          debit_negative_balances?: boolean;
+
+          /**
+           * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://stripe.com/docs/connect/bank-transfers#payout-information) documentation.
+           */
+          schedule?: {
+            /**
+             * The number of days charge funds are held before being paid out. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter does not apply when the `interval` is `manual`.
+             */
+            delay_days?: 'minimum' | number;
+
+            /**
+             * How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`. Default is `daily`.
+             */
+            interval?: 'daily' | 'manual' | 'monthly' | 'weekly';
+
+            /**
+             * The day of the month when available funds are paid out, specified as a number between 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a shorter month. Required and applicable only if `interval` is `monthly`.
+             */
+            monthly_anchor?: number;
+
+            /**
+             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. (required and applicable only if `interval` is `weekly`.)
+             */
+            weekly_anchor?:
+              | 'friday'
+              | 'monday'
+              | 'saturday'
+              | 'sunday'
+              | 'thursday'
+              | 'tuesday'
+              | 'wednesday';
+          };
+
+          /**
+           * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
+           */
+          statement_descriptor?: string;
+        };
+      };
+
+      /**
+       * Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
+       */
+      tos_acceptance?: {
+        /**
+         * The Unix timestamp marking when the account representative accepted the Stripe Services Agreement.
+         */
+        date?: number;
+
+        /**
+         * The IP address from which the account representative accepted the Stripe Services Agreement.
+         */
+        ip?: string;
+
+        /**
+         * The user agent of the browser from which the account representative accepted the Stripe Services Agreement.
+         */
+        user_agent?: string;
+      };
+
+      /**
+       * The type of Stripe account to create. Currently must be `custom`, as only [Custom accounts](https://stripe.com/docs/connect/custom-accounts) may be created via the API.
+       */
+      type?: 'custom' | 'express' | 'standard';
+    }
+
+    /**
+     * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
+     *
+     * Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.
+     *
+     * If you want to delete your own account, use the [data tab in your account settings](https://dashboard.stripe.com/account/data) instead.
+     */
+    interface DelParams {}
+
+    /**
+     * Returns a list of accounts connected to your platform via [Connect](https://stripe.com/docs/connect). If you're not a platform, the list is empty.
+     */
+    interface ListParams {
+      created?:
+        | {
+          /**
+           * Minimum value to filter by (exclusive)
+           */
+          gt?: number;
+
+          /**
+           * Minimum value to filter by (inclusive)
+           */
+          gte?: number;
+
+          /**
+           * Maximum value to filter by (exclusive)
+           */
+          lt?: number;
+
+          /**
+           * Maximum value to filter by (inclusive)
+           */
+          lte?: number;
+        }
+        | number;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
      * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
      *
      * Test-mode Custom and Express accounts can be rejected at any time. Accounts created using live-mode keys may only be rejected once all balances are zero.
@@ -567,7 +1295,1542 @@ declare namespace Stripe {
       reason: string;
     }
 
+    /**
+     * Retrieves the details of an account.
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates a connected [Express or Custom account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are supported by both account types.
+     *
+     * To update your own account, use the [Dashboard](https://dashboard.stripe.com/account). Refer to our [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
+     */
+    interface UpdateParams {
+      /**
+       * An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
+       */
+      account_token?: string;
+
+      /**
+       * Non-essential business information about the account
+       */
+      business_profile?: {
+        /**
+         * The merchant category code for the account. MCCs are used to classify businesses based on the goods or services they provide.
+         */
+        mcc?: string;
+
+        /**
+         * The customer-facing business name.
+         */
+        name?: string;
+
+        /**
+         * Internal-only description of the product sold by, or service provided by, the business. Used by Stripe for risk and underwriting purposes.
+         */
+        product_description?: string;
+
+        /**
+         * A publicly available email address for sending support issues to.
+         */
+        support_email?: string;
+
+        /**
+         * A publicly available phone number to call with support issues.
+         */
+        support_phone?: string;
+
+        /**
+         * A publicly available website for handling support issues.
+         */
+        support_url?: string;
+
+        /**
+         * The business's publicly available website.
+         */
+        url?: string;
+      };
+
+      /**
+       * The business type. Can be `individual` or `company`.
+       */
+      business_type?: string;
+
+      /**
+       * Information about the company or business. This field is null unless `business_type` is set to `company`.
+       */
+      company?: {
+        /**
+         * The company's primary address.
+         */
+        address?: {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        };
+
+        /**
+         * The Kana variation of the company's primary address (Japan only).
+         */
+        address_kana?: {
+          /**
+           * City or ward.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Block or building number.
+           */
+          line1?: string;
+
+          /**
+           * Building details.
+           */
+          line2?: string;
+
+          /**
+           * Postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Prefecture.
+           */
+          state?: string;
+
+          /**
+           * Town or cho-me.
+           */
+          town?: string;
+        };
+
+        /**
+         * The Kanji variation of the company's primary address (Japan only).
+         */
+        address_kanji?: {
+          /**
+           * City or ward.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Block or building number.
+           */
+          line1?: string;
+
+          /**
+           * Building details.
+           */
+          line2?: string;
+
+          /**
+           * Postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Prefecture.
+           */
+          state?: string;
+
+          /**
+           * Town or cho-me.
+           */
+          town?: string;
+        };
+
+        /**
+         * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
+         */
+        directors_provided?: boolean;
+
+        /**
+         * The company's legal name.
+         */
+        name?: string;
+
+        /**
+         * The Kana variation of the company's legal name (Japan only).
+         */
+        name_kana?: string;
+
+        /**
+         * The Kanji variation of the company's legal name (Japan only).
+         */
+        name_kanji?: string;
+
+        /**
+         * Whether the company's owners have been provided. Set this Boolean to `true` after creating all the company's owners with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.owner` requirement.
+         */
+        owners_provided?: boolean;
+
+        /**
+         * The company's phone number (used for verification).
+         */
+        phone?: string;
+
+        /**
+         * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
+         */
+        tax_id?: string;
+
+        /**
+         * The jurisdiction in which the `tax_id` is registered (Germany-based companies only).
+         */
+        tax_id_registrar?: string;
+
+        /**
+         * The VAT number of the company.
+         */
+        vat_id?: string;
+
+        /**
+         * Information on the verification state of the company.
+         */
+        verification?: {
+          /**
+           * A document verifying the business.
+           */
+          document?: {
+            /**
+             * The back of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            back?: string;
+
+            /**
+             * The front of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            front?: string;
+          };
+        };
+      };
+
+      /**
+       * Three-letter ISO currency code representing the default currency for the account. This must be a currency that [Stripe supports in the account's country](https://stripe.com/docs/payouts).
+       */
+      default_currency?: string;
+
+      /**
+       * Email address of the account representative. For Standard accounts, this is used to ask them to claim their Stripe account. For Custom accounts, this only makes the account easier to identify to platforms; Stripe does not email the account representative.
+       */
+      email?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A card or bank account to attach to the account. You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe.js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation.
+       *
+       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
+       */
+      external_account?: string;
+
+      /**
+       * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
+       */
+      individual?: {
+        /**
+         * The individual's primary address.
+         */
+        address?: {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        };
+
+        /**
+         * The Kana variation of the the individual's primary address (Japan only).
+         */
+        address_kana?: {
+          /**
+           * City or ward.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Block or building number.
+           */
+          line1?: string;
+
+          /**
+           * Building details.
+           */
+          line2?: string;
+
+          /**
+           * Postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Prefecture.
+           */
+          state?: string;
+
+          /**
+           * Town or cho-me.
+           */
+          town?: string;
+        };
+
+        /**
+         * The Kanji variation of the the individual's primary address (Japan only).
+         */
+        address_kanji?: {
+          /**
+           * City or ward.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Block or building number.
+           */
+          line1?: string;
+
+          /**
+           * Building details.
+           */
+          line2?: string;
+
+          /**
+           * Postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * Prefecture.
+           */
+          state?: string;
+
+          /**
+           * Town or cho-me.
+           */
+          town?: string;
+        };
+
+        /**
+         * The individual's date of birth.
+         */
+        dob?:
+          | {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+          | '';
+
+        email?: string;
+
+        /**
+         * The individual's first name.
+         */
+        first_name?: string;
+
+        /**
+         * The Kana variation of the the individual's first name (Japan only).
+         */
+        first_name_kana?: string;
+
+        /**
+         * The Kanji variation of the individual's first name (Japan only).
+         */
+        first_name_kanji?: string;
+
+        /**
+         * The individual's gender (International regulations require either "male" or "female").
+         */
+        gender?: string;
+
+        /**
+         * The government-issued ID number of the individual, as appropriate for the representative's country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
+         */
+        id_number?: string;
+
+        /**
+         * The individual's last name.
+         */
+        last_name?: string;
+
+        /**
+         * The Kana varation of the individual's last name (Japan only).
+         */
+        last_name_kana?: string;
+
+        /**
+         * The Kanji varation of the individual's last name (Japan only).
+         */
+        last_name_kanji?: string;
+
+        /**
+         * The individual's maiden name.
+         */
+        maiden_name?: string;
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: {
+          [key: string]: string;
+        };
+
+        /**
+         * The individual's phone number.
+         */
+        phone?: string;
+
+        /**
+         * The last four digits of the individual's Social Security Number (U.S. only).
+         */
+        ssn_last_4?: string;
+
+        /**
+         * The individual's verification document information.
+         */
+        verification?: {
+          /**
+           * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
+           */
+          additional_document?: {
+            /**
+             * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            back?: string;
+
+            /**
+             * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            front?: string;
+          };
+
+          /**
+           * An identifying document, either a passport or local ID card.
+           */
+          document?: {
+            /**
+             * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            back?: string;
+
+            /**
+             * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             */
+            front?: string;
+          };
+        };
+      };
+
+      /**
+       * A set of key-value pairs that you can attach to an `Account` object. This can be useful for storing additional information about the account in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
+       */
+      requested_capabilities?: Array<
+        | 'card_issuing'
+        | 'card_payments'
+        | 'legacy_payments'
+        | 'transfers'>;
+
+      /**
+       * Options for customizing how the account functions within Stripe.
+       */
+      settings?: {
+        /**
+         * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
+         */
+        branding?: {
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be square and at least 128px x 128px.
+           */
+          icon?: string;
+
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) A logo for the account that will be used in Checkout instead of the icon and without the account's name next to it if provided. Must be at least 128px x 128px.
+           */
+          logo?: string;
+
+          /**
+           * A CSS hex color value representing the primary branding color for this account.
+           */
+          primary_color?: string;
+        };
+
+        /**
+         * Settings specific to card charging on the account.
+         */
+        card_payments?: {
+          /**
+           * Automatically declines certain charge types regardless of whether the card issuer accepted or declined the charge.
+           */
+          decline_on?: {
+            /**
+             * Whether Stripe automatically declines charges with an incorrect ZIP or postal code. This setting only applies when a ZIP or postal code is provided and they fail bank verification.
+             */
+            avs_failure?: boolean;
+
+            /**
+             * Whether Stripe automatically declines charges with an incorrect CVC. This setting only applies when a CVC is provided and it fails bank verification.
+             */
+            cvc_failure?: boolean;
+          };
+
+          /**
+           * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix?: string;
+        };
+
+        /**
+         * Settings that apply across payment methods for charging on the account.
+         */
+        payments?: {
+          /**
+           * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
+           */
+          statement_descriptor?: string;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only).
+           */
+          statement_descriptor_kana?: string;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only).
+           */
+          statement_descriptor_kanji?: string;
+        };
+
+        /**
+         * Settings specific to the account's payouts.
+         */
+        payouts?: {
+          /**
+           * A Boolean indicating whether Stripe should try to reclaim negative balances from an attached bank account. For details, see [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances).
+           */
+          debit_negative_balances?: boolean;
+
+          /**
+           * Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://stripe.com/docs/connect/bank-transfers#payout-information) documentation.
+           */
+          schedule?: {
+            /**
+             * The number of days charge funds are held before being paid out. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter does not apply when the `interval` is `manual`.
+             */
+            delay_days?: 'minimum' | number;
+
+            /**
+             * How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`. Default is `daily`.
+             */
+            interval?: 'daily' | 'manual' | 'monthly' | 'weekly';
+
+            /**
+             * The day of the month when available funds are paid out, specified as a number between 1--31. Payouts nominally scheduled between the 29th and 31st of the month are instead sent on the last day of a shorter month. Required and applicable only if `interval` is `monthly`.
+             */
+            monthly_anchor?: number;
+
+            /**
+             * The day of the week when available funds are paid out, specified as `monday`, `tuesday`, etc. (required and applicable only if `interval` is `weekly`.)
+             */
+            weekly_anchor?:
+              | 'friday'
+              | 'monday'
+              | 'saturday'
+              | 'sunday'
+              | 'thursday'
+              | 'tuesday'
+              | 'wednesday';
+          };
+
+          /**
+           * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
+           */
+          statement_descriptor?: string;
+        };
+      };
+
+      /**
+       * Details on the account's acceptance of the [Stripe Services Agreement](https://stripe.com/docs/connect/updating-accounts#tos-acceptance).
+       */
+      tos_acceptance?: {
+        /**
+         * The Unix timestamp marking when the account representative accepted the Stripe Services Agreement.
+         */
+        date?: number;
+
+        /**
+         * The IP address from which the account representative accepted the Stripe Services Agreement.
+         */
+        ip?: string;
+
+        /**
+         * The user agent of the browser from which the account representative accepted the Stripe Services Agreement.
+         */
+        user_agent?: string;
+      };
+    }
+
+    /**
+     * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
+     */
+    interface ListCapabilitiesParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Retrieves information about the specified Account Capability.
+     */
+    interface RetrieveCapabilityParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates an existing Account Capability.
+     */
+    interface UpdateCapabilityParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    /**
+     * Create an external account for a given account.
+     */
+    interface CreateExternalAccountParams {
+      /**
+       * When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
+       */
+      default_for_currency?: boolean;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Please refer to full [documentation](https://stripe.com/docs/api) instead.
+       */
+      external_account: string;
+
+      /**
+       * A set of key-value pairs that you can attach to an external account object. It can be useful for storing additional information about the external account in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+    }
+
+    /**
+     * Delete a specified external account for a given account.
+     */
+    interface DeleteExternalAccountParams {}
+
+    /**
+     * List external accounts for an account.
+     */
+    interface ListExternalAccountsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * Retrieve a specified external account for a given account.
+     */
+    interface RetrieveExternalAccountParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
+     * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
+     */
+    interface UpdateExternalAccountParams {
+      /**
+       * The name of the person or business that owns the bank account.
+       */
+      account_holder_name?: string;
+
+      /**
+       * The type of entity that holds the account. This can be either `individual` or `company`.
+       */
+      account_holder_type?: '' | 'company' | 'individual';
+
+      /**
+       * City/District/Suburb/Town/Village.
+       */
+      address_city?: string;
+
+      /**
+       * Billing address country, if provided when creating card.
+       */
+      address_country?: string;
+
+      /**
+       * Address line 1 (Street address/PO Box/Company name).
+       */
+      address_line1?: string;
+
+      /**
+       * Address line 2 (Apartment/Suite/Unit/Building).
+       */
+      address_line2?: string;
+
+      /**
+       * State/County/Province/Region.
+       */
+      address_state?: string;
+
+      /**
+       * ZIP or postal code.
+       */
+      address_zip?: string;
+
+      /**
+       * When set to true, this becomes the default external account for its currency.
+       */
+      default_for_currency?: boolean;
+
+      /**
+       * Two digit number representing the card's expiration month.
+       */
+      exp_month?: string;
+
+      /**
+       * Four digit number representing the card's expiration year.
+       */
+      exp_year?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Cardholder name.
+       */
+      name?: string;
+    }
+
+    /**
+     * Creates a single-use login link for an Express account to access their Stripe dashboard.
+     *
+     * You may only create login links for [Express accounts](https://stripe.com/docs/connect/express-accounts) connected to your platform.
+     */
+    interface CreateLoginLinkParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Where to redirect the user after they log out of their dashboard.
+       */
+      redirect_url?: string;
+    }
+
+    /**
+     * Creates a new person.
+     */
+    interface CreatePersonParams {
+      /**
+       * The person's address.
+       */
+      address?: {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1?: string;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2?: string;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * State, county, province, or region.
+         */
+        state?: string;
+      };
+
+      /**
+       * The Kana variation of the person's address (Japan only).
+       */
+      address_kana?: {
+        /**
+         * City or ward.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Block or building number.
+         */
+        line1?: string;
+
+        /**
+         * Building details.
+         */
+        line2?: string;
+
+        /**
+         * Postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * Prefecture.
+         */
+        state?: string;
+
+        /**
+         * Town or cho-me.
+         */
+        town?: string;
+      };
+
+      /**
+       * The Kanji variation of the person's address (Japan only).
+       */
+      address_kanji?: {
+        /**
+         * City or ward.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Block or building number.
+         */
+        line1?: string;
+
+        /**
+         * Building details.
+         */
+        line2?: string;
+
+        /**
+         * Postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * Prefecture.
+         */
+        state?: string;
+
+        /**
+         * Town or cho-me.
+         */
+        town?: string;
+      };
+
+      /**
+       * The person's date of birth.
+       */
+      dob?:
+        | {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
+        | '';
+
+      /**
+       * The person's email address.
+       */
+      email?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * The person's first name.
+       */
+      first_name?: string;
+
+      /**
+       * The Kana variation of the person's first name (Japan only).
+       */
+      first_name_kana?: string;
+
+      /**
+       * The Kanji variation of the person's first name (Japan only).
+       */
+      first_name_kanji?: string;
+
+      /**
+       * The person's gender (International regulations require either "male" or "female").
+       */
+      gender?: string;
+
+      /**
+       * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
+       */
+      id_number?: string;
+
+      /**
+       * The person's last name.
+       */
+      last_name?: string;
+
+      /**
+       * The Kana variation of the person's last name (Japan only).
+       */
+      last_name_kana?: string;
+
+      /**
+       * The Kanji variation of the person's last name (Japan only).
+       */
+      last_name_kanji?: string;
+
+      /**
+       * The person's maiden name.
+       */
+      maiden_name?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
+       */
+      person_token?: string;
+
+      /**
+       * The person's phone number.
+       */
+      phone?: string;
+
+      /**
+       * The relationship that this person has with the account's legal entity.
+       */
+      relationship?: {
+        /**
+         * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+         */
+        director?: boolean;
+
+        /**
+         * Whether the person has significant responsibility to control, manage, or direct the organization.
+         */
+        executive?: boolean;
+
+        /**
+         * Whether the person is an owner of the account's legal entity.
+         */
+        owner?: boolean;
+
+        /**
+         * The percent owned by the person of the account's legal entity.
+         */
+        percent_ownership?: number | '';
+
+        /**
+         * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
+         */
+        representative?: boolean;
+
+        /**
+         * The person's title (e.g., CEO, Support Engineer).
+         */
+        title?: string;
+      };
+
+      /**
+       * The last 4 digits of the person's social security number.
+       */
+      ssn_last_4?: string;
+
+      /**
+       * The person's verification status.
+       */
+      verification?: {
+        /**
+         * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
+         */
+        additional_document?: {
+          /**
+           * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          back?: string;
+
+          /**
+           * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          front?: string;
+        };
+
+        /**
+         * An identifying document, either a passport or local ID card.
+         */
+        document?: {
+          /**
+           * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          back?: string;
+
+          /**
+           * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          front?: string;
+        };
+      };
+    }
+
+    /**
+     * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
+     */
+    interface DeletePersonParams {}
+
+    /**
+     * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
+     */
+    interface ListPersonsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Filters on the list of people returned based on the person's relationship to the account's company.
+       */
+      relationship?: {
+        /**
+         * A filter on the list of people returned based on whether these people are directors of the account's company.
+         */
+        director?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are executives of the account's company.
+         */
+        executive?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are owners of the account's company.
+         */
+        owner?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are the representative of the account's company.
+         */
+        representative?: boolean;
+      };
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * Retrieves an existing person.
+     */
+    interface RetrievePersonParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates an existing person.
+     */
+    interface UpdatePersonParams {
+      /**
+       * The person's address.
+       */
+      address?: {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1?: string;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2?: string;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * State, county, province, or region.
+         */
+        state?: string;
+      };
+
+      /**
+       * The Kana variation of the person's address (Japan only).
+       */
+      address_kana?: {
+        /**
+         * City or ward.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Block or building number.
+         */
+        line1?: string;
+
+        /**
+         * Building details.
+         */
+        line2?: string;
+
+        /**
+         * Postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * Prefecture.
+         */
+        state?: string;
+
+        /**
+         * Town or cho-me.
+         */
+        town?: string;
+      };
+
+      /**
+       * The Kanji variation of the person's address (Japan only).
+       */
+      address_kanji?: {
+        /**
+         * City or ward.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Block or building number.
+         */
+        line1?: string;
+
+        /**
+         * Building details.
+         */
+        line2?: string;
+
+        /**
+         * Postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * Prefecture.
+         */
+        state?: string;
+
+        /**
+         * Town or cho-me.
+         */
+        town?: string;
+      };
+
+      /**
+       * The person's date of birth.
+       */
+      dob?:
+        | {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
+        | '';
+
+      /**
+       * The person's email address.
+       */
+      email?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * The person's first name.
+       */
+      first_name?: string;
+
+      /**
+       * The Kana variation of the person's first name (Japan only).
+       */
+      first_name_kana?: string;
+
+      /**
+       * The Kanji variation of the person's first name (Japan only).
+       */
+      first_name_kanji?: string;
+
+      /**
+       * The person's gender (International regulations require either "male" or "female").
+       */
+      gender?: string;
+
+      /**
+       * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
+       */
+      id_number?: string;
+
+      /**
+       * The person's last name.
+       */
+      last_name?: string;
+
+      /**
+       * The Kana variation of the person's last name (Japan only).
+       */
+      last_name_kana?: string;
+
+      /**
+       * The Kanji variation of the person's last name (Japan only).
+       */
+      last_name_kanji?: string;
+
+      /**
+       * The person's maiden name.
+       */
+      maiden_name?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
+       */
+      person_token?: string;
+
+      /**
+       * The person's phone number.
+       */
+      phone?: string;
+
+      /**
+       * The relationship that this person has with the account's legal entity.
+       */
+      relationship?: {
+        /**
+         * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+         */
+        director?: boolean;
+
+        /**
+         * Whether the person has significant responsibility to control, manage, or direct the organization.
+         */
+        executive?: boolean;
+
+        /**
+         * Whether the person is an owner of the account's legal entity.
+         */
+        owner?: boolean;
+
+        /**
+         * The percent owned by the person of the account's legal entity.
+         */
+        percent_ownership?: number | '';
+
+        /**
+         * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
+         */
+        representative?: boolean;
+
+        /**
+         * The person's title (e.g., CEO, Support Engineer).
+         */
+        title?: string;
+      };
+
+      /**
+       * The last 4 digits of the person's social security number.
+       */
+      ssn_last_4?: string;
+
+      /**
+       * The person's verification status.
+       */
+      verification?: {
+        /**
+         * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
+         */
+        additional_document?: {
+          /**
+           * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          back?: string;
+
+          /**
+           * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          front?: string;
+        };
+
+        /**
+         * An identifying document, either a passport or local ID card.
+         */
+        document?: {
+          /**
+           * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          back?: string;
+
+          /**
+           * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          front?: string;
+        };
+      };
+    }
+
     class Resource {
+      /**
+       * With [Connect](https://stripe.com/docs/connect), you can create Stripe accounts for your users.
+       * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
+       *
+       * For Standard accounts, parameters other than country, email, and type
+       * are used to prefill the account application that we ask the account holder to complete.
+       */
+      create(params?: CreateParams, options?: HeaderOptions): Promise<Account>;
+
+      /**
+       * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
+       *
+       * Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.
+       *
+       * If you want to delete your own account, use the [data tab in your account settings](https://dashboard.stripe.com/account/data) instead.
+       */
+      del(
+        id: string,
+        params?: DelParams,
+        options?: HeaderOptions
+      ): Promise<DeletedAccount>;
+
+      /**
+       * Returns a list of accounts connected to your platform via [Connect](https://stripe.com/docs/connect). If you're not a platform, the list is empty.
+       */
+      list(
+        params?: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<Account>>;
+
       /**
        * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
        *
@@ -578,6 +2841,162 @@ declare namespace Stripe {
         params: RejectParams,
         options?: HeaderOptions
       ): Promise<Account>;
+
+      /**
+       * Retrieves the details of an account.
+       */
+      retrieve(
+        params?: RetrieveParams,
+        options?: HeaderOptions
+      ): Promise<Account>;
+
+      /**
+       * Updates a connected [Express or Custom account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are supported by both account types.
+       *
+       * To update your own account, use the [Dashboard](https://dashboard.stripe.com/account). Refer to our [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
+       */
+      update(
+        id: string,
+        params?: UpdateParams,
+        options?: HeaderOptions
+      ): Promise<Account>;
+
+      /**
+       * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
+       */
+      listCapabilities(
+        id: string,
+        params?: ListCapabilitiesParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<Capability>>;
+
+      /**
+       * Retrieves information about the specified Account Capability.
+       */
+      retrieveCapability(
+        accountId: string,
+        id: string,
+        params?: RetrieveCapabilityParams,
+        options?: HeaderOptions
+      ): Promise<Capability>;
+
+      /**
+       * Updates an existing Account Capability.
+       */
+      updateCapability(
+        accountId: string,
+        id: string,
+        params?: UpdateCapabilityParams,
+        options?: HeaderOptions
+      ): Promise<Capability>;
+
+      /**
+       * Create an external account for a given account.
+       */
+      createExternalAccount(
+        id: string,
+        params: CreateExternalAccountParams,
+        options?: HeaderOptions
+      ): Promise<BankAccount | Card>;
+
+      /**
+       * Delete a specified external account for a given account.
+       */
+      deleteExternalAccount(
+        accountId: string,
+        id: string,
+        params?: DeleteExternalAccountParams,
+        options?: HeaderOptions
+      ): Promise<BankAccount | Card>;
+
+      /**
+       * List external accounts for an account.
+       */
+      listExternalAccounts(
+        id: string,
+        params?: ListExternalAccountsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<BankAccount | Card>>;
+
+      /**
+       * Retrieve a specified external account for a given account.
+       */
+      retrieveExternalAccount(
+        accountId: string,
+        id: string,
+        params?: RetrieveExternalAccountParams,
+        options?: HeaderOptions
+      ): Promise<BankAccount | Card>;
+
+      /**
+       * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
+       * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
+       */
+      updateExternalAccount(
+        accountId: string,
+        id: string,
+        params?: UpdateExternalAccountParams,
+        options?: HeaderOptions
+      ): Promise<BankAccount | Card>;
+
+      /**
+       * Creates a single-use login link for an Express account to access their Stripe dashboard.
+       *
+       * You may only create login links for [Express accounts](https://stripe.com/docs/connect/express-accounts) connected to your platform.
+       */
+      createLoginLink(
+        id: string,
+        params?: CreateLoginLinkParams,
+        options?: HeaderOptions
+      ): Promise<LoginLink>;
+
+      /**
+       * Creates a new person.
+       */
+      createPerson(
+        id: string,
+        params?: CreatePersonParams,
+        options?: HeaderOptions
+      ): Promise<Person>;
+
+      /**
+       * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
+       */
+      deletePerson(
+        accountId: string,
+        id: string,
+        params?: DeletePersonParams,
+        options?: HeaderOptions
+      ): Promise<DeletedPerson>;
+
+      /**
+       * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
+       */
+      listPersons(
+        id: string,
+        params?: ListPersonsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<Person>>;
+
+      /**
+       * Retrieves an existing person.
+       */
+      retrievePerson(
+        accountId: string,
+        id: string,
+        params?: RetrievePersonParams,
+        options?: HeaderOptions
+      ): Promise<Person>;
+
+      /**
+       * Updates an existing person.
+       */
+      updatePerson(
+        accountId: string,
+        id: string,
+        params?: UpdatePersonParams,
+        options?: HeaderOptions
+      ): Promise<Person>;
     }
   }
 
@@ -588,22 +3007,22 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * The timestamp at which this account link will expire.
      */
-    expires_at: number;
+    expires_at?: number;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'account_link';
+    object?: 'account_link';
 
     /**
      * The URL for the account link.
      */
-    url: string;
+    url?: string;
   }
 
   namespace AccountLink {
@@ -617,7 +3036,7 @@ declare namespace Stripe {
       account: string;
 
       /**
-       * The information the platform wants to collect from users up-front. Possible values are `currently_due` and `eventually_due`.
+       * Which information the platform needs to collect from the user. One of `currently_due` or `eventually_due`. Default is `currently_due`.
        */
       collect?: 'currently_due' | 'eventually_due';
 
@@ -780,6 +3199,23 @@ declare namespace Stripe {
 
   namespace ApplePayDomain {
     /**
+     * Create an apple pay domain.
+     */
+    interface CreateParams {
+      domain_name: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Delete an apple pay domain.
+     */
+    interface DeleteParams {}
+
+    /**
      * List apple pay domains.
      */
     interface ListParams {
@@ -807,18 +3243,6 @@ declare namespace Stripe {
     }
 
     /**
-     * Create an apple pay domain.
-     */
-    interface CreateParams {
-      domain_name: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
      * Retrieve an apple pay domain.
      */
     interface RetrieveParams {
@@ -828,36 +3252,12 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
-    /**
-     * Delete an apple pay domain.
-     */
-    interface DeleteParams {
-
-    }
-
     class Resource {
-      /**
-       * List apple pay domains.
-       */
-      list(
-        params?: ListParams,
-        options?: HeaderOptions
-      ): Promise<ApiList<ApplePayDomain>>;
-
       /**
        * Create an apple pay domain.
        */
       create(
         params: CreateParams,
-        options?: HeaderOptions
-      ): Promise<ApplePayDomain>;
-
-      /**
-       * Retrieve an apple pay domain.
-       */
-      retrieve(
-        id: string,
-        params?: RetrieveParams,
         options?: HeaderOptions
       ): Promise<ApplePayDomain>;
 
@@ -869,6 +3269,23 @@ declare namespace Stripe {
         params?: DeleteParams,
         options?: HeaderOptions
       ): Promise<DeletedApplePayDomain>;
+
+      /**
+       * List apple pay domains.
+       */
+      list(
+        params?: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<ApplePayDomain>>;
+
+      /**
+       * Retrieve an apple pay domain.
+       */
+      retrieve(
+        id: string,
+        params?: RetrieveParams,
+        options?: HeaderOptions
+      ): Promise<ApplePayDomain>;
     }
   }
 
@@ -879,7 +3296,7 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * The name of the application.
@@ -889,7 +3306,7 @@ declare namespace Stripe {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'application';
+    object?: 'application';
   }
 
   /**
@@ -899,22 +3316,22 @@ declare namespace Stripe {
     /**
      * ID of the Stripe account this fee was taken from.
      */
-    account: string | Account;
+    account?: string | Account;
 
     /**
      * Amount earned, in %s.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Amount in %s refunded (can be less than the amount attribute on the fee if a partial refund was issued)
      */
-    amount_refunded: number;
+    amount_refunded?: number;
 
     /**
      * ID of the Connect application that earned the fee.
      */
-    application: string | Application;
+    application?: string | Application;
 
     /**
      * Balance transaction that describes the impact of this collected application fee on your account balance (not including refunds).
@@ -924,32 +3341,32 @@ declare namespace Stripe {
     /**
      * ID of the charge that the application fee was taken from.
      */
-    charge: string | Charge;
+    charge?: string | Charge;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'application_fee';
+    object?: 'application_fee';
 
     /**
      * ID of the corresponding charge on the platform account, if this fee was the result of a charge using the `destination` parameter.
@@ -959,12 +3376,12 @@ declare namespace Stripe {
     /**
      * Whether the fee has been fully refunded. If the fee is only partially refunded, this attribute will still be false.
      */
-    refunded: boolean;
+    refunded?: boolean;
 
     /**
      * A list of refunds that have been applied to the fee.
      */
-    refunds: ApiList<FeeRefund>;
+    refunds?: ApiList<FeeRefund>;
   }
 
   namespace ApplicationFee {
@@ -1032,6 +3449,90 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
+    /**
+     * Refunds an application fee that has previously been collected but not yet refunded.
+     * Funds will be refunded to the Stripe account from which the fee was originally collected.
+     *
+     * You can optionally refund only part of an application fee.
+     * You can do so multiple times, until the entire fee has been refunded.
+     *
+     * Once entirely refunded, an application fee can't be refunded again.
+     * This method will raise an error when called on an already-refunded application fee,
+     * or when trying to refund more money than is left on an application fee.
+     */
+    interface CreateRefundParams {
+      /**
+       * A positive integer, in _%s_, representing how much of this fee to refund. Can refund only up to the remaining unrefunded amount of the fee.
+       */
+      amount?: number;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+    }
+
+    /**
+     * You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
+     */
+    interface ListRefundsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.
+     */
+    interface RetrieveRefundParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates the specified application fee refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+     *
+     * This request only accepts metadata as an argument.
+     */
+    interface UpdateRefundParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+    }
+
     class Resource {
       /**
        * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
@@ -1049,6 +3550,54 @@ declare namespace Stripe {
         params?: RetrieveParams,
         options?: HeaderOptions
       ): Promise<ApplicationFee>;
+
+      /**
+       * Refunds an application fee that has previously been collected but not yet refunded.
+       * Funds will be refunded to the Stripe account from which the fee was originally collected.
+       *
+       * You can optionally refund only part of an application fee.
+       * You can do so multiple times, until the entire fee has been refunded.
+       *
+       * Once entirely refunded, an application fee can't be refunded again.
+       * This method will raise an error when called on an already-refunded application fee,
+       * or when trying to refund more money than is left on an application fee.
+       */
+      createRefund(
+        id: string,
+        params?: CreateRefundParams,
+        options?: HeaderOptions
+      ): Promise<FeeRefund>;
+
+      /**
+       * You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
+       */
+      listRefunds(
+        id: string,
+        params?: ListRefundsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<FeeRefund>>;
+
+      /**
+       * By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.
+       */
+      retrieveRefund(
+        feeId: string,
+        id: string,
+        params?: RetrieveRefundParams,
+        options?: HeaderOptions
+      ): Promise<FeeRefund>;
+
+      /**
+       * Updates the specified application fee refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+       *
+       * This request only accepts metadata as an argument.
+       */
+      updateRefund(
+        feeId: string,
+        id: string,
+        params?: UpdateRefundParams,
+        options?: HeaderOptions
+      ): Promise<FeeRefund>;
     }
   }
 
@@ -1059,7 +3608,7 @@ declare namespace Stripe {
     /**
      * Funds that are available to be transferred or paid out, whether automatically by Stripe or explicitly via the [Transfers API](#transfers) or [Payouts API](#payouts). The available balance for each currency and payment type can be found in the `source_types` property.
      */
-    available: Array<{
+    available?: Array<{
       /**
        * Balance amount.
        */
@@ -1113,17 +3662,17 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'balance';
+    object?: 'balance';
 
     /**
      * Funds that are not yet available in the balance, due to the 7-day rolling pay cycle. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
      */
-    pending: Array<{
+    pending?: Array<{
       /**
        * Balance amount.
        */
@@ -1148,6 +3697,30 @@ declare namespace Stripe {
     }>;
   }
 
+  namespace Balance {
+    /**
+     * Retrieves the current account balance, based on the authentication that was used to make the request.
+     *  For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    class Resource {
+      /**
+       * Retrieves the current account balance, based on the authentication that was used to make the request.
+       *  For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
+       */
+      retrieve(
+        params?: RetrieveParams,
+        options?: HeaderOptions
+      ): Promise<Balance>;
+    }
+  }
+
   /**
    * The BalanceTransaction object.
    */
@@ -1155,22 +3728,22 @@ declare namespace Stripe {
     /**
      * Gross amount of the transaction, in %s.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * The date the transaction's net funds will become available in the Stripe balance.
      */
-    available_on: number;
+    available_on?: number;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -1182,12 +3755,12 @@ declare namespace Stripe {
     /**
      * Fees (in %s) paid for this transaction.
      */
-    fee: number;
+    fee?: number;
 
     /**
      * Detailed breakdown of fees (in %s) paid for this transaction.
      */
-    fee_details: Array<{
+    fee_details?: Array<{
       /**
        * Amount of the fee, in cents.
        */
@@ -1214,17 +3787,17 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Net amount of the transaction, in %s.
      */
-    net: number;
+    net?: number;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'balance_transaction';
+    object?: 'balance_transaction';
 
     /**
      * The Stripe object to which this transaction is related.
@@ -1251,12 +3824,12 @@ declare namespace Stripe {
     /**
      * If the transaction's net funds are available in the Stripe balance yet. Either `available` or `pending`.
      */
-    status: string;
+    status?: string;
 
     /**
      * Transaction type: `adjustment`, `advance`, `advance_funding`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_transaction`, `payment`, `payment_failure_refund`, `payment_refund`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`. [Learn more](https://stripe.com/docs/reports/balance-transaction-types) about balance transaction types and what they represent.
      */
-    type:
+    type?:
       | 'adjustment'
       | 'advance'
       | 'advance_funding'
@@ -1593,6 +4166,36 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
+    /**
+     * List bitcoin transacitons for a given receiver.
+     */
+    interface ListTransactionsParams {
+      /**
+       * Only return transactions for the customer specified by this customer ID.
+       */
+      customer?: string;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
     class Resource {
       /**
        * Returns a list of your receivers. Receivers are returned sorted by creation date, with the most recently created receivers appearing first.
@@ -1610,6 +4213,15 @@ declare namespace Stripe {
         params?: RetrieveParams,
         options?: HeaderOptions
       ): Promise<BitcoinReceiver>;
+
+      /**
+       * List bitcoin transacitons for a given receiver.
+       */
+      listTransactions(
+        id: string,
+        params?: ListTransactionsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<BitcoinTransaction>>;
     }
   }
 
@@ -1620,37 +4232,37 @@ declare namespace Stripe {
     /**
      * The amount of `currency` that the transaction was converted to in real-time.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * The amount of bitcoin contained in the transaction.
      */
-    bitcoin_amount: number;
+    bitcoin_amount?: number;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) to which this transaction was converted.
      */
-    currency: string;
+    currency?: string;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'bitcoin_transaction';
+    object?: 'bitcoin_transaction';
 
     /**
      * The receiver to which this transaction was sent.
      */
-    receiver: string;
+    receiver?: string;
   }
 
   namespace BitcoinTransaction {
@@ -1703,22 +4315,22 @@ declare namespace Stripe {
     /**
      * The account for which the capability enables functionality.
      */
-    account: string | Account;
+    account?: string | Account;
 
     /**
      * The identifier for the capability.
      */
-    id: string;
+    id?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'capability';
+    object?: 'capability';
 
     /**
      * Whether the capability has been requested.
      */
-    requested: boolean;
+    requested?: boolean;
 
     /**
      * Time at which the capability was requested. Measured in seconds since the Unix epoch.
@@ -1760,7 +4372,7 @@ declare namespace Stripe {
     /**
      * The status of the capability. Can be `active`, `inactive`, `pending`, or `unrequested`.
      */
-    status: 'active' | 'disabled' | 'inactive' | 'pending' | 'unrequested';
+    status?: 'active' | 'disabled' | 'inactive' | 'pending' | 'unrequested';
   }
 
   namespace Capability {
@@ -1850,12 +4462,12 @@ declare namespace Stripe {
     /**
      * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Amount in %s refunded (can be less than the amount attribute on the charge if a partial refund was issued).
      */
-    amount_refunded: number;
+    amount_refunded?: number;
 
     /**
      * ID of the Connect application that created the charge.
@@ -1882,7 +4494,7 @@ declare namespace Stripe {
      */
     balance_transaction?: string | BalanceTransaction | null;
 
-    billing_details: {
+    billing_details?: {
       /**
        * Billing address.
        */
@@ -1939,17 +4551,17 @@ declare namespace Stripe {
     /**
      * If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
      */
-    captured: boolean;
+    captured?: boolean;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * ID of the customer this charge is for if one exists.
@@ -1974,7 +4586,7 @@ declare namespace Stripe {
     /**
      * Whether the charge has been disputed.
      */
-    disputed: boolean;
+    disputed?: boolean;
 
     /**
      * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/api#errors) for a list of codes).
@@ -2006,7 +4618,7 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * ID of the invoice this charge is for if one exists.
@@ -2042,19 +4654,19 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'charge';
+    object?: 'charge';
 
     /**
      * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
@@ -2133,7 +4745,7 @@ declare namespace Stripe {
     /**
      * `true` if the charge succeeded, or was successfully authorized for later capture.
      */
-    paid: boolean;
+    paid?: boolean;
 
     /**
      * ID of the PaymentIntent associated with this charge, if one exists.
@@ -2226,9 +4838,7 @@ declare namespace Stripe {
           routing_number?: string | null;
         };
 
-        alipay?: {
-
-        };
+        alipay?: {};
 
         au_becs_debit?: {
           /**
@@ -2437,22 +5047,16 @@ declare namespace Stripe {
            */
           wallet?:
             | {
-              amex_express_checkout?: {
+              amex_express_checkout?: {};
 
-              };
-
-              apple_pay?: {
-
-              };
+              apple_pay?: {};
 
               /**
                * (For tokenized numbers only.) The last four digits of the device account number.
                */
               dynamic_last4?: string | null;
 
-              google_pay?: {
-
-              };
+              google_pay?: {};
 
               masterpass?: {
                 /**
@@ -2540,9 +5144,7 @@ declare namespace Stripe {
                   | null;
               };
 
-              samsung_pay?: {
-
-              };
+              samsung_pay?: {};
 
               /**
                * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
@@ -2823,9 +5425,7 @@ declare namespace Stripe {
           verified_name?: string | null;
         };
 
-        klarna?: {
-
-        };
+        klarna?: {};
 
         multibanco?: {
           /**
@@ -2934,9 +5534,7 @@ declare namespace Stripe {
           verified_name?: string | null;
         };
 
-        stripe_account?: {
-
-        };
+        stripe_account?: {};
 
         /**
          * The type of transaction-specific details of the payment method used in the payment, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `klarna`, `multibanco`, `p24`, `sepa_debit`, `sofort`, `stripe_account`, or `wechat`.
@@ -2945,9 +5543,7 @@ declare namespace Stripe {
          */
         type: string;
 
-        wechat?: {
-
-        };
+        wechat?: {};
       }
       | null;
 
@@ -2964,17 +5560,17 @@ declare namespace Stripe {
     /**
      * This is the URL to view the receipt for this charge. The receipt is kept up-to-date to the latest state of the charge, including any refunds. If the charge is for an Invoice, the receipt will be stylized as an Invoice receipt.
      */
-    receipt_url: string;
+    receipt_url?: string;
 
     /**
      * Whether the charge has been fully refunded. If the charge is only partially refunded, this attribute will still be false.
      */
-    refunded: boolean;
+    refunded?: boolean;
 
     /**
      * A list of refunds that have been applied to the charge.
      */
-    refunds: ApiList<Refund>;
+    refunds?: ApiList<Refund>;
 
     /**
      * ID of the review associated with this charge if one exists.
@@ -3070,7 +5666,7 @@ declare namespace Stripe {
     /**
      * The status of the payment is either `succeeded`, `pending`, or `failed`.
      */
-    status: string;
+    status?: string;
 
     /**
      * ID of the transfer to the `destination` account (only applicable if the charge was created using the `destination` parameter).
@@ -3101,70 +5697,6 @@ declare namespace Stripe {
   }
 
   namespace Charge {
-    /**
-     * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
-     */
-    interface ListParams {
-      created?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * Only return charges for the customer specified by this customer ID.
-       */
-      customer?: string;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * Only return charges that were created by the PaymentIntent specified by this PaymentIntent ID.
-       */
-      payment_intent?: string;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-
-      /**
-       * Only return charges for this transfer group.
-       */
-      transfer_group?: string;
-    }
-
     /**
      * To charge a credit card or other payment source, you create a Charge object. If your API key is in test mode, the supplied payment source (e.g., card) won't actually be charged, although everything else will occur as if in live mode. (Stripe assumes that the charge would have completed successfully).
      */
@@ -3309,6 +5841,70 @@ declare namespace Stripe {
 
       /**
        * A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#grouping-transactions).
+       */
+      transfer_group?: string;
+    }
+
+    /**
+     * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
+     */
+    interface ListParams {
+      created?:
+        | {
+          /**
+           * Minimum value to filter by (exclusive)
+           */
+          gt?: number;
+
+          /**
+           * Minimum value to filter by (inclusive)
+           */
+          gte?: number;
+
+          /**
+           * Maximum value to filter by (exclusive)
+           */
+          lt?: number;
+
+          /**
+           * Maximum value to filter by (inclusive)
+           */
+          lte?: number;
+        }
+        | number;
+
+      /**
+       * Only return charges for the customer specified by this customer ID.
+       */
+      customer?: string;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Only return charges that were created by the PaymentIntent specified by this PaymentIntent ID.
+       */
+      payment_intent?: string;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+
+      /**
+       * Only return charges for this transfer group.
        */
       transfer_group?: string;
     }
@@ -3468,17 +6064,17 @@ declare namespace Stripe {
 
     class Resource {
       /**
+       * To charge a credit card or other payment source, you create a Charge object. If your API key is in test mode, the supplied payment source (e.g., card) won't actually be charged, although everything else will occur as if in live mode. (Stripe assumes that the charge would have completed successfully).
+       */
+      create(params?: CreateParams, options?: HeaderOptions): Promise<Charge>;
+
+      /**
        * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
        */
       list(
         params?: ListParams,
         options?: HeaderOptions
       ): Promise<ApiList<Charge>>;
-
-      /**
-       * To charge a credit card or other payment source, you create a Charge object. If your API key is in test mode, the supplied payment source (e.g., card) won't actually be charged, although everything else will occur as if in live mode. (Stripe assumes that the charge would have completed successfully).
-       */
-      create(params?: CreateParams, options?: HeaderOptions): Promise<Charge>;
 
       /**
        * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
@@ -3518,32 +6114,32 @@ declare namespace Stripe {
     /**
      * Amount transferred, in %s.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * ID of the account that funds are being collected for.
      */
-    destination: string | Account;
+    destination?: string | Account;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'connect_collection_transfer';
+    object?: 'connect_collection_transfer';
   }
 
   /**
@@ -3553,41 +6149,41 @@ declare namespace Stripe {
     /**
      * The default currency for this country. This applies to both payment methods and bank accounts.
      */
-    default_currency: string;
+    default_currency?: string;
 
     /**
      * Unique identifier for the object. Represented as the ISO country code for this country.
      */
-    id: string;
+    id?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'country_spec';
+    object?: 'country_spec';
 
     /**
      * Currencies that can be accepted in the specific country (for transfers).
      */
-    supported_bank_account_currencies: {
+    supported_bank_account_currencies?: {
       [key: string]: Array<string>;
     };
 
     /**
      * Currencies that can be accepted in the specified country (for payments).
      */
-    supported_payment_currencies: Array<string>;
+    supported_payment_currencies?: Array<string>;
 
     /**
      * Payment methods available in the specified country. You may need to enable some payment methods (e.g., [ACH](https://stripe.com/docs/ach)) on your account before they appear in this list. The `stripe` payment method refers to [charging through your platform](https://stripe.com/docs/connect/destination-charges).
      */
-    supported_payment_methods: Array<string>;
+    supported_payment_methods?: Array<string>;
 
     /**
      * Countries that can accept transfers from the specified country.
      */
-    supported_transfer_countries: Array<string>;
+    supported_transfer_countries?: Array<string>;
 
-    verification_fields: {
+    verification_fields?: {
       company: {
         /**
          * Additional fields which are only required for some users.
@@ -3771,58 +6367,6 @@ declare namespace Stripe {
 
   namespace Coupon {
     /**
-     * Returns a list of your coupons.
-     */
-    interface ListParams {
-      /**
-       * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
-       */
-      created?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-    }
-
-    /**
      * You can create coupons easily via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. Coupon creation is also accessible via the API if you need to create coupons on the fly.
      *
      * A coupon has either a percent_off or an amount_off and currency. If you set an amount_off, that amount will be subtracted from any invoice's subtotal. For example, an invoice with a subtotal of 100 will have a final total of 0 if a coupon with an amount_off of 200 is applied to it and an invoice with a subtotal of 300 will have a final total of 100 if a coupon with an amount_off of 200 is applied to it.
@@ -3887,6 +6431,63 @@ declare namespace Stripe {
     }
 
     /**
+     * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
+     */
+    interface DeleteParams {}
+
+    /**
+     * Returns a list of your coupons.
+     */
+    interface ListParams {
+      /**
+       * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
+       */
+      created?:
+        | {
+          /**
+           * Minimum value to filter by (exclusive)
+           */
+          gt?: number;
+
+          /**
+           * Minimum value to filter by (inclusive)
+           */
+          gte?: number;
+
+          /**
+           * Maximum value to filter by (exclusive)
+           */
+          lt?: number;
+
+          /**
+           * Maximum value to filter by (inclusive)
+           */
+          lte?: number;
+        }
+        | number;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
      * Retrieves the coupon with the given ID.
      */
     interface RetrieveParams {
@@ -3918,14 +6519,23 @@ declare namespace Stripe {
       name?: string;
     }
 
-    /**
-     * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
-     */
-    interface DeleteParams {
-
-    }
-
     class Resource {
+      /**
+       * You can create coupons easily via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. Coupon creation is also accessible via the API if you need to create coupons on the fly.
+       *
+       * A coupon has either a percent_off or an amount_off and currency. If you set an amount_off, that amount will be subtracted from any invoice's subtotal. For example, an invoice with a subtotal of 100 will have a final total of 0 if a coupon with an amount_off of 200 is applied to it and an invoice with a subtotal of 300 will have a final total of 100 if a coupon with an amount_off of 200 is applied to it.
+       */
+      create(params: CreateParams, options?: HeaderOptions): Promise<Coupon>;
+
+      /**
+       * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
+       */
+      del(
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedCoupon>;
+
       /**
        * Returns a list of your coupons.
        */
@@ -3933,13 +6543,6 @@ declare namespace Stripe {
         params?: ListParams,
         options?: HeaderOptions
       ): Promise<ApiList<Coupon>>;
-
-      /**
-       * You can create coupons easily via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. Coupon creation is also accessible via the API if you need to create coupons on the fly.
-       *
-       * A coupon has either a percent_off or an amount_off and currency. If you set an amount_off, that amount will be subtracted from any invoice's subtotal. For example, an invoice with a subtotal of 100 will have a final total of 0 if a coupon with an amount_off of 200 is applied to it and an invoice with a subtotal of 300 will have a final total of 100 if a coupon with an amount_off of 200 is applied to it.
-       */
-      create(params: CreateParams, options?: HeaderOptions): Promise<Coupon>;
 
       /**
        * Retrieves the coupon with the given ID.
@@ -3958,15 +6561,6 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<Coupon>;
-
-      /**
-       * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
-       */
-      del(
-        id: string,
-        params?: DeleteParams,
-        options?: HeaderOptions
-      ): Promise<DeletedCoupon>;
     }
   }
 
@@ -3977,22 +6571,22 @@ declare namespace Stripe {
     /**
      * The integer amount in **%s** representing the total amount of the credit note, including tax.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * ID of the customer.
      */
-    customer: string | Customer;
+    customer?: string | Customer;
 
     /**
      * Customer balance transaction related to this credit note.
@@ -4002,17 +6596,17 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * ID of the invoice.
      */
-    invoice: string | Invoice;
+    invoice?: string | Invoice;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Customer-facing text that appears on the credit note PDF.
@@ -4022,24 +6616,24 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * A unique number that identifies this particular credit note and appears on the PDF of the credit note and its associated invoice.
      */
-    number: string;
+    number?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'credit_note';
+    object?: 'credit_note';
 
     /**
      * The link to download the PDF of the credit note.
      */
-    pdf: string;
+    pdf?: string;
 
     /**
      * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
@@ -4059,12 +6653,12 @@ declare namespace Stripe {
     /**
      * Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
      */
-    status: 'issued' | 'void';
+    status?: 'issued' | 'void';
 
     /**
      * Type of this credit note, one of `post_payment` or `pre_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
      */
-    type: 'post_payment' | 'pre_payment';
+    type?: 'post_payment' | 'pre_payment';
 
     /**
      * The time that the credit note was voided.
@@ -4141,16 +6735,6 @@ declare namespace Stripe {
     }
 
     /**
-     * Retrieves the credit note object with the given identifier.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
      * Returns a list of credit notes.
      */
     interface ListParams {
@@ -4183,6 +6767,16 @@ declare namespace Stripe {
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
        */
       starting_after?: string;
+    }
+
+    /**
+     * Retrieves the credit note object with the given identifier.
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     /**
@@ -4238,6 +6832,14 @@ declare namespace Stripe {
       ): Promise<CreditNote>;
 
       /**
+       * Returns a list of credit notes.
+       */
+      list(
+        params?: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<CreditNote>>;
+
+      /**
        * Retrieves the credit note object with the given identifier.
        */
       retrieve(
@@ -4245,14 +6847,6 @@ declare namespace Stripe {
         params?: RetrieveParams,
         options?: HeaderOptions
       ): Promise<CreditNote>;
-
-      /**
-       * Returns a list of credit notes.
-       */
-      list(
-        params?: ListParams,
-        options?: HeaderOptions
-      ): Promise<ApiList<CreditNote>>;
 
       /**
        * Updates an existing credit note.
@@ -4569,60 +7163,6 @@ declare namespace Stripe {
 
   namespace Customer {
     /**
-     * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
-     */
-    interface ListParams {
-      created?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * A filter on the list based on the customer's `email` field. The value must be a string.
-       */
-      email?: string;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-    }
-
-    /**
      * Creates a new customer object.
      */
     interface CreateParams {
@@ -4677,7 +7217,7 @@ declare namespace Stripe {
        */
       invoice_settings?: {
         /**
-         * Default custom fields to be displayed on invoices for this customer.
+         * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
         custom_fields?:
           | Array<{
@@ -4809,6 +7349,65 @@ declare namespace Stripe {
     }
 
     /**
+     * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
+     */
+    interface DeleteParams {}
+
+    /**
+     * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
+     */
+    interface ListParams {
+      created?:
+        | {
+          /**
+           * Minimum value to filter by (exclusive)
+           */
+          gt?: number;
+
+          /**
+           * Minimum value to filter by (inclusive)
+           */
+          gte?: number;
+
+          /**
+           * Maximum value to filter by (exclusive)
+           */
+          lt?: number;
+
+          /**
+           * Maximum value to filter by (inclusive)
+           */
+          lte?: number;
+        }
+        | number;
+
+      /**
+       * A filter on the list based on the customer's `email` field. The value must be a string.
+       */
+      email?: string;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
      * Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
      */
     interface RetrieveParams {
@@ -4880,7 +7479,7 @@ declare namespace Stripe {
        */
       invoice_settings?: {
         /**
-         * Default custom fields to be displayed on invoices for this customer.
+         * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
         custom_fields?:
           | Array<{
@@ -4992,20 +7591,371 @@ declare namespace Stripe {
     }
 
     /**
-     * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
+     * Removes the currently applied discount on a customer.
      */
-    interface DeleteParams {
+    interface DeleteDiscountParams {}
 
+    /**
+     * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+     */
+    interface CreateBalanceTransactionParams {
+      /**
+       * The integer amount in **%s** to apply to the customer's balance. Pass a negative amount to credit the customer's balance, and pass in a positive amount to debit the customer's balance.
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). If the customer's [`currency`](https://stripe.com/docs/api/customers/object#customer_object-currency) is set, this value must match it. If the customer's `currency` is not set, it will be updated to this value.
+       */
+      currency: string;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
     }
 
     /**
-     * Removes the currently applied discount on a customer.
+     * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
      */
-    interface DeleteDiscountParams {
+    interface ListBalanceTransactionsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
 
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+     */
+    interface RetrieveBalanceTransactionParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Most customer balance transaction fields are immutable, but you may update its description and metadata.
+     */
+    interface UpdateBalanceTransactionParams {
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+    }
+
+    /**
+     * When you create a new credit card, you must specify a customer or recipient on which to create it.
+     *
+     * If the card's owner has no default card, then the new card will become the default.
+     * However, if the owner already has a default, then it will not change.
+     * To change the default, you should [update the customer](https://stripe.com/docs/api#update_customer) to have a new default_source.
+     */
+    interface CreateSourceParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the card in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Please refer to full [documentation](https://stripe.com/docs/api) instead.
+       */
+      source: string;
+    }
+
+    /**
+     * List sources for a specified customer.
+     */
+    interface ListSourcesParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Filter sources according to a particular object type.
+       */
+      object?: string;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * Retrieve a specified source for a given customer.
+     */
+    interface RetrieveSourceParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Update a specified source for a given customer.
+     */
+    interface UpdateSourceParams {
+      /**
+       * The name of the person or business that owns the bank account.
+       */
+      account_holder_name?: string;
+
+      /**
+       * The type of entity that holds the account. This can be either `individual` or `company`.
+       */
+      account_holder_type?: 'company' | 'individual';
+
+      /**
+       * City/District/Suburb/Town/Village.
+       */
+      address_city?: string;
+
+      /**
+       * Billing address country, if provided when creating card.
+       */
+      address_country?: string;
+
+      /**
+       * Address line 1 (Street address/PO Box/Company name).
+       */
+      address_line1?: string;
+
+      /**
+       * Address line 2 (Apartment/Suite/Unit/Building).
+       */
+      address_line2?: string;
+
+      /**
+       * State/County/Province/Region.
+       */
+      address_state?: string;
+
+      /**
+       * ZIP or postal code.
+       */
+      address_zip?: string;
+
+      /**
+       * Two digit number representing the card's expiration month.
+       */
+      exp_month?: string;
+
+      /**
+       * Four digit number representing the card's expiration year.
+       */
+      exp_year?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Cardholder name.
+       */
+      name?: string;
+
+      owner?: {
+        /**
+         * Owner's address.
+         */
+        address?: {
+          city?: string;
+
+          country?: string;
+
+          line1?: string;
+
+          line2?: string;
+
+          postal_code?: string;
+
+          state?: string;
+        };
+
+        /**
+         * Owner's email address.
+         */
+        email?: string;
+
+        /**
+         * Owner's full name.
+         */
+        name?: string;
+
+        /**
+         * Owner's phone number.
+         */
+        phone?: string;
+      };
+    }
+
+    /**
+     * Delete a specified source for a given customer.
+     */
+    interface DeleteSourceParams {}
+
+    /**
+     * Verify a specified bank account for a given customer.
+     */
+    interface VerifySourceParams {
+      /**
+       * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
+       */
+      amounts?: Array<number>;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Creates a new TaxID object for a customer.
+     */
+    interface CreateTaxIdParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, or `za_vat`
+       */
+      type:
+        | 'au_abn'
+        | 'ch_vat'
+        | 'eu_vat'
+        | 'in_gst'
+        | 'mx_rfc'
+        | 'no_vat'
+        | 'nz_gst'
+        | 'za_vat';
+
+      /**
+       * Value of the tax ID.
+       */
+      value: string;
+    }
+
+    /**
+     * Deletes an existing TaxID object.
+     */
+    interface DeleteTaxIdParams {}
+
+    /**
+     * Returns a list of tax IDs for a customer.
+     */
+    interface ListTaxIdsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * Retrieves the TaxID object with the given identifier.
+     */
+    interface RetrieveTaxIdParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     class Resource {
+      /**
+       * Creates a new customer object.
+       */
+      create(params?: CreateParams, options?: HeaderOptions): Promise<Customer>;
+
+      /**
+       * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
+       */
+      del(
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedCustomer>;
+
       /**
        * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
        */
@@ -5013,11 +7963,6 @@ declare namespace Stripe {
         params?: ListParams,
         options?: HeaderOptions
       ): Promise<ApiList<Customer>>;
-
-      /**
-       * Creates a new customer object.
-       */
-      create(params?: CreateParams, options?: HeaderOptions): Promise<Customer>;
 
       /**
        * Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
@@ -5040,15 +7985,6 @@ declare namespace Stripe {
       ): Promise<Customer>;
 
       /**
-       * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
-       */
-      del(
-        id: string,
-        params?: DeleteParams,
-        options?: HeaderOptions
-      ): Promise<DeletedCustomer>;
-
-      /**
        * Removes the currently applied discount on a customer.
        */
       deleteDiscount(
@@ -5056,6 +7992,160 @@ declare namespace Stripe {
         params?: DeleteDiscountParams,
         options?: HeaderOptions
       ): Promise<DeletedDiscount>;
+
+      /**
+       * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+       */
+      createBalanceTransaction(
+        id: string,
+        params: CreateBalanceTransactionParams,
+        options?: HeaderOptions
+      ): Promise<CustomerBalanceTransaction>;
+
+      /**
+       * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+       */
+      listBalanceTransactions(
+        id: string,
+        params?: ListBalanceTransactionsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<CustomerBalanceTransaction>>;
+
+      /**
+       * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+       */
+      retrieveBalanceTransaction(
+        customerId: string,
+        id: string,
+        params?: RetrieveBalanceTransactionParams,
+        options?: HeaderOptions
+      ): Promise<CustomerBalanceTransaction>;
+
+      /**
+       * Most customer balance transaction fields are immutable, but you may update its description and metadata.
+       */
+      updateBalanceTransaction(
+        customerId: string,
+        id: string,
+        params?: UpdateBalanceTransactionParams,
+        options?: HeaderOptions
+      ): Promise<CustomerBalanceTransaction>;
+
+      /**
+       * When you create a new credit card, you must specify a customer or recipient on which to create it.
+       *
+       * If the card's owner has no default card, then the new card will become the default.
+       * However, if the owner already has a default, then it will not change.
+       * To change the default, you should [update the customer](https://stripe.com/docs/api#update_customer) to have a new default_source.
+       */
+      createSource(
+        id: string,
+        params: CreateSourceParams,
+        options?: HeaderOptions
+      ): Promise<
+        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
+      >;
+
+      /**
+       * List sources for a specified customer.
+       */
+      listSources(
+        id: string,
+        params?: ListSourcesParams,
+        options?: HeaderOptions
+      ): Promise<
+        ApiList<
+
+            | Account
+            | AlipayAccount
+            | BankAccount
+            | BitcoinReceiver
+            | Card
+            | Source
+        >
+      >;
+
+      /**
+       * Retrieve a specified source for a given customer.
+       */
+      retrieveSource(
+        customerId: string,
+        id: string,
+        params?: RetrieveSourceParams,
+        options?: HeaderOptions
+      ): Promise<
+        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
+      >;
+
+      /**
+       * Update a specified source for a given customer.
+       */
+      updateSource(
+        customerId: string,
+        id: string,
+        params?: UpdateSourceParams,
+        options?: HeaderOptions
+      ): Promise<Card | BankAccount | Source>;
+
+      /**
+       * Delete a specified source for a given customer.
+       */
+      deleteSource(
+        customerId: string,
+        id: string,
+        params?: DeleteSourceParams,
+        options?: HeaderOptions
+      ): Promise<
+        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
+      >;
+
+      /**
+       * Verify a specified bank account for a given customer.
+       */
+      verifySource(
+        customerId: string,
+        id: string,
+        params?: VerifySourceParams,
+        options?: HeaderOptions
+      ): Promise<BankAccount>;
+
+      /**
+       * Creates a new TaxID object for a customer.
+       */
+      createTaxId(
+        id: string,
+        params: CreateTaxIdParams,
+        options?: HeaderOptions
+      ): Promise<TaxId>;
+
+      /**
+       * Deletes an existing TaxID object.
+       */
+      deleteTaxId(
+        customerId: string,
+        id: string,
+        params?: DeleteTaxIdParams,
+        options?: HeaderOptions
+      ): Promise<DeletedTaxId>;
+
+      /**
+       * Returns a list of tax IDs for a customer.
+       */
+      listTaxIds(
+        id: string,
+        params?: ListTaxIdsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<TaxId>>;
+
+      /**
+       * Retrieves the TaxID object with the given identifier.
+       */
+      retrieveTaxId(
+        customerId: string,
+        id: string,
+        params?: RetrieveTaxIdParams,
+        options?: HeaderOptions
+      ): Promise<TaxId>;
     }
   }
 
@@ -5066,12 +8156,12 @@ declare namespace Stripe {
     /**
      * The amount of the transaction. A negative value is a credit for the customer's balance, and a positive value is a debit to the customer's `balance`.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * The ID of the credit note (if any) related to the transaction.
@@ -5081,12 +8171,12 @@ declare namespace Stripe {
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * The ID of the customer the transaction belongs to.
      */
-    customer: string | Customer;
+    customer?: string | Customer;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -5096,12 +8186,12 @@ declare namespace Stripe {
     /**
      * The customer's `balance` after the transaction was applied. A negative value decreases the amount due on the customer's next invoice. A positive value increases the amount due on the customer's next invoice.
      */
-    ending_balance: number;
+    ending_balance?: number;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * The ID of the invoice (if any) related to the transaction.
@@ -5111,7 +8201,7 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -5125,12 +8215,12 @@ declare namespace Stripe {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'customer_balance_transaction';
+    object?: 'customer_balance_transaction';
 
     /**
      * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_too_large`, `invoice_too_small`, `unapplied_from_invoice`, or `unspent_receiver_credit`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
      */
-    type:
+    type?:
       | 'adjustment'
       | 'applied_to_invoice'
       | 'credit_note'
@@ -5143,41 +8233,6 @@ declare namespace Stripe {
   }
 
   namespace CustomerBalanceTransaction {
-    /**
-     * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
-     * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-     */
-    interface ListParams {
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-    }
-
     /**
      * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
      */
@@ -5211,6 +8266,41 @@ declare namespace Stripe {
     }
 
     /**
+     * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+     */
+    interface ListParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
      * Most customer balance transaction fields are immutable, but you may update its description and metadata.
      */
     interface UpdateParams {
@@ -5234,12 +8324,11 @@ declare namespace Stripe {
 
     class Resource {
       /**
-       * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+       * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
        */
-      retrieve(
-        customerId: string,
+      create(
         id: string,
-        params?: RetrieveParams,
+        params: CreateParams,
         options?: HeaderOptions
       ): Promise<CustomerBalanceTransaction>;
 
@@ -5253,11 +8342,12 @@ declare namespace Stripe {
       ): Promise<ApiList<CustomerBalanceTransaction>>;
 
       /**
-       * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+       * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
        */
-      create(
+      retrieve(
+        customerId: string,
         id: string,
-        params: CreateParams,
+        params?: RetrieveParams,
         options?: HeaderOptions
       ): Promise<CustomerBalanceTransaction>;
 
@@ -5321,29 +8411,29 @@ declare namespace Stripe {
     /**
      * Disputed amount. Usually the amount of the charge, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
      */
-    amount: number;
+    amount?: number;
 
     /**
      * List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.
      */
-    balance_transactions: Array<BalanceTransaction>;
+    balance_transactions?: Array<BalanceTransaction>;
 
     /**
      * ID of the charge that was disputed.
      */
-    charge: string | Charge;
+    charge?: string | Charge;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
-    evidence: {
+    evidence?: {
       /**
        * Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity.
        */
@@ -5480,7 +8570,7 @@ declare namespace Stripe {
       uncategorized_text?: string | null;
     };
 
-    evidence_details: {
+    evidence_details?: {
       /**
        * Date by which evidence must be submitted in order to successfully challenge dispute. Will be null if the customer's bank or credit card company doesn't allow a response for this particular dispute.
        */
@@ -5505,22 +8595,22 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * If true, it is still possible to refund the disputed payment. Once the payment has been fully refunded, no further funds will be withdrawn from your Stripe account as a result of this dispute.
      */
-    is_charge_refundable: boolean;
+    is_charge_refundable?: boolean;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
@@ -5532,7 +8622,7 @@ declare namespace Stripe {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'dispute';
+    object?: 'dispute';
 
     /**
      * ID of the PaymentIntent that was disputed.
@@ -5542,12 +8632,12 @@ declare namespace Stripe {
     /**
      * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).
      */
-    reason: string;
+    reason?: string;
 
     /**
      * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `charge_refunded`, `won`, or `lost`.
      */
-    status:
+    status?:
       | 'charge_refunded'
       | 'lost'
       | 'needs_response'
@@ -5564,7 +8654,7 @@ declare namespace Stripe {
      */
     interface ListParams {
       /**
-       * Only return disputes that are associated by the Charge specified by this Charge ID.
+       * Only return disputes associated to the charge specified by this charge ID.
        */
       charge?: string;
 
@@ -5606,6 +8696,11 @@ declare namespace Stripe {
        * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
        */
       limit?: number;
+
+      /**
+       * Only return disputes associated to the PaymentIntent specified by this PaymentIntent ID.
+       */
+      payment_intent?: string;
 
       /**
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
@@ -5791,27 +8886,27 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Time at which the key will expire. Measured in seconds since the Unix epoch.
      */
-    expires: number;
+    expires?: number;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'ephemeral_key';
+    object?: 'ephemeral_key';
 
     /**
      * The key's secret. You can use this value to make authorized requests to the Stripe API.
@@ -5823,8 +8918,26 @@ declare namespace Stripe {
     /**
      * Invalidates a short-lived API key for a given resource.
      */
-    interface DeleteParams {
+    interface DeleteParams {}
 
+    /**
+     * Creates a short-lived API key for a given resource.
+     */
+    interface CreateParams {
+      /**
+       * The ID of the Customer you'd like to modify using the resulting ephemeral key.
+       */
+      customer?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * The ID of the Issuing Card you'd like to access using the resulting ephemeral key.
+       */
+      issuing_card?: string;
     }
 
     class Resource {
@@ -5834,6 +8947,14 @@ declare namespace Stripe {
       del(
         id: string,
         params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<EphemeralKey>;
+
+      /**
+       * Creates a short-lived API key for a given resource.
+       */
+      create(
+        params?: CreateParams,
         options?: HeaderOptions
       ): Promise<EphemeralKey>;
     }
@@ -5856,43 +8977,39 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
-    data: {
+    data?: {
       /**
        * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](#invoice_object) as the value of the object key.
        */
-      object: {
-
-      };
+      object: {};
 
       /**
        * Object containing the names of the attributes that have changed, and their previous values (sent along only with *.updated events).
        */
-      previous_attributes?: {
-
-      };
+      previous_attributes?: {};
     };
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'event';
+    object?: 'event';
 
     /**
      * Number of webhooks that have yet to be successfully delivered (i.e., to return a 20x response) to the URLs you've specified.
      */
-    pending_webhooks: number;
+    pending_webhooks?: number;
 
     /**
      * Information on the API request that instigated the event.
@@ -5914,7 +9031,7 @@ declare namespace Stripe {
     /**
      * Description of the event (e.g., `invoice.created` or `charge.refunded`).
      */
-    type: string;
+    type?: string;
   }
 
   namespace Event {
@@ -6019,17 +9136,17 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object. Represented as the three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) in lowercase.
      */
-    id: string;
+    id?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'exchange_rate';
+    object?: 'exchange_rate';
 
     /**
      * Hash where the keys are supported currencies and the values are the exchange rate at which the base id currency converts to the key currency.
      */
-    rates: {
+    rates?: {
       [key: string]: number;
     };
   }
@@ -6097,7 +9214,7 @@ declare namespace Stripe {
     /**
      * Amount, in %s.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Balance transaction that describes the impact on your account balance.
@@ -6107,34 +9224,34 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * ID of the application fee that was refunded.
      */
-    fee: string | ApplicationFee;
+    fee?: string | ApplicationFee;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'fee_refund';
+    object?: 'fee_refund';
   }
 
   namespace FeeRefund {
@@ -6280,7 +9397,7 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * A filename for the file, suitable for saving to a filesystem.
@@ -6290,24 +9407,24 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     links?: ApiList<FileLink> | null;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'file';
+    object?: 'file';
 
     /**
      * The purpose of the file. Possible values are `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `identity_document`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
      */
-    purpose: string;
+    purpose?: string;
 
     /**
      * The size in bytes of the file object.
      */
-    size: number;
+    size?: number;
 
     /**
      * A user friendly title for the document.
@@ -6399,6 +9516,13 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
+    /**
+     * To upload a file to Stripe, you'll need to send a request of type multipart/form-data. The request should contain the file you would like to upload, as well as the parameters for creating a file.
+     *
+     * All of Stripe's officially supported Client libraries should have support for sending multipart/form-data.
+     */
+    interface CreateParams {}
+
     class Resource {
       /**
        * Returns a list of the files that your account has access to. The files are returned sorted by creation date, with the most recently created files appearing first.
@@ -6416,6 +9540,13 @@ declare namespace Stripe {
         params?: RetrieveParams,
         options?: HeaderOptions
       ): Promise<File>;
+
+      /**
+       * To upload a file to Stripe, you'll need to send a request of type multipart/form-data. The request should contain the file you would like to upload, as well as the parameters for creating a file.
+       *
+       * All of Stripe's officially supported Client libraries should have support for sending multipart/form-data.
+       */
+      create(params?: CreateParams, options?: HeaderOptions): Promise<File>;
     }
   }
 
@@ -6426,12 +9557,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Whether this link is already expired.
      */
-    expired: boolean;
+    expired?: boolean;
 
     /**
      * Time at which the link expires.
@@ -6441,29 +9572,29 @@ declare namespace Stripe {
     /**
      * The file object this link points to.
      */
-    file: string | File;
+    file?: string | File;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'file_link';
+    object?: 'file_link';
 
     /**
      * The publicly accessible URL to download the file.
@@ -6472,16 +9603,6 @@ declare namespace Stripe {
   }
 
   namespace FileLink {
-    /**
-     * Retrieves the file link with the given ID.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     /**
      * Creates a new file link object.
      */
@@ -6500,28 +9621,6 @@ declare namespace Stripe {
        * The ID of the file. The file's `purpose` must be one of the following: `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
        */
       file: string;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-    }
-
-    /**
-     * Updates an existing file link object. Expired links can no longer be updated.
-     */
-    interface UpdateParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A future timestamp after which the link will no longer be usable, or `now` to expire the link immediately.
-       */
-      expires_at?: 'now' | number | '';
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -6590,7 +9689,52 @@ declare namespace Stripe {
       starting_after?: string;
     }
 
+    /**
+     * Retrieves the file link with the given ID.
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates an existing file link object. Expired links can no longer be updated.
+     */
+    interface UpdateParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A future timestamp after which the link will no longer be usable, or `now` to expire the link immediately.
+       */
+      expires_at?: 'now' | number | '';
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+    }
+
     class Resource {
+      /**
+       * Creates a new file link object.
+       */
+      create(params: CreateParams, options?: HeaderOptions): Promise<FileLink>;
+
+      /**
+       * Returns a list of file links.
+       */
+      list(
+        params?: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<FileLink>>;
+
       /**
        * Retrieves the file link with the given ID.
        */
@@ -6601,11 +9745,6 @@ declare namespace Stripe {
       ): Promise<FileLink>;
 
       /**
-       * Creates a new file link object.
-       */
-      create(params: CreateParams, options?: HeaderOptions): Promise<FileLink>;
-
-      /**
        * Updates an existing file link object. Expired links can no longer be updated.
        */
       update(
@@ -6613,14 +9752,6 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<FileLink>;
-
-      /**
-       * Returns a list of file links.
-       */
-      list(
-        params?: ListParams,
-        options?: HeaderOptions
-      ): Promise<ApiList<FileLink>>;
     }
   }
 
@@ -7152,99 +10283,6 @@ declare namespace Stripe {
 
   namespace Invoice {
     /**
-     * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
-     */
-    interface ListParams {
-      /**
-       * The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
-       */
-      collection_method?: 'charge_automatically' | 'send_invoice';
-
-      created?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * Only return invoices for the customer specified by this customer ID.
-       */
-      customer?: string;
-
-      due_date?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-
-      /**
-       * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
-       */
-      status?: 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
-
-      /**
-       * Only return invoices for the subscription specified by this subscription ID.
-       */
-      subscription?: string;
-    }
-
-    /**
      * This endpoint creates a draft invoice for a given customer. The draft invoice created pulls in all pending invoice items on that customer, including prorations.
      */
     interface CreateParams {
@@ -7350,6 +10388,104 @@ declare namespace Stripe {
     }
 
     /**
+     * Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api#void_invoice).
+     */
+    interface DeleteParams {}
+
+    /**
+     * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
+     */
+    interface ListParams {
+      /**
+       * The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
+       */
+      collection_method?: 'charge_automatically' | 'send_invoice';
+
+      created?:
+        | {
+          /**
+           * Minimum value to filter by (exclusive)
+           */
+          gt?: number;
+
+          /**
+           * Minimum value to filter by (inclusive)
+           */
+          gte?: number;
+
+          /**
+           * Maximum value to filter by (exclusive)
+           */
+          lt?: number;
+
+          /**
+           * Maximum value to filter by (inclusive)
+           */
+          lte?: number;
+        }
+        | number;
+
+      /**
+       * Only return invoices for the customer specified by this customer ID.
+       */
+      customer?: string;
+
+      due_date?:
+        | {
+          /**
+           * Minimum value to filter by (exclusive)
+           */
+          gt?: number;
+
+          /**
+           * Minimum value to filter by (inclusive)
+           */
+          gte?: number;
+
+          /**
+           * Maximum value to filter by (exclusive)
+           */
+          lt?: number;
+
+          /**
+           * Maximum value to filter by (inclusive)
+           */
+          lte?: number;
+        }
+        | number;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+
+      /**
+       * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
+       */
+      status?: 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
+
+      /**
+       * Only return invoices for the subscription specified by this subscription ID.
+       */
+      subscription?: string;
+    }
+
+    /**
      * Retrieves the invoice with the given ID.
      */
     interface RetrieveParams {
@@ -7384,7 +10520,7 @@ declare namespace Stripe {
       collection_method?: 'charge_automatically' | 'send_invoice';
 
       /**
-       * A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice.
+       * A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
        */
       custom_fields?:
         | Array<{
@@ -7416,7 +10552,7 @@ declare namespace Stripe {
       default_source?: string;
 
       /**
-       * The tax rates that will apply to any line item that does not have `tax_rates` set. Pass an empty string to remove previously-set default tax rates.
+       * The tax rates that will apply to any line item that does not have `tax_rates` set. Pass an empty string to remove previously-defined tax rates.
        */
       default_tax_rates?: Array<string> | '';
 
@@ -7465,10 +10601,28 @@ declare namespace Stripe {
     }
 
     /**
-     * Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api#void_invoice).
+     * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
      */
-    interface DeleteParams {
+    interface FinalizeInvoiceParams {
+      /**
+       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
+       */
+      auto_advance?: boolean;
 
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
+     */
+    interface MarkUncollectibleParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     /**
@@ -7509,18 +10663,215 @@ declare namespace Stripe {
     }
 
     /**
-     * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
+     * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discount that is applicable to the customer.
+     *
+     * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
+     *
+     * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass a proration_date parameter when doing the actual subscription update. The value passed in should be the same as the subscription_proration_date returned on the upcoming invoice resource. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_proration_date on the upcoming invoice resource.
      */
-    interface FinalizeInvoiceParams {
+    interface RetrieveUpcomingParams {
       /**
-       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
+       * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
        */
-      auto_advance?: boolean;
+      coupon?: string;
+
+      /**
+       * The identifier of the customer whose upcoming invoice you'd like to retrieve.
+       */
+      customer?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * List of invoice items to add or update in the upcoming invoice preview.
+       */
+      invoice_items?: Array<{
+        /**
+         * The integer amount in **%s** of previewed invoice item.
+         */
+        amount?: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Only applicable to new invoice items.
+         */
+        currency?: string;
+
+        /**
+         * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+         */
+        description?: string;
+
+        /**
+         * Explicitly controls whether discounts apply to this invoice item. Defaults to true, except for negative invoice items.
+         */
+        discountable?: boolean;
+
+        /**
+         * The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
+         */
+        invoiceitem?: string;
+
+        /**
+         * A set of key-value pairs that you can attach to an invoice item object. It can be useful for storing additional information about the invoice item in a structured format.
+         */
+        metadata?: {
+          [key: string]: string;
+        };
+
+        /**
+         * The period associated with this invoice item.
+         */
+        period?: {
+          /**
+           * The end of the period, which must be greater than or equal to the start.
+           */
+          end: number;
+
+          /**
+           * The start of the period.
+           */
+          start: number;
+        };
+
+        /**
+         * Non-negative integer. The quantity of units for the invoice item.
+         */
+        quantity?: number;
+
+        tax_rates?: Array<string> | '';
+
+        /**
+         * The integer unit amount in **%s** of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal string with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }>;
+
+      /**
+       * The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+       */
+      schedule?: string;
+
+      /**
+       * The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
+       */
+      subscription?: string;
+
+      /**
+       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+       */
+      subscription_billing_cycle_anchor?: 'now' | 'unchanged' | number;
+
+      /**
+       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period if `prorate=true`
+       */
+      subscription_cancel_at?: number | '';
+
+      /**
+       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       */
+      subscription_cancel_at_period_end?: boolean;
+
+      /**
+       * This simulates the subscription being canceled or expired immediately.
+       */
+      subscription_cancel_now?: boolean;
+
+      /**
+       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+       */
+      subscription_default_tax_rates?: Array<string> | '';
+
+      /**
+       * List of subscription items, each with an attached plan.
+       */
+      subscription_items?: Array<{
+        /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?:
+          | {
+            /**
+             * Usage threshold that triggers the subscription to advance to a new billing period
+             */
+            usage_gte: number;
+          }
+          | '';
+
+        /**
+         * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+         */
+        clear_usage?: boolean;
+
+        /**
+         * A flag that, if set to `true`, will delete the specified item.
+         */
+        deleted?: boolean;
+
+        /**
+         * Subscription item to update.
+         */
+        id?: string;
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: {
+          [key: string]: string;
+        };
+
+        /**
+         * Plan ID for this item, as a string.
+         */
+        plan?: string;
+
+        /**
+         * Quantity for this item.
+         */
+        quantity?: number;
+
+        /**
+         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+         */
+        tax_rates?: Array<string> | '';
+      }>;
+
+      /**
+       * If previewing an update to a subscription, this decides whether the preview will show the result of applying prorations or not. If set, one of `subscription_items` or `subscription`, and one of `subscription_items` or `subscription_trial_end` are required.
+       */
+      subscription_prorate?: boolean;
+
+      /**
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration` cannot be set to false.
+       */
+      subscription_proration_date?: number;
+
+      /**
+       * Date a subscription is intended to start (can be future or past)
+       */
+      subscription_start_date?: number;
+
+      /**
+       * If provided, the invoice returned will preview updating or creating a subscription with that tax percent. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
+       */
+      subscription_tax_percent?: number;
+
+      /**
+       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
+       */
+      subscription_trial_end?: 'now' | number;
+
+      /**
+       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed.
+       */
+      subscription_trial_from_plan?: boolean;
     }
 
     /**
@@ -7529,16 +10880,6 @@ declare namespace Stripe {
      * Requests made in test-mode result in no emails being sent, despite sending an invoice.sent event.
      */
     interface SendInvoiceParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
-     * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
-     */
-    interface MarkUncollectibleParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -7555,7 +10896,71 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
+    /**
+     * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+     */
+    interface ListLineItemsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+     */
+    interface ListUpcomingLineItemsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
     class Resource {
+      /**
+       * This endpoint creates a draft invoice for a given customer. The draft invoice created pulls in all pending invoice items on that customer, including prorations.
+       */
+      create(params: CreateParams, options?: HeaderOptions): Promise<Invoice>;
+
+      /**
+       * Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api#void_invoice).
+       */
+      del(
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedInvoice>;
+
       /**
        * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
        */
@@ -7563,11 +10968,6 @@ declare namespace Stripe {
         params?: ListParams,
         options?: HeaderOptions
       ): Promise<ApiList<Invoice>>;
-
-      /**
-       * This endpoint creates a draft invoice for a given customer. The draft invoice created pulls in all pending invoice items on that customer, including prorations.
-       */
-      create(params: CreateParams, options?: HeaderOptions): Promise<Invoice>;
 
       /**
        * Retrieves the invoice with the given ID.
@@ -7593,13 +10993,22 @@ declare namespace Stripe {
       ): Promise<Invoice>;
 
       /**
-       * Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api#void_invoice).
+       * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
        */
-      del(
+      finalizeInvoice(
         id: string,
-        params?: DeleteParams,
+        params?: FinalizeInvoiceParams,
         options?: HeaderOptions
-      ): Promise<DeletedInvoice>;
+      ): Promise<Invoice>;
+
+      /**
+       * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
+       */
+      markUncollectible(
+        id: string,
+        params?: MarkUncollectibleParams,
+        options?: HeaderOptions
+      ): Promise<Invoice>;
 
       /**
        * Stripe automatically creates and then attempts to collect payment on invoices for customers on subscriptions according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to attempt payment on an invoice out of the normal collection schedule or for some other reason, you can do so.
@@ -7611,11 +11020,14 @@ declare namespace Stripe {
       ): Promise<Invoice>;
 
       /**
-       * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
+       * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discount that is applicable to the customer.
+       *
+       * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
+       *
+       * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass a proration_date parameter when doing the actual subscription update. The value passed in should be the same as the subscription_proration_date returned on the upcoming invoice resource. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_proration_date on the upcoming invoice resource.
        */
-      finalizeInvoice(
-        id: string,
-        params?: FinalizeInvoiceParams,
+      retrieveUpcoming(
+        params?: RetrieveUpcomingParams,
         options?: HeaderOptions
       ): Promise<Invoice>;
 
@@ -7631,15 +11043,6 @@ declare namespace Stripe {
       ): Promise<Invoice>;
 
       /**
-       * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
-       */
-      markUncollectible(
-        id: string,
-        params?: MarkUncollectibleParams,
-        options?: HeaderOptions
-      ): Promise<Invoice>;
-
-      /**
        * Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://stripe.com/docs/api#delete_invoice), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
        */
       voidInvoice(
@@ -7647,6 +11050,24 @@ declare namespace Stripe {
         params?: VoidInvoiceParams,
         options?: HeaderOptions
       ): Promise<Invoice>;
+
+      /**
+       * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+       */
+      listLineItems(
+        id: string,
+        params?: ListLineItemsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<InvoiceLineItem>>;
+
+      /**
+       * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+       */
+      listUpcomingLineItems(
+        id: string,
+        params?: ListUpcomingLineItemsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<InvoiceLineItem>>;
     }
   }
 
@@ -7788,70 +11209,6 @@ declare namespace Stripe {
 
   namespace InvoiceItem {
     /**
-     * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
-     */
-    interface ListParams {
-      created?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * The identifier of the customer whose invoice items to return. If none is provided, all invoice items will be returned.
-       */
-      customer?: string;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Only return invoice items belonging to this invoice. If none is provided, all invoice items will be returned. If specifying an invoice, no customer identifier is needed.
-       */
-      invoice?: string;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * Set to `true` to only show pending invoice items, which are not yet attached to any invoices. Set to `false` to only show invoice items already attached to invoices. If unspecified, no filter is applied.
-       */
-      pending?: boolean;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-    }
-
-    /**
      * Creates an item to be added to a draft invoice. If no invoice is specified, the item will be on the next invoice created for the customer specified.
      */
     interface CreateParams {
@@ -7939,6 +11296,75 @@ declare namespace Stripe {
     }
 
     /**
+     * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
+     */
+    interface DeleteParams {}
+
+    /**
+     * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
+     */
+    interface ListParams {
+      created?:
+        | {
+          /**
+           * Minimum value to filter by (exclusive)
+           */
+          gt?: number;
+
+          /**
+           * Minimum value to filter by (inclusive)
+           */
+          gte?: number;
+
+          /**
+           * Maximum value to filter by (exclusive)
+           */
+          lt?: number;
+
+          /**
+           * Maximum value to filter by (inclusive)
+           */
+          lte?: number;
+        }
+        | number;
+
+      /**
+       * The identifier of the customer whose invoice items to return. If none is provided, all invoice items will be returned.
+       */
+      customer?: string;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Only return invoice items belonging to this invoice. If none is provided, all invoice items will be returned. If specifying an invoice, no customer identifier is needed.
+       */
+      invoice?: string;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Set to `true` to only show pending invoice items, which are not yet attached to any invoices. Set to `false` to only show invoice items already attached to invoices. If unspecified, no filter is applied.
+       */
+      pending?: boolean;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
      * Retrieves the invoice item with the given ID.
      */
     interface RetrieveParams {
@@ -8000,7 +11426,7 @@ declare namespace Stripe {
       quantity?: number;
 
       /**
-       * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
+       * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item. Pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Array<string> | '';
 
@@ -8015,22 +11441,7 @@ declare namespace Stripe {
       unit_amount_decimal?: string;
     }
 
-    /**
-     * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
-     */
-    interface DeleteParams {
-
-    }
-
     class Resource {
-      /**
-       * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
-       */
-      list(
-        params?: ListParams,
-        options?: HeaderOptions
-      ): Promise<ApiList<InvoiceItem>>;
-
       /**
        * Creates an item to be added to a draft invoice. If no invoice is specified, the item will be on the next invoice created for the customer specified.
        */
@@ -8038,6 +11449,23 @@ declare namespace Stripe {
         params: CreateParams,
         options?: HeaderOptions
       ): Promise<InvoiceItem>;
+
+      /**
+       * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
+       */
+      del(
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedInvoiceItem>;
+
+      /**
+       * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
+       */
+      list(
+        params?: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<InvoiceItem>>;
 
       /**
        * Retrieves the invoice item with the given ID.
@@ -8056,15 +11484,6 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<InvoiceItem>;
-
-      /**
-       * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
-       */
-      del(
-        id: string,
-        params?: DeleteParams,
-        options?: HeaderOptions
-      ): Promise<DeletedInvoiceItem>;
     }
   }
 
@@ -8075,12 +11494,12 @@ declare namespace Stripe {
     /**
      * The amount, in %s.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -8090,33 +11509,33 @@ declare namespace Stripe {
     /**
      * If true, discounts will apply to this line item. Always false for prorations.
      */
-    discountable: boolean;
+    discountable?: boolean;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     invoice_item?: string;
 
     /**
      * Whether this is a test line item.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'line_item';
+    object?: 'line_item';
 
-    period: {
+    period?: {
       /**
        * End of the line item's billing period
        */
@@ -8136,7 +11555,7 @@ declare namespace Stripe {
     /**
      * Whether this is a proration.
      */
-    proration: boolean;
+    proration?: boolean;
 
     /**
      * The quantity of the subscription, if the line item is a subscription or a proration.
@@ -8183,7 +11602,7 @@ declare namespace Stripe {
     /**
      * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
      */
-    type: 'invoiceitem' | 'subscription';
+    type?: 'invoiceitem' | 'subscription';
 
     /**
      * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
@@ -8236,47 +11655,47 @@ declare namespace Stripe {
     /**
      * An IFR is actionable if it has not received a dispute and has not been fully refunded. You may wish to proactively refund a charge that receives an IFR, in order to avoid receiving a dispute later.
      */
-    actionable: boolean;
+    actionable?: boolean;
 
     /**
      * ID of the charge this issuer fraud record is for, optionally expanded.
      */
-    charge: string | Charge;
+    charge?: string | Charge;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * The type of fraud labelled by the issuer. One of `card_never_received`, `fraudulent_card_application`, `made_with_counterfeit_card`, `made_with_lost_card`, `made_with_stolen_card`, `misc`, `unauthorized_use_of_card`.
      */
-    fraud_type: string;
+    fraud_type?: string;
 
     /**
      * If true, the associated charge is subject to [liability shift](https://stripe.com/docs/sources/three-d-secure#disputed-payments).
      */
-    has_liability_shift: boolean;
+    has_liability_shift?: boolean;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'issuer_fraud_record';
+    object?: 'issuer_fraud_record';
 
     /**
      * The timestamp at which the card issuer posted the issuer fraud record.
      */
-    post_date: number;
+    post_date?: number;
   }
 
   namespace IssuerFraudRecord {
@@ -8351,32 +11770,30 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'login_link';
+    object?: 'login_link';
 
     /**
      * The URL for the login link.
      */
-    url: string;
+    url?: string;
   }
 
   /**
    * The Mandate object.
    */
   interface Mandate {
-    customer_acceptance: {
+    customer_acceptance?: {
       /**
        * The time at which the customer accepted the Mandate.
        */
       accepted_at?: number | null;
 
-      offline?: {
-
-      };
+      offline?: {};
 
       online?: {
         /**
@@ -8399,31 +11816,27 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
-    multi_use?: {
-
-    };
+    multi_use?: {};
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'mandate';
+    object?: 'mandate';
 
     /**
      * ID of the payment method associated with this mandate.
      */
-    payment_method: string | PaymentMethod;
+    payment_method?: string | PaymentMethod;
 
-    payment_method_details: {
-      card?: {
-
-      };
+    payment_method_details?: {
+      card?: {};
 
       sepa_debit?: {
         /**
@@ -8458,12 +11871,12 @@ declare namespace Stripe {
     /**
      * The status of the Mandate, one of `active`, `inactive`, or `pending`. The Mandate can be used to initiate a payment only if status=active.
      */
-    status: 'active' | 'inactive' | 'pending';
+    status?: 'active' | 'inactive' | 'pending';
 
     /**
      * The type of the mandate, one of `multi_use` or `single_use`
      */
-    type: 'multi_use' | 'single_use';
+    type?: 'multi_use' | 'single_use';
   }
 
   namespace Mandate {
@@ -8496,7 +11909,7 @@ declare namespace Stripe {
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the order.
      */
-    amount: number;
+    amount?: number;
 
     amount_returned?: number | null;
 
@@ -8515,12 +11928,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * The customer used for the order.
@@ -8537,29 +11950,29 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * List of items constituting the order. An order can have up to 25 items.
      */
-    items: Array<OrderItem>;
+    items?: Array<OrderItem>;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'order';
+    object?: 'order';
 
     returns?: ApiList<OrderReturn> | null;
 
@@ -8684,7 +12097,7 @@ declare namespace Stripe {
     /**
      * Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More details in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
      */
-    status: string;
+    status?: string;
 
     /**
      * The timestamps at which the order status was updated.
@@ -9179,22 +12592,22 @@ declare namespace Stripe {
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * Description of the line item, meant to be displayable to the user (e.g., `"Express shipping"`).
      */
-    description: string;
+    description?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'order_item';
+    object?: 'order_item';
 
     /**
      * The ID of the associated object for this line item. Expandable if not null (e.g., expandable to a SKU).
@@ -9209,7 +12622,7 @@ declare namespace Stripe {
     /**
      * The type of line item. One of `sku`, `tax`, `shipping`, or `discount`.
      */
-    type: string;
+    type?: string;
   }
 
   /**
@@ -9219,37 +12632,37 @@ declare namespace Stripe {
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the returned line item.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * The items included in this order return.
      */
-    items: Array<OrderItem>;
+    items?: Array<OrderItem>;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'order_return';
+    object?: 'order_return';
 
     /**
      * The order that this return includes items from.
@@ -9357,7 +12770,7 @@ declare namespace Stripe {
     /**
      * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Amount that can be captured from this PaymentIntent.
@@ -9404,7 +12817,7 @@ declare namespace Stripe {
      *
      * Change `capture_method` to manual if you wish to use [separate authorization and capture](https://stripe.com/docs/payments/capture-later) for payment methods that support this.
      */
-    capture_method: 'automatic' | 'manual';
+    capture_method?: 'automatic' | 'manual';
 
     /**
      * Charges that were created by this PaymentIntent, if any.
@@ -9427,17 +12840,17 @@ declare namespace Stripe {
      *
      * When the confirmation method is `manual`, all payment attempts must be made using a secret key. The PaymentIntent returns to the `requires_confirmation` state after handling `next_action`s, and requires your server to initiate each payment attempt with an explicit confirmation.
      */
-    confirmation_method: 'automatic' | 'manual';
+    confirmation_method?: 'automatic' | 'manual';
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * ID of the Customer this PaymentIntent belongs to, if one exists.
@@ -9454,7 +12867,7 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * ID of the invoice that created this PaymentIntent, if it exists.
@@ -9527,7 +12940,7 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
@@ -9561,16 +12974,14 @@ declare namespace Stripe {
         /**
          * When confirming a PaymentIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
          */
-        use_stripe_sdk?: {
-
-        };
+        use_stripe_sdk?: {};
       }
       | null;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'payment_intent';
+    object?: 'payment_intent';
 
     /**
      * The account (if any) for which the funds of the PaymentIntent are intended. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
@@ -9663,7 +13074,7 @@ declare namespace Stripe {
     /**
      * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
      */
-    payment_method_types: Array<string>;
+    payment_method_types?: Array<string>;
 
     /**
      * Email address that the receipt for the resulting payment will be sent to.
@@ -9771,7 +13182,7 @@ declare namespace Stripe {
     /**
      * Status of this PaymentIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `requires_capture`, `canceled`, or `succeeded`. Read more about each PaymentIntent [status](https://stripe.com/docs/payments/intents#intent-statuses).
      */
-    status:
+    status?:
       | 'canceled'
       | 'processing'
       | 'requires_action'
@@ -9897,9 +13308,7 @@ declare namespace Stripe {
           /**
            * If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
            */
-          offline?: {
-
-          };
+          offline?: {};
 
           /**
            * If this is a Mandate accepted online, this hash contains details about the online acceptance.
@@ -10371,6 +13780,74 @@ declare namespace Stripe {
     }
 
     /**
+     * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
+     *
+     * Once canceled, no additional charges will be made by the PaymentIntent and any operations on the PaymentIntent will fail with an error. For PaymentIntents with status='requires_capture', the remaining amount_capturable will automatically be refunded.
+     */
+    interface CancelParams {
+      /**
+       * Reason for canceling this PaymentIntent. Possible values are `duplicate`, `fraudulent`, `requested_by_customer`, or `abandoned`
+       */
+      cancellation_reason?:
+        | 'abandoned'
+        | 'duplicate'
+        | 'fraudulent'
+        | 'requested_by_customer';
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
+     *
+     * Uncaptured PaymentIntents will be canceled exactly seven days after they are created.
+     *
+     * Learn more about [separate authorization and capture](https://stripe.com/docs/payments/capture-later).
+     */
+    interface CaptureParams {
+      /**
+       * The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Any additional amount will be automatically refunded. Defaults to the full `amount_capturable` if not provided.
+       */
+      amount_to_capture?: number;
+
+      /**
+       * The amount of the application fee (if any) that will be applied to the
+       * payment and transferred to the application owner's Stripe account. For
+       * more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       */
+      application_fee_amount?: number;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
+       */
+      statement_descriptor?: string;
+
+      /**
+       * Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
+       */
+      statement_descriptor_suffix?: string;
+
+      /**
+       * The parameters used to automatically create a Transfer when the payment
+       * is captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       */
+      transfer_data?: {
+        /**
+         * The amount that will be transferred automatically when a charge succeeds.
+         */
+        amount?: number;
+      };
+    }
+
+    /**
      * Confirm that your customer intends to pay with current or provided
      * payment method. Upon confirmation, the PaymentIntent will attempt to initiate
      * a payment.
@@ -10425,9 +13902,7 @@ declare namespace Stripe {
             /**
              * If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
              */
-            offline?: {
-
-            };
+            offline?: {};
 
             /**
              * If this is a Mandate accepted online, this hash contains details about the online acceptance.
@@ -10636,74 +14111,6 @@ declare namespace Stripe {
       use_stripe_sdk?: boolean;
     }
 
-    /**
-     * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
-     *
-     * Once canceled, no additional charges will be made by the PaymentIntent and any operations on the PaymentIntent will fail with an error. For PaymentIntents with status='requires_capture', the remaining amount_capturable will automatically be refunded.
-     */
-    interface CancelParams {
-      /**
-       * Reason for canceling this PaymentIntent. Possible values are `duplicate`, `fraudulent`, `requested_by_customer`, or `abandoned`
-       */
-      cancellation_reason?:
-        | 'abandoned'
-        | 'duplicate'
-        | 'fraudulent'
-        | 'requested_by_customer';
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
-     * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
-     *
-     * Uncaptured PaymentIntents will be canceled exactly seven days after they are created.
-     *
-     * Learn more about [separate authorization and capture](https://stripe.com/docs/payments/capture-later).
-     */
-    interface CaptureParams {
-      /**
-       * The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Any additional amount will be automatically refunded. Defaults to the full `amount_capturable` if not provided.
-       */
-      amount_to_capture?: number;
-
-      /**
-       * The amount of the application fee (if any) that will be applied to the
-       * payment and transferred to the application owner's Stripe account. For
-       * more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-       */
-      application_fee_amount?: number;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
-       */
-      statement_descriptor?: string;
-
-      /**
-       * Provides information about a card payment that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
-       */
-      statement_descriptor_suffix?: string;
-
-      /**
-       * The parameters used to automatically create a Transfer when the payment
-       * is captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-       */
-      transfer_data?: {
-        /**
-         * The amount that will be transferred automatically when a charge succeeds.
-         */
-        amount?: number;
-      };
-    }
-
     class Resource {
       /**
        * Creates a PaymentIntent object.
@@ -10759,6 +14166,30 @@ declare namespace Stripe {
       ): Promise<PaymentIntent>;
 
       /**
+       * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
+       *
+       * Once canceled, no additional charges will be made by the PaymentIntent and any operations on the PaymentIntent will fail with an error. For PaymentIntents with status='requires_capture', the remaining amount_capturable will automatically be refunded.
+       */
+      cancel(
+        id: string,
+        params?: CancelParams,
+        options?: HeaderOptions
+      ): Promise<PaymentIntent>;
+
+      /**
+       * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
+       *
+       * Uncaptured PaymentIntents will be canceled exactly seven days after they are created.
+       *
+       * Learn more about [separate authorization and capture](https://stripe.com/docs/payments/capture-later).
+       */
+      capture(
+        id: string,
+        params?: CaptureParams,
+        options?: HeaderOptions
+      ): Promise<PaymentIntent>;
+
+      /**
        * Confirm that your customer intends to pay with current or provided
        * payment method. Upon confirmation, the PaymentIntent will attempt to initiate
        * a payment.
@@ -10790,30 +14221,6 @@ declare namespace Stripe {
         params?: ConfirmParams,
         options?: HeaderOptions
       ): Promise<PaymentIntent>;
-
-      /**
-       * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
-       *
-       * Once canceled, no additional charges will be made by the PaymentIntent and any operations on the PaymentIntent will fail with an error. For PaymentIntents with status='requires_capture', the remaining amount_capturable will automatically be refunded.
-       */
-      cancel(
-        id: string,
-        params?: CancelParams,
-        options?: HeaderOptions
-      ): Promise<PaymentIntent>;
-
-      /**
-       * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
-       *
-       * Uncaptured PaymentIntents will be canceled exactly seven days after they are created.
-       *
-       * Learn more about [separate authorization and capture](https://stripe.com/docs/payments/capture-later).
-       */
-      capture(
-        id: string,
-        params?: CaptureParams,
-        options?: HeaderOptions
-      ): Promise<PaymentIntent>;
     }
   }
 
@@ -10821,7 +14228,7 @@ declare namespace Stripe {
    * The PaymentMethod object.
    */
   interface PaymentMethod {
-    billing_details: {
+    billing_details?: {
       /**
        * Billing address.
        */
@@ -10965,22 +14372,16 @@ declare namespace Stripe {
        */
       wallet?:
         | {
-          amex_express_checkout?: {
+          amex_express_checkout?: {};
 
-          };
-
-          apple_pay?: {
-
-          };
+          apple_pay?: {};
 
           /**
            * (For tokenized numbers only.) The last four digits of the device account number.
            */
           dynamic_last4?: string | null;
 
-          google_pay?: {
-
-          };
+          google_pay?: {};
 
           masterpass?: {
             /**
@@ -11068,9 +14469,7 @@ declare namespace Stripe {
               | null;
           };
 
-          samsung_pay?: {
-
-          };
+          samsung_pay?: {};
 
           /**
            * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
@@ -11172,14 +14571,12 @@ declare namespace Stripe {
         | null;
     };
 
-    card_present?: {
-
-    };
+    card_present?: {};
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
@@ -11189,7 +14586,7 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     ideal?: {
       /**
@@ -11232,19 +14629,19 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'payment_method';
+    object?: 'payment_method';
 
     sepa_debit?: {
       /**
@@ -11276,7 +14673,7 @@ declare namespace Stripe {
     /**
      * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
      */
-    type: 'card' | 'card_present' | 'ideal' | 'sepa_debit';
+    type?: 'card' | 'card_present' | 'ideal' | 'sepa_debit';
   }
 
   namespace PaymentMethod {
@@ -11408,6 +14805,41 @@ declare namespace Stripe {
     }
 
     /**
+     * Returns a list of PaymentMethods for a given Customer
+     */
+    interface ListParams {
+      /**
+       * The ID of the customer whose PaymentMethods will be retrieved.
+       */
+      customer: string;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+
+      /**
+       * A required filter on the list, based on the object `type` field.
+       */
+      type: 'card' | 'card_present' | 'ideal' | 'sepa_debit';
+    }
+
+    /**
      * Retrieves a PaymentMethod object.
      */
     interface RetrieveParams {
@@ -11482,44 +14914,7 @@ declare namespace Stripe {
         [key: string]: string;
       };
 
-      sepa_debit?: {
-
-      };
-    }
-
-    /**
-     * Returns a list of PaymentMethods for a given Customer
-     */
-    interface ListParams {
-      /**
-       * The ID of the customer whose PaymentMethods will be retrieved.
-       */
-      customer: string;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-
-      /**
-       * A required filter on the list, based on the object `type` field.
-       */
-      type: 'card' | 'card_present' | 'ideal' | 'sepa_debit';
+      sepa_debit?: {};
     }
 
     /**
@@ -11561,6 +14956,14 @@ declare namespace Stripe {
       ): Promise<PaymentMethod>;
 
       /**
+       * Returns a list of PaymentMethods for a given Customer
+       */
+      list(
+        params: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<PaymentMethod>>;
+
+      /**
        * Retrieves a PaymentMethod object.
        */
       retrieve(
@@ -11577,14 +14980,6 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<PaymentMethod>;
-
-      /**
-       * Returns a list of PaymentMethods for a given Customer
-       */
-      list(
-        params: ListParams,
-        options?: HeaderOptions
-      ): Promise<ApiList<PaymentMethod>>;
 
       /**
        * Attaches a PaymentMethod object to a Customer.
@@ -11617,17 +15012,17 @@ declare namespace Stripe {
     /**
      * Amount (in %s) to be transferred to your bank account or debit card.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Date the payout is expected to arrive in the bank. This factors in delays like weekends or bank holidays.
      */
-    arrival_date: number;
+    arrival_date?: number;
 
     /**
      * Returns `true` if the payout was created by an [automated payout schedule](https://stripe.com/docs/payouts#payout-schedule), and `false` if it was [requested manually](https://stripe.com/docs/payouts#manual-payouts).
      */
-    automatic: boolean;
+    automatic?: boolean;
 
     /**
      * ID of the balance transaction that describes the impact of this payout on your account balance.
@@ -11637,12 +15032,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -11672,34 +15067,34 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces](/blog/instant-payouts-for-marketplaces) for more information.)
      */
-    method: string;
+    method?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'payout';
+    object?: 'payout';
 
     /**
      * The source balance this payout came from. One of `card` or `bank_account`.
      */
-    source_type: string;
+    source_type?: string;
 
     /**
      * Extra information about a payout to be displayed on the user's bank statement.
@@ -11709,23 +15104,69 @@ declare namespace Stripe {
     /**
      * Current status of the payout (`paid`, `pending`, `in_transit`, `canceled` or `failed`). A payout will be `pending` until it is submitted to the bank, at which point it becomes `in_transit`. It will then change to `paid` if the transaction goes through. If it does not go through successfully, its status will change to `failed` or `canceled`.
      */
-    status: string;
+    status?: string;
 
     /**
      * Can be `bank_account` or `card`.
      */
-    type: 'bank_account' | 'card';
+    type?: 'bank_account' | 'card';
   }
 
   namespace Payout {
     /**
-     * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
+     * To send funds to your own bank account, you create a new payout object. Your [Stripe balance](https://stripe.com/docs/api#balance) must be able to cover the payout amount, or you'll receive an “Insufficient Funds” error.
+     *
+     * If your API key is in test mode, money won't actually be sent, though everything else will occur as if in live mode.
+     *
+     * If you are creating a manual payout on a Stripe account that uses multiple payment source types, you'll need to specify the source type balance that the payout should draw from. The [balance object](https://stripe.com/docs/api#balance_object) details available and pending amounts by source type.
      */
-    interface RetrieveParams {
+    interface CreateParams {
+      /**
+       * A positive integer in cents representing how much to payout.
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * The ID of a bank account or a card to send the payout to. If no destination is supplied, the default external account for the specified currency will be used.
+       */
+      destination?: string;
+
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * A set of key-value pairs that you can attach to a payout object. It can be useful for storing additional information about the payout in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces for more information](https://stripe.com/blog/instant-payouts-for-marketplaces).)
+       */
+      method?: 'instant' | 'standard';
+
+      /**
+       * The balance type of your Stripe balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the balances API. One of `bank_account` or `card`.
+       */
+      source_type?: 'bank_account' | 'card';
+
+      /**
+       * A string to be displayed on the recipient's bank or card statement. This may be at most 22 characters. Attempting to use a `statement_descriptor` longer than 22 characters will return an error. Note: Most banks will truncate this information and/or display it inconsistently. Some may not display it at all.
+       */
+      statement_descriptor?: string;
     }
 
     /**
@@ -11812,59 +15253,13 @@ declare namespace Stripe {
     }
 
     /**
-     * To send funds to your own bank account, you create a new payout object. Your [Stripe balance](https://stripe.com/docs/api#balance) must be able to cover the payout amount, or you'll receive an “Insufficient Funds” error.
-     *
-     * If your API key is in test mode, money won't actually be sent, though everything else will occur as if in live mode.
-     *
-     * If you are creating a manual payout on a Stripe account that uses multiple payment source types, you'll need to specify the source type balance that the payout should draw from. The [balance object](https://stripe.com/docs/api#balance_object) details available and pending amounts by source type.
+     * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
      */
-    interface CreateParams {
-      /**
-       * A positive integer in cents representing how much to payout.
-       */
-      amount: number;
-
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      currency: string;
-
-      /**
-       * An arbitrary string attached to the object. Often useful for displaying to users.
-       */
-      description?: string;
-
-      /**
-       * The ID of a bank account or a card to send the payout to. If no destination is supplied, the default external account for the specified currency will be used.
-       */
-      destination?: string;
-
+    interface RetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * A set of key-value pairs that you can attach to a payout object. It can be useful for storing additional information about the payout in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
-       * The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces for more information](https://stripe.com/blog/instant-payouts-for-marketplaces).)
-       */
-      method?: 'instant' | 'standard';
-
-      /**
-       * The balance type of your Stripe balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the balances API. One of `bank_account` or `card`.
-       */
-      source_type?: 'bank_account' | 'card';
-
-      /**
-       * A string to be displayed on the recipient's bank or card statement. This may be at most 22 characters. Attempting to use a `statement_descriptor` longer than 22 characters will return an error. Note: Most banks will truncate this information and/or display it inconsistently. Some may not display it at all.
-       */
-      statement_descriptor?: string;
     }
 
     /**
@@ -11896,13 +15291,13 @@ declare namespace Stripe {
 
     class Resource {
       /**
-       * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
+       * To send funds to your own bank account, you create a new payout object. Your [Stripe balance](https://stripe.com/docs/api#balance) must be able to cover the payout amount, or you'll receive an “Insufficient Funds” error.
+       *
+       * If your API key is in test mode, money won't actually be sent, though everything else will occur as if in live mode.
+       *
+       * If you are creating a manual payout on a Stripe account that uses multiple payment source types, you'll need to specify the source type balance that the payout should draw from. The [balance object](https://stripe.com/docs/api#balance_object) details available and pending amounts by source type.
        */
-      retrieve(
-        id: string,
-        params?: RetrieveParams,
-        options?: HeaderOptions
-      ): Promise<Payout>;
+      create(params: CreateParams, options?: HeaderOptions): Promise<Payout>;
 
       /**
        * Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
@@ -11913,13 +15308,13 @@ declare namespace Stripe {
       ): Promise<ApiList<Payout>>;
 
       /**
-       * To send funds to your own bank account, you create a new payout object. Your [Stripe balance](https://stripe.com/docs/api#balance) must be able to cover the payout amount, or you'll receive an “Insufficient Funds” error.
-       *
-       * If your API key is in test mode, money won't actually be sent, though everything else will occur as if in live mode.
-       *
-       * If you are creating a manual payout on a Stripe account that uses multiple payment source types, you'll need to specify the source type balance that the payout should draw from. The [balance object](https://stripe.com/docs/api#balance_object) details available and pending amounts by source type.
+       * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
        */
-      create(params: CreateParams, options?: HeaderOptions): Promise<Payout>;
+      retrieve(
+        id: string,
+        params?: RetrieveParams,
+        options?: HeaderOptions
+      ): Promise<Payout>;
 
       /**
        * Updates the specified payout by setting the values of the parameters passed. Any parameters not provided will be left unchanged. This request accepts only the metadata as arguments.
@@ -12310,66 +15705,6 @@ declare namespace Stripe {
 
   namespace Person {
     /**
-     * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
-     */
-    interface ListParams {
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * Filters on the list of people returned based on the person's relationship to the account's company.
-       */
-      relationship?: {
-        /**
-         * A filter on the list of people returned based on whether these people are directors of the account's company.
-         */
-        director?: boolean;
-
-        /**
-         * A filter on the list of people returned based on whether these people are executives of the account's company.
-         */
-        executive?: boolean;
-
-        /**
-         * A filter on the list of people returned based on whether these people are owners of the account's company.
-         */
-        owner?: boolean;
-
-        /**
-         * A filter on the list of people returned based on whether these people are the representative of the account's company.
-         */
-        representative?: boolean;
-      };
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-    }
-
-    /**
-     * Retrieves an existing person.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
      * Creates a new person.
      */
     interface CreateParams {
@@ -12656,6 +15991,71 @@ declare namespace Stripe {
           front?: string;
         };
       };
+    }
+
+    /**
+     * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
+     */
+    interface DeleteParams {}
+
+    /**
+     * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
+     */
+    interface ListParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Filters on the list of people returned based on the person's relationship to the account's company.
+       */
+      relationship?: {
+        /**
+         * A filter on the list of people returned based on whether these people are directors of the account's company.
+         */
+        director?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are executives of the account's company.
+         */
+        executive?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are owners of the account's company.
+         */
+        owner?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are the representative of the account's company.
+         */
+        representative?: boolean;
+      };
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * Retrieves an existing person.
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     /**
@@ -12947,14 +16347,26 @@ declare namespace Stripe {
       };
     }
 
-    /**
-     * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
-     */
-    interface DeleteParams {
-
-    }
-
     class Resource {
+      /**
+       * Creates a new person.
+       */
+      create(
+        id: string,
+        params?: CreateParams,
+        options?: HeaderOptions
+      ): Promise<Person>;
+
+      /**
+       * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
+       */
+      del(
+        accountId: string,
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedPerson>;
+
       /**
        * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
        */
@@ -12975,15 +16387,6 @@ declare namespace Stripe {
       ): Promise<Person>;
 
       /**
-       * Creates a new person.
-       */
-      create(
-        id: string,
-        params?: CreateParams,
-        options?: HeaderOptions
-      ): Promise<Person>;
-
-      /**
        * Updates an existing person.
        */
       update(
@@ -12992,16 +16395,6 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<Person>;
-
-      /**
-       * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
-       */
-      del(
-        accountId: string,
-        id: string,
-        params?: DeleteParams,
-        options?: HeaderOptions
-      ): Promise<DeletedPerson>;
     }
   }
 
@@ -13170,68 +16563,6 @@ declare namespace Stripe {
 
   namespace Plan {
     /**
-     * Returns a list of your plans.
-     */
-    interface ListParams {
-      /**
-       * Only return plans that are active or inactive (e.g., pass `false` to list all inactive plans).
-       */
-      active?: boolean;
-
-      /**
-       * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
-       */
-      created?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * Only return plans for the given product.
-       */
-      product?: string;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-    }
-
-    /**
      * You can create plans using the API, or in the Stripe [Dashboard](https://dashboard.stripe.com/subscriptions/products).
      */
     interface CreateParams {
@@ -13395,6 +16726,73 @@ declare namespace Stripe {
     }
 
     /**
+     * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
+     */
+    interface DeleteParams {}
+
+    /**
+     * Returns a list of your plans.
+     */
+    interface ListParams {
+      /**
+       * Only return plans that are active or inactive (e.g., pass `false` to list all inactive plans).
+       */
+      active?: boolean;
+
+      /**
+       * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
+       */
+      created?:
+        | {
+          /**
+           * Minimum value to filter by (exclusive)
+           */
+          gt?: number;
+
+          /**
+           * Minimum value to filter by (inclusive)
+           */
+          gte?: number;
+
+          /**
+           * Maximum value to filter by (exclusive)
+           */
+          lt?: number;
+
+          /**
+           * Maximum value to filter by (inclusive)
+           */
+          lte?: number;
+        }
+        | number;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Only return plans for the given product.
+       */
+      product?: string;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
      * Retrieves the plan with the given ID.
      */
     interface RetrieveParams {
@@ -13441,14 +16839,21 @@ declare namespace Stripe {
       trial_period_days?: number;
     }
 
-    /**
-     * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
-     */
-    interface DeleteParams {
-
-    }
-
     class Resource {
+      /**
+       * You can create plans using the API, or in the Stripe [Dashboard](https://dashboard.stripe.com/subscriptions/products).
+       */
+      create(params: CreateParams, options?: HeaderOptions): Promise<Plan>;
+
+      /**
+       * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
+       */
+      del(
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedPlan>;
+
       /**
        * Returns a list of your plans.
        */
@@ -13456,11 +16861,6 @@ declare namespace Stripe {
         params?: ListParams,
         options?: HeaderOptions
       ): Promise<ApiList<Plan>>;
-
-      /**
-       * You can create plans using the API, or in the Stripe [Dashboard](https://dashboard.stripe.com/subscriptions/products).
-       */
-      create(params: CreateParams, options?: HeaderOptions): Promise<Plan>;
 
       /**
        * Retrieves the plan with the given ID.
@@ -13479,15 +16879,6 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<Plan>;
-
-      /**
-       * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
-       */
-      del(
-        id: string,
-        params?: DeleteParams,
-        options?: HeaderOptions
-      ): Promise<DeletedPlan>;
     }
   }
 
@@ -13498,27 +16889,27 @@ declare namespace Stripe {
     /**
      * The Connected account that incurred this charge.
      */
-    account: string;
+    account?: string;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'platform_tax_fee';
+    object?: 'platform_tax_fee';
 
     /**
      * The payment object that caused this tax to be inflicted.
      */
-    source_transaction: string;
+    source_transaction?: string;
 
     /**
      * The type of tax (VAT).
      */
-    type: string;
+    type?: string;
   }
 
   /**
@@ -13768,6 +17159,88 @@ declare namespace Stripe {
     }
 
     /**
+     * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
+     */
+    interface DeleteParams {}
+
+    /**
+     * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
+     */
+    interface ListParams {
+      /**
+       * Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
+       */
+      active?: boolean;
+
+      /**
+       * Only return products that were created during the given date interval.
+       */
+      created?:
+        | {
+          /**
+           * Minimum value to filter by (exclusive)
+           */
+          gt?: number;
+
+          /**
+           * Minimum value to filter by (inclusive)
+           */
+          gte?: number;
+
+          /**
+           * Maximum value to filter by (exclusive)
+           */
+          lt?: number;
+
+          /**
+           * Maximum value to filter by (inclusive)
+           */
+          lte?: number;
+        }
+        | number;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Only return products with the given IDs.
+       */
+      ids?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Only return products that can be shipped (i.e., physical, not digital products).
+       */
+      shippable?: boolean;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+
+      /**
+       * Only return products of this type.
+       */
+      type?: 'good' | 'service';
+
+      /**
+       * Only return products with the given url.
+       */
+      url?: string;
+    }
+
+    /**
      * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
      */
     interface RetrieveParams {
@@ -13876,95 +17349,28 @@ declare namespace Stripe {
       url?: string;
     }
 
-    /**
-     * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
-     */
-    interface ListParams {
-      /**
-       * Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
-       */
-      active?: boolean;
-
-      /**
-       * Only return products that were created during the given date interval.
-       */
-      created?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Only return products with the given IDs.
-       */
-      ids?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * Only return products that can be shipped (i.e., physical, not digital products).
-       */
-      shippable?: boolean;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-
-      /**
-       * Only return products of this type.
-       */
-      type?: 'good' | 'service';
-
-      /**
-       * Only return products with the given url.
-       */
-      url?: string;
-    }
-
-    /**
-     * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
-     */
-    interface DeleteParams {
-
-    }
-
     class Resource {
       /**
        * Creates a new product object. To create a product for use with orders, see [Products](https://stripe.com/docs/api#create_product).
        */
       create(params: CreateParams, options?: HeaderOptions): Promise<Product>;
+
+      /**
+       * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
+       */
+      del(
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedProduct>;
+
+      /**
+       * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
+       */
+      list(
+        params?: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<Product>>;
 
       /**
        * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
@@ -13983,23 +17389,6 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<Product>;
-
-      /**
-       * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
-       */
-      list(
-        params?: ListParams,
-        options?: HeaderOptions
-      ): Promise<ApiList<Product>>;
-
-      /**
-       * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
-       */
-      del(
-        id: string,
-        params?: DeleteParams,
-        options?: HeaderOptions
-      ): Promise<DeletedProduct>;
     }
   }
 
@@ -14095,6 +17484,64 @@ declare namespace Stripe {
 
   namespace Recipient {
     /**
+     * Creates a new Recipient object and verifies the recipient's identity.
+     * Also verifies the recipient's bank account information or debit card, if either is provided.
+     */
+    interface CreateParams {
+      /**
+       * A bank account to attach to the recipient. You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js), or a dictionary containing a user's bank account details, with the options described below.
+       */
+      bank_account?: string;
+
+      /**
+       * A U.S. Visa or MasterCard debit card (_not_ prepaid) to attach to the recipient. If the debit card is not valid, recipient creation will fail. You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js), or a dictionary containing a user's debit card details, with the options described below. Although not all information is required, the extra info helps prevent fraud.
+       */
+      card?: string;
+
+      /**
+       * An arbitrary string which you can attach to a `Recipient` object. It is displayed alongside the recipient in the web interface.
+       */
+      description?: string;
+
+      /**
+       * The recipient's email address. It is displayed alongside the recipient in the web interface, and can be useful for searching and tracking.
+       */
+      email?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * The recipient's full, legal name. For type `individual`, should be in the format `First Last`, `First Middle Last`, or `First M Last` (no prefixes or suffixes). For `corporation`, the full, incorporated name.
+       */
+      name: string;
+
+      /**
+       * The recipient's tax ID, as a string. For type `individual`, the full SSN; for type `corporation`, the full EIN.
+       */
+      tax_id?: string;
+
+      /**
+       * Type of the recipient: either `individual` or `corporation`.
+       */
+      type: string;
+    }
+
+    /**
+     * Permanently deletes a recipient. It cannot be undone.
+     */
+    interface DeleteParams {}
+
+    /**
      * Returns a list of your recipients. The recipients are returned sorted by creation date, with the most recently created recipients appearing first.
      */
     interface ListParams {
@@ -14148,59 +17595,6 @@ declare namespace Stripe {
        * Only return recipients that are verified or unverified.
        */
       verified?: boolean;
-    }
-
-    /**
-     * Creates a new Recipient object and verifies the recipient's identity.
-     * Also verifies the recipient's bank account information or debit card, if either is provided.
-     */
-    interface CreateParams {
-      /**
-       * A bank account to attach to the recipient. You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js), or a dictionary containing a user's bank account details, with the options described below.
-       */
-      bank_account?: string;
-
-      /**
-       * A U.S. Visa or MasterCard debit card (_not_ prepaid) to attach to the recipient. If the debit card is not valid, recipient creation will fail. You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js), or a dictionary containing a user's debit card details, with the options described below. Although not all information is required, the extra info helps prevent fraud.
-       */
-      card?: string;
-
-      /**
-       * An arbitrary string which you can attach to a `Recipient` object. It is displayed alongside the recipient in the web interface.
-       */
-      description?: string;
-
-      /**
-       * The recipient's email address. It is displayed alongside the recipient in the web interface, and can be useful for searching and tracking.
-       */
-      email?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
-       * The recipient's full, legal name. For type `individual`, should be in the format `First Last`, `First Middle Last`, or `First M Last` (no prefixes or suffixes). For `corporation`, the full, incorporated name.
-       */
-      name: string;
-
-      /**
-       * The recipient's tax ID, as a string. For type `individual`, the full SSN; for type `corporation`, the full EIN.
-       */
-      tax_id?: string;
-
-      /**
-       * Type of the recipient: either `individual` or `corporation`.
-       */
-      type: string;
     }
 
     /**
@@ -14269,14 +17663,22 @@ declare namespace Stripe {
       tax_id?: string;
     }
 
-    /**
-     * Permanently deletes a recipient. It cannot be undone.
-     */
-    interface DeleteParams {
-
-    }
-
     class Resource {
+      /**
+       * Creates a new Recipient object and verifies the recipient's identity.
+       * Also verifies the recipient's bank account information or debit card, if either is provided.
+       */
+      create(params: CreateParams, options?: HeaderOptions): Promise<Recipient>;
+
+      /**
+       * Permanently deletes a recipient. It cannot be undone.
+       */
+      del(
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedRecipient>;
+
       /**
        * Returns a list of your recipients. The recipients are returned sorted by creation date, with the most recently created recipients appearing first.
        */
@@ -14284,12 +17686,6 @@ declare namespace Stripe {
         params?: ListParams,
         options?: HeaderOptions
       ): Promise<ApiList<Recipient>>;
-
-      /**
-       * Creates a new Recipient object and verifies the recipient's identity.
-       * Also verifies the recipient's bank account information or debit card, if either is provided.
-       */
-      create(params: CreateParams, options?: HeaderOptions): Promise<Recipient>;
 
       /**
        * Retrieves the details of an existing recipient. You need only supply the unique recipient identifier that was returned upon recipient creation.
@@ -14312,15 +17708,6 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<Recipient>;
-
-      /**
-       * Permanently deletes a recipient. It cannot be undone.
-       */
-      del(
-        id: string,
-        params?: DeleteParams,
-        options?: HeaderOptions
-      ): Promise<DeletedRecipient>;
     }
   }
 
@@ -14331,7 +17718,7 @@ declare namespace Stripe {
     /**
      * Amount, in %s.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Balance transaction that describes the impact on your account balance.
@@ -14346,12 +17733,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users. (Available on non-card refunds only)
@@ -14371,19 +17758,19 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'refund';
+    object?: 'refund';
 
     /**
      * ID of the PaymentIntent that was refunded.
@@ -14418,6 +17805,32 @@ declare namespace Stripe {
 
   namespace Refund {
     /**
+     * Create a refund.
+     */
+    interface CreateParams {
+      amount?: number;
+
+      charge?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      metadata?: {
+        [key: string]: string;
+      };
+
+      payment_intent?: string;
+
+      reason?: 'duplicate' | 'fraudulent' | 'requested_by_customer';
+
+      refund_application_fee?: boolean;
+
+      reverse_transfer?: boolean;
+    }
+
+    /**
      * You can see a list of the refunds belonging to a specific charge. Note that the 10 most recent refunds are always available by default on the charge object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
      */
     interface ListParams {
@@ -14440,16 +17853,6 @@ declare namespace Stripe {
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
        */
       starting_after?: string;
-    }
-
-    /**
-     * Retrieves the details of an existing refund.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
     }
 
     /**
@@ -14512,29 +17915,13 @@ declare namespace Stripe {
     }
 
     /**
-     * Create a refund.
+     * Retrieves the details of an existing refund.
      */
-    interface CreateParams {
-      amount?: number;
-
-      charge?: string;
-
+    interface RetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      metadata?: {
-        [key: string]: string;
-      };
-
-      payment_intent?: string;
-
-      reason?: 'duplicate' | 'fraudulent' | 'requested_by_customer';
-
-      refund_application_fee?: boolean;
-
-      reverse_transfer?: boolean;
     }
 
     /**
@@ -14568,10 +17955,23 @@ declare namespace Stripe {
 
     class Resource {
       /**
+       * Create a refund.
+       */
+      create(params?: CreateParams, options?: HeaderOptions): Promise<Refund>;
+
+      /**
        * You can see a list of the refunds belonging to a specific charge. Note that the 10 most recent refunds are always available by default on the charge object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
        */
       list(
         id: string,
+        params?: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<Refund>>;
+
+      /**
+       * Returns a list of all refunds you've previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
+       */
+      list(
         params?: ListParams,
         options?: HeaderOptions
       ): Promise<ApiList<Refund>>;
@@ -14585,19 +17985,6 @@ declare namespace Stripe {
         params?: RetrieveParams,
         options?: HeaderOptions
       ): Promise<Refund>;
-
-      /**
-       * Returns a list of all refunds you've previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
-       */
-      list(
-        params?: ListParams,
-        options?: HeaderOptions
-      ): Promise<ApiList<Refund>>;
-
-      /**
-       * Create a refund.
-       */
-      create(params?: CreateParams, options?: HeaderOptions): Promise<Refund>;
 
       /**
        * Retrieves the details of an existing refund.
@@ -14625,12 +18012,12 @@ declare namespace Stripe {
    * The ReserveTransaction object.
    */
   interface ReserveTransaction {
-    amount: number;
+    amount?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -14640,12 +18027,12 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'reserve_transaction';
+    object?: 'reserve_transaction';
   }
 
   /**
@@ -14675,12 +18062,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * The IP address where the payment originated.
@@ -14722,22 +18109,22 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'review';
+    object?: 'review';
 
     /**
      * If `true`, the review needs action.
      */
-    open: boolean;
+    open?: boolean;
 
     /**
      * The reason the review was opened. One of `rule` or `manual`.
      */
-    opened_reason: 'manual' | 'rule';
+    opened_reason?: 'manual' | 'rule';
 
     /**
      * The PaymentIntent ID associated with this review, if one exists.
@@ -14747,7 +18134,7 @@ declare namespace Stripe {
     /**
      * The reason the review is currently open or closed. One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
      */
-    reason: string;
+    reason?: string;
 
     /**
      * Information related to the browsing session of the user who initiated the payment.
@@ -14904,7 +18291,7 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * ID of the Customer this SetupIntent belongs to, if one exists.
@@ -14921,7 +18308,7 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * The error encountered in the previous SetupIntent confirmation.
@@ -14989,7 +18376,7 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * ID of the multi use Mandate generated by the SetupIntent.
@@ -15028,16 +18415,14 @@ declare namespace Stripe {
         /**
          * When confirming a SetupIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
          */
-        use_stripe_sdk?: {
-
-        };
+        use_stripe_sdk?: {};
       }
       | null;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'setup_intent';
+    object?: 'setup_intent';
 
     /**
      * The account (if any) for which the setup is intended.
@@ -15070,7 +18455,7 @@ declare namespace Stripe {
     /**
      * The list of payment method types (e.g. card) that this SetupIntent is allowed to set up.
      */
-    payment_method_types: Array<string>;
+    payment_method_types?: Array<string>;
 
     /**
      * ID of the single_use Mandate generated by the SetupIntent.
@@ -15080,7 +18465,7 @@ declare namespace Stripe {
     /**
      * [Status](https://stripe.com/docs/payments/intents#intent-statuses) of this SetupIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `canceled`, or `succeeded`.
      */
-    status:
+    status?:
       | 'canceled'
       | 'processing'
       | 'requires_action'
@@ -15093,7 +18478,7 @@ declare namespace Stripe {
      *
      * Use `on_session` if you intend to only reuse the payment method when the customer is in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. If not provided, this value defaults to `off_session`.
      */
-    usage: string;
+    usage?: string;
   }
 
   namespace SetupIntent {
@@ -15142,9 +18527,7 @@ declare namespace Stripe {
           /**
            * If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
            */
-          offline?: {
-
-          };
+          offline?: {};
 
           /**
            * If this is a Mandate accepted online, this hash contains details about the online acceptance.
@@ -15359,6 +18742,23 @@ declare namespace Stripe {
     }
 
     /**
+     * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
+     *
+     * Once canceled, setup is abandoned and any operations on the SetupIntent will fail with an error.
+     */
+    interface CancelParams {
+      /**
+       * Reason for canceling this SetupIntent. Possible values are `abandoned`, `requested_by_customer`, or `duplicate`
+       */
+      cancellation_reason?: 'abandoned' | 'duplicate' | 'requested_by_customer';
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
      * Confirm that your customer intends to set up the current or
      * provided payment method. For example, you would confirm a SetupIntent
      * when a customer hits the “Save” button on a payment method management
@@ -15396,9 +18796,7 @@ declare namespace Stripe {
             /**
              * If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
              */
-            offline?: {
-
-            };
+            offline?: {};
 
             /**
              * If this is a Mandate accepted online, this hash contains details about the online acceptance.
@@ -15483,23 +18881,6 @@ declare namespace Stripe {
       return_url?: string;
     }
 
-    /**
-     * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
-     *
-     * Once canceled, setup is abandoned and any operations on the SetupIntent will fail with an error.
-     */
-    interface CancelParams {
-      /**
-       * Reason for canceling this SetupIntent. Possible values are `abandoned`, `requested_by_customer`, or `duplicate`
-       */
-      cancellation_reason?: 'abandoned' | 'duplicate' | 'requested_by_customer';
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     class Resource {
       /**
        * Creates a SetupIntent object.
@@ -15543,6 +18924,17 @@ declare namespace Stripe {
       ): Promise<SetupIntent>;
 
       /**
+       * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
+       *
+       * Once canceled, setup is abandoned and any operations on the SetupIntent will fail with an error.
+       */
+      cancel(
+        id: string,
+        params?: CancelParams,
+        options?: HeaderOptions
+      ): Promise<SetupIntent>;
+
+      /**
        * Confirm that your customer intends to set up the current or
        * provided payment method. For example, you would confirm a SetupIntent
        * when a customer hits the “Save” button on a payment method management
@@ -15560,17 +18952,6 @@ declare namespace Stripe {
       confirm(
         id: string,
         params?: ConfirmParams,
-        options?: HeaderOptions
-      ): Promise<SetupIntent>;
-
-      /**
-       * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
-       *
-       * Once canceled, setup is abandoned and any operations on the SetupIntent will fail with an error.
-       */
-      cancel(
-        id: string,
-        params?: CancelParams,
         options?: HeaderOptions
       ): Promise<SetupIntent>;
     }
@@ -15705,166 +19086,6 @@ declare namespace Stripe {
 
   namespace Sku {
     /**
-     * Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
-     * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
-     */
-    interface ListParams {
-      /**
-       * Only return SKUs that are active or inactive (e.g., pass `false` to list all inactive products).
-       */
-      active?: boolean;
-
-      /**
-       * Only return SKUs that have the specified key-value pairs in this partially constructed dictionary. Can be specified only if `product` is also supplied. For instance, if the associated product has attributes `["color", "size"]`, passing in `attributes[color]=red` returns all the SKUs for this product that have `color` set to `red`.
-       */
-      attributes?: {
-        [key: string]: string;
-      };
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Only return SKUs with the given IDs.
-       */
-      ids?: Array<string>;
-
-      /**
-       * Only return SKUs that are either in stock or out of stock (e.g., pass `false` to list all SKUs that are out of stock). If no value is provided, all SKUs are returned.
-       */
-      in_stock?: boolean;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * The ID of the product whose SKUs will be retrieved. Must be a product with type `good`.
-       */
-      product?: string;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-    }
-
-    /**
-     * Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     *
-     * Note that a SKU's attributes are not editable. Instead, you would need to deactivate the existing SKU and create a new one with the new attribute values.
-     */
-    interface UpdateParams {
-      /**
-       * Whether this SKU is available for purchase.
-       */
-      active?: boolean;
-
-      /**
-       * A dictionary of attributes and values for the attributes defined by the product. When specified, `attributes` will partially update the existing attributes dictionary on the product, with the postcondition that a value must be present for each attribute key on the product.
-       */
-      attributes?: {
-        [key: string]: string;
-      };
-
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      currency?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * The URL of an image for this SKU, meant to be displayable to the customer.
-       */
-      image?: string;
-
-      /**
-       * Description of the SKU's inventory.
-       */
-      inventory?: {
-        /**
-         * The count of inventory available. Required if `type` is `finite`.
-         */
-        quantity?: number;
-
-        /**
-         * Inventory type. Possible values are `finite`, `bucket` (not quantified), and `infinite`.
-         */
-        type?: 'bucket' | 'finite' | 'infinite';
-
-        /**
-         * An indicator of the inventory available. Possible values are `in_stock`, `limited`, and `out_of_stock`. Will be present if and only if `type` is `bucket`.
-         */
-        value?: '' | 'in_stock' | 'limited' | 'out_of_stock';
-      };
-
-      /**
-       * A set of key-value pairs that you can attach to a SKU object. It can be useful for storing additional information about the SKU in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
-       * The dimensions of this SKU for shipping purposes.
-       */
-      package_dimensions?:
-        | {
-          /**
-           * Height, in inches. Maximum precision is 2 decimal places.
-           */
-          height: number;
-
-          /**
-           * Length, in inches. Maximum precision is 2 decimal places.
-           */
-          length: number;
-
-          /**
-           * Weight, in ounces. Maximum precision is 2 decimal places.
-           */
-          weight: number;
-
-          /**
-           * Width, in inches. Maximum precision is 2 decimal places.
-           */
-          width: number;
-        }
-        | '';
-
-      /**
-       * The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
-       */
-      price?: number;
-
-      /**
-       * The ID of the product that this SKU should belong to. The product must exist, have the same set of attribute names as the SKU's current product, and be of type `good`.
-       */
-      product?: string;
-    }
-
-    /**
      * Creates a new SKU associated with a product.
      */
     interface CreateParams {
@@ -15966,36 +19187,169 @@ declare namespace Stripe {
     /**
      * Delete a SKU. Deleting a SKU is only possible until it has been used in an order.
      */
-    interface DeleteParams {
+    interface DeleteParams {}
 
+    /**
+     * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
+     */
+    interface ListParams {
+      /**
+       * Only return SKUs that are active or inactive (e.g., pass `false` to list all inactive products).
+       */
+      active?: boolean;
+
+      /**
+       * Only return SKUs that have the specified key-value pairs in this partially constructed dictionary. Can be specified only if `product` is also supplied. For instance, if the associated product has attributes `["color", "size"]`, passing in `attributes[color]=red` returns all the SKUs for this product that have `color` set to `red`.
+       */
+      attributes?: {
+        [key: string]: string;
+      };
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Only return SKUs with the given IDs.
+       */
+      ids?: Array<string>;
+
+      /**
+       * Only return SKUs that are either in stock or out of stock (e.g., pass `false` to list all SKUs that are out of stock). If no value is provided, all SKUs are returned.
+       */
+      in_stock?: boolean;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * The ID of the product whose SKUs will be retrieved. Must be a product with type `good`.
+       */
+      product?: string;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+     *
+     * Note that a SKU's attributes are not editable. Instead, you would need to deactivate the existing SKU and create a new one with the new attribute values.
+     */
+    interface UpdateParams {
+      /**
+       * Whether this SKU is available for purchase.
+       */
+      active?: boolean;
+
+      /**
+       * A dictionary of attributes and values for the attributes defined by the product. When specified, `attributes` will partially update the existing attributes dictionary on the product, with the postcondition that a value must be present for each attribute key on the product.
+       */
+      attributes?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * The URL of an image for this SKU, meant to be displayable to the customer.
+       */
+      image?: string;
+
+      /**
+       * Description of the SKU's inventory.
+       */
+      inventory?: {
+        /**
+         * The count of inventory available. Required if `type` is `finite`.
+         */
+        quantity?: number;
+
+        /**
+         * Inventory type. Possible values are `finite`, `bucket` (not quantified), and `infinite`.
+         */
+        type?: 'bucket' | 'finite' | 'infinite';
+
+        /**
+         * An indicator of the inventory available. Possible values are `in_stock`, `limited`, and `out_of_stock`. Will be present if and only if `type` is `bucket`.
+         */
+        value?: '' | 'in_stock' | 'limited' | 'out_of_stock';
+      };
+
+      /**
+       * A set of key-value pairs that you can attach to a SKU object. It can be useful for storing additional information about the SKU in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * The dimensions of this SKU for shipping purposes.
+       */
+      package_dimensions?:
+        | {
+          /**
+           * Height, in inches. Maximum precision is 2 decimal places.
+           */
+          height: number;
+
+          /**
+           * Length, in inches. Maximum precision is 2 decimal places.
+           */
+          length: number;
+
+          /**
+           * Weight, in ounces. Maximum precision is 2 decimal places.
+           */
+          weight: number;
+
+          /**
+           * Width, in inches. Maximum precision is 2 decimal places.
+           */
+          width: number;
+        }
+        | '';
+
+      /**
+       * The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
+       */
+      price?: number;
+
+      /**
+       * The ID of the product that this SKU should belong to. The product must exist, have the same set of attribute names as the SKU's current product, and be of type `good`.
+       */
+      product?: string;
     }
 
     class Resource {
-      /**
-       * Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
-       */
-      retrieve(
-        id: string,
-        params?: RetrieveParams,
-        options?: HeaderOptions
-      ): Promise<Sku>;
-
-      /**
-       * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
-       */
-      list(params?: ListParams, options?: HeaderOptions): Promise<ApiList<Sku>>;
-
-      /**
-       * Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-       *
-       * Note that a SKU's attributes are not editable. Instead, you would need to deactivate the existing SKU and create a new one with the new attribute values.
-       */
-      update(
-        id: string,
-        params?: UpdateParams,
-        options?: HeaderOptions
-      ): Promise<Sku>;
-
       /**
        * Creates a new SKU associated with a product.
        */
@@ -16009,6 +19363,31 @@ declare namespace Stripe {
         params?: DeleteParams,
         options?: HeaderOptions
       ): Promise<DeletedSku>;
+
+      /**
+       * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
+       */
+      list(params?: ListParams, options?: HeaderOptions): Promise<ApiList<Sku>>;
+
+      /**
+       * Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
+       */
+      retrieve(
+        id: string,
+        params?: RetrieveParams,
+        options?: HeaderOptions
+      ): Promise<Sku>;
+
+      /**
+       * Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+       *
+       * Note that a SKU's attributes are not editable. Instead, you would need to deactivate the existing SKU and create a new one with the new attribute values.
+       */
+      update(
+        id: string,
+        params?: UpdateParams,
+        options?: HeaderOptions
+      ): Promise<Sku>;
     }
   }
 
@@ -16198,7 +19577,7 @@ declare namespace Stripe {
     /**
      * The client secret of the source. Used for client-side retrieval using a publishable key.
      */
-    client_secret: string;
+    client_secret?: string;
 
     code_verification?: {
       /**
@@ -16215,7 +19594,7 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the source. This is the currency for which the source will be chargeable once ready. Required for `single_use` sources.
@@ -16236,7 +19615,7 @@ declare namespace Stripe {
     /**
      * The authentication `flow` of the source. `flow` is one of `redirect`, `receiver`, `code_verification`, `none`.
      */
-    flow: string;
+    flow?: string;
 
     giropay?: {
       bank_code?: string | null;
@@ -16251,7 +19630,7 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     ideal?: {
       bank?: string | null;
@@ -16318,7 +19697,7 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -16354,7 +19733,7 @@ declare namespace Stripe {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'source';
+    object?: 'source';
 
     /**
      * Information about the owner of the payment instrument that may be used or required by particular source types.
@@ -16692,7 +20071,7 @@ declare namespace Stripe {
     /**
      * The status of the source, one of `canceled`, `chargeable`, `consumed`, `failed`, or `pending`. Only `chargeable` sources can be used to create a charge.
      */
-    status: string;
+    status?: string;
 
     three_d_secure?: {
       address_line1_check?: string | null;
@@ -16739,7 +20118,7 @@ declare namespace Stripe {
     /**
      * The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `klarna`, `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the source with a name matching this value. It contains additional information specific to the [payment method](https://stripe.com/docs/sources) used.
      */
-    type:
+    type?:
       | 'ach_credit_transfer'
       | 'ach_debit'
       | 'acss_debit'
@@ -16775,21 +20154,6 @@ declare namespace Stripe {
   }
 
   namespace Source {
-    /**
-     * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
-     */
-    interface RetrieveParams {
-      /**
-       * The client secret of the source. Required if a publishable key is used to retrieve the source.
-       */
-      client_secret?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     /**
      * Creates a new source object.
      */
@@ -17067,6 +20431,21 @@ declare namespace Stripe {
     }
 
     /**
+     * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
+     */
+    interface RetrieveParams {
+      /**
+       * The client secret of the source. Required if a publishable key is used to retrieve the source.
+       */
+      client_secret?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
      * Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
      *
      * This request accepts the metadata and owner as arguments. It is also possible to update type specific information for selected payment methods. Please refer to our [payment method guides](https://stripe.com/docs/sources) for more detail.
@@ -17288,6 +20667,31 @@ declare namespace Stripe {
     }
 
     /**
+     * List source transactions for a given source.
+     */
+    interface ListSourceTransactionsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
      * Verify a given source.
      */
     interface VerifyParams {
@@ -17304,6 +20708,11 @@ declare namespace Stripe {
 
     class Resource {
       /**
+       * Creates a new source object.
+       */
+      create(params?: CreateParams, options?: HeaderOptions): Promise<Source>;
+
+      /**
        * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
        */
       retrieve(
@@ -17311,11 +20720,6 @@ declare namespace Stripe {
         params?: RetrieveParams,
         options?: HeaderOptions
       ): Promise<Source>;
-
-      /**
-       * Creates a new source object.
-       */
-      create(params?: CreateParams, options?: HeaderOptions): Promise<Source>;
 
       /**
        * Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -17327,6 +20731,15 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<Source>;
+
+      /**
+       * List source transactions for a given source.
+       */
+      listSourceTransactions(
+        id: string,
+        params?: ListSourceTransactionsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<SourceTransaction>>;
 
       /**
        * Verify a given source.
@@ -17358,27 +20771,27 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'source_mandate_notification';
+    object?: 'source_mandate_notification';
 
     /**
      * The reason of the mandate notification. Valid reasons are `mandate_confirmed` or `debit_initiated`.
      */
-    reason: string;
+    reason?: string;
 
     sepa_debit?: {
       /**
@@ -17397,17 +20810,17 @@ declare namespace Stripe {
       mandate_reference?: string;
     };
 
-    source: Source;
+    source?: Source;
 
     /**
      * The status of the mandate notification. Valid statuses are `pending` or `submitted`.
      */
-    status: string;
+    status?: string;
 
     /**
      * The type of source this mandate notification is attached to. Should be the source type identifier code for the payment method, such as `three_d_secure`.
      */
-    type: string;
+    type?: string;
   }
 
   /**
@@ -17439,7 +20852,7 @@ declare namespace Stripe {
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the amount your customer has pushed to the receiver.
      */
-    amount: number;
+    amount?: number;
 
     chf_credit_transfer?: {
       /**
@@ -17471,12 +20884,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     gbp_credit_transfer?: {
       /**
@@ -17508,17 +20921,17 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'source_transaction';
+    object?: 'source_transaction';
 
     paper_check?: {
       /**
@@ -17552,17 +20965,17 @@ declare namespace Stripe {
     /**
      * The ID of the source this transaction is attached to.
      */
-    source: string;
+    source?: string;
 
     /**
      * The status of the transaction, one of `succeeded`, `pending`, or `failed`.
      */
-    status: string;
+    status?: string;
 
     /**
      * The type of source this transaction is attached to.
      */
-    type:
+    type?:
       | 'ach_credit_transfer'
       | 'ach_debit'
       | 'alipay'
@@ -17593,7 +21006,7 @@ declare namespace Stripe {
     /**
      * Determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
      */
-    billing_cycle_anchor: number;
+    billing_cycle_anchor?: number;
 
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
@@ -17620,7 +21033,7 @@ declare namespace Stripe {
     /**
      * If the subscription has been canceled with the `at_period_end` flag set to `true`, `cancel_at_period_end` on the subscription will be true. You can use this attribute to determine whether a subscription that has a status of active is scheduled to be canceled at the end of the current period.
      */
-    cancel_at_period_end: boolean;
+    cancel_at_period_end?: boolean;
 
     /**
      * If the subscription has been canceled, the date of that cancellation. If the subscription was canceled with `cancel_at_period_end`, `canceled_at` will still reflect the date of the initial cancellation request, not the end of the subscription period when the subscription is automatically moved to a canceled state.
@@ -17635,22 +21048,22 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.
      */
-    current_period_end: number;
+    current_period_end?: number;
 
     /**
      * Start of the current period that the subscription has been invoiced for.
      */
-    current_period_start: number;
+    current_period_start?: number;
 
     /**
      * ID of the customer who owns the subscription.
      */
-    customer: string | Customer;
+    customer?: string | Customer;
 
     /**
      * Number of days a customer has to pay invoices generated by this subscription. This value will be `null` for subscriptions where `collection_method=charge_automatically`.
@@ -17693,9 +21106,9 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
-    invoice_customer_balance_settings: {
+    invoice_customer_balance_settings?: {
       /**
        * Controls whether a customer balance applied to this invoice should be consumed and not credited or debited back to the customer if voided.
        */
@@ -17705,7 +21118,7 @@ declare namespace Stripe {
     /**
      * List of subscription items, each with an attached plan.
      */
-    items: ApiList<SubscriptionItem>;
+    items?: ApiList<SubscriptionItem>;
 
     /**
      * The most recent invoice this subscription has generated.
@@ -17715,12 +21128,12 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
@@ -17732,7 +21145,7 @@ declare namespace Stripe {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'subscription';
+    object?: 'subscription';
 
     /**
      * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
@@ -17774,7 +21187,7 @@ declare namespace Stripe {
     /**
      * Date when the subscription was first created. The date might differ from the `created` date due to backdating.
      */
-    start_date: number;
+    start_date?: number;
 
     /**
      * Possible values are `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `canceled`, or `unpaid`.
@@ -17787,7 +21200,7 @@ declare namespace Stripe {
      *
      * If subscription `collection_method=send_invoice` it becomes `past_due` when its invoice is not paid by the due date, and `canceled` or `unpaid` if it is still not paid by an additional deadline after that. Note that when a subscription has a status of `unpaid`, no subsequent invoices will be attempted (invoices will be created, but then immediately automatically closed). After receiving updated payment information from a customer, you may choose to reopen and pay their closed invoices.
      */
-    status:
+    status?:
       | 'active'
       | 'canceled'
       | 'incomplete'
@@ -17825,6 +21238,230 @@ declare namespace Stripe {
   }
 
   namespace Subscription {
+    /**
+     * Creates a new subscription on an existing customer.
+     */
+    interface CreateParams {
+      /**
+       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+       */
+      application_fee_percent?: number;
+
+      /**
+       * For new subscriptions, a past timestamp to backdate the subscription's start date to. If set, the first invoice will contain a proration for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
+       */
+      backdate_start_date?: number;
+
+      /**
+       * A future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
+       */
+      billing_cycle_anchor?: number;
+
+      /**
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+       */
+      billing_thresholds?:
+        | {
+          /**
+           * Monetary threshold that triggers the subscription to advance to a new billing period
+           */
+          amount_gte?: number;
+
+          /**
+           * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+           */
+          reset_billing_cycle_anchor?: boolean;
+        }
+        | '';
+
+      /**
+       * A timestamp at which the subscription should cancel. If set to a date before the current period ends this will cause a proration if `prorate=true`.
+       */
+      cancel_at?: number;
+
+      /**
+       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       */
+      cancel_at_period_end?: boolean;
+
+      /**
+       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
+       */
+      collection_method?: 'charge_automatically' | 'send_invoice';
+
+      /**
+       * The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
+       */
+      coupon?: string;
+
+      /**
+       * The identifier of the customer to subscribe.
+       */
+      customer: string;
+
+      /**
+       * Number of days a customer has to pay invoices generated by this subscription. Valid only for subscriptions where `collection_method` is set to `send_invoice`.
+       */
+      days_until_due?: number;
+
+      /**
+       * ID of the default payment method for the subscription. It must belong to the customer associated with the subscription. If not set, invoices will use the default payment method in the customer's invoice settings.
+       */
+      default_payment_method?: string;
+
+      /**
+       * ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If not set, defaults to the customer's default source.
+       */
+      default_source?: string;
+
+      /**
+       * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
+       */
+      default_tax_rates?: Array<string> | '';
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Controls whether a customer balance applied to an invoice should be consumed and not credited or debited back to the customer if voided by this subscription.
+       */
+      invoice_customer_balance_settings?: {};
+
+      /**
+       * List of subscription items, each with an attached plan.
+       */
+      items?: Array<{
+        /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?:
+          | {
+            /**
+             * Usage threshold that triggers the subscription to advance to a new billing period
+             */
+            usage_gte: number;
+          }
+          | '';
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: {
+          [key: string]: string;
+        };
+
+        /**
+         * Plan ID for this item, as a string.
+         */
+        plan: string;
+
+        /**
+         * Quantity for this item.
+         */
+        quantity?: number;
+
+        /**
+         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+         */
+        tax_rates?: Array<string> | '';
+      }>;
+
+      /**
+       * A set of key-value pairs that you can attach to a `Subscription` object. It can be useful for storing additional information about the subscription in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Indicates if a customer is on or off-session while an invoice payment is attempted.
+       */
+      off_session?: boolean;
+
+      /**
+       * Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
+       *
+       * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
+       */
+      payment_behavior?:
+        | 'allow_incomplete'
+        | 'error_if_incomplete'
+        | 'pending_if_incomplete';
+
+      /**
+       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
+       */
+      pending_invoice_item_interval?:
+        | {
+          /**
+           * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+           */
+          interval: 'day' | 'month' | 'week' | 'year';
+
+          /**
+           * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+           */
+          interval_count?: number;
+        }
+        | '';
+
+      /**
+       * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
+       */
+      prorate?: boolean;
+
+      /**
+       * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
+       */
+      tax_percent?: number | '';
+
+      /**
+       * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
+       */
+      transfer_data?: {
+        /**
+         * ID of an existing, connected Stripe account.
+         */
+        destination: string;
+      };
+
+      /**
+       * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
+       */
+      trial_end?: 'now' | number;
+
+      /**
+       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
+       */
+      trial_from_plan?: boolean;
+
+      /**
+       * Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan.
+       */
+      trial_period_days?: number;
+    }
+
+    /**
+     * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
+     *
+     * Note, however, that any pending invoice items that you've created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed.
+     *
+     * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
+     */
+    interface DelParams {
+      /**
+       * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
+       */
+      invoice_now?: boolean;
+
+      /**
+       * Will generate a proration invoice item that credits remaining unused time until the subscription period end.
+       */
+      prorate?: boolean;
+    }
+
     /**
      * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
      */
@@ -17952,210 +21589,13 @@ declare namespace Stripe {
     }
 
     /**
-     * Creates a new subscription on an existing customer.
+     * Retrieves the subscription with the given ID.
      */
-    interface CreateParams {
-      /**
-       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
-       */
-      application_fee_percent?: number;
-
-      /**
-       * For new subscriptions, a past timestamp to backdate the subscription's start date to. If set, the first invoice will contain a proration for the timespan between the start date and the current time. Can be combined with trials and the billing cycle anchor.
-       */
-      backdate_start_date?: number;
-
-      /**
-       * A future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
-       */
-      billing_cycle_anchor?: number;
-
-      /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
-       */
-      billing_thresholds?:
-        | {
-          /**
-           * Monetary threshold that triggers the subscription to advance to a new billing period
-           */
-          amount_gte?: number;
-
-          /**
-           * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
-           */
-          reset_billing_cycle_anchor?: boolean;
-        }
-        | '';
-
-      /**
-       * A timestamp at which the subscription should cancel. If set to a date before the current period ends this will cause a proration if `prorate=true`.
-       */
-      cancel_at?: number;
-
-      /**
-       * Boolean indicating whether this subscription should cancel at the end of the current period.
-       */
-      cancel_at_period_end?: boolean;
-
-      /**
-       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
-       */
-      collection_method?: 'charge_automatically' | 'send_invoice';
-
-      /**
-       * The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
-       */
-      coupon?: string;
-
-      /**
-       * The identifier of the customer to subscribe.
-       */
-      customer: string;
-
-      /**
-       * Number of days a customer has to pay invoices generated by this subscription. Valid only for subscriptions where `collection_method` is set to `send_invoice`.
-       */
-      days_until_due?: number;
-
-      /**
-       * ID of the default payment method for the subscription. It must belong to the customer associated with the subscription. If not set, invoices will use the default payment method in the customer's invoice settings.
-       */
-      default_payment_method?: string;
-
-      /**
-       * ID of the default payment source for the subscription. It must belong to the customer associated with the subscription and be in a chargeable state. If not set, defaults to the customer's default source.
-       */
-      default_source?: string;
-
-      /**
-       * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
-       */
-      default_tax_rates?: Array<string> | '';
-
+    interface RetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * Controls whether a customer balance applied to an invoice should be consumed and not credited or debited back to the customer if voided by this subscription.
-       */
-      invoice_customer_balance_settings?: {
-
-      };
-
-      /**
-       * List of subscription items, each with an attached plan.
-       */
-      items?: Array<{
-        /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
-         */
-        billing_thresholds?:
-          | {
-            /**
-             * Usage threshold that triggers the subscription to advance to a new billing period
-             */
-            usage_gte: number;
-          }
-          | '';
-
-        /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-         */
-        metadata?: {
-          [key: string]: string;
-        };
-
-        /**
-         * Plan ID for this item, as a string.
-         */
-        plan: string;
-
-        /**
-         * Quantity for this item.
-         */
-        quantity?: number;
-
-        /**
-         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription.
-         */
-        tax_rates?: Array<string> | '';
-      }>;
-
-      /**
-       * A set of key-value pairs that you can attach to a `Subscription` object. It can be useful for storing additional information about the subscription in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
-       * Indicates if a customer is on or off-session while an invoice payment is attempted.
-       */
-      off_session?: boolean;
-
-      /**
-       * Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
-       *
-       * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
-       */
-      payment_behavior?:
-        | 'allow_incomplete'
-        | 'error_if_incomplete'
-        | 'pending_if_incomplete';
-
-      /**
-       * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
-       */
-      pending_invoice_item_interval?:
-        | {
-          /**
-           * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
-           */
-          interval: 'day' | 'month' | 'week' | 'year';
-
-          /**
-           * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
-           */
-          interval_count?: number;
-        }
-        | '';
-
-      /**
-       * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
-       */
-      prorate?: boolean;
-
-      /**
-       * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-       */
-      tax_percent?: number | '';
-
-      /**
-       * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
-       */
-      transfer_data?: {
-        /**
-         * ID of an existing, connected Stripe account.
-         */
-        destination: string;
-      };
-
-      /**
-       * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
-       */
-      trial_end?: 'now' | number;
-
-      /**
-       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
-       */
-      trial_from_plan?: boolean;
-
-      /**
-       * Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan.
-       */
-      trial_period_days?: number;
     }
 
     /**
@@ -18225,7 +21665,7 @@ declare namespace Stripe {
       default_source?: string;
 
       /**
-       * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
+       * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription. Pass an empty string to remove previously-defined tax rates.
        */
       default_tax_rates?: Array<string> | '';
 
@@ -18237,16 +21677,14 @@ declare namespace Stripe {
       /**
        * Controls whether a customer balance applied to an invoice should be consumed and not credited or debited back to the customer if voided by this subscription.
        */
-      invoice_customer_balance_settings?: {
-
-      };
+      invoice_customer_balance_settings?: {};
 
       /**
        * List of subscription items, each with an attached plan.
        */
       items?: Array<{
         /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
          */
         billing_thresholds?:
           | {
@@ -18290,7 +21728,7 @@ declare namespace Stripe {
         quantity?: number;
 
         /**
-         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription.
+         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
         tax_rates?: Array<string> | '';
       }>;
@@ -18373,31 +21811,11 @@ declare namespace Stripe {
     }
 
     /**
-     * Retrieves the subscription with the given ID.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
      * Removes the currently applied discount on a subscription.
      */
-    interface DeleteDiscountParams {
-
-    }
+    interface DeleteDiscountParams {}
 
     class Resource {
-      /**
-       * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
-       */
-      list(
-        params?: ListParams,
-        options?: HeaderOptions
-      ): Promise<ApiList<Subscription>>;
-
       /**
        * Creates a new subscription on an existing customer.
        */
@@ -18407,13 +21825,25 @@ declare namespace Stripe {
       ): Promise<Subscription>;
 
       /**
-       * Updates an existing subscription on a customer to match the specified parameters. When changing plans or quantities, we will optionally prorate the price we charge next month to make up for any price changes. To preview how the proration will be calculated, use the [upcoming invoice](https://stripe.com/docs/api#upcoming_invoice) endpoint.
+       * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
+       *
+       * Note, however, that any pending invoice items that you've created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed.
+       *
+       * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
        */
-      update(
+      del(
         id: string,
-        params?: UpdateParams,
+        params?: DelParams,
         options?: HeaderOptions
       ): Promise<Subscription>;
+
+      /**
+       * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
+       */
+      list(
+        params?: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<Subscription>>;
 
       /**
        * Retrieves the subscription with the given ID.
@@ -18421,6 +21851,15 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: RetrieveParams,
+        options?: HeaderOptions
+      ): Promise<Subscription>;
+
+      /**
+       * Updates an existing subscription on a customer to match the specified parameters. When changing plans or quantities, we will optionally prorate the price we charge next month to make up for any price changes. To preview how the proration will be calculated, use the [upcoming invoice](https://stripe.com/docs/api#upcoming_invoice) endpoint.
+       */
+      update(
+        id: string,
+        params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<Subscription>;
 
@@ -18510,51 +21949,11 @@ declare namespace Stripe {
 
   namespace SubscriptionItem {
     /**
-     * Returns a list of your subscription items for a given subscription.
-     */
-    interface ListParams {
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-
-      /**
-       * The ID of the subscription whose items will be retrieved.
-       */
-      subscription: string;
-    }
-
-    /**
-     * Retrieves the invoice item with the given ID.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
      * Adds a new item to an existing subscription. No existing items will be changed or replaced.
      */
     interface CreateParams {
       /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
       billing_thresholds?:
         | {
@@ -18613,9 +22012,69 @@ declare namespace Stripe {
       subscription: string;
 
       /**
-       * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription.
+       * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Array<string> | '';
+    }
+
+    /**
+     * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
+     */
+    interface DeleteParams {
+      /**
+       * Delete all usage for the given subscription item. Allowed only when the current plan's `usage_type` is `metered`.
+       */
+      clear_usage?: boolean;
+
+      /**
+       * Flag indicating whether to [prorate](https://stripe.com/docs/billing/subscriptions/prorations) switching plans during a billing cycle.
+       */
+      prorate?: boolean;
+
+      /**
+       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](#retrieve_customer_invoice) endpoint.
+       */
+      proration_date?: number;
+    }
+
+    /**
+     * Returns a list of your subscription items for a given subscription.
+     */
+    interface ListParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+
+      /**
+       * The ID of the subscription whose items will be retrieved.
+       */
+      subscription: string;
+    }
+
+    /**
+     * Retrieves the invoice item with the given ID.
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     /**
@@ -18623,7 +22082,7 @@ declare namespace Stripe {
      */
     interface UpdateParams {
       /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
       billing_thresholds?:
         | {
@@ -18679,32 +22138,60 @@ declare namespace Stripe {
       quantity?: number;
 
       /**
-       * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription.
+       * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Array<string> | '';
     }
 
     /**
-     * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
+     * Creates a usage record for a specified subscription item and date, and fills it with a quantity.
+     *
+     * Usage records provide quantity information that Stripe uses to track how much a customer is using your service. With usage information and the pricing model set up by the [metered billing](https://stripe.com/docs/billing/subscriptions/metered-billing) plan, Stripe helps you send accurate invoices to your customers.
+     *
+     * The default calculation for usage is to add up all the quantity values of the usage records within a billing period. You can change this default behavior with the billing plan's aggregate_usage [parameter](https://stripe.com/docs/api/plans/create#create_plan-aggregate_usage). When there is more than one usage record with the same timestamp, Stripe adds the quantity values together. In most cases, this is the desired resolution, however, you can change this behavior with the action parameter.
+     *
+     * The default pricing model for metered billing is [per-unit pricing. For finer granularity, you can configure metered billing to have a <a href="https://stripe.com/docs/billing/subscriptions/tiers">tiered pricing](https://stripe.com/docs/api/plans/object#plan_object-billing_scheme) model.
      */
-    interface DeleteParams {
+    interface CreateUsageRecordParams {
       /**
-       * Delete all usage for the given subscription item. Allowed only when the current plan's `usage_type` is `metered`.
+       * Valid values are `increment` (default) or `set`. When using `increment` the specified `quantity` will be added to the usage at the specified timestamp. The `set` action will overwrite the usage quantity at that timestamp. If the subscription has [billing thresholds](https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_thresholds), `increment` is the only allowed value.
        */
-      clear_usage?: boolean;
+      action?: 'increment' | 'set';
 
       /**
-       * Flag indicating whether to [prorate](https://stripe.com/docs/billing/subscriptions/prorations) switching plans during a billing cycle.
+       * Specifies which fields in the response should be expanded.
        */
-      prorate?: boolean;
+      expand?: Array<string>;
 
       /**
-       * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](#retrieve_customer_invoice) endpoint.
+       * The usage quantity for the specified timestamp.
        */
-      proration_date?: number;
+      quantity: number;
+
+      /**
+       * The timestamp for the usage event. This timestamp must be within the current billing period of the subscription of the provided `subscription_item`.
+       */
+      timestamp: number;
     }
 
     class Resource {
+      /**
+       * Adds a new item to an existing subscription. No existing items will be changed or replaced.
+       */
+      create(
+        params: CreateParams,
+        options?: HeaderOptions
+      ): Promise<SubscriptionItem>;
+
+      /**
+       * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
+       */
+      del(
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedSubscriptionItem>;
+
       /**
        * Returns a list of your subscription items for a given subscription.
        */
@@ -18723,14 +22210,6 @@ declare namespace Stripe {
       ): Promise<SubscriptionItem>;
 
       /**
-       * Adds a new item to an existing subscription. No existing items will be changed or replaced.
-       */
-      create(
-        params: CreateParams,
-        options?: HeaderOptions
-      ): Promise<SubscriptionItem>;
-
-      /**
        * Updates the plan or quantity of an item on a current subscription.
        */
       update(
@@ -18740,13 +22219,19 @@ declare namespace Stripe {
       ): Promise<SubscriptionItem>;
 
       /**
-       * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
+       * Creates a usage record for a specified subscription item and date, and fills it with a quantity.
+       *
+       * Usage records provide quantity information that Stripe uses to track how much a customer is using your service. With usage information and the pricing model set up by the [metered billing](https://stripe.com/docs/billing/subscriptions/metered-billing) plan, Stripe helps you send accurate invoices to your customers.
+       *
+       * The default calculation for usage is to add up all the quantity values of the usage records within a billing period. You can change this default behavior with the billing plan's aggregate_usage [parameter](https://stripe.com/docs/api/plans/create#create_plan-aggregate_usage). When there is more than one usage record with the same timestamp, Stripe adds the quantity values together. In most cases, this is the desired resolution, however, you can change this behavior with the action parameter.
+       *
+       * The default pricing model for metered billing is [per-unit pricing. For finer granularity, you can configure metered billing to have a <a href="https://stripe.com/docs/billing/subscriptions/tiers">tiered pricing](https://stripe.com/docs/api/plans/object#plan_object-billing_scheme) model.
        */
-      del(
+      createUsageRecord(
         id: string,
-        params?: DeleteParams,
+        params: CreateUsageRecordParams,
         options?: HeaderOptions
-      ): Promise<DeletedSubscriptionItem>;
+      ): Promise<UsageRecord>;
     }
   }
 
@@ -18767,7 +22252,7 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Object representing the start and end dates for the current phase of the subscription schedule, if it is `active`.
@@ -18783,9 +22268,9 @@ declare namespace Stripe {
     /**
      * ID of the customer who owns the subscription schedule.
      */
-    customer: string | Customer;
+    customer?: string | Customer;
 
-    default_settings: {
+    default_settings?: {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
        */
@@ -18829,17 +22314,17 @@ declare namespace Stripe {
     /**
      * Behavior of the subscription schedule and underlying subscription when it ends.
      */
-    end_behavior: 'cancel' | 'none' | 'release' | 'renew';
+    end_behavior?: 'cancel' | 'none' | 'release' | 'renew';
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -18853,12 +22338,12 @@ declare namespace Stripe {
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'subscription_schedule';
+    object?: 'subscription_schedule';
 
     /**
      * Configuration for the subscription schedule's phases.
      */
-    phases: Array<{
+    phases?: Array<{
       /**
        * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account during this phase of the schedule.
        */
@@ -18993,7 +22478,7 @@ declare namespace Stripe {
     /**
      * The present status of the subscription schedule. Possible values are `not_started`, `active`, `completed`, `released`, and `canceled`. You can read more about the different states in our [behavior guide](https://stripe.com/docs/billing/subscriptions/subscription-schedules).
      */
-    status: 'active' | 'canceled' | 'completed' | 'not_started' | 'released';
+    status?: 'active' | 'canceled' | 'completed' | 'not_started' | 'released';
 
     /**
      * ID of the subscription managed by the subscription schedule.
@@ -19002,6 +22487,193 @@ declare namespace Stripe {
   }
 
   namespace SubscriptionSchedule {
+    /**
+     * Creates a new subscription schedule object.
+     */
+    interface CreateParams {
+      /**
+       * The identifier of the customer to create the subscription schedule for.
+       */
+      customer?: string;
+
+      /**
+       * Object representing the subscription schedule's default settings.
+       */
+      default_settings?: {
+        /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?:
+          | {
+            /**
+             * Monetary threshold that triggers the subscription to advance to a new billing period
+             */
+            amount_gte?: number;
+
+            /**
+             * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+             */
+            reset_billing_cycle_anchor?: boolean;
+          }
+          | '';
+
+        /**
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         */
+        collection_method?: 'charge_automatically' | 'send_invoice';
+
+        /**
+         * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
+         */
+        default_payment_method?: string;
+
+        /**
+         * All invoices will be billed using the specified settings.
+         */
+        invoice_settings?: {
+          days_until_due?: number;
+        };
+      };
+
+      /**
+       * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+       */
+      end_behavior?: 'cancel' | 'none' | 'release' | 'renew';
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Migrate an existing subscription to be managed by a subscription schedule. If this parameter is set, a subscription schedule will be created using the subscription's plan(s), set to auto-renew using the subscription's interval. When using this parameter, other parameters (such as phase values) cannot be set. To create a subscription schedule with other modifications, we recommend making two separate API calls.
+       */
+      from_subscription?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
+       */
+      phases?: Array<{
+        /**
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+         */
+        application_fee_percent?: number;
+
+        /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?:
+          | {
+            /**
+             * Monetary threshold that triggers the subscription to advance to a new billing period
+             */
+            amount_gte?: number;
+
+            /**
+             * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+             */
+            reset_billing_cycle_anchor?: boolean;
+          }
+          | '';
+
+        /**
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         */
+        collection_method?: 'charge_automatically' | 'send_invoice';
+
+        /**
+         * The identifier of the coupon to apply to this phase of the subscription schedule.
+         */
+        coupon?: string;
+
+        /**
+         * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
+         */
+        default_payment_method?: string;
+
+        /**
+         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase. When updating, pass an empty string to remove previously-defined tax rates.
+         */
+        default_tax_rates?: Array<string> | '';
+
+        /**
+         * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
+         */
+        end_date?: number;
+
+        /**
+         * All invoices will be billed using the specified settings.
+         */
+        invoice_settings?: {
+          days_until_due?: number;
+        };
+
+        /**
+         * Integer representing the multiplier applied to the plan interval. For example, `iterations=2` applied to a plan with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+         */
+        iterations?: number;
+
+        /**
+         * List of configuration items, each with an attached plan, to apply during this phase of the subscription schedule.
+         */
+        plans: Array<{
+          /**
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+           */
+          billing_thresholds?:
+            | {
+              /**
+               * Usage threshold that triggers the subscription to advance to a new billing period
+               */
+              usage_gte: number;
+            }
+            | '';
+
+          /**
+           * The plan ID to subscribe to.
+           */
+          plan: string;
+
+          /**
+           * Quantity for the given plan. Can be set only if the plan's `usage_type` is `licensed` and not `metered`.
+           */
+          quantity?: number;
+
+          /**
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+           */
+          tax_rates?: Array<string> | '';
+        }>;
+
+        /**
+         * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period during thise phase of the schedule. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
+         */
+        tax_percent?: number;
+
+        /**
+         * If set to true the entire phase is counted as a trial and the customer will not be charged for any fees.
+         */
+        trial?: boolean;
+
+        /**
+         * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
+         */
+        trial_end?: number;
+      }>;
+
+      /**
+       * When the subscription schedule starts. We recommend using `now` so that it starts the subscription immediately. You can also use a Unix timestamp to backdate the subscription so that it starts on a past date, or set a future date for the subscription to start on. When you backdate, the `billing_cycle_anchor` of the subscription is equivalent to the `start_date`.
+       */
+      start_date?: number | 'now';
+    }
+
     /**
      * Retrieves the list of your subscription schedules.
      */
@@ -19146,193 +22818,6 @@ declare namespace Stripe {
     }
 
     /**
-     * Creates a new subscription schedule object.
-     */
-    interface CreateParams {
-      /**
-       * The identifier of the customer to create the subscription schedule for.
-       */
-      customer?: string;
-
-      /**
-       * Object representing the subscription schedule's default settings.
-       */
-      default_settings?: {
-        /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
-         */
-        billing_thresholds?:
-          | {
-            /**
-             * Monetary threshold that triggers the subscription to advance to a new billing period
-             */
-            amount_gte?: number;
-
-            /**
-             * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
-             */
-            reset_billing_cycle_anchor?: boolean;
-          }
-          | '';
-
-        /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
-         */
-        collection_method?: 'charge_automatically' | 'send_invoice';
-
-        /**
-         * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
-         */
-        default_payment_method?: string;
-
-        /**
-         * All invoices will be billed using the specified settings.
-         */
-        invoice_settings?: {
-          days_until_due?: number;
-        };
-      };
-
-      /**
-       * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
-       */
-      end_behavior?: 'cancel' | 'none' | 'release' | 'renew';
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Migrate an existing subscription to be managed by a subscription schedule. If this parameter is set, a subscription schedule will be created using the subscription's plan(s), set to auto-renew using the subscription's interval. When using this parameter, other parameters (such as phase values) cannot be set. To create a subscription schedule with other modifications, we recommend making two separate API calls.
-       */
-      from_subscription?: string;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
-       * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
-       */
-      phases?: Array<{
-        /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
-         */
-        application_fee_percent?: number;
-
-        /**
-         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
-         */
-        billing_thresholds?:
-          | {
-            /**
-             * Monetary threshold that triggers the subscription to advance to a new billing period
-             */
-            amount_gte?: number;
-
-            /**
-             * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
-             */
-            reset_billing_cycle_anchor?: boolean;
-          }
-          | '';
-
-        /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
-         */
-        collection_method?: 'charge_automatically' | 'send_invoice';
-
-        /**
-         * The identifier of the coupon to apply to this phase of the subscription schedule.
-         */
-        coupon?: string;
-
-        /**
-         * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
-         */
-        default_payment_method?: string;
-
-        /**
-         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
-         */
-        default_tax_rates?: Array<string> | '';
-
-        /**
-         * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
-         */
-        end_date?: number;
-
-        /**
-         * All invoices will be billed using the specified settings.
-         */
-        invoice_settings?: {
-          days_until_due?: number;
-        };
-
-        /**
-         * Integer representing the multiplier applied to the plan interval. For example, `iterations=2` applied to a plan with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
-         */
-        iterations?: number;
-
-        /**
-         * List of configuration items, each with an attached plan, to apply during this phase of the subscription schedule.
-         */
-        plans: Array<{
-          /**
-           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
-           */
-          billing_thresholds?:
-            | {
-              /**
-               * Usage threshold that triggers the subscription to advance to a new billing period
-               */
-              usage_gte: number;
-            }
-            | '';
-
-          /**
-           * The plan ID to subscribe to.
-           */
-          plan: string;
-
-          /**
-           * Quantity for the given plan. Can be set only if the plan's `usage_type` is `licensed` and not `metered`.
-           */
-          quantity?: number;
-
-          /**
-           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription.
-           */
-          tax_rates?: Array<string> | '';
-        }>;
-
-        /**
-         * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period during thise phase of the schedule. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-         */
-        tax_percent?: number;
-
-        /**
-         * If set to true the entire phase is counted as a trial and the customer will not be charged for any fees.
-         */
-        trial?: boolean;
-
-        /**
-         * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
-         */
-        trial_end?: number;
-      }>;
-
-      /**
-       * When the subscription schedule starts. We recommend using `now` so that it starts the subscription immediately. You can also use a Unix timestamp to backdate the subscription so that it starts on a past date, or set a future date for the subscription to start on. When you backdate, the `billing_cycle_anchor` of the subscription is equivalent to the `start_date`.
-       */
-      start_date?: number | 'now';
-    }
-
-    /**
      * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
      */
     interface RetrieveParams {
@@ -19444,7 +22929,7 @@ declare namespace Stripe {
         default_payment_method?: string;
 
         /**
-         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
+         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase. When updating, pass an empty string to remove previously-defined tax rates.
          */
         default_tax_rates?: Array<string> | '';
 
@@ -19470,7 +22955,7 @@ declare namespace Stripe {
          */
         plans: Array<{
           /**
-           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
+           * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
            */
           billing_thresholds?:
             | {
@@ -19492,7 +22977,7 @@ declare namespace Stripe {
           quantity?: number;
 
           /**
-           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription.
+           * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
            */
           tax_rates?: Array<string> | '';
         }>;
@@ -19561,20 +23046,20 @@ declare namespace Stripe {
 
     class Resource {
       /**
-       * Retrieves the list of your subscription schedules.
-       */
-      list(
-        params?: ListParams,
-        options?: HeaderOptions
-      ): Promise<ApiList<SubscriptionSchedule>>;
-
-      /**
        * Creates a new subscription schedule object.
        */
       create(
         params?: CreateParams,
         options?: HeaderOptions
       ): Promise<SubscriptionSchedule>;
+
+      /**
+       * Retrieves the list of your subscription schedules.
+       */
+      list(
+        params?: ListParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<SubscriptionSchedule>>;
 
       /**
        * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
@@ -19621,27 +23106,27 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'tax_deducted_at_source';
+    object?: 'tax_deducted_at_source';
 
     /**
      * The end of the invoicing period. This TDS applies to Stripe fees collected during this invoicing period.
      */
-    period_end: number;
+    period_end?: number;
 
     /**
      * The start of the invoicing period. This TDS applies to Stripe fees collected during this invoicing period.
      */
-    period_start: number;
+    period_start?: number;
 
     /**
      * The TAN that was supplied to Stripe when TDS was assessed
      */
-    tax_deduction_account_number: string;
+    tax_deduction_account_number?: string;
   }
 
   /**
@@ -19762,14 +23247,9 @@ declare namespace Stripe {
     }
 
     /**
-     * Retrieves the TaxID object with the given identifier.
+     * Deletes an existing TaxID object.
      */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
+    interface DeleteParams {}
 
     /**
      * Returns a list of tax IDs for a customer.
@@ -19797,10 +23277,13 @@ declare namespace Stripe {
     }
 
     /**
-     * Deletes an existing TaxID object.
+     * Retrieves the TaxID object with the given identifier.
      */
-    interface DeleteParams {
-
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     class Resource {
@@ -19814,14 +23297,14 @@ declare namespace Stripe {
       ): Promise<TaxId>;
 
       /**
-       * Retrieves the TaxID object with the given identifier.
+       * Deletes an existing TaxID object.
        */
-      retrieve(
+      del(
         customerId: string,
         id: string,
-        params?: RetrieveParams,
+        params?: DeleteParams,
         options?: HeaderOptions
-      ): Promise<TaxId>;
+      ): Promise<DeletedTaxId>;
 
       /**
        * Returns a list of tax IDs for a customer.
@@ -19833,14 +23316,14 @@ declare namespace Stripe {
       ): Promise<ApiList<TaxId>>;
 
       /**
-       * Deletes an existing TaxID object.
+       * Retrieves the TaxID object with the given identifier.
        */
-      del(
+      retrieve(
         customerId: string,
         id: string,
-        params?: DeleteParams,
+        params?: RetrieveParams,
         options?: HeaderOptions
-      ): Promise<DeletedTaxId>;
+      ): Promise<TaxId>;
     }
   }
 
@@ -19851,12 +23334,12 @@ declare namespace Stripe {
     /**
      * Defaults to `true`. When set to `false`, this tax rate cannot be applied to objects in the API, but will still be applied to subscriptions and invoices that already have it set.
      */
-    active: boolean;
+    active?: boolean;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
@@ -19866,17 +23349,17 @@ declare namespace Stripe {
     /**
      * The display name of the tax rates as it will appear to your customer on their receipt email, PDF, and the hosted invoice page.
      */
-    display_name: string;
+    display_name?: string;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * This specifies if the tax rate is inclusive or exclusive.
      */
-    inclusive: boolean;
+    inclusive?: boolean;
 
     /**
      * The jurisdiction for the tax rate.
@@ -19886,27 +23369,74 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'tax_rate';
+    object?: 'tax_rate';
 
     /**
      * This represents the tax rate percent out of 100.
      */
-    percentage: number;
+    percentage?: number;
   }
 
   namespace TaxRate {
+    /**
+     * Creates a new tax rate.
+     */
+    interface CreateParams {
+      /**
+       * Flag determining whether the tax rate is active or inactive. Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications.
+       */
+      active?: boolean;
+
+      /**
+       * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
+       */
+      description?: string;
+
+      /**
+       * The display name of the tax rate, which will be shown to users.
+       */
+      display_name: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * This specifies if the tax rate is inclusive or exclusive.
+       */
+      inclusive: boolean;
+
+      /**
+       * The jurisdiction for the tax rate.
+       */
+      jurisdiction?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * This represents the tax rate percent out of 100.
+       */
+      percentage: number;
+    }
+
     /**
      * Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
      */
@@ -20007,53 +23537,6 @@ declare namespace Stripe {
     }
 
     /**
-     * Creates a new tax rate.
-     */
-    interface CreateParams {
-      /**
-       * Flag determining whether the tax rate is active or inactive. Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications.
-       */
-      active?: boolean;
-
-      /**
-       * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
-       */
-      description?: string;
-
-      /**
-       * The display name of the tax rate, which will be shown to users.
-       */
-      display_name: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * This specifies if the tax rate is inclusive or exclusive.
-       */
-      inclusive: boolean;
-
-      /**
-       * The jurisdiction for the tax rate.
-       */
-      jurisdiction?: string;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
-       * This represents the tax rate percent out of 100.
-       */
-      percentage: number;
-    }
-
-    /**
      * Updates an existing tax rate.
      */
     interface UpdateParams {
@@ -20092,6 +23575,11 @@ declare namespace Stripe {
 
     class Resource {
       /**
+       * Creates a new tax rate.
+       */
+      create(params: CreateParams, options?: HeaderOptions): Promise<TaxRate>;
+
+      /**
        * Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
        */
       list(
@@ -20109,11 +23597,6 @@ declare namespace Stripe {
       ): Promise<TaxRate>;
 
       /**
-       * Creates a new tax rate.
-       */
-      create(params: CreateParams, options?: HeaderOptions): Promise<TaxRate>;
-
-      /**
        * Updates an existing tax rate.
        */
       update(
@@ -20128,39 +23611,39 @@ declare namespace Stripe {
    * The ThreeDSecure object.
    */
   interface ThreeDSecure {
-    amount: number;
+    amount?: number;
 
     /**
      * True if the cardholder went through the authentication flow and their bank indicated that authentication succeeded.
      */
-    authenticated: boolean;
+    authenticated?: boolean;
 
-    card: Card;
+    card?: Card;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'three_d_secure';
+    object?: 'three_d_secure';
 
     /**
      * If present, this is the URL that you should send the cardholder to for authentication. If you are going to use Stripe.js to display the authentication page in an iframe, you should use the value "_callback".
@@ -20170,20 +23653,10 @@ declare namespace Stripe {
     /**
      * Possible values are `redirect_pending`, `succeeded`, or `failed`. When the cardholder can be authenticated, the object starts with status `redirect_pending`. When liability will be shifted to the cardholder's bank (either because the cardholder was successfully authenticated, or because the bank has not implemented 3D Secure, the object wlil be in status `succeeded`. `failed` indicates that authentication was attempted unsuccessfully.
      */
-    status: string;
+    status?: string;
   }
 
   namespace ThreeDSecure {
-    /**
-     * Retrieves a 3D Secure object.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     /**
      * Initiate 3D Secure authentication.
      */
@@ -20216,21 +23689,31 @@ declare namespace Stripe {
       return_url: string;
     }
 
+    /**
+     * Retrieves a 3D Secure object.
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     class Resource {
+      /**
+       * Initiate 3D Secure authentication.
+       */
+      create(
+        params: CreateParams,
+        options?: HeaderOptions
+      ): Promise<ThreeDSecure>;
+
       /**
        * Retrieves a 3D Secure object.
        */
       retrieve(
         id: string,
         params?: RetrieveParams,
-        options?: HeaderOptions
-      ): Promise<ThreeDSecure>;
-
-      /**
-       * Initiate 3D Secure authentication.
-       */
-      create(
-        params: CreateParams,
         options?: HeaderOptions
       ): Promise<ThreeDSecure>;
     }
@@ -20252,7 +23735,7 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Email of the user, whose token is created during Stripe Checkout. This field is non-standard, and maybe removed in the future.
@@ -20262,40 +23745,30 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'token';
+    object?: 'token';
 
     /**
      * Type of the token: `account`, `bank_account`, `card`, or `pii`.
      */
-    type: string;
+    type?: string;
 
     /**
      * Whether this token has already been used (tokens can be used only once).
      */
-    used: boolean;
+    used?: boolean;
   }
 
   namespace Token {
-    /**
-     * Retrieves the token with the given ID.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     /**
      * Creates a single-use token that represents a bank account's details.
      * This token can be used with any API method in place of a bank account dictionary. This token can be used only once, by attaching it to a [Custom account](https://stripe.com/docs/api#accounts).
@@ -20664,7 +24137,23 @@ declare namespace Stripe {
       };
     }
 
+    /**
+     * Retrieves the token with the given ID.
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     class Resource {
+      /**
+       * Creates a single-use token that represents a bank account's details.
+       * This token can be used with any API method in place of a bank account dictionary. This token can be used only once, by attaching it to a [Custom account](https://stripe.com/docs/api#accounts).
+       */
+      create(params?: CreateParams, options?: HeaderOptions): Promise<Token>;
+
       /**
        * Retrieves the token with the given ID.
        */
@@ -20673,12 +24162,6 @@ declare namespace Stripe {
         params?: RetrieveParams,
         options?: HeaderOptions
       ): Promise<Token>;
-
-      /**
-       * Creates a single-use token that represents a bank account's details.
-       * This token can be used with any API method in place of a bank account dictionary. This token can be used only once, by attaching it to a [Custom account](https://stripe.com/docs/api#accounts).
-       */
-      create(params?: CreateParams, options?: HeaderOptions): Promise<Token>;
     }
   }
 
@@ -20689,7 +24172,7 @@ declare namespace Stripe {
     /**
      * Amount transferred.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * ID of the balance transaction that describes the impact of this top-up on your account balance. May not be specified depending on status of top-up.
@@ -20699,12 +24182,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -20729,26 +24212,26 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'topup';
+    object?: 'topup';
 
-    source: Source;
+    source?: Source;
 
     /**
      * Extra information about a top-up. This will appear on your source's bank statement. It must contain at least one letter.
@@ -20758,7 +24241,7 @@ declare namespace Stripe {
     /**
      * The status of the top-up is either `canceled`, `failed`, `pending`, `reversed`, or `succeeded`.
      */
-    status: 'canceled' | 'failed' | 'pending' | 'reversed' | 'succeeded';
+    status?: 'canceled' | 'failed' | 'pending' | 'reversed' | 'succeeded';
 
     /**
      * A string that identifies this top-up as part of a group.
@@ -20990,12 +24473,12 @@ declare namespace Stripe {
     /**
      * Amount in %s to be transferred.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Amount in %s reversed (can be less than the amount attribute on the transfer if a partial reversal was issued).
      */
-    amount_reversed: number;
+    amount_reversed?: number;
 
     /**
      * Balance transaction that describes the impact of this transfer on your account balance.
@@ -21005,12 +24488,12 @@ declare namespace Stripe {
     /**
      * Time that this record of the transfer was first created.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -21030,34 +24513,34 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * A set of key-value pairs that you can attach to a transfer object. It can be useful for storing additional information about the transfer in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'transfer';
+    object?: 'transfer';
 
     /**
      * A list of reversals that have been applied to the transfer.
      */
-    reversals: ApiList<TransferReversal>;
+    reversals?: ApiList<TransferReversal>;
 
     /**
      * Whether the transfer has been fully reversed. If the transfer is only partially reversed, this attribute will still be false.
      */
-    reversed: boolean;
+    reversed?: boolean;
 
     /**
      * ID of the charge or payment that was used to fund the transfer. If null, the transfer was funded from the available balance.
@@ -21221,6 +24704,96 @@ declare namespace Stripe {
       };
     }
 
+    /**
+     * When you create a new reversal, you must specify a transfer to create it on.
+     *
+     * When reversing transfers, you can optionally reverse part of the transfer. You can do so as many times as you wish until the entire transfer has been reversed.
+     *
+     * Once entirely reversed, a transfer can't be reversed again. This method will return an error when called on an already-reversed transfer, or when trying to reverse more money than is left on a transfer.
+     */
+    interface CreateReversalParams {
+      /**
+       * A positive integer in %s representing how much of this transfer to reverse. Can only reverse up to the unreversed amount remaining of the transfer. Partial transfer reversals are only allowed for transfers to Stripe Accounts. Defaults to the entire transfer amount.
+       */
+      amount?: number;
+
+      /**
+       * An arbitrary string which you can attach to a reversal object. It is displayed alongside the reversal in the Dashboard. This will be unset if you POST an empty value.
+       */
+      description?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Boolean indicating whether the application fee should be refunded when reversing this transfer. If a full transfer reversal is given, the full application fee will be refunded. Otherwise, the application fee will be refunded with an amount proportional to the amount of the transfer reversed.
+       */
+      refund_application_fee?: boolean;
+    }
+
+    /**
+     * You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.
+     */
+    interface ListReversalsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.
+     */
+    interface RetrieveReversalParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates the specified reversal by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+     *
+     * This request only accepts metadata and description as arguments.
+     */
+    interface UpdateReversalParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+    }
+
     class Resource {
       /**
        * To send funds from your Stripe account to a connected account, you create a new transfer object. Your [Stripe balance](https://stripe.com/docs/api#balance) must be able to cover the transfer amount, or you'll receive an “Insufficient Funds” error.
@@ -21254,6 +24827,50 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<Transfer>;
+
+      /**
+       * When you create a new reversal, you must specify a transfer to create it on.
+       *
+       * When reversing transfers, you can optionally reverse part of the transfer. You can do so as many times as you wish until the entire transfer has been reversed.
+       *
+       * Once entirely reversed, a transfer can't be reversed again. This method will return an error when called on an already-reversed transfer, or when trying to reverse more money than is left on a transfer.
+       */
+      createReversal(
+        id: string,
+        params?: CreateReversalParams,
+        options?: HeaderOptions
+      ): Promise<TransferReversal>;
+
+      /**
+       * You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.
+       */
+      listReversals(
+        id: string,
+        params?: ListReversalsParams,
+        options?: HeaderOptions
+      ): Promise<ApiList<TransferReversal>>;
+
+      /**
+       * By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.
+       */
+      retrieveReversal(
+        idId: string,
+        id: string,
+        params?: RetrieveReversalParams,
+        options?: HeaderOptions
+      ): Promise<TransferReversal>;
+
+      /**
+       * Updates the specified reversal by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+       *
+       * This request only accepts metadata and description as arguments.
+       */
+      updateReversal(
+        idId: string,
+        id: string,
+        params?: UpdateReversalParams,
+        options?: HeaderOptions
+      ): Promise<TransferReversal>;
     }
   }
 
@@ -21264,7 +24881,7 @@ declare namespace Stripe {
     /**
      * Amount, in %s.
      */
-    amount: number;
+    amount?: number;
 
     /**
      * Balance transaction that describes the impact on your account balance.
@@ -21274,12 +24891,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency: string;
+    currency?: string;
 
     /**
      * Linked payment refund for the transfer reversal.
@@ -21289,19 +24906,19 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'transfer_reversal';
+    object?: 'transfer_reversal';
 
     /**
      * ID of the refund responsible for the transfer reversal.
@@ -21311,7 +24928,7 @@ declare namespace Stripe {
     /**
      * ID of the transfer that was reversed.
      */
-    transfer: string | Transfer;
+    transfer?: string | Transfer;
   }
 
   namespace TransferReversal {
@@ -21459,32 +25076,82 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'usage_record';
+    object?: 'usage_record';
 
     /**
      * The usage quantity for the specified date.
      */
-    quantity: number;
+    quantity?: number;
 
     /**
      * The ID of the subscription item this usage record contains data for.
      */
-    subscription_item: string;
+    subscription_item?: string;
 
     /**
      * The timestamp when this usage occurred.
      */
-    timestamp: number;
+    timestamp?: number;
+  }
+
+  namespace UsageRecord {
+    /**
+     * Creates a usage record for a specified subscription item and date, and fills it with a quantity.
+     *
+     * Usage records provide quantity information that Stripe uses to track how much a customer is using your service. With usage information and the pricing model set up by the [metered billing](https://stripe.com/docs/billing/subscriptions/metered-billing) plan, Stripe helps you send accurate invoices to your customers.
+     *
+     * The default calculation for usage is to add up all the quantity values of the usage records within a billing period. You can change this default behavior with the billing plan's aggregate_usage [parameter](https://stripe.com/docs/api/plans/create#create_plan-aggregate_usage). When there is more than one usage record with the same timestamp, Stripe adds the quantity values together. In most cases, this is the desired resolution, however, you can change this behavior with the action parameter.
+     *
+     * The default pricing model for metered billing is [per-unit pricing. For finer granularity, you can configure metered billing to have a <a href="https://stripe.com/docs/billing/subscriptions/tiers">tiered pricing](https://stripe.com/docs/api/plans/object#plan_object-billing_scheme) model.
+     */
+    interface CreateOnSubscriptionItemParams {
+      /**
+       * Valid values are `increment` (default) or `set`. When using `increment` the specified `quantity` will be added to the usage at the specified timestamp. The `set` action will overwrite the usage quantity at that timestamp. If the subscription has [billing thresholds](https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_thresholds), `increment` is the only allowed value.
+       */
+      action?: 'increment' | 'set';
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * The usage quantity for the specified timestamp.
+       */
+      quantity: number;
+
+      /**
+       * The timestamp for the usage event. This timestamp must be within the current billing period of the subscription of the provided `subscription_item`.
+       */
+      timestamp: number;
+    }
+
+    class Resource {
+      /**
+       * Creates a usage record for a specified subscription item and date, and fills it with a quantity.
+       *
+       * Usage records provide quantity information that Stripe uses to track how much a customer is using your service. With usage information and the pricing model set up by the [metered billing](https://stripe.com/docs/billing/subscriptions/metered-billing) plan, Stripe helps you send accurate invoices to your customers.
+       *
+       * The default calculation for usage is to add up all the quantity values of the usage records within a billing period. You can change this default behavior with the billing plan's aggregate_usage [parameter](https://stripe.com/docs/api/plans/create#create_plan-aggregate_usage). When there is more than one usage record with the same timestamp, Stripe adds the quantity values together. In most cases, this is the desired resolution, however, you can change this behavior with the action parameter.
+       *
+       * The default pricing model for metered billing is [per-unit pricing. For finer granularity, you can configure metered billing to have a <a href="https://stripe.com/docs/billing/subscriptions/tiers">tiered pricing](https://stripe.com/docs/api/plans/object#plan_object-billing_scheme) model.
+       */
+      createOnSubscriptionItem(
+        id: string,
+        params: CreateOnSubscriptionItemParams,
+        options?: HeaderOptions
+      ): Promise<UsageRecord>;
+    }
   }
 
   /**
@@ -21494,7 +25161,7 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id: string;
+    id?: string;
 
     /**
      * The invoice in which this usage period has been billed for.
@@ -21504,14 +25171,14 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode: boolean;
+    livemode?: boolean;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object: 'usage_record_summary';
+    object?: 'usage_record_summary';
 
-    period: {
+    period?: {
       /**
        * The end date of this usage period. All usage up to and including this point in time is included.
        */
@@ -21526,12 +25193,12 @@ declare namespace Stripe {
     /**
      * The ID of the subscription item this summary is describing.
      */
-    subscription_item: string;
+    subscription_item?: string;
 
     /**
      * The total usage within this usage period.
      */
-    total_usage: number;
+    total_usage?: number;
   }
 
   /**
@@ -21607,41 +25274,6 @@ declare namespace Stripe {
   }
 
   namespace WebhookEndpoint {
-    /**
-     * Returns a list of your webhook endpoints.
-     */
-    interface ListParams {
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-    }
-
-    /**
-     * Retrieves the webhook endpoint with the given ID.
-     */
-    interface RetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     /**
      * A webhook endpoint must have a url and a list of enabled_events. You may optionally specify the Boolean connect parameter. If set to true, then a Connect webhook endpoint that notifies the specified url about events from all connected accounts is created; otherwise an account webhook endpoint that notifies the specified url only about events from your account is created. You can also create webhook endpoints in the [webhooks settings](https://dashboard.stripe.com/account/webhooks) section of the Dashboard.
      */
@@ -21916,6 +25548,46 @@ declare namespace Stripe {
     }
 
     /**
+     * You can also delete webhook endpoints via the [webhook endpoint management](https://dashboard.stripe.com/account/webhooks) page of the Stripe dashboard.
+     */
+    interface DeleteParams {}
+
+    /**
+     * Returns a list of your webhook endpoints.
+     */
+    interface ListParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    /**
+     * Retrieves the webhook endpoint with the given ID.
+     */
+    interface RetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
      * Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of your endpoint.
      */
     interface UpdateParams {
@@ -22090,14 +25762,24 @@ declare namespace Stripe {
       url?: string;
     }
 
-    /**
-     * You can also delete webhook endpoints via the [webhook endpoint management](https://dashboard.stripe.com/account/webhooks) page of the Stripe dashboard.
-     */
-    interface DeleteParams {
-
-    }
-
     class Resource {
+      /**
+       * A webhook endpoint must have a url and a list of enabled_events. You may optionally specify the Boolean connect parameter. If set to true, then a Connect webhook endpoint that notifies the specified url about events from all connected accounts is created; otherwise an account webhook endpoint that notifies the specified url only about events from your account is created. You can also create webhook endpoints in the [webhooks settings](https://dashboard.stripe.com/account/webhooks) section of the Dashboard.
+       */
+      create(
+        params: CreateParams,
+        options?: HeaderOptions
+      ): Promise<WebhookEndpoint>;
+
+      /**
+       * You can also delete webhook endpoints via the [webhook endpoint management](https://dashboard.stripe.com/account/webhooks) page of the Stripe dashboard.
+       */
+      del(
+        id: string,
+        params?: DeleteParams,
+        options?: HeaderOptions
+      ): Promise<DeletedWebhookEndpoint>;
+
       /**
        * Returns a list of your webhook endpoints.
        */
@@ -22116,14 +25798,6 @@ declare namespace Stripe {
       ): Promise<WebhookEndpoint>;
 
       /**
-       * A webhook endpoint must have a url and a list of enabled_events. You may optionally specify the Boolean connect parameter. If set to true, then a Connect webhook endpoint that notifies the specified url about events from all connected accounts is created; otherwise an account webhook endpoint that notifies the specified url only about events from your account is created. You can also create webhook endpoints in the [webhooks settings](https://dashboard.stripe.com/account/webhooks) section of the Dashboard.
-       */
-      create(
-        params: CreateParams,
-        options?: HeaderOptions
-      ): Promise<WebhookEndpoint>;
-
-      /**
        * Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of your endpoint.
        */
       update(
@@ -22131,15 +25805,6 @@ declare namespace Stripe {
         params?: UpdateParams,
         options?: HeaderOptions
       ): Promise<WebhookEndpoint>;
-
-      /**
-       * You can also delete webhook endpoints via the [webhook endpoint management](https://dashboard.stripe.com/account/webhooks) page of the Stripe dashboard.
-       */
-      del(
-        id: string,
-        params?: DeleteParams,
-        options?: HeaderOptions
-      ): Promise<DeletedWebhookEndpoint>;
     }
   }
 
@@ -22157,7 +25822,7 @@ declare namespace Stripe {
       /**
        * The URL the customer will be directed to if they decide to cancel payment and return to your website.
        */
-      cancel_url: string;
+      cancel_url?: string;
 
       /**
        * A unique string to reference the Checkout Session. This can be a
@@ -22236,12 +25901,12 @@ declare namespace Stripe {
        * Unique identifier for the object. Used to pass to `redirectToCheckout`
        * in Stripe.js.
        */
-      id: string;
+      id?: string;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode: boolean;
+      livemode?: boolean;
 
       /**
        * The IETF language tag of the locale Checkout is displayed in. If blank
@@ -22273,7 +25938,7 @@ declare namespace Stripe {
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'checkout.session';
+      object?: 'checkout.session';
 
       /**
        * The ID of the PaymentIntent for Checkout Sessions in `payment` mode.
@@ -22284,7 +25949,7 @@ declare namespace Stripe {
        * A list of the types of payment methods (e.g. card) this Checkout
        * Session is allowed to accept.
        */
-      payment_method_types: Array<string>;
+      payment_method_types?: Array<string>;
 
       /**
        * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
@@ -22309,20 +25974,10 @@ declare namespace Stripe {
        * The URL the customer will be directed to after the payment or
        * subscription creation is successful.
        */
-      success_url: string;
+      success_url?: string;
     }
 
     namespace Session {
-      /**
-       * Retrieves a Session object.
-       */
-      interface RetrieveParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-      }
-
       /**
        * Creates a Session object.
        */
@@ -22649,21 +26304,31 @@ declare namespace Stripe {
         success_url: string;
       }
 
+      /**
+       * Retrieves a Session object.
+       */
+      interface RetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       class Resource {
+        /**
+         * Creates a Session object.
+         */
+        create(
+          params: CreateParams,
+          options?: HeaderOptions
+        ): Promise<Checkout.Session>;
+
         /**
          * Retrieves a Session object.
          */
         retrieve(
           id: string,
           params?: RetrieveParams,
-          options?: HeaderOptions
-        ): Promise<Checkout.Session>;
-
-        /**
-         * Creates a Session object.
-         */
-        create(
-          params: CreateParams,
           options?: HeaderOptions
         ): Promise<Checkout.Session>;
       }
@@ -22678,26 +26343,26 @@ declare namespace Stripe {
       /**
        * Whether the authorization has been approved.
        */
-      approved: boolean;
+      approved?: boolean;
 
       /**
        * How the card details were provided. One of `chip`, `contactless`, `keyed_in`, `online`, or `swipe`.
        */
-      authorization_method: string;
+      authorization_method?: string;
 
       /**
        * The amount that has been authorized. This will be `0` when the object is created, and increase after it has been approved.
        */
-      authorized_amount: number;
+      authorized_amount?: number;
 
       /**
        * The currency that was presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      authorized_currency: string;
+      authorized_currency?: string;
 
-      balance_transactions: Array<BalanceTransaction>;
+      balance_transactions?: Array<BalanceTransaction>;
 
-      card: Issuing.Card;
+      card?: Issuing.Card;
 
       /**
        * The cardholder to whom this authorization belongs.
@@ -22707,31 +26372,31 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created: number;
+      created?: number;
 
       /**
        * The amount the authorization is expected to be in `held_currency`. When Stripe holds funds from you, this is the amount reserved for the authorization. This will be `0` when the object is created, and increase after it has been approved. For multi-currency transactions, `held_amount` can be used to determine the expected exchange rate.
        */
-      held_amount: number;
+      held_amount?: number;
 
       /**
        * The currency of the [held amount](https://stripe.com/docs/api#issuing_authorization_object-held_amount). This will always be the card currency.
        */
-      held_currency: string;
+      held_currency?: string;
 
       /**
        * Unique identifier for the object.
        */
-      id: string;
+      id?: string;
 
-      is_held_amount_controllable: boolean;
+      is_held_amount_controllable?: boolean;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode: boolean;
+      livemode?: boolean;
 
-      merchant_data: {
+      merchant_data?: {
         /**
          * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
          */
@@ -22776,26 +26441,26 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: {
+      metadata?: {
         [key: string]: string;
       };
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'issuing.authorization';
+      object?: 'issuing.authorization';
 
       /**
        * The amount the user is requesting to be authorized. This field will only be non-zero during an `issuing.authorization.request` webhook.
        */
-      pending_authorized_amount: number;
+      pending_authorized_amount?: number;
 
       /**
        * The additional amount Stripe will hold if the authorization is approved. This field will only be non-zero during an `issuing.authorization.request` webhook.
        */
-      pending_held_amount: number;
+      pending_held_amount?: number;
 
-      request_history: Array<{
+      request_history?: Array<{
         /**
          * Whether this request was approved.
          */
@@ -22869,11 +26534,11 @@ declare namespace Stripe {
       /**
        * One of `closed`, `pending`, or `reversed`.
        */
-      status: string;
+      status?: string;
 
-      transactions: Array<Issuing.Transaction>;
+      transactions?: Array<Issuing.Transaction>;
 
-      verification_data: {
+      verification_data?: {
         /**
          * One of `match`, `mismatch`, or `not_provided`.
          */
@@ -23092,7 +26757,7 @@ declare namespace Stripe {
      * The Card object.
      */
     interface Card {
-      authorization_controls: {
+      authorization_controls?: {
         /**
          * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this card.
          */
@@ -23184,6 +26849,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -23476,6 +27144,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -23788,6 +27459,9 @@ declare namespace Stripe {
                 | 'department_stores'
                 | 'detective_agencies'
                 | 'digital_goods_applications'
+                | 'digital_goods_games'
+                | 'digital_goods_large_volume'
+                | 'digital_goods_media'
                 | 'direct_marketing_catalog_merchant'
                 | 'direct_marketing_combination_catalog_and_retail_merchant'
                 | 'direct_marketing_inbound_telemarketing'
@@ -24011,7 +27685,7 @@ declare namespace Stripe {
       /**
        * The brand of the card.
        */
-      brand: string;
+      brand?: string;
 
       /**
        * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object to which the card belongs.
@@ -24021,54 +27695,54 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created: number;
+      created?: number;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      currency: string;
+      currency?: string;
 
       /**
        * The expiration month of the card.
        */
-      exp_month: number;
+      exp_month?: number;
 
       /**
        * The expiration year of the card.
        */
-      exp_year: number;
+      exp_year?: number;
 
       /**
        * Unique identifier for the object.
        */
-      id: string;
+      id?: string;
 
       /**
        * The last 4 digits of the card number.
        */
-      last4: string;
+      last4?: string;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode: boolean;
+      livemode?: boolean;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: {
+      metadata?: {
         [key: string]: string;
       };
 
       /**
        * The name of the cardholder, printed on the card.
        */
-      name: string;
+      name?: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'issuing.card';
+      object?: 'issuing.card';
 
       /**
        * Metadata about the PIN on the card.
@@ -24174,7 +27848,7 @@ declare namespace Stripe {
       /**
        * One of `active`, `inactive`, `canceled`, `lost`, or `stolen`.
        */
-      status:
+      status?:
         | 'active'
         | 'canceled'
         | 'inactive'
@@ -24185,102 +27859,10 @@ declare namespace Stripe {
       /**
        * One of `virtual` or `physical`.
        */
-      type: string;
+      type?: string;
     }
 
     namespace Card {
-      /**
-       * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-       */
-      interface ListParams {
-        /**
-         * Only return cards belonging to the Cardholder with the provided ID.
-         */
-        cardholder?: string;
-
-        /**
-         * Only return cards that were issued during the given date interval.
-         */
-        created?:
-          | {
-            /**
-             * Minimum value to filter by (exclusive)
-             */
-            gt?: number;
-
-            /**
-             * Minimum value to filter by (inclusive)
-             */
-            gte?: number;
-
-            /**
-             * Maximum value to filter by (exclusive)
-             */
-            lt?: number;
-
-            /**
-             * Maximum value to filter by (inclusive)
-             */
-            lte?: number;
-          }
-          | number;
-
-        /**
-         * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-         */
-        ending_before?: string;
-
-        /**
-         * Only return cards that have the given expiration month.
-         */
-        exp_month?: number;
-
-        /**
-         * Only return cards that have the given expiration year.
-         */
-        exp_year?: number;
-
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-
-        /**
-         * Only return cards that have the given last four digits.
-         */
-        last4?: string;
-
-        /**
-         * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-         */
-        limit?: number;
-
-        /**
-         * Only return cards that have the given name.
-         */
-        name?: string;
-
-        /**
-         * Only return cards whose full card number matches that of this card source ID.
-         */
-        source?: string;
-
-        /**
-         * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-         */
-        starting_after?: string;
-
-        /**
-         * Only return cards that have the given status. One of `active`, `inactive`, `canceled`, `lost`, or `stolen`.
-         */
-        status?: 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen';
-
-        /**
-         * Only return cards that have the given type. One of `virtual` or `physical`.
-         */
-        type?: 'physical' | 'virtual';
-      }
-
       /**
        * Creates an Issuing Card object.
        */
@@ -24379,6 +27961,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -24669,6 +28254,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -24973,6 +28561,9 @@ declare namespace Stripe {
               | 'department_stores'
               | 'detective_agencies'
               | 'digital_goods_applications'
+              | 'digital_goods_games'
+              | 'digital_goods_large_volume'
+              | 'digital_goods_media'
               | 'direct_marketing_catalog_merchant'
               | 'direct_marketing_combination_catalog_and_retail_merchant'
               | 'direct_marketing_inbound_telemarketing'
@@ -25253,6 +28844,98 @@ declare namespace Stripe {
       }
 
       /**
+       * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+       */
+      interface ListParams {
+        /**
+         * Only return cards belonging to the Cardholder with the provided ID.
+         */
+        cardholder?: string;
+
+        /**
+         * Only return cards that were issued during the given date interval.
+         */
+        created?:
+          | {
+            /**
+             * Minimum value to filter by (exclusive)
+             */
+            gt?: number;
+
+            /**
+             * Minimum value to filter by (inclusive)
+             */
+            gte?: number;
+
+            /**
+             * Maximum value to filter by (exclusive)
+             */
+            lt?: number;
+
+            /**
+             * Maximum value to filter by (inclusive)
+             */
+            lte?: number;
+          }
+          | number;
+
+        /**
+         * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+         */
+        ending_before?: string;
+
+        /**
+         * Only return cards that have the given expiration month.
+         */
+        exp_month?: number;
+
+        /**
+         * Only return cards that have the given expiration year.
+         */
+        exp_year?: number;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Only return cards that have the given last four digits.
+         */
+        last4?: string;
+
+        /**
+         * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+         */
+        limit?: number;
+
+        /**
+         * Only return cards that have the given name.
+         */
+        name?: string;
+
+        /**
+         * Only return cards whose full card number matches that of this card source ID.
+         */
+        source?: string;
+
+        /**
+         * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+         */
+        starting_after?: string;
+
+        /**
+         * Only return cards that have the given status. One of `active`, `inactive`, `canceled`, `lost`, or `stolen`.
+         */
+        status?: 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen';
+
+        /**
+         * Only return cards that have the given type. One of `virtual` or `physical`.
+         */
+        type?: 'physical' | 'virtual';
+      }
+
+      /**
        * Retrieves an Issuing Card object.
        */
       interface RetrieveParams {
@@ -25360,6 +29043,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -25650,6 +29336,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -25954,6 +29643,9 @@ declare namespace Stripe {
               | 'department_stores'
               | 'detective_agencies'
               | 'digital_goods_applications'
+              | 'digital_goods_games'
+              | 'digital_goods_large_volume'
+              | 'digital_goods_media'
               | 'direct_marketing_catalog_merchant'
               | 'direct_marketing_combination_catalog_and_retail_merchant'
               | 'direct_marketing_inbound_telemarketing'
@@ -26189,15 +29881,17 @@ declare namespace Stripe {
         status?: 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen';
       }
 
-      class Resource {
+      /**
+       * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/management#virtual-card-info) of a virtual card.
+       */
+      interface RetrieveDetailsParams {
         /**
-         * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+         * Specifies which fields in the response should be expanded.
          */
-        list(
-          params?: ListParams,
-          options?: HeaderOptions
-        ): Promise<ApiList<Issuing.Card>>;
+        expand?: Array<string>;
+      }
 
+      class Resource {
         /**
          * Creates an Issuing Card object.
          */
@@ -26205,6 +29899,14 @@ declare namespace Stripe {
           params: CreateParams,
           options?: HeaderOptions
         ): Promise<Issuing.Card>;
+
+        /**
+         * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+         */
+        list(
+          params?: ListParams,
+          options?: HeaderOptions
+        ): Promise<ApiList<Issuing.Card>>;
 
         /**
          * Retrieves an Issuing Card object.
@@ -26223,6 +29925,15 @@ declare namespace Stripe {
           params?: UpdateParams,
           options?: HeaderOptions
         ): Promise<Issuing.Card>;
+
+        /**
+         * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/management#virtual-card-info) of a virtual card.
+         */
+        retrieveDetails(
+          id: string,
+          params?: RetrieveDetailsParams,
+          options?: HeaderOptions
+        ): Promise<Issuing.CardDetails>;
       }
     }
 
@@ -26230,32 +29941,32 @@ declare namespace Stripe {
      * The CardDetails object.
      */
     interface CardDetails {
-      card: Issuing.Card;
+      card?: Issuing.Card;
 
       /**
        * The CVC number for the card.
        */
-      cvc: string;
+      cvc?: string;
 
       /**
        * The expiration month of the card.
        */
-      exp_month: number;
+      exp_month?: number;
 
       /**
        * The expiration year of the card.
        */
-      exp_year: number;
+      exp_year?: number;
 
       /**
        * The card number.
        */
-      number: string;
+      number?: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'issuing.card_details';
+      object?: 'issuing.card_details';
     }
 
     /**
@@ -26355,6 +30066,9 @@ declare namespace Stripe {
               | 'department_stores'
               | 'detective_agencies'
               | 'digital_goods_applications'
+              | 'digital_goods_games'
+              | 'digital_goods_large_volume'
+              | 'digital_goods_media'
               | 'direct_marketing_catalog_merchant'
               | 'direct_marketing_combination_catalog_and_retail_merchant'
               | 'direct_marketing_inbound_telemarketing'
@@ -26647,6 +30361,9 @@ declare namespace Stripe {
               | 'department_stores'
               | 'detective_agencies'
               | 'digital_goods_applications'
+              | 'digital_goods_games'
+              | 'digital_goods_large_volume'
+              | 'digital_goods_media'
               | 'direct_marketing_catalog_merchant'
               | 'direct_marketing_combination_catalog_and_retail_merchant'
               | 'direct_marketing_inbound_telemarketing'
@@ -26949,6 +30666,9 @@ declare namespace Stripe {
                   | 'department_stores'
                   | 'detective_agencies'
                   | 'digital_goods_applications'
+                  | 'digital_goods_games'
+                  | 'digital_goods_large_volume'
+                  | 'digital_goods_media'
                   | 'direct_marketing_catalog_merchant'
                   | 'direct_marketing_combination_catalog_and_retail_merchant'
                   | 'direct_marketing_inbound_telemarketing'
@@ -27170,7 +30890,7 @@ declare namespace Stripe {
         }
         | null;
 
-      billing: {
+      billing?: {
         address: {
           /**
            * City/District/Suburb/Town/Village.
@@ -27221,7 +30941,7 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created: number;
+      created?: number;
 
       /**
        * The cardholder's email address.
@@ -27231,7 +30951,7 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id: string;
+      id?: string;
 
       /**
        * Additional information about an `individual` cardholder.
@@ -27299,36 +31019,36 @@ declare namespace Stripe {
       /**
        * Whether or not this cardholder is the default cardholder.
        */
-      is_default: boolean;
+      is_default?: boolean;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode: boolean;
+      livemode?: boolean;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: {
+      metadata?: {
         [key: string]: string;
       };
 
       /**
        * The cardholder's name. This will be printed on cards issued to them.
        */
-      name: string;
+      name?: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'issuing.cardholder';
+      object?: 'issuing.cardholder';
 
       /**
        * The cardholder's phone number.
        */
       phone_number?: string | null;
 
-      requirements: {
+      requirements?: {
         /**
          * If the cardholder is disabled, this string describes why. Can be one of `listed`, `rejected.listed`, or `under_review`.
          */
@@ -27351,92 +31071,15 @@ declare namespace Stripe {
       /**
        * Specifies whether to permit authorizations on this cardholder's cards.
        */
-      status: 'active' | 'blocked' | 'inactive';
+      status?: 'active' | 'blocked' | 'inactive';
 
       /**
        * One of `individual` or `business_entity`.
        */
-      type: 'business_entity' | 'individual';
+      type?: 'business_entity' | 'individual';
     }
 
     namespace Cardholder {
-      /**
-       * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-       */
-      interface ListParams {
-        /**
-         * Only return cardholders that were created during the given date interval.
-         */
-        created?:
-          | {
-            /**
-             * Minimum value to filter by (exclusive)
-             */
-            gt?: number;
-
-            /**
-             * Minimum value to filter by (inclusive)
-             */
-            gte?: number;
-
-            /**
-             * Maximum value to filter by (exclusive)
-             */
-            lt?: number;
-
-            /**
-             * Maximum value to filter by (inclusive)
-             */
-            lte?: number;
-          }
-          | number;
-
-        /**
-         * Only return cardholders that have the given email address.
-         */
-        email?: string;
-
-        /**
-         * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-         */
-        ending_before?: string;
-
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-
-        /**
-         * Only return the default cardholder.
-         */
-        is_default?: boolean;
-
-        /**
-         * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-         */
-        limit?: number;
-
-        /**
-         * Only return cardholders that have the given phone number.
-         */
-        phone_number?: string;
-
-        /**
-         * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-         */
-        starting_after?: string;
-
-        /**
-         * Only return cardholders that have the given status. One of `active`, `inactive`, or `blocked`.
-         */
-        status?: 'active' | 'blocked' | 'inactive';
-
-        /**
-         * Only return cardholders that have the given type. One of `individual` or `business_entity`.
-         */
-        type?: 'business_entity' | 'individual';
-      }
-
       /**
        * Creates a new Issuing Cardholder object that can be issued cards.
        */
@@ -27535,6 +31178,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -27825,6 +31471,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -28124,6 +31773,9 @@ declare namespace Stripe {
               | 'department_stores'
               | 'detective_agencies'
               | 'digital_goods_applications'
+              | 'digital_goods_games'
+              | 'digital_goods_large_volume'
+              | 'digital_goods_media'
               | 'direct_marketing_catalog_merchant'
               | 'direct_marketing_combination_catalog_and_retail_merchant'
               | 'direct_marketing_inbound_telemarketing'
@@ -28472,6 +32124,83 @@ declare namespace Stripe {
       }
 
       /**
+       * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+       */
+      interface ListParams {
+        /**
+         * Only return cardholders that were created during the given date interval.
+         */
+        created?:
+          | {
+            /**
+             * Minimum value to filter by (exclusive)
+             */
+            gt?: number;
+
+            /**
+             * Minimum value to filter by (inclusive)
+             */
+            gte?: number;
+
+            /**
+             * Maximum value to filter by (exclusive)
+             */
+            lt?: number;
+
+            /**
+             * Maximum value to filter by (inclusive)
+             */
+            lte?: number;
+          }
+          | number;
+
+        /**
+         * Only return cardholders that have the given email address.
+         */
+        email?: string;
+
+        /**
+         * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+         */
+        ending_before?: string;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Only return the default cardholder.
+         */
+        is_default?: boolean;
+
+        /**
+         * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+         */
+        limit?: number;
+
+        /**
+         * Only return cardholders that have the given phone number.
+         */
+        phone_number?: string;
+
+        /**
+         * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+         */
+        starting_after?: string;
+
+        /**
+         * Only return cardholders that have the given status. One of `active`, `inactive`, or `blocked`.
+         */
+        status?: 'active' | 'blocked' | 'inactive';
+
+        /**
+         * Only return cardholders that have the given type. One of `individual` or `business_entity`.
+         */
+        type?: 'business_entity' | 'individual';
+      }
+
+      /**
        * Retrieves an Issuing Cardholder object.
        */
       interface RetrieveParams {
@@ -28579,6 +32308,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -28869,6 +32601,9 @@ declare namespace Stripe {
             | 'department_stores'
             | 'detective_agencies'
             | 'digital_goods_applications'
+            | 'digital_goods_games'
+            | 'digital_goods_large_volume'
+            | 'digital_goods_media'
             | 'direct_marketing_catalog_merchant'
             | 'direct_marketing_combination_catalog_and_retail_merchant'
             | 'direct_marketing_inbound_telemarketing'
@@ -29168,6 +32903,9 @@ declare namespace Stripe {
               | 'department_stores'
               | 'detective_agencies'
               | 'digital_goods_applications'
+              | 'digital_goods_games'
+              | 'digital_goods_large_volume'
+              | 'digital_goods_media'
               | 'direct_marketing_catalog_merchant'
               | 'direct_marketing_combination_catalog_and_retail_merchant'
               | 'direct_marketing_inbound_telemarketing'
@@ -29510,20 +33248,20 @@ declare namespace Stripe {
 
       class Resource {
         /**
-         * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-         */
-        list(
-          params?: ListParams,
-          options?: HeaderOptions
-        ): Promise<ApiList<Issuing.Cardholder>>;
-
-        /**
          * Creates a new Issuing Cardholder object that can be issued cards.
          */
         create(
           params: CreateParams,
           options?: HeaderOptions
         ): Promise<Issuing.Cardholder>;
+
+        /**
+         * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+         */
+        list(
+          params?: ListParams,
+          options?: HeaderOptions
+        ): Promise<ApiList<Issuing.Cardholder>>;
 
         /**
          * Retrieves an Issuing Cardholder object.
@@ -29552,24 +33290,24 @@ declare namespace Stripe {
       /**
        * Disputed amount. Usually the amount of the `disputed_transaction`, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
        */
-      amount: number;
+      amount?: number;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created: number;
+      created?: number;
 
       /**
        * The currency the `disputed_transaction` was made in.
        */
-      currency: string;
+      currency?: string;
 
       /**
        * The transaction being disputed.
        */
-      disputed_transaction: string | Issuing.Transaction;
+      disputed_transaction?: string | Issuing.Transaction;
 
-      evidence: {
+      evidence?: {
         /**
          * Evidence to support a fraudulent dispute. This will only be present if your dispute's `reason` is `fraudulent`.
          */
@@ -29608,94 +33346,37 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id: string;
+      id?: string;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode: boolean;
+      livemode?: boolean;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata: {
+      metadata?: {
         [key: string]: string;
       };
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'issuing.dispute';
+      object?: 'issuing.dispute';
 
       /**
        * Reason for this dispute. One of `other` or `fraudulent`.
        */
-      reason: string;
+      reason?: string;
 
       /**
        * Current status of dispute. One of `lost`, `under_review`, `unsubmitted`, or `won`.
        */
-      status: 'lost' | 'under_review' | 'unsubmitted' | 'won';
+      status?: 'lost' | 'under_review' | 'unsubmitted' | 'won';
     }
 
     namespace Dispute {
-      /**
-       * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-       */
-      interface ListParams {
-        /**
-         * Only return issuing disputes that were created during the given date interval.
-         */
-        created?:
-          | {
-            /**
-             * Minimum value to filter by (exclusive)
-             */
-            gt?: number;
-
-            /**
-             * Minimum value to filter by (inclusive)
-             */
-            gte?: number;
-
-            /**
-             * Maximum value to filter by (exclusive)
-             */
-            lt?: number;
-
-            /**
-             * Maximum value to filter by (inclusive)
-             */
-            lte?: number;
-          }
-          | number;
-
-        /**
-         * Only return issuing disputes for the given transaction.
-         */
-        disputed_transaction?: string;
-
-        /**
-         * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-         */
-        ending_before?: string;
-
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-
-        /**
-         * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-         */
-        limit?: number;
-
-        /**
-         * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-         */
-        starting_after?: string;
-      }
-
       /**
        * Creates an Issuing Dispute object.
        */
@@ -29764,6 +33445,73 @@ declare namespace Stripe {
       }
 
       /**
+       * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+       */
+      interface ListParams {
+        /**
+         * Only return issuing disputes that were created during the given date interval.
+         */
+        created?:
+          | {
+            /**
+             * Minimum value to filter by (exclusive)
+             */
+            gt?: number;
+
+            /**
+             * Minimum value to filter by (inclusive)
+             */
+            gte?: number;
+
+            /**
+             * Maximum value to filter by (exclusive)
+             */
+            lt?: number;
+
+            /**
+             * Maximum value to filter by (inclusive)
+             */
+            lte?: number;
+          }
+          | number;
+
+        /**
+         * Only return issuing disputes for the given transaction.
+         */
+        disputed_transaction?: string;
+
+        /**
+         * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+         */
+        ending_before?: string;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+         */
+        limit?: number;
+
+        /**
+         * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+         */
+        starting_after?: string;
+      }
+
+      /**
+       * Retrieves an Issuing Dispute object.
+       */
+      interface RetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      /**
        * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
        */
       interface UpdateParams {
@@ -29780,17 +33528,15 @@ declare namespace Stripe {
         };
       }
 
-      /**
-       * Retrieves an Issuing Dispute object.
-       */
-      interface RetrieveParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-      }
-
       class Resource {
+        /**
+         * Creates an Issuing Dispute object.
+         */
+        create(
+          params: CreateParams,
+          options?: HeaderOptions
+        ): Promise<Issuing.Dispute>;
+
         /**
          * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
          */
@@ -29800,10 +33546,11 @@ declare namespace Stripe {
         ): Promise<ApiList<Issuing.Dispute>>;
 
         /**
-         * Creates an Issuing Dispute object.
+         * Retrieves an Issuing Dispute object.
          */
-        create(
-          params: CreateParams,
+        retrieve(
+          id: string,
+          params?: RetrieveParams,
           options?: HeaderOptions
         ): Promise<Issuing.Dispute>;
 
@@ -29815,15 +33562,6 @@ declare namespace Stripe {
           params?: UpdateParams,
           options?: HeaderOptions
         ): Promise<Issuing.Dispute>;
-
-        /**
-         * Retrieves an Issuing Dispute object.
-         */
-        retrieve(
-          id: string,
-          params?: RetrieveParams,
-          options?: HeaderOptions
-        ): Promise<Issuing.Dispute>;
       }
     }
 
@@ -29831,7 +33569,10 @@ declare namespace Stripe {
      * The Transaction object.
      */
     interface Transaction {
-      amount: number;
+      /**
+       * The amount of this transaction in your currency. This is the amount that your balance will be updated by.
+       */
+      amount?: number;
 
       /**
        * The `Authorization` object that led to this transaction.
@@ -29843,7 +33584,7 @@ declare namespace Stripe {
       /**
        * The card used to make this transaction.
        */
-      card: string | Issuing.Card;
+      card?: string | Issuing.Card;
 
       /**
        * The cardholder to whom this transaction belongs.
@@ -29853,30 +33594,36 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created: number;
+      created?: number;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      currency: string;
+      currency?: string;
 
       dispute?: string | Issuing.Dispute | null;
 
       /**
        * Unique identifier for the object.
        */
-      id: string;
+      id?: string;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode: boolean;
+      livemode?: boolean;
 
-      merchant_amount: number;
+      /**
+       * The amount that the merchant will receive, denominated in `merchant_currency`. It will be different from `amount` if the merchant is taking payment in a different currency.
+       */
+      merchant_amount?: number;
 
-      merchant_currency: string;
+      /**
+       * The currency with which the merchant is taking payment.
+       */
+      merchant_currency?: string;
 
-      merchant_data: {
+      merchant_data?: {
         /**
          * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
          */
@@ -29921,19 +33668,19 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: {
+      metadata?: {
         [key: string]: string;
       };
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'issuing.transaction';
+      object?: 'issuing.transaction';
 
       /**
        * One of `capture`, `refund`, `cash_withdrawal`, `refund_reversal`, `dispute`, or `dispute_loss`.
        */
-      type: string;
+      type?: string;
     }
 
     namespace Transaction {
@@ -30068,37 +33815,37 @@ declare namespace Stripe {
       /**
        * An EFW is actionable if it has not received a dispute and has not been fully refunded. You may wish to proactively refund a charge that receives an EFW, in order to avoid receiving a dispute later.
        */
-      actionable: boolean;
+      actionable?: boolean;
 
       /**
        * ID of the charge this early fraud warning is for, optionally expanded.
        */
-      charge: string | Charge;
+      charge?: string | Charge;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created: number;
+      created?: number;
 
       /**
        * The type of fraud labelled by the issuer. One of `card_never_received`, `fraudulent_card_application`, `made_with_counterfeit_card`, `made_with_lost_card`, `made_with_stolen_card`, `misc`, `unauthorized_use_of_card`.
        */
-      fraud_type: string;
+      fraud_type?: string;
 
       /**
        * Unique identifier for the object.
        */
-      id: string;
+      id?: string;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode: boolean;
+      livemode?: boolean;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'radar.early_fraud_warning';
+      object?: 'radar.early_fraud_warning';
     }
 
     namespace EarlyFraudWarning {
@@ -30249,6 +33996,50 @@ declare namespace Stripe {
 
     namespace ValueList {
       /**
+       * Creates a new ValueList object, which can then be referenced in rules.
+       */
+      interface CreateParams {
+        /**
+         * The name of the value list for use in rules.
+         */
+        alias: string;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`. Use `string` if the item type is unknown or mixed.
+         */
+        item_type?:
+          | 'card_bin'
+          | 'card_fingerprint'
+          | 'case_sensitive_string'
+          | 'country'
+          | 'email'
+          | 'ip_address'
+          | 'string';
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: {
+          [key: string]: string;
+        };
+
+        /**
+         * The human-readable name of the value list.
+         */
+        name: string;
+      }
+
+      /**
+       * Deletes a ValueList object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
+       */
+      interface DeleteParams {}
+
+      /**
        * Returns a list of ValueList objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
        */
       interface ListParams {
@@ -30318,45 +34109,6 @@ declare namespace Stripe {
       }
 
       /**
-       * Creates a new ValueList object, which can then be referenced in rules.
-       */
-      interface CreateParams {
-        /**
-         * The name of the value list for use in rules.
-         */
-        alias: string;
-
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-
-        /**
-         * Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`. Use `string` if the item type is unknown or mixed.
-         */
-        item_type?:
-          | 'card_bin'
-          | 'card_fingerprint'
-          | 'case_sensitive_string'
-          | 'country'
-          | 'email'
-          | 'ip_address'
-          | 'string';
-
-        /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-         */
-        metadata?: {
-          [key: string]: string;
-        };
-
-        /**
-         * The human-readable name of the value list.
-         */
-        name: string;
-      }
-
-      /**
        * Updates a ValueList object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that item_type is immutable.
        */
       interface UpdateParams {
@@ -30383,14 +34135,24 @@ declare namespace Stripe {
         name?: string;
       }
 
-      /**
-       * Deletes a ValueList object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
-       */
-      interface DeleteParams {
-
-      }
-
       class Resource {
+        /**
+         * Creates a new ValueList object, which can then be referenced in rules.
+         */
+        create(
+          params: CreateParams,
+          options?: HeaderOptions
+        ): Promise<Radar.ValueList>;
+
+        /**
+         * Deletes a ValueList object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
+         */
+        del(
+          id: string,
+          params?: DeleteParams,
+          options?: HeaderOptions
+        ): Promise<DeletedValueList>;
+
         /**
          * Returns a list of ValueList objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
          */
@@ -30409,14 +34171,6 @@ declare namespace Stripe {
         ): Promise<Radar.ValueList>;
 
         /**
-         * Creates a new ValueList object, which can then be referenced in rules.
-         */
-        create(
-          params: CreateParams,
-          options?: HeaderOptions
-        ): Promise<Radar.ValueList>;
-
-        /**
          * Updates a ValueList object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that item_type is immutable.
          */
         update(
@@ -30424,15 +34178,6 @@ declare namespace Stripe {
           params?: UpdateParams,
           options?: HeaderOptions
         ): Promise<Radar.ValueList>;
-
-        /**
-         * Deletes a ValueList object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
-         */
-        del(
-          id: string,
-          params?: DeleteParams,
-          options?: HeaderOptions
-        ): Promise<DeletedValueList>;
       }
     }
 
@@ -30494,6 +34239,31 @@ declare namespace Stripe {
     }
 
     namespace ValueListItem {
+      /**
+       * Creates a new ValueListItem object, which is added to the specified parent value list.
+       */
+      interface CreateParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * The value of the item (whose type must match the type of the parent value list).
+         */
+        value: string;
+
+        /**
+         * The identifier of the value list which the created item will be added to.
+         */
+        value_list: string;
+      }
+
+      /**
+       * Deletes a ValueListItem object, removing it from its parent value list.
+       */
+      interface DeleteParams {}
+
       /**
        * Returns a list of ValueListItem objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
        */
@@ -30563,51 +34333,7 @@ declare namespace Stripe {
         expand?: Array<string>;
       }
 
-      /**
-       * Creates a new ValueListItem object, which is added to the specified parent value list.
-       */
-      interface CreateParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-
-        /**
-         * The value of the item (whose type must match the type of the parent value list).
-         */
-        value: string;
-
-        /**
-         * The identifier of the value list which the created item will be added to.
-         */
-        value_list: string;
-      }
-
-      /**
-       * Deletes a ValueListItem object, removing it from its parent value list.
-       */
-      interface DeleteParams {
-
-      }
-
       class Resource {
-        /**
-         * Returns a list of ValueListItem objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-         */
-        list(
-          params: ListParams,
-          options?: HeaderOptions
-        ): Promise<ApiList<Radar.ValueListItem>>;
-
-        /**
-         * Retrieves a ValueListItem object.
-         */
-        retrieve(
-          id: string,
-          params?: RetrieveParams,
-          options?: HeaderOptions
-        ): Promise<Radar.ValueListItem>;
-
         /**
          * Creates a new ValueListItem object, which is added to the specified parent value list.
          */
@@ -30624,6 +34350,23 @@ declare namespace Stripe {
           params?: DeleteParams,
           options?: HeaderOptions
         ): Promise<DeletedValueListItem>;
+
+        /**
+         * Returns a list of ValueListItem objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+         */
+        list(
+          params: ListParams,
+          options?: HeaderOptions
+        ): Promise<ApiList<Radar.ValueListItem>>;
+
+        /**
+         * Retrieves a ValueListItem object.
+         */
+        retrieve(
+          id: string,
+          params?: RetrieveParams,
+          options?: HeaderOptions
+        ): Promise<Radar.ValueListItem>;
       }
     }
   }
@@ -30636,7 +34379,7 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created: number;
+      created?: number;
 
       /**
        * If something should go wrong during the run, a message about the failure (populated when
@@ -30647,19 +34390,19 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id: string;
+      id?: string;
 
       /**
        * Always `true`: reports can only be run on live-mode data.
        */
-      livemode: boolean;
+      livemode?: boolean;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'reporting.report_run';
+      object?: 'reporting.report_run';
 
-      parameters: {
+      parameters?: {
         /**
          * The set of output columns requested for inclusion in the report run.
          */
@@ -30699,7 +34442,7 @@ declare namespace Stripe {
       /**
        * The ID of the [report type](https://stripe.com/docs/reporting/statements/api#report-types) to run, such as `"balance.summary.1"`.
        */
-      report_type: string;
+      report_type?: string;
 
       /**
        * The file object representing the result of the report run (populated when
@@ -30712,7 +34455,7 @@ declare namespace Stripe {
        *  When the run finishes, this will be set to `succeeded` and the `result` field will be populated.
        *  Rarely, we may encounter an error, at which point this will be set to `failed` and the `error` field will be populated.
        */
-      status: string;
+      status?: string;
 
       /**
        * Timestamp at which this run successfully finished (populated when
@@ -30722,16 +34465,6 @@ declare namespace Stripe {
     }
 
     namespace ReportRun {
-      /**
-       * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-       */
-      interface RetrieveParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-      }
-
       /**
        * Creates a new object and begin running the report. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
        */
@@ -30867,16 +34600,17 @@ declare namespace Stripe {
         starting_after?: string;
       }
 
-      class Resource {
+      /**
+       * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+       */
+      interface RetrieveParams {
         /**
-         * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+         * Specifies which fields in the response should be expanded.
          */
-        retrieve(
-          id: string,
-          params?: RetrieveParams,
-          options?: HeaderOptions
-        ): Promise<Reporting.ReportRun>;
+        expand?: Array<string>;
+      }
 
+      class Resource {
         /**
          * Creates a new object and begin running the report. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
          */
@@ -30892,6 +34626,15 @@ declare namespace Stripe {
           params?: ListParams,
           options?: HeaderOptions
         ): Promise<ApiList<Reporting.ReportRun>>;
+
+        /**
+         * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+         */
+        retrieve(
+          id: string,
+          params?: RetrieveParams,
+          options?: HeaderOptions
+        ): Promise<Reporting.ReportRun>;
       }
     }
 
@@ -30902,12 +34645,12 @@ declare namespace Stripe {
       /**
        * Most recent time for which this Report Type is available. Measured in seconds since the Unix epoch.
        */
-      data_available_end: number;
+      data_available_end?: number;
 
       /**
        * Earliest time for which this Report Type is available. Measured in seconds since the Unix epoch.
        */
-      data_available_start: number;
+      data_available_start?: number;
 
       /**
        * List of column names that are included by default when this Report Type gets run. (If the Report Type doesn't support the `columns` parameter, this will be null.)
@@ -30917,40 +34660,30 @@ declare namespace Stripe {
       /**
        * The [ID of the Report Type](https://stripe.com/docs/reporting/statements/api#available-report-types), such as `balance.summary.1`.
        */
-      id: string;
+      id?: string;
 
       /**
        * Human-readable name of the Report Type
        */
-      name: string;
+      name?: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'reporting.report_type';
+      object?: 'reporting.report_type';
 
       /**
        * When this Report Type was latest updated. Measured in seconds since the Unix epoch.
        */
-      updated: number;
+      updated?: number;
 
       /**
        * Version of the Report Type. Different versions report with the same ID will have the same purpose, but may take different run parameters or have different result schemas.
        */
-      version: number;
+      version?: number;
     }
 
     namespace ReportType {
-      /**
-       * Retrieves the details of a Report Type. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-       */
-      interface RetrieveParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-      }
-
       /**
        * Returns a full list of Report Types. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
        */
@@ -30961,7 +34694,25 @@ declare namespace Stripe {
         expand?: Array<string>;
       }
 
+      /**
+       * Retrieves the details of a Report Type. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+       */
+      interface RetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       class Resource {
+        /**
+         * Returns a full list of Report Types. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+         */
+        list(
+          params?: ListParams,
+          options?: HeaderOptions
+        ): Promise<ApiList<Reporting.ReportType>>;
+
         /**
          * Retrieves the details of a Report Type. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
          */
@@ -30970,14 +34721,6 @@ declare namespace Stripe {
           params?: RetrieveParams,
           options?: HeaderOptions
         ): Promise<Reporting.ReportType>;
-
-        /**
-         * Returns a full list of Report Types. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-         */
-        list(
-          params?: ListParams,
-          options?: HeaderOptions
-        ): Promise<ApiList<Reporting.ReportType>>;
       }
     }
   }
@@ -30990,12 +34733,12 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created: number;
+      created?: number;
 
       /**
        * When the query was run, Sigma contained a snapshot of your Stripe data at this time.
        */
-      data_load_time: number;
+      data_load_time?: number;
 
       error?: {
         /**
@@ -31012,37 +34755,37 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id: string;
+      id?: string;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode: boolean;
+      livemode?: boolean;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'scheduled_query_run';
+      object?: 'scheduled_query_run';
 
       /**
        * Time at which the result expires and is no longer available for download.
        */
-      result_available_until: number;
+      result_available_until?: number;
 
       /**
        * SQL for the query.
        */
-      sql: string;
+      sql?: string;
 
       /**
        * The query's execution status, which will be `completed` for successful runs, and `canceled`, `failed`, or `timed_out` otherwise.
        */
-      status: string;
+      status?: string;
 
       /**
        * Title of the query.
        */
-      title: string;
+      title?: string;
     }
 
     namespace ScheduledQueryRun {
@@ -31115,12 +34858,12 @@ declare namespace Stripe {
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object: 'terminal.connection_token';
+      object?: 'terminal.connection_token';
 
       /**
        * Your application should pass this token to the Stripe Terminal SDK.
        */
-      secret: string;
+      secret?: string;
     }
 
     namespace ConnectionToken {
@@ -31226,21 +34969,6 @@ declare namespace Stripe {
 
     namespace Location {
       /**
-       * Retrieves a Location object.
-       */
-      interface RetrieveParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
-      }
-
-      /**
        * Creates a new Location object.
        */
       interface CreateParams {
@@ -31266,6 +34994,61 @@ declare namespace Stripe {
          */
         display_name: string;
 
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
+         */
+        operator_account?: string;
+      }
+
+      /**
+       * Deletes a Location object.
+       */
+      interface DeleteParams {
+        /**
+         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
+         */
+        operator_account?: string;
+      }
+
+      /**
+       * Returns a list of Location objects.
+       */
+      interface ListParams {
+        /**
+         * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+         */
+        ending_before?: string;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+         */
+        limit?: number;
+
+        /**
+         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
+         */
+        operator_account?: string;
+
+        /**
+         * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+         */
+        starting_after?: string;
+      }
+
+      /**
+       * Retrieves a Location object.
+       */
+      interface RetrieveParams {
         /**
          * Specifies which fields in the response should be expanded.
          */
@@ -31314,61 +35097,38 @@ declare namespace Stripe {
         operator_account?: string;
       }
 
-      /**
-       * Returns a list of Location objects.
-       */
-      interface ListParams {
-        /**
-         * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-         */
-        ending_before?: string;
-
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-
-        /**
-         * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-         */
-        limit?: number;
-
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
-
-        /**
-         * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-         */
-        starting_after?: string;
-      }
-
-      /**
-       * Deletes a Location object.
-       */
-      interface DeleteParams {
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
-      }
-
       class Resource {
+        /**
+         * Creates a new Location object.
+         */
+        create(
+          params: CreateParams,
+          options?: HeaderOptions
+        ): Promise<Terminal.Location>;
+
+        /**
+         * Deletes a Location object.
+         */
+        del(
+          id: string,
+          params?: DeleteParams,
+          options?: HeaderOptions
+        ): Promise<DeletedLocation>;
+
+        /**
+         * Returns a list of Location objects.
+         */
+        list(
+          params?: ListParams,
+          options?: HeaderOptions
+        ): Promise<ApiList<Terminal.Location>>;
+
         /**
          * Retrieves a Location object.
          */
         retrieve(
           id: string,
           params?: RetrieveParams,
-          options?: HeaderOptions
-        ): Promise<Terminal.Location>;
-
-        /**
-         * Creates a new Location object.
-         */
-        create(
-          params: CreateParams,
           options?: HeaderOptions
         ): Promise<Terminal.Location>;
 
@@ -31380,23 +35140,6 @@ declare namespace Stripe {
           params?: UpdateParams,
           options?: HeaderOptions
         ): Promise<Terminal.Location>;
-
-        /**
-         * Returns a list of Location objects.
-         */
-        list(
-          params?: ListParams,
-          options?: HeaderOptions
-        ): Promise<ApiList<Terminal.Location>>;
-
-        /**
-         * Deletes a Location object.
-         */
-        del(
-          id: string,
-          params?: DeleteParams,
-          options?: HeaderOptions
-        ): Promise<DeletedLocation>;
       }
     }
 
@@ -31469,41 +35212,6 @@ declare namespace Stripe {
 
     namespace Reader {
       /**
-       * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-       */
-      interface UpdateParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-
-        /**
-         * The new label of the reader.
-         */
-        label?: string;
-
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
-      }
-
-      /**
-       * Retrieves a Reader object.
-       */
-      interface RetrieveParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
-      }
-
-      /**
        * Creates a new Reader object.
        */
       interface CreateParams {
@@ -31531,6 +35239,16 @@ declare namespace Stripe {
          * A code generated by the reader used for registering to an account.
          */
         registration_code: string;
+      }
+
+      /**
+       * Deletes a Reader object.
+       */
+      interface DeleteParams {
+        /**
+         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
+         */
+        operator_account?: string;
       }
 
       /**
@@ -31579,9 +35297,34 @@ declare namespace Stripe {
       }
 
       /**
-       * Deletes a Reader object.
+       * Retrieves a Reader object.
        */
-      interface DeleteParams {
+      interface RetrieveParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
+         */
+        operator_account?: string;
+      }
+
+      /**
+       * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+       */
+      interface UpdateParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * The new label of the reader.
+         */
+        label?: string;
+
         /**
          * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
          */
@@ -31590,13 +35333,29 @@ declare namespace Stripe {
 
       class Resource {
         /**
-         * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+         * Creates a new Reader object.
          */
-        update(
-          id: string,
-          params?: UpdateParams,
+        create(
+          params: CreateParams,
           options?: HeaderOptions
         ): Promise<Terminal.Reader>;
+
+        /**
+         * Deletes a Reader object.
+         */
+        del(
+          id: string,
+          params?: DeleteParams,
+          options?: HeaderOptions
+        ): Promise<DeletedReader>;
+
+        /**
+         * Returns a list of Reader objects.
+         */
+        list(
+          params?: ListParams,
+          options?: HeaderOptions
+        ): Promise<ApiList<Terminal.Reader>>;
 
         /**
          * Retrieves a Reader object.
@@ -31608,29 +35367,13 @@ declare namespace Stripe {
         ): Promise<Terminal.Reader>;
 
         /**
-         * Creates a new Reader object.
+         * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
          */
-        create(
-          params: CreateParams,
+        update(
+          id: string,
+          params?: UpdateParams,
           options?: HeaderOptions
         ): Promise<Terminal.Reader>;
-
-        /**
-         * Returns a list of Reader objects.
-         */
-        list(
-          params?: ListParams,
-          options?: HeaderOptions
-        ): Promise<ApiList<Terminal.Reader>>;
-
-        /**
-         * Deletes a Reader object.
-         */
-        del(
-          id: string,
-          params?: DeleteParams,
-          options?: HeaderOptions
-        ): Promise<DeletedReader>;
       }
     }
   }
