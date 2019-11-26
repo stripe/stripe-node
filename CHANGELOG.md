@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 7.14.0 - 2019-11-26
+* [#732](https://github.com/stripe/stripe-node/pull/732) Add support for CreditNote preview
+
 ## 7.13.1 - 2019-11-22
 
 - [#728](https://github.com/stripe/stripe-node/pull/728) Remove duplicate export
