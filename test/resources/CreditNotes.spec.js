@@ -61,6 +61,23 @@ describe('CreditNotes Resource', () => {
     });
   });
 
+  describe('preview', () => {
+    it('Sends the correct request', () => {
+      const data = {
+        amount: 100,
+        invoice: 'in_123',
+      };
+      stripe.creditNotes.preview(data);
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/credit_notes/preview?amount=100&invoice=in_123',
+        headers: {},
+        data: {},
+        settings: {},
+      });
+    });
+  });
+
   describe('voidCreditNote', () => {
     it('Sends the correct request', () => {
       stripe.creditNotes.voidCreditNote('cn_123');
