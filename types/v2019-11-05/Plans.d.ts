@@ -83,7 +83,7 @@ declare namespace Stripe {
     /**
      * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
      */
-    tiers: Array<Plan.Tier> | null;
+    tiers: Array<Tier> | null;
 
     /**
      * Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price, in `graduated` tiering pricing can successively change as the quantity grows.
@@ -93,7 +93,7 @@ declare namespace Stripe {
     /**
      * Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
      */
-    transform_usage: Plan.TransformUsage | null;
+    transform_usage: TransformUsage | null;
 
     /**
      * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
@@ -113,50 +113,7 @@ declare namespace Stripe {
 
     type Interval = 'day' | 'month' | 'week' | 'year'
 
-    interface Tier {
-      /**
-       * Price for the entire tier.
-       */
-      flat_amount?: number | null;
-
-      /**
-       * Same as `flat_amount`, but contains a decimal value with at most 12 decimal places.
-       */
-      flat_amount_decimal?: string | null;
-
-      /**
-       * Per unit price for units relevant to the tier.
-       */
-      unit_amount?: number | null;
-
-      /**
-       * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
-       */
-      unit_amount_decimal?: string | null;
-
-      /**
-       * Up to and including to this quantity will be contained in the tier.
-       */
-      up_to?: number | null;
-    }
-
     type TiersMode = 'graduated' | 'volume'
-
-    interface TransformUsage {
-      /**
-       * Divide usage by this number.
-       */
-      divide_by: number;
-
-      /**
-       * After division, either round the result `up` or `down`.
-       */
-      round: TransformUsage.Round;
-    }
-
-    namespace TransformUsage {
-      type Round = 'down' | 'up'
-    }
 
     type UsageType = 'licensed' | 'metered'
   }

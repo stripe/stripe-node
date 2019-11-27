@@ -43,7 +43,7 @@ declare namespace Stripe {
       /**
        * The line items, plans, or SKUs purchased by the customer.
        */
-      display_items?: Array<Session.DisplayItem> | null;
+      display_items?: Array<DisplayItem> | null;
 
       /**
        * Unique identifier for the object. Used to pass to `redirectToCheckout`
@@ -110,53 +110,6 @@ declare namespace Stripe {
     }
 
     namespace Session {
-      interface DisplayItem {
-        /**
-         * Amount for the display item.
-         */
-        amount?: number;
-
-        /**
-         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-         */
-        currency?: string;
-
-        custom?: DisplayItem.Custom;
-
-        plan?: Plan;
-
-        /**
-         * Quantity of the display item being purchased.
-         */
-        quantity?: number;
-
-        sku?: Sku;
-
-        /**
-         * The type of display item. One of `custom`, `plan` or `sku`
-         */
-        type?: string;
-      }
-
-      namespace DisplayItem {
-        interface Custom {
-          /**
-           * The description of the line item.
-           */
-          description?: string | null;
-
-          /**
-           * The images of the line item.
-           */
-          images?: Array<string> | null;
-
-          /**
-           * The name of the line item.
-           */
-          name: string;
-        }
-      }
-
       type Locale =
         | 'auto'
         | 'da'

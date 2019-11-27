@@ -16,7 +16,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
      */
-    billing_thresholds?: Subscription.BillingThresholds | null;
+    billing_thresholds?: BillingThresholds | null;
 
     /**
      * A date in the future at which the subscription will automatically get canceled
@@ -101,7 +101,7 @@ declare namespace Stripe {
      */
     id?: string;
 
-    invoice_customer_balance_settings?: Subscription.InvoiceCustomerBalanceSettings;
+    invoice_customer_balance_settings?: InvoiceCustomerBalanceSettings;
 
     /**
      * List of subscription items, each with an attached plan.
@@ -138,9 +138,7 @@ declare namespace Stripe {
     /**
      * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
      */
-    pending_invoice_item_interval?:
-      | Subscription.PendingInvoiceItemInterval
-      | null;
+    pending_invoice_item_interval?: PendingInvoiceItemInterval | null;
 
     /**
      * You can use this [SetupIntent](https://stripe.com/docs/api/setup_intents) to collect user authentication when creating a subscription without immediate payment or updating a subscription's payment method, allowing you to optimize for off-session payments. Learn more in the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication#scenario-2).
@@ -188,7 +186,7 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
      */
-    transfer_data?: Subscription.TransferData | null;
+    transfer_data?: TransferData | null;
 
     /**
      * If the subscription has a trial, the end of that trial.
@@ -202,42 +200,7 @@ declare namespace Stripe {
   }
 
   namespace Subscription {
-    interface BillingThresholds {
-      /**
-       * Monetary threshold that triggers the subscription to create an invoice
-       */
-      amount_gte?: number | null;
-
-      /**
-       * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
-       */
-      reset_billing_cycle_anchor?: boolean | null;
-    }
-
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
-
-    interface InvoiceCustomerBalanceSettings {
-      /**
-       * Controls whether a customer balance applied to this invoice should be consumed and not credited or debited back to the customer if voided.
-       */
-      consume_applied_balance_on_void: boolean;
-    }
-
-    interface PendingInvoiceItemInterval {
-      /**
-       * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
-       */
-      interval: PendingInvoiceItemInterval.Interval;
-
-      /**
-       * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
-       */
-      interval_count: number;
-    }
-
-    namespace PendingInvoiceItemInterval {
-      type Interval = 'day' | 'month' | 'week' | 'year'
-    }
 
     type Status =
       | 'active'
@@ -247,13 +210,6 @@ declare namespace Stripe {
       | 'past_due'
       | 'trialing'
       | 'unpaid'
-
-    interface TransferData {
-      /**
-       * The account (if any) where funds from the payment will be transferred to upon payment success.
-       */
-      destination: string | Account;
-    }
   }
 
   /**

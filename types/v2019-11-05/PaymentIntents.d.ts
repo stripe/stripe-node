@@ -105,7 +105,7 @@ declare namespace Stripe {
     /**
      * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
      */
-    last_payment_error?: PaymentIntent.LastPaymentError | null;
+    last_payment_error?: StripeError | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -122,7 +122,7 @@ declare namespace Stripe {
     /**
      * If present, this property tells you what actions you need to take in order for your customer to fulfill a payment using the provided source.
      */
-    next_action?: PaymentIntent.NextAction | null;
+    next_action?: NextAction | null;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
@@ -142,7 +142,7 @@ declare namespace Stripe {
     /**
      * Payment-method-specific configuration for this PaymentIntent.
      */
-    payment_method_options?: PaymentIntent.PaymentMethodOptions | null;
+    payment_method_options?: PaymentMethodOptions | null;
 
     /**
      * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
@@ -173,7 +173,7 @@ declare namespace Stripe {
     /**
      * Shipping information for this PaymentIntent.
      */
-    shipping?: PaymentIntent.Shipping | null;
+    shipping?: ShippingDetails | null;
 
     /**
      * This is a legacy field that will be removed in the future. It is the ID of the Source object that is associated with this PaymentIntent, if one was supplied.
@@ -206,7 +206,7 @@ declare namespace Stripe {
     /**
      * The data with which to automatically create a Transfer when the payment is finalized. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
      */
-    transfer_data?: PaymentIntent.TransferData | null;
+    transfer_data?: TransferData | null;
 
     /**
      * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
@@ -228,201 +228,6 @@ declare namespace Stripe {
 
     type ConfirmationMethod = 'automatic' | 'manual'
 
-    interface LastPaymentError {
-      /**
-       * For card errors, the ID of the failed charge.
-       */
-      charge?: string;
-
-      /**
-       * For some errors that could be handled programmatically, a short string indicating the [error code](https://stripe.com/docs/error-codes) reported.
-       */
-      code?: string;
-
-      /**
-       * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.
-       */
-      decline_code?: string;
-
-      /**
-       * A URL to more information about the [error code](https://stripe.com/docs/error-codes) reported.
-       */
-      doc_url?: string;
-
-      /**
-       * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
-       */
-      message?: string;
-
-      /**
-       * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
-       */
-      param?: string;
-
-      payment_intent?: PaymentIntent;
-
-      payment_method?: PaymentMethod;
-
-      setup_intent?: SetupIntent;
-
-      source?:
-        | Account
-        | AlipayAccount
-        | BankAccount
-        | BitcoinReceiver
-        | Card
-        | Source;
-
-      /**
-       * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
-       */
-      type: LastPaymentError.Type;
-    }
-
-    namespace LastPaymentError {
-      type Type =
-        | 'api_connection_error'
-        | 'api_error'
-        | 'authentication_error'
-        | 'card_error'
-        | 'idempotency_error'
-        | 'invalid_request_error'
-        | 'rate_limit_error'
-    }
-
-    interface NextAction {
-      redirect_to_url?: NextAction.RedirectToUrl;
-
-      /**
-       * Type of the next action to perform, one of `redirect_to_url` or `use_stripe_sdk`.
-       */
-      type: string;
-
-      /**
-       * When confirming a PaymentIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
-       */
-      use_stripe_sdk?: NextAction.UseStripeSdk;
-    }
-
-    namespace NextAction {
-      interface RedirectToUrl {
-        /**
-         * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
-         */
-        return_url?: string | null;
-
-        /**
-         * The URL you must redirect your customer to in order to authenticate the payment.
-         */
-        url?: string | null;
-      }
-
-      interface UseStripeSdk {}
-    }
-
-    interface PaymentMethodOptions {
-      card?: PaymentMethodOptions.Card;
-    }
-
-    namespace PaymentMethodOptions {
-      interface Card {
-        /**
-         * Installment details for this payment (Mexico only).
-         *
-         * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
-         */
-        installments?: Card.Installments | null;
-
-        /**
-         * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
-         */
-        request_three_d_secure?: Card.RequestThreeDSecure | null;
-      }
-
-      namespace Card {
-        interface Installments {
-          /**
-           * Installment plans that may be selected for this PaymentIntent.
-           */
-          available_plans?: Array<Installments.AvailablePlan> | null;
-
-          /**
-           * Whether Installments are enabled for this PaymentIntent.
-           */
-          enabled: boolean;
-
-          /**
-           * Installment plan selected for this PaymentIntent.
-           */
-          plan?: Installments.Plan | null;
-        }
-
-        namespace Installments {
-          interface AvailablePlan {
-            /**
-             * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
-             */
-            count?: number | null;
-
-            /**
-             * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
-             * One of `month`.
-             */
-            interval?: 'month' | null;
-
-            /**
-             * Type of installment plan, one of `fixed_count`.
-             */
-            type: 'fixed_count';
-          }
-
-          interface Plan {
-            /**
-             * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
-             */
-            count?: number | null;
-
-            /**
-             * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
-             * One of `month`.
-             */
-            interval?: 'month' | null;
-
-            /**
-             * Type of installment plan, one of `fixed_count`.
-             */
-            type: 'fixed_count';
-          }
-        }
-
-        type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only'
-      }
-    }
-
-    interface Shipping {
-      address?: Address;
-
-      /**
-       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-       */
-      carrier?: string | null;
-
-      /**
-       * Recipient name.
-       */
-      name?: string | null;
-
-      /**
-       * Recipient phone (including extension).
-       */
-      phone?: string | null;
-
-      /**
-       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-       */
-      tracking_number?: string | null;
-    }
-
     type Status =
       | 'canceled'
       | 'processing'
@@ -431,20 +236,6 @@ declare namespace Stripe {
       | 'requires_confirmation'
       | 'requires_payment_method'
       | 'succeeded'
-
-    interface TransferData {
-      /**
-       * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
-       */
-      amount?: number;
-
-      /**
-       * The account (if any) the payment will be attributed to for tax
-       * reporting, and where funds from the payment will be transferred to upon
-       * payment success.
-       */
-      destination: string | Account;
-    }
   }
 
   /**

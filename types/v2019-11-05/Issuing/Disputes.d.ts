@@ -24,7 +24,7 @@ declare namespace Stripe {
        */
       disputed_transaction?: string | Issuing.Transaction;
 
-      evidence?: Dispute.Evidence;
+      evidence?: Evidence;
 
       /**
        * Unique identifier for the object.
@@ -60,44 +60,6 @@ declare namespace Stripe {
     }
 
     namespace Dispute {
-      interface Evidence {
-        /**
-         * Evidence to support a fraudulent dispute. This will only be present if your dispute's `reason` is `fraudulent`.
-         */
-        fraudulent?: Evidence.Fraudulent | null;
-
-        /**
-         * Evidence to support an uncategorized dispute. This will only be present if your dispute's `reason` is `other`.
-         */
-        other?: Evidence.Other | null;
-      }
-
-      namespace Evidence {
-        interface Fraudulent {
-          /**
-           * Brief freeform text explaining why you are disputing this transaction.
-           */
-          dispute_explanation?: string | null;
-
-          /**
-           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
-           */
-          uncategorized_file?: string | File | null;
-        }
-
-        interface Other {
-          /**
-           * Brief freeform text explaining why you are disputing this transaction.
-           */
-          dispute_explanation: string;
-
-          /**
-           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
-           */
-          uncategorized_file?: string | File | null;
-        }
-      }
-
       type Status = 'lost' | 'under_review' | 'unsubmitted' | 'won'
     }
 
