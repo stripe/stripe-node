@@ -539,6 +539,463 @@ declare namespace Stripe {
   }
 
   /**
+   * The Capability object.
+   */
+  interface Capability {
+    /**
+     * The account for which the capability enables functionality.
+     */
+    account?: string | Account;
+
+    /**
+     * The identifier for the capability.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'capability';
+
+    /**
+     * Whether the capability has been requested.
+     */
+    requested?: boolean;
+
+    /**
+     * Time at which the capability was requested. Measured in seconds since the Unix epoch.
+     */
+    requested_at?: number | null;
+
+    requirements?: {
+      /**
+       * The date the fields in `currently_due` must be collected by to keep the capability enabled for the account.
+       */
+      current_deadline?: number | null;
+
+      /**
+       * The fields that need to be collected to keep the capability enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the capability is disabled.
+       */
+      currently_due: Array<string>;
+
+      /**
+       * If the capability is disabled, this string describes why. Possible values are `requirement.fields_needed`, `pending.onboarding`, `pending.review`, `rejected_fraud`, or `rejected.other`.
+       */
+      disabled_reason?: string | null;
+
+      /**
+       * The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
+       */
+      eventually_due: Array<string>;
+
+      /**
+       * The fields that weren't collected by the `current_deadline`. These fields need to be collected to enable the capability for the account.
+       */
+      past_due: Array<string>;
+
+      /**
+       * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
+       */
+      pending_verification: Array<string>;
+    };
+
+    /**
+     * The status of the capability. Can be `active`, `inactive`, `pending`, or `unrequested`.
+     */
+    status?: 'active' | 'disabled' | 'inactive' | 'pending' | 'unrequested';
+  }
+
+  /**
+   * The ExternalAccount object.
+   */
+  interface ExternalAccount {}
+
+  /**
+   * The LoginLink object.
+   */
+  interface LoginLink {
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created?: number;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'login_link';
+
+    /**
+     * The URL for the login link.
+     */
+    url?: string;
+  }
+
+  /**
+   * The Person object.
+   */
+  interface Person {
+    /**
+     * The account the person is associated with.
+     */
+    account: string;
+
+    address: {
+      /**
+       * City/District/Suburb/Town/Village.
+       */
+      city?: string | null;
+
+      /**
+       * 2-letter country code.
+       */
+      country?: string | null;
+
+      /**
+       * Address line 1 (Street address/PO Box/Company name).
+       */
+      line1?: string | null;
+
+      /**
+       * Address line 2 (Apartment/Suite/Unit/Building).
+       */
+      line2?: string | null;
+
+      /**
+       * ZIP or postal code.
+       */
+      postal_code?: string | null;
+
+      /**
+       * State/County/Province/Region.
+       */
+      state?: string | null;
+    };
+
+    /**
+     * The Kana variation of the person's address (Japan only).
+     */
+    address_kana:
+      | {
+        /**
+         * City/Ward.
+         */
+        city?: string | null;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string | null;
+
+        /**
+         * Block/Building number.
+         */
+        line1?: string | null;
+
+        /**
+         * Building details.
+         */
+        line2?: string | null;
+
+        /**
+         * Zip/Postal Code.
+         */
+        postal_code?: string | null;
+
+        /**
+         * Prefecture.
+         */
+        state?: string | null;
+
+        /**
+         * Town/cho-me.
+         */
+        town?: string | null;
+      }
+      | null;
+
+    /**
+     * The Kanji variation of the person's address (Japan only).
+     */
+    address_kanji:
+      | {
+        /**
+         * City/Ward.
+         */
+        city?: string | null;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string | null;
+
+        /**
+         * Block/Building number.
+         */
+        line1?: string | null;
+
+        /**
+         * Building details.
+         */
+        line2?: string | null;
+
+        /**
+         * Zip/Postal Code.
+         */
+        postal_code?: string | null;
+
+        /**
+         * Prefecture.
+         */
+        state?: string | null;
+
+        /**
+         * Town/cho-me.
+         */
+        town?: string | null;
+      }
+      | null;
+
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created: number;
+
+    dob: {
+      /**
+       * The day of birth, between 1 and 31.
+       */
+      day?: number | null;
+
+      /**
+       * The month of birth, between 1 and 12.
+       */
+      month?: number | null;
+
+      /**
+       * The four-digit year of birth.
+       */
+      year?: number | null;
+    };
+
+    /**
+     * The person's email address.
+     */
+    email: string | null;
+
+    /**
+     * The person's first name.
+     */
+    first_name: string | null;
+
+    /**
+     * The Kana variation of the person's first name (Japan only).
+     */
+    first_name_kana: string | null;
+
+    /**
+     * The Kanji variation of the person's first name (Japan only).
+     */
+    first_name_kanji: string | null;
+
+    /**
+     * The person's gender (International regulations require either "male" or "female").
+     */
+    gender: string | null;
+
+    /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * Whether the person's `id_number` was provided.
+     */
+    id_number_provided: boolean;
+
+    /**
+     * The person's last name.
+     */
+    last_name: string | null;
+
+    /**
+     * The Kana variation of the person's last name (Japan only).
+     */
+    last_name_kana: string | null;
+
+    /**
+     * The Kanji variation of the person's last name (Japan only).
+     */
+    last_name_kanji: string | null;
+
+    /**
+     * The person's maiden name.
+     */
+    maiden_name: string | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'person';
+
+    /**
+     * The person's phone number.
+     */
+    phone: string | null;
+
+    relationship: {
+      /**
+       * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+       */
+      director?: boolean | null;
+
+      /**
+       * Whether the person has significant responsibility to control, manage, or direct the organization.
+       */
+      executive?: boolean | null;
+
+      /**
+       * Whether the person is an owner of the account's legal entity.
+       */
+      owner?: boolean | null;
+
+      /**
+       * The percent owned by the person of the account's legal entity.
+       */
+      percent_ownership?: number | null;
+
+      /**
+       * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
+       */
+      representative?: boolean | null;
+
+      /**
+       * The person's title (e.g., CEO, Support Engineer).
+       */
+      title?: string | null;
+    };
+
+    /**
+     * Information about the requirements for this person, including what information needs to be collected, and by when.
+     */
+    requirements:
+      | {
+        /**
+         * Fields that need to be collected to keep the person's account enabled. If not collected by the account's `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
+         */
+        currently_due: Array<string>;
+
+        /**
+         * Fields that need to be collected assuming all volume thresholds are reached. As fields are needed, they are moved to `currently_due` and the account's `current_deadline` is set.
+         */
+        eventually_due: Array<string>;
+
+        /**
+         * Fields that weren't collected by the account's `current_deadline`. These fields need to be collected to enable payouts for the person's account.
+         */
+        past_due: Array<string>;
+
+        /**
+         * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
+         */
+        pending_verification: Array<string>;
+      }
+      | null;
+
+    /**
+     * Whether the last 4 digits of this person's SSN have been provided.
+     */
+    ssn_last_4_provided: boolean;
+
+    verification: {
+      /**
+       * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
+       */
+      additional_document?:
+        | {
+          /**
+           * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+           */
+          back?: string | File | null;
+
+          /**
+           * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
+           */
+          details?: string | null;
+
+          /**
+           * One of `document_corrupt`, `document_country_not_supported`, `document_expired`, `document_failed_copy`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_failed_greyscale`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_missing_back`, `document_missing_front`, `document_not_readable`, `document_not_uploaded`, `document_photo_mismatch`, `document_too_large`, or `document_type_not_supported`. A machine-readable code specifying the verification state for this document.
+           */
+          details_code?: string | null;
+
+          /**
+           * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+           */
+          front?: string | File | null;
+        }
+        | null;
+
+      /**
+       * A user-displayable string describing the verification state for the person. For example, this may say "Provided identity information could not be verified".
+       */
+      details?: string | null;
+
+      /**
+       * One of `document_address_mismatch`, `document_dob_mismatch`, `document_duplicate_type`, `document_id_number_mismatch`, `document_name_mismatch`, `document_nationality_mismatch`, `failed_keyed_identity`, or `failed_other`. A machine-readable code specifying the verification state for the person.
+       */
+      details_code?: string | null;
+
+      document?: {
+        /**
+         * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+         */
+        back?: string | File | null;
+
+        /**
+         * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
+         */
+        details?: string | null;
+
+        /**
+         * One of `document_corrupt`, `document_country_not_supported`, `document_expired`, `document_failed_copy`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_failed_greyscale`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_missing_back`, `document_missing_front`, `document_not_readable`, `document_not_uploaded`, `document_photo_mismatch`, `document_too_large`, or `document_type_not_supported`. A machine-readable code specifying the verification state for this document.
+         */
+        details_code?: string | null;
+
+        /**
+         * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+         */
+        front?: string | File | null;
+      };
+
+      /**
+       * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`.
+       */
+      status: string;
+    };
+  }interface DeletedPerson {
+    /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'person';
+
+    /**
+     * Always true for a deleted object
+     */
+    deleted: true;
+  }
+
+  /**
    * With [Connect](https://stripe.com/docs/connect), you can create Stripe accounts for your users.
    * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
    *

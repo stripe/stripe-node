@@ -2,7 +2,7 @@ declare namespace Stripe {
   export interface StripeConfig {
     apiVersion?: string;
     maxNetworkRetries?: number;
-    httpAgent?: Object; // TODO: improve types?
+    httpAgent?: HttpAgent;
     timeout?: number;
     host?: string;
     port?: string | number; // TODO: double-check
@@ -38,7 +38,19 @@ declare namespace Stripe {
     request_end_time: number;
   }
 
-  // TODO
-  export interface BankAccount {}
-  export interface Card {}
+  /**
+   * Should be https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/node/http.d.ts#L326
+   */
+  export class HttpAgent {
+    maxFreeSockets: number;
+    maxSockets: number;
+    readonly sockets: {
+      readonly [key: string]: Object[];
+    };
+    readonly requests: {
+      readonly [key: string]: Object[];
+    };
+    constructor(options: Object);
+    destroy(): void;
+  }
 }

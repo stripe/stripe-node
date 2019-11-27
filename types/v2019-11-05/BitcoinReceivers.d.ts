@@ -125,6 +125,46 @@ declare namespace Stripe {
   }
 
   /**
+   * The BitcoinTransaction object.
+   */
+  interface BitcoinTransaction {
+    /**
+     * The amount of `currency` that the transaction was converted to in real-time.
+     */
+    amount?: number;
+
+    /**
+     * The amount of bitcoin contained in the transaction.
+     */
+    bitcoin_amount?: number;
+
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created?: number;
+
+    /**
+     * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) to which this transaction was converted.
+     */
+    currency?: string;
+
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'bitcoin_transaction';
+
+    /**
+     * The receiver to which this transaction was sent.
+     */
+    receiver?: string;
+  }
+
+  /**
    * Returns a list of your receivers. Receivers are returned sorted by creation date, with the most recently created receivers appearing first.
    */
   interface BitcoinReceiverListParams {

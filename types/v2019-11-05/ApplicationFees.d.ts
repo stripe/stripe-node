@@ -75,6 +75,53 @@ declare namespace Stripe {
   }
 
   /**
+   * The FeeRefund object.
+   */
+  interface FeeRefund {
+    /**
+     * Amount, in %s.
+     */
+    amount?: number;
+
+    /**
+     * Balance transaction that describes the impact on your account balance.
+     */
+    balance_transaction?: string | BalanceTransaction | null;
+
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created?: number;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency?: string;
+
+    /**
+     * ID of the application fee that was refunded.
+     */
+    fee?: string | ApplicationFee;
+
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'fee_refund';
+  }
+
+  /**
    * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
    */
   interface ApplicationFeeListParams {
