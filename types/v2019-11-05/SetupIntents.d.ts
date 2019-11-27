@@ -159,7 +159,7 @@ declare namespace Stripe {
     /**
      * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
      */
-    mandate_data?: secret_key_param;
+    mandate_data?: SetupIntentCreateParams.MandateData;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -181,7 +181,7 @@ declare namespace Stripe {
     /**
      * Payment-method-specific configuration for this SetupIntent.
      */
-    payment_method_options?: payment_method_options_param;
+    payment_method_options?: SetupIntentCreateParams.PaymentMethodOptions;
 
     /**
      * The list of payment method types (e.g. card) that this SetupIntent is allowed to use. If this is not provided, defaults to ["card"].
@@ -196,7 +196,7 @@ declare namespace Stripe {
     /**
      * If this hash is populated, this SetupIntent will generate a single_use Mandate on success.
      */
-    single_use?: setup_intent_single_use_params;
+    single_use?: SetupIntentCreateParams.SingleUse;
 
     /**
      * Indicates how the payment method is intended to be used in the future. If not provided, this value defaults to `off_session`.
@@ -205,6 +205,94 @@ declare namespace Stripe {
   }
 
   namespace SetupIntentCreateParams {
+    interface MandateData {
+      /**
+       * This hash contains details about the customer acceptance of the Mandate.
+       */
+      customer_acceptance: MandateData.CustomerAcceptance;
+    }
+
+    namespace MandateData {
+      interface CustomerAcceptance {
+        /**
+         * The time at which the customer accepted the Mandate.
+         */
+        accepted_at?: number;
+
+        /**
+         * If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
+         */
+        offline?: CustomerAcceptance.Offline;
+
+        /**
+         * If this is a Mandate accepted online, this hash contains details about the online acceptance.
+         */
+        online?: CustomerAcceptance.Online;
+
+        /**
+         * The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
+         */
+        type: CustomerAcceptance.Type;
+      }
+
+      namespace CustomerAcceptance {
+        interface Offline {}
+
+        interface Online {
+          /**
+           * The IP address from which the Mandate was accepted by the customer.
+           */
+          ip_address: string;
+
+          /**
+           * The user agent of the browser from which the Mandate was accepted by the customer.
+           */
+          user_agent: string;
+        }
+
+        type Type = 'offline' | 'online'
+      }
+    }
+
+    interface PaymentMethodOptions {
+      /**
+       * Configuration for any card setup attempted on this SetupIntent.
+       */
+      card?: PaymentMethodOptions.Card;
+    }
+
+    namespace PaymentMethodOptions {
+      interface Card {
+        /**
+         * When specified, this parameter signals that a card has been collected
+         * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
+         * parameter can only be provided during confirmation.
+         */
+        moto?: boolean;
+
+        /**
+         * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+         */
+        request_three_d_secure?: Card.RequestThreeDSecure;
+      }
+
+      namespace Card {
+        type RequestThreeDSecure = 'any' | 'automatic'
+      }
+    }
+
+    interface SingleUse {
+      /**
+       * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+    }
+
     type Usage = 'off_session' | 'on_session'
   }
 
@@ -215,7 +303,7 @@ declare namespace Stripe {
     /**
      * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
      */
-    created?: range_query_specs | number;
+    created?: number | SetupIntentListParams.Created;
 
     /**
      * Only return SetupIntents for the customer specified by this customer ID.
@@ -246,6 +334,30 @@ declare namespace Stripe {
      * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
      */
     starting_after?: string;
+  }
+
+  namespace SetupIntentListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**
@@ -354,7 +466,9 @@ declare namespace Stripe {
     /**
      * This hash contains details about the Mandate to create
      */
-    mandate_data?: secret_key_param | client_key_param;
+    mandate_data?:
+      | SetupIntentConfirmParams.MandateData1
+      | SetupIntentConfirmParams.MandateData2;
 
     /**
      * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
@@ -364,7 +478,7 @@ declare namespace Stripe {
     /**
      * Payment-method-specific configuration for this SetupIntent.
      */
-    payment_method_options?: payment_method_options_param;
+    payment_method_options?: SetupIntentConfirmParams.PaymentMethodOptions;
 
     /**
      * The URL to redirect your customer back to after they authenticate on the payment method's app or site.
@@ -372,6 +486,118 @@ declare namespace Stripe {
      * This parameter is only used for cards and other redirect-based payment methods.
      */
     return_url?: string;
+  }
+
+  namespace SetupIntentConfirmParams {
+    interface MandateData1 {
+      /**
+       * This hash contains details about the customer acceptance of the Mandate.
+       */
+      customer_acceptance: MandateData1.CustomerAcceptance;
+    }
+
+    namespace MandateData1 {
+      interface CustomerAcceptance {
+        /**
+         * The time at which the customer accepted the Mandate.
+         */
+        accepted_at?: number;
+
+        /**
+         * If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
+         */
+        offline?: CustomerAcceptance.Offline;
+
+        /**
+         * If this is a Mandate accepted online, this hash contains details about the online acceptance.
+         */
+        online?: CustomerAcceptance.Online;
+
+        /**
+         * The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
+         */
+        type: CustomerAcceptance.Type;
+      }
+
+      namespace CustomerAcceptance {
+        interface Offline {}
+
+        interface Online {
+          /**
+           * The IP address from which the Mandate was accepted by the customer.
+           */
+          ip_address: string;
+
+          /**
+           * The user agent of the browser from which the Mandate was accepted by the customer.
+           */
+          user_agent: string;
+        }
+
+        type Type = 'offline' | 'online'
+      }
+    }
+    interface MandateData2 {
+      /**
+       * This hash contains details about the customer acceptance of the Mandate.
+       */
+      customer_acceptance: MandateData2.CustomerAcceptance;
+    }
+
+    namespace MandateData2 {
+      interface CustomerAcceptance {
+        /**
+         * If this is a Mandate accepted online, this hash contains details about the online acceptance.
+         */
+        online: CustomerAcceptance.Online;
+
+        /**
+         * The type of customer acceptance information included with the Mandate.
+         */
+        type: 'online';
+      }
+
+      namespace CustomerAcceptance {
+        interface Online {
+          /**
+           * The IP address from which the Mandate was accepted by the customer.
+           */
+          ip_address?: string;
+
+          /**
+           * The user agent of the browser from which the Mandate was accepted by the customer.
+           */
+          user_agent?: string;
+        }
+      }
+    }
+
+    interface PaymentMethodOptions {
+      /**
+       * Configuration for any card setup attempted on this SetupIntent.
+       */
+      card?: PaymentMethodOptions.Card;
+    }
+
+    namespace PaymentMethodOptions {
+      interface Card {
+        /**
+         * When specified, this parameter signals that a card has been collected
+         * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
+         * parameter can only be provided during confirmation.
+         */
+        moto?: boolean;
+
+        /**
+         * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+         */
+        request_three_d_secure?: Card.RequestThreeDSecure;
+      }
+
+      namespace Card {
+        type RequestThreeDSecure = 'any' | 'automatic'
+      }
+    }
   }
 
   class SetupIntentsResource {
@@ -392,7 +618,7 @@ declare namespace Stripe {
     list(
       params?: SetupIntentListParams,
       options?: HeaderOptions
-    ): Promise<PaymentFlowsSetupIntentList>;
+    ): Promise<ApiList<SetupIntent>>;
 
     /**
      * Retrieves the details of a SetupIntent that has previously been created.

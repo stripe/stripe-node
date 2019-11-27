@@ -184,7 +184,7 @@ declare namespace Stripe {
     /**
      * Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
      */
-    mandate?: mandate_params;
+    mandate?: SourceCreateParams.Mandate;
 
     /**
      * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
@@ -201,22 +201,22 @@ declare namespace Stripe {
     /**
      * Information about the owner of the payment instrument that may be used or required by particular source types.
      */
-    owner?: owner;
+    owner?: SourceCreateParams.Owner;
 
     /**
      * Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
      */
-    receiver?: receiver_params;
+    receiver?: SourceCreateParams.Receiver;
 
     /**
      * Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
      */
-    redirect?: redirect_params;
+    redirect?: SourceCreateParams.Redirect;
 
     /**
      * Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
      */
-    source_order?: shallow_order_specs;
+    source_order?: SourceCreateParams.SourceOrder;
 
     /**
      * An arbitrary string to be displayed on your customer's statement. As an example, if your website is `RunClub` and the item you're charging for is a race ticket, you may want to specify a `statement_descriptor` of `RunClub 5K race ticket.` While many payment types will display this information, some may not display it at all.
@@ -238,6 +238,248 @@ declare namespace Stripe {
 
   namespace SourceCreateParams {
     type Flow = 'code_verification' | 'none' | 'receiver' | 'redirect'
+
+    interface Mandate {
+      /**
+       * The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
+       */
+      acceptance?: Mandate.Acceptance;
+
+      /**
+       * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
+       */
+      amount?: number | '';
+
+      /**
+       * The currency specified by the mandate. (Must match `currency` of the source)
+       */
+      currency?: string;
+
+      /**
+       * The interval of debits permitted by the mandate. Either `one_time` (just permitting a single debit), `scheduled` (with debits on an agreed schedule or for clearly-defined events), or `variable`(for debits with any frequency)
+       */
+      interval?: Mandate.Interval;
+
+      /**
+       * The method Stripe should use to notify the customer of upcoming debit instructions and/or mandate confirmation as required by the underlying debit network. Either `email` (an email is sent directly to the customer), `manual` (a `source.mandate_notification` event is sent to your webhooks endpoint and you should handle the notification) or `none` (the underlying debit network does not require any notification).
+       */
+      notification_method?: Mandate.NotificationMethod;
+    }
+
+    namespace Mandate {
+      interface Acceptance {
+        /**
+         * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
+         */
+        date?: number;
+
+        /**
+         * The IP address from which the mandate was accepted or refused by the customer.
+         */
+        ip?: string;
+
+        /**
+         * The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]` is `offline`
+         */
+        offline?: Acceptance.Offline;
+
+        /**
+         * The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is `online`
+         */
+        online?: Acceptance.Online;
+
+        /**
+         * The status of the mandate acceptance. Either `accepted` (the mandate was accepted) or `refused` (the mandate was refused).
+         */
+        status: Acceptance.Status;
+
+        /**
+         * The type of acceptance information included with the mandate. Either `online` or `offline`
+         */
+        type?: Acceptance.Type;
+
+        /**
+         * The user agent of the browser from which the mandate was accepted or refused by the customer.
+         */
+        user_agent?: string;
+      }
+
+      namespace Acceptance {
+        interface Offline {
+          /**
+           * An email to contact you with if a copy of the mandate is requested, required if `type` is `offline`.
+           */
+          contact_email: string;
+        }
+
+        interface Online {
+          /**
+           * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the mandate was accepted or refused by the customer.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the mandate was accepted or refused by the customer.
+           */
+          user_agent?: string;
+        }
+
+        type Status = 'accepted' | 'pending' | 'refused' | 'revoked'
+
+        type Type = 'offline' | 'online'
+      }
+
+      type Interval = 'one_time' | 'scheduled' | 'variable'
+
+      type NotificationMethod =
+        | 'deprecated_none'
+        | 'email'
+        | 'manual'
+        | 'none'
+        | 'stripe_email'
+    }
+
+    interface Owner {
+      /**
+       * Owner's address.
+       */
+      address?: Owner.Address;
+
+      /**
+       * Owner's email address.
+       */
+      email?: string;
+
+      /**
+       * Owner's full name.
+       */
+      name?: string;
+
+      /**
+       * Owner's phone number.
+       */
+      phone?: string;
+    }
+
+    namespace Owner {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1?: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
+
+    interface Receiver {
+      /**
+       * The method Stripe should use to request information needed to process a refund or mispayment. Either `email` (an email is sent directly to the customer) or `manual` (a `source.refund_attributes_required` event is sent to your webhooks endpoint). Refer to each payment method's documentation to learn which refund attributes may be required.
+       */
+      refund_attributes_method?: Receiver.RefundAttributesMethod;
+    }
+
+    namespace Receiver {
+      type RefundAttributesMethod = 'email' | 'manual' | 'none'
+    }
+
+    interface Redirect {
+      /**
+       * The URL you provide to redirect the customer back to you after they authenticated their payment. It can use your application URI scheme in the context of a mobile application.
+       */
+      return_url: string;
+    }
+
+    interface SourceOrder {
+      /**
+       * List of items constituting the order.
+       */
+      items?: Array<SourceOrder.Item>;
+
+      /**
+       * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
+       */
+      shipping?: SourceOrder.Shipping;
+    }
+
+    namespace SourceOrder {
+      interface Item {
+        amount?: number;
+
+        currency?: string;
+
+        description?: string;
+
+        /**
+         * The ID of the SKU being ordered.
+         */
+        parent?: string;
+
+        /**
+         * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
+         */
+        quantity?: number;
+
+        type?: Item.Type;
+      }
+
+      namespace Item {
+        type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+      }
+
+      interface Shipping {
+        /**
+         * Shipping address.
+         */
+        address: Shipping.Address;
+
+        /**
+         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+         */
+        carrier?: string;
+
+        /**
+         * Recipient name.
+         */
+        name?: string;
+
+        /**
+         * Recipient phone (including extension).
+         */
+        phone?: string;
+
+        /**
+         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+         */
+        tracking_number?: string;
+      }
+
+      namespace Shipping {
+        interface Address {
+          city?: string;
+
+          country?: string;
+
+          line1: string;
+
+          line2?: string;
+
+          postal_code?: string;
+
+          state?: string;
+        }
+      }
+    }
 
     type Usage = 'reusable' | 'single_use'
   }
@@ -276,7 +518,7 @@ declare namespace Stripe {
     /**
      * Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
      */
-    mandate?: mandate_params;
+    mandate?: SourceUpdateParams.Mandate;
 
     /**
      * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
@@ -288,12 +530,238 @@ declare namespace Stripe {
     /**
      * Information about the owner of the payment instrument that may be used or required by particular source types.
      */
-    owner?: owner;
+    owner?: SourceUpdateParams.Owner;
 
     /**
      * Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
      */
-    source_order?: order_params;
+    source_order?: SourceUpdateParams.SourceOrder;
+  }
+
+  namespace SourceUpdateParams {
+    interface Mandate {
+      /**
+       * The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
+       */
+      acceptance?: Mandate.Acceptance;
+
+      /**
+       * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
+       */
+      amount?: number | '';
+
+      /**
+       * The currency specified by the mandate. (Must match `currency` of the source)
+       */
+      currency?: string;
+
+      /**
+       * The interval of debits permitted by the mandate. Either `one_time` (just permitting a single debit), `scheduled` (with debits on an agreed schedule or for clearly-defined events), or `variable`(for debits with any frequency)
+       */
+      interval?: Mandate.Interval;
+
+      /**
+       * The method Stripe should use to notify the customer of upcoming debit instructions and/or mandate confirmation as required by the underlying debit network. Either `email` (an email is sent directly to the customer), `manual` (a `source.mandate_notification` event is sent to your webhooks endpoint and you should handle the notification) or `none` (the underlying debit network does not require any notification).
+       */
+      notification_method?: Mandate.NotificationMethod;
+    }
+
+    namespace Mandate {
+      interface Acceptance {
+        /**
+         * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
+         */
+        date?: number;
+
+        /**
+         * The IP address from which the mandate was accepted or refused by the customer.
+         */
+        ip?: string;
+
+        /**
+         * The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]` is `offline`
+         */
+        offline?: Acceptance.Offline;
+
+        /**
+         * The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is `online`
+         */
+        online?: Acceptance.Online;
+
+        /**
+         * The status of the mandate acceptance. Either `accepted` (the mandate was accepted) or `refused` (the mandate was refused).
+         */
+        status: Acceptance.Status;
+
+        /**
+         * The type of acceptance information included with the mandate. Either `online` or `offline`
+         */
+        type?: Acceptance.Type;
+
+        /**
+         * The user agent of the browser from which the mandate was accepted or refused by the customer.
+         */
+        user_agent?: string;
+      }
+
+      namespace Acceptance {
+        interface Offline {
+          /**
+           * An email to contact you with if a copy of the mandate is requested, required if `type` is `offline`.
+           */
+          contact_email: string;
+        }
+
+        interface Online {
+          /**
+           * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the mandate was accepted or refused by the customer.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the mandate was accepted or refused by the customer.
+           */
+          user_agent?: string;
+        }
+
+        type Status = 'accepted' | 'pending' | 'refused' | 'revoked'
+
+        type Type = 'offline' | 'online'
+      }
+
+      type Interval = 'one_time' | 'scheduled' | 'variable'
+
+      type NotificationMethod =
+        | 'deprecated_none'
+        | 'email'
+        | 'manual'
+        | 'none'
+        | 'stripe_email'
+    }
+
+    interface Owner {
+      /**
+       * Owner's address.
+       */
+      address?: Owner.Address;
+
+      /**
+       * Owner's email address.
+       */
+      email?: string;
+
+      /**
+       * Owner's full name.
+       */
+      name?: string;
+
+      /**
+       * Owner's phone number.
+       */
+      phone?: string;
+    }
+
+    namespace Owner {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1?: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
+
+    interface SourceOrder {
+      /**
+       * List of items constituting the order.
+       */
+      items?: Array<SourceOrder.Item>;
+
+      /**
+       * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
+       */
+      shipping?: SourceOrder.Shipping;
+    }
+
+    namespace SourceOrder {
+      interface Item {
+        amount?: number;
+
+        currency?: string;
+
+        description?: string;
+
+        /**
+         * The ID of the SKU being ordered.
+         */
+        parent?: string;
+
+        /**
+         * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
+         */
+        quantity?: number;
+
+        type?: Item.Type;
+      }
+
+      namespace Item {
+        type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+      }
+
+      interface Shipping {
+        /**
+         * Shipping address.
+         */
+        address: Shipping.Address;
+
+        /**
+         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+         */
+        carrier?: string;
+
+        /**
+         * Recipient name.
+         */
+        name?: string;
+
+        /**
+         * Recipient phone (including extension).
+         */
+        phone?: string;
+
+        /**
+         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+         */
+        tracking_number?: string;
+      }
+
+      namespace Shipping {
+        interface Address {
+          city?: string;
+
+          country?: string;
+
+          line1: string;
+
+          line2?: string;
+
+          postal_code?: string;
+
+          state?: string;
+        }
+      }
+    }
   }
 
   /**
@@ -372,7 +840,7 @@ declare namespace Stripe {
       id: string,
       params?: SourceListSourceTransactionsParams,
       options?: HeaderOptions
-    ): Promise<ApmsSourcesSourceTransactionList>;
+    ): Promise<ApiList<SourceTransaction>>;
 
     /**
      * Verify a given source.

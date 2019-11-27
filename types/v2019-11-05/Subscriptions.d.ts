@@ -106,7 +106,7 @@ declare namespace Stripe {
     /**
      * List of subscription items, each with an attached plan.
      */
-    items?: SubscriptionItemList;
+    items?: ApiList<SubscriptionItem>;
 
     /**
      * The most recent invoice this subscription has generated.
@@ -234,7 +234,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?: billing_thresholds_param | '';
+    billing_thresholds?: '' | SubscriptionCreateParams.BillingThresholds;
 
     /**
      * A timestamp at which the subscription should cancel. If set to a date before the current period ends this will cause a proration if `prorate=true`.
@@ -289,12 +289,12 @@ declare namespace Stripe {
     /**
      * Controls whether a customer balance applied to an invoice should be consumed and not credited or debited back to the customer if voided by this subscription.
      */
-    invoice_customer_balance_settings?: invoice_customer_balance_settings_param;
+    invoice_customer_balance_settings?: SubscriptionCreateParams.InvoiceCustomerBalanceSettings;
 
     /**
      * List of subscription items, each with an attached plan.
      */
-    items?: Array<subscription_item_create_params>;
+    items?: Array<SubscriptionCreateParams.Item>;
 
     /**
      * A set of key-value pairs that you can attach to a `Subscription` object. It can be useful for storing additional information about the subscription in a structured format.
@@ -318,7 +318,9 @@ declare namespace Stripe {
     /**
      * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
      */
-    pending_invoice_item_interval?: pending_invoice_item_interval_params | '';
+    pending_invoice_item_interval?:
+      | ''
+      | SubscriptionCreateParams.PendingInvoiceItemInterval;
 
     /**
      * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
@@ -333,7 +335,7 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
      */
-    transfer_data?: transfer_data_specs;
+    transfer_data?: SubscriptionCreateParams.TransferData;
 
     /**
      * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
@@ -352,12 +354,87 @@ declare namespace Stripe {
   }
 
   namespace SubscriptionCreateParams {
+    interface BillingThresholds {
+      /**
+       * Monetary threshold that triggers the subscription to advance to a new billing period
+       */
+      amount_gte?: number;
+
+      /**
+       * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+       */
+      reset_billing_cycle_anchor?: boolean;
+    }
+
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface InvoiceCustomerBalanceSettings {}
+
+    interface Item {
+      /**
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+       */
+      billing_thresholds?: '' | Item.BillingThresholds;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Plan ID for this item, as a string.
+       */
+      plan: string;
+
+      /**
+       * Quantity for this item.
+       */
+      quantity?: number;
+
+      /**
+       * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+       */
+      tax_rates?: Array<string> | '';
+    }
+
+    namespace Item {
+      interface BillingThresholds {
+        /**
+         * Usage threshold that triggers the subscription to advance to a new billing period
+         */
+        usage_gte: number;
+      }
+    }
 
     type PaymentBehavior =
       | 'allow_incomplete'
       | 'error_if_incomplete'
       | 'pending_if_incomplete'
+
+    interface PendingInvoiceItemInterval {
+      /**
+       * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+       */
+      interval: PendingInvoiceItemInterval.Interval;
+
+      /**
+       * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+       */
+      interval_count?: number;
+    }
+
+    namespace PendingInvoiceItemInterval {
+      type Interval = 'day' | 'month' | 'week' | 'year'
+    }
+
+    interface TransferData {
+      /**
+       * ID of an existing, connected Stripe account.
+       */
+      destination: string;
+    }
   }
 
   /**
@@ -388,11 +465,11 @@ declare namespace Stripe {
      */
     collection_method?: SubscriptionListParams.CollectionMethod;
 
-    created?: range_query_specs | number;
+    created?: number | SubscriptionListParams.Created;
 
-    current_period_end?: range_query_specs | number;
+    current_period_end?: number | SubscriptionListParams.CurrentPeriodEnd;
 
-    current_period_start?: range_query_specs | number;
+    current_period_start?: number | SubscriptionListParams.CurrentPeriodStart;
 
     /**
      * The ID of the customer whose subscriptions will be retrieved.
@@ -433,6 +510,72 @@ declare namespace Stripe {
   namespace SubscriptionListParams {
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
 
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface CurrentPeriodEnd {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface CurrentPeriodStart {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
     type Status =
       | 'active'
       | 'all'
@@ -472,7 +615,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?: billing_thresholds_param | '';
+    billing_thresholds?: '' | SubscriptionUpdateParams.BillingThresholds;
 
     /**
      * A timestamp at which the subscription should cancel. If set to a date before the current period ends this will cause a proration if `prorate=true`.
@@ -522,12 +665,12 @@ declare namespace Stripe {
     /**
      * Controls whether a customer balance applied to an invoice should be consumed and not credited or debited back to the customer if voided by this subscription.
      */
-    invoice_customer_balance_settings?: invoice_customer_balance_settings_param;
+    invoice_customer_balance_settings?: SubscriptionUpdateParams.InvoiceCustomerBalanceSettings;
 
     /**
      * List of subscription items, each with an attached plan.
      */
-    items?: Array<subscription_item_update_params>;
+    items?: Array<SubscriptionUpdateParams.Item>;
 
     /**
      * A set of key-value pairs that you can attach to a subscription object. This can be useful for storing additional information about the subscription in a structured format.
@@ -551,7 +694,9 @@ declare namespace Stripe {
     /**
      * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
      */
-    pending_invoice_item_interval?: pending_invoice_item_interval_params | '';
+    pending_invoice_item_interval?:
+      | ''
+      | SubscriptionUpdateParams.PendingInvoiceItemInterval;
 
     /**
      * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
@@ -571,7 +716,7 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
      */
-    transfer_data?: transfer_data_specs | '';
+    transfer_data?: '' | SubscriptionUpdateParams.TransferData;
 
     /**
      * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
@@ -587,12 +732,102 @@ declare namespace Stripe {
   namespace SubscriptionUpdateParams {
     type BillingCycleAnchor = 'now' | 'unchanged'
 
+    interface BillingThresholds {
+      /**
+       * Monetary threshold that triggers the subscription to advance to a new billing period
+       */
+      amount_gte?: number;
+
+      /**
+       * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+       */
+      reset_billing_cycle_anchor?: boolean;
+    }
+
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface InvoiceCustomerBalanceSettings {}
+
+    interface Item {
+      /**
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+       */
+      billing_thresholds?: '' | Item.BillingThresholds;
+
+      /**
+       * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+       */
+      clear_usage?: boolean;
+
+      /**
+       * A flag that, if set to `true`, will delete the specified item.
+       */
+      deleted?: boolean;
+
+      /**
+       * Subscription item to update.
+       */
+      id?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Plan ID for this item, as a string.
+       */
+      plan?: string;
+
+      /**
+       * Quantity for this item.
+       */
+      quantity?: number;
+
+      /**
+       * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+       */
+      tax_rates?: Array<string> | '';
+    }
+
+    namespace Item {
+      interface BillingThresholds {
+        /**
+         * Usage threshold that triggers the subscription to advance to a new billing period
+         */
+        usage_gte: number;
+      }
+    }
 
     type PaymentBehavior =
       | 'allow_incomplete'
       | 'error_if_incomplete'
       | 'pending_if_incomplete'
+
+    interface PendingInvoiceItemInterval {
+      /**
+       * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+       */
+      interval: PendingInvoiceItemInterval.Interval;
+
+      /**
+       * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+       */
+      interval_count?: number;
+    }
+
+    namespace PendingInvoiceItemInterval {
+      type Interval = 'day' | 'month' | 'week' | 'year'
+    }
+
+    interface TransferData {
+      /**
+       * ID of an existing, connected Stripe account.
+       */
+      destination: string;
+    }
   }
 
   /**
