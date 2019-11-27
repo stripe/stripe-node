@@ -3,7 +3,7 @@ declare namespace Stripe {
    * The Mandate object.
    */
   interface Mandate {
-    customer_acceptance?: Mandate.CustomerAcceptance;
+    customer_acceptance?: CustomerAcceptance;
 
     /**
      * Unique identifier for the object.
@@ -15,7 +15,7 @@ declare namespace Stripe {
      */
     livemode?: boolean;
 
-    multi_use?: Mandate.MultiUse;
+    multi_use?: MultiUse;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
@@ -27,9 +27,9 @@ declare namespace Stripe {
      */
     payment_method?: string | PaymentMethod;
 
-    payment_method_details?: Mandate.PaymentMethodDetails;
+    payment_method_details?: PaymentMethodDetails;
 
-    single_use?: Mandate.SingleUse;
+    single_use?: SingleUse;
 
     /**
      * The status of the Mandate, one of `active`, `inactive`, or `pending`. The Mandate can be used to initiate a payment only if status=active.
@@ -43,81 +43,6 @@ declare namespace Stripe {
   }
 
   namespace Mandate {
-    interface CustomerAcceptance {
-      /**
-       * The time at which the customer accepted the Mandate.
-       */
-      accepted_at?: number | null;
-
-      offline?: CustomerAcceptance.Offline;
-
-      online?: CustomerAcceptance.Online;
-
-      /**
-       * The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
-       */
-      type: CustomerAcceptance.Type;
-    }
-
-    namespace CustomerAcceptance {
-      interface Offline {}
-
-      interface Online {
-        /**
-         * The IP address from which the Mandate was accepted by the customer.
-         */
-        ip_address?: string | null;
-
-        /**
-         * The user agent of the browser from which the Mandate was accepted by the customer.
-         */
-        user_agent?: string | null;
-      }
-
-      type Type = 'offline' | 'online'
-    }
-
-    interface MultiUse {}
-
-    interface PaymentMethodDetails {
-      card?: PaymentMethodDetails.Card;
-
-      sepa_debit?: PaymentMethodDetails.SepaDebit;
-
-      /**
-       * The type of the payment method associated with this mandate. An additional hash is included on `payment_method_details` with a name matching this value. It contains mandate information specific to the payment method.
-       */
-      type: string;
-    }
-
-    namespace PaymentMethodDetails {
-      interface Card {}
-
-      interface SepaDebit {
-        /**
-         * The unique reference of the mandate.
-         */
-        reference: string;
-
-        /**
-         * The URL of the mandate. This URL generally contains sensitive information about the customer and should be shared with them exclusively.
-         */
-        url: string;
-      }
-    }
-
-    interface SingleUse {
-      /**
-       * On a single use mandate, the amount of the payment.
-       */
-      amount: number;
-
-      /**
-       * On a single use mandate, the currency of the payment.
-       */
-      currency: string;
-    }
-
     type Status = 'active' | 'inactive' | 'pending'
 
     type Type = 'multi_use' | 'single_use'

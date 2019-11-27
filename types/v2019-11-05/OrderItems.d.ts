@@ -4,38 +4,28 @@ declare namespace Stripe {
    */
   interface OrderItem {
     /**
-     * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
+     * The amount (price) for this order item.
      */
-    amount?: number;
+    amount?: number | null;
 
     /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     * This currency of this order item. Required when `amount` is present.
      */
-    currency?: string;
+    currency?: string | null;
 
     /**
-     * Description of the line item, meant to be displayable to the user (e.g., `"Express shipping"`).
+     * Human-readable description for this order item.
      */
-    description?: string;
+    description?: string | null;
 
     /**
-     * String representing the object's type. Objects of the same type share the same value.
+     * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
      */
-    object?: 'order_item';
+    quantity?: number;
 
     /**
-     * The ID of the associated object for this line item. Expandable if not null (e.g., expandable to a SKU).
+     * The type of this order item. Must be `sku`, `tax`, or `shipping`.
      */
-    parent?: string | Sku | null;
-
-    /**
-     * A positive integer representing the number of instances of `parent` that are included in this order item. Applicable/present only if `type` is `sku`.
-     */
-    quantity?: number | null;
-
-    /**
-     * The type of line item. One of `sku`, `tax`, `shipping`, or `discount`.
-     */
-    type?: string;
+    type?: string | null;
   }
 }

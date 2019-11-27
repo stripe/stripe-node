@@ -28,9 +28,9 @@ declare namespace Stripe {
      */
     currency?: string;
 
-    evidence?: Dispute.Evidence;
+    evidence?: Evidence;
 
-    evidence_details?: Dispute.EvidenceDetails;
+    evidence_details?: EvidenceDetails;
 
     /**
      * Unique identifier for the object.
@@ -81,165 +81,6 @@ declare namespace Stripe {
   }
 
   namespace Dispute {
-    interface Evidence {
-      /**
-       * Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity.
-       */
-      access_activity_log?: string | null;
-
-      /**
-       * The billing address provided by the customer.
-       */
-      billing_address?: string | null;
-
-      /**
-       * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Your subscription cancellation policy, as shown to the customer.
-       */
-      cancellation_policy?: string | File | null;
-
-      /**
-       * An explanation of how and when the customer was shown your refund policy prior to purchase.
-       */
-      cancellation_policy_disclosure?: string | null;
-
-      /**
-       * A justification for why the customer's subscription was not canceled.
-       */
-      cancellation_rebuttal?: string | null;
-
-      /**
-       * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any communication with the customer that you feel is relevant to your case. Examples include emails proving that the customer received the product or service, or demonstrating their use of or satisfaction with the product or service.
-       */
-      customer_communication?: string | File | null;
-
-      /**
-       * The email address of the customer.
-       */
-      customer_email_address?: string | null;
-
-      /**
-       * The name of the customer.
-       */
-      customer_name?: string | null;
-
-      /**
-       * The IP address that the customer used when making the purchase.
-       */
-      customer_purchase_ip?: string | null;
-
-      /**
-       * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) A relevant document or contract showing the customer's signature.
-       */
-      customer_signature?: string | File | null;
-
-      /**
-       * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Documentation for the prior charge that can uniquely identify the charge, such as a receipt, shipping label, work order, etc. This document should be paired with a similar document from the disputed payment that proves the two payments are separate.
-       */
-      duplicate_charge_documentation?: string | File | null;
-
-      /**
-       * An explanation of the difference between the disputed charge versus the prior charge that appears to be a duplicate.
-       */
-      duplicate_charge_explanation?: string | null;
-
-      /**
-       * The Stripe ID for the prior charge which appears to be a duplicate of the disputed charge.
-       */
-      duplicate_charge_id?: string | null;
-
-      /**
-       * A description of the product or service that was sold.
-       */
-      product_description?: string | null;
-
-      /**
-       * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any receipt or message sent to the customer notifying them of the charge.
-       */
-      receipt?: string | File | null;
-
-      /**
-       * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Your refund policy, as shown to the customer.
-       */
-      refund_policy?: string | File | null;
-
-      /**
-       * Documentation demonstrating that the customer was shown your refund policy prior to purchase.
-       */
-      refund_policy_disclosure?: string | null;
-
-      /**
-       * A justification for why the customer is not entitled to a refund.
-       */
-      refund_refusal_explanation?: string | null;
-
-      /**
-       * The date on which the customer received or began receiving the purchased service, in a clear human-readable format.
-       */
-      service_date?: string | null;
-
-      /**
-       * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Documentation showing proof that a service was provided to the customer. This could include a copy of a signed contract, work order, or other form of written agreement.
-       */
-      service_documentation?: string | File | null;
-
-      /**
-       * The address to which a physical product was shipped. You should try to include as complete address information as possible.
-       */
-      shipping_address?: string | null;
-
-      /**
-       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc. If multiple carriers were used for this purchase, please separate them with commas.
-       */
-      shipping_carrier?: string | null;
-
-      /**
-       * The date on which a physical product began its route to the shipping address, in a clear human-readable format.
-       */
-      shipping_date?: string | null;
-
-      /**
-       * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Documentation showing proof that a product was shipped to the customer at the same address the customer provided to you. This could include a copy of the shipment receipt, shipping label, etc. It should show the customer's full shipping address, if possible.
-       */
-      shipping_documentation?: string | File | null;
-
-      /**
-       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-       */
-      shipping_tracking_number?: string | null;
-
-      /**
-       * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any additional evidence or statements.
-       */
-      uncategorized_file?: string | File | null;
-
-      /**
-       * Any additional evidence or statements.
-       */
-      uncategorized_text?: string | null;
-    }
-
-    interface EvidenceDetails {
-      /**
-       * Date by which evidence must be submitted in order to successfully challenge dispute. Will be null if the customer's bank or credit card company doesn't allow a response for this particular dispute.
-       */
-      due_by?: number | null;
-
-      /**
-       * Whether evidence has been staged for this dispute.
-       */
-      has_evidence: boolean;
-
-      /**
-       * Whether the last evidence submission was submitted past the due date. Defaults to `false` if no evidence submissions have occurred. If `true`, then delivery of the latest evidence is *not* guaranteed.
-       */
-      past_due: boolean;
-
-      /**
-       * The number of times evidence has been submitted. Typically, you may only submit evidence once.
-       */
-      submission_count: number;
-    }
-
     type Status =
       | 'charge_refunded'
       | 'lost'
@@ -260,7 +101,7 @@ declare namespace Stripe {
      */
     charge?: string;
 
-    created?: number | DisputeListParams.Created;
+    created?: range_query_specs | number;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -288,30 +129,6 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  namespace DisputeListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
   /**
    * Retrieves the dispute with the given ID.
    */
@@ -331,7 +148,7 @@ declare namespace Stripe {
     /**
      * Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
      */
-    evidence?: DisputeUpdateParams.Evidence;
+    evidence?: dispute_evidence_params;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -349,88 +166,6 @@ declare namespace Stripe {
      * Whether to immediately submit evidence to the bank. If `false`, evidence is staged on the dispute. Staged evidence is visible in the API and Dashboard, and can be submitted to the bank by making another request with this attribute set to `true` (the default).
      */
     submit?: boolean;
-  }
-
-  namespace DisputeUpdateParams {
-    interface Evidence {
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      access_activity_log?: string;
-
-      billing_address?: string;
-
-      cancellation_policy?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      cancellation_policy_disclosure?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      cancellation_rebuttal?: string;
-
-      customer_communication?: string;
-
-      customer_email_address?: string;
-
-      customer_name?: string;
-
-      customer_purchase_ip?: string;
-
-      customer_signature?: string;
-
-      duplicate_charge_documentation?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      duplicate_charge_explanation?: string;
-
-      duplicate_charge_id?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      product_description?: string;
-
-      receipt?: string;
-
-      refund_policy?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      refund_policy_disclosure?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      refund_refusal_explanation?: string;
-
-      service_date?: string;
-
-      service_documentation?: string;
-
-      shipping_address?: string;
-
-      shipping_carrier?: string;
-
-      shipping_date?: string;
-
-      shipping_documentation?: string;
-
-      shipping_tracking_number?: string;
-
-      uncategorized_file?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      uncategorized_text?: string;
-    }
   }
 
   /**

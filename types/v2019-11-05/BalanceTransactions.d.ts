@@ -38,7 +38,7 @@ declare namespace Stripe {
     /**
      * Detailed breakdown of fees (in %s) paid for this transaction.
      */
-    fee_details?: Array<BalanceTransaction.FeeDetail>;
+    fee_details?: Array<Fee>;
 
     /**
      * Unique identifier for the object.
@@ -89,30 +89,6 @@ declare namespace Stripe {
   }
 
   namespace BalanceTransaction {
-    interface FeeDetail {
-      /**
-       * Amount of the fee, in cents.
-       */
-      amount: number;
-
-      application?: string | null;
-
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      currency: string;
-
-      /**
-       * An arbitrary string attached to the object. Often useful for displaying to users.
-       */
-      description?: string | null;
-
-      /**
-       * Type of the fee, one of: `application_fee`, `stripe_fee` or `tax`.
-       */
-      type: string;
-    }
-
     type Type =
       | 'adjustment'
       | 'advance'
@@ -151,9 +127,9 @@ declare namespace Stripe {
    * Note that this endpoint was previously called “Balance history” and used the path /v1/balance/history.
    */
   interface BalanceTransactionListParams {
-    available_on?: number | BalanceTransactionListParams.AvailableOn;
+    available_on?: range_query_specs | number;
 
-    created?: number | BalanceTransactionListParams.Created;
+    created?: range_query_specs | number;
 
     currency?: string;
 
@@ -193,52 +169,6 @@ declare namespace Stripe {
     type?: string;
   }
 
-  namespace BalanceTransactionListParams {
-    interface AvailableOn {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
   /**
    * Retrieves the balance transaction with the given ID.
    *
@@ -260,7 +190,7 @@ declare namespace Stripe {
     list(
       params?: BalanceTransactionListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<BalanceTransaction>>;
+    ): Promise<BalanceTransactionsList>;
 
     /**
      * Retrieves the balance transaction with the given ID.

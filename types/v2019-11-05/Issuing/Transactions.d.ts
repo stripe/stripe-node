@@ -58,7 +58,7 @@ declare namespace Stripe {
        */
       merchant_currency?: string;
 
-      merchant_data?: Transaction.MerchantData;
+      merchant_data?: Issuing.MerchantData;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -78,50 +78,6 @@ declare namespace Stripe {
       type?: string;
     }
 
-    namespace Transaction {
-      interface MerchantData {
-        /**
-         * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
-         */
-        category: string;
-
-        /**
-         * City where the seller is located
-         */
-        city?: string | null;
-
-        /**
-         * Country where the seller is located
-         */
-        country?: string | null;
-
-        /**
-         * Name of the seller
-         */
-        name?: string | null;
-
-        /**
-         * Identifier assigned to the seller by the card brand
-         */
-        network_id: string;
-
-        /**
-         * Postal code where the seller is located
-         */
-        postal_code?: string | null;
-
-        /**
-         * State where the seller is located
-         */
-        state?: string | null;
-
-        /**
-         * The url an online purchase was made from
-         */
-        url?: string | null;
-      }
-    }
-
     /**
      * Returns a list of Issuing Transaction objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
      */
@@ -139,7 +95,7 @@ declare namespace Stripe {
       /**
        * Only return transactions that were created during the given date interval.
        */
-      created?: number | TransactionListParams.Created;
+      created?: range_query_specs | number;
 
       /**
        * Only return transactions that originate from a given dispute.
@@ -165,30 +121,6 @@ declare namespace Stripe {
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
        */
       starting_after?: string;
-    }
-
-    namespace TransactionListParams {
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
     }
 
     /**

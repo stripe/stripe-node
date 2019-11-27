@@ -176,9 +176,9 @@ declare namespace Stripe {
    * Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
    */
   interface PayoutListParams {
-    arrival_date?: number | PayoutListParams.ArrivalDate;
+    arrival_date?: range_query_specs | number;
 
-    created?: number | PayoutListParams.Created;
+    created?: range_query_specs | number;
 
     /**
      * The ID of an external account - only return payouts sent to this external account.
@@ -209,52 +209,6 @@ declare namespace Stripe {
      * Only return payouts that have the given status: `pending`, `paid`, `failed`, or `canceled`.
      */
     status?: string;
-  }
-
-  namespace PayoutListParams {
-    interface ArrivalDate {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
   }
 
   /**
@@ -313,7 +267,7 @@ declare namespace Stripe {
     list(
       params?: PayoutListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Payout>>;
+    ): Promise<PayoutList>;
 
     /**
      * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
