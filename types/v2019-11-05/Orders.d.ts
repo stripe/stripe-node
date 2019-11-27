@@ -81,115 +81,12 @@ declare namespace Stripe {
     /**
      * The shipping address for the order. Present if the order is for goods to be shipped.
      */
-    shipping?:
-      | {
-        address?: {
-          /**
-           * City/District/Suburb/Town/Village.
-           */
-          city?: string | null;
-
-          /**
-           * 2-letter country code.
-           */
-          country?: string | null;
-
-          /**
-           * Address line 1 (Street address/PO Box/Company name).
-           */
-          line1?: string | null;
-
-          /**
-           * Address line 2 (Apartment/Suite/Unit/Building).
-           */
-          line2?: string | null;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string | null;
-
-          /**
-           * State/County/Province/Region.
-           */
-          state?: string | null;
-        };
-
-        /**
-         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-         */
-        carrier?: string | null;
-
-        /**
-         * Recipient name.
-         */
-        name?: string | null;
-
-        /**
-         * Recipient phone (including extension).
-         */
-        phone?: string | null;
-
-        /**
-         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-         */
-        tracking_number?: string | null;
-      }
-      | null;
+    shipping?: Order.Shipping | null;
 
     /**
      * A list of supported shipping methods for this order. The desired shipping method can be specified either by updating the order, or when paying it.
      */
-    shipping_methods?:
-      | Array<{
-        /**
-         * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
-         */
-        amount: number;
-
-        /**
-         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-         */
-        currency: string;
-
-        /**
-         * The estimated delivery date for the given shipping method. Can be either a specific date or a range.
-         */
-        delivery_estimate?:
-          | {
-            /**
-             * If `type` is `"exact"`, `date` will be the expected delivery date in the format YYYY-MM-DD.
-             */
-            date?: string;
-
-            /**
-             * If `type` is `"range"`, `earliest` will be be the earliest delivery date in the format YYYY-MM-DD.
-             */
-            earliest?: string;
-
-            /**
-             * If `type` is `"range"`, `latest` will be the latest delivery date in the format YYYY-MM-DD.
-             */
-            latest?: string;
-
-            /**
-             * The type of estimate. Must be either `"range"` or `"exact"`.
-             */
-            type: string;
-          }
-          | null;
-
-        /**
-         * An arbitrary string attached to the object. Often useful for displaying to users.
-         */
-        description: string;
-
-        /**
-         * Unique identifier for the object.
-         */
-        id: string;
-      }>
-      | null;
+    shipping_methods?: Array<Order.ShippingMethod> | null;
 
     /**
      * Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More details in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
@@ -199,17 +96,7 @@ declare namespace Stripe {
     /**
      * The timestamps at which the order status was updated.
      */
-    status_transitions?:
-      | {
-        canceled?: number | null;
-
-        fulfiled?: number | null;
-
-        paid?: number | null;
-
-        returned?: number | null;
-      }
-      | null;
+    status_transitions?: Order.StatusTransitions | null;
 
     updated?: number | null;
 
@@ -217,6 +104,127 @@ declare namespace Stripe {
      * The user's order ID if it is different from the Stripe order ID.
      */
     upstream_id?: string;
+  }
+
+  namespace Order {
+    interface Shipping {
+      address?: Shipping.Address;
+
+      /**
+       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+       */
+      carrier?: string | null;
+
+      /**
+       * Recipient name.
+       */
+      name?: string | null;
+
+      /**
+       * Recipient phone (including extension).
+       */
+      phone?: string | null;
+
+      /**
+       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+       */
+      tracking_number?: string | null;
+    }
+
+    namespace Shipping {
+      interface Address {
+        /**
+         * City/District/Suburb/Town/Village.
+         */
+        city?: string | null;
+
+        /**
+         * 2-letter country code.
+         */
+        country?: string | null;
+
+        /**
+         * Address line 1 (Street address/PO Box/Company name).
+         */
+        line1?: string | null;
+
+        /**
+         * Address line 2 (Apartment/Suite/Unit/Building).
+         */
+        line2?: string | null;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string | null;
+
+        /**
+         * State/County/Province/Region.
+         */
+        state?: string | null;
+      }
+    }
+
+    interface ShippingMethod {
+      /**
+       * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * The estimated delivery date for the given shipping method. Can be either a specific date or a range.
+       */
+      delivery_estimate?: ShippingMethod.DeliveryEstimate | null;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description: string;
+
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+    }
+
+    namespace ShippingMethod {
+      interface DeliveryEstimate {
+        /**
+         * If `type` is `"exact"`, `date` will be the expected delivery date in the format YYYY-MM-DD.
+         */
+        date?: string;
+
+        /**
+         * If `type` is `"range"`, `earliest` will be be the earliest delivery date in the format YYYY-MM-DD.
+         */
+        earliest?: string;
+
+        /**
+         * If `type` is `"range"`, `latest` will be the latest delivery date in the format YYYY-MM-DD.
+         */
+        latest?: string;
+
+        /**
+         * The type of estimate. Must be either `"range"` or `"exact"`.
+         */
+        type: string;
+      }
+    }
+
+    interface StatusTransitions {
+      canceled?: number | null;
+
+      fulfiled?: number | null;
+
+      paid?: number | null;
+
+      returned?: number | null;
+    }
   }
 
   /**
@@ -251,7 +259,23 @@ declare namespace Stripe {
     /**
      * List of items constituting the order. An order can have up to 25 items.
      */
-    items?: Array<{
+    items?: Array<OrderCreateParams.Item>;
+
+    /**
+     * A set of key-value pairs that you can attach to an order object. Limited to 500 characters. Metadata can be useful for storing additional information about the order in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
+     */
+    shipping?: OrderCreateParams.Shipping;
+  }
+
+  namespace OrderCreateParams {
+    interface Item {
       amount?: number;
 
       currency?: string;
@@ -268,24 +292,32 @@ declare namespace Stripe {
        */
       quantity?: number;
 
-      type?: 'discount' | 'shipping' | 'sku' | 'tax';
-    }>;
+      type?: Item.Type;
+    }
 
-    /**
-     * A set of key-value pairs that you can attach to an order object. Limited to 500 characters. Metadata can be useful for storing additional information about the order in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
+    namespace Item {
+      type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+    }
 
-    /**
-     * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
-     */
-    shipping?: {
+    interface Shipping {
       /**
        * Customer shipping address.
        */
-      address: {
+      address: Shipping.Address;
+
+      /**
+       * Customer name.
+       */
+      name: string;
+
+      /**
+       * Customer phone (including extension).
+       */
+      phone?: string;
+    }
+
+    namespace Shipping {
+      interface Address {
         city?: string;
 
         country?: string;
@@ -297,18 +329,8 @@ declare namespace Stripe {
         postal_code?: string;
 
         state?: string;
-      };
-
-      /**
-       * Customer name.
-       */
-      name: string;
-
-      /**
-       * Customer phone (including extension).
-       */
-      phone?: string;
-    };
+      }
+    }
   }
 
   /**
@@ -318,29 +340,7 @@ declare namespace Stripe {
     /**
      * Date this order was created.
      */
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | OrderListParams.Created;
 
     /**
      * Only return orders for the given customer.
@@ -380,120 +380,148 @@ declare namespace Stripe {
     /**
      * Filter orders based on when they were paid, fulfilled, canceled, or returned.
      */
-    status_transitions?: {
-      /**
-       * Date this order was canceled.
-       */
-      canceled?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * Date this order was fulfilled.
-       */
-      fulfilled?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * Date this order was paid.
-       */
-      paid?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-
-      /**
-       * Date this order was returned.
-       */
-      returned?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
-    };
+    status_transitions?: OrderListParams.StatusTransitions;
 
     /**
      * Only return orders with the given upstream order IDs.
      */
     upstream_ids?: Array<string>;
+  }
+
+  namespace OrderListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface StatusTransitions {
+      /**
+       * Date this order was canceled.
+       */
+      canceled?: number | StatusTransitions.Canceled;
+
+      /**
+       * Date this order was fulfilled.
+       */
+      fulfilled?: number | StatusTransitions.Fulfilled;
+
+      /**
+       * Date this order was paid.
+       */
+      paid?: number | StatusTransitions.Paid;
+
+      /**
+       * Date this order was returned.
+       */
+      returned?: number | StatusTransitions.Returned;
+    }
+
+    namespace StatusTransitions {
+      interface Canceled {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
+
+      interface Fulfilled {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
+
+      interface Paid {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
+
+      interface Returned {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
+    }
   }
 
   /**
@@ -535,7 +563,16 @@ declare namespace Stripe {
     /**
      * Tracking information once the order has been fulfilled.
      */
-    shipping?: {
+    shipping?: OrderUpdateParams.Shipping;
+
+    /**
+     * Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More detail in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
+     */
+    status?: OrderUpdateParams.Status;
+  }
+
+  namespace OrderUpdateParams {
+    interface Shipping {
       /**
        * The name of the carrier like `USPS`, `UPS`, or `FedEx`.
        */
@@ -545,12 +582,9 @@ declare namespace Stripe {
        * The tracking number provided by the carrier.
        */
       tracking_number: string;
-    };
+    }
 
-    /**
-     * Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More detail in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
-     */
-    status?: 'canceled' | 'created' | 'fulfilled' | 'paid' | 'returned';
+    type Status = 'canceled' | 'created' | 'fulfilled' | 'paid' | 'returned'
   }
 
   /**
@@ -599,34 +633,40 @@ declare namespace Stripe {
     /**
      * List of items to return.
      */
-    items?:
-      | Array<{
-        /**
-         * The amount (price) for this order item to return.
-         */
-        amount?: number;
+    items?: '' | OrderReturnOrderParams.Items;
+  }
 
-        /**
-         * If returning a `tax` item, use description to disambiguate which one to return.
-         */
-        description?: string;
+  namespace OrderReturnOrderParams {
+    interface Items {
+      /**
+       * The amount (price) for this order item to return.
+       */
+      amount?: number;
 
-        /**
-         * The ID of the SKU, tax, or shipping item being returned.
-         */
-        parent?: string;
+      /**
+       * If returning a `tax` item, use description to disambiguate which one to return.
+       */
+      description?: string;
 
-        /**
-         * When type is `sku`, this is the number of instances of the SKU to be returned.
-         */
-        quantity?: number;
+      /**
+       * The ID of the SKU, tax, or shipping item being returned.
+       */
+      parent?: string;
 
-        /**
-         * The type of this order item. Must be `sku`, `tax`, or `shipping`.
-         */
-        type?: 'discount' | 'shipping' | 'sku' | 'tax';
-      }>
-      | '';
+      /**
+       * When type is `sku`, this is the number of instances of the SKU to be returned.
+       */
+      quantity?: number;
+
+      /**
+       * The type of this order item. Must be `sku`, `tax`, or `shipping`.
+       */
+      type?: Items.Type;
+    }
+
+    namespace Items {
+      type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+    }
   }
 
   class OrdersResource {

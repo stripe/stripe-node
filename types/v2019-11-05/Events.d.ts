@@ -18,17 +18,7 @@ declare namespace Stripe {
      */
     created?: number;
 
-    data?: {
-      /**
-       * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](#invoice_object) as the value of the object key.
-       */
-      object: {};
-
-      /**
-       * Object containing the names of the attributes that have changed, and their previous values (sent along only with *.updated events).
-       */
-      previous_attributes?: {};
-    };
+    data?: Event.Data;
 
     /**
      * Unique identifier for the object.
@@ -53,19 +43,7 @@ declare namespace Stripe {
     /**
      * Information on the API request that instigated the event.
      */
-    request?:
-      | {
-        /**
-         * ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe's automatic subscription handling). Request logs are available in the [dashboard](https://dashboard.stripe.com/logs), but currently not in the API.
-         */
-        id?: string | null;
-
-        /**
-         * The idempotency key transmitted during the request, if any. *Note: This property is populated only for events on or after May 23, 2017*.
-         */
-        idempotency_key?: string | null;
-      }
-      | null;
+    request?: Event.Request | null;
 
     /**
      * Description of the event (e.g., `invoice.created` or `charge.refunded`).
@@ -73,33 +51,43 @@ declare namespace Stripe {
     type?: string;
   }
 
+  namespace Event {
+    interface Data {
+      /**
+       * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](#invoice_object) as the value of the object key.
+       */
+      object: Data.Object;
+
+      /**
+       * Object containing the names of the attributes that have changed, and their previous values (sent along only with *.updated events).
+       */
+      previous_attributes?: Data.PreviousAttributes;
+    }
+
+    namespace Data {
+      interface Object {}
+
+      interface PreviousAttributes {}
+    }
+
+    interface Request {
+      /**
+       * ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe's automatic subscription handling). Request logs are available in the [dashboard](https://dashboard.stripe.com/logs), but currently not in the API.
+       */
+      id?: string | null;
+
+      /**
+       * The idempotency key transmitted during the request, if any. *Note: This property is populated only for events on or after May 23, 2017*.
+       */
+      idempotency_key?: string | null;
+    }
+  }
+
   /**
    * List events, going back up to 30 days. Each event data is rendered according to Stripe API version at its creation time, specified in [event object](https://stripe.com/docs/api/events/object) api_version attribute (not according to your current Stripe API version or Stripe-Version header).
    */
   interface EventListParams {
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | EventListParams.Created;
 
     /**
      * Filter events by whether all webhooks were successfully delivered. If false, events which are still pending or have failed all delivery attempts to a webhook endpoint will be returned.
@@ -135,6 +123,30 @@ declare namespace Stripe {
      * An array of up to 20 strings containing specific event names. The list will be filtered to include only events with a matching event property. You may pass either `type` or `types`, but not both.
      */
     types?: Array<string>;
+  }
+
+  namespace EventListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**

@@ -78,7 +78,31 @@ declare namespace Stripe {
     /**
      * Events sent to this endpoint will be generated with this Stripe Version instead of your account's default Stripe Version.
      */
-    api_version?:
+    api_version?: WebhookEndpointCreateParams.ApiVersion;
+
+    /**
+     * Whether this endpoint should receive events from connected accounts (`true`), or from your account (`false`). Defaults to `false`.
+     */
+    connect?: boolean;
+
+    /**
+     * The list of events to enable for this endpoint. You may specify `['*']` to enable all events, except those that require explicit selection.
+     */
+    enabled_events: Array<WebhookEndpointCreateParams.EnabledEvent>;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * The URL of the webhook endpoint.
+     */
+    url: string;
+  }
+
+  namespace WebhookEndpointCreateParams {
+    type ApiVersion =
       | '2011-01-01'
       | '2011-06-21'
       | '2011-06-28'
@@ -171,17 +195,9 @@ declare namespace Stripe {
       | '2019-09-09'
       | '2019-10-08'
       | '2019-10-17'
-      | '2019-11-05';
+      | '2019-11-05'
 
-    /**
-     * Whether this endpoint should receive events from connected accounts (`true`), or from your account (`false`). Defaults to `false`.
-     */
-    connect?: boolean;
-
-    /**
-     * The list of events to enable for this endpoint. You may specify `['*']` to enable all events, except those that require explicit selection.
-     */
-    enabled_events: Array<
+    type EnabledEvent =
       | '*'
       | 'account.application.authorized'
       | 'account.application.deauthorized'
@@ -331,17 +347,7 @@ declare namespace Stripe {
       | 'transfer.failed'
       | 'transfer.paid'
       | 'transfer.reversed'
-      | 'transfer.updated'>;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * The URL of the webhook endpoint.
-     */
-    url: string;
+      | 'transfer.updated'
   }
 
   /**
@@ -396,7 +402,21 @@ declare namespace Stripe {
     /**
      * The list of events to enable for this endpoint. You may specify `['*']` to enable all events, except those that require explicit selection.
      */
-    enabled_events?: Array<
+    enabled_events?: Array<WebhookEndpointUpdateParams.EnabledEvent>;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * The URL of the webhook endpoint.
+     */
+    url?: string;
+  }
+
+  namespace WebhookEndpointUpdateParams {
+    type EnabledEvent =
       | '*'
       | 'account.application.authorized'
       | 'account.application.deauthorized'
@@ -546,17 +566,7 @@ declare namespace Stripe {
       | 'transfer.failed'
       | 'transfer.paid'
       | 'transfer.reversed'
-      | 'transfer.updated'>;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * The URL of the webhook endpoint.
-     */
-    url?: string;
+      | 'transfer.updated'
   }
 
   class WebhookEndpointsResource {

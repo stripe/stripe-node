@@ -51,7 +51,7 @@ declare namespace Stripe {
     /**
      * A set of available payout methods for this card. Will be either `["standard"]` or `["standard", "instant"]`. Only values from this set should be passed as the `method` when creating a transfer.
      */
-    available_payout_methods: Array<'instant' | 'standard'> | null;
+    available_payout_methods: Array<Card.AvailablePayoutMethod> | null;
 
     /**
      * Card brand. Can be `American Express`, `Diners Club`, `Discover`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
@@ -159,6 +159,10 @@ declare namespace Stripe {
      * If the card number is tokenized, this is the method that was used. Can be `apple_pay` or `google_pay`.
      */
     tokenization_method: string | null;
+  }
+
+  namespace Card {
+    type AvailablePayoutMethod = 'instant' | 'standard'
   }
 
   interface DeletedCard {

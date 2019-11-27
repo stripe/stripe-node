@@ -16,19 +16,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
      */
-    billing_thresholds?:
-      | {
-        /**
-         * Monetary threshold that triggers the subscription to create an invoice
-         */
-        amount_gte?: number | null;
-
-        /**
-         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
-         */
-        reset_billing_cycle_anchor?: boolean | null;
-      }
-      | null;
+    billing_thresholds?: Subscription.BillingThresholds | null;
 
     /**
      * A date in the future at which the subscription will automatically get canceled
@@ -48,7 +36,7 @@ declare namespace Stripe {
     /**
      * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
      */
-    collection_method?: 'charge_automatically' | 'send_invoice' | null;
+    collection_method?: Subscription.CollectionMethod | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -113,12 +101,7 @@ declare namespace Stripe {
      */
     id?: string;
 
-    invoice_customer_balance_settings?: {
-      /**
-       * Controls whether a customer balance applied to this invoice should be consumed and not credited or debited back to the customer if voided.
-       */
-      consume_applied_balance_on_void: boolean;
-    };
+    invoice_customer_balance_settings?: Subscription.InvoiceCustomerBalanceSettings;
 
     /**
      * List of subscription items, each with an attached plan.
@@ -156,17 +139,7 @@ declare namespace Stripe {
      * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
      */
     pending_invoice_item_interval?:
-      | {
-        /**
-         * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
-         */
-        interval: 'day' | 'month' | 'week' | 'year';
-
-        /**
-         * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
-         */
-        interval_count: number;
-      }
+      | Subscription.PendingInvoiceItemInterval
       | null;
 
     /**
@@ -205,14 +178,7 @@ declare namespace Stripe {
      *
      * If subscription `collection_method=send_invoice` it becomes `past_due` when its invoice is not paid by the due date, and `canceled` or `unpaid` if it is still not paid by an additional deadline after that. Note that when a subscription has a status of `unpaid`, no subsequent invoices will be attempted (invoices will be created, but then immediately automatically closed). After receiving updated payment information from a customer, you may choose to reopen and pay their closed invoices.
      */
-    status?:
-      | 'active'
-      | 'canceled'
-      | 'incomplete'
-      | 'incomplete_expired'
-      | 'past_due'
-      | 'trialing'
-      | 'unpaid';
+    status?: Subscription.Status;
 
     /**
      * If provided, each invoice created by this subscription will apply the tax rate, increasing the amount billed to the customer.
@@ -222,14 +188,7 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
      */
-    transfer_data?:
-      | {
-        /**
-         * The account (if any) where funds from the payment will be transferred to upon payment success.
-         */
-        destination: string | Account;
-      }
-      | null;
+    transfer_data?: Subscription.TransferData | null;
 
     /**
      * If the subscription has a trial, the end of that trial.
@@ -240,6 +199,61 @@ declare namespace Stripe {
      * If the subscription has a trial, the beginning of that trial.
      */
     trial_start?: number | null;
+  }
+
+  namespace Subscription {
+    interface BillingThresholds {
+      /**
+       * Monetary threshold that triggers the subscription to create an invoice
+       */
+      amount_gte?: number | null;
+
+      /**
+       * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
+       */
+      reset_billing_cycle_anchor?: boolean | null;
+    }
+
+    type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface InvoiceCustomerBalanceSettings {
+      /**
+       * Controls whether a customer balance applied to this invoice should be consumed and not credited or debited back to the customer if voided.
+       */
+      consume_applied_balance_on_void: boolean;
+    }
+
+    interface PendingInvoiceItemInterval {
+      /**
+       * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+       */
+      interval: PendingInvoiceItemInterval.Interval;
+
+      /**
+       * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+       */
+      interval_count: number;
+    }
+
+    namespace PendingInvoiceItemInterval {
+      type Interval = 'day' | 'month' | 'week' | 'year'
+    }
+
+    type Status =
+      | 'active'
+      | 'canceled'
+      | 'incomplete'
+      | 'incomplete_expired'
+      | 'past_due'
+      | 'trialing'
+      | 'unpaid'
+
+    interface TransferData {
+      /**
+       * The account (if any) where funds from the payment will be transferred to upon payment success.
+       */
+      destination: string | Account;
+    }
   }
 
   /**
@@ -264,19 +278,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?:
-      | {
-        /**
-         * Monetary threshold that triggers the subscription to advance to a new billing period
-         */
-        amount_gte?: number;
-
-        /**
-         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
-         */
-        reset_billing_cycle_anchor?: boolean;
-      }
-      | '';
+    billing_thresholds?: '' | SubscriptionCreateParams.BillingThresholds;
 
     /**
      * A timestamp at which the subscription should cancel. If set to a date before the current period ends this will cause a proration if `prorate=true`.
@@ -291,7 +293,7 @@ declare namespace Stripe {
     /**
      * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
      */
-    collection_method?: 'charge_automatically' | 'send_invoice';
+    collection_method?: SubscriptionCreateParams.CollectionMethod;
 
     /**
      * The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
@@ -331,23 +333,92 @@ declare namespace Stripe {
     /**
      * Controls whether a customer balance applied to an invoice should be consumed and not credited or debited back to the customer if voided by this subscription.
      */
-    invoice_customer_balance_settings?: {};
+    invoice_customer_balance_settings?: SubscriptionCreateParams.InvoiceCustomerBalanceSettings;
 
     /**
      * List of subscription items, each with an attached plan.
      */
-    items?: Array<{
+    items?: Array<SubscriptionCreateParams.Item>;
+
+    /**
+     * A set of key-value pairs that you can attach to a `Subscription` object. It can be useful for storing additional information about the subscription in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * Indicates if a customer is on or off-session while an invoice payment is attempted.
+     */
+    off_session?: boolean;
+
+    /**
+     * Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
+     *
+     * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
+     */
+    payment_behavior?: SubscriptionCreateParams.PaymentBehavior;
+
+    /**
+     * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
+     */
+    pending_invoice_item_interval?:
+      | ''
+      | SubscriptionCreateParams.PendingInvoiceItemInterval;
+
+    /**
+     * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
+     */
+    prorate?: boolean;
+
+    /**
+     * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
+     */
+    tax_percent?: number | '';
+
+    /**
+     * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
+     */
+    transfer_data?: SubscriptionCreateParams.TransferData;
+
+    /**
+     * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
+     */
+    trial_end?: 'now' | number;
+
+    /**
+     * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
+     */
+    trial_from_plan?: boolean;
+
+    /**
+     * Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan.
+     */
+    trial_period_days?: number;
+  }
+
+  namespace SubscriptionCreateParams {
+    interface BillingThresholds {
+      /**
+       * Monetary threshold that triggers the subscription to advance to a new billing period
+       */
+      amount_gte?: number;
+
+      /**
+       * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+       */
+      reset_billing_cycle_anchor?: boolean;
+    }
+
+    type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface InvoiceCustomerBalanceSettings {}
+
+    interface Item {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?:
-        | {
-          /**
-           * Usage threshold that triggers the subscription to advance to a new billing period
-           */
-          usage_gte: number;
-        }
-        | '';
+      billing_thresholds?: '' | Item.BillingThresholds;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -370,81 +441,44 @@ declare namespace Stripe {
        * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Array<string> | '';
-    }>;
+    }
 
-    /**
-     * A set of key-value pairs that you can attach to a `Subscription` object. It can be useful for storing additional information about the subscription in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
+    namespace Item {
+      interface BillingThresholds {
+        /**
+         * Usage threshold that triggers the subscription to advance to a new billing period
+         */
+        usage_gte: number;
+      }
+    }
 
-    /**
-     * Indicates if a customer is on or off-session while an invoice payment is attempted.
-     */
-    off_session?: boolean;
-
-    /**
-     * Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
-     *
-     * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
-     */
-    payment_behavior?:
+    type PaymentBehavior =
       | 'allow_incomplete'
       | 'error_if_incomplete'
-      | 'pending_if_incomplete';
+      | 'pending_if_incomplete'
 
-    /**
-     * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
-     */
-    pending_invoice_item_interval?:
-      | {
-        /**
-         * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
-         */
-        interval: 'day' | 'month' | 'week' | 'year';
+    interface PendingInvoiceItemInterval {
+      /**
+       * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+       */
+      interval: PendingInvoiceItemInterval.Interval;
 
-        /**
-         * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
-         */
-        interval_count?: number;
-      }
-      | '';
+      /**
+       * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+       */
+      interval_count?: number;
+    }
 
-    /**
-     * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
-     */
-    prorate?: boolean;
+    namespace PendingInvoiceItemInterval {
+      type Interval = 'day' | 'month' | 'week' | 'year'
+    }
 
-    /**
-     * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-     */
-    tax_percent?: number | '';
-
-    /**
-     * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
-     */
-    transfer_data?: {
+    interface TransferData {
       /**
        * ID of an existing, connected Stripe account.
        */
       destination: string;
-    };
-
-    /**
-     * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
-     */
-    trial_end?: 'now' | number;
-
-    /**
-     * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
-     */
-    trial_from_plan?: boolean;
-
-    /**
-     * Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan.
-     */
-    trial_period_days?: number;
+    }
   }
 
   /**
@@ -473,79 +507,13 @@ declare namespace Stripe {
     /**
      * The collection method of the subscriptions to retrieve. Either `charge_automatically` or `send_invoice`.
      */
-    collection_method?: 'charge_automatically' | 'send_invoice';
+    collection_method?: SubscriptionListParams.CollectionMethod;
 
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
+    created?: number | SubscriptionListParams.Created;
 
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
+    current_period_end?: number | SubscriptionListParams.CurrentPeriodEnd;
 
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
-
-    current_period_end?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
-
-    current_period_start?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    current_period_start?: number | SubscriptionListParams.CurrentPeriodStart;
 
     /**
      * The ID of the customer whose subscriptions will be retrieved.
@@ -580,7 +548,79 @@ declare namespace Stripe {
     /**
      * The status of the subscriptions to retrieve. One of: `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `unpaid`, `canceled`, or `all`. Passing in a value of `canceled` will return all canceled subscriptions, including those belonging to deleted customers. Passing in a value of `all` will return subscriptions of all statuses.
      */
-    status?:
+    status?: SubscriptionListParams.Status;
+  }
+
+  namespace SubscriptionListParams {
+    type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface CurrentPeriodEnd {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface CurrentPeriodStart {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    type Status =
       | 'active'
       | 'all'
       | 'canceled'
@@ -589,7 +629,7 @@ declare namespace Stripe {
       | 'incomplete_expired'
       | 'past_due'
       | 'trialing'
-      | 'unpaid';
+      | 'unpaid'
   }
 
   /**
@@ -614,24 +654,12 @@ declare namespace Stripe {
     /**
      * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
      */
-    billing_cycle_anchor?: 'now' | 'unchanged';
+    billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
 
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?:
-      | {
-        /**
-         * Monetary threshold that triggers the subscription to advance to a new billing period
-         */
-        amount_gte?: number;
-
-        /**
-         * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
-         */
-        reset_billing_cycle_anchor?: boolean;
-      }
-      | '';
+    billing_thresholds?: '' | SubscriptionUpdateParams.BillingThresholds;
 
     /**
      * A timestamp at which the subscription should cancel. If set to a date before the current period ends this will cause a proration if `prorate=true`.
@@ -646,7 +674,7 @@ declare namespace Stripe {
     /**
      * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
      */
-    collection_method?: 'charge_automatically' | 'send_invoice';
+    collection_method?: SubscriptionUpdateParams.CollectionMethod;
 
     /**
      * The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
@@ -681,23 +709,94 @@ declare namespace Stripe {
     /**
      * Controls whether a customer balance applied to an invoice should be consumed and not credited or debited back to the customer if voided by this subscription.
      */
-    invoice_customer_balance_settings?: {};
+    invoice_customer_balance_settings?: SubscriptionUpdateParams.InvoiceCustomerBalanceSettings;
 
     /**
      * List of subscription items, each with an attached plan.
      */
-    items?: Array<{
+    items?: Array<SubscriptionUpdateParams.Item>;
+
+    /**
+     * A set of key-value pairs that you can attach to a subscription object. This can be useful for storing additional information about the subscription in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * Indicates if a customer is on or off-session while an invoice payment is attempted.
+     */
+    off_session?: boolean;
+
+    /**
+     * Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
+     *
+     * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
+     */
+    payment_behavior?: SubscriptionUpdateParams.PaymentBehavior;
+
+    /**
+     * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
+     */
+    pending_invoice_item_interval?:
+      | ''
+      | SubscriptionUpdateParams.PendingInvoiceItemInterval;
+
+    /**
+     * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
+     */
+    prorate?: boolean;
+
+    /**
+     * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](#retrieve_customer_invoice) endpoint. It can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
+     */
+    proration_date?: number;
+
+    /**
+     * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
+     */
+    tax_percent?: number | '';
+
+    /**
+     * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
+     */
+    transfer_data?: '' | SubscriptionUpdateParams.TransferData;
+
+    /**
+     * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
+     */
+    trial_end?: 'now' | number;
+
+    /**
+     * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
+     */
+    trial_from_plan?: boolean;
+  }
+
+  namespace SubscriptionUpdateParams {
+    type BillingCycleAnchor = 'now' | 'unchanged'
+
+    interface BillingThresholds {
+      /**
+       * Monetary threshold that triggers the subscription to advance to a new billing period
+       */
+      amount_gte?: number;
+
+      /**
+       * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
+       */
+      reset_billing_cycle_anchor?: boolean;
+    }
+
+    type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface InvoiceCustomerBalanceSettings {}
+
+    interface Item {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?:
-        | {
-          /**
-           * Usage threshold that triggers the subscription to advance to a new billing period
-           */
-          usage_gte: number;
-        }
-        | '';
+      billing_thresholds?: '' | Item.BillingThresholds;
 
       /**
        * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
@@ -735,83 +834,44 @@ declare namespace Stripe {
        * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Array<string> | '';
-    }>;
+    }
 
-    /**
-     * A set of key-value pairs that you can attach to a subscription object. This can be useful for storing additional information about the subscription in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
+    namespace Item {
+      interface BillingThresholds {
+        /**
+         * Usage threshold that triggers the subscription to advance to a new billing period
+         */
+        usage_gte: number;
+      }
+    }
 
-    /**
-     * Indicates if a customer is on or off-session while an invoice payment is attempted.
-     */
-    off_session?: boolean;
-
-    /**
-     * Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
-     *
-     * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
-     */
-    payment_behavior?:
+    type PaymentBehavior =
       | 'allow_incomplete'
       | 'error_if_incomplete'
-      | 'pending_if_incomplete';
+      | 'pending_if_incomplete'
 
-    /**
-     * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
-     */
-    pending_invoice_item_interval?:
-      | {
-        /**
-         * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
-         */
-        interval: 'day' | 'month' | 'week' | 'year';
+    interface PendingInvoiceItemInterval {
+      /**
+       * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
+       */
+      interval: PendingInvoiceItemInterval.Interval;
 
-        /**
-         * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
-         */
-        interval_count?: number;
-      }
-      | '';
+      /**
+       * The number of intervals between invoices. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+       */
+      interval_count?: number;
+    }
 
-    /**
-     * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
-     */
-    prorate?: boolean;
+    namespace PendingInvoiceItemInterval {
+      type Interval = 'day' | 'month' | 'week' | 'year'
+    }
 
-    /**
-     * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](#retrieve_customer_invoice) endpoint. It can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
-     */
-    proration_date?: number;
-
-    /**
-     * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-     */
-    tax_percent?: number | '';
-
-    /**
-     * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
-     */
-    transfer_data?:
-      | {
-        /**
-         * ID of an existing, connected Stripe account.
-         */
-        destination: string;
-      }
-      | '';
-
-    /**
-     * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
-     */
-    trial_end?: 'now' | number;
-
-    /**
-     * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
-     */
-    trial_from_plan?: boolean;
+    interface TransferData {
+      /**
+       * ID of an existing, connected Stripe account.
+       */
+      destination: string;
+    }
   }
 
   /**

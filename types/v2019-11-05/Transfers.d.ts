@@ -192,7 +192,7 @@ declare namespace Stripe {
     /**
      * The source balance to use for this transfer. One of `bank_account` or `card`. For most users, this will default to `card`.
      */
-    source_type?: 'bank_account' | 'card';
+    source_type?: TransferCreateParams.SourceType;
 
     /**
      * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
@@ -200,33 +200,15 @@ declare namespace Stripe {
     transfer_group?: string;
   }
 
+  namespace TransferCreateParams {
+    type SourceType = 'bank_account' | 'card'
+  }
+
   /**
    * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
    */
   interface TransferListParams {
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | TransferListParams.Created;
 
     /**
      * Only return transfers for the destination specified by this account ID.
@@ -257,6 +239,30 @@ declare namespace Stripe {
      * Only return transfers with the specified transfer group.
      */
     transfer_group?: string;
+  }
+
+  namespace TransferListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**

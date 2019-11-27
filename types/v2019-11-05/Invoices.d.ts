@@ -51,16 +51,7 @@ declare namespace Stripe {
     /**
      * Indicates the reason why the invoice was created. `subscription_cycle` indicates an invoice created by a subscription advancing into a new period. `subscription_create` indicates an invoice created due to creating a subscription. `subscription_update` indicates an invoice created due to updating a subscription. `subscription` is set for all old invoices to indicate either a change to a subscription or a period advancement. `manual` is set for all invoices unrelated to a subscription (for example: created via the invoice editor). The `upcoming` value is reserved for simulated invoices per the upcoming invoice endpoint. `subscription_threshold` indicates an invoice created due to a billing threshold being reached.
      */
-    billing_reason:
-      | 'automatic_pending_invoice_item_invoice'
-      | 'manual'
-      | 'subscription'
-      | 'subscription_create'
-      | 'subscription_cycle'
-      | 'subscription_threshold'
-      | 'subscription_update'
-      | 'upcoming'
-      | null;
+    billing_reason: Invoice.BillingReason | null;
 
     /**
      * ID of the latest charge generated for this invoice, if any.
@@ -70,7 +61,7 @@ declare namespace Stripe {
     /**
      * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions.
      */
-    collection_method: 'charge_automatically' | 'send_invoice' | null;
+    collection_method: Invoice.CollectionMethod | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -85,58 +76,14 @@ declare namespace Stripe {
     /**
      * Custom fields displayed on the invoice.
      */
-    custom_fields:
-      | Array<{
-        /**
-         * The name of the custom field.
-         */
-        name: string;
-
-        /**
-         * The value of the custom field.
-         */
-        value: string;
-      }>
-      | null;
+    custom_fields: Array<Invoice.CustomField> | null;
 
     customer: string | Customer;
 
     /**
      * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
      */
-    customer_address:
-      | {
-        /**
-         * City/District/Suburb/Town/Village.
-         */
-        city?: string | null;
-
-        /**
-         * 2-letter country code.
-         */
-        country?: string | null;
-
-        /**
-         * Address line 1 (Street address/PO Box/Company name).
-         */
-        line1?: string | null;
-
-        /**
-         * Address line 2 (Apartment/Suite/Unit/Building).
-         */
-        line2?: string | null;
-
-        /**
-         * ZIP or postal code.
-         */
-        postal_code?: string | null;
-
-        /**
-         * State/County/Province/Region.
-         */
-        state?: string | null;
-      }
-      | null;
+    customer_address: Invoice.CustomerAddress | null;
 
     /**
      * The customer's email. Until the invoice is finalized, this field will equal `customer.email`. Once the invoice is finalized, this field will no longer be updated.
@@ -156,92 +103,17 @@ declare namespace Stripe {
     /**
      * The customer's shipping information. Until the invoice is finalized, this field will equal `customer.shipping`. Once the invoice is finalized, this field will no longer be updated.
      */
-    customer_shipping:
-      | {
-        address?: {
-          /**
-           * City/District/Suburb/Town/Village.
-           */
-          city?: string | null;
-
-          /**
-           * 2-letter country code.
-           */
-          country?: string | null;
-
-          /**
-           * Address line 1 (Street address/PO Box/Company name).
-           */
-          line1?: string | null;
-
-          /**
-           * Address line 2 (Apartment/Suite/Unit/Building).
-           */
-          line2?: string | null;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string | null;
-
-          /**
-           * State/County/Province/Region.
-           */
-          state?: string | null;
-        };
-
-        /**
-         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-         */
-        carrier?: string | null;
-
-        /**
-         * Recipient name.
-         */
-        name?: string | null;
-
-        /**
-         * Recipient phone (including extension).
-         */
-        phone?: string | null;
-
-        /**
-         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-         */
-        tracking_number?: string | null;
-      }
-      | null;
+    customer_shipping: Invoice.CustomerShipping | null;
 
     /**
      * The customer's tax exempt status. Until the invoice is finalized, this field will equal `customer.tax_exempt`. Once the invoice is finalized, this field will no longer be updated.
      */
-    customer_tax_exempt: 'exempt' | 'none' | 'reverse' | null;
+    customer_tax_exempt: Invoice.CustomerTaxExempt | null;
 
     /**
      * The customer's tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as `customer.tax_ids`. Once the invoice is finalized, this field will no longer be updated.
      */
-    customer_tax_ids:
-      | Array<{
-        /**
-         * The type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `unknown`, or `za_vat`
-         */
-        type:
-          | 'au_abn'
-          | 'ch_vat'
-          | 'eu_vat'
-          | 'in_gst'
-          | 'mx_rfc'
-          | 'no_vat'
-          | 'nz_gst'
-          | 'unknown'
-          | 'za_vat';
-
-        /**
-         * The value of the tax ID.
-         */
-        value?: string | null;
-      }>
-      | null;
+    customer_tax_ids: Array<Invoice.CustomerTaxId> | null;
 
     /**
      * ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
@@ -385,36 +257,9 @@ declare namespace Stripe {
     /**
      * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
      */
-    status:
-      | 'deleted'
-      | 'draft'
-      | 'open'
-      | 'paid'
-      | 'uncollectible'
-      | 'void'
-      | null;
+    status: Invoice.Status | null;
 
-    status_transitions: {
-      /**
-       * The time that the invoice draft was finalized.
-       */
-      finalized_at?: number | null;
-
-      /**
-       * The time that the invoice was marked uncollectible.
-       */
-      marked_uncollectible_at?: number | null;
-
-      /**
-       * The time that the invoice was paid.
-       */
-      paid_at?: number | null;
-
-      /**
-       * The time that the invoice was voided.
-       */
-      voided_at?: number | null;
-    };
+    status_transitions: Invoice.StatusTransitions;
 
     /**
      * The subscription that this invoice was prepared for, if any.
@@ -441,27 +286,7 @@ declare namespace Stripe {
      */
     tax_percent: number | null;
 
-    threshold_reason: {
-      /**
-       * The total invoice amount threshold boundary if it triggered the threshold invoice.
-       */
-      amount_gte?: number | null;
-
-      /**
-       * Indicates which line items triggered a threshold invoice.
-       */
-      item_reasons: Array<{
-        /**
-         * The IDs of the line items that triggered the threshold invoice.
-         */
-        line_item_ids: Array<string>;
-
-        /**
-         * The quantity threshold boundary that applied to the given line item.
-         */
-        usage_gte: number;
-      }>;
-    };
+    threshold_reason: Invoice.ThresholdReason;
 
     /**
      * Total after discounts and taxes.
@@ -471,41 +296,240 @@ declare namespace Stripe {
     /**
      * The aggregate amounts calculated per tax rate for all line items.
      */
-    total_tax_amounts:
-      | Array<{
-        /**
-         * The amount, in %s, of the tax.
-         */
-        amount: number;
-
-        /**
-         * Whether this tax amount is inclusive or exclusive.
-         */
-        inclusive: boolean;
-
-        /**
-         * The tax rate that was applied to get this tax amount.
-         */
-        tax_rate: string | TaxRate;
-      }>
-      | null;
+    total_tax_amounts: Array<Invoice.TotalTaxAmount> | null;
 
     /**
      * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
      */
-    transfer_data:
-      | {
-        /**
-         * The account (if any) where funds from the payment will be transferred to upon payment success.
-         */
-        destination: string | Account;
-      }
-      | null;
+    transfer_data: Invoice.TransferData | null;
 
     /**
      * The time at which webhooks for this invoice were successfully delivered (if the invoice had no webhooks to deliver, this will match `created`). Invoice payment is delayed until webhooks are delivered, or until all webhook delivery attempts have been exhausted.
      */
     webhooks_delivered_at: number | null;
+  }
+
+  namespace Invoice {
+    type BillingReason =
+      | 'automatic_pending_invoice_item_invoice'
+      | 'manual'
+      | 'subscription'
+      | 'subscription_create'
+      | 'subscription_cycle'
+      | 'subscription_threshold'
+      | 'subscription_update'
+      | 'upcoming'
+
+    type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface CustomField {
+      /**
+       * The name of the custom field.
+       */
+      name: string;
+
+      /**
+       * The value of the custom field.
+       */
+      value: string;
+    }
+
+    interface CustomerAddress {
+      /**
+       * City/District/Suburb/Town/Village.
+       */
+      city?: string | null;
+
+      /**
+       * 2-letter country code.
+       */
+      country?: string | null;
+
+      /**
+       * Address line 1 (Street address/PO Box/Company name).
+       */
+      line1?: string | null;
+
+      /**
+       * Address line 2 (Apartment/Suite/Unit/Building).
+       */
+      line2?: string | null;
+
+      /**
+       * ZIP or postal code.
+       */
+      postal_code?: string | null;
+
+      /**
+       * State/County/Province/Region.
+       */
+      state?: string | null;
+    }
+
+    interface CustomerShipping {
+      address?: CustomerShipping.Address;
+
+      /**
+       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+       */
+      carrier?: string | null;
+
+      /**
+       * Recipient name.
+       */
+      name?: string | null;
+
+      /**
+       * Recipient phone (including extension).
+       */
+      phone?: string | null;
+
+      /**
+       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+       */
+      tracking_number?: string | null;
+    }
+
+    namespace CustomerShipping {
+      interface Address {
+        /**
+         * City/District/Suburb/Town/Village.
+         */
+        city?: string | null;
+
+        /**
+         * 2-letter country code.
+         */
+        country?: string | null;
+
+        /**
+         * Address line 1 (Street address/PO Box/Company name).
+         */
+        line1?: string | null;
+
+        /**
+         * Address line 2 (Apartment/Suite/Unit/Building).
+         */
+        line2?: string | null;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string | null;
+
+        /**
+         * State/County/Province/Region.
+         */
+        state?: string | null;
+      }
+    }
+
+    type CustomerTaxExempt = 'exempt' | 'none' | 'reverse'
+
+    interface CustomerTaxId {
+      /**
+       * The type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `unknown`, or `za_vat`
+       */
+      type: CustomerTaxId.Type;
+
+      /**
+       * The value of the tax ID.
+       */
+      value?: string | null;
+    }
+
+    namespace CustomerTaxId {
+      type Type =
+        | 'au_abn'
+        | 'ch_vat'
+        | 'eu_vat'
+        | 'in_gst'
+        | 'mx_rfc'
+        | 'no_vat'
+        | 'nz_gst'
+        | 'unknown'
+        | 'za_vat'
+    }
+
+    type Status =
+      | 'deleted'
+      | 'draft'
+      | 'open'
+      | 'paid'
+      | 'uncollectible'
+      | 'void'
+
+    interface StatusTransitions {
+      /**
+       * The time that the invoice draft was finalized.
+       */
+      finalized_at?: number | null;
+
+      /**
+       * The time that the invoice was marked uncollectible.
+       */
+      marked_uncollectible_at?: number | null;
+
+      /**
+       * The time that the invoice was paid.
+       */
+      paid_at?: number | null;
+
+      /**
+       * The time that the invoice was voided.
+       */
+      voided_at?: number | null;
+    }
+
+    interface ThresholdReason {
+      /**
+       * The total invoice amount threshold boundary if it triggered the threshold invoice.
+       */
+      amount_gte?: number | null;
+
+      /**
+       * Indicates which line items triggered a threshold invoice.
+       */
+      item_reasons: Array<ThresholdReason.ItemReason>;
+    }
+
+    namespace ThresholdReason {
+      interface ItemReason {
+        /**
+         * The IDs of the line items that triggered the threshold invoice.
+         */
+        line_item_ids: Array<string>;
+
+        /**
+         * The quantity threshold boundary that applied to the given line item.
+         */
+        usage_gte: number;
+      }
+    }
+
+    interface TotalTaxAmount {
+      /**
+       * The amount, in %s, of the tax.
+       */
+      amount: number;
+
+      /**
+       * Whether this tax amount is inclusive or exclusive.
+       */
+      inclusive: boolean;
+
+      /**
+       * The tax rate that was applied to get this tax amount.
+       */
+      tax_rate: string | TaxRate;
+    }
+
+    interface TransferData {
+      /**
+       * The account (if any) where funds from the payment will be transferred to upon payment success.
+       */
+      destination: string | Account;
+    }
   }
 
   interface DeletedInvoice {
@@ -573,17 +597,7 @@ declare namespace Stripe {
      */
     object?: 'line_item';
 
-    period?: {
-      /**
-       * End of the line item's billing period
-       */
-      end: number;
-
-      /**
-       * Start of the line item's billing period
-       */
-      start: number;
-    };
+    period?: InvoiceLineItem.Period;
 
     /**
      * The plan of the subscription, if the line item is a subscription or a proration.
@@ -613,24 +627,7 @@ declare namespace Stripe {
     /**
      * The amount of tax calculated per tax rate for this line item
      */
-    tax_amounts?:
-      | Array<{
-        /**
-         * The amount, in %s, of the tax.
-         */
-        amount: number;
-
-        /**
-         * Whether this tax amount is inclusive or exclusive.
-         */
-        inclusive: boolean;
-
-        /**
-         * The tax rate that was applied to get this tax amount.
-         */
-        tax_rate: string | TaxRate;
-      }>
-      | null;
+    tax_amounts?: Array<InvoiceLineItem.TaxAmount> | null;
 
     /**
      * The tax rates which apply to the line item.
@@ -640,12 +637,45 @@ declare namespace Stripe {
     /**
      * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
      */
-    type?: 'invoiceitem' | 'subscription';
+    type?: InvoiceLineItem.Type;
 
     /**
      * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
      */
     unified_proration?: boolean;
+  }
+
+  namespace InvoiceLineItem {
+    interface Period {
+      /**
+       * End of the line item's billing period
+       */
+      end: number;
+
+      /**
+       * Start of the line item's billing period
+       */
+      start: number;
+    }
+
+    interface TaxAmount {
+      /**
+       * The amount, in %s, of the tax.
+       */
+      amount: number;
+
+      /**
+       * Whether this tax amount is inclusive or exclusive.
+       */
+      inclusive: boolean;
+
+      /**
+       * The tax rate that was applied to get this tax amount.
+       */
+      tax_rate: string | TaxRate;
+    }
+
+    type Type = 'invoiceitem' | 'subscription'
   }
 
   /**
@@ -665,24 +695,12 @@ declare namespace Stripe {
     /**
      * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
      */
-    collection_method?: 'charge_automatically' | 'send_invoice';
+    collection_method?: InvoiceCreateParams.CollectionMethod;
 
     /**
      * A list of up to 4 custom fields to be displayed on the invoice.
      */
-    custom_fields?:
-      | Array<{
-        /**
-         * The name of the custom field. This may be up to 30 characters.
-         */
-        name: string;
-
-        /**
-         * The value of the custom field. This may be up to 30 characters.
-         */
-        value: string;
-      }>
-      | '';
+    custom_fields?: '' | InvoiceCreateParams.CustomFields;
 
     customer: string;
 
@@ -745,12 +763,30 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
      */
-    transfer_data?: {
+    transfer_data?: InvoiceCreateParams.TransferData;
+  }
+
+  namespace InvoiceCreateParams {
+    type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface CustomFields {
+      /**
+       * The name of the custom field. This may be up to 30 characters.
+       */
+      name: string;
+
+      /**
+       * The value of the custom field. This may be up to 30 characters.
+       */
+      value: string;
+    }
+
+    interface TransferData {
       /**
        * ID of an existing, connected Stripe account.
        */
       destination: string;
-    };
+    }
   }
 
   /**
@@ -765,60 +801,16 @@ declare namespace Stripe {
     /**
      * The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
      */
-    collection_method?: 'charge_automatically' | 'send_invoice';
+    collection_method?: InvoiceListParams.CollectionMethod;
 
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | InvoiceListParams.Created;
 
     /**
      * Only return invoices for the customer specified by this customer ID.
      */
     customer?: string;
 
-    due_date?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    due_date?: number | InvoiceListParams.DueDate;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -843,12 +835,62 @@ declare namespace Stripe {
     /**
      * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
      */
-    status?: 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
+    status?: InvoiceListParams.Status;
 
     /**
      * Only return invoices for the subscription specified by this subscription ID.
      */
     subscription?: string;
+  }
+
+  namespace InvoiceListParams {
+    type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface DueDate {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void'
   }
 
   /**
@@ -883,24 +925,12 @@ declare namespace Stripe {
     /**
      * Either `charge_automatically` or `send_invoice`. This field can be updated only on `draft` invoices.
      */
-    collection_method?: 'charge_automatically' | 'send_invoice';
+    collection_method?: InvoiceUpdateParams.CollectionMethod;
 
     /**
      * A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
      */
-    custom_fields?:
-      | Array<{
-        /**
-         * The name of the custom field. This may be up to 30 characters.
-         */
-        name: string;
-
-        /**
-         * The value of the custom field. This may be up to 30 characters.
-         */
-        value: string;
-      }>
-      | '';
+    custom_fields?: '' | InvoiceUpdateParams.CustomFields;
 
     /**
      * The number of days from which the invoice is created until it is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
@@ -956,14 +986,30 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
      */
-    transfer_data?:
-      | {
-        /**
-         * ID of an existing, connected Stripe account.
-         */
-        destination: string;
-      }
-      | '';
+    transfer_data?: '' | InvoiceUpdateParams.TransferData;
+  }
+
+  namespace InvoiceUpdateParams {
+    type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface CustomFields {
+      /**
+       * The name of the custom field. This may be up to 30 characters.
+       */
+      name: string;
+
+      /**
+       * The value of the custom field. This may be up to 30 characters.
+       */
+      value: string;
+    }
+
+    interface TransferData {
+      /**
+       * ID of an existing, connected Stripe account.
+       */
+      destination: string;
+    }
   }
 
   /**
@@ -1054,7 +1100,83 @@ declare namespace Stripe {
     /**
      * List of invoice items to add or update in the upcoming invoice preview.
      */
-    invoice_items?: Array<{
+    invoice_items?: Array<InvoiceRetrieveUpcomingParams.InvoiceItem>;
+
+    /**
+     * The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+     */
+    schedule?: string;
+
+    /**
+     * The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
+     */
+    subscription?: string;
+
+    /**
+     * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+     */
+    subscription_billing_cycle_anchor?:
+      | number
+      | InvoiceRetrieveUpcomingParams.SubscriptionBillingCycleAnchor;
+
+    /**
+     * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period if `prorate=true`
+     */
+    subscription_cancel_at?: number | '';
+
+    /**
+     * Boolean indicating whether this subscription should cancel at the end of the current period.
+     */
+    subscription_cancel_at_period_end?: boolean;
+
+    /**
+     * This simulates the subscription being canceled or expired immediately.
+     */
+    subscription_cancel_now?: boolean;
+
+    /**
+     * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+     */
+    subscription_default_tax_rates?: Array<string> | '';
+
+    /**
+     * List of subscription items, each with an attached plan.
+     */
+    subscription_items?: Array<InvoiceRetrieveUpcomingParams.SubscriptionItem>;
+
+    /**
+     * If previewing an update to a subscription, this decides whether the preview will show the result of applying prorations or not. If set, one of `subscription_items` or `subscription`, and one of `subscription_items` or `subscription_trial_end` are required.
+     */
+    subscription_prorate?: boolean;
+
+    /**
+     * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration` cannot be set to false.
+     */
+    subscription_proration_date?: number;
+
+    /**
+     * Date a subscription is intended to start (can be future or past)
+     */
+    subscription_start_date?: number;
+
+    /**
+     * If provided, the invoice returned will preview updating or creating a subscription with that tax percent. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
+     */
+    subscription_tax_percent?: number;
+
+    /**
+     * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
+     */
+    subscription_trial_end?: 'now' | number;
+
+    /**
+     * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed.
+     */
+    subscription_trial_from_plan?: boolean;
+  }
+
+  namespace InvoiceRetrieveUpcomingParams {
+    interface InvoiceItem {
       /**
        * The integer amount in **%s** of previewed invoice item.
        */
@@ -1090,17 +1212,7 @@ declare namespace Stripe {
       /**
        * The period associated with this invoice item.
        */
-      period?: {
-        /**
-         * The end of the period, which must be greater than or equal to the start.
-         */
-        end: number;
-
-        /**
-         * The start of the period.
-         */
-        start: number;
-      };
+      period?: InvoiceItem.Period;
 
       /**
        * Non-negative integer. The quantity of units for the invoice item.
@@ -1118,58 +1230,29 @@ declare namespace Stripe {
        * Same as `unit_amount`, but accepts a decimal string with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
        */
       unit_amount_decimal?: string;
-    }>;
+    }
 
-    /**
-     * The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
-     */
-    schedule?: string;
+    namespace InvoiceItem {
+      interface Period {
+        /**
+         * The end of the period, which must be greater than or equal to the start.
+         */
+        end: number;
 
-    /**
-     * The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
-     */
-    subscription?: string;
+        /**
+         * The start of the period.
+         */
+        start: number;
+      }
+    }
 
-    /**
-     * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
-     */
-    subscription_billing_cycle_anchor?: 'now' | 'unchanged' | number;
+    type SubscriptionBillingCycleAnchor = 'now' | 'unchanged'
 
-    /**
-     * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period if `prorate=true`
-     */
-    subscription_cancel_at?: number | '';
-
-    /**
-     * Boolean indicating whether this subscription should cancel at the end of the current period.
-     */
-    subscription_cancel_at_period_end?: boolean;
-
-    /**
-     * This simulates the subscription being canceled or expired immediately.
-     */
-    subscription_cancel_now?: boolean;
-
-    /**
-     * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
-     */
-    subscription_default_tax_rates?: Array<string> | '';
-
-    /**
-     * List of subscription items, each with an attached plan.
-     */
-    subscription_items?: Array<{
+    interface SubscriptionItem {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?:
-        | {
-          /**
-           * Usage threshold that triggers the subscription to advance to a new billing period
-           */
-          usage_gte: number;
-        }
-        | '';
+      billing_thresholds?: '' | SubscriptionItem.BillingThresholds;
 
       /**
        * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
@@ -1207,37 +1290,16 @@ declare namespace Stripe {
        * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Array<string> | '';
-    }>;
+    }
 
-    /**
-     * If previewing an update to a subscription, this decides whether the preview will show the result of applying prorations or not. If set, one of `subscription_items` or `subscription`, and one of `subscription_items` or `subscription_trial_end` are required.
-     */
-    subscription_prorate?: boolean;
-
-    /**
-     * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration` cannot be set to false.
-     */
-    subscription_proration_date?: number;
-
-    /**
-     * Date a subscription is intended to start (can be future or past)
-     */
-    subscription_start_date?: number;
-
-    /**
-     * If provided, the invoice returned will preview updating or creating a subscription with that tax percent. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-     */
-    subscription_tax_percent?: number;
-
-    /**
-     * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
-     */
-    subscription_trial_end?: 'now' | number;
-
-    /**
-     * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed.
-     */
-    subscription_trial_from_plan?: boolean;
+    namespace SubscriptionItem {
+      interface BillingThresholds {
+        /**
+         * Usage threshold that triggers the subscription to advance to a new billing period
+         */
+        usage_gte: number;
+      }
+    }
   }
 
   /**

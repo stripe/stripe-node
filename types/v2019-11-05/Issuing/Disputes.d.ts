@@ -24,41 +24,7 @@ declare namespace Stripe {
        */
       disputed_transaction?: string | Issuing.Transaction;
 
-      evidence?: {
-        /**
-         * Evidence to support a fraudulent dispute. This will only be present if your dispute's `reason` is `fraudulent`.
-         */
-        fraudulent?:
-          | {
-            /**
-             * Brief freeform text explaining why you are disputing this transaction.
-             */
-            dispute_explanation?: string | null;
-
-            /**
-             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
-             */
-            uncategorized_file?: string | File | null;
-          }
-          | null;
-
-        /**
-         * Evidence to support an uncategorized dispute. This will only be present if your dispute's `reason` is `other`.
-         */
-        other?:
-          | {
-            /**
-             * Brief freeform text explaining why you are disputing this transaction.
-             */
-            dispute_explanation: string;
-
-            /**
-             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
-             */
-            uncategorized_file?: string | File | null;
-          }
-          | null;
-      };
+      evidence?: Dispute.Evidence;
 
       /**
        * Unique identifier for the object.
@@ -90,7 +56,49 @@ declare namespace Stripe {
       /**
        * Current status of dispute. One of `lost`, `under_review`, `unsubmitted`, or `won`.
        */
-      status?: 'lost' | 'under_review' | 'unsubmitted' | 'won';
+      status?: Dispute.Status;
+    }
+
+    namespace Dispute {
+      interface Evidence {
+        /**
+         * Evidence to support a fraudulent dispute. This will only be present if your dispute's `reason` is `fraudulent`.
+         */
+        fraudulent?: Evidence.Fraudulent | null;
+
+        /**
+         * Evidence to support an uncategorized dispute. This will only be present if your dispute's `reason` is `other`.
+         */
+        other?: Evidence.Other | null;
+      }
+
+      namespace Evidence {
+        interface Fraudulent {
+          /**
+           * Brief freeform text explaining why you are disputing this transaction.
+           */
+          dispute_explanation?: string | null;
+
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+           */
+          uncategorized_file?: string | File | null;
+        }
+
+        interface Other {
+          /**
+           * Brief freeform text explaining why you are disputing this transaction.
+           */
+          dispute_explanation: string;
+
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+           */
+          uncategorized_file?: string | File | null;
+        }
+      }
+
+      type Status = 'lost' | 'under_review' | 'unsubmitted' | 'won'
     }
 
     /**
@@ -110,37 +118,7 @@ declare namespace Stripe {
       /**
        * A hash containing all the evidence related to the dispute. This should have a single key, equal to the provided `reason`, mapping to an appropriate evidence object.
        */
-      evidence?: {
-        /**
-         * Evidence to support a fraudulent dispute. Only provide this if your dispute's `reason` is `fraudulent`.
-         */
-        fraudulent?: {
-          /**
-           * Brief freeform text explaining why you are disputing this transaction.
-           */
-          dispute_explanation: string;
-
-          /**
-           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
-           */
-          uncategorized_file?: string;
-        };
-
-        /**
-         * Evidence to support an uncategorized dispute. Only provide this if your dispute's `reason` is `other`.
-         */
-        other?: {
-          /**
-           * Brief freeform text explaining why you are disputing this transaction.
-           */
-          dispute_explanation: string;
-
-          /**
-           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
-           */
-          uncategorized_file?: string;
-        };
-      };
+      evidence?: DisputeCreateParams.Evidence;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -157,7 +135,49 @@ declare namespace Stripe {
       /**
        * The reason for the dispute. One of `other` or `fraudulent`.
        */
-      reason: 'fraudulent' | 'other';
+      reason: DisputeCreateParams.Reason;
+    }
+
+    namespace DisputeCreateParams {
+      interface Evidence {
+        /**
+         * Evidence to support a fraudulent dispute. Only provide this if your dispute's `reason` is `fraudulent`.
+         */
+        fraudulent?: Evidence.Fraudulent;
+
+        /**
+         * Evidence to support an uncategorized dispute. Only provide this if your dispute's `reason` is `other`.
+         */
+        other?: Evidence.Other;
+      }
+
+      namespace Evidence {
+        interface Fraudulent {
+          /**
+           * Brief freeform text explaining why you are disputing this transaction.
+           */
+          dispute_explanation: string;
+
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+           */
+          uncategorized_file?: string;
+        }
+
+        interface Other {
+          /**
+           * Brief freeform text explaining why you are disputing this transaction.
+           */
+          dispute_explanation: string;
+
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+           */
+          uncategorized_file?: string;
+        }
+      }
+
+      type Reason = 'fraudulent' | 'other'
     }
 
     /**
@@ -167,29 +187,7 @@ declare namespace Stripe {
       /**
        * Only return issuing disputes that were created during the given date interval.
        */
-      created?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
+      created?: number | DisputeListParams.Created;
 
       /**
        * Only return issuing disputes for the given transaction.
@@ -215,6 +213,30 @@ declare namespace Stripe {
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
        */
       starting_after?: string;
+    }
+
+    namespace DisputeListParams {
+      interface Created {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
     }
 
     /**

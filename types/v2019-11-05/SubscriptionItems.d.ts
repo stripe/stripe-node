@@ -6,14 +6,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
      */
-    billing_thresholds:
-      | {
-        /**
-         * Usage threshold that triggers the subscription to create an invoice
-         */
-        usage_gte?: number | null;
-      }
-      | null;
+    billing_thresholds: SubscriptionItem.BillingThresholds | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -55,6 +48,15 @@ declare namespace Stripe {
     tax_rates: Array<TaxRate> | null;
   }
 
+  namespace SubscriptionItem {
+    interface BillingThresholds {
+      /**
+       * Usage threshold that triggers the subscription to create an invoice
+       */
+      usage_gte?: number | null;
+    }
+  }
+
   interface DeletedSubscriptionItem {
     /**
      * Unique identifier for the object.
@@ -84,14 +86,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?:
-      | {
-        /**
-         * Usage threshold that triggers the subscription to advance to a new billing period
-         */
-        usage_gte: number;
-      }
-      | '';
+    billing_thresholds?: '' | SubscriptionItemCreateParams.BillingThresholds;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -110,10 +105,7 @@ declare namespace Stripe {
      *
      * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
      */
-    payment_behavior?:
-      | 'allow_incomplete'
-      | 'error_if_incomplete'
-      | 'pending_if_incomplete';
+    payment_behavior?: SubscriptionItemCreateParams.PaymentBehavior;
 
     /**
      * The identifier of the plan to add to the subscription.
@@ -144,6 +136,20 @@ declare namespace Stripe {
      * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
      */
     tax_rates?: Array<string> | '';
+  }
+
+  namespace SubscriptionItemCreateParams {
+    interface BillingThresholds {
+      /**
+       * Usage threshold that triggers the subscription to advance to a new billing period
+       */
+      usage_gte: number;
+    }
+
+    type PaymentBehavior =
+      | 'allow_incomplete'
+      | 'error_if_incomplete'
+      | 'pending_if_incomplete'
   }
 
   /**
@@ -213,14 +219,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?:
-      | {
-        /**
-         * Usage threshold that triggers the subscription to advance to a new billing period
-         */
-        usage_gte: number;
-      }
-      | '';
+    billing_thresholds?: '' | SubscriptionItemUpdateParams.BillingThresholds;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -241,10 +240,7 @@ declare namespace Stripe {
      *
      * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
      */
-    payment_behavior?:
-      | 'allow_incomplete'
-      | 'error_if_incomplete'
-      | 'pending_if_incomplete';
+    payment_behavior?: SubscriptionItemUpdateParams.PaymentBehavior;
 
     /**
      * The identifier of the new plan for this subscription item.
@@ -272,6 +268,20 @@ declare namespace Stripe {
     tax_rates?: Array<string> | '';
   }
 
+  namespace SubscriptionItemUpdateParams {
+    interface BillingThresholds {
+      /**
+       * Usage threshold that triggers the subscription to advance to a new billing period
+       */
+      usage_gte: number;
+    }
+
+    type PaymentBehavior =
+      | 'allow_incomplete'
+      | 'error_if_incomplete'
+      | 'pending_if_incomplete'
+  }
+
   /**
    * Creates a usage record for a specified subscription item and date, and fills it with a quantity.
    *
@@ -285,7 +295,7 @@ declare namespace Stripe {
     /**
      * Valid values are `increment` (default) or `set`. When using `increment` the specified `quantity` will be added to the usage at the specified timestamp. The `set` action will overwrite the usage quantity at that timestamp. If the subscription has [billing thresholds](https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_thresholds), `increment` is the only allowed value.
      */
-    action?: 'increment' | 'set';
+    action?: SubscriptionItemCreateUsageRecordParams.Action;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -301,6 +311,10 @@ declare namespace Stripe {
      * The timestamp for the usage event. This timestamp must be within the current billing period of the subscription of the provided `subscription_item`.
      */
     timestamp: number;
+  }
+
+  namespace SubscriptionItemCreateUsageRecordParams {
+    type Action = 'increment' | 'set'
   }
 
   class SubscriptionItemsResource {

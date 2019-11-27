@@ -73,12 +73,7 @@ declare namespace Stripe {
     /**
      * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
      */
-    reason?:
-      | 'duplicate'
-      | 'fraudulent'
-      | 'order_change'
-      | 'product_unsatisfactory'
-      | null;
+    reason?: CreditNote.Reason | null;
 
     /**
      * Refund related to this credit note.
@@ -88,17 +83,29 @@ declare namespace Stripe {
     /**
      * Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
      */
-    status?: 'issued' | 'void';
+    status?: CreditNote.Status;
 
     /**
      * Type of this credit note, one of `post_payment` or `pre_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
      */
-    type?: 'post_payment' | 'pre_payment';
+    type?: CreditNote.Type;
 
     /**
      * The time that the credit note was voided.
      */
     voided_at?: number | null;
+  }
+
+  namespace CreditNote {
+    type Reason =
+      | 'duplicate'
+      | 'fraudulent'
+      | 'order_change'
+      | 'product_unsatisfactory'
+
+    type Status = 'issued' | 'void'
+
+    type Type = 'post_payment' | 'pre_payment'
   }
 
   /**
@@ -151,11 +158,7 @@ declare namespace Stripe {
     /**
      * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
      */
-    reason?:
-      | 'duplicate'
-      | 'fraudulent'
-      | 'order_change'
-      | 'product_unsatisfactory';
+    reason?: CreditNoteCreateParams.Reason;
 
     /**
      * ID of an existing refund to link this credit note to.
@@ -166,6 +169,14 @@ declare namespace Stripe {
      * The integer amount in **%s** representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
      */
     refund_amount?: number;
+  }
+
+  namespace CreditNoteCreateParams {
+    type Reason =
+      | 'duplicate'
+      | 'fraudulent'
+      | 'order_change'
+      | 'product_unsatisfactory'
   }
 
   /**
