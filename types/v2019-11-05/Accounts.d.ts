@@ -111,7 +111,7 @@ declare namespace Stripe {
       /**
        * A publicly available mailing address for sending support issues to.
        */
-      support_address?: BusinessProfile.SupportAddress | null;
+      support_address?: Address | null;
 
       /**
        * A publicly available email address for sending support issues to.
@@ -132,40 +132,6 @@ declare namespace Stripe {
        * The business's publicly available website.
        */
       url?: string | null;
-    }
-
-    namespace BusinessProfile {
-      interface SupportAddress {
-        /**
-         * City/District/Suburb/Town/Village.
-         */
-        city?: string | null;
-
-        /**
-         * 2-letter country code.
-         */
-        country?: string | null;
-
-        /**
-         * Address line 1 (Street address/PO Box/Company name).
-         */
-        line1?: string | null;
-
-        /**
-         * Address line 2 (Apartment/Suite/Unit/Building).
-         */
-        line2?: string | null;
-
-        /**
-         * ZIP or postal code.
-         */
-        postal_code?: string | null;
-
-        /**
-         * State/County/Province/Region.
-         */
-        state?: string | null;
-      }
     }
 
     interface Capabilities {
@@ -201,7 +167,7 @@ declare namespace Stripe {
     }
 
     interface Company {
-      address?: Company.Address;
+      address?: Address;
 
       /**
        * The Kana variation of the company's primary address (Japan only).
@@ -265,38 +231,6 @@ declare namespace Stripe {
     }
 
     namespace Company {
-      interface Address {
-        /**
-         * City/District/Suburb/Town/Village.
-         */
-        city?: string | null;
-
-        /**
-         * 2-letter country code.
-         */
-        country?: string | null;
-
-        /**
-         * Address line 1 (Street address/PO Box/Company name).
-         */
-        line1?: string | null;
-
-        /**
-         * Address line 2 (Apartment/Suite/Unit/Building).
-         */
-        line2?: string | null;
-
-        /**
-         * ZIP or postal code.
-         */
-        postal_code?: string | null;
-
-        /**
-         * State/County/Province/Region.
-         */
-        state?: string | null;
-      }
-
       interface AddressKana {
         /**
          * City/Ward.
@@ -697,7 +631,7 @@ declare namespace Stripe {
      */
     account: string;
 
-    address: Person.Address;
+    address: Address;
 
     /**
      * The Kana variation of the person's address (Japan only).
@@ -804,38 +738,6 @@ declare namespace Stripe {
   }
 
   namespace Person {
-    interface Address {
-      /**
-       * City/District/Suburb/Town/Village.
-       */
-      city?: string | null;
-
-      /**
-       * 2-letter country code.
-       */
-      country?: string | null;
-
-      /**
-       * Address line 1 (Street address/PO Box/Company name).
-       */
-      line1?: string | null;
-
-      /**
-       * Address line 2 (Apartment/Suite/Unit/Building).
-       */
-      line2?: string | null;
-
-      /**
-       * ZIP or postal code.
-       */
-      postal_code?: string | null;
-
-      /**
-       * State/County/Province/Region.
-       */
-      state?: string | null;
-    }
-
     interface AddressKana {
       /**
        * City/Ward.
