@@ -38,29 +38,7 @@ declare namespace Stripe {
     /**
      * Detailed breakdown of fees (in %s) paid for this transaction.
      */
-    fee_details?: Array<{
-      /**
-       * Amount of the fee, in cents.
-       */
-      amount: number;
-
-      application?: string | null;
-
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      currency: string;
-
-      /**
-       * An arbitrary string attached to the object. Often useful for displaying to users.
-       */
-      description?: string | null;
-
-      /**
-       * Type of the fee, one of: `application_fee`, `stripe_fee` or `tax`.
-       */
-      type: string;
-    }>;
+    fee_details?: Array<BalanceTransaction.FeeDetail>;
 
     /**
      * Unique identifier for the object.
@@ -107,7 +85,35 @@ declare namespace Stripe {
     /**
      * Transaction type: `adjustment`, `advance`, `advance_funding`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_transaction`, `payment`, `payment_failure_refund`, `payment_refund`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`. [Learn more](https://stripe.com/docs/reports/balance-transaction-types) about balance transaction types and what they represent.
      */
-    type?:
+    type?: BalanceTransaction.Type;
+  }
+
+  namespace BalanceTransaction {
+    interface FeeDetail {
+      /**
+       * Amount of the fee, in cents.
+       */
+      amount: number;
+
+      application?: string | null;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string | null;
+
+      /**
+       * Type of the fee, one of: `application_fee`, `stripe_fee` or `tax`.
+       */
+      type: string;
+    }
+
+    type Type =
       | 'adjustment'
       | 'advance'
       | 'advance_funding'
@@ -136,7 +142,7 @@ declare namespace Stripe {
       | 'transfer'
       | 'transfer_cancel'
       | 'transfer_failure'
-      | 'transfer_refund';
+      | 'transfer_refund'
   }
 
   /**
@@ -145,53 +151,9 @@ declare namespace Stripe {
    * Note that this endpoint was previously called “Balance history” and used the path /v1/balance/history.
    */
   interface BalanceTransactionListParams {
-    available_on?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
+    available_on?: number | BalanceTransactionListParams.AvailableOn;
 
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
-
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | BalanceTransactionListParams.Created;
 
     currency?: string;
 
@@ -229,6 +191,52 @@ declare namespace Stripe {
      * Only returns transactions of the given type. One of: `charge`, `refund`, `adjustment`, `application_fee`, `application_fee_refund`, `transfer`, `payment`, `payout`, `payout_failure`, `stripe_fee`, or `network_cost`.
      */
     type?: string;
+  }
+
+  namespace BalanceTransactionListParams {
+    interface AvailableOn {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**

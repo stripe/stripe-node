@@ -21,7 +21,7 @@ declare namespace Stripe {
     /**
      * One of `forever`, `once`, and `repeating`. Describes how long a customer who applies this coupon will get the discount.
      */
-    duration: 'forever' | 'once' | 'repeating';
+    duration: Coupon.Duration;
 
     /**
      * If `duration` is `repeating`, the number of months the coupon applies. Null if coupon `duration` is `forever` or `once`.
@@ -81,6 +81,10 @@ declare namespace Stripe {
     valid: boolean;
   }
 
+  namespace Coupon {
+    type Duration = 'forever' | 'once' | 'repeating'
+  }
+
   interface DeletedCoupon {
     /**
      * Unique identifier for the object.
@@ -117,7 +121,7 @@ declare namespace Stripe {
     /**
      * Specifies how long the discount will be in effect. Can be `forever`, `once`, or `repeating`.
      */
-    duration: 'forever' | 'once' | 'repeating';
+    duration: CouponCreateParams.Duration;
 
     /**
      * Required only if `duration` is `repeating`, in which case it must be a positive integer that specifies the number of months the discount will be in effect.
@@ -162,6 +166,10 @@ declare namespace Stripe {
     redeem_by?: number;
   }
 
+  namespace CouponCreateParams {
+    type Duration = 'forever' | 'once' | 'repeating'
+  }
+
   /**
    * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
    */
@@ -174,29 +182,7 @@ declare namespace Stripe {
     /**
      * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
      */
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | CouponListParams.Created;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -217,6 +203,30 @@ declare namespace Stripe {
      * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
      */
     starting_after?: string;
+  }
+
+  namespace CouponListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**

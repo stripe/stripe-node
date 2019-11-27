@@ -28,7 +28,60 @@ declare namespace Stripe {
      */
     currency?: string;
 
-    evidence?: {
+    evidence?: Dispute.Evidence;
+
+    evidence_details?: Dispute.EvidenceDetails;
+
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * If true, it is still possible to refund the disputed payment. Once the payment has been fully refunded, no further funds will be withdrawn from your Stripe account as a result of this dispute.
+     */
+    is_charge_refundable?: boolean;
+
+    /**
+     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+     */
+    livemode?: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * Network-dependent reason code for the dispute.
+     */
+    network_reason_code?: string | null;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'dispute';
+
+    /**
+     * ID of the PaymentIntent that was disputed.
+     */
+    payment_intent?: string | PaymentIntent | null;
+
+    /**
+     * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).
+     */
+    reason?: string;
+
+    /**
+     * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `charge_refunded`, `won`, or `lost`.
+     */
+    status?: Dispute.Status;
+  }
+
+  namespace Dispute {
+    interface Evidence {
       /**
        * Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity.
        */
@@ -163,9 +216,9 @@ declare namespace Stripe {
        * Any additional evidence or statements.
        */
       uncategorized_text?: string | null;
-    };
+    }
 
-    evidence_details?: {
+    interface EvidenceDetails {
       /**
        * Date by which evidence must be submitted in order to successfully challenge dispute. Will be null if the customer's bank or credit card company doesn't allow a response for this particular dispute.
        */
@@ -185,54 +238,9 @@ declare namespace Stripe {
        * The number of times evidence has been submitted. Typically, you may only submit evidence once.
        */
       submission_count: number;
-    };
+    }
 
-    /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
-     * If true, it is still possible to refund the disputed payment. Once the payment has been fully refunded, no further funds will be withdrawn from your Stripe account as a result of this dispute.
-     */
-    is_charge_refundable?: boolean;
-
-    /**
-     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-     */
-    livemode?: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * Network-dependent reason code for the dispute.
-     */
-    network_reason_code?: string | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'dispute';
-
-    /**
-     * ID of the PaymentIntent that was disputed.
-     */
-    payment_intent?: string | PaymentIntent | null;
-
-    /**
-     * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).
-     */
-    reason?: string;
-
-    /**
-     * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `charge_refunded`, `won`, or `lost`.
-     */
-    status?:
+    type Status =
       | 'charge_refunded'
       | 'lost'
       | 'needs_response'
@@ -240,7 +248,7 @@ declare namespace Stripe {
       | 'warning_closed'
       | 'warning_needs_response'
       | 'warning_under_review'
-      | 'won';
+      | 'won'
   }
 
   /**
@@ -252,29 +260,7 @@ declare namespace Stripe {
      */
     charge?: string;
 
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | DisputeListParams.Created;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -302,6 +288,30 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
+  namespace DisputeListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+  }
+
   /**
    * Retrieves the dispute with the given ID.
    */
@@ -321,7 +331,28 @@ declare namespace Stripe {
     /**
      * Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
      */
-    evidence?: {
+    evidence?: DisputeUpdateParams.Evidence;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A set of key-value pairs that you can attach to a dispute object. This can be useful for storing additional information about the dispute in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * Whether to immediately submit evidence to the bank. If `false`, evidence is staged on the dispute. Staged evidence is visible in the API and Dashboard, and can be submitted to the bank by making another request with this attribute set to `true` (the default).
+     */
+    submit?: boolean;
+  }
+
+  namespace DisputeUpdateParams {
+    interface Evidence {
       /**
        * Has a maximum character count of 20,000.
        */
@@ -399,24 +430,7 @@ declare namespace Stripe {
        * Has a maximum character count of 20,000.
        */
       uncategorized_text?: string;
-    };
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A set of key-value pairs that you can attach to a dispute object. This can be useful for storing additional information about the dispute in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * Whether to immediately submit evidence to the bank. If `false`, evidence is staged on the dispute. Staged evidence is visible in the API and Dashboard, and can be submitted to the bank by making another request with this attribute set to `true` (the default).
-     */
-    submit?: boolean;
+    }
   }
 
   /**

@@ -16,12 +16,7 @@ declare namespace Stripe {
     /**
      * The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
      */
-    closed_reason?:
-      | 'approved'
-      | 'disputed'
-      | 'refunded'
-      | 'refunded_as_fraud'
-      | null;
+    closed_reason?: Review.ClosedReason | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -41,34 +36,7 @@ declare namespace Stripe {
     /**
      * Information related to the location of the payment. Note that this information is an approximation and attempts to locate the nearest population center - it should not be used to determine a specific address.
      */
-    ip_address_location?:
-      | {
-        /**
-         * The city where the payment originated.
-         */
-        city?: string | null;
-
-        /**
-         * Two-letter ISO code representing the country where the payment originated.
-         */
-        country?: string | null;
-
-        /**
-         * The geographic latitude where the payment originated.
-         */
-        latitude?: number | null;
-
-        /**
-         * The geographic longitude where the payment originated.
-         */
-        longitude?: number | null;
-
-        /**
-         * The state/county/province/region where the payment originated.
-         */
-        region?: string | null;
-      }
-      | null;
+    ip_address_location?: Review.IpAddressLocation | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -88,7 +56,7 @@ declare namespace Stripe {
     /**
      * The reason the review was opened. One of `rule` or `manual`.
      */
-    opened_reason?: 'manual' | 'rule';
+    opened_reason?: Review.OpenedReason;
 
     /**
      * The PaymentIntent ID associated with this review, if one exists.
@@ -103,58 +71,73 @@ declare namespace Stripe {
     /**
      * Information related to the browsing session of the user who initiated the payment.
      */
-    session?:
-      | {
-        /**
-         * The browser used in this browser session (e.g., `Chrome`).
-         */
-        browser?: string | null;
+    session?: Review.Session | null;
+  }
 
-        /**
-         * Information about the device used for the browser session (e.g., `Samsung SM-G930T`).
-         */
-        device?: string | null;
+  namespace Review {
+    type ClosedReason =
+      | 'approved'
+      | 'disputed'
+      | 'refunded'
+      | 'refunded_as_fraud'
 
-        /**
-         * The platform for the browser session (e.g., `Macintosh`).
-         */
-        platform?: string | null;
+    interface IpAddressLocation {
+      /**
+       * The city where the payment originated.
+       */
+      city?: string | null;
 
-        /**
-         * The version for the browser session (e.g., `61.0.3163.100`).
-         */
-        version?: string | null;
-      }
-      | null;
+      /**
+       * Two-letter ISO code representing the country where the payment originated.
+       */
+      country?: string | null;
+
+      /**
+       * The geographic latitude where the payment originated.
+       */
+      latitude?: number | null;
+
+      /**
+       * The geographic longitude where the payment originated.
+       */
+      longitude?: number | null;
+
+      /**
+       * The state/county/province/region where the payment originated.
+       */
+      region?: string | null;
+    }
+
+    type OpenedReason = 'manual' | 'rule'
+
+    interface Session {
+      /**
+       * The browser used in this browser session (e.g., `Chrome`).
+       */
+      browser?: string | null;
+
+      /**
+       * Information about the device used for the browser session (e.g., `Samsung SM-G930T`).
+       */
+      device?: string | null;
+
+      /**
+       * The platform for the browser session (e.g., `Macintosh`).
+       */
+      platform?: string | null;
+
+      /**
+       * The version for the browser session (e.g., `61.0.3163.100`).
+       */
+      version?: string | null;
+    }
   }
 
   /**
    * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
   interface ReviewListParams {
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | ReviewListParams.Created;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -175,6 +158,30 @@ declare namespace Stripe {
      * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
      */
     starting_after?: string;
+  }
+
+  namespace ReviewListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**

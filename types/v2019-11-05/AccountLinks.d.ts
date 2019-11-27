@@ -36,7 +36,7 @@ declare namespace Stripe {
     /**
      * Which information the platform needs to collect from the user. One of `currently_due` or `eventually_due`. Default is `currently_due`.
      */
-    collect?: 'currently_due' | 'eventually_due';
+    collect?: AccountLinkCreateParams.Collect;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -57,6 +57,10 @@ declare namespace Stripe {
      * The type of account link the user is requesting. Possible values are `custom_account_verification` or `custom_account_update`.
      */
     type: string;
+  }
+
+  namespace AccountLinkCreateParams {
+    type Collect = 'currently_due' | 'eventually_due'
   }
 
   class AccountLinksResource {

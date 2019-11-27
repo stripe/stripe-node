@@ -56,7 +56,33 @@ declare namespace Stripe {
     /**
      * The bank account this token will represent.
      */
-    bank_account?: {
+    bank_account?: TokenCreateParams.BankAccount;
+
+    card?: string | TokenCreateParams.Card;
+
+    /**
+     * The customer (owned by the application's account) for which to create a token. For use only with [Stripe Connect](https://stripe.com/docs/connect). Also, this can be used only with an [OAuth access token](https://stripe.com/docs/connect/standard-accounts) or [Stripe-Account header](https://stripe.com/docs/connect/authentication). For more details, see [Cloning Saved Payment Methods](https://stripe.com/docs/connect/cloning-saved-payment-methods).
+     */
+    customer?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Information for the person this token will represent.
+     */
+    person?: TokenCreateParams.Person;
+
+    /**
+     * The PII this token will represent.
+     */
+    pii?: TokenCreateParams.Pii;
+  }
+
+  namespace TokenCreateParams {
+    interface BankAccount {
       /**
        * The name of the person or business that owns the bank account.This field is required when attaching the bank account to a `Customer` object.
        */
@@ -65,7 +91,7 @@ declare namespace Stripe {
       /**
        * The type of entity that holds the account. It can be `company` or `individual`. This field is required when attaching the bank account to a `Customer` object.
        */
-      account_holder_type?: 'company' | 'individual';
+      account_holder_type?: BankAccount.AccountHolderType;
 
       /**
        * The account number for the bank account, in string form. Must be a checking account.
@@ -86,186 +112,58 @@ declare namespace Stripe {
        * The routing number, sort code, or other country-appropriateinstitution number for the bank account. For US bank accounts, this is required and should bethe ACH routing number, not the wire routing number. If you are providing an IBAN for`account_number`, this field is not required.
        */
       routing_number?: string;
-    };
+    }
 
-    card?:
-      | {
-        address_city?: string;
+    namespace BankAccount {
+      type AccountHolderType = 'company' | 'individual'
+    }
 
-        address_country?: string;
+    interface Card {
+      address_city?: string;
 
-        address_line1?: string;
+      address_country?: string;
 
-        address_line2?: string;
+      address_line1?: string;
 
-        address_state?: string;
+      address_line2?: string;
 
-        address_zip?: string;
+      address_state?: string;
 
-        currency?: string;
+      address_zip?: string;
 
-        cvc?: string;
+      currency?: string;
 
-        exp_month: string;
+      cvc?: string;
 
-        exp_year: string;
+      exp_month: string;
 
-        name?: string;
+      exp_year: string;
 
-        number: string;
-      }
-      | string;
+      name?: string;
 
-    /**
-     * The customer (owned by the application's account) for which to create a token. For use only with [Stripe Connect](https://stripe.com/docs/connect). Also, this can be used only with an [OAuth access token](https://stripe.com/docs/connect/standard-accounts) or [Stripe-Account header](https://stripe.com/docs/connect/authentication). For more details, see [Cloning Saved Payment Methods](https://stripe.com/docs/connect/cloning-saved-payment-methods).
-     */
-    customer?: string;
+      number: string;
+    }
 
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Information for the person this token will represent.
-     */
-    person?: {
+    interface Person {
       /**
        * The person's address.
        */
-      address?: {
-        /**
-         * City, district, suburb, town, or village.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Address line 1 (e.g., street, PO Box, or company name).
-         */
-        line1?: string;
-
-        /**
-         * Address line 2 (e.g., apartment, suite, unit, or building).
-         */
-        line2?: string;
-
-        /**
-         * ZIP or postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * State, county, province, or region.
-         */
-        state?: string;
-      };
+      address?: Person.Address;
 
       /**
        * The Kana variation of the person's address (Japan only).
        */
-      address_kana?: {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
-      };
+      address_kana?: Person.AddressKana;
 
       /**
        * The Kanji variation of the person's address (Japan only).
        */
-      address_kanji?: {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
-      };
+      address_kanji?: Person.AddressKanji;
 
       /**
        * The person's date of birth.
        */
-      dob?:
-        | {
-          /**
-           * The day of birth, between 1 and 31.
-           */
-          day: number;
-
-          /**
-           * The month of birth, between 1 and 12.
-           */
-          month: number;
-
-          /**
-           * The four-digit year of birth.
-           */
-          year: number;
-        }
-        | '';
+      dob?: '' | Person.Dob;
 
       /**
        * The person's email address.
@@ -332,7 +230,144 @@ declare namespace Stripe {
       /**
        * The relationship that this person has with the account's legal entity.
        */
-      relationship?: {
+      relationship?: Person.Relationship;
+
+      /**
+       * The last 4 digits of the person's social security number.
+       */
+      ssn_last_4?: string;
+
+      /**
+       * The person's verification status.
+       */
+      verification?: Person.Verification;
+    }
+
+    namespace Person {
+      interface Address {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1?: string;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2?: string;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * State, county, province, or region.
+         */
+        state?: string;
+      }
+
+      interface AddressKana {
+        /**
+         * City or ward.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Block or building number.
+         */
+        line1?: string;
+
+        /**
+         * Building details.
+         */
+        line2?: string;
+
+        /**
+         * Postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * Prefecture.
+         */
+        state?: string;
+
+        /**
+         * Town or cho-me.
+         */
+        town?: string;
+      }
+
+      interface AddressKanji {
+        /**
+         * City or ward.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Block or building number.
+         */
+        line1?: string;
+
+        /**
+         * Building details.
+         */
+        line2?: string;
+
+        /**
+         * Postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * Prefecture.
+         */
+        state?: string;
+
+        /**
+         * Town or cho-me.
+         */
+        town?: string;
+      }
+
+      interface Dob {
+        /**
+         * The day of birth, between 1 and 31.
+         */
+        day: number;
+
+        /**
+         * The month of birth, between 1 and 12.
+         */
+        month: number;
+
+        /**
+         * The four-digit year of birth.
+         */
+        year: number;
+      }
+
+      interface Relationship {
         /**
          * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
@@ -362,36 +397,22 @@ declare namespace Stripe {
          * The person's title (e.g., CEO, Support Engineer).
          */
         title?: string;
-      };
+      }
 
-      /**
-       * The last 4 digits of the person's social security number.
-       */
-      ssn_last_4?: string;
-
-      /**
-       * The person's verification status.
-       */
-      verification?: {
+      interface Verification {
         /**
          * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
          */
-        additional_document?: {
-          /**
-           * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-           */
-          back?: string;
-
-          /**
-           * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-           */
-          front?: string;
-        };
+        additional_document?: Verification.AdditionalDocument;
 
         /**
          * An identifying document, either a passport or local ID card.
          */
-        document?: {
+        document?: Verification.Document;
+      }
+
+      namespace Verification {
+        interface AdditionalDocument {
           /**
            * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
            */
@@ -401,19 +422,28 @@ declare namespace Stripe {
            * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
            */
           front?: string;
-        };
-      };
-    };
+        }
 
-    /**
-     * The PII this token will represent.
-     */
-    pii?: {
+        interface Document {
+          /**
+           * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          back?: string;
+
+          /**
+           * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+           */
+          front?: string;
+        }
+      }
+    }
+
+    interface Pii {
       /**
        * The `id_number` for the PII, in string form.
        */
       id_number?: string;
-    };
+    }
   }
 
   /**

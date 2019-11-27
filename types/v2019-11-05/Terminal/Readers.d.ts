@@ -12,7 +12,7 @@ declare namespace Stripe {
       /**
        * Type of reader, one of `bbpos_chipper2x` or `verifone_P400`.
        */
-      device_type: 'bbpos_chipper2x' | 'verifone_P400';
+      device_type: Reader.DeviceType;
 
       /**
        * Unique identifier for the object.
@@ -48,6 +48,10 @@ declare namespace Stripe {
        * The networking status of the reader.
        */
       status: string | null;
+    }
+
+    namespace Reader {
+      type DeviceType = 'bbpos_chipper2x' | 'verifone_P400'
     }
 
     interface DeletedReader {
@@ -114,7 +118,7 @@ declare namespace Stripe {
       /**
        * Filters readers by device type
        */
-      device_type?: 'bbpos_chipper2x' | 'verifone_P400' | string;
+      device_type?: string | ReaderListParams.DeviceType;
 
       /**
        * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -149,7 +153,13 @@ declare namespace Stripe {
       /**
        * A status filter to filter readers to only offline or online readers
        */
-      status?: 'offline' | 'online' | string;
+      status?: string | ReaderListParams.Status;
+    }
+
+    namespace ReaderListParams {
+      type DeviceType = 'bbpos_chipper2x' | 'verifone_P400'
+
+      type Status = 'offline' | 'online'
     }
 
     /**

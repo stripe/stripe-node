@@ -3,43 +3,60 @@ declare namespace Stripe {
    * The PaymentMethod object.
    */
   interface PaymentMethod {
-    billing_details?: {
+    billing_details?: PaymentMethod.BillingDetails;
+
+    card?: PaymentMethod.Card;
+
+    card_present?: PaymentMethod.CardPresent;
+
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created?: number;
+
+    /**
+     * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
+     */
+    customer?: string | Customer | null;
+
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    ideal?: PaymentMethod.Ideal;
+
+    /**
+     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+     */
+    livemode?: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'payment_method';
+
+    sepa_debit?: PaymentMethod.SepaDebit;
+
+    /**
+     * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+     */
+    type?: PaymentMethod.Type;
+  }
+
+  namespace PaymentMethod {
+    interface BillingDetails {
       /**
        * Billing address.
        */
-      address?:
-        | {
-          /**
-           * City/District/Suburb/Town/Village.
-           */
-          city?: string | null;
-
-          /**
-           * 2-letter country code.
-           */
-          country?: string | null;
-
-          /**
-           * Address line 1 (Street address/PO Box/Company name).
-           */
-          line1?: string | null;
-
-          /**
-           * Address line 2 (Apartment/Suite/Unit/Building).
-           */
-          line2?: string | null;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string | null;
-
-          /**
-           * State/County/Province/Region.
-           */
-          state?: string | null;
-        }
-        | null;
+      address?: BillingDetails.Address | null;
 
       /**
        * Email address.
@@ -55,9 +72,43 @@ declare namespace Stripe {
        * Billing phone number (including extension).
        */
       phone?: string | null;
-    };
+    }
 
-    card?: {
+    namespace BillingDetails {
+      interface Address {
+        /**
+         * City/District/Suburb/Town/Village.
+         */
+        city?: string | null;
+
+        /**
+         * 2-letter country code.
+         */
+        country?: string | null;
+
+        /**
+         * Address line 1 (Street address/PO Box/Company name).
+         */
+        line1?: string | null;
+
+        /**
+         * Address line 2 (Apartment/Suite/Unit/Building).
+         */
+        line2?: string | null;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string | null;
+
+        /**
+         * State/County/Province/Region.
+         */
+        state?: string | null;
+      }
+    }
+
+    interface Card {
       /**
        * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
        */
@@ -66,24 +117,7 @@ declare namespace Stripe {
       /**
        * Checks on Card address and CVC if provided.
        */
-      checks?:
-        | {
-          /**
-           * If a address line1 was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
-           */
-          address_line1_check?: string | null;
-
-          /**
-           * If a address postal code was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
-           */
-          address_postal_code_check?: string | null;
-
-          /**
-           * If a CVC was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
-           */
-          cvc_check?: string | null;
-        }
-        | null;
+      checks?: Card.Checks | null;
 
       /**
        * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
@@ -133,241 +167,274 @@ declare namespace Stripe {
       /**
        * Contains details on how this Card maybe be used for 3D Secure authentication.
        */
-      three_d_secure_usage?:
-        | {
-          /**
-           * Whether 3D Secure is supported on this card.
-           */
-          supported: boolean;
-        }
-        | null;
+      three_d_secure_usage?: Card.ThreeDSecureUsage | null;
 
       /**
        * If this Card is part of a card wallet, this contains the details of the card wallet.
        */
-      wallet?:
-        | {
-          amex_express_checkout?: {};
+      wallet?: Card.Wallet | null;
+    }
 
-          apple_pay?: {};
+    namespace Card {
+      interface Checks {
+        /**
+         * If a address line1 was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+         */
+        address_line1_check?: string | null;
+
+        /**
+         * If a address postal code was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+         */
+        address_postal_code_check?: string | null;
+
+        /**
+         * If a CVC was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+         */
+        cvc_check?: string | null;
+      }
+
+      interface ThreeDSecureUsage {
+        /**
+         * Whether 3D Secure is supported on this card.
+         */
+        supported: boolean;
+      }
+
+      interface Wallet {
+        amex_express_checkout?: Wallet.AmexExpressCheckout;
+
+        apple_pay?: Wallet.ApplePay;
+
+        /**
+         * (For tokenized numbers only.) The last four digits of the device account number.
+         */
+        dynamic_last4?: string | null;
+
+        google_pay?: Wallet.GooglePay;
+
+        masterpass?: Wallet.Masterpass;
+
+        samsung_pay?: Wallet.SamsungPay;
+
+        /**
+         * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+         */
+        type: Wallet.Type;
+
+        visa_checkout?: Wallet.VisaCheckout;
+      }
+
+      namespace Wallet {
+        interface AmexExpressCheckout {}
+
+        interface ApplePay {}
+
+        interface GooglePay {}
+
+        interface Masterpass {
+          /**
+           * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          billing_address?: Masterpass.BillingAddress | null;
 
           /**
-           * (For tokenized numbers only.) The last four digits of the device account number.
+           * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          dynamic_last4?: string | null;
-
-          google_pay?: {};
-
-          masterpass?: {
-            /**
-             * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-             */
-            billing_address?:
-              | {
-                /**
-                 * City/District/Suburb/Town/Village.
-                 */
-                city?: string | null;
-
-                /**
-                 * 2-letter country code.
-                 */
-                country?: string | null;
-
-                /**
-                 * Address line 1 (Street address/PO Box/Company name).
-                 */
-                line1?: string | null;
-
-                /**
-                 * Address line 2 (Apartment/Suite/Unit/Building).
-                 */
-                line2?: string | null;
-
-                /**
-                 * ZIP or postal code.
-                 */
-                postal_code?: string | null;
-
-                /**
-                 * State/County/Province/Region.
-                 */
-                state?: string | null;
-              }
-              | null;
-
-            /**
-             * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-             */
-            email?: string | null;
-
-            /**
-             * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-             */
-            name?: string | null;
-
-            /**
-             * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-             */
-            shipping_address?:
-              | {
-                /**
-                 * City/District/Suburb/Town/Village.
-                 */
-                city?: string | null;
-
-                /**
-                 * 2-letter country code.
-                 */
-                country?: string | null;
-
-                /**
-                 * Address line 1 (Street address/PO Box/Company name).
-                 */
-                line1?: string | null;
-
-                /**
-                 * Address line 2 (Apartment/Suite/Unit/Building).
-                 */
-                line2?: string | null;
-
-                /**
-                 * ZIP or postal code.
-                 */
-                postal_code?: string | null;
-
-                /**
-                 * State/County/Province/Region.
-                 */
-                state?: string | null;
-              }
-              | null;
-          };
-
-          samsung_pay?: {};
+          email?: string | null;
 
           /**
-           * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+           * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          type:
-            | 'amex_express_checkout'
-            | 'apple_pay'
-            | 'google_pay'
-            | 'masterpass'
-            | 'samsung_pay'
-            | 'visa_checkout';
+          name?: string | null;
 
-          visa_checkout?: {
-            /**
-             * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-             */
-            billing_address?:
-              | {
-                /**
-                 * City/District/Suburb/Town/Village.
-                 */
-                city?: string | null;
-
-                /**
-                 * 2-letter country code.
-                 */
-                country?: string | null;
-
-                /**
-                 * Address line 1 (Street address/PO Box/Company name).
-                 */
-                line1?: string | null;
-
-                /**
-                 * Address line 2 (Apartment/Suite/Unit/Building).
-                 */
-                line2?: string | null;
-
-                /**
-                 * ZIP or postal code.
-                 */
-                postal_code?: string | null;
-
-                /**
-                 * State/County/Province/Region.
-                 */
-                state?: string | null;
-              }
-              | null;
-
-            /**
-             * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-             */
-            email?: string | null;
-
-            /**
-             * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-             */
-            name?: string | null;
-
-            /**
-             * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
-             */
-            shipping_address?:
-              | {
-                /**
-                 * City/District/Suburb/Town/Village.
-                 */
-                city?: string | null;
-
-                /**
-                 * 2-letter country code.
-                 */
-                country?: string | null;
-
-                /**
-                 * Address line 1 (Street address/PO Box/Company name).
-                 */
-                line1?: string | null;
-
-                /**
-                 * Address line 2 (Apartment/Suite/Unit/Building).
-                 */
-                line2?: string | null;
-
-                /**
-                 * ZIP or postal code.
-                 */
-                postal_code?: string | null;
-
-                /**
-                 * State/County/Province/Region.
-                 */
-                state?: string | null;
-              }
-              | null;
-          };
+          /**
+           * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          shipping_address?: Masterpass.ShippingAddress | null;
         }
-        | null;
-    };
 
-    card_present?: {};
+        namespace Masterpass {
+          interface BillingAddress {
+            /**
+             * City/District/Suburb/Town/Village.
+             */
+            city?: string | null;
 
-    /**
-     * Time at which the object was created. Measured in seconds since the Unix epoch.
-     */
-    created?: number;
+            /**
+             * 2-letter country code.
+             */
+            country?: string | null;
 
-    /**
-     * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
-     */
-    customer?: string | Customer | null;
+            /**
+             * Address line 1 (Street address/PO Box/Company name).
+             */
+            line1?: string | null;
 
-    /**
-     * Unique identifier for the object.
-     */
-    id?: string;
+            /**
+             * Address line 2 (Apartment/Suite/Unit/Building).
+             */
+            line2?: string | null;
 
-    ideal?: {
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string | null;
+
+            /**
+             * State/County/Province/Region.
+             */
+            state?: string | null;
+          }
+
+          interface ShippingAddress {
+            /**
+             * City/District/Suburb/Town/Village.
+             */
+            city?: string | null;
+
+            /**
+             * 2-letter country code.
+             */
+            country?: string | null;
+
+            /**
+             * Address line 1 (Street address/PO Box/Company name).
+             */
+            line1?: string | null;
+
+            /**
+             * Address line 2 (Apartment/Suite/Unit/Building).
+             */
+            line2?: string | null;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string | null;
+
+            /**
+             * State/County/Province/Region.
+             */
+            state?: string | null;
+          }
+        }
+
+        interface SamsungPay {}
+
+        type Type =
+          | 'amex_express_checkout'
+          | 'apple_pay'
+          | 'google_pay'
+          | 'masterpass'
+          | 'samsung_pay'
+          | 'visa_checkout'
+
+        interface VisaCheckout {
+          /**
+           * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          billing_address?: VisaCheckout.BillingAddress | null;
+
+          /**
+           * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          email?: string | null;
+
+          /**
+           * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          name?: string | null;
+
+          /**
+           * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          shipping_address?: VisaCheckout.ShippingAddress | null;
+        }
+
+        namespace VisaCheckout {
+          interface BillingAddress {
+            /**
+             * City/District/Suburb/Town/Village.
+             */
+            city?: string | null;
+
+            /**
+             * 2-letter country code.
+             */
+            country?: string | null;
+
+            /**
+             * Address line 1 (Street address/PO Box/Company name).
+             */
+            line1?: string | null;
+
+            /**
+             * Address line 2 (Apartment/Suite/Unit/Building).
+             */
+            line2?: string | null;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string | null;
+
+            /**
+             * State/County/Province/Region.
+             */
+            state?: string | null;
+          }
+
+          interface ShippingAddress {
+            /**
+             * City/District/Suburb/Town/Village.
+             */
+            city?: string | null;
+
+            /**
+             * 2-letter country code.
+             */
+            country?: string | null;
+
+            /**
+             * Address line 1 (Street address/PO Box/Company name).
+             */
+            line1?: string | null;
+
+            /**
+             * Address line 2 (Apartment/Suite/Unit/Building).
+             */
+            line2?: string | null;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string | null;
+
+            /**
+             * State/County/Province/Region.
+             */
+            state?: string | null;
+          }
+        }
+      }
+    }
+
+    interface CardPresent {}
+
+    interface Ideal {
       /**
        * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
        */
-      bank?:
+      bank?: Ideal.Bank | null;
+
+      /**
+       * The Bank Identifier Code of the customer's bank, if the bank was provided.
+       */
+      bic?: Ideal.Bic | null;
+    }
+
+    namespace Ideal {
+      type Bank =
         | 'abn_amro'
         | 'asn_bank'
         | 'bunq'
@@ -380,12 +447,8 @@ declare namespace Stripe {
         | 'sns_bank'
         | 'triodos_bank'
         | 'van_lanschot'
-        | null;
 
-      /**
-       * The Bank Identifier Code of the customer's bank, if the bank was provided.
-       */
-      bic?:
+      type Bic =
         | 'ABNANL2A'
         | 'ASNBNL21'
         | 'BUNQNL2A'
@@ -398,27 +461,9 @@ declare namespace Stripe {
         | 'RBRBNL21'
         | 'SNSBNL2A'
         | 'TRIONL2U'
-        | null;
-    };
+    }
 
-    /**
-     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-     */
-    livemode?: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'payment_method';
-
-    sepa_debit?: {
+    interface SepaDebit {
       /**
        * Bank code of bank associated with the bank account.
        */
@@ -443,12 +488,9 @@ declare namespace Stripe {
        * Last four characters of the IBAN.
        */
       last4?: string | null;
-    };
+    }
 
-    /**
-     * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
-     */
-    type?: 'card' | 'card_present' | 'ideal' | 'sepa_debit';
+    type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
   }
 
   /**
@@ -458,68 +500,12 @@ declare namespace Stripe {
     /**
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
-    billing_details?: {
-      /**
-       * Billing address.
-       */
-      address?: {
-        city?: string;
-
-        country?: string;
-
-        line1?: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      };
-
-      /**
-       * Email address.
-       */
-      email?: string;
-
-      /**
-       * Full name.
-       */
-      name?: string;
-
-      /**
-       * Billing phone number (including extension).
-       */
-      phone?: string;
-    };
+    billing_details?: PaymentMethodCreateParams.BillingDetails;
 
     /**
      * If this is a `card` PaymentMethod, this hash contains the user's card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When creating with a card number, you must meet the requirements for [PCI compliance](https://stripe.com/docs/security#validating-pci-compliance). We strongly recommend using Stripe.js instead of interacting with this API directly.
      */
-    card?:
-      | {
-        /**
-         * The card's CVC. It is highly recommended to always include this value.
-         */
-        cvc?: string;
-
-        /**
-         * Two-digit number representing the card's expiration month.
-         */
-        exp_month: number;
-
-        /**
-         * Four-digit number representing the card's expiration year.
-         */
-        exp_year: number;
-
-        /**
-         * The card number, as a string without any separators.
-         */
-        number: string;
-      }
-      | {
-        token: string;
-      };
+    card?: PaymentMethodCreateParams.Card1 | PaymentMethodCreateParams.Card2;
 
     /**
      * The `Customer` to whom the original PaymentMethod is attached.
@@ -534,24 +520,7 @@ declare namespace Stripe {
     /**
      * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
      */
-    ideal?: {
-      /**
-       * The customer's bank.
-       */
-      bank?:
-        | 'abn_amro'
-        | 'asn_bank'
-        | 'bunq'
-        | 'handelsbanken'
-        | 'ing'
-        | 'knab'
-        | 'moneyou'
-        | 'rabobank'
-        | 'regiobank'
-        | 'sns_bank'
-        | 'triodos_bank'
-        | 'van_lanschot';
-    };
+    ideal?: PaymentMethodCreateParams.Ideal;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -568,14 +537,106 @@ declare namespace Stripe {
     /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
-    sepa_debit?: {
-      iban: string;
-    };
+    sepa_debit?: PaymentMethodCreateParams.SepaDebit;
 
     /**
      * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type. Required unless `payment_method` is specified (see the [Cloning PaymentMethods](https://stripe.com/docs/payments/payment-methods/connect#cloning-payment-methods) guide)
      */
-    type?: 'card' | 'card_present' | 'ideal' | 'sepa_debit';
+    type?: PaymentMethodCreateParams.Type;
+  }
+
+  namespace PaymentMethodCreateParams {
+    interface BillingDetails {
+      /**
+       * Billing address.
+       */
+      address?: BillingDetails.Address;
+
+      /**
+       * Email address.
+       */
+      email?: string;
+
+      /**
+       * Full name.
+       */
+      name?: string;
+
+      /**
+       * Billing phone number (including extension).
+       */
+      phone?: string;
+    }
+
+    namespace BillingDetails {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1?: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
+
+    interface Card1 {
+      /**
+       * The card's CVC. It is highly recommended to always include this value.
+       */
+      cvc?: string;
+
+      /**
+       * Two-digit number representing the card's expiration month.
+       */
+      exp_month: number;
+
+      /**
+       * Four-digit number representing the card's expiration year.
+       */
+      exp_year: number;
+
+      /**
+       * The card number, as a string without any separators.
+       */
+      number: string;
+    }
+    interface Card2 {
+      token: string;
+    }
+
+    interface Ideal {
+      /**
+       * The customer's bank.
+       */
+      bank?: Ideal.Bank;
+    }
+
+    namespace Ideal {
+      type Bank =
+        | 'abn_amro'
+        | 'asn_bank'
+        | 'bunq'
+        | 'handelsbanken'
+        | 'ing'
+        | 'knab'
+        | 'moneyou'
+        | 'rabobank'
+        | 'regiobank'
+        | 'sns_bank'
+        | 'triodos_bank'
+        | 'van_lanschot'
+    }
+
+    interface SepaDebit {
+      iban: string;
+    }
+
+    type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
   }
 
   /**
@@ -610,7 +671,11 @@ declare namespace Stripe {
     /**
      * A required filter on the list, based on the object `type` field.
      */
-    type: 'card' | 'card_present' | 'ideal' | 'sepa_debit';
+    type: PaymentMethodListParams.Type;
+  }
+
+  namespace PaymentMethodListParams {
+    type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
   }
 
   /**
@@ -630,23 +695,31 @@ declare namespace Stripe {
     /**
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
-    billing_details?: {
+    billing_details?: PaymentMethodUpdateParams.BillingDetails;
+
+    card?: PaymentMethodUpdateParams.Card;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    sepa_debit?: PaymentMethodUpdateParams.SepaDebit;
+  }
+
+  namespace PaymentMethodUpdateParams {
+    interface BillingDetails {
       /**
        * Billing address.
        */
-      address?: {
-        city?: string;
-
-        country?: string;
-
-        line1?: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      };
+      address?: BillingDetails.Address;
 
       /**
        * Email address.
@@ -662,9 +735,25 @@ declare namespace Stripe {
        * Billing phone number (including extension).
        */
       phone?: string;
-    };
+    }
 
-    card?: {
+    namespace BillingDetails {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1?: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
+
+    interface Card {
       /**
        * Two-digit number representing the card's expiration month.
        */
@@ -674,21 +763,9 @@ declare namespace Stripe {
        * Four-digit number representing the card's expiration year.
        */
       exp_year?: number;
-    };
+    }
 
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    sepa_debit?: {};
+    interface SepaDebit {}
   }
 
   /**

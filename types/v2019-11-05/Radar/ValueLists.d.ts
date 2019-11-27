@@ -27,14 +27,7 @@ declare namespace Stripe {
       /**
        * The type of items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`.
        */
-      item_type:
-        | 'card_bin'
-        | 'card_fingerprint'
-        | 'case_sensitive_string'
-        | 'country'
-        | 'email'
-        | 'ip_address'
-        | 'string';
+      item_type: ValueList.ItemType;
 
       /**
        * List of items contained within this value list.
@@ -62,6 +55,17 @@ declare namespace Stripe {
        * String representing the object's type. Objects of the same type share the same value.
        */
       object: 'radar.value_list';
+    }
+
+    namespace ValueList {
+      type ItemType =
+        | 'card_bin'
+        | 'card_fingerprint'
+        | 'case_sensitive_string'
+        | 'country'
+        | 'email'
+        | 'ip_address'
+        | 'string'
     }
 
     interface DeletedValueList {
@@ -98,14 +102,7 @@ declare namespace Stripe {
       /**
        * Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`. Use `string` if the item type is unknown or mixed.
        */
-      item_type?:
-        | 'card_bin'
-        | 'card_fingerprint'
-        | 'case_sensitive_string'
-        | 'country'
-        | 'email'
-        | 'ip_address'
-        | 'string';
+      item_type?: ValueListCreateParams.ItemType;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -118,6 +115,17 @@ declare namespace Stripe {
        * The human-readable name of the value list.
        */
       name: string;
+    }
+
+    namespace ValueListCreateParams {
+      type ItemType =
+        | 'card_bin'
+        | 'card_fingerprint'
+        | 'case_sensitive_string'
+        | 'country'
+        | 'email'
+        | 'ip_address'
+        | 'string'
     }
 
     /**
@@ -139,29 +147,7 @@ declare namespace Stripe {
        */
       contains?: string;
 
-      created?:
-        | {
-          /**
-           * Minimum value to filter by (exclusive)
-           */
-          gt?: number;
-
-          /**
-           * Minimum value to filter by (inclusive)
-           */
-          gte?: number;
-
-          /**
-           * Maximum value to filter by (exclusive)
-           */
-          lt?: number;
-
-          /**
-           * Maximum value to filter by (inclusive)
-           */
-          lte?: number;
-        }
-        | number;
+      created?: number | ValueListListParams.Created;
 
       /**
        * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -182,6 +168,30 @@ declare namespace Stripe {
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
        */
       starting_after?: string;
+    }
+
+    namespace ValueListListParams {
+      interface Created {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
     }
 
     /**

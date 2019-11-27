@@ -6,56 +6,12 @@ declare namespace Stripe {
     /**
      * Funds that are available to be transferred or paid out, whether automatically by Stripe or explicitly via the [Transfers API](#transfers) or [Payouts API](#payouts). The available balance for each currency and payment type can be found in the `source_types` property.
      */
-    available?: Array<{
-      /**
-       * Balance amount.
-       */
-      amount: number;
-
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      currency: string;
-
-      source_types?: {
-        /**
-         * Amount for bank account.
-         */
-        bank_account?: number;
-
-        /**
-         * Amount for card.
-         */
-        card?: number;
-      };
-    }>;
+    available?: Array<Balance.Available>;
 
     /**
      * Funds held due to negative balances on connected Custom accounts. The connect reserve balance for each currency and payment type can be found in the `source_types` property.
      */
-    connect_reserved?: Array<{
-      /**
-       * Balance amount.
-       */
-      amount: number;
-
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      currency: string;
-
-      source_types?: {
-        /**
-         * Amount for bank account.
-         */
-        bank_account?: number;
-
-        /**
-         * Amount for card.
-         */
-        card?: number;
-      };
-    }>;
+    connect_reserved?: Array<Balance.ConnectReserved>;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -70,7 +26,11 @@ declare namespace Stripe {
     /**
      * Funds that are not yet available in the balance, due to the 7-day rolling pay cycle. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
      */
-    pending?: Array<{
+    pending?: Array<Balance.Pending>;
+  }
+
+  namespace Balance {
+    interface Available {
       /**
        * Balance amount.
        */
@@ -81,7 +41,11 @@ declare namespace Stripe {
        */
       currency: string;
 
-      source_types?: {
+      source_types?: Available.SourceTypes;
+    }
+
+    namespace Available {
+      interface SourceTypes {
         /**
          * Amount for bank account.
          */
@@ -91,8 +55,64 @@ declare namespace Stripe {
          * Amount for card.
          */
         card?: number;
-      };
-    }>;
+      }
+    }
+
+    interface ConnectReserved {
+      /**
+       * Balance amount.
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      source_types?: ConnectReserved.SourceTypes;
+    }
+
+    namespace ConnectReserved {
+      interface SourceTypes {
+        /**
+         * Amount for bank account.
+         */
+        bank_account?: number;
+
+        /**
+         * Amount for card.
+         */
+        card?: number;
+      }
+    }
+
+    interface Pending {
+      /**
+       * Balance amount.
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      source_types?: Pending.SourceTypes;
+    }
+
+    namespace Pending {
+      interface SourceTypes {
+        /**
+         * Amount for bank account.
+         */
+        bank_account?: number;
+
+        /**
+         * Amount for card.
+         */
+        card?: number;
+      }
+    }
   }
 
   /**

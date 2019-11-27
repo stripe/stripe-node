@@ -3,7 +3,64 @@ declare namespace Stripe {
    * The SourceTransaction object.
    */
   interface SourceTransaction {
-    ach_credit_transfer?: {
+    ach_credit_transfer?: SourceTransaction.AchCreditTransfer;
+
+    /**
+     * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the amount your customer has pushed to the receiver.
+     */
+    amount?: number;
+
+    chf_credit_transfer?: SourceTransaction.ChfCreditTransfer;
+
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created?: number;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency?: string;
+
+    gbp_credit_transfer?: SourceTransaction.GbpCreditTransfer;
+
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+     */
+    livemode?: boolean;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'source_transaction';
+
+    paper_check?: SourceTransaction.PaperCheck;
+
+    sepa_credit_transfer?: SourceTransaction.SepaCreditTransfer;
+
+    /**
+     * The ID of the source this transaction is attached to.
+     */
+    source?: string;
+
+    /**
+     * The status of the transaction, one of `succeeded`, `pending`, or `failed`.
+     */
+    status?: string;
+
+    /**
+     * The type of source this transaction is attached to.
+     */
+    type?: SourceTransaction.Type;
+  }
+
+  namespace SourceTransaction {
+    interface AchCreditTransfer {
       /**
        * Customer data associated with the transfer.
        */
@@ -23,14 +80,9 @@ declare namespace Stripe {
        * Routing number associated with the transfer.
        */
       routing_number?: string;
-    };
+    }
 
-    /**
-     * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the amount your customer has pushed to the receiver.
-     */
-    amount?: number;
-
-    chf_credit_transfer?: {
+    interface ChfCreditTransfer {
       /**
        * Reference associated with the transfer.
        */
@@ -55,19 +107,9 @@ declare namespace Stripe {
        * Sender's name.
        */
       sender_name?: string;
-    };
+    }
 
-    /**
-     * Time at which the object was created. Measured in seconds since the Unix epoch.
-     */
-    created?: number;
-
-    /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-     */
-    currency?: string;
-
-    gbp_credit_transfer?: {
+    interface GbpCreditTransfer {
       /**
        * Bank account fingerprint associated with the transfer.
        */
@@ -92,24 +134,9 @@ declare namespace Stripe {
        * Sort code associated with the transfer.
        */
       sort_code?: string;
-    };
+    }
 
-    /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
-     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-     */
-    livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'source_transaction';
-
-    paper_check?: {
+    interface PaperCheck {
       /**
        * String unix time for the available date.
        */
@@ -119,9 +146,9 @@ declare namespace Stripe {
        * Invoice ID associated with the paper check.
        */
       invoices?: string;
-    };
+    }
 
-    sepa_credit_transfer?: {
+    interface SepaCreditTransfer {
       /**
        * Reference associated with the transfer.
        */
@@ -136,22 +163,9 @@ declare namespace Stripe {
        * Sender's name.
        */
       sender_name?: string;
-    };
+    }
 
-    /**
-     * The ID of the source this transaction is attached to.
-     */
-    source?: string;
-
-    /**
-     * The status of the transaction, one of `succeeded`, `pending`, or `failed`.
-     */
-    status?: string;
-
-    /**
-     * The type of source this transaction is attached to.
-     */
-    type?:
+    type Type =
       | 'ach_credit_transfer'
       | 'ach_debit'
       | 'alipay'
@@ -167,6 +181,6 @@ declare namespace Stripe {
       | 'sepa_debit'
       | 'sofort'
       | 'three_d_secure'
-      | 'wechat';
+      | 'wechat'
   }
 }

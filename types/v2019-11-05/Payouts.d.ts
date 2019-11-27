@@ -103,7 +103,11 @@ declare namespace Stripe {
     /**
      * Can be `bank_account` or `card`.
      */
-    type?: 'bank_account' | 'card';
+    type?: Payout.Type;
+  }
+
+  namespace Payout {
+    type Type = 'bank_account' | 'card'
   }
 
   /**
@@ -149,12 +153,12 @@ declare namespace Stripe {
     /**
      * The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces for more information](https://stripe.com/blog/instant-payouts-for-marketplaces).)
      */
-    method?: 'instant' | 'standard';
+    method?: PayoutCreateParams.Method;
 
     /**
      * The balance type of your Stripe balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the balances API. One of `bank_account` or `card`.
      */
-    source_type?: 'bank_account' | 'card';
+    source_type?: PayoutCreateParams.SourceType;
 
     /**
      * A string to be displayed on the recipient's bank or card statement. This may be at most 22 characters. Attempting to use a `statement_descriptor` longer than 22 characters will return an error. Note: Most banks will truncate this information and/or display it inconsistently. Some may not display it at all.
@@ -162,57 +166,19 @@ declare namespace Stripe {
     statement_descriptor?: string;
   }
 
+  namespace PayoutCreateParams {
+    type Method = 'instant' | 'standard'
+
+    type SourceType = 'bank_account' | 'card'
+  }
+
   /**
    * Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
    */
   interface PayoutListParams {
-    arrival_date?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
+    arrival_date?: number | PayoutListParams.ArrivalDate;
 
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
-
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | PayoutListParams.Created;
 
     /**
      * The ID of an external account - only return payouts sent to this external account.
@@ -243,6 +209,52 @@ declare namespace Stripe {
      * Only return payouts that have the given status: `pending`, `paid`, `failed`, or `canceled`.
      */
     status?: string;
+  }
+
+  namespace PayoutListParams {
+    interface ArrivalDate {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**

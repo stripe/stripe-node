@@ -43,50 +43,7 @@ declare namespace Stripe {
       /**
        * The line items, plans, or SKUs purchased by the customer.
        */
-      display_items?:
-        | Array<{
-          /**
-           * Amount for the display item.
-           */
-          amount?: number;
-
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency?: string;
-
-          custom?: {
-            /**
-             * The description of the line item.
-             */
-            description?: string | null;
-
-            /**
-             * The images of the line item.
-             */
-            images?: Array<string> | null;
-
-            /**
-             * The name of the line item.
-             */
-            name: string;
-          };
-
-          plan?: Plan;
-
-          /**
-           * Quantity of the display item being purchased.
-           */
-          quantity?: number;
-
-          sku?: Sku;
-
-          /**
-           * The type of display item. One of `custom`, `plan` or `sku`
-           */
-          type?: string;
-        }>
-        | null;
+      display_items?: Array<Session.DisplayItem> | null;
 
       /**
        * Unique identifier for the object. Used to pass to `redirectToCheckout`
@@ -103,28 +60,12 @@ declare namespace Stripe {
        * The IETF language tag of the locale Checkout is displayed in. If blank
        * or `auto`, the browser's locale is used.
        */
-      locale?:
-        | 'auto'
-        | 'da'
-        | 'de'
-        | 'en'
-        | 'es'
-        | 'fi'
-        | 'fr'
-        | 'it'
-        | 'ja'
-        | 'nb'
-        | 'nl'
-        | 'pl'
-        | 'pt'
-        | 'sv'
-        | 'zh'
-        | null;
+      locale?: Session.Locale | null;
 
       /**
        * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
        */
-      mode?: 'payment' | 'setup' | 'subscription' | null;
+      mode?: Session.Mode | null;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
@@ -154,7 +95,7 @@ declare namespace Stripe {
        * in `subscription` or `setup` mode.
        * Supported values are `auto`, `book`, `donate`, or `pay`.
        */
-      submit_type?: 'auto' | 'book' | 'donate' | 'pay' | null;
+      submit_type?: Session.SubmitType | null;
 
       /**
        * The ID of the subscription for Checkout Sessions in `subscription` mode.
@@ -168,6 +109,76 @@ declare namespace Stripe {
       success_url?: string;
     }
 
+    namespace Session {
+      interface DisplayItem {
+        /**
+         * Amount for the display item.
+         */
+        amount?: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency?: string;
+
+        custom?: DisplayItem.Custom;
+
+        plan?: Plan;
+
+        /**
+         * Quantity of the display item being purchased.
+         */
+        quantity?: number;
+
+        sku?: Sku;
+
+        /**
+         * The type of display item. One of `custom`, `plan` or `sku`
+         */
+        type?: string;
+      }
+
+      namespace DisplayItem {
+        interface Custom {
+          /**
+           * The description of the line item.
+           */
+          description?: string | null;
+
+          /**
+           * The images of the line item.
+           */
+          images?: Array<string> | null;
+
+          /**
+           * The name of the line item.
+           */
+          name: string;
+        }
+      }
+
+      type Locale =
+        | 'auto'
+        | 'da'
+        | 'de'
+        | 'en'
+        | 'es'
+        | 'fi'
+        | 'fr'
+        | 'it'
+        | 'ja'
+        | 'nb'
+        | 'nl'
+        | 'pl'
+        | 'pt'
+        | 'sv'
+        | 'zh'
+
+      type Mode = 'payment' | 'setup' | 'subscription'
+
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay'
+    }
+
     /**
      * Creates a Session object.
      */
@@ -175,7 +186,7 @@ declare namespace Stripe {
       /**
        * Specify whether Checkout should collect the customer's billing address. If set to `required`, Checkout will always collect the customer's billing address. If not set or set to `auto` Checkout will only collect the billing address when necessary.
        */
-      billing_address_collection?: 'auto' | 'required';
+      billing_address_collection?: SessionCreateParams.BillingAddressCollection;
 
       /**
        * The URL the customer will be directed to if they decide to cancel payment and return to your website.
@@ -221,7 +232,62 @@ declare namespace Stripe {
        * one-time payments or adding invoice line items to a subscription (used
        * in conjunction with `subscription_data`).
        */
-      line_items?: Array<{
+      line_items?: Array<SessionCreateParams.LineItem>;
+
+      /**
+       * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used. Supported values are `auto`, `da`, `de`, `en`, `es`, `fi`, `fr`, `it`, `ja`, `nb`, `nl`, `pl`, `pt`, `sv`, or `zh`.
+       */
+      locale?: SessionCreateParams.Locale;
+
+      /**
+       * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
+       */
+      mode?: SessionCreateParams.Mode;
+
+      /**
+       * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
+       */
+      payment_intent_data?: SessionCreateParams.PaymentIntentData;
+
+      /**
+       * A list of the types of payment methods (e.g. card) this Checkout
+       * Session is allowed to accept. The only supported values today are `card` and `ideal`.
+       */
+      payment_method_types: Array<SessionCreateParams.PaymentMethodType>;
+
+      /**
+       * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
+       */
+      setup_intent_data?: SessionCreateParams.SetupIntentData;
+
+      /**
+       * Describes the type of transaction being performed by Checkout in order to customize
+       * relevant text on the page, such as the submit button. `submit_type` can only be
+       * specified on Checkout Sessions in `payment` mode, but not Checkout Sessions
+       * in `subscription` or `setup` mode.
+       * Supported values are `auto`, `book`, `donate`, or `pay`.
+       */
+      submit_type?: SessionCreateParams.SubmitType;
+
+      /**
+       * A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
+       */
+      subscription_data?: SessionCreateParams.SubscriptionData;
+
+      /**
+       * The URL to which Stripe should send customers when payment or setup
+       * is complete.
+       * If you'd like access to the Checkout Session for the successful
+       * payment, read more about it in our guide on [fulfilling your payments
+       * with webhooks](/docs/payments/checkout/fulfillment#webhooks).
+       */
+      success_url: string;
+    }
+
+    namespace SessionCreateParams {
+      type BillingAddressCollection = 'auto' | 'required'
+
+      interface LineItem {
         /**
          * The amount to be collected per unit of the line item.
          */
@@ -251,12 +317,9 @@ declare namespace Stripe {
          * The quantity of the line item being purchased.
          */
         quantity: number;
-      }>;
+      }
 
-      /**
-       * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used. Supported values are `auto`, `da`, `de`, `en`, `es`, `fi`, `fr`, `it`, `ja`, `nb`, `nl`, `pl`, `pt`, `sv`, or `zh`.
-       */
-      locale?:
+      type Locale =
         | 'auto'
         | 'da'
         | 'de'
@@ -271,17 +334,11 @@ declare namespace Stripe {
         | 'pl'
         | 'pt'
         | 'sv'
-        | 'zh';
+        | 'zh'
 
-      /**
-       * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
-       */
-      mode?: 'payment' | 'setup' | 'subscription';
+      type Mode = 'payment' | 'setup' | 'subscription'
 
-      /**
-       * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
-       */
-      payment_intent_data?: {
+      interface PaymentIntentData {
         /**
          * The amount of the application fee (if any) that will be applied to the payment and transferred to the
          * application owner's Stripe account. To use an application fee, the request must be made on
@@ -293,7 +350,7 @@ declare namespace Stripe {
         /**
          * Capture method of this PaymentIntent, one of `automatic` or `manual`.
          */
-        capture_method?: 'automatic' | 'manual';
+        capture_method?: PaymentIntentData.CaptureMethod;
 
         /**
          * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -328,28 +385,36 @@ declare namespace Stripe {
          *
          * Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by [SCA](https://stripe.com/docs/strong-customer-authentication), using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect [off-session payments](https://stripe.com/docs/payments/cards/charging-saved-cards#off-session-payments-with-saved-cards) for this customer.
          */
-        setup_future_usage?: 'off_session' | 'on_session';
+        setup_future_usage?: PaymentIntentData.SetupFutureUsage;
 
         /**
          * Shipping information for this payment.
          */
-        shipping?: {
+        shipping?: PaymentIntentData.Shipping;
+
+        /**
+         * Extra information about the payment. This will appear on your
+         * customer's statement when this payment succeeds in creating a charge.
+         */
+        statement_descriptor?: string;
+
+        /**
+         * The parameters used to automatically create a Transfer when the payment succeeds.
+         * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+         */
+        transfer_data?: PaymentIntentData.TransferData;
+      }
+
+      namespace PaymentIntentData {
+        type CaptureMethod = 'automatic' | 'manual'
+
+        type SetupFutureUsage = 'off_session' | 'on_session'
+
+        interface Shipping {
           /**
            * Shipping address.
            */
-          address: {
-            city?: string;
-
-            country?: string;
-
-            line1: string;
-
-            line2?: string;
-
-            postal_code?: string;
-
-            state?: string;
-          };
+          address: Shipping.Address;
 
           /**
            * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -370,19 +435,25 @@ declare namespace Stripe {
            * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
            */
           tracking_number?: string;
-        };
+        }
 
-        /**
-         * Extra information about the payment. This will appear on your
-         * customer's statement when this payment succeeds in creating a charge.
-         */
-        statement_descriptor?: string;
+        namespace Shipping {
+          interface Address {
+            city?: string;
 
-        /**
-         * The parameters used to automatically create a Transfer when the payment succeeds.
-         * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-         */
-        transfer_data?: {
+            country?: string;
+
+            line1: string;
+
+            line2?: string;
+
+            postal_code?: string;
+
+            state?: string;
+          }
+        }
+
+        interface TransferData {
           /**
            * If specified, successful charges will be attributed to the destination
            * account for tax reporting, and the funds from charges will be transferred
@@ -390,19 +461,12 @@ declare namespace Stripe {
            * returned on the successful charge's `transfer` field.
            */
           destination: string;
-        };
-      };
+        }
+      }
 
-      /**
-       * A list of the types of payment methods (e.g. card) this Checkout
-       * Session is allowed to accept. The only supported values today are `card` and `ideal`.
-       */
-      payment_method_types: Array<'card' | 'ideal'>;
+      type PaymentMethodType = 'card' | 'ideal'
 
-      /**
-       * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
-       */
-      setup_intent_data?: {
+      interface SetupIntentData {
         /**
          * An arbitrary string attached to the object. Often useful for displaying to users.
          */
@@ -419,21 +483,11 @@ declare namespace Stripe {
          * The Stripe account for which the setup is intended.
          */
         on_behalf_of?: string;
-      };
+      }
 
-      /**
-       * Describes the type of transaction being performed by Checkout in order to customize
-       * relevant text on the page, such as the submit button. `submit_type` can only be
-       * specified on Checkout Sessions in `payment` mode, but not Checkout Sessions
-       * in `subscription` or `setup` mode.
-       * Supported values are `auto`, `book`, `donate`, or `pay`.
-       */
-      submit_type?: 'auto' | 'book' | 'donate' | 'pay';
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay'
 
-      /**
-       * A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
-       */
-      subscription_data?: {
+      interface SubscriptionData {
         /**
          * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. To use an application fee percent, the request must be made on behalf of another account, using the `Stripe-Account` header or an OAuth key. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
          */
@@ -444,17 +498,7 @@ declare namespace Stripe {
          * subscribing to. Use this parameter for subscriptions. To create one-time
          * payments, use `line_items`.
          */
-        items: Array<{
-          /**
-           * Plan ID for this item.
-           */
-          plan: string;
-
-          /**
-           * Quantity for this item.
-           */
-          quantity?: number;
-        }>;
+        items: Array<SubscriptionData.Item>;
 
         /**
          * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -482,16 +526,21 @@ declare namespace Stripe {
          * customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
-      };
+      }
 
-      /**
-       * The URL to which Stripe should send customers when payment or setup
-       * is complete.
-       * If you'd like access to the Checkout Session for the successful
-       * payment, read more about it in our guide on [fulfilling your payments
-       * with webhooks](/docs/payments/checkout/fulfillment#webhooks).
-       */
-      success_url: string;
+      namespace SubscriptionData {
+        interface Item {
+          /**
+           * Plan ID for this item.
+           */
+          plan: string;
+
+          /**
+           * Quantity for this item.
+           */
+          quantity?: number;
+        }
+      }
     }
 
     /**

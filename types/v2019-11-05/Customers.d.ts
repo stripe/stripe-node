@@ -6,39 +6,7 @@ declare namespace Stripe {
     /**
      * The customer's address.
      */
-    address:
-      | {
-        /**
-         * City/District/Suburb/Town/Village.
-         */
-        city?: string | null;
-
-        /**
-         * 2-letter country code.
-         */
-        country?: string | null;
-
-        /**
-         * Address line 1 (Street address/PO Box/Company name).
-         */
-        line1?: string | null;
-
-        /**
-         * Address line 2 (Apartment/Suite/Unit/Building).
-         */
-        line2?: string | null;
-
-        /**
-         * ZIP or postal code.
-         */
-        postal_code?: string | null;
-
-        /**
-         * State/County/Province/Region.
-         */
-        state?: string | null;
-      }
-      | null;
+    address: Customer.Address | null;
 
     /**
      * Current balance, if any, being stored on the customer. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that will be added to their next invoice. The balance does not refer to any unpaid invoices; it solely takes into account amounts that have yet to be successfully applied to any invoice. This balance is only taken into account as invoices are finalized.
@@ -98,34 +66,7 @@ declare namespace Stripe {
      */
     invoice_prefix: string | null;
 
-    invoice_settings: {
-      /**
-       * Default custom fields to be displayed on invoices for this customer.
-       */
-      custom_fields?:
-        | Array<{
-          /**
-           * The name of the custom field.
-           */
-          name: string;
-
-          /**
-           * The value of the custom field.
-           */
-          value: string;
-        }>
-        | null;
-
-      /**
-       * ID of the default payment method used for subscriptions and invoices for the customer.
-       */
-      default_payment_method?: string | PaymentMethod | null;
-
-      /**
-       * Default footer to be displayed on invoices for this customer.
-       */
-      footer?: string | null;
-    };
+    invoice_settings: Customer.InvoiceSettings;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -162,61 +103,7 @@ declare namespace Stripe {
     /**
      * Mailing and shipping address for the customer. Appears on invoices emailed to this customer.
      */
-    shipping:
-      | {
-        address?: {
-          /**
-           * City/District/Suburb/Town/Village.
-           */
-          city?: string | null;
-
-          /**
-           * 2-letter country code.
-           */
-          country?: string | null;
-
-          /**
-           * Address line 1 (Street address/PO Box/Company name).
-           */
-          line1?: string | null;
-
-          /**
-           * Address line 2 (Apartment/Suite/Unit/Building).
-           */
-          line2?: string | null;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string | null;
-
-          /**
-           * State/County/Province/Region.
-           */
-          state?: string | null;
-        };
-
-        /**
-         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-         */
-        carrier?: string | null;
-
-        /**
-         * Recipient name.
-         */
-        name?: string | null;
-
-        /**
-         * Recipient phone (including extension).
-         */
-        phone?: string | null;
-
-        /**
-         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-         */
-        tracking_number?: string | null;
-      }
-      | null;
+    shipping: Customer.Shipping | null;
 
     /**
      * The customer's payment sources, if any.
@@ -233,7 +120,7 @@ declare namespace Stripe {
     /**
      * Describes the customer's tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text **"Reverse charge"**.
      */
-    tax_exempt: 'exempt' | 'none' | 'reverse' | null;
+    tax_exempt: Customer.TaxExempt | null;
 
     /**
      * The customer's tax IDs.
@@ -243,36 +130,161 @@ declare namespace Stripe {
     /**
      * The customer's tax information. Appears on invoices emailed to this customer. This field has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
      */
-    tax_info:
-      | {
-        /**
-         * The customer's tax ID number.
-         */
-        tax_id?: string | null;
-
-        /**
-         * The type of ID number.
-         */
-        type: string;
-      }
-      | null;
+    tax_info: Customer.TaxInfo | null;
 
     /**
      * Describes the status of looking up the tax ID provided in `tax_info`. This field has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
      */
-    tax_info_verification:
-      | {
+    tax_info_verification: Customer.TaxInfoVerification | null;
+  }
+
+  namespace Customer {
+    interface Address {
+      /**
+       * City/District/Suburb/Town/Village.
+       */
+      city?: string | null;
+
+      /**
+       * 2-letter country code.
+       */
+      country?: string | null;
+
+      /**
+       * Address line 1 (Street address/PO Box/Company name).
+       */
+      line1?: string | null;
+
+      /**
+       * Address line 2 (Apartment/Suite/Unit/Building).
+       */
+      line2?: string | null;
+
+      /**
+       * ZIP or postal code.
+       */
+      postal_code?: string | null;
+
+      /**
+       * State/County/Province/Region.
+       */
+      state?: string | null;
+    }
+
+    interface InvoiceSettings {
+      /**
+       * Default custom fields to be displayed on invoices for this customer.
+       */
+      custom_fields?: Array<InvoiceSettings.CustomField> | null;
+
+      /**
+       * ID of the default payment method used for subscriptions and invoices for the customer.
+       */
+      default_payment_method?: string | PaymentMethod | null;
+
+      /**
+       * Default footer to be displayed on invoices for this customer.
+       */
+      footer?: string | null;
+    }
+
+    namespace InvoiceSettings {
+      interface CustomField {
         /**
-         * The state of verification for this customer. Possible values are `unverified`, `pending`, or `verified`.
+         * The name of the custom field.
          */
-        status?: string | null;
+        name: string;
 
         /**
-         * The official name associated with the tax ID returned from the external provider.
+         * The value of the custom field.
          */
-        verified_name?: string | null;
+        value: string;
       }
-      | null;
+    }
+
+    interface Shipping {
+      address?: Shipping.Address;
+
+      /**
+       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+       */
+      carrier?: string | null;
+
+      /**
+       * Recipient name.
+       */
+      name?: string | null;
+
+      /**
+       * Recipient phone (including extension).
+       */
+      phone?: string | null;
+
+      /**
+       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+       */
+      tracking_number?: string | null;
+    }
+
+    namespace Shipping {
+      interface Address {
+        /**
+         * City/District/Suburb/Town/Village.
+         */
+        city?: string | null;
+
+        /**
+         * 2-letter country code.
+         */
+        country?: string | null;
+
+        /**
+         * Address line 1 (Street address/PO Box/Company name).
+         */
+        line1?: string | null;
+
+        /**
+         * Address line 2 (Apartment/Suite/Unit/Building).
+         */
+        line2?: string | null;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string | null;
+
+        /**
+         * State/County/Province/Region.
+         */
+        state?: string | null;
+      }
+    }
+
+    type TaxExempt = 'exempt' | 'none' | 'reverse'
+
+    interface TaxInfo {
+      /**
+       * The customer's tax ID number.
+       */
+      tax_id?: string | null;
+
+      /**
+       * The type of ID number.
+       */
+      type: string;
+    }
+
+    interface TaxInfoVerification {
+      /**
+       * The state of verification for this customer. Possible values are `unverified`, `pending`, or `verified`.
+       */
+      status?: string | null;
+
+      /**
+       * The official name associated with the tax ID returned from the external provider.
+       */
+      verified_name?: string | null;
+    }
   }
 
   interface DeletedCustomer {
@@ -363,7 +375,11 @@ declare namespace Stripe {
     /**
      * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_too_large`, `invoice_too_small`, `unapplied_from_invoice`, or `unspent_receiver_credit`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
      */
-    type?:
+    type?: CustomerBalanceTransaction.Type;
+  }
+
+  namespace CustomerBalanceTransaction {
+    type Type =
       | 'adjustment'
       | 'applied_to_invoice'
       | 'credit_note'
@@ -372,7 +388,7 @@ declare namespace Stripe {
       | 'invoice_too_small'
       | 'migration'
       | 'unapplied_from_invoice'
-      | 'unspent_receiver_credit';
+      | 'unspent_receiver_credit'
   }
 
   /**
@@ -417,7 +433,18 @@ declare namespace Stripe {
     /**
      * Type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `za_vat`, or `unknown`
      */
-    type:
+    type: TaxId.Type;
+
+    /**
+     * Value of the tax ID.
+     */
+    value: string;
+
+    verification: TaxId.Verification;
+  }
+
+  namespace TaxId {
+    type Type =
       | 'au_abn'
       | 'ch_vat'
       | 'eu_vat'
@@ -426,18 +453,13 @@ declare namespace Stripe {
       | 'no_vat'
       | 'nz_gst'
       | 'unknown'
-      | 'za_vat';
+      | 'za_vat'
 
-    /**
-     * Value of the tax ID.
-     */
-    value: string;
-
-    verification: {
+    interface Verification {
       /**
        * Verification status, one of `pending`, `unavailable`, `unverified`, or `verified`.
        */
-      status: 'pending' | 'unavailable' | 'unverified' | 'verified';
+      status: Verification.Status;
 
       /**
        * Verified address.
@@ -448,7 +470,11 @@ declare namespace Stripe {
        * Verified name.
        */
       verified_name?: string | null;
-    };
+    }
+
+    namespace Verification {
+      type Status = 'pending' | 'unavailable' | 'unverified' | 'verified'
+    }
   }interface DeletedTaxId {
     /**
      * Unique identifier for the object.
@@ -473,21 +499,7 @@ declare namespace Stripe {
     /**
      * The customer's address.
      */
-    address?:
-      | {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
-      | '';
+    address?: '' | CustomerCreateParams.Address;
 
     /**
      * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -519,34 +531,7 @@ declare namespace Stripe {
     /**
      * Default invoice settings for this customer.
      */
-    invoice_settings?: {
-      /**
-       * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
-       */
-      custom_fields?:
-        | Array<{
-          /**
-           * The name of the custom field. This may be up to 30 characters.
-           */
-          name: string;
-
-          /**
-           * The value of the custom field. This may be up to 30 characters.
-           */
-          value: string;
-        }>
-        | '';
-
-      /**
-       * ID of the default payment method used for subscriptions and invoices for the customer.
-       */
-      default_payment_method?: string;
-
-      /**
-       * Default footer to be displayed on invoices for this customer.
-       */
-      footer?: string;
-    };
+    invoice_settings?: CustomerCreateParams.InvoiceSettings;
 
     /**
      * A set of key-value pairs that you can attach to a customer object. It can be useful for storing additional information about the customer in a structured format.
@@ -575,52 +560,121 @@ declare namespace Stripe {
     /**
      * The customer's shipping information. Appears on invoices emailed to this customer.
      */
-    shipping?:
-      | {
-        /**
-         * Customer shipping address.
-         */
-        address: {
-          city?: string;
-
-          country?: string;
-
-          line1: string;
-
-          line2?: string;
-
-          postal_code?: string;
-
-          state?: string;
-        };
-
-        /**
-         * Customer name.
-         */
-        name: string;
-
-        /**
-         * Customer phone (including extension).
-         */
-        phone?: string;
-      }
-      | '';
+    shipping?: '' | CustomerCreateParams.Shipping;
 
     source?: string;
 
     /**
      * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
      */
-    tax_exempt?: '' | 'exempt' | 'none' | 'reverse';
+    tax_exempt?: CustomerCreateParams.TaxExempt;
 
     /**
      * The customer's tax IDs.
      */
-    tax_id_data?: Array<{
+    tax_id_data?: Array<CustomerCreateParams.TaxIdDatum>;
+
+    /**
+     * The customer's tax information. Appears on invoices emailed to this customer. This parameter has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
+     */
+    tax_info?: CustomerCreateParams.TaxInfo;
+  }
+
+  namespace CustomerCreateParams {
+    interface Address {
+      city?: string;
+
+      country?: string;
+
+      line1: string;
+
+      line2?: string;
+
+      postal_code?: string;
+
+      state?: string;
+    }
+
+    interface InvoiceSettings {
+      /**
+       * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
+       */
+      custom_fields?: '' | InvoiceSettings.CustomFields;
+
+      /**
+       * ID of the default payment method used for subscriptions and invoices for the customer.
+       */
+      default_payment_method?: string;
+
+      /**
+       * Default footer to be displayed on invoices for this customer.
+       */
+      footer?: string;
+    }
+
+    namespace InvoiceSettings {
+      interface CustomFields {
+        /**
+         * The name of the custom field. This may be up to 30 characters.
+         */
+        name: string;
+
+        /**
+         * The value of the custom field. This may be up to 30 characters.
+         */
+        value: string;
+      }
+    }
+
+    interface Shipping {
+      /**
+       * Customer shipping address.
+       */
+      address: Shipping.Address;
+
+      /**
+       * Customer name.
+       */
+      name: string;
+
+      /**
+       * Customer phone (including extension).
+       */
+      phone?: string;
+    }
+
+    namespace Shipping {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
+
+    type TaxExempt = '' | 'exempt' | 'none' | 'reverse'
+
+    interface TaxIdDatum {
       /**
        * Type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, or `za_vat`
        */
-      type:
+      type: TaxIdDatum.Type;
+
+      /**
+       * Value of the tax ID.
+       */
+      value: string;
+    }
+
+    namespace TaxIdDatum {
+      type Type =
         | 'au_abn'
         | 'ch_vat'
         | 'eu_vat'
@@ -628,18 +682,10 @@ declare namespace Stripe {
         | 'mx_rfc'
         | 'no_vat'
         | 'nz_gst'
-        | 'za_vat';
+        | 'za_vat'
+    }
 
-      /**
-       * Value of the tax ID.
-       */
-      value: string;
-    }>;
-
-    /**
-     * The customer's tax information. Appears on invoices emailed to this customer. This parameter has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
-     */
-    tax_info?: {
+    interface TaxInfo {
       /**
        * The customer's tax ID number.
        */
@@ -649,7 +695,7 @@ declare namespace Stripe {
        * The type of ID number. The only possible value is `vat`
        */
       type: 'vat';
-    };
+    }
   }
 
   /**
@@ -661,29 +707,7 @@ declare namespace Stripe {
    * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
    */
   interface CustomerListParams {
-    created?:
-      | {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-      | number;
+    created?: number | CustomerListParams.Created;
 
     /**
      * A filter on the list based on the customer's `email` field. The value must be a string.
@@ -711,6 +735,30 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
+  namespace CustomerListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+  }
+
   /**
    * Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
    */
@@ -730,21 +778,7 @@ declare namespace Stripe {
     /**
      * The customer's address.
      */
-    address?:
-      | {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
-      | '';
+    address?: '' | CustomerUpdateParams.Address;
 
     /**
      * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -781,34 +815,7 @@ declare namespace Stripe {
     /**
      * Default invoice settings for this customer.
      */
-    invoice_settings?: {
-      /**
-       * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
-       */
-      custom_fields?:
-        | Array<{
-          /**
-           * The name of the custom field. This may be up to 30 characters.
-           */
-          name: string;
-
-          /**
-           * The value of the custom field. This may be up to 30 characters.
-           */
-          value: string;
-        }>
-        | '';
-
-      /**
-       * ID of the default payment method used for subscriptions and invoices for the customer.
-       */
-      default_payment_method?: string;
-
-      /**
-       * Default footer to be displayed on invoices for this customer.
-       */
-      footer?: string;
-    };
+    invoice_settings?: CustomerUpdateParams.InvoiceSettings;
 
     /**
      * A set of key-value pairs that you can attach to a customer object. It can be useful for storing additional information about the customer in a structured format.
@@ -835,48 +842,108 @@ declare namespace Stripe {
     /**
      * The customer's shipping information. Appears on invoices emailed to this customer.
      */
-    shipping?:
-      | {
-        /**
-         * Customer shipping address.
-         */
-        address: {
-          city?: string;
-
-          country?: string;
-
-          line1: string;
-
-          line2?: string;
-
-          postal_code?: string;
-
-          state?: string;
-        };
-
-        /**
-         * Customer name.
-         */
-        name: string;
-
-        /**
-         * Customer phone (including extension).
-         */
-        phone?: string;
-      }
-      | '';
+    shipping?: '' | CustomerUpdateParams.Shipping;
 
     source?: string;
 
     /**
      * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
      */
-    tax_exempt?: '' | 'exempt' | 'none' | 'reverse';
+    tax_exempt?: CustomerUpdateParams.TaxExempt;
 
     /**
      * The customer's tax information. Appears on invoices emailed to this customer. This parameter has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
      */
-    tax_info?: {
+    tax_info?: CustomerUpdateParams.TaxInfo;
+
+    /**
+     * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
+     */
+    trial_end?: 'now' | number;
+  }
+
+  namespace CustomerUpdateParams {
+    interface Address {
+      city?: string;
+
+      country?: string;
+
+      line1: string;
+
+      line2?: string;
+
+      postal_code?: string;
+
+      state?: string;
+    }
+
+    interface InvoiceSettings {
+      /**
+       * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
+       */
+      custom_fields?: '' | InvoiceSettings.CustomFields;
+
+      /**
+       * ID of the default payment method used for subscriptions and invoices for the customer.
+       */
+      default_payment_method?: string;
+
+      /**
+       * Default footer to be displayed on invoices for this customer.
+       */
+      footer?: string;
+    }
+
+    namespace InvoiceSettings {
+      interface CustomFields {
+        /**
+         * The name of the custom field. This may be up to 30 characters.
+         */
+        name: string;
+
+        /**
+         * The value of the custom field. This may be up to 30 characters.
+         */
+        value: string;
+      }
+    }
+
+    interface Shipping {
+      /**
+       * Customer shipping address.
+       */
+      address: Shipping.Address;
+
+      /**
+       * Customer name.
+       */
+      name: string;
+
+      /**
+       * Customer phone (including extension).
+       */
+      phone?: string;
+    }
+
+    namespace Shipping {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
+
+    type TaxExempt = '' | 'exempt' | 'none' | 'reverse'
+
+    interface TaxInfo {
       /**
        * The customer's tax ID number.
        */
@@ -886,12 +953,7 @@ declare namespace Stripe {
        * The type of ID number. The only possible value is `vat`
        */
       type: 'vat';
-    };
-
-    /**
-     * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
-     */
-    trial_end?: 'now' | number;
+    }
   }
 
   /**
@@ -1066,7 +1128,7 @@ declare namespace Stripe {
     /**
      * The type of entity that holds the account. This can be either `individual` or `company`.
      */
-    account_holder_type?: 'company' | 'individual';
+    account_holder_type?: CustomerUpdateSourceParams.AccountHolderType;
 
     /**
      * City/District/Suburb/Town/Village.
@@ -1122,23 +1184,17 @@ declare namespace Stripe {
      */
     name?: string;
 
-    owner?: {
+    owner?: CustomerUpdateSourceParams.Owner;
+  }
+
+  namespace CustomerUpdateSourceParams {
+    type AccountHolderType = 'company' | 'individual'
+
+    interface Owner {
       /**
        * Owner's address.
        */
-      address?: {
-        city?: string;
-
-        country?: string;
-
-        line1?: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      };
+      address?: Owner.Address;
 
       /**
        * Owner's email address.
@@ -1154,7 +1210,23 @@ declare namespace Stripe {
        * Owner's phone number.
        */
       phone?: string;
-    };
+    }
+
+    namespace Owner {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1?: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
   }
 
   /**
@@ -1189,7 +1261,16 @@ declare namespace Stripe {
     /**
      * Type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, or `za_vat`
      */
-    type:
+    type: CustomerCreateTaxIdParams.Type;
+
+    /**
+     * Value of the tax ID.
+     */
+    value: string;
+  }
+
+  namespace CustomerCreateTaxIdParams {
+    type Type =
       | 'au_abn'
       | 'ch_vat'
       | 'eu_vat'
@@ -1197,12 +1278,7 @@ declare namespace Stripe {
       | 'mx_rfc'
       | 'no_vat'
       | 'nz_gst'
-      | 'za_vat';
-
-    /**
-     * Value of the tax ID.
-     */
-    value: string;
+      | 'za_vat'
   }
 
   /**

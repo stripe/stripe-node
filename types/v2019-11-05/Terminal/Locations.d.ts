@@ -4,7 +4,26 @@ declare namespace Stripe {
      * The Location object.
      */
     interface Location {
-      address: {
+      address: Location.Address;
+
+      /**
+       * The display name of the location.
+       */
+      display_name: string;
+
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'terminal.location';
+    }
+
+    namespace Location {
+      interface Address {
         /**
          * City/District/Suburb/Town/Village.
          */
@@ -34,22 +53,7 @@ declare namespace Stripe {
          * State/County/Province/Region.
          */
         state?: string | null;
-      };
-
-      /**
-       * The display name of the location.
-       */
-      display_name: string;
-
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'terminal.location';
+      }
     }
 
     interface DeletedLocation {
@@ -76,19 +80,7 @@ declare namespace Stripe {
       /**
        * The full address of the location.
        */
-      address: {
-        city?: string;
-
-        country: string;
-
-        line1?: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      };
+      address: LocationCreateParams.Address;
 
       /**
        * A name for the location.
@@ -104,6 +96,22 @@ declare namespace Stripe {
        * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
        */
       operator_account?: string;
+    }
+
+    namespace LocationCreateParams {
+      interface Address {
+        city?: string;
+
+        country: string;
+
+        line1?: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
     }
 
     /**
@@ -168,19 +176,7 @@ declare namespace Stripe {
       /**
        * The full address of the location.
        */
-      address?: {
-        city?: string;
-
-        country: string;
-
-        line1?: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      };
+      address?: LocationUpdateParams.Address;
 
       /**
        * A name for the location.
@@ -196,6 +192,22 @@ declare namespace Stripe {
        * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
        */
       operator_account?: string;
+    }
+
+    namespace LocationUpdateParams {
+      interface Address {
+        city?: string;
+
+        country: string;
+
+        line1?: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
     }
 
     class LocationsResource {
