@@ -201,5 +201,7 @@ declare module 'stripe' {
     setTelemetryEnabled(enabled: boolean): void;
     /** DEPRECATED Please use the StripeConfig object instead. */
     setHttpAgent(agent: Stripe.HttpAgent): void;
-  }export = Stripe
+  }
+
+  export = Stripe;
 }
