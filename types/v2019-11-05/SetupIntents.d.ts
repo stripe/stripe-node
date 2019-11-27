@@ -45,7 +45,7 @@ declare namespace Stripe {
     /**
      * The error encountered in the previous SetupIntent confirmation.
      */
-    last_setup_error?: StripeError | null;
+    last_setup_error?: SetupIntent.LastSetupError | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -67,7 +67,7 @@ declare namespace Stripe {
     /**
      * If present, this property tells you what actions you need to take in order for your customer to continue payment setup.
      */
-    next_action?: NextAction | null;
+    next_action?: SetupIntent.NextAction | null;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
@@ -87,7 +87,7 @@ declare namespace Stripe {
     /**
      * Payment-method-specific configuration for this SetupIntent.
      */
-    payment_method_options?: PaymentMethodOptions | null;
+    payment_method_options?: SetupIntent.PaymentMethodOptions | null;
 
     /**
      * The list of payment method types (e.g. card) that this SetupIntent is allowed to set up.
@@ -117,6 +117,115 @@ declare namespace Stripe {
       | 'abandoned'
       | 'duplicate'
       | 'requested_by_customer'
+
+    interface LastSetupError {
+      /**
+       * For card errors, the ID of the failed charge.
+       */
+      charge?: string;
+
+      /**
+       * For some errors that could be handled programmatically, a short string indicating the [error code](https://stripe.com/docs/error-codes) reported.
+       */
+      code?: string;
+
+      /**
+       * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.
+       */
+      decline_code?: string;
+
+      /**
+       * A URL to more information about the [error code](https://stripe.com/docs/error-codes) reported.
+       */
+      doc_url?: string;
+
+      /**
+       * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
+       */
+      message?: string;
+
+      /**
+       * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
+       */
+      param?: string;
+
+      payment_intent?: PaymentIntent;
+
+      payment_method?: PaymentMethod;
+
+      setup_intent?: SetupIntent;
+
+      source?:
+        | Account
+        | AlipayAccount
+        | BankAccount
+        | BitcoinReceiver
+        | Card
+        | Source;
+
+      /**
+       * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
+       */
+      type: LastSetupError.Type;
+    }
+
+    namespace LastSetupError {
+      type Type =
+        | 'api_connection_error'
+        | 'api_error'
+        | 'authentication_error'
+        | 'card_error'
+        | 'idempotency_error'
+        | 'invalid_request_error'
+        | 'rate_limit_error'
+    }
+
+    interface NextAction {
+      redirect_to_url?: NextAction.RedirectToUrl;
+
+      /**
+       * Type of the next action to perform, one of `redirect_to_url` or `use_stripe_sdk`.
+       */
+      type: string;
+
+      /**
+       * When confirming a SetupIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
+       */
+      use_stripe_sdk?: NextAction.UseStripeSdk;
+    }
+
+    namespace NextAction {
+      interface RedirectToUrl {
+        /**
+         * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
+         */
+        return_url?: string | null;
+
+        /**
+         * The URL you must redirect your customer to in order to authenticate.
+         */
+        url?: string | null;
+      }
+
+      interface UseStripeSdk {}
+    }
+
+    interface PaymentMethodOptions {
+      card?: PaymentMethodOptions.Card;
+    }
+
+    namespace PaymentMethodOptions {
+      interface Card {
+        /**
+         * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+         */
+        request_three_d_secure?: Card.RequestThreeDSecure | null;
+      }
+
+      namespace Card {
+        type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only'
+      }
+    }
 
     type Status =
       | 'canceled'

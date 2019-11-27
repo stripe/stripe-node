@@ -3,7 +3,7 @@ declare namespace Stripe {
    * The Charge object.
    */
   interface Charge {
-    alternate_statement_descriptors?: AlternateStatementDescriptors;
+    alternate_statement_descriptors?: Charge.AlternateStatementDescriptors;
 
     /**
      * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
@@ -40,7 +40,7 @@ declare namespace Stripe {
      */
     balance_transaction?: string | BalanceTransaction | null;
 
-    billing_details?: BillingDetails;
+    billing_details?: Charge.BillingDetails;
 
     /**
      * If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
@@ -95,7 +95,7 @@ declare namespace Stripe {
     /**
      * Information on fraud assessments for the charge.
      */
-    fraud_details?: FraudDetails | null;
+    fraud_details?: Charge.FraudDetails | null;
 
     /**
      * Unique identifier for the object.
@@ -107,7 +107,7 @@ declare namespace Stripe {
      */
     invoice?: string | Invoice | null;
 
-    level3?: Level3;
+    level3?: Charge.Level3;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -139,7 +139,7 @@ declare namespace Stripe {
     /**
      * Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
      */
-    outcome?: Outcome | null;
+    outcome?: Charge.Outcome | null;
 
     /**
      * `true` if the charge succeeded, or was successfully authorized for later capture.
@@ -159,7 +159,7 @@ declare namespace Stripe {
     /**
      * Details about the payment method at the time of the transaction.
      */
-    payment_method_details?: PaymentMethodDetails | null;
+    payment_method_details?: Charge.PaymentMethodDetails | null;
 
     /**
      * This is the email address that the receipt for this charge was sent to.
@@ -194,7 +194,7 @@ declare namespace Stripe {
     /**
      * Shipping information for the charge.
      */
-    shipping?: ShippingDetails | null;
+    shipping?: Charge.Shipping | null;
 
     /**
      * This is a legacy field that will be removed in the future. It contains the Source, Card, or BankAccount object used for the charge. For details about the payment method used for this charge, refer to `payment_method` or `payment_method_details` instead.
@@ -236,12 +236,920 @@ declare namespace Stripe {
     /**
      * An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
      */
-    transfer_data?: TransferData | null;
+    transfer_data?: Charge.TransferData | null;
 
     /**
      * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
      */
     transfer_group?: string | null;
+  }
+
+  namespace Charge {
+    interface AlternateStatementDescriptors {
+      /**
+       * The Kana variation of the descriptor.
+       */
+      kana?: string;
+
+      /**
+       * The Kanji variation of the descriptor.
+       */
+      kanji?: string;
+    }
+
+    interface BillingDetails {
+      /**
+       * Billing address.
+       */
+      address?: Address | null;
+
+      /**
+       * Email address.
+       */
+      email?: string | null;
+
+      /**
+       * Full name.
+       */
+      name?: string | null;
+
+      /**
+       * Billing phone number (including extension).
+       */
+      phone?: string | null;
+    }
+
+    interface FraudDetails {
+      /**
+       * Assessments from Stripe. If set, the value is `fraudulent`.
+       */
+      stripe_report?: string;
+
+      /**
+       * Assessments reported by you. If set, possible values of are `safe` and `fraudulent`.
+       */
+      user_report?: string;
+    }
+
+    interface Level3 {
+      customer_reference?: string;
+
+      line_items: Array<Level3.LineItem>;
+
+      merchant_reference: string;
+
+      shipping_address_zip?: string;
+
+      shipping_amount?: number;
+
+      shipping_from_zip?: string;
+    }
+
+    namespace Level3 {
+      interface LineItem {
+        discount_amount?: number | null;
+
+        product_code: string;
+
+        product_description: string;
+
+        quantity?: number | null;
+
+        tax_amount?: number | null;
+
+        unit_cost?: number | null;
+      }
+    }
+
+    interface Outcome {
+      /**
+       * Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://stripe.com/docs/declines#blocked-payments) after bank authorization, and may temporarily appear as "pending" on a cardholder's statement.
+       */
+      network_status?: string | null;
+
+      /**
+       * An enumerated value providing a more detailed explanation of the outcome's `type`. Charges blocked by Radar's default block rule have the value `highest_risk_level`. Charges placed in review by Radar's default review rule have the value `elevated_risk_level`. Charges authorized, blocked, or placed in review by custom rules have the value `rule`. See [understanding declines](https://stripe.com/docs/declines) for more details.
+       */
+      reason?: string | null;
+
+      /**
+       * Stripe's evaluation of the riskiness of the payment. Possible values for evaluated payments are `normal`, `elevated`, `highest`. For non-card payments, and card-based payments predating the public assignment of risk levels, this field will have the value `not_assessed`. In the event of an error in the evaluation, this field will have the value `unknown`.
+       */
+      risk_level?: string;
+
+      /**
+       * Stripe's evaluation of the riskiness of the payment. Possible values for evaluated payments are between 0 and 100. For non-card payments, card-based payments predating the public assignment of risk scores, or in the event of an error during evaluation, this field will not be present. This field is only available with Radar for Fraud Teams.
+       */
+      risk_score?: number;
+
+      /**
+       * The ID of the Radar rule that matched the payment, if applicable.
+       */
+      rule?: string | Outcome.Rule;
+
+      /**
+       * A human-readable description of the outcome type and reason, designed for you (the recipient of the payment), not your customer.
+       */
+      seller_message?: string | null;
+
+      /**
+       * Possible values are `authorized`, `manual_review`, `issuer_declined`, `blocked`, and `invalid`. See [understanding declines](https://stripe.com/docs/declines) and [Radar reviews](radar/review) for details.
+       */
+      type: string;
+    }
+
+    namespace Outcome {
+      interface Rule {
+        /**
+         * The action taken on the payment.
+         */
+        action: string;
+
+        /**
+         * Always true for a deleted object
+         */
+        deleted?: true;
+
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
+
+        /**
+         * The predicate to evaluate the payment against.
+         */
+        predicate: string;
+      }
+    }
+
+    interface PaymentMethodDetails {
+      ach_credit_transfer?: PaymentMethodDetails.AchCreditTransfer;
+
+      ach_debit?: PaymentMethodDetails.AchDebit;
+
+      acss_debit?: PaymentMethodDetails.AcssDebit;
+
+      alipay?: PaymentMethodDetails.Alipay;
+
+      au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
+
+      bancontact?: PaymentMethodDetails.Bancontact;
+
+      bitcoin?: PaymentMethodDetails.Bitcoin;
+
+      card?: PaymentMethodDetails.Card;
+
+      card_present?: PaymentMethodDetails.CardPresent;
+
+      eps?: PaymentMethodDetails.Eps;
+
+      giropay?: PaymentMethodDetails.Giropay;
+
+      ideal?: PaymentMethodDetails.Ideal;
+
+      klarna?: PaymentMethodDetails.Klarna;
+
+      multibanco?: PaymentMethodDetails.Multibanco;
+
+      p24?: PaymentMethodDetails.P24;
+
+      sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
+
+      sepa_debit?: PaymentMethodDetails.SepaDebit;
+
+      sofort?: PaymentMethodDetails.Sofort;
+
+      stripe_account?: PaymentMethodDetails.StripeAccount;
+
+      /**
+       * The type of transaction-specific details of the payment method used in the payment, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `klarna`, `multibanco`, `p24`, `sepa_debit`, `sofort`, `stripe_account`, or `wechat`.
+       * An additional hash is included on `payment_method_details` with a name matching this value.
+       * It contains information specific to the payment method.
+       */
+      type: string;
+
+      wechat?: PaymentMethodDetails.Wechat;
+    }
+
+    namespace PaymentMethodDetails {
+      interface AchCreditTransfer {
+        /**
+         * Account number to transfer funds to.
+         */
+        account_number?: string | null;
+
+        /**
+         * Name of the bank associated with the routing number.
+         */
+        bank_name?: string | null;
+
+        /**
+         * Routing transit number for the bank account to transfer funds to.
+         */
+        routing_number?: string | null;
+
+        /**
+         * SWIFT code of the bank associated with the routing number.
+         */
+        swift_code?: string | null;
+      }
+
+      interface AchDebit {
+        /**
+         * Type of entity that holds the account. This can be either `individual` or `company`.
+         */
+        account_holder_type?: AchDebit.AccountHolderType | null;
+
+        /**
+         * Name of the bank associated with the bank account.
+         */
+        bank_name?: string | null;
+
+        /**
+         * Two-letter ISO code representing the country the bank account is located in.
+         */
+        country?: string | null;
+
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
+        fingerprint?: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4?: string | null;
+
+        /**
+         * Routing transit number of the bank account.
+         */
+        routing_number?: string | null;
+      }
+
+      namespace AchDebit {
+        type AccountHolderType = 'company' | 'individual'
+      }
+
+      interface AcssDebit {
+        /**
+         * Two-letter ISO code representing the country the bank account is located in.
+         */
+        country?: string | null;
+
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
+        fingerprint?: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4?: string | null;
+
+        /**
+         * Routing transit number of the bank account.
+         */
+        routing_number?: string | null;
+      }
+
+      interface Alipay {}
+
+      interface AuBecsDebit {
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
+        bsb_number?: string | null;
+
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
+        fingerprint?: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4?: string | null;
+
+        /**
+         * ID of the mandate used to make this payment.
+         */
+        mandate?: string;
+      }
+
+      interface Bancontact {
+        /**
+         * Bank code of bank associated with the bank account.
+         */
+        bank_code?: string | null;
+
+        /**
+         * Name of the bank associated with the bank account.
+         */
+        bank_name?: string | null;
+
+        /**
+         * Bank Identifier Code of the bank associated with the bank account.
+         */
+        bic?: string | null;
+
+        /**
+         * Last four characters of the IBAN.
+         */
+        iban_last4?: string | null;
+
+        /**
+         * Preferred language of the Bancontact authorization page that the customer is redirected to.
+         * Can be one of `en`, `de`, `fr`, or `nl`
+         */
+        preferred_language?: Bancontact.PreferredLanguage | null;
+
+        /**
+         * Owner's verified full name. Values are verified or provided by Bancontact directly
+         * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_name?: string | null;
+      }
+
+      namespace Bancontact {
+        type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl'
+      }
+
+      interface Bitcoin {
+        address?: string | null;
+
+        amount?: number | null;
+
+        amount_charged?: number | null;
+
+        amount_received?: number | null;
+
+        amount_returned?: number | null;
+
+        refund_address?: string | null;
+      }
+
+      interface Card {
+        /**
+         * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+         */
+        brand?: string | null;
+
+        /**
+         * Check results by Card networks on Card address and CVC at time of payment.
+         */
+        checks?: Card.Checks | null;
+
+        /**
+         * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+         */
+        country?: string | null;
+
+        /**
+         * Card description. (Only for internal use only and not typically available in standard API requests.)
+         */
+        description?: string | null;
+
+        /**
+         * Two-digit number representing the card's expiration month.
+         */
+        exp_month?: number | null;
+
+        /**
+         * Four-digit number representing the card's expiration year.
+         */
+        exp_year?: number | null;
+
+        /**
+         * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example.
+         */
+        fingerprint?: string | null;
+
+        /**
+         * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+         */
+        funding?: string | null;
+
+        /**
+         * Issuer identification number of the card. (Only for internal use only and not typically available in standard API requests.)
+         */
+        iin?: string | null;
+
+        /**
+         * Installment details for this payment (Mexico only).
+         *
+         * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+         */
+        installments?: Card.Installments | null;
+
+        /**
+         * Issuer bank name of the card. (Only for internal use only and not typically available in standard API requests.)
+         */
+        issuer?: string | null;
+
+        /**
+         * The last four digits of the card.
+         */
+        last4?: string | null;
+
+        /**
+         * True if this payment was marked as MOTO and out of scope for SCA.
+         */
+        moto?: boolean | null;
+
+        /**
+         * Populated if this transaction used 3D Secure authentication.
+         */
+        three_d_secure?: Card.ThreeDSecure | null;
+
+        /**
+         * If this Card is part of a card wallet, this contains the details of the card wallet.
+         */
+        wallet?: Card.Wallet | null;
+      }
+
+      namespace Card {
+        interface Checks {
+          /**
+           * If a address line1 was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+           */
+          address_line1_check?: string | null;
+
+          /**
+           * If a address postal code was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+           */
+          address_postal_code_check?: string | null;
+
+          /**
+           * If a CVC was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+           */
+          cvc_check?: string | null;
+        }
+
+        interface Installments {
+          /**
+           * Installment plan selected for the payment.
+           */
+          plan?: Installments.Plan | null;
+        }
+
+        namespace Installments {
+          interface Plan {
+            /**
+             * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+             */
+            count?: number | null;
+
+            /**
+             * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+             * One of `month`.
+             */
+            interval?: 'month' | null;
+
+            /**
+             * Type of installment plan, one of `fixed_count`.
+             */
+            type: 'fixed_count';
+          }
+        }
+
+        interface ThreeDSecure {
+          /**
+           * Whether or not authentication was performed. 3D Secure will succeed without authentication when the card is not enrolled.
+           */
+          authenticated: boolean;
+
+          /**
+           * Whether or not 3D Secure succeeded.
+           */
+          succeeded: boolean;
+
+          /**
+           * The version of 3D Secure that was used for this payment.
+           */
+          version: string;
+        }
+
+        interface Wallet {
+          amex_express_checkout?: Wallet.AmexExpressCheckout;
+
+          apple_pay?: Wallet.ApplePay;
+
+          /**
+           * (For tokenized numbers only.) The last four digits of the device account number.
+           */
+          dynamic_last4?: string | null;
+
+          google_pay?: Wallet.GooglePay;
+
+          masterpass?: Wallet.Masterpass;
+
+          samsung_pay?: Wallet.SamsungPay;
+
+          /**
+           * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+           */
+          type: Wallet.Type;
+
+          visa_checkout?: Wallet.VisaCheckout;
+        }
+
+        namespace Wallet {
+          interface AmexExpressCheckout {}
+
+          interface ApplePay {}
+
+          interface GooglePay {}
+
+          interface Masterpass {
+            /**
+             * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+             */
+            billing_address?: Address | null;
+
+            /**
+             * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+             */
+            email?: string | null;
+
+            /**
+             * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+             */
+            name?: string | null;
+
+            /**
+             * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+             */
+            shipping_address?: Address | null;
+          }
+
+          interface SamsungPay {}
+
+          type Type =
+            | 'amex_express_checkout'
+            | 'apple_pay'
+            | 'google_pay'
+            | 'masterpass'
+            | 'samsung_pay'
+            | 'visa_checkout'
+
+          interface VisaCheckout {
+            /**
+             * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+             */
+            billing_address?: Address | null;
+
+            /**
+             * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+             */
+            email?: string | null;
+
+            /**
+             * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+             */
+            name?: string | null;
+
+            /**
+             * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+             */
+            shipping_address?: Address | null;
+          }
+        }
+      }
+
+      interface CardPresent {
+        /**
+         * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+         */
+        brand?: string | null;
+
+        /**
+         * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+         */
+        country?: string | null;
+
+        /**
+         * Authorization response cryptogram.
+         */
+        emv_auth_data?: string | null;
+
+        /**
+         * Two-digit number representing the card's expiration month.
+         */
+        exp_month?: number | null;
+
+        /**
+         * Four-digit number representing the card's expiration year.
+         */
+        exp_year?: number | null;
+
+        /**
+         * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example.
+         */
+        fingerprint?: string | null;
+
+        /**
+         * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+         */
+        funding?: string | null;
+
+        /**
+         * ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
+         */
+        generated_card?: string | null;
+
+        /**
+         * The last four digits of the card.
+         */
+        last4?: string | null;
+
+        /**
+         * How were card details read in this transaction. Can be contact_emv, contactless_emv, magnetic_stripe_fallback, magnetic_stripe_track2, or contactless_magstripe_mode
+         */
+        read_method?: string | null;
+
+        /**
+         * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
+         */
+        receipt?: CardPresent.Receipt | null;
+      }
+
+      namespace CardPresent {
+        interface Receipt {
+          /**
+           * EMV tag 9F26, cryptogram generated by the integrated circuit chip.
+           */
+          application_cryptogram?: string | null;
+
+          /**
+           * Mnenomic of the Application Identifier.
+           */
+          application_preferred_name?: string | null;
+
+          /**
+           * Identifier for this transaction.
+           */
+          authorization_code?: string | null;
+
+          /**
+           * EMV tag 8A. A code returned by the card issuer.
+           */
+          authorization_response_code?: string | null;
+
+          /**
+           * How the cardholder verified ownership of the card.
+           */
+          cardholder_verification_method?: string | null;
+
+          /**
+           * EMV tag 84. Similar to the application identifier stored on the integrated circuit chip.
+           */
+          dedicated_file_name?: string | null;
+
+          /**
+           * The outcome of a series of EMV functions performed by the card reader.
+           */
+          terminal_verification_results?: string | null;
+
+          /**
+           * An indication of various EMV functions performed during the transaction.
+           */
+          transaction_status_information?: string | null;
+        }
+      }
+
+      interface Eps {
+        /**
+         * Owner's verified full name. Values are verified or provided by EPS directly
+         * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_name?: string | null;
+      }
+
+      interface Giropay {
+        /**
+         * Bank code of bank associated with the bank account.
+         */
+        bank_code?: string | null;
+
+        /**
+         * Name of the bank associated with the bank account.
+         */
+        bank_name?: string | null;
+
+        /**
+         * Bank Identifier Code of the bank associated with the bank account.
+         */
+        bic?: string | null;
+
+        /**
+         * Owner's verified full name. Values are verified or provided by Giropay directly
+         * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_name?: string | null;
+      }
+
+      interface Ideal {
+        /**
+         * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
+         */
+        bank?: Ideal.Bank | null;
+
+        /**
+         * The Bank Identifier Code of the customer's bank.
+         */
+        bic?: Ideal.Bic | null;
+
+        /**
+         * Last four characters of the IBAN.
+         */
+        iban_last4?: string | null;
+
+        /**
+         * Owner's verified full name. Values are verified or provided by iDEAL directly
+         * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_name?: string | null;
+      }
+
+      namespace Ideal {
+        type Bank =
+          | 'abn_amro'
+          | 'asn_bank'
+          | 'bunq'
+          | 'handelsbanken'
+          | 'ing'
+          | 'knab'
+          | 'moneyou'
+          | 'rabobank'
+          | 'regiobank'
+          | 'sns_bank'
+          | 'triodos_bank'
+          | 'van_lanschot'
+
+        type Bic =
+          | 'ABNANL2A'
+          | 'ASNBNL21'
+          | 'BUNQNL2A'
+          | 'FVLBNL22'
+          | 'HANDNL2A'
+          | 'INGBNL2A'
+          | 'KNABNL2H'
+          | 'MOYONL21'
+          | 'RABONL2U'
+          | 'RBRBNL21'
+          | 'SNSBNL2A'
+          | 'TRIONL2U'
+      }
+
+      interface Klarna {}
+
+      interface Multibanco {
+        /**
+         * Entity number associated with this Multibanco payment.
+         */
+        entity?: string | null;
+
+        /**
+         * Reference number associated with this Multibanco payment.
+         */
+        reference?: string | null;
+      }
+
+      interface P24 {
+        /**
+         * Unique reference for this Przelewy24 payment.
+         */
+        reference?: string | null;
+
+        /**
+         * Owner's verified full name. Values are verified or provided by Przelewy24 directly
+         * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_name?: string | null;
+      }
+
+      interface SepaCreditTransfer {
+        /**
+         * Name of the bank associated with the bank account.
+         */
+        bank_name?: string | null;
+
+        /**
+         * Bank Identifier Code of the bank associated with the bank account.
+         */
+        bic?: string | null;
+
+        /**
+         * IBAN of the bank account to transfer funds to.
+         */
+        iban?: string | null;
+      }
+
+      interface SepaDebit {
+        /**
+         * Bank code of bank associated with the bank account.
+         */
+        bank_code?: string | null;
+
+        /**
+         * Branch code of bank associated with the bank account.
+         */
+        branch_code?: string | null;
+
+        /**
+         * Two-letter ISO code representing the country the bank account is located in.
+         */
+        country?: string | null;
+
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
+        fingerprint?: string | null;
+
+        /**
+         * Last four characters of the IBAN.
+         */
+        last4?: string | null;
+
+        /**
+         * ID of the mandate used to make this payment.
+         */
+        mandate?: string | null;
+      }
+
+      interface Sofort {
+        /**
+         * Bank code of bank associated with the bank account.
+         */
+        bank_code?: string | null;
+
+        /**
+         * Name of the bank associated with the bank account.
+         */
+        bank_name?: string | null;
+
+        /**
+         * Bank Identifier Code of the bank associated with the bank account.
+         */
+        bic?: string | null;
+
+        /**
+         * Two-letter ISO code representing the country the bank account is located in.
+         */
+        country?: string | null;
+
+        /**
+         * Last four characters of the IBAN.
+         */
+        iban_last4?: string | null;
+
+        /**
+         * Owner's verified full name. Values are verified or provided by SOFORT directly
+         * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_name?: string | null;
+      }
+
+      interface StripeAccount {}
+
+      interface Wechat {}
+    }
+
+    interface Shipping {
+      address?: Address;
+
+      /**
+       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+       */
+      carrier?: string | null;
+
+      /**
+       * Recipient name.
+       */
+      name?: string | null;
+
+      /**
+       * Recipient phone (including extension).
+       */
+      phone?: string | null;
+
+      /**
+       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+       */
+      tracking_number?: string | null;
+    }
+
+    interface TransferData {
+      /**
+       * The amount transferred to the destination account, if specified. By default, the entire charge amount is transferred to the destination account.
+       */
+      amount?: number | null;
+
+      /**
+       * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
+       */
+      destination: string | Account;
+    }
   }
 
   /**

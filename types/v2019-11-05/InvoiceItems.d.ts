@@ -60,7 +60,7 @@ declare namespace Stripe {
      */
     object: 'invoiceitem';
 
-    period: InvoiceLineItemPeriod;
+    period: InvoiceItem.Period;
 
     /**
      * If the invoice item is a proration, the plan of the subscription that the proration was computed for.
@@ -106,6 +106,20 @@ declare namespace Stripe {
      * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
      */
     unit_amount_decimal: string | null;
+  }
+
+  namespace InvoiceItem {
+    interface Period {
+      /**
+       * End of the line item's billing period
+       */
+      end: number;
+
+      /**
+       * Start of the line item's billing period
+       */
+      start: number;
+    }
   }
 
   interface DeletedInvoiceItem {

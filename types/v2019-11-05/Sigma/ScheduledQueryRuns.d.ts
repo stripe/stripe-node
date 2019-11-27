@@ -14,7 +14,7 @@ declare namespace Stripe {
        */
       data_load_time?: number;
 
-      error?: RunError;
+      error?: ScheduledQueryRun.Error;
 
       /**
        * The file object representing the results of the query.
@@ -55,6 +55,15 @@ declare namespace Stripe {
        * Title of the query.
        */
       title?: string;
+    }
+
+    namespace ScheduledQueryRun {
+      interface Error {
+        /**
+         * Information about the run failure.
+         */
+        message: string;
+      }
     }
 
     /**

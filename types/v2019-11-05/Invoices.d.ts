@@ -76,7 +76,7 @@ declare namespace Stripe {
     /**
      * Custom fields displayed on the invoice.
      */
-    custom_fields: Array<CustomField> | null;
+    custom_fields: Array<Invoice.CustomField> | null;
 
     customer: string | Customer;
 
@@ -103,7 +103,7 @@ declare namespace Stripe {
     /**
      * The customer's shipping information. Until the invoice is finalized, this field will equal `customer.shipping`. Once the invoice is finalized, this field will no longer be updated.
      */
-    customer_shipping: ShippingDetails | null;
+    customer_shipping: Invoice.CustomerShipping | null;
 
     /**
      * The customer's tax exempt status. Until the invoice is finalized, this field will equal `customer.tax_exempt`. Once the invoice is finalized, this field will no longer be updated.
@@ -113,7 +113,7 @@ declare namespace Stripe {
     /**
      * The customer's tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as `customer.tax_ids`. Once the invoice is finalized, this field will no longer be updated.
      */
-    customer_tax_ids: Array<CustomerTaxId> | null;
+    customer_tax_ids: Array<Invoice.CustomerTaxId> | null;
 
     /**
      * ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
@@ -259,7 +259,7 @@ declare namespace Stripe {
      */
     status: Invoice.Status | null;
 
-    status_transitions: StatusTransitions;
+    status_transitions: Invoice.StatusTransitions;
 
     /**
      * The subscription that this invoice was prepared for, if any.
@@ -286,7 +286,7 @@ declare namespace Stripe {
      */
     tax_percent: number | null;
 
-    threshold_reason: ThresholdReason;
+    threshold_reason: Invoice.ThresholdReason;
 
     /**
      * Total after discounts and taxes.
@@ -296,12 +296,12 @@ declare namespace Stripe {
     /**
      * The aggregate amounts calculated per tax rate for all line items.
      */
-    total_tax_amounts: Array<TaxAmount> | null;
+    total_tax_amounts: Array<Invoice.TotalTaxAmount> | null;
 
     /**
      * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
      */
-    transfer_data: TransferData | null;
+    transfer_data: Invoice.TransferData | null;
 
     /**
      * The time at which webhooks for this invoice were successfully delivered (if the invoice had no webhooks to deliver, this will match `created`). Invoice payment is delayed until webhooks are delivered, or until all webhook delivery attempts have been exhausted.
@@ -322,7 +322,68 @@ declare namespace Stripe {
 
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
 
+    interface CustomField {
+      /**
+       * The name of the custom field.
+       */
+      name: string;
+
+      /**
+       * The value of the custom field.
+       */
+      value: string;
+    }
+
+    interface CustomerShipping {
+      address?: Address;
+
+      /**
+       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+       */
+      carrier?: string | null;
+
+      /**
+       * Recipient name.
+       */
+      name?: string | null;
+
+      /**
+       * Recipient phone (including extension).
+       */
+      phone?: string | null;
+
+      /**
+       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+       */
+      tracking_number?: string | null;
+    }
+
     type CustomerTaxExempt = 'exempt' | 'none' | 'reverse'
+
+    interface CustomerTaxId {
+      /**
+       * The type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `unknown`, or `za_vat`
+       */
+      type: CustomerTaxId.Type;
+
+      /**
+       * The value of the tax ID.
+       */
+      value?: string | null;
+    }
+
+    namespace CustomerTaxId {
+      type Type =
+        | 'au_abn'
+        | 'ch_vat'
+        | 'eu_vat'
+        | 'in_gst'
+        | 'mx_rfc'
+        | 'no_vat'
+        | 'nz_gst'
+        | 'unknown'
+        | 'za_vat'
+    }
 
     type Status =
       | 'deleted'
@@ -331,6 +392,78 @@ declare namespace Stripe {
       | 'paid'
       | 'uncollectible'
       | 'void'
+
+    interface StatusTransitions {
+      /**
+       * The time that the invoice draft was finalized.
+       */
+      finalized_at?: number | null;
+
+      /**
+       * The time that the invoice was marked uncollectible.
+       */
+      marked_uncollectible_at?: number | null;
+
+      /**
+       * The time that the invoice was paid.
+       */
+      paid_at?: number | null;
+
+      /**
+       * The time that the invoice was voided.
+       */
+      voided_at?: number | null;
+    }
+
+    interface ThresholdReason {
+      /**
+       * The total invoice amount threshold boundary if it triggered the threshold invoice.
+       */
+      amount_gte?: number | null;
+
+      /**
+       * Indicates which line items triggered a threshold invoice.
+       */
+      item_reasons: Array<ThresholdReason.ItemReason>;
+    }
+
+    namespace ThresholdReason {
+      interface ItemReason {
+        /**
+         * The IDs of the line items that triggered the threshold invoice.
+         */
+        line_item_ids: Array<string>;
+
+        /**
+         * The quantity threshold boundary that applied to the given line item.
+         */
+        usage_gte: number;
+      }
+    }
+
+    interface TotalTaxAmount {
+      /**
+       * The amount, in %s, of the tax.
+       */
+      amount: number;
+
+      /**
+       * Whether this tax amount is inclusive or exclusive.
+       */
+      inclusive: boolean;
+
+      /**
+       * The tax rate that was applied to get this tax amount.
+       */
+      tax_rate: string | TaxRate;
+    }
+
+    interface TransferData {
+      /**
+       * The account (if any) where funds from the payment will be transferred to upon payment success.
+       */
+      destination: string | Account;
+    }
   }
 
   interface DeletedInvoice {
@@ -398,7 +531,7 @@ declare namespace Stripe {
      */
     object?: 'line_item';
 
-    period?: InvoiceLineItemPeriod;
+    period?: InvoiceLineItem.Period;
 
     /**
      * The plan of the subscription, if the line item is a subscription or a proration.
@@ -428,7 +561,7 @@ declare namespace Stripe {
     /**
      * The amount of tax calculated per tax rate for this line item
      */
-    tax_amounts?: Array<TaxAmount> | null;
+    tax_amounts?: Array<InvoiceLineItem.TaxAmount> | null;
 
     /**
      * The tax rates which apply to the line item.
@@ -447,6 +580,35 @@ declare namespace Stripe {
   }
 
   namespace InvoiceLineItem {
+    interface Period {
+      /**
+       * End of the line item's billing period
+       */
+      end: number;
+
+      /**
+       * Start of the line item's billing period
+       */
+      start: number;
+    }
+
+    interface TaxAmount {
+      /**
+       * The amount, in %s, of the tax.
+       */
+      amount: number;
+
+      /**
+       * Whether this tax amount is inclusive or exclusive.
+       */
+      inclusive: boolean;
+
+      /**
+       * The tax rate that was applied to get this tax amount.
+       */
+      tax_rate: string | TaxRate;
+    }
+
     type Type = 'invoiceitem' | 'subscription'
   }
 
