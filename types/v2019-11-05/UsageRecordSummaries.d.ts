@@ -23,7 +23,7 @@ declare namespace Stripe {
      */
     object?: 'usage_record_summary';
 
-    period?: Period;
+    period?: UsageRecordSummary.Period;
 
     /**
      * The ID of the subscription item this summary is describing.
@@ -34,5 +34,19 @@ declare namespace Stripe {
      * The total usage within this usage period.
      */
     total_usage?: number;
+  }
+
+  namespace UsageRecordSummary {
+    interface Period {
+      /**
+       * The end date of this usage period. All usage up to and including this point in time is included.
+       */
+      end?: number | null;
+
+      /**
+       * The start date of this usage period. All usage after this point in time is included.
+       */
+      start?: number | null;
+    }
   }
 }

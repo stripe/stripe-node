@@ -50,7 +50,7 @@ declare namespace Stripe {
     /**
      * Charges that were created by this PaymentIntent, if any.
      */
-    charges?: PaymentFlowsPaymentIntentResourceChargeList;
+    charges?: ApiList<Charge>;
 
     /**
      * The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key.
@@ -105,7 +105,7 @@ declare namespace Stripe {
     /**
      * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
      */
-    last_payment_error?: StripeError | null;
+    last_payment_error?: PaymentIntent.LastPaymentError | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -122,7 +122,7 @@ declare namespace Stripe {
     /**
      * If present, this property tells you what actions you need to take in order for your customer to fulfill a payment using the provided source.
      */
-    next_action?: NextAction | null;
+    next_action?: PaymentIntent.NextAction | null;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
@@ -142,7 +142,7 @@ declare namespace Stripe {
     /**
      * Payment-method-specific configuration for this PaymentIntent.
      */
-    payment_method_options?: PaymentMethodOptions | null;
+    payment_method_options?: PaymentIntent.PaymentMethodOptions | null;
 
     /**
      * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
@@ -173,7 +173,7 @@ declare namespace Stripe {
     /**
      * Shipping information for this PaymentIntent.
      */
-    shipping?: ShippingDetails | null;
+    shipping?: PaymentIntent.Shipping | null;
 
     /**
      * This is a legacy field that will be removed in the future. It is the ID of the Source object that is associated with this PaymentIntent, if one was supplied.
@@ -206,7 +206,7 @@ declare namespace Stripe {
     /**
      * The data with which to automatically create a Transfer when the payment is finalized. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
      */
-    transfer_data?: TransferData | null;
+    transfer_data?: PaymentIntent.TransferData | null;
 
     /**
      * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
@@ -228,6 +228,201 @@ declare namespace Stripe {
 
     type ConfirmationMethod = 'automatic' | 'manual'
 
+    interface LastPaymentError {
+      /**
+       * For card errors, the ID of the failed charge.
+       */
+      charge?: string;
+
+      /**
+       * For some errors that could be handled programmatically, a short string indicating the [error code](https://stripe.com/docs/error-codes) reported.
+       */
+      code?: string;
+
+      /**
+       * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.
+       */
+      decline_code?: string;
+
+      /**
+       * A URL to more information about the [error code](https://stripe.com/docs/error-codes) reported.
+       */
+      doc_url?: string;
+
+      /**
+       * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
+       */
+      message?: string;
+
+      /**
+       * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
+       */
+      param?: string;
+
+      payment_intent?: PaymentIntent;
+
+      payment_method?: PaymentMethod;
+
+      setup_intent?: SetupIntent;
+
+      source?:
+        | Account
+        | AlipayAccount
+        | BankAccount
+        | BitcoinReceiver
+        | Card
+        | Source;
+
+      /**
+       * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
+       */
+      type: LastPaymentError.Type;
+    }
+
+    namespace LastPaymentError {
+      type Type =
+        | 'api_connection_error'
+        | 'api_error'
+        | 'authentication_error'
+        | 'card_error'
+        | 'idempotency_error'
+        | 'invalid_request_error'
+        | 'rate_limit_error'
+    }
+
+    interface NextAction {
+      redirect_to_url?: NextAction.RedirectToUrl;
+
+      /**
+       * Type of the next action to perform, one of `redirect_to_url` or `use_stripe_sdk`.
+       */
+      type: string;
+
+      /**
+       * When confirming a PaymentIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
+       */
+      use_stripe_sdk?: NextAction.UseStripeSdk;
+    }
+
+    namespace NextAction {
+      interface RedirectToUrl {
+        /**
+         * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
+         */
+        return_url?: string | null;
+
+        /**
+         * The URL you must redirect your customer to in order to authenticate the payment.
+         */
+        url?: string | null;
+      }
+
+      interface UseStripeSdk {}
+    }
+
+    interface PaymentMethodOptions {
+      card?: PaymentMethodOptions.Card;
+    }
+
+    namespace PaymentMethodOptions {
+      interface Card {
+        /**
+         * Installment details for this payment (Mexico only).
+         *
+         * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+         */
+        installments?: Card.Installments | null;
+
+        /**
+         * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+         */
+        request_three_d_secure?: Card.RequestThreeDSecure | null;
+      }
+
+      namespace Card {
+        interface Installments {
+          /**
+           * Installment plans that may be selected for this PaymentIntent.
+           */
+          available_plans?: Array<Installments.AvailablePlan> | null;
+
+          /**
+           * Whether Installments are enabled for this PaymentIntent.
+           */
+          enabled: boolean;
+
+          /**
+           * Installment plan selected for this PaymentIntent.
+           */
+          plan?: Installments.Plan | null;
+        }
+
+        namespace Installments {
+          interface AvailablePlan {
+            /**
+             * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+             */
+            count?: number | null;
+
+            /**
+             * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+             * One of `month`.
+             */
+            interval?: 'month' | null;
+
+            /**
+             * Type of installment plan, one of `fixed_count`.
+             */
+            type: 'fixed_count';
+          }
+
+          interface Plan {
+            /**
+             * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+             */
+            count?: number | null;
+
+            /**
+             * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+             * One of `month`.
+             */
+            interval?: 'month' | null;
+
+            /**
+             * Type of installment plan, one of `fixed_count`.
+             */
+            type: 'fixed_count';
+          }
+        }
+
+        type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only'
+      }
+    }
+
+    interface Shipping {
+      address?: Address;
+
+      /**
+       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+       */
+      carrier?: string | null;
+
+      /**
+       * Recipient name.
+       */
+      name?: string | null;
+
+      /**
+       * Recipient phone (including extension).
+       */
+      phone?: string | null;
+
+      /**
+       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+       */
+      tracking_number?: string | null;
+    }
+
     type Status =
       | 'canceled'
       | 'processing'
@@ -236,6 +431,20 @@ declare namespace Stripe {
       | 'requires_confirmation'
       | 'requires_payment_method'
       | 'succeeded'
+
+    interface TransferData {
+      /**
+       * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+       */
+      amount?: number;
+
+      /**
+       * The account (if any) the payment will be attributed to for tax
+       * reporting, and where funds from the payment will be transferred to upon
+       * payment success.
+       */
+      destination: string | Account;
+    }
   }
 
   /**
@@ -316,7 +525,7 @@ declare namespace Stripe {
     /**
      * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
      */
-    mandate_data?: secret_key_param;
+    mandate_data?: PaymentIntentCreateParams.MandateData;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -343,7 +552,7 @@ declare namespace Stripe {
     /**
      * Payment-method-specific configuration for this PaymentIntent.
      */
-    payment_method_options?: payment_method_options_param;
+    payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
 
     /**
      * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. If this is not provided, defaults to ["card"].
@@ -383,7 +592,7 @@ declare namespace Stripe {
     /**
      * Shipping information for this PaymentIntent.
      */
-    shipping?: shipping;
+    shipping?: PaymentIntentCreateParams.Shipping;
 
     /**
      * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Source, Card, and BankAccount objects.
@@ -404,7 +613,7 @@ declare namespace Stripe {
      * The parameters used to automatically create a Transfer when the payment succeeds.
      * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
      */
-    transfer_data?: transfer_data_creation_params;
+    transfer_data?: PaymentIntentCreateParams.TransferData;
 
     /**
      * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
@@ -422,9 +631,191 @@ declare namespace Stripe {
 
     type ConfirmationMethod = 'automatic' | 'manual'
 
+    interface MandateData {
+      /**
+       * This hash contains details about the customer acceptance of the Mandate.
+       */
+      customer_acceptance: MandateData.CustomerAcceptance;
+    }
+
+    namespace MandateData {
+      interface CustomerAcceptance {
+        /**
+         * The time at which the customer accepted the Mandate.
+         */
+        accepted_at?: number;
+
+        /**
+         * If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
+         */
+        offline?: CustomerAcceptance.Offline;
+
+        /**
+         * If this is a Mandate accepted online, this hash contains details about the online acceptance.
+         */
+        online?: CustomerAcceptance.Online;
+
+        /**
+         * The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
+         */
+        type: CustomerAcceptance.Type;
+      }
+
+      namespace CustomerAcceptance {
+        interface Offline {}
+
+        interface Online {
+          /**
+           * The IP address from which the Mandate was accepted by the customer.
+           */
+          ip_address: string;
+
+          /**
+           * The user agent of the browser from which the Mandate was accepted by the customer.
+           */
+          user_agent: string;
+        }
+
+        type Type = 'offline' | 'online'
+      }
+    }
+
     type OffSession = 'one_off' | 'recurring'
 
+    interface PaymentMethodOptions {
+      /**
+       * Configuration for any card payments attempted on this PaymentIntent.
+       */
+      card?: PaymentMethodOptions.Card;
+    }
+
+    namespace PaymentMethodOptions {
+      interface Card {
+        /**
+         * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
+         *
+         * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+         */
+        installments?: Card.Installments;
+
+        /**
+         * When specified, this parameter indicates that a transaction will be marked
+         * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
+         * parameter can only be provided during confirmation.
+         */
+        moto?: boolean;
+
+        /**
+         * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+         */
+        request_three_d_secure?: Card.RequestThreeDSecure;
+      }
+
+      namespace Card {
+        interface Installments {
+          /**
+           * Setting to true enables installments for this PaymentIntent.
+           * This will cause the response to contain a list of available installment plans.
+           * Setting to false will prevent any selected plan from applying to a charge.
+           */
+          enabled?: boolean;
+
+          /**
+           * The selected installment plan to use for this payment attempt.
+           * This parameter can only be provided during confirmation.
+           */
+          plan?: '' | Installments.Plan;
+        }
+
+        namespace Installments {
+          interface Plan {
+            /**
+             * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+             */
+            count: number;
+
+            /**
+             * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+             * One of `month`.
+             */
+            interval: 'month';
+
+            /**
+             * Type of installment plan, one of `fixed_count`.
+             */
+            type: 'fixed_count';
+          }
+        }
+
+        type RequestThreeDSecure = 'any' | 'automatic'
+      }
+    }
+
     type SetupFutureUsage = 'off_session' | 'on_session'
+
+    interface Shipping {
+      /**
+       * Shipping address.
+       */
+      address: Shipping.Address;
+
+      /**
+       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+       */
+      carrier?: string;
+
+      /**
+       * Recipient name.
+       */
+      name: string;
+
+      /**
+       * Recipient phone (including extension).
+       */
+      phone?: string;
+
+      /**
+       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+       */
+      tracking_number?: string;
+    }
+
+    namespace Shipping {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
+
+    interface TransferData {
+      /**
+       * The amount that will be transferred automatically when a charge succeeds.
+       * The amount is capped at the total transaction amount and if no amount is set,
+       * the full amount is transferred.
+       *
+       * If you intend to collect a fee and you need a more robust reporting experience, using
+       * [application_fee_amount](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-application_fee_amount)
+       * might be a better fit for your integration.
+       */
+      amount?: number;
+
+      /**
+       * If specified, successful charges will be attributed to the destination
+       * account for tax reporting, and the funds from charges will be transferred
+       * to the destination account. The ID of the resulting transfer will be
+       * returned on the successful charge's `transfer` field.
+       */
+      destination: string;
+    }
   }
 
   /**
@@ -434,7 +825,7 @@ declare namespace Stripe {
     /**
      * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
      */
-    created?: range_query_specs | number;
+    created?: number | PaymentIntentListParams.Created;
 
     /**
      * Only return PaymentIntents for the customer specified by this customer ID.
@@ -460,6 +851,30 @@ declare namespace Stripe {
      * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
      */
     starting_after?: string;
+  }
+
+  namespace PaymentIntentListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**
@@ -570,7 +985,7 @@ declare namespace Stripe {
     /**
      * Shipping information for this PaymentIntent.
      */
-    shipping?: shipping | '';
+    shipping?: '' | PaymentIntentUpdateParams.Shipping;
 
     /**
      * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Source, Card, and BankAccount objects.
@@ -590,7 +1005,7 @@ declare namespace Stripe {
     /**
      * The parameters used to automatically create a Transfer when the payment succeeds. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
      */
-    transfer_data?: transfer_data_update_params;
+    transfer_data?: PaymentIntentUpdateParams.TransferData;
 
     /**
      * A string that identifies the resulting payment as part of a group. `transfer_group` may only be provided if it has not been set. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
@@ -600,6 +1015,56 @@ declare namespace Stripe {
 
   namespace PaymentIntentUpdateParams {
     type SetupFutureUsage = 'off_session' | 'on_session'
+
+    interface Shipping {
+      /**
+       * Shipping address.
+       */
+      address: Shipping.Address;
+
+      /**
+       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+       */
+      carrier?: string;
+
+      /**
+       * Recipient name.
+       */
+      name: string;
+
+      /**
+       * Recipient phone (including extension).
+       */
+      phone?: string;
+
+      /**
+       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+       */
+      tracking_number?: string;
+    }
+
+    namespace Shipping {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
+
+    interface TransferData {
+      /**
+       * The amount that will be transferred automatically when a charge succeeds.
+       */
+      amount?: number;
+    }
   }
 
   /**
@@ -666,7 +1131,16 @@ declare namespace Stripe {
      * The parameters used to automatically create a Transfer when the payment
      * is captured. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
      */
-    transfer_data?: transfer_data_update_params;
+    transfer_data?: PaymentIntentCaptureParams.TransferData;
+  }
+
+  namespace PaymentIntentCaptureParams {
+    interface TransferData {
+      /**
+       * The amount that will be transferred automatically when a charge succeeds.
+       */
+      amount?: number;
+    }
   }
 
   /**
@@ -710,7 +1184,9 @@ declare namespace Stripe {
     /**
      * This hash contains details about the Mandate to create
      */
-    mandate_data?: secret_key_param | client_key_param;
+    mandate_data?:
+      | PaymentIntentConfirmParams.MandateData1
+      | PaymentIntentConfirmParams.MandateData2;
 
     /**
      * Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards).
@@ -725,7 +1201,7 @@ declare namespace Stripe {
     /**
      * Payment-method-specific configuration for this PaymentIntent.
      */
-    payment_method_options?: payment_method_options_param;
+    payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
     /**
      * Email address that the receipt for the resulting payment will be sent to.
@@ -764,7 +1240,7 @@ declare namespace Stripe {
     /**
      * Shipping information for this PaymentIntent.
      */
-    shipping?: shipping | '';
+    shipping?: '' | PaymentIntentConfirmParams.Shipping;
 
     /**
      * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Source, Card, and BankAccount objects.
@@ -778,9 +1254,204 @@ declare namespace Stripe {
   }
 
   namespace PaymentIntentConfirmParams {
+    interface MandateData1 {
+      /**
+       * This hash contains details about the customer acceptance of the Mandate.
+       */
+      customer_acceptance: MandateData1.CustomerAcceptance;
+    }
+
+    namespace MandateData1 {
+      interface CustomerAcceptance {
+        /**
+         * The time at which the customer accepted the Mandate.
+         */
+        accepted_at?: number;
+
+        /**
+         * If this is a Mandate accepted offline, this hash contains details about the offline acceptance.
+         */
+        offline?: CustomerAcceptance.Offline;
+
+        /**
+         * If this is a Mandate accepted online, this hash contains details about the online acceptance.
+         */
+        online?: CustomerAcceptance.Online;
+
+        /**
+         * The type of customer acceptance information included with the Mandate. One of `online` or `offline`.
+         */
+        type: CustomerAcceptance.Type;
+      }
+
+      namespace CustomerAcceptance {
+        interface Offline {}
+
+        interface Online {
+          /**
+           * The IP address from which the Mandate was accepted by the customer.
+           */
+          ip_address: string;
+
+          /**
+           * The user agent of the browser from which the Mandate was accepted by the customer.
+           */
+          user_agent: string;
+        }
+
+        type Type = 'offline' | 'online'
+      }
+    }
+    interface MandateData2 {
+      /**
+       * This hash contains details about the customer acceptance of the Mandate.
+       */
+      customer_acceptance: MandateData2.CustomerAcceptance;
+    }
+
+    namespace MandateData2 {
+      interface CustomerAcceptance {
+        /**
+         * If this is a Mandate accepted online, this hash contains details about the online acceptance.
+         */
+        online: CustomerAcceptance.Online;
+
+        /**
+         * The type of customer acceptance information included with the Mandate.
+         */
+        type: 'online';
+      }
+
+      namespace CustomerAcceptance {
+        interface Online {
+          /**
+           * The IP address from which the Mandate was accepted by the customer.
+           */
+          ip_address?: string;
+
+          /**
+           * The user agent of the browser from which the Mandate was accepted by the customer.
+           */
+          user_agent?: string;
+        }
+      }
+    }
+
     type OffSession = 'one_off' | 'recurring'
 
+    interface PaymentMethodOptions {
+      /**
+       * Configuration for any card payments attempted on this PaymentIntent.
+       */
+      card?: PaymentMethodOptions.Card;
+    }
+
+    namespace PaymentMethodOptions {
+      interface Card {
+        /**
+         * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
+         *
+         * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+         */
+        installments?: Card.Installments;
+
+        /**
+         * When specified, this parameter indicates that a transaction will be marked
+         * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
+         * parameter can only be provided during confirmation.
+         */
+        moto?: boolean;
+
+        /**
+         * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+         */
+        request_three_d_secure?: Card.RequestThreeDSecure;
+      }
+
+      namespace Card {
+        interface Installments {
+          /**
+           * Setting to true enables installments for this PaymentIntent.
+           * This will cause the response to contain a list of available installment plans.
+           * Setting to false will prevent any selected plan from applying to a charge.
+           */
+          enabled?: boolean;
+
+          /**
+           * The selected installment plan to use for this payment attempt.
+           * This parameter can only be provided during confirmation.
+           */
+          plan?: '' | Installments.Plan;
+        }
+
+        namespace Installments {
+          interface Plan {
+            /**
+             * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+             */
+            count: number;
+
+            /**
+             * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+             * One of `month`.
+             */
+            interval: 'month';
+
+            /**
+             * Type of installment plan, one of `fixed_count`.
+             */
+            type: 'fixed_count';
+          }
+        }
+
+        type RequestThreeDSecure = 'any' | 'automatic'
+      }
+    }
+
     type SetupFutureUsage = 'off_session' | 'on_session'
+
+    interface Shipping {
+      /**
+       * Shipping address.
+       */
+      address: Shipping.Address;
+
+      /**
+       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+       */
+      carrier?: string;
+
+      /**
+       * Recipient name.
+       */
+      name: string;
+
+      /**
+       * Recipient phone (including extension).
+       */
+      phone?: string;
+
+      /**
+       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+       */
+      tracking_number?: string;
+    }
+
+    namespace Shipping {
+      interface Address {
+        city?: string;
+
+        country?: string;
+
+        line1: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
+    }
   }
 
   class PaymentIntentsResource {
@@ -807,7 +1478,7 @@ declare namespace Stripe {
     list(
       params?: PaymentIntentListParams,
       options?: HeaderOptions
-    ): Promise<PaymentFlowsPaymentIntentList>;
+    ): Promise<ApiList<PaymentIntent>>;
 
     /**
      * Retrieves the details of a PaymentIntent that has previously been created.

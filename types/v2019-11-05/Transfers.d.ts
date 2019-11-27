@@ -68,7 +68,7 @@ declare namespace Stripe {
     /**
      * A list of reversals that have been applied to the transfer.
      */
-    reversals?: TransferReversalList;
+    reversals?: ApiList<TransferReversal>;
 
     /**
      * Whether the transfer has been fully reversed. If the transfer is only partially reversed, this attribute will still be false.
@@ -208,7 +208,7 @@ declare namespace Stripe {
    * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
    */
   interface TransferListParams {
-    created?: range_query_specs | number;
+    created?: number | TransferListParams.Created;
 
     /**
      * Only return transfers for the destination specified by this account ID.
@@ -239,6 +239,30 @@ declare namespace Stripe {
      * Only return transfers with the specified transfer group.
      */
     transfer_group?: string;
+  }
+
+  namespace TransferListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**
@@ -380,7 +404,7 @@ declare namespace Stripe {
     list(
       params?: TransferListParams,
       options?: HeaderOptions
-    ): Promise<TransferList>;
+    ): Promise<ApiList<Transfer>>;
 
     /**
      * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
@@ -422,7 +446,7 @@ declare namespace Stripe {
       id: string,
       params?: TransferListReversalsParams,
       options?: HeaderOptions
-    ): Promise<TransferReversalList>;
+    ): Promise<ApiList<TransferReversal>>;
 
     /**
      * By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.
