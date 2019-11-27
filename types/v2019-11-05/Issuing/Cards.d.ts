@@ -1045,7 +1045,7 @@ declare namespace Stripe {
       type ReplacementReason = 'damage' | 'expiration' | 'loss' | 'theft'
 
       interface Shipping {
-        address: Shipping.Address;
+        address: Address;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1086,40 +1086,6 @@ declare namespace Stripe {
          * One of `bulk` or `individual`. Bulk shipments will be grouped and mailed together, while individual ones will not.
          */
         type: string;
-      }
-
-      namespace Shipping {
-        interface Address {
-          /**
-           * City/District/Suburb/Town/Village.
-           */
-          city?: string | null;
-
-          /**
-           * 2-letter country code.
-           */
-          country?: string | null;
-
-          /**
-           * Address line 1 (Street address/PO Box/Company name).
-           */
-          line1?: string | null;
-
-          /**
-           * Address line 2 (Apartment/Suite/Unit/Building).
-           */
-          line2?: string | null;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string | null;
-
-          /**
-           * State/County/Province/Region.
-           */
-          state?: string | null;
-        }
       }
 
       type Status =

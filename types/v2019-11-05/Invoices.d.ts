@@ -83,7 +83,7 @@ declare namespace Stripe {
     /**
      * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
      */
-    customer_address: Invoice.CustomerAddress | null;
+    customer_address: Address | null;
 
     /**
      * The customer's email. Until the invoice is finalized, this field will equal `customer.email`. Once the invoice is finalized, this field will no longer be updated.
@@ -334,40 +334,8 @@ declare namespace Stripe {
       value: string;
     }
 
-    interface CustomerAddress {
-      /**
-       * City/District/Suburb/Town/Village.
-       */
-      city?: string | null;
-
-      /**
-       * 2-letter country code.
-       */
-      country?: string | null;
-
-      /**
-       * Address line 1 (Street address/PO Box/Company name).
-       */
-      line1?: string | null;
-
-      /**
-       * Address line 2 (Apartment/Suite/Unit/Building).
-       */
-      line2?: string | null;
-
-      /**
-       * ZIP or postal code.
-       */
-      postal_code?: string | null;
-
-      /**
-       * State/County/Province/Region.
-       */
-      state?: string | null;
-    }
-
     interface CustomerShipping {
-      address?: CustomerShipping.Address;
+      address?: Address;
 
       /**
        * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -388,40 +356,6 @@ declare namespace Stripe {
        * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
        */
       tracking_number?: string | null;
-    }
-
-    namespace CustomerShipping {
-      interface Address {
-        /**
-         * City/District/Suburb/Town/Village.
-         */
-        city?: string | null;
-
-        /**
-         * 2-letter country code.
-         */
-        country?: string | null;
-
-        /**
-         * Address line 1 (Street address/PO Box/Company name).
-         */
-        line1?: string | null;
-
-        /**
-         * Address line 2 (Apartment/Suite/Unit/Building).
-         */
-        line2?: string | null;
-
-        /**
-         * ZIP or postal code.
-         */
-        postal_code?: string | null;
-
-        /**
-         * State/County/Province/Region.
-         */
-        state?: string | null;
-      }
     }
 
     type CustomerTaxExempt = 'exempt' | 'none' | 'reverse'

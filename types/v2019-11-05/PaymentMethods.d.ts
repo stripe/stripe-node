@@ -56,7 +56,7 @@ declare namespace Stripe {
       /**
        * Billing address.
        */
-      address?: BillingDetails.Address | null;
+      address?: Address | null;
 
       /**
        * Email address.
@@ -72,40 +72,6 @@ declare namespace Stripe {
        * Billing phone number (including extension).
        */
       phone?: string | null;
-    }
-
-    namespace BillingDetails {
-      interface Address {
-        /**
-         * City/District/Suburb/Town/Village.
-         */
-        city?: string | null;
-
-        /**
-         * 2-letter country code.
-         */
-        country?: string | null;
-
-        /**
-         * Address line 1 (Street address/PO Box/Company name).
-         */
-        line1?: string | null;
-
-        /**
-         * Address line 2 (Apartment/Suite/Unit/Building).
-         */
-        line2?: string | null;
-
-        /**
-         * ZIP or postal code.
-         */
-        postal_code?: string | null;
-
-        /**
-         * State/County/Province/Region.
-         */
-        state?: string | null;
-      }
     }
 
     interface Card {
@@ -235,7 +201,7 @@ declare namespace Stripe {
           /**
            * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          billing_address?: Masterpass.BillingAddress | null;
+          billing_address?: Address | null;
 
           /**
            * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -250,73 +216,7 @@ declare namespace Stripe {
           /**
            * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          shipping_address?: Masterpass.ShippingAddress | null;
-        }
-
-        namespace Masterpass {
-          interface BillingAddress {
-            /**
-             * City/District/Suburb/Town/Village.
-             */
-            city?: string | null;
-
-            /**
-             * 2-letter country code.
-             */
-            country?: string | null;
-
-            /**
-             * Address line 1 (Street address/PO Box/Company name).
-             */
-            line1?: string | null;
-
-            /**
-             * Address line 2 (Apartment/Suite/Unit/Building).
-             */
-            line2?: string | null;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string | null;
-
-            /**
-             * State/County/Province/Region.
-             */
-            state?: string | null;
-          }
-
-          interface ShippingAddress {
-            /**
-             * City/District/Suburb/Town/Village.
-             */
-            city?: string | null;
-
-            /**
-             * 2-letter country code.
-             */
-            country?: string | null;
-
-            /**
-             * Address line 1 (Street address/PO Box/Company name).
-             */
-            line1?: string | null;
-
-            /**
-             * Address line 2 (Apartment/Suite/Unit/Building).
-             */
-            line2?: string | null;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string | null;
-
-            /**
-             * State/County/Province/Region.
-             */
-            state?: string | null;
-          }
+          shipping_address?: Address | null;
         }
 
         interface SamsungPay {}
@@ -333,7 +233,7 @@ declare namespace Stripe {
           /**
            * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          billing_address?: VisaCheckout.BillingAddress | null;
+          billing_address?: Address | null;
 
           /**
            * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -348,73 +248,7 @@ declare namespace Stripe {
           /**
            * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          shipping_address?: VisaCheckout.ShippingAddress | null;
-        }
-
-        namespace VisaCheckout {
-          interface BillingAddress {
-            /**
-             * City/District/Suburb/Town/Village.
-             */
-            city?: string | null;
-
-            /**
-             * 2-letter country code.
-             */
-            country?: string | null;
-
-            /**
-             * Address line 1 (Street address/PO Box/Company name).
-             */
-            line1?: string | null;
-
-            /**
-             * Address line 2 (Apartment/Suite/Unit/Building).
-             */
-            line2?: string | null;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string | null;
-
-            /**
-             * State/County/Province/Region.
-             */
-            state?: string | null;
-          }
-
-          interface ShippingAddress {
-            /**
-             * City/District/Suburb/Town/Village.
-             */
-            city?: string | null;
-
-            /**
-             * 2-letter country code.
-             */
-            country?: string | null;
-
-            /**
-             * Address line 1 (Street address/PO Box/Company name).
-             */
-            line1?: string | null;
-
-            /**
-             * Address line 2 (Apartment/Suite/Unit/Building).
-             */
-            line2?: string | null;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string | null;
-
-            /**
-             * State/County/Province/Region.
-             */
-            state?: string | null;
-          }
+          shipping_address?: Address | null;
         }
       }
     }

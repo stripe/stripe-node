@@ -4,7 +4,7 @@ declare namespace Stripe {
      * The Location object.
      */
     interface Location {
-      address: Location.Address;
+      address: Address;
 
       /**
        * The display name of the location.
@@ -20,40 +20,6 @@ declare namespace Stripe {
        * String representing the object's type. Objects of the same type share the same value.
        */
       object: 'terminal.location';
-    }
-
-    namespace Location {
-      interface Address {
-        /**
-         * City/District/Suburb/Town/Village.
-         */
-        city?: string | null;
-
-        /**
-         * 2-letter country code.
-         */
-        country?: string | null;
-
-        /**
-         * Address line 1 (Street address/PO Box/Company name).
-         */
-        line1?: string | null;
-
-        /**
-         * Address line 2 (Apartment/Suite/Unit/Building).
-         */
-        line2?: string | null;
-
-        /**
-         * ZIP or postal code.
-         */
-        postal_code?: string | null;
-
-        /**
-         * State/County/Province/Region.
-         */
-        state?: string | null;
-      }
     }
 
     interface DeletedLocation {

@@ -1,4 +1,5 @@
 ///<reference path='../lib.d.ts' />
+///<reference path='./Addresses.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AlipayAccounts.d.ts' />
