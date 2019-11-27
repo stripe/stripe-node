@@ -8,7 +8,7 @@ declare namespace Stripe {
      */
     amount?: number | null;
 
-    bacs_debit?: SourceMandateNotification.BacsDebit;
+    bacs_debit?: BacsDebitData;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -35,7 +35,7 @@ declare namespace Stripe {
      */
     reason?: string;
 
-    sepa_debit?: SourceMandateNotification.SepaDebit;
+    sepa_debit?: SepaDebitData;
 
     source?: Source;
 
@@ -48,31 +48,5 @@ declare namespace Stripe {
      * The type of source this mandate notification is attached to. Should be the source type identifier code for the payment method, such as `three_d_secure`.
      */
     type?: string;
-  }
-
-  namespace SourceMandateNotification {
-    interface BacsDebit {
-      /**
-       * Last 4 digits of the account number associated with the debit.
-       */
-      last4?: string;
-    }
-
-    interface SepaDebit {
-      /**
-       * SEPA creditor ID.
-       */
-      creditor_identifier?: string;
-
-      /**
-       * Last 4 digits of the account number associated with the debit.
-       */
-      last4?: string;
-
-      /**
-       * Mandate reference associated with the debit.
-       */
-      mandate_reference?: string;
-    }
   }
 }
