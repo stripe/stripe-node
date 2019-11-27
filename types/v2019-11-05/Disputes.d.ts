@@ -101,7 +101,7 @@ declare namespace Stripe {
      */
     charge?: string;
 
-    created?: number | DisputeListParams.Created;
+    created?: range_query_specs | number;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -129,30 +129,6 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  namespace DisputeListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
   /**
    * Retrieves the dispute with the given ID.
    */
@@ -172,7 +148,7 @@ declare namespace Stripe {
     /**
      * Evidence to upload, to respond to a dispute. Updating any field in the hash will submit all fields in the hash for review. The combined character count of all fields is limited to 150,000.
      */
-    evidence?: DisputeUpdateParams.Evidence;
+    evidence?: dispute_evidence_params;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -190,88 +166,6 @@ declare namespace Stripe {
      * Whether to immediately submit evidence to the bank. If `false`, evidence is staged on the dispute. Staged evidence is visible in the API and Dashboard, and can be submitted to the bank by making another request with this attribute set to `true` (the default).
      */
     submit?: boolean;
-  }
-
-  namespace DisputeUpdateParams {
-    interface Evidence {
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      access_activity_log?: string;
-
-      billing_address?: string;
-
-      cancellation_policy?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      cancellation_policy_disclosure?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      cancellation_rebuttal?: string;
-
-      customer_communication?: string;
-
-      customer_email_address?: string;
-
-      customer_name?: string;
-
-      customer_purchase_ip?: string;
-
-      customer_signature?: string;
-
-      duplicate_charge_documentation?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      duplicate_charge_explanation?: string;
-
-      duplicate_charge_id?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      product_description?: string;
-
-      receipt?: string;
-
-      refund_policy?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      refund_policy_disclosure?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      refund_refusal_explanation?: string;
-
-      service_date?: string;
-
-      service_documentation?: string;
-
-      shipping_address?: string;
-
-      shipping_carrier?: string;
-
-      shipping_date?: string;
-
-      shipping_documentation?: string;
-
-      shipping_tracking_number?: string;
-
-      uncategorized_file?: string;
-
-      /**
-       * Has a maximum character count of 20,000.
-       */
-      uncategorized_text?: string;
-    }
   }
 
   /**

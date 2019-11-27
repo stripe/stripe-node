@@ -62,12 +62,12 @@ declare namespace Stripe {
     /**
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
-    billing_details?: PaymentMethodCreateParams.BillingDetails;
+    billing_details?: billing_details_inner_params;
 
     /**
      * If this is a `card` PaymentMethod, this hash contains the user's card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When creating with a card number, you must meet the requirements for [PCI compliance](https://stripe.com/docs/security#validating-pci-compliance). We strongly recommend using Stripe.js instead of interacting with this API directly.
      */
-    card?: PaymentMethodCreateParams.Card1 | PaymentMethodCreateParams.Card2;
+    card?: card_details_params | token_params;
 
     /**
      * The `Customer` to whom the original PaymentMethod is attached.
@@ -82,7 +82,7 @@ declare namespace Stripe {
     /**
      * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
      */
-    ideal?: PaymentMethodCreateParams.Ideal;
+    ideal?: param;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -99,7 +99,7 @@ declare namespace Stripe {
     /**
      * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
      */
-    sepa_debit?: PaymentMethodCreateParams.SepaDebit;
+    sepa_debit?: param;
 
     /**
      * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type. Required unless `payment_method` is specified (see the [Cloning PaymentMethods](https://stripe.com/docs/payments/payment-methods/connect#cloning-payment-methods) guide)
@@ -108,96 +108,6 @@ declare namespace Stripe {
   }
 
   namespace PaymentMethodCreateParams {
-    interface BillingDetails {
-      /**
-       * Billing address.
-       */
-      address?: BillingDetails.Address;
-
-      /**
-       * Email address.
-       */
-      email?: string;
-
-      /**
-       * Full name.
-       */
-      name?: string;
-
-      /**
-       * Billing phone number (including extension).
-       */
-      phone?: string;
-    }
-
-    namespace BillingDetails {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1?: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
-    }
-
-    interface Card1 {
-      /**
-       * The card's CVC. It is highly recommended to always include this value.
-       */
-      cvc?: string;
-
-      /**
-       * Two-digit number representing the card's expiration month.
-       */
-      exp_month: number;
-
-      /**
-       * Four-digit number representing the card's expiration year.
-       */
-      exp_year: number;
-
-      /**
-       * The card number, as a string without any separators.
-       */
-      number: string;
-    }
-    interface Card2 {
-      token: string;
-    }
-
-    interface Ideal {
-      /**
-       * The customer's bank.
-       */
-      bank?: Ideal.Bank;
-    }
-
-    namespace Ideal {
-      type Bank =
-        | 'abn_amro'
-        | 'asn_bank'
-        | 'bunq'
-        | 'handelsbanken'
-        | 'ing'
-        | 'knab'
-        | 'moneyou'
-        | 'rabobank'
-        | 'regiobank'
-        | 'sns_bank'
-        | 'triodos_bank'
-        | 'van_lanschot'
-    }
-
-    interface SepaDebit {
-      iban: string;
-    }
-
     type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
   }
 
@@ -257,9 +167,9 @@ declare namespace Stripe {
     /**
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
-    billing_details?: PaymentMethodUpdateParams.BillingDetails;
+    billing_details?: billing_details_inner_params;
 
-    card?: PaymentMethodUpdateParams.Card;
+    card?: update_api_param;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -273,61 +183,7 @@ declare namespace Stripe {
       [key: string]: string;
     };
 
-    sepa_debit?: PaymentMethodUpdateParams.SepaDebit;
-  }
-
-  namespace PaymentMethodUpdateParams {
-    interface BillingDetails {
-      /**
-       * Billing address.
-       */
-      address?: BillingDetails.Address;
-
-      /**
-       * Email address.
-       */
-      email?: string;
-
-      /**
-       * Full name.
-       */
-      name?: string;
-
-      /**
-       * Billing phone number (including extension).
-       */
-      phone?: string;
-    }
-
-    namespace BillingDetails {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1?: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
-    }
-
-    interface Card {
-      /**
-       * Two-digit number representing the card's expiration month.
-       */
-      exp_month?: number;
-
-      /**
-       * Four-digit number representing the card's expiration year.
-       */
-      exp_year?: number;
-    }
-
-    interface SepaDebit {}
+    sepa_debit?: update_param;
   }
 
   /**
@@ -374,7 +230,7 @@ declare namespace Stripe {
     list(
       params: PaymentMethodListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<PaymentMethod>>;
+    ): Promise<PaymentFlowsPaymentMethodList>;
 
     /**
      * Retrieves a PaymentMethod object.

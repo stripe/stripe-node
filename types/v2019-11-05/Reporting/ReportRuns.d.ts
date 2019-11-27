@@ -69,7 +69,7 @@ declare namespace Stripe {
       /**
        * Parameters specifying how the report should be run. Different Report Types have different required and optional parameters, listed in the [API Access to Reports](https://stripe.com/docs/reporting/statements/api) documentation.
        */
-      parameters?: ReportRunCreateParams.Parameters;
+      parameters?: run_parameter_specs;
 
       /**
        * The ID of the [report type](https://stripe.com/docs/reporting/statements/api#report-types) to run, such as `"balance.summary.1"`.
@@ -77,85 +77,11 @@ declare namespace Stripe {
       report_type: string;
     }
 
-    namespace ReportRunCreateParams {
-      interface Parameters {
-        /**
-         * The set of report columns to include in the report output. If omitted, the Report Type is run with its default column set.
-         */
-        columns?: Array<string>;
-
-        /**
-         * Connected account ID to filter for in the report run.
-         */
-        connected_account?: string;
-
-        /**
-         * Currency of objects to be included in the report run.
-         */
-        currency?: string;
-
-        /**
-         * Ending timestamp of data to be included in the report run (exclusive).
-         */
-        interval_end?: number;
-
-        /**
-         * Starting timestamp of data to be included in the report run.
-         */
-        interval_start?: number;
-
-        /**
-         * Payout ID by which to filter the report run.
-         */
-        payout?: string;
-
-        /**
-         * Category of balance transactions to be included in the report run.
-         */
-        reporting_category?: Parameters.ReportingCategory;
-      }
-
-      namespace Parameters {
-        type ReportingCategory =
-          | 'advance'
-          | 'advance_funding'
-          | 'charge'
-          | 'charge_failure'
-          | 'connect_collection_transfer'
-          | 'connect_reserved_funds'
-          | 'dispute'
-          | 'dispute_reversal'
-          | 'fee'
-          | 'financing_paydown'
-          | 'financing_paydown_reversal'
-          | 'financing_payout'
-          | 'financing_payout_reversal'
-          | 'issuing_authorization_hold'
-          | 'issuing_authorization_release'
-          | 'issuing_transaction'
-          | 'network_cost'
-          | 'other_adjustment'
-          | 'partial_capture_reversal'
-          | 'payout'
-          | 'payout_reversal'
-          | 'platform_earning'
-          | 'platform_earning_refund'
-          | 'refund'
-          | 'refund_failure'
-          | 'risk_reserved_funds'
-          | 'tax'
-          | 'topup'
-          | 'topup_reversal'
-          | 'transfer'
-          | 'transfer_reversal'
-      }
-    }
-
     /**
      * Returns a list of Report Runs, with the most recent appearing first. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
      */
     interface ReportRunListParams {
-      created?: number | ReportRunListParams.Created;
+      created?: range_query_specs | number;
 
       /**
        * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -176,30 +102,6 @@ declare namespace Stripe {
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
        */
       starting_after?: string;
-    }
-
-    namespace ReportRunListParams {
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
     }
 
     /**

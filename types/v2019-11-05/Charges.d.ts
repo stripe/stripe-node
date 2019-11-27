@@ -184,7 +184,7 @@ declare namespace Stripe {
     /**
      * A list of refunds that have been applied to the charge.
      */
-    refunds?: ApiList<Refund>;
+    refunds?: RefundList;
 
     /**
      * ID of the review associated with this charge if one exists.
@@ -280,7 +280,7 @@ declare namespace Stripe {
      */
     description?: string;
 
-    destination?: ChargeCreateParams.Destination;
+    destination?: destination_specs;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -307,7 +307,7 @@ declare namespace Stripe {
     /**
      * Shipping information for the charge. Helps prevent fraud on charges for physical goods.
      */
-    shipping?: ChargeCreateParams.Shipping;
+    shipping?: shipping;
 
     /**
      * A payment source to be charged. This can be the ID of a [card](https://stripe.com/docs/api#cards) (i.e., credit or debit card), a [bank account](https://stripe.com/docs/api#bank_accounts), a [source](https://stripe.com/docs/api#sources), a [token](https://stripe.com/docs/api#tokens), or a [connected account](https://stripe.com/docs/connect/account-debits#charging-a-connected-account). For certain sources---namely, [cards](https://stripe.com/docs/api#cards), [bank accounts](https://stripe.com/docs/api#bank_accounts), and attached [sources](https://stripe.com/docs/api#sources)---you must also pass the ID of the associated customer.
@@ -327,7 +327,7 @@ declare namespace Stripe {
     /**
      * An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
      */
-    transfer_data?: ChargeCreateParams.TransferData;
+    transfer_data?: transfer_data_specs;
 
     /**
      * A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#grouping-transactions).
@@ -335,80 +335,11 @@ declare namespace Stripe {
     transfer_group?: string;
   }
 
-  namespace ChargeCreateParams {
-    interface Destination {
-      /**
-       * ID of an existing, connected Stripe account.
-       */
-      account: string;
-
-      /**
-       * The amount to transfer to the destination account without creating an `Application Fee` object. Cannot be combined with the `application_fee` parameter. Must be less than or equal to the charge amount.
-       */
-      amount?: number;
-    }
-
-    interface Shipping {
-      /**
-       * Shipping address.
-       */
-      address: Shipping.Address;
-
-      /**
-       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-       */
-      carrier?: string;
-
-      /**
-       * Recipient name.
-       */
-      name: string;
-
-      /**
-       * Recipient phone (including extension).
-       */
-      phone?: string;
-
-      /**
-       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-       */
-      tracking_number?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
-    }
-
-    interface TransferData {
-      /**
-       * The amount transferred to the destination account, if specified. By default, the entire charge amount is transferred to the destination account.
-       */
-      amount?: number;
-
-      /**
-       * ID of an existing, connected Stripe account.
-       */
-      destination: string;
-    }
-  }
-
   /**
    * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
    */
   interface ChargeListParams {
-    created?: number | ChargeListParams.Created;
+    created?: range_query_specs | number;
 
     /**
      * Only return charges for the customer specified by this customer ID.
@@ -446,30 +377,6 @@ declare namespace Stripe {
     transfer_group?: string;
   }
 
-  namespace ChargeListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
   /**
    * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
    */
@@ -502,7 +409,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs you can attach to a charge giving information about its riskiness. If you believe a charge is fraudulent, include a `user_report` key with a value of `fraudulent`. If you believe a charge is safe, include a `user_report` key with a value of `safe`. Stripe will use the information you send to improve our fraud detection algorithms.
      */
-    fraud_details?: ChargeUpdateParams.FraudDetails;
+    fraud_details?: fraud_details;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -519,65 +426,12 @@ declare namespace Stripe {
     /**
      * Shipping information for the charge. Helps prevent fraud on charges for physical goods.
      */
-    shipping?: ChargeUpdateParams.Shipping;
+    shipping?: shipping;
 
     /**
      * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
      */
     transfer_group?: string;
-  }
-
-  namespace ChargeUpdateParams {
-    interface FraudDetails {
-      user_report: '' | FraudDetails.UserReport;
-    }
-
-    namespace FraudDetails {
-      type UserReport = 'fraudulent' | 'safe'
-    }
-
-    interface Shipping {
-      /**
-       * Shipping address.
-       */
-      address: Shipping.Address;
-
-      /**
-       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-       */
-      carrier?: string;
-
-      /**
-       * Recipient name.
-       */
-      name: string;
-
-      /**
-       * Recipient phone (including extension).
-       */
-      phone?: string;
-
-      /**
-       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-       */
-      tracking_number?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
-    }
   }
 
   /**
@@ -624,21 +478,12 @@ declare namespace Stripe {
     /**
      * An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
      */
-    transfer_data?: ChargeCaptureParams.TransferData;
+    transfer_data?: transfer_data_specs;
 
     /**
      * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
      */
     transfer_group?: string;
-  }
-
-  namespace ChargeCaptureParams {
-    interface TransferData {
-      /**
-       * The amount transferred to the destination account, if specified. By default, the entire charge amount is transferred to the destination account.
-       */
-      amount?: number;
-    }
   }
 
   class ChargesResource {
