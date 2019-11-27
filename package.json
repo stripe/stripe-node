@@ -37,7 +37,8 @@
     "mocha-junit-reporter": "^1.23.1",
     "nock": "^10.0.6",
     "nyc": "^14.1.0",
-    "prettier": "^1.16.4"
+    "prettier": "^1.16.4",
+    "typescript": "^3.7.2"
   },
   "dependencies": {
     "qs": "^6.6.0"
@@ -47,7 +48,8 @@
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage",
     "mocha": "nyc mocha",
     "mocha-only": "mocha",
-    "test": "npm run lint && npm run mocha",
+    "test": "yarn lint && yarn test-typescript && yarn mocha",
+    "test-typescript": "tsc --noEmit --noImplicitAny --esModuleInterop test/typescriptTest.ts",
     "lint": "eslint --ext .js,.jsx .",
     "fix": "yarn lint --fix",
     "report": "nyc -r text -r lcov report",
