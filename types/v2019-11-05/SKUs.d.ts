@@ -35,7 +35,7 @@ declare namespace Stripe {
      */
     image: string | null;
 
-    inventory: Inventory;
+    inventory: Sku.Inventory;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -57,7 +57,7 @@ declare namespace Stripe {
     /**
      * The dimensions of this SKU for shipping purposes.
      */
-    package_dimensions: PackageDimensions | null;
+    package_dimensions: Sku.PackageDimensions | null;
 
     /**
      * The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
@@ -70,6 +70,47 @@ declare namespace Stripe {
     product: string | Product;
 
     updated: number;
+  }
+
+  namespace Sku {
+    interface Inventory {
+      /**
+       * The count of inventory available. Will be present if and only if `type` is `finite`.
+       */
+      quantity?: number | null;
+
+      /**
+       * Inventory type. Possible values are `finite`, `bucket` (not quantified), and `infinite`.
+       */
+      type: string;
+
+      /**
+       * An indicator of the inventory available. Possible values are `in_stock`, `limited`, and `out_of_stock`. Will be present if and only if `type` is `bucket`.
+       */
+      value?: string | null;
+    }
+
+    interface PackageDimensions {
+      /**
+       * Height, in inches.
+       */
+      height: number;
+
+      /**
+       * Length, in inches.
+       */
+      length: number;
+
+      /**
+       * Weight, in ounces.
+       */
+      weight: number;
+
+      /**
+       * Width, in inches.
+       */
+      width: number;
+    }
   }
 
   interface DeletedSku {

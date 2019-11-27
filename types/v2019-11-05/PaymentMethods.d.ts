@@ -3,11 +3,11 @@ declare namespace Stripe {
    * The PaymentMethod object.
    */
   interface PaymentMethod {
-    billing_details?: BillingDetails;
+    billing_details?: PaymentMethod.BillingDetails;
 
-    card?: Card;
+    card?: PaymentMethod.Card;
 
-    card_present?: CardPresent;
+    card_present?: PaymentMethod.CardPresent;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -24,7 +24,7 @@ declare namespace Stripe {
      */
     id?: string;
 
-    ideal?: Ideal;
+    ideal?: PaymentMethod.Ideal;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -43,7 +43,7 @@ declare namespace Stripe {
      */
     object?: 'payment_method';
 
-    sepa_debit?: SepaDebit;
+    sepa_debit?: PaymentMethod.SepaDebit;
 
     /**
      * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
@@ -52,6 +52,278 @@ declare namespace Stripe {
   }
 
   namespace PaymentMethod {
+    interface BillingDetails {
+      /**
+       * Billing address.
+       */
+      address?: Address | null;
+
+      /**
+       * Email address.
+       */
+      email?: string | null;
+
+      /**
+       * Full name.
+       */
+      name?: string | null;
+
+      /**
+       * Billing phone number (including extension).
+       */
+      phone?: string | null;
+    }
+
+    interface Card {
+      /**
+       * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+       */
+      brand: string;
+
+      /**
+       * Checks on Card address and CVC if provided.
+       */
+      checks?: Card.Checks | null;
+
+      /**
+       * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+       */
+      country?: string | null;
+
+      /**
+       * Card description. (Only for internal use only and not typically available in standard API requests.)
+       */
+      description?: string | null;
+
+      /**
+       * Two-digit number representing the card's expiration month.
+       */
+      exp_month: number;
+
+      /**
+       * Four-digit number representing the card's expiration year.
+       */
+      exp_year: number;
+
+      /**
+       * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example.
+       */
+      fingerprint?: string | null;
+
+      /**
+       * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+       */
+      funding: string;
+
+      /**
+       * Issuer identification number of the card. (Only for internal use only and not typically available in standard API requests.)
+       */
+      iin?: string | null;
+
+      /**
+       * Issuer bank name of the card. (Only for internal use only and not typically available in standard API requests.)
+       */
+      issuer?: string | null;
+
+      /**
+       * The last four digits of the card.
+       */
+      last4: string;
+
+      /**
+       * Contains details on how this Card maybe be used for 3D Secure authentication.
+       */
+      three_d_secure_usage?: Card.ThreeDSecureUsage | null;
+
+      /**
+       * If this Card is part of a card wallet, this contains the details of the card wallet.
+       */
+      wallet?: Card.Wallet | null;
+    }
+
+    namespace Card {
+      interface Checks {
+        /**
+         * If a address line1 was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+         */
+        address_line1_check?: string | null;
+
+        /**
+         * If a address postal code was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+         */
+        address_postal_code_check?: string | null;
+
+        /**
+         * If a CVC was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+         */
+        cvc_check?: string | null;
+      }
+
+      interface ThreeDSecureUsage {
+        /**
+         * Whether 3D Secure is supported on this card.
+         */
+        supported: boolean;
+      }
+
+      interface Wallet {
+        amex_express_checkout?: Wallet.AmexExpressCheckout;
+
+        apple_pay?: Wallet.ApplePay;
+
+        /**
+         * (For tokenized numbers only.) The last four digits of the device account number.
+         */
+        dynamic_last4?: string | null;
+
+        google_pay?: Wallet.GooglePay;
+
+        masterpass?: Wallet.Masterpass;
+
+        samsung_pay?: Wallet.SamsungPay;
+
+        /**
+         * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+         */
+        type: Wallet.Type;
+
+        visa_checkout?: Wallet.VisaCheckout;
+      }
+
+      namespace Wallet {
+        interface AmexExpressCheckout {}
+
+        interface ApplePay {}
+
+        interface GooglePay {}
+
+        interface Masterpass {
+          /**
+           * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          billing_address?: Address | null;
+
+          /**
+           * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          email?: string | null;
+
+          /**
+           * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          name?: string | null;
+
+          /**
+           * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          shipping_address?: Address | null;
+        }
+
+        interface SamsungPay {}
+
+        type Type =
+          | 'amex_express_checkout'
+          | 'apple_pay'
+          | 'google_pay'
+          | 'masterpass'
+          | 'samsung_pay'
+          | 'visa_checkout'
+
+        interface VisaCheckout {
+          /**
+           * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          billing_address?: Address | null;
+
+          /**
+           * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          email?: string | null;
+
+          /**
+           * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          name?: string | null;
+
+          /**
+           * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          shipping_address?: Address | null;
+        }
+      }
+    }
+
+    interface CardPresent {}
+
+    interface Ideal {
+      /**
+       * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
+       */
+      bank?: Ideal.Bank | null;
+
+      /**
+       * The Bank Identifier Code of the customer's bank, if the bank was provided.
+       */
+      bic?: Ideal.Bic | null;
+    }
+
+    namespace Ideal {
+      type Bank =
+        | 'abn_amro'
+        | 'asn_bank'
+        | 'bunq'
+        | 'handelsbanken'
+        | 'ing'
+        | 'knab'
+        | 'moneyou'
+        | 'rabobank'
+        | 'regiobank'
+        | 'sns_bank'
+        | 'triodos_bank'
+        | 'van_lanschot'
+
+      type Bic =
+        | 'ABNANL2A'
+        | 'ASNBNL21'
+        | 'BUNQNL2A'
+        | 'FVLBNL22'
+        | 'HANDNL2A'
+        | 'INGBNL2A'
+        | 'KNABNL2H'
+        | 'MOYONL21'
+        | 'RABONL2U'
+        | 'RBRBNL21'
+        | 'SNSBNL2A'
+        | 'TRIONL2U'
+    }
+
+    interface SepaDebit {
+      /**
+       * Bank code of bank associated with the bank account.
+       */
+      bank_code?: string | null;
+
+      /**
+       * Branch code of bank associated with the bank account.
+       */
+      branch_code?: string | null;
+
+      /**
+       * Two-letter ISO code representing the country the bank account is located in.
+       */
+      country?: string | null;
+
+      /**
+       * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+       */
+      fingerprint?: string | null;
+
+      /**
+       * Last four characters of the IBAN.
+       */
+      last4?: string | null;
+    }
+
     type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
   }
 

@@ -6,21 +6,21 @@ declare namespace Stripe {
     /**
      * Optional information related to the business.
      */
-    business_profile: BusinessProfile | null;
+    business_profile: Account.BusinessProfile | null;
 
     /**
      * The business type. Can be `individual` or `company`.
      */
     business_type: string | null;
 
-    capabilities: Capabilities;
+    capabilities: Account.Capabilities;
 
     /**
      * Whether the account can create live charges.
      */
     charges_enabled: boolean;
 
-    company: Company;
+    company: Account.Company;
 
     /**
      * The account's country.
@@ -76,14 +76,14 @@ declare namespace Stripe {
      */
     payouts_enabled: boolean;
 
-    requirements: Requirements;
+    requirements: Account.Requirements;
 
     /**
      * Options for customizing how the account functions within Stripe.
      */
-    settings: Settings | null;
+    settings: Account.Settings | null;
 
-    tos_acceptance: TosAcceptance;
+    tos_acceptance: Account.TosAcceptance;
 
     /**
      * The Stripe account type. Can be `standard`, `express`, or `custom`.
@@ -92,6 +92,418 @@ declare namespace Stripe {
   }
 
   namespace Account {
+    interface BusinessProfile {
+      /**
+       * The merchant category code for the account. MCCs are used to classify businesses based on the goods or services they provide.
+       */
+      mcc?: string | null;
+
+      /**
+       * The customer-facing business name.
+       */
+      name?: string | null;
+
+      /**
+       * Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
+       */
+      product_description?: string | null;
+
+      /**
+       * A publicly available mailing address for sending support issues to.
+       */
+      support_address?: Address | null;
+
+      /**
+       * A publicly available email address for sending support issues to.
+       */
+      support_email?: string | null;
+
+      /**
+       * A publicly available phone number to call with support issues.
+       */
+      support_phone?: string | null;
+
+      /**
+       * A publicly available website for handling support issues.
+       */
+      support_url?: string | null;
+
+      /**
+       * The business's publicly available website.
+       */
+      url?: string | null;
+    }
+
+    interface Capabilities {
+      /**
+       * The status of the card issuing capability of the account, or whether you can use Issuing to distribute funds on cards
+       */
+      card_issuing?: Capabilities.CardIssuing;
+
+      /**
+       * The status of the card payments capability of the account, or whether the account can directly process credit and debit card charges.
+       */
+      card_payments?: Capabilities.CardPayments;
+
+      /**
+       * The status of the legacy payments capability of the account.
+       */
+      legacy_payments?: Capabilities.LegacyPayments;
+
+      /**
+       * The status of the transfers capability of the account, or whether your platform can transfer funds to the account.
+       */
+      transfers?: Capabilities.Transfers;
+    }
+
+    namespace Capabilities {
+      type CardIssuing = 'active' | 'inactive' | 'pending'
+
+      type CardPayments = 'active' | 'inactive' | 'pending'
+
+      type LegacyPayments = 'active' | 'inactive' | 'pending'
+
+      type Transfers = 'active' | 'inactive' | 'pending'
+    }
+
+    interface Company {
+      address?: Address;
+
+      /**
+       * The Kana variation of the company's primary address (Japan only).
+       */
+      address_kana?: Company.AddressKana | null;
+
+      /**
+       * The Kanji variation of the company's primary address (Japan only).
+       */
+      address_kanji?: Company.AddressKanji | null;
+
+      /**
+       * Whether the company's directors have been provided. This Boolean will be `true` if you've manually indicated that all directors are provided via [the `directors_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-directors_provided).
+       */
+      directors_provided: boolean;
+
+      /**
+       * The company's legal name.
+       */
+      name?: string | null;
+
+      /**
+       * The Kana variation of the company's legal name (Japan only).
+       */
+      name_kana?: string | null;
+
+      /**
+       * The Kanji variation of the company's legal name (Japan only).
+       */
+      name_kanji?: string | null;
+
+      /**
+       * Whether the company's owners have been provided. This Boolean will be `true` if you've manually indicated that all owners are provided via [the `owners_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-owners_provided), or if Stripe determined that all owners were provided. Stripe determines ownership requirements using both the number of owners provided and their total percent ownership (calculated by adding the `percent_ownership` of each owner together).
+       */
+      owners_provided: boolean;
+
+      /**
+       * The company's phone number (used for verification).
+       */
+      phone?: string | null;
+
+      /**
+       * Whether the company's business ID number was provided.
+       */
+      tax_id_provided?: boolean;
+
+      /**
+       * The jurisdiction in which the `tax_id` is registered (Germany-based companies only).
+       */
+      tax_id_registrar?: string;
+
+      /**
+       * Whether the company's business VAT number was provided.
+       */
+      vat_id_provided?: boolean;
+
+      /**
+       * Information on the verification state of the company.
+       */
+      verification?: Company.Verification | null;
+    }
+
+    namespace Company {
+      interface AddressKana {
+        /**
+         * City/Ward.
+         */
+        city?: string | null;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string | null;
+
+        /**
+         * Block/Building number.
+         */
+        line1?: string | null;
+
+        /**
+         * Building details.
+         */
+        line2?: string | null;
+
+        /**
+         * Zip/Postal Code.
+         */
+        postal_code?: string | null;
+
+        /**
+         * Prefecture.
+         */
+        state?: string | null;
+
+        /**
+         * Town/cho-me.
+         */
+        town?: string | null;
+      }
+
+      interface AddressKanji {
+        /**
+         * City/Ward.
+         */
+        city?: string | null;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string | null;
+
+        /**
+         * Block/Building number.
+         */
+        line1?: string | null;
+
+        /**
+         * Building details.
+         */
+        line2?: string | null;
+
+        /**
+         * Zip/Postal Code.
+         */
+        postal_code?: string | null;
+
+        /**
+         * Prefecture.
+         */
+        state?: string | null;
+
+        /**
+         * Town/cho-me.
+         */
+        town?: string | null;
+      }
+
+      interface Verification {
+        document: Verification.Document;
+      }
+
+      namespace Verification {
+        interface Document {
+          /**
+           * The back of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`.
+           */
+          back?: string | File | null;
+
+          /**
+           * A user-displayable string describing the verification state of this document.
+           */
+          details?: string | null;
+
+          /**
+           * One of `document_corrupt`, `document_expired`, `document_failed_copy`, `document_failed_greyscale`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_not_readable`, `document_not_uploaded`, `document_type_not_supported`, or `document_too_large`. A machine-readable code specifying the verification state for this document.
+           */
+          details_code?: string | null;
+
+          /**
+           * The front of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`.
+           */
+          front?: string | File | null;
+        }
+      }
+    }
+
+    interface Requirements {
+      /**
+       * The date the fields in `currently_due` must be collected by to keep payouts enabled for the account. These fields might block payouts sooner if the next threshold is reached before these fields are collected.
+       */
+      current_deadline?: number | null;
+
+      /**
+       * The fields that need to be collected to keep the account enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
+       */
+      currently_due?: Array<string> | null;
+
+      /**
+       * If the account is disabled, this string describes why the account can't create charges or receive payouts. Can be `requirements.past_due`, `requirements.pending_verification`, `rejected.fraud`, `rejected.terms_of_service`, `rejected.listed`, `rejected.other`, `listed`, `under_review`, or `other`.
+       */
+      disabled_reason?: string | null;
+
+      /**
+       * The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
+       */
+      eventually_due?: Array<string> | null;
+
+      /**
+       * The fields that weren't collected by the `current_deadline`. These fields need to be collected to re-enable the account.
+       */
+      past_due?: Array<string> | null;
+
+      /**
+       * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
+       */
+      pending_verification?: Array<string> | null;
+    }
+
+    interface Settings {
+      branding: Settings.Branding;
+
+      card_payments: Settings.CardPayments;
+
+      dashboard: Settings.Dashboard;
+
+      payments: Settings.Payments;
+
+      payouts?: Settings.Payouts;
+    }
+
+    namespace Settings {
+      interface Branding {
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be square and at least 128px x 128px.
+         */
+        icon?: string | File | null;
+
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) A logo for the account that will be used in Checkout instead of the icon and without the account's name next to it if provided. Must be at least 128px x 128px.
+         */
+        logo?: string | File | null;
+
+        /**
+         * A CSS hex color value representing the primary branding color for this account
+         */
+        primary_color?: string | null;
+      }
+
+      interface CardPayments {
+        decline_on?: CardPayments.DeclineOn;
+
+        /**
+         * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
+         */
+        statement_descriptor_prefix?: string | null;
+      }
+
+      namespace CardPayments {
+        interface DeclineOn {
+          /**
+           * Whether Stripe automatically declines charges with an incorrect ZIP or postal code. This setting only applies when a ZIP or postal code is provided and they fail bank verification.
+           */
+          avs_failure: boolean;
+
+          /**
+           * Whether Stripe automatically declines charges with an incorrect CVC. This setting only applies when a CVC is provided and it fails bank verification.
+           */
+          cvc_failure: boolean;
+        }
+      }
+
+      interface Dashboard {
+        /**
+         * The display name for this account. This is used on the Stripe Dashboard to differentiate between accounts.
+         */
+        display_name?: string | null;
+
+        /**
+         * The timezone used in the Stripe Dashboard for this account. A list of possible time zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones).
+         */
+        timezone?: string | null;
+      }
+
+      interface Payments {
+        /**
+         * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
+         */
+        statement_descriptor?: string | null;
+
+        /**
+         * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only)
+         */
+        statement_descriptor_kana?: string | null;
+
+        /**
+         * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only)
+         */
+        statement_descriptor_kanji?: string | null;
+      }
+
+      interface Payouts {
+        /**
+         * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See our [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances) documentation for details. Default value is `true` for Express accounts and `false` for Custom accounts.
+         */
+        debit_negative_balances: boolean;
+
+        schedule: Payouts.Schedule;
+
+        /**
+         * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
+         */
+        statement_descriptor?: string | null;
+      }
+
+      namespace Payouts {
+        interface Schedule {
+          /**
+           * The number of days charges for the account will be held before being paid out.
+           */
+          delay_days: number;
+
+          /**
+           * How frequently funds will be paid out. One of `manual` (payouts only created via API call), `daily`, `weekly`, or `monthly`.
+           */
+          interval: string;
+
+          /**
+           * The day of the month funds will be paid out. Only shown if `interval` is monthly. Payouts scheduled between the 29th and 31st of the month are sent on the last day of shorter months.
+           */
+          monthly_anchor?: number;
+
+          /**
+           * The day of the week funds will be paid out, of the style 'monday', 'tuesday', etc. Only shown if `interval` is weekly.
+           */
+          weekly_anchor?: string;
+        }
+      }
+    }
+
+    interface TosAcceptance {
+      /**
+       * The Unix timestamp marking when the Stripe Services Agreement was accepted by the account representative
+       */
+      date?: number | null;
+
+      /**
+       * The IP address from which the Stripe Services Agreement was accepted by the account representative
+       */
+      ip?: string | null;
+
+      /**
+       * The user agent of the browser from which the Stripe Services Agreement was accepted by the account representative
+       */
+      user_agent?: string | null;
+    }
+
     type Type = 'custom' | 'express' | 'standard'
   }
 
@@ -141,7 +553,7 @@ declare namespace Stripe {
      */
     requested_at?: number | null;
 
-    requirements?: Requirements;
+    requirements?: Capability.Requirements;
 
     /**
      * The status of the capability. Can be `active`, `inactive`, `pending`, or `unrequested`.
@@ -150,6 +562,38 @@ declare namespace Stripe {
   }
 
   namespace Capability {
+    interface Requirements {
+      /**
+       * The date the fields in `currently_due` must be collected by to keep the capability enabled for the account.
+       */
+      current_deadline?: number | null;
+
+      /**
+       * The fields that need to be collected to keep the capability enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the capability is disabled.
+       */
+      currently_due: Array<string>;
+
+      /**
+       * If the capability is disabled, this string describes why. Possible values are `requirement.fields_needed`, `pending.onboarding`, `pending.review`, `rejected_fraud`, or `rejected.other`.
+       */
+      disabled_reason?: string | null;
+
+      /**
+       * The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
+       */
+      eventually_due: Array<string>;
+
+      /**
+       * The fields that weren't collected by the `current_deadline`. These fields need to be collected to enable the capability for the account.
+       */
+      past_due: Array<string>;
+
+      /**
+       * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
+       */
+      pending_verification: Array<string>;
+    }
+
     type Status = 'active' | 'disabled' | 'inactive' | 'pending' | 'unrequested'
   }
 
@@ -192,19 +636,19 @@ declare namespace Stripe {
     /**
      * The Kana variation of the person's address (Japan only).
      */
-    address_kana: JapanAddress | null;
+    address_kana: Person.AddressKana | null;
 
     /**
      * The Kanji variation of the person's address (Japan only).
      */
-    address_kanji: JapanAddress | null;
+    address_kanji: Person.AddressKanji | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
     created: number;
 
-    dob: DateOfBirth;
+    dob: Person.Dob;
 
     /**
      * The person's email address.
@@ -278,19 +722,236 @@ declare namespace Stripe {
      */
     phone: string | null;
 
-    relationship: Relationship;
+    relationship: Person.Relationship;
 
     /**
      * Information about the requirements for this person, including what information needs to be collected, and by when.
      */
-    requirements: Requirements | null;
+    requirements: Person.Requirements | null;
 
     /**
      * Whether the last 4 digits of this person's SSN have been provided.
      */
     ssn_last_4_provided: boolean;
 
-    verification: Verification;
+    verification: Person.Verification;
+  }
+
+  namespace Person {
+    interface AddressKana {
+      /**
+       * City/Ward.
+       */
+      city?: string | null;
+
+      /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country?: string | null;
+
+      /**
+       * Block/Building number.
+       */
+      line1?: string | null;
+
+      /**
+       * Building details.
+       */
+      line2?: string | null;
+
+      /**
+       * Zip/Postal Code.
+       */
+      postal_code?: string | null;
+
+      /**
+       * Prefecture.
+       */
+      state?: string | null;
+
+      /**
+       * Town/cho-me.
+       */
+      town?: string | null;
+    }
+
+    interface AddressKanji {
+      /**
+       * City/Ward.
+       */
+      city?: string | null;
+
+      /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country?: string | null;
+
+      /**
+       * Block/Building number.
+       */
+      line1?: string | null;
+
+      /**
+       * Building details.
+       */
+      line2?: string | null;
+
+      /**
+       * Zip/Postal Code.
+       */
+      postal_code?: string | null;
+
+      /**
+       * Prefecture.
+       */
+      state?: string | null;
+
+      /**
+       * Town/cho-me.
+       */
+      town?: string | null;
+    }
+
+    interface Dob {
+      /**
+       * The day of birth, between 1 and 31.
+       */
+      day?: number | null;
+
+      /**
+       * The month of birth, between 1 and 12.
+       */
+      month?: number | null;
+
+      /**
+       * The four-digit year of birth.
+       */
+      year?: number | null;
+    }
+
+    interface Relationship {
+      /**
+       * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+       */
+      director?: boolean | null;
+
+      /**
+       * Whether the person has significant responsibility to control, manage, or direct the organization.
+       */
+      executive?: boolean | null;
+
+      /**
+       * Whether the person is an owner of the account's legal entity.
+       */
+      owner?: boolean | null;
+
+      /**
+       * The percent owned by the person of the account's legal entity.
+       */
+      percent_ownership?: number | null;
+
+      /**
+       * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
+       */
+      representative?: boolean | null;
+
+      /**
+       * The person's title (e.g., CEO, Support Engineer).
+       */
+      title?: string | null;
+    }
+
+    interface Requirements {
+      /**
+       * Fields that need to be collected to keep the person's account enabled. If not collected by the account's `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
+       */
+      currently_due: Array<string>;
+
+      /**
+       * Fields that need to be collected assuming all volume thresholds are reached. As fields are needed, they are moved to `currently_due` and the account's `current_deadline` is set.
+       */
+      eventually_due: Array<string>;
+
+      /**
+       * Fields that weren't collected by the account's `current_deadline`. These fields need to be collected to enable payouts for the person's account.
+       */
+      past_due: Array<string>;
+
+      /**
+       * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
+       */
+      pending_verification: Array<string>;
+    }
+
+    interface Verification {
+      /**
+       * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
+       */
+      additional_document?: Verification.AdditionalDocument | null;
+
+      /**
+       * A user-displayable string describing the verification state for the person. For example, this may say "Provided identity information could not be verified".
+       */
+      details?: string | null;
+
+      /**
+       * One of `document_address_mismatch`, `document_dob_mismatch`, `document_duplicate_type`, `document_id_number_mismatch`, `document_name_mismatch`, `document_nationality_mismatch`, `failed_keyed_identity`, or `failed_other`. A machine-readable code specifying the verification state for the person.
+       */
+      details_code?: string | null;
+
+      document?: Verification.Document;
+
+      /**
+       * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`.
+       */
+      status: string;
+    }
+
+    namespace Verification {
+      interface AdditionalDocument {
+        /**
+         * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+         */
+        back?: string | File | null;
+
+        /**
+         * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
+         */
+        details?: string | null;
+
+        /**
+         * One of `document_corrupt`, `document_country_not_supported`, `document_expired`, `document_failed_copy`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_failed_greyscale`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_missing_back`, `document_missing_front`, `document_not_readable`, `document_not_uploaded`, `document_photo_mismatch`, `document_too_large`, or `document_type_not_supported`. A machine-readable code specifying the verification state for this document.
+         */
+        details_code?: string | null;
+
+        /**
+         * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+         */
+        front?: string | File | null;
+      }
+
+      interface Document {
+        /**
+         * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+         */
+        back?: string | File | null;
+
+        /**
+         * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
+         */
+        details?: string | null;
+
+        /**
+         * One of `document_corrupt`, `document_country_not_supported`, `document_expired`, `document_failed_copy`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_failed_greyscale`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_missing_back`, `document_missing_front`, `document_not_readable`, `document_not_uploaded`, `document_photo_mismatch`, `document_too_large`, or `document_type_not_supported`. A machine-readable code specifying the verification state for this document.
+         */
+        details_code?: string | null;
+
+        /**
+         * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+         */
+        front?: string | File | null;
+      }
+    }
   }interface DeletedPerson {
     /**
      * Unique identifier for the object.

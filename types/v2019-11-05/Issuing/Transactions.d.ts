@@ -58,7 +58,7 @@ declare namespace Stripe {
        */
       merchant_currency?: string;
 
-      merchant_data?: Issuing.MerchantData;
+      merchant_data?: Transaction.MerchantData;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -76,6 +76,50 @@ declare namespace Stripe {
        * One of `capture`, `refund`, `cash_withdrawal`, `refund_reversal`, `dispute`, or `dispute_loss`.
        */
       type?: string;
+    }
+
+    namespace Transaction {
+      interface MerchantData {
+        /**
+         * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+         */
+        category: string;
+
+        /**
+         * City where the seller is located
+         */
+        city?: string | null;
+
+        /**
+         * Country where the seller is located
+         */
+        country?: string | null;
+
+        /**
+         * Name of the seller
+         */
+        name?: string | null;
+
+        /**
+         * Identifier assigned to the seller by the card brand
+         */
+        network_id: string;
+
+        /**
+         * Postal code where the seller is located
+         */
+        postal_code?: string | null;
+
+        /**
+         * State where the seller is located
+         */
+        state?: string | null;
+
+        /**
+         * The url an online purchase was made from
+         */
+        url?: string | null;
+      }
     }
 
     /**

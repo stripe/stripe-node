@@ -18,7 +18,7 @@ declare namespace Stripe {
      */
     created?: number;
 
-    data?: EventData;
+    data?: Event.Data;
 
     /**
      * Unique identifier for the object.
@@ -43,12 +43,44 @@ declare namespace Stripe {
     /**
      * Information on the API request that instigated the event.
      */
-    request?: EventRequest | null;
+    request?: Event.Request | null;
 
     /**
      * Description of the event (e.g., `invoice.created` or `charge.refunded`).
      */
     type?: string;
+  }
+
+  namespace Event {
+    interface Data {
+      /**
+       * Object containing the API resource relevant to the event. For example, an `invoice.created` event will have a full [invoice object](#invoice_object) as the value of the object key.
+       */
+      object: Data.Object;
+
+      /**
+       * Object containing the names of the attributes that have changed, and their previous values (sent along only with *.updated events).
+       */
+      previous_attributes?: Data.PreviousAttributes;
+    }
+
+    namespace Data {
+      interface Object {}
+
+      interface PreviousAttributes {}
+    }
+
+    interface Request {
+      /**
+       * ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe's automatic subscription handling). Request logs are available in the [dashboard](https://dashboard.stripe.com/logs), but currently not in the API.
+       */
+      id?: string | null;
+
+      /**
+       * The idempotency key transmitted during the request, if any. *Note: This property is populated only for events on or after May 23, 2017*.
+       */
+      idempotency_key?: string | null;
+    }
   }
 
   /**
