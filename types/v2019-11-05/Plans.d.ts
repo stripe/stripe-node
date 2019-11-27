@@ -201,12 +201,12 @@ declare namespace Stripe {
      */
     nickname?: string;
 
-    product?: inline_product_params | string;
+    product?: string | PlanCreateParams.Product;
 
     /**
      * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
      */
-    tiers?: Array<plan_tier_param>;
+    tiers?: Array<PlanCreateParams.Tier>;
 
     /**
      * Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price, in `graduated` tiering pricing can successively change as the quantity grows.
@@ -216,7 +216,7 @@ declare namespace Stripe {
     /**
      * Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
      */
-    transform_usage?: transform_usage_param;
+    transform_usage?: PlanCreateParams.TransformUsage;
 
     /**
      * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
@@ -236,7 +236,84 @@ declare namespace Stripe {
 
     type Interval = 'day' | 'month' | 'week' | 'year'
 
+    interface Product {
+      /**
+       * Whether the product is currently available for purchase. Defaults to `true`.
+       */
+      active?: boolean;
+
+      /**
+       * The identifier for the product. Must be unique. If not provided, an identifier will be randomly generated.
+       */
+      id?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+       */
+      name: string;
+
+      /**
+       * An arbitrary string to be displayed on your customer's credit card statement. This may be up to 22 characters. The statement description may not include <>"' characters, and will appear on your customer's statement in capital letters. Non-ASCII characters are automatically stripped. While most banks display this information consistently, some may display it incorrectly or not at all.
+       */
+      statement_descriptor?: string;
+
+      /**
+       * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
+       */
+      unit_label?: string;
+    }
+
+    interface Tier {
+      /**
+       * The flat billing amount for an entire tier, regardless of the number of units in the tier.
+       */
+      flat_amount?: number;
+
+      /**
+       * Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
+       */
+      flat_amount_decimal?: string;
+
+      /**
+       * The per unit billing amount for each individual unit for which this tier applies.
+       */
+      unit_amount?: number;
+
+      /**
+       * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+       */
+      unit_amount_decimal?: string;
+
+      /**
+       * Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous tier adding one. Use `inf` to define a fallback tier.
+       */
+      up_to: 'inf' | number;
+    }
+
     type TiersMode = 'graduated' | 'volume'
+
+    interface TransformUsage {
+      /**
+       * Divide usage by this number.
+       */
+      divide_by: number;
+
+      /**
+       * After division, either round the result `up` or `down`.
+       */
+      round: TransformUsage.Round;
+    }
+
+    namespace TransformUsage {
+      type Round = 'down' | 'up'
+    }
 
     type UsageType = 'licensed' | 'metered'
   }
@@ -258,7 +335,7 @@ declare namespace Stripe {
     /**
      * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
      */
-    created?: range_query_specs | number;
+    created?: number | PlanListParams.Created;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -284,6 +361,30 @@ declare namespace Stripe {
      * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
      */
     starting_after?: string;
+  }
+
+  namespace PlanListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**

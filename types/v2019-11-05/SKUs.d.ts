@@ -128,7 +128,7 @@ declare namespace Stripe {
     /**
      * Description of the SKU's inventory.
      */
-    inventory: inventory_specs;
+    inventory: SkuCreateParams.Inventory;
 
     /**
      * A set of key-value pairs that you can attach to a SKU object. It can be useful for storing additional information about the SKU in a structured format.
@@ -140,7 +140,7 @@ declare namespace Stripe {
     /**
      * The dimensions of this SKU for shipping purposes.
      */
-    package_dimensions?: package_dimensions_specs;
+    package_dimensions?: SkuCreateParams.PackageDimensions;
 
     /**
      * The cost of the item as a nonnegative integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
@@ -151,6 +151,53 @@ declare namespace Stripe {
      * The ID of the product this SKU is associated with. Must be a product with type `good`.
      */
     product: string;
+  }
+
+  namespace SkuCreateParams {
+    interface Inventory {
+      /**
+       * The count of inventory available. Required if `type` is `finite`.
+       */
+      quantity?: number;
+
+      /**
+       * Inventory type. Possible values are `finite`, `bucket` (not quantified), and `infinite`.
+       */
+      type?: Inventory.Type;
+
+      /**
+       * An indicator of the inventory available. Possible values are `in_stock`, `limited`, and `out_of_stock`. Will be present if and only if `type` is `bucket`.
+       */
+      value?: '' | Inventory.Value;
+    }
+
+    namespace Inventory {
+      type Type = 'bucket' | 'finite' | 'infinite'
+
+      type Value = 'in_stock' | 'limited' | 'out_of_stock'
+    }
+
+    interface PackageDimensions {
+      /**
+       * Height, in inches. Maximum precision is 2 decimal places.
+       */
+      height: number;
+
+      /**
+       * Length, in inches. Maximum precision is 2 decimal places.
+       */
+      length: number;
+
+      /**
+       * Weight, in ounces. Maximum precision is 2 decimal places.
+       */
+      weight: number;
+
+      /**
+       * Width, in inches. Maximum precision is 2 decimal places.
+       */
+      width: number;
+    }
   }
 
   /**
@@ -256,7 +303,7 @@ declare namespace Stripe {
     /**
      * Description of the SKU's inventory.
      */
-    inventory?: inventory_update_specs;
+    inventory?: SkuUpdateParams.Inventory;
 
     /**
      * A set of key-value pairs that you can attach to a SKU object. It can be useful for storing additional information about the SKU in a structured format.
@@ -268,7 +315,7 @@ declare namespace Stripe {
     /**
      * The dimensions of this SKU for shipping purposes.
      */
-    package_dimensions?: package_dimensions_specs | '';
+    package_dimensions?: '' | SkuUpdateParams.PackageDimensions;
 
     /**
      * The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
@@ -279,6 +326,53 @@ declare namespace Stripe {
      * The ID of the product that this SKU should belong to. The product must exist, have the same set of attribute names as the SKU's current product, and be of type `good`.
      */
     product?: string;
+  }
+
+  namespace SkuUpdateParams {
+    interface Inventory {
+      /**
+       * The count of inventory available. Required if `type` is `finite`.
+       */
+      quantity?: number;
+
+      /**
+       * Inventory type. Possible values are `finite`, `bucket` (not quantified), and `infinite`.
+       */
+      type?: Inventory.Type;
+
+      /**
+       * An indicator of the inventory available. Possible values are `in_stock`, `limited`, and `out_of_stock`. Will be present if and only if `type` is `bucket`.
+       */
+      value?: '' | Inventory.Value;
+    }
+
+    namespace Inventory {
+      type Type = 'bucket' | 'finite' | 'infinite'
+
+      type Value = 'in_stock' | 'limited' | 'out_of_stock'
+    }
+
+    interface PackageDimensions {
+      /**
+       * Height, in inches. Maximum precision is 2 decimal places.
+       */
+      height: number;
+
+      /**
+       * Length, in inches. Maximum precision is 2 decimal places.
+       */
+      length: number;
+
+      /**
+       * Weight, in ounces. Maximum precision is 2 decimal places.
+       */
+      weight: number;
+
+      /**
+       * Width, in inches. Maximum precision is 2 decimal places.
+       */
+      width: number;
+    }
   }
 
   class SkusResource {

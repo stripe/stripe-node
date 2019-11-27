@@ -178,7 +178,7 @@ declare namespace Stripe {
     /**
      * The individual line items that make up the invoice. `lines` is sorted as follows: invoice items in reverse chronological order, followed by the subscription, if any.
      */
-    lines: InvoiceLinesList;
+    lines: ApiList<InvoiceLineItem>;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -472,7 +472,7 @@ declare namespace Stripe {
     /**
      * A list of up to 4 custom fields to be displayed on the invoice.
      */
-    custom_fields?: Array<custom_field_params> | '';
+    custom_fields?: '' | InvoiceCreateParams.CustomFields;
 
     customer: string;
 
@@ -535,11 +535,30 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
      */
-    transfer_data?: transfer_data_specs;
+    transfer_data?: InvoiceCreateParams.TransferData;
   }
 
   namespace InvoiceCreateParams {
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface CustomFields {
+      /**
+       * The name of the custom field. This may be up to 30 characters.
+       */
+      name: string;
+
+      /**
+       * The value of the custom field. This may be up to 30 characters.
+       */
+      value: string;
+    }
+
+    interface TransferData {
+      /**
+       * ID of an existing, connected Stripe account.
+       */
+      destination: string;
+    }
   }
 
   /**
@@ -556,14 +575,14 @@ declare namespace Stripe {
      */
     collection_method?: InvoiceListParams.CollectionMethod;
 
-    created?: range_query_specs | number;
+    created?: number | InvoiceListParams.Created;
 
     /**
      * Only return invoices for the customer specified by this customer ID.
      */
     customer?: string;
 
-    due_date?: range_query_specs | number;
+    due_date?: number | InvoiceListParams.DueDate;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -598,6 +617,50 @@ declare namespace Stripe {
 
   namespace InvoiceListParams {
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface DueDate {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
 
     type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void'
   }
@@ -639,7 +702,7 @@ declare namespace Stripe {
     /**
      * A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
      */
-    custom_fields?: Array<custom_field_params> | '';
+    custom_fields?: '' | InvoiceUpdateParams.CustomFields;
 
     /**
      * The number of days from which the invoice is created until it is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
@@ -695,11 +758,30 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
      */
-    transfer_data?: transfer_data_specs | '';
+    transfer_data?: '' | InvoiceUpdateParams.TransferData;
   }
 
   namespace InvoiceUpdateParams {
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface CustomFields {
+      /**
+       * The name of the custom field. This may be up to 30 characters.
+       */
+      name: string;
+
+      /**
+       * The value of the custom field. This may be up to 30 characters.
+       */
+      value: string;
+    }
+
+    interface TransferData {
+      /**
+       * ID of an existing, connected Stripe account.
+       */
+      destination: string;
+    }
   }
 
   /**
@@ -790,7 +872,7 @@ declare namespace Stripe {
     /**
      * List of invoice items to add or update in the upcoming invoice preview.
      */
-    invoice_items?: Array<invoice_item_preview_params>;
+    invoice_items?: Array<InvoiceRetrieveUpcomingParams.InvoiceItem>;
 
     /**
      * The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
@@ -832,7 +914,7 @@ declare namespace Stripe {
     /**
      * List of subscription items, each with an attached plan.
      */
-    subscription_items?: Array<subscription_item_update_params>;
+    subscription_items?: Array<InvoiceRetrieveUpcomingParams.SubscriptionItem>;
 
     /**
      * If previewing an update to a subscription, this decides whether the preview will show the result of applying prorations or not. If set, one of `subscription_items` or `subscription`, and one of `subscription_items` or `subscription_trial_end` are required.
@@ -866,7 +948,130 @@ declare namespace Stripe {
   }
 
   namespace InvoiceRetrieveUpcomingParams {
+    interface InvoiceItem {
+      /**
+       * The integer amount in **%s** of previewed invoice item.
+       */
+      amount?: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Only applicable to new invoice items.
+       */
+      currency?: string;
+
+      /**
+       * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+       */
+      description?: string;
+
+      /**
+       * Explicitly controls whether discounts apply to this invoice item. Defaults to true, except for negative invoice items.
+       */
+      discountable?: boolean;
+
+      /**
+       * The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
+       */
+      invoiceitem?: string;
+
+      /**
+       * A set of key-value pairs that you can attach to an invoice item object. It can be useful for storing additional information about the invoice item in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * The period associated with this invoice item.
+       */
+      period?: InvoiceItem.Period;
+
+      /**
+       * Non-negative integer. The quantity of units for the invoice item.
+       */
+      quantity?: number;
+
+      tax_rates?: Array<string> | '';
+
+      /**
+       * The integer unit amount in **%s** of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
+       */
+      unit_amount?: number;
+
+      /**
+       * Same as `unit_amount`, but accepts a decimal string with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+       */
+      unit_amount_decimal?: string;
+    }
+
+    namespace InvoiceItem {
+      interface Period {
+        /**
+         * The end of the period, which must be greater than or equal to the start.
+         */
+        end: number;
+
+        /**
+         * The start of the period.
+         */
+        start: number;
+      }
+    }
+
     type SubscriptionBillingCycleAnchor = 'now' | 'unchanged'
+
+    interface SubscriptionItem {
+      /**
+       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+       */
+      billing_thresholds?: '' | SubscriptionItem.BillingThresholds;
+
+      /**
+       * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+       */
+      clear_usage?: boolean;
+
+      /**
+       * A flag that, if set to `true`, will delete the specified item.
+       */
+      deleted?: boolean;
+
+      /**
+       * Subscription item to update.
+       */
+      id?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * Plan ID for this item, as a string.
+       */
+      plan?: string;
+
+      /**
+       * Quantity for this item.
+       */
+      quantity?: number;
+
+      /**
+       * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+       */
+      tax_rates?: Array<string> | '';
+    }
+
+    namespace SubscriptionItem {
+      interface BillingThresholds {
+        /**
+         * Usage threshold that triggers the subscription to advance to a new billing period
+         */
+        usage_gte: number;
+      }
+    }
   }
 
   /**
@@ -1056,7 +1261,7 @@ declare namespace Stripe {
       id: string,
       params?: InvoiceListLineItemsParams,
       options?: HeaderOptions
-    ): Promise<InvoiceLinesList>;
+    ): Promise<ApiList<InvoiceLineItem>>;
 
     /**
      * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -1065,6 +1270,6 @@ declare namespace Stripe {
       id: string,
       params?: InvoiceListUpcomingLineItemsParams,
       options?: HeaderOptions
-    ): Promise<InvoiceLinesList>;
+    ): Promise<ApiList<InvoiceLineItem>>;
   }
 }

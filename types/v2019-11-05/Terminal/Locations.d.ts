@@ -46,7 +46,7 @@ declare namespace Stripe {
       /**
        * The full address of the location.
        */
-      address: required_country_address;
+      address: LocationCreateParams.Address;
 
       /**
        * A name for the location.
@@ -62,6 +62,22 @@ declare namespace Stripe {
        * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
        */
       operator_account?: string;
+    }
+
+    namespace LocationCreateParams {
+      interface Address {
+        city?: string;
+
+        country: string;
+
+        line1?: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
     }
 
     /**
@@ -126,7 +142,7 @@ declare namespace Stripe {
       /**
        * The full address of the location.
        */
-      address?: required_country_address;
+      address?: LocationUpdateParams.Address;
 
       /**
        * A name for the location.
@@ -142,6 +158,22 @@ declare namespace Stripe {
        * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
        */
       operator_account?: string;
+    }
+
+    namespace LocationUpdateParams {
+      interface Address {
+        city?: string;
+
+        country: string;
+
+        line1?: string;
+
+        line2?: string;
+
+        postal_code?: string;
+
+        state?: string;
+      }
     }
 
     class LocationsResource {
@@ -168,7 +200,7 @@ declare namespace Stripe {
       list(
         params?: LocationListParams,
         options?: HeaderOptions
-      ): Promise<TerminalLocationLocationList>;
+      ): Promise<ApiList<Terminal.Location>>;
 
       /**
        * Retrieves a Location object.

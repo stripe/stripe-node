@@ -141,12 +141,12 @@ declare namespace Stripe {
     /**
      * A positive integer representing how much to transfer.
      */
-    amount?: range_query_specs | number;
+    amount?: number | TopupListParams.Amount;
 
     /**
      * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
      */
-    created?: range_query_specs | number;
+    created?: number | TopupListParams.Created;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -175,6 +175,50 @@ declare namespace Stripe {
   }
 
   namespace TopupListParams {
+    interface Amount {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
     type Status = 'canceled' | 'failed' | 'pending' | 'succeeded'
   }
 
@@ -229,7 +273,10 @@ declare namespace Stripe {
     /**
      * Returns a list of top-ups.
      */
-    list(params?: TopupListParams, options?: HeaderOptions): Promise<TopupList>;
+    list(
+      params?: TopupListParams,
+      options?: HeaderOptions
+    ): Promise<ApiList<Topup>>;
 
     /**
      * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.

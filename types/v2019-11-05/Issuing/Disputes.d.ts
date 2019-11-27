@@ -80,7 +80,7 @@ declare namespace Stripe {
       /**
        * A hash containing all the evidence related to the dispute. This should have a single key, equal to the provided `reason`, mapping to an appropriate evidence object.
        */
-      evidence?: disputes_evidence;
+      evidence?: DisputeCreateParams.Evidence;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -101,6 +101,44 @@ declare namespace Stripe {
     }
 
     namespace DisputeCreateParams {
+      interface Evidence {
+        /**
+         * Evidence to support a fraudulent dispute. Only provide this if your dispute's `reason` is `fraudulent`.
+         */
+        fraudulent?: Evidence.Fraudulent;
+
+        /**
+         * Evidence to support an uncategorized dispute. Only provide this if your dispute's `reason` is `other`.
+         */
+        other?: Evidence.Other;
+      }
+
+      namespace Evidence {
+        interface Fraudulent {
+          /**
+           * Brief freeform text explaining why you are disputing this transaction.
+           */
+          dispute_explanation: string;
+
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+           */
+          uncategorized_file?: string;
+        }
+
+        interface Other {
+          /**
+           * Brief freeform text explaining why you are disputing this transaction.
+           */
+          dispute_explanation: string;
+
+          /**
+           * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+           */
+          uncategorized_file?: string;
+        }
+      }
+
       type Reason = 'fraudulent' | 'other'
     }
 
@@ -111,7 +149,7 @@ declare namespace Stripe {
       /**
        * Only return issuing disputes that were created during the given date interval.
        */
-      created?: range_query_specs | number;
+      created?: number | DisputeListParams.Created;
 
       /**
        * Only return issuing disputes for the given transaction.
@@ -137,6 +175,30 @@ declare namespace Stripe {
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
        */
       starting_after?: string;
+    }
+
+    namespace DisputeListParams {
+      interface Created {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
     }
 
     /**
@@ -181,7 +243,7 @@ declare namespace Stripe {
       list(
         params?: DisputeListParams,
         options?: HeaderOptions
-      ): Promise<IssuingDisputeList>;
+      ): Promise<ApiList<Issuing.Dispute>>;
 
       /**
        * Retrieves an Issuing Dispute object.
