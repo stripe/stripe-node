@@ -980,7 +980,7 @@ declare namespace Stripe {
      *
      * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
      */
-    setup_future_usage?: PaymentIntentUpdateParams.SetupFutureUsage;
+    setup_future_usage?: '' | PaymentIntentUpdateParams.SetupFutureUsage;
 
     /**
      * Shipping information for this PaymentIntent.
@@ -1014,7 +1014,7 @@ declare namespace Stripe {
   }
 
   namespace PaymentIntentUpdateParams {
-    type SetupFutureUsage = '' | 'off_session' | 'on_session'
+    type SetupFutureUsage = 'off_session' | 'on_session'
 
     interface Shipping {
       /**
@@ -1235,7 +1235,7 @@ declare namespace Stripe {
      *
      * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
      */
-    setup_future_usage?: PaymentIntentConfirmParams.SetupFutureUsage;
+    setup_future_usage?: '' | PaymentIntentConfirmParams.SetupFutureUsage;
 
     /**
      * Shipping information for this PaymentIntent.
@@ -1408,7 +1408,7 @@ declare namespace Stripe {
       }
     }
 
-    type SetupFutureUsage = '' | 'off_session' | 'on_session'
+    type SetupFutureUsage = 'off_session' | 'on_session'
 
     interface Shipping {
       /**
