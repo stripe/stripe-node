@@ -73,6 +73,11 @@ declare namespace Stripe {
   }
 
   /**
+   * The UsageRecord object.
+   */
+  interface UsageRecord {}
+
+  /**
    * Adds a new item to an existing subscription. No existing items will be changed or replaced.
    */
   interface SubscriptionItemCreateParams {

@@ -526,6 +526,129 @@ declare namespace Stripe {
   }
 
   /**
+   * The InvoiceLineItem object.
+   */
+  interface InvoiceLineItem {
+    /**
+     * The amount, in %s.
+     */
+    amount?: number;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency?: string;
+
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description?: string | null;
+
+    /**
+     * If true, discounts will apply to this line item. Always false for prorations.
+     */
+    discountable?: boolean;
+
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    invoice_item?: string;
+
+    /**
+     * Whether this is a test line item.
+     */
+    livemode?: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'line_item';
+
+    period?: {
+      /**
+       * End of the line item's billing period
+       */
+      end: number;
+
+      /**
+       * Start of the line item's billing period
+       */
+      start: number;
+    };
+
+    /**
+     * The plan of the subscription, if the line item is a subscription or a proration.
+     */
+    plan?: Plan | null;
+
+    /**
+     * Whether this is a proration.
+     */
+    proration?: boolean;
+
+    /**
+     * The quantity of the subscription, if the line item is a subscription or a proration.
+     */
+    quantity?: number | null;
+
+    /**
+     * The subscription that the invoice item pertains to, if any.
+     */
+    subscription?: string | null;
+
+    /**
+     * The subscription item that generated this invoice item. Left empty if the line item is not an explicit result of a subscription.
+     */
+    subscription_item?: string;
+
+    /**
+     * The amount of tax calculated per tax rate for this line item
+     */
+    tax_amounts?:
+      | Array<{
+        /**
+         * The amount, in %s, of the tax.
+         */
+        amount: number;
+
+        /**
+         * Whether this tax amount is inclusive or exclusive.
+         */
+        inclusive: boolean;
+
+        /**
+         * The tax rate that was applied to get this tax amount.
+         */
+        tax_rate: string | TaxRate;
+      }>
+      | null;
+
+    /**
+     * The tax rates which apply to the line item.
+     */
+    tax_rates?: Array<TaxRate> | null;
+
+    /**
+     * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
+     */
+    type?: 'invoiceitem' | 'subscription';
+
+    /**
+     * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
+     */
+    unified_proration?: boolean;
+  }
+
+  /**
    * This endpoint creates a draft invoice for a given customer. The draft invoice created pulls in all pending invoice items on that customer, including prorations.
    */
   interface InvoiceCreateParams {

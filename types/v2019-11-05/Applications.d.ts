@@ -1,0 +1,21 @@
+declare namespace Stripe {
+  /**
+   * The Application object.
+   */
+  interface Application {
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * The name of the application.
+     */
+    name?: string | null;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'application';
+  }
+}
