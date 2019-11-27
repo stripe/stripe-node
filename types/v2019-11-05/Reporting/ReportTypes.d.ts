@@ -72,7 +72,7 @@ declare namespace Stripe {
       list(
         params?: ReportTypeListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Reporting.ReportType>>;
+      ): Promise<FinancialReportingFinanceReportTypeList>;
 
       /**
        * Retrieves the details of a Report Type. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)

@@ -89,7 +89,7 @@ declare namespace Stripe {
       list(
         params?: EarlyFraudWarningListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Radar.EarlyFraudWarning>>;
+      ): Promise<RadarEarlyFraudWarningList>;
 
       /**
        * Retrieves the details of an early fraud warning that has previously been created.

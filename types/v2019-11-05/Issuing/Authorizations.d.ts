@@ -118,7 +118,7 @@ declare namespace Stripe {
       /**
        * Only return authorizations that were created during the given date interval.
        */
-      created?: number | AuthorizationListParams.Created;
+      created?: range_query_specs | number;
 
       /**
        * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -147,28 +147,6 @@ declare namespace Stripe {
     }
 
     namespace AuthorizationListParams {
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
       type Status = 'closed' | 'pending' | 'reversed'
     }
 

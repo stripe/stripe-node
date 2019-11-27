@@ -185,7 +185,7 @@ declare namespace Stripe {
        * one-time payments or adding invoice line items to a subscription (used
        * in conjunction with `subscription_data`).
        */
-      line_items?: Array<SessionCreateParams.LineItem>;
+      line_items?: Array<line_item_params>;
 
       /**
        * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used. Supported values are `auto`, `da`, `de`, `en`, `es`, `fi`, `fr`, `it`, `ja`, `nb`, `nl`, `pl`, `pt`, `sv`, or `zh`.
@@ -200,7 +200,7 @@ declare namespace Stripe {
       /**
        * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
        */
-      payment_intent_data?: SessionCreateParams.PaymentIntentData;
+      payment_intent_data?: payment_intent_data_params;
 
       /**
        * A list of the types of payment methods (e.g. card) this Checkout
@@ -211,7 +211,7 @@ declare namespace Stripe {
       /**
        * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
        */
-      setup_intent_data?: SessionCreateParams.SetupIntentData;
+      setup_intent_data?: setup_intent_data_param;
 
       /**
        * Describes the type of transaction being performed by Checkout in order to customize
@@ -225,7 +225,7 @@ declare namespace Stripe {
       /**
        * A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
        */
-      subscription_data?: SessionCreateParams.SubscriptionData;
+      subscription_data?: subscription_data_params;
 
       /**
        * The URL to which Stripe should send customers when payment or setup
@@ -239,38 +239,6 @@ declare namespace Stripe {
 
     namespace SessionCreateParams {
       type BillingAddressCollection = 'auto' | 'required'
-
-      interface LineItem {
-        /**
-         * The amount to be collected per unit of the line item.
-         */
-        amount: number;
-
-        /**
-         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-         */
-        currency: string;
-
-        /**
-         * The description for the line item.
-         */
-        description?: string;
-
-        /**
-         * A list of images representing this line item.
-         */
-        images?: Array<string>;
-
-        /**
-         * The name for the line item.
-         */
-        name: string;
-
-        /**
-         * The quantity of the line item being purchased.
-         */
-        quantity: number;
-      }
 
       type Locale =
         | 'auto'
@@ -291,209 +259,9 @@ declare namespace Stripe {
 
       type Mode = 'payment' | 'setup' | 'subscription'
 
-      interface PaymentIntentData {
-        /**
-         * The amount of the application fee (if any) that will be applied to the payment and transferred to the
-         * application owner's Stripe account. To use an application fee, the request must be made on
-         * behalf of another account, using the `Stripe-Account` header or an OAuth key. For more
-         * information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-         */
-        application_fee_amount?: number;
-
-        /**
-         * Capture method of this PaymentIntent, one of `automatic` or `manual`.
-         */
-        capture_method?: PaymentIntentData.CaptureMethod;
-
-        /**
-         * An arbitrary string attached to the object. Often useful for displaying to users.
-         */
-        description?: string;
-
-        /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-         */
-        metadata?: {
-          [key: string]: string;
-        };
-
-        /**
-         * The Stripe account ID for which these funds are intended. For details,
-         * see the PaymentIntents [use case for connected
-         * accounts](/docs/payments/connected-accounts).
-         */
-        on_behalf_of?: string;
-
-        /**
-         * Email address that the receipt for the resulting payment will be sent to.
-         */
-        receipt_email?: string;
-
-        /**
-         * Indicates that you intend to make future payments with this PaymentIntent's payment method.
-         *
-         * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
-         *
-         * Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. For more, learn to [save card details after a payment](https://stripe.com/docs/payments/save-after-payment).
-         *
-         * Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by [SCA](https://stripe.com/docs/strong-customer-authentication), using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect [off-session payments](https://stripe.com/docs/payments/cards/charging-saved-cards#off-session-payments-with-saved-cards) for this customer.
-         */
-        setup_future_usage?: PaymentIntentData.SetupFutureUsage;
-
-        /**
-         * Shipping information for this payment.
-         */
-        shipping?: PaymentIntentData.Shipping;
-
-        /**
-         * Extra information about the payment. This will appear on your
-         * customer's statement when this payment succeeds in creating a charge.
-         */
-        statement_descriptor?: string;
-
-        /**
-         * The parameters used to automatically create a Transfer when the payment succeeds.
-         * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
-         */
-        transfer_data?: PaymentIntentData.TransferData;
-      }
-
-      namespace PaymentIntentData {
-        type CaptureMethod = 'automatic' | 'manual'
-
-        type SetupFutureUsage = 'off_session' | 'on_session'
-
-        interface Shipping {
-          /**
-           * Shipping address.
-           */
-          address: Shipping.Address;
-
-          /**
-           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-           */
-          carrier?: string;
-
-          /**
-           * Recipient name.
-           */
-          name: string;
-
-          /**
-           * Recipient phone (including extension).
-           */
-          phone?: string;
-
-          /**
-           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-           */
-          tracking_number?: string;
-        }
-
-        namespace Shipping {
-          interface Address {
-            city?: string;
-
-            country?: string;
-
-            line1: string;
-
-            line2?: string;
-
-            postal_code?: string;
-
-            state?: string;
-          }
-        }
-
-        interface TransferData {
-          /**
-           * If specified, successful charges will be attributed to the destination
-           * account for tax reporting, and the funds from charges will be transferred
-           * to the destination account. The ID of the resulting transfer will be
-           * returned on the successful charge's `transfer` field.
-           */
-          destination: string;
-        }
-      }
-
       type PaymentMethodType = 'card' | 'ideal'
 
-      interface SetupIntentData {
-        /**
-         * An arbitrary string attached to the object. Often useful for displaying to users.
-         */
-        description?: string;
-
-        /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-         */
-        metadata?: {
-          [key: string]: string;
-        };
-
-        /**
-         * The Stripe account for which the setup is intended.
-         */
-        on_behalf_of?: string;
-      }
-
       type SubmitType = 'auto' | 'book' | 'donate' | 'pay'
-
-      interface SubscriptionData {
-        /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. To use an application fee percent, the request must be made on behalf of another account, using the `Stripe-Account` header or an OAuth key. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
-         */
-        application_fee_percent?: number;
-
-        /**
-         * A list of items, each with an attached plan, that the customer is
-         * subscribing to. Use this parameter for subscriptions. To create one-time
-         * payments, use `line_items`.
-         */
-        items: Array<SubscriptionData.Item>;
-
-        /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-         */
-        metadata?: {
-          [key: string]: string;
-        };
-
-        /**
-         * Unix timestamp representing the end of the trial period the customer
-         * will get before being charged for the first time. Has to be at least
-         * 48 hours in the future.
-         */
-        trial_end?: number;
-
-        /**
-         * Indicates if a plan's `trial_period_days` should be applied to the
-         * subscription. Setting `trial_end` on `subscription_data` is preferred.
-         * Defaults to `false`.
-         */
-        trial_from_plan?: boolean;
-
-        /**
-         * Integer representing the number of trial period days before the
-         * customer is charged for the first time. Has to be at least 1.
-         */
-        trial_period_days?: number;
-      }
-
-      namespace SubscriptionData {
-        interface Item {
-          /**
-           * Plan ID for this item.
-           */
-          plan: string;
-
-          /**
-           * Quantity for this item.
-           */
-          quantity?: number;
-        }
-      }
     }
 
     /**

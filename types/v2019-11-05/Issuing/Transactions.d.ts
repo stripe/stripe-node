@@ -95,7 +95,7 @@ declare namespace Stripe {
       /**
        * Only return transactions that were created during the given date interval.
        */
-      created?: number | TransactionListParams.Created;
+      created?: range_query_specs | number;
 
       /**
        * Only return transactions that originate from a given dispute.
@@ -121,30 +121,6 @@ declare namespace Stripe {
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
        */
       starting_after?: string;
-    }
-
-    namespace TransactionListParams {
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
     }
 
     /**
