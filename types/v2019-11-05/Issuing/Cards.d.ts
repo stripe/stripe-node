@@ -2083,7 +2083,7 @@ declare namespace Stripe {
         /**
          * One of `bulk` or `individual`. Bulk shipments will be grouped and mailed together, while individual ones will not.
          */
-        type?: Shipping.Type;
+        type?: '' | Shipping.Type;
       }
 
       namespace Shipping {
@@ -2101,7 +2101,7 @@ declare namespace Stripe {
           state?: string;
         }
 
-        type Type = '' | 'bulk' | 'individual'
+        type Type = 'bulk' | 'individual'
       }
 
       type Status = 'active' | 'inactive'

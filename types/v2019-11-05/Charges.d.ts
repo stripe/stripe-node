@@ -1437,11 +1437,11 @@ declare namespace Stripe {
 
   namespace ChargeUpdateParams {
     interface FraudDetails {
-      user_report: FraudDetails.UserReport;
+      user_report: '' | FraudDetails.UserReport;
     }
 
     namespace FraudDetails {
-      type UserReport = '' | 'fraudulent' | 'safe'
+      type UserReport = 'fraudulent' | 'safe'
     }
 
     interface Shipping {

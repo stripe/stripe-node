@@ -501,7 +501,7 @@ declare namespace Stripe {
     /**
      * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
      */
-    tax_exempt?: CustomerCreateParams.TaxExempt;
+    tax_exempt?: '' | CustomerCreateParams.TaxExempt;
 
     /**
      * The customer's tax IDs.
@@ -593,7 +593,7 @@ declare namespace Stripe {
       }
     }
 
-    type TaxExempt = '' | 'exempt' | 'none' | 'reverse'
+    type TaxExempt = 'exempt' | 'none' | 'reverse'
 
     interface TaxIdDatum {
       /**
@@ -783,7 +783,7 @@ declare namespace Stripe {
     /**
      * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
      */
-    tax_exempt?: CustomerUpdateParams.TaxExempt;
+    tax_exempt?: '' | CustomerUpdateParams.TaxExempt;
 
     /**
      * The customer's tax information. Appears on invoices emailed to this customer. This parameter has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
@@ -875,7 +875,7 @@ declare namespace Stripe {
       }
     }
 
-    type TaxExempt = '' | 'exempt' | 'none' | 'reverse'
+    type TaxExempt = 'exempt' | 'none' | 'reverse'
 
     interface TaxInfo {
       /**
