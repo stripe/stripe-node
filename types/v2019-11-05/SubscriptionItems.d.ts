@@ -6,7 +6,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
      */
-    billing_thresholds: BillingThresholds | null;
+    billing_thresholds: SubscriptionItem.BillingThresholds | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -48,6 +48,15 @@ declare namespace Stripe {
     tax_rates: Array<TaxRate> | null;
   }
 
+  namespace SubscriptionItem {
+    interface BillingThresholds {
+      /**
+       * Usage threshold that triggers the subscription to create an invoice
+       */
+      usage_gte?: number | null;
+    }
+  }
+
   interface DeletedSubscriptionItem {
     /**
      * Unique identifier for the object.
@@ -77,7 +86,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?: billing_thresholds_param | '';
+    billing_thresholds?: '' | SubscriptionItemCreateParams.BillingThresholds;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -130,6 +139,13 @@ declare namespace Stripe {
   }
 
   namespace SubscriptionItemCreateParams {
+    interface BillingThresholds {
+      /**
+       * Usage threshold that triggers the subscription to advance to a new billing period
+       */
+      usage_gte: number;
+    }
+
     type PaymentBehavior =
       | 'allow_incomplete'
       | 'error_if_incomplete'
@@ -203,7 +219,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?: billing_thresholds_param | '';
+    billing_thresholds?: '' | SubscriptionItemUpdateParams.BillingThresholds;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -253,6 +269,13 @@ declare namespace Stripe {
   }
 
   namespace SubscriptionItemUpdateParams {
+    interface BillingThresholds {
+      /**
+       * Usage threshold that triggers the subscription to advance to a new billing period
+       */
+      usage_gte: number;
+    }
+
     type PaymentBehavior =
       | 'allow_incomplete'
       | 'error_if_incomplete'

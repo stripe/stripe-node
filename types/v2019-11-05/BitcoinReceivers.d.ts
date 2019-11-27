@@ -97,7 +97,7 @@ declare namespace Stripe {
     /**
      * A list with one entry for each time that the customer sent bitcoin to the receiver. Hidden when viewing the receiver with a publishable key.
      */
-    transactions: BitcoinTransactionList;
+    transactions: ApiList<BitcoinTransaction>;
 
     /**
      * This receiver contains uncaptured funds that can be used for a payment or refunded.
@@ -269,6 +269,6 @@ declare namespace Stripe {
       id: string,
       params?: BitcoinReceiverListTransactionsParams,
       options?: HeaderOptions
-    ): Promise<BitcoinTransactionList>;
+    ): Promise<ApiList<BitcoinTransaction>>;
   }
 }

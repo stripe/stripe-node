@@ -121,7 +121,7 @@ declare namespace Stripe {
     list(
       params?: ApplePayDomainListParams,
       options?: HeaderOptions
-    ): Promise<ApplePayDomainList>;
+    ): Promise<ApiList<ApplePayDomain>>;
 
     /**
      * Retrieve an apple pay domain.

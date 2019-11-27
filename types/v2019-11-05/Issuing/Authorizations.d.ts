@@ -60,7 +60,7 @@ declare namespace Stripe {
        */
       livemode?: boolean;
 
-      merchant_data?: Issuing.MerchantData;
+      merchant_data?: Authorization.MerchantData;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -84,7 +84,7 @@ declare namespace Stripe {
        */
       pending_held_amount?: number;
 
-      request_history?: Array<RequestHistory>;
+      request_history?: Array<Authorization.RequestHistory>;
 
       /**
        * One of `closed`, `pending`, or `reversed`.
@@ -93,12 +93,163 @@ declare namespace Stripe {
 
       transactions?: Array<Issuing.Transaction>;
 
-      verification_data?: VerificationData;
+      verification_data?: Authorization.VerificationData;
 
       /**
        * What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
        */
       wallet_provider?: string | null;
+    }
+
+    namespace Authorization {
+      interface MerchantData {
+        /**
+         * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
+         */
+        category: string;
+
+        /**
+         * City where the seller is located
+         */
+        city?: string | null;
+
+        /**
+         * Country where the seller is located
+         */
+        country?: string | null;
+
+        /**
+         * Name of the seller
+         */
+        name?: string | null;
+
+        /**
+         * Identifier assigned to the seller by the card brand
+         */
+        network_id: string;
+
+        /**
+         * Postal code where the seller is located
+         */
+        postal_code?: string | null;
+
+        /**
+         * State where the seller is located
+         */
+        state?: string | null;
+
+        /**
+         * The url an online purchase was made from
+         */
+        url?: string | null;
+      }
+
+      interface RequestHistory {
+        /**
+         * Whether this request was approved.
+         */
+        approved: boolean;
+
+        /**
+         * The amount that was authorized at the time of this request
+         */
+        authorized_amount: number;
+
+        /**
+         * The currency that was presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        authorized_currency: string;
+
+        /**
+         * Time at which the object was created. Measured in seconds since the Unix epoch.
+         */
+        created: number;
+
+        /**
+         * The amount Stripe held from your account to fund the authorization, if the request was approved
+         */
+        held_amount: number;
+
+        /**
+         * The currency of the [held amount](https://stripe.com/docs/api#issuing_authorization_object-held_amount)
+         */
+        held_currency: string;
+
+        /**
+         * The reason for the approval or decline.
+         */
+        reason: RequestHistory.Reason;
+
+        /**
+         * When an authorization is declined due to `authorization_controls`, this array contains details about the authorization controls that were violated. Otherwise, it is empty.
+         */
+        violated_authorization_controls: Array<
+          RequestHistory.ViolatedAuthorizationControl
+        >;
+      }
+
+      namespace RequestHistory {
+        type Reason =
+          | 'account_compliance_disabled'
+          | 'account_inactive'
+          | 'authentication_failed'
+          | 'authorization_controls'
+          | 'card_active'
+          | 'card_inactive'
+          | 'cardholder_inactive'
+          | 'cardholder_verification_required'
+          | 'insufficient_funds'
+          | 'not_allowed'
+          | 'suspected_fraud'
+          | 'webhook_approved'
+          | 'webhook_declined'
+          | 'webhook_timeout'
+
+        interface ViolatedAuthorizationControl {
+          /**
+           * Entity which the authorization control acts on. One of `account`, `card`, or `cardholder`.
+           */
+          entity: ViolatedAuthorizationControl.Entity;
+
+          /**
+           * Name of the authorization control. One of `allowed_categories`, `blocked_categories`, `max_amount`, `max_approvals`, or `spending_limits`.
+           */
+          name: ViolatedAuthorizationControl.Name;
+        }
+
+        namespace ViolatedAuthorizationControl {
+          type Entity = 'account' | 'card' | 'cardholder'
+
+          type Name =
+            | 'allowed_categories'
+            | 'blocked_categories'
+            | 'max_amount'
+            | 'max_approvals'
+            | 'spending_limits'
+        }
+      }
+
+      interface VerificationData {
+        /**
+         * One of `match`, `mismatch`, or `not_provided`.
+         */
+        address_line1_check: string;
+
+        /**
+         * One of `match`, `mismatch`, or `not_provided`.
+         */
+        address_zip_check: string;
+
+        /**
+         * One of `exempt`, `failure`, `none`, or `success`.
+         */
+        authentication: string;
+
+        /**
+         * One of `match`, `mismatch`, or `not_provided`.
+         */
+        cvc_check: string;
+      }
     }
 
     /**
@@ -118,7 +269,7 @@ declare namespace Stripe {
       /**
        * Only return authorizations that were created during the given date interval.
        */
-      created?: range_query_specs | number;
+      created?: number | AuthorizationListParams.Created;
 
       /**
        * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -147,6 +298,28 @@ declare namespace Stripe {
     }
 
     namespace AuthorizationListParams {
+      interface Created {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
+
       type Status = 'closed' | 'pending' | 'reversed'
     }
 

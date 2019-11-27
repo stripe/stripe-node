@@ -221,7 +221,7 @@ declare namespace Stripe {
       list(
         params?: ReaderListParams,
         options?: HeaderOptions
-      ): Promise<TerminalReaderRetrieveReader>;
+      ): Promise<ApiList<Terminal.Reader>>;
 
       /**
        * Retrieves a Reader object.

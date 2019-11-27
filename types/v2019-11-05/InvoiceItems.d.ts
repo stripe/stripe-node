@@ -60,7 +60,7 @@ declare namespace Stripe {
      */
     object: 'invoiceitem';
 
-    period: InvoiceLineItemPeriod;
+    period: InvoiceItem.Period;
 
     /**
      * If the invoice item is a proration, the plan of the subscription that the proration was computed for.
@@ -106,6 +106,20 @@ declare namespace Stripe {
      * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
      */
     unit_amount_decimal: string | null;
+  }
+
+  namespace InvoiceItem {
+    interface Period {
+      /**
+       * End of the line item's billing period
+       */
+      end: number;
+
+      /**
+       * Start of the line item's billing period
+       */
+      start: number;
+    }
   }
 
   interface DeletedInvoiceItem {
@@ -174,7 +188,7 @@ declare namespace Stripe {
     /**
      * The period associated with this invoice item.
      */
-    period?: period;
+    period?: InvoiceItemCreateParams.Period;
 
     /**
      * Non-negative integer. The quantity of units for the invoice item.
@@ -202,6 +216,20 @@ declare namespace Stripe {
     unit_amount_decimal?: string;
   }
 
+  namespace InvoiceItemCreateParams {
+    interface Period {
+      /**
+       * The end of the period, which must be greater than or equal to the start.
+       */
+      end: number;
+
+      /**
+       * The start of the period.
+       */
+      start: number;
+    }
+  }
+
   /**
    * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
    */
@@ -211,7 +239,7 @@ declare namespace Stripe {
    * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
    */
   interface InvoiceItemListParams {
-    created?: range_query_specs | number;
+    created?: number | InvoiceItemListParams.Created;
 
     /**
      * The identifier of the customer whose invoice items to return. If none is provided, all invoice items will be returned.
@@ -247,6 +275,30 @@ declare namespace Stripe {
      * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
      */
     starting_after?: string;
+  }
+
+  namespace InvoiceItemListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**
@@ -293,7 +345,7 @@ declare namespace Stripe {
     /**
      * The period associated with this invoice item.
      */
-    period?: period;
+    period?: InvoiceItemUpdateParams.Period;
 
     /**
      * Non-negative integer. The quantity of units for the invoice item.
@@ -314,6 +366,20 @@ declare namespace Stripe {
      * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
      */
     unit_amount_decimal?: string;
+  }
+
+  namespace InvoiceItemUpdateParams {
+    interface Period {
+      /**
+       * The end of the period, which must be greater than or equal to the start.
+       */
+      end: number;
+
+      /**
+       * The start of the period.
+       */
+      start: number;
+    }
   }
 
   class InvoiceItemsResource {
