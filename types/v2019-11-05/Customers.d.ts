@@ -66,7 +66,7 @@ declare namespace Stripe {
      */
     invoice_prefix: string | null;
 
-    invoice_settings: Customer.InvoiceSettings;
+    invoice_settings: InvoiceSettings;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -103,7 +103,7 @@ declare namespace Stripe {
     /**
      * Mailing and shipping address for the customer. Appears on invoices emailed to this customer.
      */
-    shipping: Customer.Shipping | null;
+    shipping: ShippingDetails | null;
 
     /**
      * The customer's payment sources, if any.
@@ -130,95 +130,16 @@ declare namespace Stripe {
     /**
      * The customer's tax information. Appears on invoices emailed to this customer. This field has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
      */
-    tax_info: Customer.TaxInfo | null;
+    tax_info: TaxInfo | null;
 
     /**
      * Describes the status of looking up the tax ID provided in `tax_info`. This field has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
      */
-    tax_info_verification: Customer.TaxInfoVerification | null;
+    tax_info_verification: TaxInfoVerification | null;
   }
 
   namespace Customer {
-    interface InvoiceSettings {
-      /**
-       * Default custom fields to be displayed on invoices for this customer.
-       */
-      custom_fields?: Array<InvoiceSettings.CustomField> | null;
-
-      /**
-       * ID of the default payment method used for subscriptions and invoices for the customer.
-       */
-      default_payment_method?: string | PaymentMethod | null;
-
-      /**
-       * Default footer to be displayed on invoices for this customer.
-       */
-      footer?: string | null;
-    }
-
-    namespace InvoiceSettings {
-      interface CustomField {
-        /**
-         * The name of the custom field.
-         */
-        name: string;
-
-        /**
-         * The value of the custom field.
-         */
-        value: string;
-      }
-    }
-
-    interface Shipping {
-      address?: Address;
-
-      /**
-       * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-       */
-      carrier?: string | null;
-
-      /**
-       * Recipient name.
-       */
-      name?: string | null;
-
-      /**
-       * Recipient phone (including extension).
-       */
-      phone?: string | null;
-
-      /**
-       * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-       */
-      tracking_number?: string | null;
-    }
-
     type TaxExempt = 'exempt' | 'none' | 'reverse'
-
-    interface TaxInfo {
-      /**
-       * The customer's tax ID number.
-       */
-      tax_id?: string | null;
-
-      /**
-       * The type of ID number.
-       */
-      type: string;
-    }
-
-    interface TaxInfoVerification {
-      /**
-       * The state of verification for this customer. Possible values are `unverified`, `pending`, or `verified`.
-       */
-      status?: string | null;
-
-      /**
-       * The official name associated with the tax ID returned from the external provider.
-       */
-      verified_name?: string | null;
-    }
   }
 
   interface DeletedCustomer {
@@ -374,7 +295,7 @@ declare namespace Stripe {
      */
     value: string;
 
-    verification: TaxId.Verification;
+    verification: Verification;
   }
 
   namespace TaxId {
@@ -388,27 +309,6 @@ declare namespace Stripe {
       | 'nz_gst'
       | 'unknown'
       | 'za_vat'
-
-    interface Verification {
-      /**
-       * Verification status, one of `pending`, `unavailable`, `unverified`, or `verified`.
-       */
-      status: Verification.Status;
-
-      /**
-       * Verified address.
-       */
-      verified_address?: string | null;
-
-      /**
-       * Verified name.
-       */
-      verified_name?: string | null;
-    }
-
-    namespace Verification {
-      type Status = 'pending' | 'unavailable' | 'unverified' | 'verified'
-    }
   }interface DeletedTaxId {
     /**
      * Unique identifier for the object.

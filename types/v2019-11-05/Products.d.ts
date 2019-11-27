@@ -68,7 +68,7 @@ declare namespace Stripe {
     /**
      * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. Only applicable to products of `type=good`.
      */
-    package_dimensions: Product.PackageDimensions | null;
+    package_dimensions: PackageDimensions | null;
 
     /**
      * Whether this product is a shipped good. Only applicable to products of `type=good`.
@@ -99,28 +99,6 @@ declare namespace Stripe {
   }
 
   namespace Product {
-    interface PackageDimensions {
-      /**
-       * Height, in inches.
-       */
-      height: number;
-
-      /**
-       * Length, in inches.
-       */
-      length: number;
-
-      /**
-       * Weight, in ounces.
-       */
-      weight: number;
-
-      /**
-       * Width, in inches.
-       */
-      width: number;
-    }
-
     type Type = 'good' | 'service'
   }
 

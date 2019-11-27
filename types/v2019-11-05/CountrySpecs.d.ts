@@ -40,41 +40,7 @@ declare namespace Stripe {
      */
     supported_transfer_countries?: Array<string>;
 
-    verification_fields?: CountrySpec.VerificationFields;
-  }
-
-  namespace CountrySpec {
-    interface VerificationFields {
-      company: VerificationFields.Company;
-
-      individual: VerificationFields.Individual;
-    }
-
-    namespace VerificationFields {
-      interface Company {
-        /**
-         * Additional fields which are only required for some users.
-         */
-        additional: Array<string>;
-
-        /**
-         * Fields which every account must eventually provide.
-         */
-        minimum: Array<string>;
-      }
-
-      interface Individual {
-        /**
-         * Additional fields which are only required for some users.
-         */
-        additional: Array<string>;
-
-        /**
-         * Fields which every account must eventually provide.
-         */
-        minimum: Array<string>;
-      }
-    }
+    verification_fields?: VerificationFields;
   }
 
   /**

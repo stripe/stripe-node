@@ -3,14 +3,14 @@ declare namespace Stripe {
    * The SourceTransaction object.
    */
   interface SourceTransaction {
-    ach_credit_transfer?: SourceTransaction.AchCreditTransfer;
+    ach_credit_transfer?: AchCreditTransferData;
 
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the amount your customer has pushed to the receiver.
      */
     amount?: number;
 
-    chf_credit_transfer?: SourceTransaction.ChfCreditTransfer;
+    chf_credit_transfer?: ChfCreditTransferData;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -22,7 +22,7 @@ declare namespace Stripe {
      */
     currency?: string;
 
-    gbp_credit_transfer?: SourceTransaction.GbpCreditTransfer;
+    gbp_credit_transfer?: GbpCreditTransferData;
 
     /**
      * Unique identifier for the object.
@@ -39,9 +39,9 @@ declare namespace Stripe {
      */
     object?: 'source_transaction';
 
-    paper_check?: SourceTransaction.PaperCheck;
+    paper_check?: PaperCheckData;
 
-    sepa_credit_transfer?: SourceTransaction.SepaCreditTransfer;
+    sepa_credit_transfer?: SepaCreditTransferData;
 
     /**
      * The ID of the source this transaction is attached to.
@@ -60,111 +60,6 @@ declare namespace Stripe {
   }
 
   namespace SourceTransaction {
-    interface AchCreditTransfer {
-      /**
-       * Customer data associated with the transfer.
-       */
-      customer_data?: string;
-
-      /**
-       * Bank account fingerprint associated with the transfer.
-       */
-      fingerprint?: string;
-
-      /**
-       * Last 4 digits of the account number associated with the transfer.
-       */
-      last4?: string;
-
-      /**
-       * Routing number associated with the transfer.
-       */
-      routing_number?: string;
-    }
-
-    interface ChfCreditTransfer {
-      /**
-       * Reference associated with the transfer.
-       */
-      reference?: string;
-
-      /**
-       * Sender's country address.
-       */
-      sender_address_country?: string;
-
-      /**
-       * Sender's line 1 address.
-       */
-      sender_address_line1?: string;
-
-      /**
-       * Sender's bank account IBAN.
-       */
-      sender_iban?: string;
-
-      /**
-       * Sender's name.
-       */
-      sender_name?: string;
-    }
-
-    interface GbpCreditTransfer {
-      /**
-       * Bank account fingerprint associated with the transfer.
-       */
-      fingerprint?: string;
-
-      /**
-       * Last 4 digits of account number associated with the transfer.
-       */
-      last4?: string;
-
-      /**
-       * Sender entered arbitrary information about the transfer.
-       */
-      reference?: string;
-
-      /**
-       * Sender name associated with the transfer.
-       */
-      sender_name?: string;
-
-      /**
-       * Sort code associated with the transfer.
-       */
-      sort_code?: string;
-    }
-
-    interface PaperCheck {
-      /**
-       * String unix time for the available date.
-       */
-      available_at?: string;
-
-      /**
-       * Invoice ID associated with the paper check.
-       */
-      invoices?: string;
-    }
-
-    interface SepaCreditTransfer {
-      /**
-       * Reference associated with the transfer.
-       */
-      reference?: string;
-
-      /**
-       * Sender's bank account IBAN.
-       */
-      sender_iban?: string;
-
-      /**
-       * Sender's name.
-       */
-      sender_name?: string;
-    }
-
     type Type =
       | 'ach_credit_transfer'
       | 'ach_debit'
