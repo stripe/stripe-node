@@ -44,65 +44,54 @@ Or using ES modules, this looks more like:
 
 ```js
 import Stripe from 'stripe';
-const stripe = Stripe('sk_test_...');
+const stripe = new Stripe('sk_test_...');
 //…
 ```
 
 On older versions of Node, you can use [promises](#using-promises)
 or [callbacks](#using-callbacks) instead of `async`/`await`.
 
-## Initialize with config object
-
-The package can be initialized with several options:
-
-```js
-import ProxyAgent from 'https-proxy-agent';
-
-const stripe = Stripe('sk_test_...', {
-  apiVersion: '2019-08-08',
-  maxNetworkRetries: 1,
-  httpAgent: new ProxyAgent(process.env.http_proxy),
-  timeout: 1000,
-  host: 'api.example.com',
-  port: 123,
-  telemetry: true,
-});
-```
-
-| Option              | Default                       | Description                                                                           |
-| ------------------- | ----------------------------- | ------------------------------------------------------------------------------------- |
-| `apiVersion`        | `null`                        | Stripe API version to be used. If not set the account's default version will be used. |
-| `maxNetworkRetries` | 0                             | The amount of times a request should be [retried](#network-retries).                  |
-| `httpAgent`         | `null`                        | [Proxy](#configuring-a-proxy) agent to be used by the library.                        |
-| `timeout`           | 120000 (Node default timeout) | [Maximum time each request can take in ms.](#configuring-timeout)                     |
-| `host`              | `'api.stripe.com'`            | Host that requests are made to.                                                       |
-| `port`              | 443                           | Port that requests are made to.                                                       |
-| `telemetry`         | `true`                        | Allow Stripe to send latency [telemetry](#request-latency-telemetry)                  |
-
-Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis. `timeout` can be updated at any time with [`stripe.setTimeout`](#configuring-timeout).
-
 ### Usage with TypeScript
 
-Stripe does not currently maintain typings for this package, but there are
-community typings available from DefinitelyTyped.
+As of 7.14.0, Stripe maintains TypeScript types for the latest [API version][api-versions].
 
-To install:
+#### Installation
 
-```sh
-npm install --dev @types/stripe
+Add this to your tsconfig.json:
+
+```js
+  "types": ["stripe/types/v2019-11-05"],
 ```
 
-To use:
+Or this wherever you import Stripe:
 
 ```ts
-// Note `* as` and `new Stripe` for TypeScript:
-import * as Stripe from 'stripe';
+///<reference types="stripe/types/v2019-11-05" />
+```
+
+#### Usage
+
+```ts
+// Import Stripe as a default import (not `* as Stripe`, unlike the DefinitelyTyped version)
+// and insantiate it as `new Stripe()`:
+import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
 
-const customer: Promise<
-  Stripe.customers.ICustomer
-> = stripe.customers.create(/* ... */);
+const params: Stripe.CreateCustomerParams = {
+  description: 'test customer',
+};
+const customer: Promise<Stripe.Customer> = stripe.customers.create(params);
 ```
+
+Note that if you are on an older API Version, the types for the latest version
+may not match yours. We recommend [upgrading your API Version][api-version-upgrading] if you would like to take advantage of Stripe's TypeScript definitions.
+
+If you are on an older API Version (eg; `2019-10-17`) and not able to upgrade,
+you may use the types for the latest API Version and silence any resulting type errors
+with a comment like `// @ts-ignore stripe-version-2019-10-17`.
+This provides the benefit of better types in most places, and highlights
+some of the areas you will need to modify when you upgrade your API Version.
+Once you have made the upgrade, you can remove these comments.
 
 ### Using Promises
 
@@ -156,6 +145,38 @@ stripe.customers.create(
   }
 );
 ```
+
+## Configuration
+
+### Initialize with config object
+
+The package can be initialized with several options:
+
+```js
+import ProxyAgent from 'https-proxy-agent';
+
+const stripe = Stripe('sk_test_...', {
+  apiVersion: '2019-08-08',
+  maxNetworkRetries: 1,
+  httpAgent: new ProxyAgent(process.env.http_proxy),
+  timeout: 1000,
+  host: 'api.example.com',
+  port: 123,
+  telemetry: true,
+});
+```
+
+| Option              | Default                       | Description                                                                           |
+| ------------------- | ----------------------------- | ------------------------------------------------------------------------------------- |
+| `apiVersion`        | `null`                        | Stripe API version to be used. If not set the account's default version will be used. |
+| `maxNetworkRetries` | 0                             | The amount of times a request should be [retried](#network-retries).                  |
+| `httpAgent`         | `null`                        | [Proxy](#configuring-a-proxy) agent to be used by the library.                        |
+| `timeout`           | 120000 (Node default timeout) | [Maximum time each request can take in ms.](#configuring-timeout)                     |
+| `host`              | `'api.stripe.com'`            | Host that requests are made to.                                                       |
+| `port`              | 443                           | Port that requests are made to.                                                       |
+| `telemetry`         | `true`                        | Allow Stripe to send latency [telemetry](#request-latency-telemetry)                  |
+
+Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis. `timeout` can be updated at any time with [`stripe.setTimeout`](#configuring-timeout).
 
 ### Configuring Timeout
 
@@ -512,6 +533,8 @@ $ yarn fix
 ```
 
 [api-keys]: https://dashboard.stripe.com/account/apikeys
+[api-versions]: https://stripe.com/docs/upgrades
+[api-versions-upgrading]: https://stripe.com/docs/upgrades#how-can-i-upgrade-my-api
 [connect]: https://stripe.com/connect
 [https-proxy-agent]: https://github.com/TooTallNate/node-https-proxy-agent
 [stripe-js]: https://stripe.com/docs/stripe.js
