@@ -10,18 +10,21 @@ import Stripe from 'stripe';
 
 const stripe = new Stripe('sk_test_123');
 
-const params: Stripe.CustomerCreateParams = {
-  description: 'test',
-};
-const opts: Stripe.RequestOptions = {
-  stripeVersion: '2019-11-05',
-};
-const customer: Promise<Stripe.Customer> = stripe.customers.create(
-  params,
-  opts
-);
-
 (async () => {
+  const params: Stripe.CustomerCreateParams = {
+    description: 'test',
+  };
+  const opts: Stripe.RequestOptions = {
+    stripeVersion: '2019-11-05',
+  };
+  const customer: Stripe.Customer = await stripe.customers.create(params, opts);
+
+  const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
+    expand: ['customer'],
+  });
+  const customerEmail: string = (charge.customer as Stripe.Customer).email;
+  const btId: string = charge.balance_transaction as string;
+
   for await (const customer of stripe.customers.list()) {
     const {id} = customer as Stripe.Customer;
     if (id === 'hi') {
