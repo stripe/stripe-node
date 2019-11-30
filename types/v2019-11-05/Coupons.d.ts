@@ -269,7 +269,7 @@ declare namespace Stripe {
      */
     create(
       params: CouponCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Coupon>;
 
     /**
@@ -278,7 +278,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: CouponDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedCoupon>;
 
     /**
@@ -286,7 +286,7 @@ declare namespace Stripe {
      */
     list(
       params?: CouponListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Coupon>;
 
     /**
@@ -295,7 +295,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: CouponRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Coupon>;
 
     /**
@@ -304,7 +304,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: CouponUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Coupon>;
   }
 }

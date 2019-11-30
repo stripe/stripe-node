@@ -637,7 +637,7 @@ declare namespace Stripe {
      */
     create(
       params?: PaymentMethodCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentMethod>;
 
     /**
@@ -645,7 +645,7 @@ declare namespace Stripe {
      */
     list(
       params: PaymentMethodListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<PaymentMethod>;
 
     /**
@@ -654,7 +654,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: PaymentMethodRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentMethod>;
 
     /**
@@ -663,7 +663,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: PaymentMethodUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentMethod>;
 
     /**
@@ -676,7 +676,7 @@ declare namespace Stripe {
     attach(
       id: string,
       params: PaymentMethodAttachParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentMethod>;
 
     /**
@@ -685,7 +685,7 @@ declare namespace Stripe {
     detach(
       id: string,
       params?: PaymentMethodDetachParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentMethod>;
   }
 }

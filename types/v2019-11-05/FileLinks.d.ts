@@ -177,7 +177,7 @@ declare namespace Stripe {
      */
     create(
       params: FileLinkCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<FileLink>;
 
     /**
@@ -185,7 +185,7 @@ declare namespace Stripe {
      */
     list(
       params?: FileLinkListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<FileLink>;
 
     /**
@@ -194,7 +194,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: FileLinkRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<FileLink>;
 
     /**
@@ -203,7 +203,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: FileLinkUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<FileLink>;
   }
 }

@@ -103,7 +103,7 @@ declare namespace Stripe {
      */
     create(
       params: ApplePayDomainCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<ApplePayDomain>;
 
     /**
@@ -112,7 +112,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: ApplePayDomainDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedApplePayDomain>;
 
     /**
@@ -120,7 +120,7 @@ declare namespace Stripe {
      */
     list(
       params?: ApplePayDomainListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<ApplePayDomain>;
 
     /**
@@ -129,7 +129,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: ApplePayDomainRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<ApplePayDomain>;
   }
 }

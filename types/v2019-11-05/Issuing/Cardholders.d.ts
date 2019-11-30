@@ -3368,7 +3368,7 @@ declare namespace Stripe {
        */
       create(
         params: CardholderCreateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Issuing.Cardholder>;
 
       /**
@@ -3376,7 +3376,7 @@ declare namespace Stripe {
        */
       list(
         params?: CardholderListParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): ApiListPromise<Issuing.Cardholder>;
 
       /**
@@ -3385,7 +3385,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: CardholderRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Issuing.Cardholder>;
 
       /**
@@ -3394,7 +3394,7 @@ declare namespace Stripe {
       update(
         id: string,
         params?: CardholderUpdateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Issuing.Cardholder>;
     }
   }

@@ -69,7 +69,7 @@ declare namespace Stripe {
      */
     create(
       params: AccountLinkCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<AccountLink>;
   }
 }

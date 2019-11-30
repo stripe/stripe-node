@@ -3415,7 +3415,7 @@ declare namespace Stripe {
      */
     create(
       params?: AccountCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Account>;
 
     /**
@@ -3428,7 +3428,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: AccountDelParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedAccount>;
 
     /**
@@ -3436,7 +3436,7 @@ declare namespace Stripe {
      */
     list(
       params?: AccountListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Account>;
 
     /**
@@ -3447,7 +3447,7 @@ declare namespace Stripe {
     reject(
       id: string,
       params: AccountRejectParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Account>;
 
     /**
@@ -3455,7 +3455,7 @@ declare namespace Stripe {
      */
     retrieve(
       params?: AccountRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Account>;
 
     /**
@@ -3466,7 +3466,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: AccountUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Account>;
 
     /**
@@ -3475,7 +3475,7 @@ declare namespace Stripe {
     listCapabilities(
       id: string,
       params?: AccountListCapabilitiesParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Capability>;
 
     /**
@@ -3485,7 +3485,7 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountRetrieveCapabilityParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Capability>;
 
     /**
@@ -3495,7 +3495,7 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountUpdateCapabilityParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Capability>;
 
     /**
@@ -3504,7 +3504,7 @@ declare namespace Stripe {
     createExternalAccount(
       id: string,
       params: AccountCreateExternalAccountParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<BankAccount | Card>;
 
     /**
@@ -3514,7 +3514,7 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountDeleteExternalAccountParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<BankAccount | Card>;
 
     /**
@@ -3523,7 +3523,7 @@ declare namespace Stripe {
     listExternalAccounts(
       id: string,
       params?: AccountListExternalAccountsParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<BankAccount | Card>;
 
     /**
@@ -3533,7 +3533,7 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountRetrieveExternalAccountParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<BankAccount | Card>;
 
     /**
@@ -3544,7 +3544,7 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountUpdateExternalAccountParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<BankAccount | Card>;
 
     /**
@@ -3555,7 +3555,7 @@ declare namespace Stripe {
     createLoginLink(
       id: string,
       params?: AccountCreateLoginLinkParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<LoginLink>;
 
     /**
@@ -3564,7 +3564,7 @@ declare namespace Stripe {
     createPerson(
       id: string,
       params?: AccountCreatePersonParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Person>;
 
     /**
@@ -3574,7 +3574,7 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountDeletePersonParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedPerson>;
 
     /**
@@ -3583,7 +3583,7 @@ declare namespace Stripe {
     listPersons(
       id: string,
       params?: AccountListPersonsParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Person>;
 
     /**
@@ -3593,7 +3593,7 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountRetrievePersonParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Person>;
 
     /**
@@ -3603,7 +3603,7 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountUpdatePersonParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Person>;
   }
 }

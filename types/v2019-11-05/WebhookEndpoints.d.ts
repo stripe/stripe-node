@@ -575,7 +575,7 @@ declare namespace Stripe {
      */
     create(
       params: WebhookEndpointCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<WebhookEndpoint>;
 
     /**
@@ -584,7 +584,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: WebhookEndpointDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedWebhookEndpoint>;
 
     /**
@@ -592,7 +592,7 @@ declare namespace Stripe {
      */
     list(
       params?: WebhookEndpointListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<WebhookEndpoint>;
 
     /**
@@ -601,7 +601,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: WebhookEndpointRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<WebhookEndpoint>;
 
     /**
@@ -610,7 +610,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: WebhookEndpointUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<WebhookEndpoint>;
   }
 }

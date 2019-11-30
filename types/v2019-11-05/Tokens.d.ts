@@ -461,7 +461,10 @@ declare namespace Stripe {
      * Creates a single-use token that represents a bank account's details.
      * This token can be used with any API method in place of a bank account dictionary. This token can be used only once, by attaching it to a [Custom account](https://stripe.com/docs/api#accounts).
      */
-    create(params?: TokenCreateParams, options?: HeaderOptions): Promise<Token>;
+    create(
+      params?: TokenCreateParams,
+      options?: RequestOptions
+    ): Promise<Token>;
 
     /**
      * Retrieves the token with the given ID.
@@ -469,7 +472,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: TokenRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Token>;
   }
 }

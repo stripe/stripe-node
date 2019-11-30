@@ -395,7 +395,7 @@ declare namespace Stripe {
      */
     create(
       params: TransferCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Transfer>;
 
     /**
@@ -403,7 +403,7 @@ declare namespace Stripe {
      */
     list(
       params?: TransferListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Transfer>;
 
     /**
@@ -412,7 +412,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: TransferRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Transfer>;
 
     /**
@@ -423,7 +423,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: TransferUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Transfer>;
 
     /**
@@ -436,7 +436,7 @@ declare namespace Stripe {
     createReversal(
       id: string,
       params?: TransferCreateReversalParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<TransferReversal>;
 
     /**
@@ -445,7 +445,7 @@ declare namespace Stripe {
     listReversals(
       id: string,
       params?: TransferListReversalsParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<TransferReversal>;
 
     /**
@@ -455,7 +455,7 @@ declare namespace Stripe {
       idId: string,
       id: string,
       params?: TransferRetrieveReversalParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<TransferReversal>;
 
     /**
@@ -467,7 +467,7 @@ declare namespace Stripe {
       idId: string,
       id: string,
       params?: TransferUpdateReversalParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<TransferReversal>;
   }
 }

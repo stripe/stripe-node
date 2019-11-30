@@ -141,7 +141,7 @@ declare namespace Stripe {
      */
     list(
       params?: FileListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<File>;
 
     /**
@@ -150,7 +150,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: FileRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<File>;
 
     /**
@@ -158,6 +158,6 @@ declare namespace Stripe {
      *
      * All of Stripe's officially supported Client libraries should have support for sending multipart/form-data.
      */
-    create(params?: FileCreateParams, options?: HeaderOptions): Promise<File>;
+    create(params?: FileCreateParams, options?: RequestOptions): Promise<File>;
   }
 }

@@ -124,7 +124,7 @@ declare namespace Stripe {
      */
     list(
       params?: OrderReturnListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<OrderReturn>;
 
     /**
@@ -133,7 +133,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: OrderReturnRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<OrderReturn>;
   }
 }

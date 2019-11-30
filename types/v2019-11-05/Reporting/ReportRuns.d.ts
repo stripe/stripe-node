@@ -257,7 +257,7 @@ declare namespace Stripe {
        */
       create(
         params: ReportRunCreateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Reporting.ReportRun>;
 
       /**
@@ -265,7 +265,7 @@ declare namespace Stripe {
        */
       list(
         params?: ReportRunListParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): ApiListPromise<Reporting.ReportRun>;
 
       /**
@@ -274,7 +274,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: ReportRunRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Reporting.ReportRun>;
     }
   }

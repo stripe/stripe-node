@@ -1261,7 +1261,7 @@ declare namespace Stripe {
      */
     create(
       params?: CustomerCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Customer>;
 
     /**
@@ -1270,7 +1270,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: CustomerDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedCustomer>;
 
     /**
@@ -1278,7 +1278,7 @@ declare namespace Stripe {
      */
     list(
       params?: CustomerListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Customer>;
 
     /**
@@ -1287,7 +1287,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: CustomerRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Customer>;
 
     /**
@@ -1298,7 +1298,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: CustomerUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Customer>;
 
     /**
@@ -1307,7 +1307,7 @@ declare namespace Stripe {
     deleteDiscount(
       id: string,
       params?: CustomerDeleteDiscountParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedDiscount>;
 
     /**
@@ -1316,7 +1316,7 @@ declare namespace Stripe {
     createBalanceTransaction(
       id: string,
       params: CustomerCreateBalanceTransactionParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<CustomerBalanceTransaction>;
 
     /**
@@ -1325,7 +1325,7 @@ declare namespace Stripe {
     listBalanceTransactions(
       id: string,
       params?: CustomerListBalanceTransactionsParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<CustomerBalanceTransaction>;
 
     /**
@@ -1335,7 +1335,7 @@ declare namespace Stripe {
       customerId: string,
       id: string,
       params?: CustomerRetrieveBalanceTransactionParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<CustomerBalanceTransaction>;
 
     /**
@@ -1345,7 +1345,7 @@ declare namespace Stripe {
       customerId: string,
       id: string,
       params?: CustomerUpdateBalanceTransactionParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<CustomerBalanceTransaction>;
 
     /**
@@ -1358,7 +1358,7 @@ declare namespace Stripe {
     createSource(
       id: string,
       params: CustomerCreateSourceParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<
       Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
     >;
@@ -1369,7 +1369,7 @@ declare namespace Stripe {
     listSources(
       id: string,
       params?: CustomerListSourcesParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<
       Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
     >;
@@ -1381,7 +1381,7 @@ declare namespace Stripe {
       customerId: string,
       id: string,
       params?: CustomerRetrieveSourceParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<
       Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
     >;
@@ -1393,7 +1393,7 @@ declare namespace Stripe {
       customerId: string,
       id: string,
       params?: CustomerUpdateSourceParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Card | BankAccount | Source>;
 
     /**
@@ -1403,7 +1403,7 @@ declare namespace Stripe {
       customerId: string,
       id: string,
       params?: CustomerDeleteSourceParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<
       Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
     >;
@@ -1415,7 +1415,7 @@ declare namespace Stripe {
       customerId: string,
       id: string,
       params?: CustomerVerifySourceParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<BankAccount>;
 
     /**
@@ -1424,7 +1424,7 @@ declare namespace Stripe {
     createTaxId(
       id: string,
       params: CustomerCreateTaxIdParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<TaxId>;
 
     /**
@@ -1434,7 +1434,7 @@ declare namespace Stripe {
       customerId: string,
       id: string,
       params?: CustomerDeleteTaxIdParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedTaxId>;
 
     /**
@@ -1443,7 +1443,7 @@ declare namespace Stripe {
     listTaxIds(
       id: string,
       params?: CustomerListTaxIdsParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<TaxId>;
 
     /**
@@ -1453,7 +1453,7 @@ declare namespace Stripe {
       customerId: string,
       id: string,
       params?: CustomerRetrieveTaxIdParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<TaxId>;
   }
 }

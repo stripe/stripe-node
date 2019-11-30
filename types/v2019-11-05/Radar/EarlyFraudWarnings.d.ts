@@ -88,7 +88,7 @@ declare namespace Stripe {
        */
       list(
         params?: EarlyFraudWarningListParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): ApiListPromise<Radar.EarlyFraudWarning>;
 
       /**
@@ -99,7 +99,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: EarlyFraudWarningRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Radar.EarlyFraudWarning>;
     }
   }

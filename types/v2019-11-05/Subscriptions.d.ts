@@ -885,7 +885,7 @@ declare namespace Stripe {
      */
     create(
       params: SubscriptionCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Subscription>;
 
     /**
@@ -898,7 +898,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: SubscriptionDelParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Subscription>;
 
     /**
@@ -906,7 +906,7 @@ declare namespace Stripe {
      */
     list(
       params?: SubscriptionListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Subscription>;
 
     /**
@@ -915,7 +915,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: SubscriptionRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Subscription>;
 
     /**
@@ -924,7 +924,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: SubscriptionUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Subscription>;
 
     /**
@@ -933,7 +933,7 @@ declare namespace Stripe {
     deleteDiscount(
       id: string,
       params?: SubscriptionDeleteDiscountParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedDiscount>;
   }
 }

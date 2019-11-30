@@ -481,7 +481,7 @@ declare namespace Stripe {
     /**
      * You can create plans using the API, or in the Stripe [Dashboard](https://dashboard.stripe.com/subscriptions/products).
      */
-    create(params: PlanCreateParams, options?: HeaderOptions): Promise<Plan>;
+    create(params: PlanCreateParams, options?: RequestOptions): Promise<Plan>;
 
     /**
      * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
@@ -489,7 +489,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: PlanDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedPlan>;
 
     /**
@@ -497,7 +497,7 @@ declare namespace Stripe {
      */
     list(
       params?: PlanListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Plan>;
 
     /**
@@ -506,7 +506,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: PlanRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Plan>;
 
     /**
@@ -515,7 +515,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: PlanUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Plan>;
   }
 }

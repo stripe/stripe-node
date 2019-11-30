@@ -250,7 +250,7 @@ declare namespace Stripe {
      */
     list(
       params?: BitcoinReceiverListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<BitcoinReceiver>;
 
     /**
@@ -259,7 +259,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: BitcoinReceiverRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<BitcoinReceiver>;
 
     /**
@@ -268,7 +268,7 @@ declare namespace Stripe {
     listTransactions(
       id: string,
       params?: BitcoinReceiverListTransactionsParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<BitcoinTransaction>;
   }
 }

@@ -62,7 +62,7 @@ declare namespace Stripe {
      */
     list(
       params?: ExchangeRateListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<ExchangeRate>;
 
     /**
@@ -71,7 +71,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: ExchangeRateRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<ExchangeRate>;
   }
 }

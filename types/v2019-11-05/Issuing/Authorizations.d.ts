@@ -401,7 +401,7 @@ declare namespace Stripe {
        */
       list(
         params?: AuthorizationListParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): ApiListPromise<Issuing.Authorization>;
 
       /**
@@ -410,7 +410,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: AuthorizationRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Issuing.Authorization>;
 
       /**
@@ -419,7 +419,7 @@ declare namespace Stripe {
       update(
         id: string,
         params?: AuthorizationUpdateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Issuing.Authorization>;
 
       /**
@@ -428,7 +428,7 @@ declare namespace Stripe {
       approve(
         id: string,
         params?: AuthorizationApproveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Issuing.Authorization>;
 
       /**
@@ -437,7 +437,7 @@ declare namespace Stripe {
       decline(
         id: string,
         params?: AuthorizationDeclineParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Issuing.Authorization>;
     }
   }

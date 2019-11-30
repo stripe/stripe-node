@@ -1379,7 +1379,7 @@ declare namespace Stripe {
      */
     create(
       params?: SourceCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Source>;
 
     /**
@@ -1388,7 +1388,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: SourceRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Source>;
 
     /**
@@ -1399,7 +1399,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: SourceUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Source>;
 
     /**
@@ -1408,7 +1408,7 @@ declare namespace Stripe {
     listSourceTransactions(
       id: string,
       params?: SourceListSourceTransactionsParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<SourceTransaction>;
 
     /**
@@ -1417,7 +1417,7 @@ declare namespace Stripe {
     verify(
       id: string,
       params: SourceVerifyParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Source>;
   }
 }

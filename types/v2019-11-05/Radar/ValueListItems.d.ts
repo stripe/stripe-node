@@ -159,7 +159,7 @@ declare namespace Stripe {
        */
       create(
         params: ValueListItemCreateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Radar.ValueListItem>;
 
       /**
@@ -168,7 +168,7 @@ declare namespace Stripe {
       del(
         id: string,
         params?: ValueListItemDeleteParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<DeletedValueListItem>;
 
       /**
@@ -176,7 +176,7 @@ declare namespace Stripe {
        */
       list(
         params: ValueListItemListParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): ApiListPromise<Radar.ValueListItem>;
 
       /**
@@ -185,7 +185,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: ValueListItemRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Radar.ValueListItem>;
     }
   }

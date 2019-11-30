@@ -71,7 +71,7 @@ declare namespace Stripe {
        */
       list(
         params?: ReportTypeListParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): ApiListPromise<Reporting.ReportType>;
 
       /**
@@ -80,7 +80,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: ReportTypeRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Reporting.ReportType>;
     }
   }

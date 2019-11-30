@@ -718,7 +718,7 @@ declare namespace Stripe {
      */
     create(
       params?: SetupIntentCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SetupIntent>;
 
     /**
@@ -726,7 +726,7 @@ declare namespace Stripe {
      */
     list(
       params?: SetupIntentListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<SetupIntent>;
 
     /**
@@ -739,7 +739,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: SetupIntentRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SetupIntent>;
 
     /**
@@ -748,7 +748,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: SetupIntentUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SetupIntent>;
 
     /**
@@ -759,7 +759,7 @@ declare namespace Stripe {
     cancel(
       id: string,
       params?: SetupIntentCancelParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SetupIntent>;
 
     /**
@@ -780,7 +780,7 @@ declare namespace Stripe {
     confirm(
       id: string,
       params?: SetupIntentConfirmParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SetupIntent>;
   }
 }

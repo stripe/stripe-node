@@ -388,7 +388,7 @@ declare namespace Stripe {
      */
     create(
       params: InvoiceItemCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<InvoiceItem>;
 
     /**
@@ -397,7 +397,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: InvoiceItemDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedInvoiceItem>;
 
     /**
@@ -405,7 +405,7 @@ declare namespace Stripe {
      */
     list(
       params?: InvoiceItemListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<InvoiceItem>;
 
     /**
@@ -414,7 +414,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: InvoiceItemRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<InvoiceItem>;
 
     /**
@@ -423,7 +423,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: InvoiceItemUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<InvoiceItem>;
   }
 }

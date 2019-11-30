@@ -252,7 +252,7 @@ declare namespace Stripe {
      */
     create(
       params?: RefundCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Refund>;
 
     /**
@@ -261,7 +261,7 @@ declare namespace Stripe {
     list(
       id: string,
       params?: RefundListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Refund>;
 
     /**
@@ -269,7 +269,7 @@ declare namespace Stripe {
      */
     list(
       params?: RefundListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Refund>;
 
     /**
@@ -279,7 +279,7 @@ declare namespace Stripe {
       chargeId: string,
       id: string,
       params?: RefundRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Refund>;
 
     /**
@@ -288,7 +288,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: RefundRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Refund>;
 
     /**
@@ -299,7 +299,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: RefundUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Refund>;
   }
 }

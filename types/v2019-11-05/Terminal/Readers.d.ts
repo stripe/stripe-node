@@ -203,7 +203,7 @@ declare namespace Stripe {
        */
       create(
         params: ReaderCreateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Terminal.Reader>;
 
       /**
@@ -212,7 +212,7 @@ declare namespace Stripe {
       del(
         id: string,
         params?: ReaderDeleteParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<DeletedReader>;
 
       /**
@@ -220,7 +220,7 @@ declare namespace Stripe {
        */
       list(
         params?: ReaderListParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): ApiListPromise<Terminal.Reader>;
 
       /**
@@ -229,7 +229,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: ReaderRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Terminal.Reader>;
 
       /**
@@ -238,7 +238,7 @@ declare namespace Stripe {
       update(
         id: string,
         params?: ReaderUpdateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Terminal.Reader>;
     }
   }

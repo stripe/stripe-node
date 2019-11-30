@@ -118,7 +118,7 @@ declare namespace Stripe {
      */
     list(
       params?: CountrySpecListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<CountrySpec>;
 
     /**
@@ -127,7 +127,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: CountrySpecRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<CountrySpec>;
   }
 }

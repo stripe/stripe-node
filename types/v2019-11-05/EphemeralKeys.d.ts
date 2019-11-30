@@ -66,7 +66,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: EphemeralKeyDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<EphemeralKey>;
 
     /**
@@ -74,7 +74,7 @@ declare namespace Stripe {
      */
     create(
       params?: EphemeralKeyCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<EphemeralKey>;
   }
 }

@@ -97,7 +97,7 @@ declare namespace Stripe {
      */
     list(
       params?: IssuerFraudRecordListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<IssuerFraudRecord>;
 
     /**
@@ -108,7 +108,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: IssuerFraudRecordRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<IssuerFraudRecord>;
   }
 }

@@ -252,7 +252,7 @@ declare namespace Stripe {
      */
     create(
       params: TaxRateCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<TaxRate>;
 
     /**
@@ -260,7 +260,7 @@ declare namespace Stripe {
      */
     list(
       params?: TaxRateListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<TaxRate>;
 
     /**
@@ -269,7 +269,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: TaxRateRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<TaxRate>;
 
     /**
@@ -278,7 +278,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: TaxRateUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<TaxRate>;
   }
 }
