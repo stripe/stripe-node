@@ -1279,7 +1279,7 @@ declare namespace Stripe {
     list(
       params?: CustomerListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Customer>>;
+    ): ApiListPromise<Customer>;
 
     /**
      * Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
@@ -1326,7 +1326,7 @@ declare namespace Stripe {
       id: string,
       params?: CustomerListBalanceTransactionsParams,
       options?: HeaderOptions
-    ): Promise<ApiList<CustomerBalanceTransaction>>;
+    ): ApiListPromise<CustomerBalanceTransaction>;
 
     /**
      * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
@@ -1370,10 +1370,8 @@ declare namespace Stripe {
       id: string,
       params?: CustomerListSourcesParams,
       options?: HeaderOptions
-    ): Promise<
-      ApiList<
-        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
-      >
+    ): ApiListPromise<
+      Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
     >;
 
     /**
@@ -1446,7 +1444,7 @@ declare namespace Stripe {
       id: string,
       params?: CustomerListTaxIdsParams,
       options?: HeaderOptions
-    ): Promise<ApiList<TaxId>>;
+    ): ApiListPromise<TaxId>;
 
     /**
      * Retrieves the TaxID object with the given identifier.

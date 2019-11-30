@@ -1332,7 +1332,7 @@ declare namespace Stripe {
     list(
       params?: InvoiceListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Invoice>>;
+    ): ApiListPromise<Invoice>;
 
     /**
      * Retrieves the invoice with the given ID.
@@ -1423,7 +1423,7 @@ declare namespace Stripe {
       id: string,
       params?: InvoiceListLineItemsParams,
       options?: HeaderOptions
-    ): Promise<ApiList<InvoiceLineItem>>;
+    ): ApiListPromise<InvoiceLineItem>;
 
     /**
      * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -1432,6 +1432,6 @@ declare namespace Stripe {
       id: string,
       params?: InvoiceListUpcomingLineItemsParams,
       options?: HeaderOptions
-    ): Promise<ApiList<InvoiceLineItem>>;
+    ): ApiListPromise<InvoiceLineItem>;
   }
 }

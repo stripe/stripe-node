@@ -593,7 +593,7 @@ declare namespace Stripe {
     list(
       params?: WebhookEndpointListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<WebhookEndpoint>>;
+    ): ApiListPromise<WebhookEndpoint>;
 
     /**
      * Retrieves the webhook endpoint with the given ID.

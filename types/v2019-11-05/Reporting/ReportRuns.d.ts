@@ -266,7 +266,7 @@ declare namespace Stripe {
       list(
         params?: ReportRunListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Reporting.ReportRun>>;
+      ): ApiListPromise<Reporting.ReportRun>;
 
       /**
        * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)

@@ -211,7 +211,7 @@ declare namespace Stripe {
     list(
       params?: ReviewListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Review>>;
+    ): ApiListPromise<Review>;
 
     /**
      * Retrieves a Review object.

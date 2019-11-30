@@ -63,7 +63,7 @@ declare namespace Stripe {
     list(
       params?: ExchangeRateListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<ExchangeRate>>;
+    ): ApiListPromise<ExchangeRate>;
 
     /**
      * Retrieves the exchange rates from the given currency to every supported currency.

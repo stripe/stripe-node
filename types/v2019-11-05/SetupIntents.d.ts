@@ -727,7 +727,7 @@ declare namespace Stripe {
     list(
       params?: SetupIntentListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<SetupIntent>>;
+    ): ApiListPromise<SetupIntent>;
 
     /**
      * Retrieves the details of a SetupIntent that has previously been created.

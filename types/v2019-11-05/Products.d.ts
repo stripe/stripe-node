@@ -475,7 +475,7 @@ declare namespace Stripe {
     list(
       params?: ProductListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Product>>;
+    ): ApiListPromise<Product>;
 
     /**
      * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.

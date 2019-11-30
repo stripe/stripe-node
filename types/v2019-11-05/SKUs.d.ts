@@ -434,10 +434,7 @@ declare namespace Stripe {
     /**
      * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
      */
-    list(
-      params?: SkuListParams,
-      options?: HeaderOptions
-    ): Promise<ApiList<Sku>>;
+    list(params?: SkuListParams, options?: HeaderOptions): ApiListPromise<Sku>;
 
     /**
      * Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.

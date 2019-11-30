@@ -3437,7 +3437,7 @@ declare namespace Stripe {
     list(
       params?: AccountListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Account>>;
+    ): ApiListPromise<Account>;
 
     /**
      * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
@@ -3476,7 +3476,7 @@ declare namespace Stripe {
       id: string,
       params?: AccountListCapabilitiesParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Capability>>;
+    ): ApiListPromise<Capability>;
 
     /**
      * Retrieves information about the specified Account Capability.
@@ -3524,7 +3524,7 @@ declare namespace Stripe {
       id: string,
       params?: AccountListExternalAccountsParams,
       options?: HeaderOptions
-    ): Promise<ApiList<BankAccount | Card>>;
+    ): ApiListPromise<BankAccount | Card>;
 
     /**
      * Retrieve a specified external account for a given account.
@@ -3584,7 +3584,7 @@ declare namespace Stripe {
       id: string,
       params?: AccountListPersonsParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Person>>;
+    ): ApiListPromise<Person>;
 
     /**
      * Retrieves an existing person.

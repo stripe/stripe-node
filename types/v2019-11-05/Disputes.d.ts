@@ -452,7 +452,7 @@ declare namespace Stripe {
     list(
       params?: DisputeListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Dispute>>;
+    ): ApiListPromise<Dispute>;
 
     /**
      * Retrieves the dispute with the given ID.

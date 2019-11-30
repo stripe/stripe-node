@@ -125,7 +125,7 @@ declare namespace Stripe {
     list(
       params?: OrderReturnListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<OrderReturn>>;
+    ): ApiListPromise<OrderReturn>;
 
     /**
      * Retrieves the details of an existing order return. Supply the unique order ID from either an order return creation request or the order return list, and Stripe will return the corresponding order information.

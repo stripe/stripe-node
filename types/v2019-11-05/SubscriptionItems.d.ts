@@ -341,7 +341,7 @@ declare namespace Stripe {
     list(
       params: SubscriptionItemListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<SubscriptionItem>>;
+    ): ApiListPromise<SubscriptionItem>;
 
     /**
      * Retrieves the invoice item with the given ID.

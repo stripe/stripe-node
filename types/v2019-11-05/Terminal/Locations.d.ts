@@ -200,7 +200,7 @@ declare namespace Stripe {
       list(
         params?: LocationListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Terminal.Location>>;
+      ): ApiListPromise<Terminal.Location>;
 
       /**
        * Retrieves a Location object.

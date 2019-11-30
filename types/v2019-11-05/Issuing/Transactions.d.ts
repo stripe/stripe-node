@@ -224,7 +224,7 @@ declare namespace Stripe {
       list(
         params?: TransactionListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Issuing.Transaction>>;
+      ): ApiListPromise<Issuing.Transaction>;
 
       /**
        * Retrieves an Issuing Transaction object.

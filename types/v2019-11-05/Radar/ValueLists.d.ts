@@ -255,7 +255,7 @@ declare namespace Stripe {
       list(
         params?: ValueListListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Radar.ValueList>>;
+      ): ApiListPromise<Radar.ValueList>;
 
       /**
        * Retrieves a ValueList object.

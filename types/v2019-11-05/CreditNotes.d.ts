@@ -282,7 +282,7 @@ declare namespace Stripe {
     list(
       params?: CreditNoteListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<CreditNote>>;
+    ): ApiListPromise<CreditNote>;
 
     /**
      * Retrieves the credit note object with the given identifier.

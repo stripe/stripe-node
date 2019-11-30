@@ -261,7 +261,7 @@ declare namespace Stripe {
     list(
       params?: TaxRateListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<TaxRate>>;
+    ): ApiListPromise<TaxRate>;
 
     /**
      * Retrieves a tax rate with the given ID

@@ -260,7 +260,7 @@ declare namespace Stripe {
     list(
       params?: BalanceTransactionListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<BalanceTransaction>>;
+    ): ApiListPromise<BalanceTransaction>;
 
     /**
      * Retrieves the balance transaction with the given ID.

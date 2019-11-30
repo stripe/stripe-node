@@ -276,7 +276,7 @@ declare namespace Stripe {
     list(
       params?: TopupListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Topup>>;
+    ): ApiListPromise<Topup>;
 
     /**
      * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
