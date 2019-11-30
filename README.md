@@ -93,6 +93,19 @@ This provides the benefit of better types in most places, and highlights
 some of the areas you will need to modify when you upgrade your API Version.
 Once you have made the upgrade, you can remove these comments.
 
+#### Using `expand` with TypeScript
+
+[Expandable][expanding_objects] fields are typed as `string | Foo`,
+so you must cast them appropriately, eg;
+
+```ts
+const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
+  expand: ['customer'],
+});
+const customerEmail: string = (charge.customer as Stripe.Customer).email;
+const btId: string = charge.balance_transaction as string;
+```
+
 ### Using Promises
 
 Every method returns a chainable promise which can be used instead of a regular
@@ -536,6 +549,7 @@ $ yarn fix
 [api-versions]: https://stripe.com/docs/upgrades
 [api-versions-upgrading]: https://stripe.com/docs/upgrades#how-can-i-upgrade-my-api
 [connect]: https://stripe.com/connect
+[expanding_objects]: https://stripe.com/docs/api/expanding_objects
 [https-proxy-agent]: https://github.com/TooTallNate/node-https-proxy-agent
 [stripe-js]: https://stripe.com/docs/stripe.js
 
