@@ -907,7 +907,7 @@ declare namespace Stripe {
     list(
       params?: SubscriptionListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Subscription>>;
+    ): ApiListPromise<Subscription>;
 
     /**
      * Retrieves the subscription with the given ID.

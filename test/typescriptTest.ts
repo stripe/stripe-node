@@ -14,3 +14,31 @@ const params: Stripe.CustomerCreateParams = {
   description: 'test',
 };
 const customer: Promise<Stripe.Customer> = stripe.customers.create(params);
+
+(async () => {
+  for await (const customer of stripe.customers.list()) {
+    const {id} = customer as Stripe.Customer;
+    if (id === 'hi') {
+      break;
+    }
+  }
+
+  const aThousandCustomers: Array<
+    Stripe.Customer
+  > = await stripe.customers.list().autoPagingToArray({limit: 1000});
+
+  const nothing: void = await stripe.customers
+    .list()
+    .autoPagingEach((customer: Stripe.Customer) => {
+      if (customer.id === 'one') {
+        return false;
+      }
+      if (customer.id === 'two') {
+        return Promise.resolve(false);
+      }
+      if (customer.id === 'three') {
+        return Promise.resolve();
+      }
+      return undefined;
+    });
+})();

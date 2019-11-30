@@ -1,3 +1,5 @@
+///<reference lib="esnext.asynciterable" />
+
 declare namespace Stripe {
   export interface StripeConfig {
     apiVersion?: string;
@@ -14,6 +16,12 @@ declare namespace Stripe {
   export interface ApiList<T> {
     has_more: boolean;
     data: Array<T>;
+  }
+
+  export interface ApiListPromise<T> extends Promise<ApiList<T>>, AsyncIterableIterator<T> {
+    autoPagingEach(handler: (item: T) => boolean | void | Promise<boolean | void>): void;
+
+    autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
   }
 
   export interface RequestEvent {

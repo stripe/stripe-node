@@ -498,7 +498,7 @@ declare namespace Stripe {
     list(
       params?: PlanListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Plan>>;
+    ): ApiListPromise<Plan>;
 
     /**
      * Retrieves the plan with the given ID.

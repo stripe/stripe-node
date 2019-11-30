@@ -98,7 +98,7 @@ declare namespace Stripe {
     list(
       params?: IssuerFraudRecordListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<IssuerFraudRecord>>;
+    ): ApiListPromise<IssuerFraudRecord>;
 
     /**
      * Retrieves the details of an issuer fraud record that has previously been created.

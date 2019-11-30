@@ -108,7 +108,7 @@ declare namespace Stripe {
       list(
         params?: ScheduledQueryRunListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Sigma.ScheduledQueryRun>>;
+      ): ApiListPromise<Sigma.ScheduledQueryRun>;
 
       /**
        * Retrieves the details of an scheduled query run.

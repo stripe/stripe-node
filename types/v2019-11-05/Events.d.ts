@@ -166,7 +166,7 @@ declare namespace Stripe {
     list(
       params?: EventListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Event>>;
+    ): ApiListPromise<Event>;
 
     /**
      * Retrieves the details of an event. Supply the unique identifier of the event, which you might have received in a webhook.

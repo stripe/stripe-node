@@ -281,7 +281,7 @@ declare namespace Stripe {
       list(
         params?: DisputeListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Issuing.Dispute>>;
+      ): ApiListPromise<Issuing.Dispute>;
 
       /**
        * Retrieves an Issuing Dispute object.

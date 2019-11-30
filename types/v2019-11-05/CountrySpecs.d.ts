@@ -119,7 +119,7 @@ declare namespace Stripe {
     list(
       params?: CountrySpecListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<CountrySpec>>;
+    ): ApiListPromise<CountrySpec>;
 
     /**
      * Returns a Country Spec for a given Country code.

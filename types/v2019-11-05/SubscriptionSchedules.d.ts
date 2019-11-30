@@ -903,7 +903,7 @@ declare namespace Stripe {
     list(
       params?: SubscriptionScheduleListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<SubscriptionSchedule>>;
+    ): ApiListPromise<SubscriptionSchedule>;
 
     /**
      * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.

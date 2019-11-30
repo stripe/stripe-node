@@ -287,7 +287,7 @@ declare namespace Stripe {
     list(
       params?: CouponListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Coupon>>;
+    ): ApiListPromise<Coupon>;
 
     /**
      * Retrieves the coupon with the given ID.

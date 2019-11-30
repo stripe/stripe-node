@@ -278,7 +278,7 @@ declare namespace Stripe {
     list(
       params?: ApplicationFeeListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<ApplicationFee>>;
+    ): ApiListPromise<ApplicationFee>;
 
     /**
      * Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
@@ -313,7 +313,7 @@ declare namespace Stripe {
       id: string,
       params?: ApplicationFeeListRefundsParams,
       options?: HeaderOptions
-    ): Promise<ApiList<FeeRefund>>;
+    ): ApiListPromise<FeeRefund>;
 
     /**
      * By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.

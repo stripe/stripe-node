@@ -646,7 +646,7 @@ declare namespace Stripe {
     list(
       params: PaymentMethodListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<PaymentMethod>>;
+    ): ApiListPromise<PaymentMethod>;
 
     /**
      * Retrieves a PaymentMethod object.

@@ -402,7 +402,7 @@ declare namespace Stripe {
       list(
         params?: AuthorizationListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Issuing.Authorization>>;
+      ): ApiListPromise<Issuing.Authorization>;
 
       /**
        * Retrieves an Issuing Authorization object.

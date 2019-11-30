@@ -186,7 +186,7 @@ declare namespace Stripe {
     list(
       params?: FileLinkListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<FileLink>>;
+    ): ApiListPromise<FileLink>;
 
     /**
      * Retrieves the file link with the given ID.

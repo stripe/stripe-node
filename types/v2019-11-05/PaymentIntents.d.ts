@@ -1478,7 +1478,7 @@ declare namespace Stripe {
     list(
       params?: PaymentIntentListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<PaymentIntent>>;
+    ): ApiListPromise<PaymentIntent>;
 
     /**
      * Retrieves the details of a PaymentIntent that has previously been created.

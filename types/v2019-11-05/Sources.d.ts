@@ -1409,7 +1409,7 @@ declare namespace Stripe {
       id: string,
       params?: SourceListSourceTransactionsParams,
       options?: HeaderOptions
-    ): Promise<ApiList<SourceTransaction>>;
+    ): ApiListPromise<SourceTransaction>;
 
     /**
      * Verify a given source.

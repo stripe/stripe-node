@@ -298,7 +298,7 @@ declare namespace Stripe {
     list(
       params?: RecipientListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Recipient>>;
+    ): ApiListPromise<Recipient>;
 
     /**
      * Retrieves the details of an existing recipient. You need only supply the unique recipient identifier that was returned upon recipient creation.

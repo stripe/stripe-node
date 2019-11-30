@@ -3377,7 +3377,7 @@ declare namespace Stripe {
       list(
         params?: CardholderListParams,
         options?: HeaderOptions
-      ): Promise<ApiList<Issuing.Cardholder>>;
+      ): ApiListPromise<Issuing.Cardholder>;
 
       /**
        * Retrieves an Issuing Cardholder object.

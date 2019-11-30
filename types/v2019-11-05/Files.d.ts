@@ -142,7 +142,7 @@ declare namespace Stripe {
     list(
       params?: FileListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<File>>;
+    ): ApiListPromise<File>;
 
     /**
      * Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object.

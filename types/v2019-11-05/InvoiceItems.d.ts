@@ -406,7 +406,7 @@ declare namespace Stripe {
     list(
       params?: InvoiceItemListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<InvoiceItem>>;
+    ): ApiListPromise<InvoiceItem>;
 
     /**
      * Retrieves the invoice item with the given ID.

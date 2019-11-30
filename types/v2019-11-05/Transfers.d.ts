@@ -404,7 +404,7 @@ declare namespace Stripe {
     list(
       params?: TransferListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Transfer>>;
+    ): ApiListPromise<Transfer>;
 
     /**
      * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
@@ -446,7 +446,7 @@ declare namespace Stripe {
       id: string,
       params?: TransferListReversalsParams,
       options?: HeaderOptions
-    ): Promise<ApiList<TransferReversal>>;
+    ): ApiListPromise<TransferReversal>;
 
     /**
      * By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.

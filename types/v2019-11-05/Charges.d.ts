@@ -1564,7 +1564,7 @@ declare namespace Stripe {
     list(
       params?: ChargeListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Charge>>;
+    ): ApiListPromise<Charge>;
 
     /**
      * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.

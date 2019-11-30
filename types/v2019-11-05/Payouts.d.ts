@@ -313,7 +313,7 @@ declare namespace Stripe {
     list(
       params?: PayoutListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Payout>>;
+    ): ApiListPromise<Payout>;
 
     /**
      * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.

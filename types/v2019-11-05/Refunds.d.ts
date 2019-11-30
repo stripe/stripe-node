@@ -262,7 +262,7 @@ declare namespace Stripe {
       id: string,
       params?: RefundListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Refund>>;
+    ): ApiListPromise<Refund>;
 
     /**
      * Returns a list of all refunds you've previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
@@ -270,7 +270,7 @@ declare namespace Stripe {
     list(
       params?: RefundListParams,
       options?: HeaderOptions
-    ): Promise<ApiList<Refund>>;
+    ): ApiListPromise<Refund>;
 
     /**
      * Retrieves the details of an existing refund.
