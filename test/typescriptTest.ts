@@ -13,7 +13,13 @@ const stripe = new Stripe('sk_test_123');
 const params: Stripe.CustomerCreateParams = {
   description: 'test',
 };
-const customer: Promise<Stripe.Customer> = stripe.customers.create(params);
+const headers: Stripe.HeaderOptions = {
+  stripeVersion: '2019-11-05',
+};
+const customer: Promise<Stripe.Customer> = stripe.customers.create(
+  params,
+  headers
+);
 
 (async () => {
   for await (const customer of stripe.customers.list()) {
