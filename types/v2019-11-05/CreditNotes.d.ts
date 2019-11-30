@@ -273,7 +273,7 @@ declare namespace Stripe {
      */
     create(
       params: CreditNoteCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<CreditNote>;
 
     /**
@@ -281,7 +281,7 @@ declare namespace Stripe {
      */
     list(
       params?: CreditNoteListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<CreditNote>;
 
     /**
@@ -290,7 +290,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: CreditNoteRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<CreditNote>;
 
     /**
@@ -299,7 +299,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: CreditNoteUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<CreditNote>;
 
     /**
@@ -308,7 +308,7 @@ declare namespace Stripe {
     voidCreditNote(
       id: string,
       params?: CreditNoteVoidCreditNoteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<CreditNote>;
   }
 }

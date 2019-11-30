@@ -259,7 +259,7 @@ declare namespace Stripe {
      */
     list(
       params?: BalanceTransactionListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<BalanceTransaction>;
 
     /**
@@ -270,7 +270,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: BalanceTransactionRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<BalanceTransaction>;
   }
 }

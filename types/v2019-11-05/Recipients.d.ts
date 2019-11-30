@@ -280,7 +280,7 @@ declare namespace Stripe {
      */
     create(
       params: RecipientCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Recipient>;
 
     /**
@@ -289,7 +289,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: RecipientDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedRecipient>;
 
     /**
@@ -297,7 +297,7 @@ declare namespace Stripe {
      */
     list(
       params?: RecipientListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Recipient>;
 
     /**
@@ -306,7 +306,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: RecipientRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Recipient>;
 
     /**
@@ -319,7 +319,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: RecipientUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Recipient>;
   }
 }

@@ -1555,7 +1555,7 @@ declare namespace Stripe {
      */
     create(
       params?: ChargeCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Charge>;
 
     /**
@@ -1563,7 +1563,7 @@ declare namespace Stripe {
      */
     list(
       params?: ChargeListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Charge>;
 
     /**
@@ -1572,7 +1572,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: ChargeRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Charge>;
 
     /**
@@ -1581,7 +1581,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: ChargeUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Charge>;
 
     /**
@@ -1592,7 +1592,7 @@ declare namespace Stripe {
     capture(
       id: string,
       params?: ChargeCaptureParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Charge>;
   }
 }

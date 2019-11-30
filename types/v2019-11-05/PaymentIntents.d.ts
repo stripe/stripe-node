@@ -1469,7 +1469,7 @@ declare namespace Stripe {
      */
     create(
       params: PaymentIntentCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentIntent>;
 
     /**
@@ -1477,7 +1477,7 @@ declare namespace Stripe {
      */
     list(
       params?: PaymentIntentListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<PaymentIntent>;
 
     /**
@@ -1490,7 +1490,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: PaymentIntentRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentIntent>;
 
     /**
@@ -1505,7 +1505,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: PaymentIntentUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentIntent>;
 
     /**
@@ -1516,7 +1516,7 @@ declare namespace Stripe {
     cancel(
       id: string,
       params?: PaymentIntentCancelParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentIntent>;
 
     /**
@@ -1529,7 +1529,7 @@ declare namespace Stripe {
     capture(
       id: string,
       params?: PaymentIntentCaptureParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentIntent>;
 
     /**
@@ -1562,7 +1562,7 @@ declare namespace Stripe {
     confirm(
       id: string,
       params?: PaymentIntentConfirmParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<PaymentIntent>;
   }
 }

@@ -182,7 +182,7 @@ declare namespace Stripe {
        */
       create(
         params: LocationCreateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Terminal.Location>;
 
       /**
@@ -191,7 +191,7 @@ declare namespace Stripe {
       del(
         id: string,
         params?: LocationDeleteParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<DeletedLocation>;
 
       /**
@@ -199,7 +199,7 @@ declare namespace Stripe {
        */
       list(
         params?: LocationListParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): ApiListPromise<Terminal.Location>;
 
       /**
@@ -208,7 +208,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: LocationRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Terminal.Location>;
 
       /**
@@ -217,7 +217,7 @@ declare namespace Stripe {
       update(
         id: string,
         params?: LocationUpdateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Terminal.Location>;
     }
   }

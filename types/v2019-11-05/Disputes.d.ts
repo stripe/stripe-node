@@ -451,7 +451,7 @@ declare namespace Stripe {
      */
     list(
       params?: DisputeListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Dispute>;
 
     /**
@@ -460,7 +460,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: DisputeRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Dispute>;
 
     /**
@@ -471,7 +471,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: DisputeUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Dispute>;
 
     /**
@@ -482,7 +482,7 @@ declare namespace Stripe {
     close(
       id: string,
       params?: DisputeCloseParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Dispute>;
   }
 }

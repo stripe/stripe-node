@@ -210,7 +210,7 @@ declare namespace Stripe {
      */
     list(
       params?: ReviewListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Review>;
 
     /**
@@ -219,7 +219,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: ReviewRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Review>;
 
     /**
@@ -228,7 +228,7 @@ declare namespace Stripe {
     approve(
       id: string,
       params?: ReviewApproveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Review>;
   }
 }

@@ -559,7 +559,7 @@ declare namespace Stripe {
        */
       create(
         params: SessionCreateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Checkout.Session>;
 
       /**
@@ -568,7 +568,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: SessionRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Checkout.Session>;
     }
   }

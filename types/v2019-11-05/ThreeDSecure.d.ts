@@ -96,7 +96,7 @@ declare namespace Stripe {
      */
     create(
       params: ThreeDSecureCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<ThreeDSecure>;
 
     /**
@@ -105,7 +105,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: ThreeDSecureRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<ThreeDSecure>;
   }
 }

@@ -304,7 +304,7 @@ declare namespace Stripe {
      */
     create(
       params: PayoutCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Payout>;
 
     /**
@@ -312,7 +312,7 @@ declare namespace Stripe {
      */
     list(
       params?: PayoutListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Payout>;
 
     /**
@@ -321,7 +321,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: PayoutRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Payout>;
 
     /**
@@ -330,7 +330,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: PayoutUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Payout>;
 
     /**
@@ -339,7 +339,7 @@ declare namespace Stripe {
     cancel(
       id: string,
       params?: PayoutCancelParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Payout>;
   }
 }

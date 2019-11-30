@@ -457,7 +457,7 @@ declare namespace Stripe {
      */
     create(
       params: ProductCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Product>;
 
     /**
@@ -466,7 +466,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: ProductDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedProduct>;
 
     /**
@@ -474,7 +474,7 @@ declare namespace Stripe {
      */
     list(
       params?: ProductListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Product>;
 
     /**
@@ -483,7 +483,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: ProductRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Product>;
 
     /**
@@ -492,7 +492,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: ProductUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Product>;
   }
 }

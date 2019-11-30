@@ -1314,7 +1314,7 @@ declare namespace Stripe {
      */
     create(
       params: InvoiceCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Invoice>;
 
     /**
@@ -1323,7 +1323,7 @@ declare namespace Stripe {
     del(
       id: string,
       params?: InvoiceDeleteParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<DeletedInvoice>;
 
     /**
@@ -1331,7 +1331,7 @@ declare namespace Stripe {
      */
     list(
       params?: InvoiceListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Invoice>;
 
     /**
@@ -1340,7 +1340,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: InvoiceRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Invoice>;
 
     /**
@@ -1354,7 +1354,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: InvoiceUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Invoice>;
 
     /**
@@ -1363,7 +1363,7 @@ declare namespace Stripe {
     finalizeInvoice(
       id: string,
       params?: InvoiceFinalizeInvoiceParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Invoice>;
 
     /**
@@ -1372,7 +1372,7 @@ declare namespace Stripe {
     markUncollectible(
       id: string,
       params?: InvoiceMarkUncollectibleParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Invoice>;
 
     /**
@@ -1381,7 +1381,7 @@ declare namespace Stripe {
     pay(
       id: string,
       params?: InvoicePayParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Invoice>;
 
     /**
@@ -1393,7 +1393,7 @@ declare namespace Stripe {
      */
     retrieveUpcoming(
       params?: InvoiceRetrieveUpcomingParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Invoice>;
 
     /**
@@ -1404,7 +1404,7 @@ declare namespace Stripe {
     sendInvoice(
       id: string,
       params?: InvoiceSendInvoiceParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Invoice>;
 
     /**
@@ -1413,7 +1413,7 @@ declare namespace Stripe {
     voidInvoice(
       id: string,
       params?: InvoiceVoidInvoiceParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Invoice>;
 
     /**
@@ -1422,7 +1422,7 @@ declare namespace Stripe {
     listLineItems(
       id: string,
       params?: InvoiceListLineItemsParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<InvoiceLineItem>;
 
     /**
@@ -1431,7 +1431,7 @@ declare namespace Stripe {
     listUpcomingLineItems(
       id: string,
       params?: InvoiceListUpcomingLineItemsParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<InvoiceLineItem>;
   }
 }

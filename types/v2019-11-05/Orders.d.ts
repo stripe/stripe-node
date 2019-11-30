@@ -639,14 +639,14 @@ declare namespace Stripe {
     /**
      * Creates a new order object.
      */
-    create(params: OrderCreateParams, options?: HeaderOptions): Promise<Order>;
+    create(params: OrderCreateParams, options?: RequestOptions): Promise<Order>;
 
     /**
      * Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
      */
     list(
       params?: OrderListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Order>;
 
     /**
@@ -655,7 +655,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: OrderRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Order>;
 
     /**
@@ -664,7 +664,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: OrderUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Order>;
 
     /**
@@ -673,7 +673,7 @@ declare namespace Stripe {
     pay(
       id: string,
       params?: OrderPayParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Order>;
 
     /**
@@ -682,7 +682,7 @@ declare namespace Stripe {
     returnOrder(
       id: string,
       params?: OrderReturnOrderParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<OrderReturn>;
   }
 }

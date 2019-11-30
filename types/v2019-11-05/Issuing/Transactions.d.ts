@@ -223,7 +223,7 @@ declare namespace Stripe {
        */
       list(
         params?: TransactionListParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): ApiListPromise<Issuing.Transaction>;
 
       /**
@@ -232,7 +232,7 @@ declare namespace Stripe {
       retrieve(
         id: string,
         params?: TransactionRetrieveParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Issuing.Transaction>;
 
       /**
@@ -241,7 +241,7 @@ declare namespace Stripe {
       update(
         id: string,
         params?: TransactionUpdateParams,
-        options?: HeaderOptions
+        options?: RequestOptions
       ): Promise<Issuing.Transaction>;
     }
   }

@@ -133,7 +133,7 @@ declare namespace Stripe {
      */
     retrieve(
       params?: BalanceRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Balance>;
   }
 }

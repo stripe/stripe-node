@@ -165,7 +165,7 @@ declare namespace Stripe {
      */
     list(
       params?: EventListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Event>;
 
     /**
@@ -174,7 +174,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: EventRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Event>;
   }
 }

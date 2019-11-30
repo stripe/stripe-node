@@ -11,7 +11,7 @@ declare namespace Stripe {
     telemetry?: boolean;
   }
 
-  export interface HeaderOptions {
+  export interface RequestOptions {
     /**
      * Use a specific API Key for this request.
      * For Connect, we recommend using `stripeAccount` instead.

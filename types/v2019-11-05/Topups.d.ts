@@ -268,14 +268,14 @@ declare namespace Stripe {
     /**
      * Top up the balance of an account
      */
-    create(params: TopupCreateParams, options?: HeaderOptions): Promise<Topup>;
+    create(params: TopupCreateParams, options?: RequestOptions): Promise<Topup>;
 
     /**
      * Returns a list of top-ups.
      */
     list(
       params?: TopupListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<Topup>;
 
     /**
@@ -284,7 +284,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: TopupRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Topup>;
 
     /**
@@ -293,7 +293,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: TopupUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Topup>;
 
     /**
@@ -302,7 +302,7 @@ declare namespace Stripe {
     cancel(
       id: string,
       params?: TopupCancelParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<Topup>;
   }
 }

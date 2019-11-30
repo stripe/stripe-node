@@ -894,7 +894,7 @@ declare namespace Stripe {
      */
     create(
       params?: SubscriptionScheduleCreateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
 
     /**
@@ -902,7 +902,7 @@ declare namespace Stripe {
      */
     list(
       params?: SubscriptionScheduleListParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): ApiListPromise<SubscriptionSchedule>;
 
     /**
@@ -911,7 +911,7 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: SubscriptionScheduleRetrieveParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
 
     /**
@@ -920,7 +920,7 @@ declare namespace Stripe {
     update(
       id: string,
       params?: SubscriptionScheduleUpdateParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
 
     /**
@@ -929,7 +929,7 @@ declare namespace Stripe {
     cancel(
       id: string,
       params?: SubscriptionScheduleCancelParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
 
     /**
@@ -938,7 +938,7 @@ declare namespace Stripe {
     release(
       id: string,
       params?: SubscriptionScheduleReleaseParams,
-      options?: HeaderOptions
+      options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
   }
 }
