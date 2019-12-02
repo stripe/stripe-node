@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Topup {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'topup';
+
+    /**
      * Amount transferred.
      */
     amount?: number;
@@ -44,26 +54,9 @@ declare namespace Stripe {
     failure_message?: string | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'topup';
 
     source?: Source;
 
@@ -81,6 +74,13 @@ declare namespace Stripe {
      * A string that identifies this top-up as part of a group.
      */
     transfer_group?: string | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   namespace Topup {
@@ -132,6 +132,38 @@ declare namespace Stripe {
      * A string that identifies this top-up as part of a group.
      */
     transfer_group?: string;
+  }
+
+  /**
+   * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
+   */
+  interface TopupRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates the metadata of a top-up. Other top-up details are not editable by design.
+   */
+  interface TopupUpdateParams {
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   /**
@@ -220,38 +252,6 @@ declare namespace Stripe {
     }
 
     type Status = 'canceled' | 'failed' | 'pending' | 'succeeded'
-  }
-
-  /**
-   * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
-   */
-  interface TopupRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates the metadata of a top-up. Other top-up details are not editable by design.
-   */
-  interface TopupUpdateParams {
-    /**
-     * An arbitrary string attached to the object. Often useful for displaying to users.
-     */
-    description?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   /**

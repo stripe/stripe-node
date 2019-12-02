@@ -4,11 +4,6 @@ declare namespace Stripe {
    */
   interface CountrySpec {
     /**
-     * The default currency for this country. This applies to both payment methods and bank accounts.
-     */
-    default_currency?: string;
-
-    /**
      * Unique identifier for the object. Represented as the ISO country code for this country.
      */
     id?: string;
@@ -17,6 +12,11 @@ declare namespace Stripe {
      * String representing the object's type. Objects of the same type share the same value.
      */
     object?: 'country_spec';
+
+    /**
+     * The default currency for this country. This applies to both payment methods and bank accounts.
+     */
+    default_currency?: string;
 
     /**
      * Currencies that can be accepted in the specific country (for transfers).
@@ -78,6 +78,16 @@ declare namespace Stripe {
   }
 
   /**
+   * Returns a Country Spec for a given Country code.
+   */
+  interface CountrySpecRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
    * Lists all Country Spec objects available in the API.
    */
   interface CountrySpecListParams {
@@ -100,16 +110,6 @@ declare namespace Stripe {
      * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
      */
     starting_after?: string;
-  }
-
-  /**
-   * Returns a Country Spec for a given Country code.
-   */
-  interface CountrySpecRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
   }
 
   class CountrySpecsResource {

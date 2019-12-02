@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface IssuerFraudRecord {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'issuer_fraud_record';
+
+    /**
      * An IFR is actionable if it has not received a dispute and has not been fully refunded. You may wish to proactively refund a charge that receives an IFR, in order to avoid receiving a dispute later.
      */
     actionable?: boolean;
@@ -29,24 +39,26 @@ declare namespace Stripe {
     has_liability_shift?: boolean;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
 
     /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'issuer_fraud_record';
-
-    /**
      * The timestamp at which the card issuer posted the issuer fraud record.
      */
     post_date?: number;
+  }
+
+  /**
+   * Retrieves the details of an issuer fraud record that has previously been created.
+   *
+   * Please refer to the [issuer fraud record](https://stripe.com/docs/api#issuer_fraud_record_object) object reference for more details.
+   */
+  interface IssuerFraudRecordRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 
   /**
@@ -77,18 +89,6 @@ declare namespace Stripe {
      * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
      */
     starting_after?: string;
-  }
-
-  /**
-   * Retrieves the details of an issuer fraud record that has previously been created.
-   *
-   * Please refer to the [issuer fraud record](https://stripe.com/docs/api#issuer_fraud_record_object) object reference for more details.
-   */
-  interface IssuerFraudRecordRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
   }
 
   class IssuerFraudRecordsResource {

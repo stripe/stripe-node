@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Plan {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'plan';
+
+    /**
      * Whether the plan is currently available for new subscriptions.
      */
     active: boolean;
@@ -39,11 +49,6 @@ declare namespace Stripe {
     currency: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * One of `day`, `week`, `month` or `year`. The frequency with which a subscription should be billed.
      */
     interval: Plan.Interval;
@@ -59,21 +64,9 @@ declare namespace Stripe {
     livemode: boolean;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
      * A brief description of the plan, hidden from customers.
      */
     nickname: string | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'plan';
 
     /**
      * The product whose pricing this plan determines.
@@ -104,6 +97,13 @@ declare namespace Stripe {
      * Configures how the quantity per period should be determined, can be either `metered` or `licensed`. `licensed` will automatically bill the `quantity` set when adding it to a subscription, `metered` will aggregate the total usage based on usage records. Defaults to `licensed`.
      */
     usage_type: Plan.UsageType;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace Plan {
@@ -362,9 +362,51 @@ declare namespace Stripe {
   }
 
   /**
-   * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
+   * Retrieves the plan with the given ID.
    */
-  interface PlanDeleteParams {}
+  interface PlanRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan's ID, amount, currency, or billing cycle.
+   */
+  interface PlanUpdateParams {
+    /**
+     * Whether the plan is currently available for new subscriptions.
+     */
+    active?: boolean;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * A brief description of the plan, hidden from customers.
+     */
+    nickname?: string;
+
+    /**
+     * The product the plan belongs to. Note that after updating, statement descriptors and line items of the plan in active subscriptions will be affected.
+     */
+    product?: string;
+
+    /**
+     * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+     */
+    trial_period_days?: number;
+  }
 
   /**
    * Returns a list of your plans.
@@ -431,51 +473,9 @@ declare namespace Stripe {
   }
 
   /**
-   * Retrieves the plan with the given ID.
+   * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
    */
-  interface PlanRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan's ID, amount, currency, or billing cycle.
-   */
-  interface PlanUpdateParams {
-    /**
-     * Whether the plan is currently available for new subscriptions.
-     */
-    active?: boolean;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * A brief description of the plan, hidden from customers.
-     */
-    nickname?: string;
-
-    /**
-     * The product the plan belongs to. Note that after updating, statement descriptors and line items of the plan in active subscriptions will be affected.
-     */
-    product?: string;
-
-    /**
-     * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
-     */
-    trial_period_days?: number;
-  }
+  interface PlanDeleteParams {}
 
   class PlansResource {
     /**

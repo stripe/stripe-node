@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Sku {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'sku';
+
+    /**
      * Whether the SKU is available for purchase.
      */
     active: boolean;
@@ -26,11 +36,6 @@ declare namespace Stripe {
     currency: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * The URL of an image for this SKU, meant to be displayable to the customer.
      */
     image: string | null;
@@ -41,18 +46,6 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'sku';
 
     /**
      * The dimensions of this SKU for shipping purposes.
@@ -70,6 +63,13 @@ declare namespace Stripe {
     product: string | Product;
 
     updated: number;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace Sku {
@@ -242,63 +242,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Delete a SKU. Deleting a SKU is only possible until it has been used in an order.
-   */
-  interface SkuDeleteParams {}
-
-  /**
-   * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
-   */
-  interface SkuListParams {
-    /**
-     * Only return SKUs that are active or inactive (e.g., pass `false` to list all inactive products).
-     */
-    active?: boolean;
-
-    /**
-     * Only return SKUs that have the specified key-value pairs in this partially constructed dictionary. Can be specified only if `product` is also supplied. For instance, if the associated product has attributes `["color", "size"]`, passing in `attributes[color]=red` returns all the SKUs for this product that have `color` set to `red`.
-     */
-    attributes?: {
-      [key: string]: string;
-    };
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Only return SKUs with the given IDs.
-     */
-    ids?: Array<string>;
-
-    /**
-     * Only return SKUs that are either in stock or out of stock (e.g., pass `false` to list all SKUs that are out of stock). If no value is provided, all SKUs are returned.
-     */
-    in_stock?: boolean;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * The ID of the product whose SKUs will be retrieved. Must be a product with type `good`.
-     */
-    product?: string;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  /**
    * Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
    */
   interface SkuRetrieveParams {
@@ -415,6 +358,63 @@ declare namespace Stripe {
       width: number;
     }
   }
+
+  /**
+   * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
+   */
+  interface SkuListParams {
+    /**
+     * Only return SKUs that are active or inactive (e.g., pass `false` to list all inactive products).
+     */
+    active?: boolean;
+
+    /**
+     * Only return SKUs that have the specified key-value pairs in this partially constructed dictionary. Can be specified only if `product` is also supplied. For instance, if the associated product has attributes `["color", "size"]`, passing in `attributes[color]=red` returns all the SKUs for this product that have `color` set to `red`.
+     */
+    attributes?: {
+      [key: string]: string;
+    };
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Only return SKUs with the given IDs.
+     */
+    ids?: Array<string>;
+
+    /**
+     * Only return SKUs that are either in stock or out of stock (e.g., pass `false` to list all SKUs that are out of stock). If no value is provided, all SKUs are returned.
+     */
+    in_stock?: boolean;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * The ID of the product whose SKUs will be retrieved. Must be a product with type `good`.
+     */
+    product?: string;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+  }
+
+  /**
+   * Delete a SKU. Deleting a SKU is only possible until it has been used in an order.
+   */
+  interface SkuDeleteParams {}
 
   class SkusResource {
     /**

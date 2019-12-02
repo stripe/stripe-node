@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Coupon {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'coupon';
+
+    /**
      * Amount (in the `currency` specified) that will be taken off the subtotal of any invoices for this customer.
      */
     amount_off: number | null;
@@ -29,11 +39,6 @@ declare namespace Stripe {
     duration_in_months: number | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
@@ -44,21 +49,9 @@ declare namespace Stripe {
     max_redemptions: number | null;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
      * Name of the coupon displayed to customers on for instance invoices or receipts.
      */
     name: string | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'coupon';
 
     /**
      * Percent that will be taken off the subtotal of any invoices for this customer for the duration of the coupon. For example, a coupon with percent_off of 50 will make a %s100 invoice %s50 instead.
@@ -79,6 +72,13 @@ declare namespace Stripe {
      * Taking account of the above properties, whether this coupon can still be applied to a customer.
      */
     valid: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace Coupon {
@@ -171,9 +171,36 @@ declare namespace Stripe {
   }
 
   /**
-   * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
+   * Retrieves the coupon with the given ID.
    */
-  interface CouponDeleteParams {}
+  interface CouponRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
+   */
+  interface CouponUpdateParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A set of key-value pairs that you can attach to a coupon object. It can be useful for storing additional information about the coupon in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
+     */
+    name?: string;
+  }
 
   /**
    * Returns a list of your coupons.
@@ -230,36 +257,9 @@ declare namespace Stripe {
   }
 
   /**
-   * Retrieves the coupon with the given ID.
+   * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
    */
-  interface CouponRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
-   */
-  interface CouponUpdateParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A set of key-value pairs that you can attach to a coupon object. It can be useful for storing additional information about the coupon in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
-     */
-    name?: string;
-  }
+  interface CouponDeleteParams {}
 
   class CouponsResource {
     /**

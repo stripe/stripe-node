@@ -4,6 +4,11 @@ declare namespace Stripe {
    */
   interface AccountLink {
     /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'account_link';
+
+    /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
     created?: number;
@@ -12,11 +17,6 @@ declare namespace Stripe {
      * The timestamp at which this account link will expire.
      */
     expires_at?: number;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'account_link';
 
     /**
      * The URL for the account link.

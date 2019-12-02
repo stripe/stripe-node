@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Subscription {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'subscription';
+
+    /**
      * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account.
      */
     application_fee_percent?: number | null;
@@ -96,11 +106,6 @@ declare namespace Stripe {
      */
     ended_at?: number | null;
 
-    /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
     invoice_customer_balance_settings?: Subscription.InvoiceCustomerBalanceSettings;
 
     /**
@@ -119,21 +124,9 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
      * Specifies the approximate timestamp on which any pending invoice items will be billed according to the schedule provided at `pending_invoice_item_interval`.
      */
     next_pending_invoice_item_invoice?: number | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'subscription';
 
     /**
      * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
@@ -199,6 +192,13 @@ declare namespace Stripe {
      * If the subscription has a trial, the beginning of that trial.
      */
     trial_start?: number | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   namespace Subscription {
@@ -482,157 +482,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
-   *
-   * Note, however, that any pending invoice items that you've created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed.
-   *
-   * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
-   */
-  interface SubscriptionDelParams {
-    /**
-     * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
-     */
-    invoice_now?: boolean;
-
-    /**
-     * Will generate a proration invoice item that credits remaining unused time until the subscription period end.
-     */
-    prorate?: boolean;
-  }
-
-  /**
-   * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
-   */
-  interface SubscriptionListParams {
-    /**
-     * The collection method of the subscriptions to retrieve. Either `charge_automatically` or `send_invoice`.
-     */
-    collection_method?: SubscriptionListParams.CollectionMethod;
-
-    created?: number | SubscriptionListParams.Created;
-
-    current_period_end?: number | SubscriptionListParams.CurrentPeriodEnd;
-
-    current_period_start?: number | SubscriptionListParams.CurrentPeriodStart;
-
-    /**
-     * The ID of the customer whose subscriptions will be retrieved.
-     */
-    customer?: string;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * The ID of the plan whose subscriptions will be retrieved.
-     */
-    plan?: string;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-
-    /**
-     * The status of the subscriptions to retrieve. One of: `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `unpaid`, `canceled`, or `all`. Passing in a value of `canceled` will return all canceled subscriptions, including those belonging to deleted customers. Passing in a value of `all` will return subscriptions of all statuses.
-     */
-    status?: SubscriptionListParams.Status;
-  }
-
-  namespace SubscriptionListParams {
-    type CollectionMethod = 'charge_automatically' | 'send_invoice'
-
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    interface CurrentPeriodEnd {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    interface CurrentPeriodStart {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    type Status =
-      | 'active'
-      | 'all'
-      | 'canceled'
-      | 'ended'
-      | 'incomplete'
-      | 'incomplete_expired'
-      | 'past_due'
-      | 'trialing'
-      | 'unpaid'
-  }
-
-  /**
    * Retrieves the subscription with the given ID.
    */
   interface SubscriptionRetrieveParams {
@@ -872,6 +721,157 @@ declare namespace Stripe {
        */
       destination: string;
     }
+  }
+
+  /**
+   * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
+   */
+  interface SubscriptionListParams {
+    /**
+     * The collection method of the subscriptions to retrieve. Either `charge_automatically` or `send_invoice`.
+     */
+    collection_method?: SubscriptionListParams.CollectionMethod;
+
+    created?: number | SubscriptionListParams.Created;
+
+    current_period_end?: number | SubscriptionListParams.CurrentPeriodEnd;
+
+    current_period_start?: number | SubscriptionListParams.CurrentPeriodStart;
+
+    /**
+     * The ID of the customer whose subscriptions will be retrieved.
+     */
+    customer?: string;
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * The ID of the plan whose subscriptions will be retrieved.
+     */
+    plan?: string;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+
+    /**
+     * The status of the subscriptions to retrieve. One of: `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `unpaid`, `canceled`, or `all`. Passing in a value of `canceled` will return all canceled subscriptions, including those belonging to deleted customers. Passing in a value of `all` will return subscriptions of all statuses.
+     */
+    status?: SubscriptionListParams.Status;
+  }
+
+  namespace SubscriptionListParams {
+    type CollectionMethod = 'charge_automatically' | 'send_invoice'
+
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface CurrentPeriodEnd {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface CurrentPeriodStart {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    type Status =
+      | 'active'
+      | 'all'
+      | 'canceled'
+      | 'ended'
+      | 'incomplete'
+      | 'incomplete_expired'
+      | 'past_due'
+      | 'trialing'
+      | 'unpaid'
+  }
+
+  /**
+   * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
+   *
+   * Note, however, that any pending invoice items that you've created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed.
+   *
+   * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
+   */
+  interface SubscriptionDelParams {
+    /**
+     * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
+     */
+    invoice_now?: boolean;
+
+    /**
+     * Will generate a proration invoice item that credits remaining unused time until the subscription period end.
+     */
+    prorate?: boolean;
   }
 
   /**

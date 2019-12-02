@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface EphemeralKey {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'ephemeral_key';
+
+    /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
     created?: number;
@@ -14,30 +24,15 @@ declare namespace Stripe {
     expires?: number;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'ephemeral_key';
 
     /**
      * The key's secret. You can use this value to make authorized requests to the Stripe API.
      */
     secret?: string;
   }
-
-  /**
-   * Invalidates a short-lived API key for a given resource.
-   */
-  interface EphemeralKeyDeleteParams {}
 
   /**
    * Creates a short-lived API key for a given resource.
@@ -58,6 +53,11 @@ declare namespace Stripe {
      */
     issuing_card?: string;
   }
+
+  /**
+   * Invalidates a short-lived API key for a given resource.
+   */
+  interface EphemeralKeyDeleteParams {}
 
   class EphemeralKeysResource {
     /**

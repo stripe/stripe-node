@@ -4,6 +4,16 @@ declare namespace Stripe {
      * The Card object.
      */
     interface Card {
+      /**
+       * Unique identifier for the object.
+       */
+      id?: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'issuing.card';
+
       authorization_controls?: Card.AuthorizationControls;
 
       /**
@@ -37,11 +47,6 @@ declare namespace Stripe {
       exp_year?: number;
 
       /**
-       * Unique identifier for the object.
-       */
-      id?: string;
-
-      /**
        * The last 4 digits of the card number.
        */
       last4?: string;
@@ -52,21 +57,9 @@ declare namespace Stripe {
       livemode?: boolean;
 
       /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
        * The name of the cardholder, printed on the card.
        */
       name?: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object?: 'issuing.card';
 
       /**
        * Metadata about the PIN on the card.
@@ -79,7 +72,7 @@ declare namespace Stripe {
       replacement_for?: string | Issuing.Card | null;
 
       /**
-       * Why the card that this card replaces (if any) needed to be replaced. One of `damage`, `expiration`, `loss`, or `theft`.
+       * The reason why the previous card needed to be replaced.
        */
       replacement_reason?: Card.ReplacementReason | null;
 
@@ -97,6 +90,13 @@ declare namespace Stripe {
        * One of `virtual` or `physical`.
        */
       type?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
     }
 
     namespace Card {
@@ -1037,9 +1037,13 @@ declare namespace Stripe {
 
       interface Pin {
         /**
-         * The status of the pin. One of `blocked` or `active`.
+         * Wether the PIN will be accepted or not.
          */
-        status: string;
+        status: Pin.Status;
+      }
+
+      namespace Pin {
+        type Status = 'active' | 'blocked'
       }
 
       type ReplacementReason = 'damage' | 'expiration' | 'loss' | 'theft'
@@ -1048,7 +1052,7 @@ declare namespace Stripe {
         address: Address;
 
         /**
-         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+         * The delivery service that shipped a card. One of `fedex` or `usps`.
          */
         carrier?: string | null;
 
@@ -1068,9 +1072,9 @@ declare namespace Stripe {
         phone?: string | null;
 
         /**
-         * The delivery status of the card. One of `pending`, `shipped`, `delivered`, `returned`, `failure`, or `canceled`.
+         * The delivery status of the card.
          */
-        status?: string | null;
+        status?: Shipping.Status | null;
 
         /**
          * A tracking number for a card shipment.
@@ -1083,9 +1087,21 @@ declare namespace Stripe {
         tracking_url?: string | null;
 
         /**
-         * One of `bulk` or `individual`. Bulk shipments will be grouped and mailed together, while individual ones will not.
+         * Packaging options.
          */
-        type: string;
+        type: Shipping.Type;
+      }
+
+      namespace Shipping {
+        type Status =
+          | 'canceled'
+          | 'delivered'
+          | 'failure'
+          | 'pending'
+          | 'returned'
+          | 'shipped'
+
+        type Type = 'bulk' | 'individual'
       }
 
       type Status =
@@ -1131,7 +1147,7 @@ declare namespace Stripe {
       replacement_for?: string;
 
       /**
-       * If `replacement_for` is specified, this should indicate why that card is being replaced. One of `damage`, `expiration`, `loss`, or `theft`.
+       * If `replacement_for` is specified, this should indicate why that card is being replaced.
        */
       replacement_reason?: CardCreateParams.ReplacementReason;
 
@@ -2081,7 +2097,7 @@ declare namespace Stripe {
         name: string;
 
         /**
-         * One of `bulk` or `individual`. Bulk shipments will be grouped and mailed together, while individual ones will not.
+         * Packaging options.
          */
         type?: '' | Shipping.Type;
       }
@@ -2105,104 +2121,6 @@ declare namespace Stripe {
       }
 
       type Status = 'active' | 'inactive'
-
-      type Type = 'physical' | 'virtual'
-    }
-
-    /**
-     * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-     */
-    interface CardListParams {
-      /**
-       * Only return cards belonging to the Cardholder with the provided ID.
-       */
-      cardholder?: string;
-
-      /**
-       * Only return cards that were issued during the given date interval.
-       */
-      created?: number | CardListParams.Created;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Only return cards that have the given expiration month.
-       */
-      exp_month?: number;
-
-      /**
-       * Only return cards that have the given expiration year.
-       */
-      exp_year?: number;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Only return cards that have the given last four digits.
-       */
-      last4?: string;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * Only return cards that have the given name.
-       */
-      name?: string;
-
-      /**
-       * Only return cards whose full card number matches that of this card source ID.
-       */
-      source?: string;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-
-      /**
-       * Only return cards that have the given status. One of `active`, `inactive`, `canceled`, `lost`, or `stolen`.
-       */
-      status?: CardListParams.Status;
-
-      /**
-       * Only return cards that have the given type. One of `virtual` or `physical`.
-       */
-      type?: CardListParams.Type;
-    }
-
-    namespace CardListParams {
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
-      type Status = 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen'
 
       type Type = 'physical' | 'virtual'
     }
@@ -3171,6 +3089,104 @@ declare namespace Stripe {
       }
 
       type Status = 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen'
+    }
+
+    /**
+     * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+     */
+    interface CardListParams {
+      /**
+       * Only return cards belonging to the Cardholder with the provided ID.
+       */
+      cardholder?: string;
+
+      /**
+       * Only return cards that were issued during the given date interval.
+       */
+      created?: number | CardListParams.Created;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Only return cards that have the given expiration month.
+       */
+      exp_month?: number;
+
+      /**
+       * Only return cards that have the given expiration year.
+       */
+      exp_year?: number;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Only return cards that have the given last four digits.
+       */
+      last4?: string;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Only return cards that have the given name.
+       */
+      name?: string;
+
+      /**
+       * Only return cards whose full card number matches that of this card source ID.
+       */
+      source?: string;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+
+      /**
+       * Only return cards that have the given status. One of `active`, `inactive`, `canceled`, `lost`, or `stolen`.
+       */
+      status?: CardListParams.Status;
+
+      /**
+       * Only return cards that have the given type. One of `virtual` or `physical`.
+       */
+      type?: CardListParams.Type;
+    }
+
+    namespace CardListParams {
+      interface Created {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
+
+      type Status = 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen'
+
+      type Type = 'physical' | 'virtual'
     }
 
     /**

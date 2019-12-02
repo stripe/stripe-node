@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface BalanceTransaction {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'balance_transaction';
+
+    /**
      * Gross amount of the transaction, in %s.
      */
     amount?: number;
@@ -41,19 +51,9 @@ declare namespace Stripe {
     fee_details?: Array<BalanceTransaction.FeeDetail>;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Net amount of the transaction, in %s.
      */
     net?: number;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'balance_transaction';
 
     /**
      * The Stripe object to which this transaction is related.
@@ -143,6 +143,18 @@ declare namespace Stripe {
       | 'transfer_cancel'
       | 'transfer_failure'
       | 'transfer_refund'
+  }
+
+  /**
+   * Retrieves the balance transaction with the given ID.
+   *
+   * Note that this endpoint previously used the path /v1/balance/history/:id.
+   */
+  interface BalanceTransactionRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 
   /**
@@ -237,18 +249,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves the balance transaction with the given ID.
-   *
-   * Note that this endpoint previously used the path /v1/balance/history/:id.
-   */
-  interface BalanceTransactionRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
   }
 
   class BalanceTransactionsResource {

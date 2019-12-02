@@ -5,6 +5,16 @@ declare namespace Stripe {
      */
     interface Transaction {
       /**
+       * Unique identifier for the object.
+       */
+      id?: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'issuing.transaction';
+
+      /**
        * The amount of this transaction in your currency. This is the amount that your balance will be updated by.
        */
       amount?: number;
@@ -39,11 +49,6 @@ declare namespace Stripe {
       dispute?: string | Issuing.Dispute | null;
 
       /**
-       * Unique identifier for the object.
-       */
-      id?: string;
-
-      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode?: boolean;
@@ -61,21 +66,16 @@ declare namespace Stripe {
       merchant_data?: Transaction.MerchantData;
 
       /**
+       * One of `capture`, `refund`, `cash_withdrawal`, `refund_reversal`, `dispute`, or `dispute_loss`.
+       */
+      type?: string;
+
+      /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata?: {
         [key: string]: string;
       };
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object?: 'issuing.transaction';
-
-      /**
-       * One of `capture`, `refund`, `cash_withdrawal`, `refund_reversal`, `dispute`, or `dispute_loss`.
-       */
-      type?: string;
     }
 
     namespace Transaction {
@@ -120,6 +120,32 @@ declare namespace Stripe {
          */
         url?: string | null;
       }
+    }
+
+    /**
+     * Retrieves an Issuing Transaction object.
+     */
+    interface TransactionRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+     */
+    interface TransactionUpdateParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      metadata?:
+        | {
+          [key: string]: string;
+        }
+        | '';
     }
 
     /**
@@ -189,32 +215,6 @@ declare namespace Stripe {
          */
         lte?: number;
       }
-    }
-
-    /**
-     * Retrieves an Issuing Transaction object.
-     */
-    interface TransactionRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
-     * Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
-    interface TransactionUpdateParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      metadata?:
-        | {
-          [key: string]: string;
-        }
-        | '';
     }
 
     class TransactionsResource {

@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Order {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'order';
+
+    /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the order.
      */
     amount?: number;
@@ -45,11 +55,6 @@ declare namespace Stripe {
     external_coupon_code?: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * List of items constituting the order. An order can have up to 25 items.
      */
     items?: Array<OrderItem>;
@@ -58,18 +63,6 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'order';
 
     returns?: ApiList<OrderReturn> | null;
 
@@ -104,6 +97,13 @@ declare namespace Stripe {
      * The user's order ID if it is different from the Stripe order ID.
      */
     upstream_id?: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   namespace Order {
@@ -300,6 +300,69 @@ declare namespace Stripe {
   }
 
   /**
+   * Retrieves the details of an existing order. Supply the unique order ID from either an order creation request or the order list, and Stripe will return the corresponding order information.
+   */
+  interface OrderRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates the specific order by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+   */
+  interface OrderUpdateParams {
+    /**
+     * A coupon code that represents a discount to be applied to this order. Must be one-time duration and in same currency as the order. An order can have multiple coupons.
+     */
+    coupon?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A set of key-value pairs that you can attach to a product object. It can be useful for storing additional information about the order in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * The shipping method to select for fulfilling this order. If specified, must be one of the `id`s of a shipping method in the `shipping_methods` array. If specified, will overwrite the existing selected shipping method, updating `items` as necessary.
+     */
+    selected_shipping_method?: string;
+
+    /**
+     * Tracking information once the order has been fulfilled.
+     */
+    shipping?: OrderUpdateParams.Shipping;
+
+    /**
+     * Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More detail in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
+     */
+    status?: OrderUpdateParams.Status;
+  }
+
+  namespace OrderUpdateParams {
+    interface Shipping {
+      /**
+       * The name of the carrier like `USPS`, `UPS`, or `FedEx`.
+       */
+      carrier: string;
+
+      /**
+       * The tracking number provided by the carrier.
+       */
+      tracking_number: string;
+    }
+
+    type Status = 'canceled' | 'created' | 'fulfilled' | 'paid' | 'returned'
+  }
+
+  /**
    * Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
    */
   interface OrderListParams {
@@ -488,69 +551,6 @@ declare namespace Stripe {
         lte?: number;
       }
     }
-  }
-
-  /**
-   * Retrieves the details of an existing order. Supply the unique order ID from either an order creation request or the order list, and Stripe will return the corresponding order information.
-   */
-  interface OrderRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates the specific order by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-   */
-  interface OrderUpdateParams {
-    /**
-     * A coupon code that represents a discount to be applied to this order. Must be one-time duration and in same currency as the order. An order can have multiple coupons.
-     */
-    coupon?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A set of key-value pairs that you can attach to a product object. It can be useful for storing additional information about the order in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * The shipping method to select for fulfilling this order. If specified, must be one of the `id`s of a shipping method in the `shipping_methods` array. If specified, will overwrite the existing selected shipping method, updating `items` as necessary.
-     */
-    selected_shipping_method?: string;
-
-    /**
-     * Tracking information once the order has been fulfilled.
-     */
-    shipping?: OrderUpdateParams.Shipping;
-
-    /**
-     * Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More detail in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
-     */
-    status?: OrderUpdateParams.Status;
-  }
-
-  namespace OrderUpdateParams {
-    interface Shipping {
-      /**
-       * The name of the carrier like `USPS`, `UPS`, or `FedEx`.
-       */
-      carrier: string;
-
-      /**
-       * The tracking number provided by the carrier.
-       */
-      tracking_number: string;
-    }
-
-    type Status = 'canceled' | 'created' | 'fulfilled' | 'paid' | 'returned'
   }
 
   /**

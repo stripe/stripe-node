@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface OrderReturn {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'order_return';
+
+    /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the returned line item.
      */
     amount?: number;
@@ -19,11 +29,6 @@ declare namespace Stripe {
     currency?: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * The items included in this order return.
      */
     items?: Array<OrderItem>;
@@ -34,11 +39,6 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'order_return';
-
-    /**
      * The order that this return includes items from.
      */
     order?: string | Order | null;
@@ -47,6 +47,16 @@ declare namespace Stripe {
      * The ID of the refund issued for this return.
      */
     refund?: string | Refund | null;
+  }
+
+  /**
+   * Retrieves the details of an existing order return. Supply the unique order ID from either an order return creation request or the order return list, and Stripe will return the corresponding order information.
+   */
+  interface OrderReturnRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 
   /**
@@ -106,16 +116,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves the details of an existing order return. Supply the unique order ID from either an order return creation request or the order return list, and Stripe will return the corresponding order information.
-   */
-  interface OrderReturnRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
   }
 
   class OrderReturnsResource {

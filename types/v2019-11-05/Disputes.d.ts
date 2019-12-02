@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Dispute {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'dispute';
+
+    /**
      * Disputed amount. Usually the amount of the charge, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
      */
     amount?: number;
@@ -33,11 +43,6 @@ declare namespace Stripe {
     evidence_details?: Dispute.EvidenceDetails;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * If true, it is still possible to refund the disputed payment. Once the payment has been fully refunded, no further funds will be withdrawn from your Stripe account as a result of this dispute.
      */
     is_charge_refundable?: boolean;
@@ -48,21 +53,9 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
      * Network-dependent reason code for the dispute.
      */
     network_reason_code?: string | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'dispute';
 
     /**
      * ID of the PaymentIntent that was disputed.
@@ -78,6 +71,13 @@ declare namespace Stripe {
      * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `charge_refunded`, `won`, or `lost`.
      */
     status?: Dispute.Status;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   namespace Dispute {
@@ -252,67 +252,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Returns a list of your disputes.
-   */
-  interface DisputeListParams {
-    /**
-     * Only return disputes associated to the charge specified by this charge ID.
-     */
-    charge?: string;
-
-    created?: number | DisputeListParams.Created;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * Only return disputes associated to the PaymentIntent specified by this PaymentIntent ID.
-     */
-    payment_intent?: string;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  namespace DisputeListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
-  /**
    * Retrieves the dispute with the given ID.
    */
   interface DisputeRetrieveParams {
@@ -430,6 +369,67 @@ declare namespace Stripe {
        * Has a maximum character count of 20,000.
        */
       uncategorized_text?: string;
+    }
+  }
+
+  /**
+   * Returns a list of your disputes.
+   */
+  interface DisputeListParams {
+    /**
+     * Only return disputes associated to the charge specified by this charge ID.
+     */
+    charge?: string;
+
+    created?: number | DisputeListParams.Created;
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * Only return disputes associated to the PaymentIntent specified by this PaymentIntent ID.
+     */
+    payment_intent?: string;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+  }
+
+  namespace DisputeListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
     }
   }
 

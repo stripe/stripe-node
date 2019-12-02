@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Account {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'account';
+
+    /**
      * Optional information related to the business.
      */
     business_profile: Account.BusinessProfile | null;
@@ -52,24 +62,7 @@ declare namespace Stripe {
      */
     external_accounts: ApiList<BankAccount | Card>;
 
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
     individual: Person;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'account';
 
     /**
      * Whether Stripe can send payouts to this account.
@@ -89,6 +82,13 @@ declare namespace Stripe {
      * The Stripe account type. Can be `standard`, `express`, or `custom`.
      */
     type: Account.Type;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace Account {
@@ -200,7 +200,7 @@ declare namespace Stripe {
       name_kanji?: string | null;
 
       /**
-       * Whether the company's owners have been provided. This Boolean will be `true` if you've manually indicated that all owners are provided via [the `owners_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-owners_provided), or if Stripe determined that all owners were provided. Stripe determines ownership requirements using both the number of owners provided and their total percent ownership (calculated by adding the `percent_ownership` of each owner together).
+       * Whether the company's owners have been provided. This Boolean will be `true` if you've manually indicated that all owners are provided via [the `owners_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-owners_provided), or if Stripe determined that sufficient owners were provided. Stripe determines ownership requirements using both the number of owners provided and their total percent ownership (calculated by adding the `percent_ownership` of each owner together).
        */
       owners_provided: boolean;
 
@@ -529,11 +529,6 @@ declare namespace Stripe {
    */
   interface Capability {
     /**
-     * The account for which the capability enables functionality.
-     */
-    account?: string | Account;
-
-    /**
      * The identifier for the capability.
      */
     id?: string;
@@ -542,6 +537,11 @@ declare namespace Stripe {
      * String representing the object's type. Objects of the same type share the same value.
      */
     object?: 'capability';
+
+    /**
+     * The account for which the capability enables functionality.
+     */
+    account?: string | Account;
 
     /**
      * Whether the capability has been requested.
@@ -607,14 +607,14 @@ declare namespace Stripe {
    */
   interface LoginLink {
     /**
-     * Time at which the object was created. Measured in seconds since the Unix epoch.
-     */
-    created?: number;
-
-    /**
      * String representing the object's type. Objects of the same type share the same value.
      */
     object?: 'login_link';
+
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created?: number;
 
     /**
      * The URL for the login link.
@@ -626,6 +626,16 @@ declare namespace Stripe {
    * The Person object.
    */
   interface Person {
+    /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'person';
+
     /**
      * The account the person is associated with.
      */
@@ -676,11 +686,6 @@ declare namespace Stripe {
     gender: string | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * Whether the person's `id_number` was provided.
      */
     id_number_provided: boolean;
@@ -706,18 +711,6 @@ declare namespace Stripe {
     maiden_name: string | null;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'person';
-
-    /**
      * The person's phone number.
      */
     phone: string | null;
@@ -735,6 +728,13 @@ declare namespace Stripe {
     ssn_last_4_provided: boolean;
 
     verification: Person.Verification;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace Person {
@@ -1710,83 +1710,6 @@ declare namespace Stripe {
   }
 
   /**
-   * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
-   *
-   * Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.
-   *
-   * If you want to delete your own account, use the [data tab in your account settings](https://dashboard.stripe.com/account/data) instead.
-   */
-  interface AccountDelParams {}
-
-  /**
-   * Returns a list of accounts connected to your platform via [Connect](https://stripe.com/docs/connect). If you're not a platform, the list is empty.
-   */
-  interface AccountListParams {
-    created?: number | AccountListParams.Created;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  namespace AccountListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
-  /**
-   * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
-   *
-   * Test-mode Custom and Express accounts can be rejected at any time. Accounts created using live-mode keys may only be rejected once all balances are zero.
-   */
-  interface AccountRejectParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
-     */
-    reason: string;
-  }
-
-  /**
    * Retrieves the details of an account.
    */
   interface AccountRetrieveParams {
@@ -2523,38 +2446,54 @@ declare namespace Stripe {
   }
 
   /**
-   * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
+   * Returns a list of accounts connected to your platform via [Connect](https://stripe.com/docs/connect). If you're not a platform, the list is empty.
    */
-  interface AccountListCapabilitiesParams {
+  interface AccountListParams {
+    created?: number | AccountListParams.Created;
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
     /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
   }
 
-  /**
-   * Retrieves information about the specified Account Capability.
-   */
-  interface AccountRetrieveCapabilityParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
+  namespace AccountListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
 
-  /**
-   * Updates an existing Account Capability.
-   */
-  interface AccountUpdateCapabilityParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
 
-    /**
-     * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
-     */
-    requested?: boolean;
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**
@@ -2582,127 +2521,6 @@ declare namespace Stripe {
     metadata?: {
       [key: string]: string;
     };
-  }
-
-  /**
-   * Delete a specified external account for a given account.
-   */
-  interface AccountDeleteExternalAccountParams {}
-
-  /**
-   * List external accounts for an account.
-   */
-  interface AccountListExternalAccountsParams {
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  /**
-   * Retrieve a specified external account for a given account.
-   */
-  interface AccountRetrieveExternalAccountParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
-   * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
-   */
-  interface AccountUpdateExternalAccountParams {
-    /**
-     * The name of the person or business that owns the bank account.
-     */
-    account_holder_name?: string;
-
-    /**
-     * The type of entity that holds the account. This can be either `individual` or `company`.
-     */
-    account_holder_type?:
-      | ''
-      | AccountUpdateExternalAccountParams.AccountHolderType;
-
-    /**
-     * City/District/Suburb/Town/Village.
-     */
-    address_city?: string;
-
-    /**
-     * Billing address country, if provided when creating card.
-     */
-    address_country?: string;
-
-    /**
-     * Address line 1 (Street address/PO Box/Company name).
-     */
-    address_line1?: string;
-
-    /**
-     * Address line 2 (Apartment/Suite/Unit/Building).
-     */
-    address_line2?: string;
-
-    /**
-     * State/County/Province/Region.
-     */
-    address_state?: string;
-
-    /**
-     * ZIP or postal code.
-     */
-    address_zip?: string;
-
-    /**
-     * When set to true, this becomes the default external account for its currency.
-     */
-    default_for_currency?: boolean;
-
-    /**
-     * Two digit number representing the card's expiration month.
-     */
-    exp_month?: string;
-
-    /**
-     * Four digit number representing the card's expiration year.
-     */
-    exp_year?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * Cardholder name.
-     */
-    name?: string;
-  }
-
-  namespace AccountUpdateExternalAccountParams {
-    type AccountHolderType = 'company' | 'individual'
   }
 
   /**
@@ -3030,9 +2848,58 @@ declare namespace Stripe {
   }
 
   /**
+   * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
+   *
+   * Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.
+   *
+   * If you want to delete your own account, use the [data tab in your account settings](https://dashboard.stripe.com/account/data) instead.
+   */
+  interface AccountDelParams {}
+
+  /**
+   * Delete a specified external account for a given account.
+   */
+  interface AccountDeleteExternalAccountParams {}
+
+  /**
    * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
    */
   interface AccountDeletePersonParams {}
+
+  /**
+   * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
+   */
+  interface AccountListCapabilitiesParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * List external accounts for an account.
+   */
+  interface AccountListExternalAccountsParams {
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+  }
 
   /**
    * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
@@ -3089,6 +2956,43 @@ declare namespace Stripe {
   }
 
   /**
+   * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
+   *
+   * Test-mode Custom and Express accounts can be rejected at any time. Accounts created using live-mode keys may only be rejected once all balances are zero.
+   */
+  interface AccountRejectParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
+     */
+    reason: string;
+  }
+
+  /**
+   * Retrieves information about the specified Account Capability.
+   */
+  interface AccountRetrieveCapabilityParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Retrieve a specified external account for a given account.
+   */
+  interface AccountRetrieveExternalAccountParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
    * Retrieves an existing person.
    */
   interface AccountRetrievePersonParams {
@@ -3096,6 +3000,102 @@ declare namespace Stripe {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+  }
+
+  /**
+   * Updates an existing Account Capability.
+   */
+  interface AccountUpdateCapabilityParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+     */
+    requested?: boolean;
+  }
+
+  /**
+   * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
+   * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
+   */
+  interface AccountUpdateExternalAccountParams {
+    /**
+     * The name of the person or business that owns the bank account.
+     */
+    account_holder_name?: string;
+
+    /**
+     * The type of entity that holds the account. This can be either `individual` or `company`.
+     */
+    account_holder_type?:
+      | ''
+      | AccountUpdateExternalAccountParams.AccountHolderType;
+
+    /**
+     * City/District/Suburb/Town/Village.
+     */
+    address_city?: string;
+
+    /**
+     * Billing address country, if provided when creating card.
+     */
+    address_country?: string;
+
+    /**
+     * Address line 1 (Street address/PO Box/Company name).
+     */
+    address_line1?: string;
+
+    /**
+     * Address line 2 (Apartment/Suite/Unit/Building).
+     */
+    address_line2?: string;
+
+    /**
+     * State/County/Province/Region.
+     */
+    address_state?: string;
+
+    /**
+     * ZIP or postal code.
+     */
+    address_zip?: string;
+
+    /**
+     * When set to true, this becomes the default external account for its currency.
+     */
+    default_for_currency?: boolean;
+
+    /**
+     * Two digit number representing the card's expiration month.
+     */
+    exp_month?: string;
+
+    /**
+     * Four digit number representing the card's expiration year.
+     */
+    exp_year?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * Cardholder name.
+     */
+    name?: string;
+  }
+
+  namespace AccountUpdateExternalAccountParams {
+    type AccountHolderType = 'company' | 'individual'
   }
 
   /**

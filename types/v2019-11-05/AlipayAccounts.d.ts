@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface AlipayAccount {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'alipay_account';
+
+    /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
     created: number;
@@ -16,26 +26,9 @@ declare namespace Stripe {
     fingerprint: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'alipay_account';
 
     /**
      * If the Alipay account object is not reusable, the exact amount that you can create a charge for.
@@ -61,6 +54,13 @@ declare namespace Stripe {
      * The username for the Alipay account.
      */
     username: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   interface DeletedAlipayAccount {

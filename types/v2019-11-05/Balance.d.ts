@@ -4,6 +4,11 @@ declare namespace Stripe {
    */
   interface Balance {
     /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'balance';
+
+    /**
      * Funds that are available to be transferred or paid out, whether automatically by Stripe or explicitly via the [Transfers API](#transfers) or [Payouts API](#payouts). The available balance for each currency and payment type can be found in the `source_types` property.
      */
     available?: Array<Balance.Available>;
@@ -17,11 +22,6 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'balance';
 
     /**
      * Funds that are not yet available in the balance, due to the 7-day rolling pay cycle. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.

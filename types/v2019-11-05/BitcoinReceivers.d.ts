@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface BitcoinReceiver {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'bitcoin_receiver';
+
+    /**
      * True when this bitcoin receiver has received a non-zero amount of bitcoin.
      */
     active: boolean;
@@ -61,11 +71,6 @@ declare namespace Stripe {
     filled: boolean;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * A bitcoin address that is specific to this receiver. The customer can send bitcoin to this address to fill the receiver.
      */
     inbound_address: string;
@@ -74,18 +79,6 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'bitcoin_receiver';
 
     /**
      * The ID of the payment created from the receiver, if any. Hidden when viewing the receiver with a publishable key.
@@ -105,6 +98,13 @@ declare namespace Stripe {
     uncaptured_funds: boolean;
 
     used_for_payment: boolean | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   interface DeletedBitcoinReceiver {
@@ -129,6 +129,16 @@ declare namespace Stripe {
    */
   interface BitcoinTransaction {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'bitcoin_transaction';
+
+    /**
      * The amount of `currency` that the transaction was converted to in real-time.
      */
     amount?: number;
@@ -149,19 +159,19 @@ declare namespace Stripe {
     currency?: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'bitcoin_transaction';
-
-    /**
      * The receiver to which this transaction was sent.
      */
     receiver?: string;
+  }
+
+  /**
+   * Retrieves the Bitcoin receiver with the given ID.
+   */
+  interface BitcoinReceiverRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 
   /**
@@ -202,16 +212,6 @@ declare namespace Stripe {
      * Filter for receivers with uncaptured funds.
      */
     uncaptured_funds?: boolean;
-  }
-
-  /**
-   * Retrieves the Bitcoin receiver with the given ID.
-   */
-  interface BitcoinReceiverRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
   }
 
   /**

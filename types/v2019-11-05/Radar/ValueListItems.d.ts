@@ -5,6 +5,16 @@ declare namespace Stripe {
      */
     interface ValueListItem {
       /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'radar.value_list_item';
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -15,19 +25,9 @@ declare namespace Stripe {
       created_by: string;
 
       /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'radar.value_list_item';
 
       /**
        * The value of the item.
@@ -78,9 +78,14 @@ declare namespace Stripe {
     }
 
     /**
-     * Deletes a ValueListItem object, removing it from its parent value list.
+     * Retrieves a ValueListItem object.
      */
-    interface ValueListItemDeleteParams {}
+    interface ValueListItemRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
 
     /**
      * Returns a list of ValueListItem objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -144,14 +149,9 @@ declare namespace Stripe {
     }
 
     /**
-     * Retrieves a ValueListItem object.
+     * Deletes a ValueListItem object, removing it from its parent value list.
      */
-    interface ValueListItemRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
+    interface ValueListItemDeleteParams {}
 
     class ValueListItemsResource {
       /**

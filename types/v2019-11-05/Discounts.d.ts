@@ -3,6 +3,11 @@ declare namespace Stripe {
    * The Discount object.
    */
   interface Discount {
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'discount';
+
     coupon: Coupon;
 
     customer: string | Customer | null;
@@ -11,11 +16,6 @@ declare namespace Stripe {
      * If the coupon has a duration of `repeating`, the date that this discount will end. If the coupon has a duration of `once` or `forever`, this attribute will be null.
      */
     end: number | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'discount';
 
     /**
      * Date that the coupon was applied.

@@ -3,6 +3,16 @@ declare namespace Stripe {
    * The ThreeDSecure object.
    */
   interface ThreeDSecure {
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'three_d_secure';
+
     amount?: number;
 
     /**
@@ -23,19 +33,9 @@ declare namespace Stripe {
     currency?: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'three_d_secure';
 
     /**
      * If present, this is the URL that you should send the cardholder to for authentication. If you are going to use Stripe.js to display the authentication page in an iframe, you should use the value "_callback".

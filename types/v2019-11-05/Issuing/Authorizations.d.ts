@@ -5,6 +5,16 @@ declare namespace Stripe {
      */
     interface Authorization {
       /**
+       * Unique identifier for the object.
+       */
+      id?: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'issuing.authorization';
+
+      /**
        * Whether the authorization has been approved.
        */
       approved?: boolean;
@@ -48,11 +58,6 @@ declare namespace Stripe {
        */
       held_currency?: string;
 
-      /**
-       * Unique identifier for the object.
-       */
-      id?: string;
-
       is_held_amount_controllable?: boolean;
 
       /**
@@ -61,18 +66,6 @@ declare namespace Stripe {
       livemode?: boolean;
 
       merchant_data?: Authorization.MerchantData;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object?: 'issuing.authorization';
 
       /**
        * The amount the user is requesting to be authorized. This field will only be non-zero during an `issuing.authorization.request` webhook.
@@ -99,6 +92,13 @@ declare namespace Stripe {
        * What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
        */
       wallet_provider?: string | null;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
     }
 
     namespace Authorization {
@@ -253,6 +253,35 @@ declare namespace Stripe {
     }
 
     /**
+     * Retrieves an Issuing Authorization object.
+     */
+    interface AuthorizationRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates the specified Issuing Authorization object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+     */
+    interface AuthorizationUpdateParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?:
+        | {
+          [key: string]: string;
+        }
+        | '';
+    }
+
+    /**
      * Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
      */
     interface AuthorizationListParams {
@@ -321,35 +350,6 @@ declare namespace Stripe {
       }
 
       type Status = 'closed' | 'pending' | 'reversed'
-    }
-
-    /**
-     * Retrieves an Issuing Authorization object.
-     */
-    interface AuthorizationRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
-     * Updates the specified Issuing Authorization object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
-    interface AuthorizationUpdateParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata?:
-        | {
-          [key: string]: string;
-        }
-        | '';
     }
 
     /**

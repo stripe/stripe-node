@@ -1,4 +1,5 @@
 ///<reference path='../lib.d.ts' />
+///<reference path='../webhooks.d.ts' />
 ///<reference path='./Addresses.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
@@ -143,6 +144,7 @@ declare module 'stripe' {
     topups: Stripe.TopupsResource;
     transfers: Stripe.TransfersResource;
     webhookEndpoints: Stripe.WebhookEndpointsResource;
+    webhooks: Stripe.Webhooks;
 
     /**
      * Namespaced Resources

@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Customer {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'customer';
+
+    /**
      * The customer's address.
      */
     address: Address | null;
@@ -57,11 +67,6 @@ declare namespace Stripe {
     email: string | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * The prefix for the customer used to generate unique invoice numbers.
      */
     invoice_prefix: string | null;
@@ -74,21 +79,9 @@ declare namespace Stripe {
     livemode: boolean;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
      * The customer's full name or business name.
      */
     name: string | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'customer';
 
     /**
      * The customer's phone number.
@@ -136,6 +129,13 @@ declare namespace Stripe {
      * Describes the status of looking up the tax ID provided in `tax_info`. This field has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
      */
     tax_info_verification: Customer.TaxInfoVerification | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace Customer {
@@ -243,6 +243,16 @@ declare namespace Stripe {
    */
   interface CustomerBalanceTransaction {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'customer_balance_transaction';
+
+    /**
      * The amount of the transaction. A negative value is a credit for the customer's balance, and a positive value is a debit to the customer's `balance`.
      */
     amount?: number;
@@ -278,11 +288,6 @@ declare namespace Stripe {
     ending_balance?: number;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * The ID of the invoice (if any) related to the transaction.
      */
     invoice?: string | Invoice | null;
@@ -293,6 +298,11 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
+     * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_too_large`, `invoice_too_small`, `unapplied_from_invoice`, or `unspent_receiver_credit`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
+     */
+    type?: CustomerBalanceTransaction.Type;
+
+    /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata?:
@@ -300,16 +310,6 @@ declare namespace Stripe {
         [key: string]: string;
       }
       | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'customer_balance_transaction';
-
-    /**
-     * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_too_large`, `invoice_too_small`, `unapplied_from_invoice`, or `unspent_receiver_credit`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
-     */
-    type?: CustomerBalanceTransaction.Type;
   }
 
   namespace CustomerBalanceTransaction {
@@ -335,6 +335,16 @@ declare namespace Stripe {
    */
   interface TaxId {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'tax_id';
+
+    /**
      * Two-letter ISO code representing the country of the tax ID.
      */
     country: string | null;
@@ -350,19 +360,9 @@ declare namespace Stripe {
     customer: string | Customer;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'tax_id';
 
     /**
      * Type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `za_vat`, or `unknown`
@@ -633,67 +633,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
-   */
-  interface CustomerDeleteParams {}
-
-  /**
-   * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
-   */
-  interface CustomerListParams {
-    created?: number | CustomerListParams.Created;
-
-    /**
-     * A filter on the list based on the customer's `email` field. The value must be a string.
-     */
-    email?: string;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  namespace CustomerListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
-  /**
    * Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
    */
   interface CustomerRetrieveParams {
@@ -891,46 +830,16 @@ declare namespace Stripe {
   }
 
   /**
-   * Removes the currently applied discount on a customer.
+   * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
    */
-  interface CustomerDeleteDiscountParams {}
-
-  /**
-   * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-   */
-  interface CustomerCreateBalanceTransactionParams {
-    /**
-     * The integer amount in **%s** to apply to the customer's balance. Pass a negative amount to credit the customer's balance, and pass in a positive amount to debit the customer's balance.
-     */
-    amount: number;
+  interface CustomerListParams {
+    created?: number | CustomerListParams.Created;
 
     /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). If the customer's [`currency`](https://stripe.com/docs/api/customers/object#customer_object-currency) is set, this value must match it. If the customer's `currency` is not set, it will be updated to this value.
+     * A filter on the list based on the customer's `email` field. The value must be a string.
      */
-    currency: string;
+    email?: string;
 
-    /**
-     * An arbitrary string attached to the object. Often useful for displaying to users.
-     */
-    description?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-  }
-
-  /**
-   * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-   */
-  interface CustomerListBalanceTransactionsParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
      */
@@ -952,20 +861,49 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-   */
-  interface CustomerRetrieveBalanceTransactionParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
+  namespace CustomerListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
   }
 
   /**
-   * Most customer balance transaction fields are immutable, but you may update its description and metadata.
+   * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
    */
-  interface CustomerUpdateBalanceTransactionParams {
+  interface CustomerDeleteParams {}
+
+  /**
+   * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+   */
+  interface CustomerCreateBalanceTransactionParams {
+    /**
+     * The integer amount in **%s** to apply to the customer's balance. Pass a negative amount to credit the customer's balance, and pass in a positive amount to debit the customer's balance.
+     */
+    amount: number;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). If the customer's [`currency`](https://stripe.com/docs/api/customers/object#customer_object-currency) is set, this value must match it. If the customer's `currency` is not set, it will be updated to this value.
+     */
+    currency: string;
+
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
@@ -1011,6 +949,78 @@ declare namespace Stripe {
   }
 
   /**
+   * Creates a new TaxID object for a customer.
+   */
+  interface CustomerCreateTaxIdParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, or `za_vat`
+     */
+    type: CustomerCreateTaxIdParams.Type;
+
+    /**
+     * Value of the tax ID.
+     */
+    value: string;
+  }
+
+  namespace CustomerCreateTaxIdParams {
+    type Type =
+      | 'au_abn'
+      | 'ch_vat'
+      | 'eu_vat'
+      | 'in_gst'
+      | 'mx_rfc'
+      | 'no_vat'
+      | 'nz_gst'
+      | 'za_vat'
+  }
+
+  /**
+   * Removes the currently applied discount on a customer.
+   */
+  interface CustomerDeleteDiscountParams {}
+
+  /**
+   * Delete a specified source for a given customer.
+   */
+  interface CustomerDeleteSourceParams {}
+
+  /**
+   * Deletes an existing TaxID object.
+   */
+  interface CustomerDeleteTaxIdParams {}
+
+  /**
+   * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+   */
+  interface CustomerListBalanceTransactionsParams {
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+  }
+
+  /**
    * List sources for a specified customer.
    */
   interface CustomerListSourcesParams {
@@ -1041,6 +1051,41 @@ declare namespace Stripe {
   }
 
   /**
+   * Returns a list of tax IDs for a customer.
+   */
+  interface CustomerListTaxIdsParams {
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+  }
+
+  /**
+   * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+   */
+  interface CustomerRetrieveBalanceTransactionParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
    * Retrieve a specified source for a given customer.
    */
   interface CustomerRetrieveSourceParams {
@@ -1048,6 +1093,38 @@ declare namespace Stripe {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
+  }
+
+  /**
+   * Retrieves the TaxID object with the given identifier.
+   */
+  interface CustomerRetrieveTaxIdParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Most customer balance transaction fields are immutable, but you may update its description and metadata.
+   */
+  interface CustomerUpdateBalanceTransactionParams {
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   /**
@@ -1164,11 +1241,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Delete a specified source for a given customer.
-   */
-  interface CustomerDeleteSourceParams {}
-
-  /**
    * Verify a specified bank account for a given customer.
    */
   interface CustomerVerifySourceParams {
@@ -1177,78 +1249,6 @@ declare namespace Stripe {
      */
     amounts?: Array<number>;
 
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Creates a new TaxID object for a customer.
-   */
-  interface CustomerCreateTaxIdParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, or `za_vat`
-     */
-    type: CustomerCreateTaxIdParams.Type;
-
-    /**
-     * Value of the tax ID.
-     */
-    value: string;
-  }
-
-  namespace CustomerCreateTaxIdParams {
-    type Type =
-      | 'au_abn'
-      | 'ch_vat'
-      | 'eu_vat'
-      | 'in_gst'
-      | 'mx_rfc'
-      | 'no_vat'
-      | 'nz_gst'
-      | 'za_vat'
-  }
-
-  /**
-   * Deletes an existing TaxID object.
-   */
-  interface CustomerDeleteTaxIdParams {}
-
-  /**
-   * Returns a list of tax IDs for a customer.
-   */
-  interface CustomerListTaxIdsParams {
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  /**
-   * Retrieves the TaxID object with the given identifier.
-   */
-  interface CustomerRetrieveTaxIdParams {
     /**
      * Specifies which fields in the response should be expanded.
      */

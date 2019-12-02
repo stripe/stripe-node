@@ -5,6 +5,16 @@ declare namespace Stripe {
      */
     interface ReportRun {
       /**
+       * Unique identifier for the object.
+       */
+      id?: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'reporting.report_run';
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created?: number;
@@ -16,19 +26,9 @@ declare namespace Stripe {
       error?: string | null;
 
       /**
-       * Unique identifier for the object.
-       */
-      id?: string;
-
-      /**
        * Always `true`: reports can only be run on live-mode data.
        */
       livemode?: boolean;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object?: 'reporting.report_run';
 
       parameters?: ReportRun.Parameters;
 
@@ -191,6 +191,16 @@ declare namespace Stripe {
     }
 
     /**
+     * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+     */
+    interface ReportRunRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
      * Returns a list of Report Runs, with the most recent appearing first. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
      */
     interface ReportRunListParams {
@@ -239,16 +249,6 @@ declare namespace Stripe {
          */
         lte?: number;
       }
-    }
-
-    /**
-     * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-     */
-    interface ReportRunRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
     }
 
     class ReportRunsResource {

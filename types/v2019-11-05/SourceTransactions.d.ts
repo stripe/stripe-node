@@ -3,6 +3,16 @@ declare namespace Stripe {
    * The SourceTransaction object.
    */
   interface SourceTransaction {
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'source_transaction';
+
     ach_credit_transfer?: SourceTransaction.AchCreditTransfer;
 
     /**
@@ -25,19 +35,9 @@ declare namespace Stripe {
     gbp_credit_transfer?: SourceTransaction.GbpCreditTransfer;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'source_transaction';
 
     paper_check?: SourceTransaction.PaperCheck;
 
