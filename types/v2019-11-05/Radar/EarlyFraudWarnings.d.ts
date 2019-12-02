@@ -5,6 +5,16 @@ declare namespace Stripe {
      */
     interface EarlyFraudWarning {
       /**
+       * Unique identifier for the object.
+       */
+      id?: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'radar.early_fraud_warning';
+
+      /**
        * An EFW is actionable if it has not received a dispute and has not been fully refunded. You may wish to proactively refund a charge that receives an EFW, in order to avoid receiving a dispute later.
        */
       actionable?: boolean;
@@ -25,19 +35,21 @@ declare namespace Stripe {
       fraud_type?: string;
 
       /**
-       * Unique identifier for the object.
-       */
-      id?: string;
-
-      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode?: boolean;
+    }
 
+    /**
+     * Retrieves the details of an early fraud warning that has previously been created.
+     *
+     * Please refer to the [early fraud warning](https://stripe.com/docs/api#early_fraud_warning_object) object reference for more details.
+     */
+    interface EarlyFraudWarningRetrieveParams {
       /**
-       * String representing the object's type. Objects of the same type share the same value.
+       * Specifies which fields in the response should be expanded.
        */
-      object?: 'radar.early_fraud_warning';
+      expand?: Array<string>;
     }
 
     /**
@@ -68,18 +80,6 @@ declare namespace Stripe {
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
        */
       starting_after?: string;
-    }
-
-    /**
-     * Retrieves the details of an early fraud warning that has previously been created.
-     *
-     * Please refer to the [early fraud warning](https://stripe.com/docs/api#early_fraud_warning_object) object reference for more details.
-     */
-    interface EarlyFraudWarningRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
     }
 
     class EarlyFraudWarningsResource {

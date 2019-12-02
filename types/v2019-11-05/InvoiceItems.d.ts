@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface InvoiceItem {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'invoiceitem';
+
+    /**
      * Amount (in the `currency` specified) of the invoice item. This should always be equal to `unit_amount * quantity`.
      */
     amount: number;
@@ -34,11 +44,6 @@ declare namespace Stripe {
     discountable: boolean;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * The ID of the invoice this invoice item belongs to.
      */
     invoice: string | Invoice | null;
@@ -47,18 +52,6 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'invoiceitem';
 
     period: InvoiceItem.Period;
 
@@ -106,6 +99,13 @@ declare namespace Stripe {
      * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
      */
     unit_amount_decimal: string | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace InvoiceItem {
@@ -231,77 +231,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
-   */
-  interface InvoiceItemDeleteParams {}
-
-  /**
-   * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
-   */
-  interface InvoiceItemListParams {
-    created?: number | InvoiceItemListParams.Created;
-
-    /**
-     * The identifier of the customer whose invoice items to return. If none is provided, all invoice items will be returned.
-     */
-    customer?: string;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Only return invoice items belonging to this invoice. If none is provided, all invoice items will be returned. If specifying an invoice, no customer identifier is needed.
-     */
-    invoice?: string;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * Set to `true` to only show pending invoice items, which are not yet attached to any invoices. Set to `false` to only show invoice items already attached to invoices. If unspecified, no filter is applied.
-     */
-    pending?: boolean;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  namespace InvoiceItemListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
-  /**
    * Retrieves the invoice item with the given ID.
    */
   interface InvoiceItemRetrieveParams {
@@ -381,6 +310,77 @@ declare namespace Stripe {
       start: number;
     }
   }
+
+  /**
+   * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
+   */
+  interface InvoiceItemListParams {
+    created?: number | InvoiceItemListParams.Created;
+
+    /**
+     * The identifier of the customer whose invoice items to return. If none is provided, all invoice items will be returned.
+     */
+    customer?: string;
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Only return invoice items belonging to this invoice. If none is provided, all invoice items will be returned. If specifying an invoice, no customer identifier is needed.
+     */
+    invoice?: string;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * Set to `true` to only show pending invoice items, which are not yet attached to any invoices. Set to `false` to only show invoice items already attached to invoices. If unspecified, no filter is applied.
+     */
+    pending?: boolean;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+  }
+
+  namespace InvoiceItemListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+  }
+
+  /**
+   * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
+   */
+  interface InvoiceItemDeleteParams {}
 
   class InvoiceItemsResource {
     /**

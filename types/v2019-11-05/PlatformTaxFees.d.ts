@@ -4,11 +4,6 @@ declare namespace Stripe {
    */
   interface PlatformTaxFee {
     /**
-     * The Connected account that incurred this charge.
-     */
-    account?: string;
-
-    /**
      * Unique identifier for the object.
      */
     id?: string;
@@ -17,6 +12,11 @@ declare namespace Stripe {
      * String representing the object's type. Objects of the same type share the same value.
      */
     object?: 'platform_tax_fee';
+
+    /**
+     * The Connected account that incurred this charge.
+     */
+    account?: string;
 
     /**
      * The payment object that caused this tax to be inflicted.

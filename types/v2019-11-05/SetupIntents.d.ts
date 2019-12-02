@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface SetupIntent {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'setup_intent';
+
+    /**
      * ID of the Connect application that created the SetupIntent.
      */
     application?: string | Application | null;
@@ -38,11 +48,6 @@ declare namespace Stripe {
     description?: string | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * The error encountered in the previous SetupIntent confirmation.
      */
     last_setup_error?: SetupIntent.LastSetupError | null;
@@ -58,21 +63,9 @@ declare namespace Stripe {
     mandate?: string | Mandate | null;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
      * If present, this property tells you what actions you need to take in order for your customer to continue payment setup.
      */
     next_action?: SetupIntent.NextAction | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'setup_intent';
 
     /**
      * The account (if any) for which the setup is intended.
@@ -110,6 +103,13 @@ declare namespace Stripe {
      * Use `on_session` if you intend to only reuse the payment method when the customer is in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. If not provided, this value defaults to `off_session`.
      */
     usage?: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   namespace SetupIntent {
@@ -406,6 +406,64 @@ declare namespace Stripe {
   }
 
   /**
+   * Retrieves the details of a SetupIntent that has previously been created.
+   *
+   * Client-side retrieval using a publishable key is allowed when the client_secret is provided in the query string.
+   *
+   * When retrieved with a publishable key, only a subset of properties will be returned. Please refer to the [SetupIntent](https://stripe.com/docs/api#setup_intent_object) object reference for more details.
+   */
+  interface SetupIntentRetrieveParams {
+    /**
+     * The client secret of the SetupIntent. Required if a publishable key is used to retrieve the SetupIntent.
+     */
+    client_secret?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates a SetupIntent object.
+   */
+  interface SetupIntentUpdateParams {
+    /**
+     * ID of the Customer this SetupIntent belongs to, if one exists.
+     *
+     * If present, payment methods used with this SetupIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this SetupIntent.
+     */
+    customer?: string;
+
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
+     * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
+     */
+    payment_method?: string;
+
+    /**
+     * The list of payment method types (e.g. card) that this SetupIntent is allowed to set up. If this is not provided, defaults to ["card"].
+     */
+    payment_method_types?: Array<string>;
+  }
+
+  /**
    * Returns a list of SetupIntents.
    */
   interface SetupIntentListParams {
@@ -467,64 +525,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves the details of a SetupIntent that has previously been created.
-   *
-   * Client-side retrieval using a publishable key is allowed when the client_secret is provided in the query string.
-   *
-   * When retrieved with a publishable key, only a subset of properties will be returned. Please refer to the [SetupIntent](https://stripe.com/docs/api#setup_intent_object) object reference for more details.
-   */
-  interface SetupIntentRetrieveParams {
-    /**
-     * The client secret of the SetupIntent. Required if a publishable key is used to retrieve the SetupIntent.
-     */
-    client_secret?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates a SetupIntent object.
-   */
-  interface SetupIntentUpdateParams {
-    /**
-     * ID of the Customer this SetupIntent belongs to, if one exists.
-     *
-     * If present, payment methods used with this SetupIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this SetupIntent.
-     */
-    customer?: string;
-
-    /**
-     * An arbitrary string attached to the object. Often useful for displaying to users.
-     */
-    description?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
-     */
-    payment_method?: string;
-
-    /**
-     * The list of payment method types (e.g. card) that this SetupIntent is allowed to set up. If this is not provided, defaults to ["card"].
-     */
-    payment_method_types?: Array<string>;
   }
 
   /**

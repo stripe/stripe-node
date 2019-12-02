@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface ApplicationFee {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'application_fee';
+
+    /**
      * ID of the Stripe account this fee was taken from.
      */
     account?: string | Account;
@@ -44,19 +54,9 @@ declare namespace Stripe {
     currency?: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'application_fee';
 
     /**
      * ID of the corresponding charge on the platform account, if this fee was the result of a charge using the `destination` parameter.
@@ -78,6 +78,16 @@ declare namespace Stripe {
    * The FeeRefund object.
    */
   interface FeeRefund {
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'fee_refund';
+
     /**
      * Amount, in %s.
      */
@@ -104,21 +114,21 @@ declare namespace Stripe {
     fee?: string | ApplicationFee;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata?: {
       [key: string]: string;
     };
+  }
 
+  /**
+   * Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
+   */
+  interface ApplicationFeeRetrieveParams {
     /**
-     * String representing the object's type. Objects of the same type share the same value.
+     * Specifies which fields in the response should be expanded.
      */
-    object?: 'fee_refund';
+    expand?: Array<string>;
   }
 
   /**
@@ -175,16 +185,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
-   */
-  interface ApplicationFeeRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
   }
 
   /**

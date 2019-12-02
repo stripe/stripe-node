@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Product {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'product';
+
+    /**
      * Whether the product is currently available for purchase.
      */
     active: boolean | null;
@@ -34,11 +44,6 @@ declare namespace Stripe {
     description: string | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. Only applicable to products of `type=good`.
      */
     images: Array<string>;
@@ -49,21 +54,9 @@ declare namespace Stripe {
     livemode: boolean;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
      * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
      */
     name: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'product';
 
     /**
      * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. Only applicable to products of `type=good`.
@@ -96,6 +89,13 @@ declare namespace Stripe {
      * A URL of a publicly-accessible webpage for this product. Only applicable to products of `type=good`.
      */
     url: string | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace Product {
@@ -255,92 +255,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
-   */
-  interface ProductDeleteParams {}
-
-  /**
-   * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
-   */
-  interface ProductListParams {
-    /**
-     * Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
-     */
-    active?: boolean;
-
-    /**
-     * Only return products that were created during the given date interval.
-     */
-    created?: number | ProductListParams.Created;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Only return products with the given IDs.
-     */
-    ids?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * Only return products that can be shipped (i.e., physical, not digital products).
-     */
-    shippable?: boolean;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-
-    /**
-     * Only return products of this type.
-     */
-    type?: ProductListParams.Type;
-
-    /**
-     * Only return products with the given url.
-     */
-    url?: string;
-  }
-
-  namespace ProductListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    type Type = 'good' | 'service'
-  }
-
-  /**
    * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
    */
   interface ProductRetrieveParams {
@@ -450,6 +364,92 @@ declare namespace Stripe {
       width: number;
     }
   }
+
+  /**
+   * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
+   */
+  interface ProductListParams {
+    /**
+     * Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
+     */
+    active?: boolean;
+
+    /**
+     * Only return products that were created during the given date interval.
+     */
+    created?: number | ProductListParams.Created;
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Only return products with the given IDs.
+     */
+    ids?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * Only return products that can be shipped (i.e., physical, not digital products).
+     */
+    shippable?: boolean;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+
+    /**
+     * Only return products of this type.
+     */
+    type?: ProductListParams.Type;
+
+    /**
+     * Only return products with the given url.
+     */
+    url?: string;
+  }
+
+  namespace ProductListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    type Type = 'good' | 'service'
+  }
+
+  /**
+   * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
+   */
+  interface ProductDeleteParams {}
 
   class ProductsResource {
     /**

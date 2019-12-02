@@ -5,6 +5,16 @@ declare namespace Stripe {
      */
     interface Reader {
       /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'terminal.reader';
+
+      /**
        * The current software version of the reader.
        */
       device_sw_version: string | null;
@@ -13,11 +23,6 @@ declare namespace Stripe {
        * Type of reader, one of `bbpos_chipper2x` or `verifone_P400`.
        */
       device_type: Reader.DeviceType;
-
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
 
       /**
        * The local IP address of the reader.
@@ -33,11 +38,6 @@ declare namespace Stripe {
        * The location identifier of the reader.
        */
       location: string | null;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'terminal.reader';
 
       /**
        * Serial number of the reader.
@@ -102,9 +102,34 @@ declare namespace Stripe {
     }
 
     /**
-     * Deletes a Reader object.
+     * Retrieves a Reader object.
      */
-    interface ReaderDeleteParams {
+    interface ReaderRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
+       */
+      operator_account?: string;
+    }
+
+    /**
+     * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+     */
+    interface ReaderUpdateParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * The new label of the reader.
+       */
+      label?: string;
+
       /**
        * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
        */
@@ -163,34 +188,9 @@ declare namespace Stripe {
     }
 
     /**
-     * Retrieves a Reader object.
+     * Deletes a Reader object.
      */
-    interface ReaderRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-       */
-      operator_account?: string;
-    }
-
-    /**
-     * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
-    interface ReaderUpdateParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * The new label of the reader.
-       */
-      label?: string;
-
+    interface ReaderDeleteParams {
       /**
        * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
        */

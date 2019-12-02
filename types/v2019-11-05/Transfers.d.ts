@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Transfer {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'transfer';
+
+    /**
      * Amount in %s to be transferred.
      */
     amount?: number;
@@ -44,26 +54,9 @@ declare namespace Stripe {
     destination_payment?: string | Charge;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * A set of key-value pairs that you can attach to a transfer object. It can be useful for storing additional information about the transfer in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'transfer';
 
     /**
      * A list of reversals that have been applied to the transfer.
@@ -89,12 +82,29 @@ declare namespace Stripe {
      * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
      */
     transfer_group?: string | null;
+
+    /**
+     * A set of key-value pairs that you can attach to a transfer object. It can be useful for storing additional information about the transfer in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   /**
    * The TransferReversal object.
    */
   interface TransferReversal {
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'transfer_reversal';
+
     /**
      * Amount, in %s.
      */
@@ -121,23 +131,6 @@ declare namespace Stripe {
     destination_payment_refund?: string | Refund | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'transfer_reversal';
-
-    /**
      * ID of the refund responsible for the transfer reversal.
      */
     source_refund?: string | Refund | null;
@@ -146,6 +139,13 @@ declare namespace Stripe {
      * ID of the transfer that was reversed.
      */
     transfer?: string | Transfer;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   /**
@@ -202,6 +202,40 @@ declare namespace Stripe {
 
   namespace TransferCreateParams {
     type SourceType = 'bank_account' | 'card'
+  }
+
+  /**
+   * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
+   */
+  interface TransferRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+   *
+   * This request accepts only metadata as an argument.
+   */
+  interface TransferUpdateParams {
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   /**
@@ -263,40 +297,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
-   */
-  interface TransferRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-   *
-   * This request accepts only metadata as an argument.
-   */
-  interface TransferUpdateParams {
-    /**
-     * An arbitrary string attached to the object. Often useful for displaying to users.
-     */
-    description?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   /**

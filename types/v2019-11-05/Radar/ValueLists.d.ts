@@ -5,6 +5,16 @@ declare namespace Stripe {
      */
     interface ValueList {
       /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'radar.value_list';
+
+      /**
        * The name of the value list for use in rules.
        */
       alias: string;
@@ -18,11 +28,6 @@ declare namespace Stripe {
        * The name or email address of the user who created this value list.
        */
       created_by: string;
-
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
 
       /**
        * The type of items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`.
@@ -40,21 +45,16 @@ declare namespace Stripe {
       livemode: boolean;
 
       /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata: {
-        [key: string]: string;
-      };
-
-      /**
        * The name of the value list.
        */
       name: string;
 
       /**
-       * String representing the object's type. Objects of the same type share the same value.
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      object: 'radar.value_list';
+      metadata: {
+        [key: string]: string;
+      };
     }
 
     namespace ValueList {
@@ -129,9 +129,41 @@ declare namespace Stripe {
     }
 
     /**
-     * Deletes a ValueList object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
+     * Retrieves a ValueList object.
      */
-    interface ValueListDeleteParams {}
+    interface ValueListRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates a ValueList object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that item_type is immutable.
+     */
+    interface ValueListUpdateParams {
+      /**
+       * The name of the value list for use in rules.
+       */
+      alias?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * The human-readable name of the value list.
+       */
+      name?: string;
+    }
 
     /**
      * Returns a list of ValueList objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -195,41 +227,9 @@ declare namespace Stripe {
     }
 
     /**
-     * Retrieves a ValueList object.
+     * Deletes a ValueList object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
      */
-    interface ValueListRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
-     * Updates a ValueList object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that item_type is immutable.
-     */
-    interface ValueListUpdateParams {
-      /**
-       * The name of the value list for use in rules.
-       */
-      alias?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
-       * The human-readable name of the value list.
-       */
-      name?: string;
-    }
+    interface ValueListDeleteParams {}
 
     class ValueListsResource {
       /**

@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface FileLink {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'file_link';
+
+    /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
     created?: number;
@@ -24,14 +34,14 @@ declare namespace Stripe {
     file?: string | File;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
+
+    /**
+     * The publicly accessible URL to download the file.
+     */
+    url?: string | null;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -39,16 +49,6 @@ declare namespace Stripe {
     metadata?: {
       [key: string]: string;
     };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'file_link';
-
-    /**
-     * The publicly accessible URL to download the file.
-     */
-    url?: string | null;
   }
 
   /**
@@ -69,6 +69,38 @@ declare namespace Stripe {
      * The ID of the file. The file's `purpose` must be one of the following: `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
      */
     file: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+  }
+
+  /**
+   * Retrieves the file link with the given ID.
+   */
+  interface FileLinkRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates an existing file link object. Expired links can no longer be updated.
+   */
+  interface FileLinkUpdateParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A future timestamp after which the link will no longer be usable, or `now` to expire the link immediately.
+     */
+    expires_at?: 'now' | number | '';
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -137,38 +169,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves the file link with the given ID.
-   */
-  interface FileLinkRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates an existing file link object. Expired links can no longer be updated.
-   */
-  interface FileLinkUpdateParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A future timestamp after which the link will no longer be usable, or `now` to expire the link immediately.
-     */
-    expires_at?: 'now' | number | '';
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   class FileLinksResource {

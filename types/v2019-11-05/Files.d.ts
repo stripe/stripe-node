@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface File {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'file';
+
+    /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
     created?: number;
@@ -13,17 +23,7 @@ declare namespace Stripe {
      */
     filename?: string | null;
 
-    /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
     links?: ApiList<FileLink> | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'file';
 
     /**
      * The purpose of the file. Possible values are `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `identity_document`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
@@ -49,6 +49,23 @@ declare namespace Stripe {
      * The URL from which the file can be downloaded using your live secret API key.
      */
     url?: string | null;
+  }
+
+  /**
+   * To upload a file to Stripe, you'll need to send a request of type multipart/form-data. The request should contain the file you would like to upload, as well as the parameters for creating a file.
+   *
+   * All of Stripe's officially supported Client libraries should have support for sending multipart/form-data.
+   */
+  interface FileCreateParams {}
+
+  /**
+   * Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object.
+   */
+  interface FileRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 
   /**
@@ -117,23 +134,6 @@ declare namespace Stripe {
       | 'sigma_scheduled_query'
       | 'tax_document_user_upload'
   }
-
-  /**
-   * Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object.
-   */
-  interface FileRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * To upload a file to Stripe, you'll need to send a request of type multipart/form-data. The request should contain the file you would like to upload, as well as the parameters for creating a file.
-   *
-   * All of Stripe's officially supported Client libraries should have support for sending multipart/form-data.
-   */
-  interface FileCreateParams {}
 
   class FilesResource {
     /**

@@ -3,12 +3,17 @@ declare namespace Stripe {
    * The Mandate object.
    */
   interface Mandate {
-    customer_acceptance?: Mandate.CustomerAcceptance;
-
     /**
      * Unique identifier for the object.
      */
     id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'mandate';
+
+    customer_acceptance?: Mandate.CustomerAcceptance;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -16,11 +21,6 @@ declare namespace Stripe {
     livemode?: boolean;
 
     multi_use?: Mandate.MultiUse;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'mandate';
 
     /**
      * ID of the payment method associated with this mandate.

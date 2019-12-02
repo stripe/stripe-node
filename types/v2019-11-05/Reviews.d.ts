@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Review {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'review';
+
+    /**
      * The ZIP or postal code of the card used, if applicable.
      */
     billing_zip?: string | null;
@@ -24,11 +34,6 @@ declare namespace Stripe {
     created?: number;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * The IP address where the payment originated.
      */
     ip_address?: string | null;
@@ -42,11 +47,6 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'review';
 
     /**
      * If `true`, the review needs action.
@@ -134,6 +134,16 @@ declare namespace Stripe {
   }
 
   /**
+   * Retrieves a Review object.
+   */
+  interface ReviewRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
    * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
    */
   interface ReviewListParams {
@@ -182,16 +192,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves a Review object.
-   */
-  interface ReviewRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
   }
 
   /**

@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface TaxRate {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'tax_rate';
+
+    /**
      * Defaults to `true`. When set to `false`, this tax rate cannot be applied to objects in the API, but will still be applied to subscriptions and invoices that already have it set.
      */
     active?: boolean;
@@ -24,11 +34,6 @@ declare namespace Stripe {
     display_name?: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * This specifies if the tax rate is inclusive or exclusive.
      */
     inclusive?: boolean;
@@ -44,21 +49,16 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
+     * This represents the tax rate percent out of 100.
+     */
+    percentage?: number;
+
+    /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata?: {
       [key: string]: string;
     };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'tax_rate';
-
-    /**
-     * This represents the tax rate percent out of 100.
-     */
-    percentage?: number;
   }
 
   /**
@@ -106,6 +106,53 @@ declare namespace Stripe {
      * This represents the tax rate percent out of 100.
      */
     percentage: number;
+  }
+
+  /**
+   * Retrieves a tax rate with the given ID
+   */
+  interface TaxRateRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates an existing tax rate.
+   */
+  interface TaxRateUpdateParams {
+    /**
+     * Flag determining whether the tax rate is active or inactive. Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications.
+     */
+    active?: boolean;
+
+    /**
+     * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
+     */
+    description?: string;
+
+    /**
+     * The display name of the tax rate, which will be shown to users.
+     */
+    display_name?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * The jurisdiction for the tax rate.
+     */
+    jurisdiction?: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   /**
@@ -197,53 +244,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves a tax rate with the given ID
-   */
-  interface TaxRateRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates an existing tax rate.
-   */
-  interface TaxRateUpdateParams {
-    /**
-     * Flag determining whether the tax rate is active or inactive. Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications.
-     */
-    active?: boolean;
-
-    /**
-     * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
-     */
-    description?: string;
-
-    /**
-     * The display name of the tax rate, which will be shown to users.
-     */
-    display_name?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * The jurisdiction for the tax rate.
-     */
-    jurisdiction?: string;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   class TaxRatesResource {

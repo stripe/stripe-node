@@ -3,6 +3,16 @@ declare namespace Stripe {
    * The Source object.
    */
   interface Source {
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'source';
+
     ach_credit_transfer?: Source.AchCreditTransfer;
 
     ach_debit?: Source.AchDebit;
@@ -55,11 +65,6 @@ declare namespace Stripe {
 
     giropay?: Source.Giropay;
 
-    /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
     ideal?: Source.Ideal;
 
     klarna?: Source.Klarna;
@@ -69,21 +74,7 @@ declare namespace Stripe {
      */
     livemode?: boolean;
 
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?:
-      | {
-        [key: string]: string;
-      }
-      | null;
-
     multibanco?: Source.Multibanco;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'source';
 
     /**
      * Information about the owner of the payment instrument that may be used or required by particular source types.
@@ -127,6 +118,15 @@ declare namespace Stripe {
     usage?: string | null;
 
     wechat?: Source.Wechat;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?:
+      | {
+        [key: string]: string;
+      }
+      | null;
   }
 
   namespace Source {

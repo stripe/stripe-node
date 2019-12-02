@@ -4,6 +4,11 @@ declare namespace Stripe {
    */
   interface OrderItem {
     /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'order_item';
+
+    /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the line item.
      */
     amount?: number;
@@ -17,11 +22,6 @@ declare namespace Stripe {
      * Description of the line item, meant to be displayable to the user (e.g., `"Express shipping"`).
      */
     description?: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'order_item';
 
     /**
      * The ID of the associated object for this line item. Expandable if not null (e.g., expandable to a SKU).

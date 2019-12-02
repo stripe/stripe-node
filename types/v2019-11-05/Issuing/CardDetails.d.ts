@@ -4,6 +4,11 @@ declare namespace Stripe {
      * The CardDetails object.
      */
     interface CardDetails {
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'issuing.card_details';
+
       card?: Issuing.Card;
 
       /**
@@ -25,11 +30,6 @@ declare namespace Stripe {
        * The card number.
        */
       number?: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object?: 'issuing.card_details';
     }
   }
 }

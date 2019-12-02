@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface ConnectCollectionTransfer {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'connect_collection_transfer';
+
+    /**
      * Amount transferred, in %s.
      */
     amount?: number;
@@ -19,18 +29,8 @@ declare namespace Stripe {
     destination?: string | Account;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'connect_collection_transfer';
   }
 }

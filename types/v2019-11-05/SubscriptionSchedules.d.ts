@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface SubscriptionSchedule {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'subscription_schedule';
+
+    /**
      * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
      */
     canceled_at?: number | null;
@@ -36,28 +46,9 @@ declare namespace Stripe {
     end_behavior?: SubscriptionSchedule.EndBehavior;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?:
-      | {
-        [key: string]: string;
-      }
-      | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'subscription_schedule';
 
     /**
      * Configuration for the subscription schedule's phases.
@@ -88,6 +79,15 @@ declare namespace Stripe {
      * ID of the subscription managed by the subscription schedule.
      */
     subscription?: string | Subscription | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?:
+      | {
+        [key: string]: string;
+      }
+      | null;
   }
 
   namespace SubscriptionSchedule {
@@ -493,151 +493,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Retrieves the list of your subscription schedules.
-   */
-  interface SubscriptionScheduleListParams {
-    /**
-     * Only return subscription schedules that were created canceled the given date interval.
-     */
-    canceled_at?: number | SubscriptionScheduleListParams.CanceledAt;
-
-    /**
-     * Only return subscription schedules that completed during the given date interval.
-     */
-    completed_at?: number | SubscriptionScheduleListParams.CompletedAt;
-
-    /**
-     * Only return subscription schedules that were created during the given date interval.
-     */
-    created?: number | SubscriptionScheduleListParams.Created;
-
-    /**
-     * Only return subscription schedules for the given customer.
-     */
-    customer?: string;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * Only return subscription schedules that were released during the given date interval.
-     */
-    released_at?: number | SubscriptionScheduleListParams.ReleasedAt;
-
-    /**
-     * Only return subscription schedules that have not started yet.
-     */
-    scheduled?: boolean;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  namespace SubscriptionScheduleListParams {
-    interface CanceledAt {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    interface CompletedAt {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    interface ReleasedAt {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
-  /**
    * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
    */
   interface SubscriptionScheduleRetrieveParams {
@@ -850,6 +705,151 @@ declare namespace Stripe {
           usage_gte: number;
         }
       }
+    }
+  }
+
+  /**
+   * Retrieves the list of your subscription schedules.
+   */
+  interface SubscriptionScheduleListParams {
+    /**
+     * Only return subscription schedules that were created canceled the given date interval.
+     */
+    canceled_at?: number | SubscriptionScheduleListParams.CanceledAt;
+
+    /**
+     * Only return subscription schedules that completed during the given date interval.
+     */
+    completed_at?: number | SubscriptionScheduleListParams.CompletedAt;
+
+    /**
+     * Only return subscription schedules that were created during the given date interval.
+     */
+    created?: number | SubscriptionScheduleListParams.Created;
+
+    /**
+     * Only return subscription schedules for the given customer.
+     */
+    customer?: string;
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * Only return subscription schedules that were released during the given date interval.
+     */
+    released_at?: number | SubscriptionScheduleListParams.ReleasedAt;
+
+    /**
+     * Only return subscription schedules that have not started yet.
+     */
+    scheduled?: boolean;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+  }
+
+  namespace SubscriptionScheduleListParams {
+    interface CanceledAt {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface CompletedAt {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    interface ReleasedAt {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
     }
   }
 

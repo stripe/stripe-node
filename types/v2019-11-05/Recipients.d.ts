@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Recipient {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'recipient';
+
+    /**
      * Hash describing the current account on the recipient, if there is one.
      */
     active_account: BankAccount | null;
@@ -28,21 +38,9 @@ declare namespace Stripe {
     email: string | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
 
     /**
      * The ID of the [Custom account](https://stripe.com/docs/connect/custom-accounts) this recipient was migrated to. If set, the recipient can no longer be updated, nor can transfers be made to it: use the Custom account instead.
@@ -53,11 +51,6 @@ declare namespace Stripe {
      * Full, legal name of the recipient.
      */
     name: string | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'recipient';
 
     rolled_back_from: string | Account;
 
@@ -70,6 +63,13 @@ declare namespace Stripe {
      * Whether the recipient has been verified. This field is non-standard, and maybe removed in the future
      */
     verified: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   interface DeletedRecipient {
@@ -143,71 +143,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Permanently deletes a recipient. It cannot be undone.
-   */
-  interface RecipientDeleteParams {}
-
-  /**
-   * Returns a list of your recipients. The recipients are returned sorted by creation date, with the most recently created recipients appearing first.
-   */
-  interface RecipientListParams {
-    created?: number | RecipientListParams.Created;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-
-    type?: RecipientListParams.Type;
-
-    /**
-     * Only return recipients that are verified or unverified.
-     */
-    verified?: boolean;
-  }
-
-  namespace RecipientListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-
-    type Type = 'corporation' | 'individual'
-  }
-
-  /**
    * Retrieves the details of an existing recipient. You need only supply the unique recipient identifier that was returned upon recipient creation.
    */
   interface RecipientRetrieveParams {
@@ -272,6 +207,71 @@ declare namespace Stripe {
      */
     tax_id?: string;
   }
+
+  /**
+   * Returns a list of your recipients. The recipients are returned sorted by creation date, with the most recently created recipients appearing first.
+   */
+  interface RecipientListParams {
+    created?: number | RecipientListParams.Created;
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+
+    type?: RecipientListParams.Type;
+
+    /**
+     * Only return recipients that are verified or unverified.
+     */
+    verified?: boolean;
+  }
+
+  namespace RecipientListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
+    }
+
+    type Type = 'corporation' | 'individual'
+  }
+
+  /**
+   * Permanently deletes a recipient. It cannot be undone.
+   */
+  interface RecipientDeleteParams {}
 
   class RecipientsResource {
     /**

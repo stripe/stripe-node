@@ -5,6 +5,16 @@ declare namespace Stripe {
      */
     interface Dispute {
       /**
+       * Unique identifier for the object.
+       */
+      id?: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'issuing.dispute';
+
+      /**
        * Disputed amount. Usually the amount of the `disputed_transaction`, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
        */
       amount?: number;
@@ -27,26 +37,9 @@ declare namespace Stripe {
       evidence?: Dispute.Evidence;
 
       /**
-       * Unique identifier for the object.
-       */
-      id?: string;
-
-      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode?: boolean;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object?: 'issuing.dispute';
 
       /**
        * Reason for this dispute. One of `other` or `fraudulent`.
@@ -57,6 +50,13 @@ declare namespace Stripe {
        * Current status of dispute. One of `lost`, `under_review`, `unsubmitted`, or `won`.
        */
       status?: Dispute.Status;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
     }
 
     namespace Dispute {
@@ -181,6 +181,33 @@ declare namespace Stripe {
     }
 
     /**
+     * Retrieves an Issuing Dispute object.
+     */
+    interface DisputeRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    /**
+     * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+     */
+    interface DisputeUpdateParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+    }
+
+    /**
      * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
      */
     interface DisputeListParams {
@@ -237,33 +264,6 @@ declare namespace Stripe {
          */
         lte?: number;
       }
-    }
-
-    /**
-     * Retrieves an Issuing Dispute object.
-     */
-    interface DisputeRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    /**
-     * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
-    interface DisputeUpdateParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
     }
 
     class DisputesResource {

@@ -3,6 +3,16 @@ declare namespace Stripe {
    * The Token object.
    */
   interface Token {
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'token';
+
     bank_account?: BankAccount;
 
     card?: Card;
@@ -23,19 +33,9 @@ declare namespace Stripe {
     email?: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'token';
 
     /**
      * Type of the token: `account`, `bank_account`, `card`, or `pii`.

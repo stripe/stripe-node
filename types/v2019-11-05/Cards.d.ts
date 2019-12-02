@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Card {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'card';
+
+    /**
      * The account this card belongs to. This attribute will not be in the card object if the card belongs to a customer or recipient instead.
      */
     account: string | Account | null;
@@ -114,11 +124,6 @@ declare namespace Stripe {
     funding: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * Issuer identification number of the card. (Only for internal use only and not typically available in standard API requests.)
      */
     iin: string;
@@ -134,21 +139,9 @@ declare namespace Stripe {
     last4: string;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
      * Cardholder name.
      */
     name: string | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'card';
 
     /**
      * The recipient that this card belongs to. This attribute will not be in the card object if the card belongs to a customer or account instead.
@@ -159,6 +152,13 @@ declare namespace Stripe {
      * If the card number is tokenized, this is the method that was used. Can be `apple_pay` or `google_pay`.
      */
     tokenization_method: string | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace Card {

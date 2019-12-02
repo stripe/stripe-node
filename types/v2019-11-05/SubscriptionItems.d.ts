@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface SubscriptionItem {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'subscription_item';
+
+    /**
      * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
      */
     billing_thresholds: SubscriptionItem.BillingThresholds | null;
@@ -12,23 +22,6 @@ declare namespace Stripe {
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
     created: number;
-
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'subscription_item';
 
     plan: Plan;
 
@@ -46,6 +39,13 @@ declare namespace Stripe {
      * The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
      */
     tax_rates: Array<TaxRate> | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
   }
 
   namespace SubscriptionItem {
@@ -153,56 +153,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
-   */
-  interface SubscriptionItemDeleteParams {
-    /**
-     * Delete all usage for the given subscription item. Allowed only when the current plan's `usage_type` is `metered`.
-     */
-    clear_usage?: boolean;
-
-    /**
-     * Flag indicating whether to [prorate](https://stripe.com/docs/billing/subscriptions/prorations) switching plans during a billing cycle.
-     */
-    prorate?: boolean;
-
-    /**
-     * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](#retrieve_customer_invoice) endpoint.
-     */
-    proration_date?: number;
-  }
-
-  /**
-   * Returns a list of your subscription items for a given subscription.
-   */
-  interface SubscriptionItemListParams {
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-
-    /**
-     * The ID of the subscription whose items will be retrieved.
-     */
-    subscription: string;
-  }
-
-  /**
    * Retrieves the invoice item with the given ID.
    */
   interface SubscriptionItemRetrieveParams {
@@ -280,6 +230,56 @@ declare namespace Stripe {
       | 'allow_incomplete'
       | 'error_if_incomplete'
       | 'pending_if_incomplete'
+  }
+
+  /**
+   * Returns a list of your subscription items for a given subscription.
+   */
+  interface SubscriptionItemListParams {
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+
+    /**
+     * The ID of the subscription whose items will be retrieved.
+     */
+    subscription: string;
+  }
+
+  /**
+   * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
+   */
+  interface SubscriptionItemDeleteParams {
+    /**
+     * Delete all usage for the given subscription item. Allowed only when the current plan's `usage_type` is `metered`.
+     */
+    clear_usage?: boolean;
+
+    /**
+     * Flag indicating whether to [prorate](https://stripe.com/docs/billing/subscriptions/prorations) switching plans during a billing cycle.
+     */
+    prorate?: boolean;
+
+    /**
+     * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](#retrieve_customer_invoice) endpoint.
+     */
+    proration_date?: number;
   }
 
   /**

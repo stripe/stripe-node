@@ -3,6 +3,16 @@ declare namespace Stripe {
    * The Charge object.
    */
   interface Charge {
+    /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'charge';
+
     alternate_statement_descriptors?: Charge.AlternateStatementDescriptors;
 
     /**
@@ -98,11 +108,6 @@ declare namespace Stripe {
     fraud_details?: Charge.FraudDetails | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * ID of the invoice this charge is for if one exists.
      */
     invoice?: string | Invoice | null;
@@ -113,18 +118,6 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'charge';
 
     /**
      * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
@@ -242,6 +235,13 @@ declare namespace Stripe {
      * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
      */
     transfer_group?: string | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   namespace Charge {
@@ -670,17 +670,17 @@ declare namespace Stripe {
       namespace Card {
         interface Checks {
           /**
-           * If a address line1 was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+           * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
            */
           address_line1_check?: string | null;
 
           /**
-           * If a address postal code was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+           * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
            */
           address_postal_code_check?: string | null;
 
           /**
-           * If a CVC was provided, results of the check, one of 'pass', 'failed', 'unavailable' or 'unchecked'.
+           * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
            */
           cvc_check?: string | null;
         }
@@ -1313,72 +1313,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
-   */
-  interface ChargeListParams {
-    created?: number | ChargeListParams.Created;
-
-    /**
-     * Only return charges for the customer specified by this customer ID.
-     */
-    customer?: string;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * Only return charges that were created by the PaymentIntent specified by this PaymentIntent ID.
-     */
-    payment_intent?: string;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-
-    /**
-     * Only return charges for this transfer group.
-     */
-    transfer_group?: string;
-  }
-
-  namespace ChargeListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
-  /**
    * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
    */
   interface ChargeRetrieveParams {
@@ -1485,6 +1419,72 @@ declare namespace Stripe {
 
         state?: string;
       }
+    }
+  }
+
+  /**
+   * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
+   */
+  interface ChargeListParams {
+    created?: number | ChargeListParams.Created;
+
+    /**
+     * Only return charges for the customer specified by this customer ID.
+     */
+    customer?: string;
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * Only return charges that were created by the PaymentIntent specified by this PaymentIntent ID.
+     */
+    payment_intent?: string;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+
+    /**
+     * Only return charges for this transfer group.
+     */
+    transfer_group?: string;
+  }
+
+  namespace ChargeListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
     }
   }
 

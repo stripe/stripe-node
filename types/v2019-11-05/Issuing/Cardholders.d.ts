@@ -4,6 +4,16 @@ declare namespace Stripe {
      * The Cardholder object.
      */
     interface Cardholder {
+      /**
+       * Unique identifier for the object.
+       */
+      id?: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'issuing.cardholder';
+
       authorization_controls?: Cardholder.AuthorizationControls | null;
 
       billing?: Cardholder.Billing;
@@ -24,11 +34,6 @@ declare namespace Stripe {
       email?: string | null;
 
       /**
-       * Unique identifier for the object.
-       */
-      id?: string;
-
-      /**
        * Additional information about an `individual` cardholder.
        */
       individual?: Cardholder.Individual | null;
@@ -44,21 +49,9 @@ declare namespace Stripe {
       livemode?: boolean;
 
       /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
-
-      /**
        * The cardholder's name. This will be printed on cards issued to them.
        */
       name?: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object?: 'issuing.cardholder';
 
       /**
        * The cardholder's phone number.
@@ -76,6 +69,13 @@ declare namespace Stripe {
        * One of `individual` or `business_entity`.
        */
       type?: Cardholder.Type;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
     }
 
     namespace Cardholder {
@@ -2194,89 +2194,6 @@ declare namespace Stripe {
     }
 
     /**
-     * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-     */
-    interface CardholderListParams {
-      /**
-       * Only return cardholders that were created during the given date interval.
-       */
-      created?: number | CardholderListParams.Created;
-
-      /**
-       * Only return cardholders that have the given email address.
-       */
-      email?: string;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Only return the default cardholder.
-       */
-      is_default?: boolean;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * Only return cardholders that have the given phone number.
-       */
-      phone_number?: string;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-
-      /**
-       * Only return cardholders that have the given status. One of `active`, `inactive`, or `blocked`.
-       */
-      status?: CardholderListParams.Status;
-
-      /**
-       * Only return cardholders that have the given type. One of `individual` or `business_entity`.
-       */
-      type?: CardholderListParams.Type;
-    }
-
-    namespace CardholderListParams {
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
-      type Status = 'active' | 'blocked' | 'inactive'
-
-      type Type = 'business_entity' | 'individual'
-    }
-
-    /**
      * Retrieves an Issuing Cardholder object.
      */
     interface CardholderRetrieveParams {
@@ -3360,6 +3277,89 @@ declare namespace Stripe {
       }
 
       type Status = 'active' | 'inactive'
+    }
+
+    /**
+     * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+     */
+    interface CardholderListParams {
+      /**
+       * Only return cardholders that were created during the given date interval.
+       */
+      created?: number | CardholderListParams.Created;
+
+      /**
+       * Only return cardholders that have the given email address.
+       */
+      email?: string;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Only return the default cardholder.
+       */
+      is_default?: boolean;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Only return cardholders that have the given phone number.
+       */
+      phone_number?: string;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+
+      /**
+       * Only return cardholders that have the given status. One of `active`, `inactive`, or `blocked`.
+       */
+      status?: CardholderListParams.Status;
+
+      /**
+       * Only return cardholders that have the given type. One of `individual` or `business_entity`.
+       */
+      type?: CardholderListParams.Type;
+    }
+
+    namespace CardholderListParams {
+      interface Created {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
+
+      type Status = 'active' | 'blocked' | 'inactive'
+
+      type Type = 'business_entity' | 'individual'
     }
 
     class CardholdersResource {

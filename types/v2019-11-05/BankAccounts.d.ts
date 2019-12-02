@@ -3,6 +3,16 @@ declare namespace Stripe {
    * The BankAccount object.
    */
   interface BankAccount {
+    /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'bank_account';
+
     account: string | Account | null;
 
     /**
@@ -42,26 +52,7 @@ declare namespace Stripe {
      */
     fingerprint: string | null;
 
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
     last4: string;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata:
-      | {
-        [key: string]: string;
-      }
-      | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'bank_account';
 
     /**
      * The routing transit number for the bank account.
@@ -74,6 +65,15 @@ declare namespace Stripe {
      * For external accounts, possible values are `new` and `errored`. Validations aren't run against external accounts because they're only used for payouts. This means the other statuses don't apply. If a transfer fails, the status is set to `errored` and transfers are stopped until account details are updated.
      */
     status: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata:
+      | {
+        [key: string]: string;
+      }
+      | null;
   }
 
   interface DeletedBankAccount {

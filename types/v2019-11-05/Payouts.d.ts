@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Payout {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'payout';
+
+    /**
      * Amount (in %s) to be transferred to your bank account or debit card.
      */
     amount?: number;
@@ -59,31 +69,14 @@ declare namespace Stripe {
     failure_message?: string | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
      * The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces](/blog/instant-payouts-for-marketplaces) for more information.)
      */
     method?: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'payout';
 
     /**
      * The source balance this payout came from. One of `card` or `bank_account`.
@@ -104,6 +97,13 @@ declare namespace Stripe {
      * Can be `bank_account` or `card`.
      */
     type?: Payout.Type;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   namespace Payout {
@@ -170,6 +170,33 @@ declare namespace Stripe {
     type Method = 'instant' | 'standard'
 
     type SourceType = 'bank_account' | 'card'
+  }
+
+  /**
+   * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
+   */
+  interface PayoutRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates the specified payout by setting the values of the parameters passed. Any parameters not provided will be left unchanged. This request accepts only the metadata as arguments.
+   */
+  interface PayoutUpdateParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A set of key-value pairs that you can attach to a payout object. It can be useful for storing additional information about the payout in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   /**
@@ -255,33 +282,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
-   */
-  interface PayoutRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates the specified payout by setting the values of the parameters passed. Any parameters not provided will be left unchanged. This request accepts only the metadata as arguments.
-   */
-  interface PayoutUpdateParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A set of key-value pairs that you can attach to a payout object. It can be useful for storing additional information about the payout in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   /**

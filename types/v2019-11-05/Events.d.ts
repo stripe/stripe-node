@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface Event {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'event';
+
+    /**
      * The connected account that originated the event.
      */
     account?: string;
@@ -21,19 +31,9 @@ declare namespace Stripe {
     data?: Event.Data;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'event';
 
     /**
      * Number of webhooks that have yet to be successfully delivered (i.e., to return a 20x response) to the URLs you've specified.
@@ -81,6 +81,16 @@ declare namespace Stripe {
        */
       idempotency_key?: string | null;
     }
+  }
+
+  /**
+   * Retrieves the details of an event. Supply the unique identifier of the event, which you might have received in a webhook.
+   */
+  interface EventRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 
   /**
@@ -147,16 +157,6 @@ declare namespace Stripe {
        */
       lte?: number;
     }
-  }
-
-  /**
-   * Retrieves the details of an event. Supply the unique identifier of the event, which you might have received in a webhook.
-   */
-  interface EventRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
   }
 
   class EventsResource {

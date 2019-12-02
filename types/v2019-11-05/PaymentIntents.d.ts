@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface PaymentIntent {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'payment_intent';
+
+    /**
      * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
      */
     amount?: number;
@@ -93,11 +103,6 @@ declare namespace Stripe {
     description?: string | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * ID of the invoice that created this PaymentIntent, if it exists.
      */
     invoice?: string | Invoice | null;
@@ -113,21 +118,9 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
      * If present, this property tells you what actions you need to take in order for your customer to fulfill a payment using the provided source.
      */
     next_action?: PaymentIntent.NextAction | null;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'payment_intent';
 
     /**
      * The account (if any) for which the funds of the PaymentIntent are intended. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
@@ -212,6 +205,13 @@ declare namespace Stripe {
      * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
      */
     transfer_group?: string | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   namespace PaymentIntent {
@@ -546,6 +546,8 @@ declare namespace Stripe {
 
     /**
      * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
+     *
+     * If neither the `payment_method` parameter nor the `source` parameter are provided with `confirm=true`, `source` will be automatically populated with `customer.default_source` to improve the migration experience for users of the Charges API. We recommend that you explicitly provide the `payment_method` going forward.
      */
     payment_method?: string;
 
@@ -595,7 +597,7 @@ declare namespace Stripe {
     shipping?: PaymentIntentCreateParams.Shipping;
 
     /**
-     * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Source, Card, and BankAccount objects.
+     * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Cards and [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) objects.If neither the `payment_method` parameter nor the `source` parameter are provided with `confirm=true`, this field will be automatically populated with `customer.default_source` to improve the migration experience for users of the Charges API. We recommend that you explicitly provide the `source` or `payment_method` parameter going forward.
      */
     source?: string;
 
@@ -819,65 +821,6 @@ declare namespace Stripe {
   }
 
   /**
-   * Returns a list of PaymentIntents.
-   */
-  interface PaymentIntentListParams {
-    /**
-     * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
-     */
-    created?: number | PaymentIntentListParams.Created;
-
-    /**
-     * Only return PaymentIntents for the customer specified by this customer ID.
-     */
-    customer?: string;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  namespace PaymentIntentListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
-    }
-  }
-
-  /**
    * Retrieves the details of a PaymentIntent that has previously been created.
    *
    * Client-side retrieval using a publishable key is allowed when the client_secret is provided in the query string.
@@ -988,7 +931,7 @@ declare namespace Stripe {
     shipping?: '' | PaymentIntentUpdateParams.Shipping;
 
     /**
-     * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Source, Card, and BankAccount objects.
+     * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Cards and [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) objects.
      */
     source?: string;
 
@@ -1064,6 +1007,65 @@ declare namespace Stripe {
        * The amount that will be transferred automatically when a charge succeeds.
        */
       amount?: number;
+    }
+  }
+
+  /**
+   * Returns a list of PaymentIntents.
+   */
+  interface PaymentIntentListParams {
+    /**
+     * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
+     */
+    created?: number | PaymentIntentListParams.Created;
+
+    /**
+     * Only return PaymentIntents for the customer specified by this customer ID.
+     */
+    customer?: string;
+
+    /**
+     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+     */
+    ending_before?: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+     */
+    limit?: number;
+
+    /**
+     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+     */
+    starting_after?: string;
+  }
+
+  namespace PaymentIntentListParams {
+    interface Created {
+      /**
+       * Minimum value to filter by (exclusive)
+       */
+      gt?: number;
+
+      /**
+       * Minimum value to filter by (inclusive)
+       */
+      gte?: number;
+
+      /**
+       * Maximum value to filter by (exclusive)
+       */
+      lt?: number;
+
+      /**
+       * Maximum value to filter by (inclusive)
+       */
+      lte?: number;
     }
   }
 
@@ -1243,7 +1245,7 @@ declare namespace Stripe {
     shipping?: '' | PaymentIntentConfirmParams.Shipping;
 
     /**
-     * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Source, Card, and BankAccount objects.
+     * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Cards and [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) objects.
      */
     source?: string;
 

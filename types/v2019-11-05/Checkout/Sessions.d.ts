@@ -5,6 +5,17 @@ declare namespace Stripe {
      */
     interface Session {
       /**
+       * Unique identifier for the object. Used to pass to `redirectToCheckout`
+       * in Stripe.js.
+       */
+      id?: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'checkout.session';
+
+      /**
        * The value (`auto` or `required`) for whether Checkout collected the
        * customer's billing address.
        */
@@ -46,19 +57,12 @@ declare namespace Stripe {
       display_items?: Array<Session.DisplayItem> | null;
 
       /**
-       * Unique identifier for the object. Used to pass to `redirectToCheckout`
-       * in Stripe.js.
-       */
-      id?: string;
-
-      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode?: boolean;
 
       /**
-       * The IETF language tag of the locale Checkout is displayed in. If blank
-       * or `auto`, the browser's locale is used.
+       * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used.
        */
       locale?: Session.Locale | null;
 
@@ -66,11 +70,6 @@ declare namespace Stripe {
        * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
        */
       mode?: Session.Mode | null;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object?: 'checkout.session';
 
       /**
        * The ID of the PaymentIntent for Checkout Sessions in `payment` mode.
@@ -235,7 +234,7 @@ declare namespace Stripe {
       line_items?: Array<SessionCreateParams.LineItem>;
 
       /**
-       * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used. Supported values are `auto`, `da`, `de`, `en`, `es`, `fi`, `fr`, `it`, `ja`, `nb`, `nl`, `pl`, `pt`, `sv`, or `zh`.
+       * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used.
        */
       locale?: SessionCreateParams.Locale;
 

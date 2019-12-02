@@ -5,6 +5,16 @@ declare namespace Stripe {
      */
     interface ReportType {
       /**
+       * The [ID of the Report Type](https://stripe.com/docs/reporting/statements/api#available-report-types), such as `balance.summary.1`.
+       */
+      id?: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object?: 'reporting.report_type';
+
+      /**
        * Most recent time for which this Report Type is available. Measured in seconds since the Unix epoch.
        */
       data_available_end?: number;
@@ -20,19 +30,9 @@ declare namespace Stripe {
       default_columns?: Array<string> | null;
 
       /**
-       * The [ID of the Report Type](https://stripe.com/docs/reporting/statements/api#available-report-types), such as `balance.summary.1`.
-       */
-      id?: string;
-
-      /**
        * Human-readable name of the Report Type
        */
       name?: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object?: 'reporting.report_type';
 
       /**
        * When this Report Type was latest updated. Measured in seconds since the Unix epoch.
@@ -46,9 +46,9 @@ declare namespace Stripe {
     }
 
     /**
-     * Returns a full list of Report Types. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+     * Retrieves the details of a Report Type. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
      */
-    interface ReportTypeListParams {
+    interface ReportTypeRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -56,9 +56,9 @@ declare namespace Stripe {
     }
 
     /**
-     * Retrieves the details of a Report Type. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+     * Returns a full list of Report Types. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
      */
-    interface ReportTypeRetrieveParams {
+    interface ReportTypeListParams {
       /**
        * Specifies which fields in the response should be expanded.
        */

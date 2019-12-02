@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface ApplePayDomain {
     /**
+     * Unique identifier for the object.
+     */
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'apple_pay_domain';
+
+    /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
     created: number;
@@ -11,19 +21,9 @@ declare namespace Stripe {
     domain_name: string;
 
     /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'apple_pay_domain';
   }
 
   interface DeletedApplePayDomain {
@@ -56,9 +56,14 @@ declare namespace Stripe {
   }
 
   /**
-   * Delete an apple pay domain.
+   * Retrieve an apple pay domain.
    */
-  interface ApplePayDomainDeleteParams {}
+  interface ApplePayDomainRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
 
   /**
    * List apple pay domains.
@@ -88,14 +93,9 @@ declare namespace Stripe {
   }
 
   /**
-   * Retrieve an apple pay domain.
+   * Delete an apple pay domain.
    */
-  interface ApplePayDomainRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
+  interface ApplePayDomainDeleteParams {}
 
   class ApplePayDomainsResource {
     /**

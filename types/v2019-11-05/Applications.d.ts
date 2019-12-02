@@ -9,13 +9,13 @@ declare namespace Stripe {
     id?: string;
 
     /**
-     * The name of the application.
-     */
-    name?: string | null;
-
-    /**
      * String representing the object's type. Objects of the same type share the same value.
      */
     object?: 'application';
+
+    /**
+     * The name of the application.
+     */
+    name?: string | null;
   }
 }

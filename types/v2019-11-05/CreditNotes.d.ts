@@ -4,6 +4,16 @@ declare namespace Stripe {
    */
   interface CreditNote {
     /**
+     * Unique identifier for the object.
+     */
+    id?: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object?: 'credit_note';
+
+    /**
      * The integer amount in **%s** representing the total amount of the credit note, including tax.
      */
     amount?: number;
@@ -29,11 +39,6 @@ declare namespace Stripe {
     customer_balance_transaction?: string | CustomerBalanceTransaction | null;
 
     /**
-     * Unique identifier for the object.
-     */
-    id?: string;
-
-    /**
      * ID of the invoice.
      */
     invoice?: string | Invoice;
@@ -49,21 +54,9 @@ declare namespace Stripe {
     memo?: string | null;
 
     /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
      * A unique number that identifies this particular credit note and appears on the PDF of the credit note and its associated invoice.
      */
     number?: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'credit_note';
 
     /**
      * The link to download the PDF of the credit note.
@@ -94,6 +87,13 @@ declare namespace Stripe {
      * The time that the credit note was voided.
      */
     voided_at?: number | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   namespace CreditNote {
@@ -116,8 +116,10 @@ declare namespace Stripe {
    *
    *  Refund: create a new refund (using refund_amount) or link an existing refund (using refund).
    *  Customer balance credit: credit the customer's balance (using credit_amount) which will be automatically applied to their next invoice when it's finalized.
-   *  Outside of Stripe credit: any positive value from the result of amount - refund_amount - credit_amount is represented as an “outside of Stripe” credit.
+   *  Outside of Stripe credit: record the amount that is or will be credited outside of Stripe (using out_of_band_amount).
    *
+   *
+   * For post-payment credit notes the sum of the refund, credit and outside of Stripe amounts must equal the credit note total.
    *
    * You may issue multiple credit notes for an invoice. Each credit note will increment the invoice's pre_payment_credit_notes_amount
    * or post_payment_credit_notes_amount depending on its status at the time of credit note creation.
@@ -156,6 +158,11 @@ declare namespace Stripe {
     };
 
     /**
+     * The integer amount in **%s** representing the amount that is credited outside of Stripe.
+     */
+    out_of_band_amount?: number;
+
+    /**
      * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
      */
     reason?: CreditNoteCreateParams.Reason;
@@ -177,6 +184,38 @@ declare namespace Stripe {
       | 'fraudulent'
       | 'order_change'
       | 'product_unsatisfactory'
+  }
+
+  /**
+   * Retrieves the credit note object with the given identifier.
+   */
+  interface CreditNoteRetrieveParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+  }
+
+  /**
+   * Updates an existing credit note.
+   */
+  interface CreditNoteUpdateParams {
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
+
+    /**
+     * Credit note memo.
+     */
+    memo?: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
   }
 
   /**
@@ -215,26 +254,31 @@ declare namespace Stripe {
   }
 
   /**
-   * Retrieves the credit note object with the given identifier.
+   * Get a preview of a credit note without creating it.
    */
-  interface CreditNoteRetrieveParams {
+  interface CreditNotePreviewParams {
+    /**
+     * The integer amount in **%s** representing the total amount of the credit note.
+     */
+    amount?: number;
+
+    /**
+     * The integer amount in **%s** representing the amount to credit the customer's balance, which will be automatically applied to their next invoice.
+     */
+    credit_amount?: number;
+
     /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
-  }
 
-  /**
-   * Updates an existing credit note.
-   */
-  interface CreditNoteUpdateParams {
     /**
-     * Specifies which fields in the response should be expanded.
+     * ID of the invoice.
      */
-    expand?: Array<string>;
+    invoice: string;
 
     /**
-     * Credit note memo.
+     * The credit note's memo appears on the credit note PDF.
      */
     memo?: string;
 
@@ -244,6 +288,34 @@ declare namespace Stripe {
     metadata?: {
       [key: string]: string;
     };
+
+    /**
+     * The integer amount in **%s** representing the amount that is credited outside of Stripe.
+     */
+    out_of_band_amount?: number;
+
+    /**
+     * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
+     */
+    reason?: CreditNotePreviewParams.Reason;
+
+    /**
+     * ID of an existing refund to link this credit note to.
+     */
+    refund?: string;
+
+    /**
+     * The integer amount in **%s** representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
+     */
+    refund_amount?: number;
+  }
+
+  namespace CreditNotePreviewParams {
+    type Reason =
+      | 'duplicate'
+      | 'fraudulent'
+      | 'order_change'
+      | 'product_unsatisfactory'
   }
 
   /**
@@ -265,8 +337,10 @@ declare namespace Stripe {
      *
      *  Refund: create a new refund (using refund_amount) or link an existing refund (using refund).
      *  Customer balance credit: credit the customer's balance (using credit_amount) which will be automatically applied to their next invoice when it's finalized.
-     *  Outside of Stripe credit: any positive value from the result of amount - refund_amount - credit_amount is represented as an “outside of Stripe” credit.
+     *  Outside of Stripe credit: record the amount that is or will be credited outside of Stripe (using out_of_band_amount).
      *
+     *
+     * For post-payment credit notes the sum of the refund, credit and outside of Stripe amounts must equal the credit note total.
      *
      * You may issue multiple credit notes for an invoice. Each credit note will increment the invoice's pre_payment_credit_notes_amount
      * or post_payment_credit_notes_amount depending on its status at the time of credit note creation.
@@ -299,6 +373,14 @@ declare namespace Stripe {
     update(
       id: string,
       params?: CreditNoteUpdateParams,
+      options?: RequestOptions
+    ): Promise<CreditNote>;
+
+    /**
+     * Get a preview of a credit note without creating it.
+     */
+    preview(
+      params: CreditNotePreviewParams,
       options?: RequestOptions
     ): Promise<CreditNote>;
 
