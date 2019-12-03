@@ -280,6 +280,7 @@ declare namespace Stripe {
       params?: CouponRetrieveParams,
       options?: RequestOptions
     ): Promise<Coupon>;
+    retrieve(id: string, options?: RequestOptions): Promise<Coupon>;
 
     /**
      * Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
@@ -297,6 +298,7 @@ declare namespace Stripe {
       params?: CouponListParams,
       options?: RequestOptions
     ): ApiListPromise<Coupon>;
+    list(options?: RequestOptions): ApiListPromise<Coupon>;
 
     /**
      * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
@@ -306,5 +308,6 @@ declare namespace Stripe {
       params?: CouponDeleteParams,
       options?: RequestOptions
     ): Promise<DeletedCoupon>;
+    del(id: string, options?: RequestOptions): Promise<DeletedCoupon>;
   }
 }

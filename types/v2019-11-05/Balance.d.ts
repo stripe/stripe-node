@@ -135,5 +135,6 @@ declare namespace Stripe {
       params?: BalanceRetrieveParams,
       options?: RequestOptions
     ): Promise<Balance>;
+    retrieve(options?: RequestOptions): Promise<Balance>;
   }
 }

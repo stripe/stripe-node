@@ -896,6 +896,7 @@ declare namespace Stripe {
       params?: SubscriptionScheduleCreateParams,
       options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
+    create(options?: RequestOptions): Promise<SubscriptionSchedule>;
 
     /**
      * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
@@ -903,6 +904,10 @@ declare namespace Stripe {
     retrieve(
       id: string,
       params?: SubscriptionScheduleRetrieveParams,
+      options?: RequestOptions
+    ): Promise<SubscriptionSchedule>;
+    retrieve(
+      id: string,
       options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
 
@@ -922,6 +927,7 @@ declare namespace Stripe {
       params?: SubscriptionScheduleListParams,
       options?: RequestOptions
     ): ApiListPromise<SubscriptionSchedule>;
+    list(options?: RequestOptions): ApiListPromise<SubscriptionSchedule>;
 
     /**
      * Cancels a subscription schedule and its associated subscription immediately (if the subscription schedule has an active subscription). A subscription schedule can only be canceled if its status is not_started or active.
@@ -931,6 +937,7 @@ declare namespace Stripe {
       params?: SubscriptionScheduleCancelParams,
       options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
+    cancel(id: string, options?: RequestOptions): Promise<SubscriptionSchedule>;
 
     /**
      * Releases the subscription schedule immediately, which will stop scheduling of its phases, but leave any existing subscription in place. A schedule can only be released if its status is not_started or active. If the subscription schedule is currently associated with a subscription, releasing it will remove its subscription property and set the subscription's ID to the released_subscription property.
@@ -938,6 +945,10 @@ declare namespace Stripe {
     release(
       id: string,
       params?: SubscriptionScheduleReleaseParams,
+      options?: RequestOptions
+    ): Promise<SubscriptionSchedule>;
+    release(
+      id: string,
       options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
   }

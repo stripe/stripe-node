@@ -639,6 +639,7 @@ declare namespace Stripe {
       params?: PaymentMethodCreateParams,
       options?: RequestOptions
     ): Promise<PaymentMethod>;
+    create(options?: RequestOptions): Promise<PaymentMethod>;
 
     /**
      * Retrieves a PaymentMethod object.
@@ -648,6 +649,7 @@ declare namespace Stripe {
       params?: PaymentMethodRetrieveParams,
       options?: RequestOptions
     ): Promise<PaymentMethod>;
+    retrieve(id: string, options?: RequestOptions): Promise<PaymentMethod>;
 
     /**
      * Updates a PaymentMethod object. A PaymentMethod must be attached a customer to be updated.
@@ -687,5 +689,6 @@ declare namespace Stripe {
       params?: PaymentMethodDetachParams,
       options?: RequestOptions
     ): Promise<PaymentMethod>;
+    detach(id: string, options?: RequestOptions): Promise<PaymentMethod>;
   }
 }

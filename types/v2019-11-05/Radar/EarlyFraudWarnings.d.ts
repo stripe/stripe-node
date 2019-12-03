@@ -93,6 +93,10 @@ declare namespace Stripe {
         params?: EarlyFraudWarningRetrieveParams,
         options?: RequestOptions
       ): Promise<Radar.EarlyFraudWarning>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Radar.EarlyFraudWarning>;
 
       /**
        * Returns a list of early fraud warnings.
@@ -101,6 +105,7 @@ declare namespace Stripe {
         params?: EarlyFraudWarningListParams,
         options?: RequestOptions
       ): ApiListPromise<Radar.EarlyFraudWarning>;
+      list(options?: RequestOptions): ApiListPromise<Radar.EarlyFraudWarning>;
     }
   }
 }

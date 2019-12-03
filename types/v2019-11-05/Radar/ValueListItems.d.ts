@@ -170,6 +170,10 @@ declare namespace Stripe {
         params?: ValueListItemRetrieveParams,
         options?: RequestOptions
       ): Promise<Radar.ValueListItem>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Radar.ValueListItem>;
 
       /**
        * Returns a list of ValueListItem objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -187,6 +191,7 @@ declare namespace Stripe {
         params?: ValueListItemDeleteParams,
         options?: RequestOptions
       ): Promise<DeletedValueListItem>;
+      del(id: string, options?: RequestOptions): Promise<DeletedValueListItem>;
     }
   }
 }

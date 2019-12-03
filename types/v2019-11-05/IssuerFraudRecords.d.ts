@@ -102,6 +102,7 @@ declare namespace Stripe {
       params?: IssuerFraudRecordRetrieveParams,
       options?: RequestOptions
     ): Promise<IssuerFraudRecord>;
+    retrieve(id: string, options?: RequestOptions): Promise<IssuerFraudRecord>;
 
     /**
      * Returns a list of issuer fraud records.
@@ -110,5 +111,6 @@ declare namespace Stripe {
       params?: IssuerFraudRecordListParams,
       options?: RequestOptions
     ): ApiListPromise<IssuerFraudRecord>;
+    list(options?: RequestOptions): ApiListPromise<IssuerFraudRecord>;
   }
 }

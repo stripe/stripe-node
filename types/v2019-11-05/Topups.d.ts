@@ -278,6 +278,7 @@ declare namespace Stripe {
       params?: TopupRetrieveParams,
       options?: RequestOptions
     ): Promise<Topup>;
+    retrieve(id: string, options?: RequestOptions): Promise<Topup>;
 
     /**
      * Updates the metadata of a top-up. Other top-up details are not editable by design.
@@ -295,6 +296,7 @@ declare namespace Stripe {
       params?: TopupListParams,
       options?: RequestOptions
     ): ApiListPromise<Topup>;
+    list(options?: RequestOptions): ApiListPromise<Topup>;
 
     /**
      * Cancels a top-up. Only pending top-ups can be canceled.
@@ -304,5 +306,6 @@ declare namespace Stripe {
       params?: TopupCancelParams,
       options?: RequestOptions
     ): Promise<Topup>;
+    cancel(id: string, options?: RequestOptions): Promise<Topup>;
   }
 }

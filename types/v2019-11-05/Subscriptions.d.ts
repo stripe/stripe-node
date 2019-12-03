@@ -896,6 +896,7 @@ declare namespace Stripe {
       params?: SubscriptionRetrieveParams,
       options?: RequestOptions
     ): Promise<Subscription>;
+    retrieve(id: string, options?: RequestOptions): Promise<Subscription>;
 
     /**
      * Updates an existing subscription on a customer to match the specified parameters. When changing plans or quantities, we will optionally prorate the price we charge next month to make up for any price changes. To preview how the proration will be calculated, use the [upcoming invoice](https://stripe.com/docs/api#upcoming_invoice) endpoint.
@@ -913,6 +914,7 @@ declare namespace Stripe {
       params?: SubscriptionListParams,
       options?: RequestOptions
     ): ApiListPromise<Subscription>;
+    list(options?: RequestOptions): ApiListPromise<Subscription>;
 
     /**
      * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
@@ -926,6 +928,7 @@ declare namespace Stripe {
       params?: SubscriptionDelParams,
       options?: RequestOptions
     ): Promise<Subscription>;
+    del(id: string, options?: RequestOptions): Promise<Subscription>;
 
     /**
      * Removes the currently applied discount on a subscription.
@@ -933,6 +936,10 @@ declare namespace Stripe {
     deleteDiscount(
       id: string,
       params?: SubscriptionDeleteDiscountParams,
+      options?: RequestOptions
+    ): Promise<DeletedDiscount>;
+    deleteDiscount(
+      id: string,
       options?: RequestOptions
     ): Promise<DeletedDiscount>;
   }

@@ -283,6 +283,7 @@ declare namespace Stripe {
         params?: DisputeRetrieveParams,
         options?: RequestOptions
       ): Promise<Issuing.Dispute>;
+      retrieve(id: string, options?: RequestOptions): Promise<Issuing.Dispute>;
 
       /**
        * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -300,6 +301,7 @@ declare namespace Stripe {
         params?: DisputeListParams,
         options?: RequestOptions
       ): ApiListPromise<Issuing.Dispute>;
+      list(options?: RequestOptions): ApiListPromise<Issuing.Dispute>;
     }
   }
 }

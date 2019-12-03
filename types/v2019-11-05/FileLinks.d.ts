@@ -188,6 +188,7 @@ declare namespace Stripe {
       params?: FileLinkRetrieveParams,
       options?: RequestOptions
     ): Promise<FileLink>;
+    retrieve(id: string, options?: RequestOptions): Promise<FileLink>;
 
     /**
      * Updates an existing file link object. Expired links can no longer be updated.
@@ -205,5 +206,6 @@ declare namespace Stripe {
       params?: FileLinkListParams,
       options?: RequestOptions
     ): ApiListPromise<FileLink>;
+    list(options?: RequestOptions): ApiListPromise<FileLink>;
   }
 }

@@ -280,6 +280,7 @@ declare namespace Stripe {
       params?: ApplicationFeeRetrieveParams,
       options?: RequestOptions
     ): Promise<ApplicationFee>;
+    retrieve(id: string, options?: RequestOptions): Promise<ApplicationFee>;
 
     /**
      * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
@@ -288,6 +289,7 @@ declare namespace Stripe {
       params?: ApplicationFeeListParams,
       options?: RequestOptions
     ): ApiListPromise<ApplicationFee>;
+    list(options?: RequestOptions): ApiListPromise<ApplicationFee>;
 
     /**
      * Refunds an application fee that has previously been collected but not yet refunded.
@@ -305,6 +307,7 @@ declare namespace Stripe {
       params?: ApplicationFeeCreateRefundParams,
       options?: RequestOptions
     ): Promise<FeeRefund>;
+    createRefund(id: string, options?: RequestOptions): Promise<FeeRefund>;
 
     /**
      * You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
@@ -312,6 +315,10 @@ declare namespace Stripe {
     listRefunds(
       id: string,
       params?: ApplicationFeeListRefundsParams,
+      options?: RequestOptions
+    ): ApiListPromise<FeeRefund>;
+    listRefunds(
+      id: string,
       options?: RequestOptions
     ): ApiListPromise<FeeRefund>;
 
@@ -322,6 +329,11 @@ declare namespace Stripe {
       feeId: string,
       id: string,
       params?: ApplicationFeeRetrieveRefundParams,
+      options?: RequestOptions
+    ): Promise<FeeRefund>;
+    retrieveRefund(
+      feeId: string,
+      id: string,
       options?: RequestOptions
     ): Promise<FeeRefund>;
 

@@ -121,6 +121,7 @@ declare namespace Stripe {
       params?: CountrySpecRetrieveParams,
       options?: RequestOptions
     ): Promise<CountrySpec>;
+    retrieve(id: string, options?: RequestOptions): Promise<CountrySpec>;
 
     /**
      * Lists all Country Spec objects available in the API.
@@ -129,5 +130,6 @@ declare namespace Stripe {
       params?: CountrySpecListParams,
       options?: RequestOptions
     ): ApiListPromise<CountrySpec>;
+    list(options?: RequestOptions): ApiListPromise<CountrySpec>;
   }
 }

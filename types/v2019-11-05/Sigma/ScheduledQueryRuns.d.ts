@@ -110,6 +110,10 @@ declare namespace Stripe {
         params?: ScheduledQueryRunRetrieveParams,
         options?: RequestOptions
       ): Promise<Sigma.ScheduledQueryRun>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Sigma.ScheduledQueryRun>;
 
       /**
        * Returns a list of scheduled query runs.
@@ -118,6 +122,7 @@ declare namespace Stripe {
         params?: ScheduledQueryRunListParams,
         options?: RequestOptions
       ): ApiListPromise<Sigma.ScheduledQueryRun>;
+      list(options?: RequestOptions): ApiListPromise<Sigma.ScheduledQueryRun>;
     }
   }
 }

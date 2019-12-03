@@ -254,6 +254,7 @@ declare namespace Stripe {
       params?: RefundCreateParams,
       options?: RequestOptions
     ): Promise<Refund>;
+    create(options?: RequestOptions): Promise<Refund>;
 
     /**
      * Retrieves the details of an existing refund.
@@ -264,6 +265,11 @@ declare namespace Stripe {
       params?: RefundRetrieveParams,
       options?: RequestOptions
     ): Promise<Refund>;
+    retrieve(
+      chargeId: string,
+      id: string,
+      options?: RequestOptions
+    ): Promise<Refund>;
 
     /**
      * Retrieves the details of an existing refund.
@@ -273,6 +279,7 @@ declare namespace Stripe {
       params?: RefundRetrieveParams,
       options?: RequestOptions
     ): Promise<Refund>;
+    retrieve(id: string, options?: RequestOptions): Promise<Refund>;
 
     /**
      * Updates the specified refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -293,6 +300,7 @@ declare namespace Stripe {
       params?: RefundListParams,
       options?: RequestOptions
     ): ApiListPromise<Refund>;
+    list(id: string, options?: RequestOptions): ApiListPromise<Refund>;
 
     /**
      * Returns a list of all refunds you've previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
@@ -301,5 +309,6 @@ declare namespace Stripe {
       params?: RefundListParams,
       options?: RequestOptions
     ): ApiListPromise<Refund>;
+    list(options?: RequestOptions): ApiListPromise<Refund>;
   }
 }

@@ -48,6 +48,7 @@ declare namespace Stripe {
         params?: ConnectionTokenCreateParams,
         options?: RequestOptions
       ): Promise<Terminal.ConnectionToken>;
+      create(options?: RequestOptions): Promise<Terminal.ConnectionToken>;
     }
   }
 }

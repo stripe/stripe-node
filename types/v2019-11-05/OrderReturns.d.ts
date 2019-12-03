@@ -127,6 +127,7 @@ declare namespace Stripe {
       params?: OrderReturnRetrieveParams,
       options?: RequestOptions
     ): Promise<OrderReturn>;
+    retrieve(id: string, options?: RequestOptions): Promise<OrderReturn>;
 
     /**
      * Returns a list of your order returns. The returns are returned sorted by creation date, with the most recently created return appearing first.
@@ -135,5 +136,6 @@ declare namespace Stripe {
       params?: OrderReturnListParams,
       options?: RequestOptions
     ): ApiListPromise<OrderReturn>;
+    list(options?: RequestOptions): ApiListPromise<OrderReturn>;
   }
 }

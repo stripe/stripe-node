@@ -67,6 +67,7 @@ declare namespace Stripe {
       params?: EphemeralKeyCreateParams,
       options?: RequestOptions
     ): Promise<EphemeralKey>;
+    create(options?: RequestOptions): Promise<EphemeralKey>;
 
     /**
      * Invalidates a short-lived API key for a given resource.
@@ -76,5 +77,6 @@ declare namespace Stripe {
       params?: EphemeralKeyDeleteParams,
       options?: RequestOptions
     ): Promise<EphemeralKey>;
+    del(id: string, options?: RequestOptions): Promise<EphemeralKey>;
   }
 }

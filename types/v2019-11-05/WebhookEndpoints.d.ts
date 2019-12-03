@@ -586,6 +586,7 @@ declare namespace Stripe {
       params?: WebhookEndpointRetrieveParams,
       options?: RequestOptions
     ): Promise<WebhookEndpoint>;
+    retrieve(id: string, options?: RequestOptions): Promise<WebhookEndpoint>;
 
     /**
      * Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of your endpoint.
@@ -603,6 +604,7 @@ declare namespace Stripe {
       params?: WebhookEndpointListParams,
       options?: RequestOptions
     ): ApiListPromise<WebhookEndpoint>;
+    list(options?: RequestOptions): ApiListPromise<WebhookEndpoint>;
 
     /**
      * You can also delete webhook endpoints via the [webhook endpoint management](https://dashboard.stripe.com/account/webhooks) page of the Stripe dashboard.
@@ -612,5 +614,6 @@ declare namespace Stripe {
       params?: WebhookEndpointDeleteParams,
       options?: RequestOptions
     ): Promise<DeletedWebhookEndpoint>;
+    del(id: string, options?: RequestOptions): Promise<DeletedWebhookEndpoint>;
   }
 }

@@ -404,6 +404,10 @@ declare namespace Stripe {
         params?: AuthorizationRetrieveParams,
         options?: RequestOptions
       ): Promise<Issuing.Authorization>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Issuing.Authorization>;
 
       /**
        * Updates the specified Issuing Authorization object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -421,6 +425,7 @@ declare namespace Stripe {
         params?: AuthorizationListParams,
         options?: RequestOptions
       ): ApiListPromise<Issuing.Authorization>;
+      list(options?: RequestOptions): ApiListPromise<Issuing.Authorization>;
 
       /**
        * Approves a pending Issuing Authorization object.
@@ -430,6 +435,10 @@ declare namespace Stripe {
         params?: AuthorizationApproveParams,
         options?: RequestOptions
       ): Promise<Issuing.Authorization>;
+      approve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Issuing.Authorization>;
 
       /**
        * Declines a pending Issuing Authorization object.
@@ -437,6 +446,10 @@ declare namespace Stripe {
       decline(
         id: string,
         params?: AuthorizationDeclineParams,
+        options?: RequestOptions
+      ): Promise<Issuing.Authorization>;
+      decline(
+        id: string,
         options?: RequestOptions
       ): Promise<Issuing.Authorization>;
     }

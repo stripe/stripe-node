@@ -3216,6 +3216,7 @@ declare namespace Stripe {
         params?: CardRetrieveParams,
         options?: RequestOptions
       ): Promise<Issuing.Card>;
+      retrieve(id: string, options?: RequestOptions): Promise<Issuing.Card>;
 
       /**
        * Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -3233,6 +3234,7 @@ declare namespace Stripe {
         params?: CardListParams,
         options?: RequestOptions
       ): ApiListPromise<Issuing.Card>;
+      list(options?: RequestOptions): ApiListPromise<Issuing.Card>;
 
       /**
        * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/management#virtual-card-info) of a virtual card.
@@ -3240,6 +3242,10 @@ declare namespace Stripe {
       retrieveDetails(
         id: string,
         params?: CardRetrieveDetailsParams,
+        options?: RequestOptions
+      ): Promise<Issuing.CardDetails>;
+      retrieveDetails(
+        id: string,
         options?: RequestOptions
       ): Promise<Issuing.CardDetails>;
     }

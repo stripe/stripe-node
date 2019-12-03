@@ -142,6 +142,7 @@ declare namespace Stripe {
      * All of Stripe's officially supported Client libraries should have support for sending multipart/form-data.
      */
     create(params?: FileCreateParams, options?: RequestOptions): Promise<File>;
+    create(options?: RequestOptions): Promise<File>;
 
     /**
      * Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object.
@@ -151,6 +152,7 @@ declare namespace Stripe {
       params?: FileRetrieveParams,
       options?: RequestOptions
     ): Promise<File>;
+    retrieve(id: string, options?: RequestOptions): Promise<File>;
 
     /**
      * Returns a list of the files that your account has access to. The files are returned sorted by creation date, with the most recently created files appearing first.
@@ -159,5 +161,6 @@ declare namespace Stripe {
       params?: FileListParams,
       options?: RequestOptions
     ): ApiListPromise<File>;
+    list(options?: RequestOptions): ApiListPromise<File>;
   }
 }

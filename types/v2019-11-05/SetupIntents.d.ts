@@ -720,6 +720,7 @@ declare namespace Stripe {
       params?: SetupIntentCreateParams,
       options?: RequestOptions
     ): Promise<SetupIntent>;
+    create(options?: RequestOptions): Promise<SetupIntent>;
 
     /**
      * Retrieves the details of a SetupIntent that has previously been created.
@@ -733,6 +734,7 @@ declare namespace Stripe {
       params?: SetupIntentRetrieveParams,
       options?: RequestOptions
     ): Promise<SetupIntent>;
+    retrieve(id: string, options?: RequestOptions): Promise<SetupIntent>;
 
     /**
      * Updates a SetupIntent object.
@@ -750,6 +752,7 @@ declare namespace Stripe {
       params?: SetupIntentListParams,
       options?: RequestOptions
     ): ApiListPromise<SetupIntent>;
+    list(options?: RequestOptions): ApiListPromise<SetupIntent>;
 
     /**
      * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
@@ -761,6 +764,7 @@ declare namespace Stripe {
       params?: SetupIntentCancelParams,
       options?: RequestOptions
     ): Promise<SetupIntent>;
+    cancel(id: string, options?: RequestOptions): Promise<SetupIntent>;
 
     /**
      * Confirm that your customer intends to set up the current or
@@ -782,5 +786,6 @@ declare namespace Stripe {
       params?: SetupIntentConfirmParams,
       options?: RequestOptions
     ): Promise<SetupIntent>;
+    confirm(id: string, options?: RequestOptions): Promise<SetupIntent>;
   }
 }

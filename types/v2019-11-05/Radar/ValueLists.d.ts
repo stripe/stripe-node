@@ -248,6 +248,7 @@ declare namespace Stripe {
         params?: ValueListRetrieveParams,
         options?: RequestOptions
       ): Promise<Radar.ValueList>;
+      retrieve(id: string, options?: RequestOptions): Promise<Radar.ValueList>;
 
       /**
        * Updates a ValueList object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that item_type is immutable.
@@ -265,6 +266,7 @@ declare namespace Stripe {
         params?: ValueListListParams,
         options?: RequestOptions
       ): ApiListPromise<Radar.ValueList>;
+      list(options?: RequestOptions): ApiListPromise<Radar.ValueList>;
 
       /**
        * Deletes a ValueList object, also deleting any items contained within the value list. To be deleted, a value list must not be referenced in any rules.
@@ -274,6 +276,7 @@ declare namespace Stripe {
         params?: ValueListDeleteParams,
         options?: RequestOptions
       ): Promise<DeletedValueList>;
+      del(id: string, options?: RequestOptions): Promise<DeletedValueList>;
     }
   }
 }

@@ -468,6 +468,7 @@ declare namespace Stripe {
       params?: ProductRetrieveParams,
       options?: RequestOptions
     ): Promise<Product>;
+    retrieve(id: string, options?: RequestOptions): Promise<Product>;
 
     /**
      * Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -485,6 +486,7 @@ declare namespace Stripe {
       params?: ProductListParams,
       options?: RequestOptions
     ): ApiListPromise<Product>;
+    list(options?: RequestOptions): ApiListPromise<Product>;
 
     /**
      * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
@@ -494,5 +496,6 @@ declare namespace Stripe {
       params?: ProductDeleteParams,
       options?: RequestOptions
     ): Promise<DeletedProduct>;
+    del(id: string, options?: RequestOptions): Promise<DeletedProduct>;
   }
 }
