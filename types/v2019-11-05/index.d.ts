@@ -182,27 +182,27 @@ declare module 'stripe' {
 
     setProtocol(protocol: string): void;
 
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setHost(host: string): void;
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setHost(host: string, port: string | number): void;
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setHost(host: string, port: string | number, protocol: string): void;
 
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setPort(port: string | number): void;
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setApiVersion(version?: string): void;
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setApiKey(key?: string): void;
 
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setTimeout(timeout?: number): void;
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setMaxNetworkRetries(maxNetworkRetries: number): void;
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setTelemetryEnabled(enabled: boolean): void;
-    /** DEPRECATED Please use the StripeConfig object instead. */
+    /** @deprecated Please use the StripeConfig object instead. */
     setHttpAgent(agent: Stripe.HttpAgent): void;
   }
 
