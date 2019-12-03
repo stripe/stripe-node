@@ -397,14 +397,6 @@ declare namespace Stripe {
 
     class AuthorizationsResource {
       /**
-       * Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-       */
-      list(
-        params?: AuthorizationListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Issuing.Authorization>;
-
-      /**
        * Retrieves an Issuing Authorization object.
        */
       retrieve(
@@ -421,6 +413,14 @@ declare namespace Stripe {
         params?: AuthorizationUpdateParams,
         options?: RequestOptions
       ): Promise<Issuing.Authorization>;
+
+      /**
+       * Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+       */
+      list(
+        params?: AuthorizationListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Issuing.Authorization>;
 
       /**
        * Approves a pending Issuing Authorization object.

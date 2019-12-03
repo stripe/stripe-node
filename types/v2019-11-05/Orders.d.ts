@@ -642,14 +642,6 @@ declare namespace Stripe {
     create(params: OrderCreateParams, options?: RequestOptions): Promise<Order>;
 
     /**
-     * Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
-     */
-    list(
-      params?: OrderListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Order>;
-
-    /**
      * Retrieves the details of an existing order. Supply the unique order ID from either an order creation request or the order list, and Stripe will return the corresponding order information.
      */
     retrieve(
@@ -666,6 +658,14 @@ declare namespace Stripe {
       params?: OrderUpdateParams,
       options?: RequestOptions
     ): Promise<Order>;
+
+    /**
+     * Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
+     */
+    list(
+      params?: OrderListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Order>;
 
     /**
      * Pay an order by providing a source to create a payment.

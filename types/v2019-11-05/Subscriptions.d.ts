@@ -889,27 +889,6 @@ declare namespace Stripe {
     ): Promise<Subscription>;
 
     /**
-     * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
-     *
-     * Note, however, that any pending invoice items that you've created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed.
-     *
-     * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
-     */
-    del(
-      id: string,
-      params?: SubscriptionDelParams,
-      options?: RequestOptions
-    ): Promise<Subscription>;
-
-    /**
-     * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
-     */
-    list(
-      params?: SubscriptionListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Subscription>;
-
-    /**
      * Retrieves the subscription with the given ID.
      */
     retrieve(
@@ -924,6 +903,27 @@ declare namespace Stripe {
     update(
       id: string,
       params?: SubscriptionUpdateParams,
+      options?: RequestOptions
+    ): Promise<Subscription>;
+
+    /**
+     * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
+     */
+    list(
+      params?: SubscriptionListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Subscription>;
+
+    /**
+     * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
+     *
+     * Note, however, that any pending invoice items that you've created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed.
+     *
+     * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
+     */
+    del(
+      id: string,
+      params?: SubscriptionDelParams,
       options?: RequestOptions
     ): Promise<Subscription>;
 

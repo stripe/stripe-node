@@ -461,23 +461,6 @@ declare namespace Stripe {
     ): Promise<Product>;
 
     /**
-     * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
-     */
-    del(
-      id: string,
-      params?: ProductDeleteParams,
-      options?: RequestOptions
-    ): Promise<DeletedProduct>;
-
-    /**
-     * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
-     */
-    list(
-      params?: ProductListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Product>;
-
-    /**
      * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
      */
     retrieve(
@@ -494,5 +477,22 @@ declare namespace Stripe {
       params?: ProductUpdateParams,
       options?: RequestOptions
     ): Promise<Product>;
+
+    /**
+     * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
+     */
+    list(
+      params?: ProductListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Product>;
+
+    /**
+     * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
+     */
+    del(
+      id: string,
+      params?: ProductDeleteParams,
+      options?: RequestOptions
+    ): Promise<DeletedProduct>;
   }
 }

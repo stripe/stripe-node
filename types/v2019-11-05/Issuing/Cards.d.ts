@@ -3209,14 +3209,6 @@ declare namespace Stripe {
       ): Promise<Issuing.Card>;
 
       /**
-       * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-       */
-      list(
-        params?: CardListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Issuing.Card>;
-
-      /**
        * Retrieves an Issuing Card object.
        */
       retrieve(
@@ -3233,6 +3225,14 @@ declare namespace Stripe {
         params?: CardUpdateParams,
         options?: RequestOptions
       ): Promise<Issuing.Card>;
+
+      /**
+       * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+       */
+      list(
+        params?: CardListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Issuing.Card>;
 
       /**
        * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/management#virtual-card-info) of a virtual card.

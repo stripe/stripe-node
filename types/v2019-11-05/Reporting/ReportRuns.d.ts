@@ -261,14 +261,6 @@ declare namespace Stripe {
       ): Promise<Reporting.ReportRun>;
 
       /**
-       * Returns a list of Report Runs, with the most recent appearing first. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-       */
-      list(
-        params?: ReportRunListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Reporting.ReportRun>;
-
-      /**
        * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
        */
       retrieve(
@@ -276,6 +268,14 @@ declare namespace Stripe {
         params?: ReportRunRetrieveParams,
         options?: RequestOptions
       ): Promise<Reporting.ReportRun>;
+
+      /**
+       * Returns a list of Report Runs, with the most recent appearing first. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+       */
+      list(
+        params?: ReportRunListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Reporting.ReportRun>;
     }
   }
 }

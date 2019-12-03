@@ -120,14 +120,6 @@ declare namespace Stripe {
 
   class OrderReturnsResource {
     /**
-     * Returns a list of your order returns. The returns are returned sorted by creation date, with the most recently created return appearing first.
-     */
-    list(
-      params?: OrderReturnListParams,
-      options?: RequestOptions
-    ): ApiListPromise<OrderReturn>;
-
-    /**
      * Retrieves the details of an existing order return. Supply the unique order ID from either an order return creation request or the order return list, and Stripe will return the corresponding order information.
      */
     retrieve(
@@ -135,5 +127,13 @@ declare namespace Stripe {
       params?: OrderReturnRetrieveParams,
       options?: RequestOptions
     ): Promise<OrderReturn>;
+
+    /**
+     * Returns a list of your order returns. The returns are returned sorted by creation date, with the most recently created return appearing first.
+     */
+    list(
+      params?: OrderReturnListParams,
+      options?: RequestOptions
+    ): ApiListPromise<OrderReturn>;
   }
 }

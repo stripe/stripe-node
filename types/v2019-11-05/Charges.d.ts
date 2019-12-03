@@ -1559,14 +1559,6 @@ declare namespace Stripe {
     ): Promise<Charge>;
 
     /**
-     * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
-     */
-    list(
-      params?: ChargeListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Charge>;
-
-    /**
      * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
      */
     retrieve(
@@ -1583,6 +1575,14 @@ declare namespace Stripe {
       params?: ChargeUpdateParams,
       options?: RequestOptions
     ): Promise<Charge>;
+
+    /**
+     * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
+     */
+    list(
+      params?: ChargeListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Charge>;
 
     /**
      * Capture the payment of an existing, uncaptured, charge. This is the second half of the two-step payment flow, where first you [created a charge](https://stripe.com/docs/api#create_charge) with the capture option set to false.

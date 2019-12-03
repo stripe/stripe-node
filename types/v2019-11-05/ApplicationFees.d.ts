@@ -273,14 +273,6 @@ declare namespace Stripe {
 
   class ApplicationFeesResource {
     /**
-     * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
-     */
-    list(
-      params?: ApplicationFeeListParams,
-      options?: RequestOptions
-    ): ApiListPromise<ApplicationFee>;
-
-    /**
      * Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
      */
     retrieve(
@@ -288,6 +280,14 @@ declare namespace Stripe {
       params?: ApplicationFeeRetrieveParams,
       options?: RequestOptions
     ): Promise<ApplicationFee>;
+
+    /**
+     * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
+     */
+    list(
+      params?: ApplicationFeeListParams,
+      options?: RequestOptions
+    ): ApiListPromise<ApplicationFee>;
 
     /**
      * Refunds an application fee that has previously been collected but not yet refunded.

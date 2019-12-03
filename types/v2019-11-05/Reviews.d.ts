@@ -206,14 +206,6 @@ declare namespace Stripe {
 
   class ReviewsResource {
     /**
-     * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-     */
-    list(
-      params?: ReviewListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Review>;
-
-    /**
      * Retrieves a Review object.
      */
     retrieve(
@@ -221,6 +213,14 @@ declare namespace Stripe {
       params?: ReviewRetrieveParams,
       options?: RequestOptions
     ): Promise<Review>;
+
+    /**
+     * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+     */
+    list(
+      params?: ReviewListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Review>;
 
     /**
      * Approves a Review object, closing it and removing it from the list of reviews.

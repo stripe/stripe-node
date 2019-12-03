@@ -137,12 +137,11 @@ declare namespace Stripe {
 
   class FilesResource {
     /**
-     * Returns a list of the files that your account has access to. The files are returned sorted by creation date, with the most recently created files appearing first.
+     * To upload a file to Stripe, you'll need to send a request of type multipart/form-data. The request should contain the file you would like to upload, as well as the parameters for creating a file.
+     *
+     * All of Stripe's officially supported Client libraries should have support for sending multipart/form-data.
      */
-    list(
-      params?: FileListParams,
-      options?: RequestOptions
-    ): ApiListPromise<File>;
+    create(params?: FileCreateParams, options?: RequestOptions): Promise<File>;
 
     /**
      * Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object.
@@ -154,10 +153,11 @@ declare namespace Stripe {
     ): Promise<File>;
 
     /**
-     * To upload a file to Stripe, you'll need to send a request of type multipart/form-data. The request should contain the file you would like to upload, as well as the parameters for creating a file.
-     *
-     * All of Stripe's officially supported Client libraries should have support for sending multipart/form-data.
+     * Returns a list of the files that your account has access to. The files are returned sorted by creation date, with the most recently created files appearing first.
      */
-    create(params?: FileCreateParams, options?: RequestOptions): Promise<File>;
+    list(
+      params?: FileListParams,
+      options?: RequestOptions
+    ): ApiListPromise<File>;
   }
 }

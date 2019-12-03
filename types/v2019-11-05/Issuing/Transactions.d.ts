@@ -219,14 +219,6 @@ declare namespace Stripe {
 
     class TransactionsResource {
       /**
-       * Returns a list of Issuing Transaction objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-       */
-      list(
-        params?: TransactionListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Issuing.Transaction>;
-
-      /**
        * Retrieves an Issuing Transaction object.
        */
       retrieve(
@@ -243,6 +235,14 @@ declare namespace Stripe {
         params?: TransactionUpdateParams,
         options?: RequestOptions
       ): Promise<Issuing.Transaction>;
+
+      /**
+       * Returns a list of Issuing Transaction objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+       */
+      list(
+        params?: TransactionListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Issuing.Transaction>;
     }
   }
 }

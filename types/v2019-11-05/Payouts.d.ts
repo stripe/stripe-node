@@ -308,14 +308,6 @@ declare namespace Stripe {
     ): Promise<Payout>;
 
     /**
-     * Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
-     */
-    list(
-      params?: PayoutListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Payout>;
-
-    /**
      * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
      */
     retrieve(
@@ -332,6 +324,14 @@ declare namespace Stripe {
       params?: PayoutUpdateParams,
       options?: RequestOptions
     ): Promise<Payout>;
+
+    /**
+     * Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
+     */
+    list(
+      params?: PayoutListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Payout>;
 
     /**
      * A previously created payout can be canceled if it has not yet been paid out. Funds will be refunded to your available balance. You may not cancel automatic Stripe payouts.

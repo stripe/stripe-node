@@ -399,14 +399,6 @@ declare namespace Stripe {
     ): Promise<Transfer>;
 
     /**
-     * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
-     */
-    list(
-      params?: TransferListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Transfer>;
-
-    /**
      * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
      */
     retrieve(
@@ -425,6 +417,14 @@ declare namespace Stripe {
       params?: TransferUpdateParams,
       options?: RequestOptions
     ): Promise<Transfer>;
+
+    /**
+     * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
+     */
+    list(
+      params?: TransferListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Transfer>;
 
     /**
      * When you create a new reversal, you must specify a transfer to create it on.

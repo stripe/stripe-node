@@ -246,14 +246,6 @@ declare namespace Stripe {
 
   class BitcoinReceiversResource {
     /**
-     * Returns a list of your receivers. Receivers are returned sorted by creation date, with the most recently created receivers appearing first.
-     */
-    list(
-      params?: BitcoinReceiverListParams,
-      options?: RequestOptions
-    ): ApiListPromise<BitcoinReceiver>;
-
-    /**
      * Retrieves the Bitcoin receiver with the given ID.
      */
     retrieve(
@@ -261,6 +253,14 @@ declare namespace Stripe {
       params?: BitcoinReceiverRetrieveParams,
       options?: RequestOptions
     ): Promise<BitcoinReceiver>;
+
+    /**
+     * Returns a list of your receivers. Receivers are returned sorted by creation date, with the most recently created receivers appearing first.
+     */
+    list(
+      params?: BitcoinReceiverListParams,
+      options?: RequestOptions
+    ): ApiListPromise<BitcoinReceiver>;
 
     /**
      * List bitcoin transacitons for a given receiver.

@@ -186,23 +186,6 @@ declare namespace Stripe {
       ): Promise<Terminal.Location>;
 
       /**
-       * Deletes a Location object.
-       */
-      del(
-        id: string,
-        params?: LocationDeleteParams,
-        options?: RequestOptions
-      ): Promise<DeletedLocation>;
-
-      /**
-       * Returns a list of Location objects.
-       */
-      list(
-        params?: LocationListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Terminal.Location>;
-
-      /**
        * Retrieves a Location object.
        */
       retrieve(
@@ -219,6 +202,23 @@ declare namespace Stripe {
         params?: LocationUpdateParams,
         options?: RequestOptions
       ): Promise<Terminal.Location>;
+
+      /**
+       * Returns a list of Location objects.
+       */
+      list(
+        params?: LocationListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Terminal.Location>;
+
+      /**
+       * Deletes a Location object.
+       */
+      del(
+        id: string,
+        params?: LocationDeleteParams,
+        options?: RequestOptions
+      ): Promise<DeletedLocation>;
     }
   }
 }

@@ -898,14 +898,6 @@ declare namespace Stripe {
     ): Promise<SubscriptionSchedule>;
 
     /**
-     * Retrieves the list of your subscription schedules.
-     */
-    list(
-      params?: SubscriptionScheduleListParams,
-      options?: RequestOptions
-    ): ApiListPromise<SubscriptionSchedule>;
-
-    /**
      * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
      */
     retrieve(
@@ -922,6 +914,14 @@ declare namespace Stripe {
       params?: SubscriptionScheduleUpdateParams,
       options?: RequestOptions
     ): Promise<SubscriptionSchedule>;
+
+    /**
+     * Retrieves the list of your subscription schedules.
+     */
+    list(
+      params?: SubscriptionScheduleListParams,
+      options?: RequestOptions
+    ): ApiListPromise<SubscriptionSchedule>;
 
     /**
      * Cancels a subscription schedule and its associated subscription immediately (if the subscription schedule has an active subscription). A subscription schedule can only be canceled if its status is not_started or active.

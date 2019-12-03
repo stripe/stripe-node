@@ -1265,23 +1265,6 @@ declare namespace Stripe {
     ): Promise<Customer>;
 
     /**
-     * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
-     */
-    del(
-      id: string,
-      params?: CustomerDeleteParams,
-      options?: RequestOptions
-    ): Promise<DeletedCustomer>;
-
-    /**
-     * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
-     */
-    list(
-      params?: CustomerListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Customer>;
-
-    /**
      * Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
      */
     retrieve(
@@ -1302,13 +1285,21 @@ declare namespace Stripe {
     ): Promise<Customer>;
 
     /**
-     * Removes the currently applied discount on a customer.
+     * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
      */
-    deleteDiscount(
-      id: string,
-      params?: CustomerDeleteDiscountParams,
+    list(
+      params?: CustomerListParams,
       options?: RequestOptions
-    ): Promise<DeletedDiscount>;
+    ): ApiListPromise<Customer>;
+
+    /**
+     * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
+     */
+    del(
+      id: string,
+      params?: CustomerDeleteParams,
+      options?: RequestOptions
+    ): Promise<DeletedCustomer>;
 
     /**
      * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
@@ -1316,35 +1307,6 @@ declare namespace Stripe {
     createBalanceTransaction(
       id: string,
       params: CustomerCreateBalanceTransactionParams,
-      options?: RequestOptions
-    ): Promise<CustomerBalanceTransaction>;
-
-    /**
-     * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-     */
-    listBalanceTransactions(
-      id: string,
-      params?: CustomerListBalanceTransactionsParams,
-      options?: RequestOptions
-    ): ApiListPromise<CustomerBalanceTransaction>;
-
-    /**
-     * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-     */
-    retrieveBalanceTransaction(
-      customerId: string,
-      id: string,
-      params?: CustomerRetrieveBalanceTransactionParams,
-      options?: RequestOptions
-    ): Promise<CustomerBalanceTransaction>;
-
-    /**
-     * Most customer balance transaction fields are immutable, but you may update its description and metadata.
-     */
-    updateBalanceTransaction(
-      customerId: string,
-      id: string,
-      params?: CustomerUpdateBalanceTransactionParams,
       options?: RequestOptions
     ): Promise<CustomerBalanceTransaction>;
 
@@ -1364,37 +1326,22 @@ declare namespace Stripe {
     >;
 
     /**
-     * List sources for a specified customer.
+     * Creates a new TaxID object for a customer.
      */
-    listSources(
+    createTaxId(
       id: string,
-      params?: CustomerListSourcesParams,
+      params: CustomerCreateTaxIdParams,
       options?: RequestOptions
-    ): ApiListPromise<
-      Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
-    >;
+    ): Promise<TaxId>;
 
     /**
-     * Retrieve a specified source for a given customer.
+     * Removes the currently applied discount on a customer.
      */
-    retrieveSource(
-      customerId: string,
+    deleteDiscount(
       id: string,
-      params?: CustomerRetrieveSourceParams,
+      params?: CustomerDeleteDiscountParams,
       options?: RequestOptions
-    ): Promise<
-      Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
-    >;
-
-    /**
-     * Update a specified source for a given customer.
-     */
-    updateSource(
-      customerId: string,
-      id: string,
-      params?: CustomerUpdateSourceParams,
-      options?: RequestOptions
-    ): Promise<Card | BankAccount | Source>;
+    ): Promise<DeletedDiscount>;
 
     /**
      * Delete a specified source for a given customer.
@@ -1409,25 +1356,6 @@ declare namespace Stripe {
     >;
 
     /**
-     * Verify a specified bank account for a given customer.
-     */
-    verifySource(
-      customerId: string,
-      id: string,
-      params?: CustomerVerifySourceParams,
-      options?: RequestOptions
-    ): Promise<BankAccount>;
-
-    /**
-     * Creates a new TaxID object for a customer.
-     */
-    createTaxId(
-      id: string,
-      params: CustomerCreateTaxIdParams,
-      options?: RequestOptions
-    ): Promise<TaxId>;
-
-    /**
      * Deletes an existing TaxID object.
      */
     deleteTaxId(
@@ -1436,6 +1364,26 @@ declare namespace Stripe {
       params?: CustomerDeleteTaxIdParams,
       options?: RequestOptions
     ): Promise<DeletedTaxId>;
+
+    /**
+     * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+     */
+    listBalanceTransactions(
+      id: string,
+      params?: CustomerListBalanceTransactionsParams,
+      options?: RequestOptions
+    ): ApiListPromise<CustomerBalanceTransaction>;
+
+    /**
+     * List sources for a specified customer.
+     */
+    listSources(
+      id: string,
+      params?: CustomerListSourcesParams,
+      options?: RequestOptions
+    ): ApiListPromise<
+      Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
+    >;
 
     /**
      * Returns a list of tax IDs for a customer.
@@ -1447,6 +1395,28 @@ declare namespace Stripe {
     ): ApiListPromise<TaxId>;
 
     /**
+     * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+     */
+    retrieveBalanceTransaction(
+      customerId: string,
+      id: string,
+      params?: CustomerRetrieveBalanceTransactionParams,
+      options?: RequestOptions
+    ): Promise<CustomerBalanceTransaction>;
+
+    /**
+     * Retrieve a specified source for a given customer.
+     */
+    retrieveSource(
+      customerId: string,
+      id: string,
+      params?: CustomerRetrieveSourceParams,
+      options?: RequestOptions
+    ): Promise<
+      Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
+    >;
+
+    /**
      * Retrieves the TaxID object with the given identifier.
      */
     retrieveTaxId(
@@ -1455,5 +1425,35 @@ declare namespace Stripe {
       params?: CustomerRetrieveTaxIdParams,
       options?: RequestOptions
     ): Promise<TaxId>;
+
+    /**
+     * Most customer balance transaction fields are immutable, but you may update its description and metadata.
+     */
+    updateBalanceTransaction(
+      customerId: string,
+      id: string,
+      params?: CustomerUpdateBalanceTransactionParams,
+      options?: RequestOptions
+    ): Promise<CustomerBalanceTransaction>;
+
+    /**
+     * Update a specified source for a given customer.
+     */
+    updateSource(
+      customerId: string,
+      id: string,
+      params?: CustomerUpdateSourceParams,
+      options?: RequestOptions
+    ): Promise<Card | BankAccount | Source>;
+
+    /**
+     * Verify a specified bank account for a given customer.
+     */
+    verifySource(
+      customerId: string,
+      id: string,
+      params?: CustomerVerifySourceParams,
+      options?: RequestOptions
+    ): Promise<BankAccount>;
   }
 }
