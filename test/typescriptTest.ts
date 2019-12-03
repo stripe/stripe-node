@@ -8,7 +8,20 @@
 ///<reference types="../types/v2019-11-05" />
 import Stripe from 'stripe';
 
-const stripe = new Stripe('sk_test_123');
+let stripe = new Stripe('sk_test_123');
+
+// Check config object.
+stripe = new Stripe('sk_test_123', '2019-xx-xx');
+stripe = new Stripe('sk_test_123', {
+  apiVersion: '2019-08-08',
+  maxNetworkRetries: 1,
+  timeout: 1000,
+  host: 'api.example.com',
+  port: 123,
+  telemetry: true,
+});
+
+stripe.setTimeout(3000);
 
 (async () => {
   const params: Stripe.CustomerCreateParams = {
@@ -17,7 +30,14 @@ const stripe = new Stripe('sk_test_123');
   const opts: Stripe.RequestOptions = {
     stripeVersion: '2019-11-05',
   };
-  const customer: Stripe.Customer = await stripe.customers.create(params, opts);
+  let customer: Stripe.Customer = await stripe.customers.create(params, opts);
+
+  // check no opts:
+  await stripe.customers.create(params);
+
+  // check multiple dispatch:
+  customer = await stripe.customers.retrieve(customer.id, opts);
+  customer = await stripe.customers.retrieve(customer.id, {expand: []}, opts);
 
   const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
     expand: ['customer'],
