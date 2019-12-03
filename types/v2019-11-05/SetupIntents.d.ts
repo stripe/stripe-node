@@ -722,14 +722,6 @@ declare namespace Stripe {
     ): Promise<SetupIntent>;
 
     /**
-     * Returns a list of SetupIntents.
-     */
-    list(
-      params?: SetupIntentListParams,
-      options?: RequestOptions
-    ): ApiListPromise<SetupIntent>;
-
-    /**
      * Retrieves the details of a SetupIntent that has previously been created.
      *
      * Client-side retrieval using a publishable key is allowed when the client_secret is provided in the query string.
@@ -750,6 +742,14 @@ declare namespace Stripe {
       params?: SetupIntentUpdateParams,
       options?: RequestOptions
     ): Promise<SetupIntent>;
+
+    /**
+     * Returns a list of SetupIntents.
+     */
+    list(
+      params?: SetupIntentListParams,
+      options?: RequestOptions
+    ): ApiListPromise<SetupIntent>;
 
     /**
      * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.

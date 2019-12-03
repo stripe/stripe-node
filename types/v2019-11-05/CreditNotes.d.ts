@@ -351,14 +351,6 @@ declare namespace Stripe {
     ): Promise<CreditNote>;
 
     /**
-     * Returns a list of credit notes.
-     */
-    list(
-      params?: CreditNoteListParams,
-      options?: RequestOptions
-    ): ApiListPromise<CreditNote>;
-
-    /**
      * Retrieves the credit note object with the given identifier.
      */
     retrieve(
@@ -375,6 +367,14 @@ declare namespace Stripe {
       params?: CreditNoteUpdateParams,
       options?: RequestOptions
     ): Promise<CreditNote>;
+
+    /**
+     * Returns a list of credit notes.
+     */
+    list(
+      params?: CreditNoteListParams,
+      options?: RequestOptions
+    ): ApiListPromise<CreditNote>;
 
     /**
      * Get a preview of a credit note without creating it.

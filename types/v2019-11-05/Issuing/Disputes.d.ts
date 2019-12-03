@@ -276,14 +276,6 @@ declare namespace Stripe {
       ): Promise<Issuing.Dispute>;
 
       /**
-       * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-       */
-      list(
-        params?: DisputeListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Issuing.Dispute>;
-
-      /**
        * Retrieves an Issuing Dispute object.
        */
       retrieve(
@@ -300,6 +292,14 @@ declare namespace Stripe {
         params?: DisputeUpdateParams,
         options?: RequestOptions
       ): Promise<Issuing.Dispute>;
+
+      /**
+       * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+       */
+      list(
+        params?: DisputeListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Issuing.Dispute>;
     }
   }
 }

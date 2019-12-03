@@ -181,14 +181,6 @@ declare namespace Stripe {
     ): Promise<FileLink>;
 
     /**
-     * Returns a list of file links.
-     */
-    list(
-      params?: FileLinkListParams,
-      options?: RequestOptions
-    ): ApiListPromise<FileLink>;
-
-    /**
      * Retrieves the file link with the given ID.
      */
     retrieve(
@@ -205,5 +197,13 @@ declare namespace Stripe {
       params?: FileLinkUpdateParams,
       options?: RequestOptions
     ): Promise<FileLink>;
+
+    /**
+     * Returns a list of file links.
+     */
+    list(
+      params?: FileLinkListParams,
+      options?: RequestOptions
+    ): ApiListPromise<FileLink>;
   }
 }

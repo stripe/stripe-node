@@ -161,14 +161,6 @@ declare namespace Stripe {
 
   class EventsResource {
     /**
-     * List events, going back up to 30 days. Each event data is rendered according to Stripe API version at its creation time, specified in [event object](https://stripe.com/docs/api/events/object) api_version attribute (not according to your current Stripe API version or Stripe-Version header).
-     */
-    list(
-      params?: EventListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Event>;
-
-    /**
      * Retrieves the details of an event. Supply the unique identifier of the event, which you might have received in a webhook.
      */
     retrieve(
@@ -176,5 +168,13 @@ declare namespace Stripe {
       params?: EventRetrieveParams,
       options?: RequestOptions
     ): Promise<Event>;
+
+    /**
+     * List events, going back up to 30 days. Each event data is rendered according to Stripe API version at its creation time, specified in [event object](https://stripe.com/docs/api/events/object) api_version attribute (not according to your current Stripe API version or Stripe-Version header).
+     */
+    list(
+      params?: EventListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Event>;
   }
 }

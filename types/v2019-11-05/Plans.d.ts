@@ -484,23 +484,6 @@ declare namespace Stripe {
     create(params: PlanCreateParams, options?: RequestOptions): Promise<Plan>;
 
     /**
-     * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
-     */
-    del(
-      id: string,
-      params?: PlanDeleteParams,
-      options?: RequestOptions
-    ): Promise<DeletedPlan>;
-
-    /**
-     * Returns a list of your plans.
-     */
-    list(
-      params?: PlanListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Plan>;
-
-    /**
      * Retrieves the plan with the given ID.
      */
     retrieve(
@@ -517,5 +500,22 @@ declare namespace Stripe {
       params?: PlanUpdateParams,
       options?: RequestOptions
     ): Promise<Plan>;
+
+    /**
+     * Returns a list of your plans.
+     */
+    list(
+      params?: PlanListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Plan>;
+
+    /**
+     * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
+     */
+    del(
+      id: string,
+      params?: PlanDeleteParams,
+      options?: RequestOptions
+    ): Promise<DeletedPlan>;
   }
 }

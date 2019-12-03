@@ -207,23 +207,6 @@ declare namespace Stripe {
       ): Promise<Terminal.Reader>;
 
       /**
-       * Deletes a Reader object.
-       */
-      del(
-        id: string,
-        params?: ReaderDeleteParams,
-        options?: RequestOptions
-      ): Promise<DeletedReader>;
-
-      /**
-       * Returns a list of Reader objects.
-       */
-      list(
-        params?: ReaderListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Terminal.Reader>;
-
-      /**
        * Retrieves a Reader object.
        */
       retrieve(
@@ -240,6 +223,23 @@ declare namespace Stripe {
         params?: ReaderUpdateParams,
         options?: RequestOptions
       ): Promise<Terminal.Reader>;
+
+      /**
+       * Returns a list of Reader objects.
+       */
+      list(
+        params?: ReaderListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Terminal.Reader>;
+
+      /**
+       * Deletes a Reader object.
+       */
+      del(
+        id: string,
+        params?: ReaderDeleteParams,
+        options?: RequestOptions
+      ): Promise<DeletedReader>;
     }
   }
 }

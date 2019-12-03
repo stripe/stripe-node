@@ -61,19 +61,19 @@ declare namespace Stripe {
 
   class EphemeralKeysResource {
     /**
+     * Creates a short-lived API key for a given resource.
+     */
+    create(
+      params?: EphemeralKeyCreateParams,
+      options?: RequestOptions
+    ): Promise<EphemeralKey>;
+
+    /**
      * Invalidates a short-lived API key for a given resource.
      */
     del(
       id: string,
       params?: EphemeralKeyDeleteParams,
-      options?: RequestOptions
-    ): Promise<EphemeralKey>;
-
-    /**
-     * Creates a short-lived API key for a given resource.
-     */
-    create(
-      params?: EphemeralKeyCreateParams,
       options?: RequestOptions
     ): Promise<EphemeralKey>;
   }

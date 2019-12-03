@@ -253,16 +253,6 @@ declare namespace Stripe {
 
   class BalanceTransactionsResource {
     /**
-     * Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.
-     *
-     * Note that this endpoint was previously called “Balance history” and used the path /v1/balance/history.
-     */
-    list(
-      params?: BalanceTransactionListParams,
-      options?: RequestOptions
-    ): ApiListPromise<BalanceTransaction>;
-
-    /**
      * Retrieves the balance transaction with the given ID.
      *
      * Note that this endpoint previously used the path /v1/balance/history/:id.
@@ -272,5 +262,15 @@ declare namespace Stripe {
       params?: BalanceTransactionRetrieveParams,
       options?: RequestOptions
     ): Promise<BalanceTransaction>;
+
+    /**
+     * Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.
+     *
+     * Note that this endpoint was previously called “Balance history” and used the path /v1/balance/history.
+     */
+    list(
+      params?: BalanceTransactionListParams,
+      options?: RequestOptions
+    ): ApiListPromise<BalanceTransaction>;
   }
 }

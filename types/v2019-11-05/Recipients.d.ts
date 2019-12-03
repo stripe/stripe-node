@@ -284,23 +284,6 @@ declare namespace Stripe {
     ): Promise<Recipient>;
 
     /**
-     * Permanently deletes a recipient. It cannot be undone.
-     */
-    del(
-      id: string,
-      params?: RecipientDeleteParams,
-      options?: RequestOptions
-    ): Promise<DeletedRecipient>;
-
-    /**
-     * Returns a list of your recipients. The recipients are returned sorted by creation date, with the most recently created recipients appearing first.
-     */
-    list(
-      params?: RecipientListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Recipient>;
-
-    /**
      * Retrieves the details of an existing recipient. You need only supply the unique recipient identifier that was returned upon recipient creation.
      */
     retrieve(
@@ -321,5 +304,22 @@ declare namespace Stripe {
       params?: RecipientUpdateParams,
       options?: RequestOptions
     ): Promise<Recipient>;
+
+    /**
+     * Returns a list of your recipients. The recipients are returned sorted by creation date, with the most recently created recipients appearing first.
+     */
+    list(
+      params?: RecipientListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Recipient>;
+
+    /**
+     * Permanently deletes a recipient. It cannot be undone.
+     */
+    del(
+      id: string,
+      params?: RecipientDeleteParams,
+      options?: RequestOptions
+    ): Promise<DeletedRecipient>;
   }
 }

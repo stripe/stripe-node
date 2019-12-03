@@ -447,14 +447,6 @@ declare namespace Stripe {
 
   class DisputesResource {
     /**
-     * Returns a list of your disputes.
-     */
-    list(
-      params?: DisputeListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Dispute>;
-
-    /**
      * Retrieves the dispute with the given ID.
      */
     retrieve(
@@ -473,6 +465,14 @@ declare namespace Stripe {
       params?: DisputeUpdateParams,
       options?: RequestOptions
     ): Promise<Dispute>;
+
+    /**
+     * Returns a list of your disputes.
+     */
+    list(
+      params?: DisputeListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Dispute>;
 
     /**
      * Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute, acknowledging it as lost.

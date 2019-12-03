@@ -114,14 +114,6 @@ declare namespace Stripe {
 
   class CountrySpecsResource {
     /**
-     * Lists all Country Spec objects available in the API.
-     */
-    list(
-      params?: CountrySpecListParams,
-      options?: RequestOptions
-    ): ApiListPromise<CountrySpec>;
-
-    /**
      * Returns a Country Spec for a given Country code.
      */
     retrieve(
@@ -129,5 +121,13 @@ declare namespace Stripe {
       params?: CountrySpecRetrieveParams,
       options?: RequestOptions
     ): Promise<CountrySpec>;
+
+    /**
+     * Lists all Country Spec objects available in the API.
+     */
+    list(
+      params?: CountrySpecListParams,
+      options?: RequestOptions
+    ): ApiListPromise<CountrySpec>;
   }
 }

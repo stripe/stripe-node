@@ -256,14 +256,6 @@ declare namespace Stripe {
     ): Promise<TaxRate>;
 
     /**
-     * Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
-     */
-    list(
-      params?: TaxRateListParams,
-      options?: RequestOptions
-    ): ApiListPromise<TaxRate>;
-
-    /**
      * Retrieves a tax rate with the given ID
      */
     retrieve(
@@ -280,5 +272,13 @@ declare namespace Stripe {
       params?: TaxRateUpdateParams,
       options?: RequestOptions
     ): Promise<TaxRate>;
+
+    /**
+     * Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
+     */
+    list(
+      params?: TaxRateListParams,
+      options?: RequestOptions
+    ): ApiListPromise<TaxRate>;
   }
 }

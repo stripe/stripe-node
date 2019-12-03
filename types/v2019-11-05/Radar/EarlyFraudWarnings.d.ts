@@ -84,14 +84,6 @@ declare namespace Stripe {
 
     class EarlyFraudWarningsResource {
       /**
-       * Returns a list of early fraud warnings.
-       */
-      list(
-        params?: EarlyFraudWarningListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Radar.EarlyFraudWarning>;
-
-      /**
        * Retrieves the details of an early fraud warning that has previously been created.
        *
        * Please refer to the [early fraud warning](https://stripe.com/docs/api#early_fraud_warning_object) object reference for more details.
@@ -101,6 +93,14 @@ declare namespace Stripe {
         params?: EarlyFraudWarningRetrieveParams,
         options?: RequestOptions
       ): Promise<Radar.EarlyFraudWarning>;
+
+      /**
+       * Returns a list of early fraud warnings.
+       */
+      list(
+        params?: EarlyFraudWarningListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Radar.EarlyFraudWarning>;
     }
   }
 }

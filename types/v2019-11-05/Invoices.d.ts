@@ -1318,23 +1318,6 @@ declare namespace Stripe {
     ): Promise<Invoice>;
 
     /**
-     * Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api#void_invoice).
-     */
-    del(
-      id: string,
-      params?: InvoiceDeleteParams,
-      options?: RequestOptions
-    ): Promise<DeletedInvoice>;
-
-    /**
-     * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
-     */
-    list(
-      params?: InvoiceListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Invoice>;
-
-    /**
      * Retrieves the invoice with the given ID.
      */
     retrieve(
@@ -1358,6 +1341,23 @@ declare namespace Stripe {
     ): Promise<Invoice>;
 
     /**
+     * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
+     */
+    list(
+      params?: InvoiceListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Invoice>;
+
+    /**
+     * Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api#void_invoice).
+     */
+    del(
+      id: string,
+      params?: InvoiceDeleteParams,
+      options?: RequestOptions
+    ): Promise<DeletedInvoice>;
+
+    /**
      * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
      */
     finalizeInvoice(
@@ -1365,6 +1365,24 @@ declare namespace Stripe {
       params?: InvoiceFinalizeInvoiceParams,
       options?: RequestOptions
     ): Promise<Invoice>;
+
+    /**
+     * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+     */
+    listLineItems(
+      id: string,
+      params?: InvoiceListLineItemsParams,
+      options?: RequestOptions
+    ): ApiListPromise<InvoiceLineItem>;
+
+    /**
+     * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+     */
+    listUpcomingLineItems(
+      id: string,
+      params?: InvoiceListUpcomingLineItemsParams,
+      options?: RequestOptions
+    ): ApiListPromise<InvoiceLineItem>;
 
     /**
      * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
@@ -1415,23 +1433,5 @@ declare namespace Stripe {
       params?: InvoiceVoidInvoiceParams,
       options?: RequestOptions
     ): Promise<Invoice>;
-
-    /**
-     * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-     */
-    listLineItems(
-      id: string,
-      params?: InvoiceListLineItemsParams,
-      options?: RequestOptions
-    ): ApiListPromise<InvoiceLineItem>;
-
-    /**
-     * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-     */
-    listUpcomingLineItems(
-      id: string,
-      params?: InvoiceListUpcomingLineItemsParams,
-      options?: RequestOptions
-    ): ApiListPromise<InvoiceLineItem>;
   }
 }

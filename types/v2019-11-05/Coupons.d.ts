@@ -273,23 +273,6 @@ declare namespace Stripe {
     ): Promise<Coupon>;
 
     /**
-     * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
-     */
-    del(
-      id: string,
-      params?: CouponDeleteParams,
-      options?: RequestOptions
-    ): Promise<DeletedCoupon>;
-
-    /**
-     * Returns a list of your coupons.
-     */
-    list(
-      params?: CouponListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Coupon>;
-
-    /**
      * Retrieves the coupon with the given ID.
      */
     retrieve(
@@ -306,5 +289,22 @@ declare namespace Stripe {
       params?: CouponUpdateParams,
       options?: RequestOptions
     ): Promise<Coupon>;
+
+    /**
+     * Returns a list of your coupons.
+     */
+    list(
+      params?: CouponListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Coupon>;
+
+    /**
+     * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
+     */
+    del(
+      id: string,
+      params?: CouponDeleteParams,
+      options?: RequestOptions
+    ): Promise<DeletedCoupon>;
   }
 }

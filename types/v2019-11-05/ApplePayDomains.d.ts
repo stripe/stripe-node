@@ -107,13 +107,13 @@ declare namespace Stripe {
     ): Promise<ApplePayDomain>;
 
     /**
-     * Delete an apple pay domain.
+     * Retrieve an apple pay domain.
      */
-    del(
+    retrieve(
       id: string,
-      params?: ApplePayDomainDeleteParams,
+      params?: ApplePayDomainRetrieveParams,
       options?: RequestOptions
-    ): Promise<DeletedApplePayDomain>;
+    ): Promise<ApplePayDomain>;
 
     /**
      * List apple pay domains.
@@ -124,12 +124,12 @@ declare namespace Stripe {
     ): ApiListPromise<ApplePayDomain>;
 
     /**
-     * Retrieve an apple pay domain.
+     * Delete an apple pay domain.
      */
-    retrieve(
+    del(
       id: string,
-      params?: ApplePayDomainRetrieveParams,
+      params?: ApplePayDomainDeleteParams,
       options?: RequestOptions
-    ): Promise<ApplePayDomain>;
+    ): Promise<DeletedApplePayDomain>;
   }
 }

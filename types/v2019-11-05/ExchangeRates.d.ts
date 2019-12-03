@@ -58,14 +58,6 @@ declare namespace Stripe {
 
   class ExchangeRatesResource {
     /**
-     * Returns a list of objects that contain the rates at which foreign currencies are converted to one another. Only shows the currencies for which Stripe supports.
-     */
-    list(
-      params?: ExchangeRateListParams,
-      options?: RequestOptions
-    ): ApiListPromise<ExchangeRate>;
-
-    /**
      * Retrieves the exchange rates from the given currency to every supported currency.
      */
     retrieve(
@@ -73,5 +65,13 @@ declare namespace Stripe {
       params?: ExchangeRateRetrieveParams,
       options?: RequestOptions
     ): Promise<ExchangeRate>;
+
+    /**
+     * Returns a list of objects that contain the rates at which foreign currencies are converted to one another. Only shows the currencies for which Stripe supports.
+     */
+    list(
+      params?: ExchangeRateListParams,
+      options?: RequestOptions
+    ): ApiListPromise<ExchangeRate>;
   }
 }

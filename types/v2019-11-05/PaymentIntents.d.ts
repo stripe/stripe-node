@@ -1475,14 +1475,6 @@ declare namespace Stripe {
     ): Promise<PaymentIntent>;
 
     /**
-     * Returns a list of PaymentIntents.
-     */
-    list(
-      params?: PaymentIntentListParams,
-      options?: RequestOptions
-    ): ApiListPromise<PaymentIntent>;
-
-    /**
      * Retrieves the details of a PaymentIntent that has previously been created.
      *
      * Client-side retrieval using a publishable key is allowed when the client_secret is provided in the query string.
@@ -1509,6 +1501,14 @@ declare namespace Stripe {
       params?: PaymentIntentUpdateParams,
       options?: RequestOptions
     ): Promise<PaymentIntent>;
+
+    /**
+     * Returns a list of PaymentIntents.
+     */
+    list(
+      params?: PaymentIntentListParams,
+      options?: RequestOptions
+    ): ApiListPromise<PaymentIntent>;
 
     /**
      * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.

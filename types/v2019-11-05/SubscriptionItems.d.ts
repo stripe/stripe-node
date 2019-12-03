@@ -327,23 +327,6 @@ declare namespace Stripe {
     ): Promise<SubscriptionItem>;
 
     /**
-     * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
-     */
-    del(
-      id: string,
-      params?: SubscriptionItemDeleteParams,
-      options?: RequestOptions
-    ): Promise<DeletedSubscriptionItem>;
-
-    /**
-     * Returns a list of your subscription items for a given subscription.
-     */
-    list(
-      params: SubscriptionItemListParams,
-      options?: RequestOptions
-    ): ApiListPromise<SubscriptionItem>;
-
-    /**
      * Retrieves the invoice item with the given ID.
      */
     retrieve(
@@ -360,6 +343,23 @@ declare namespace Stripe {
       params?: SubscriptionItemUpdateParams,
       options?: RequestOptions
     ): Promise<SubscriptionItem>;
+
+    /**
+     * Returns a list of your subscription items for a given subscription.
+     */
+    list(
+      params: SubscriptionItemListParams,
+      options?: RequestOptions
+    ): ApiListPromise<SubscriptionItem>;
+
+    /**
+     * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
+     */
+    del(
+      id: string,
+      params?: SubscriptionItemDeleteParams,
+      options?: RequestOptions
+    ): Promise<DeletedSubscriptionItem>;
 
     /**
      * Creates a usage record for a specified subscription item and date, and fills it with a quantity.

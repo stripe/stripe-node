@@ -271,14 +271,6 @@ declare namespace Stripe {
     create(params: TopupCreateParams, options?: RequestOptions): Promise<Topup>;
 
     /**
-     * Returns a list of top-ups.
-     */
-    list(
-      params?: TopupListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Topup>;
-
-    /**
      * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
      */
     retrieve(
@@ -295,6 +287,14 @@ declare namespace Stripe {
       params?: TopupUpdateParams,
       options?: RequestOptions
     ): Promise<Topup>;
+
+    /**
+     * Returns a list of top-ups.
+     */
+    list(
+      params?: TopupListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Topup>;
 
     /**
      * Cancels a top-up. Only pending top-ups can be canceled.

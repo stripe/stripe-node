@@ -641,14 +641,6 @@ declare namespace Stripe {
     ): Promise<PaymentMethod>;
 
     /**
-     * Returns a list of PaymentMethods for a given Customer
-     */
-    list(
-      params: PaymentMethodListParams,
-      options?: RequestOptions
-    ): ApiListPromise<PaymentMethod>;
-
-    /**
      * Retrieves a PaymentMethod object.
      */
     retrieve(
@@ -665,6 +657,14 @@ declare namespace Stripe {
       params?: PaymentMethodUpdateParams,
       options?: RequestOptions
     ): Promise<PaymentMethod>;
+
+    /**
+     * Returns a list of PaymentMethods for a given Customer
+     */
+    list(
+      params: PaymentMethodListParams,
+      options?: RequestOptions
+    ): ApiListPromise<PaymentMethod>;
 
     /**
      * Attaches a PaymentMethod object to a Customer.

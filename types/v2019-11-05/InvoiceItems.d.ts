@@ -392,23 +392,6 @@ declare namespace Stripe {
     ): Promise<InvoiceItem>;
 
     /**
-     * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
-     */
-    del(
-      id: string,
-      params?: InvoiceItemDeleteParams,
-      options?: RequestOptions
-    ): Promise<DeletedInvoiceItem>;
-
-    /**
-     * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
-     */
-    list(
-      params?: InvoiceItemListParams,
-      options?: RequestOptions
-    ): ApiListPromise<InvoiceItem>;
-
-    /**
      * Retrieves the invoice item with the given ID.
      */
     retrieve(
@@ -425,5 +408,22 @@ declare namespace Stripe {
       params?: InvoiceItemUpdateParams,
       options?: RequestOptions
     ): Promise<InvoiceItem>;
+
+    /**
+     * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
+     */
+    list(
+      params?: InvoiceItemListParams,
+      options?: RequestOptions
+    ): ApiListPromise<InvoiceItem>;
+
+    /**
+     * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
+     */
+    del(
+      id: string,
+      params?: InvoiceItemDeleteParams,
+      options?: RequestOptions
+    ): Promise<DeletedInvoiceItem>;
   }
 }

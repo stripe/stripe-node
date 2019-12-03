@@ -93,14 +93,6 @@ declare namespace Stripe {
 
   class IssuerFraudRecordsResource {
     /**
-     * Returns a list of issuer fraud records.
-     */
-    list(
-      params?: IssuerFraudRecordListParams,
-      options?: RequestOptions
-    ): ApiListPromise<IssuerFraudRecord>;
-
-    /**
      * Retrieves the details of an issuer fraud record that has previously been created.
      *
      * Please refer to the [issuer fraud record](https://stripe.com/docs/api#issuer_fraud_record_object) object reference for more details.
@@ -110,5 +102,13 @@ declare namespace Stripe {
       params?: IssuerFraudRecordRetrieveParams,
       options?: RequestOptions
     ): Promise<IssuerFraudRecord>;
+
+    /**
+     * Returns a list of issuer fraud records.
+     */
+    list(
+      params?: IssuerFraudRecordListParams,
+      options?: RequestOptions
+    ): ApiListPromise<IssuerFraudRecord>;
   }
 }
