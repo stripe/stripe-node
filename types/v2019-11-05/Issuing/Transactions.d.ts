@@ -226,6 +226,10 @@ declare namespace Stripe {
         params?: TransactionRetrieveParams,
         options?: RequestOptions
       ): Promise<Issuing.Transaction>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Issuing.Transaction>;
 
       /**
        * Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -243,6 +247,7 @@ declare namespace Stripe {
         params?: TransactionListParams,
         options?: RequestOptions
       ): ApiListPromise<Issuing.Transaction>;
+      list(options?: RequestOptions): ApiListPromise<Issuing.Transaction>;
     }
   }
 }

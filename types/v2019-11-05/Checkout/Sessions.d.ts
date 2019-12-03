@@ -569,6 +569,7 @@ declare namespace Stripe {
         params?: SessionRetrieveParams,
         options?: RequestOptions
       ): Promise<Checkout.Session>;
+      retrieve(id: string, options?: RequestOptions): Promise<Checkout.Session>;
     }
   }
 }

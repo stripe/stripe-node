@@ -1557,6 +1557,7 @@ declare namespace Stripe {
       params?: ChargeCreateParams,
       options?: RequestOptions
     ): Promise<Charge>;
+    create(options?: RequestOptions): Promise<Charge>;
 
     /**
      * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
@@ -1566,6 +1567,7 @@ declare namespace Stripe {
       params?: ChargeRetrieveParams,
       options?: RequestOptions
     ): Promise<Charge>;
+    retrieve(id: string, options?: RequestOptions): Promise<Charge>;
 
     /**
      * Updates the specified charge by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -1583,6 +1585,7 @@ declare namespace Stripe {
       params?: ChargeListParams,
       options?: RequestOptions
     ): ApiListPromise<Charge>;
+    list(options?: RequestOptions): ApiListPromise<Charge>;
 
     /**
      * Capture the payment of an existing, uncaptured, charge. This is the second half of the two-step payment flow, where first you [created a charge](https://stripe.com/docs/api#create_charge) with the capture option set to false.
@@ -1594,5 +1597,6 @@ declare namespace Stripe {
       params?: ChargeCaptureParams,
       options?: RequestOptions
     ): Promise<Charge>;
+    capture(id: string, options?: RequestOptions): Promise<Charge>;
   }
 }

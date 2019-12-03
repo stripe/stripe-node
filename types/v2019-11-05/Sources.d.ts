@@ -1381,6 +1381,7 @@ declare namespace Stripe {
       params?: SourceCreateParams,
       options?: RequestOptions
     ): Promise<Source>;
+    create(options?: RequestOptions): Promise<Source>;
 
     /**
      * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
@@ -1390,6 +1391,7 @@ declare namespace Stripe {
       params?: SourceRetrieveParams,
       options?: RequestOptions
     ): Promise<Source>;
+    retrieve(id: string, options?: RequestOptions): Promise<Source>;
 
     /**
      * Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -1408,6 +1410,10 @@ declare namespace Stripe {
     listSourceTransactions(
       id: string,
       params?: SourceListSourceTransactionsParams,
+      options?: RequestOptions
+    ): ApiListPromise<SourceTransaction>;
+    listSourceTransactions(
+      id: string,
       options?: RequestOptions
     ): ApiListPromise<SourceTransaction>;
 

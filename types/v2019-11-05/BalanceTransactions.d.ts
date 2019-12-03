@@ -262,6 +262,7 @@ declare namespace Stripe {
       params?: BalanceTransactionRetrieveParams,
       options?: RequestOptions
     ): Promise<BalanceTransaction>;
+    retrieve(id: string, options?: RequestOptions): Promise<BalanceTransaction>;
 
     /**
      * Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.
@@ -272,5 +273,6 @@ declare namespace Stripe {
       params?: BalanceTransactionListParams,
       options?: RequestOptions
     ): ApiListPromise<BalanceTransaction>;
+    list(options?: RequestOptions): ApiListPromise<BalanceTransaction>;
   }
 }

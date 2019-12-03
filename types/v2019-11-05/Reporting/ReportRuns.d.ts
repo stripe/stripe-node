@@ -268,6 +268,10 @@ declare namespace Stripe {
         params?: ReportRunRetrieveParams,
         options?: RequestOptions
       ): Promise<Reporting.ReportRun>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Reporting.ReportRun>;
 
       /**
        * Returns a list of Report Runs, with the most recent appearing first. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
@@ -276,6 +280,7 @@ declare namespace Stripe {
         params?: ReportRunListParams,
         options?: RequestOptions
       ): ApiListPromise<Reporting.ReportRun>;
+      list(options?: RequestOptions): ApiListPromise<Reporting.ReportRun>;
     }
   }
 }

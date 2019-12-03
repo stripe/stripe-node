@@ -399,6 +399,7 @@ declare namespace Stripe {
       params?: InvoiceItemRetrieveParams,
       options?: RequestOptions
     ): Promise<InvoiceItem>;
+    retrieve(id: string, options?: RequestOptions): Promise<InvoiceItem>;
 
     /**
      * Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it's attached to is closed.
@@ -416,6 +417,7 @@ declare namespace Stripe {
       params?: InvoiceItemListParams,
       options?: RequestOptions
     ): ApiListPromise<InvoiceItem>;
+    list(options?: RequestOptions): ApiListPromise<InvoiceItem>;
 
     /**
      * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
@@ -425,5 +427,6 @@ declare namespace Stripe {
       params?: InvoiceItemDeleteParams,
       options?: RequestOptions
     ): Promise<DeletedInvoiceItem>;
+    del(id: string, options?: RequestOptions): Promise<DeletedInvoiceItem>;
   }
 }

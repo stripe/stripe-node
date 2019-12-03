@@ -315,6 +315,7 @@ declare namespace Stripe {
       params?: PayoutRetrieveParams,
       options?: RequestOptions
     ): Promise<Payout>;
+    retrieve(id: string, options?: RequestOptions): Promise<Payout>;
 
     /**
      * Updates the specified payout by setting the values of the parameters passed. Any parameters not provided will be left unchanged. This request accepts only the metadata as arguments.
@@ -332,6 +333,7 @@ declare namespace Stripe {
       params?: PayoutListParams,
       options?: RequestOptions
     ): ApiListPromise<Payout>;
+    list(options?: RequestOptions): ApiListPromise<Payout>;
 
     /**
      * A previously created payout can be canceled if it has not yet been paid out. Funds will be refunded to your available balance. You may not cancel automatic Stripe payouts.
@@ -341,5 +343,6 @@ declare namespace Stripe {
       params?: PayoutCancelParams,
       options?: RequestOptions
     ): Promise<Payout>;
+    cancel(id: string, options?: RequestOptions): Promise<Payout>;
   }
 }

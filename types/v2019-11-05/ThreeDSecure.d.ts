@@ -107,5 +107,6 @@ declare namespace Stripe {
       params?: ThreeDSecureRetrieveParams,
       options?: RequestOptions
     ): Promise<ThreeDSecure>;
+    retrieve(id: string, options?: RequestOptions): Promise<ThreeDSecure>;
   }
 }

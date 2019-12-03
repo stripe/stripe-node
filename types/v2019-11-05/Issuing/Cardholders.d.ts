@@ -3379,6 +3379,10 @@ declare namespace Stripe {
         params?: CardholderRetrieveParams,
         options?: RequestOptions
       ): Promise<Issuing.Cardholder>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Issuing.Cardholder>;
 
       /**
        * Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -3396,6 +3400,7 @@ declare namespace Stripe {
         params?: CardholderListParams,
         options?: RequestOptions
       ): ApiListPromise<Issuing.Cardholder>;
+      list(options?: RequestOptions): ApiListPromise<Issuing.Cardholder>;
     }
   }
 }

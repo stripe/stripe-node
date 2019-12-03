@@ -406,6 +406,7 @@ declare namespace Stripe {
       params?: TransferRetrieveParams,
       options?: RequestOptions
     ): Promise<Transfer>;
+    retrieve(id: string, options?: RequestOptions): Promise<Transfer>;
 
     /**
      * Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -425,6 +426,7 @@ declare namespace Stripe {
       params?: TransferListParams,
       options?: RequestOptions
     ): ApiListPromise<Transfer>;
+    list(options?: RequestOptions): ApiListPromise<Transfer>;
 
     /**
      * When you create a new reversal, you must specify a transfer to create it on.
@@ -438,6 +440,10 @@ declare namespace Stripe {
       params?: TransferCreateReversalParams,
       options?: RequestOptions
     ): Promise<TransferReversal>;
+    createReversal(
+      id: string,
+      options?: RequestOptions
+    ): Promise<TransferReversal>;
 
     /**
      * You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.
@@ -445,6 +451,10 @@ declare namespace Stripe {
     listReversals(
       id: string,
       params?: TransferListReversalsParams,
+      options?: RequestOptions
+    ): ApiListPromise<TransferReversal>;
+    listReversals(
+      id: string,
       options?: RequestOptions
     ): ApiListPromise<TransferReversal>;
 
@@ -455,6 +465,11 @@ declare namespace Stripe {
       idId: string,
       id: string,
       params?: TransferRetrieveReversalParams,
+      options?: RequestOptions
+    ): Promise<TransferReversal>;
+    retrieveReversal(
+      idId: string,
+      id: string,
       options?: RequestOptions
     ): Promise<TransferReversal>;
 

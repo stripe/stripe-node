@@ -74,6 +74,10 @@ declare namespace Stripe {
         params?: ReportTypeRetrieveParams,
         options?: RequestOptions
       ): Promise<Reporting.ReportType>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Reporting.ReportType>;
 
       /**
        * Returns a full list of Report Types. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
@@ -82,6 +86,7 @@ declare namespace Stripe {
         params?: ReportTypeListParams,
         options?: RequestOptions
       ): ApiListPromise<Reporting.ReportType>;
+      list(options?: RequestOptions): ApiListPromise<Reporting.ReportType>;
     }
   }
 }

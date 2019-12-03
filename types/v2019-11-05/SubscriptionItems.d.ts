@@ -334,6 +334,7 @@ declare namespace Stripe {
       params?: SubscriptionItemRetrieveParams,
       options?: RequestOptions
     ): Promise<SubscriptionItem>;
+    retrieve(id: string, options?: RequestOptions): Promise<SubscriptionItem>;
 
     /**
      * Updates the plan or quantity of an item on a current subscription.
@@ -360,6 +361,7 @@ declare namespace Stripe {
       params?: SubscriptionItemDeleteParams,
       options?: RequestOptions
     ): Promise<DeletedSubscriptionItem>;
+    del(id: string, options?: RequestOptions): Promise<DeletedSubscriptionItem>;
 
     /**
      * Creates a usage record for a specified subscription item and date, and fills it with a quantity.

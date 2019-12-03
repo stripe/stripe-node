@@ -649,6 +649,7 @@ declare namespace Stripe {
       params?: OrderRetrieveParams,
       options?: RequestOptions
     ): Promise<Order>;
+    retrieve(id: string, options?: RequestOptions): Promise<Order>;
 
     /**
      * Updates the specific order by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -666,6 +667,7 @@ declare namespace Stripe {
       params?: OrderListParams,
       options?: RequestOptions
     ): ApiListPromise<Order>;
+    list(options?: RequestOptions): ApiListPromise<Order>;
 
     /**
      * Pay an order by providing a source to create a payment.
@@ -675,6 +677,7 @@ declare namespace Stripe {
       params?: OrderPayParams,
       options?: RequestOptions
     ): Promise<Order>;
+    pay(id: string, options?: RequestOptions): Promise<Order>;
 
     /**
      * Return all or part of an order. The order must have a status of paid or fulfilled before it can be returned. Once all items have been returned, the order will become canceled or returned depending on which status the order started in.
@@ -684,5 +687,6 @@ declare namespace Stripe {
       params?: OrderReturnOrderParams,
       options?: RequestOptions
     ): Promise<OrderReturn>;
+    returnOrder(id: string, options?: RequestOptions): Promise<OrderReturn>;
   }
 }

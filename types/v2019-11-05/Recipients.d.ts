@@ -291,6 +291,7 @@ declare namespace Stripe {
       params?: RecipientRetrieveParams,
       options?: RequestOptions
     ): Promise<Recipient>;
+    retrieve(id: string, options?: RequestOptions): Promise<Recipient>;
 
     /**
      * Updates the specified recipient by setting the values of the parameters passed.
@@ -312,6 +313,7 @@ declare namespace Stripe {
       params?: RecipientListParams,
       options?: RequestOptions
     ): ApiListPromise<Recipient>;
+    list(options?: RequestOptions): ApiListPromise<Recipient>;
 
     /**
      * Permanently deletes a recipient. It cannot be undone.
@@ -321,5 +323,6 @@ declare namespace Stripe {
       params?: RecipientDeleteParams,
       options?: RequestOptions
     ): Promise<DeletedRecipient>;
+    del(id: string, options?: RequestOptions): Promise<DeletedRecipient>;
   }
 }

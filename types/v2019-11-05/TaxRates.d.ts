@@ -263,6 +263,7 @@ declare namespace Stripe {
       params?: TaxRateRetrieveParams,
       options?: RequestOptions
     ): Promise<TaxRate>;
+    retrieve(id: string, options?: RequestOptions): Promise<TaxRate>;
 
     /**
      * Updates an existing tax rate.
@@ -280,5 +281,6 @@ declare namespace Stripe {
       params?: TaxRateListParams,
       options?: RequestOptions
     ): ApiListPromise<TaxRate>;
+    list(options?: RequestOptions): ApiListPromise<TaxRate>;
   }
 }

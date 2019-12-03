@@ -1486,6 +1486,7 @@ declare namespace Stripe {
       params?: PaymentIntentRetrieveParams,
       options?: RequestOptions
     ): Promise<PaymentIntent>;
+    retrieve(id: string, options?: RequestOptions): Promise<PaymentIntent>;
 
     /**
      * Updates properties on a PaymentIntent object without confirming.
@@ -1509,6 +1510,7 @@ declare namespace Stripe {
       params?: PaymentIntentListParams,
       options?: RequestOptions
     ): ApiListPromise<PaymentIntent>;
+    list(options?: RequestOptions): ApiListPromise<PaymentIntent>;
 
     /**
      * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
@@ -1520,6 +1522,7 @@ declare namespace Stripe {
       params?: PaymentIntentCancelParams,
       options?: RequestOptions
     ): Promise<PaymentIntent>;
+    cancel(id: string, options?: RequestOptions): Promise<PaymentIntent>;
 
     /**
      * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
@@ -1533,6 +1536,7 @@ declare namespace Stripe {
       params?: PaymentIntentCaptureParams,
       options?: RequestOptions
     ): Promise<PaymentIntent>;
+    capture(id: string, options?: RequestOptions): Promise<PaymentIntent>;
 
     /**
      * Confirm that your customer intends to pay with current or provided
@@ -1566,5 +1570,6 @@ declare namespace Stripe {
       params?: PaymentIntentConfirmParams,
       options?: RequestOptions
     ): Promise<PaymentIntent>;
+    confirm(id: string, options?: RequestOptions): Promise<PaymentIntent>;
   }
 }

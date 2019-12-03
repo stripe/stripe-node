@@ -142,5 +142,6 @@ declare namespace Stripe {
       params?: MandateRetrieveParams,
       options?: RequestOptions
     ): Promise<Mandate>;
+    retrieve(id: string, options?: RequestOptions): Promise<Mandate>;
   }
 }

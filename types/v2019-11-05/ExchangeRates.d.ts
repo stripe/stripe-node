@@ -65,6 +65,7 @@ declare namespace Stripe {
       params?: ExchangeRateRetrieveParams,
       options?: RequestOptions
     ): Promise<ExchangeRate>;
+    retrieve(id: string, options?: RequestOptions): Promise<ExchangeRate>;
 
     /**
      * Returns a list of objects that contain the rates at which foreign currencies are converted to one another. Only shows the currencies for which Stripe supports.
@@ -73,5 +74,6 @@ declare namespace Stripe {
       params?: ExchangeRateListParams,
       options?: RequestOptions
     ): ApiListPromise<ExchangeRate>;
+    list(options?: RequestOptions): ApiListPromise<ExchangeRate>;
   }
 }

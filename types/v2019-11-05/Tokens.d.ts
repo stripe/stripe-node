@@ -465,6 +465,7 @@ declare namespace Stripe {
       params?: TokenCreateParams,
       options?: RequestOptions
     ): Promise<Token>;
+    create(options?: RequestOptions): Promise<Token>;
 
     /**
      * Retrieves the token with the given ID.
@@ -474,5 +475,6 @@ declare namespace Stripe {
       params?: TokenRetrieveParams,
       options?: RequestOptions
     ): Promise<Token>;
+    retrieve(id: string, options?: RequestOptions): Promise<Token>;
   }
 }

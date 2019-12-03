@@ -3417,6 +3417,7 @@ declare namespace Stripe {
       params?: AccountCreateParams,
       options?: RequestOptions
     ): Promise<Account>;
+    create(options?: RequestOptions): Promise<Account>;
 
     /**
      * Retrieves the details of an account.
@@ -3425,6 +3426,7 @@ declare namespace Stripe {
       params?: AccountRetrieveParams,
       options?: RequestOptions
     ): Promise<Account>;
+    retrieve(options?: RequestOptions): Promise<Account>;
 
     /**
      * Updates a connected [Express or Custom account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are supported by both account types.
@@ -3444,6 +3446,7 @@ declare namespace Stripe {
       params?: AccountListParams,
       options?: RequestOptions
     ): ApiListPromise<Account>;
+    list(options?: RequestOptions): ApiListPromise<Account>;
 
     /**
      * Create an external account for a given account.
@@ -3464,6 +3467,7 @@ declare namespace Stripe {
       params?: AccountCreateLoginLinkParams,
       options?: RequestOptions
     ): Promise<LoginLink>;
+    createLoginLink(id: string, options?: RequestOptions): Promise<LoginLink>;
 
     /**
      * Creates a new person.
@@ -3473,6 +3477,7 @@ declare namespace Stripe {
       params?: AccountCreatePersonParams,
       options?: RequestOptions
     ): Promise<Person>;
+    createPerson(id: string, options?: RequestOptions): Promise<Person>;
 
     /**
      * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
@@ -3486,6 +3491,7 @@ declare namespace Stripe {
       params?: AccountDelParams,
       options?: RequestOptions
     ): Promise<DeletedAccount>;
+    del(id: string, options?: RequestOptions): Promise<DeletedAccount>;
 
     /**
      * Delete a specified external account for a given account.
@@ -3494,6 +3500,11 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountDeleteExternalAccountParams,
+      options?: RequestOptions
+    ): Promise<BankAccount | Card>;
+    deleteExternalAccount(
+      accountId: string,
+      id: string,
       options?: RequestOptions
     ): Promise<BankAccount | Card>;
 
@@ -3506,6 +3517,11 @@ declare namespace Stripe {
       params?: AccountDeletePersonParams,
       options?: RequestOptions
     ): Promise<DeletedPerson>;
+    deletePerson(
+      accountId: string,
+      id: string,
+      options?: RequestOptions
+    ): Promise<DeletedPerson>;
 
     /**
      * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
@@ -3513,6 +3529,10 @@ declare namespace Stripe {
     listCapabilities(
       id: string,
       params?: AccountListCapabilitiesParams,
+      options?: RequestOptions
+    ): ApiListPromise<Capability>;
+    listCapabilities(
+      id: string,
       options?: RequestOptions
     ): ApiListPromise<Capability>;
 
@@ -3524,6 +3544,10 @@ declare namespace Stripe {
       params?: AccountListExternalAccountsParams,
       options?: RequestOptions
     ): ApiListPromise<BankAccount | Card>;
+    listExternalAccounts(
+      id: string,
+      options?: RequestOptions
+    ): ApiListPromise<BankAccount | Card>;
 
     /**
      * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
@@ -3533,6 +3557,7 @@ declare namespace Stripe {
       params?: AccountListPersonsParams,
       options?: RequestOptions
     ): ApiListPromise<Person>;
+    listPersons(id: string, options?: RequestOptions): ApiListPromise<Person>;
 
     /**
      * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
@@ -3554,6 +3579,11 @@ declare namespace Stripe {
       params?: AccountRetrieveCapabilityParams,
       options?: RequestOptions
     ): Promise<Capability>;
+    retrieveCapability(
+      accountId: string,
+      id: string,
+      options?: RequestOptions
+    ): Promise<Capability>;
 
     /**
      * Retrieve a specified external account for a given account.
@@ -3564,6 +3594,11 @@ declare namespace Stripe {
       params?: AccountRetrieveExternalAccountParams,
       options?: RequestOptions
     ): Promise<BankAccount | Card>;
+    retrieveExternalAccount(
+      accountId: string,
+      id: string,
+      options?: RequestOptions
+    ): Promise<BankAccount | Card>;
 
     /**
      * Retrieves an existing person.
@@ -3572,6 +3607,11 @@ declare namespace Stripe {
       accountId: string,
       id: string,
       params?: AccountRetrievePersonParams,
+      options?: RequestOptions
+    ): Promise<Person>;
+    retrievePerson(
+      accountId: string,
+      id: string,
       options?: RequestOptions
     ): Promise<Person>;
 

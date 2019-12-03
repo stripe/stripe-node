@@ -454,6 +454,7 @@ declare namespace Stripe {
       params?: DisputeRetrieveParams,
       options?: RequestOptions
     ): Promise<Dispute>;
+    retrieve(id: string, options?: RequestOptions): Promise<Dispute>;
 
     /**
      * When you get a dispute, contacting your customer is always the best first step. If that doesn't work, you can submit evidence to help us resolve the dispute in your favor. You can do this in your [dashboard](https://dashboard.stripe.com/disputes), but if you prefer, you can use the API to submit evidence programmatically.
@@ -473,6 +474,7 @@ declare namespace Stripe {
       params?: DisputeListParams,
       options?: RequestOptions
     ): ApiListPromise<Dispute>;
+    list(options?: RequestOptions): ApiListPromise<Dispute>;
 
     /**
      * Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute, acknowledging it as lost.
@@ -484,5 +486,6 @@ declare namespace Stripe {
       params?: DisputeCloseParams,
       options?: RequestOptions
     ): Promise<Dispute>;
+    close(id: string, options?: RequestOptions): Promise<Dispute>;
   }
 }
