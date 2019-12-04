@@ -598,11 +598,6 @@ declare namespace Stripe {
   }
 
   /**
-   * The ExternalAccount object.
-   */
-  interface ExternalAccount {}
-
-  /**
    * The LoginLink object.
    */
   interface LoginLink {

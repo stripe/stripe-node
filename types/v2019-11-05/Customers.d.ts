@@ -326,11 +326,6 @@ declare namespace Stripe {
   }
 
   /**
-   * The Source object.
-   */
-  interface Source {}
-
-  /**
    * The TaxId object.
    */
   interface TaxId {
