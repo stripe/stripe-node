@@ -1,6 +1,11 @@
 declare namespace Stripe {
   interface ExternalAccountCreateParams {
     /**
+     * Please refer to full [documentation](https://stripe.com/docs/api) instead.
+     */
+    external_account: string;
+
+    /**
      * When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
      */
     default_for_currency?: boolean;
@@ -9,11 +14,6 @@ declare namespace Stripe {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
-
-    /**
-     * Please refer to full [documentation](https://stripe.com/docs/api) instead.
-     */
-    external_account: string;
 
     /**
      * A set of key-value pairs that you can attach to an external account object. It can be useful for storing additional information about the external account in a structured format.

@@ -1,6 +1,11 @@
 declare namespace Stripe {
   interface CustomerSourceCreateParams {
     /**
+     * Please refer to full [documentation](https://stripe.com/docs/api) instead.
+     */
+    source: string;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -11,11 +16,6 @@ declare namespace Stripe {
     metadata?: {
       [key: string]: string;
     };
-
-    /**
-     * Please refer to full [documentation](https://stripe.com/docs/api) instead.
-     */
-    source: string;
   }
 
   interface CustomerSourceRetrieveParams {

@@ -53,6 +53,11 @@ declare namespace Stripe {
 
   interface FileLinkCreateParams {
     /**
+     * The ID of the file. The file's `purpose` must be one of the following: `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
+     */
+    file: string;
+
+    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
@@ -61,11 +66,6 @@ declare namespace Stripe {
      * A future timestamp after which the link will no longer be usable.
      */
     expires_at?: number;
-
-    /**
-     * The ID of the file. The file's `purpose` must be one of the following: `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
-     */
-    file: string;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

@@ -101,11 +101,6 @@ declare namespace Stripe {
 
   interface TaxIdCreateParams {
     /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
      * Type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, or `za_vat`
      */
     type: TaxIdCreateParams.Type;
@@ -114,6 +109,11 @@ declare namespace Stripe {
      * Value of the tax ID.
      */
     value: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 
   namespace TaxIdCreateParams {

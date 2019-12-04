@@ -1110,14 +1110,24 @@ declare namespace Stripe {
 
     interface CardholderCreateParams {
       /**
-       * Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
-       */
-      authorization_controls?: CardholderCreateParams.AuthorizationControls;
-
-      /**
        * The cardholder's billing address.
        */
       billing: CardholderCreateParams.Billing;
+
+      /**
+       * The cardholder's name. This will be printed on cards issued to them.
+       */
+      name: string;
+
+      /**
+       * One of `individual` or `business_entity`.
+       */
+      type: CardholderCreateParams.Type;
+
+      /**
+       * Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
+       */
+      authorization_controls?: CardholderCreateParams.AuthorizationControls;
 
       /**
        * Additional information about a `business_entity` cardholder.
@@ -1149,11 +1159,6 @@ declare namespace Stripe {
       };
 
       /**
-       * The cardholder's name. This will be printed on cards issued to them.
-       */
-      name: string;
-
-      /**
        * The cardholder's phone number. This will be transformed to [E.164](https://en.wikipedia.org/wiki/E.164) if it is not provided in that format already.
        */
       phone_number?: string;
@@ -1162,11 +1167,6 @@ declare namespace Stripe {
        * Specifies whether to permit authorizations on this cardholder's cards. Defaults to `inactive`.
        */
       status?: CardholderCreateParams.Status;
-
-      /**
-       * One of `individual` or `business_entity`.
-       */
-      type: CardholderCreateParams.Type;
     }
 
     namespace CardholderCreateParams {

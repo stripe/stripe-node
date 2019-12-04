@@ -486,6 +486,8 @@ declare namespace Stripe {
   }
 
   interface InvoiceCreateParams {
+    customer: string;
+
     /**
      * A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#invoices).
      */
@@ -505,8 +507,6 @@ declare namespace Stripe {
      * A list of up to 4 custom fields to be displayed on the invoice.
      */
     custom_fields?: '' | InvoiceCreateParams.CustomFields;
-
-    customer: string;
 
     /**
      * The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.

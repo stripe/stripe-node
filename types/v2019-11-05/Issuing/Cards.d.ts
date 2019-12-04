@@ -1115,6 +1115,16 @@ declare namespace Stripe {
 
     interface CardCreateParams {
       /**
+       * The currency for the card. This currently must be `usd`.
+       */
+      currency: string;
+
+      /**
+       * The type of card to issue. Possible values are `physical` or `virtual`.
+       */
+      type: CardCreateParams.Type;
+
+      /**
        * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
        */
       authorization_controls?: CardCreateParams.AuthorizationControls;
@@ -1123,11 +1133,6 @@ declare namespace Stripe {
        * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object with which the card will be associated.
        */
       cardholder?: string;
-
-      /**
-       * The currency for the card. This currently must be `usd`.
-       */
-      currency: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -1157,11 +1162,6 @@ declare namespace Stripe {
        * Specifies whether to permit authorizations on this card. Possible values are `active` or `inactive`.
        */
       status?: CardCreateParams.Status;
-
-      /**
-       * The type of card to issue. Possible values are `physical` or `virtual`.
-       */
-      type: CardCreateParams.Type;
     }
 
     namespace CardCreateParams {

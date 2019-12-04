@@ -103,14 +103,19 @@ declare namespace Stripe {
 
     interface DisputeCreateParams {
       /**
-       * Amount to dispute, defaults to full value, given in the currency the transaction was made in.
-       */
-      amount?: number;
-
-      /**
        * The ID of the issuing transaction to create a dispute for.
        */
       disputed_transaction: string;
+
+      /**
+       * The reason for the dispute. One of `other` or `fraudulent`.
+       */
+      reason: DisputeCreateParams.Reason;
+
+      /**
+       * Amount to dispute, defaults to full value, given in the currency the transaction was made in.
+       */
+      amount?: number;
 
       /**
        * A hash containing all the evidence related to the dispute. This should have a single key, equal to the provided `reason`, mapping to an appropriate evidence object.
@@ -128,11 +133,6 @@ declare namespace Stripe {
       metadata?: {
         [key: string]: string;
       };
-
-      /**
-       * The reason for the dispute. One of `other` or `fraudulent`.
-       */
-      reason: DisputeCreateParams.Reason;
     }
 
     namespace DisputeCreateParams {

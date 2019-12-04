@@ -110,6 +110,11 @@ declare namespace Stripe {
 
   interface CreditNoteCreateParams {
     /**
+     * ID of the invoice.
+     */
+    invoice: string;
+
+    /**
      * The integer amount in **%s** representing the total amount of the credit note.
      */
     amount?: number;
@@ -123,11 +128,6 @@ declare namespace Stripe {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
-
-    /**
-     * ID of the invoice.
-     */
-    invoice: string;
 
     /**
      * The credit note's memo appears on the credit note PDF.
@@ -230,6 +230,11 @@ declare namespace Stripe {
 
   interface CreditNotePreviewParams {
     /**
+     * ID of the invoice.
+     */
+    invoice: string;
+
+    /**
      * The integer amount in **%s** representing the total amount of the credit note.
      */
     amount?: number;
@@ -243,11 +248,6 @@ declare namespace Stripe {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
-
-    /**
-     * ID of the invoice.
-     */
-    invoice: string;
 
     /**
      * The credit note's memo appears on the credit note PDF.

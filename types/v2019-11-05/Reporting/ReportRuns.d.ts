@@ -98,6 +98,11 @@ declare namespace Stripe {
 
     interface ReportRunCreateParams {
       /**
+       * The ID of the [report type](https://stripe.com/docs/reporting/statements/api#report-types) to run, such as `"balance.summary.1"`.
+       */
+      report_type: string;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -106,11 +111,6 @@ declare namespace Stripe {
        * Parameters specifying how the report should be run. Different Report Types have different required and optional parameters, listed in the [API Access to Reports](https://stripe.com/docs/reporting/statements/api) documentation.
        */
       parameters?: ReportRunCreateParams.Parameters;
-
-      /**
-       * The ID of the [report type](https://stripe.com/docs/reporting/statements/api#report-types) to run, such as `"balance.summary.1"`.
-       */
-      report_type: string;
     }
 
     namespace ReportRunCreateParams {

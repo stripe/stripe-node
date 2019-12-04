@@ -93,24 +93,24 @@ declare namespace Stripe {
 
   interface TransferCreateParams {
     /**
-     * A positive integer in %s representing how much to transfer.
-     */
-    amount?: number;
-
-    /**
      * 3-letter [ISO code for currency](https://stripe.com/docs/payouts).
      */
     currency: string;
 
     /**
-     * An arbitrary string attached to the object. Often useful for displaying to users.
-     */
-    description?: string;
-
-    /**
      * The ID of a connected Stripe account. [See the Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
      */
     destination: string;
+
+    /**
+     * A positive integer in %s representing how much to transfer.
+     */
+    amount?: number;
+
+    /**
+     * An arbitrary string attached to the object. Often useful for displaying to users.
+     */
+    description?: string;
 
     /**
      * Specifies which fields in the response should be expanded.

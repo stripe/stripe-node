@@ -180,14 +180,29 @@ declare namespace Stripe {
 
     interface SessionCreateParams {
       /**
-       * Specify whether Checkout should collect the customer's billing address. If set to `required`, Checkout will always collect the customer's billing address. If not set or set to `auto` Checkout will only collect the billing address when necessary.
-       */
-      billing_address_collection?: SessionCreateParams.BillingAddressCollection;
-
-      /**
        * The URL the customer will be directed to if they decide to cancel payment and return to your website.
        */
       cancel_url: string;
+
+      /**
+       * A list of the types of payment methods (e.g. card) this Checkout
+       * Session is allowed to accept. The only supported values today are `card` and `ideal`.
+       */
+      payment_method_types: Array<SessionCreateParams.PaymentMethodType>;
+
+      /**
+       * The URL to which Stripe should send customers when payment or setup
+       * is complete.
+       * If you'd like access to the Checkout Session for the successful
+       * payment, read more about it in our guide on [fulfilling your payments
+       * with webhooks](/docs/payments/checkout/fulfillment#webhooks).
+       */
+      success_url: string;
+
+      /**
+       * Specify whether Checkout should collect the customer's billing address. If set to `required`, Checkout will always collect the customer's billing address. If not set or set to `auto` Checkout will only collect the billing address when necessary.
+       */
+      billing_address_collection?: SessionCreateParams.BillingAddressCollection;
 
       /**
        * A unique string to reference the Checkout Session. This can be a
@@ -246,12 +261,6 @@ declare namespace Stripe {
       payment_intent_data?: SessionCreateParams.PaymentIntentData;
 
       /**
-       * A list of the types of payment methods (e.g. card) this Checkout
-       * Session is allowed to accept. The only supported values today are `card` and `ideal`.
-       */
-      payment_method_types: Array<SessionCreateParams.PaymentMethodType>;
-
-      /**
        * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
        */
       setup_intent_data?: SessionCreateParams.SetupIntentData;
@@ -269,15 +278,6 @@ declare namespace Stripe {
        * A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
        */
       subscription_data?: SessionCreateParams.SubscriptionData;
-
-      /**
-       * The URL to which Stripe should send customers when payment or setup
-       * is complete.
-       * If you'd like access to the Checkout Session for the successful
-       * payment, read more about it in our guide on [fulfilling your payments
-       * with webhooks](/docs/payments/checkout/fulfillment#webhooks).
-       */
-      success_url: string;
     }
 
     namespace SessionCreateParams {

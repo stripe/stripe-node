@@ -94,6 +94,11 @@ declare namespace Stripe {
       alias: string;
 
       /**
+       * The human-readable name of the value list.
+       */
+      name: string;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -109,11 +114,6 @@ declare namespace Stripe {
       metadata?: {
         [key: string]: string;
       };
-
-      /**
-       * The human-readable name of the value list.
-       */
-      name: string;
     }
 
     namespace ValueListCreateParams {

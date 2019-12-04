@@ -75,6 +75,16 @@ declare namespace Stripe {
 
   interface WebhookEndpointCreateParams {
     /**
+     * The list of events to enable for this endpoint. You may specify `['*']` to enable all events, except those that require explicit selection.
+     */
+    enabled_events: Array<WebhookEndpointCreateParams.EnabledEvent>;
+
+    /**
+     * The URL of the webhook endpoint.
+     */
+    url: string;
+
+    /**
      * Events sent to this endpoint will be generated with this Stripe Version instead of your account's default Stripe Version.
      */
     api_version?: WebhookEndpointCreateParams.ApiVersion;
@@ -85,19 +95,9 @@ declare namespace Stripe {
     connect?: boolean;
 
     /**
-     * The list of events to enable for this endpoint. You may specify `['*']` to enable all events, except those that require explicit selection.
-     */
-    enabled_events: Array<WebhookEndpointCreateParams.EnabledEvent>;
-
-    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
-
-    /**
-     * The URL of the webhook endpoint.
-     */
-    url: string;
   }
 
   namespace WebhookEndpointCreateParams {

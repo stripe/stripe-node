@@ -55,14 +55,19 @@ declare namespace Stripe {
     amount: number;
 
     /**
-     * The ID of a card token, or the ID of a card belonging to the given customer.
-     */
-    card?: string;
-
-    /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
     currency: string;
+
+    /**
+     * The URL that the cardholder's browser will be returned to when authentication completes.
+     */
+    return_url: string;
+
+    /**
+     * The ID of a card token, or the ID of a card belonging to the given customer.
+     */
+    card?: string;
 
     customer?: string;
 
@@ -70,11 +75,6 @@ declare namespace Stripe {
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
-
-    /**
-     * The URL that the cardholder's browser will be returned to when authentication completes.
-     */
-    return_url: string;
   }
 
   interface ThreeDSecureRetrieveParams {

@@ -134,6 +134,26 @@ declare namespace Stripe {
 
   interface SkuCreateParams {
     /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+
+    /**
+     * Description of the SKU's inventory.
+     */
+    inventory: SkuCreateParams.Inventory;
+
+    /**
+     * The cost of the item as a nonnegative integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
+     */
+    price: number;
+
+    /**
+     * The ID of the product this SKU is associated with. Must be a product with type `good`.
+     */
+    product: string;
+
+    /**
      * Whether the SKU is available for purchase. Default to `true`.
      */
     active?: boolean;
@@ -144,11 +164,6 @@ declare namespace Stripe {
     attributes?: {
       [key: string]: string;
     };
-
-    /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-     */
-    currency: string;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -166,11 +181,6 @@ declare namespace Stripe {
     image?: string;
 
     /**
-     * Description of the SKU's inventory.
-     */
-    inventory: SkuCreateParams.Inventory;
-
-    /**
      * A set of key-value pairs that you can attach to a SKU object. It can be useful for storing additional information about the SKU in a structured format.
      */
     metadata?: {
@@ -181,16 +191,6 @@ declare namespace Stripe {
      * The dimensions of this SKU for shipping purposes.
      */
     package_dimensions?: SkuCreateParams.PackageDimensions;
-
-    /**
-     * The cost of the item as a nonnegative integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
-     */
-    price: number;
-
-    /**
-     * The ID of the product this SKU is associated with. Must be a product with type `good`.
-     */
-    product: string;
   }
 
   namespace SkuCreateParams {

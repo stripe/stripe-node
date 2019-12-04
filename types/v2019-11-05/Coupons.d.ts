@@ -106,6 +106,11 @@ declare namespace Stripe {
 
   interface CouponCreateParams {
     /**
+     * Specifies how long the discount will be in effect. Can be `forever`, `once`, or `repeating`.
+     */
+    duration: CouponCreateParams.Duration;
+
+    /**
      * A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
      */
     amount_off?: number;
@@ -114,11 +119,6 @@ declare namespace Stripe {
      * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `amount_off` parameter (required if `amount_off` is passed).
      */
     currency?: string;
-
-    /**
-     * Specifies how long the discount will be in effect. Can be `forever`, `once`, or `repeating`.
-     */
-    duration: CouponCreateParams.Duration;
 
     /**
      * Required only if `duration` is `repeating`, in which case it must be a positive integer that specifies the number of months the discount will be in effect.
