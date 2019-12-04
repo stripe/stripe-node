@@ -74,6 +74,13 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
      * The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces](/blog/instant-payouts-for-marketplaces) for more information.)
      */
     method?: string;
@@ -97,13 +104,6 @@ declare namespace Stripe {
      * Can be `bank_account` or `card`.
      */
     type?: Payout.Type;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   namespace Payout {

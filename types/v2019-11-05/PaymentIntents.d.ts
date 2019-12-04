@@ -95,7 +95,7 @@ declare namespace Stripe {
      *
      * If present, payment methods used with this PaymentIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this PaymentIntent.
      */
-    customer?: string | Customer | null;
+    customer?: string | Customer | DeletedCustomer | null;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -105,7 +105,7 @@ declare namespace Stripe {
     /**
      * ID of the invoice that created this PaymentIntent, if it exists.
      */
-    invoice?: string | Invoice | null;
+    invoice?: string | Invoice | DeletedInvoice | null;
 
     /**
      * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
@@ -118,6 +118,13 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
      * If present, this property tells you what actions you need to take in order for your customer to fulfill a payment using the provided source.
      */
     next_action?: PaymentIntent.NextAction | null;
@@ -125,7 +132,7 @@ declare namespace Stripe {
     /**
      * The account (if any) for which the funds of the PaymentIntent are intended. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
      */
-    on_behalf_of?: string | Account | null;
+    on_behalf_of?: string | Account | DeletedAccount | null;
 
     /**
      * ID of the payment method used in this PaymentIntent.
@@ -205,13 +212,6 @@ declare namespace Stripe {
      * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
      */
     transfer_group?: string | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   namespace PaymentIntent {
@@ -443,7 +443,7 @@ declare namespace Stripe {
        * reporting, and where funds from the payment will be transferred to upon
        * payment success.
        */
-      destination: string | Account;
+      destination: string | Account | DeletedAccount;
     }
   }
 

@@ -55,6 +55,8 @@ declare namespace Stripe {
 
     customer: string | null;
 
+    deleted?: void;
+
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
@@ -81,6 +83,13 @@ declare namespace Stripe {
     livemode: boolean;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
+
+    /**
      * The ID of the payment created from the receiver, if any. Hidden when viewing the receiver with a publishable key.
      */
     payment: string | null;
@@ -98,13 +107,6 @@ declare namespace Stripe {
     uncaptured_funds: boolean;
 
     used_for_payment: boolean | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   interface DeletedBitcoinReceiver {

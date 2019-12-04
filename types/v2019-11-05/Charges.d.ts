@@ -70,7 +70,7 @@ declare namespace Stripe {
     /**
      * ID of the customer this charge is for if one exists.
      */
-    customer?: string | Customer | null;
+    customer?: string | Customer | DeletedCustomer | null;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -80,7 +80,7 @@ declare namespace Stripe {
     /**
      * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
      */
-    destination?: string | Account | null;
+    destination?: string | Account | DeletedAccount | null;
 
     /**
      * Details about the dispute if the charge has been disputed.
@@ -110,7 +110,7 @@ declare namespace Stripe {
     /**
      * ID of the invoice this charge is for if one exists.
      */
-    invoice?: string | Invoice | null;
+    invoice?: string | Invoice | DeletedInvoice | null;
 
     level3?: Charge.Level3;
 
@@ -120,9 +120,16 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
      * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
      */
-    on_behalf_of?: string | Account | null;
+    on_behalf_of?: string | Account | DeletedAccount | null;
 
     /**
      * ID of the order this charge is for if one exists.
@@ -235,13 +242,6 @@ declare namespace Stripe {
      * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
      */
     transfer_group?: string | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   namespace Charge {
@@ -1148,7 +1148,7 @@ declare namespace Stripe {
       /**
        * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
        */
-      destination: string | Account;
+      destination: string | Account | DeletedAccount;
     }
   }
 

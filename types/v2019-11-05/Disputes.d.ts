@@ -53,6 +53,13 @@ declare namespace Stripe {
     livemode?: boolean;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
      * Network-dependent reason code for the dispute.
      */
     network_reason_code?: string | null;
@@ -71,13 +78,6 @@ declare namespace Stripe {
      * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `charge_refunded`, `won`, or `lost`.
      */
     status?: Dispute.Status;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   namespace Dispute {

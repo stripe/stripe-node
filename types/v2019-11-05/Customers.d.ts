@@ -46,6 +46,8 @@ declare namespace Stripe {
       | Source
       | null;
 
+    deleted?: void;
+
     /**
      * When the customer's latest invoice is billed by charging automatically, delinquent is true if the invoice's latest charge is failed. When the customer's latest invoice is billed by sending an invoice, delinquent is true if the invoice is not paid by its due date.
      */
@@ -77,6 +79,13 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
 
     /**
      * The customer's full name or business name.
@@ -129,13 +138,6 @@ declare namespace Stripe {
      * Describes the status of looking up the tax ID provided in `tax_info`. This field has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
      */
     tax_info_verification: Customer.TaxInfoVerification | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   namespace Customer {
@@ -275,7 +277,7 @@ declare namespace Stripe {
     /**
      * The ID of the customer the transaction belongs to.
      */
-    customer?: string | Customer;
+    customer?: string | Customer | DeletedCustomer;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -290,17 +292,12 @@ declare namespace Stripe {
     /**
      * The ID of the invoice (if any) related to the transaction.
      */
-    invoice?: string | Invoice | null;
+    invoice?: string | Invoice | DeletedInvoice | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
-
-    /**
-     * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_too_large`, `invoice_too_small`, `unapplied_from_invoice`, or `unspent_receiver_credit`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
-     */
-    type?: CustomerBalanceTransaction.Type;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -310,6 +307,11 @@ declare namespace Stripe {
         [key: string]: string;
       }
       | null;
+
+    /**
+     * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_too_large`, `invoice_too_small`, `unapplied_from_invoice`, or `unspent_receiver_credit`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
+     */
+    type?: CustomerBalanceTransaction.Type;
   }
 
   namespace CustomerBalanceTransaction {
@@ -352,7 +354,9 @@ declare namespace Stripe {
     /**
      * ID of the customer.
      */
-    customer: string | Customer;
+    customer: string | Customer | DeletedCustomer;
+
+    deleted?: void;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

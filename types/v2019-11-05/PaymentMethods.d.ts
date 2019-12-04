@@ -27,7 +27,7 @@ declare namespace Stripe {
     /**
      * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
      */
-    customer?: string | Customer | null;
+    customer?: string | Customer | DeletedCustomer | null;
 
     ideal?: PaymentMethod.Ideal;
 
@@ -36,19 +36,19 @@ declare namespace Stripe {
      */
     livemode?: boolean;
 
-    sepa_debit?: PaymentMethod.SepaDebit;
-
-    /**
-     * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
-     */
-    type?: PaymentMethod.Type;
-
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
     metadata?: {
       [key: string]: string;
     };
+
+    sepa_debit?: PaymentMethod.SepaDebit;
+
+    /**
+     * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+     */
+    type?: PaymentMethod.Type;
   }
 
   namespace PaymentMethod {

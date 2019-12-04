@@ -58,6 +58,13 @@ declare namespace Stripe {
      */
     livemode?: boolean;
 
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
     source?: Source;
 
     /**
@@ -74,13 +81,6 @@ declare namespace Stripe {
      * A string that identifies this top-up as part of a group.
      */
     transfer_group?: string | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   namespace Topup {

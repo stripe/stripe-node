@@ -45,7 +45,7 @@ declare namespace Stripe {
     /**
      * The customer used for the order.
      */
-    customer?: string | Customer | null;
+    customer?: string | Customer | DeletedCustomer | null;
 
     /**
      * The email address of the customer placing the order.
@@ -63,6 +63,13 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
 
     returns?: ApiList<OrderReturn> | null;
 
@@ -97,13 +104,6 @@ declare namespace Stripe {
      * The user's order ID if it is different from the Stripe order ID.
      */
     upstream_id?: string;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   namespace Order {

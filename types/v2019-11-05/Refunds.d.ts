@@ -54,6 +54,13 @@ declare namespace Stripe {
     failure_reason?: string;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
      * ID of the PaymentIntent that was refunded.
      */
     payment_intent?: string | PaymentIntent | null;
@@ -82,13 +89,6 @@ declare namespace Stripe {
      * If the accompanying transfer was reversed, the transfer reversal object. Only applicable if the charge was created using the destination parameter.
      */
     transfer_reversal?: string | TransferReversal | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   /**

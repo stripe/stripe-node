@@ -16,7 +16,7 @@ declare namespace Stripe {
     /**
      * The account this card belongs to. This attribute will not be in the card object if the card belongs to a customer or recipient instead.
      */
-    account: string | Account | null;
+    account: string | Account | DeletedAccount | null;
 
     /**
      * City/District/Suburb/Town/Village.
@@ -81,7 +81,7 @@ declare namespace Stripe {
     /**
      * The customer that this card belongs to. This attribute will not be in the card object if the card belongs to an account or recipient instead.
      */
-    customer: string | Customer | null;
+    customer: string | Customer | DeletedCustomer | null;
 
     /**
      * If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
@@ -92,6 +92,8 @@ declare namespace Stripe {
      * Whether this card is the default external account for its currency.
      */
     default_for_currency: boolean | null;
+
+    deleted?: void;
 
     /**
      * Card description. (Only for internal use only and not typically available in standard API requests.)
@@ -139,6 +141,13 @@ declare namespace Stripe {
     last4: string;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
+
+    /**
      * Cardholder name.
      */
     name: string | null;
@@ -146,19 +155,12 @@ declare namespace Stripe {
     /**
      * The recipient that this card belongs to. This attribute will not be in the card object if the card belongs to a customer or account instead.
      */
-    recipient: string | Recipient | null;
+    recipient: string | Recipient | DeletedRecipient | null;
 
     /**
      * If the card number is tokenized, this is the method that was used. Can be `apple_pay` or `google_pay`.
      */
     tokenization_method: string | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   namespace Card {

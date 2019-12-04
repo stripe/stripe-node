@@ -18,6 +18,8 @@ declare namespace Stripe {
      */
     created: number;
 
+    deleted?: void;
+
     domain_name: string;
 
     /**

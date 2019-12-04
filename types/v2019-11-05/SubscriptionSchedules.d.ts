@@ -36,7 +36,7 @@ declare namespace Stripe {
     /**
      * ID of the customer who owns the subscription schedule.
      */
-    customer?: string | Customer;
+    customer?: string | Customer | DeletedCustomer;
 
     default_settings?: SubscriptionSchedule.DefaultSettings;
 
@@ -49,6 +49,15 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?:
+      | {
+        [key: string]: string;
+      }
+      | null;
 
     /**
      * Configuration for the subscription schedule's phases.
@@ -79,15 +88,6 @@ declare namespace Stripe {
      * ID of the subscription managed by the subscription schedule.
      */
     subscription?: string | Subscription | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?:
-      | {
-        [key: string]: string;
-      }
-      | null;
   }
 
   namespace SubscriptionSchedule {
@@ -163,7 +163,7 @@ declare namespace Stripe {
       /**
        * ID of the coupon to use during this phase of the subscription schedule.
        */
-      coupon?: string | Coupon | null;
+      coupon?: string | Coupon | DeletedCoupon | null;
 
       /**
        * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
@@ -234,7 +234,7 @@ declare namespace Stripe {
         /**
          * ID of the plan to which the customer should be subscribed.
          */
-        plan: string | Plan;
+        plan: string | Plan | DeletedPlan;
 
         /**
          * Quantity of the plan to which the customer should be subscribed.

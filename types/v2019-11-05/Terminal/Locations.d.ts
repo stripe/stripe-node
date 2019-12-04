@@ -16,6 +16,8 @@ declare namespace Stripe {
 
       address: Address;
 
+      deleted?: void;
+
       /**
        * The display name of the location.
        */

@@ -14,6 +14,8 @@ declare namespace Stripe {
        */
       object: 'terminal.reader';
 
+      deleted?: void;
+
       /**
        * The current software version of the reader.
        */

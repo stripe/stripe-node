@@ -10,7 +10,9 @@ declare namespace Stripe {
 
     coupon: Coupon;
 
-    customer: string | Customer | null;
+    customer: string | Customer | DeletedCustomer | null;
+
+    deleted?: void;
 
     /**
      * If the coupon has a duration of `repeating`, the date that this discount will end. If the coupon has a duration of `once` or `forever`, this attribute will be null.

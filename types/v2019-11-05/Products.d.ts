@@ -38,6 +38,8 @@ declare namespace Stripe {
      */
     deactivate_on: Array<string>;
 
+    deleted?: void;
+
     /**
      * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
      */
@@ -52,6 +54,13 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
 
     /**
      * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
@@ -89,13 +98,6 @@ declare namespace Stripe {
      * A URL of a publicly-accessible webpage for this product. Only applicable to products of `type=good`.
      */
     url: string | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   namespace Product {

@@ -35,18 +35,31 @@ stripe.setAppInfo({
   };
   let customer: Stripe.Customer = await stripe.customers.create(params, opts);
 
-  // check no opts:
+  // Check no opts:
   await stripe.customers.create(params);
 
-  // check multiple dispatch:
+  // Check multiple dispatch:
   customer = await stripe.customers.retrieve(customer.id, opts);
   customer = await stripe.customers.retrieve(customer.id, {expand: []}, opts);
 
   const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
     expand: ['customer'],
   });
+  // Check you can cast an expandable field to the object:
   const customerEmail: string = (charge.customer as Stripe.Customer).email;
+  // Check you can cast an expandable field to a string:
   const btId: string = charge.balance_transaction as string;
+
+  // Check you can deal with deleted:
+  if (
+    typeof charge.customer !== 'string' &&
+    // Not sure why `!charge.customer.deleted` doesn't work, it seems to in a playground:
+    // https://www.typescriptlang.org/play/index.html#code/JYOwLgpgTgZghgYwgAgGIHt3IN4ChnJwBcyAzmFKAOYDc+yADpQgNYA2AnieZSLfXABGiFtwrVkAH2QgArmzZSZsgLaDodAmA4MIJAOQxM+zcgAmENhEhmA-CQBu6YGboBfXKEixEKACKW1hBmGFh4Wjp6yIbGphZWNiQUshDuuLjausgAsnAc6qHIALxomEoBCcGh6RYIbHBQKAjoIOTIAB4kufkQ1Z4wyAAUAITtAHTxQWYAlDj0za1ghGK8VMUdY3C4Hri19Y3IC21cpVjSFVOF0jwS0nIK6cADgxzIAGRvyJkQ6AOvw0USvobnx9O9PsMOBNAjZZuFDi02sQyOI+OsoVsPEA
+    // Might be a complexity limit with our resources: https://github.com/microsoft/TypeScript/pull/30779/files#diff-c3ed224e4daa84352f7f1abcd23e8ccaR13219
+    !('deleted' in charge.customer)
+  ) {
+    const created: number = charge.customer.created;
+  }
 
   for await (const customer of stripe.customers.list()) {
     const {id} = customer as Stripe.Customer;

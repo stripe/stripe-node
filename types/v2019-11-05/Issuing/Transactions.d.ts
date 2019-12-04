@@ -66,16 +66,16 @@ declare namespace Stripe {
       merchant_data?: Transaction.MerchantData;
 
       /**
-       * One of `capture`, `refund`, `cash_withdrawal`, `refund_reversal`, `dispute`, or `dispute_loss`.
-       */
-      type?: string;
-
-      /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata?: {
         [key: string]: string;
       };
+
+      /**
+       * One of `capture`, `refund`, `cash_withdrawal`, `refund_reversal`, `dispute`, or `dispute_loss`.
+       */
+      type?: string;
     }
 
     namespace Transaction {

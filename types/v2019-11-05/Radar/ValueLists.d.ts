@@ -29,6 +29,8 @@ declare namespace Stripe {
        */
       created_by: string;
 
+      deleted?: void;
+
       /**
        * The type of items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`.
        */
@@ -45,16 +47,16 @@ declare namespace Stripe {
       livemode: boolean;
 
       /**
-       * The name of the value list.
-       */
-      name: string;
-
-      /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: {
         [key: string]: string;
       };
+
+      /**
+       * The name of the value list.
+       */
+      name: string;
     }
 
     namespace ValueList {

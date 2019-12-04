@@ -28,6 +28,8 @@ declare namespace Stripe {
      */
     currency: string | null;
 
+    deleted?: void;
+
     /**
      * One of `forever`, `once`, and `repeating`. Describes how long a customer who applies this coupon will get the discount.
      */
@@ -47,6 +49,13 @@ declare namespace Stripe {
      * Maximum number of times this coupon can be redeemed, in total, across all customers, before it is no longer valid.
      */
     max_redemptions: number | null;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
 
     /**
      * Name of the coupon displayed to customers on for instance invoices or receipts.
@@ -72,13 +81,6 @@ declare namespace Stripe {
      * Taking account of the above properties, whether this coupon can still be applied to a customer.
      */
     valid: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   namespace Coupon {

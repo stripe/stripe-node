@@ -47,6 +47,8 @@ declare namespace Stripe {
      */
     default_currency: string;
 
+    deleted?: void;
+
     /**
      * Whether account details have been submitted. Standard accounts cannot receive payouts before this is true.
      */
@@ -63,6 +65,13 @@ declare namespace Stripe {
     external_accounts: ApiList<BankAccount | Card>;
 
     individual: Person;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
 
     /**
      * Whether Stripe can send payouts to this account.
@@ -82,13 +91,6 @@ declare namespace Stripe {
      * The Stripe account type. Can be `standard`, `express`, or `custom`.
      */
     type: Account.Type;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   namespace Account {
@@ -541,7 +543,7 @@ declare namespace Stripe {
     /**
      * The account for which the capability enables functionality.
      */
-    account?: string | Account;
+    account?: string | Account | DeletedAccount;
 
     /**
      * Whether the capability has been requested.
@@ -653,6 +655,8 @@ declare namespace Stripe {
      */
     created: number;
 
+    deleted?: void;
+
     dob: Person.Dob;
 
     /**
@@ -706,6 +710,13 @@ declare namespace Stripe {
     maiden_name: string | null;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
+
+    /**
      * The person's phone number.
      */
     phone: string | null;
@@ -723,13 +734,6 @@ declare namespace Stripe {
     ssn_last_4_provided: boolean;
 
     verification: Person.Verification;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   namespace Person {

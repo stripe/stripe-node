@@ -74,6 +74,15 @@ declare namespace Stripe {
      */
     livemode?: boolean;
 
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?:
+      | {
+        [key: string]: string;
+      }
+      | null;
+
     multibanco?: Source.Multibanco;
 
     /**
@@ -118,15 +127,6 @@ declare namespace Stripe {
     usage?: string | null;
 
     wechat?: Source.Wechat;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?:
-      | {
-        [key: string]: string;
-      }
-      | null;
   }
 
   namespace Source {

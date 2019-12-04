@@ -28,6 +28,8 @@ declare namespace Stripe {
      */
     created: number;
 
+    deleted?: void;
+
     /**
      * The list of events to enable for this endpoint. `['*']` indicates that all events are enabled, except those that require explicit selection.
      */

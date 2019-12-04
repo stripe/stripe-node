@@ -40,7 +40,7 @@ declare namespace Stripe {
      *
      * If present, payment methods used with this SetupIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this SetupIntent.
      */
-    customer?: string | Customer | null;
+    customer?: string | Customer | DeletedCustomer | null;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -63,6 +63,13 @@ declare namespace Stripe {
     mandate?: string | Mandate | null;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
      * If present, this property tells you what actions you need to take in order for your customer to continue payment setup.
      */
     next_action?: SetupIntent.NextAction | null;
@@ -70,7 +77,7 @@ declare namespace Stripe {
     /**
      * The account (if any) for which the setup is intended.
      */
-    on_behalf_of?: string | Account | null;
+    on_behalf_of?: string | Account | DeletedAccount | null;
 
     /**
      * ID of the payment method used with this SetupIntent.
@@ -103,13 +110,6 @@ declare namespace Stripe {
      * Use `on_session` if you intend to only reuse the payment method when the customer is in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. If not provided, this value defaults to `off_session`.
      */
     usage?: string;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   namespace SetupIntent {

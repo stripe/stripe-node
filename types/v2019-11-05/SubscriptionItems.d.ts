@@ -23,6 +23,15 @@ declare namespace Stripe {
      */
     created: number;
 
+    deleted?: void;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
+
     plan: Plan;
 
     /**
@@ -39,13 +48,6 @@ declare namespace Stripe {
      * The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
      */
     tax_rates: Array<TaxRate> | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   namespace SubscriptionItem {

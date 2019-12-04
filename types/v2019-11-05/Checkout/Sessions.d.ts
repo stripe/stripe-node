@@ -40,7 +40,7 @@ declare namespace Stripe {
        * during the session unless an existing customer was provided when
        * the session was created.
        */
-      customer?: string | Customer | null;
+      customer?: string | Customer | DeletedCustomer | null;
 
       /**
        * If provided, this value will be used when the Customer object is created.
