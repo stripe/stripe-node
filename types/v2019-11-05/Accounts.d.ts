@@ -527,448 +527,6 @@ declare namespace Stripe {
   }
 
   /**
-   * The Capability object.
-   */
-  interface Capability {
-    /**
-     * The identifier for the capability.
-     */
-    id?: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'capability';
-
-    /**
-     * The account for which the capability enables functionality.
-     */
-    account?: string | Account | DeletedAccount;
-
-    /**
-     * Whether the capability has been requested.
-     */
-    requested?: boolean;
-
-    /**
-     * Time at which the capability was requested. Measured in seconds since the Unix epoch.
-     */
-    requested_at?: number | null;
-
-    requirements?: Capability.Requirements;
-
-    /**
-     * The status of the capability. Can be `active`, `inactive`, `pending`, or `unrequested`.
-     */
-    status?: Capability.Status;
-  }
-
-  namespace Capability {
-    interface Requirements {
-      /**
-       * The date the fields in `currently_due` must be collected by to keep the capability enabled for the account.
-       */
-      current_deadline?: number | null;
-
-      /**
-       * The fields that need to be collected to keep the capability enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the capability is disabled.
-       */
-      currently_due: Array<string>;
-
-      /**
-       * If the capability is disabled, this string describes why. Possible values are `requirement.fields_needed`, `pending.onboarding`, `pending.review`, `rejected_fraud`, or `rejected.other`.
-       */
-      disabled_reason?: string | null;
-
-      /**
-       * The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
-       */
-      eventually_due: Array<string>;
-
-      /**
-       * The fields that weren't collected by the `current_deadline`. These fields need to be collected to enable the capability for the account.
-       */
-      past_due: Array<string>;
-
-      /**
-       * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
-       */
-      pending_verification: Array<string>;
-    }
-
-    type Status = 'active' | 'disabled' | 'inactive' | 'pending' | 'unrequested'
-  }
-
-  /**
-   * The LoginLink object.
-   */
-  interface LoginLink {
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object?: 'login_link';
-
-    /**
-     * Time at which the object was created. Measured in seconds since the Unix epoch.
-     */
-    created?: number;
-
-    /**
-     * The URL for the login link.
-     */
-    url?: string;
-  }
-
-  /**
-   * The Person object.
-   */
-  interface Person {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'person';
-
-    /**
-     * The account the person is associated with.
-     */
-    account: string;
-
-    address: Address;
-
-    /**
-     * The Kana variation of the person's address (Japan only).
-     */
-    address_kana: Person.AddressKana | null;
-
-    /**
-     * The Kanji variation of the person's address (Japan only).
-     */
-    address_kanji: Person.AddressKanji | null;
-
-    /**
-     * Time at which the object was created. Measured in seconds since the Unix epoch.
-     */
-    created: number;
-
-    deleted?: void;
-
-    dob: Person.Dob;
-
-    /**
-     * The person's email address.
-     */
-    email: string | null;
-
-    /**
-     * The person's first name.
-     */
-    first_name: string | null;
-
-    /**
-     * The Kana variation of the person's first name (Japan only).
-     */
-    first_name_kana: string | null;
-
-    /**
-     * The Kanji variation of the person's first name (Japan only).
-     */
-    first_name_kanji: string | null;
-
-    /**
-     * The person's gender (International regulations require either "male" or "female").
-     */
-    gender: string | null;
-
-    /**
-     * Whether the person's `id_number` was provided.
-     */
-    id_number_provided: boolean;
-
-    /**
-     * The person's last name.
-     */
-    last_name: string | null;
-
-    /**
-     * The Kana variation of the person's last name (Japan only).
-     */
-    last_name_kana: string | null;
-
-    /**
-     * The Kanji variation of the person's last name (Japan only).
-     */
-    last_name_kanji: string | null;
-
-    /**
-     * The person's maiden name.
-     */
-    maiden_name: string | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
-
-    /**
-     * The person's phone number.
-     */
-    phone: string | null;
-
-    relationship: Person.Relationship;
-
-    /**
-     * Information about the requirements for this person, including what information needs to be collected, and by when.
-     */
-    requirements: Person.Requirements | null;
-
-    /**
-     * Whether the last 4 digits of this person's SSN have been provided.
-     */
-    ssn_last_4_provided: boolean;
-
-    verification: Person.Verification;
-  }
-
-  namespace Person {
-    interface AddressKana {
-      /**
-       * City/Ward.
-       */
-      city?: string | null;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string | null;
-
-      /**
-       * Block/Building number.
-       */
-      line1?: string | null;
-
-      /**
-       * Building details.
-       */
-      line2?: string | null;
-
-      /**
-       * Zip/Postal Code.
-       */
-      postal_code?: string | null;
-
-      /**
-       * Prefecture.
-       */
-      state?: string | null;
-
-      /**
-       * Town/cho-me.
-       */
-      town?: string | null;
-    }
-
-    interface AddressKanji {
-      /**
-       * City/Ward.
-       */
-      city?: string | null;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string | null;
-
-      /**
-       * Block/Building number.
-       */
-      line1?: string | null;
-
-      /**
-       * Building details.
-       */
-      line2?: string | null;
-
-      /**
-       * Zip/Postal Code.
-       */
-      postal_code?: string | null;
-
-      /**
-       * Prefecture.
-       */
-      state?: string | null;
-
-      /**
-       * Town/cho-me.
-       */
-      town?: string | null;
-    }
-
-    interface Dob {
-      /**
-       * The day of birth, between 1 and 31.
-       */
-      day?: number | null;
-
-      /**
-       * The month of birth, between 1 and 12.
-       */
-      month?: number | null;
-
-      /**
-       * The four-digit year of birth.
-       */
-      year?: number | null;
-    }
-
-    interface Relationship {
-      /**
-       * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
-       */
-      director?: boolean | null;
-
-      /**
-       * Whether the person has significant responsibility to control, manage, or direct the organization.
-       */
-      executive?: boolean | null;
-
-      /**
-       * Whether the person is an owner of the account's legal entity.
-       */
-      owner?: boolean | null;
-
-      /**
-       * The percent owned by the person of the account's legal entity.
-       */
-      percent_ownership?: number | null;
-
-      /**
-       * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
-       */
-      representative?: boolean | null;
-
-      /**
-       * The person's title (e.g., CEO, Support Engineer).
-       */
-      title?: string | null;
-    }
-
-    interface Requirements {
-      /**
-       * Fields that need to be collected to keep the person's account enabled. If not collected by the account's `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
-       */
-      currently_due: Array<string>;
-
-      /**
-       * Fields that need to be collected assuming all volume thresholds are reached. As fields are needed, they are moved to `currently_due` and the account's `current_deadline` is set.
-       */
-      eventually_due: Array<string>;
-
-      /**
-       * Fields that weren't collected by the account's `current_deadline`. These fields need to be collected to enable payouts for the person's account.
-       */
-      past_due: Array<string>;
-
-      /**
-       * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
-       */
-      pending_verification: Array<string>;
-    }
-
-    interface Verification {
-      /**
-       * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
-       */
-      additional_document?: Verification.AdditionalDocument | null;
-
-      /**
-       * A user-displayable string describing the verification state for the person. For example, this may say "Provided identity information could not be verified".
-       */
-      details?: string | null;
-
-      /**
-       * One of `document_address_mismatch`, `document_dob_mismatch`, `document_duplicate_type`, `document_id_number_mismatch`, `document_name_mismatch`, `document_nationality_mismatch`, `failed_keyed_identity`, or `failed_other`. A machine-readable code specifying the verification state for the person.
-       */
-      details_code?: string | null;
-
-      document?: Verification.Document;
-
-      /**
-       * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`.
-       */
-      status: string;
-    }
-
-    namespace Verification {
-      interface AdditionalDocument {
-        /**
-         * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
-         */
-        back?: string | File | null;
-
-        /**
-         * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
-         */
-        details?: string | null;
-
-        /**
-         * One of `document_corrupt`, `document_country_not_supported`, `document_expired`, `document_failed_copy`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_failed_greyscale`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_missing_back`, `document_missing_front`, `document_not_readable`, `document_not_uploaded`, `document_photo_mismatch`, `document_too_large`, or `document_type_not_supported`. A machine-readable code specifying the verification state for this document.
-         */
-        details_code?: string | null;
-
-        /**
-         * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
-         */
-        front?: string | File | null;
-      }
-
-      interface Document {
-        /**
-         * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
-         */
-        back?: string | File | null;
-
-        /**
-         * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
-         */
-        details?: string | null;
-
-        /**
-         * One of `document_corrupt`, `document_country_not_supported`, `document_expired`, `document_failed_copy`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_failed_greyscale`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_missing_back`, `document_missing_front`, `document_not_readable`, `document_not_uploaded`, `document_photo_mismatch`, `document_too_large`, or `document_type_not_supported`. A machine-readable code specifying the verification state for this document.
-         */
-        details_code?: string | null;
-
-        /**
-         * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
-         */
-        front?: string | File | null;
-      }
-    }
-  }interface DeletedPerson {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'person';
-
-    /**
-     * Always true for a deleted object
-     */
-    deleted: true;
-  }
-
-  /**
    * With [Connect](https://stripe.com/docs/connect), you can create Stripe accounts for your users.
    * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
    *
@@ -2496,463 +2054,13 @@ declare namespace Stripe {
   }
 
   /**
-   * Create an external account for a given account.
-   */
-  interface AccountCreateExternalAccountParams {
-    /**
-     * When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
-     */
-    default_for_currency?: boolean;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Please refer to full [documentation](https://stripe.com/docs/api) instead.
-     */
-    external_account: string;
-
-    /**
-     * A set of key-value pairs that you can attach to an external account object. It can be useful for storing additional information about the external account in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-  }
-
-  /**
-   * Creates a single-use login link for an Express account to access their Stripe dashboard.
-   *
-   * You may only create login links for [Express accounts](https://stripe.com/docs/connect/express-accounts) connected to your platform.
-   */
-  interface AccountCreateLoginLinkParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Where to redirect the user after they log out of their dashboard.
-     */
-    redirect_url?: string;
-  }
-
-  /**
-   * Creates a new person.
-   */
-  interface AccountCreatePersonParams {
-    /**
-     * The person's address.
-     */
-    address?: AccountCreatePersonParams.Address;
-
-    /**
-     * The Kana variation of the person's address (Japan only).
-     */
-    address_kana?: AccountCreatePersonParams.AddressKana;
-
-    /**
-     * The Kanji variation of the person's address (Japan only).
-     */
-    address_kanji?: AccountCreatePersonParams.AddressKanji;
-
-    /**
-     * The person's date of birth.
-     */
-    dob?: '' | AccountCreatePersonParams.Dob;
-
-    /**
-     * The person's email address.
-     */
-    email?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * The person's first name.
-     */
-    first_name?: string;
-
-    /**
-     * The Kana variation of the person's first name (Japan only).
-     */
-    first_name_kana?: string;
-
-    /**
-     * The Kanji variation of the person's first name (Japan only).
-     */
-    first_name_kanji?: string;
-
-    /**
-     * The person's gender (International regulations require either "male" or "female").
-     */
-    gender?: string;
-
-    /**
-     * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
-     */
-    id_number?: string;
-
-    /**
-     * The person's last name.
-     */
-    last_name?: string;
-
-    /**
-     * The Kana variation of the person's last name (Japan only).
-     */
-    last_name_kana?: string;
-
-    /**
-     * The Kanji variation of the person's last name (Japan only).
-     */
-    last_name_kanji?: string;
-
-    /**
-     * The person's maiden name.
-     */
-    maiden_name?: string;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
-     */
-    person_token?: string;
-
-    /**
-     * The person's phone number.
-     */
-    phone?: string;
-
-    /**
-     * The relationship that this person has with the account's legal entity.
-     */
-    relationship?: AccountCreatePersonParams.Relationship;
-
-    /**
-     * The last 4 digits of the person's social security number.
-     */
-    ssn_last_4?: string;
-
-    /**
-     * The person's verification status.
-     */
-    verification?: AccountCreatePersonParams.Verification;
-  }
-
-  namespace AccountCreatePersonParams {
-    interface Address {
-      /**
-       * City, district, suburb, town, or village.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Address line 1 (e.g., street, PO Box, or company name).
-       */
-      line1?: string;
-
-      /**
-       * Address line 2 (e.g., apartment, suite, unit, or building).
-       */
-      line2?: string;
-
-      /**
-       * ZIP or postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * State, county, province, or region.
-       */
-      state?: string;
-    }
-
-    interface AddressKana {
-      /**
-       * City or ward.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Block or building number.
-       */
-      line1?: string;
-
-      /**
-       * Building details.
-       */
-      line2?: string;
-
-      /**
-       * Postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * Prefecture.
-       */
-      state?: string;
-
-      /**
-       * Town or cho-me.
-       */
-      town?: string;
-    }
-
-    interface AddressKanji {
-      /**
-       * City or ward.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Block or building number.
-       */
-      line1?: string;
-
-      /**
-       * Building details.
-       */
-      line2?: string;
-
-      /**
-       * Postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * Prefecture.
-       */
-      state?: string;
-
-      /**
-       * Town or cho-me.
-       */
-      town?: string;
-    }
-
-    interface Dob {
-      /**
-       * The day of birth, between 1 and 31.
-       */
-      day: number;
-
-      /**
-       * The month of birth, between 1 and 12.
-       */
-      month: number;
-
-      /**
-       * The four-digit year of birth.
-       */
-      year: number;
-    }
-
-    interface Relationship {
-      /**
-       * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
-       */
-      director?: boolean;
-
-      /**
-       * Whether the person has significant responsibility to control, manage, or direct the organization.
-       */
-      executive?: boolean;
-
-      /**
-       * Whether the person is an owner of the account's legal entity.
-       */
-      owner?: boolean;
-
-      /**
-       * The percent owned by the person of the account's legal entity.
-       */
-      percent_ownership?: number | '';
-
-      /**
-       * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
-       */
-      representative?: boolean;
-
-      /**
-       * The person's title (e.g., CEO, Support Engineer).
-       */
-      title?: string;
-    }
-
-    interface Verification {
-      /**
-       * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
-       */
-      additional_document?: Verification.AdditionalDocument;
-
-      /**
-       * An identifying document, either a passport or local ID card.
-       */
-      document?: Verification.Document;
-    }
-
-    namespace Verification {
-      interface AdditionalDocument {
-        /**
-         * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-         */
-        back?: string;
-
-        /**
-         * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-         */
-        front?: string;
-      }
-
-      interface Document {
-        /**
-         * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-         */
-        back?: string;
-
-        /**
-         * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-         */
-        front?: string;
-      }
-    }
-  }
-
-  /**
    * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
    *
    * Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.
    *
    * If you want to delete your own account, use the [data tab in your account settings](https://dashboard.stripe.com/account/data) instead.
    */
-  interface AccountDelParams {}
-
-  /**
-   * Delete a specified external account for a given account.
-   */
-  interface AccountDeleteExternalAccountParams {}
-
-  /**
-   * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
-   */
-  interface AccountDeletePersonParams {}
-
-  /**
-   * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
-   */
-  interface AccountListCapabilitiesParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * List external accounts for an account.
-   */
-  interface AccountListExternalAccountsParams {
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  /**
-   * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
-   */
-  interface AccountListPersonsParams {
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * Filters on the list of people returned based on the person's relationship to the account's company.
-     */
-    relationship?: AccountListPersonsParams.Relationship;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  namespace AccountListPersonsParams {
-    interface Relationship {
-      /**
-       * A filter on the list of people returned based on whether these people are directors of the account's company.
-       */
-      director?: boolean;
-
-      /**
-       * A filter on the list of people returned based on whether these people are executives of the account's company.
-       */
-      executive?: boolean;
-
-      /**
-       * A filter on the list of people returned based on whether these people are owners of the account's company.
-       */
-      owner?: boolean;
-
-      /**
-       * A filter on the list of people returned based on whether these people are the representative of the account's company.
-       */
-      representative?: boolean;
-    }
-  }
+  interface AccountDeleteParams {}
 
   /**
    * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
@@ -2969,439 +2077,6 @@ declare namespace Stripe {
      * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
      */
     reason: string;
-  }
-
-  /**
-   * Retrieves information about the specified Account Capability.
-   */
-  interface AccountRetrieveCapabilityParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Retrieve a specified external account for a given account.
-   */
-  interface AccountRetrieveExternalAccountParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Retrieves an existing person.
-   */
-  interface AccountRetrievePersonParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  /**
-   * Updates an existing Account Capability.
-   */
-  interface AccountUpdateCapabilityParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
-     */
-    requested?: boolean;
-  }
-
-  /**
-   * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
-   * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
-   */
-  interface AccountUpdateExternalAccountParams {
-    /**
-     * The name of the person or business that owns the bank account.
-     */
-    account_holder_name?: string;
-
-    /**
-     * The type of entity that holds the account. This can be either `individual` or `company`.
-     */
-    account_holder_type?:
-      | ''
-      | AccountUpdateExternalAccountParams.AccountHolderType;
-
-    /**
-     * City/District/Suburb/Town/Village.
-     */
-    address_city?: string;
-
-    /**
-     * Billing address country, if provided when creating card.
-     */
-    address_country?: string;
-
-    /**
-     * Address line 1 (Street address/PO Box/Company name).
-     */
-    address_line1?: string;
-
-    /**
-     * Address line 2 (Apartment/Suite/Unit/Building).
-     */
-    address_line2?: string;
-
-    /**
-     * State/County/Province/Region.
-     */
-    address_state?: string;
-
-    /**
-     * ZIP or postal code.
-     */
-    address_zip?: string;
-
-    /**
-     * When set to true, this becomes the default external account for its currency.
-     */
-    default_for_currency?: boolean;
-
-    /**
-     * Two digit number representing the card's expiration month.
-     */
-    exp_month?: string;
-
-    /**
-     * Four digit number representing the card's expiration year.
-     */
-    exp_year?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * Cardholder name.
-     */
-    name?: string;
-  }
-
-  namespace AccountUpdateExternalAccountParams {
-    type AccountHolderType = 'company' | 'individual'
-  }
-
-  /**
-   * Updates an existing person.
-   */
-  interface AccountUpdatePersonParams {
-    /**
-     * The person's address.
-     */
-    address?: AccountUpdatePersonParams.Address;
-
-    /**
-     * The Kana variation of the person's address (Japan only).
-     */
-    address_kana?: AccountUpdatePersonParams.AddressKana;
-
-    /**
-     * The Kanji variation of the person's address (Japan only).
-     */
-    address_kanji?: AccountUpdatePersonParams.AddressKanji;
-
-    /**
-     * The person's date of birth.
-     */
-    dob?: '' | AccountUpdatePersonParams.Dob;
-
-    /**
-     * The person's email address.
-     */
-    email?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * The person's first name.
-     */
-    first_name?: string;
-
-    /**
-     * The Kana variation of the person's first name (Japan only).
-     */
-    first_name_kana?: string;
-
-    /**
-     * The Kanji variation of the person's first name (Japan only).
-     */
-    first_name_kanji?: string;
-
-    /**
-     * The person's gender (International regulations require either "male" or "female").
-     */
-    gender?: string;
-
-    /**
-     * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
-     */
-    id_number?: string;
-
-    /**
-     * The person's last name.
-     */
-    last_name?: string;
-
-    /**
-     * The Kana variation of the person's last name (Japan only).
-     */
-    last_name_kana?: string;
-
-    /**
-     * The Kanji variation of the person's last name (Japan only).
-     */
-    last_name_kanji?: string;
-
-    /**
-     * The person's maiden name.
-     */
-    maiden_name?: string;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
-
-    /**
-     * A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
-     */
-    person_token?: string;
-
-    /**
-     * The person's phone number.
-     */
-    phone?: string;
-
-    /**
-     * The relationship that this person has with the account's legal entity.
-     */
-    relationship?: AccountUpdatePersonParams.Relationship;
-
-    /**
-     * The last 4 digits of the person's social security number.
-     */
-    ssn_last_4?: string;
-
-    /**
-     * The person's verification status.
-     */
-    verification?: AccountUpdatePersonParams.Verification;
-  }
-
-  namespace AccountUpdatePersonParams {
-    interface Address {
-      /**
-       * City, district, suburb, town, or village.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Address line 1 (e.g., street, PO Box, or company name).
-       */
-      line1?: string;
-
-      /**
-       * Address line 2 (e.g., apartment, suite, unit, or building).
-       */
-      line2?: string;
-
-      /**
-       * ZIP or postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * State, county, province, or region.
-       */
-      state?: string;
-    }
-
-    interface AddressKana {
-      /**
-       * City or ward.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Block or building number.
-       */
-      line1?: string;
-
-      /**
-       * Building details.
-       */
-      line2?: string;
-
-      /**
-       * Postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * Prefecture.
-       */
-      state?: string;
-
-      /**
-       * Town or cho-me.
-       */
-      town?: string;
-    }
-
-    interface AddressKanji {
-      /**
-       * City or ward.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Block or building number.
-       */
-      line1?: string;
-
-      /**
-       * Building details.
-       */
-      line2?: string;
-
-      /**
-       * Postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * Prefecture.
-       */
-      state?: string;
-
-      /**
-       * Town or cho-me.
-       */
-      town?: string;
-    }
-
-    interface Dob {
-      /**
-       * The day of birth, between 1 and 31.
-       */
-      day: number;
-
-      /**
-       * The month of birth, between 1 and 12.
-       */
-      month: number;
-
-      /**
-       * The four-digit year of birth.
-       */
-      year: number;
-    }
-
-    interface Relationship {
-      /**
-       * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
-       */
-      director?: boolean;
-
-      /**
-       * Whether the person has significant responsibility to control, manage, or direct the organization.
-       */
-      executive?: boolean;
-
-      /**
-       * Whether the person is an owner of the account's legal entity.
-       */
-      owner?: boolean;
-
-      /**
-       * The percent owned by the person of the account's legal entity.
-       */
-      percent_ownership?: number | '';
-
-      /**
-       * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
-       */
-      representative?: boolean;
-
-      /**
-       * The person's title (e.g., CEO, Support Engineer).
-       */
-      title?: string;
-    }
-
-    interface Verification {
-      /**
-       * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
-       */
-      additional_document?: Verification.AdditionalDocument;
-
-      /**
-       * An identifying document, either a passport or local ID card.
-       */
-      document?: Verification.Document;
-    }
-
-    namespace Verification {
-      interface AdditionalDocument {
-        /**
-         * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-         */
-        back?: string;
-
-        /**
-         * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-         */
-        front?: string;
-      }
-
-      interface Document {
-        /**
-         * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-         */
-        back?: string;
-
-        /**
-         * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
-         */
-        front?: string;
-      }
-    }
   }
 
   class AccountsResource {
@@ -3448,37 +2123,6 @@ declare namespace Stripe {
     list(options?: RequestOptions): ApiListPromise<Account>;
 
     /**
-     * Create an external account for a given account.
-     */
-    createExternalAccount(
-      id: string,
-      params: AccountCreateExternalAccountParams,
-      options?: RequestOptions
-    ): Promise<BankAccount | Card>;
-
-    /**
-     * Creates a single-use login link for an Express account to access their Stripe dashboard.
-     *
-     * You may only create login links for [Express accounts](https://stripe.com/docs/connect/express-accounts) connected to your platform.
-     */
-    createLoginLink(
-      id: string,
-      params?: AccountCreateLoginLinkParams,
-      options?: RequestOptions
-    ): Promise<LoginLink>;
-    createLoginLink(id: string, options?: RequestOptions): Promise<LoginLink>;
-
-    /**
-     * Creates a new person.
-     */
-    createPerson(
-      id: string,
-      params?: AccountCreatePersonParams,
-      options?: RequestOptions
-    ): Promise<Person>;
-    createPerson(id: string, options?: RequestOptions): Promise<Person>;
-
-    /**
      * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
      *
      * Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.
@@ -3487,76 +2131,10 @@ declare namespace Stripe {
      */
     del(
       id: string,
-      params?: AccountDelParams,
+      params?: AccountDeleteParams,
       options?: RequestOptions
     ): Promise<DeletedAccount>;
     del(id: string, options?: RequestOptions): Promise<DeletedAccount>;
-
-    /**
-     * Delete a specified external account for a given account.
-     */
-    deleteExternalAccount(
-      accountId: string,
-      id: string,
-      params?: AccountDeleteExternalAccountParams,
-      options?: RequestOptions
-    ): Promise<BankAccount | Card>;
-    deleteExternalAccount(
-      accountId: string,
-      id: string,
-      options?: RequestOptions
-    ): Promise<BankAccount | Card>;
-
-    /**
-     * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
-     */
-    deletePerson(
-      accountId: string,
-      id: string,
-      params?: AccountDeletePersonParams,
-      options?: RequestOptions
-    ): Promise<DeletedPerson>;
-    deletePerson(
-      accountId: string,
-      id: string,
-      options?: RequestOptions
-    ): Promise<DeletedPerson>;
-
-    /**
-     * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
-     */
-    listCapabilities(
-      id: string,
-      params?: AccountListCapabilitiesParams,
-      options?: RequestOptions
-    ): ApiListPromise<Capability>;
-    listCapabilities(
-      id: string,
-      options?: RequestOptions
-    ): ApiListPromise<Capability>;
-
-    /**
-     * List external accounts for an account.
-     */
-    listExternalAccounts(
-      id: string,
-      params?: AccountListExternalAccountsParams,
-      options?: RequestOptions
-    ): ApiListPromise<BankAccount | Card>;
-    listExternalAccounts(
-      id: string,
-      options?: RequestOptions
-    ): ApiListPromise<BankAccount | Card>;
-
-    /**
-     * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
-     */
-    listPersons(
-      id: string,
-      params?: AccountListPersonsParams,
-      options?: RequestOptions
-    ): ApiListPromise<Person>;
-    listPersons(id: string, options?: RequestOptions): ApiListPromise<Person>;
 
     /**
      * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
@@ -3575,7 +2153,7 @@ declare namespace Stripe {
     retrieveCapability(
       accountId: string,
       id: string,
-      params?: AccountRetrieveCapabilityParams,
+      params?: CapabilityRetrieveParams,
       options?: RequestOptions
     ): Promise<Capability>;
     retrieveCapability(
@@ -3585,44 +2163,51 @@ declare namespace Stripe {
     ): Promise<Capability>;
 
     /**
-     * Retrieve a specified external account for a given account.
-     */
-    retrieveExternalAccount(
-      accountId: string,
-      id: string,
-      params?: AccountRetrieveExternalAccountParams,
-      options?: RequestOptions
-    ): Promise<BankAccount | Card>;
-    retrieveExternalAccount(
-      accountId: string,
-      id: string,
-      options?: RequestOptions
-    ): Promise<BankAccount | Card>;
-
-    /**
-     * Retrieves an existing person.
-     */
-    retrievePerson(
-      accountId: string,
-      id: string,
-      params?: AccountRetrievePersonParams,
-      options?: RequestOptions
-    ): Promise<Person>;
-    retrievePerson(
-      accountId: string,
-      id: string,
-      options?: RequestOptions
-    ): Promise<Person>;
-
-    /**
      * Updates an existing Account Capability.
      */
     updateCapability(
       accountId: string,
       id: string,
-      params?: AccountUpdateCapabilityParams,
+      params?: CapabilityUpdateParams,
       options?: RequestOptions
     ): Promise<Capability>;
+
+    /**
+     * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
+     */
+    listCapabilities(
+      id: string,
+      params?: CapabilityListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Capability>;
+    listCapabilities(
+      id: string,
+      options?: RequestOptions
+    ): ApiListPromise<Capability>;
+
+    /**
+     * Create an external account for a given account.
+     */
+    createExternalAccount(
+      id: string,
+      params: ExternalAccountCreateParams,
+      options?: RequestOptions
+    ): Promise<BankAccount | Card>;
+
+    /**
+     * Retrieve a specified external account for a given account.
+     */
+    retrieveExternalAccount(
+      accountId: string,
+      id: string,
+      params?: ExternalAccountRetrieveParams,
+      options?: RequestOptions
+    ): Promise<BankAccount | Card>;
+    retrieveExternalAccount(
+      accountId: string,
+      id: string,
+      options?: RequestOptions
+    ): Promise<BankAccount | Card>;
 
     /**
      * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
@@ -3631,9 +2216,74 @@ declare namespace Stripe {
     updateExternalAccount(
       accountId: string,
       id: string,
-      params?: AccountUpdateExternalAccountParams,
+      params?: ExternalAccountUpdateParams,
       options?: RequestOptions
     ): Promise<BankAccount | Card>;
+
+    /**
+     * List external accounts for an account.
+     */
+    listExternalAccounts(
+      id: string,
+      params?: ExternalAccountListParams,
+      options?: RequestOptions
+    ): ApiListPromise<BankAccount | Card>;
+    listExternalAccounts(
+      id: string,
+      options?: RequestOptions
+    ): ApiListPromise<BankAccount | Card>;
+
+    /**
+     * Delete a specified external account for a given account.
+     */
+    deleteExternalAccount(
+      accountId: string,
+      id: string,
+      params?: ExternalAccountDeleteParams,
+      options?: RequestOptions
+    ): Promise<BankAccount | Card>;
+    deleteExternalAccount(
+      accountId: string,
+      id: string,
+      options?: RequestOptions
+    ): Promise<BankAccount | Card>;
+
+    /**
+     * Creates a single-use login link for an Express account to access their Stripe dashboard.
+     *
+     * You may only create login links for [Express accounts](https://stripe.com/docs/connect/express-accounts) connected to your platform.
+     */
+    createLoginLink(
+      id: string,
+      params?: LoginLinkCreateParams,
+      options?: RequestOptions
+    ): Promise<LoginLink>;
+    createLoginLink(id: string, options?: RequestOptions): Promise<LoginLink>;
+
+    /**
+     * Creates a new person.
+     */
+    createPerson(
+      id: string,
+      params?: PersonCreateParams,
+      options?: RequestOptions
+    ): Promise<Person>;
+    createPerson(id: string, options?: RequestOptions): Promise<Person>;
+
+    /**
+     * Retrieves an existing person.
+     */
+    retrievePerson(
+      accountId: string,
+      id: string,
+      params?: PersonRetrieveParams,
+      options?: RequestOptions
+    ): Promise<Person>;
+    retrievePerson(
+      accountId: string,
+      id: string,
+      options?: RequestOptions
+    ): Promise<Person>;
 
     /**
      * Updates an existing person.
@@ -3641,8 +2291,33 @@ declare namespace Stripe {
     updatePerson(
       accountId: string,
       id: string,
-      params?: AccountUpdatePersonParams,
+      params?: PersonUpdateParams,
       options?: RequestOptions
     ): Promise<Person>;
+
+    /**
+     * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
+     */
+    listPersons(
+      id: string,
+      params?: PersonListParams,
+      options?: RequestOptions
+    ): ApiListPromise<Person>;
+    listPersons(id: string, options?: RequestOptions): ApiListPromise<Person>;
+
+    /**
+     * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
+     */
+    deletePerson(
+      accountId: string,
+      id: string,
+      params?: PersonDeleteParams,
+      options?: RequestOptions
+    ): Promise<DeletedPerson>;
+    deletePerson(
+      accountId: string,
+      id: string,
+      options?: RequestOptions
+    ): Promise<DeletedPerson>;
   }
 }
