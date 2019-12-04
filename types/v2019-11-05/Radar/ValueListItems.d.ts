@@ -24,6 +24,8 @@ declare namespace Stripe {
        */
       created_by: string;
 
+      deleted?: void;
+
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */

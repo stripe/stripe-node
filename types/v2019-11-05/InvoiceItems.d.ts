@@ -26,12 +26,14 @@ declare namespace Stripe {
     /**
      * The ID of the customer who will be billed when this invoice item is billed.
      */
-    customer: string | Customer;
+    customer: string | Customer | DeletedCustomer;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
     date: number;
+
+    deleted?: void;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -46,12 +48,19 @@ declare namespace Stripe {
     /**
      * The ID of the invoice this invoice item belongs to.
      */
-    invoice: string | Invoice | null;
+    invoice: string | Invoice | DeletedInvoice | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
 
     period: InvoiceItem.Period;
 
@@ -99,13 +108,6 @@ declare namespace Stripe {
      * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
      */
     unit_amount_decimal: string | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   namespace InvoiceItem {

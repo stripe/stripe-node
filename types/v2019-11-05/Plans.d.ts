@@ -48,6 +48,8 @@ declare namespace Stripe {
      */
     currency: string;
 
+    deleted?: void;
+
     /**
      * One of `day`, `week`, `month` or `year`. The frequency with which a subscription should be billed.
      */
@@ -64,6 +66,13 @@ declare namespace Stripe {
     livemode: boolean;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
+
+    /**
      * A brief description of the plan, hidden from customers.
      */
     nickname: string | null;
@@ -71,7 +80,7 @@ declare namespace Stripe {
     /**
      * The product whose pricing this plan determines.
      */
-    product: string | Product | null;
+    product: string | Product | DeletedProduct | null;
 
     /**
      * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
@@ -97,13 +106,6 @@ declare namespace Stripe {
      * Configures how the quantity per period should be determined, can be either `metered` or `licensed`. `licensed` will automatically bill the `quantity` set when adding it to a subscription, `metered` will aggregate the total usage based on usage records. Defaults to `licensed`.
      */
     usage_type: Plan.UsageType;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   namespace Plan {

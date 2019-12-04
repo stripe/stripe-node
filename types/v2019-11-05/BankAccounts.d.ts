@@ -13,7 +13,7 @@ declare namespace Stripe {
      */
     object: 'bank_account';
 
-    account: string | Account | null;
+    account: string | Account | DeletedAccount | null;
 
     /**
      * The name of the person or business that owns the bank account.
@@ -40,12 +40,14 @@ declare namespace Stripe {
      */
     currency: string | null;
 
-    customer: string | Customer | null;
+    customer: string | Customer | DeletedCustomer | null;
 
     /**
      * Whether this bank account is the default external account for its currency.
      */
     default_for_currency: boolean | null;
+
+    deleted?: void;
 
     /**
      * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
@@ -53,6 +55,15 @@ declare namespace Stripe {
     fingerprint: string | null;
 
     last4: string;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata:
+      | {
+        [key: string]: string;
+      }
+      | null;
 
     /**
      * The routing transit number for the bank account.
@@ -65,15 +76,6 @@ declare namespace Stripe {
      * For external accounts, possible values are `new` and `errored`. Validations aren't run against external accounts because they're only used for payouts. This means the other statuses don't apply. If a transfer fails, the status is set to `errored` and transfers are stopped until account details are updated.
      */
     status: string;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata:
-      | {
-        [key: string]: string;
-      }
-      | null;
   }
 
   interface DeletedBankAccount {

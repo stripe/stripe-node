@@ -46,7 +46,7 @@ declare namespace Stripe {
     /**
      * ID of the Stripe account the transfer was sent to.
      */
-    destination?: string | Account | null;
+    destination?: string | Account | DeletedAccount | null;
 
     /**
      * If the destination is a Stripe account, this will be the ID of the payment that the destination account received for the transfer.
@@ -57,6 +57,13 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode?: boolean;
+
+    /**
+     * A set of key-value pairs that you can attach to a transfer object. It can be useful for storing additional information about the transfer in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
 
     /**
      * A list of reversals that have been applied to the transfer.
@@ -82,13 +89,6 @@ declare namespace Stripe {
      * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
      */
     transfer_group?: string | null;
-
-    /**
-     * A set of key-value pairs that you can attach to a transfer object. It can be useful for storing additional information about the transfer in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   /**
@@ -131,6 +131,13 @@ declare namespace Stripe {
     destination_payment_refund?: string | Refund | null;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
+    /**
      * ID of the refund responsible for the transfer reversal.
      */
     source_refund?: string | Refund | null;
@@ -139,13 +146,6 @@ declare namespace Stripe {
      * ID of the transfer that was reversed.
      */
     transfer?: string | Transfer;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   /**

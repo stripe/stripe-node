@@ -88,7 +88,7 @@ declare namespace Stripe {
      */
     custom_fields: Array<Invoice.CustomField> | null;
 
-    customer: string | Customer;
+    customer: string | Customer | DeletedCustomer;
 
     /**
      * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
@@ -148,6 +148,8 @@ declare namespace Stripe {
      */
     default_tax_rates: Array<TaxRate> | null;
 
+    deleted?: void;
+
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
      */
@@ -189,6 +191,15 @@ declare namespace Stripe {
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
     livemode: boolean;
+
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata:
+      | {
+        [key: string]: string;
+      }
+      | null;
 
     /**
      * The time at which payment will next be attempted. This value will be `null` for invoices where `collection_method=send_invoice`.
@@ -298,15 +309,6 @@ declare namespace Stripe {
      * The time at which webhooks for this invoice were successfully delivered (if the invoice had no webhooks to deliver, this will match `created`). Invoice payment is delayed until webhooks are delivered, or until all webhook delivery attempts have been exhausted.
      */
     webhooks_delivered_at: number | null;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata:
-      | {
-        [key: string]: string;
-      }
-      | null;
   }
 
   namespace Invoice {
@@ -462,7 +464,7 @@ declare namespace Stripe {
       /**
        * The account (if any) where funds from the payment will be transferred to upon payment success.
        */
-      destination: string | Account;
+      destination: string | Account | DeletedAccount;
     }
   }
 
@@ -524,6 +526,13 @@ declare namespace Stripe {
      */
     livemode?: boolean;
 
+    /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
+     */
+    metadata?: {
+      [key: string]: string;
+    };
+
     period?: InvoiceLineItem.Period;
 
     /**
@@ -570,13 +579,6 @@ declare namespace Stripe {
      * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
      */
     unified_proration?: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
-     */
-    metadata?: {
-      [key: string]: string;
-    };
   }
 
   namespace InvoiceLineItem {

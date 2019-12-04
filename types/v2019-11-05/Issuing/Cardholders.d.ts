@@ -49,6 +49,13 @@ declare namespace Stripe {
       livemode?: boolean;
 
       /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
        * The cardholder's name. This will be printed on cards issued to them.
        */
       name?: string;
@@ -69,13 +76,6 @@ declare namespace Stripe {
        * One of `individual` or `business_entity`.
        */
       type?: Cardholder.Type;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
     }
 
     namespace Cardholder {

@@ -28,7 +28,9 @@ declare namespace Stripe {
     /**
      * The default card to use for creating transfers to this recipient.
      */
-    default_card: string | Card | null;
+    default_card: string | Card | DeletedCard | null;
+
+    deleted?: void;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -43,16 +45,23 @@ declare namespace Stripe {
     livemode: boolean;
 
     /**
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: {
+      [key: string]: string;
+    };
+
+    /**
      * The ID of the [Custom account](https://stripe.com/docs/connect/custom-accounts) this recipient was migrated to. If set, the recipient can no longer be updated, nor can transfers be made to it: use the Custom account instead.
      */
-    migrated_to: string | Account | null;
+    migrated_to: string | Account | DeletedAccount | null;
 
     /**
      * Full, legal name of the recipient.
      */
     name: string | null;
 
-    rolled_back_from: string | Account;
+    rolled_back_from: string | Account | DeletedAccount;
 
     /**
      * Type of the recipient, one of `individual` or `corporation`.
@@ -63,13 +72,6 @@ declare namespace Stripe {
      * Whether the recipient has been verified. This field is non-standard, and maybe removed in the future
      */
     verified: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: {
-      [key: string]: string;
-    };
   }
 
   interface DeletedRecipient {

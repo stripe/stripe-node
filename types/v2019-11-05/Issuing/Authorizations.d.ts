@@ -68,6 +68,13 @@ declare namespace Stripe {
       merchant_data?: Authorization.MerchantData;
 
       /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
        * The amount the user is requesting to be authorized. This field will only be non-zero during an `issuing.authorization.request` webhook.
        */
       pending_authorized_amount?: number;
@@ -92,13 +99,6 @@ declare namespace Stripe {
        * What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
        */
       wallet_provider?: string | null;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata?: {
-        [key: string]: string;
-      };
     }
 
     namespace Authorization {
