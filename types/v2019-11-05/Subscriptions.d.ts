@@ -862,7 +862,7 @@ declare namespace Stripe {
    *
    * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
    */
-  interface SubscriptionDelParams {
+  interface SubscriptionDeleteParams {
     /**
      * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
      */
@@ -925,7 +925,7 @@ declare namespace Stripe {
      */
     del(
       id: string,
-      params?: SubscriptionDelParams,
+      params?: SubscriptionDeleteParams,
       options?: RequestOptions
     ): Promise<Subscription>;
     del(id: string, options?: RequestOptions): Promise<Subscription>;
