@@ -485,9 +485,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * This endpoint creates a draft invoice for a given customer. The draft invoice created pulls in all pending invoice items on that customer, including prorations.
-   */
   interface InvoiceCreateParams {
     /**
      * A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#invoices).
@@ -596,9 +593,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the invoice with the given ID.
-   */
   interface InvoiceRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -606,14 +600,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Draft invoices are fully editable. Once an invoice is [finalized](https://stripe.com/docs/billing/invoices/workflow#finalized),
-   * monetary values, as well as collection_method, become uneditable.
-   *
-   * If you would like to stop the Stripe Billing engine from automatically finalizing, reattempting payments on,
-   * sending reminders for, or [automatically reconciling](https://stripe.com/docs/billing/invoices/reconciliation) invoices, pass
-   * auto_advance=false.
-   */
   interface InvoiceUpdateParams {
     /**
      * A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#invoices).
@@ -715,9 +701,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
-   */
   interface InvoiceListParams {
     /**
      * The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
@@ -814,14 +797,8 @@ declare namespace Stripe {
     type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void'
   }
 
-  /**
-   * Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api#void_invoice).
-   */
   interface InvoiceDeleteParams {}
 
-  /**
-   * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
-   */
   interface InvoiceFinalizeInvoiceParams {
     /**
      * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
@@ -834,9 +811,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
-   */
   interface InvoiceMarkUncollectibleParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -844,9 +818,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Stripe automatically creates and then attempts to collect payment on invoices for customers on subscriptions according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to attempt payment on an invoice out of the normal collection schedule or for some other reason, you can do so.
-   */
   interface InvoicePayParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -881,13 +852,6 @@ declare namespace Stripe {
     source?: string;
   }
 
-  /**
-   * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discount that is applicable to the customer.
-   *
-   * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
-   *
-   * You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass a proration_date parameter when doing the actual subscription update. The value passed in should be the same as the subscription_proration_date returned on the upcoming invoice resource. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_proration_date on the upcoming invoice resource.
-   */
   interface InvoiceRetrieveUpcomingParams {
     /**
      * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
@@ -1109,11 +1073,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Stripe will automatically send invoices to customers according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email.
-   *
-   * Requests made in test-mode result in no emails being sent, despite sending an invoice.sent event.
-   */
   interface InvoiceSendInvoiceParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -1121,9 +1080,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://stripe.com/docs/api#delete_invoice), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
-   */
   interface InvoiceVoidInvoiceParams {
     /**
      * Specifies which fields in the response should be expanded.

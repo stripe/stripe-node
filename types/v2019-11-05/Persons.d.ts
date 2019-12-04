@@ -350,9 +350,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Creates a new person.
-   */
   interface PersonCreateParams {
     /**
      * The person's address.
@@ -657,9 +654,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves an existing person.
-   */
   interface PersonRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -667,9 +661,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates an existing person.
-   */
   interface PersonUpdateParams {
     /**
      * The person's address.
@@ -974,9 +965,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
-   */
   interface PersonListParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -1028,8 +1016,5 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
-   */
   interface PersonDeleteParams {}
 }

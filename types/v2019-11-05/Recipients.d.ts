@@ -91,10 +91,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Creates a new Recipient object and verifies the recipient's identity.
-   * Also verifies the recipient's bank account information or debit card, if either is provided.
-   */
   interface RecipientCreateParams {
     /**
      * A bank account to attach to the recipient. You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js), or a dictionary containing a user's bank account details, with the options described below.
@@ -144,9 +140,6 @@ declare namespace Stripe {
     type: string;
   }
 
-  /**
-   * Retrieves the details of an existing recipient. You need only supply the unique recipient identifier that was returned upon recipient creation.
-   */
   interface RecipientRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -154,13 +147,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specified recipient by setting the values of the parameters passed.
-   * Any parameters not provided will be left unchanged.
-   *
-   * If you update the name or tax ID, the identity verification will automatically be rerun.
-   * If you update the bank account, the bank account validation will automatically be rerun.
-   */
   interface RecipientUpdateParams {
     /**
      * A bank account to attach to the recipient. You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js), or a dictionary containing a user's bank account details, with the options described below.
@@ -210,9 +196,6 @@ declare namespace Stripe {
     tax_id?: string;
   }
 
-  /**
-   * Returns a list of your recipients. The recipients are returned sorted by creation date, with the most recently created recipients appearing first.
-   */
   interface RecipientListParams {
     created?: number | RecipientListParams.Created;
 
@@ -270,9 +253,6 @@ declare namespace Stripe {
     type Type = 'corporation' | 'individual'
   }
 
-  /**
-   * Permanently deletes a recipient. It cannot be undone.
-   */
   interface RecipientDeleteParams {}
 
   class RecipientsResource {

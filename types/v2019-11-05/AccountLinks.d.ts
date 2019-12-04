@@ -24,9 +24,6 @@ declare namespace Stripe {
     url?: string;
   }
 
-  /**
-   * Creates an AccountLink object that returns a single-use Stripe URL that the user can redirect their user to in order to take them through the Connect Onboarding flow.
-   */
   interface AccountLinkCreateParams {
     /**
      * The identifier of the account to create an account link for.

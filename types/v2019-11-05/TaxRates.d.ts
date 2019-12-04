@@ -61,9 +61,6 @@ declare namespace Stripe {
     percentage?: number;
   }
 
-  /**
-   * Creates a new tax rate.
-   */
   interface TaxRateCreateParams {
     /**
      * Flag determining whether the tax rate is active or inactive. Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications.
@@ -108,9 +105,6 @@ declare namespace Stripe {
     percentage: number;
   }
 
-  /**
-   * Retrieves a tax rate with the given ID
-   */
   interface TaxRateRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -118,9 +112,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates an existing tax rate.
-   */
   interface TaxRateUpdateParams {
     /**
      * Flag determining whether the tax rate is active or inactive. Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications.
@@ -155,9 +146,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
-   */
   interface TaxRateListParams {
     /**
      * Optional flag to filter by tax rates that are either active or not active (archived)

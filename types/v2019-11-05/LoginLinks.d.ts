@@ -19,11 +19,6 @@ declare namespace Stripe {
     url?: string;
   }
 
-  /**
-   * Creates a single-use login link for an Express account to access their Stripe dashboard.
-   *
-   * You may only create login links for [Express accounts](https://stripe.com/docs/connect/express-accounts) connected to your platform.
-   */
   interface LoginLinkCreateParams {
     /**
      * Specifies which fields in the response should be expanded.

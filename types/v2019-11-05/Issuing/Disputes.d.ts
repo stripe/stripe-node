@@ -101,9 +101,6 @@ declare namespace Stripe {
       type Status = 'lost' | 'under_review' | 'unsubmitted' | 'won'
     }
 
-    /**
-     * Creates an Issuing Dispute object.
-     */
     interface DisputeCreateParams {
       /**
        * Amount to dispute, defaults to full value, given in the currency the transaction was made in.
@@ -180,9 +177,6 @@ declare namespace Stripe {
       type Reason = 'fraudulent' | 'other'
     }
 
-    /**
-     * Retrieves an Issuing Dispute object.
-     */
     interface DisputeRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -190,9 +184,6 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
-    /**
-     * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
     interface DisputeUpdateParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -207,9 +198,6 @@ declare namespace Stripe {
       };
     }
 
-    /**
-     * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-     */
     interface DisputeListParams {
       /**
        * Only return issuing disputes that were created during the given date interval.

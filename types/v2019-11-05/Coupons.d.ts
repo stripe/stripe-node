@@ -104,11 +104,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * You can create coupons easily via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. Coupon creation is also accessible via the API if you need to create coupons on the fly.
-   *
-   * A coupon has either a percent_off or an amount_off and currency. If you set an amount_off, that amount will be subtracted from any invoice's subtotal. For example, an invoice with a subtotal of 100 will have a final total of 0 if a coupon with an amount_off of 200 is applied to it and an invoice with a subtotal of 300 will have a final total of 100 if a coupon with an amount_off of 200 is applied to it.
-   */
   interface CouponCreateParams {
     /**
      * A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
@@ -172,9 +167,6 @@ declare namespace Stripe {
     type Duration = 'forever' | 'once' | 'repeating'
   }
 
-  /**
-   * Retrieves the coupon with the given ID.
-   */
   interface CouponRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -182,9 +174,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
-   */
   interface CouponUpdateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -204,9 +193,6 @@ declare namespace Stripe {
     name?: string;
   }
 
-  /**
-   * Returns a list of your coupons.
-   */
   interface CouponListParams {
     /**
      * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
@@ -258,9 +244,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
-   */
   interface CouponDeleteParams {}
 
   class CouponsResource {

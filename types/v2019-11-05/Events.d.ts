@@ -83,9 +83,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the details of an event. Supply the unique identifier of the event, which you might have received in a webhook.
-   */
   interface EventRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -93,9 +90,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * List events, going back up to 30 days. Each event data is rendered according to Stripe API version at its creation time, specified in [event object](https://stripe.com/docs/api/events/object) api_version attribute (not according to your current Stripe API version or Stripe-Version header).
-   */
   interface EventListParams {
     created?: number | EventListParams.Created;
 

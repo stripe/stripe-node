@@ -240,9 +240,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Creates a new customer object.
-   */
   interface CustomerCreateParams {
     /**
      * The customer's address.
@@ -446,9 +443,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
-   */
   interface CustomerRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -456,11 +450,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specified customer by setting the values of the parameters passed. Any parameters not provided will be left unchanged. For example, if you pass the source parameter, that becomes the customer's active source (e.g., a card) to be used for all charges in the future. When you update a customer to a new valid card source by passing the source parameter: for each of the customer's current subscriptions, if the subscription bills automatically and is in the past_due state, then the latest open invoice for the subscription with automatic collection enabled will be retried. This retry will not count as an automatic retry, and will not affect the next regularly scheduled payment for the invoice. Changing the default_source for a customer will not trigger this behavior.
-   *
-   * This request accepts mostly the same arguments as the customer creation call.
-   */
   interface CustomerUpdateParams {
     /**
      * The customer's address.
@@ -643,9 +632,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
-   */
   interface CustomerListParams {
     created?: number | CustomerListParams.Created;
 
@@ -699,14 +685,8 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer.
-   */
   interface CustomerDeleteParams {}
 
-  /**
-   * Removes the currently applied discount on a customer.
-   */
   interface CustomerDeleteDiscountParams {}
 
   class CustomersResource {

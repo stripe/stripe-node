@@ -1108,9 +1108,6 @@ declare namespace Stripe {
       type Type = 'business_entity' | 'individual'
     }
 
-    /**
-     * Creates a new Issuing Cardholder object that can be issued cards.
-     */
     interface CardholderCreateParams {
       /**
        * Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
@@ -2193,9 +2190,6 @@ declare namespace Stripe {
       type Type = 'business_entity' | 'individual'
     }
 
-    /**
-     * Retrieves an Issuing Cardholder object.
-     */
     interface CardholderRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -2203,9 +2197,6 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
-    /**
-     * Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
     interface CardholderUpdateParams {
       /**
        * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
@@ -3279,9 +3270,6 @@ declare namespace Stripe {
       type Status = 'active' | 'inactive'
     }
 
-    /**
-     * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-     */
     interface CardholderListParams {
       /**
        * Only return cardholders that were created during the given date interval.

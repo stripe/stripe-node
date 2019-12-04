@@ -49,11 +49,6 @@ declare namespace Stripe {
     post_date?: number;
   }
 
-  /**
-   * Retrieves the details of an issuer fraud record that has previously been created.
-   *
-   * Please refer to the [issuer fraud record](https://stripe.com/docs/api#issuer_fraud_record_object) object reference for more details.
-   */
   interface IssuerFraudRecordRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -61,9 +56,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Returns a list of issuer fraud records.
-   */
   interface IssuerFraudRecordListParams {
     /**
      * Only return issuer fraud records for the charge specified by this charge ID.

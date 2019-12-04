@@ -59,9 +59,6 @@ declare namespace Stripe {
       deleted: true;
     }
 
-    /**
-     * Creates a new ValueListItem object, which is added to the specified parent value list.
-     */
     interface ValueListItemCreateParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -79,9 +76,6 @@ declare namespace Stripe {
       value_list: string;
     }
 
-    /**
-     * Retrieves a ValueListItem object.
-     */
     interface ValueListItemRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -89,9 +83,6 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
-    /**
-     * Returns a list of ValueListItem objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-     */
     interface ValueListItemListParams {
       created?: number | ValueListItemListParams.Created;
 
@@ -150,9 +141,6 @@ declare namespace Stripe {
       }
     }
 
-    /**
-     * Deletes a ValueListItem object, removing it from its parent value list.
-     */
     interface ValueListItemDeleteParams {}
 
     class ValueListItemsResource {

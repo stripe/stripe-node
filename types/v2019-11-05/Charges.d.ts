@@ -1152,9 +1152,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * To charge a credit card or other payment source, you create a Charge object. If your API key is in test mode, the supplied payment source (e.g., card) won't actually be charged, although everything else will occur as if in live mode. (Stripe assumes that the charge would have completed successfully).
-   */
   interface ChargeCreateParams {
     /**
      * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
@@ -1312,9 +1309,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
-   */
   interface ChargeRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -1322,9 +1316,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specified charge by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-   */
   interface ChargeUpdateParams {
     /**
      * The ID of an existing customer that will be associated with this request. This field may only be updated if there is no existing associated customer with this charge.
@@ -1422,9 +1413,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
-   */
   interface ChargeListParams {
     created?: number | ChargeListParams.Created;
 
@@ -1488,11 +1476,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Capture the payment of an existing, uncaptured, charge. This is the second half of the two-step payment flow, where first you [created a charge](https://stripe.com/docs/api#create_charge) with the capture option set to false.
-   *
-   * Uncaptured payments expire exactly seven days after they are created. If they are not captured by that point in time, they will be marked as refunded and will no longer be capturable.
-   */
   interface ChargeCaptureParams {
     /**
      * The amount to capture, which must be less than or equal to the original amount. Any additional amount will be automatically refunded.

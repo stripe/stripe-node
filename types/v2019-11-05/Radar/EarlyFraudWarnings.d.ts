@@ -40,11 +40,6 @@ declare namespace Stripe {
       livemode?: boolean;
     }
 
-    /**
-     * Retrieves the details of an early fraud warning that has previously been created.
-     *
-     * Please refer to the [early fraud warning](https://stripe.com/docs/api#early_fraud_warning_object) object reference for more details.
-     */
     interface EarlyFraudWarningRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -52,9 +47,6 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
-    /**
-     * Returns a list of early fraud warnings.
-     */
     interface EarlyFraudWarningListParams {
       /**
        * Only return early fraud warnings for the charge specified by this charge ID.

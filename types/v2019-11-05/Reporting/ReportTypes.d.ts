@@ -45,9 +45,6 @@ declare namespace Stripe {
       version?: number;
     }
 
-    /**
-     * Retrieves the details of a Report Type. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-     */
     interface ReportTypeRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -55,9 +52,6 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
-    /**
-     * Returns a full list of Report Types. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-     */
     interface ReportTypeListParams {
       /**
        * Specifies which fields in the response should be expanded.

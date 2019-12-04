@@ -72,9 +72,6 @@ declare namespace Stripe {
     type Status = 'active' | 'disabled' | 'inactive' | 'pending' | 'unrequested'
   }
 
-  /**
-   * Retrieves information about the specified Account Capability.
-   */
   interface CapabilityRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -82,9 +79,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates an existing Account Capability.
-   */
   interface CapabilityUpdateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -97,9 +91,6 @@ declare namespace Stripe {
     requested?: boolean;
   }
 
-  /**
-   * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
-   */
   interface CapabilityListParams {
     /**
      * Specifies which fields in the response should be expanded.

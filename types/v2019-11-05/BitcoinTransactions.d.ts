@@ -39,9 +39,6 @@ declare namespace Stripe {
     receiver?: string;
   }
 
-  /**
-   * List bitcoin transacitons for a given receiver.
-   */
   interface BitcoinTransactionListParams {
     /**
      * Only return transactions for the customer specified by this customer ID.

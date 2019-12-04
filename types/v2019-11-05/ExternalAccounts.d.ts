@@ -1,7 +1,4 @@
 declare namespace Stripe {
-  /**
-   * Create an external account for a given account.
-   */
   interface ExternalAccountCreateParams {
     /**
      * When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
@@ -26,9 +23,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Retrieve a specified external account for a given account.
-   */
   interface ExternalAccountRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -36,10 +30,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
-   * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
-   */
   interface ExternalAccountUpdateParams {
     /**
      * The name of the person or business that owns the bank account.
@@ -115,9 +105,6 @@ declare namespace Stripe {
     type AccountHolderType = 'company' | 'individual'
   }
 
-  /**
-   * List external accounts for an account.
-   */
   interface ExternalAccountListParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -140,8 +127,5 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * Delete a specified external account for a given account.
-   */
   interface ExternalAccountDeleteParams {}
 }

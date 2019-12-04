@@ -126,9 +126,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Retrieves the Bitcoin receiver with the given ID.
-   */
   interface BitcoinReceiverRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -136,9 +133,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Returns a list of your receivers. Receivers are returned sorted by creation date, with the most recently created receivers appearing first.
-   */
   interface BitcoinReceiverListParams {
     /**
      * Filter for active receivers.

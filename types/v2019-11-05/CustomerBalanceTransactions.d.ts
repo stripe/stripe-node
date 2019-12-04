@@ -86,9 +86,6 @@ declare namespace Stripe {
       | 'unspent_receiver_credit'
   }
 
-  /**
-   * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-   */
   interface CustomerBalanceTransactionCreateParams {
     /**
      * The integer amount in **%s** to apply to the customer's balance. Pass a negative amount to credit the customer's balance, and pass in a positive amount to debit the customer's balance.
@@ -118,9 +115,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-   */
   interface CustomerBalanceTransactionRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -128,9 +122,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Most customer balance transaction fields are immutable, but you may update its description and metadata.
-   */
   interface CustomerBalanceTransactionUpdateParams {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -150,9 +141,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
-   */
   interface CustomerBalanceTransactionListParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.

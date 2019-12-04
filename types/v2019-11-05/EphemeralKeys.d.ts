@@ -34,9 +34,6 @@ declare namespace Stripe {
     secret?: string;
   }
 
-  /**
-   * Creates a short-lived API key for a given resource.
-   */
   interface EphemeralKeyCreateParams {
     /**
      * The ID of the Customer you'd like to modify using the resulting ephemeral key.
@@ -54,9 +51,6 @@ declare namespace Stripe {
     issuing_card?: string;
   }
 
-  /**
-   * Invalidates a short-lived API key for a given resource.
-   */
   interface EphemeralKeyDeleteParams {}
 
   class EphemeralKeysResource {
