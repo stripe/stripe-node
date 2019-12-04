@@ -16,41 +16,41 @@ declare namespace Stripe {
      * Use a specific API Key for this request.
      * For Connect, we recommend using `stripeAccount` instead.
      */
-    apiKey?: string,
+    apiKey?: string;
     /** @deprecated Please use apiKey instead. */
-    api_key?: string,
+    api_key?: string;
 
     /**
      * See the [idempotency key docs](https://stripe.com/docs/api/idempotency).
      */
-    idempotencyKey?: string,
+    idempotencyKey?: string;
     /** @deprecated Please use idempotencyKey instead. */
-    idempotency_key?: string,
+    idempotency_key?: string;
 
     /**
      * An account id on whose behalf you wish to make a request.
      */
-    stripeAccount?: string,
+    stripeAccount?: string;
     /** @deprecated Please use stripeAccount instead. */
-    stripe_account?: string,
+    stripe_account?: string;
 
     /**
      * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (eg; '2019-11-05').
      */
-    stripeVersion?: string,
+    stripeVersion?: string;
     /** @deprecated Please use stripeVersion instead. */
-    stripe_version?: string,
+    stripe_version?: string;
 
     /**
      * Specify the number of requests to retry in event of error.
      * This overrides a default set on the Stripe object's config argument.
      */
-    maxNetworkRetries?: number,
+    maxNetworkRetries?: number;
 
     /**
      * Specify a timeout for this request in milliseconds.
      */
-    timeout?: number,
+    timeout?: number;
   }
 
   export interface ApiList<T> {
