@@ -256,9 +256,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Creates a new subscription on an existing customer.
-   */
   interface SubscriptionCreateParams {
     /**
      * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
@@ -481,9 +478,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the subscription with the given ID.
-   */
   interface SubscriptionRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -491,9 +485,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates an existing subscription on a customer to match the specified parameters. When changing plans or quantities, we will optionally prorate the price we charge next month to make up for any price changes. To preview how the proration will be calculated, use the [upcoming invoice](https://stripe.com/docs/api#upcoming_invoice) endpoint.
-   */
   interface SubscriptionUpdateParams {
     /**
      * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
@@ -723,9 +714,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
-   */
   interface SubscriptionListParams {
     /**
      * The collection method of the subscriptions to retrieve. Either `charge_automatically` or `send_invoice`.
@@ -855,13 +843,6 @@ declare namespace Stripe {
       | 'unpaid'
   }
 
-  /**
-   * Cancels a customer's subscription immediately. The customer will not be charged again for the subscription.
-   *
-   * Note, however, that any pending invoice items that you've created will still be charged for at the end of the period, unless manually [deleted](https://stripe.com/docs/api#delete_invoiceitem). If you've set the subscription to cancel at the end of the period, any pending prorations will also be left in place and collected at the end of the period. But if the subscription is set to cancel immediately, pending prorations will be removed.
-   *
-   * By default, upon subscription cancellation, Stripe will stop automatic collection of all finalized invoices for the customer. This is intended to prevent unexpected payment attempts after the customer has canceled a subscription. However, you can resume automatic collection of the invoices manually after subscription cancellation to have us proceed. Or, you could check for unpaid invoices before allowing the customer to cancel the subscription at all.
-   */
   interface SubscriptionDeleteParams {
     /**
      * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
@@ -874,9 +855,6 @@ declare namespace Stripe {
     prorate?: boolean;
   }
 
-  /**
-   * Removes the currently applied discount on a subscription.
-   */
   interface SubscriptionDeleteDiscountParams {}
 
   class SubscriptionsResource {

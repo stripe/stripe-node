@@ -132,9 +132,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Creates a new SKU associated with a product.
-   */
   interface SkuCreateParams {
     /**
      * Whether the SKU is available for purchase. Default to `true`.
@@ -243,9 +240,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
-   */
   interface SkuRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -253,11 +247,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-   *
-   * Note that a SKU's attributes are not editable. Instead, you would need to deactivate the existing SKU and create a new one with the new attribute values.
-   */
   interface SkuUpdateParams {
     /**
      * Whether this SKU is available for purchase.
@@ -361,9 +350,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
-   */
   interface SkuListParams {
     /**
      * Only return SKUs that are active or inactive (e.g., pass `false` to list all inactive products).
@@ -413,9 +399,6 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * Delete a SKU. Deleting a SKU is only possible until it has been used in an order.
-   */
   interface SkuDeleteParams {}
 
   class SkusResource {

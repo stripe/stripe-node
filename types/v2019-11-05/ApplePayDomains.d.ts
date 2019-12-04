@@ -45,9 +45,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Create an apple pay domain.
-   */
   interface ApplePayDomainCreateParams {
     domain_name: string;
 
@@ -57,9 +54,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Retrieve an apple pay domain.
-   */
   interface ApplePayDomainRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -67,9 +61,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * List apple pay domains.
-   */
   interface ApplePayDomainListParams {
     domain_name?: string;
 
@@ -94,9 +85,6 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * Delete an apple pay domain.
-   */
   interface ApplePayDomainDeleteParams {}
 
   class ApplePayDomainsResource {

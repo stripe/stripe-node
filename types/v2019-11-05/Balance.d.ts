@@ -115,10 +115,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the current account balance, based on the authentication that was used to make the request.
-   *  For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
-   */
   interface BalanceRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.

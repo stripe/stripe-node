@@ -74,9 +74,6 @@ declare namespace Stripe {
     refunds?: ApiList<FeeRefund>;
   }
 
-  /**
-   * Retrieves the details of an application fee that your account has collected. The same information is returned when refunding the application fee.
-   */
   interface ApplicationFeeRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -84,9 +81,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
-   */
   interface ApplicationFeeListParams {
     /**
      * Only return application fees for the charge specified by this charge ID.

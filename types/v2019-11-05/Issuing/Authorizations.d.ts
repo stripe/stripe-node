@@ -252,9 +252,6 @@ declare namespace Stripe {
       }
     }
 
-    /**
-     * Retrieves an Issuing Authorization object.
-     */
     interface AuthorizationRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -262,9 +259,6 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
-    /**
-     * Updates the specified Issuing Authorization object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
     interface AuthorizationUpdateParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -281,9 +275,6 @@ declare namespace Stripe {
         | '';
     }
 
-    /**
-     * Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-     */
     interface AuthorizationListParams {
       /**
        * Only return issuing transactions that belong to the given card.
@@ -352,9 +343,6 @@ declare namespace Stripe {
       type Status = 'closed' | 'pending' | 'reversed'
     }
 
-    /**
-     * Approves a pending Issuing Authorization object.
-     */
     interface AuthorizationApproveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -376,9 +364,6 @@ declare namespace Stripe {
         | '';
     }
 
-    /**
-     * Declines a pending Issuing Authorization object.
-     */
     interface AuthorizationDeclineParams {
       /**
        * Specifies which fields in the response should be expanded.

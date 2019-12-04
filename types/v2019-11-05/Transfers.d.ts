@@ -91,9 +91,6 @@ declare namespace Stripe {
     transfer_group?: string | null;
   }
 
-  /**
-   * To send funds from your Stripe account to a connected account, you create a new transfer object. Your [Stripe balance](https://stripe.com/docs/api#balance) must be able to cover the transfer amount, or you'll receive an “Insufficient Funds” error.
-   */
   interface TransferCreateParams {
     /**
      * A positive integer in %s representing how much to transfer.
@@ -147,9 +144,6 @@ declare namespace Stripe {
     type SourceType = 'bank_account' | 'card'
   }
 
-  /**
-   * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
-   */
   interface TransferRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -157,11 +151,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-   *
-   * This request accepts only metadata as an argument.
-   */
   interface TransferUpdateParams {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -181,9 +170,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
-   */
   interface TransferListParams {
     created?: number | TransferListParams.Created;
 

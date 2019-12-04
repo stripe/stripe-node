@@ -721,9 +721,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Creates a new source object.
-   */
   interface SourceCreateParams {
     /**
      * Amount associated with the source. This is the amount for which the source will be chargeable once ready. Required for `single_use` sources.
@@ -1053,9 +1050,6 @@ declare namespace Stripe {
     type Usage = 'reusable' | 'single_use'
   }
 
-  /**
-   * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
-   */
   interface SourceRetrieveParams {
     /**
      * The client secret of the source. Required if a publishable key is used to retrieve the source.
@@ -1068,11 +1062,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-   *
-   * This request accepts the metadata and owner as arguments. It is also possible to update type specific information for selected payment methods. Please refer to our [payment method guides](https://stripe.com/docs/sources) for more detail.
-   */
   interface SourceUpdateParams {
     /**
      * Amount associated with the source.
@@ -1333,9 +1322,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * List source transactions for a given source.
-   */
   interface SourceListSourceTransactionsParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -1358,9 +1344,6 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * Verify a given source.
-   */
   interface SourceVerifyParams {
     /**
      * Specifies which fields in the response should be expanded.

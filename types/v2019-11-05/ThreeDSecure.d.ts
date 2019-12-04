@@ -48,9 +48,6 @@ declare namespace Stripe {
     status?: string;
   }
 
-  /**
-   * Initiate 3D Secure authentication.
-   */
   interface ThreeDSecureCreateParams {
     /**
      * Amount of the charge that you will create when authentication completes.
@@ -80,9 +77,6 @@ declare namespace Stripe {
     return_url: string;
   }
 
-  /**
-   * Retrieves a 3D Secure object.
-   */
   interface ThreeDSecureRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.

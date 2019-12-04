@@ -108,22 +108,6 @@ declare namespace Stripe {
     type Type = 'post_payment' | 'pre_payment'
   }
 
-  /**
-   * Issue a credit note to adjust the amount of a finalized invoice. For a status=open invoice, a credit note reduces
-   * its amount_due. For a status=paid invoice, a credit note does not affect its amount_due. Instead, it can result
-   * in any combination of the following:
-   *
-   *
-   *  Refund: create a new refund (using refund_amount) or link an existing refund (using refund).
-   *  Customer balance credit: credit the customer's balance (using credit_amount) which will be automatically applied to their next invoice when it's finalized.
-   *  Outside of Stripe credit: record the amount that is or will be credited outside of Stripe (using out_of_band_amount).
-   *
-   *
-   * For post-payment credit notes the sum of the refund, credit and outside of Stripe amounts must equal the credit note total.
-   *
-   * You may issue multiple credit notes for an invoice. Each credit note will increment the invoice's pre_payment_credit_notes_amount
-   * or post_payment_credit_notes_amount depending on its status at the time of credit note creation.
-   */
   interface CreditNoteCreateParams {
     /**
      * The integer amount in **%s** representing the total amount of the credit note.
@@ -186,9 +170,6 @@ declare namespace Stripe {
       | 'product_unsatisfactory'
   }
 
-  /**
-   * Retrieves the credit note object with the given identifier.
-   */
   interface CreditNoteRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -196,9 +177,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates an existing credit note.
-   */
   interface CreditNoteUpdateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -218,9 +196,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Returns a list of credit notes.
-   */
   interface CreditNoteListParams {
     /**
      * Only return credit notes for the customer specified by this customer ID.
@@ -253,9 +228,6 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * Get a preview of a credit note without creating it.
-   */
   interface CreditNotePreviewParams {
     /**
      * The integer amount in **%s** representing the total amount of the credit note.
@@ -318,9 +290,6 @@ declare namespace Stripe {
       | 'product_unsatisfactory'
   }
 
-  /**
-   * Marks a credit note as void. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
-   */
   interface CreditNoteVoidCreditNoteParams {
     /**
      * Specifies which fields in the response should be expanded.

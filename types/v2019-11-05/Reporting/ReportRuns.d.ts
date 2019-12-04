@@ -96,9 +96,6 @@ declare namespace Stripe {
       }
     }
 
-    /**
-     * Creates a new object and begin running the report. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-     */
     interface ReportRunCreateParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -190,9 +187,6 @@ declare namespace Stripe {
       }
     }
 
-    /**
-     * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-     */
     interface ReportRunRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -200,9 +194,6 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
-    /**
-     * Returns a list of Report Runs, with the most recent appearing first. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
-     */
     interface ReportRunListParams {
       created?: number | ReportRunListParams.Created;
 

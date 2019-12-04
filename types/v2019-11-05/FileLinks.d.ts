@@ -51,9 +51,6 @@ declare namespace Stripe {
     url?: string | null;
   }
 
-  /**
-   * Creates a new file link object.
-   */
   interface FileLinkCreateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -78,9 +75,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Retrieves the file link with the given ID.
-   */
   interface FileLinkRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -88,9 +82,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates an existing file link object. Expired links can no longer be updated.
-   */
   interface FileLinkUpdateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -110,9 +101,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Returns a list of file links.
-   */
   interface FileLinkListParams {
     created?: number | FileLinkListParams.Created;
 

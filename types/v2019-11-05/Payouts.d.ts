@@ -110,13 +110,6 @@ declare namespace Stripe {
     type Type = 'bank_account' | 'card'
   }
 
-  /**
-   * To send funds to your own bank account, you create a new payout object. Your [Stripe balance](https://stripe.com/docs/api#balance) must be able to cover the payout amount, or you'll receive an “Insufficient Funds” error.
-   *
-   * If your API key is in test mode, money won't actually be sent, though everything else will occur as if in live mode.
-   *
-   * If you are creating a manual payout on a Stripe account that uses multiple payment source types, you'll need to specify the source type balance that the payout should draw from. The [balance object](https://stripe.com/docs/api#balance_object) details available and pending amounts by source type.
-   */
   interface PayoutCreateParams {
     /**
      * A positive integer in cents representing how much to payout.
@@ -172,9 +165,6 @@ declare namespace Stripe {
     type SourceType = 'bank_account' | 'card'
   }
 
-  /**
-   * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
-   */
   interface PayoutRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -182,9 +172,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specified payout by setting the values of the parameters passed. Any parameters not provided will be left unchanged. This request accepts only the metadata as arguments.
-   */
   interface PayoutUpdateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -199,9 +186,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
-   */
   interface PayoutListParams {
     arrival_date?: number | PayoutListParams.ArrivalDate;
 
@@ -284,9 +268,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * A previously created payout can be canceled if it has not yet been paid out. Funds will be refunded to your available balance. You may not cancel automatic Stripe payouts.
-   */
   interface PayoutCancelParams {
     /**
      * Specifies which fields in the response should be expanded.

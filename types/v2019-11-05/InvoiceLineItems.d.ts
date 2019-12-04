@@ -128,9 +128,6 @@ declare namespace Stripe {
     type Type = 'invoiceitem' | 'subscription'
   }
 
-  /**
-   * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-   */
   interface InvoiceLineItemListParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -153,9 +150,6 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-   */
   interface InvoiceLineItemListUpcomingParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.

@@ -123,9 +123,6 @@ declare namespace Stripe {
     type Type = 'multi_use' | 'single_use'
   }
 
-  /**
-   * Retrieves a Mandate object.
-   */
   interface MandateRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.

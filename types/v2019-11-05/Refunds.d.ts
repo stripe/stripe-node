@@ -91,9 +91,6 @@ declare namespace Stripe {
     transfer_reversal?: string | TransferReversal | null;
   }
 
-  /**
-   * Create a refund.
-   */
   interface RefundCreateParams {
     amount?: number;
 
@@ -121,9 +118,6 @@ declare namespace Stripe {
     type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer'
   }
 
-  /**
-   * Retrieves the details of an existing refund.
-   */
   interface RefundRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -131,9 +125,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Retrieves the details of an existing refund.
-   */
   interface RefundRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -141,11 +132,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specified refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-   *
-   * This request only accepts metadata as an argument.
-   */
   interface RefundUpdateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -160,9 +146,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * You can see a list of the refunds belonging to a specific charge. Note that the 10 most recent refunds are always available by default on the charge object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
-   */
   interface RefundListParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -185,9 +168,6 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * Returns a list of all refunds you've previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
-   */
   interface RefundListParams {
     /**
      * Only return refunds for the charge specified by this charge ID.

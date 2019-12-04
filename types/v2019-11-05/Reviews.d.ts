@@ -133,9 +133,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves a Review object.
-   */
   interface ReviewRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -143,9 +140,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-   */
   interface ReviewListParams {
     created?: number | ReviewListParams.Created;
 
@@ -194,9 +188,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Approves a Review object, closing it and removing it from the list of reviews.
-   */
   interface ReviewApproveParams {
     /**
      * Specifies which fields in the response should be expanded.

@@ -87,9 +87,6 @@ declare namespace Stripe {
     type Status = 'canceled' | 'failed' | 'pending' | 'reversed' | 'succeeded'
   }
 
-  /**
-   * Top up the balance of an account
-   */
   interface TopupCreateParams {
     /**
      * A positive integer representing how much to transfer.
@@ -134,9 +131,6 @@ declare namespace Stripe {
     transfer_group?: string;
   }
 
-  /**
-   * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
-   */
   interface TopupRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -144,9 +138,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the metadata of a top-up. Other top-up details are not editable by design.
-   */
   interface TopupUpdateParams {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -166,9 +157,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Returns a list of top-ups.
-   */
   interface TopupListParams {
     /**
      * A positive integer representing how much to transfer.
@@ -254,9 +242,6 @@ declare namespace Stripe {
     type Status = 'canceled' | 'failed' | 'pending' | 'succeeded'
   }
 
-  /**
-   * Cancels a top-up. Only pending top-ups can be canceled.
-   */
   interface TopupCancelParams {
     /**
      * Specifies which fields in the response should be expanded.

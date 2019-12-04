@@ -73,9 +73,6 @@ declare namespace Stripe {
       deleted: true;
     }
 
-    /**
-     * Creates a new Reader object.
-     */
     interface ReaderCreateParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -103,9 +100,6 @@ declare namespace Stripe {
       registration_code: string;
     }
 
-    /**
-     * Retrieves a Reader object.
-     */
     interface ReaderRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -118,9 +112,6 @@ declare namespace Stripe {
       operator_account?: string;
     }
 
-    /**
-     * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
     interface ReaderUpdateParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -138,9 +129,6 @@ declare namespace Stripe {
       operator_account?: string;
     }
 
-    /**
-     * Returns a list of Reader objects.
-     */
     interface ReaderListParams {
       /**
        * Filters readers by device type
@@ -189,9 +177,6 @@ declare namespace Stripe {
       type Status = 'offline' | 'online'
     }
 
-    /**
-     * Deletes a Reader object.
-     */
     interface ReaderDeleteParams {
       /**
        * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.

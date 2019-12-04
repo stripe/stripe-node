@@ -193,9 +193,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Creates a new order object.
-   */
   interface OrderCreateParams {
     /**
      * A coupon code that represents a discount to be applied to this order. Must be one-time duration and in same currency as the order. An order can have multiple coupons.
@@ -299,9 +296,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the details of an existing order. Supply the unique order ID from either an order creation request or the order list, and Stripe will return the corresponding order information.
-   */
   interface OrderRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -309,9 +303,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specific order by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-   */
   interface OrderUpdateParams {
     /**
      * A coupon code that represents a discount to be applied to this order. Must be one-time duration and in same currency as the order. An order can have multiple coupons.
@@ -362,9 +353,6 @@ declare namespace Stripe {
     type Status = 'canceled' | 'created' | 'fulfilled' | 'paid' | 'returned'
   }
 
-  /**
-   * Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
-   */
   interface OrderListParams {
     /**
      * Date this order was created.
@@ -553,9 +541,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Pay an order by providing a source to create a payment.
-   */
   interface OrderPayParams {
     application_fee?: number;
 
@@ -587,9 +572,6 @@ declare namespace Stripe {
     source?: string;
   }
 
-  /**
-   * Return all or part of an order. The order must have a status of paid or fulfilled before it can be returned. Once all items have been returned, the order will become canceled or returned depending on which status the order started in.
-   */
   interface OrderReturnOrderParams {
     /**
      * Specifies which fields in the response should be expanded.

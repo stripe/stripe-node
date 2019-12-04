@@ -327,9 +327,6 @@ declare namespace Stripe {
     type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
   }
 
-  /**
-   * Creates a PaymentMethod object. Read the [Stripe.js reference](https://stripe.com/docs/stripe-js/reference#stripe-create-payment-method) to learn how to create PaymentMethods via Stripe.js.
-   */
   interface PaymentMethodCreateParams {
     /**
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
@@ -473,9 +470,6 @@ declare namespace Stripe {
     type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
   }
 
-  /**
-   * Retrieves a PaymentMethod object.
-   */
   interface PaymentMethodRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -483,9 +477,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates a PaymentMethod object. A PaymentMethod must be attached a customer to be updated.
-   */
   interface PaymentMethodUpdateParams {
     /**
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
@@ -563,9 +554,6 @@ declare namespace Stripe {
     interface SepaDebit {}
   }
 
-  /**
-   * Returns a list of PaymentMethods for a given Customer
-   */
   interface PaymentMethodListParams {
     /**
      * The ID of the customer whose PaymentMethods will be retrieved.
@@ -602,13 +590,6 @@ declare namespace Stripe {
     type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
   }
 
-  /**
-   * Attaches a PaymentMethod object to a Customer.
-   *
-   * To use this PaymentMethod as the default for invoice or subscription payments,
-   * set [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method),
-   * on the Customer to the PaymentMethod's ID.
-   */
   interface PaymentMethodAttachParams {
     /**
      * The ID of the customer to which to attach the PaymentMethod.
@@ -621,9 +602,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Detaches a PaymentMethod object from a Customer.
-   */
   interface PaymentMethodDetachParams {
     /**
      * Specifies which fields in the response should be expanded.

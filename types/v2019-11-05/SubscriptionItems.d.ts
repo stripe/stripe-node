@@ -76,9 +76,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Adds a new item to an existing subscription. No existing items will be changed or replaced.
-   */
   interface SubscriptionItemCreateParams {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
@@ -149,9 +146,6 @@ declare namespace Stripe {
       | 'pending_if_incomplete'
   }
 
-  /**
-   * Retrieves the invoice item with the given ID.
-   */
   interface SubscriptionItemRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -159,9 +153,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the plan or quantity of an item on a current subscription.
-   */
   interface SubscriptionItemUpdateParams {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
@@ -229,9 +220,6 @@ declare namespace Stripe {
       | 'pending_if_incomplete'
   }
 
-  /**
-   * Returns a list of your subscription items for a given subscription.
-   */
   interface SubscriptionItemListParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -259,9 +247,6 @@ declare namespace Stripe {
     subscription: string;
   }
 
-  /**
-   * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
-   */
   interface SubscriptionItemDeleteParams {
     /**
      * Delete all usage for the given subscription item. Allowed only when the current plan's `usage_type` is `metered`.

@@ -526,13 +526,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * With [Connect](https://stripe.com/docs/connect), you can create Stripe accounts for your users.
-   * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
-   *
-   * For Standard accounts, parameters other than country, email, and type
-   * are used to prefill the account application that we ask the account holder to complete.
-   */
   interface AccountCreateParams {
     /**
      * An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
@@ -1266,9 +1259,6 @@ declare namespace Stripe {
     type Type = 'custom' | 'express' | 'standard'
   }
 
-  /**
-   * Retrieves the details of an account.
-   */
   interface AccountRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -1276,11 +1266,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates a connected [Express or Custom account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are supported by both account types.
-   *
-   * To update your own account, use the [Dashboard](https://dashboard.stripe.com/account). Refer to our [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
-   */
   interface AccountUpdateParams {
     /**
      * An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
@@ -2002,9 +1987,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Returns a list of accounts connected to your platform via [Connect](https://stripe.com/docs/connect). If you're not a platform, the list is empty.
-   */
   interface AccountListParams {
     created?: number | AccountListParams.Created;
 
@@ -2053,20 +2035,8 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
-   *
-   * Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.
-   *
-   * If you want to delete your own account, use the [data tab in your account settings](https://dashboard.stripe.com/account/data) instead.
-   */
   interface AccountDeleteParams {}
 
-  /**
-   * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
-   *
-   * Test-mode Custom and Express accounts can be rejected at any time. Accounts created using live-mode keys may only be rejected once all balances are zero.
-   */
   interface AccountRejectParams {
     /**
      * Specifies which fields in the response should be expanded.

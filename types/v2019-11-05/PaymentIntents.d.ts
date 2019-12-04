@@ -447,18 +447,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Creates a PaymentIntent object.
-   *
-   * After the PaymentIntent is created, attach a payment method and [confirm](https://stripe.com/docs/api/payment_intents/confirm)
-   * to continue the payment. You can read more about the different payment flows
-   * available via the Payment Intents API [here](https://stripe.com/docs/payments/payment-intents).
-   *
-   * When confirm=true is used during creation, it is equivalent to creating
-   * and confirming the PaymentIntent in the same call. You may use any parameters
-   * available in the [confirm API](https://stripe.com/docs/api/payment_intents/confirm) when confirm=true
-   * is supplied.
-   */
   interface PaymentIntentCreateParams {
     /**
      * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
@@ -820,13 +808,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the details of a PaymentIntent that has previously been created.
-   *
-   * Client-side retrieval using a publishable key is allowed when the client_secret is provided in the query string.
-   *
-   * When retrieved with a publishable key, only a subset of properties will be returned. Please refer to the [payment intent](https://stripe.com/docs/api#payment_intent_object) object reference for more details.
-   */
   interface PaymentIntentRetrieveParams {
     /**
      * The client secret of the PaymentIntent. Required if a publishable key is used to retrieve the source.
@@ -839,15 +820,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates properties on a PaymentIntent object without confirming.
-   *
-   * Depending on which properties you update, you may need to confirm the
-   * PaymentIntent again. For example, updating the payment_method will
-   * always require you to confirm the PaymentIntent again. If you prefer to
-   * update and confirm at the same time, we recommend updating properties via
-   * the [confirm API](https://stripe.com/docs/api/payment_intents/confirm) instead.
-   */
   interface PaymentIntentUpdateParams {
     /**
      * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
@@ -1010,9 +982,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Returns a list of PaymentIntents.
-   */
   interface PaymentIntentListParams {
     /**
      * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
@@ -1069,11 +1038,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
-   *
-   * Once canceled, no additional charges will be made by the PaymentIntent and any operations on the PaymentIntent will fail with an error. For PaymentIntents with status='requires_capture', the remaining amount_capturable will automatically be refunded.
-   */
   interface PaymentIntentCancelParams {
     /**
      * Reason for canceling this PaymentIntent. Possible values are `duplicate`, `fraudulent`, `requested_by_customer`, or `abandoned`
@@ -1094,13 +1058,6 @@ declare namespace Stripe {
       | 'requested_by_customer'
   }
 
-  /**
-   * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
-   *
-   * Uncaptured PaymentIntents will be canceled exactly seven days after they are created.
-   *
-   * Learn more about [separate authorization and capture](https://stripe.com/docs/payments/capture-later).
-   */
   interface PaymentIntentCaptureParams {
     /**
      * The amount to capture from the PaymentIntent, which must be less than or equal to the original amount. Any additional amount will be automatically refunded. Defaults to the full `amount_capturable` if not provided.
@@ -1145,33 +1102,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Confirm that your customer intends to pay with current or provided
-   * payment method. Upon confirmation, the PaymentIntent will attempt to initiate
-   * a payment.
-   *
-   * If the selected payment method requires additional authentication steps, the
-   * PaymentIntent will transition to the requires_action status and
-   * suggest additional actions via next_action. If payment fails,
-   * the PaymentIntent will transition to the requires_payment_method status. If
-   * payment succeeds, the PaymentIntent will transition to the succeeded
-   * status (or requires_capture, if capture_method is set to manual).
-   *
-   * If the confirmation_method is automatic, payment may be attempted
-   * using our [client SDKs](https://stripe.com/docs/stripe-js/reference#stripe-handle-card-payment)
-   * and the PaymentIntent's [client_secret](https://stripe.com/docs/api#payment_intent_object-client_secret).
-   * After next_actions are handled by the client, no additional
-   * confirmation is required to complete the payment.
-   *
-   * If the confirmation_method is manual, all payment attempts must be
-   * initiated using a secret key.
-   * If any actions are required for the payment, the PaymentIntent will
-   * return to the requires_confirmation state
-   * after those actions are completed. Your server needs to then
-   * explicitly re-confirm the PaymentIntent to initiate the next payment
-   * attempt. Read the [expanded documentation](https://stripe.com/docs/payments/payment-intents/web-manual)
-   * to learn more about manual confirmation.
-   */
   interface PaymentIntentConfirmParams {
     /**
      * Specifies which fields in the response should be expanded.

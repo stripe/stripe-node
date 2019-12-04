@@ -49,9 +49,6 @@ declare namespace Stripe {
     refund?: string | Refund | null;
   }
 
-  /**
-   * Retrieves the details of an existing order return. Supply the unique order ID from either an order return creation request or the order return list, and Stripe will return the corresponding order information.
-   */
   interface OrderReturnRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -59,9 +56,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Returns a list of your order returns. The returns are returned sorted by creation date, with the most recently created return appearing first.
-   */
   interface OrderReturnListParams {
     /**
      * Date this return was created.

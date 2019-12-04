@@ -178,9 +178,6 @@ declare namespace Stripe {
       type SubmitType = 'auto' | 'book' | 'donate' | 'pay'
     }
 
-    /**
-     * Creates a Session object.
-     */
     interface SessionCreateParams {
       /**
        * Specify whether Checkout should collect the customer's billing address. If set to `required`, Checkout will always collect the customer's billing address. If not set or set to `auto` Checkout will only collect the billing address when necessary.
@@ -542,9 +539,6 @@ declare namespace Stripe {
       }
     }
 
-    /**
-     * Retrieves a Session object.
-     */
     interface SessionRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.

@@ -99,9 +99,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Creates a new TaxID object for a customer.
-   */
   interface TaxIdCreateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -131,9 +128,6 @@ declare namespace Stripe {
       | 'za_vat'
   }
 
-  /**
-   * Retrieves the TaxID object with the given identifier.
-   */
   interface TaxIdRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -141,9 +135,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Returns a list of tax IDs for a customer.
-   */
   interface TaxIdListParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -166,8 +157,5 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * Deletes an existing TaxID object.
-   */
   interface TaxIdDeleteParams {}
 }

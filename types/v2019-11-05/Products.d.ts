@@ -143,9 +143,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Creates a new product object. To create a product for use with orders, see [Products](https://stripe.com/docs/api#create_product).
-   */
   interface ProductCreateParams {
     /**
      * Whether the product is currently available for purchase. Defaults to `true`.
@@ -256,9 +253,6 @@ declare namespace Stripe {
     type Type = 'good' | 'service'
   }
 
-  /**
-   * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
-   */
   interface ProductRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -266,9 +260,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-   */
   interface ProductUpdateParams {
     /**
      * Whether the product is available for purchase.
@@ -367,9 +358,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
-   */
   interface ProductListParams {
     /**
      * Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
@@ -448,9 +436,6 @@ declare namespace Stripe {
     type Type = 'good' | 'service'
   }
 
-  /**
-   * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
-   */
   interface ProductDeleteParams {}
 
   class ProductsResource {

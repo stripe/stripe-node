@@ -1113,9 +1113,6 @@ declare namespace Stripe {
         | 'stolen'
     }
 
-    /**
-     * Creates an Issuing Card object.
-     */
     interface CardCreateParams {
       /**
        * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
@@ -2125,9 +2122,6 @@ declare namespace Stripe {
       type Type = 'physical' | 'virtual'
     }
 
-    /**
-     * Retrieves an Issuing Card object.
-     */
     interface CardRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -2135,9 +2129,6 @@ declare namespace Stripe {
       expand?: Array<string>;
     }
 
-    /**
-     * Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
     interface CardUpdateParams {
       /**
        * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
@@ -3091,9 +3082,6 @@ declare namespace Stripe {
       type Status = 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen'
     }
 
-    /**
-     * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
-     */
     interface CardListParams {
       /**
        * Only return cards belonging to the Cardholder with the provided ID.
@@ -3189,9 +3177,6 @@ declare namespace Stripe {
       type Type = 'physical' | 'virtual'
     }
 
-    /**
-     * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/management#virtual-card-info) of a virtual card.
-     */
     interface CardRetrieveDetailsParams {
       /**
        * Specifies which fields in the response should be expanded.

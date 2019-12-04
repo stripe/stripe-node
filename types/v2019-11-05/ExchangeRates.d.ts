@@ -21,9 +21,6 @@ declare namespace Stripe {
     };
   }
 
-  /**
-   * Retrieves the exchange rates from the given currency to every supported currency.
-   */
   interface ExchangeRateRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -31,9 +28,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Returns a list of objects that contain the rates at which foreign currencies are converted to one another. Only shows the currencies for which Stripe supports.
-   */
   interface ExchangeRateListParams {
     /**
      * A cursor for use in pagination. `ending_before` is the currency that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with the exchange rate for currency X your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.

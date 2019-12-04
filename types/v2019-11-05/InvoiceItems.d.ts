@@ -141,9 +141,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * Creates an item to be added to a draft invoice. If no invoice is specified, the item will be on the next invoice created for the customer specified.
-   */
   interface InvoiceItemCreateParams {
     /**
      * The integer amount in **%s** of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
@@ -232,9 +229,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the invoice item with the given ID.
-   */
   interface InvoiceItemRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -242,9 +236,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it's attached to is closed.
-   */
   interface InvoiceItemUpdateParams {
     /**
      * The integer amount in **%s** of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
@@ -313,9 +304,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
-   */
   interface InvoiceItemListParams {
     created?: number | InvoiceItemListParams.Created;
 
@@ -379,9 +367,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
-   */
   interface InvoiceItemDeleteParams {}
 
   class InvoiceItemsResource {

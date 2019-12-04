@@ -236,12 +236,6 @@ declare namespace Stripe {
       | 'succeeded'
   }
 
-  /**
-   * Creates a SetupIntent object.
-   *
-   * After the SetupIntent is created, attach a payment method and [confirm](https://stripe.com/docs/api/setup_intents/confirm)
-   * to collect any required permissions to charge the payment method later.
-   */
   interface SetupIntentCreateParams {
     /**
      * Set to `true` to attempt to confirm this SetupIntent immediately. This parameter defaults to `false`. If the payment method attached is a card, a return_url may be provided in case additional authentication is required.
@@ -405,13 +399,6 @@ declare namespace Stripe {
     type Usage = 'off_session' | 'on_session'
   }
 
-  /**
-   * Retrieves the details of a SetupIntent that has previously been created.
-   *
-   * Client-side retrieval using a publishable key is allowed when the client_secret is provided in the query string.
-   *
-   * When retrieved with a publishable key, only a subset of properties will be returned. Please refer to the [SetupIntent](https://stripe.com/docs/api#setup_intent_object) object reference for more details.
-   */
   interface SetupIntentRetrieveParams {
     /**
      * The client secret of the SetupIntent. Required if a publishable key is used to retrieve the SetupIntent.
@@ -424,9 +411,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates a SetupIntent object.
-   */
   interface SetupIntentUpdateParams {
     /**
      * ID of the Customer this SetupIntent belongs to, if one exists.
@@ -463,9 +447,6 @@ declare namespace Stripe {
     payment_method_types?: Array<string>;
   }
 
-  /**
-   * Returns a list of SetupIntents.
-   */
   interface SetupIntentListParams {
     /**
      * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
@@ -527,11 +508,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
-   *
-   * Once canceled, setup is abandoned and any operations on the SetupIntent will fail with an error.
-   */
   interface SetupIntentCancelParams {
     /**
      * Reason for canceling this SetupIntent. Possible values are `abandoned`, `requested_by_customer`, or `duplicate`
@@ -551,21 +527,6 @@ declare namespace Stripe {
       | 'requested_by_customer'
   }
 
-  /**
-   * Confirm that your customer intends to set up the current or
-   * provided payment method. For example, you would confirm a SetupIntent
-   * when a customer hits the “Save” button on a payment method management
-   * page on your website.
-   *
-   * If the selected payment method does not require any additional
-   * steps from the customer, the SetupIntent will transition to the
-   * succeeded status.
-   *
-   * Otherwise, it will transition to the requires_action status and
-   * suggest additional actions via next_action. If setup fails,
-   * the SetupIntent will transition to the
-   * requires_payment_method status.
-   */
   interface SetupIntentConfirmParams {
     /**
      * Specifies which fields in the response should be expanded.

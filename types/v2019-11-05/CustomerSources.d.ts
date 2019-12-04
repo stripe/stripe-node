@@ -1,11 +1,4 @@
 declare namespace Stripe {
-  /**
-   * When you create a new credit card, you must specify a customer or recipient on which to create it.
-   *
-   * If the card's owner has no default card, then the new card will become the default.
-   * However, if the owner already has a default, then it will not change.
-   * To change the default, you should [update the customer](https://stripe.com/docs/api#update_customer) to have a new default_source.
-   */
   interface CustomerSourceCreateParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -25,9 +18,6 @@ declare namespace Stripe {
     source: string;
   }
 
-  /**
-   * Retrieve a specified source for a given customer.
-   */
   interface CustomerSourceRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -35,9 +25,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Update a specified source for a given customer.
-   */
   interface CustomerSourceUpdateParams {
     /**
      * The name of the person or business that owns the bank account.
@@ -148,9 +135,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * List sources for a specified customer.
-   */
   interface CustomerSourceListParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -178,14 +162,8 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * Delete a specified source for a given customer.
-   */
   interface CustomerSourceDeleteParams {}
 
-  /**
-   * Verify a specified bank account for a given customer.
-   */
   interface CustomerSourceVerifyParams {
     /**
      * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.

@@ -48,10 +48,6 @@ declare namespace Stripe {
     used?: boolean;
   }
 
-  /**
-   * Creates a single-use token that represents a bank account's details.
-   * This token can be used with any API method in place of a bank account dictionary. This token can be used only once, by attaching it to a [Custom account](https://stripe.com/docs/api#accounts).
-   */
   interface TokenCreateParams {
     /**
      * The bank account this token will represent.
@@ -446,9 +442,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Retrieves the token with the given ID.
-   */
   interface TokenRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.

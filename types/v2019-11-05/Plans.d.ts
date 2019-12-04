@@ -180,9 +180,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * You can create plans using the API, or in the Stripe [Dashboard](https://dashboard.stripe.com/subscriptions/products).
-   */
   interface PlanCreateParams {
     /**
      * Whether the plan is currently available for new subscriptions. Defaults to `true`.
@@ -363,9 +360,6 @@ declare namespace Stripe {
     type UsageType = 'licensed' | 'metered'
   }
 
-  /**
-   * Retrieves the plan with the given ID.
-   */
   interface PlanRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -373,9 +367,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan's ID, amount, currency, or billing cycle.
-   */
   interface PlanUpdateParams {
     /**
      * Whether the plan is currently available for new subscriptions.
@@ -410,9 +401,6 @@ declare namespace Stripe {
     trial_period_days?: number;
   }
 
-  /**
-   * Returns a list of your plans.
-   */
   interface PlanListParams {
     /**
      * Only return plans that are active or inactive (e.g., pass `false` to list all inactive plans).
@@ -474,9 +462,6 @@ declare namespace Stripe {
     }
   }
 
-  /**
-   * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
-   */
   interface PlanDeleteParams {}
 
   class PlansResource {

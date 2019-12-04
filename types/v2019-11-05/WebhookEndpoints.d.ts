@@ -73,9 +73,6 @@ declare namespace Stripe {
     deleted: true;
   }
 
-  /**
-   * A webhook endpoint must have a url and a list of enabled_events. You may optionally specify the Boolean connect parameter. If set to true, then a Connect webhook endpoint that notifies the specified url about events from all connected accounts is created; otherwise an account webhook endpoint that notifies the specified url only about events from your account is created. You can also create webhook endpoints in the [webhooks settings](https://dashboard.stripe.com/account/webhooks) section of the Dashboard.
-   */
   interface WebhookEndpointCreateParams {
     /**
      * Events sent to this endpoint will be generated with this Stripe Version instead of your account's default Stripe Version.
@@ -352,9 +349,6 @@ declare namespace Stripe {
       | 'transfer.updated'
   }
 
-  /**
-   * Retrieves the webhook endpoint with the given ID.
-   */
   interface WebhookEndpointRetrieveParams {
     /**
      * Specifies which fields in the response should be expanded.
@@ -362,9 +356,6 @@ declare namespace Stripe {
     expand?: Array<string>;
   }
 
-  /**
-   * Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of your endpoint.
-   */
   interface WebhookEndpointUpdateParams {
     /**
      * Disable the webhook endpoint if set to true.
@@ -541,9 +532,6 @@ declare namespace Stripe {
       | 'transfer.updated'
   }
 
-  /**
-   * Returns a list of your webhook endpoints.
-   */
   interface WebhookEndpointListParams {
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -566,9 +554,6 @@ declare namespace Stripe {
     starting_after?: string;
   }
 
-  /**
-   * You can also delete webhook endpoints via the [webhook endpoint management](https://dashboard.stripe.com/account/webhooks) page of the Stripe dashboard.
-   */
   interface WebhookEndpointDeleteParams {}
 
   class WebhookEndpointsResource {
