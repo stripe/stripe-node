@@ -22,6 +22,9 @@ stripe = new Stripe('sk_test_123', {
 });
 
 stripe.setTimeout(3000);
+stripe.setAppInfo({
+  name: 'my-wordpress-plugin',
+});
 
 (async () => {
   const params: Stripe.CustomerCreateParams = {

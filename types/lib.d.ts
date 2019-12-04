@@ -112,4 +112,15 @@ declare namespace Stripe {
     constructor(options: Object);
     destroy(): void;
   }
+
+  /**
+   * Identify your plugin.
+   * @docs https://stripe.com/docs/building-plugins?lang=node#setappinfo
+   */
+  export interface AppInfo {
+    name: string;
+    partner_id?: string;
+    url?: string;
+    version?: string
+  }
 }
