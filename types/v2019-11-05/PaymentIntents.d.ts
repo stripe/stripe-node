@@ -454,6 +454,11 @@ declare namespace Stripe {
     amount: number;
 
     /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string;
+
+    /**
      * The amount of the application fee (if any) that will be applied to the
      * payment and transferred to the application owner's Stripe account. For
      * more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
@@ -482,11 +487,6 @@ declare namespace Stripe {
      * When the confirmation method is `manual`, all payment attempts must be made using a secret key. The PaymentIntent returns to the `requires_confirmation` state after handling `next_action`s, and requires your server to initiate each payment attempt with an explicit confirmation.
      */
     confirmation_method?: PaymentIntentCreateParams.ConfirmationMethod;
-
-    /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-     */
-    currency: string;
 
     /**
      * ID of the Customer this PaymentIntent belongs to, if one exists.

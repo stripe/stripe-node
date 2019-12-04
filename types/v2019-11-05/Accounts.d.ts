@@ -2039,14 +2039,14 @@ declare namespace Stripe {
 
   interface AccountRejectParams {
     /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
      * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
      */
     reason: string;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 
   class AccountsResource {

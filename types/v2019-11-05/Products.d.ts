@@ -145,6 +145,11 @@ declare namespace Stripe {
 
   interface ProductCreateParams {
     /**
+     * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+     */
+    name: string;
+
+    /**
      * Whether the product is currently available for purchase. Defaults to `true`.
      */
     active?: boolean;
@@ -190,11 +195,6 @@ declare namespace Stripe {
     metadata?: {
       [key: string]: string;
     };
-
-    /**
-     * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
-     */
-    name: string;
 
     /**
      * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.

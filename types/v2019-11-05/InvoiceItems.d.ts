@@ -143,11 +143,6 @@ declare namespace Stripe {
 
   interface InvoiceItemCreateParams {
     /**
-     * The integer amount in **%s** of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
-     */
-    amount?: number;
-
-    /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
     currency: string;
@@ -156,6 +151,11 @@ declare namespace Stripe {
      * The ID of the customer who will be billed when this invoice item is billed.
      */
     customer: string;
+
+    /**
+     * The integer amount in **%s** of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
+     */
+    amount?: number;
 
     /**
      * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.

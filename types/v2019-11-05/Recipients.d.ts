@@ -93,6 +93,16 @@ declare namespace Stripe {
 
   interface RecipientCreateParams {
     /**
+     * The recipient's full, legal name. For type `individual`, should be in the format `First Last`, `First Middle Last`, or `First M Last` (no prefixes or suffixes). For `corporation`, the full, incorporated name.
+     */
+    name: string;
+
+    /**
+     * Type of the recipient: either `individual` or `corporation`.
+     */
+    type: string;
+
+    /**
      * A bank account to attach to the recipient. You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/stripe-js), or a dictionary containing a user's bank account details, with the options described below.
      */
     bank_account?: string;
@@ -125,19 +135,9 @@ declare namespace Stripe {
     };
 
     /**
-     * The recipient's full, legal name. For type `individual`, should be in the format `First Last`, `First Middle Last`, or `First M Last` (no prefixes or suffixes). For `corporation`, the full, incorporated name.
-     */
-    name: string;
-
-    /**
      * The recipient's tax ID, as a string. For type `individual`, the full SSN; for type `corporation`, the full EIN.
      */
     tax_id?: string;
-
-    /**
-     * Type of the recipient: either `individual` or `corporation`.
-     */
-    type: string;
   }
 
   interface RecipientRetrieveParams {

@@ -63,6 +63,21 @@ declare namespace Stripe {
 
   interface TaxRateCreateParams {
     /**
+     * The display name of the tax rate, which will be shown to users.
+     */
+    display_name: string;
+
+    /**
+     * This specifies if the tax rate is inclusive or exclusive.
+     */
+    inclusive: boolean;
+
+    /**
+     * This represents the tax rate percent out of 100.
+     */
+    percentage: number;
+
+    /**
      * Flag determining whether the tax rate is active or inactive. Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications.
      */
     active?: boolean;
@@ -73,19 +88,9 @@ declare namespace Stripe {
     description?: string;
 
     /**
-     * The display name of the tax rate, which will be shown to users.
-     */
-    display_name: string;
-
-    /**
      * Specifies which fields in the response should be expanded.
      */
     expand?: Array<string>;
-
-    /**
-     * This specifies if the tax rate is inclusive or exclusive.
-     */
-    inclusive: boolean;
 
     /**
      * The jurisdiction for the tax rate.
@@ -98,11 +103,6 @@ declare namespace Stripe {
     metadata?: {
       [key: string]: string;
     };
-
-    /**
-     * This represents the tax rate percent out of 100.
-     */
-    percentage: number;
   }
 
   interface TaxRateRetrieveParams {

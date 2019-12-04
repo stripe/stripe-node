@@ -78,6 +78,16 @@ declare namespace Stripe {
 
   interface SubscriptionItemCreateParams {
     /**
+     * The identifier of the plan to add to the subscription.
+     */
+    plan: string;
+
+    /**
+     * The identifier of the subscription to modify.
+     */
+    subscription: string;
+
+    /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
      */
     billing_thresholds?: '' | SubscriptionItemCreateParams.BillingThresholds;
@@ -102,11 +112,6 @@ declare namespace Stripe {
     payment_behavior?: SubscriptionItemCreateParams.PaymentBehavior;
 
     /**
-     * The identifier of the plan to add to the subscription.
-     */
-    plan: string;
-
-    /**
      * Flag indicating whether to [prorate](https://stripe.com/docs/billing/subscriptions/prorations) switching plans during a billing cycle.
      */
     prorate?: boolean;
@@ -120,11 +125,6 @@ declare namespace Stripe {
      * The quantity you'd like to apply to the subscription item you're creating.
      */
     quantity?: number;
-
-    /**
-     * The identifier of the subscription to modify.
-     */
-    subscription: string;
 
     /**
      * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
@@ -222,6 +222,11 @@ declare namespace Stripe {
 
   interface SubscriptionItemListParams {
     /**
+     * The ID of the subscription whose items will be retrieved.
+     */
+    subscription: string;
+
+    /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
      */
     ending_before?: string;
@@ -240,11 +245,6 @@ declare namespace Stripe {
      * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
      */
     starting_after?: string;
-
-    /**
-     * The ID of the subscription whose items will be retrieved.
-     */
-    subscription: string;
   }
 
   interface SubscriptionItemDeleteParams {

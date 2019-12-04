@@ -1346,14 +1346,14 @@ declare namespace Stripe {
 
   interface SourceVerifyParams {
     /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
      * The values needed to verify the source.
      */
     values: Array<string>;
+
+    /**
+     * Specifies which fields in the response should be expanded.
+     */
+    expand?: Array<string>;
   }
 
   class SourcesResource {
