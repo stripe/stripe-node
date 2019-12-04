@@ -73,4 +73,15 @@ stripe.setAppInfo({
       }
       return undefined;
     });
+
+  try {
+    await stripe.paymentIntents.create({amount: 100, currency: 'USD'});
+  } catch (err) {
+    if (err instanceof stripe.errors.StripeCardError) {
+      const decline_code: string = err.decline_code;
+    }
+    if (err instanceof Stripe.errors.StripeCardError) {
+      const decline_code: string = err.decline_code;
+    }
+  }
 })();
