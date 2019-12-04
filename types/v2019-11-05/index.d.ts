@@ -173,6 +173,12 @@ declare module 'stripe' {
       readers: Stripe.Terminal.ReadersResource,
     };
 
+    /**
+     * API Errors
+     */
+    static errors: Stripe.Errors;
+    errors: Stripe.Errors;
+
     on(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
     on(event: 'response', handler: (event: Stripe.ResponseEvent) => void): void;
     once(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
