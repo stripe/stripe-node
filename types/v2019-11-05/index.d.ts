@@ -95,7 +95,7 @@ declare module 'stripe' {
 
     constructor(apiKey: string, config?: Stripe.StripeConfig | string);
 
-    setAppInfo(info?: { partner_id?: string; name: string; url?: string; version?: string }): void;
+    setAppInfo(info?: Stripe.AppInfo): void;
 
     /**
      * Top Level Resources
