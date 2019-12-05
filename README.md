@@ -69,6 +69,15 @@ Or this wherever you import Stripe:
 ///<reference types="stripe/types/v2019-11-05" />
 ```
 
+We do not include the types by default because they represent only the latest API Version;
+users on older versions might otherwise be confused if they upgrade their stripe library
+and see type errors which do not reflect their version of the API.
+
+Additionally, many users were previously using [`@types/stripe` on DefinitelyTyped](https://www.npmjs.com/package/@types/stripe),
+and might wish to migrate the types they use on their own schedule.
+
+We may revisit this structure in the future.
+
 #### Usage
 
 ```ts
