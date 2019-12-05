@@ -35,7 +35,7 @@ declare namespace Stripe {
     stripe_account?: string;
 
     /**
-     * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (eg; '2019-11-05').
+     * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (eg; '2019-12-03').
      */
     stripeVersion?: string;
     /** @deprecated Please use stripeVersion instead. */

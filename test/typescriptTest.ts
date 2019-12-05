@@ -5,7 +5,7 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-///<reference types="../types/v2019-11-05" />
+///<reference types="../types/2019-12-03" />
 import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123');
@@ -13,7 +13,7 @@ let stripe = new Stripe('sk_test_123');
 // Check config object.
 stripe = new Stripe('sk_test_123', '2019-xx-xx');
 stripe = new Stripe('sk_test_123', {
-  apiVersion: '2019-08-08',
+  apiVersion: '2019-xx-xx',
   maxNetworkRetries: 1,
   timeout: 1000,
   host: 'api.example.com',
@@ -31,7 +31,7 @@ stripe.setAppInfo({
     description: 'test',
   };
   const opts: Stripe.RequestOptions = {
-    stripeVersion: '2019-11-05',
+    stripeVersion: '2019-12-03',
   };
   let customer: Stripe.Customer = await stripe.customers.create(params, opts);
 

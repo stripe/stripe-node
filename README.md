@@ -57,13 +57,13 @@ As of 7.14.0, Stripe maintains TypeScript types for the latest [API version][api
 Add this to your tsconfig.json:
 
 ```js
-  "types": ["stripe/types/v2019-11-05"],
+  "types": ["stripe/types/2019-12-03"],
 ```
 
 Or this wherever you import Stripe:
 
 ```ts
-///<reference types="stripe/types/v2019-11-05" />
+///<reference types="stripe/types/2019-12-03" />
 ```
 
 We do not include the types by default because they represent only the latest API Version;

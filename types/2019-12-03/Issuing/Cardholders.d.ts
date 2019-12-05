@@ -1,9 +1,9 @@
 declare namespace Stripe {
   namespace Issuing {
     /**
-     * The Card object.
+     * The Cardholder object.
      */
-    interface Card {
+    interface Cardholder {
       /**
        * Unique identifier for the object.
        */
@@ -12,19 +12,16 @@ declare namespace Stripe {
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'issuing.card';
+      object?: 'issuing.cardholder';
 
-      authorization_controls?: Card.AuthorizationControls;
+      authorization_controls?: Cardholder.AuthorizationControls | null;
 
-      /**
-       * The brand of the card.
-       */
-      brand?: string;
+      billing?: Cardholder.Billing;
 
       /**
-       * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object to which the card belongs.
+       * Additional information about a `business_entity` cardholder.
        */
-      cardholder?: Issuing.Cardholder | null;
+      company?: Cardholder.Company | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -32,24 +29,19 @@ declare namespace Stripe {
       created?: number;
 
       /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       * The cardholder's email address.
        */
-      currency?: string;
+      email?: string | null;
 
       /**
-       * The expiration month of the card.
+       * Additional information about an `individual` cardholder.
        */
-      exp_month?: number;
+      individual?: Cardholder.Individual | null;
 
       /**
-       * The expiration year of the card.
+       * Whether or not this cardholder is the default cardholder.
        */
-      exp_year?: number;
-
-      /**
-       * The last 4 digits of the card number.
-       */
-      last4?: string;
+      is_default?: boolean;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -64,42 +56,29 @@ declare namespace Stripe {
       };
 
       /**
-       * The name of the cardholder, printed on the card.
+       * The cardholder's name. This will be printed on cards issued to them.
        */
       name?: string;
 
       /**
-       * Metadata about the PIN on the card.
+       * The cardholder's phone number.
        */
-      pin?: Card.Pin | null;
+      phone_number?: string | null;
+
+      requirements?: Cardholder.Requirements;
 
       /**
-       * The card this card replaces, if any.
+       * Specifies whether to permit authorizations on this cardholder's cards.
        */
-      replacement_for?: string | Issuing.Card | null;
+      status?: Cardholder.Status;
 
       /**
-       * The reason why the previous card needed to be replaced.
+       * One of `individual` or `business_entity`.
        */
-      replacement_reason?: Card.ReplacementReason | null;
-
-      /**
-       * Where and how the card will be shipped.
-       */
-      shipping?: Card.Shipping | null;
-
-      /**
-       * One of `active`, `inactive`, `canceled`, `lost`, or `stolen`.
-       */
-      status?: Card.Status;
-
-      /**
-       * One of `virtual` or `physical`.
-       */
-      type?: string;
+      type?: Cardholder.Type;
     }
 
-    namespace Card {
+    namespace Cardholder {
       interface AuthorizationControls {
         /**
          * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this card.
@@ -116,22 +95,12 @@ declare namespace Stripe {
           | null;
 
         /**
-         * The currency of the card. See [max_amount](https://stripe.com/docs/api#issuing_card_object-authorization_controls-max_amount)
-         */
-        currency?: string | null;
-
-        /**
-         * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
-         */
-        max_approvals?: number | null;
-
-        /**
          * Limit the spending with rules based on time intervals and categories.
          */
         spending_limits?: Array<AuthorizationControls.SpendingLimit> | null;
 
         /**
-         * Currency for the amounts within spending_limits. Locked to the currency of the card.
+         * Currency for the amounts within spending_limits.
          */
         spending_limits_currency?: string | null;
       }
@@ -1035,136 +1004,172 @@ declare namespace Stripe {
         }
       }
 
-      interface Pin {
-        /**
-         * Wether the PIN will be accepted or not.
-         */
-        status: Pin.Status;
-      }
-
-      namespace Pin {
-        type Status = 'active' | 'blocked'
-      }
-
-      type ReplacementReason = 'damage' | 'expiration' | 'loss' | 'theft'
-
-      interface Shipping {
+      interface Billing {
         address: Address;
 
-        /**
-         * The delivery service that shipped a card. One of `fedex` or `usps`.
-         */
-        carrier?: string | null;
-
-        /**
-         * A unix timestamp representing a best estimate of when the card will be delivered.
-         */
-        eta?: number | null;
-
-        /**
-         * Recipient name.
-         */
-        name: string;
-
-        /**
-         * Deprecated field. It always return null and will be removed in the next client library major version
-         */
-        phone?: string | null;
-
-        /**
-         * The delivery status of the card.
-         */
-        status?: Shipping.Status | null;
-
-        /**
-         * A tracking number for a card shipment.
-         */
-        tracking_number?: string | null;
-
-        /**
-         * A link to the shipping carrier's site where you can view detailed information about a card shipment.
-         */
-        tracking_url?: string | null;
-
-        /**
-         * Packaging options.
-         */
-        type: Shipping.Type;
+        name?: string | null;
       }
 
-      namespace Shipping {
-        type Status =
-          | 'canceled'
-          | 'delivered'
-          | 'failure'
-          | 'pending'
-          | 'returned'
-          | 'shipped'
-
-        type Type = 'bulk' | 'individual'
+      interface Company {
+        /**
+         * Whether the company's business ID number was provided.
+         */
+        tax_id_provided: boolean;
       }
 
-      type Status =
-        | 'active'
-        | 'canceled'
-        | 'inactive'
-        | 'lost'
-        | 'pending'
-        | 'stolen'
+      interface Individual {
+        /**
+         * The date of birth of this cardholder.
+         */
+        dob?: Individual.Dob | null;
+
+        /**
+         * The first name of this cardholder.
+         */
+        first_name: string;
+
+        /**
+         * The last name of this cardholder.
+         */
+        last_name: string;
+
+        /**
+         * Government-issued ID document for this cardholder.
+         */
+        verification?: Individual.Verification | null;
+      }
+
+      namespace Individual {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day?: number | null;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month?: number | null;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year?: number | null;
+        }
+
+        interface Verification {
+          /**
+           * An identifying document, either a passport or local ID card.
+           */
+          document?: Verification.Document | null;
+        }
+
+        namespace Verification {
+          interface Document {
+            /**
+             * The back of a document returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+             */
+            back?: string | File | null;
+
+            /**
+             * The front of a document returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+             */
+            front?: string | File | null;
+          }
+        }
+      }
+
+      interface Requirements {
+        /**
+         * If `disabled_reason` is present, all cards will decline authorizations with `cardholder_verification_required` reason.
+         */
+        disabled_reason?: Requirements.DisabledReason | null;
+
+        /**
+         * If not empty, this field contains the list of fields that need to be collected in order to verify and re-enabled the cardholder.
+         */
+        past_due?: Array<Requirements.PastDue> | null;
+      }
+
+      namespace Requirements {
+        type DisabledReason = 'listed' | 'rejected.listed' | 'under_review'
+
+        type PastDue =
+          | 'individual.dob.day'
+          | 'individual.dob.month'
+          | 'individual.dob.year'
+          | 'individual.first_name'
+          | 'individual.last_name'
+          | 'individual.verification.document'
+      }
+
+      type Status = 'active' | 'blocked' | 'inactive'
+
+      type Type = 'business_entity' | 'individual'
     }
 
-    interface CardCreateParams {
+    interface CardholderCreateParams {
       /**
-       * The currency for the card. This currently must be `usd`.
+       * The cardholder's billing address.
        */
-      currency: string;
+      billing: CardholderCreateParams.Billing;
 
       /**
-       * The type of card to issue. Possible values are `physical` or `virtual`.
+       * The cardholder's name. This will be printed on cards issued to them.
        */
-      type: CardCreateParams.Type;
+      name: string;
 
       /**
-       * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
+       * One of `individual` or `business_entity`.
        */
-      authorization_controls?: CardCreateParams.AuthorizationControls;
+      type: CardholderCreateParams.Type;
 
       /**
-       * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object with which the card will be associated.
+       * Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
        */
-      cardholder?: string;
+      authorization_controls?: CardholderCreateParams.AuthorizationControls;
+
+      /**
+       * Additional information about a `business_entity` cardholder.
+       */
+      company?: CardholderCreateParams.Company;
+
+      /**
+       * The cardholder's email address.
+       */
+      email?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
 
+      /**
+       * Additional information about an `individual` cardholder.
+       */
+      individual?: CardholderCreateParams.Individual;
+
+      /**
+       * Specifies whether to set this as the default cardholder.
+       */
+      is_default?: boolean;
+
       metadata?: {
         [key: string]: string;
       };
 
       /**
-       * The card this is meant to be a replacement for (if any).
+       * The cardholder's phone number. This will be transformed to [E.164](https://en.wikipedia.org/wiki/E.164) if it is not provided in that format already.
        */
-      replacement_for?: string;
+      phone_number?: string;
 
       /**
-       * If `replacement_for` is specified, this should indicate why that card is being replaced.
+       * Specifies whether to permit authorizations on this cardholder's cards. Defaults to `inactive`.
        */
-      replacement_reason?: CardCreateParams.ReplacementReason;
-
-      /**
-       * The address where the card will be shipped.
-       */
-      shipping?: CardCreateParams.Shipping;
-
-      /**
-       * Specifies whether to permit authorizations on this card. Possible values are `active` or `inactive`.
-       */
-      status?: CardCreateParams.Status;
+      status?: CardholderCreateParams.Status;
     }
 
-    namespace CardCreateParams {
+    namespace CardholderCreateParams {
       interface AuthorizationControls {
         /**
          * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this card.
@@ -1177,14 +1182,14 @@ declare namespace Stripe {
         blocked_categories?: Array<AuthorizationControls.BlockedCategory>;
 
         /**
-         * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
-         */
-        max_approvals?: number;
-
-        /**
          * Limit the spending with rules based on time intervals and categories.
          */
         spending_limits?: Array<AuthorizationControls.SpendingLimit>;
+
+        /**
+         * Currency for your spending limits. Defaults to your merchant country's currency.
+         */
+        spending_limits_currency?: string;
       }
 
       namespace AuthorizationControls {
@@ -2086,20 +2091,16 @@ declare namespace Stripe {
         }
       }
 
-      type ReplacementReason = 'damage' | 'expiration' | 'loss' | 'theft'
-
-      interface Shipping {
-        address: Shipping.Address;
-
-        name: string;
+      interface Billing {
+        address: Billing.Address;
 
         /**
-         * Packaging options.
+         * Deprecated param. Passing value for this param is simply discarded. It will be removed in the next client library major version
          */
-        type?: '' | Shipping.Type;
+        name?: string;
       }
 
-      namespace Shipping {
+      namespace Billing {
         interface Address {
           city: string;
 
@@ -2113,51 +2114,144 @@ declare namespace Stripe {
 
           state?: string;
         }
+      }
 
-        type Type = 'bulk' | 'individual'
+      interface Company {
+        /**
+         * The entity's business ID number.
+         */
+        tax_id?: string;
+      }
+
+      interface Individual {
+        /**
+         * The date of birth of this cardholder.
+         */
+        dob?: Individual.Dob;
+
+        /**
+         * The first name of this cardholder.
+         */
+        first_name: string;
+
+        /**
+         * The last name of this cardholder.
+         */
+        last_name: string;
+
+        /**
+         * Government-issued ID document for this cardholder.
+         */
+        verification?: Individual.Verification;
+      }
+
+      namespace Individual {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
+
+        interface Verification {
+          /**
+           * An identifying document, either a passport or local ID card.
+           */
+          document?: Verification.Document;
+        }
+
+        namespace Verification {
+          interface Document {
+            /**
+             * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+             */
+            back?: string;
+
+            /**
+             * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+             */
+            front?: string;
+          }
+        }
       }
 
       type Status = 'active' | 'inactive'
 
-      type Type = 'physical' | 'virtual'
+      type Type = 'business_entity' | 'individual'
     }
 
-    interface CardRetrieveParams {
+    interface CardholderRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
     }
 
-    interface CardUpdateParams {
+    interface CardholderUpdateParams {
       /**
        * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
        */
-      authorization_controls?: CardUpdateParams.AuthorizationControls;
+      authorization_controls?: CardholderUpdateParams.AuthorizationControls;
 
       /**
-       * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) to associate the card with. (This field is deprecated and will be removed from future versions of the API.)
+       * The cardholder's billing address.
        */
-      cardholder?: string;
+      billing?: CardholderUpdateParams.Billing;
+
+      /**
+       * Additional information about a `business_entity` cardholder.
+       */
+      company?: CardholderUpdateParams.Company;
+
+      /**
+       * The cardholder's email address.
+       */
+      email?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
 
-      metadata?:
-        | {
-          [key: string]: string;
-        }
-        | '';
+      /**
+       * Additional information about an `individual` cardholder.
+       */
+      individual?: CardholderUpdateParams.Individual;
 
       /**
-       * Specifies whether to permit authorizations on this card. Possible values are `active`, `inactive`, or the terminal states: `canceled`, `lost`, `stolen`.
+       * Specifies whether to set this as the default cardholder.
        */
-      status?: CardUpdateParams.Status;
+      is_default?: boolean;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: {
+        [key: string]: string;
+      };
+
+      /**
+       * The cardholder's phone number.
+       */
+      phone_number?: string;
+
+      /**
+       * Specifies whether to permit authorizations on this cardholder's cards.
+       */
+      status?: CardholderUpdateParams.Status;
     }
 
-    namespace CardUpdateParams {
+    namespace CardholderUpdateParams {
       interface AuthorizationControls {
         /**
          * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this card.
@@ -2170,14 +2264,14 @@ declare namespace Stripe {
         blocked_categories?: Array<AuthorizationControls.BlockedCategory>;
 
         /**
-         * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
-         */
-        max_approvals?: number;
-
-        /**
          * Limit the spending with rules based on time intervals and categories.
          */
         spending_limits?: Array<AuthorizationControls.SpendingLimit>;
+
+        /**
+         * Currency for your spending limits. Defaults to your merchant country's currency.
+         */
+        spending_limits_currency?: string;
       }
 
       namespace AuthorizationControls {
@@ -3079,19 +3173,113 @@ declare namespace Stripe {
         }
       }
 
-      type Status = 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen'
+      interface Billing {
+        address: Billing.Address;
+
+        /**
+         * Deprecated param. Passing value for this param is simply discarded. It will be removed in the next client library major version
+         */
+        name?: string;
+      }
+
+      namespace Billing {
+        interface Address {
+          city: string;
+
+          country: string;
+
+          line1: string;
+
+          line2?: string;
+
+          postal_code: string;
+
+          state?: string;
+        }
+      }
+
+      interface Company {
+        /**
+         * The entity's business ID number.
+         */
+        tax_id?: string;
+      }
+
+      interface Individual {
+        /**
+         * The date of birth of this cardholder.
+         */
+        dob?: Individual.Dob;
+
+        /**
+         * The first name of this cardholder.
+         */
+        first_name: string;
+
+        /**
+         * The last name of this cardholder.
+         */
+        last_name: string;
+
+        /**
+         * Government-issued ID document for this cardholder.
+         */
+        verification?: Individual.Verification;
+      }
+
+      namespace Individual {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
+
+        interface Verification {
+          /**
+           * An identifying document, either a passport or local ID card.
+           */
+          document?: Verification.Document;
+        }
+
+        namespace Verification {
+          interface Document {
+            /**
+             * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+             */
+            back?: string;
+
+            /**
+             * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
+             */
+            front?: string;
+          }
+        }
+      }
+
+      type Status = 'active' | 'inactive'
     }
 
-    interface CardListParams {
+    interface CardholderListParams {
       /**
-       * Only return cards belonging to the Cardholder with the provided ID.
+       * Only return cardholders that were created during the given date interval.
        */
-      cardholder?: string;
+      created?: number | CardholderListParams.Created;
 
       /**
-       * Only return cards that were issued during the given date interval.
+       * Only return cardholders that have the given email address.
        */
-      created?: number | CardListParams.Created;
+      email?: string;
 
       /**
        * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
@@ -3099,24 +3287,14 @@ declare namespace Stripe {
       ending_before?: string;
 
       /**
-       * Only return cards that have the given expiration month.
-       */
-      exp_month?: number;
-
-      /**
-       * Only return cards that have the given expiration year.
-       */
-      exp_year?: number;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
 
       /**
-       * Only return cards that have the given last four digits.
+       * Only return the default cardholder.
        */
-      last4?: string;
+      is_default?: boolean;
 
       /**
        * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
@@ -3124,14 +3302,9 @@ declare namespace Stripe {
       limit?: number;
 
       /**
-       * Only return cards that have the given name.
+       * Only return cardholders that have the given phone number.
        */
-      name?: string;
-
-      /**
-       * Only return cards whose full card number matches that of this card source ID.
-       */
-      source?: string;
+      phone_number?: string;
 
       /**
        * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
@@ -3139,17 +3312,17 @@ declare namespace Stripe {
       starting_after?: string;
 
       /**
-       * Only return cards that have the given status. One of `active`, `inactive`, `canceled`, `lost`, or `stolen`.
+       * Only return cardholders that have the given status. One of `active`, `inactive`, or `blocked`.
        */
-      status?: CardListParams.Status;
+      status?: CardholderListParams.Status;
 
       /**
-       * Only return cards that have the given type. One of `virtual` or `physical`.
+       * Only return cardholders that have the given type. One of `individual` or `business_entity`.
        */
-      type?: CardListParams.Type;
+      type?: CardholderListParams.Type;
     }
 
-    namespace CardListParams {
+    namespace CardholderListParams {
       interface Created {
         /**
          * Minimum value to filter by (exclusive)
@@ -3172,67 +3345,50 @@ declare namespace Stripe {
         lte?: number;
       }
 
-      type Status = 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen'
+      type Status = 'active' | 'blocked' | 'inactive'
 
-      type Type = 'physical' | 'virtual'
+      type Type = 'business_entity' | 'individual'
     }
 
-    interface CardRetrieveDetailsParams {
+    class CardholdersResource {
       /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    class CardsResource {
-      /**
-       * Creates an Issuing Card object.
+       * Creates a new Issuing Cardholder object that can be issued cards.
        */
       create(
-        params: CardCreateParams,
+        params: CardholderCreateParams,
         options?: RequestOptions
-      ): Promise<Issuing.Card>;
+      ): Promise<Issuing.Cardholder>;
 
       /**
-       * Retrieves an Issuing Card object.
+       * Retrieves an Issuing Cardholder object.
        */
       retrieve(
         id: string,
-        params?: CardRetrieveParams,
+        params?: CardholderRetrieveParams,
         options?: RequestOptions
-      ): Promise<Issuing.Card>;
-      retrieve(id: string, options?: RequestOptions): Promise<Issuing.Card>;
+      ): Promise<Issuing.Cardholder>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Issuing.Cardholder>;
 
       /**
-       * Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+       * Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
        */
       update(
         id: string,
-        params?: CardUpdateParams,
+        params?: CardholderUpdateParams,
         options?: RequestOptions
-      ): Promise<Issuing.Card>;
+      ): Promise<Issuing.Cardholder>;
 
       /**
-       * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
+       * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
        */
       list(
-        params?: CardListParams,
+        params?: CardholderListParams,
         options?: RequestOptions
-      ): ApiListPromise<Issuing.Card>;
-      list(options?: RequestOptions): ApiListPromise<Issuing.Card>;
-
-      /**
-       * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/management#virtual-card-info) of a virtual card.
-       */
-      retrieveDetails(
-        id: string,
-        params?: CardRetrieveDetailsParams,
-        options?: RequestOptions
-      ): Promise<Issuing.CardDetails>;
-      retrieveDetails(
-        id: string,
-        options?: RequestOptions
-      ): Promise<Issuing.CardDetails>;
+      ): ApiListPromise<Issuing.Cardholder>;
+      list(options?: RequestOptions): ApiListPromise<Issuing.Cardholder>;
     }
   }
 }
