@@ -53,7 +53,7 @@ or [callbacks](#using-callbacks) instead of `async`/`await`.
 
 ### Usage with TypeScript
 
-As of 7.14.0, Stripe maintains TypeScript types for the latest [API version][api-versions].
+As of 7.15.0, Stripe maintains TypeScript types for the latest [API version][api-versions].
 
 #### Installation
 
