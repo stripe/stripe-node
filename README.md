@@ -50,7 +50,7 @@ const stripe = new Stripe('sk_test_...');
 
 ### Usage with TypeScript
 
-As of 7.14.0, Stripe maintains TypeScript types for the latest [API version][api-versions].
+As of 7.15.0, Stripe maintains TypeScript types for the latest [API version][api-versions].
 
 #### Installation
 
