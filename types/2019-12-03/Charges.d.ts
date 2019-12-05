@@ -657,6 +657,11 @@ declare namespace Stripe {
         moto?: boolean | null;
 
         /**
+         * Identifies which network this charge was processed on. Can be `amex`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+         */
+        network?: string | null;
+
+        /**
          * Populated if this transaction used 3D Secure authentication.
          */
         three_d_secure?: Card.ThreeDSecure | null;
@@ -861,6 +866,11 @@ declare namespace Stripe {
          * The last four digits of the card.
          */
         last4?: string | null;
+
+        /**
+         * Identifies which network this charge was processed on. Can be `amex`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+         */
+        network?: string | null;
 
         /**
          * How were card details read in this transaction. Can be contact_emv, contactless_emv, magnetic_stripe_fallback, magnetic_stripe_track2, or contactless_magstripe_mode

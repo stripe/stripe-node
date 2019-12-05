@@ -106,8 +106,6 @@ declare namespace Stripe {
      */
     ended_at?: number | null;
 
-    invoice_customer_balance_settings?: Subscription.InvoiceCustomerBalanceSettings;
-
     /**
      * List of subscription items, each with an attached plan.
      */
@@ -216,13 +214,6 @@ declare namespace Stripe {
 
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
 
-    interface InvoiceCustomerBalanceSettings {
-      /**
-       * Controls whether a customer balance applied to this invoice should be consumed and not credited or debited back to the customer if voided.
-       */
-      consume_applied_balance_on_void: boolean;
-    }
-
     interface PendingInvoiceItemInterval {
       /**
        * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
@@ -328,11 +319,6 @@ declare namespace Stripe {
     expand?: Array<string>;
 
     /**
-     * Controls whether a customer balance applied to an invoice should be consumed and not credited or debited back to the customer if voided by this subscription.
-     */
-    invoice_customer_balance_settings?: SubscriptionCreateParams.InvoiceCustomerBalanceSettings;
-
-    /**
      * List of subscription items, each with an attached plan.
      */
     items?: Array<SubscriptionCreateParams.Item>;
@@ -408,8 +394,6 @@ declare namespace Stripe {
     }
 
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
-
-    interface InvoiceCustomerBalanceSettings {}
 
     interface Item {
       /**
@@ -547,11 +531,6 @@ declare namespace Stripe {
     expand?: Array<string>;
 
     /**
-     * Controls whether a customer balance applied to an invoice should be consumed and not credited or debited back to the customer if voided by this subscription.
-     */
-    invoice_customer_balance_settings?: SubscriptionUpdateParams.InvoiceCustomerBalanceSettings;
-
-    /**
      * List of subscription items, each with an attached plan.
      */
     items?: Array<SubscriptionUpdateParams.Item>;
@@ -629,8 +608,6 @@ declare namespace Stripe {
     }
 
     type CollectionMethod = 'charge_automatically' | 'send_invoice'
-
-    interface InvoiceCustomerBalanceSettings {}
 
     interface Item {
       /**

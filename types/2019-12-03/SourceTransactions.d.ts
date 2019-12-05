@@ -116,6 +116,11 @@ declare namespace Stripe {
       fingerprint?: string;
 
       /**
+       * The credit transfer rails the sender used to push money. The three rails are: Faster Payments, BACS, and CHAPS.
+       */
+      funding_method?: string;
+
+      /**
        * Last 4 digits of account number associated with the transfer.
        */
       last4?: string;

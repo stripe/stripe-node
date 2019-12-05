@@ -195,6 +195,7 @@ declare namespace Stripe {
       | '2019-10-08'
       | '2019-10-17'
       | '2019-11-05'
+      | '2019-12-03'
 
     type EnabledEvent =
       | '*'

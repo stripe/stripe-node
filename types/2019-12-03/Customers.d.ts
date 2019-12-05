@@ -128,16 +128,6 @@ declare namespace Stripe {
      * The customer's tax IDs.
      */
     tax_ids: ApiList<TaxId>;
-
-    /**
-     * The customer's tax information. Appears on invoices emailed to this customer. This field has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
-     */
-    tax_info: Customer.TaxInfo | null;
-
-    /**
-     * Describes the status of looking up the tax ID provided in `tax_info`. This field has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
-     */
-    tax_info_verification: Customer.TaxInfoVerification | null;
   }
 
   namespace Customer {
@@ -197,30 +187,6 @@ declare namespace Stripe {
     }
 
     type TaxExempt = 'exempt' | 'none' | 'reverse'
-
-    interface TaxInfo {
-      /**
-       * The customer's tax ID number.
-       */
-      tax_id?: string | null;
-
-      /**
-       * The type of ID number.
-       */
-      type: string;
-    }
-
-    interface TaxInfoVerification {
-      /**
-       * The state of verification for this customer. Possible values are `unverified`, `pending`, or `verified`.
-       */
-      status?: string | null;
-
-      /**
-       * The official name associated with the tax ID returned from the external provider.
-       */
-      verified_name?: string | null;
-    }
   }
 
   interface DeletedCustomer {
@@ -318,11 +284,6 @@ declare namespace Stripe {
      * The customer's tax IDs.
      */
     tax_id_data?: Array<CustomerCreateParams.TaxIdDatum>;
-
-    /**
-     * The customer's tax information. Appears on invoices emailed to this customer. This parameter has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
-     */
-    tax_info?: CustomerCreateParams.TaxInfo;
   }
 
   namespace CustomerCreateParams {
@@ -429,18 +390,6 @@ declare namespace Stripe {
         | 'nz_gst'
         | 'za_vat'
     }
-
-    interface TaxInfo {
-      /**
-       * The customer's tax ID number.
-       */
-      tax_id: string;
-
-      /**
-       * The type of ID number. The only possible value is `vat`
-       */
-      type: 'vat';
-    }
   }
 
   interface CustomerRetrieveParams {
@@ -528,11 +477,6 @@ declare namespace Stripe {
     tax_exempt?: '' | CustomerUpdateParams.TaxExempt;
 
     /**
-     * The customer's tax information. Appears on invoices emailed to this customer. This parameter has been deprecated and will be removed in a future API version, for further information view the [migration guide](https://stripe.com/docs/billing/migration/taxes#moving-from-taxinfo-to-customer-tax-ids).
-     */
-    tax_info?: CustomerUpdateParams.TaxInfo;
-
-    /**
      * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
      */
     trial_end?: 'now' | number;
@@ -618,18 +562,6 @@ declare namespace Stripe {
     }
 
     type TaxExempt = 'exempt' | 'none' | 'reverse'
-
-    interface TaxInfo {
-      /**
-       * The customer's tax ID number.
-       */
-      tax_id: string;
-
-      /**
-       * The type of ID number. The only possible value is `vat`
-       */
-      type: 'vat';
-    }
   }
 
   interface CustomerListParams {
