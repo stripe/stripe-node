@@ -54,10 +54,11 @@ As of 7.15.0, Stripe maintains TypeScript types for the latest [API version][api
 
 #### Installation
 
-Add this to your tsconfig.json:
+Add this to your `tsconfig.json` under `"compilerOptions"`:
 
 ```js
   "types": ["stripe/types/2019-12-03"],
+  "esModuleInterop": true,
 ```
 
 Or this wherever you import Stripe:
@@ -65,6 +66,8 @@ Or this wherever you import Stripe:
 ```ts
 ///<reference types="stripe/types/2019-12-03" />
 ```
+
+with the `--esModuleInterop` flag.
 
 We do not include the types by default because they represent only the latest API Version;
 users on older versions might otherwise be confused if they upgrade their stripe library
@@ -83,7 +86,7 @@ We may revisit this structure in the future.
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
 
-const params: Stripe.CreateCustomerParams = {
+const params: Stripe.CustomerCreateParams = {
   description: 'test customer',
 };
 const customer: Promise<Stripe.Customer> = stripe.customers.create(params);
