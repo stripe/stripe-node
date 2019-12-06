@@ -331,7 +331,7 @@ describe('Flows', function() {
         expect(request.idempotency_key).to.equal(idempotencyKey);
         expect(request.account).to.equal(connectedAccountId);
         expect(request.method).to.equal('POST');
-        expect(request.path).to.equal('/v1/charges');
+        expect(request.path).to.equal('/v1/customers');
         expect(request.request_start_time).to.be.within(
           lowerBoundStartTime,
           Date.now()
@@ -342,12 +342,11 @@ describe('Flows', function() {
 
       stripe.once('request', onRequest);
 
-      stripe.charges
+      stripe.customers
         .create(
           {
-            amount: 1234,
-            currency: 'usd',
-            card: 'tok_chargeDeclined',
+            description: 'stripe-node test customer',
+            not_a_param: 'garbage, please 400',
           },
           {
             stripe_version: apiVersion,
@@ -379,9 +378,9 @@ describe('Flows', function() {
         expect(response.idempotency_key).to.equal(idempotencyKey);
         expect(response.account).to.equal(connectedAccountId);
         expect(response.method).to.equal('POST');
-        expect(response.path).to.equal('/v1/charges');
+        expect(response.path).to.equal('/v1/customers');
         expect(response.request_id).to.match(/req_[\w\d]/);
-        expect(response.status).to.equal(402);
+        expect(response.status).to.equal(400);
         expect(response.elapsed).to.equal(
           response.request_end_time - response.request_start_time
         );
@@ -395,12 +394,11 @@ describe('Flows', function() {
 
       stripe.on('response', onResponse);
 
-      stripe.charges
+      stripe.customers
         .create(
           {
-            amount: 1234,
-            currency: 'usd',
-            card: 'tok_chargeDeclined',
+            description: 'stripe-node test customer',
+            not_a_param: 'garbage, please 400',
           },
           {
             stripe_version: apiVersion,
@@ -421,11 +419,9 @@ describe('Flows', function() {
       stripe.once('response', onResponse);
       stripe.off('response', onResponse);
 
-      stripe.charges
+      stripe.customers
         .create({
-          amount: 1234,
-          currency: 'usd',
-          card: 'tok_visa',
+          description: 'stripe-node test customer',
         })
         .then(() => {
           done();
