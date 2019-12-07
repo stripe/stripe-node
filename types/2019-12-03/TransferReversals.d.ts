@@ -6,17 +6,17 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'transfer_reversal';
+    object: 'transfer_reversal';
 
     /**
      * Amount, in %s.
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Balance transaction that describes the impact on your account balance.
@@ -26,12 +26,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * Linked payment refund for the transfer reversal.
@@ -41,7 +41,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
@@ -53,7 +53,7 @@ declare namespace Stripe {
     /**
      * ID of the transfer that was reversed.
      */
-    transfer?: string | Transfer;
+    transfer: string | Transfer;
   }
 
   interface TransferReversalCreateParams {

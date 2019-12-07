@@ -6,37 +6,37 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'order_return';
+    object: 'order_return';
 
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the returned line item.
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * The items included in this order return.
      */
-    items?: Array<OrderItem>;
+    items: Array<OrderItem>;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * The order that this return includes items from.

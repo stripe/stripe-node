@@ -6,12 +6,12 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'event';
+    object: 'event';
 
     /**
      * The connected account that originated the event.
@@ -26,19 +26,19 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
-    data?: Event.Data;
+    data: Event.Data;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Number of webhooks that have yet to be successfully delivered (i.e., to return a 20x response) to the URLs you've specified.
      */
-    pending_webhooks?: number;
+    pending_webhooks: number;
 
     /**
      * Information on the API request that instigated the event.
@@ -48,7 +48,7 @@ declare namespace Stripe {
     /**
      * Description of the event (e.g., `invoice.created` or `charge.refunded`).
      */
-    type?: string;
+    type: string;
   }
 
   namespace Event {

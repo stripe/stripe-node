@@ -6,12 +6,12 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'subscription_schedule';
+    object: 'subscription_schedule';
 
     /**
      * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
@@ -26,7 +26,7 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Object representing the start and end dates for the current phase of the subscription schedule, if it is `active`.
@@ -36,19 +36,19 @@ declare namespace Stripe {
     /**
      * ID of the customer who owns the subscription schedule.
      */
-    customer?: string | Customer | DeletedCustomer;
+    customer: string | Customer | DeletedCustomer;
 
-    default_settings?: SubscriptionSchedule.DefaultSettings;
+    default_settings: SubscriptionSchedule.DefaultSettings;
 
     /**
      * Behavior of the subscription schedule and underlying subscription when it ends.
      */
-    end_behavior?: SubscriptionSchedule.EndBehavior;
+    end_behavior: SubscriptionSchedule.EndBehavior;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -62,7 +62,7 @@ declare namespace Stripe {
     /**
      * Configuration for the subscription schedule's phases.
      */
-    phases?: Array<SubscriptionSchedule.Phase>;
+    phases: Array<SubscriptionSchedule.Phase>;
 
     /**
      * Time at which the subscription schedule was released. Measured in seconds since the Unix epoch.
@@ -82,7 +82,7 @@ declare namespace Stripe {
     /**
      * The present status of the subscription schedule. Possible values are `not_started`, `active`, `completed`, `released`, and `canceled`. You can read more about the different states in our [behavior guide](https://stripe.com/docs/billing/subscriptions/subscription-schedules).
      */
-    status?: SubscriptionSchedule.Status;
+    status: SubscriptionSchedule.Status;
 
     /**
      * ID of the subscription managed by the subscription schedule.

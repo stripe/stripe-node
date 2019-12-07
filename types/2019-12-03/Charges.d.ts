@@ -6,24 +6,24 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'charge';
+    object: 'charge';
 
     alternate_statement_descriptors?: Charge.AlternateStatementDescriptors;
 
     /**
      * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Amount in %s refunded (can be less than the amount attribute on the charge if a partial refund was issued).
      */
-    amount_refunded?: number;
+    amount_refunded: number;
 
     /**
      * ID of the Connect application that created the charge.
@@ -50,22 +50,22 @@ declare namespace Stripe {
      */
     balance_transaction?: string | BalanceTransaction | null;
 
-    billing_details?: Charge.BillingDetails;
+    billing_details: Charge.BillingDetails;
 
     /**
      * If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
      */
-    captured?: boolean;
+    captured: boolean;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * ID of the customer this charge is for if one exists.
@@ -90,7 +90,7 @@ declare namespace Stripe {
     /**
      * Whether the charge has been disputed.
      */
-    disputed?: boolean;
+    disputed: boolean;
 
     /**
      * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/api#errors) for a list of codes).
@@ -117,12 +117,12 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
@@ -144,7 +144,7 @@ declare namespace Stripe {
     /**
      * `true` if the charge succeeded, or was successfully authorized for later capture.
      */
-    paid?: boolean;
+    paid: boolean;
 
     /**
      * ID of the PaymentIntent associated with this charge, if one exists.
@@ -174,17 +174,17 @@ declare namespace Stripe {
     /**
      * This is the URL to view the receipt for this charge. The receipt is kept up-to-date to the latest state of the charge, including any refunds. If the charge is for an Invoice, the receipt will be stylized as an Invoice receipt.
      */
-    receipt_url?: string;
+    receipt_url: string;
 
     /**
      * Whether the charge has been fully refunded. If the charge is only partially refunded, this attribute will still be false.
      */
-    refunded?: boolean;
+    refunded: boolean;
 
     /**
      * A list of refunds that have been applied to the charge.
      */
-    refunds?: ApiList<Refund>;
+    refunds: ApiList<Refund>;
 
     /**
      * ID of the review associated with this charge if one exists.
@@ -226,7 +226,7 @@ declare namespace Stripe {
     /**
      * The status of the payment is either `succeeded`, `pending`, or `failed`.
      */
-    status?: string;
+    status: string;
 
     /**
      * ID of the transfer to the `destination` account (only applicable if the charge was created using the `destination` parameter).

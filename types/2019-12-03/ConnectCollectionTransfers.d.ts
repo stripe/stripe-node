@@ -6,31 +6,31 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'connect_collection_transfer';
+    object: 'connect_collection_transfer';
 
     /**
      * Amount transferred, in %s.
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * ID of the account that funds are being collected for.
      */
-    destination?: string | Account | DeletedAccount;
+    destination: string | Account | DeletedAccount;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
   }
 }

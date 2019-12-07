@@ -6,26 +6,26 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'platform_tax_fee';
+    object: 'platform_tax_fee';
 
     /**
      * The Connected account that incurred this charge.
      */
-    account?: string;
+    account: string;
 
     /**
      * The payment object that caused this tax to be inflicted.
      */
-    source_transaction?: string;
+    source_transaction: string;
 
     /**
      * The type of tax (VAT).
      */
-    type?: string;
+    type: string;
   }
 }

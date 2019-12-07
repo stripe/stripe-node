@@ -6,40 +6,40 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'mandate';
+    object: 'mandate';
 
-    customer_acceptance?: Mandate.CustomerAcceptance;
+    customer_acceptance: Mandate.CustomerAcceptance;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     multi_use?: Mandate.MultiUse;
 
     /**
      * ID of the payment method associated with this mandate.
      */
-    payment_method?: string | PaymentMethod;
+    payment_method: string | PaymentMethod;
 
-    payment_method_details?: Mandate.PaymentMethodDetails;
+    payment_method_details: Mandate.PaymentMethodDetails;
 
     single_use?: Mandate.SingleUse;
 
     /**
      * The status of the Mandate, one of `active`, `inactive`, or `pending`. The Mandate can be used to initiate a payment only if status=active.
      */
-    status?: Mandate.Status;
+    status: Mandate.Status;
 
     /**
      * The type of the mandate, one of `multi_use` or `single_use`
      */
-    type?: Mandate.Type;
+    type: Mandate.Type;
   }
 
   namespace Mandate {

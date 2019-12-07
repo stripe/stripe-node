@@ -6,22 +6,22 @@ declare namespace Stripe {
     /**
      * The identifier for the capability.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'capability';
+    object: 'capability';
 
     /**
      * The account for which the capability enables functionality.
      */
-    account?: string | Account | DeletedAccount;
+    account: string | Account | DeletedAccount;
 
     /**
      * Whether the capability has been requested.
      */
-    requested?: boolean;
+    requested: boolean;
 
     /**
      * Time at which the capability was requested. Measured in seconds since the Unix epoch.
@@ -33,7 +33,7 @@ declare namespace Stripe {
     /**
      * The status of the capability. Can be `active`, `inactive`, `pending`, or `unrequested`.
      */
-    status?: Capability.Status;
+    status: Capability.Status;
   }
 
   namespace Capability {

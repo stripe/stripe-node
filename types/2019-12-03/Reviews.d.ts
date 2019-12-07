@@ -6,12 +6,12 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'review';
+    object: 'review';
 
     /**
      * The ZIP or postal code of the card used, if applicable.
@@ -31,7 +31,7 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * The IP address where the payment originated.
@@ -46,17 +46,17 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * If `true`, the review needs action.
      */
-    open?: boolean;
+    open: boolean;
 
     /**
      * The reason the review was opened. One of `rule` or `manual`.
      */
-    opened_reason?: Review.OpenedReason;
+    opened_reason: Review.OpenedReason;
 
     /**
      * The PaymentIntent ID associated with this review, if one exists.
@@ -66,7 +66,7 @@ declare namespace Stripe {
     /**
      * The reason the review is currently open or closed. One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
      */
-    reason?: string;
+    reason: string;
 
     /**
      * Information related to the browsing session of the user who initiated the payment.

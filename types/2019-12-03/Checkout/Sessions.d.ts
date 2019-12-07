@@ -8,12 +8,12 @@ declare namespace Stripe {
        * Unique identifier for the object. Used to pass to `redirectToCheckout`
        * in Stripe.js.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'checkout.session';
+      object: 'checkout.session';
 
       /**
        * The value (`auto` or `required`) for whether Checkout collected the
@@ -24,7 +24,7 @@ declare namespace Stripe {
       /**
        * The URL the customer will be directed to if they decide to cancel payment and return to your website.
        */
-      cancel_url?: string;
+      cancel_url: string;
 
       /**
        * A unique string to reference the Checkout Session. This can be a
@@ -59,7 +59,7 @@ declare namespace Stripe {
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode?: boolean;
+      livemode: boolean;
 
       /**
        * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used.
@@ -80,7 +80,7 @@ declare namespace Stripe {
        * A list of the types of payment methods (e.g. card) this Checkout
        * Session is allowed to accept.
        */
-      payment_method_types?: Array<string>;
+      payment_method_types: Array<string>;
 
       /**
        * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
@@ -105,7 +105,7 @@ declare namespace Stripe {
        * The URL the customer will be directed to after the payment or
        * subscription creation is successful.
        */
-      success_url?: string;
+      success_url: string;
     }
 
     namespace Session {

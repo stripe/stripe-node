@@ -6,27 +6,27 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'payout';
+    object: 'payout';
 
     /**
      * Amount (in %s) to be transferred to your bank account or debit card.
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Date the payout is expected to arrive in the bank. This factors in delays like weekends or bank holidays.
      */
-    arrival_date?: number;
+    arrival_date: number;
 
     /**
      * Returns `true` if the payout was created by an [automated payout schedule](https://stripe.com/docs/payouts#payout-schedule), and `false` if it was [requested manually](https://stripe.com/docs/payouts#manual-payouts).
      */
-    automatic?: boolean;
+    automatic: boolean;
 
     /**
      * ID of the balance transaction that describes the impact of this payout on your account balance.
@@ -36,12 +36,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -71,24 +71,24 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
     /**
      * The method used to send this payout, which can be `standard` or `instant`. `instant` is only supported for payouts to debit cards. (See [Instant payouts for marketplaces](/blog/instant-payouts-for-marketplaces) for more information.)
      */
-    method?: string;
+    method: string;
 
     /**
      * The source balance this payout came from. One of `card` or `bank_account`.
      */
-    source_type?: string;
+    source_type: string;
 
     /**
      * Extra information about a payout to be displayed on the user's bank statement.
@@ -98,12 +98,12 @@ declare namespace Stripe {
     /**
      * Current status of the payout (`paid`, `pending`, `in_transit`, `canceled` or `failed`). A payout will be `pending` until it is submitted to the bank, at which point it becomes `in_transit`. It will then change to `paid` if the transaction goes through. If it does not go through successfully, its status will change to `failed` or `canceled`.
      */
-    status?: string;
+    status: string;
 
     /**
      * Can be `bank_account` or `card`.
      */
-    type?: Payout.Type;
+    type: Payout.Type;
   }
 
   namespace Payout {

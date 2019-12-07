@@ -7,17 +7,17 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'issuing.transaction';
+      object: 'issuing.transaction';
 
       /**
        * The amount of this transaction in your currency. This is the amount that your balance will be updated by.
        */
-      amount?: number;
+      amount: number;
 
       /**
        * The `Authorization` object that led to this transaction.
@@ -29,7 +29,7 @@ declare namespace Stripe {
       /**
        * The card used to make this transaction.
        */
-      card?: string | Issuing.Card;
+      card: string | Issuing.Card;
 
       /**
        * The cardholder to whom this transaction belongs.
@@ -39,43 +39,43 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created?: number;
+      created: number;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      currency?: string;
+      currency: string;
 
       dispute?: string | Issuing.Dispute | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode?: boolean;
+      livemode: boolean;
 
       /**
        * The amount that the merchant will receive, denominated in `merchant_currency`. It will be different from `amount` if the merchant is taking payment in a different currency.
        */
-      merchant_amount?: number;
+      merchant_amount: number;
 
       /**
        * The currency with which the merchant is taking payment.
        */
-      merchant_currency?: string;
+      merchant_currency: string;
 
-      merchant_data?: Transaction.MerchantData;
+      merchant_data: Transaction.MerchantData;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata?: {
+      metadata: {
         [key: string]: string;
       };
 
       /**
        * One of `capture`, `refund`, `cash_withdrawal`, `refund_reversal`, `dispute`, or `dispute_loss`.
        */
-      type?: string;
+      type: string;
     }
 
     namespace Transaction {

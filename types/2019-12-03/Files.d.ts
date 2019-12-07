@@ -6,17 +6,17 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'file';
+    object: 'file';
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * A filename for the file, suitable for saving to a filesystem.
@@ -28,12 +28,12 @@ declare namespace Stripe {
     /**
      * The purpose of the file. Possible values are `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `identity_document`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
      */
-    purpose?: string;
+    purpose: string;
 
     /**
      * The size in bytes of the file object.
      */
-    size?: number;
+    size: number;
 
     /**
      * A user friendly title for the document.

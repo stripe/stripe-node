@@ -7,22 +7,22 @@ declare namespace Stripe {
       /**
        * The [ID of the Report Type](https://stripe.com/docs/reporting/statements/api#available-report-types), such as `balance.summary.1`.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'reporting.report_type';
+      object: 'reporting.report_type';
 
       /**
        * Most recent time for which this Report Type is available. Measured in seconds since the Unix epoch.
        */
-      data_available_end?: number;
+      data_available_end: number;
 
       /**
        * Earliest time for which this Report Type is available. Measured in seconds since the Unix epoch.
        */
-      data_available_start?: number;
+      data_available_start: number;
 
       /**
        * List of column names that are included by default when this Report Type gets run. (If the Report Type doesn't support the `columns` parameter, this will be null.)
@@ -32,17 +32,17 @@ declare namespace Stripe {
       /**
        * Human-readable name of the Report Type
        */
-      name?: string;
+      name: string;
 
       /**
        * When this Report Type was latest updated. Measured in seconds since the Unix epoch.
        */
-      updated?: number;
+      updated: number;
 
       /**
        * Version of the Report Type. Different versions report with the same ID will have the same purpose, but may take different run parameters or have different result schemas.
        */
-      version?: number;
+      version: number;
     }
 
     interface ReportTypeRetrieveParams {

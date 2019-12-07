@@ -7,22 +7,22 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'scheduled_query_run';
+      object: 'scheduled_query_run';
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created?: number;
+      created: number;
 
       /**
        * When the query was run, Sigma contained a snapshot of your Stripe data at this time.
        */
-      data_load_time?: number;
+      data_load_time: number;
 
       error?: ScheduledQueryRun.Error;
 
@@ -34,27 +34,27 @@ declare namespace Stripe {
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode?: boolean;
+      livemode: boolean;
 
       /**
        * Time at which the result expires and is no longer available for download.
        */
-      result_available_until?: number;
+      result_available_until: number;
 
       /**
        * SQL for the query.
        */
-      sql?: string;
+      sql: string;
 
       /**
        * The query's execution status, which will be `completed` for successful runs, and `canceled`, `failed`, or `timed_out` otherwise.
        */
-      status?: string;
+      status: string;
 
       /**
        * Title of the query.
        */
-      title?: string;
+      title: string;
     }
 
     namespace ScheduledQueryRun {

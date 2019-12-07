@@ -6,56 +6,56 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'dispute';
+    object: 'dispute';
 
     /**
      * Disputed amount. Usually the amount of the charge, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
      */
-    amount?: number;
+    amount: number;
 
     /**
      * List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.
      */
-    balance_transactions?: Array<BalanceTransaction>;
+    balance_transactions: Array<BalanceTransaction>;
 
     /**
      * ID of the charge that was disputed.
      */
-    charge?: string | Charge;
+    charge: string | Charge;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
-    evidence?: Dispute.Evidence;
+    evidence: Dispute.Evidence;
 
-    evidence_details?: Dispute.EvidenceDetails;
+    evidence_details: Dispute.EvidenceDetails;
 
     /**
      * If true, it is still possible to refund the disputed payment. Once the payment has been fully refunded, no further funds will be withdrawn from your Stripe account as a result of this dispute.
      */
-    is_charge_refundable?: boolean;
+    is_charge_refundable: boolean;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
@@ -72,12 +72,12 @@ declare namespace Stripe {
     /**
      * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).
      */
-    reason?: string;
+    reason: string;
 
     /**
      * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `charge_refunded`, `won`, or `lost`.
      */
-    status?: Dispute.Status;
+    status: Dispute.Status;
   }
 
   namespace Dispute {

@@ -6,12 +6,12 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'usage_record_summary';
+    object: 'usage_record_summary';
 
     /**
      * The invoice in which this usage period has been billed for.
@@ -21,19 +21,19 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
-    period?: UsageRecordSummary.Period;
+    period: UsageRecordSummary.Period;
 
     /**
      * The ID of the subscription item this summary is describing.
      */
-    subscription_item?: string;
+    subscription_item: string;
 
     /**
      * The total usage within this usage period.
      */
-    total_usage?: number;
+    total_usage: number;
   }
 
   namespace UsageRecordSummary {

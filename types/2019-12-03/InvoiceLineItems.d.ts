@@ -6,22 +6,22 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'line_item';
+    object: 'line_item';
 
     /**
      * The amount, in %s.
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -31,23 +31,23 @@ declare namespace Stripe {
     /**
      * If true, discounts will apply to this line item. Always false for prorations.
      */
-    discountable?: boolean;
+    discountable: boolean;
 
     invoice_item?: string;
 
     /**
      * Whether this is a test line item.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
-    period?: InvoiceLineItem.Period;
+    period: InvoiceLineItem.Period;
 
     /**
      * The plan of the subscription, if the line item is a subscription or a proration.
@@ -57,7 +57,7 @@ declare namespace Stripe {
     /**
      * Whether this is a proration.
      */
-    proration?: boolean;
+    proration: boolean;
 
     /**
      * The quantity of the subscription, if the line item is a subscription or a proration.
@@ -87,7 +87,7 @@ declare namespace Stripe {
     /**
      * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
      */
-    type?: InvoiceLineItem.Type;
+    type: InvoiceLineItem.Type;
 
     /**
      * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.

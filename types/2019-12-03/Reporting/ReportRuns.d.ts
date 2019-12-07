@@ -7,17 +7,17 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'reporting.report_run';
+      object: 'reporting.report_run';
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created?: number;
+      created: number;
 
       /**
        * If something should go wrong during the run, a message about the failure (populated when
@@ -28,14 +28,14 @@ declare namespace Stripe {
       /**
        * Always `true`: reports can only be run on live-mode data.
        */
-      livemode?: boolean;
+      livemode: boolean;
 
-      parameters?: ReportRun.Parameters;
+      parameters: ReportRun.Parameters;
 
       /**
        * The ID of the [report type](https://stripe.com/docs/reporting/statements/api#report-types) to run, such as `"balance.summary.1"`.
        */
-      report_type?: string;
+      report_type: string;
 
       /**
        * The file object representing the result of the report run (populated when
@@ -48,7 +48,7 @@ declare namespace Stripe {
        *  When the run finishes, this will be set to `succeeded` and the `result` field will be populated.
        *  Rarely, we may encounter an error, at which point this will be set to `failed` and the `error` field will be populated.
        */
-      status?: string;
+      status: string;
 
       /**
        * Timestamp at which this run successfully finished (populated when

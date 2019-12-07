@@ -7,16 +7,16 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'issuing.cardholder';
+      object: 'issuing.cardholder';
 
       authorization_controls?: Cardholder.AuthorizationControls | null;
 
-      billing?: Cardholder.Billing;
+      billing: Cardholder.Billing;
 
       /**
        * Additional information about a `business_entity` cardholder.
@@ -26,7 +26,7 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created?: number;
+      created: number;
 
       /**
        * The cardholder's email address.
@@ -41,41 +41,41 @@ declare namespace Stripe {
       /**
        * Whether or not this cardholder is the default cardholder.
        */
-      is_default?: boolean;
+      is_default: boolean;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode?: boolean;
+      livemode: boolean;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata?: {
+      metadata: {
         [key: string]: string;
       };
 
       /**
        * The cardholder's name. This will be printed on cards issued to them.
        */
-      name?: string;
+      name: string;
 
       /**
        * The cardholder's phone number.
        */
       phone_number?: string | null;
 
-      requirements?: Cardholder.Requirements;
+      requirements: Cardholder.Requirements;
 
       /**
        * Specifies whether to permit authorizations on this cardholder's cards.
        */
-      status?: Cardholder.Status;
+      status: Cardholder.Status;
 
       /**
        * One of `individual` or `business_entity`.
        */
-      type?: Cardholder.Type;
+      type: Cardholder.Type;
     }
 
     namespace Cardholder {

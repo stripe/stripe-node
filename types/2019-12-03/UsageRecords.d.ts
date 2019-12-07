@@ -6,32 +6,32 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'usage_record';
+    object: 'usage_record';
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * The usage quantity for the specified date.
      */
-    quantity?: number;
+    quantity: number;
 
     /**
      * The ID of the subscription item this usage record contains data for.
      */
-    subscription_item?: string;
+    subscription_item: string;
 
     /**
      * The timestamp when this usage occurred.
      */
-    timestamp?: number;
+    timestamp: number;
   }
 
   interface UsageRecordCreateParams {

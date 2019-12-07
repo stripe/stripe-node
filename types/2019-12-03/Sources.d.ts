@@ -6,12 +6,12 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'source';
+    object: 'source';
 
     ach_credit_transfer?: Source.AchCreditTransfer;
 
@@ -37,14 +37,14 @@ declare namespace Stripe {
     /**
      * The client secret of the source. Used for client-side retrieval using a publishable key.
      */
-    client_secret?: string;
+    client_secret: string;
 
     code_verification?: Source.CodeVerification;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the source. This is the currency for which the source will be chargeable once ready. Required for `single_use` sources.
@@ -61,7 +61,7 @@ declare namespace Stripe {
     /**
      * The authentication `flow` of the source. `flow` is one of `redirect`, `receiver`, `code_verification`, `none`.
      */
-    flow?: string;
+    flow: string;
 
     giropay?: Source.Giropay;
 
@@ -72,7 +72,7 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -112,14 +112,14 @@ declare namespace Stripe {
     /**
      * The status of the source, one of `canceled`, `chargeable`, `consumed`, `failed`, or `pending`. Only `chargeable` sources can be used to create a charge.
      */
-    status?: string;
+    status: string;
 
     three_d_secure?: Source.ThreeDSecure;
 
     /**
      * The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `klarna`, `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the source with a name matching this value. It contains additional information specific to the [payment method](https://stripe.com/docs/sources) used.
      */
-    type?: Source.Type;
+    type: Source.Type;
 
     /**
      * Either `reusable` or `single_use`. Whether this source should be reusable or not. Some source types may or may not be reusable by construction, while others may leave the option at creation. If an incompatible value is passed, an error will be returned.

@@ -7,36 +7,36 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'issuing.authorization';
+      object: 'issuing.authorization';
 
       /**
        * Whether the authorization has been approved.
        */
-      approved?: boolean;
+      approved: boolean;
 
       /**
        * How the card details were provided. One of `chip`, `contactless`, `keyed_in`, `online`, or `swipe`.
        */
-      authorization_method?: string;
+      authorization_method: string;
 
       /**
        * The amount that has been authorized. This will be `0` when the object is created, and increase after it has been approved.
        */
-      authorized_amount?: number;
+      authorized_amount: number;
 
       /**
        * The currency that was presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      authorized_currency?: string;
+      authorized_currency: string;
 
-      balance_transactions?: Array<BalanceTransaction>;
+      balance_transactions: Array<BalanceTransaction>;
 
-      card?: Issuing.Card;
+      card: Issuing.Card;
 
       /**
        * The cardholder to whom this authorization belongs.
@@ -46,54 +46,54 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created?: number;
+      created: number;
 
       /**
        * The amount the authorization is expected to be in `held_currency`. When Stripe holds funds from you, this is the amount reserved for the authorization. This will be `0` when the object is created, and increase after it has been approved. For multi-currency transactions, `held_amount` can be used to determine the expected exchange rate.
        */
-      held_amount?: number;
+      held_amount: number;
 
       /**
        * The currency of the [held amount](https://stripe.com/docs/api#issuing_authorization_object-held_amount). This will always be the card currency.
        */
-      held_currency?: string;
+      held_currency: string;
 
-      is_held_amount_controllable?: boolean;
+      is_held_amount_controllable: boolean;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode?: boolean;
+      livemode: boolean;
 
-      merchant_data?: Authorization.MerchantData;
+      merchant_data: Authorization.MerchantData;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata?: {
+      metadata: {
         [key: string]: string;
       };
 
       /**
        * The amount the user is requesting to be authorized. This field will only be non-zero during an `issuing.authorization.request` webhook.
        */
-      pending_authorized_amount?: number;
+      pending_authorized_amount: number;
 
       /**
        * The additional amount Stripe will hold if the authorization is approved. This field will only be non-zero during an `issuing.authorization.request` webhook.
        */
-      pending_held_amount?: number;
+      pending_held_amount: number;
 
-      request_history?: Array<Authorization.RequestHistory>;
+      request_history: Array<Authorization.RequestHistory>;
 
       /**
        * One of `closed`, `pending`, or `reversed`.
        */
-      status?: string;
+      status: string;
 
-      transactions?: Array<Issuing.Transaction>;
+      transactions: Array<Issuing.Transaction>;
 
-      verification_data?: Authorization.VerificationData;
+      verification_data: Authorization.VerificationData;
 
       /**
        * What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.

@@ -7,7 +7,7 @@ declare namespace Stripe {
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'terminal.connection_token';
+      object: 'terminal.connection_token';
 
       /**
        * The id of the location that this connection token is scoped to.
@@ -17,7 +17,7 @@ declare namespace Stripe {
       /**
        * Your application should pass this token to the Stripe Terminal SDK.
        */
-      secret?: string;
+      secret: string;
     }
 
     interface ConnectionTokenCreateParams {

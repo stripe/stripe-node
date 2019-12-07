@@ -6,22 +6,22 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'customer_balance_transaction';
+    object: 'customer_balance_transaction';
 
     /**
      * The amount of the transaction. A negative value is a credit for the customer's balance, and a positive value is a debit to the customer's `balance`.
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * The ID of the credit note (if any) related to the transaction.
@@ -31,12 +31,12 @@ declare namespace Stripe {
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * The ID of the customer the transaction belongs to.
      */
-    customer?: string | Customer | DeletedCustomer;
+    customer: string | Customer | DeletedCustomer;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -46,7 +46,7 @@ declare namespace Stripe {
     /**
      * The customer's `balance` after the transaction was applied. A negative value decreases the amount due on the customer's next invoice. A positive value increases the amount due on the customer's next invoice.
      */
-    ending_balance?: number;
+    ending_balance: number;
 
     /**
      * The ID of the invoice (if any) related to the transaction.
@@ -56,7 +56,7 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -70,7 +70,7 @@ declare namespace Stripe {
     /**
      * Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_too_large`, `invoice_too_small`, `unapplied_from_invoice`, or `unspent_receiver_credit`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
      */
-    type?: CustomerBalanceTransaction.Type;
+    type: CustomerBalanceTransaction.Type;
   }
 
   namespace CustomerBalanceTransaction {

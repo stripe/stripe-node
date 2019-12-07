@@ -6,17 +6,17 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'payment_intent';
+    object: 'payment_intent';
 
     /**
      * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Amount that can be captured from this PaymentIntent.
@@ -55,7 +55,7 @@ declare namespace Stripe {
      *
      * Change `capture_method` to manual if you wish to use [separate authorization and capture](https://stripe.com/docs/payments/capture-later) for payment methods that support this.
      */
-    capture_method?: PaymentIntent.CaptureMethod;
+    capture_method: PaymentIntent.CaptureMethod;
 
     /**
      * Charges that were created by this PaymentIntent, if any.
@@ -78,17 +78,17 @@ declare namespace Stripe {
      *
      * When the confirmation method is `manual`, all payment attempts must be made using a secret key. The PaymentIntent returns to the `requires_confirmation` state after handling `next_action`s, and requires your server to initiate each payment attempt with an explicit confirmation.
      */
-    confirmation_method?: PaymentIntent.ConfirmationMethod;
+    confirmation_method: PaymentIntent.ConfirmationMethod;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * ID of the Customer this PaymentIntent belongs to, if one exists.
@@ -115,7 +115,7 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
@@ -147,7 +147,7 @@ declare namespace Stripe {
     /**
      * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
      */
-    payment_method_types?: Array<string>;
+    payment_method_types: Array<string>;
 
     /**
      * Email address that the receipt for the resulting payment will be sent to.
@@ -201,7 +201,7 @@ declare namespace Stripe {
     /**
      * Status of this PaymentIntent, one of `requires_payment_method`, `requires_confirmation`, `requires_action`, `processing`, `requires_capture`, `canceled`, or `succeeded`. Read more about each PaymentIntent [status](https://stripe.com/docs/payments/intents#intent-statuses).
      */
-    status?: PaymentIntent.Status;
+    status: PaymentIntent.Status;
 
     /**
      * The data with which to automatically create a Transfer when the payment is finalized. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.

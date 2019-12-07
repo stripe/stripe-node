@@ -6,38 +6,38 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'source_transaction';
+    object: 'source_transaction';
 
     ach_credit_transfer?: SourceTransaction.AchCreditTransfer;
 
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the amount your customer has pushed to the receiver.
      */
-    amount?: number;
+    amount: number;
 
     chf_credit_transfer?: SourceTransaction.ChfCreditTransfer;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     gbp_credit_transfer?: SourceTransaction.GbpCreditTransfer;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     paper_check?: SourceTransaction.PaperCheck;
 
@@ -46,17 +46,17 @@ declare namespace Stripe {
     /**
      * The ID of the source this transaction is attached to.
      */
-    source?: string;
+    source: string;
 
     /**
      * The status of the transaction, one of `succeeded`, `pending`, or `failed`.
      */
-    status?: string;
+    status: string;
 
     /**
      * The type of source this transaction is attached to.
      */
-    type?: SourceTransaction.Type;
+    type: SourceTransaction.Type;
   }
 
   namespace SourceTransaction {

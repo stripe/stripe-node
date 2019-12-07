@@ -6,14 +6,14 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'payment_method';
+    object: 'payment_method';
 
-    billing_details?: PaymentMethod.BillingDetails;
+    billing_details: PaymentMethod.BillingDetails;
 
     card?: PaymentMethod.Card;
 
@@ -22,7 +22,7 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
@@ -34,12 +34,12 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
@@ -48,7 +48,7 @@ declare namespace Stripe {
     /**
      * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
      */
-    type?: PaymentMethod.Type;
+    type: PaymentMethod.Type;
   }
 
   namespace PaymentMethod {

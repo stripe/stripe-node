@@ -7,56 +7,56 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'issuing.dispute';
+      object: 'issuing.dispute';
 
       /**
        * Disputed amount. Usually the amount of the `disputed_transaction`, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
        */
-      amount?: number;
+      amount: number;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created?: number;
+      created: number;
 
       /**
        * The currency the `disputed_transaction` was made in.
        */
-      currency?: string;
+      currency: string;
 
       /**
        * The transaction being disputed.
        */
-      disputed_transaction?: string | Issuing.Transaction;
+      disputed_transaction: string | Issuing.Transaction;
 
-      evidence?: Dispute.Evidence;
+      evidence: Dispute.Evidence;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode?: boolean;
+      livemode: boolean;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: {
+      metadata: {
         [key: string]: string;
       };
 
       /**
        * Reason for this dispute. One of `other` or `fraudulent`.
        */
-      reason?: string;
+      reason: string;
 
       /**
        * Current status of dispute. One of `lost`, `under_review`, `unsubmitted`, or `won`.
        */
-      status?: Dispute.Status;
+      status: Dispute.Status;
     }
 
     namespace Dispute {

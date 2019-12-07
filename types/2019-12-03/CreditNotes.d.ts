@@ -6,32 +6,32 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'credit_note';
+    object: 'credit_note';
 
     /**
      * The integer amount in **%s** representing the total amount of the credit note, including tax.
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * ID of the customer.
      */
-    customer?: string | Customer | DeletedCustomer;
+    customer: string | Customer | DeletedCustomer;
 
     /**
      * Customer balance transaction related to this credit note.
@@ -41,12 +41,12 @@ declare namespace Stripe {
     /**
      * ID of the invoice.
      */
-    invoice?: string | Invoice | DeletedInvoice;
+    invoice: string | Invoice | DeletedInvoice;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Customer-facing text that appears on the credit note PDF.
@@ -56,19 +56,19 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
     /**
      * A unique number that identifies this particular credit note and appears on the PDF of the credit note and its associated invoice.
      */
-    number?: string;
+    number: string;
 
     /**
      * The link to download the PDF of the credit note.
      */
-    pdf?: string;
+    pdf: string;
 
     /**
      * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
@@ -83,12 +83,12 @@ declare namespace Stripe {
     /**
      * Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
      */
-    status?: CreditNote.Status;
+    status: CreditNote.Status;
 
     /**
      * Type of this credit note, one of `post_payment` or `pre_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
      */
-    type?: CreditNote.Type;
+    type: CreditNote.Type;
 
     /**
      * The time that the credit note was voided.

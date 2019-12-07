@@ -7,19 +7,19 @@ declare namespace Stripe {
       /**
        * Unique identifier for the object.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
-      object?: 'issuing.card';
+      object: 'issuing.card';
 
-      authorization_controls?: Card.AuthorizationControls;
+      authorization_controls: Card.AuthorizationControls;
 
       /**
        * The brand of the card.
        */
-      brand?: string;
+      brand: string;
 
       /**
        * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object to which the card belongs.
@@ -29,44 +29,44 @@ declare namespace Stripe {
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      created?: number;
+      created: number;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      currency?: string;
+      currency: string;
 
       /**
        * The expiration month of the card.
        */
-      exp_month?: number;
+      exp_month: number;
 
       /**
        * The expiration year of the card.
        */
-      exp_year?: number;
+      exp_year: number;
 
       /**
        * The last 4 digits of the card number.
        */
-      last4?: string;
+      last4: string;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      livemode?: boolean;
+      livemode: boolean;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata?: {
+      metadata: {
         [key: string]: string;
       };
 
       /**
        * The name of the cardholder, printed on the card.
        */
-      name?: string;
+      name: string;
 
       /**
        * Metadata about the PIN on the card.
@@ -91,12 +91,12 @@ declare namespace Stripe {
       /**
        * One of `active`, `inactive`, `canceled`, `lost`, or `stolen`.
        */
-      status?: Card.Status;
+      status: Card.Status;
 
       /**
        * One of `virtual` or `physical`.
        */
-      type?: string;
+      type: string;
     }
 
     namespace Card {

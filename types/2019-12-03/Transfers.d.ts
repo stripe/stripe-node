@@ -6,22 +6,22 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'transfer';
+    object: 'transfer';
 
     /**
      * Amount in %s to be transferred.
      */
-    amount?: number;
+    amount: number;
 
     /**
      * Amount in %s reversed (can be less than the amount attribute on the transfer if a partial reversal was issued).
      */
-    amount_reversed?: number;
+    amount_reversed: number;
 
     /**
      * Balance transaction that describes the impact of this transfer on your account balance.
@@ -31,12 +31,12 @@ declare namespace Stripe {
     /**
      * Time that this record of the transfer was first created.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -56,24 +56,24 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * A set of key-value pairs that you can attach to a transfer object. It can be useful for storing additional information about the transfer in a structured format.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
     /**
      * A list of reversals that have been applied to the transfer.
      */
-    reversals?: ApiList<TransferReversal>;
+    reversals: ApiList<TransferReversal>;
 
     /**
      * Whether the transfer has been fully reversed. If the transfer is only partially reversed, this attribute will still be false.
      */
-    reversed?: boolean;
+    reversed: boolean;
 
     /**
      * ID of the charge or payment that was used to fund the transfer. If null, the transfer was funded from the available balance.

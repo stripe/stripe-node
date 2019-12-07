@@ -6,32 +6,32 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'balance_transaction';
+    object: 'balance_transaction';
 
     /**
      * Gross amount of the transaction, in %s.
      */
-    amount?: number;
+    amount: number;
 
     /**
      * The date the transaction's net funds will become available in the Stripe balance.
      */
-    available_on?: number;
+    available_on: number;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -43,17 +43,17 @@ declare namespace Stripe {
     /**
      * Fees (in %s) paid for this transaction.
      */
-    fee?: number;
+    fee: number;
 
     /**
      * Detailed breakdown of fees (in %s) paid for this transaction.
      */
-    fee_details?: Array<BalanceTransaction.FeeDetail>;
+    fee_details: Array<BalanceTransaction.FeeDetail>;
 
     /**
      * Net amount of the transaction, in %s.
      */
-    net?: number;
+    net: number;
 
     /**
      * The Stripe object to which this transaction is related.
@@ -80,12 +80,12 @@ declare namespace Stripe {
     /**
      * If the transaction's net funds are available in the Stripe balance yet. Either `available` or `pending`.
      */
-    status?: string;
+    status: string;
 
     /**
      * Transaction type: `adjustment`, `advance`, `advance_funding`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_transaction`, `payment`, `payment_failure_refund`, `payment_refund`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`. [Learn more](https://stripe.com/docs/reports/balance-transaction-types) about balance transaction types and what they represent.
      */
-    type?: BalanceTransaction.Type;
+    type: BalanceTransaction.Type;
   }
 
   namespace BalanceTransaction {

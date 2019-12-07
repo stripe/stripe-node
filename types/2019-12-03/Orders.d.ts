@@ -6,17 +6,17 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'order';
+    object: 'order';
 
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the order.
      */
-    amount?: number;
+    amount: number;
 
     amount_returned?: number | null;
 
@@ -35,12 +35,12 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
      */
-    currency?: string;
+    currency: string;
 
     /**
      * The customer used for the order.
@@ -57,17 +57,17 @@ declare namespace Stripe {
     /**
      * List of items constituting the order. An order can have up to 25 items.
      */
-    items?: Array<OrderItem>;
+    items: Array<OrderItem>;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
@@ -91,7 +91,7 @@ declare namespace Stripe {
     /**
      * Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More details in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
      */
-    status?: string;
+    status: string;
 
     /**
      * The timestamps at which the order status was updated.

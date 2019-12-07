@@ -6,22 +6,22 @@ declare namespace Stripe {
     /**
      * Unique identifier for the object.
      */
-    id?: string;
+    id: string;
 
     /**
      * String representing the object's type. Objects of the same type share the same value.
      */
-    object?: 'tax_rate';
+    object: 'tax_rate';
 
     /**
      * Defaults to `true`. When set to `false`, this tax rate cannot be applied to objects in the API, but will still be applied to subscriptions and invoices that already have it set.
      */
-    active?: boolean;
+    active: boolean;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created?: number;
+    created: number;
 
     /**
      * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
@@ -31,12 +31,12 @@ declare namespace Stripe {
     /**
      * The display name of the tax rates as it will appear to your customer on their receipt email, PDF, and the hosted invoice page.
      */
-    display_name?: string;
+    display_name: string;
 
     /**
      * This specifies if the tax rate is inclusive or exclusive.
      */
-    inclusive?: boolean;
+    inclusive: boolean;
 
     /**
      * The jurisdiction for the tax rate.
@@ -46,19 +46,19 @@ declare namespace Stripe {
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
      */
-    livemode?: boolean;
+    livemode: boolean;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
+    metadata: {
       [key: string]: string;
     };
 
     /**
      * This represents the tax rate percent out of 100.
      */
-    percentage?: number;
+    percentage: number;
   }
 
   interface TaxRateCreateParams {
