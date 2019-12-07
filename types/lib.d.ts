@@ -163,6 +163,9 @@ declare namespace Stripe {
 
     readonly type: keyof Errors;
 
+    /**
+     * See the "error types" section at https://stripe.com/docs/api/errors
+     */
     readonly rawType: RawErrorType;
 
     /**
@@ -202,8 +205,13 @@ declare namespace Stripe {
     readonly source?: Source;
   }
 
+  /**
+   * Card errors are the most common type of error you should expect to handle.
+   * They result when the user enters a card that can't be charged for some reason.
+   */
   export class StripeCardError extends StripeError {
     readonly type: 'StripeCardError';
+    readonly rawType: 'card_error';
 
     /**
      * @docs https://stripe.com/docs/declines/codes
@@ -211,35 +219,73 @@ declare namespace Stripe {
     readonly decline_code: string;
   }
 
+  /**
+   * Invalid request errors arise when your request has invalid parameters.
+   */
   export class StripeInvalidRequestError extends StripeError {
     readonly type: 'StripeInvalidRequestError';
+    readonly rawType: 'invalid_request_error';
   }
 
+  /**
+   * API errors cover any other type of problem (e.g., a temporary problem with Stripe's servers),
+   * and are extremely uncommon.
+   *
+   * It could also be raised in the case that a new error has been introduced in the API,
+   * but this version of the library doesn't know how to handle it.
+   */
   export class StripeAPIError extends StripeError {
     readonly type: 'StripeAPIError';
+    readonly rawType: 'api_error';
   }
 
+  /**
+   * Failure to properly authenticate yourself in the request.
+   */
   export class StripeAuthenticationError extends StripeError {
     readonly type: 'StripeAuthenticationError';
+    readonly rawType: 'authentication_error';
   }
 
+  /**
+   * Access was attempted on a resource that wasn't allowed.
+   */
   export class StripePermissionError extends StripeError {
     readonly type: 'StripePermissionError';
   }
 
+  /**
+   * Too many requests hit the API too quickly.
+   * @docs https://stripe.com/docs/rate-limits
+   */
   export class StripeRateLimitError extends StripeError {
     readonly type: 'StripeRateLimitError';
+    readonly rawType: 'rate_limit_error	';
   }
 
+  /**
+   * The library cannot connect to Stripe.
+   * This can happen for a variety of reasons,
+   * such as loss of network connectivity or a bad TLS certificate.
+   */
   export class StripeConnectionError extends StripeError {
     readonly type: 'StripeConnectionError';
   }
 
+  /**
+   * The signature verification for a webhook failed.
+   * @docs https://stripe.com/docs/webhooks/signatures
+   */
   export class StripeSignatureVerificationError extends StripeError {
     readonly type: 'StripeSignatureVerificationError';
   }
 
+  /**
+   * Idempotency errors occur when an `Idempotency-Key` is re-used on a request that does not match the first request's API endpoint and parameters.
+   * @docs https://stripe.com/docs/api/idempotent_requests?lang=node
+   */
   export class StripeIdempotencyError extends StripeError {
     readonly type: 'StripeIdempotencyError';
+    readonly rawType: 'idempotency_error';
   }
 }
