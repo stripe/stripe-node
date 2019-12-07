@@ -150,6 +150,8 @@ declare namespace Stripe {
     | 'invalid_request_error'
     | 'api_error'
     | 'idempotency_error'
+    | 'rate_limit_error'
+    | 'authentication_error'
     | 'invalid_grant';
 
   export class StripeError  {
