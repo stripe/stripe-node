@@ -53,6 +53,14 @@ declare namespace Stripe {
     timeout?: number;
   }
 
+  /**
+   * A container for paginated lists of objects.
+   * The array of objects is on the `.data` property,
+   * and `.has_more` indicates whether there are additional objects beyond the end of this list.
+   *
+   * Learn more in Stripe's [pagination docs](https://stripe.com/docs/api/pagination?lang=node)
+   * or, when iterating over many items, try [auto-pagination](https://github.com/stripe/stripe-node#auto-pagination) instead.
+   */
   export interface ApiList<T> {
     object: 'list';
 

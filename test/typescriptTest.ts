@@ -68,6 +68,10 @@ stripe.setAppInfo({
     }
   }
 
+  const cusList: Stripe.ApiList<
+    Stripe.Customer
+  > = await stripe.customers.list();
+
   const aThousandCustomers: Array<
     Stripe.Customer
   > = await stripe.customers.list().autoPagingToArray({limit: 1000});
