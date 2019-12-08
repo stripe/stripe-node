@@ -1,3 +1,4 @@
+
 # Stripe Node.js Library
 
 [![Version](https://img.shields.io/npm/v/stripe.svg)](https://www.npmjs.org/package/stripe)
@@ -135,6 +136,35 @@ stripe.customers
   });
 ```
 
+
+<details>
+<summary>customer.create parameters :
+</summary>
+<p>
+
+
+|Parameter| Type | Descripation
+|--|--|--|
+| balance | Number |An integer amount in cents that represents the customer’s current balance, which affect the customer’s future invoices.
+| address | Object | 
+| coupon | String |An arbitrary string that you can attach to a customer object. It is displayed alongside the customer in the dashboard. This can be unset by updating the value to null and then saving
+| description | String |An arbitrary string that you can attach to a customer object. It is displayed alongside the customer in the dashboard. This can be unset by updating the value to null and then saving.
+| email | String |Customer's email address. It's displayed alongside the customer in your dashboard and can be useful for searching and tracking.This can be unset by updating the value to null and then saving.
+| invoice_prefix | String |The prefix for the customer used to generate unique invoice numbers. Must be 3–12 uppercase letters or numbers.
+| invoice_settings | Object |
+| name | String | The customer’s full name or business name. This can be unset by updating the value to null and then saving.
+| payment_method | String |The ID of the PaymentMethod to attach to the customer.
+| phone | String |The customer’s phone number. This can be unset by updating the value to null and then saving.
+| plan | String |The identifier of the plan to subscribe the customer to. If provided, the returned customer object will have a list of subscriptions that the customer is currently subscribed to. If you subscribe a customer to a plan without a free trial, the customer must have a valid card as well.
+| source | Object |The source can either be a token, like the ones returned by our Stripe.js, or a dictionary containing a user’s credit card details.
+| tax_exempt | String | The customer’s tax exemption. One of none, exempt, or reverse.
+| trial_end | String |Unix timestamp representing the end of the trial period the customer will get before being charged.
+| tax_percent | String |A positive decimal (with at most two decimal places) between 1 and 100.
+
+
+</p>
+</details>  
+
 ### Using callbacks
 
 On versions of Node.js prior to v7.9:
@@ -185,6 +215,7 @@ stripe.customers.create(
   }
 );
 ```
+ 
 
 If `timeout` is set globally via the config object, the value set in a per-request basis will be favored.
 
