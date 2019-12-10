@@ -121,123 +121,123 @@ declare namespace Stripe {
       /**
        * City/Ward.
        */
-      city?: string | null;
+      city: string | null;
 
       /**
        * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
        */
-      country?: string | null;
+      country: string | null;
 
       /**
        * Block/Building number.
        */
-      line1?: string | null;
+      line1: string | null;
 
       /**
        * Building details.
        */
-      line2?: string | null;
+      line2: string | null;
 
       /**
        * Zip/Postal Code.
        */
-      postal_code?: string | null;
+      postal_code: string | null;
 
       /**
        * Prefecture.
        */
-      state?: string | null;
+      state: string | null;
 
       /**
        * Town/cho-me.
        */
-      town?: string | null;
+      town: string | null;
     }
 
     interface AddressKanji {
       /**
        * City/Ward.
        */
-      city?: string | null;
+      city: string | null;
 
       /**
        * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
        */
-      country?: string | null;
+      country: string | null;
 
       /**
        * Block/Building number.
        */
-      line1?: string | null;
+      line1: string | null;
 
       /**
        * Building details.
        */
-      line2?: string | null;
+      line2: string | null;
 
       /**
        * Zip/Postal Code.
        */
-      postal_code?: string | null;
+      postal_code: string | null;
 
       /**
        * Prefecture.
        */
-      state?: string | null;
+      state: string | null;
 
       /**
        * Town/cho-me.
        */
-      town?: string | null;
+      town: string | null;
     }
 
     interface Dob {
       /**
        * The day of birth, between 1 and 31.
        */
-      day?: number | null;
+      day: number | null;
 
       /**
        * The month of birth, between 1 and 12.
        */
-      month?: number | null;
+      month: number | null;
 
       /**
        * The four-digit year of birth.
        */
-      year?: number | null;
+      year: number | null;
     }
 
     interface Relationship {
       /**
        * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
        */
-      director?: boolean | null;
+      director: boolean | null;
 
       /**
        * Whether the person has significant responsibility to control, manage, or direct the organization.
        */
-      executive?: boolean | null;
+      executive: boolean | null;
 
       /**
        * Whether the person is an owner of the account's legal entity.
        */
-      owner?: boolean | null;
+      owner: boolean | null;
 
       /**
        * The percent owned by the person of the account's legal entity.
        */
-      percent_ownership?: number | null;
+      percent_ownership: number | null;
 
       /**
        * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
        */
-      representative?: boolean | null;
+      representative: boolean | null;
 
       /**
        * The person's title (e.g., CEO, Support Engineer).
        */
-      title?: string | null;
+      title: string | null;
     }
 
     interface Requirements {
@@ -291,44 +291,44 @@ declare namespace Stripe {
         /**
          * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
          */
-        back?: string | File | null;
+        back: string | File | null;
 
         /**
          * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
          */
-        details?: string | null;
+        details: string | null;
 
         /**
          * One of `document_corrupt`, `document_country_not_supported`, `document_expired`, `document_failed_copy`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_failed_greyscale`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_missing_back`, `document_missing_front`, `document_not_readable`, `document_not_uploaded`, `document_photo_mismatch`, `document_too_large`, or `document_type_not_supported`. A machine-readable code specifying the verification state for this document.
          */
-        details_code?: string | null;
+        details_code: string | null;
 
         /**
          * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
          */
-        front?: string | File | null;
+        front: string | File | null;
       }
 
       interface Document {
         /**
          * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
          */
-        back?: string | File | null;
+        back: string | File | null;
 
         /**
          * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
          */
-        details?: string | null;
+        details: string | null;
 
         /**
          * One of `document_corrupt`, `document_country_not_supported`, `document_expired`, `document_failed_copy`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_failed_greyscale`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_missing_back`, `document_missing_front`, `document_not_readable`, `document_not_uploaded`, `document_photo_mismatch`, `document_too_large`, or `document_type_not_supported`. A machine-readable code specifying the verification state for this document.
          */
-        details_code?: string | null;
+        details_code: string | null;
 
         /**
          * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
          */
-        front?: string | File | null;
+        front: string | File | null;
       }
     }
   }

@@ -20,9 +20,9 @@ declare namespace Stripe {
       approved: boolean;
 
       /**
-       * How the card details were provided. One of `chip`, `contactless`, `keyed_in`, `online`, or `swipe`.
+       * How the card details were provided.
        */
-      authorization_method: string;
+      authorization_method: Authorization.AuthorizationMethod;
 
       /**
        * The amount that has been authorized. This will be `0` when the object is created, and increase after it has been approved.
@@ -41,7 +41,7 @@ declare namespace Stripe {
       /**
        * The cardholder to whom this authorization belongs.
        */
-      cardholder?: string | Issuing.Cardholder | null;
+      cardholder: string | Issuing.Cardholder | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -87,9 +87,9 @@ declare namespace Stripe {
       request_history: Array<Authorization.RequestHistory>;
 
       /**
-       * One of `closed`, `pending`, or `reversed`.
+       * The current status of the authorization in its lifecycle.
        */
-      status: string;
+      status: Authorization.Status;
 
       transactions: Array<Issuing.Transaction>;
 
@@ -98,10 +98,17 @@ declare namespace Stripe {
       /**
        * What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
        */
-      wallet_provider?: string | null;
+      wallet_provider: string | null;
     }
 
     namespace Authorization {
+      type AuthorizationMethod =
+        | 'chip'
+        | 'contactless'
+        | 'keyed_in'
+        | 'online'
+        | 'swipe'
+
       interface MerchantData {
         /**
          * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
@@ -111,17 +118,17 @@ declare namespace Stripe {
         /**
          * City where the seller is located
          */
-        city?: string | null;
+        city: string | null;
 
         /**
          * Country where the seller is located
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Name of the seller
          */
-        name?: string | null;
+        name: string | null;
 
         /**
          * Identifier assigned to the seller by the card brand
@@ -131,17 +138,17 @@ declare namespace Stripe {
         /**
          * Postal code where the seller is located
          */
-        postal_code?: string | null;
+        postal_code: string | null;
 
         /**
          * State where the seller is located
          */
-        state?: string | null;
+        state: string | null;
 
         /**
          * The url an online purchase was made from
          */
-        url?: string | null;
+        url: string | null;
       }
 
       interface RequestHistory {
@@ -229,14 +236,16 @@ declare namespace Stripe {
         }
       }
 
+      type Status = 'closed' | 'pending' | 'reversed'
+
       interface VerificationData {
         /**
-         * One of `match`, `mismatch`, or `not_provided`.
+         * Wether the cardholder provided an address first line and if it matched the cardholder's `billing.address.line1`. One of `match`, `mismatch`, or `not_provided`.
          */
         address_line1_check: string;
 
         /**
-         * One of `match`, `mismatch`, or `not_provided`.
+         * Wether the cardholder provided a zip (or postal code) and if it matched the cardholder's `billing.address.postal_code`. One of `match`, `mismatch`, or `not_provided`.
          */
         address_zip_check: string;
 
@@ -246,7 +255,7 @@ declare namespace Stripe {
         authentication: string;
 
         /**
-         * One of `match`, `mismatch`, or `not_provided`.
+         * Wether the cardholder provided a CVC and if it matched Stripe's record. One of `match`, `mismatch`, or `not_provided`.
          */
         cvc_check: string;
       }

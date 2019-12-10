@@ -98,12 +98,12 @@ declare namespace Stripe {
       /**
        * The merchant category code for the account. MCCs are used to classify businesses based on the goods or services they provide.
        */
-      mcc?: string | null;
+      mcc: string | null;
 
       /**
        * The customer-facing business name.
        */
-      name?: string | null;
+      name: string | null;
 
       /**
        * Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
@@ -113,27 +113,27 @@ declare namespace Stripe {
       /**
        * A publicly available mailing address for sending support issues to.
        */
-      support_address?: Address | null;
+      support_address: Address | null;
 
       /**
        * A publicly available email address for sending support issues to.
        */
-      support_email?: string | null;
+      support_email: string | null;
 
       /**
        * A publicly available phone number to call with support issues.
        */
-      support_phone?: string | null;
+      support_phone: string | null;
 
       /**
        * A publicly available website for handling support issues.
        */
-      support_url?: string | null;
+      support_url: string | null;
 
       /**
        * The business's publicly available website.
        */
-      url?: string | null;
+      url: string | null;
     }
 
     interface Capabilities {
@@ -189,7 +189,7 @@ declare namespace Stripe {
       /**
        * The company's legal name.
        */
-      name?: string | null;
+      name: string | null;
 
       /**
        * The Kana variation of the company's legal name (Japan only).
@@ -237,74 +237,74 @@ declare namespace Stripe {
         /**
          * City/Ward.
          */
-        city?: string | null;
+        city: string | null;
 
         /**
          * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Block/Building number.
          */
-        line1?: string | null;
+        line1: string | null;
 
         /**
          * Building details.
          */
-        line2?: string | null;
+        line2: string | null;
 
         /**
          * Zip/Postal Code.
          */
-        postal_code?: string | null;
+        postal_code: string | null;
 
         /**
          * Prefecture.
          */
-        state?: string | null;
+        state: string | null;
 
         /**
          * Town/cho-me.
          */
-        town?: string | null;
+        town: string | null;
       }
 
       interface AddressKanji {
         /**
          * City/Ward.
          */
-        city?: string | null;
+        city: string | null;
 
         /**
          * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Block/Building number.
          */
-        line1?: string | null;
+        line1: string | null;
 
         /**
          * Building details.
          */
-        line2?: string | null;
+        line2: string | null;
 
         /**
          * Zip/Postal Code.
          */
-        postal_code?: string | null;
+        postal_code: string | null;
 
         /**
          * Prefecture.
          */
-        state?: string | null;
+        state: string | null;
 
         /**
          * Town/cho-me.
          */
-        town?: string | null;
+        town: string | null;
       }
 
       interface Verification {
@@ -316,22 +316,22 @@ declare namespace Stripe {
           /**
            * The back of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`.
            */
-          back?: string | File | null;
+          back: string | File | null;
 
           /**
            * A user-displayable string describing the verification state of this document.
            */
-          details?: string | null;
+          details: string | null;
 
           /**
            * One of `document_corrupt`, `document_expired`, `document_failed_copy`, `document_failed_greyscale`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_not_readable`, `document_not_uploaded`, `document_type_not_supported`, or `document_too_large`. A machine-readable code specifying the verification state for this document.
            */
-          details_code?: string | null;
+          details_code: string | null;
 
           /**
            * The front of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`.
            */
-          front?: string | File | null;
+          front: string | File | null;
         }
       }
     }
@@ -340,32 +340,32 @@ declare namespace Stripe {
       /**
        * The date the fields in `currently_due` must be collected by to keep payouts enabled for the account. These fields might block payouts sooner if the next threshold is reached before these fields are collected.
        */
-      current_deadline?: number | null;
+      current_deadline: number | null;
 
       /**
        * The fields that need to be collected to keep the account enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
        */
-      currently_due?: Array<string> | null;
+      currently_due: Array<string> | null;
 
       /**
        * If the account is disabled, this string describes why the account can't create charges or receive payouts. Can be `requirements.past_due`, `requirements.pending_verification`, `rejected.fraud`, `rejected.terms_of_service`, `rejected.listed`, `rejected.other`, `listed`, `under_review`, or `other`.
        */
-      disabled_reason?: string | null;
+      disabled_reason: string | null;
 
       /**
        * The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
        */
-      eventually_due?: Array<string> | null;
+      eventually_due: Array<string> | null;
 
       /**
        * The fields that weren't collected by the `current_deadline`. These fields need to be collected to re-enable the account.
        */
-      past_due?: Array<string> | null;
+      past_due: Array<string> | null;
 
       /**
        * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
        */
-      pending_verification?: Array<string> | null;
+      pending_verification: Array<string> | null;
     }
 
     interface Settings {
@@ -385,17 +385,17 @@ declare namespace Stripe {
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be square and at least 128px x 128px.
          */
-        icon?: string | File | null;
+        icon: string | File | null;
 
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) A logo for the account that will be used in Checkout instead of the icon and without the account's name next to it if provided. Must be at least 128px x 128px.
          */
-        logo?: string | File | null;
+        logo: string | File | null;
 
         /**
          * A CSS hex color value representing the primary branding color for this account
          */
-        primary_color?: string | null;
+        primary_color: string | null;
       }
 
       interface CardPayments {
@@ -404,7 +404,7 @@ declare namespace Stripe {
         /**
          * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
          */
-        statement_descriptor_prefix?: string | null;
+        statement_descriptor_prefix: string | null;
       }
 
       namespace CardPayments {
@@ -425,29 +425,29 @@ declare namespace Stripe {
         /**
          * The display name for this account. This is used on the Stripe Dashboard to differentiate between accounts.
          */
-        display_name?: string | null;
+        display_name: string | null;
 
         /**
          * The timezone used in the Stripe Dashboard for this account. A list of possible time zone values is maintained at the [IANA Time Zone Database](http://www.iana.org/time-zones).
          */
-        timezone?: string | null;
+        timezone: string | null;
       }
 
       interface Payments {
         /**
          * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge.
          */
-        statement_descriptor?: string | null;
+        statement_descriptor: string | null;
 
         /**
          * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only)
          */
-        statement_descriptor_kana?: string | null;
+        statement_descriptor_kana: string | null;
 
         /**
          * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only)
          */
-        statement_descriptor_kanji?: string | null;
+        statement_descriptor_kanji: string | null;
       }
 
       interface Payouts {
@@ -461,7 +461,7 @@ declare namespace Stripe {
         /**
          * The text that appears on the bank account statement for payouts. If not set, this defaults to the platform's bank descriptor as set in the Dashboard.
          */
-        statement_descriptor?: string | null;
+        statement_descriptor: string | null;
       }
 
       namespace Payouts {
@@ -493,17 +493,17 @@ declare namespace Stripe {
       /**
        * The Unix timestamp marking when the Stripe Services Agreement was accepted by the account representative
        */
-      date?: number | null;
+      date: number | null;
 
       /**
        * The IP address from which the Stripe Services Agreement was accepted by the account representative
        */
-      ip?: string | null;
+      ip: string | null;
 
       /**
        * The user agent of the browser from which the Stripe Services Agreement was accepted by the account representative
        */
-      user_agent?: string | null;
+      user_agent: string | null;
     }
 
     type Type = 'custom' | 'express' | 'standard'

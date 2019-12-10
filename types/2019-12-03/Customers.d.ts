@@ -135,17 +135,17 @@ declare namespace Stripe {
       /**
        * Default custom fields to be displayed on invoices for this customer.
        */
-      custom_fields?: Array<InvoiceSettings.CustomField> | null;
+      custom_fields: Array<InvoiceSettings.CustomField> | null;
 
       /**
        * ID of the default payment method used for subscriptions and invoices for the customer.
        */
-      default_payment_method?: string | PaymentMethod | null;
+      default_payment_method: string | PaymentMethod | null;
 
       /**
        * Default footer to be displayed on invoices for this customer.
        */
-      footer?: string | null;
+      footer: string | null;
     }
 
     namespace InvoiceSettings {

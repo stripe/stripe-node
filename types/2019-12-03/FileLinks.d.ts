@@ -26,7 +26,7 @@ declare namespace Stripe {
     /**
      * Time at which the link expires.
      */
-    expires_at?: number | null;
+    expires_at: number | null;
 
     /**
      * The file object this link points to.
@@ -48,7 +48,7 @@ declare namespace Stripe {
     /**
      * The publicly accessible URL to download the file.
      */
-    url?: string | null;
+    url: string | null;
   }
 
   interface FileLinkCreateParams {

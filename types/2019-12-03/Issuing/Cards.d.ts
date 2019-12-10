@@ -24,7 +24,7 @@ declare namespace Stripe {
       /**
        * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object to which the card belongs.
        */
-      cardholder?: Issuing.Cardholder | null;
+      cardholder: Issuing.Cardholder | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -71,32 +71,32 @@ declare namespace Stripe {
       /**
        * Metadata about the PIN on the card.
        */
-      pin?: Card.Pin | null;
+      pin: Card.Pin | null;
 
       /**
        * The card this card replaces, if any.
        */
-      replacement_for?: string | Issuing.Card | null;
+      replacement_for: string | Issuing.Card | null;
 
       /**
        * The reason why the previous card needed to be replaced.
        */
-      replacement_reason?: Card.ReplacementReason | null;
+      replacement_reason: Card.ReplacementReason | null;
 
       /**
        * Where and how the card will be shipped.
        */
-      shipping?: Card.Shipping | null;
+      shipping: Card.Shipping | null;
 
       /**
-       * One of `active`, `inactive`, `canceled`, `lost`, or `stolen`.
+       * Whether authorizations can be approved on this card.
        */
       status: Card.Status;
 
       /**
-       * One of `virtual` or `physical`.
+       * The type of the card.
        */
-      type: string;
+      type: Card.Type;
     }
 
     namespace Card {
@@ -104,36 +104,32 @@ declare namespace Stripe {
         /**
          * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this card.
          */
-        allowed_categories?:
-          | Array<AuthorizationControls.AllowedCategory>
-          | null;
+        allowed_categories: Array<AuthorizationControls.AllowedCategory> | null;
 
         /**
          * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to always decline on this card.
          */
-        blocked_categories?:
-          | Array<AuthorizationControls.BlockedCategory>
-          | null;
+        blocked_categories: Array<AuthorizationControls.BlockedCategory> | null;
 
         /**
          * The currency of the card. See [max_amount](https://stripe.com/docs/api#issuing_card_object-authorization_controls-max_amount)
          */
-        currency?: string | null;
+        currency: string | null;
 
         /**
          * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
          */
-        max_approvals?: number | null;
+        max_approvals: number | null;
 
         /**
          * Limit the spending with rules based on time intervals and categories.
          */
-        spending_limits?: Array<AuthorizationControls.SpendingLimit> | null;
+        spending_limits: Array<AuthorizationControls.SpendingLimit> | null;
 
         /**
          * Currency for the amounts within spending_limits. Locked to the currency of the card.
          */
-        spending_limits_currency?: string | null;
+        spending_limits_currency: string | null;
       }
 
       namespace AuthorizationControls {
@@ -726,10 +722,10 @@ declare namespace Stripe {
           /**
            * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) on which to apply the spending limit. Leave this blank to limit all charges.
            */
-          categories?: Array<SpendingLimit.Category> | null;
+          categories: Array<SpendingLimit.Category> | null;
 
           /**
-           * The time interval with which to apply this spending limit towards. Allowed values are `per_authorization`, `daily`, `weekly`, `monthly`, `yearly`, or `all_time`.
+           * The time interval or event with which to apply this spending limit towards.
            */
           interval: SpendingLimit.Interval;
         }
@@ -1054,12 +1050,12 @@ declare namespace Stripe {
         /**
          * The delivery service that shipped a card. One of `fedex` or `usps`.
          */
-        carrier?: string | null;
+        carrier: string | null;
 
         /**
          * A unix timestamp representing a best estimate of when the card will be delivered.
          */
-        eta?: number | null;
+        eta: number | null;
 
         /**
          * Recipient name.
@@ -1069,22 +1065,22 @@ declare namespace Stripe {
         /**
          * Deprecated field. It always return null and will be removed in the next client library major version
          */
-        phone?: string | null;
+        phone: string | null;
 
         /**
          * The delivery status of the card.
          */
-        status?: Shipping.Status | null;
+        status: Shipping.Status | null;
 
         /**
          * A tracking number for a card shipment.
          */
-        tracking_number?: string | null;
+        tracking_number: string | null;
 
         /**
          * A link to the shipping carrier's site where you can view detailed information about a card shipment.
          */
-        tracking_url?: string | null;
+        tracking_url: string | null;
 
         /**
          * Packaging options.
@@ -1104,13 +1100,9 @@ declare namespace Stripe {
         type Type = 'bulk' | 'individual'
       }
 
-      type Status =
-        | 'active'
-        | 'canceled'
-        | 'inactive'
-        | 'lost'
-        | 'pending'
-        | 'stolen'
+      type Status = 'active' | 'canceled' | 'inactive' | 'lost' | 'stolen'
+
+      type Type = 'physical' | 'virtual'
     }
 
     interface CardCreateParams {
@@ -1122,7 +1114,7 @@ declare namespace Stripe {
       /**
        * The type of card to issue. Possible values are `physical` or `virtual`.
        */
-      type: CardCreateParams.Type;
+      type: string | CardCreateParams.Type;
 
       /**
        * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
@@ -1159,7 +1151,7 @@ declare namespace Stripe {
       shipping?: CardCreateParams.Shipping;
 
       /**
-       * Specifies whether to permit authorizations on this card. Possible values are `active` or `inactive`.
+       * Whether authorizations can be approved on this card.
        */
       status?: CardCreateParams.Status;
     }
@@ -1780,7 +1772,7 @@ declare namespace Stripe {
           categories?: Array<SpendingLimit.Category>;
 
           /**
-           * The time interval with which to apply this spending limit towards. Allowed values are 'per_authorization', 'daily', 'weekly', 'monthly', 'yearly', and 'all_time'.
+           * The time interval with which to apply this spending limit towards.
            */
           interval: SpendingLimit.Interval;
         }
@@ -2147,7 +2139,7 @@ declare namespace Stripe {
         | '';
 
       /**
-       * Specifies whether to permit authorizations on this card. Possible values are `active`, `inactive`, or the terminal states: `canceled`, `lost`, `stolen`.
+       * Whether authorizations can be approved on this card.
        */
       status?: CardUpdateParams.Status;
     }
@@ -2768,7 +2760,7 @@ declare namespace Stripe {
           categories?: Array<SpendingLimit.Category>;
 
           /**
-           * The time interval with which to apply this spending limit towards. Allowed values are 'per_authorization', 'daily', 'weekly', 'monthly', 'yearly', and 'all_time'.
+           * The time interval with which to apply this spending limit towards.
            */
           interval: SpendingLimit.Interval;
         }

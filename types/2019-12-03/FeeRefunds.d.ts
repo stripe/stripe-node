@@ -21,7 +21,7 @@ declare namespace Stripe {
     /**
      * Balance transaction that describes the impact on your account balance.
      */
-    balance_transaction?: string | BalanceTransaction | null;
+    balance_transaction: string | BalanceTransaction | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.

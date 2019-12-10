@@ -13,6 +13,8 @@ declare namespace Stripe {
      */
     object: 'payment_method';
 
+    au_becs_debit?: PaymentMethod.AuBecsDebit;
+
     billing_details: PaymentMethod.BillingDetails;
 
     card?: PaymentMethod.Card;
@@ -27,7 +29,7 @@ declare namespace Stripe {
     /**
      * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
      */
-    customer?: string | Customer | DeletedCustomer | null;
+    customer: string | Customer | DeletedCustomer | null;
 
     ideal?: PaymentMethod.Ideal;
 
@@ -52,26 +54,34 @@ declare namespace Stripe {
   }
 
   namespace PaymentMethod {
+    interface AuBecsDebit {
+      bsb_number: string | null;
+
+      fingerprint: string | null;
+
+      last4: string | null;
+    }
+
     interface BillingDetails {
       /**
        * Billing address.
        */
-      address?: Address | null;
+      address: Address | null;
 
       /**
        * Email address.
        */
-      email?: string | null;
+      email: string | null;
 
       /**
        * Full name.
        */
-      name?: string | null;
+      name: string | null;
 
       /**
        * Billing phone number (including extension).
        */
-      phone?: string | null;
+      phone: string | null;
     }
 
     interface Card {
@@ -83,12 +93,12 @@ declare namespace Stripe {
       /**
        * Checks on Card address and CVC if provided.
        */
-      checks?: Card.Checks | null;
+      checks: Card.Checks | null;
 
       /**
        * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
        */
-      country?: string | null;
+      country: string | null;
 
       /**
        * Card description. (Only for internal use only and not typically available in standard API requests.)
@@ -133,12 +143,12 @@ declare namespace Stripe {
       /**
        * Contains details on how this Card maybe be used for 3D Secure authentication.
        */
-      three_d_secure_usage?: Card.ThreeDSecureUsage | null;
+      three_d_secure_usage: Card.ThreeDSecureUsage | null;
 
       /**
        * If this Card is part of a card wallet, this contains the details of the card wallet.
        */
-      wallet?: Card.Wallet | null;
+      wallet: Card.Wallet | null;
     }
 
     namespace Card {
@@ -146,17 +156,17 @@ declare namespace Stripe {
         /**
          * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
-        address_line1_check?: string | null;
+        address_line1_check: string | null;
 
         /**
          * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
-        address_postal_code_check?: string | null;
+        address_postal_code_check: string | null;
 
         /**
          * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
          */
-        cvc_check?: string | null;
+        cvc_check: string | null;
       }
 
       interface ThreeDSecureUsage {
@@ -174,7 +184,7 @@ declare namespace Stripe {
         /**
          * (For tokenized numbers only.) The last four digits of the device account number.
          */
-        dynamic_last4?: string | null;
+        dynamic_last4: string | null;
 
         google_pay?: Wallet.GooglePay;
 
@@ -201,22 +211,22 @@ declare namespace Stripe {
           /**
            * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          billing_address?: Address | null;
+          billing_address: Address | null;
 
           /**
            * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          email?: string | null;
+          email: string | null;
 
           /**
            * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          name?: string | null;
+          name: string | null;
 
           /**
            * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          shipping_address?: Address | null;
+          shipping_address: Address | null;
         }
 
         interface SamsungPay {}
@@ -233,22 +243,22 @@ declare namespace Stripe {
           /**
            * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          billing_address?: Address | null;
+          billing_address: Address | null;
 
           /**
            * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          email?: string | null;
+          email: string | null;
 
           /**
            * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          name?: string | null;
+          name: string | null;
 
           /**
            * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          shipping_address?: Address | null;
+          shipping_address: Address | null;
         }
       }
     }
@@ -259,12 +269,12 @@ declare namespace Stripe {
       /**
        * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
        */
-      bank?: Ideal.Bank | null;
+      bank: Ideal.Bank | null;
 
       /**
        * The Bank Identifier Code of the customer's bank, if the bank was provided.
        */
-      bic?: Ideal.Bic | null;
+      bic: Ideal.Bic | null;
     }
 
     namespace Ideal {
@@ -301,33 +311,43 @@ declare namespace Stripe {
       /**
        * Bank code of bank associated with the bank account.
        */
-      bank_code?: string | null;
+      bank_code: string | null;
 
       /**
        * Branch code of bank associated with the bank account.
        */
-      branch_code?: string | null;
+      branch_code: string | null;
 
       /**
        * Two-letter ISO code representing the country the bank account is located in.
        */
-      country?: string | null;
+      country: string | null;
 
       /**
        * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
        */
-      fingerprint?: string | null;
+      fingerprint: string | null;
 
       /**
        * Last four characters of the IBAN.
        */
-      last4?: string | null;
+      last4: string | null;
     }
 
-    type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
+    type Type =
+      | 'au_becs_debit'
+      | 'card'
+      | 'card_present'
+      | 'ideal'
+      | 'sepa_debit'
   }
 
   interface PaymentMethodCreateParams {
+    /**
+     * If this is a `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+     */
+    au_becs_debit?: PaymentMethodCreateParams.AuBecsDebit;
+
     /**
      * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
      */
@@ -377,6 +397,12 @@ declare namespace Stripe {
   }
 
   namespace PaymentMethodCreateParams {
+    interface AuBecsDebit {
+      account_number: string;
+
+      bsb_number: string;
+    }
+
     interface BillingDetails {
       /**
        * Billing address.
@@ -467,7 +493,12 @@ declare namespace Stripe {
       iban: string;
     }
 
-    type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
+    type Type =
+      | 'au_becs_debit'
+      | 'card'
+      | 'card_present'
+      | 'ideal'
+      | 'sepa_debit'
   }
 
   interface PaymentMethodRetrieveParams {

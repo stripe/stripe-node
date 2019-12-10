@@ -20,7 +20,7 @@ declare namespace Stripe {
     /**
      * IP address of the client that generated the token.
      */
-    client_ip?: string | null;
+    client_ip: string | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.

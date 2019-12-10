@@ -26,7 +26,7 @@ declare namespace Stripe {
     /**
      * Balance transaction that describes the impact of this transfer on your account balance.
      */
-    balance_transaction?: string | BalanceTransaction | null;
+    balance_transaction: string | BalanceTransaction | null;
 
     /**
      * Time that this record of the transfer was first created.
@@ -41,12 +41,12 @@ declare namespace Stripe {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
-    description?: string | null;
+    description: string | null;
 
     /**
      * ID of the Stripe account the transfer was sent to.
      */
-    destination?: string | Account | DeletedAccount | null;
+    destination: string | Account | DeletedAccount | null;
 
     /**
      * If the destination is a Stripe account, this will be the ID of the payment that the destination account received for the transfer.
@@ -78,17 +78,17 @@ declare namespace Stripe {
     /**
      * ID of the charge or payment that was used to fund the transfer. If null, the transfer was funded from the available balance.
      */
-    source_transaction?: string | Charge | null;
+    source_transaction: string | Charge | null;
 
     /**
      * The source balance this transfer came from. One of `card` or `bank_account`.
      */
-    source_type?: string | null;
+    source_type: string | null;
 
     /**
      * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
      */
-    transfer_group?: string | null;
+    transfer_group: string | null;
   }
 
   interface TransferCreateParams {

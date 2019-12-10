@@ -21,7 +21,7 @@ declare namespace Stripe {
     /**
      * ID of the balance transaction that describes the impact of this top-up on your account balance. May not be specified depending on status of top-up.
      */
-    balance_transaction?: string | BalanceTransaction | null;
+    balance_transaction: string | BalanceTransaction | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -36,22 +36,22 @@ declare namespace Stripe {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
-    description?: string | null;
+    description: string | null;
 
     /**
      * Date the funds are expected to arrive in your Stripe account for payouts. This factors in delays like weekends or bank holidays. May not be specified depending on status of top-up.
      */
-    expected_availability_date?: number | null;
+    expected_availability_date: number | null;
 
     /**
      * Error code explaining reason for top-up failure if available (see [the errors section](https://stripe.com/docs/api#errors) for a list of codes).
      */
-    failure_code?: string | null;
+    failure_code: string | null;
 
     /**
      * Message to user further explaining reason for top-up failure if available.
      */
-    failure_message?: string | null;
+    failure_message: string | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -70,7 +70,7 @@ declare namespace Stripe {
     /**
      * Extra information about a top-up. This will appear on your source's bank statement. It must contain at least one letter.
      */
-    statement_descriptor?: string | null;
+    statement_descriptor: string | null;
 
     /**
      * The status of the top-up is either `canceled`, `failed`, `pending`, `reversed`, or `succeeded`.
@@ -80,7 +80,7 @@ declare namespace Stripe {
     /**
      * A string that identifies this top-up as part of a group.
      */
-    transfer_group?: string | null;
+    transfer_group: string | null;
   }
 
   namespace Topup {

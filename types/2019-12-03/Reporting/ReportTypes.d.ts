@@ -27,7 +27,7 @@ declare namespace Stripe {
       /**
        * List of column names that are included by default when this Report Type gets run. (If the Report Type doesn't support the `columns` parameter, this will be null.)
        */
-      default_columns?: Array<string> | null;
+      default_columns: Array<string> | null;
 
       /**
        * Human-readable name of the Report Type

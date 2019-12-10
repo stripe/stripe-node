@@ -47,7 +47,7 @@ declare namespace Stripe {
       /**
        * The time at which the customer accepted the Mandate.
        */
-      accepted_at?: number | null;
+      accepted_at: number | null;
 
       offline?: CustomerAcceptance.Offline;
 
@@ -66,12 +66,12 @@ declare namespace Stripe {
         /**
          * The IP address from which the Mandate was accepted by the customer.
          */
-        ip_address?: string | null;
+        ip_address: string | null;
 
         /**
          * The user agent of the browser from which the Mandate was accepted by the customer.
          */
-        user_agent?: string | null;
+        user_agent: string | null;
       }
 
       type Type = 'offline' | 'online'
@@ -80,6 +80,8 @@ declare namespace Stripe {
     interface MultiUse {}
 
     interface PaymentMethodDetails {
+      au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
+
       card?: PaymentMethodDetails.Card;
 
       sepa_debit?: PaymentMethodDetails.SepaDebit;
@@ -91,6 +93,10 @@ declare namespace Stripe {
     }
 
     namespace PaymentMethodDetails {
+      interface AuBecsDebit {
+        url: string;
+      }
+
       interface Card {}
 
       interface SepaDebit {

@@ -31,7 +31,7 @@ declare namespace Stripe {
     /**
      * ID of the balance transaction that describes the impact of this payout on your account balance.
      */
-    balance_transaction?: string | BalanceTransaction | null;
+    balance_transaction: string | BalanceTransaction | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -46,27 +46,27 @@ declare namespace Stripe {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
-    description?: string | null;
+    description: string | null;
 
     /**
      * ID of the bank account or card the payout was sent to.
      */
-    destination?: string | BankAccount | Card | null;
+    destination: string | BankAccount | Card | null;
 
     /**
      * If the payout failed or was canceled, this will be the ID of the balance transaction that reversed the initial balance transaction, and puts the funds from the failed payout back in your balance.
      */
-    failure_balance_transaction?: string | BalanceTransaction | null;
+    failure_balance_transaction: string | BalanceTransaction | null;
 
     /**
      * Error code explaining reason for payout failure if available. See [Types of payout failures](https://stripe.com/docs/api#payout_failures) for a list of failure codes.
      */
-    failure_code?: string | null;
+    failure_code: string | null;
 
     /**
      * Message to user further explaining reason for payout failure if available.
      */
-    failure_message?: string | null;
+    failure_message: string | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -93,7 +93,7 @@ declare namespace Stripe {
     /**
      * Extra information about a payout to be displayed on the user's bank statement.
      */
-    statement_descriptor?: string | null;
+    statement_descriptor: string | null;
 
     /**
      * Current status of the payout (`paid`, `pending`, `in_transit`, `canceled` or `failed`). A payout will be `pending` until it is submitted to the bank, at which point it becomes `in_transit`. It will then change to `paid` if the transaction goes through. If it does not go through successfully, its status will change to `failed` or `canceled`.

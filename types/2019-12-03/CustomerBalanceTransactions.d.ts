@@ -26,7 +26,7 @@ declare namespace Stripe {
     /**
      * The ID of the credit note (if any) related to the transaction.
      */
-    credit_note?: string | CreditNote | null;
+    credit_note: string | CreditNote | null;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -41,7 +41,7 @@ declare namespace Stripe {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
-    description?: string | null;
+    description: string | null;
 
     /**
      * The customer's `balance` after the transaction was applied. A negative value decreases the amount due on the customer's next invoice. A positive value increases the amount due on the customer's next invoice.
@@ -51,7 +51,7 @@ declare namespace Stripe {
     /**
      * The ID of the invoice (if any) related to the transaction.
      */
-    invoice?: string | Invoice | DeletedInvoice | null;
+    invoice: string | Invoice | DeletedInvoice | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -61,7 +61,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?:
+    metadata:
       | {
         [key: string]: string;
       }

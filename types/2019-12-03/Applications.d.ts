@@ -16,6 +16,6 @@ declare namespace Stripe {
     /**
      * The name of the application.
      */
-    name?: string | null;
+    name: string | null;
   }
 }

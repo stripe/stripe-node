@@ -371,7 +371,7 @@ declare namespace Stripe {
       /**
        * The value of the tax ID.
        */
-      value?: string | null;
+      value: string | null;
     }
 
     namespace CustomerTaxId {
@@ -399,29 +399,29 @@ declare namespace Stripe {
       /**
        * The time that the invoice draft was finalized.
        */
-      finalized_at?: number | null;
+      finalized_at: number | null;
 
       /**
        * The time that the invoice was marked uncollectible.
        */
-      marked_uncollectible_at?: number | null;
+      marked_uncollectible_at: number | null;
 
       /**
        * The time that the invoice was paid.
        */
-      paid_at?: number | null;
+      paid_at: number | null;
 
       /**
        * The time that the invoice was voided.
        */
-      voided_at?: number | null;
+      voided_at: number | null;
     }
 
     interface ThresholdReason {
       /**
        * The total invoice amount threshold boundary if it triggered the threshold invoice.
        */
-      amount_gte?: number | null;
+      amount_gte: number | null;
 
       /**
        * Indicates which line items triggered a threshold invoice.

@@ -28,17 +28,17 @@ declare namespace Stripe {
     /**
      * ID of the Connect application that created the charge.
      */
-    application?: string | Application | null;
+    application: string | Application | null;
 
     /**
      * The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
      */
-    application_fee?: string | ApplicationFee | null;
+    application_fee: string | ApplicationFee | null;
 
     /**
      * The amount of the application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
      */
-    application_fee_amount?: number | null;
+    application_fee_amount: number | null;
 
     /**
      * Authorization code on the charge.
@@ -48,7 +48,7 @@ declare namespace Stripe {
     /**
      * ID of the balance transaction that describes the impact of this charge on your account balance (not including refunds or disputes).
      */
-    balance_transaction?: string | BalanceTransaction | null;
+    balance_transaction: string | BalanceTransaction | null;
 
     billing_details: Charge.BillingDetails;
 
@@ -70,22 +70,22 @@ declare namespace Stripe {
     /**
      * ID of the customer this charge is for if one exists.
      */
-    customer?: string | Customer | DeletedCustomer | null;
+    customer: string | Customer | DeletedCustomer | null;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
-    description?: string | null;
+    description: string | null;
 
     /**
      * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
      */
-    destination?: string | Account | DeletedAccount | null;
+    destination: string | Account | DeletedAccount | null;
 
     /**
      * Details about the dispute if the charge has been disputed.
      */
-    dispute?: string | Dispute | null;
+    dispute: string | Dispute | null;
 
     /**
      * Whether the charge has been disputed.
@@ -95,22 +95,22 @@ declare namespace Stripe {
     /**
      * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/api#errors) for a list of codes).
      */
-    failure_code?: string | null;
+    failure_code: string | null;
 
     /**
      * Message to user further explaining reason for charge failure if available.
      */
-    failure_message?: string | null;
+    failure_message: string | null;
 
     /**
      * Information on fraud assessments for the charge.
      */
-    fraud_details?: Charge.FraudDetails | null;
+    fraud_details: Charge.FraudDetails | null;
 
     /**
      * ID of the invoice this charge is for if one exists.
      */
-    invoice?: string | Invoice | DeletedInvoice | null;
+    invoice: string | Invoice | DeletedInvoice | null;
 
     level3?: Charge.Level3;
 
@@ -129,17 +129,17 @@ declare namespace Stripe {
     /**
      * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
      */
-    on_behalf_of?: string | Account | DeletedAccount | null;
+    on_behalf_of: string | Account | DeletedAccount | null;
 
     /**
      * ID of the order this charge is for if one exists.
      */
-    order?: string | Order | null;
+    order: string | Order | null;
 
     /**
      * Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
      */
-    outcome?: Charge.Outcome | null;
+    outcome: Charge.Outcome | null;
 
     /**
      * `true` if the charge succeeded, or was successfully authorized for later capture.
@@ -149,27 +149,27 @@ declare namespace Stripe {
     /**
      * ID of the PaymentIntent associated with this charge, if one exists.
      */
-    payment_intent?: string | null;
+    payment_intent: string | null;
 
     /**
      * ID of the payment method used in this charge.
      */
-    payment_method?: string | null;
+    payment_method: string | null;
 
     /**
      * Details about the payment method at the time of the transaction.
      */
-    payment_method_details?: Charge.PaymentMethodDetails | null;
+    payment_method_details: Charge.PaymentMethodDetails | null;
 
     /**
      * This is the email address that the receipt for this charge was sent to.
      */
-    receipt_email?: string | null;
+    receipt_email: string | null;
 
     /**
      * This is the transaction number that appears on email receipts sent for this charge. This attribute will be `null` until a receipt has been sent.
      */
-    receipt_number?: string | null;
+    receipt_number: string | null;
 
     /**
      * This is the URL to view the receipt for this charge. The receipt is kept up-to-date to the latest state of the charge, including any refunds. If the charge is for an Invoice, the receipt will be stylized as an Invoice receipt.
@@ -189,17 +189,17 @@ declare namespace Stripe {
     /**
      * ID of the review associated with this charge if one exists.
      */
-    review?: string | Review | null;
+    review: string | Review | null;
 
     /**
      * Shipping information for the charge.
      */
-    shipping?: Charge.Shipping | null;
+    shipping: Charge.Shipping | null;
 
     /**
      * This is a legacy field that will be removed in the future. It contains the Source, Card, or BankAccount object used for the charge. For details about the payment method used for this charge, refer to `payment_method` or `payment_method_details` instead.
      */
-    source?:
+    source:
       | Account
       | AlipayAccount
       | BankAccount
@@ -211,17 +211,17 @@ declare namespace Stripe {
     /**
      * The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
      */
-    source_transfer?: string | Transfer | null;
+    source_transfer: string | Transfer | null;
 
     /**
      * For card charges, use `statement_descriptor_suffix` instead. Otherwise, you can use this value as the complete description of a charge on your customers' statements. Must contain at least one letter, maximum 22 characters.
      */
-    statement_descriptor?: string | null;
+    statement_descriptor: string | null;
 
     /**
      * Provides information about the charge that customers see on their statements. Concatenated with the prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters for the concatenated descriptor.
      */
-    statement_descriptor_suffix?: string | null;
+    statement_descriptor_suffix: string | null;
 
     /**
      * The status of the payment is either `succeeded`, `pending`, or `failed`.
@@ -236,12 +236,12 @@ declare namespace Stripe {
     /**
      * An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
      */
-    transfer_data?: Charge.TransferData | null;
+    transfer_data: Charge.TransferData | null;
 
     /**
      * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
      */
-    transfer_group?: string | null;
+    transfer_group: string | null;
   }
 
   namespace Charge {
@@ -261,22 +261,22 @@ declare namespace Stripe {
       /**
        * Billing address.
        */
-      address?: Address | null;
+      address: Address | null;
 
       /**
        * Email address.
        */
-      email?: string | null;
+      email: string | null;
 
       /**
        * Full name.
        */
-      name?: string | null;
+      name: string | null;
 
       /**
        * Billing phone number (including extension).
        */
-      phone?: string | null;
+      phone: string | null;
     }
 
     interface FraudDetails {
@@ -307,17 +307,17 @@ declare namespace Stripe {
 
     namespace Level3 {
       interface LineItem {
-        discount_amount?: number | null;
+        discount_amount: number | null;
 
         product_code: string;
 
         product_description: string;
 
-        quantity?: number | null;
+        quantity: number | null;
 
-        tax_amount?: number | null;
+        tax_amount: number | null;
 
-        unit_cost?: number | null;
+        unit_cost: number | null;
       }
     }
 
@@ -325,12 +325,12 @@ declare namespace Stripe {
       /**
        * Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://stripe.com/docs/declines#blocked-payments) after bank authorization, and may temporarily appear as "pending" on a cardholder's statement.
        */
-      network_status?: string | null;
+      network_status: string | null;
 
       /**
        * An enumerated value providing a more detailed explanation of the outcome's `type`. Charges blocked by Radar's default block rule have the value `highest_risk_level`. Charges placed in review by Radar's default review rule have the value `elevated_risk_level`. Charges authorized, blocked, or placed in review by custom rules have the value `rule`. See [understanding declines](https://stripe.com/docs/declines) for more details.
        */
-      reason?: string | null;
+      reason: string | null;
 
       /**
        * Stripe's evaluation of the riskiness of the payment. Possible values for evaluated payments are `normal`, `elevated`, `highest`. For non-card payments, and card-based payments predating the public assignment of risk levels, this field will have the value `not_assessed`. In the event of an error in the evaluation, this field will have the value `unknown`.
@@ -350,7 +350,7 @@ declare namespace Stripe {
       /**
        * A human-readable description of the outcome type and reason, designed for you (the recipient of the payment), not your customer.
        */
-      seller_message?: string | null;
+      seller_message: string | null;
 
       /**
        * Possible values are `authorized`, `manual_review`, `issuer_declined`, `blocked`, and `invalid`. See [understanding declines](https://stripe.com/docs/declines) and [Radar reviews](radar/review) for details.
@@ -436,54 +436,54 @@ declare namespace Stripe {
         /**
          * Account number to transfer funds to.
          */
-        account_number?: string | null;
+        account_number: string | null;
 
         /**
          * Name of the bank associated with the routing number.
          */
-        bank_name?: string | null;
+        bank_name: string | null;
 
         /**
          * Routing transit number for the bank account to transfer funds to.
          */
-        routing_number?: string | null;
+        routing_number: string | null;
 
         /**
          * SWIFT code of the bank associated with the routing number.
          */
-        swift_code?: string | null;
+        swift_code: string | null;
       }
 
       interface AchDebit {
         /**
          * Type of entity that holds the account. This can be either `individual` or `company`.
          */
-        account_holder_type?: AchDebit.AccountHolderType | null;
+        account_holder_type: AchDebit.AccountHolderType | null;
 
         /**
          * Name of the bank associated with the bank account.
          */
-        bank_name?: string | null;
+        bank_name: string | null;
 
         /**
          * Two-letter ISO code representing the country the bank account is located in.
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
          */
-        fingerprint?: string | null;
+        fingerprint: string | null;
 
         /**
          * Last four digits of the bank account number.
          */
-        last4?: string | null;
+        last4: string | null;
 
         /**
          * Routing transit number of the bank account.
          */
-        routing_number?: string | null;
+        routing_number: string | null;
       }
 
       namespace AchDebit {
@@ -494,22 +494,22 @@ declare namespace Stripe {
         /**
          * Two-letter ISO code representing the country the bank account is located in.
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
          */
-        fingerprint?: string | null;
+        fingerprint: string | null;
 
         /**
          * Last four digits of the bank account number.
          */
-        last4?: string | null;
+        last4: string | null;
 
         /**
          * Routing transit number of the bank account.
          */
-        routing_number?: string | null;
+        routing_number: string | null;
       }
 
       interface Alipay {}
@@ -518,17 +518,17 @@ declare namespace Stripe {
         /**
          * Bank-State-Branch number of the bank account.
          */
-        bsb_number?: string | null;
+        bsb_number: string | null;
 
         /**
          * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
          */
-        fingerprint?: string | null;
+        fingerprint: string | null;
 
         /**
          * Last four digits of the bank account number.
          */
-        last4?: string | null;
+        last4: string | null;
 
         /**
          * ID of the mandate used to make this payment.
@@ -540,34 +540,34 @@ declare namespace Stripe {
         /**
          * Bank code of bank associated with the bank account.
          */
-        bank_code?: string | null;
+        bank_code: string | null;
 
         /**
          * Name of the bank associated with the bank account.
          */
-        bank_name?: string | null;
+        bank_name: string | null;
 
         /**
          * Bank Identifier Code of the bank associated with the bank account.
          */
-        bic?: string | null;
+        bic: string | null;
 
         /**
          * Last four characters of the IBAN.
          */
-        iban_last4?: string | null;
+        iban_last4: string | null;
 
         /**
          * Preferred language of the Bancontact authorization page that the customer is redirected to.
          * Can be one of `en`, `de`, `fr`, or `nl`
          */
-        preferred_language?: Bancontact.PreferredLanguage | null;
+        preferred_language: Bancontact.PreferredLanguage | null;
 
         /**
          * Owner's verified full name. Values are verified or provided by Bancontact directly
          * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
          */
-        verified_name?: string | null;
+        verified_name: string | null;
       }
 
       namespace Bancontact {
@@ -575,34 +575,34 @@ declare namespace Stripe {
       }
 
       interface Bitcoin {
-        address?: string | null;
+        address: string | null;
 
-        amount?: number | null;
+        amount: number | null;
 
-        amount_charged?: number | null;
+        amount_charged: number | null;
 
-        amount_received?: number | null;
+        amount_received: number | null;
 
-        amount_returned?: number | null;
+        amount_returned: number | null;
 
-        refund_address?: string | null;
+        refund_address: string | null;
       }
 
       interface Card {
         /**
          * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
          */
-        brand?: string | null;
+        brand: string | null;
 
         /**
          * Check results by Card networks on Card address and CVC at time of payment.
          */
-        checks?: Card.Checks | null;
+        checks: Card.Checks | null;
 
         /**
          * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Card description. (Only for internal use only and not typically available in standard API requests.)
@@ -612,12 +612,12 @@ declare namespace Stripe {
         /**
          * Two-digit number representing the card's expiration month.
          */
-        exp_month?: number | null;
+        exp_month: number | null;
 
         /**
          * Four-digit number representing the card's expiration year.
          */
-        exp_year?: number | null;
+        exp_year: number | null;
 
         /**
          * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example.
@@ -627,7 +627,7 @@ declare namespace Stripe {
         /**
          * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
          */
-        funding?: string | null;
+        funding: string | null;
 
         /**
          * Issuer identification number of the card. (Only for internal use only and not typically available in standard API requests.)
@@ -639,7 +639,7 @@ declare namespace Stripe {
          *
          * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
          */
-        installments?: Card.Installments | null;
+        installments: Card.Installments | null;
 
         /**
          * Issuer bank name of the card. (Only for internal use only and not typically available in standard API requests.)
@@ -649,7 +649,7 @@ declare namespace Stripe {
         /**
          * The last four digits of the card.
          */
-        last4?: string | null;
+        last4: string | null;
 
         /**
          * True if this payment was marked as MOTO and out of scope for SCA.
@@ -659,17 +659,17 @@ declare namespace Stripe {
         /**
          * Identifies which network this charge was processed on. Can be `amex`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
          */
-        network?: string | null;
+        network: string | null;
 
         /**
          * Populated if this transaction used 3D Secure authentication.
          */
-        three_d_secure?: Card.ThreeDSecure | null;
+        three_d_secure: Card.ThreeDSecure | null;
 
         /**
          * If this Card is part of a card wallet, this contains the details of the card wallet.
          */
-        wallet?: Card.Wallet | null;
+        wallet: Card.Wallet | null;
       }
 
       namespace Card {
@@ -677,24 +677,24 @@ declare namespace Stripe {
           /**
            * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
            */
-          address_line1_check?: string | null;
+          address_line1_check: string | null;
 
           /**
            * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
            */
-          address_postal_code_check?: string | null;
+          address_postal_code_check: string | null;
 
           /**
            * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
            */
-          cvc_check?: string | null;
+          cvc_check: string | null;
         }
 
         interface Installments {
           /**
            * Installment plan selected for the payment.
            */
-          plan?: Installments.Plan | null;
+          plan: Installments.Plan | null;
         }
 
         namespace Installments {
@@ -702,13 +702,13 @@ declare namespace Stripe {
             /**
              * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
              */
-            count?: number | null;
+            count: number | null;
 
             /**
              * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
              * One of `month`.
              */
-            interval?: 'month' | null;
+            interval: 'month' | null;
 
             /**
              * Type of installment plan, one of `fixed_count`.
@@ -742,7 +742,7 @@ declare namespace Stripe {
           /**
            * (For tokenized numbers only.) The last four digits of the device account number.
            */
-          dynamic_last4?: string | null;
+          dynamic_last4: string | null;
 
           google_pay?: Wallet.GooglePay;
 
@@ -769,22 +769,22 @@ declare namespace Stripe {
             /**
              * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            billing_address?: Address | null;
+            billing_address: Address | null;
 
             /**
              * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            email?: string | null;
+            email: string | null;
 
             /**
              * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            name?: string | null;
+            name: string | null;
 
             /**
              * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            shipping_address?: Address | null;
+            shipping_address: Address | null;
           }
 
           interface SamsungPay {}
@@ -801,22 +801,22 @@ declare namespace Stripe {
             /**
              * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            billing_address?: Address | null;
+            billing_address: Address | null;
 
             /**
              * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            email?: string | null;
+            email: string | null;
 
             /**
              * Owner's verified full name. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            name?: string | null;
+            name: string | null;
 
             /**
              * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            shipping_address?: Address | null;
+            shipping_address: Address | null;
           }
         }
       }
@@ -825,62 +825,62 @@ declare namespace Stripe {
         /**
          * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
          */
-        brand?: string | null;
+        brand: string | null;
 
         /**
          * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Authorization response cryptogram.
          */
-        emv_auth_data?: string | null;
+        emv_auth_data: string | null;
 
         /**
          * Two-digit number representing the card's expiration month.
          */
-        exp_month?: number | null;
+        exp_month: number | null;
 
         /**
          * Four-digit number representing the card's expiration year.
          */
-        exp_year?: number | null;
+        exp_year: number | null;
 
         /**
          * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example.
          */
-        fingerprint?: string | null;
+        fingerprint: string | null;
 
         /**
          * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
          */
-        funding?: string | null;
+        funding: string | null;
 
         /**
          * ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
          */
-        generated_card?: string | null;
+        generated_card: string | null;
 
         /**
          * The last four digits of the card.
          */
-        last4?: string | null;
+        last4: string | null;
 
         /**
          * Identifies which network this charge was processed on. Can be `amex`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
          */
-        network?: string | null;
+        network: string | null;
 
         /**
          * How were card details read in this transaction. Can be contact_emv, contactless_emv, magnetic_stripe_fallback, magnetic_stripe_track2, or contactless_magstripe_mode
          */
-        read_method?: string | null;
+        read_method: string | null;
 
         /**
          * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
          */
-        receipt?: CardPresent.Receipt | null;
+        receipt: CardPresent.Receipt | null;
       }
 
       namespace CardPresent {
@@ -888,42 +888,42 @@ declare namespace Stripe {
           /**
            * EMV tag 9F26, cryptogram generated by the integrated circuit chip.
            */
-          application_cryptogram?: string | null;
+          application_cryptogram: string | null;
 
           /**
            * Mnenomic of the Application Identifier.
            */
-          application_preferred_name?: string | null;
+          application_preferred_name: string | null;
 
           /**
            * Identifier for this transaction.
            */
-          authorization_code?: string | null;
+          authorization_code: string | null;
 
           /**
            * EMV tag 8A. A code returned by the card issuer.
            */
-          authorization_response_code?: string | null;
+          authorization_response_code: string | null;
 
           /**
            * How the cardholder verified ownership of the card.
            */
-          cardholder_verification_method?: string | null;
+          cardholder_verification_method: string | null;
 
           /**
            * EMV tag 84. Similar to the application identifier stored on the integrated circuit chip.
            */
-          dedicated_file_name?: string | null;
+          dedicated_file_name: string | null;
 
           /**
            * The outcome of a series of EMV functions performed by the card reader.
            */
-          terminal_verification_results?: string | null;
+          terminal_verification_results: string | null;
 
           /**
            * An indication of various EMV functions performed during the transaction.
            */
-          transaction_status_information?: string | null;
+          transaction_status_information: string | null;
         }
       }
 
@@ -932,53 +932,53 @@ declare namespace Stripe {
          * Owner's verified full name. Values are verified or provided by EPS directly
          * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
          */
-        verified_name?: string | null;
+        verified_name: string | null;
       }
 
       interface Giropay {
         /**
          * Bank code of bank associated with the bank account.
          */
-        bank_code?: string | null;
+        bank_code: string | null;
 
         /**
          * Name of the bank associated with the bank account.
          */
-        bank_name?: string | null;
+        bank_name: string | null;
 
         /**
          * Bank Identifier Code of the bank associated with the bank account.
          */
-        bic?: string | null;
+        bic: string | null;
 
         /**
          * Owner's verified full name. Values are verified or provided by Giropay directly
          * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
          */
-        verified_name?: string | null;
+        verified_name: string | null;
       }
 
       interface Ideal {
         /**
          * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
          */
-        bank?: Ideal.Bank | null;
+        bank: Ideal.Bank | null;
 
         /**
          * The Bank Identifier Code of the customer's bank.
          */
-        bic?: Ideal.Bic | null;
+        bic: Ideal.Bic | null;
 
         /**
          * Last four characters of the IBAN.
          */
-        iban_last4?: string | null;
+        iban_last4: string | null;
 
         /**
          * Owner's verified full name. Values are verified or provided by iDEAL directly
          * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
          */
-        verified_name?: string | null;
+        verified_name: string | null;
       }
 
       namespace Ideal {
@@ -1017,107 +1017,107 @@ declare namespace Stripe {
         /**
          * Entity number associated with this Multibanco payment.
          */
-        entity?: string | null;
+        entity: string | null;
 
         /**
          * Reference number associated with this Multibanco payment.
          */
-        reference?: string | null;
+        reference: string | null;
       }
 
       interface P24 {
         /**
          * Unique reference for this Przelewy24 payment.
          */
-        reference?: string | null;
+        reference: string | null;
 
         /**
          * Owner's verified full name. Values are verified or provided by Przelewy24 directly
          * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
          */
-        verified_name?: string | null;
+        verified_name: string | null;
       }
 
       interface SepaCreditTransfer {
         /**
          * Name of the bank associated with the bank account.
          */
-        bank_name?: string | null;
+        bank_name: string | null;
 
         /**
          * Bank Identifier Code of the bank associated with the bank account.
          */
-        bic?: string | null;
+        bic: string | null;
 
         /**
          * IBAN of the bank account to transfer funds to.
          */
-        iban?: string | null;
+        iban: string | null;
       }
 
       interface SepaDebit {
         /**
          * Bank code of bank associated with the bank account.
          */
-        bank_code?: string | null;
+        bank_code: string | null;
 
         /**
          * Branch code of bank associated with the bank account.
          */
-        branch_code?: string | null;
+        branch_code: string | null;
 
         /**
          * Two-letter ISO code representing the country the bank account is located in.
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
          */
-        fingerprint?: string | null;
+        fingerprint: string | null;
 
         /**
          * Last four characters of the IBAN.
          */
-        last4?: string | null;
+        last4: string | null;
 
         /**
          * ID of the mandate used to make this payment.
          */
-        mandate?: string | null;
+        mandate: string | null;
       }
 
       interface Sofort {
         /**
          * Bank code of bank associated with the bank account.
          */
-        bank_code?: string | null;
+        bank_code: string | null;
 
         /**
          * Name of the bank associated with the bank account.
          */
-        bank_name?: string | null;
+        bank_name: string | null;
 
         /**
          * Bank Identifier Code of the bank associated with the bank account.
          */
-        bic?: string | null;
+        bic: string | null;
 
         /**
          * Two-letter ISO code representing the country the bank account is located in.
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Last four characters of the IBAN.
          */
-        iban_last4?: string | null;
+        iban_last4: string | null;
 
         /**
          * Owner's verified full name. Values are verified or provided by SOFORT directly
          * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
          */
-        verified_name?: string | null;
+        verified_name: string | null;
       }
 
       interface StripeAccount {}
@@ -1153,7 +1153,7 @@ declare namespace Stripe {
       /**
        * The amount transferred to the destination account, if specified. By default, the entire charge amount is transferred to the destination account.
        */
-      amount?: number | null;
+      amount: number | null;
 
       /**
        * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.

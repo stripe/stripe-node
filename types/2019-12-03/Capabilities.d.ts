@@ -26,7 +26,7 @@ declare namespace Stripe {
     /**
      * Time at which the capability was requested. Measured in seconds since the Unix epoch.
      */
-    requested_at?: number | null;
+    requested_at: number | null;
 
     requirements?: Capability.Requirements;
 
@@ -41,7 +41,7 @@ declare namespace Stripe {
       /**
        * The date the fields in `currently_due` must be collected by to keep the capability enabled for the account.
        */
-      current_deadline?: number | null;
+      current_deadline: number | null;
 
       /**
        * The fields that need to be collected to keep the capability enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the capability is disabled.
@@ -51,7 +51,7 @@ declare namespace Stripe {
       /**
        * If the capability is disabled, this string describes why. Possible values are `requirement.fields_needed`, `pending.onboarding`, `pending.review`, `rejected_fraud`, or `rejected.other`.
        */
-      disabled_reason?: string | null;
+      disabled_reason: string | null;
 
       /**
        * The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.

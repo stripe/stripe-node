@@ -36,7 +36,7 @@ declare namespace Stripe {
     /**
      * Customer balance transaction related to this credit note.
      */
-    customer_balance_transaction?: string | CustomerBalanceTransaction | null;
+    customer_balance_transaction: string | CustomerBalanceTransaction | null;
 
     /**
      * ID of the invoice.
@@ -51,7 +51,7 @@ declare namespace Stripe {
     /**
      * Customer-facing text that appears on the credit note PDF.
      */
-    memo?: string | null;
+    memo: string | null;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -73,12 +73,12 @@ declare namespace Stripe {
     /**
      * Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
      */
-    reason?: CreditNote.Reason | null;
+    reason: CreditNote.Reason | null;
 
     /**
      * Refund related to this credit note.
      */
-    refund?: string | Refund | null;
+    refund: string | Refund | null;
 
     /**
      * Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
@@ -93,7 +93,7 @@ declare namespace Stripe {
     /**
      * The time that the credit note was voided.
      */
-    voided_at?: number | null;
+    voided_at: number | null;
   }
 
   namespace CreditNote {

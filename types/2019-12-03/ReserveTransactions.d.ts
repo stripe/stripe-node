@@ -23,6 +23,6 @@ declare namespace Stripe {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
-    description?: string | null;
+    description: string | null;
   }
 }

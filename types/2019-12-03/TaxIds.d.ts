@@ -69,12 +69,12 @@ declare namespace Stripe {
       /**
        * Verified address.
        */
-      verified_address?: string | null;
+      verified_address: string | null;
 
       /**
        * Verified name.
        */
-      verified_name?: string | null;
+      verified_name: string | null;
     }
 
     namespace Verification {

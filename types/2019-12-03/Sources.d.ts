@@ -24,7 +24,7 @@ declare namespace Stripe {
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount associated with the source. This is the amount for which the source will be chargeable once ready. Required for `single_use` sources.
      */
-    amount?: number | null;
+    amount: number | null;
 
     au_becs_debit?: Source.AuBecsDebit;
 
@@ -49,7 +49,7 @@ declare namespace Stripe {
     /**
      * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the source. This is the currency for which the source will be chargeable once ready. Required for `single_use` sources.
      */
-    currency?: string | null;
+    currency: string | null;
 
     /**
      * The ID of the customer to which this source is attached. This will not be present when the source has not been attached to a customer.
@@ -77,7 +77,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?:
+    metadata:
       | {
         [key: string]: string;
       }
@@ -88,7 +88,7 @@ declare namespace Stripe {
     /**
      * Information about the owner of the payment instrument that may be used or required by particular source types.
      */
-    owner?: Source.Owner | null;
+    owner: Source.Owner | null;
 
     p24?: Source.P24;
 
@@ -107,7 +107,7 @@ declare namespace Stripe {
     /**
      * Extra information about a source. This will appear on your customer's statement every time you charge the source.
      */
-    statement_descriptor?: string | null;
+    statement_descriptor: string | null;
 
     /**
      * The status of the source, one of `canceled`, `chargeable`, `consumed`, `failed`, or `pending`. Only `chargeable` sources can be used to create a charge.
@@ -124,7 +124,7 @@ declare namespace Stripe {
     /**
      * Either `reusable` or `single_use`. Whether this source should be reusable or not. Some source types may or may not be reusable by construction, while others may leave the option at creation. If an incompatible value is passed, an error will be returned.
      */
-    usage?: string | null;
+    usage: string | null;
 
     wechat?: Source.Wechat;
   }
@@ -420,42 +420,42 @@ declare namespace Stripe {
       /**
        * Owner's address.
        */
-      address?: Address | null;
+      address: Address | null;
 
       /**
        * Owner's email address.
        */
-      email?: string | null;
+      email: string | null;
 
       /**
        * Owner's full name.
        */
-      name?: string | null;
+      name: string | null;
 
       /**
        * Owner's phone number (including extension).
        */
-      phone?: string | null;
+      phone: string | null;
 
       /**
        * Verified owner's address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
        */
-      verified_address?: Address | null;
+      verified_address: Address | null;
 
       /**
        * Verified owner's email address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
        */
-      verified_email?: string | null;
+      verified_email: string | null;
 
       /**
        * Verified owner's full name. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
        */
-      verified_name?: string | null;
+      verified_name: string | null;
 
       /**
        * Verified owner's phone number (including extension). Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
        */
-      verified_phone?: string | null;
+      verified_phone: string | null;
     }
 
     interface P24 {
@@ -466,7 +466,7 @@ declare namespace Stripe {
       /**
        * The address of the receiver source. This is the value that should be communicated to the customer to send their funds to.
        */
-      address?: string | null;
+      address: string | null;
 
       /**
        * The total amount that was charged by you. The amount charged is expressed in the source's currency.
@@ -498,7 +498,7 @@ declare namespace Stripe {
       /**
        * The failure reason for the redirect, either `user_abort` (the customer aborted or dropped out of the redirect flow), `declined` (the authentication failed or the transaction was declined), or `processing_error` (the redirect failed due to a technical error). Present only if the redirect status is `failed`.
        */
-      failure_reason?: string | null;
+      failure_reason: string | null;
 
       /**
        * The URL you provide to redirect the customer to after they authenticated their payment.
@@ -591,7 +591,7 @@ declare namespace Stripe {
       /**
        * List of items constituting the order.
        */
-      items?: Array<SourceOrder.Item> | null;
+      items: Array<SourceOrder.Item> | null;
 
       shipping?: SourceOrder.Shipping;
     }
@@ -601,17 +601,17 @@ declare namespace Stripe {
         /**
          * The amount (price) for this order item.
          */
-        amount?: number | null;
+        amount: number | null;
 
         /**
          * This currency of this order item. Required when `amount` is present.
          */
-        currency?: string | null;
+        currency: string | null;
 
         /**
          * Human-readable description for this order item.
          */
-        description?: string | null;
+        description: string | null;
 
         /**
          * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
@@ -621,7 +621,7 @@ declare namespace Stripe {
         /**
          * The type of this order item. Must be `sku`, `tax`, or `shipping`.
          */
-        type?: string | null;
+        type: string | null;
       }
 
       interface Shipping {

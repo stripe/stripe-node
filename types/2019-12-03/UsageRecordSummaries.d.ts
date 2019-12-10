@@ -16,7 +16,7 @@ declare namespace Stripe {
     /**
      * The invoice in which this usage period has been billed for.
      */
-    invoice?: string | null;
+    invoice: string | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -41,12 +41,12 @@ declare namespace Stripe {
       /**
        * The end date of this usage period. All usage up to and including this point in time is included.
        */
-      end?: number | null;
+      end: number | null;
 
       /**
        * The start date of this usage period. All usage after this point in time is included.
        */
-      start?: number | null;
+      start: number | null;
     }
   }
 }

@@ -36,9 +36,9 @@ declare namespace Stripe {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
-    description?: string | null;
+    description: string | null;
 
-    exchange_rate?: number | null;
+    exchange_rate: number | null;
 
     /**
      * Fees (in %s) paid for this transaction.
@@ -58,7 +58,7 @@ declare namespace Stripe {
     /**
      * The Stripe object to which this transaction is related.
      */
-    source?:
+    source:
       | string
       | ApplicationFee
       | Charge
@@ -95,7 +95,7 @@ declare namespace Stripe {
        */
       amount: number;
 
-      application?: string | null;
+      application: string | null;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -105,7 +105,7 @@ declare namespace Stripe {
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
-      description?: string | null;
+      description: string | null;
 
       /**
        * Type of the fee, one of: `application_fee`, `stripe_fee` or `tax`.

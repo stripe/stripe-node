@@ -22,9 +22,9 @@ declare namespace Stripe {
       /**
        * The `Authorization` object that led to this transaction.
        */
-      authorization?: string | Issuing.Authorization | null;
+      authorization: string | Issuing.Authorization | null;
 
-      balance_transaction?: string | BalanceTransaction | null;
+      balance_transaction: string | BalanceTransaction | null;
 
       /**
        * The card used to make this transaction.
@@ -34,7 +34,7 @@ declare namespace Stripe {
       /**
        * The cardholder to whom this transaction belongs.
        */
-      cardholder?: string | Issuing.Cardholder | null;
+      cardholder: string | Issuing.Cardholder | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -46,7 +46,7 @@ declare namespace Stripe {
        */
       currency: string;
 
-      dispute?: string | Issuing.Dispute | null;
+      dispute: string | Issuing.Dispute | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -88,17 +88,17 @@ declare namespace Stripe {
         /**
          * City where the seller is located
          */
-        city?: string | null;
+        city: string | null;
 
         /**
          * Country where the seller is located
          */
-        country?: string | null;
+        country: string | null;
 
         /**
          * Name of the seller
          */
-        name?: string | null;
+        name: string | null;
 
         /**
          * Identifier assigned to the seller by the card brand
@@ -108,17 +108,17 @@ declare namespace Stripe {
         /**
          * Postal code where the seller is located
          */
-        postal_code?: string | null;
+        postal_code: string | null;
 
         /**
          * State where the seller is located
          */
-        state?: string | null;
+        state: string | null;
 
         /**
          * The url an online purchase was made from
          */
-        url?: string | null;
+        url: string | null;
       }
     }
 

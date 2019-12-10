@@ -26,7 +26,7 @@ declare namespace Stripe {
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
      */
-    description?: string | null;
+    description: string | null;
 
     /**
      * If true, discounts will apply to this line item. Always false for prorations.
@@ -52,7 +52,7 @@ declare namespace Stripe {
     /**
      * The plan of the subscription, if the line item is a subscription or a proration.
      */
-    plan?: Plan | null;
+    plan: Plan | null;
 
     /**
      * Whether this is a proration.
@@ -62,12 +62,12 @@ declare namespace Stripe {
     /**
      * The quantity of the subscription, if the line item is a subscription or a proration.
      */
-    quantity?: number | null;
+    quantity: number | null;
 
     /**
      * The subscription that the invoice item pertains to, if any.
      */
-    subscription?: string | null;
+    subscription: string | null;
 
     /**
      * The subscription item that generated this invoice item. Left empty if the line item is not an explicit result of a subscription.

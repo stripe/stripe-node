@@ -14,14 +14,14 @@ declare namespace Stripe {
        */
       object: 'issuing.cardholder';
 
-      authorization_controls?: Cardholder.AuthorizationControls | null;
+      authorization_controls: Cardholder.AuthorizationControls | null;
 
       billing: Cardholder.Billing;
 
       /**
        * Additional information about a `business_entity` cardholder.
        */
-      company?: Cardholder.Company | null;
+      company: Cardholder.Company | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -31,12 +31,12 @@ declare namespace Stripe {
       /**
        * The cardholder's email address.
        */
-      email?: string | null;
+      email: string | null;
 
       /**
        * Additional information about an `individual` cardholder.
        */
-      individual?: Cardholder.Individual | null;
+      individual: Cardholder.Individual | null;
 
       /**
        * Whether or not this cardholder is the default cardholder.
@@ -63,7 +63,7 @@ declare namespace Stripe {
       /**
        * The cardholder's phone number.
        */
-      phone_number?: string | null;
+      phone_number: string | null;
 
       requirements: Cardholder.Requirements;
 
@@ -83,26 +83,22 @@ declare namespace Stripe {
         /**
          * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this card.
          */
-        allowed_categories?:
-          | Array<AuthorizationControls.AllowedCategory>
-          | null;
+        allowed_categories: Array<AuthorizationControls.AllowedCategory> | null;
 
         /**
          * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to always decline on this card.
          */
-        blocked_categories?:
-          | Array<AuthorizationControls.BlockedCategory>
-          | null;
+        blocked_categories: Array<AuthorizationControls.BlockedCategory> | null;
 
         /**
          * Limit the spending with rules based on time intervals and categories.
          */
-        spending_limits?: Array<AuthorizationControls.SpendingLimit> | null;
+        spending_limits: Array<AuthorizationControls.SpendingLimit> | null;
 
         /**
          * Currency for the amounts within spending_limits.
          */
-        spending_limits_currency?: string | null;
+        spending_limits_currency: string | null;
       }
 
       namespace AuthorizationControls {
@@ -695,10 +691,10 @@ declare namespace Stripe {
           /**
            * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) on which to apply the spending limit. Leave this blank to limit all charges.
            */
-          categories?: Array<SpendingLimit.Category> | null;
+          categories: Array<SpendingLimit.Category> | null;
 
           /**
-           * The time interval with which to apply this spending limit towards. Allowed values are `per_authorization`, `daily`, `weekly`, `monthly`, `yearly`, or `all_time`.
+           * The time interval or event with which to apply this spending limit towards.
            */
           interval: SpendingLimit.Interval;
         }
@@ -1007,7 +1003,7 @@ declare namespace Stripe {
       interface Billing {
         address: Address;
 
-        name?: string | null;
+        name: string | null;
       }
 
       interface Company {
@@ -1021,7 +1017,7 @@ declare namespace Stripe {
         /**
          * The date of birth of this cardholder.
          */
-        dob?: Individual.Dob | null;
+        dob: Individual.Dob | null;
 
         /**
          * The first name of this cardholder.
@@ -1036,7 +1032,7 @@ declare namespace Stripe {
         /**
          * Government-issued ID document for this cardholder.
          */
-        verification?: Individual.Verification | null;
+        verification: Individual.Verification | null;
       }
 
       namespace Individual {
@@ -1044,24 +1040,24 @@ declare namespace Stripe {
           /**
            * The day of birth, between 1 and 31.
            */
-          day?: number | null;
+          day: number | null;
 
           /**
            * The month of birth, between 1 and 12.
            */
-          month?: number | null;
+          month: number | null;
 
           /**
            * The four-digit year of birth.
            */
-          year?: number | null;
+          year: number | null;
         }
 
         interface Verification {
           /**
            * An identifying document, either a passport or local ID card.
            */
-          document?: Verification.Document | null;
+          document: Verification.Document | null;
         }
 
         namespace Verification {
@@ -1069,12 +1065,12 @@ declare namespace Stripe {
             /**
              * The back of a document returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
              */
-            back?: string | File | null;
+            back: string | File | null;
 
             /**
              * The front of a document returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
              */
-            front?: string | File | null;
+            front: string | File | null;
           }
         }
       }
@@ -1083,12 +1079,12 @@ declare namespace Stripe {
         /**
          * If `disabled_reason` is present, all cards will decline authorizations with `cardholder_verification_required` reason.
          */
-        disabled_reason?: Requirements.DisabledReason | null;
+        disabled_reason: Requirements.DisabledReason | null;
 
         /**
          * If not empty, this field contains the list of fields that need to be collected in order to verify and re-enabled the cardholder.
          */
-        past_due?: Array<Requirements.PastDue> | null;
+        past_due: Array<Requirements.PastDue> | null;
       }
 
       namespace Requirements {
@@ -1785,7 +1781,7 @@ declare namespace Stripe {
           categories?: Array<SpendingLimit.Category>;
 
           /**
-           * The time interval with which to apply this spending limit towards. Allowed values are 'per_authorization', 'daily', 'weekly', 'monthly', 'yearly', and 'all_time'.
+           * The time interval with which to apply this spending limit towards.
            */
           interval: SpendingLimit.Interval;
         }
@@ -2867,7 +2863,7 @@ declare namespace Stripe {
           categories?: Array<SpendingLimit.Category>;
 
           /**
-           * The time interval with which to apply this spending limit towards. Allowed values are 'per_authorization', 'daily', 'weekly', 'monthly', 'yearly', and 'all_time'.
+           * The time interval with which to apply this spending limit towards.
            */
           interval: SpendingLimit.Interval;
         }

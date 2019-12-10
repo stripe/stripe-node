@@ -19,7 +19,7 @@ declare namespace Stripe {
        * The value (`auto` or `required`) for whether Checkout collected the
        * customer's billing address.
        */
-      billing_address_collection?: string | null;
+      billing_address_collection: string | null;
 
       /**
        * The URL the customer will be directed to if they decide to cancel payment and return to your website.
@@ -31,7 +31,7 @@ declare namespace Stripe {
        * customer ID, a cart ID, or similar, and can be used to reconcile the
        * session with your internal systems.
        */
-      client_reference_id?: string | null;
+      client_reference_id: string | null;
 
       /**
        * The ID of the customer for this session.
@@ -40,7 +40,7 @@ declare namespace Stripe {
        * during the session unless an existing customer was provided when
        * the session was created.
        */
-      customer?: string | Customer | DeletedCustomer | null;
+      customer: string | Customer | DeletedCustomer | null;
 
       /**
        * If provided, this value will be used when the Customer object is created.
@@ -49,12 +49,12 @@ declare namespace Stripe {
        * on file. To access information about the customer once a session is
        * complete, use the `customer` field.
        */
-      customer_email?: string | null;
+      customer_email: string | null;
 
       /**
        * The line items, plans, or SKUs purchased by the customer.
        */
-      display_items?: Array<Session.DisplayItem> | null;
+      display_items: Array<Session.DisplayItem> | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -64,17 +64,17 @@ declare namespace Stripe {
       /**
        * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used.
        */
-      locale?: Session.Locale | null;
+      locale: Session.Locale | null;
 
       /**
        * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
        */
-      mode?: Session.Mode | null;
+      mode: Session.Mode | null;
 
       /**
        * The ID of the PaymentIntent for Checkout Sessions in `payment` mode.
        */
-      payment_intent?: string | PaymentIntent | null;
+      payment_intent: string | PaymentIntent | null;
 
       /**
        * A list of the types of payment methods (e.g. card) this Checkout
@@ -85,7 +85,7 @@ declare namespace Stripe {
       /**
        * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
        */
-      setup_intent?: string | SetupIntent | null;
+      setup_intent: string | SetupIntent | null;
 
       /**
        * Describes the type of transaction being performed by Checkout in order to customize
@@ -94,12 +94,12 @@ declare namespace Stripe {
        * in `subscription` or `setup` mode.
        * Supported values are `auto`, `book`, `donate`, or `pay`.
        */
-      submit_type?: Session.SubmitType | null;
+      submit_type: Session.SubmitType | null;
 
       /**
        * The ID of the subscription for Checkout Sessions in `subscription` mode.
        */
-      subscription?: string | Subscription | null;
+      subscription: string | Subscription | null;
 
       /**
        * The URL the customer will be directed to after the payment or
@@ -142,12 +142,12 @@ declare namespace Stripe {
           /**
            * The description of the line item.
            */
-          description?: string | null;
+          description: string | null;
 
           /**
            * The images of the line item.
            */
-          images?: Array<string> | null;
+          images: Array<string> | null;
 
           /**
            * The name of the line item.

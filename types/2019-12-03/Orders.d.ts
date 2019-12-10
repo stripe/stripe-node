@@ -18,19 +18,19 @@ declare namespace Stripe {
      */
     amount: number;
 
-    amount_returned?: number | null;
+    amount_returned: number | null;
 
     /**
      * ID of the Connect Application that created the order.
      */
-    application?: string | null;
+    application: string | null;
 
-    application_fee?: number | null;
+    application_fee: number | null;
 
     /**
      * The ID of the payment used to pay for the order. Present if the order status is `paid`, `fulfilled`, or `refunded`.
      */
-    charge?: string | Charge | null;
+    charge: string | Charge | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -45,12 +45,12 @@ declare namespace Stripe {
     /**
      * The customer used for the order.
      */
-    customer?: string | Customer | DeletedCustomer | null;
+    customer: string | Customer | DeletedCustomer | null;
 
     /**
      * The email address of the customer placing the order.
      */
-    email?: string | null;
+    email: string | null;
 
     external_coupon_code?: string;
 
@@ -71,22 +71,22 @@ declare namespace Stripe {
       [key: string]: string;
     };
 
-    returns?: ApiList<OrderReturn> | null;
+    returns: ApiList<OrderReturn> | null;
 
     /**
      * The shipping method that is currently selected for this order, if any. If present, it is equal to one of the `id`s of shipping methods in the `shipping_methods` array. At order creation time, if there are multiple shipping methods, Stripe will automatically selected the first method.
      */
-    selected_shipping_method?: string | null;
+    selected_shipping_method: string | null;
 
     /**
      * The shipping address for the order. Present if the order is for goods to be shipped.
      */
-    shipping?: Order.Shipping | null;
+    shipping: Order.Shipping | null;
 
     /**
      * A list of supported shipping methods for this order. The desired shipping method can be specified either by updating the order, or when paying it.
      */
-    shipping_methods?: Array<Order.ShippingMethod> | null;
+    shipping_methods: Array<Order.ShippingMethod> | null;
 
     /**
      * Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More details in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
@@ -96,9 +96,9 @@ declare namespace Stripe {
     /**
      * The timestamps at which the order status was updated.
      */
-    status_transitions?: Order.StatusTransitions | null;
+    status_transitions: Order.StatusTransitions | null;
 
-    updated?: number | null;
+    updated: number | null;
 
     /**
      * The user's order ID if it is different from the Stripe order ID.
@@ -145,7 +145,7 @@ declare namespace Stripe {
       /**
        * The estimated delivery date for the given shipping method. Can be either a specific date or a range.
        */
-      delivery_estimate?: ShippingMethod.DeliveryEstimate | null;
+      delivery_estimate: ShippingMethod.DeliveryEstimate | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -183,13 +183,13 @@ declare namespace Stripe {
     }
 
     interface StatusTransitions {
-      canceled?: number | null;
+      canceled: number | null;
 
-      fulfiled?: number | null;
+      fulfiled: number | null;
 
-      paid?: number | null;
+      paid: number | null;
 
-      returned?: number | null;
+      returned: number | null;
     }
   }
 

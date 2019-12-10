@@ -21,7 +21,7 @@ declare namespace Stripe {
     /**
      * The Stripe API version used to render `data`. *Note: This property is populated only for events on or after October 31, 2014*.
      */
-    api_version?: string | null;
+    api_version: string | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -43,7 +43,7 @@ declare namespace Stripe {
     /**
      * Information on the API request that instigated the event.
      */
-    request?: Event.Request | null;
+    request: Event.Request | null;
 
     /**
      * Description of the event (e.g., `invoice.created` or `charge.refunded`).
@@ -74,12 +74,12 @@ declare namespace Stripe {
       /**
        * ID of the API request that caused the event. If null, the event was automatic (e.g., Stripe's automatic subscription handling). Request logs are available in the [dashboard](https://dashboard.stripe.com/logs), but currently not in the API.
        */
-      id?: string | null;
+      id: string | null;
 
       /**
        * The idempotency key transmitted during the request, if any. *Note: This property is populated only for events on or after May 23, 2017*.
        */
-      idempotency_key?: string | null;
+      idempotency_key: string | null;
     }
   }
 

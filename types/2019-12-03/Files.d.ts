@@ -21,7 +21,7 @@ declare namespace Stripe {
     /**
      * A filename for the file, suitable for saving to a filesystem.
      */
-    filename?: string | null;
+    filename: string | null;
 
     links?: ApiList<FileLink> | null;
 
@@ -38,17 +38,17 @@ declare namespace Stripe {
     /**
      * A user friendly title for the document.
      */
-    title?: string | null;
+    title: string | null;
 
     /**
      * The type of the file returned (e.g., `csv`, `pdf`, `jpg`, or `png`).
      */
-    type?: string | null;
+    type: string | null;
 
     /**
      * The URL from which the file can be downloaded using your live secret API key.
      */
-    url?: string | null;
+    url: string | null;
   }
 
   interface FileCreateParams {}

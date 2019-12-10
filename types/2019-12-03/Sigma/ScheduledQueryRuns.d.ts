@@ -29,7 +29,7 @@ declare namespace Stripe {
       /**
        * The file object representing the results of the query.
        */
-      file?: File | null;
+      file: File | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

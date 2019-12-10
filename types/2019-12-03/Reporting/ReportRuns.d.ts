@@ -23,7 +23,7 @@ declare namespace Stripe {
        * If something should go wrong during the run, a message about the failure (populated when
        *  `status=failed`).
        */
-      error?: string | null;
+      error: string | null;
 
       /**
        * Always `true`: reports can only be run on live-mode data.
@@ -41,7 +41,7 @@ declare namespace Stripe {
        * The file object representing the result of the report run (populated when
        *  `status=succeeded`).
        */
-      result?: File | null;
+      result: File | null;
 
       /**
        * Status of this report run. This will be `pending` when the run is initially created.
@@ -54,7 +54,7 @@ declare namespace Stripe {
        * Timestamp at which this run successfully finished (populated when
        *  `status=succeeded`). Measured in seconds since the Unix epoch.
        */
-      succeeded_at?: number | null;
+      succeeded_at: number | null;
     }
 
     namespace ReportRun {

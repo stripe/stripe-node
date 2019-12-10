@@ -16,7 +16,7 @@ declare namespace Stripe {
     /**
      * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the amount associated with the mandate notification. The amount is expressed in the currency of the underlying source. Required if the notification type is `debit_initiated`.
      */
-    amount?: number | null;
+    amount: number | null;
 
     bacs_debit?: SourceMandateNotification.BacsDebit;
 

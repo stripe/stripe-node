@@ -16,17 +16,17 @@ declare namespace Stripe {
     /**
      * The ZIP or postal code of the card used, if applicable.
      */
-    billing_zip?: string | null;
+    billing_zip: string | null;
 
     /**
      * The charge associated with this review.
      */
-    charge?: string | Charge | null;
+    charge: string | Charge | null;
 
     /**
      * The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
      */
-    closed_reason?: Review.ClosedReason | null;
+    closed_reason: Review.ClosedReason | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -36,12 +36,12 @@ declare namespace Stripe {
     /**
      * The IP address where the payment originated.
      */
-    ip_address?: string | null;
+    ip_address: string | null;
 
     /**
      * Information related to the location of the payment. Note that this information is an approximation and attempts to locate the nearest population center - it should not be used to determine a specific address.
      */
-    ip_address_location?: Review.IpAddressLocation | null;
+    ip_address_location: Review.IpAddressLocation | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -71,7 +71,7 @@ declare namespace Stripe {
     /**
      * Information related to the browsing session of the user who initiated the payment.
      */
-    session?: Review.Session | null;
+    session: Review.Session | null;
   }
 
   namespace Review {
@@ -85,27 +85,27 @@ declare namespace Stripe {
       /**
        * The city where the payment originated.
        */
-      city?: string | null;
+      city: string | null;
 
       /**
        * Two-letter ISO code representing the country where the payment originated.
        */
-      country?: string | null;
+      country: string | null;
 
       /**
        * The geographic latitude where the payment originated.
        */
-      latitude?: number | null;
+      latitude: number | null;
 
       /**
        * The geographic longitude where the payment originated.
        */
-      longitude?: number | null;
+      longitude: number | null;
 
       /**
        * The state/county/province/region where the payment originated.
        */
-      region?: string | null;
+      region: string | null;
     }
 
     type OpenedReason = 'manual' | 'rule'
@@ -114,22 +114,22 @@ declare namespace Stripe {
       /**
        * The browser used in this browser session (e.g., `Chrome`).
        */
-      browser?: string | null;
+      browser: string | null;
 
       /**
        * Information about the device used for the browser session (e.g., `Samsung SM-G930T`).
        */
-      device?: string | null;
+      device: string | null;
 
       /**
        * The platform for the browser session (e.g., `Macintosh`).
        */
-      platform?: string | null;
+      platform: string | null;
 
       /**
        * The version for the browser session (e.g., `61.0.3163.100`).
        */
-      version?: string | null;
+      version: string | null;
     }
   }
 

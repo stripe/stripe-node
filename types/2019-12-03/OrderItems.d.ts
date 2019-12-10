@@ -26,12 +26,12 @@ declare namespace Stripe {
     /**
      * The ID of the associated object for this line item. Expandable if not null (e.g., expandable to a SKU).
      */
-    parent?: string | Sku | DeletedSku | null;
+    parent: string | Sku | DeletedSku | null;
 
     /**
      * A positive integer representing the number of instances of `parent` that are included in this order item. Applicable/present only if `type` is `sku`.
      */
-    quantity?: number | null;
+    quantity: number | null;
 
     /**
      * The type of line item. One of `sku`, `tax`, `shipping`, or `discount`.

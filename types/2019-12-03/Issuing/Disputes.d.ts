@@ -64,12 +64,12 @@ declare namespace Stripe {
         /**
          * Evidence to support a fraudulent dispute. This will only be present if your dispute's `reason` is `fraudulent`.
          */
-        fraudulent?: Evidence.Fraudulent | null;
+        fraudulent: Evidence.Fraudulent | null;
 
         /**
          * Evidence to support an uncategorized dispute. This will only be present if your dispute's `reason` is `other`.
          */
-        other?: Evidence.Other | null;
+        other: Evidence.Other | null;
       }
 
       namespace Evidence {
@@ -77,12 +77,12 @@ declare namespace Stripe {
           /**
            * Brief freeform text explaining why you are disputing this transaction.
            */
-          dispute_explanation?: string | null;
+          dispute_explanation: string | null;
 
           /**
            * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
            */
-          uncategorized_file?: string | File | null;
+          uncategorized_file: string | File | null;
         }
 
         interface Other {
@@ -94,7 +94,7 @@ declare namespace Stripe {
           /**
            * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
            */
-          uncategorized_file?: string | File | null;
+          uncategorized_file: string | File | null;
         }
       }
 

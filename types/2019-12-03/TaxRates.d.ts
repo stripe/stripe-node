@@ -26,7 +26,7 @@ declare namespace Stripe {
     /**
      * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
      */
-    description?: string | null;
+    description: string | null;
 
     /**
      * The display name of the tax rates as it will appear to your customer on their receipt email, PDF, and the hosted invoice page.
@@ -41,7 +41,7 @@ declare namespace Stripe {
     /**
      * The jurisdiction for the tax rate.
      */
-    jurisdiction?: string | null;
+    jurisdiction: string | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

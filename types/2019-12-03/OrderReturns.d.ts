@@ -41,12 +41,12 @@ declare namespace Stripe {
     /**
      * The order that this return includes items from.
      */
-    order?: string | Order | null;
+    order: string | Order | null;
 
     /**
      * The ID of the refund issued for this return.
      */
-    refund?: string | Refund | null;
+    refund: string | Refund | null;
   }
 
   interface OrderReturnRetrieveParams {
