@@ -1048,9 +1048,9 @@ declare namespace Stripe {
         address: Address;
 
         /**
-         * The delivery service that shipped a card. One of `fedex` or `usps`.
+         * The delivery company that shipped a card.
          */
-        carrier: string | null;
+        carrier: Shipping.Carrier | null;
 
         /**
          * A unix timestamp representing a best estimate of when the card will be delivered.
@@ -1089,6 +1089,8 @@ declare namespace Stripe {
       }
 
       namespace Shipping {
+        type Carrier = 'fedex' | 'usps'
+
         type Status =
           | 'canceled'
           | 'delivered'
@@ -2088,7 +2090,7 @@ declare namespace Stripe {
         /**
          * Packaging options.
          */
-        type?: '' | Shipping.Type;
+        type?: Shipping.Type;
       }
 
       namespace Shipping {
