@@ -262,7 +262,7 @@ declare namespace Stripe {
    */
   export class StripeRateLimitError extends StripeError {
     readonly type: 'StripeRateLimitError';
-    readonly rawType: 'rate_limit_error	';
+    readonly rawType: 'rate_limit_error';
   }
 
   /**
