@@ -1,5 +1,6 @@
 ///<reference path='../lib.d.ts' />
-///<reference path='../webhooks.d.ts' />
+///<reference path='../Webhooks.d.ts' />
+///<reference path='../OAuth.d.ts' />
 ///<reference path='./Addresses.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
@@ -157,6 +158,7 @@ declare module 'stripe' {
     transfers: Stripe.TransfersResource;
     webhookEndpoints: Stripe.WebhookEndpointsResource;
     webhooks: Stripe.Webhooks;
+    oauth: Stripe.OAuthResource;
 
     /**
      * Namespaced Resources
