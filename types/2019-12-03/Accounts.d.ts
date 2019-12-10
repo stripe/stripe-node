@@ -2073,6 +2073,16 @@ declare namespace Stripe {
     retrieve(options?: RequestOptions): Promise<Account>;
 
     /**
+     * Retrieves the details of an account.
+     */
+    retrieve(
+      id: string,
+      params?: AccountRetrieveParams,
+      options?: RequestOptions
+    ): Promise<Account>;
+    retrieve(id: string, options?: RequestOptions): Promise<Account>;
+
+    /**
      * Updates a connected [Express or Custom account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are supported by both account types.
      *
      * To update your own account, use the [Dashboard](https://dashboard.stripe.com/account). Refer to our [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
