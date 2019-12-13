@@ -226,5 +226,5 @@ declare module 'stripe' {
     setHttpAgent(agent: Stripe.HttpAgent): void;
   }
 
-  export = Stripe;
+  export default Stripe;
 }

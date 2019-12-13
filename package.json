@@ -49,7 +49,7 @@
     "mocha": "nyc mocha",
     "mocha-only": "mocha",
     "test": "yarn lint && yarn test-typescript && yarn mocha",
-    "test-typescript": "tsc --noEmit --noImplicitAny --esModuleInterop --lib esnext test/typescriptTest.ts",
+    "test-typescript": "tsc --noEmit --noImplicitAny --lib esnext test/typescriptTest.ts",
     "lint": "eslint --ext .js,.jsx .",
     "fix": "yarn lint --fix",
     "report": "nyc -r text -r lcov report",

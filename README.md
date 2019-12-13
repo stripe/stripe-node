@@ -58,16 +58,7 @@ Add this to your `tsconfig.json` under `"compilerOptions"`:
 
 ```js
   "types": ["stripe/types/2019-12-03"],
-  "esModuleInterop": true,
 ```
-
-Or this wherever you import Stripe:
-
-```ts
-///<reference types="stripe/types/2019-12-03" />
-```
-
-with the `--esModuleInterop` flag.
 
 We do not include the types by default because they represent only the latest API Version;
 users on older versions might otherwise be confused if they upgrade their stripe library
