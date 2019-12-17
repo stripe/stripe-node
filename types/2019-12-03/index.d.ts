@@ -89,7 +89,7 @@
 ///<reference path='./TransferReversals.d.ts' />
 
 declare module 'stripe' {
-  class Stripe {
+  export class Stripe {
     DEFAULT_HOST: string;
     DEFAULT_PORT: string;
     DEFAULT_BASE_PATH: string;
@@ -105,6 +105,8 @@ declare module 'stripe' {
       uname: string;
     };
     USER_AGENT_SERIALIZED: string;
+
+    static Stripe: typeof Stripe;
 
     constructor(apiKey: string, config?: Stripe.StripeConfig | string);
 
