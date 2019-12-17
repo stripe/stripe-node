@@ -509,7 +509,7 @@ $ yarn fix
 
 [api-keys]: https://dashboard.stripe.com/account/apikeys
 [api-versions]: https://stripe.com/docs/api/versioning
-[api-versions-upgrading]: https://stripe.com/docs/upgrades#how-can-i-upgrade-my-api
+[api-version-upgrading]: https://stripe.com/docs/upgrades#how-can-i-upgrade-my-api
 [connect]: https://stripe.com/connect
 [expanding_objects]: https://stripe.com/docs/api/expanding_objects
 [https-proxy-agent]: https://github.com/TooTallNate/node-https-proxy-agent
