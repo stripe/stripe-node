@@ -108,7 +108,7 @@ declare module 'stripe' {
 
     static Stripe: typeof Stripe;
 
-    constructor(apiKey: string, config?: Stripe.StripeConfig | string);
+    constructor(apiKey: string, config: Stripe.StripeConfig);
 
     setAppInfo(info?: Stripe.AppInfo): void;
 
@@ -210,7 +210,7 @@ declare module 'stripe' {
     /** @deprecated Please use the StripeConfig object instead. */
     setPort(port: string | number): void;
     /** @deprecated Please use the StripeConfig object instead. */
-    setApiVersion(version?: string): void;
+    setApiVersion(version?: Stripe.LatestAPIVersion): void;
     /** @deprecated Please use the StripeConfig object instead. */
     setApiKey(key?: string): void;
 

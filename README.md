@@ -52,30 +52,13 @@ const stripe = new Stripe('sk_test_...');
 
 As of 7.15.0, Stripe maintains TypeScript types for the latest [API version][api-versions].
 
-#### Installation
-
-Add this to your `tsconfig.json` under `"compilerOptions"`:
-
-```js
-  "types": ["stripe/types/2019-12-03"],
-```
-
-We do not include the types by default because they represent only the latest API Version;
-users on older versions might otherwise be confused if they upgrade their stripe library
-and see type errors which do not reflect their version of the API.
-
-Additionally, many users were previously using [`@types/stripe` on DefinitelyTyped](https://www.npmjs.com/package/@types/stripe),
-and might wish to migrate the types they use on their own schedule.
-
-We may revisit this structure in the future.
-
-#### Usage
-
 ```ts
 // Import Stripe as a default import (not `* as Stripe`, unlike the DefinitelyTyped version)
-// and insantiate it as `new Stripe()`:
+// and instantiate it as `new Stripe()` with the latest API version:
 import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_...');
+const stripe = new Stripe('sk_test_...', {
+  apiVersion: '2019-12-03',
+});
 
 const params: Stripe.CustomerCreateParams = {
   description: 'test customer',
@@ -83,15 +66,16 @@ const params: Stripe.CustomerCreateParams = {
 const customer: Promise<Stripe.Customer> = stripe.customers.create(params);
 ```
 
-Note that if you are on an older API Version, the types for the latest version
-may not match yours. We recommend [upgrading your API Version][api-version-upgrading] if you would like to take advantage of Stripe's TypeScript definitions.
+We recommend [upgrading your API version][api-version-upgrading] if you would like to take advantage of Stripe's TypeScript definitions.
 
 If you are on an older API Version (eg; `2019-10-17`) and not able to upgrade,
-you may use the types for the latest API Version and silence any resulting type errors
+you may pass `apiVersion: null` to use your account's default API version.
+The types for the latest version may not match yours; you may silence any resulting type errors
 with a comment like `// @ts-ignore stripe-version-2019-10-17`.
-This provides the benefit of better types in most places, and highlights
-some of the areas you will need to modify when you upgrade your API Version.
-Once you have made the upgrade, you can remove these comments.
+This provides the benefit of better types in most places,
+removes the risk of introducing runtime bugs, and highlights
+some of the areas you will need to modify when you upgrade your API version.
+When you upgrade, you should remove these comments.
 
 #### Using `expand` with TypeScript
 
@@ -524,7 +508,7 @@ $ yarn fix
 ```
 
 [api-keys]: https://dashboard.stripe.com/account/apikeys
-[api-versions]: https://stripe.com/docs/upgrades
+[api-versions]: https://stripe.com/docs/api/versioning
 [api-versions-upgrading]: https://stripe.com/docs/upgrades#how-can-i-upgrade-my-api
 [connect]: https://stripe.com/connect
 [expanding_objects]: https://stripe.com/docs/api/expanding_objects

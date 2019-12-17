@@ -8,12 +8,24 @@
 ///<reference types="../types/2019-12-03" />
 import Stripe from 'stripe';
 
-let stripe = new Stripe('sk_test_123');
+let stripe = new Stripe('sk_test_123', {apiVersion: '2019-12-03'});
+
+// @ts-ignore lazily ignore apiVersion requirement.
+stripe = new Stripe('sk_test_123');
+
+stripe = new Stripe('sk_test_123', {
+  // @ts-ignore ignore specific apiVersion.
+  apiVersion: '2019-11-05',
+});
+
+stripe = new Stripe('sk_test_123', {
+  // I'm not sure why this isn't a type error... but this is a useful way to allow the user to use their default account api version, and I'm glad we don't have to specify `| null` in the type signature, which would nudge users to do the less safe thing.
+  apiVersion: null,
+});
 
 // Check config object.
-stripe = new Stripe('sk_test_123', '2019-xx-xx');
 stripe = new Stripe('sk_test_123', {
-  apiVersion: '2019-xx-xx',
+  apiVersion: '2019-12-03',
   maxNetworkRetries: 1,
   timeout: 1000,
   host: 'api.example.com',

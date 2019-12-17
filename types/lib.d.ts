@@ -1,8 +1,23 @@
 ///<reference lib="esnext.asynciterable" />
 
 declare namespace Stripe {
+
+  export type LatestApiVersion = '2019-12-03';
+
   export interface StripeConfig {
-    apiVersion?: string;
+    /**
+     * This library's types only reflect the latest API version.
+     *
+     * We recommend upgrading your account's API Version to the latest version
+     * if you wish to use TypeScript with this library.
+     *
+     * If you wish to remain on your account's default API version,
+     * you may pass `null` or another version instead of the latest version,
+     * and add a `@ts-ignore` comment here and anywhere the types differ between API versions.
+     *
+     * @docs https://stripe.com/docs/api/versioning
+     */
+    apiVersion: LatestApiVersion;
     maxNetworkRetries?: number;
     httpAgent?: HttpAgent;
     timeout?: number;
