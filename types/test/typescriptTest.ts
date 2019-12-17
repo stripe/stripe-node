@@ -5,7 +5,7 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-///<reference types="../types/2019-12-03" />
+///<reference types="../2019-12-03" />
 import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {apiVersion: '2019-12-03'});
@@ -19,7 +19,7 @@ stripe = new Stripe('sk_test_123', {
 });
 
 stripe = new Stripe('sk_test_123', {
-  // I'm not sure why this isn't a type error... but this is a useful way to allow the user to use their default account api version, and I'm glad we don't have to specify `| null` in the type signature, which would nudge users to do the less safe thing.
+  // @ts-ignore ignore default apiVersion.
   apiVersion: null,
 });
 
@@ -59,8 +59,12 @@ stripe.setHost('host', 'port', 'protocol');
   const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
     expand: ['customer'],
   });
+
+  // Ignore null case.
+  if (!charge.customer) throw Error('guard');
+
   // Check you can cast an expandable field to the object:
-  const customerEmail: string = (charge.customer as Stripe.Customer).email;
+  const cusEmail: string | null = (charge.customer as Stripe.Customer).email;
   // Check you can cast an expandable field to a string:
   const btId: string = charge.balance_transaction as string;
 
