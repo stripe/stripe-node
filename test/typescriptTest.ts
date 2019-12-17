@@ -26,6 +26,8 @@ stripe.setAppInfo({
   name: 'my-wordpress-plugin',
 });
 
+stripe.setHost('host', 'port', 'protocol');
+
 (async () => {
   const params: Stripe.CustomerCreateParams = {
     description: 'test',

@@ -205,11 +205,7 @@ declare module 'stripe' {
     setProtocol(protocol: string): void;
 
     /** @deprecated Please use the StripeConfig object instead. */
-    setHost(host: string): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setHost(host: string, port: string | number): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setHost(host: string, port: string | number, protocol: string): void;
+    setHost(host: string, port?: string | number, protocol?: string): void;
 
     /** @deprecated Please use the StripeConfig object instead. */
     setPort(port: string | number): void;
