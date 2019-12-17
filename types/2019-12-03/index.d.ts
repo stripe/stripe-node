@@ -210,7 +210,7 @@ declare module 'stripe' {
     /** @deprecated Please use the StripeConfig object instead. */
     setPort(port: string | number): void;
     /** @deprecated Please use the StripeConfig object instead. */
-    setApiVersion(version?: Stripe.LatestAPIVersion): void;
+    setApiVersion(version?: Stripe.LatestApiVersion): void;
     /** @deprecated Please use the StripeConfig object instead. */
     setApiKey(key?: string): void;
 
