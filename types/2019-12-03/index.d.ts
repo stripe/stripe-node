@@ -110,7 +110,7 @@ declare module 'stripe' {
 
     constructor(apiKey: string, config: Stripe.StripeConfig);
 
-    setAppInfo(info?: Stripe.AppInfo): void;
+    setAppInfo(info: Stripe.AppInfo): void;
 
     /**
      * Top Level Resources
@@ -210,9 +210,9 @@ declare module 'stripe' {
     /** @deprecated Please use the StripeConfig object instead. */
     setPort(port: string | number): void;
     /** @deprecated Please use the StripeConfig object instead. */
-    setApiVersion(version?: Stripe.LatestApiVersion): void;
+    setApiVersion(version: Stripe.LatestApiVersion): void;
     /** @deprecated Please use the StripeConfig object instead. */
-    setApiKey(key?: string): void;
+    setApiKey(key: string): void;
 
     /** @deprecated Please use the StripeConfig object instead. */
     setTimeout(timeout?: number): void;
