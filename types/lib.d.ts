@@ -209,7 +209,7 @@ declare namespace Stripe {
      * The parameter the error relates to if the error is parameter-specific. You can use this to display a
      * message near the correct form field, for example.
      */
-    readonly params?: string;
+    readonly param?: string;
 
     /** @deprecated */
     readonly detail?: any;
