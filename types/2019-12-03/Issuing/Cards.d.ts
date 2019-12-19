@@ -1153,7 +1153,7 @@ declare namespace Stripe {
       shipping?: CardCreateParams.Shipping;
 
       /**
-       * Whether authorizations can be approved on this card.
+       * Whether authorizations can be approved on this card. Defaults to `inactive`.
        */
       status?: CardCreateParams.Status;
     }
@@ -2090,7 +2090,7 @@ declare namespace Stripe {
         /**
          * Packaging options.
          */
-        type?: Shipping.Type;
+        type?: string | Shipping.Type;
       }
 
       namespace Shipping {

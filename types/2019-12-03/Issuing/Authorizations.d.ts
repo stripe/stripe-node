@@ -240,12 +240,12 @@ declare namespace Stripe {
 
       interface VerificationData {
         /**
-         * Wether the cardholder provided an address first line and if it matched the cardholder's `billing.address.line1`. One of `match`, `mismatch`, or `not_provided`.
+         * Whether the cardholder provided an address first line and if it matched the cardholder's `billing.address.line1`. One of `match`, `mismatch`, or `not_provided`.
          */
         address_line1_check: string;
 
         /**
-         * Wether the cardholder provided a zip (or postal code) and if it matched the cardholder's `billing.address.postal_code`. One of `match`, `mismatch`, or `not_provided`.
+         * Whether the cardholder provided a zip (or postal code) and if it matched the cardholder's `billing.address.postal_code`. One of `match`, `mismatch`, or `not_provided`.
          */
         address_zip_check: string;
 
@@ -255,7 +255,7 @@ declare namespace Stripe {
         authentication: string;
 
         /**
-         * Wether the cardholder provided a CVC and if it matched Stripe's record. One of `match`, `mismatch`, or `not_provided`.
+         * Whether the cardholder provided a CVC and if it matched Stripe's record. One of `match`, `mismatch`, or `not_provided`.
          */
         cvc_check: string;
       }

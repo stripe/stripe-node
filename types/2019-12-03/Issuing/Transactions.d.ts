@@ -73,9 +73,9 @@ declare namespace Stripe {
       };
 
       /**
-       * One of `capture`, `refund`, `cash_withdrawal`, `refund_reversal`, `dispute`, or `dispute_loss`.
+       * The nature of the transaction.
        */
-      type: string;
+      type: Transaction.Type;
     }
 
     namespace Transaction {
@@ -120,6 +120,14 @@ declare namespace Stripe {
          */
         url: string | null;
       }
+
+      type Type =
+        | 'capture'
+        | 'cash_withdrawal'
+        | 'dispute'
+        | 'dispute_loss'
+        | 'refund'
+        | 'refund_reversal'
     }
 
     interface TransactionRetrieveParams {

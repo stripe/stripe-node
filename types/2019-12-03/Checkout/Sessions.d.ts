@@ -92,7 +92,6 @@ declare namespace Stripe {
        * relevant text on the page, such as the submit button. `submit_type` can only be
        * specified on Checkout Sessions in `payment` mode, but not Checkout Sessions
        * in `subscription` or `setup` mode.
-       * Supported values are `auto`, `book`, `donate`, or `pay`.
        */
       submit_type: Session.SubmitType | null;
 
@@ -166,6 +165,7 @@ declare namespace Stripe {
         | 'fr'
         | 'it'
         | 'ja'
+        | 'ms'
         | 'nb'
         | 'nl'
         | 'pl'
@@ -200,7 +200,7 @@ declare namespace Stripe {
       success_url: string;
 
       /**
-       * Specify whether Checkout should collect the customer's billing address. If set to `required`, Checkout will always collect the customer's billing address. If not set or set to `auto` Checkout will only collect the billing address when necessary.
+       * Specify whether Checkout should collect the customer's billing address.
        */
       billing_address_collection?: SessionCreateParams.BillingAddressCollection;
 
@@ -270,7 +270,6 @@ declare namespace Stripe {
        * relevant text on the page, such as the submit button. `submit_type` can only be
        * specified on Checkout Sessions in `payment` mode, but not Checkout Sessions
        * in `subscription` or `setup` mode.
-       * Supported values are `auto`, `book`, `donate`, or `pay`.
        */
       submit_type?: SessionCreateParams.SubmitType;
 
@@ -325,6 +324,7 @@ declare namespace Stripe {
         | 'fr'
         | 'it'
         | 'ja'
+        | 'ms'
         | 'nb'
         | 'nl'
         | 'pl'
@@ -344,7 +344,7 @@ declare namespace Stripe {
         application_fee_amount?: number;
 
         /**
-         * Capture method of this PaymentIntent, one of `automatic` or `manual`.
+         * Controls when the funds will be captured from the customer's account.
          */
         capture_method?: PaymentIntentData.CaptureMethod;
 
@@ -377,7 +377,7 @@ declare namespace Stripe {
          *
          * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
          *
-         * Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow. For more, learn to [save card details after a payment](https://stripe.com/docs/payments/save-after-payment).
+         * For more, learn to [save card details after a payment](https://stripe.com/docs/payments/save-after-payment).
          *
          * Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by [SCA](https://stripe.com/docs/strong-customer-authentication), using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect [off-session payments](https://stripe.com/docs/payments/cards/charging-saved-cards#off-session-payments-with-saved-cards) for this customer.
          */
