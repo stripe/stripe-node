@@ -812,14 +812,34 @@ declare namespace Stripe {
       params?: CustomerSourceDeleteParams,
       options?: RequestOptions
     ): Promise<
-      Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
+
+        | Account
+        | AlipayAccount
+        | BankAccount
+        | BitcoinReceiver
+        | Card
+        | Source
+        | DeletedAlipayAccount
+        | DeletedBankAccount
+        | DeletedBitcoinReceiver
+        | DeletedCard
     >;
     deleteSource(
       customerId: string,
       id: string,
       options?: RequestOptions
     ): Promise<
-      Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
+
+        | Account
+        | AlipayAccount
+        | BankAccount
+        | BitcoinReceiver
+        | Card
+        | Source
+        | DeletedAlipayAccount
+        | DeletedBankAccount
+        | DeletedBitcoinReceiver
+        | DeletedCard
     >;
 
     /**
