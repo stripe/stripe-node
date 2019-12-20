@@ -28,6 +28,9 @@ declare namespace Stripe {
     livemode: boolean;
   }
 
+  /**
+   * The DeletedApplePayDomain object.
+   */
   interface DeletedApplePayDomain {
     /**
      * Unique identifier for the object.

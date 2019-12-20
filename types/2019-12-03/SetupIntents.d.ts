@@ -77,7 +77,7 @@ declare namespace Stripe {
     /**
      * The account (if any) for which the setup is intended.
      */
-    on_behalf_of: string | Account | DeletedAccount | null;
+    on_behalf_of: string | Account | null;
 
     /**
      * ID of the payment method used with this SetupIntent.

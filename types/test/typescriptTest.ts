@@ -53,8 +53,8 @@ stripe.setHost('host', 'port', 'protocol');
   await stripe.customers.create(params);
 
   // Check multiple dispatch:
-  customer = await stripe.customers.retrieve(customer.id, opts);
-  customer = await stripe.customers.retrieve(customer.id, {expand: []}, opts);
+  let product = await stripe.products.retrieve('prod_123', opts);
+  product = await stripe.products.retrieve('prod_123', {expand: []}, opts);
 
   const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
     expand: ['customer'],
@@ -77,6 +77,16 @@ stripe.setHost('host', 'port', 'protocol');
     !('deleted' in charge.customer)
   ) {
     const created: number = charge.customer.created;
+  }
+  // Okay, this is how I hope people can deal with deleted:
+  const maybeCoupon: Stripe.Coupon | Stripe.DeletedCoupon = await (1
+    ? stripe.coupons.retrieve('25_off')
+    : stripe.coupons.del('25_off'));
+  if (maybeCoupon.deleted) {
+    const d: true = maybeCoupon.deleted;
+  } else {
+    // Here, TS knows it's a full Coupon.
+    const created: number = maybeCoupon.created;
   }
 
   for await (const customer of stripe.customers.list()) {

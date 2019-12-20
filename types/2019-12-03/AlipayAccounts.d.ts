@@ -18,7 +18,7 @@ declare namespace Stripe {
      */
     created: number;
 
-    customer: string | Customer | DeletedCustomer | null;
+    customer?: string | Customer | DeletedCustomer | null;
 
     deleted?: void;
 
@@ -35,7 +35,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
@@ -65,6 +65,9 @@ declare namespace Stripe {
     username: string;
   }
 
+  /**
+   * The DeletedAlipayAccount object.
+   */
   interface DeletedAlipayAccount {
     /**
      * Unique identifier for the object.

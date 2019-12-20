@@ -18,17 +18,17 @@ declare namespace Stripe {
      */
     account: string;
 
-    address: Address;
+    address?: Address;
 
     /**
      * The Kana variation of the person's address (Japan only).
      */
-    address_kana: Person.AddressKana | null;
+    address_kana?: Person.AddressKana | null;
 
     /**
      * The Kanji variation of the person's address (Japan only).
      */
-    address_kanji: Person.AddressKanji | null;
+    address_kanji?: Person.AddressKanji | null;
 
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -37,83 +37,83 @@ declare namespace Stripe {
 
     deleted?: void;
 
-    dob: Person.Dob;
+    dob?: Person.Dob;
 
     /**
      * The person's email address.
      */
-    email: string | null;
+    email?: string | null;
 
     /**
      * The person's first name.
      */
-    first_name: string | null;
+    first_name?: string | null;
 
     /**
      * The Kana variation of the person's first name (Japan only).
      */
-    first_name_kana: string | null;
+    first_name_kana?: string | null;
 
     /**
      * The Kanji variation of the person's first name (Japan only).
      */
-    first_name_kanji: string | null;
+    first_name_kanji?: string | null;
 
     /**
      * The person's gender (International regulations require either "male" or "female").
      */
-    gender: string | null;
+    gender?: string | null;
 
     /**
      * Whether the person's `id_number` was provided.
      */
-    id_number_provided: boolean;
+    id_number_provided?: boolean;
 
     /**
      * The person's last name.
      */
-    last_name: string | null;
+    last_name?: string | null;
 
     /**
      * The Kana variation of the person's last name (Japan only).
      */
-    last_name_kana: string | null;
+    last_name_kana?: string | null;
 
     /**
      * The Kanji variation of the person's last name (Japan only).
      */
-    last_name_kanji: string | null;
+    last_name_kanji?: string | null;
 
     /**
      * The person's maiden name.
      */
-    maiden_name: string | null;
+    maiden_name?: string | null;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
     /**
      * The person's phone number.
      */
-    phone: string | null;
+    phone?: string | null;
 
-    relationship: Person.Relationship;
+    relationship?: Person.Relationship;
 
     /**
      * Information about the requirements for this person, including what information needs to be collected, and by when.
      */
-    requirements: Person.Requirements | null;
+    requirements?: Person.Requirements | null;
 
     /**
      * Whether the last 4 digits of this person's SSN have been provided.
      */
-    ssn_last_4_provided: boolean;
+    ssn_last_4_provided?: boolean;
 
-    verification: Person.Verification;
+    verification?: Person.Verification;
   }
 
   namespace Person {
@@ -333,6 +333,9 @@ declare namespace Stripe {
     }
   }
 
+  /**
+   * The DeletedPerson object.
+   */
   interface DeletedPerson {
     /**
      * Unique identifier for the object.

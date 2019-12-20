@@ -87,6 +87,9 @@ declare namespace Stripe {
     type Duration = 'forever' | 'once' | 'repeating'
   }
 
+  /**
+   * The DeletedCoupon object.
+   */
   interface DeletedCoupon {
     /**
      * Unique identifier for the object.

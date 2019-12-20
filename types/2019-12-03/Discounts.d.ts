@@ -30,6 +30,9 @@ declare namespace Stripe {
     subscription: string | null;
   }
 
+  /**
+   * The DeletedDiscount object.
+   */
   interface DeletedDiscount {
     /**
      * String representing the object's type. Objects of the same type share the same value.

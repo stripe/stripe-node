@@ -43,7 +43,7 @@ declare namespace Stripe {
     /**
      * The endpoint's secret, used to generate [webhook signatures](https://stripe.com/docs/webhooks/signatures). Only returned at creation.
      */
-    secret: string;
+    secret?: string;
 
     /**
      * The status of the webhook. It can be `enabled` or `disabled`.
@@ -56,6 +56,9 @@ declare namespace Stripe {
     url: string;
   }
 
+  /**
+   * The DeletedWebhookEndpoint object.
+   */
   interface DeletedWebhookEndpoint {
     /**
      * Unique identifier for the object.

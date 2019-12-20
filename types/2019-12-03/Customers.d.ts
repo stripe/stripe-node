@@ -117,12 +117,12 @@ declare namespace Stripe {
     /**
      * The customer's current subscriptions, if any.
      */
-    subscriptions: ApiList<Subscription>;
+    subscriptions?: ApiList<Subscription>;
 
     /**
      * Describes the customer's tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text **"Reverse charge"**.
      */
-    tax_exempt: Customer.TaxExempt | null;
+    tax_exempt?: Customer.TaxExempt | null;
 
     /**
      * The customer's tax IDs.
@@ -189,6 +189,9 @@ declare namespace Stripe {
     type TaxExempt = 'exempt' | 'none' | 'reverse'
   }
 
+  /**
+   * The DeletedCustomer object.
+   */
   interface DeletedCustomer {
     /**
      * Unique identifier for the object.
@@ -638,8 +641,11 @@ declare namespace Stripe {
       id: string,
       params?: CustomerRetrieveParams,
       options?: RequestOptions
-    ): Promise<Customer>;
-    retrieve(id: string, options?: RequestOptions): Promise<Customer>;
+    ): Promise<Customer | DeletedCustomer>;
+    retrieve(
+      id: string,
+      options?: RequestOptions
+    ): Promise<Customer | DeletedCustomer>;
 
     /**
      * Updates the specified customer by setting the values of the parameters passed. Any parameters not provided will be left unchanged. For example, if you pass the source parameter, that becomes the customer's active source (e.g., a card) to be used for all charges in the future. When you update a customer to a new valid card source by passing the source parameter: for each of the customer's current subscriptions, if the subscription bills automatically and is in the past_due state, then the latest open invoice for the subscription with automatic collection enabled will be retried. This retry will not count as an automatic retry, and will not affect the next regularly scheduled payment for the invoice. Changing the default_source for a customer will not trigger this behavior.

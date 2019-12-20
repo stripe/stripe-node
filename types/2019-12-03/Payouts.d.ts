@@ -51,7 +51,13 @@ declare namespace Stripe {
     /**
      * ID of the bank account or card the payout was sent to.
      */
-    destination: string | BankAccount | Card | null;
+    destination:
+      | string
+      | BankAccount
+      | Card
+      | DeletedBankAccount
+      | DeletedCard
+      | null;
 
     /**
      * If the payout failed or was canceled, this will be the ID of the balance transaction that reversed the initial balance transaction, and puts the funds from the failed payout back in your balance.

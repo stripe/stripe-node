@@ -36,7 +36,7 @@ declare namespace Stripe {
     /**
      * The ID of the customer the transaction belongs to.
      */
-    customer: string | Customer | DeletedCustomer;
+    customer: string | Customer;
 
     /**
      * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -51,7 +51,7 @@ declare namespace Stripe {
     /**
      * The ID of the invoice (if any) related to the transaction.
      */
-    invoice: string | Invoice | DeletedInvoice | null;
+    invoice: string | Invoice | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

@@ -163,7 +163,7 @@ declare namespace Stripe {
       /**
        * ID of the coupon to use during this phase of the subscription schedule.
        */
-      coupon: string | Coupon | DeletedCoupon | null;
+      coupon: string | Coupon | null;
 
       /**
        * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.

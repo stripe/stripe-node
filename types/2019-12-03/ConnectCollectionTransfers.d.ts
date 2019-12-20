@@ -26,7 +26,7 @@ declare namespace Stripe {
     /**
      * ID of the account that funds are being collected for.
      */
-    destination: string | Account | DeletedAccount;
+    destination: string | Account;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

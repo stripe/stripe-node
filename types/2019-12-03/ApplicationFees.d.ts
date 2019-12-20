@@ -16,7 +16,7 @@ declare namespace Stripe {
     /**
      * ID of the Stripe account this fee was taken from.
      */
-    account: string | Account | DeletedAccount;
+    account: string | Account;
 
     /**
      * Amount earned, in %s.

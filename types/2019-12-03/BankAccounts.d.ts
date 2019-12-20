@@ -13,7 +13,7 @@ declare namespace Stripe {
      */
     object: 'bank_account';
 
-    account: string | Account | DeletedAccount | null;
+    account?: string | Account | null;
 
     /**
      * The name of the person or business that owns the bank account.
@@ -38,14 +38,14 @@ declare namespace Stripe {
     /**
      * Three-letter [ISO code for the currency](https://stripe.com/docs/payouts) paid out to the bank account.
      */
-    currency: string | null;
+    currency: string;
 
-    customer: string | Customer | DeletedCustomer | null;
+    customer?: string | Customer | DeletedCustomer | null;
 
     /**
      * Whether this bank account is the default external account for its currency.
      */
-    default_for_currency: boolean | null;
+    default_for_currency?: boolean | null;
 
     deleted?: void;
 
@@ -59,7 +59,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata:
+    metadata?:
       | {
         [key: string]: string;
       }
@@ -78,6 +78,9 @@ declare namespace Stripe {
     status: string;
   }
 
+  /**
+   * The DeletedBankAccount object.
+   */
   interface DeletedBankAccount {
     /**
      * Unique identifier for the object.
@@ -90,13 +93,13 @@ declare namespace Stripe {
     object: 'bank_account';
 
     /**
+     * Three-letter [ISO code for the currency](https://stripe.com/docs/payouts) paid out to the bank account.
+     */
+    currency: string | null;
+
+    /**
      * Always true for a deleted object
      */
     deleted: true;
-
-    /**
-     * Three-letter [ISO code for the currency](https://stripe.com/docs/payouts) paid out to the bank account.
-     */
-    currency?: string | null;
   }
 }

@@ -31,7 +31,7 @@ declare namespace Stripe {
     /**
      * ID of the customer.
      */
-    customer: string | Customer | DeletedCustomer;
+    customer: string | Customer;
 
     /**
      * Customer balance transaction related to this credit note.
@@ -41,7 +41,7 @@ declare namespace Stripe {
     /**
      * ID of the invoice.
      */
-    invoice: string | Invoice | DeletedInvoice;
+    invoice: string | Invoice;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

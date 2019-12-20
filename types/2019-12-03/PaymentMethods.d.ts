@@ -29,7 +29,7 @@ declare namespace Stripe {
     /**
      * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
      */
-    customer: string | Customer | DeletedCustomer | null;
+    customer: string | Customer | null;
 
     ideal?: PaymentMethod.Ideal;
 

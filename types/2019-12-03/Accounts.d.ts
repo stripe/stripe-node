@@ -23,14 +23,14 @@ declare namespace Stripe {
      */
     business_type: string | null;
 
-    capabilities: Account.Capabilities;
+    capabilities?: Account.Capabilities;
 
     /**
      * Whether the account can create live charges.
      */
     charges_enabled: boolean;
 
-    company: Account.Company;
+    company?: Account.Company;
 
     /**
      * The account's country.
@@ -40,7 +40,7 @@ declare namespace Stripe {
     /**
      * Time at which the object was created. Measured in seconds since the Unix epoch.
      */
-    created: number;
+    created?: number;
 
     /**
      * Three-letter ISO currency code representing the default currency for the account. This must be a currency that [Stripe supports in the account's country](https://stripe.com/docs/payouts).
@@ -62,14 +62,14 @@ declare namespace Stripe {
     /**
      * External accounts (bank accounts and debit cards) currently attached to this account
      */
-    external_accounts: ApiList<BankAccount | Card>;
+    external_accounts?: ApiList<BankAccount | Card>;
 
-    individual: Person;
+    individual?: Person;
 
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
+    metadata?: {
       [key: string]: string;
     };
 
@@ -78,14 +78,14 @@ declare namespace Stripe {
      */
     payouts_enabled: boolean;
 
-    requirements: Account.Requirements;
+    requirements?: Account.Requirements;
 
     /**
      * Options for customizing how the account functions within Stripe.
      */
     settings: Account.Settings | null;
 
-    tos_acceptance: Account.TosAcceptance;
+    tos_acceptance?: Account.TosAcceptance;
 
     /**
      * The Stripe account type. Can be `standard`, `express`, or `custom`.
@@ -509,6 +509,9 @@ declare namespace Stripe {
     type Type = 'custom' | 'express' | 'standard'
   }
 
+  /**
+   * The DeletedAccount object.
+   */
   interface DeletedAccount {
     /**
      * Unique identifier for the object.
@@ -2228,12 +2231,12 @@ declare namespace Stripe {
       id: string,
       params?: ExternalAccountDeleteParams,
       options?: RequestOptions
-    ): Promise<BankAccount | Card>;
+    ): Promise<DeletedBankAccount | DeletedCard>;
     deleteExternalAccount(
       accountId: string,
       id: string,
       options?: RequestOptions
-    ): Promise<BankAccount | Card>;
+    ): Promise<DeletedBankAccount | DeletedCard>;
 
     /**
      * Creates a single-use login link for an Express account to access their Stripe dashboard.

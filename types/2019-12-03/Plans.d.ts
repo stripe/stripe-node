@@ -163,6 +163,9 @@ declare namespace Stripe {
     type UsageType = 'licensed' | 'metered'
   }
 
+  /**
+   * The DeletedPlan object.
+   */
   interface DeletedPlan {
     /**
      * Unique identifier for the object.

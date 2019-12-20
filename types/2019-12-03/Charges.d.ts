@@ -80,7 +80,7 @@ declare namespace Stripe {
     /**
      * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
      */
-    destination: string | Account | DeletedAccount | null;
+    destination: string | Account | null;
 
     /**
      * Details about the dispute if the charge has been disputed.
@@ -110,7 +110,7 @@ declare namespace Stripe {
     /**
      * ID of the invoice this charge is for if one exists.
      */
-    invoice: string | Invoice | DeletedInvoice | null;
+    invoice: string | Invoice | null;
 
     level3?: Charge.Level3;
 
@@ -129,7 +129,7 @@ declare namespace Stripe {
     /**
      * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
      */
-    on_behalf_of: string | Account | DeletedAccount | null;
+    on_behalf_of: string | Account | null;
 
     /**
      * ID of the order this charge is for if one exists.
@@ -1158,7 +1158,7 @@ declare namespace Stripe {
       /**
        * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
        */
-      destination: string | Account | DeletedAccount;
+      destination: string | Account;
     }
   }
 

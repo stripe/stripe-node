@@ -56,6 +56,9 @@ declare namespace Stripe {
       type DeviceType = 'bbpos_chipper2x' | 'verifone_P400'
     }
 
+    /**
+     * The DeletedReader object.
+     */
     interface DeletedReader {
       /**
        * Unique identifier for the object.
@@ -228,8 +231,11 @@ declare namespace Stripe {
         id: string,
         params?: ReaderDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedReader>;
-      del(id: string, options?: RequestOptions): Promise<DeletedReader>;
+      ): Promise<Terminal.DeletedReader>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Terminal.DeletedReader>;
     }
   }
 }

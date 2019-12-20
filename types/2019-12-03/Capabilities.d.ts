@@ -16,7 +16,7 @@ declare namespace Stripe {
     /**
      * The account for which the capability enables functionality.
      */
-    account: string | Account | DeletedAccount;
+    account: string | Account;
 
     /**
      * Whether the capability has been requested.

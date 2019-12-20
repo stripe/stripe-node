@@ -37,7 +37,7 @@ declare namespace Stripe {
     /**
      * The [quantity](https://stripe.com/docs/subscriptions/quantities) of the plan to which the customer should be subscribed.
      */
-    quantity: number;
+    quantity?: number;
 
     /**
      * The `subscription` this `subscription_item` belongs to.
@@ -59,6 +59,9 @@ declare namespace Stripe {
     }
   }
 
+  /**
+   * The DeletedSubscriptionItem object.
+   */
   interface DeletedSubscriptionItem {
     /**
      * Unique identifier for the object.

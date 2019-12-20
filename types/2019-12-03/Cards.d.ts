@@ -16,7 +16,7 @@ declare namespace Stripe {
     /**
      * The account this card belongs to. This attribute will not be in the card object if the card belongs to a customer or recipient instead.
      */
-    account: string | Account | DeletedAccount | null;
+    account?: string | Account | null;
 
     /**
      * City/District/Suburb/Town/Village.
@@ -61,7 +61,7 @@ declare namespace Stripe {
     /**
      * A set of available payout methods for this card. Will be either `["standard"]` or `["standard", "instant"]`. Only values from this set should be passed as the `method` when creating a transfer.
      */
-    available_payout_methods: Array<Card.AvailablePayoutMethod> | null;
+    available_payout_methods?: Array<Card.AvailablePayoutMethod> | null;
 
     /**
      * Card brand. Can be `American Express`, `Diners Club`, `Discover`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
@@ -73,15 +73,12 @@ declare namespace Stripe {
      */
     country: string | null;
 
-    /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-     */
-    currency: string | null;
+    currency?: string | null;
 
     /**
      * The customer that this card belongs to. This attribute will not be in the card object if the card belongs to an account or recipient instead.
      */
-    customer: string | Customer | DeletedCustomer | null;
+    customer?: string | Customer | DeletedCustomer | null;
 
     /**
      * If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
@@ -91,14 +88,14 @@ declare namespace Stripe {
     /**
      * Whether this card is the default external account for its currency.
      */
-    default_for_currency: boolean | null;
+    default_for_currency?: boolean | null;
 
     deleted?: void;
 
     /**
      * Card description. (Only for internal use only and not typically available in standard API requests.)
      */
-    description: string;
+    description?: string;
 
     /**
      * (For tokenized numbers only.) The last four digits of the device account number.
@@ -118,7 +115,7 @@ declare namespace Stripe {
     /**
      * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example.
      */
-    fingerprint: string | null;
+    fingerprint?: string | null;
 
     /**
      * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
@@ -128,12 +125,12 @@ declare namespace Stripe {
     /**
      * Issuer identification number of the card. (Only for internal use only and not typically available in standard API requests.)
      */
-    iin: string;
+    iin?: string;
 
     /**
      * Issuer bank name of the card. (Only for internal use only and not typically available in standard API requests.)
      */
-    issuer: string;
+    issuer?: string;
 
     /**
      * The last four digits of the card.
@@ -155,7 +152,7 @@ declare namespace Stripe {
     /**
      * The recipient that this card belongs to. This attribute will not be in the card object if the card belongs to a customer or account instead.
      */
-    recipient: string | Recipient | DeletedRecipient | null;
+    recipient?: string | Recipient | null;
 
     /**
      * If the card number is tokenized, this is the method that was used. Can be `apple_pay` or `google_pay`.
@@ -167,6 +164,9 @@ declare namespace Stripe {
     type AvailablePayoutMethod = 'instant' | 'standard'
   }
 
+  /**
+   * The DeletedCard object.
+   */
   interface DeletedCard {
     /**
      * Unique identifier for the object.
@@ -179,13 +179,13 @@ declare namespace Stripe {
     object: 'card';
 
     /**
+     * Three-letter [ISO code for the currency](https://stripe.com/docs/payouts) paid out to the bank account.
+     */
+    currency: string | null;
+
+    /**
      * Always true for a deleted object
      */
     deleted: true;
-
-    /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-     */
-    currency?: string | null;
   }
 }

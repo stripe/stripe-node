@@ -28,7 +28,7 @@ declare namespace Stripe {
     /**
      * The default card to use for creating transfers to this recipient.
      */
-    default_card: string | Card | DeletedCard | null;
+    default_card: string | Card | null;
 
     deleted?: void;
 
@@ -54,14 +54,14 @@ declare namespace Stripe {
     /**
      * The ID of the [Custom account](https://stripe.com/docs/connect/custom-accounts) this recipient was migrated to. If set, the recipient can no longer be updated, nor can transfers be made to it: use the Custom account instead.
      */
-    migrated_to: string | Account | DeletedAccount | null;
+    migrated_to: string | Account | null;
 
     /**
      * Full, legal name of the recipient.
      */
     name: string | null;
 
-    rolled_back_from: string | Account | DeletedAccount;
+    rolled_back_from?: string | Account;
 
     /**
      * Type of the recipient, one of `individual` or `corporation`.
@@ -74,6 +74,9 @@ declare namespace Stripe {
     verified: boolean;
   }
 
+  /**
+   * The DeletedRecipient object.
+   */
   interface DeletedRecipient {
     /**
      * Unique identifier for the object.
@@ -272,8 +275,11 @@ declare namespace Stripe {
       id: string,
       params?: RecipientRetrieveParams,
       options?: RequestOptions
-    ): Promise<Recipient>;
-    retrieve(id: string, options?: RequestOptions): Promise<Recipient>;
+    ): Promise<Recipient | DeletedRecipient>;
+    retrieve(
+      id: string,
+      options?: RequestOptions
+    ): Promise<Recipient | DeletedRecipient>;
 
     /**
      * Updates the specified recipient by setting the values of the parameters passed.

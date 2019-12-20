@@ -56,7 +56,7 @@ declare namespace Stripe {
     /**
      * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
      */
-    auto_advance: boolean;
+    auto_advance?: boolean;
 
     /**
      * Indicates the reason why the invoice was created. `subscription_cycle` indicates an invoice created by a subscription advancing into a new period. `subscription_create` indicates an invoice created due to creating a subscription. `subscription_update` indicates an invoice created due to updating a subscription. `subscription` is set for all old invoices to indicate either a change to a subscription or a period advancement. `manual` is set for all invoices unrelated to a subscription (for example: created via the invoice editor). The `upcoming` value is reserved for simulated invoices per the upcoming invoice endpoint. `subscription_threshold` indicates an invoice created due to a billing threshold being reached.
@@ -123,7 +123,7 @@ declare namespace Stripe {
     /**
      * The customer's tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as `customer.tax_ids`. Once the invoice is finalized, this field will no longer be updated.
      */
-    customer_tax_ids: Array<Invoice.CustomerTaxId> | null;
+    customer_tax_ids?: Array<Invoice.CustomerTaxId> | null;
 
     /**
      * ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
@@ -175,12 +175,12 @@ declare namespace Stripe {
     /**
      * The URL for the hosted invoice page, which allows customers to view and pay an invoice. If the invoice has not been finalized yet, this will be null.
      */
-    hosted_invoice_url: string | null;
+    hosted_invoice_url?: string | null;
 
     /**
      * The link to download the PDF for the invoice. If the invoice has not been finalized yet, this will be null.
      */
-    invoice_pdf: string | null;
+    invoice_pdf?: string | null;
 
     /**
      * The individual line items that make up the invoice. `lines` is sorted as follows: invoice items in reverse chronological order, followed by the subscription, if any.
@@ -271,7 +271,7 @@ declare namespace Stripe {
     /**
      * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
      */
-    subscription_proration_date: number;
+    subscription_proration_date?: number;
 
     /**
      * Total of all subscriptions, invoice items, and prorations on the invoice before any discount or tax is applied.
@@ -288,7 +288,7 @@ declare namespace Stripe {
      */
     tax_percent: number | null;
 
-    threshold_reason: Invoice.ThresholdReason;
+    threshold_reason?: Invoice.ThresholdReason;
 
     /**
      * Total after discounts and taxes.
@@ -303,7 +303,7 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
      */
-    transfer_data: Invoice.TransferData | null;
+    transfer_data?: Invoice.TransferData | null;
 
     /**
      * The time at which webhooks for this invoice were successfully delivered (if the invoice had no webhooks to deliver, this will match `created`). Invoice payment is delayed until webhooks are delivered, or until all webhook delivery attempts have been exhausted.
@@ -464,10 +464,13 @@ declare namespace Stripe {
       /**
        * The account (if any) where funds from the payment will be transferred to upon payment success.
        */
-      destination: string | Account | DeletedAccount;
+      destination: string | Account;
     }
   }
 
+  /**
+   * The DeletedInvoice object.
+   */
   interface DeletedInvoice {
     /**
      * Unique identifier for the object.

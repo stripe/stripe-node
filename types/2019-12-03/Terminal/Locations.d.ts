@@ -24,6 +24,9 @@ declare namespace Stripe {
       display_name: string;
     }
 
+    /**
+     * The DeletedLocation object.
+     */
     interface DeletedLocation {
       /**
        * Unique identifier for the object.
@@ -210,8 +213,11 @@ declare namespace Stripe {
         id: string,
         params?: LocationDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedLocation>;
-      del(id: string, options?: RequestOptions): Promise<DeletedLocation>;
+      ): Promise<Terminal.DeletedLocation>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Terminal.DeletedLocation>;
     }
   }
 }

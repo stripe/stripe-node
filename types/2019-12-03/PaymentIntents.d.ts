@@ -94,7 +94,7 @@ declare namespace Stripe {
     /**
      * ID of the invoice that created this PaymentIntent, if it exists.
      */
-    invoice: string | Invoice | DeletedInvoice | null;
+    invoice: string | Invoice | null;
 
     /**
      * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
@@ -121,7 +121,7 @@ declare namespace Stripe {
     /**
      * The account (if any) for which the funds of the PaymentIntent are intended. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
      */
-    on_behalf_of: string | Account | DeletedAccount | null;
+    on_behalf_of: string | Account | null;
 
     /**
      * ID of the payment method used in this PaymentIntent.
@@ -175,6 +175,10 @@ declare namespace Stripe {
       | BitcoinReceiver
       | Card
       | Source
+      | DeletedAlipayAccount
+      | DeletedBankAccount
+      | DeletedBitcoinReceiver
+      | DeletedCard
       | null;
 
     /**
@@ -434,7 +438,7 @@ declare namespace Stripe {
        * reporting, and where funds from the payment will be transferred to upon
        * payment success.
        */
-      destination: string | Account | DeletedAccount;
+      destination: string | Account;
     }
   }
 

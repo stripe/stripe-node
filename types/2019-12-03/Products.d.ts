@@ -36,7 +36,7 @@ declare namespace Stripe {
     /**
      * An array of connect application identifiers that cannot purchase this product. Only applicable to products of `type=good`.
      */
-    deactivate_on: Array<string>;
+    deactivate_on?: Array<string>;
 
     deleted?: void;
 
@@ -126,6 +126,9 @@ declare namespace Stripe {
     type Type = 'good' | 'service'
   }
 
+  /**
+   * The DeletedProduct object.
+   */
   interface DeletedProduct {
     /**
      * Unique identifier for the object.

@@ -26,7 +26,7 @@ declare namespace Stripe {
     /**
      * ID of the customer.
      */
-    customer: string | Customer | DeletedCustomer;
+    customer: string | Customer;
 
     deleted?: void;
 
@@ -82,6 +82,9 @@ declare namespace Stripe {
     }
   }
 
+  /**
+   * The DeletedTaxId object.
+   */
   interface DeletedTaxId {
     /**
      * Unique identifier for the object.

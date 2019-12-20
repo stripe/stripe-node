@@ -53,7 +53,7 @@ declare namespace Stripe {
      */
     currency: string;
 
-    customer: string | null;
+    customer?: string | null;
 
     deleted?: void;
 
@@ -92,14 +92,14 @@ declare namespace Stripe {
     /**
      * The ID of the payment created from the receiver, if any. Hidden when viewing the receiver with a publishable key.
      */
-    payment: string | null;
+    payment?: string | null;
 
     refund_address: string | null;
 
     /**
      * A list with one entry for each time that the customer sent bitcoin to the receiver. Hidden when viewing the receiver with a publishable key.
      */
-    transactions: ApiList<BitcoinTransaction>;
+    transactions?: ApiList<BitcoinTransaction>;
 
     /**
      * This receiver contains uncaptured funds that can be used for a payment or refunded.
@@ -109,6 +109,9 @@ declare namespace Stripe {
     used_for_payment: boolean | null;
   }
 
+  /**
+   * The DeletedBitcoinReceiver object.
+   */
   interface DeletedBitcoinReceiver {
     /**
      * Unique identifier for the object.

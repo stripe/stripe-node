@@ -114,7 +114,7 @@ declare namespace Stripe {
     /**
      * The most recent invoice this subscription has generated.
      */
-    latest_invoice: string | Invoice | DeletedInvoice | null;
+    latest_invoice: string | Invoice | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -243,7 +243,7 @@ declare namespace Stripe {
       /**
        * The account (if any) where funds from the payment will be transferred to upon payment success.
        */
-      destination: string | Account | DeletedAccount;
+      destination: string | Account;
     }
   }
 

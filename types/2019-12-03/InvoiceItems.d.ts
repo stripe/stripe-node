@@ -48,7 +48,7 @@ declare namespace Stripe {
     /**
      * The ID of the invoice this invoice item belongs to.
      */
-    invoice: string | Invoice | DeletedInvoice | null;
+    invoice: string | Invoice | null;
 
     /**
      * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -87,7 +87,7 @@ declare namespace Stripe {
     /**
      * The subscription item that this invoice item has been created for, if any.
      */
-    subscription_item: string;
+    subscription_item?: string;
 
     /**
      * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
@@ -97,7 +97,7 @@ declare namespace Stripe {
     /**
      * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
      */
-    unified_proration: boolean;
+    unified_proration?: boolean;
 
     /**
      * Unit Amount (in the `currency` specified) of the invoice item.
@@ -124,6 +124,9 @@ declare namespace Stripe {
     }
   }
 
+  /**
+   * The DeletedInvoiceItem object.
+   */
   interface DeletedInvoiceItem {
     /**
      * Unique identifier for the object.

@@ -70,6 +70,9 @@ declare namespace Stripe {
         | 'string'
     }
 
+    /**
+     * The DeletedValueList object.
+     */
     interface DeletedValueList {
       /**
        * Unique identifier for the object.
@@ -262,8 +265,11 @@ declare namespace Stripe {
         id: string,
         params?: ValueListDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedValueList>;
-      del(id: string, options?: RequestOptions): Promise<DeletedValueList>;
+      ): Promise<Radar.DeletedValueList>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Radar.DeletedValueList>;
     }
   }
 }

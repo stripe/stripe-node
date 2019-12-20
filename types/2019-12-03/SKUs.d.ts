@@ -69,7 +69,7 @@ declare namespace Stripe {
     /**
      * The ID of the product this SKU is associated with. The product must be currently active.
      */
-    product: string | Product | DeletedProduct;
+    product: string | Product;
 
     updated: number;
   }
@@ -115,6 +115,9 @@ declare namespace Stripe {
     }
   }
 
+  /**
+   * The DeletedSku object.
+   */
   interface DeletedSku {
     /**
      * Unique identifier for the object.
@@ -414,8 +417,8 @@ declare namespace Stripe {
       id: string,
       params?: SkuRetrieveParams,
       options?: RequestOptions
-    ): Promise<Sku>;
-    retrieve(id: string, options?: RequestOptions): Promise<Sku>;
+    ): Promise<Sku | DeletedSku>;
+    retrieve(id: string, options?: RequestOptions): Promise<Sku | DeletedSku>;
 
     /**
      * Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
