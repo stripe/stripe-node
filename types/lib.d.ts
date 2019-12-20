@@ -90,6 +90,8 @@ declare namespace Stripe {
      * The URL where this list can be accessed.
      */
     url: string;
+
+    // Looking for `total_count`? It is deprecated; please do not use it.
   }
 
   export interface ApiListPromise<T> extends Promise<ApiList<T>>, AsyncIterableIterator<T> {
