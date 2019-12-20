@@ -366,6 +366,11 @@ declare namespace Stripe {
         action: string;
 
         /**
+         * Always true for a deleted object
+         */
+        deleted?: true;
+
+        /**
          * Unique identifier for the object.
          */
         id: string;
