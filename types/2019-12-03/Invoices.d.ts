@@ -1209,15 +1209,13 @@ declare namespace Stripe {
     ): ApiListPromise<InvoiceLineItem>;
 
     /**
-     * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+     * When retrieving an upcoming invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
      */
     listUpcomingLineItems(
-      id: string,
       params?: InvoiceLineItemListUpcomingParams,
       options?: RequestOptions
     ): ApiListPromise<InvoiceLineItem>;
     listUpcomingLineItems(
-      id: string,
       options?: RequestOptions
     ): ApiListPromise<InvoiceLineItem>;
   }
