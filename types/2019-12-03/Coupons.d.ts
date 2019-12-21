@@ -53,9 +53,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     /**
      * Name of the coupon displayed to customers on for instance invoices or receipts.
@@ -146,9 +144,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a coupon object. It can be useful for storing additional information about the coupon in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
@@ -186,9 +182,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a coupon object. It can be useful for storing additional information about the coupon in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.

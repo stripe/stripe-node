@@ -65,9 +65,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     /**
      * If present, this property tells you what actions you need to take in order for your customer to continue payment setup.
@@ -267,9 +265,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The Stripe account ID for which this SetupIntent is created.
@@ -432,9 +428,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.

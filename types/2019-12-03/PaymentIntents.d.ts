@@ -109,9 +109,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     /**
      * If present, this property tells you what actions you need to take in order for your customer to fulfill a payment using the provided source.
@@ -502,9 +500,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards). This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
@@ -731,7 +727,7 @@ declare namespace Stripe {
       /**
        * Shipping address.
        */
-      address: Shipping.Address;
+      address: AddressParam;
 
       /**
        * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -752,22 +748,6 @@ declare namespace Stripe {
        * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
        */
       tracking_number?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
     }
 
     interface TransferData {
@@ -840,9 +820,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
@@ -919,7 +897,7 @@ declare namespace Stripe {
       /**
        * Shipping address.
        */
-      address: Shipping.Address;
+      address: AddressParam;
 
       /**
        * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -940,22 +918,6 @@ declare namespace Stripe {
        * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
        */
       tracking_number?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
     }
 
     interface TransferData {
@@ -1330,7 +1292,7 @@ declare namespace Stripe {
       /**
        * Shipping address.
        */
-      address: Shipping.Address;
+      address: AddressParam;
 
       /**
        * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1351,22 +1313,6 @@ declare namespace Stripe {
        * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
        */
       tracking_number?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
     }
   }
 

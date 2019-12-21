@@ -47,9 +47,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     /**
      * The ID of the [Custom account](https://stripe.com/docs/connect/custom-accounts) this recipient was migrated to. If set, the recipient can no longer be updated, nor can transfers be made to it: use the Custom account instead.
@@ -133,9 +131,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The recipient's tax ID, as a string. For type `individual`, the full SSN; for type `corporation`, the full EIN.
@@ -184,9 +180,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The recipient's full, legal name. For type `individual`, should be in the format `First Last`, `First Middle Last`, or `First M Last` (no prefixes or suffixes). For `corporation`, the full, incorporated name.

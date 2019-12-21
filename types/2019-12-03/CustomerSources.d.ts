@@ -13,9 +13,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the card in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
   }
 
   interface CustomerSourceRetrieveParams {
@@ -81,9 +79,7 @@ declare namespace Stripe {
      */
     expand?: Array<string>;
 
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Cardholder name.

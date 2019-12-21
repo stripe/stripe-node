@@ -124,9 +124,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     /**
      * Specifies the approximate timestamp on which any pending invoice items will be billed according to the schedule provided at `pending_invoice_item_interval`.
@@ -326,9 +324,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a `Subscription` object. It can be useful for storing additional information about the subscription in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Indicates if a customer is on or off-session while an invoice payment is attempted.
@@ -404,9 +400,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
 
       /**
        * Plan ID for this item, as a string.
@@ -538,9 +532,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a subscription object. This can be useful for storing additional information about the subscription in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Indicates if a customer is on or off-session while an invoice payment is attempted.
@@ -633,9 +625,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
 
       /**
        * Plan ID for this item, as a string.

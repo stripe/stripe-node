@@ -122,9 +122,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     /**
      * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
@@ -364,11 +362,6 @@ declare namespace Stripe {
          * The action taken on the payment.
          */
         action: string;
-
-        /**
-         * Always true for a deleted object
-         */
-        deleted?: true;
 
         /**
          * Unique identifier for the object.
@@ -1205,9 +1198,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The Stripe account ID for which these funds are intended. Automatically set if you use the `destination` parameter. For details, see [Creating Separate Charges and Transfers](https://stripe.com/docs/connect/charges-transfers#on-behalf-of).
@@ -1267,7 +1258,7 @@ declare namespace Stripe {
       /**
        * Shipping address.
        */
-      address: Shipping.Address;
+      address: AddressParam;
 
       /**
        * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1288,22 +1279,6 @@ declare namespace Stripe {
        * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
        */
       tracking_number?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
     }
 
     interface TransferData {
@@ -1350,9 +1325,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * This is the email address that the receipt for this charge will be sent to. If this field is updated, then a new email receipt will be sent to the updated address.
@@ -1383,7 +1356,7 @@ declare namespace Stripe {
       /**
        * Shipping address.
        */
-      address: Shipping.Address;
+      address: AddressParam;
 
       /**
        * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1404,22 +1377,6 @@ declare namespace Stripe {
        * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
        */
       tracking_number?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
     }
   }
 

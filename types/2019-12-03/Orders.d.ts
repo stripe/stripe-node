@@ -67,9 +67,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     returns: ApiList<OrderReturn> | null;
 
@@ -227,9 +225,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to an order object. Limited to 500 characters. Metadata can be useful for storing additional information about the order in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
@@ -266,7 +262,7 @@ declare namespace Stripe {
       /**
        * Customer shipping address.
        */
-      address: Shipping.Address;
+      address: AddressParam;
 
       /**
        * Customer name.
@@ -277,22 +273,6 @@ declare namespace Stripe {
        * Customer phone (including extension).
        */
       phone?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
     }
   }
 
@@ -317,9 +297,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a product object. It can be useful for storing additional information about the order in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The shipping method to select for fulfilling this order. If specified, must be one of the `id`s of a shipping method in the `shipping_methods` array. If specified, will overwrite the existing selected shipping method, updating `items` as necessary.
@@ -562,9 +540,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to an order object. Limited to 500 characters. Metadata can be useful for storing additional information about the order in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * A [Token](https://stripe.com/docs/api#tokens)'s or a [Source](https://stripe.com/docs/api#sources)'s ID, as returned by [Elements](https://stripe.com/docs/elements). If no customer was attached to the order at creation, either `source` or `customer is required. Otherwise, the specified source will be charged intead of the customer attached to the order.

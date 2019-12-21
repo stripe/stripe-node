@@ -56,9 +56,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     /**
      * ID of the PaymentIntent that was refunded.
@@ -101,9 +99,7 @@ declare namespace Stripe {
      */
     expand?: Array<string>;
 
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     payment_intent?: string;
 
@@ -141,9 +137,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
   }
 
   interface RefundListParams {

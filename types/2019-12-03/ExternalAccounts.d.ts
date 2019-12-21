@@ -18,9 +18,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to an external account object. It can be useful for storing additional information about the external account in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
   }
 
   interface ExternalAccountRetrieveParams {
@@ -91,9 +89,7 @@ declare namespace Stripe {
      */
     expand?: Array<string>;
 
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Cardholder name.

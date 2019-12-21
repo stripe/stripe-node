@@ -44,9 +44,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata: {
-        [key: string]: string;
-      };
+      metadata: Metadata;
 
       /**
        * Reason for this dispute. One of `other` or `fraudulent`.
@@ -130,9 +128,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
     }
 
     namespace DisputeCreateParams {
@@ -193,9 +189,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
     }
 
     interface DisputeListParams {

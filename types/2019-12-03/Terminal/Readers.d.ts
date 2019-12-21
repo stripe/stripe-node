@@ -37,9 +37,19 @@ declare namespace Stripe {
       label: string;
 
       /**
+       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       */
+      livemode: boolean;
+
+      /**
        * The location identifier of the reader.
        */
       location: string | null;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata: Metadata;
 
       /**
        * Serial number of the reader.
@@ -98,6 +108,11 @@ declare namespace Stripe {
       location?: string;
 
       /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata?: MetadataParam;
+
+      /**
        * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
        */
       operator_account?: string;
@@ -125,6 +140,11 @@ declare namespace Stripe {
        * The new label of the reader.
        */
       label?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: MetadataParam;
 
       /**
        * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.

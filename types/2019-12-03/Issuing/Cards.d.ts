@@ -59,9 +59,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: {
-        [key: string]: string;
-      };
+      metadata: Metadata;
 
       /**
        * The name of the cardholder, printed on the card.
@@ -1133,9 +1131,7 @@ declare namespace Stripe {
        */
       expand?: Array<string>;
 
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
 
       /**
        * The card this is meant to be a replacement for (if any).
@@ -2134,11 +2130,7 @@ declare namespace Stripe {
        */
       expand?: Array<string>;
 
-      metadata?:
-        | {
-          [key: string]: string;
-        }
-        | '';
+      metadata?: MetadataParam | '';
 
       /**
        * Whether authorizations can be approved on this card.

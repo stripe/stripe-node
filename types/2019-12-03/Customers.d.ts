@@ -35,6 +35,8 @@ declare namespace Stripe {
 
     /**
      * ID of the default payment source for the customer.
+     *
+     * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) field instead.
      */
     default_source:
       | string
@@ -83,9 +85,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     /**
      * The customer's full name or business name.
@@ -138,7 +138,7 @@ declare namespace Stripe {
       custom_fields: Array<InvoiceSettings.CustomField> | null;
 
       /**
-       * ID of the default payment method used for subscriptions and invoices for the customer.
+       * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
        */
       default_payment_method: string | PaymentMethod | null;
 
@@ -213,7 +213,7 @@ declare namespace Stripe {
     /**
      * The customer's address.
      */
-    address?: '' | CustomerCreateParams.Address;
+    address?: AddressParam | '';
 
     /**
      * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -250,9 +250,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a customer object. It can be useful for storing additional information about the customer in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The customer's full name or business name.
@@ -290,20 +288,6 @@ declare namespace Stripe {
   }
 
   namespace CustomerCreateParams {
-    interface Address {
-      city?: string;
-
-      country?: string;
-
-      line1: string;
-
-      line2?: string;
-
-      postal_code?: string;
-
-      state?: string;
-    }
-
     interface InvoiceSettings {
       /**
        * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
@@ -311,7 +295,7 @@ declare namespace Stripe {
       custom_fields?: '' | InvoiceSettings.CustomFields;
 
       /**
-       * ID of the default payment method used for subscriptions and invoices for the customer.
+       * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
        */
       default_payment_method?: string;
 
@@ -339,7 +323,7 @@ declare namespace Stripe {
       /**
        * Customer shipping address.
        */
-      address: Shipping.Address;
+      address: AddressParam;
 
       /**
        * Customer name.
@@ -350,22 +334,6 @@ declare namespace Stripe {
        * Customer phone (including extension).
        */
       phone?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
     }
 
     type TaxExempt = 'exempt' | 'none' | 'reverse'
@@ -406,7 +374,7 @@ declare namespace Stripe {
     /**
      * The customer's address.
      */
-    address?: '' | CustomerUpdateParams.Address;
+    address?: AddressParam | '';
 
     /**
      * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -416,7 +384,11 @@ declare namespace Stripe {
     coupon?: string;
 
     /**
-     * Provide the ID of a payment source already attached to this customer to make it this customer's default payment source. If you want to add a new payment source and make it the default, see the [source](https://stripe.com/docs/api/customers/update#update_customer-source) property.
+     * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method) parameter.
+     *
+     * Provide the ID of a payment source already attached to this customer to make it this customer's default payment source.
+     *
+     * If you want to add a new payment source and make it the default, see the [source](https://stripe.com/docs/api/customers/update#update_customer-source) property.
      */
     default_source?: string;
 
@@ -448,9 +420,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a customer object. It can be useful for storing additional information about the customer in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The customer's full name or business name.
@@ -486,20 +456,6 @@ declare namespace Stripe {
   }
 
   namespace CustomerUpdateParams {
-    interface Address {
-      city?: string;
-
-      country?: string;
-
-      line1: string;
-
-      line2?: string;
-
-      postal_code?: string;
-
-      state?: string;
-    }
-
     interface InvoiceSettings {
       /**
        * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
@@ -507,7 +463,7 @@ declare namespace Stripe {
       custom_fields?: '' | InvoiceSettings.CustomFields;
 
       /**
-       * ID of the default payment method used for subscriptions and invoices for the customer.
+       * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
        */
       default_payment_method?: string;
 
@@ -535,7 +491,7 @@ declare namespace Stripe {
       /**
        * Customer shipping address.
        */
-      address: Shipping.Address;
+      address: AddressParam;
 
       /**
        * Customer name.
@@ -546,22 +502,6 @@ declare namespace Stripe {
        * Customer phone (including extension).
        */
       phone?: string;
-    }
-
-    namespace Shipping {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
     }
 
     type TaxExempt = 'exempt' | 'none' | 'reverse'
@@ -812,14 +752,34 @@ declare namespace Stripe {
       params?: CustomerSourceDeleteParams,
       options?: RequestOptions
     ): Promise<
-      Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
+
+        | Account
+        | AlipayAccount
+        | BankAccount
+        | BitcoinReceiver
+        | Card
+        | Source
+        | DeletedAlipayAccount
+        | DeletedBankAccount
+        | DeletedBitcoinReceiver
+        | DeletedCard
     >;
     deleteSource(
       customerId: string,
       id: string,
       options?: RequestOptions
     ): Promise<
-      Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
+
+        | Account
+        | AlipayAccount
+        | BankAccount
+        | BitcoinReceiver
+        | Card
+        | Source
+        | DeletedAlipayAccount
+        | DeletedBankAccount
+        | DeletedBitcoinReceiver
+        | DeletedCard
     >;
 
     /**

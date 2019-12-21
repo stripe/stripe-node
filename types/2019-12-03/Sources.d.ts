@@ -77,11 +77,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata:
-      | {
-        [key: string]: string;
-      }
-      | null;
+    metadata: Metadata | null;
 
     multibanco?: Source.Multibanco;
 
@@ -755,9 +751,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The source to share.
@@ -1007,7 +1001,7 @@ declare namespace Stripe {
         /**
          * Shipping address.
          */
-        address: Shipping.Address;
+        address: AddressParam;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1028,22 +1022,6 @@ declare namespace Stripe {
          * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
          */
         tracking_number?: string;
-      }
-
-      namespace Shipping {
-        interface Address {
-          city?: string;
-
-          country?: string;
-
-          line1: string;
-
-          line2?: string;
-
-          postal_code?: string;
-
-          state?: string;
-        }
       }
     }
 
@@ -1081,9 +1059,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Information about the owner of the payment instrument that may be used or required by particular source types.
@@ -1281,7 +1257,7 @@ declare namespace Stripe {
         /**
          * Shipping address.
          */
-        address: Shipping.Address;
+        address: AddressParam;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1302,22 +1278,6 @@ declare namespace Stripe {
          * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
          */
         tracking_number?: string;
-      }
-
-      namespace Shipping {
-        interface Address {
-          city?: string;
-
-          country?: string;
-
-          line1: string;
-
-          line2?: string;
-
-          postal_code?: string;
-
-          state?: string;
-        }
       }
     }
   }

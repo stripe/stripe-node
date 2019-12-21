@@ -54,9 +54,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: {
-        [key: string]: string;
-      };
+      metadata: Metadata;
 
       /**
        * The cardholder's name. This will be printed on cards issued to them.
@@ -1153,9 +1151,7 @@ declare namespace Stripe {
        */
       is_default?: boolean;
 
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
 
       /**
        * The cardholder's phone number. This will be transformed to [E.164](https://en.wikipedia.org/wiki/E.164) if it is not provided in that format already.
@@ -2235,9 +2231,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
 
       /**
        * The cardholder's phone number.

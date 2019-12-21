@@ -195,11 +195,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata:
-      | {
-        [key: string]: string;
-      }
-      | null;
+    metadata: Metadata | null;
 
     /**
      * The time at which payment will next be attempted. This value will be `null` for invoices where `collection_method=send_invoice`.
@@ -548,9 +544,7 @@ declare namespace Stripe {
      */
     footer?: string;
 
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -661,9 +655,7 @@ declare namespace Stripe {
      */
     footer?: string;
 
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -979,9 +971,7 @@ declare namespace Stripe {
       /**
        * A set of key-value pairs that you can attach to an invoice item object. It can be useful for storing additional information about the invoice item in a structured format.
        */
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
 
       /**
        * The period associated with this invoice item.
@@ -1046,9 +1036,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
 
       /**
        * Plan ID for this item, as a string.

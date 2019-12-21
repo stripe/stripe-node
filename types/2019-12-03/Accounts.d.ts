@@ -69,9 +69,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: Metadata;
 
     /**
      * Whether Stripe can send payouts to this account.
@@ -185,6 +183,11 @@ declare namespace Stripe {
        * Whether the company's directors have been provided. This Boolean will be `true` if you've manually indicated that all directors are provided via [the `directors_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-directors_provided).
        */
       directors_provided?: boolean;
+
+      /**
+       * Whether the company's executives have been provided. This Boolean will be `true` if you've manually indicated that all executives are provided via [the `executives_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-executives_provided), or if Stripe determined that sufficient executives were provided.
+       */
+      executives_provided?: boolean;
 
       /**
        * The company's legal name.
@@ -585,9 +588,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to an `Account` object. This can be useful for storing additional information about the account in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
@@ -657,17 +658,22 @@ declare namespace Stripe {
       /**
        * The Kana variation of the company's primary address (Japan only).
        */
-      address_kana?: Company.AddressKana;
+      address_kana?: JapanAddressParam;
 
       /**
        * The Kanji variation of the company's primary address (Japan only).
        */
-      address_kanji?: Company.AddressKanji;
+      address_kanji?: JapanAddressParam;
 
       /**
        * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
        */
       directors_provided?: boolean;
+
+      /**
+       * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.executive` requirement.
+       */
+      executives_provided?: boolean;
 
       /**
        * The company's legal name.
@@ -748,80 +754,6 @@ declare namespace Stripe {
         state?: string;
       }
 
-      interface AddressKana {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
-      }
-
-      interface AddressKanji {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
-      }
-
       interface Verification {
         /**
          * A document verifying the business.
@@ -853,12 +785,12 @@ declare namespace Stripe {
       /**
        * The Kana variation of the the individual's primary address (Japan only).
        */
-      address_kana?: Individual.AddressKana;
+      address_kana?: JapanAddressParam;
 
       /**
        * The Kanji variation of the the individual's primary address (Japan only).
        */
-      address_kanji?: Individual.AddressKanji;
+      address_kanji?: JapanAddressParam;
 
       /**
        * The individual's date of birth.
@@ -915,9 +847,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
 
       /**
        * The individual's phone number.
@@ -966,80 +896,6 @@ declare namespace Stripe {
          * State, county, province, or region.
          */
         state?: string;
-      }
-
-      interface AddressKana {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
-      }
-
-      interface AddressKanji {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
       }
 
       interface Dob {
@@ -1327,9 +1183,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to an `Account` object. This can be useful for storing additional information about the account in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
@@ -1394,17 +1248,22 @@ declare namespace Stripe {
       /**
        * The Kana variation of the company's primary address (Japan only).
        */
-      address_kana?: Company.AddressKana;
+      address_kana?: JapanAddressParam;
 
       /**
        * The Kanji variation of the company's primary address (Japan only).
        */
-      address_kanji?: Company.AddressKanji;
+      address_kanji?: JapanAddressParam;
 
       /**
        * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
        */
       directors_provided?: boolean;
+
+      /**
+       * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.executive` requirement.
+       */
+      executives_provided?: boolean;
 
       /**
        * The company's legal name.
@@ -1485,80 +1344,6 @@ declare namespace Stripe {
         state?: string;
       }
 
-      interface AddressKana {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
-      }
-
-      interface AddressKanji {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
-      }
-
       interface Verification {
         /**
          * A document verifying the business.
@@ -1590,12 +1375,12 @@ declare namespace Stripe {
       /**
        * The Kana variation of the the individual's primary address (Japan only).
        */
-      address_kana?: Individual.AddressKana;
+      address_kana?: JapanAddressParam;
 
       /**
        * The Kanji variation of the the individual's primary address (Japan only).
        */
-      address_kanji?: Individual.AddressKanji;
+      address_kanji?: JapanAddressParam;
 
       /**
        * The individual's date of birth.
@@ -1652,9 +1437,7 @@ declare namespace Stripe {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: {
-        [key: string]: string;
-      };
+      metadata?: MetadataParam;
 
       /**
        * The individual's phone number.
@@ -1703,80 +1486,6 @@ declare namespace Stripe {
          * State, county, province, or region.
          */
         state?: string;
-      }
-
-      interface AddressKana {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
-      }
-
-      interface AddressKanji {
-        /**
-         * City or ward.
-         */
-        city?: string;
-
-        /**
-         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-         */
-        country?: string;
-
-        /**
-         * Block or building number.
-         */
-        line1?: string;
-
-        /**
-         * Building details.
-         */
-        line2?: string;
-
-        /**
-         * Postal code.
-         */
-        postal_code?: string;
-
-        /**
-         * Prefecture.
-         */
-        state?: string;
-
-        /**
-         * Town or cho-me.
-         */
-        town?: string;
       }
 
       interface Dob {

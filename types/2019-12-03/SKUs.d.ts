@@ -52,9 +52,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata: {
-      [key: string]: string;
-    };
+    metadata: Metadata;
 
     /**
      * The dimensions of this SKU for shipping purposes.
@@ -164,9 +162,7 @@ declare namespace Stripe {
     /**
      * A dictionary of attributes and values for the attributes defined by the product. If, for example, a product's attributes are `["size", "gender"]`, a valid SKU has the following dictionary of attributes: `{"size": "Medium", "gender": "Unisex"}`.
      */
-    attributes?: {
-      [key: string]: string;
-    };
+    attributes?: Metadata;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -186,9 +182,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a SKU object. It can be useful for storing additional information about the SKU in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The dimensions of this SKU for shipping purposes.
@@ -259,9 +253,7 @@ declare namespace Stripe {
     /**
      * A dictionary of attributes and values for the attributes defined by the product. When specified, `attributes` will partially update the existing attributes dictionary on the product, with the postcondition that a value must be present for each attribute key on the product.
      */
-    attributes?: {
-      [key: string]: string;
-    };
+    attributes?: Metadata;
 
     /**
      * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -286,9 +278,7 @@ declare namespace Stripe {
     /**
      * A set of key-value pairs that you can attach to a SKU object. It can be useful for storing additional information about the SKU in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * The dimensions of this SKU for shipping purposes.
@@ -362,9 +352,7 @@ declare namespace Stripe {
     /**
      * Only return SKUs that have the specified key-value pairs in this partially constructed dictionary. Can be specified only if `product` is also supplied. For instance, if the associated product has attributes `["color", "size"]`, passing in `attributes[color]=red` returns all the SKUs for this product that have `color` set to `red`.
      */
-    attributes?: {
-      [key: string]: string;
-    };
+    attributes?: Metadata;
 
     /**
      * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.

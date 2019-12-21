@@ -92,9 +92,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: Metadata;
 
     /**
      * The person's phone number.
@@ -362,12 +360,12 @@ declare namespace Stripe {
     /**
      * The Kana variation of the person's address (Japan only).
      */
-    address_kana?: PersonCreateParams.AddressKana;
+    address_kana?: JapanAddressParam;
 
     /**
      * The Kanji variation of the person's address (Japan only).
      */
-    address_kanji?: PersonCreateParams.AddressKanji;
+    address_kanji?: JapanAddressParam;
 
     /**
      * The person's date of birth.
@@ -432,9 +430,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
@@ -493,80 +489,6 @@ declare namespace Stripe {
        * State, county, province, or region.
        */
       state?: string;
-    }
-
-    interface AddressKana {
-      /**
-       * City or ward.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Block or building number.
-       */
-      line1?: string;
-
-      /**
-       * Building details.
-       */
-      line2?: string;
-
-      /**
-       * Postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * Prefecture.
-       */
-      state?: string;
-
-      /**
-       * Town or cho-me.
-       */
-      town?: string;
-    }
-
-    interface AddressKanji {
-      /**
-       * City or ward.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Block or building number.
-       */
-      line1?: string;
-
-      /**
-       * Building details.
-       */
-      line2?: string;
-
-      /**
-       * Postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * Prefecture.
-       */
-      state?: string;
-
-      /**
-       * Town or cho-me.
-       */
-      town?: string;
     }
 
     interface Dob {
@@ -673,12 +595,12 @@ declare namespace Stripe {
     /**
      * The Kana variation of the person's address (Japan only).
      */
-    address_kana?: PersonUpdateParams.AddressKana;
+    address_kana?: JapanAddressParam;
 
     /**
      * The Kanji variation of the person's address (Japan only).
      */
-    address_kanji?: PersonUpdateParams.AddressKanji;
+    address_kanji?: JapanAddressParam;
 
     /**
      * The person's date of birth.
@@ -743,9 +665,7 @@ declare namespace Stripe {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
      */
-    metadata?: {
-      [key: string]: string;
-    };
+    metadata?: MetadataParam;
 
     /**
      * A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
@@ -804,80 +724,6 @@ declare namespace Stripe {
        * State, county, province, or region.
        */
       state?: string;
-    }
-
-    interface AddressKana {
-      /**
-       * City or ward.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Block or building number.
-       */
-      line1?: string;
-
-      /**
-       * Building details.
-       */
-      line2?: string;
-
-      /**
-       * Postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * Prefecture.
-       */
-      state?: string;
-
-      /**
-       * Town or cho-me.
-       */
-      town?: string;
-    }
-
-    interface AddressKanji {
-      /**
-       * City or ward.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Block or building number.
-       */
-      line1?: string;
-
-      /**
-       * Building details.
-       */
-      line2?: string;
-
-      /**
-       * Postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * Prefecture.
-       */
-      state?: string;
-
-      /**
-       * Town or cho-me.
-       */
-      town?: string;
     }
 
     interface Dob {
