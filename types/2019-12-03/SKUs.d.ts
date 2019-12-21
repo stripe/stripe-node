@@ -205,7 +205,7 @@ declare namespace Stripe {
       /**
        * An indicator of the inventory available. Possible values are `in_stock`, `limited`, and `out_of_stock`. Will be present if and only if `type` is `bucket`.
        */
-      value?: '' | Inventory.Value;
+      value?: Inventory.Value | null;
     }
 
     namespace Inventory {
@@ -311,7 +311,7 @@ declare namespace Stripe {
       /**
        * An indicator of the inventory available. Possible values are `in_stock`, `limited`, and `out_of_stock`. Will be present if and only if `type` is `bucket`.
        */
-      value?: '' | Inventory.Value;
+      value?: Inventory.Value | null;
     }
 
     namespace Inventory {

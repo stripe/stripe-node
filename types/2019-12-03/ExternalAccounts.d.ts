@@ -37,7 +37,7 @@ declare namespace Stripe {
     /**
      * The type of entity that holds the account. This can be either `individual` or `company`.
      */
-    account_holder_type?: '' | ExternalAccountUpdateParams.AccountHolderType;
+    account_holder_type?: ExternalAccountUpdateParams.AccountHolderType | null;
 
     /**
      * City/District/Suburb/Town/Village.
