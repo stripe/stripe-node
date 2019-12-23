@@ -1,878 +1,834 @@
-declare namespace Stripe {
-  /**
-   * The Source object.
-   */
-  interface Source {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * Unique identifier for the object.
+     * The Source object.
      */
-    id: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'source';
-
-    ach_credit_transfer?: Source.AchCreditTransfer;
-
-    ach_debit?: Source.AchDebit;
-
-    acss_debit?: Source.AcssDebit;
-
-    alipay?: Source.Alipay;
-
-    /**
-     * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount associated with the source. This is the amount for which the source will be chargeable once ready. Required for `single_use` sources.
-     */
-    amount: number | null;
-
-    au_becs_debit?: Source.AuBecsDebit;
-
-    bancontact?: Source.Bancontact;
-
-    card?: Source.Card;
-
-    card_present?: Source.CardPresent;
-
-    /**
-     * The client secret of the source. Used for client-side retrieval using a publishable key.
-     */
-    client_secret: string;
-
-    code_verification?: Source.CodeVerification;
-
-    /**
-     * Time at which the object was created. Measured in seconds since the Unix epoch.
-     */
-    created: number;
-
-    /**
-     * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the source. This is the currency for which the source will be chargeable once ready. Required for `single_use` sources.
-     */
-    currency: string | null;
-
-    /**
-     * The ID of the customer to which this source is attached. This will not be present when the source has not been attached to a customer.
-     */
-    customer?: string;
-
-    eps?: Source.Eps;
-
-    /**
-     * The authentication `flow` of the source. `flow` is one of `redirect`, `receiver`, `code_verification`, `none`.
-     */
-    flow: string;
-
-    giropay?: Source.Giropay;
-
-    ideal?: Source.Ideal;
-
-    klarna?: Source.Klarna;
-
-    /**
-     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-     */
-    livemode: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: Metadata | null;
-
-    multibanco?: Source.Multibanco;
-
-    /**
-     * Information about the owner of the payment instrument that may be used or required by particular source types.
-     */
-    owner: Source.Owner | null;
-
-    p24?: Source.P24;
-
-    receiver?: Source.Receiver;
-
-    redirect?: Source.Redirect;
-
-    sepa_credit_transfer?: Source.SepaCreditTransfer;
-
-    sepa_debit?: Source.SepaDebit;
-
-    sofort?: Source.Sofort;
-
-    source_order?: Source.SourceOrder;
-
-    /**
-     * Extra information about a source. This will appear on your customer's statement every time you charge the source.
-     */
-    statement_descriptor: string | null;
-
-    /**
-     * The status of the source, one of `canceled`, `chargeable`, `consumed`, `failed`, or `pending`. Only `chargeable` sources can be used to create a charge.
-     */
-    status: string;
-
-    three_d_secure?: Source.ThreeDSecure;
-
-    /**
-     * The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `klarna`, `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the source with a name matching this value. It contains additional information specific to the [payment method](https://stripe.com/docs/sources) used.
-     */
-    type: Source.Type;
-
-    /**
-     * Either `reusable` or `single_use`. Whether this source should be reusable or not. Some source types may or may not be reusable by construction, while others may leave the option at creation. If an incompatible value is passed, an error will be returned.
-     */
-    usage: string | null;
-
-    wechat?: Source.Wechat;
-  }
-
-  namespace Source {
-    interface AchCreditTransfer {
-      account_number?: string | null;
-
-      bank_name?: string | null;
-
-      fingerprint?: string | null;
-
-      refund_account_holder_name?: string | null;
-
-      refund_account_holder_type?: string | null;
-
-      refund_routing_number?: string | null;
-
-      routing_number?: string | null;
-
-      swift_code?: string | null;
-    }
-
-    interface AchDebit {
-      bank_name?: string | null;
-
-      country?: string | null;
-
-      fingerprint?: string | null;
-
-      last4?: string | null;
-
-      routing_number?: string | null;
-
-      type?: string | null;
-    }
-
-    interface AcssDebit {
-      bank_address_city?: string | null;
-
-      bank_address_line_1?: string | null;
-
-      bank_address_line_2?: string | null;
-
-      bank_address_postal_code?: string | null;
-
-      bank_name?: string | null;
-
-      category?: string | null;
-
-      country?: string | null;
-
-      fingerprint?: string | null;
-
-      last4?: string | null;
-
-      routing_number?: string | null;
-    }
-
-    interface Alipay {
-      data_string?: string | null;
-
-      native_url?: string | null;
-
-      statement_descriptor?: string | null;
-    }
-
-    interface AuBecsDebit {
-      bsb_number?: string | null;
-
-      fingerprint?: string | null;
-
-      last4?: string | null;
-    }
-
-    interface Bancontact {
-      bank_code?: string | null;
-
-      bank_name?: string | null;
-
-      bic?: string | null;
-
-      iban_last4?: string | null;
-
-      preferred_language?: string | null;
-
-      statement_descriptor?: string | null;
-    }
-
-    interface Card {
-      address_line1_check?: string | null;
-
-      address_zip_check?: string | null;
-
-      brand?: string | null;
-
-      country?: string | null;
-
-      cvc_check?: string | null;
-
-      description?: string;
-
-      dynamic_last4?: string | null;
-
-      exp_month?: number | null;
-
-      exp_year?: number | null;
-
-      fingerprint?: string;
-
-      funding?: string | null;
-
-      iin?: string;
-
-      issuer?: string;
-
-      last4?: string | null;
-
-      name?: string | null;
-
-      three_d_secure?: string;
-
-      tokenization_method?: string | null;
-    }
-
-    interface CardPresent {
-      application_cryptogram?: string;
-
-      application_preferred_name?: string;
-
-      authorization_code?: string | null;
-
-      authorization_response_code?: string;
-
-      brand?: string | null;
-
-      country?: string | null;
-
-      cvm_type?: string;
-
-      data_type?: string | null;
-
-      dedicated_file_name?: string;
-
-      description?: string;
-
-      emv_auth_data?: string;
-
-      evidence_customer_signature?: string | null;
-
-      evidence_transaction_certificate?: string | null;
-
-      exp_month?: number | null;
-
-      exp_year?: number | null;
-
-      fingerprint?: string;
-
-      funding?: string | null;
-
-      iin?: string;
-
-      issuer?: string;
-
-      last4?: string | null;
-
-      pos_device_id?: string | null;
-
-      pos_entry_mode?: string;
-
-      read_method?: string | null;
-
-      reader?: string | null;
-
-      terminal_verification_results?: string;
-
-      transaction_status_information?: string;
-    }
-
-    interface CodeVerification {
+    interface Source {
       /**
-       * The number of attempts remaining to authenticate the source object with a verification code.
+       * Unique identifier for the object.
        */
-      attempts_remaining: number;
+      id: string;
 
       /**
-       * The status of the code verification, either `pending` (awaiting verification, `attempts_remaining` should be greater than 0), `succeeded` (successful verification) or `failed` (failed verification, cannot be verified anymore as `attempts_remaining` should be 0).
+       * String representing the object's type. Objects of the same type share the same value.
        */
-      status: string;
-    }
+      object: 'source';
 
-    interface Eps {
-      reference?: string | null;
+      ach_credit_transfer?: Source.AchCreditTransfer;
 
-      statement_descriptor?: string | null;
-    }
+      ach_debit?: Source.AchDebit;
 
-    interface Giropay {
-      bank_code?: string | null;
+      acss_debit?: Source.AcssDebit;
 
-      bank_name?: string | null;
+      alipay?: Source.Alipay;
 
-      bic?: string | null;
-
-      statement_descriptor?: string | null;
-    }
-
-    interface Ideal {
-      bank?: string | null;
-
-      bic?: string | null;
-
-      iban_last4?: string | null;
-
-      statement_descriptor?: string | null;
-    }
-
-    interface Klarna {
-      background_image_url?: string;
-
-      client_token?: string | null;
-
-      first_name?: string;
-
-      last_name?: string;
-
-      locale?: string;
-
-      logo_url?: string;
-
-      page_title?: string;
-
-      pay_later_asset_urls_descriptive?: string;
-
-      pay_later_asset_urls_standard?: string;
-
-      pay_later_name?: string;
-
-      pay_later_redirect_url?: string;
-
-      pay_now_asset_urls_descriptive?: string;
-
-      pay_now_asset_urls_standard?: string;
-
-      pay_now_name?: string;
-
-      pay_now_redirect_url?: string;
-
-      pay_over_time_asset_urls_descriptive?: string;
-
-      pay_over_time_asset_urls_standard?: string;
-
-      pay_over_time_name?: string;
-
-      pay_over_time_redirect_url?: string;
-
-      payment_method_categories?: string;
-
-      purchase_country?: string;
-
-      purchase_type?: string;
-
-      redirect_url?: string;
-
-      shipping_first_name?: string;
-
-      shipping_last_name?: string;
-    }
-
-    interface Multibanco {
-      entity?: string | null;
-
-      reference?: string | null;
-
-      refund_account_holder_address_city?: string | null;
-
-      refund_account_holder_address_country?: string | null;
-
-      refund_account_holder_address_line1?: string | null;
-
-      refund_account_holder_address_line2?: string | null;
-
-      refund_account_holder_address_postal_code?: string | null;
-
-      refund_account_holder_address_state?: string | null;
-
-      refund_account_holder_name?: string | null;
-
-      refund_iban?: string | null;
-    }
-
-    interface Owner {
       /**
-       * Owner's address.
+       * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount associated with the source. This is the amount for which the source will be chargeable once ready. Required for `single_use` sources.
        */
-      address: Address | null;
+      amount: number | null;
+
+      au_becs_debit?: Source.AuBecsDebit;
+
+      bancontact?: Source.Bancontact;
+
+      card?: Source.Card;
+
+      card_present?: Source.CardPresent;
 
       /**
-       * Owner's email address.
+       * The client secret of the source. Used for client-side retrieval using a publishable key.
        */
-      email: string | null;
+      client_secret: string;
+
+      code_verification?: Source.CodeVerification;
 
       /**
-       * Owner's full name.
+       * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
-      name: string | null;
+      created: number;
 
       /**
-       * Owner's phone number (including extension).
+       * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the source. This is the currency for which the source will be chargeable once ready. Required for `single_use` sources.
        */
-      phone: string | null;
+      currency: string | null;
 
       /**
-       * Verified owner's address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
+       * The ID of the customer to which this source is attached. This will not be present when the source has not been attached to a customer.
        */
-      verified_address: Address | null;
+      customer?: string;
+
+      eps?: Source.Eps;
 
       /**
-       * Verified owner's email address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
+       * The authentication `flow` of the source. `flow` is one of `redirect`, `receiver`, `code_verification`, `none`.
        */
-      verified_email: string | null;
+      flow: string;
+
+      giropay?: Source.Giropay;
+
+      ideal?: Source.Ideal;
+
+      klarna?: Source.Klarna;
 
       /**
-       * Verified owner's full name. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
+       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
-      verified_name: string | null;
+      livemode: boolean;
 
       /**
-       * Verified owner's phone number (including extension). Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      verified_phone: string | null;
-    }
+      metadata: Metadata | null;
 
-    interface P24 {
-      reference?: string | null;
-    }
+      multibanco?: Source.Multibanco;
 
-    interface Receiver {
       /**
-       * The address of the receiver source. This is the value that should be communicated to the customer to send their funds to.
+       * Information about the owner of the payment instrument that may be used or required by particular source types.
        */
-      address: string | null;
+      owner: Source.Owner | null;
+
+      p24?: Source.P24;
+
+      receiver?: Source.Receiver;
+
+      redirect?: Source.Redirect;
+
+      sepa_credit_transfer?: Source.SepaCreditTransfer;
+
+      sepa_debit?: Source.SepaDebit;
+
+      sofort?: Source.Sofort;
+
+      source_order?: Source.SourceOrder;
 
       /**
-       * The total amount that was charged by you. The amount charged is expressed in the source's currency.
+       * Extra information about a source. This will appear on your customer's statement every time you charge the source.
        */
-      amount_charged: number;
+      statement_descriptor: string | null;
 
       /**
-       * The total amount received by the receiver source. `amount_received = amount_returned + amount_charged` is true at all time. The amount received is expressed in the source's currency.
-       */
-      amount_received: number;
-
-      /**
-       * The total amount that was returned to the customer. The amount returned is expressed in the source's currency.
-       */
-      amount_returned: number;
-
-      /**
-       * Type of refund attribute method, one of `email`, `manual`, or `none`.
-       */
-      refund_attributes_method: string;
-
-      /**
-       * Type of refund attribute status, one of `missing`, `requested`, or `available`.
-       */
-      refund_attributes_status: string;
-    }
-
-    interface Redirect {
-      /**
-       * The failure reason for the redirect, either `user_abort` (the customer aborted or dropped out of the redirect flow), `declined` (the authentication failed or the transaction was declined), or `processing_error` (the redirect failed due to a technical error). Present only if the redirect status is `failed`.
-       */
-      failure_reason: string | null;
-
-      /**
-       * The URL you provide to redirect the customer to after they authenticated their payment.
-       */
-      return_url: string;
-
-      /**
-       * The status of the redirect, either `pending` (ready to be used by your customer to authenticate the transaction), `succeeded` (succesful authentication, cannot be reused) or `not_required` (redirect should not be used) or `failed` (failed authentication, cannot be reused).
+       * The status of the source, one of `canceled`, `chargeable`, `consumed`, `failed`, or `pending`. Only `chargeable` sources can be used to create a charge.
        */
       status: string;
 
-      /**
-       * The URL provided to you to redirect a customer to as part of a `redirect` authentication flow.
-       */
-      url: string;
-    }
-
-    interface SepaCreditTransfer {
-      bank_name?: string | null;
-
-      bic?: string | null;
-
-      iban?: string | null;
-
-      refund_account_holder_address_city?: string | null;
-
-      refund_account_holder_address_country?: string | null;
-
-      refund_account_holder_address_line1?: string | null;
-
-      refund_account_holder_address_line2?: string | null;
-
-      refund_account_holder_address_postal_code?: string | null;
-
-      refund_account_holder_address_state?: string | null;
-
-      refund_account_holder_name?: string | null;
-
-      refund_iban?: string | null;
-    }
-
-    interface SepaDebit {
-      bank_code?: string | null;
-
-      branch_code?: string | null;
-
-      country?: string | null;
-
-      fingerprint?: string | null;
-
-      last4?: string | null;
-
-      mandate_reference?: string | null;
-
-      mandate_url?: string | null;
-    }
-
-    interface Sofort {
-      bank_code?: string | null;
-
-      bank_name?: string | null;
-
-      bic?: string | null;
-
-      country?: string | null;
-
-      iban_last4?: string | null;
-
-      preferred_language?: string | null;
-
-      statement_descriptor?: string | null;
-    }
-
-    interface SourceOrder {
-      /**
-       * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the order.
-       */
-      amount: number;
+      three_d_secure?: Source.ThreeDSecure;
 
       /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       * The `type` of the source. The `type` is a payment method, one of `ach_credit_transfer`, `ach_debit`, `alipay`, `bancontact`, `card`, `card_present`, `eps`, `giropay`, `ideal`, `multibanco`, `klarna`, `p24`, `sepa_debit`, `sofort`, `three_d_secure`, or `wechat`. An additional hash is included on the source with a name matching this value. It contains additional information specific to the [payment method](https://stripe.com/docs/sources) used.
        */
-      currency: string;
+      type: Source.Type;
 
       /**
-       * The email address of the customer placing the order.
+       * Either `reusable` or `single_use`. Whether this source should be reusable or not. Some source types may or may not be reusable by construction, while others may leave the option at creation. If an incompatible value is passed, an error will be returned.
        */
-      email?: string;
+      usage: string | null;
 
-      /**
-       * List of items constituting the order.
-       */
-      items: Array<SourceOrder.Item> | null;
-
-      shipping?: SourceOrder.Shipping;
+      wechat?: Source.Wechat;
     }
 
-    namespace SourceOrder {
-      interface Item {
-        /**
-         * The amount (price) for this order item.
-         */
-        amount: number | null;
+    namespace Source {
+      interface AchCreditTransfer {
+        account_number?: string | null;
 
-        /**
-         * This currency of this order item. Required when `amount` is present.
-         */
-        currency: string | null;
+        bank_name?: string | null;
 
-        /**
-         * Human-readable description for this order item.
-         */
-        description: string | null;
+        fingerprint?: string | null;
 
-        /**
-         * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
-         */
-        quantity?: number;
+        refund_account_holder_name?: string | null;
 
-        /**
-         * The type of this order item. Must be `sku`, `tax`, or `shipping`.
-         */
-        type: string | null;
+        refund_account_holder_type?: string | null;
+
+        refund_routing_number?: string | null;
+
+        routing_number?: string | null;
+
+        swift_code?: string | null;
       }
 
-      interface Shipping {
-        address?: Address;
+      interface AchDebit {
+        bank_name?: string | null;
 
-        /**
-         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-         */
-        carrier?: string | null;
+        country?: string | null;
 
-        /**
-         * Recipient name.
-         */
+        fingerprint?: string | null;
+
+        last4?: string | null;
+
+        routing_number?: string | null;
+
+        type?: string | null;
+      }
+
+      interface AcssDebit {
+        bank_address_city?: string | null;
+
+        bank_address_line_1?: string | null;
+
+        bank_address_line_2?: string | null;
+
+        bank_address_postal_code?: string | null;
+
+        bank_name?: string | null;
+
+        category?: string | null;
+
+        country?: string | null;
+
+        fingerprint?: string | null;
+
+        last4?: string | null;
+
+        routing_number?: string | null;
+      }
+
+      interface Alipay {
+        data_string?: string | null;
+
+        native_url?: string | null;
+
+        statement_descriptor?: string | null;
+      }
+
+      interface AuBecsDebit {
+        bsb_number?: string | null;
+
+        fingerprint?: string | null;
+
+        last4?: string | null;
+      }
+
+      interface Bancontact {
+        bank_code?: string | null;
+
+        bank_name?: string | null;
+
+        bic?: string | null;
+
+        iban_last4?: string | null;
+
+        preferred_language?: string | null;
+
+        statement_descriptor?: string | null;
+      }
+
+      interface Card {
+        address_line1_check?: string | null;
+
+        address_zip_check?: string | null;
+
+        brand?: string | null;
+
+        country?: string | null;
+
+        cvc_check?: string | null;
+
+        description?: string;
+
+        dynamic_last4?: string | null;
+
+        exp_month?: number | null;
+
+        exp_year?: number | null;
+
+        fingerprint?: string;
+
+        funding?: string | null;
+
+        iin?: string;
+
+        issuer?: string;
+
+        last4?: string | null;
+
         name?: string | null;
 
+        three_d_secure?: string;
+
+        tokenization_method?: string | null;
+      }
+
+      interface CardPresent {
+        application_cryptogram?: string;
+
+        application_preferred_name?: string;
+
+        authorization_code?: string | null;
+
+        authorization_response_code?: string;
+
+        brand?: string | null;
+
+        country?: string | null;
+
+        cvm_type?: string;
+
+        data_type?: string | null;
+
+        dedicated_file_name?: string;
+
+        description?: string;
+
+        emv_auth_data?: string;
+
+        evidence_customer_signature?: string | null;
+
+        evidence_transaction_certificate?: string | null;
+
+        exp_month?: number | null;
+
+        exp_year?: number | null;
+
+        fingerprint?: string;
+
+        funding?: string | null;
+
+        iin?: string;
+
+        issuer?: string;
+
+        last4?: string | null;
+
+        pos_device_id?: string | null;
+
+        pos_entry_mode?: string;
+
+        read_method?: string | null;
+
+        reader?: string | null;
+
+        terminal_verification_results?: string;
+
+        transaction_status_information?: string;
+      }
+
+      interface CodeVerification {
         /**
-         * Recipient phone (including extension).
+         * The number of attempts remaining to authenticate the source object with a verification code.
          */
-        phone?: string | null;
+        attempts_remaining: number;
 
         /**
-         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+         * The status of the code verification, either `pending` (awaiting verification, `attempts_remaining` should be greater than 0), `succeeded` (successful verification) or `failed` (failed verification, cannot be verified anymore as `attempts_remaining` should be 0).
          */
-        tracking_number?: string | null;
+        status: string;
+      }
+
+      interface Eps {
+        reference?: string | null;
+
+        statement_descriptor?: string | null;
+      }
+
+      interface Giropay {
+        bank_code?: string | null;
+
+        bank_name?: string | null;
+
+        bic?: string | null;
+
+        statement_descriptor?: string | null;
+      }
+
+      interface Ideal {
+        bank?: string | null;
+
+        bic?: string | null;
+
+        iban_last4?: string | null;
+
+        statement_descriptor?: string | null;
+      }
+
+      interface Klarna {
+        background_image_url?: string;
+
+        client_token?: string | null;
+
+        first_name?: string;
+
+        last_name?: string;
+
+        locale?: string;
+
+        logo_url?: string;
+
+        page_title?: string;
+
+        pay_later_asset_urls_descriptive?: string;
+
+        pay_later_asset_urls_standard?: string;
+
+        pay_later_name?: string;
+
+        pay_later_redirect_url?: string;
+
+        pay_now_asset_urls_descriptive?: string;
+
+        pay_now_asset_urls_standard?: string;
+
+        pay_now_name?: string;
+
+        pay_now_redirect_url?: string;
+
+        pay_over_time_asset_urls_descriptive?: string;
+
+        pay_over_time_asset_urls_standard?: string;
+
+        pay_over_time_name?: string;
+
+        pay_over_time_redirect_url?: string;
+
+        payment_method_categories?: string;
+
+        purchase_country?: string;
+
+        purchase_type?: string;
+
+        redirect_url?: string;
+
+        shipping_first_name?: string;
+
+        shipping_last_name?: string;
+      }
+
+      interface Multibanco {
+        entity?: string | null;
+
+        reference?: string | null;
+
+        refund_account_holder_address_city?: string | null;
+
+        refund_account_holder_address_country?: string | null;
+
+        refund_account_holder_address_line1?: string | null;
+
+        refund_account_holder_address_line2?: string | null;
+
+        refund_account_holder_address_postal_code?: string | null;
+
+        refund_account_holder_address_state?: string | null;
+
+        refund_account_holder_name?: string | null;
+
+        refund_iban?: string | null;
+      }
+
+      interface Owner {
+        /**
+         * Owner's address.
+         */
+        address: Address | null;
+
+        /**
+         * Owner's email address.
+         */
+        email: string | null;
+
+        /**
+         * Owner's full name.
+         */
+        name: string | null;
+
+        /**
+         * Owner's phone number (including extension).
+         */
+        phone: string | null;
+
+        /**
+         * Verified owner's address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_address: Address | null;
+
+        /**
+         * Verified owner's email address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_email: string | null;
+
+        /**
+         * Verified owner's full name. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_name: string | null;
+
+        /**
+         * Verified owner's phone number (including extension). Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_phone: string | null;
+      }
+
+      interface P24 {
+        reference?: string | null;
+      }
+
+      interface Receiver {
+        /**
+         * The address of the receiver source. This is the value that should be communicated to the customer to send their funds to.
+         */
+        address: string | null;
+
+        /**
+         * The total amount that was charged by you. The amount charged is expressed in the source's currency.
+         */
+        amount_charged: number;
+
+        /**
+         * The total amount received by the receiver source. `amount_received = amount_returned + amount_charged` is true at all time. The amount received is expressed in the source's currency.
+         */
+        amount_received: number;
+
+        /**
+         * The total amount that was returned to the customer. The amount returned is expressed in the source's currency.
+         */
+        amount_returned: number;
+
+        /**
+         * Type of refund attribute method, one of `email`, `manual`, or `none`.
+         */
+        refund_attributes_method: string;
+
+        /**
+         * Type of refund attribute status, one of `missing`, `requested`, or `available`.
+         */
+        refund_attributes_status: string;
+      }
+
+      interface Redirect {
+        /**
+         * The failure reason for the redirect, either `user_abort` (the customer aborted or dropped out of the redirect flow), `declined` (the authentication failed or the transaction was declined), or `processing_error` (the redirect failed due to a technical error). Present only if the redirect status is `failed`.
+         */
+        failure_reason: string | null;
+
+        /**
+         * The URL you provide to redirect the customer to after they authenticated their payment.
+         */
+        return_url: string;
+
+        /**
+         * The status of the redirect, either `pending` (ready to be used by your customer to authenticate the transaction), `succeeded` (succesful authentication, cannot be reused) or `not_required` (redirect should not be used) or `failed` (failed authentication, cannot be reused).
+         */
+        status: string;
+
+        /**
+         * The URL provided to you to redirect a customer to as part of a `redirect` authentication flow.
+         */
+        url: string;
+      }
+
+      interface SepaCreditTransfer {
+        bank_name?: string | null;
+
+        bic?: string | null;
+
+        iban?: string | null;
+
+        refund_account_holder_address_city?: string | null;
+
+        refund_account_holder_address_country?: string | null;
+
+        refund_account_holder_address_line1?: string | null;
+
+        refund_account_holder_address_line2?: string | null;
+
+        refund_account_holder_address_postal_code?: string | null;
+
+        refund_account_holder_address_state?: string | null;
+
+        refund_account_holder_name?: string | null;
+
+        refund_iban?: string | null;
+      }
+
+      interface SepaDebit {
+        bank_code?: string | null;
+
+        branch_code?: string | null;
+
+        country?: string | null;
+
+        fingerprint?: string | null;
+
+        last4?: string | null;
+
+        mandate_reference?: string | null;
+
+        mandate_url?: string | null;
+      }
+
+      interface Sofort {
+        bank_code?: string | null;
+
+        bank_name?: string | null;
+
+        bic?: string | null;
+
+        country?: string | null;
+
+        iban_last4?: string | null;
+
+        preferred_language?: string | null;
+
+        statement_descriptor?: string | null;
+      }
+
+      interface SourceOrder {
+        /**
+         * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the total amount for the order.
+         */
+        amount: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * The email address of the customer placing the order.
+         */
+        email?: string;
+
+        /**
+         * List of items constituting the order.
+         */
+        items: Array<SourceOrder.Item> | null;
+
+        shipping?: SourceOrder.Shipping;
+      }
+
+      namespace SourceOrder {
+        interface Item {
+          /**
+           * The amount (price) for this order item.
+           */
+          amount: number | null;
+
+          /**
+           * This currency of this order item. Required when `amount` is present.
+           */
+          currency: string | null;
+
+          /**
+           * Human-readable description for this order item.
+           */
+          description: string | null;
+
+          /**
+           * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
+           */
+          quantity?: number;
+
+          /**
+           * The type of this order item. Must be `sku`, `tax`, or `shipping`.
+           */
+          type: string | null;
+        }
+
+        interface Shipping {
+          address?: Address;
+
+          /**
+           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+           */
+          carrier?: string | null;
+
+          /**
+           * Recipient name.
+           */
+          name?: string | null;
+
+          /**
+           * Recipient phone (including extension).
+           */
+          phone?: string | null;
+
+          /**
+           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+           */
+          tracking_number?: string | null;
+        }
+      }
+
+      interface ThreeDSecure {
+        address_line1_check?: string | null;
+
+        address_zip_check?: string | null;
+
+        authenticated?: boolean | null;
+
+        brand?: string | null;
+
+        card?: string | null;
+
+        country?: string | null;
+
+        customer?: string | null;
+
+        cvc_check?: string | null;
+
+        description?: string;
+
+        dynamic_last4?: string | null;
+
+        exp_month?: number | null;
+
+        exp_year?: number | null;
+
+        fingerprint?: string;
+
+        funding?: string | null;
+
+        iin?: string;
+
+        issuer?: string;
+
+        last4?: string | null;
+
+        name?: string | null;
+
+        three_d_secure?: string;
+
+        tokenization_method?: string | null;
+      }
+
+      type Type =
+        | 'ach_credit_transfer'
+        | 'ach_debit'
+        | 'acss_debit'
+        | 'alipay'
+        | 'au_becs_debit'
+        | 'bancontact'
+        | 'card'
+        | 'card_present'
+        | 'eps'
+        | 'giropay'
+        | 'ideal'
+        | 'klarna'
+        | 'multibanco'
+        | 'p24'
+        | 'sepa_credit_transfer'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'three_d_secure'
+        | 'wechat'
+
+      interface Wechat {
+        prepay_id?: string;
+
+        qr_code_url?: string | null;
+
+        statement_descriptor?: string;
       }
     }
 
-    interface ThreeDSecure {
-      address_line1_check?: string | null;
+    interface SourceCreateParams {
+      /**
+       * Amount associated with the source. This is the amount for which the source will be chargeable once ready. Required for `single_use` sources. Not supported for `receiver` type sources, where charge amount may not be specified until funds land.
+       */
+      amount?: number;
 
-      address_zip_check?: string | null;
+      /**
+       * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the source. This is the currency for which the source will be chargeable once ready.
+       */
+      currency?: string;
 
-      authenticated?: boolean | null;
+      /**
+       * The `Customer` to whom the original source is attached to. Must be set when the original source is not a `Source` (e.g., `Card`).
+       */
+      customer?: string;
 
-      brand?: string | null;
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
 
-      card?: string | null;
+      /**
+       * The authentication `flow` of the source to create. `flow` is one of `redirect`, `receiver`, `code_verification`, `none`. It is generally inferred unless a type supports multiple flows.
+       */
+      flow?: SourceCreateParams.Flow;
 
-      country?: string | null;
+      /**
+       * Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
+       */
+      mandate?: SourceCreateParams.Mandate;
 
-      customer?: string | null;
+      /**
+       * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
+       */
+      metadata?: MetadataParam;
 
-      cvc_check?: string | null;
+      /**
+       * The source to share.
+       */
+      original_source?: string;
 
-      description?: string;
+      /**
+       * Information about the owner of the payment instrument that may be used or required by particular source types.
+       */
+      owner?: SourceCreateParams.Owner;
 
-      dynamic_last4?: string | null;
+      /**
+       * Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
+       */
+      receiver?: SourceCreateParams.Receiver;
 
-      exp_month?: number | null;
+      /**
+       * Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
+       */
+      redirect?: SourceCreateParams.Redirect;
 
-      exp_year?: number | null;
+      /**
+       * Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
+       */
+      source_order?: SourceCreateParams.SourceOrder;
 
-      fingerprint?: string;
-
-      funding?: string | null;
-
-      iin?: string;
-
-      issuer?: string;
-
-      last4?: string | null;
-
-      name?: string | null;
-
-      three_d_secure?: string;
-
-      tokenization_method?: string | null;
-    }
-
-    type Type =
-      | 'ach_credit_transfer'
-      | 'ach_debit'
-      | 'acss_debit'
-      | 'alipay'
-      | 'au_becs_debit'
-      | 'bancontact'
-      | 'card'
-      | 'card_present'
-      | 'eps'
-      | 'giropay'
-      | 'ideal'
-      | 'klarna'
-      | 'multibanco'
-      | 'p24'
-      | 'sepa_credit_transfer'
-      | 'sepa_debit'
-      | 'sofort'
-      | 'three_d_secure'
-      | 'wechat'
-
-    interface Wechat {
-      prepay_id?: string;
-
-      qr_code_url?: string | null;
-
+      /**
+       * An arbitrary string to be displayed on your customer's statement. As an example, if your website is `RunClub` and the item you're charging for is a race ticket, you may want to specify a `statement_descriptor` of `RunClub 5K race ticket.` While many payment types will display this information, some may not display it at all.
+       */
       statement_descriptor?: string;
-    }
-  }
-
-  interface SourceCreateParams {
-    /**
-     * Amount associated with the source. This is the amount for which the source will be chargeable once ready. Required for `single_use` sources. Not supported for `receiver` type sources, where charge amount may not be specified until funds land.
-     */
-    amount?: number;
-
-    /**
-     * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) associated with the source. This is the currency for which the source will be chargeable once ready.
-     */
-    currency?: string;
-
-    /**
-     * The `Customer` to whom the original source is attached to. Must be set when the original source is not a `Source` (e.g., `Card`).
-     */
-    customer?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * The authentication `flow` of the source to create. `flow` is one of `redirect`, `receiver`, `code_verification`, `none`. It is generally inferred unless a type supports multiple flows.
-     */
-    flow?: SourceCreateParams.Flow;
-
-    /**
-     * Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
-     */
-    mandate?: SourceCreateParams.Mandate;
-
-    /**
-     * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
-     */
-    metadata?: MetadataParam;
-
-    /**
-     * The source to share.
-     */
-    original_source?: string;
-
-    /**
-     * Information about the owner of the payment instrument that may be used or required by particular source types.
-     */
-    owner?: SourceCreateParams.Owner;
-
-    /**
-     * Optional parameters for the receiver flow. Can be set only if the source is a receiver (`flow` is `receiver`).
-     */
-    receiver?: SourceCreateParams.Receiver;
-
-    /**
-     * Parameters required for the redirect flow. Required if the source is authenticated by a redirect (`flow` is `redirect`).
-     */
-    redirect?: SourceCreateParams.Redirect;
-
-    /**
-     * Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
-     */
-    source_order?: SourceCreateParams.SourceOrder;
-
-    /**
-     * An arbitrary string to be displayed on your customer's statement. As an example, if your website is `RunClub` and the item you're charging for is a race ticket, you may want to specify a `statement_descriptor` of `RunClub 5K race ticket.` While many payment types will display this information, some may not display it at all.
-     */
-    statement_descriptor?: string;
-
-    /**
-     * An optional token used to create the source. When passed, token properties will override source parameters.
-     */
-    token?: string;
-
-    /**
-     * The `type` of the source to create. Required unless `customer` and `original_source` are specified (see the [Cloning card Sources](https://stripe.com/docs/sources/connect#cloning-card-sources) guide)
-     */
-    type?: string;
-
-    usage?: SourceCreateParams.Usage;
-  }
-
-  namespace SourceCreateParams {
-    type Flow = 'code_verification' | 'none' | 'receiver' | 'redirect'
-
-    interface Mandate {
-      /**
-       * The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
-       */
-      acceptance?: Mandate.Acceptance;
 
       /**
-       * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
+       * An optional token used to create the source. When passed, token properties will override source parameters.
        */
-      amount?: number | '';
+      token?: string;
 
       /**
-       * The currency specified by the mandate. (Must match `currency` of the source)
+       * The `type` of the source to create. Required unless `customer` and `original_source` are specified (see the [Cloning card Sources](https://stripe.com/docs/sources/connect#cloning-card-sources) guide)
        */
-      currency?: string;
+      type?: string;
 
-      /**
-       * The interval of debits permitted by the mandate. Either `one_time` (just permitting a single debit), `scheduled` (with debits on an agreed schedule or for clearly-defined events), or `variable`(for debits with any frequency)
-       */
-      interval?: Mandate.Interval;
-
-      /**
-       * The method Stripe should use to notify the customer of upcoming debit instructions and/or mandate confirmation as required by the underlying debit network. Either `email` (an email is sent directly to the customer), `manual` (a `source.mandate_notification` event is sent to your webhooks endpoint and you should handle the notification) or `none` (the underlying debit network does not require any notification).
-       */
-      notification_method?: Mandate.NotificationMethod;
+      usage?: SourceCreateParams.Usage;
     }
 
-    namespace Mandate {
-      interface Acceptance {
+    namespace SourceCreateParams {
+      type Flow = 'code_verification' | 'none' | 'receiver' | 'redirect'
+
+      interface Mandate {
         /**
-         * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
+         * The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
          */
-        date?: number;
+        acceptance?: Mandate.Acceptance;
 
         /**
-         * The IP address from which the mandate was accepted or refused by the customer.
+         * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
          */
-        ip?: string;
+        amount?: number | '';
 
         /**
-         * The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]` is `offline`
+         * The currency specified by the mandate. (Must match `currency` of the source)
          */
-        offline?: Acceptance.Offline;
+        currency?: string;
 
         /**
-         * The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is `online`
+         * The interval of debits permitted by the mandate. Either `one_time` (just permitting a single debit), `scheduled` (with debits on an agreed schedule or for clearly-defined events), or `variable`(for debits with any frequency)
          */
-        online?: Acceptance.Online;
+        interval?: Mandate.Interval;
 
         /**
-         * The status of the mandate acceptance. Either `accepted` (the mandate was accepted) or `refused` (the mandate was refused).
+         * The method Stripe should use to notify the customer of upcoming debit instructions and/or mandate confirmation as required by the underlying debit network. Either `email` (an email is sent directly to the customer), `manual` (a `source.mandate_notification` event is sent to your webhooks endpoint and you should handle the notification) or `none` (the underlying debit network does not require any notification).
          */
-        status: Acceptance.Status;
-
-        /**
-         * The type of acceptance information included with the mandate. Either `online` or `offline`
-         */
-        type?: Acceptance.Type;
-
-        /**
-         * The user agent of the browser from which the mandate was accepted or refused by the customer.
-         */
-        user_agent?: string;
+        notification_method?: Mandate.NotificationMethod;
       }
 
-      namespace Acceptance {
-        interface Offline {
-          /**
-           * An email to contact you with if a copy of the mandate is requested, required if `type` is `offline`.
-           */
-          contact_email: string;
-        }
-
-        interface Online {
+      namespace Mandate {
+        interface Acceptance {
           /**
            * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
            */
@@ -884,269 +840,269 @@ declare namespace Stripe {
           ip?: string;
 
           /**
+           * The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]` is `offline`
+           */
+          offline?: Acceptance.Offline;
+
+          /**
+           * The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is `online`
+           */
+          online?: Acceptance.Online;
+
+          /**
+           * The status of the mandate acceptance. Either `accepted` (the mandate was accepted) or `refused` (the mandate was refused).
+           */
+          status: Acceptance.Status;
+
+          /**
+           * The type of acceptance information included with the mandate. Either `online` or `offline`
+           */
+          type?: Acceptance.Type;
+
+          /**
            * The user agent of the browser from which the mandate was accepted or refused by the customer.
            */
           user_agent?: string;
         }
 
-        type Status = 'accepted' | 'pending' | 'refused' | 'revoked'
+        namespace Acceptance {
+          interface Offline {
+            /**
+             * An email to contact you with if a copy of the mandate is requested, required if `type` is `offline`.
+             */
+            contact_email: string;
+          }
 
-        type Type = 'offline' | 'online'
+          interface Online {
+            /**
+             * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the mandate was accepted or refused by the customer.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the mandate was accepted or refused by the customer.
+             */
+            user_agent?: string;
+          }
+
+          type Status = 'accepted' | 'pending' | 'refused' | 'revoked'
+
+          type Type = 'offline' | 'online'
+        }
+
+        type Interval = 'one_time' | 'scheduled' | 'variable'
+
+        type NotificationMethod =
+          | 'deprecated_none'
+          | 'email'
+          | 'manual'
+          | 'none'
+          | 'stripe_email'
       }
 
-      type Interval = 'one_time' | 'scheduled' | 'variable'
-
-      type NotificationMethod =
-        | 'deprecated_none'
-        | 'email'
-        | 'manual'
-        | 'none'
-        | 'stripe_email'
-    }
-
-    interface Owner {
-      /**
-       * Owner's address.
-       */
-      address?: Owner.Address;
-
-      /**
-       * Owner's email address.
-       */
-      email?: string;
-
-      /**
-       * Owner's full name.
-       */
-      name?: string;
-
-      /**
-       * Owner's phone number.
-       */
-      phone?: string;
-    }
-
-    namespace Owner {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1?: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
-    }
-
-    interface Receiver {
-      /**
-       * The method Stripe should use to request information needed to process a refund or mispayment. Either `email` (an email is sent directly to the customer) or `manual` (a `source.refund_attributes_required` event is sent to your webhooks endpoint). Refer to each payment method's documentation to learn which refund attributes may be required.
-       */
-      refund_attributes_method?: Receiver.RefundAttributesMethod;
-    }
-
-    namespace Receiver {
-      type RefundAttributesMethod = 'email' | 'manual' | 'none'
-    }
-
-    interface Redirect {
-      /**
-       * The URL you provide to redirect the customer back to you after they authenticated their payment. It can use your application URI scheme in the context of a mobile application.
-       */
-      return_url: string;
-    }
-
-    interface SourceOrder {
-      /**
-       * List of items constituting the order.
-       */
-      items?: Array<SourceOrder.Item>;
-
-      /**
-       * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
-       */
-      shipping?: SourceOrder.Shipping;
-    }
-
-    namespace SourceOrder {
-      interface Item {
-        amount?: number;
-
-        currency?: string;
-
-        description?: string;
-
+      interface Owner {
         /**
-         * The ID of the SKU being ordered.
+         * Owner's address.
          */
-        parent?: string;
+        address?: Owner.Address;
 
         /**
-         * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
+         * Owner's email address.
          */
-        quantity?: number;
-
-        type?: Item.Type;
-      }
-
-      namespace Item {
-        type Type = 'discount' | 'shipping' | 'sku' | 'tax'
-      }
-
-      interface Shipping {
-        /**
-         * Shipping address.
-         */
-        address: AddressParam;
+        email?: string;
 
         /**
-         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-         */
-        carrier?: string;
-
-        /**
-         * Recipient name.
+         * Owner's full name.
          */
         name?: string;
 
         /**
-         * Recipient phone (including extension).
+         * Owner's phone number.
          */
         phone?: string;
-
-        /**
-         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-         */
-        tracking_number?: string;
-      }
-    }
-
-    type Usage = 'reusable' | 'single_use'
-  }
-
-  interface SourceRetrieveParams {
-    /**
-     * The client secret of the source. Required if a publishable key is used to retrieve the source.
-     */
-    client_secret?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  interface SourceUpdateParams {
-    /**
-     * Amount associated with the source.
-     */
-    amount?: number;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
-     */
-    mandate?: SourceUpdateParams.Mandate;
-
-    /**
-     * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
-     */
-    metadata?: MetadataParam;
-
-    /**
-     * Information about the owner of the payment instrument that may be used or required by particular source types.
-     */
-    owner?: SourceUpdateParams.Owner;
-
-    /**
-     * Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
-     */
-    source_order?: SourceUpdateParams.SourceOrder;
-  }
-
-  namespace SourceUpdateParams {
-    interface Mandate {
-      /**
-       * The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
-       */
-      acceptance?: Mandate.Acceptance;
-
-      /**
-       * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
-       */
-      amount?: number | '';
-
-      /**
-       * The currency specified by the mandate. (Must match `currency` of the source)
-       */
-      currency?: string;
-
-      /**
-       * The interval of debits permitted by the mandate. Either `one_time` (just permitting a single debit), `scheduled` (with debits on an agreed schedule or for clearly-defined events), or `variable`(for debits with any frequency)
-       */
-      interval?: Mandate.Interval;
-
-      /**
-       * The method Stripe should use to notify the customer of upcoming debit instructions and/or mandate confirmation as required by the underlying debit network. Either `email` (an email is sent directly to the customer), `manual` (a `source.mandate_notification` event is sent to your webhooks endpoint and you should handle the notification) or `none` (the underlying debit network does not require any notification).
-       */
-      notification_method?: Mandate.NotificationMethod;
-    }
-
-    namespace Mandate {
-      interface Acceptance {
-        /**
-         * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
-         */
-        date?: number;
-
-        /**
-         * The IP address from which the mandate was accepted or refused by the customer.
-         */
-        ip?: string;
-
-        /**
-         * The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]` is `offline`
-         */
-        offline?: Acceptance.Offline;
-
-        /**
-         * The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is `online`
-         */
-        online?: Acceptance.Online;
-
-        /**
-         * The status of the mandate acceptance. Either `accepted` (the mandate was accepted) or `refused` (the mandate was refused).
-         */
-        status: Acceptance.Status;
-
-        /**
-         * The type of acceptance information included with the mandate. Either `online` or `offline`
-         */
-        type?: Acceptance.Type;
-
-        /**
-         * The user agent of the browser from which the mandate was accepted or refused by the customer.
-         */
-        user_agent?: string;
       }
 
-      namespace Acceptance {
-        interface Offline {
+      namespace Owner {
+        interface Address {
+          city?: string;
+
+          country?: string;
+
+          line1?: string;
+
+          line2?: string;
+
+          postal_code?: string;
+
+          state?: string;
+        }
+      }
+
+      interface Receiver {
+        /**
+         * The method Stripe should use to request information needed to process a refund or mispayment. Either `email` (an email is sent directly to the customer) or `manual` (a `source.refund_attributes_required` event is sent to your webhooks endpoint). Refer to each payment method's documentation to learn which refund attributes may be required.
+         */
+        refund_attributes_method?: Receiver.RefundAttributesMethod;
+      }
+
+      namespace Receiver {
+        type RefundAttributesMethod = 'email' | 'manual' | 'none'
+      }
+
+      interface Redirect {
+        /**
+         * The URL you provide to redirect the customer back to you after they authenticated their payment. It can use your application URI scheme in the context of a mobile application.
+         */
+        return_url: string;
+      }
+
+      interface SourceOrder {
+        /**
+         * List of items constituting the order.
+         */
+        items?: Array<SourceOrder.Item>;
+
+        /**
+         * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
+         */
+        shipping?: SourceOrder.Shipping;
+      }
+
+      namespace SourceOrder {
+        interface Item {
+          amount?: number;
+
+          currency?: string;
+
+          description?: string;
+
           /**
-           * An email to contact you with if a copy of the mandate is requested, required if `type` is `offline`.
+           * The ID of the SKU being ordered.
            */
-          contact_email: string;
+          parent?: string;
+
+          /**
+           * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
+           */
+          quantity?: number;
+
+          type?: Item.Type;
         }
 
-        interface Online {
+        namespace Item {
+          type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+        }
+
+        interface Shipping {
+          /**
+           * Shipping address.
+           */
+          address: AddressParam;
+
+          /**
+           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+           */
+          carrier?: string;
+
+          /**
+           * Recipient name.
+           */
+          name?: string;
+
+          /**
+           * Recipient phone (including extension).
+           */
+          phone?: string;
+
+          /**
+           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+           */
+          tracking_number?: string;
+        }
+      }
+
+      type Usage = 'reusable' | 'single_use'
+    }
+
+    interface SourceRetrieveParams {
+      /**
+       * The client secret of the source. Required if a publishable key is used to retrieve the source.
+       */
+      client_secret?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface SourceUpdateParams {
+      /**
+       * Amount associated with the source.
+       */
+      amount?: number;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Information about a mandate possibility attached to a source object (generally for bank debits) as well as its acceptance status.
+       */
+      mandate?: SourceUpdateParams.Mandate;
+
+      /**
+       * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
+       */
+      metadata?: MetadataParam;
+
+      /**
+       * Information about the owner of the payment instrument that may be used or required by particular source types.
+       */
+      owner?: SourceUpdateParams.Owner;
+
+      /**
+       * Information about the items and shipping associated with the source. Required for transactional credit (for example Klarna) sources before you can charge it.
+       */
+      source_order?: SourceUpdateParams.SourceOrder;
+    }
+
+    namespace SourceUpdateParams {
+      interface Mandate {
+        /**
+         * The parameters required to notify Stripe of a mandate acceptance or refusal by the customer.
+         */
+        acceptance?: Mandate.Acceptance;
+
+        /**
+         * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
+         */
+        amount?: number | '';
+
+        /**
+         * The currency specified by the mandate. (Must match `currency` of the source)
+         */
+        currency?: string;
+
+        /**
+         * The interval of debits permitted by the mandate. Either `one_time` (just permitting a single debit), `scheduled` (with debits on an agreed schedule or for clearly-defined events), or `variable`(for debits with any frequency)
+         */
+        interval?: Mandate.Interval;
+
+        /**
+         * The method Stripe should use to notify the customer of upcoming debit instructions and/or mandate confirmation as required by the underlying debit network. Either `email` (an email is sent directly to the customer), `manual` (a `source.mandate_notification` event is sent to your webhooks endpoint and you should handle the notification) or `none` (the underlying debit network does not require any notification).
+         */
+        notification_method?: Mandate.NotificationMethod;
+      }
+
+      namespace Mandate {
+        interface Acceptance {
           /**
            * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
            */
@@ -1158,215 +1114,261 @@ declare namespace Stripe {
           ip?: string;
 
           /**
+           * The parameters required to store a mandate accepted offline. Should only be set if `mandate[type]` is `offline`
+           */
+          offline?: Acceptance.Offline;
+
+          /**
+           * The parameters required to store a mandate accepted online. Should only be set if `mandate[type]` is `online`
+           */
+          online?: Acceptance.Online;
+
+          /**
+           * The status of the mandate acceptance. Either `accepted` (the mandate was accepted) or `refused` (the mandate was refused).
+           */
+          status: Acceptance.Status;
+
+          /**
+           * The type of acceptance information included with the mandate. Either `online` or `offline`
+           */
+          type?: Acceptance.Type;
+
+          /**
            * The user agent of the browser from which the mandate was accepted or refused by the customer.
            */
           user_agent?: string;
         }
 
-        type Status = 'accepted' | 'pending' | 'refused' | 'revoked'
+        namespace Acceptance {
+          interface Offline {
+            /**
+             * An email to contact you with if a copy of the mandate is requested, required if `type` is `offline`.
+             */
+            contact_email: string;
+          }
 
-        type Type = 'offline' | 'online'
+          interface Online {
+            /**
+             * The Unix timestamp (in seconds) when the mandate was accepted or refused by the customer.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the mandate was accepted or refused by the customer.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the mandate was accepted or refused by the customer.
+             */
+            user_agent?: string;
+          }
+
+          type Status = 'accepted' | 'pending' | 'refused' | 'revoked'
+
+          type Type = 'offline' | 'online'
+        }
+
+        type Interval = 'one_time' | 'scheduled' | 'variable'
+
+        type NotificationMethod =
+          | 'deprecated_none'
+          | 'email'
+          | 'manual'
+          | 'none'
+          | 'stripe_email'
       }
 
-      type Interval = 'one_time' | 'scheduled' | 'variable'
-
-      type NotificationMethod =
-        | 'deprecated_none'
-        | 'email'
-        | 'manual'
-        | 'none'
-        | 'stripe_email'
-    }
-
-    interface Owner {
-      /**
-       * Owner's address.
-       */
-      address?: Owner.Address;
-
-      /**
-       * Owner's email address.
-       */
-      email?: string;
-
-      /**
-       * Owner's full name.
-       */
-      name?: string;
-
-      /**
-       * Owner's phone number.
-       */
-      phone?: string;
-    }
-
-    namespace Owner {
-      interface Address {
-        city?: string;
-
-        country?: string;
-
-        line1?: string;
-
-        line2?: string;
-
-        postal_code?: string;
-
-        state?: string;
-      }
-    }
-
-    interface SourceOrder {
-      /**
-       * List of items constituting the order.
-       */
-      items?: Array<SourceOrder.Item>;
-
-      /**
-       * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
-       */
-      shipping?: SourceOrder.Shipping;
-    }
-
-    namespace SourceOrder {
-      interface Item {
-        amount?: number;
-
-        currency?: string;
-
-        description?: string;
-
+      interface Owner {
         /**
-         * The ID of the SKU being ordered.
+         * Owner's address.
          */
-        parent?: string;
+        address?: Owner.Address;
 
         /**
-         * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
+         * Owner's email address.
          */
-        quantity?: number;
-
-        type?: Item.Type;
-      }
-
-      namespace Item {
-        type Type = 'discount' | 'shipping' | 'sku' | 'tax'
-      }
-
-      interface Shipping {
-        /**
-         * Shipping address.
-         */
-        address: AddressParam;
+        email?: string;
 
         /**
-         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-         */
-        carrier?: string;
-
-        /**
-         * Recipient name.
+         * Owner's full name.
          */
         name?: string;
 
         /**
-         * Recipient phone (including extension).
+         * Owner's phone number.
          */
         phone?: string;
+      }
+
+      namespace Owner {
+        interface Address {
+          city?: string;
+
+          country?: string;
+
+          line1?: string;
+
+          line2?: string;
+
+          postal_code?: string;
+
+          state?: string;
+        }
+      }
+
+      interface SourceOrder {
+        /**
+         * List of items constituting the order.
+         */
+        items?: Array<SourceOrder.Item>;
 
         /**
-         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+         * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
          */
-        tracking_number?: string;
+        shipping?: SourceOrder.Shipping;
+      }
+
+      namespace SourceOrder {
+        interface Item {
+          amount?: number;
+
+          currency?: string;
+
+          description?: string;
+
+          /**
+           * The ID of the SKU being ordered.
+           */
+          parent?: string;
+
+          /**
+           * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
+           */
+          quantity?: number;
+
+          type?: Item.Type;
+        }
+
+        namespace Item {
+          type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+        }
+
+        interface Shipping {
+          /**
+           * Shipping address.
+           */
+          address: AddressParam;
+
+          /**
+           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+           */
+          carrier?: string;
+
+          /**
+           * Recipient name.
+           */
+          name?: string;
+
+          /**
+           * Recipient phone (including extension).
+           */
+          phone?: string;
+
+          /**
+           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+           */
+          tracking_number?: string;
+        }
       }
     }
-  }
 
-  interface SourceListSourceTransactionsParams {
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
+    interface SourceListSourceTransactionsParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
 
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
 
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
 
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
 
-  interface SourceVerifyParams {
-    /**
-     * The values needed to verify the source.
-     */
-    values: Array<string>;
+    interface SourceVerifyParams {
+      /**
+       * The values needed to verify the source.
+       */
+      values: Array<string>;
 
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
 
-  class SourcesResource {
-    /**
-     * Creates a new source object.
-     */
-    create(
-      params?: SourceCreateParams,
-      options?: RequestOptions
-    ): Promise<Source>;
-    create(options?: RequestOptions): Promise<Source>;
+    class SourcesResource {
+      /**
+       * Creates a new source object.
+       */
+      create(
+        params?: SourceCreateParams,
+        options?: RequestOptions
+      ): Promise<Source>;
+      create(options?: RequestOptions): Promise<Source>;
 
-    /**
-     * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
-     */
-    retrieve(
-      id: string,
-      params?: SourceRetrieveParams,
-      options?: RequestOptions
-    ): Promise<Source>;
-    retrieve(id: string, options?: RequestOptions): Promise<Source>;
+      /**
+       * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
+       */
+      retrieve(
+        id: string,
+        params?: SourceRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Source>;
+      retrieve(id: string, options?: RequestOptions): Promise<Source>;
 
-    /**
-     * Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     *
-     * This request accepts the metadata and owner as arguments. It is also possible to update type specific information for selected payment methods. Please refer to our [payment method guides](https://stripe.com/docs/sources) for more detail.
-     */
-    update(
-      id: string,
-      params?: SourceUpdateParams,
-      options?: RequestOptions
-    ): Promise<Source>;
+      /**
+       * Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+       *
+       * This request accepts the metadata and owner as arguments. It is also possible to update type specific information for selected payment methods. Please refer to our [payment method guides](https://stripe.com/docs/sources) for more detail.
+       */
+      update(
+        id: string,
+        params?: SourceUpdateParams,
+        options?: RequestOptions
+      ): Promise<Source>;
 
-    /**
-     * List source transactions for a given source.
-     */
-    listSourceTransactions(
-      id: string,
-      params?: SourceListSourceTransactionsParams,
-      options?: RequestOptions
-    ): ApiListPromise<SourceTransaction>;
-    listSourceTransactions(
-      id: string,
-      options?: RequestOptions
-    ): ApiListPromise<SourceTransaction>;
+      /**
+       * List source transactions for a given source.
+       */
+      listSourceTransactions(
+        id: string,
+        params?: SourceListSourceTransactionsParams,
+        options?: RequestOptions
+      ): ApiListPromise<SourceTransaction>;
+      listSourceTransactions(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<SourceTransaction>;
 
-    /**
-     * Verify a given source.
-     */
-    verify(
-      id: string,
-      params: SourceVerifyParams,
-      options?: RequestOptions
-    ): Promise<Source>;
+      /**
+       * Verify a given source.
+       */
+      verify(
+        id: string,
+        params: SourceVerifyParams,
+        options?: RequestOptions
+      ): Promise<Source>;
+    }
   }
 }

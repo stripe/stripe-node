@@ -1,383 +1,385 @@
-declare namespace Stripe {
-  /**
-   * The InvoiceLineItem object.
-   */
-  interface InvoiceLineItem {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * Unique identifier for the object.
+     * The InvoiceLineItem object.
      */
-    id: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'line_item';
-
-    /**
-     * The amount, in %s.
-     */
-    amount: number;
-
-    /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-     */
-    currency: string;
-
-    /**
-     * An arbitrary string attached to the object. Often useful for displaying to users.
-     */
-    description: string | null;
-
-    /**
-     * If true, discounts will apply to this line item. Always false for prorations.
-     */
-    discountable: boolean;
-
-    invoice_item?: string;
-
-    /**
-     * Whether this is a test line item.
-     */
-    livemode: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
-     */
-    metadata: Metadata;
-
-    period: InvoiceLineItem.Period;
-
-    /**
-     * The plan of the subscription, if the line item is a subscription or a proration.
-     */
-    plan: Plan | null;
-
-    /**
-     * Whether this is a proration.
-     */
-    proration: boolean;
-
-    /**
-     * The quantity of the subscription, if the line item is a subscription or a proration.
-     */
-    quantity: number | null;
-
-    /**
-     * The subscription that the invoice item pertains to, if any.
-     */
-    subscription: string | null;
-
-    /**
-     * The subscription item that generated this invoice item. Left empty if the line item is not an explicit result of a subscription.
-     */
-    subscription_item?: string;
-
-    /**
-     * The amount of tax calculated per tax rate for this line item
-     */
-    tax_amounts?: Array<InvoiceLineItem.TaxAmount> | null;
-
-    /**
-     * The tax rates which apply to the line item.
-     */
-    tax_rates?: Array<TaxRate> | null;
-
-    /**
-     * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
-     */
-    type: InvoiceLineItem.Type;
-
-    /**
-     * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
-     */
-    unified_proration?: boolean;
-  }
-
-  namespace InvoiceLineItem {
-    interface Period {
+    interface InvoiceLineItem {
       /**
-       * End of the line item's billing period
+       * Unique identifier for the object.
        */
-      end: number;
+      id: string;
 
       /**
-       * Start of the line item's billing period
+       * String representing the object's type. Objects of the same type share the same value.
        */
-      start: number;
-    }
+      object: 'line_item';
 
-    interface TaxAmount {
       /**
-       * The amount, in %s, of the tax.
+       * The amount, in %s.
        */
       amount: number;
 
       /**
-       * Whether this tax amount is inclusive or exclusive.
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      inclusive: boolean;
+      currency: string;
 
       /**
-       * The tax rate that was applied to get this tax amount.
+       * An arbitrary string attached to the object. Often useful for displaying to users.
        */
-      tax_rate: string | TaxRate;
+      description: string | null;
+
+      /**
+       * If true, discounts will apply to this line item. Always false for prorations.
+       */
+      discountable: boolean;
+
+      invoice_item?: string;
+
+      /**
+       * Whether this is a test line item.
+       */
+      livemode: boolean;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
+       */
+      metadata: Metadata;
+
+      period: InvoiceLineItem.Period;
+
+      /**
+       * The plan of the subscription, if the line item is a subscription or a proration.
+       */
+      plan: Plan | null;
+
+      /**
+       * Whether this is a proration.
+       */
+      proration: boolean;
+
+      /**
+       * The quantity of the subscription, if the line item is a subscription or a proration.
+       */
+      quantity: number | null;
+
+      /**
+       * The subscription that the invoice item pertains to, if any.
+       */
+      subscription: string | null;
+
+      /**
+       * The subscription item that generated this invoice item. Left empty if the line item is not an explicit result of a subscription.
+       */
+      subscription_item?: string;
+
+      /**
+       * The amount of tax calculated per tax rate for this line item
+       */
+      tax_amounts?: Array<InvoiceLineItem.TaxAmount> | null;
+
+      /**
+       * The tax rates which apply to the line item.
+       */
+      tax_rates?: Array<TaxRate> | null;
+
+      /**
+       * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
+       */
+      type: InvoiceLineItem.Type;
+
+      /**
+       * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
+       */
+      unified_proration?: boolean;
     }
 
-    type Type = 'invoiceitem' | 'subscription'
-  }
-
-  interface InvoiceLineItemListParams {
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
-
-  interface InvoiceLineItemListUpcomingParams {
-    /**
-     * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
-     */
-    coupon?: string;
-
-    /**
-     * The identifier of the customer whose upcoming invoice you'd like to retrieve.
-     */
-    customer?: string;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * List of invoice items to add or update in the upcoming invoice preview.
-     */
-    invoice_items?: Array<InvoiceLineItemListUpcomingParams.InvoiceItem>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
-     */
-    schedule?: string;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-
-    /**
-     * The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
-     */
-    subscription?: string;
-
-    /**
-     * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
-     */
-    subscription_billing_cycle_anchor?:
-      | number
-      | InvoiceLineItemListUpcomingParams.SubscriptionBillingCycleAnchor;
-
-    /**
-     * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period if `prorate=true`
-     */
-    subscription_cancel_at?: number | '';
-
-    /**
-     * Boolean indicating whether this subscription should cancel at the end of the current period.
-     */
-    subscription_cancel_at_period_end?: boolean;
-
-    /**
-     * This simulates the subscription being canceled or expired immediately.
-     */
-    subscription_cancel_now?: boolean;
-
-    /**
-     * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
-     */
-    subscription_default_tax_rates?: Array<string> | '';
-
-    /**
-     * List of subscription items, each with an attached plan.
-     */
-    subscription_items?: Array<
-      InvoiceLineItemListUpcomingParams.SubscriptionItem
-    >;
-
-    /**
-     * If previewing an update to a subscription, this decides whether the preview will show the result of applying prorations or not. If set, one of `subscription_items` or `subscription`, and one of `subscription_items` or `subscription_trial_end` are required.
-     */
-    subscription_prorate?: boolean;
-
-    /**
-     * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration` cannot be set to false.
-     */
-    subscription_proration_date?: number;
-
-    /**
-     * Date a subscription is intended to start (can be future or past)
-     */
-    subscription_start_date?: number;
-
-    /**
-     * If provided, the invoice returned will preview updating or creating a subscription with that tax percent. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-     */
-    subscription_tax_percent?: number;
-
-    /**
-     * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
-     */
-    subscription_trial_end?: 'now' | number;
-
-    /**
-     * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed.
-     */
-    subscription_trial_from_plan?: boolean;
-  }
-
-  namespace InvoiceLineItemListUpcomingParams {
-    interface InvoiceItem {
-      /**
-       * The integer amount in **%s** of previewed invoice item.
-       */
-      amount?: number;
-
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Only applicable to new invoice items.
-       */
-      currency?: string;
-
-      /**
-       * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
-       */
-      description?: string;
-
-      /**
-       * Explicitly controls whether discounts apply to this invoice item. Defaults to true, except for negative invoice items.
-       */
-      discountable?: boolean;
-
-      /**
-       * The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
-       */
-      invoiceitem?: string;
-
-      /**
-       * A set of key-value pairs that you can attach to an invoice item object. It can be useful for storing additional information about the invoice item in a structured format.
-       */
-      metadata?: MetadataParam;
-
-      /**
-       * The period associated with this invoice item.
-       */
-      period?: InvoiceItem.Period;
-
-      /**
-       * Non-negative integer. The quantity of units for the invoice item.
-       */
-      quantity?: number;
-
-      tax_rates?: Array<string> | '';
-
-      /**
-       * The integer unit amount in **%s** of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
-       */
-      unit_amount?: number;
-
-      /**
-       * Same as `unit_amount`, but accepts a decimal string with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-       */
-      unit_amount_decimal?: string;
-    }
-
-    namespace InvoiceItem {
+    namespace InvoiceLineItem {
       interface Period {
         /**
-         * The end of the period, which must be greater than or equal to the start.
+         * End of the line item's billing period
          */
         end: number;
 
         /**
-         * The start of the period.
+         * Start of the line item's billing period
          */
         start: number;
       }
-    }
 
-    type SubscriptionBillingCycleAnchor = 'now' | 'unchanged'
-
-    interface SubscriptionItem {
-      /**
-       * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
-       */
-      billing_thresholds?: SubscriptionItem.BillingThresholds | null;
-
-      /**
-       * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
-       */
-      clear_usage?: boolean;
-
-      /**
-       * A flag that, if set to `true`, will delete the specified item.
-       */
-      deleted?: boolean;
-
-      /**
-       * Subscription item to update.
-       */
-      id?: string;
-
-      /**
-       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata?: MetadataParam;
-
-      /**
-       * Plan ID for this item, as a string.
-       */
-      plan?: string;
-
-      /**
-       * Quantity for this item.
-       */
-      quantity?: number;
-
-      /**
-       * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
-       */
-      tax_rates?: Array<string> | '';
-    }
-
-    namespace SubscriptionItem {
-      interface BillingThresholds {
+      interface TaxAmount {
         /**
-         * Usage threshold that triggers the subscription to advance to a new billing period
+         * The amount, in %s, of the tax.
          */
-        usage_gte: number;
+        amount: number;
+
+        /**
+         * Whether this tax amount is inclusive or exclusive.
+         */
+        inclusive: boolean;
+
+        /**
+         * The tax rate that was applied to get this tax amount.
+         */
+        tax_rate: string | TaxRate;
+      }
+
+      type Type = 'invoiceitem' | 'subscription'
+    }
+
+    interface InvoiceLineItemListParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
+
+    interface InvoiceLineItemListUpcomingParams {
+      /**
+       * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+       */
+      coupon?: string;
+
+      /**
+       * The identifier of the customer whose upcoming invoice you'd like to retrieve.
+       */
+      customer?: string;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * List of invoice items to add or update in the upcoming invoice preview.
+       */
+      invoice_items?: Array<InvoiceLineItemListUpcomingParams.InvoiceItem>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+       */
+      schedule?: string;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+
+      /**
+       * The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
+       */
+      subscription?: string;
+
+      /**
+       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+       */
+      subscription_billing_cycle_anchor?:
+        | number
+        | InvoiceLineItemListUpcomingParams.SubscriptionBillingCycleAnchor;
+
+      /**
+       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period if `prorate=true`
+       */
+      subscription_cancel_at?: number | '';
+
+      /**
+       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       */
+      subscription_cancel_at_period_end?: boolean;
+
+      /**
+       * This simulates the subscription being canceled or expired immediately.
+       */
+      subscription_cancel_now?: boolean;
+
+      /**
+       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+       */
+      subscription_default_tax_rates?: Array<string> | '';
+
+      /**
+       * List of subscription items, each with an attached plan.
+       */
+      subscription_items?: Array<
+        InvoiceLineItemListUpcomingParams.SubscriptionItem
+      >;
+
+      /**
+       * If previewing an update to a subscription, this decides whether the preview will show the result of applying prorations or not. If set, one of `subscription_items` or `subscription`, and one of `subscription_items` or `subscription_trial_end` are required.
+       */
+      subscription_prorate?: boolean;
+
+      /**
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration` cannot be set to false.
+       */
+      subscription_proration_date?: number;
+
+      /**
+       * Date a subscription is intended to start (can be future or past)
+       */
+      subscription_start_date?: number;
+
+      /**
+       * If provided, the invoice returned will preview updating or creating a subscription with that tax percent. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
+       */
+      subscription_tax_percent?: number;
+
+      /**
+       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
+       */
+      subscription_trial_end?: 'now' | number;
+
+      /**
+       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed.
+       */
+      subscription_trial_from_plan?: boolean;
+    }
+
+    namespace InvoiceLineItemListUpcomingParams {
+      interface InvoiceItem {
+        /**
+         * The integer amount in **%s** of previewed invoice item.
+         */
+        amount?: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Only applicable to new invoice items.
+         */
+        currency?: string;
+
+        /**
+         * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+         */
+        description?: string;
+
+        /**
+         * Explicitly controls whether discounts apply to this invoice item. Defaults to true, except for negative invoice items.
+         */
+        discountable?: boolean;
+
+        /**
+         * The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
+         */
+        invoiceitem?: string;
+
+        /**
+         * A set of key-value pairs that you can attach to an invoice item object. It can be useful for storing additional information about the invoice item in a structured format.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * The period associated with this invoice item.
+         */
+        period?: InvoiceItem.Period;
+
+        /**
+         * Non-negative integer. The quantity of units for the invoice item.
+         */
+        quantity?: number;
+
+        tax_rates?: Array<string> | '';
+
+        /**
+         * The integer unit amount in **%s** of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal string with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace InvoiceItem {
+        interface Period {
+          /**
+           * The end of the period, which must be greater than or equal to the start.
+           */
+          end: number;
+
+          /**
+           * The start of the period.
+           */
+          start: number;
+        }
+      }
+
+      type SubscriptionBillingCycleAnchor = 'now' | 'unchanged'
+
+      interface SubscriptionItem {
+        /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?: SubscriptionItem.BillingThresholds | null;
+
+        /**
+         * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+         */
+        clear_usage?: boolean;
+
+        /**
+         * A flag that, if set to `true`, will delete the specified item.
+         */
+        deleted?: boolean;
+
+        /**
+         * Subscription item to update.
+         */
+        id?: string;
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * Plan ID for this item, as a string.
+         */
+        plan?: string;
+
+        /**
+         * Quantity for this item.
+         */
+        quantity?: number;
+
+        /**
+         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+         */
+        tax_rates?: Array<string> | '';
+      }
+
+      namespace SubscriptionItem {
+        interface BillingThresholds {
+          /**
+           * Usage threshold that triggers the subscription to advance to a new billing period
+           */
+          usage_gte: number;
+        }
       }
     }
   }

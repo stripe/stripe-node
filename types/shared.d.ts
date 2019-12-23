@@ -1,164 +1,166 @@
-declare namespace Stripe {
-  /**
-   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-   */
-  export interface Metadata {
-    [name: string]: string;
-  }
-
-  /**
-   * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-   * While you can send values as numbers, they will be returned as strings.
-   */
-  export interface MetadataParam {
-    [name: string]: string | number | null;
-  }
-
-  /**
-   * The Address object.
-   */
-  interface Address {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * City/District/Suburb/Town/Village.
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    city: string | null;
+    export interface Metadata {
+      [name: string]: string;
+    }
 
     /**
-     * 2-letter country code.
+     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     * While you can send values as numbers, they will be returned as strings.
      */
-    country: string | null;
+    export interface MetadataParam {
+      [name: string]: string | number | null;
+    }
 
     /**
-     * Address line 1 (Street address/PO Box/Company name).
+     * The Address object.
      */
-    line1: string | null;
+    interface Address {
+      /**
+       * City/District/Suburb/Town/Village.
+       */
+      city: string | null;
 
-    /**
-     * Address line 2 (Apartment/Suite/Unit/Building).
-     */
-    line2: string | null;
+      /**
+       * 2-letter country code.
+       */
+      country: string | null;
 
-    /**
-     * ZIP or postal code.
-     */
-    postal_code: string | null;
+      /**
+       * Address line 1 (Street address/PO Box/Company name).
+       */
+      line1: string | null;
 
-    /**
-     * State/County/Province/Region.
-     */
-    state: string | null;
-  }
+      /**
+       * Address line 2 (Apartment/Suite/Unit/Building).
+       */
+      line2: string | null;
 
-  interface JapanAddress {
-    /**
-     * City/Ward.
-     */
-    city: string | null;
+      /**
+       * ZIP or postal code.
+       */
+      postal_code: string | null;
 
-    /**
-     * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-     */
-    country: string | null;
+      /**
+       * State/County/Province/Region.
+       */
+      state: string | null;
+    }
 
-    /**
-     * Block/Building number.
-     */
-    line1: string | null;
+    interface JapanAddress {
+      /**
+       * City/Ward.
+       */
+      city: string | null;
 
-    /**
-     * Building details.
-     */
-    line2: string | null;
+      /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country: string | null;
 
-    /**
-     * Zip/Postal Code.
-     */
-    postal_code: string | null;
+      /**
+       * Block/Building number.
+       */
+      line1: string | null;
 
-    /**
-     * Prefecture.
-     */
-    state: string | null;
+      /**
+       * Building details.
+       */
+      line2: string | null;
 
-    /**
-     * Town/cho-me.
-     */
-    town: string | null;
-  }
+      /**
+       * Zip/Postal Code.
+       */
+      postal_code: string | null;
 
-  interface AccountAddressParam {
-    /**
-     * City, district, suburb, town, or village.
-     */
-    city?: string;
+      /**
+       * Prefecture.
+       */
+      state: string | null;
 
-    /**
-     * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-     */
-    country?: string;
+      /**
+       * Town/cho-me.
+       */
+      town: string | null;
+    }
 
-    /**
-     * Address line 1 (e.g., street, PO Box, or company name).
-     */
-    line1?: string;
+    interface AccountAddressParam {
+      /**
+       * City, district, suburb, town, or village.
+       */
+      city?: string;
 
-    /**
-     * Address line 2 (e.g., apartment, suite, unit, or building).
-     */
-    line2?: string;
+      /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country?: string;
 
-    /**
-     * ZIP or postal code.
-     */
-    postal_code?: string;
+      /**
+       * Address line 1 (e.g., street, PO Box, or company name).
+       */
+      line1?: string;
 
-    /**
-     * State, county, province, or region.
-     */
-    state?: string;
-  }
+      /**
+       * Address line 2 (e.g., apartment, suite, unit, or building).
+       */
+      line2?: string;
 
-  interface AddressParam extends AccountAddressParam {
-    /**
-     * Address line 1 (e.g., street, PO Box, or company name).
-     */
-    line1: string;
-  }
+      /**
+       * ZIP or postal code.
+       */
+      postal_code?: string;
 
-  interface JapanAddressParam {
-    /**
-     * City or ward.
-     */
-    city?: string;
+      /**
+       * State, county, province, or region.
+       */
+      state?: string;
+    }
 
-    /**
-     * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-     */
-    country?: string;
+    interface AddressParam extends AccountAddressParam {
+      /**
+       * Address line 1 (e.g., street, PO Box, or company name).
+       */
+      line1: string;
+    }
 
-    /**
-     * Block or building number.
-     */
-    line1?: string;
+    interface JapanAddressParam {
+      /**
+       * City or ward.
+       */
+      city?: string;
 
-    /**
-     * Building details.
-     */
-    line2?: string;
+      /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country?: string;
 
-    /**
-     * Postal code.
-     */
-    postal_code?: string;
+      /**
+       * Block or building number.
+       */
+      line1?: string;
 
-    /**
-     * Prefecture.
-     */
-    state?: string;
+      /**
+       * Building details.
+       */
+      line2?: string;
 
-    /**
-     * Town or cho-me.
-     */
-    town?: string;
+      /**
+       * Postal code.
+       */
+      postal_code?: string;
+
+      /**
+       * Prefecture.
+       */
+      state?: string;
+
+      /**
+       * Town or cho-me.
+       */
+      town?: string;
+    }
   }
 }

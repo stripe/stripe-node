@@ -89,6 +89,9 @@
 ///<reference path='./TransferReversals.d.ts' />
 
 declare module 'stripe' {
+  // Added to in other modules, referenced above.
+  export namespace Stripe {}
+
   export class Stripe {
     DEFAULT_HOST: string;
     DEFAULT_PORT: string;

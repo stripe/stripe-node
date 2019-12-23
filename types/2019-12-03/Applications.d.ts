@@ -1,21 +1,23 @@
-declare namespace Stripe {
-  /**
-   * The Application object.
-   */
-  interface Application {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * Unique identifier for the object.
+     * The Application object.
      */
-    id: string;
+    interface Application {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
 
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'application';
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'application';
 
-    /**
-     * The name of the application.
-     */
-    name: string | null;
+      /**
+       * The name of the application.
+       */
+      name: string | null;
+    }
   }
 }

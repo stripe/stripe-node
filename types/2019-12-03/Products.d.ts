@@ -1,485 +1,487 @@
-declare namespace Stripe {
-  /**
-   * The Product object.
-   */
-  interface Product {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * Unique identifier for the object.
+     * The Product object.
      */
-    id: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'product';
-
-    /**
-     * Whether the product is currently available for purchase.
-     */
-    active: boolean | null;
-
-    /**
-     * A list of up to 5 attributes that each SKU can provide values for (e.g., `["color", "size"]`).
-     */
-    attributes: Array<string> | null;
-
-    /**
-     * A short one-line description of the product, meant to be displayable to the customer. Only applicable to products of `type=good`.
-     */
-    caption: string | null;
-
-    /**
-     * Time at which the object was created. Measured in seconds since the Unix epoch.
-     */
-    created: number;
-
-    /**
-     * An array of connect application identifiers that cannot purchase this product. Only applicable to products of `type=good`.
-     */
-    deactivate_on?: Array<string>;
-
-    deleted?: void;
-
-    /**
-     * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
-     */
-    description: string | null;
-
-    /**
-     * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. Only applicable to products of `type=good`.
-     */
-    images: Array<string>;
-
-    /**
-     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-     */
-    livemode: boolean;
-
-    /**
-     * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-     */
-    metadata: Metadata;
-
-    /**
-     * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
-     */
-    name: string;
-
-    /**
-     * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. Only applicable to products of `type=good`.
-     */
-    package_dimensions: Product.PackageDimensions | null;
-
-    /**
-     * Whether this product is a shipped good. Only applicable to products of `type=good`.
-     */
-    shippable: boolean | null;
-
-    /**
-     * Extra information about a product which will appear on your customer's credit card statement. In the case that multiple products are billed at once, the first statement descriptor will be used.
-     */
-    statement_descriptor: string | null;
-
-    /**
-     * The type of the product. The product is either of type `good`, which is eligible for use with Orders and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
-     */
-    type: Product.Type;
-
-    /**
-     * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
-     */
-    unit_label: string | null;
-
-    updated: number;
-
-    /**
-     * A URL of a publicly-accessible webpage for this product. Only applicable to products of `type=good`.
-     */
-    url: string | null;
-  }
-
-  namespace Product {
-    interface PackageDimensions {
+    interface Product {
       /**
-       * Height, in inches.
+       * Unique identifier for the object.
        */
-      height: number;
+      id: string;
 
       /**
-       * Length, in inches.
+       * String representing the object's type. Objects of the same type share the same value.
        */
-      length: number;
+      object: 'product';
 
       /**
-       * Weight, in ounces.
+       * Whether the product is currently available for purchase.
        */
-      weight: number;
+      active: boolean | null;
 
       /**
-       * Width, in inches.
+       * A list of up to 5 attributes that each SKU can provide values for (e.g., `["color", "size"]`).
        */
-      width: number;
+      attributes: Array<string> | null;
+
+      /**
+       * A short one-line description of the product, meant to be displayable to the customer. Only applicable to products of `type=good`.
+       */
+      caption: string | null;
+
+      /**
+       * Time at which the object was created. Measured in seconds since the Unix epoch.
+       */
+      created: number;
+
+      /**
+       * An array of connect application identifiers that cannot purchase this product. Only applicable to products of `type=good`.
+       */
+      deactivate_on?: Array<string>;
+
+      deleted?: void;
+
+      /**
+       * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+       */
+      description: string | null;
+
+      /**
+       * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. Only applicable to products of `type=good`.
+       */
+      images: Array<string>;
+
+      /**
+       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       */
+      livemode: boolean;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata: Metadata;
+
+      /**
+       * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+       */
+      name: string;
+
+      /**
+       * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. Only applicable to products of `type=good`.
+       */
+      package_dimensions: Product.PackageDimensions | null;
+
+      /**
+       * Whether this product is a shipped good. Only applicable to products of `type=good`.
+       */
+      shippable: boolean | null;
+
+      /**
+       * Extra information about a product which will appear on your customer's credit card statement. In the case that multiple products are billed at once, the first statement descriptor will be used.
+       */
+      statement_descriptor: string | null;
+
+      /**
+       * The type of the product. The product is either of type `good`, which is eligible for use with Orders and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
+       */
+      type: Product.Type;
+
+      /**
+       * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
+       */
+      unit_label: string | null;
+
+      updated: number;
+
+      /**
+       * A URL of a publicly-accessible webpage for this product. Only applicable to products of `type=good`.
+       */
+      url: string | null;
     }
 
-    type Type = 'good' | 'service'
-  }
+    namespace Product {
+      interface PackageDimensions {
+        /**
+         * Height, in inches.
+         */
+        height: number;
 
-  /**
-   * The DeletedProduct object.
-   */
-  interface DeletedProduct {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
+        /**
+         * Length, in inches.
+         */
+        length: number;
 
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'product';
+        /**
+         * Weight, in ounces.
+         */
+        weight: number;
 
-    /**
-     * Always true for a deleted object
-     */
-    deleted: true;
-  }
+        /**
+         * Width, in inches.
+         */
+        width: number;
+      }
 
-  interface ProductCreateParams {
-    /**
-     * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
-     */
-    name: string;
-
-    /**
-     * Whether the product is currently available for purchase. Defaults to `true`.
-     */
-    active?: boolean;
-
-    /**
-     * A list of up to 5 alphanumeric attributes.
-     */
-    attributes?: Array<string>;
-
-    /**
-     * A short one-line description of the product, meant to be displayable to the customer. May only be set if type=`good`.
-     */
-    caption?: string;
-
-    /**
-     * An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if type=`good`.
-     */
-    deactivate_on?: Array<string>;
-
-    /**
-     * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
-     */
-    description?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * An identifier will be randomly generated by Stripe. You can optionally override this ID, but the ID must be unique across all products in your Stripe account.
-     */
-    id?: string;
-
-    /**
-     * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. May only be set if type=`good`.
-     */
-    images?: Array<string>;
-
-    /**
-     * A set of key-value pairs that you can attach to a product object. It can be useful for storing additional information about the product in a structured format.
-     */
-    metadata?: MetadataParam;
-
-    /**
-     * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.
-     */
-    package_dimensions?: ProductCreateParams.PackageDimensions;
-
-    /**
-     * Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if type=`good`.
-     */
-    shippable?: boolean;
-
-    /**
-     * An arbitrary string to be displayed on your customer's credit card statement. This may be up to 22 characters. The statement description may not include <>"' characters, and will appear on your customer's statement in capital letters. Non-ASCII characters are automatically stripped. While most banks display this information consistently, some may display it incorrectly or not at all. It must contain at least one letter.
-     */
-    statement_descriptor?: string;
-
-    /**
-     * The type of the product. Defaults to `service` if not explicitly specified, enabling use of this product with Subscriptions and Plans. Set this parameter to `good` to use this product with Orders and SKUs. On API versions before `2018-02-05`, this field defaults to `good` for compatibility reasons.
-     */
-    type?: ProductCreateParams.Type;
-
-    /**
-     * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
-     */
-    unit_label?: string;
-
-    /**
-     * A URL of a publicly-accessible webpage for this product. May only be set if type=`good`.
-     */
-    url?: string;
-  }
-
-  namespace ProductCreateParams {
-    interface PackageDimensions {
-      /**
-       * Height, in inches. Maximum precision is 2 decimal places.
-       */
-      height: number;
-
-      /**
-       * Length, in inches. Maximum precision is 2 decimal places.
-       */
-      length: number;
-
-      /**
-       * Weight, in ounces. Maximum precision is 2 decimal places.
-       */
-      weight: number;
-
-      /**
-       * Width, in inches. Maximum precision is 2 decimal places.
-       */
-      width: number;
+      type Type = 'good' | 'service'
     }
 
-    type Type = 'good' | 'service'
-  }
-
-  interface ProductRetrieveParams {
     /**
-     * Specifies which fields in the response should be expanded.
+     * The DeletedProduct object.
      */
-    expand?: Array<string>;
-  }
-
-  interface ProductUpdateParams {
-    /**
-     * Whether the product is available for purchase.
-     */
-    active?: boolean;
-
-    /**
-     * A list of up to 5 alphanumeric attributes that each SKU can provide values for (e.g., `["color", "size"]`). If a value for `attributes` is specified, the list specified will replace the existing attributes list on this product. Any attributes not present after the update will be deleted from the SKUs for this product.
-     */
-    attributes?: Array<string> | '';
-
-    /**
-     * A short one-line description of the product, meant to be displayable to the customer. May only be set if `type=good`.
-     */
-    caption?: string;
-
-    /**
-     * An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if `type=good`.
-     */
-    deactivate_on?: Array<string>;
-
-    /**
-     * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
-     */
-    description?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. May only be set if `type=good`.
-     */
-    images?: Array<string> | '';
-
-    /**
-     * A set of key-value pairs that you can attach to a product object. It can be useful for storing additional information about the product in a structured format.
-     */
-    metadata?: MetadataParam;
-
-    /**
-     * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
-     */
-    name?: string;
-
-    /**
-     * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if `type=good`.
-     */
-    package_dimensions?: ProductUpdateParams.PackageDimensions | null;
-
-    /**
-     * Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if `type=good`.
-     */
-    shippable?: boolean;
-
-    /**
-     * An arbitrary string to be displayed on your customer's credit card statement. This may be up to 22 characters. The statement description may not include <>"' characters, and will appear on your customer's statement in capital letters. Non-ASCII characters are automatically stripped. While most banks display this information consistently, some may display it incorrectly or not at all. It must contain at least one letter. May only be set if `type=service`.
-     */
-    statement_descriptor?: string;
-
-    /**
-     * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions. May only be set if `type=service`.
-     */
-    unit_label?: string;
-
-    /**
-     * A URL of a publicly-accessible webpage for this product. May only be set if `type=good`.
-     */
-    url?: string;
-  }
-
-  namespace ProductUpdateParams {
-    interface PackageDimensions {
+    interface DeletedProduct {
       /**
-       * Height, in inches. Maximum precision is 2 decimal places.
+       * Unique identifier for the object.
        */
-      height: number;
+      id: string;
 
       /**
-       * Length, in inches. Maximum precision is 2 decimal places.
+       * String representing the object's type. Objects of the same type share the same value.
        */
-      length: number;
+      object: 'product';
 
       /**
-       * Weight, in ounces. Maximum precision is 2 decimal places.
+       * Always true for a deleted object
        */
-      weight: number;
-
-      /**
-       * Width, in inches. Maximum precision is 2 decimal places.
-       */
-      width: number;
-    }
-  }
-
-  interface ProductListParams {
-    /**
-     * Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
-     */
-    active?: boolean;
-
-    /**
-     * Only return products that were created during the given date interval.
-     */
-    created?: number | ProductListParams.Created;
-
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * Only return products with the given IDs.
-     */
-    ids?: Array<string>;
-
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
-
-    /**
-     * Only return products that can be shipped (i.e., physical, not digital products).
-     */
-    shippable?: boolean;
-
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-
-    /**
-     * Only return products of this type.
-     */
-    type?: ProductListParams.Type;
-
-    /**
-     * Only return products with the given url.
-     */
-    url?: string;
-  }
-
-  namespace ProductListParams {
-    interface Created {
-      /**
-       * Minimum value to filter by (exclusive)
-       */
-      gt?: number;
-
-      /**
-       * Minimum value to filter by (inclusive)
-       */
-      gte?: number;
-
-      /**
-       * Maximum value to filter by (exclusive)
-       */
-      lt?: number;
-
-      /**
-       * Maximum value to filter by (inclusive)
-       */
-      lte?: number;
+      deleted: true;
     }
 
-    type Type = 'good' | 'service'
-  }
+    interface ProductCreateParams {
+      /**
+       * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+       */
+      name: string;
 
-  interface ProductDeleteParams {}
+      /**
+       * Whether the product is currently available for purchase. Defaults to `true`.
+       */
+      active?: boolean;
 
-  class ProductsResource {
-    /**
-     * Creates a new product object. To create a product for use with orders, see [Products](https://stripe.com/docs/api#create_product).
-     */
-    create(
-      params: ProductCreateParams,
-      options?: RequestOptions
-    ): Promise<Product>;
+      /**
+       * A list of up to 5 alphanumeric attributes.
+       */
+      attributes?: Array<string>;
 
-    /**
-     * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
-     */
-    retrieve(
-      id: string,
-      params?: ProductRetrieveParams,
-      options?: RequestOptions
-    ): Promise<Product>;
-    retrieve(id: string, options?: RequestOptions): Promise<Product>;
+      /**
+       * A short one-line description of the product, meant to be displayable to the customer. May only be set if type=`good`.
+       */
+      caption?: string;
 
-    /**
-     * Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
-     */
-    update(
-      id: string,
-      params?: ProductUpdateParams,
-      options?: RequestOptions
-    ): Promise<Product>;
+      /**
+       * An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if type=`good`.
+       */
+      deactivate_on?: Array<string>;
 
-    /**
-     * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
-     */
-    list(
-      params?: ProductListParams,
-      options?: RequestOptions
-    ): ApiListPromise<Product>;
-    list(options?: RequestOptions): ApiListPromise<Product>;
+      /**
+       * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+       */
+      description?: string;
 
-    /**
-     * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
-     */
-    del(
-      id: string,
-      params?: ProductDeleteParams,
-      options?: RequestOptions
-    ): Promise<DeletedProduct>;
-    del(id: string, options?: RequestOptions): Promise<DeletedProduct>;
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * An identifier will be randomly generated by Stripe. You can optionally override this ID, but the ID must be unique across all products in your Stripe account.
+       */
+      id?: string;
+
+      /**
+       * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. May only be set if type=`good`.
+       */
+      images?: Array<string>;
+
+      /**
+       * A set of key-value pairs that you can attach to a product object. It can be useful for storing additional information about the product in a structured format.
+       */
+      metadata?: MetadataParam;
+
+      /**
+       * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.
+       */
+      package_dimensions?: ProductCreateParams.PackageDimensions;
+
+      /**
+       * Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if type=`good`.
+       */
+      shippable?: boolean;
+
+      /**
+       * An arbitrary string to be displayed on your customer's credit card statement. This may be up to 22 characters. The statement description may not include <>"' characters, and will appear on your customer's statement in capital letters. Non-ASCII characters are automatically stripped. While most banks display this information consistently, some may display it incorrectly or not at all. It must contain at least one letter.
+       */
+      statement_descriptor?: string;
+
+      /**
+       * The type of the product. Defaults to `service` if not explicitly specified, enabling use of this product with Subscriptions and Plans. Set this parameter to `good` to use this product with Orders and SKUs. On API versions before `2018-02-05`, this field defaults to `good` for compatibility reasons.
+       */
+      type?: ProductCreateParams.Type;
+
+      /**
+       * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
+       */
+      unit_label?: string;
+
+      /**
+       * A URL of a publicly-accessible webpage for this product. May only be set if type=`good`.
+       */
+      url?: string;
+    }
+
+    namespace ProductCreateParams {
+      interface PackageDimensions {
+        /**
+         * Height, in inches. Maximum precision is 2 decimal places.
+         */
+        height: number;
+
+        /**
+         * Length, in inches. Maximum precision is 2 decimal places.
+         */
+        length: number;
+
+        /**
+         * Weight, in ounces. Maximum precision is 2 decimal places.
+         */
+        weight: number;
+
+        /**
+         * Width, in inches. Maximum precision is 2 decimal places.
+         */
+        width: number;
+      }
+
+      type Type = 'good' | 'service'
+    }
+
+    interface ProductRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface ProductUpdateParams {
+      /**
+       * Whether the product is available for purchase.
+       */
+      active?: boolean;
+
+      /**
+       * A list of up to 5 alphanumeric attributes that each SKU can provide values for (e.g., `["color", "size"]`). If a value for `attributes` is specified, the list specified will replace the existing attributes list on this product. Any attributes not present after the update will be deleted from the SKUs for this product.
+       */
+      attributes?: Array<string> | '';
+
+      /**
+       * A short one-line description of the product, meant to be displayable to the customer. May only be set if `type=good`.
+       */
+      caption?: string;
+
+      /**
+       * An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if `type=good`.
+       */
+      deactivate_on?: Array<string>;
+
+      /**
+       * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+       */
+      description?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. May only be set if `type=good`.
+       */
+      images?: Array<string> | '';
+
+      /**
+       * A set of key-value pairs that you can attach to a product object. It can be useful for storing additional information about the product in a structured format.
+       */
+      metadata?: MetadataParam;
+
+      /**
+       * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+       */
+      name?: string;
+
+      /**
+       * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if `type=good`.
+       */
+      package_dimensions?: ProductUpdateParams.PackageDimensions | null;
+
+      /**
+       * Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if `type=good`.
+       */
+      shippable?: boolean;
+
+      /**
+       * An arbitrary string to be displayed on your customer's credit card statement. This may be up to 22 characters. The statement description may not include <>"' characters, and will appear on your customer's statement in capital letters. Non-ASCII characters are automatically stripped. While most banks display this information consistently, some may display it incorrectly or not at all. It must contain at least one letter. May only be set if `type=service`.
+       */
+      statement_descriptor?: string;
+
+      /**
+       * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions. May only be set if `type=service`.
+       */
+      unit_label?: string;
+
+      /**
+       * A URL of a publicly-accessible webpage for this product. May only be set if `type=good`.
+       */
+      url?: string;
+    }
+
+    namespace ProductUpdateParams {
+      interface PackageDimensions {
+        /**
+         * Height, in inches. Maximum precision is 2 decimal places.
+         */
+        height: number;
+
+        /**
+         * Length, in inches. Maximum precision is 2 decimal places.
+         */
+        length: number;
+
+        /**
+         * Weight, in ounces. Maximum precision is 2 decimal places.
+         */
+        weight: number;
+
+        /**
+         * Width, in inches. Maximum precision is 2 decimal places.
+         */
+        width: number;
+      }
+    }
+
+    interface ProductListParams {
+      /**
+       * Only return products that are active or inactive (e.g., pass `false` to list all inactive products).
+       */
+      active?: boolean;
+
+      /**
+       * Only return products that were created during the given date interval.
+       */
+      created?: number | ProductListParams.Created;
+
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Only return products with the given IDs.
+       */
+      ids?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * Only return products that can be shipped (i.e., physical, not digital products).
+       */
+      shippable?: boolean;
+
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+
+      /**
+       * Only return products of this type.
+       */
+      type?: ProductListParams.Type;
+
+      /**
+       * Only return products with the given url.
+       */
+      url?: string;
+    }
+
+    namespace ProductListParams {
+      interface Created {
+        /**
+         * Minimum value to filter by (exclusive)
+         */
+        gt?: number;
+
+        /**
+         * Minimum value to filter by (inclusive)
+         */
+        gte?: number;
+
+        /**
+         * Maximum value to filter by (exclusive)
+         */
+        lt?: number;
+
+        /**
+         * Maximum value to filter by (inclusive)
+         */
+        lte?: number;
+      }
+
+      type Type = 'good' | 'service'
+    }
+
+    interface ProductDeleteParams {}
+
+    class ProductsResource {
+      /**
+       * Creates a new product object. To create a product for use with orders, see [Products](https://stripe.com/docs/api#create_product).
+       */
+      create(
+        params: ProductCreateParams,
+        options?: RequestOptions
+      ): Promise<Product>;
+
+      /**
+       * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
+       */
+      retrieve(
+        id: string,
+        params?: ProductRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Product>;
+      retrieve(id: string, options?: RequestOptions): Promise<Product>;
+
+      /**
+       * Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+       */
+      update(
+        id: string,
+        params?: ProductUpdateParams,
+        options?: RequestOptions
+      ): Promise<Product>;
+
+      /**
+       * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
+       */
+      list(
+        params?: ProductListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Product>;
+      list(options?: RequestOptions): ApiListPromise<Product>;
+
+      /**
+       * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
+       */
+      del(
+        id: string,
+        params?: ProductDeleteParams,
+        options?: RequestOptions
+      ): Promise<DeletedProduct>;
+      del(id: string, options?: RequestOptions): Promise<DeletedProduct>;
+    }
   }
 }

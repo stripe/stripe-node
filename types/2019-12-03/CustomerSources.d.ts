@@ -1,174 +1,176 @@
-declare namespace Stripe {
-  interface CustomerSourceCreateParams {
-    /**
-     * Please refer to full [documentation](https://stripe.com/docs/api) instead.
-     */
-    source: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    /**
-     * A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the card in a structured format.
-     */
-    metadata?: MetadataParam;
-  }
-
-  interface CustomerSourceRetrieveParams {
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-  }
-
-  interface CustomerSourceUpdateParams {
-    /**
-     * The name of the person or business that owns the bank account.
-     */
-    account_holder_name?: string;
-
-    /**
-     * The type of entity that holds the account. This can be either `individual` or `company`.
-     */
-    account_holder_type?: CustomerSourceUpdateParams.AccountHolderType;
-
-    /**
-     * City/District/Suburb/Town/Village.
-     */
-    address_city?: string;
-
-    /**
-     * Billing address country, if provided when creating card.
-     */
-    address_country?: string;
-
-    /**
-     * Address line 1 (Street address/PO Box/Company name).
-     */
-    address_line1?: string;
-
-    /**
-     * Address line 2 (Apartment/Suite/Unit/Building).
-     */
-    address_line2?: string;
-
-    /**
-     * State/County/Province/Region.
-     */
-    address_state?: string;
-
-    /**
-     * ZIP or postal code.
-     */
-    address_zip?: string;
-
-    /**
-     * Two digit number representing the card's expiration month.
-     */
-    exp_month?: string;
-
-    /**
-     * Four digit number representing the card's expiration year.
-     */
-    exp_year?: string;
-
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
-
-    metadata?: MetadataParam;
-
-    /**
-     * Cardholder name.
-     */
-    name?: string;
-
-    owner?: CustomerSourceUpdateParams.Owner;
-  }
-
-  namespace CustomerSourceUpdateParams {
-    type AccountHolderType = 'company' | 'individual'
-
-    interface Owner {
+declare module 'stripe' {
+  namespace Stripe {
+    interface CustomerSourceCreateParams {
       /**
-       * Owner's address.
+       * Please refer to full [documentation](https://stripe.com/docs/api) instead.
        */
-      address?: Owner.Address;
+      source: string;
 
       /**
-       * Owner's email address.
+       * Specifies which fields in the response should be expanded.
        */
-      email?: string;
+      expand?: Array<string>;
 
       /**
-       * Owner's full name.
+       * A set of key-value pairs that you can attach to a card object. It can be useful for storing additional information about the card in a structured format.
+       */
+      metadata?: MetadataParam;
+    }
+
+    interface CustomerSourceRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerSourceUpdateParams {
+      /**
+       * The name of the person or business that owns the bank account.
+       */
+      account_holder_name?: string;
+
+      /**
+       * The type of entity that holds the account. This can be either `individual` or `company`.
+       */
+      account_holder_type?: CustomerSourceUpdateParams.AccountHolderType;
+
+      /**
+       * City/District/Suburb/Town/Village.
+       */
+      address_city?: string;
+
+      /**
+       * Billing address country, if provided when creating card.
+       */
+      address_country?: string;
+
+      /**
+       * Address line 1 (Street address/PO Box/Company name).
+       */
+      address_line1?: string;
+
+      /**
+       * Address line 2 (Apartment/Suite/Unit/Building).
+       */
+      address_line2?: string;
+
+      /**
+       * State/County/Province/Region.
+       */
+      address_state?: string;
+
+      /**
+       * ZIP or postal code.
+       */
+      address_zip?: string;
+
+      /**
+       * Two digit number representing the card's expiration month.
+       */
+      exp_month?: string;
+
+      /**
+       * Four digit number representing the card's expiration year.
+       */
+      exp_year?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      metadata?: MetadataParam;
+
+      /**
+       * Cardholder name.
        */
       name?: string;
 
-      /**
-       * Owner's phone number.
-       */
-      phone?: string;
+      owner?: CustomerSourceUpdateParams.Owner;
     }
 
-    namespace Owner {
-      interface Address {
-        city?: string;
+    namespace CustomerSourceUpdateParams {
+      type AccountHolderType = 'company' | 'individual'
 
-        country?: string;
+      interface Owner {
+        /**
+         * Owner's address.
+         */
+        address?: Owner.Address;
 
-        line1?: string;
+        /**
+         * Owner's email address.
+         */
+        email?: string;
 
-        line2?: string;
+        /**
+         * Owner's full name.
+         */
+        name?: string;
 
-        postal_code?: string;
+        /**
+         * Owner's phone number.
+         */
+        phone?: string;
+      }
 
-        state?: string;
+      namespace Owner {
+        interface Address {
+          city?: string;
+
+          country?: string;
+
+          line1?: string;
+
+          line2?: string;
+
+          postal_code?: string;
+
+          state?: string;
+        }
       }
     }
-  }
 
-  interface CustomerSourceListParams {
-    /**
-     * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-     */
-    ending_before?: string;
+    interface CustomerSourceListParams {
+      /**
+       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
+       */
+      ending_before?: string;
 
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
 
-    /**
-     * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-     */
-    limit?: number;
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
 
-    /**
-     * Filter sources according to a particular object type.
-     */
-    object?: string;
+      /**
+       * Filter sources according to a particular object type.
+       */
+      object?: string;
 
-    /**
-     * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-     */
-    starting_after?: string;
-  }
+      /**
+       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
+       */
+      starting_after?: string;
+    }
 
-  interface CustomerSourceDeleteParams {}
+    interface CustomerSourceDeleteParams {}
 
-  interface CustomerSourceVerifyParams {
-    /**
-     * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
-     */
-    amounts?: Array<number>;
+    interface CustomerSourceVerifyParams {
+      /**
+       * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
+       */
+      amounts?: Array<number>;
 
-    /**
-     * Specifies which fields in the response should be expanded.
-     */
-    expand?: Array<string>;
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
   }
 }
