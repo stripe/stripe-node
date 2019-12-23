@@ -130,6 +130,7 @@ declare module 'stripe' {
      * Should be https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/node/http.d.ts#L326
      * but we want to avoid adding a dependency on `@types/node` to avoid bundle bloat for non-TS users.
      */
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     export class HttpAgent {
       maxFreeSockets: number;
       maxSockets: number;
@@ -142,6 +143,7 @@ declare module 'stripe' {
       constructor(options: any);
       destroy(): void;
     }
+    /* eslint-enable @typescript-eslint/no-explicit-any */
 
     /**
      * Identify your plugin.
@@ -204,7 +206,7 @@ declare module 'stripe' {
        */
       readonly statusCode?: number;
 
-      readonly raw: any;
+      readonly raw: unknown;
 
       readonly headers: {
         [key: string]: string;
@@ -219,7 +221,7 @@ declare module 'stripe' {
       readonly param?: string;
 
       /** @deprecated */
-      readonly detail?: any;
+      readonly detail?: unknown;
 
       readonly charge?: string;
       readonly decline_code?: string;
