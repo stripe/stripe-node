@@ -93,22 +93,6 @@ declare module 'stripe' {
   export namespace Stripe {}
 
   export class Stripe {
-    DEFAULT_HOST: string;
-    DEFAULT_PORT: string;
-    DEFAULT_BASE_PATH: string;
-    DEFAULT_API_VERSION: string;
-    DEFAULT_TIMEOUT: number;
-    PACKAGE_VERSION: string;
-    USER_AGENT: {
-      bindings_version: string;
-      lang: string;
-      lang_version: string;
-      platform: string;
-      publisher: string;
-      uname: string;
-    };
-    USER_AGENT_SERIALIZED: string;
-
     static Stripe: typeof Stripe;
 
     constructor(apiKey: string, config: Stripe.StripeConfig);
