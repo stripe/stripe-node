@@ -162,5 +162,13 @@ declare module 'stripe' {
        */
       town?: string;
     }
+
+    export type CustomerSource =
+      | Account
+      | AlipayAccount
+      | BankAccount
+      | BitcoinReceiver
+      | Card
+      | Source;
   }
 }

@@ -134,15 +134,7 @@ declare module 'stripe' {
       /**
        * ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription's default source, if any, or to the customer's default source.
        */
-      default_source:
-        | string
-        | Account
-        | AlipayAccount
-        | BankAccount
-        | BitcoinReceiver
-        | Card
-        | Source
-        | null;
+      default_source: string | CustomerSource | null;
 
       /**
        * The tax rates applied to this invoice, if any.

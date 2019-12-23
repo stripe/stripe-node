@@ -39,15 +39,7 @@ declare module 'stripe' {
        *
        * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) field instead.
        */
-      default_source:
-        | string
-        | Account
-        | AlipayAccount
-        | BankAccount
-        | BitcoinReceiver
-        | Card
-        | Source
-        | null;
+      default_source: string | CustomerSource | null;
 
       deleted?: void;
 
@@ -111,9 +103,7 @@ declare module 'stripe' {
       /**
        * The customer's payment sources, if any.
        */
-      sources: ApiList<
-        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
-      >;
+      sources: ApiList<CustomerSource>;
 
       /**
        * The customer's current subscriptions, if any.
@@ -689,9 +679,7 @@ declare module 'stripe' {
         id: string,
         params: CustomerSourceCreateParams,
         options?: RequestOptions
-      ): Promise<
-        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
-      >;
+      ): Promise<CustomerSource>;
 
       /**
        * Retrieve a specified source for a given customer.
@@ -701,16 +689,12 @@ declare module 'stripe' {
         id: string,
         params?: CustomerSourceRetrieveParams,
         options?: RequestOptions
-      ): Promise<
-        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
-      >;
+      ): Promise<CustomerSource>;
       retrieveSource(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<
-        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
-      >;
+      ): Promise<CustomerSource>;
 
       /**
        * Update a specified source for a given customer.
@@ -734,15 +718,11 @@ declare module 'stripe' {
         id: string,
         params?: CustomerSourceListParams,
         options?: RequestOptions
-      ): ApiListPromise<
-        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
-      >;
+      ): ApiListPromise<CustomerSource>;
       listSources(
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<
-        Account | AlipayAccount | BankAccount | BitcoinReceiver | Card | Source
-      >;
+      ): ApiListPromise<CustomerSource>;
 
       /**
        * Delete a specified source for a given customer.
@@ -753,12 +733,7 @@ declare module 'stripe' {
         params?: CustomerSourceDeleteParams,
         options?: RequestOptions
       ): Promise<
-        | Account
-        | AlipayAccount
-        | BankAccount
-        | BitcoinReceiver
-        | Card
-        | Source
+        | CustomerSource
         | DeletedAlipayAccount
         | DeletedBankAccount
         | DeletedBitcoinReceiver
@@ -769,12 +744,7 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<
-        | Account
-        | AlipayAccount
-        | BankAccount
-        | BitcoinReceiver
-        | Card
-        | Source
+        | CustomerSource
         | DeletedAlipayAccount
         | DeletedBankAccount
         | DeletedBitcoinReceiver

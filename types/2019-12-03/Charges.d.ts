@@ -198,14 +198,7 @@ declare module 'stripe' {
       /**
        * This is a legacy field that will be removed in the future. It contains the Source, Card, or BankAccount object used for the charge. For details about the payment method used for this charge, refer to `payment_method` or `payment_method_details` instead.
        */
-      source:
-        | Account
-        | AlipayAccount
-        | BankAccount
-        | BitcoinReceiver
-        | Card
-        | Source
-        | null;
+      source: CustomerSource | null;
 
       /**
        * The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.

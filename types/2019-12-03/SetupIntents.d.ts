@@ -154,13 +154,7 @@ declare module 'stripe' {
 
         setup_intent?: SetupIntent;
 
-        source?:
-          | Account
-          | AlipayAccount
-          | BankAccount
-          | BitcoinReceiver
-          | Card
-          | Source;
+        source?: CustomerSource;
 
         /**
          * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
