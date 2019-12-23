@@ -3,7 +3,7 @@ declare module 'stripe' {
     /**
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      */
-    export interface Metadata {
+    interface Metadata {
       [name: string]: string;
     }
 
@@ -11,7 +11,7 @@ declare module 'stripe' {
      * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
      * While you can send values as numbers, they will be returned as strings.
      */
-    export interface MetadataParam {
+    interface MetadataParam {
       [name: string]: string | number | null;
     }
 
@@ -163,7 +163,7 @@ declare module 'stripe' {
       town?: string;
     }
 
-    export type CustomerSource =
+    type CustomerSource =
       | Account
       | AlipayAccount
       | BankAccount
