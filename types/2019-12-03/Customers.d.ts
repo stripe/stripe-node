@@ -187,7 +187,7 @@ declare module 'stripe' {
         tracking_number?: string | null;
       }
 
-      type TaxExempt = 'exempt' | 'none' | 'reverse'
+      type TaxExempt = 'exempt' | 'none' | 'reverse';
     }
 
     /**
@@ -337,7 +337,7 @@ declare module 'stripe' {
         phone?: string;
       }
 
-      type TaxExempt = 'exempt' | 'none' | 'reverse'
+      type TaxExempt = 'exempt' | 'none' | 'reverse';
 
       interface TaxIdDatum {
         /**
@@ -360,7 +360,7 @@ declare module 'stripe' {
           | 'mx_rfc'
           | 'no_vat'
           | 'nz_gst'
-          | 'za_vat'
+          | 'za_vat';
       }
     }
 
@@ -505,7 +505,7 @@ declare module 'stripe' {
         phone?: string;
       }
 
-      type TaxExempt = 'exempt' | 'none' | 'reverse'
+      type TaxExempt = 'exempt' | 'none' | 'reverse';
     }
 
     interface CustomerListParams {
@@ -753,34 +753,32 @@ declare module 'stripe' {
         params?: CustomerSourceDeleteParams,
         options?: RequestOptions
       ): Promise<
-
-          | Account
-          | AlipayAccount
-          | BankAccount
-          | BitcoinReceiver
-          | Card
-          | Source
-          | DeletedAlipayAccount
-          | DeletedBankAccount
-          | DeletedBitcoinReceiver
-          | DeletedCard
+        | Account
+        | AlipayAccount
+        | BankAccount
+        | BitcoinReceiver
+        | Card
+        | Source
+        | DeletedAlipayAccount
+        | DeletedBankAccount
+        | DeletedBitcoinReceiver
+        | DeletedCard
       >;
       deleteSource(
         customerId: string,
         id: string,
         options?: RequestOptions
       ): Promise<
-
-          | Account
-          | AlipayAccount
-          | BankAccount
-          | BitcoinReceiver
-          | Card
-          | Source
-          | DeletedAlipayAccount
-          | DeletedBankAccount
-          | DeletedBitcoinReceiver
-          | DeletedCard
+        | Account
+        | AlipayAccount
+        | BankAccount
+        | BitcoinReceiver
+        | Card
+        | Source
+        | DeletedAlipayAccount
+        | DeletedBankAccount
+        | DeletedBitcoinReceiver
+        | DeletedCard
       >;
 
       /**

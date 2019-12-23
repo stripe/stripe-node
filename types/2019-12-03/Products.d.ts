@@ -122,7 +122,7 @@ declare module 'stripe' {
         width: number;
       }
 
-      type Type = 'good' | 'service'
+      type Type = 'good' | 'service';
     }
 
     /**
@@ -250,7 +250,7 @@ declare module 'stripe' {
         width: number;
       }
 
-      type Type = 'good' | 'service'
+      type Type = 'good' | 'service';
     }
 
     interface ProductRetrieveParams {
@@ -431,7 +431,7 @@ declare module 'stripe' {
         lte?: number;
       }
 
-      type Type = 'good' | 'service'
+      type Type = 'good' | 'service';
     }
 
     interface ProductDeleteParams {}

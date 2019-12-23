@@ -112,7 +112,7 @@ declare module 'stripe' {
     }
 
     namespace Payout {
-      type Type = 'bank_account' | 'card'
+      type Type = 'bank_account' | 'card';
     }
 
     interface PayoutCreateParams {
@@ -163,9 +163,9 @@ declare module 'stripe' {
     }
 
     namespace PayoutCreateParams {
-      type Method = 'instant' | 'standard'
+      type Method = 'instant' | 'standard';
 
-      type SourceType = 'bank_account' | 'card'
+      type SourceType = 'bank_account' | 'card';
     }
 
     interface PayoutRetrieveParams {

@@ -135,9 +135,7 @@ declare module 'stripe' {
       /**
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
        */
-      pending_invoice_item_interval:
-        | Subscription.PendingInvoiceItemInterval
-        | null;
+      pending_invoice_item_interval: Subscription.PendingInvoiceItemInterval | null;
 
       /**
        * You can use this [SetupIntent](https://stripe.com/docs/api/setup_intents) to collect user authentication when creating a subscription without immediate payment or updating a subscription's payment method, allowing you to optimize for off-session payments. Learn more in the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication#scenario-2).
@@ -211,7 +209,7 @@ declare module 'stripe' {
         reset_billing_cycle_anchor: boolean | null;
       }
 
-      type CollectionMethod = 'charge_automatically' | 'send_invoice'
+      type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface PendingInvoiceItemInterval {
         /**
@@ -226,7 +224,7 @@ declare module 'stripe' {
       }
 
       namespace PendingInvoiceItemInterval {
-        type Interval = 'day' | 'month' | 'week' | 'year'
+        type Interval = 'day' | 'month' | 'week' | 'year';
       }
 
       type Status =
@@ -236,7 +234,7 @@ declare module 'stripe' {
         | 'incomplete_expired'
         | 'past_due'
         | 'trialing'
-        | 'unpaid'
+        | 'unpaid';
 
       interface TransferData {
         /**
@@ -342,9 +340,7 @@ declare module 'stripe' {
       /**
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
        */
-      pending_invoice_item_interval?:
-        | SubscriptionCreateParams.PendingInvoiceItemInterval
-        | null;
+      pending_invoice_item_interval?: SubscriptionCreateParams.PendingInvoiceItemInterval | null;
 
       /**
        * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
@@ -390,7 +386,7 @@ declare module 'stripe' {
         reset_billing_cycle_anchor?: boolean;
       }
 
-      type CollectionMethod = 'charge_automatically' | 'send_invoice'
+      type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface Item {
         /**
@@ -431,7 +427,7 @@ declare module 'stripe' {
       type PaymentBehavior =
         | 'allow_incomplete'
         | 'error_if_incomplete'
-        | 'pending_if_incomplete'
+        | 'pending_if_incomplete';
 
       interface PendingInvoiceItemInterval {
         /**
@@ -446,7 +442,7 @@ declare module 'stripe' {
       }
 
       namespace PendingInvoiceItemInterval {
-        type Interval = 'day' | 'month' | 'week' | 'year'
+        type Interval = 'day' | 'month' | 'week' | 'year';
       }
 
       interface TransferData {
@@ -550,9 +546,7 @@ declare module 'stripe' {
       /**
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
        */
-      pending_invoice_item_interval?:
-        | SubscriptionUpdateParams.PendingInvoiceItemInterval
-        | null;
+      pending_invoice_item_interval?: SubscriptionUpdateParams.PendingInvoiceItemInterval | null;
 
       /**
        * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
@@ -586,7 +580,7 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionUpdateParams {
-      type BillingCycleAnchor = 'now' | 'unchanged'
+      type BillingCycleAnchor = 'now' | 'unchanged';
 
       interface BillingThresholds {
         /**
@@ -600,7 +594,7 @@ declare module 'stripe' {
         reset_billing_cycle_anchor?: boolean;
       }
 
-      type CollectionMethod = 'charge_automatically' | 'send_invoice'
+      type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface Item {
         /**
@@ -656,7 +650,7 @@ declare module 'stripe' {
       type PaymentBehavior =
         | 'allow_incomplete'
         | 'error_if_incomplete'
-        | 'pending_if_incomplete'
+        | 'pending_if_incomplete';
 
       interface PendingInvoiceItemInterval {
         /**
@@ -671,7 +665,7 @@ declare module 'stripe' {
       }
 
       namespace PendingInvoiceItemInterval {
-        type Interval = 'day' | 'month' | 'week' | 'year'
+        type Interval = 'day' | 'month' | 'week' | 'year';
       }
 
       interface TransferData {
@@ -731,7 +725,7 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionListParams {
-      type CollectionMethod = 'charge_automatically' | 'send_invoice'
+      type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface Created {
         /**
@@ -808,7 +802,7 @@ declare module 'stripe' {
         | 'incomplete_expired'
         | 'past_due'
         | 'trialing'
-        | 'unpaid'
+        | 'unpaid';
     }
 
     interface SubscriptionDeleteParams {

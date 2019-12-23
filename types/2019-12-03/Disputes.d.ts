@@ -247,7 +247,7 @@ declare module 'stripe' {
         | 'warning_closed'
         | 'warning_needs_response'
         | 'warning_under_review'
-        | 'won'
+        | 'won';
     }
 
     interface DisputeRetrieveParams {

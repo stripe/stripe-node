@@ -64,7 +64,7 @@ declare module 'stripe' {
       }
 
       namespace Reader {
-        type DeviceType = 'bbpos_chipper2x' | 'verifone_P400'
+        type DeviceType = 'bbpos_chipper2x' | 'verifone_P400';
       }
 
       /**
@@ -196,9 +196,9 @@ declare module 'stripe' {
       }
 
       namespace ReaderListParams {
-        type DeviceType = 'bbpos_chipper2x' | 'verifone_P400'
+        type DeviceType = 'bbpos_chipper2x' | 'verifone_P400';
 
-        type Status = 'offline' | 'online'
+        type Status = 'offline' | 'online';
       }
 
       interface ReaderDeleteParams {

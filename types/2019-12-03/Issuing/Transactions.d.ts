@@ -126,7 +126,7 @@ declare module 'stripe' {
           | 'dispute'
           | 'dispute_loss'
           | 'refund'
-          | 'refund_reversal'
+          | 'refund_reversal';
       }
 
       interface TransactionRetrieveParams {

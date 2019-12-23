@@ -75,7 +75,7 @@ declare module 'stripe' {
           user_agent: string | null;
         }
 
-        type Type = 'offline' | 'online'
+        type Type = 'offline' | 'online';
       }
 
       interface MultiUse {}
@@ -125,9 +125,9 @@ declare module 'stripe' {
         currency: string;
       }
 
-      type Status = 'active' | 'inactive' | 'pending'
+      type Status = 'active' | 'inactive' | 'pending';
 
-      type Type = 'multi_use' | 'single_use'
+      type Type = 'multi_use' | 'single_use';
     }
 
     interface MandateRetrieveParams {

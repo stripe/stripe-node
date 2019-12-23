@@ -158,13 +158,13 @@ declare module 'stripe' {
       }
 
       namespace Capabilities {
-        type CardIssuing = 'active' | 'inactive' | 'pending'
+        type CardIssuing = 'active' | 'inactive' | 'pending';
 
-        type CardPayments = 'active' | 'inactive' | 'pending'
+        type CardPayments = 'active' | 'inactive' | 'pending';
 
-        type LegacyPayments = 'active' | 'inactive' | 'pending'
+        type LegacyPayments = 'active' | 'inactive' | 'pending';
 
-        type Transfers = 'active' | 'inactive' | 'pending'
+        type Transfers = 'active' | 'inactive' | 'pending';
       }
 
       interface Company {
@@ -510,7 +510,7 @@ declare module 'stripe' {
         user_agent: string | null;
       }
 
-      type Type = 'custom' | 'express' | 'standard'
+      type Type = 'custom' | 'express' | 'standard';
     }
 
     /**
@@ -959,7 +959,7 @@ declare module 'stripe' {
         | 'card_issuing'
         | 'card_payments'
         | 'legacy_payments'
-        | 'transfers'
+        | 'transfers';
 
       interface Settings {
         /**
@@ -1085,7 +1085,7 @@ declare module 'stripe' {
           }
 
           namespace Schedule {
-            type Interval = 'daily' | 'manual' | 'monthly' | 'weekly'
+            type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
 
             type WeeklyAnchor =
               | 'friday'
@@ -1094,7 +1094,7 @@ declare module 'stripe' {
               | 'sunday'
               | 'thursday'
               | 'tuesday'
-              | 'wednesday'
+              | 'wednesday';
           }
         }
       }
@@ -1116,7 +1116,7 @@ declare module 'stripe' {
         user_agent?: string;
       }
 
-      type Type = 'custom' | 'express' | 'standard'
+      type Type = 'custom' | 'express' | 'standard';
     }
 
     interface AccountRetrieveParams {
@@ -1549,7 +1549,7 @@ declare module 'stripe' {
         | 'card_issuing'
         | 'card_payments'
         | 'legacy_payments'
-        | 'transfers'
+        | 'transfers';
 
       interface Settings {
         /**
@@ -1675,7 +1675,7 @@ declare module 'stripe' {
           }
 
           namespace Schedule {
-            type Interval = 'daily' | 'manual' | 'monthly' | 'weekly'
+            type Interval = 'daily' | 'manual' | 'monthly' | 'weekly';
 
             type WeeklyAnchor =
               | 'friday'
@@ -1684,7 +1684,7 @@ declare module 'stripe' {
               | 'sunday'
               | 'thursday'
               | 'tuesday'
-              | 'wednesday'
+              | 'wednesday';
           }
         }
       }

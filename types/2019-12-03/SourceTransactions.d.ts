@@ -187,7 +187,7 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'three_d_secure'
-        | 'wechat'
+        | 'wechat';
     }
   }
 }

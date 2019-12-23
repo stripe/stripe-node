@@ -83,7 +83,12 @@ declare module 'stripe' {
     }
 
     namespace Topup {
-      type Status = 'canceled' | 'failed' | 'pending' | 'reversed' | 'succeeded'
+      type Status =
+        | 'canceled'
+        | 'failed'
+        | 'pending'
+        | 'reversed'
+        | 'succeeded';
     }
 
     interface TopupCreateParams {
@@ -234,7 +239,7 @@ declare module 'stripe' {
         lte?: number;
       }
 
-      type Status = 'canceled' | 'failed' | 'pending' | 'succeeded'
+      type Status = 'canceled' | 'failed' | 'pending' | 'succeeded';
     }
 
     interface TopupCancelParams {

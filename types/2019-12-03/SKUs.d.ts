@@ -210,9 +210,9 @@ declare module 'stripe' {
       }
 
       namespace Inventory {
-        type Type = 'bucket' | 'finite' | 'infinite'
+        type Type = 'bucket' | 'finite' | 'infinite';
 
-        type Value = 'in_stock' | 'limited' | 'out_of_stock'
+        type Value = 'in_stock' | 'limited' | 'out_of_stock';
       }
 
       interface PackageDimensions {
@@ -316,9 +316,9 @@ declare module 'stripe' {
       }
 
       namespace Inventory {
-        type Type = 'bucket' | 'finite' | 'infinite'
+        type Type = 'bucket' | 'finite' | 'infinite';
 
-        type Value = 'in_stock' | 'limited' | 'out_of_stock'
+        type Value = 'in_stock' | 'limited' | 'out_of_stock';
       }
 
       interface PackageDimensions {

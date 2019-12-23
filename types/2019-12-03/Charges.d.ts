@@ -481,7 +481,7 @@ declare module 'stripe' {
         }
 
         namespace AchDebit {
-          type AccountHolderType = 'company' | 'individual'
+          type AccountHolderType = 'company' | 'individual';
         }
 
         interface AcssDebit {
@@ -565,7 +565,7 @@ declare module 'stripe' {
         }
 
         namespace Bancontact {
-          type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl'
+          type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
 
         interface Bitcoin {
@@ -789,7 +789,7 @@ declare module 'stripe' {
               | 'google_pay'
               | 'masterpass'
               | 'samsung_pay'
-              | 'visa_checkout'
+              | 'visa_checkout';
 
             interface VisaCheckout {
               /**
@@ -988,7 +988,7 @@ declare module 'stripe' {
             | 'regiobank'
             | 'sns_bank'
             | 'triodos_bank'
-            | 'van_lanschot'
+            | 'van_lanschot';
 
           type Bic =
             | 'ABNANL2A'
@@ -1002,7 +1002,7 @@ declare module 'stripe' {
             | 'RABONL2U'
             | 'RBRBNL21'
             | 'SNSBNL2A'
-            | 'TRIONL2U'
+            | 'TRIONL2U';
         }
 
         interface Klarna {}
@@ -1350,7 +1350,7 @@ declare module 'stripe' {
       }
 
       namespace FraudDetails {
-        type UserReport = 'fraudulent' | 'safe'
+        type UserReport = 'fraudulent' | 'safe';
       }
 
       interface Shipping {

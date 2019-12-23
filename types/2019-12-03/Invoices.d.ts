@@ -317,9 +317,9 @@ declare module 'stripe' {
         | 'subscription_cycle'
         | 'subscription_threshold'
         | 'subscription_update'
-        | 'upcoming'
+        | 'upcoming';
 
-      type CollectionMethod = 'charge_automatically' | 'send_invoice'
+      type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface CustomField {
         /**
@@ -357,7 +357,7 @@ declare module 'stripe' {
         tracking_number?: string | null;
       }
 
-      type CustomerTaxExempt = 'exempt' | 'none' | 'reverse'
+      type CustomerTaxExempt = 'exempt' | 'none' | 'reverse';
 
       interface CustomerTaxId {
         /**
@@ -381,7 +381,7 @@ declare module 'stripe' {
           | 'no_vat'
           | 'nz_gst'
           | 'unknown'
-          | 'za_vat'
+          | 'za_vat';
       }
 
       type Status =
@@ -390,7 +390,7 @@ declare module 'stripe' {
         | 'open'
         | 'paid'
         | 'uncollectible'
-        | 'void'
+        | 'void';
 
       interface StatusTransitions {
         /**
@@ -569,7 +569,7 @@ declare module 'stripe' {
     }
 
     namespace InvoiceCreateParams {
-      type CollectionMethod = 'charge_automatically' | 'send_invoice'
+      type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface CustomFields {
         /**
@@ -675,7 +675,7 @@ declare module 'stripe' {
     }
 
     namespace InvoiceUpdateParams {
-      type CollectionMethod = 'charge_automatically' | 'send_invoice'
+      type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface CustomFields {
         /**
@@ -744,7 +744,7 @@ declare module 'stripe' {
     }
 
     namespace InvoiceListParams {
-      type CollectionMethod = 'charge_automatically' | 'send_invoice'
+      type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface Created {
         /**
@@ -790,7 +790,7 @@ declare module 'stripe' {
         lte?: number;
       }
 
-      type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void'
+      type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
     }
 
     interface InvoiceDeleteParams {}
@@ -1013,7 +1013,7 @@ declare module 'stripe' {
         }
       }
 
-      type SubscriptionBillingCycleAnchor = 'now' | 'unchanged'
+      type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
 
       interface SubscriptionItem {
         /**

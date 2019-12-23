@@ -172,11 +172,11 @@ declare module 'stripe' {
           | 'pl'
           | 'pt'
           | 'sv'
-          | 'zh'
+          | 'zh';
 
-        type Mode = 'payment' | 'setup' | 'subscription'
+        type Mode = 'payment' | 'setup' | 'subscription';
 
-        type SubmitType = 'auto' | 'book' | 'donate' | 'pay'
+        type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
       }
 
       interface SessionCreateParams {
@@ -281,7 +281,7 @@ declare module 'stripe' {
       }
 
       namespace SessionCreateParams {
-        type BillingAddressCollection = 'auto' | 'required'
+        type BillingAddressCollection = 'auto' | 'required';
 
         interface LineItem {
           /**
@@ -331,9 +331,9 @@ declare module 'stripe' {
           | 'pl'
           | 'pt'
           | 'sv'
-          | 'zh'
+          | 'zh';
 
-        type Mode = 'payment' | 'setup' | 'subscription'
+        type Mode = 'payment' | 'setup' | 'subscription';
 
         interface PaymentIntentData {
           /**
@@ -401,9 +401,9 @@ declare module 'stripe' {
         }
 
         namespace PaymentIntentData {
-          type CaptureMethod = 'automatic' | 'manual'
+          type CaptureMethod = 'automatic' | 'manual';
 
-          type SetupFutureUsage = 'off_session' | 'on_session'
+          type SetupFutureUsage = 'off_session' | 'on_session';
 
           interface Shipping {
             /**
@@ -443,7 +443,7 @@ declare module 'stripe' {
           }
         }
 
-        type PaymentMethodType = 'card' | 'ideal'
+        type PaymentMethodType = 'card' | 'ideal';
 
         interface SetupIntentData {
           /**
@@ -462,7 +462,7 @@ declare module 'stripe' {
           on_behalf_of?: string;
         }
 
-        type SubmitType = 'auto' | 'book' | 'donate' | 'pay'
+        type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
 
         interface SubscriptionData {
           /**

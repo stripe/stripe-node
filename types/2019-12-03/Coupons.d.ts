@@ -83,7 +83,7 @@ declare module 'stripe' {
     }
 
     namespace Coupon {
-      type Duration = 'forever' | 'once' | 'repeating'
+      type Duration = 'forever' | 'once' | 'repeating';
     }
 
     /**
@@ -164,7 +164,7 @@ declare module 'stripe' {
     }
 
     namespace CouponCreateParams {
-      type Duration = 'forever' | 'once' | 'repeating'
+      type Duration = 'forever' | 'once' | 'repeating';
     }
 
     interface CouponRetrieveParams {

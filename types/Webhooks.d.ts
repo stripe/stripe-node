@@ -41,10 +41,6 @@ declare module 'stripe' {
       signature: Signature;
     }
 
-    namespace Error {
-      interface StripeSignatureVerificationError {}
-    }
-
     export class Signature {
       EXPECTED_SCHEME: 'v1';
 

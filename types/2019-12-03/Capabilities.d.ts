@@ -75,7 +75,7 @@ declare module 'stripe' {
         | 'disabled'
         | 'inactive'
         | 'pending'
-        | 'unrequested'
+        | 'unrequested';
     }
 
     interface CapabilityRetrieveParams {

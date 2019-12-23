@@ -236,7 +236,7 @@ declare module 'stripe' {
             | 'google_pay'
             | 'masterpass'
             | 'samsung_pay'
-            | 'visa_checkout'
+            | 'visa_checkout';
 
           interface VisaCheckout {
             /**
@@ -289,7 +289,7 @@ declare module 'stripe' {
           | 'regiobank'
           | 'sns_bank'
           | 'triodos_bank'
-          | 'van_lanschot'
+          | 'van_lanschot';
 
         type Bic =
           | 'ABNANL2A'
@@ -303,7 +303,7 @@ declare module 'stripe' {
           | 'RABONL2U'
           | 'RBRBNL21'
           | 'SNSBNL2A'
-          | 'TRIONL2U'
+          | 'TRIONL2U';
       }
 
       interface SepaDebit {
@@ -338,7 +338,7 @@ declare module 'stripe' {
         | 'card'
         | 'card_present'
         | 'ideal'
-        | 'sepa_debit'
+        | 'sepa_debit';
     }
 
     interface PaymentMethodCreateParams {
@@ -483,7 +483,7 @@ declare module 'stripe' {
           | 'regiobank'
           | 'sns_bank'
           | 'triodos_bank'
-          | 'van_lanschot'
+          | 'van_lanschot';
       }
 
       interface SepaDebit {
@@ -495,7 +495,7 @@ declare module 'stripe' {
         | 'card'
         | 'card_present'
         | 'ideal'
-        | 'sepa_debit'
+        | 'sepa_debit';
     }
 
     interface PaymentMethodRetrieveParams {
@@ -613,7 +613,7 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodListParams {
-      type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit'
+      type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit';
     }
 
     interface PaymentMethodAttachParams {

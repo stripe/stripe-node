@@ -58,7 +58,7 @@ declare module 'stripe' {
     }
 
     namespace UsageRecordCreateParams {
-      type Action = 'increment' | 'set'
+      type Action = 'increment' | 'set';
     }
   }
 }

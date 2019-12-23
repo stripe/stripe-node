@@ -40,14 +40,14 @@ stripe.setAppInfo({
 
 stripe.setHost('host', 'port', 'protocol');
 
-(async () => {
+(async (): Promise<void> => {
   const params: Stripe.CustomerCreateParams = {
     description: 'test',
   };
   const opts: Stripe.RequestOptions = {
     stripeVersion: '2019-12-03',
   };
-  let customer: Stripe.Customer = await stripe.customers.create(params, opts);
+  const customer: Stripe.Customer = await stripe.customers.create(params, opts);
 
   // Check no opts:
   await stripe.customers.create(params);
@@ -78,8 +78,9 @@ stripe.setHost('host', 'port', 'protocol');
   ) {
     const created: number = charge.customer.created;
   }
+  const r = Math.random() - 0.5;
   // Okay, this is how I hope people can deal with deleted:
-  const maybeCoupon: Stripe.Coupon | Stripe.DeletedCoupon = await (1
+  const maybeCoupon: Stripe.Coupon | Stripe.DeletedCoupon = await (r
     ? stripe.coupons.retrieve('25_off')
     : stripe.coupons.del('25_off'));
   if (maybeCoupon.deleted) {
@@ -123,10 +124,10 @@ stripe.setHost('host', 'port', 'protocol');
     await stripe.paymentIntents.create({amount: 100, currency: 'USD'});
   } catch (err) {
     if (err instanceof stripe.errors.StripeCardError) {
-      const decline_code: string = err.decline_code;
+      const declineCode: string = err.decline_code;
     }
     if (err instanceof Stripe.errors.StripeCardError) {
-      const decline_code: string = err.decline_code;
+      const declineCode: string = err.decline_code;
     }
   }
 })();

@@ -143,7 +143,7 @@ declare module 'stripe' {
         | 'transfer'
         | 'transfer_cancel'
         | 'transfer_failure'
-        | 'transfer_refund'
+        | 'transfer_refund';
     }
 
     interface BalanceTransactionRetrieveParams {

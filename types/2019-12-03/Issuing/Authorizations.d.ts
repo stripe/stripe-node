@@ -106,7 +106,7 @@ declare module 'stripe' {
           | 'contactless'
           | 'keyed_in'
           | 'online'
-          | 'swipe'
+          | 'swipe';
 
         interface MerchantData {
           /**
@@ -209,7 +209,7 @@ declare module 'stripe' {
             | 'suspected_fraud'
             | 'webhook_approved'
             | 'webhook_declined'
-            | 'webhook_timeout'
+            | 'webhook_timeout';
 
           interface ViolatedAuthorizationControl {
             /**
@@ -224,18 +224,18 @@ declare module 'stripe' {
           }
 
           namespace ViolatedAuthorizationControl {
-            type Entity = 'account' | 'card' | 'cardholder'
+            type Entity = 'account' | 'card' | 'cardholder';
 
             type Name =
               | 'allowed_categories'
               | 'blocked_categories'
               | 'max_amount'
               | 'max_approvals'
-              | 'spending_limits'
+              | 'spending_limits';
           }
         }
 
-        type Status = 'closed' | 'pending' | 'reversed'
+        type Status = 'closed' | 'pending' | 'reversed';
 
         interface VerificationData {
           /**
@@ -344,7 +344,7 @@ declare module 'stripe' {
           lte?: number;
         }
 
-        type Status = 'closed' | 'pending' | 'reversed'
+        type Status = 'closed' | 'pending' | 'reversed';
       }
 
       interface AuthorizationApproveParams {

@@ -85,16 +85,16 @@ declare module 'stripe' {
           /**
            * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this cardholder's cards.
            */
-          allowed_categories:
-            | Array<AuthorizationControls.AllowedCategory>
-            | null;
+          allowed_categories: Array<
+            AuthorizationControls.AllowedCategory
+          > | null;
 
           /**
            * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to always decline on this cardholder's cards.
            */
-          blocked_categories:
-            | Array<AuthorizationControls.BlockedCategory>
-            | null;
+          blocked_categories: Array<
+            AuthorizationControls.BlockedCategory
+          > | null;
 
           /**
            * Limit the spending with rules based on time intervals and categories.
@@ -396,7 +396,7 @@ declare module 'stripe' {
             | 'wires_money_orders'
             | 'womens_accessory_and_specialty_shops'
             | 'womens_ready_to_wear_stores'
-            | 'wrecking_and_salvage_yards'
+            | 'wrecking_and_salvage_yards';
 
           type BlockedCategory =
             | 'ac_refrigeration_repair'
@@ -686,7 +686,7 @@ declare module 'stripe' {
             | 'wires_money_orders'
             | 'womens_accessory_and_specialty_shops'
             | 'womens_ready_to_wear_stores'
-            | 'wrecking_and_salvage_yards'
+            | 'wrecking_and_salvage_yards';
 
           interface SpendingLimit {
             /**
@@ -994,7 +994,7 @@ declare module 'stripe' {
               | 'wires_money_orders'
               | 'womens_accessory_and_specialty_shops'
               | 'womens_ready_to_wear_stores'
-              | 'wrecking_and_salvage_yards'
+              | 'wrecking_and_salvage_yards';
 
             type Interval =
               | 'all_time'
@@ -1002,7 +1002,7 @@ declare module 'stripe' {
               | 'monthly'
               | 'per_authorization'
               | 'weekly'
-              | 'yearly'
+              | 'yearly';
           }
         }
 
@@ -1094,7 +1094,7 @@ declare module 'stripe' {
         }
 
         namespace Requirements {
-          type DisabledReason = 'listed' | 'rejected.listed' | 'under_review'
+          type DisabledReason = 'listed' | 'rejected.listed' | 'under_review';
 
           type PastDue =
             | 'individual.dob.day'
@@ -1102,12 +1102,12 @@ declare module 'stripe' {
             | 'individual.dob.year'
             | 'individual.first_name'
             | 'individual.last_name'
-            | 'individual.verification.document'
+            | 'individual.verification.document';
         }
 
-        type Status = 'active' | 'blocked' | 'inactive'
+        type Status = 'active' | 'blocked' | 'inactive';
 
-        type Type = 'business_entity' | 'individual'
+        type Type = 'business_entity' | 'individual';
       }
 
       interface CardholderCreateParams {
@@ -1481,7 +1481,7 @@ declare module 'stripe' {
             | 'wires_money_orders'
             | 'womens_accessory_and_specialty_shops'
             | 'womens_ready_to_wear_stores'
-            | 'wrecking_and_salvage_yards'
+            | 'wrecking_and_salvage_yards';
 
           type BlockedCategory =
             | 'ac_refrigeration_repair'
@@ -1771,7 +1771,7 @@ declare module 'stripe' {
             | 'wires_money_orders'
             | 'womens_accessory_and_specialty_shops'
             | 'womens_ready_to_wear_stores'
-            | 'wrecking_and_salvage_yards'
+            | 'wrecking_and_salvage_yards';
 
           interface SpendingLimit {
             /**
@@ -2079,7 +2079,7 @@ declare module 'stripe' {
               | 'wires_money_orders'
               | 'womens_accessory_and_specialty_shops'
               | 'womens_ready_to_wear_stores'
-              | 'wrecking_and_salvage_yards'
+              | 'wrecking_and_salvage_yards';
 
             type Interval =
               | 'all_time'
@@ -2087,7 +2087,7 @@ declare module 'stripe' {
               | 'monthly'
               | 'per_authorization'
               | 'weekly'
-              | 'yearly'
+              | 'yearly';
           }
         }
 
@@ -2185,9 +2185,9 @@ declare module 'stripe' {
           }
         }
 
-        type Status = 'active' | 'inactive'
+        type Status = 'active' | 'inactive';
 
-        type Type = 'business_entity' | 'individual'
+        type Type = 'business_entity' | 'individual';
       }
 
       interface CardholderRetrieveParams {
@@ -2561,7 +2561,7 @@ declare module 'stripe' {
             | 'wires_money_orders'
             | 'womens_accessory_and_specialty_shops'
             | 'womens_ready_to_wear_stores'
-            | 'wrecking_and_salvage_yards'
+            | 'wrecking_and_salvage_yards';
 
           type BlockedCategory =
             | 'ac_refrigeration_repair'
@@ -2851,7 +2851,7 @@ declare module 'stripe' {
             | 'wires_money_orders'
             | 'womens_accessory_and_specialty_shops'
             | 'womens_ready_to_wear_stores'
-            | 'wrecking_and_salvage_yards'
+            | 'wrecking_and_salvage_yards';
 
           interface SpendingLimit {
             /**
@@ -3159,7 +3159,7 @@ declare module 'stripe' {
               | 'wires_money_orders'
               | 'womens_accessory_and_specialty_shops'
               | 'womens_ready_to_wear_stores'
-              | 'wrecking_and_salvage_yards'
+              | 'wrecking_and_salvage_yards';
 
             type Interval =
               | 'all_time'
@@ -3167,7 +3167,7 @@ declare module 'stripe' {
               | 'monthly'
               | 'per_authorization'
               | 'weekly'
-              | 'yearly'
+              | 'yearly';
           }
         }
 
@@ -3265,7 +3265,7 @@ declare module 'stripe' {
           }
         }
 
-        type Status = 'active' | 'inactive'
+        type Status = 'active' | 'inactive';
       }
 
       interface CardholderListParams {
@@ -3343,9 +3343,9 @@ declare module 'stripe' {
           lte?: number;
         }
 
-        type Status = 'active' | 'blocked' | 'inactive'
+        type Status = 'active' | 'blocked' | 'inactive';
 
-        type Type = 'business_entity' | 'individual'
+        type Type = 'business_entity' | 'individual';
       }
 
       class CardholdersResource {

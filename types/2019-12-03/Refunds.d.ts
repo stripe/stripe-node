@@ -112,7 +112,7 @@ declare module 'stripe' {
     }
 
     namespace RefundCreateParams {
-      type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer'
+      type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
     }
 
     interface RefundRetrieveParams {

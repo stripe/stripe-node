@@ -91,7 +91,7 @@ declare module 'stripe' {
     }
 
     namespace CustomerSourceUpdateParams {
-      type AccountHolderType = 'company' | 'individual'
+      type AccountHolderType = 'company' | 'individual';
 
       interface Owner {
         /**

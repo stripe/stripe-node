@@ -80,7 +80,7 @@ declare module 'stripe' {
         | 'approved'
         | 'disputed'
         | 'refunded'
-        | 'refunded_as_fraud'
+        | 'refunded_as_fraud';
 
       interface IpAddressLocation {
         /**
@@ -109,7 +109,7 @@ declare module 'stripe' {
         region: string | null;
       }
 
-      type OpenedReason = 'manual' | 'rule'
+      type OpenedReason = 'manual' | 'rule';
 
       interface Session {
         /**

@@ -133,12 +133,12 @@ declare module 'stripe' {
       maxFreeSockets: number;
       maxSockets: number;
       readonly sockets: {
-        readonly [key: string]: Object[];
+        readonly [key: string]: Record<string, any>[];
       };
       readonly requests: {
-        readonly [key: string]: Object[];
+        readonly [key: string]: Record<string, any>[];
       };
-      constructor(options: Object);
+      constructor(options: Record<string, any>);
       destroy(): void;
     }
 

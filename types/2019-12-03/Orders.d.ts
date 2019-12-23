@@ -256,7 +256,7 @@ declare module 'stripe' {
       }
 
       namespace Item {
-        type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+        type Type = 'discount' | 'shipping' | 'sku' | 'tax';
       }
 
       interface Shipping {
@@ -329,7 +329,7 @@ declare module 'stripe' {
         tracking_number: string;
       }
 
-      type Status = 'canceled' | 'created' | 'fulfilled' | 'paid' | 'returned'
+      type Status = 'canceled' | 'created' | 'fulfilled' | 'paid' | 'returned';
     }
 
     interface OrderListParams {
@@ -590,7 +590,7 @@ declare module 'stripe' {
       }
 
       namespace Items {
-        type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+        type Type = 'discount' | 'shipping' | 'sku' | 'tax';
       }
     }
 

@@ -138,7 +138,7 @@ declare module 'stripe' {
     }
 
     namespace TransferCreateParams {
-      type SourceType = 'bank_account' | 'card'
+      type SourceType = 'bank_account' | 'card';
     }
 
     interface TransferRetrieveParams {

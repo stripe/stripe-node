@@ -112,7 +112,7 @@ declare module 'stripe' {
       }
 
       namespace BankAccount {
-        type AccountHolderType = 'company' | 'individual'
+        type AccountHolderType = 'company' | 'individual';
       }
 
       interface Card {

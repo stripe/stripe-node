@@ -214,11 +214,11 @@ declare module 'stripe' {
         | 'failed_invoice'
         | 'fraudulent'
         | 'requested_by_customer'
-        | 'void_invoice'
+        | 'void_invoice';
 
-      type CaptureMethod = 'automatic' | 'manual'
+      type CaptureMethod = 'automatic' | 'manual';
 
-      type ConfirmationMethod = 'automatic' | 'manual'
+      type ConfirmationMethod = 'automatic' | 'manual';
 
       interface LastPaymentError {
         /**
@@ -279,7 +279,7 @@ declare module 'stripe' {
           | 'card_error'
           | 'idempotency_error'
           | 'invalid_request_error'
-          | 'rate_limit_error'
+          | 'rate_limit_error';
       }
 
       interface NextAction {
@@ -387,11 +387,11 @@ declare module 'stripe' {
             }
           }
 
-          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only'
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
       }
 
-      type SetupFutureUsage = 'off_session' | 'on_session'
+      type SetupFutureUsage = 'off_session' | 'on_session';
 
       interface Shipping {
         address?: Address;
@@ -424,7 +424,7 @@ declare module 'stripe' {
         | 'requires_capture'
         | 'requires_confirmation'
         | 'requires_payment_method'
-        | 'succeeded'
+        | 'succeeded';
 
       interface TransferData {
         /**
@@ -598,9 +598,9 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCreateParams {
-      type CaptureMethod = 'automatic' | 'manual'
+      type CaptureMethod = 'automatic' | 'manual';
 
-      type ConfirmationMethod = 'automatic' | 'manual'
+      type ConfirmationMethod = 'automatic' | 'manual';
 
       interface MandateData {
         /**
@@ -647,11 +647,11 @@ declare module 'stripe' {
             user_agent: string;
           }
 
-          type Type = 'offline' | 'online'
+          type Type = 'offline' | 'online';
         }
       }
 
-      type OffSession = 'one_off' | 'recurring'
+      type OffSession = 'one_off' | 'recurring';
 
       interface PaymentMethodOptions {
         /**
@@ -718,11 +718,11 @@ declare module 'stripe' {
             }
           }
 
-          type RequestThreeDSecure = 'any' | 'automatic'
+          type RequestThreeDSecure = 'any' | 'automatic';
         }
       }
 
-      type SetupFutureUsage = 'off_session' | 'on_session'
+      type SetupFutureUsage = 'off_session' | 'on_session';
 
       interface Shipping {
         /**
@@ -892,7 +892,7 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
-      type SetupFutureUsage = 'off_session' | 'on_session'
+      type SetupFutureUsage = 'off_session' | 'on_session';
 
       interface Shipping {
         /**
@@ -1002,7 +1002,7 @@ declare module 'stripe' {
         | 'abandoned'
         | 'duplicate'
         | 'fraudulent'
-        | 'requested_by_customer'
+        | 'requested_by_customer';
     }
 
     interface PaymentIntentCaptureParams {
@@ -1178,7 +1178,7 @@ declare module 'stripe' {
             user_agent: string;
           }
 
-          type Type = 'offline' | 'online'
+          type Type = 'offline' | 'online';
         }
       }
       interface MandateData2 {
@@ -1216,7 +1216,7 @@ declare module 'stripe' {
         }
       }
 
-      type OffSession = 'one_off' | 'recurring'
+      type OffSession = 'one_off' | 'recurring';
 
       interface PaymentMethodOptions {
         /**
@@ -1283,11 +1283,11 @@ declare module 'stripe' {
             }
           }
 
-          type RequestThreeDSecure = 'any' | 'automatic'
+          type RequestThreeDSecure = 'any' | 'automatic';
         }
       }
 
-      type SetupFutureUsage = 'off_session' | 'on_session'
+      type SetupFutureUsage = 'off_session' | 'on_session';
 
       interface Shipping {
         /**

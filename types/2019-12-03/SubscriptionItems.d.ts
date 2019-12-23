@@ -92,9 +92,7 @@ declare module 'stripe' {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?:
-        | SubscriptionItemCreateParams.BillingThresholds
-        | null;
+      billing_thresholds?: SubscriptionItemCreateParams.BillingThresholds | null;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -145,7 +143,7 @@ declare module 'stripe' {
       type PaymentBehavior =
         | 'allow_incomplete'
         | 'error_if_incomplete'
-        | 'pending_if_incomplete'
+        | 'pending_if_incomplete';
     }
 
     interface SubscriptionItemRetrieveParams {
@@ -159,9 +157,7 @@ declare module 'stripe' {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?:
-        | SubscriptionItemUpdateParams.BillingThresholds
-        | null;
+      billing_thresholds?: SubscriptionItemUpdateParams.BillingThresholds | null;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -219,7 +215,7 @@ declare module 'stripe' {
       type PaymentBehavior =
         | 'allow_incomplete'
         | 'error_if_incomplete'
-        | 'pending_if_incomplete'
+        | 'pending_if_incomplete';
     }
 
     interface SubscriptionItemListParams {

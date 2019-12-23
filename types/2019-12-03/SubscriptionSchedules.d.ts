@@ -129,7 +129,7 @@ declare module 'stripe' {
           reset_billing_cycle_anchor: boolean | null;
         }
 
-        type CollectionMethod = 'charge_automatically' | 'send_invoice'
+        type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
         interface InvoiceSettings {
           /**
@@ -139,7 +139,7 @@ declare module 'stripe' {
         }
       }
 
-      type EndBehavior = 'cancel' | 'none' | 'release' | 'renew'
+      type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
 
       interface Phase {
         /**
@@ -213,7 +213,7 @@ declare module 'stripe' {
           reset_billing_cycle_anchor: boolean | null;
         }
 
-        type CollectionMethod = 'charge_automatically' | 'send_invoice'
+        type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
         interface InvoiceSettings {
           /**
@@ -267,7 +267,7 @@ declare module 'stripe' {
       }
 
       namespace RenewalInterval {
-        type Interval = 'day' | 'month' | 'week' | 'year'
+        type Interval = 'day' | 'month' | 'week' | 'year';
       }
 
       type Status =
@@ -275,7 +275,7 @@ declare module 'stripe' {
         | 'canceled'
         | 'completed'
         | 'not_started'
-        | 'released'
+        | 'released';
     }
 
     interface SubscriptionScheduleCreateParams {
@@ -356,14 +356,14 @@ declare module 'stripe' {
           reset_billing_cycle_anchor?: boolean;
         }
 
-        type CollectionMethod = 'charge_automatically' | 'send_invoice'
+        type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
         interface InvoiceSettings {
           days_until_due?: number;
         }
       }
 
-      type EndBehavior = 'cancel' | 'none' | 'release' | 'renew'
+      type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
 
       interface Phase {
         /**
@@ -445,7 +445,7 @@ declare module 'stripe' {
           reset_billing_cycle_anchor?: boolean;
         }
 
-        type CollectionMethod = 'charge_automatically' | 'send_invoice'
+        type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
         interface InvoiceSettings {
           days_until_due?: number;
@@ -559,14 +559,14 @@ declare module 'stripe' {
           reset_billing_cycle_anchor?: boolean;
         }
 
-        type CollectionMethod = 'charge_automatically' | 'send_invoice'
+        type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
         interface InvoiceSettings {
           days_until_due?: number;
         }
       }
 
-      type EndBehavior = 'cancel' | 'none' | 'release' | 'renew'
+      type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
 
       interface Phase {
         /**
@@ -653,7 +653,7 @@ declare module 'stripe' {
           reset_billing_cycle_anchor?: boolean;
         }
 
-        type CollectionMethod = 'charge_automatically' | 'send_invoice'
+        type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
         interface InvoiceSettings {
           days_until_due?: number;

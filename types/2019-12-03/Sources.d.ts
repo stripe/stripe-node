@@ -707,7 +707,7 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'three_d_secure'
-        | 'wechat'
+        | 'wechat';
 
       interface Wechat {
         prepay_id?: string;
@@ -798,7 +798,7 @@ declare module 'stripe' {
     }
 
     namespace SourceCreateParams {
-      type Flow = 'code_verification' | 'none' | 'receiver' | 'redirect'
+      type Flow = 'code_verification' | 'none' | 'receiver' | 'redirect';
 
       interface Mandate {
         /**
@@ -890,19 +890,19 @@ declare module 'stripe' {
             user_agent?: string;
           }
 
-          type Status = 'accepted' | 'pending' | 'refused' | 'revoked'
+          type Status = 'accepted' | 'pending' | 'refused' | 'revoked';
 
-          type Type = 'offline' | 'online'
+          type Type = 'offline' | 'online';
         }
 
-        type Interval = 'one_time' | 'scheduled' | 'variable'
+        type Interval = 'one_time' | 'scheduled' | 'variable';
 
         type NotificationMethod =
           | 'deprecated_none'
           | 'email'
           | 'manual'
           | 'none'
-          | 'stripe_email'
+          | 'stripe_email';
       }
 
       interface Owner {
@@ -951,7 +951,7 @@ declare module 'stripe' {
       }
 
       namespace Receiver {
-        type RefundAttributesMethod = 'email' | 'manual' | 'none'
+        type RefundAttributesMethod = 'email' | 'manual' | 'none';
       }
 
       interface Redirect {
@@ -995,7 +995,7 @@ declare module 'stripe' {
         }
 
         namespace Item {
-          type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+          type Type = 'discount' | 'shipping' | 'sku' | 'tax';
         }
 
         interface Shipping {
@@ -1026,7 +1026,7 @@ declare module 'stripe' {
         }
       }
 
-      type Usage = 'reusable' | 'single_use'
+      type Usage = 'reusable' | 'single_use';
     }
 
     interface SourceRetrieveParams {
@@ -1164,19 +1164,19 @@ declare module 'stripe' {
             user_agent?: string;
           }
 
-          type Status = 'accepted' | 'pending' | 'refused' | 'revoked'
+          type Status = 'accepted' | 'pending' | 'refused' | 'revoked';
 
-          type Type = 'offline' | 'online'
+          type Type = 'offline' | 'online';
         }
 
-        type Interval = 'one_time' | 'scheduled' | 'variable'
+        type Interval = 'one_time' | 'scheduled' | 'variable';
 
         type NotificationMethod =
           | 'deprecated_none'
           | 'email'
           | 'manual'
           | 'none'
-          | 'stripe_email'
+          | 'stripe_email';
       }
 
       interface Owner {
@@ -1251,7 +1251,7 @@ declare module 'stripe' {
         }
 
         namespace Item {
-          type Type = 'discount' | 'shipping' | 'sku' | 'tax'
+          type Type = 'discount' | 'shipping' | 'sku' | 'tax';
         }
 
         interface Shipping {

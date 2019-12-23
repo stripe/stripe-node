@@ -160,7 +160,7 @@ declare module 'stripe' {
     }
 
     namespace Card {
-      type AvailablePayoutMethod = 'instant' | 'standard'
+      type AvailablePayoutMethod = 'instant' | 'standard';
     }
 
     /**

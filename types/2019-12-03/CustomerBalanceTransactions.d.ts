@@ -80,7 +80,7 @@ declare module 'stripe' {
         | 'invoice_too_small'
         | 'migration'
         | 'unapplied_from_invoice'
-        | 'unspent_receiver_credit'
+        | 'unspent_receiver_credit';
     }
 
     interface CustomerBalanceTransactionCreateParams {

@@ -124,7 +124,7 @@ declare module 'stripe' {
         tax_rate: string | TaxRate;
       }
 
-      type Type = 'invoiceitem' | 'subscription'
+      type Type = 'invoiceitem' | 'subscription';
     }
 
     interface InvoiceLineItemListParams {
@@ -329,7 +329,7 @@ declare module 'stripe' {
         }
       }
 
-      type SubscriptionBillingCycleAnchor = 'now' | 'unchanged'
+      type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
 
       interface SubscriptionItem {
         /**

@@ -170,26 +170,26 @@ declare module 'stripe' {
      */
     checkout: {sessions: Stripe.Checkout.SessionsResource};
     issuing: {
-      authorizations: Stripe.Issuing.AuthorizationsResource,
-      cards: Stripe.Issuing.CardsResource,
-      cardholders: Stripe.Issuing.CardholdersResource,
-      disputes: Stripe.Issuing.DisputesResource,
-      transactions: Stripe.Issuing.TransactionsResource,
+      authorizations: Stripe.Issuing.AuthorizationsResource;
+      cards: Stripe.Issuing.CardsResource;
+      cardholders: Stripe.Issuing.CardholdersResource;
+      disputes: Stripe.Issuing.DisputesResource;
+      transactions: Stripe.Issuing.TransactionsResource;
     };
     radar: {
-      earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource,
-      valueLists: Stripe.Radar.ValueListsResource,
-      valueListItems: Stripe.Radar.ValueListItemsResource,
+      earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
+      valueLists: Stripe.Radar.ValueListsResource;
+      valueListItems: Stripe.Radar.ValueListItemsResource;
     };
     reporting: {
-      reportRuns: Stripe.Reporting.ReportRunsResource,
-      reportTypes: Stripe.Reporting.ReportTypesResource,
+      reportRuns: Stripe.Reporting.ReportRunsResource;
+      reportTypes: Stripe.Reporting.ReportTypesResource;
     };
     sigma: {scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource};
     terminal: {
-      connectionTokens: Stripe.Terminal.ConnectionTokensResource,
-      locations: Stripe.Terminal.LocationsResource,
-      readers: Stripe.Terminal.ReadersResource,
+      connectionTokens: Stripe.Terminal.ConnectionTokensResource;
+      locations: Stripe.Terminal.LocationsResource;
+      readers: Stripe.Terminal.ReadersResource;
     };
 
     /**
@@ -201,9 +201,15 @@ declare module 'stripe' {
     on(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
     on(event: 'response', handler: (event: Stripe.ResponseEvent) => void): void;
     once(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
-    once(event: 'response', handler: (event: Stripe.ResponseEvent) => void): void;
+    once(
+      event: 'response',
+      handler: (event: Stripe.ResponseEvent) => void
+    ): void;
     off(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
-    off(event: 'response', handler: (event: Stripe.ResponseEvent) => void): void;
+    off(
+      event: 'response',
+      handler: (event: Stripe.ResponseEvent) => void
+    ): void;
 
     setProtocol(protocol: string): void;
 

@@ -108,11 +108,11 @@ declare module 'stripe' {
     }
 
     namespace Plan {
-      type AggregateUsage = 'last_during_period' | 'last_ever' | 'max' | 'sum'
+      type AggregateUsage = 'last_during_period' | 'last_ever' | 'max' | 'sum';
 
-      type BillingScheme = 'per_unit' | 'tiered'
+      type BillingScheme = 'per_unit' | 'tiered';
 
-      type Interval = 'day' | 'month' | 'week' | 'year'
+      type Interval = 'day' | 'month' | 'week' | 'year';
 
       interface Tier {
         /**
@@ -141,7 +141,7 @@ declare module 'stripe' {
         up_to: number | null;
       }
 
-      type TiersMode = 'graduated' | 'volume'
+      type TiersMode = 'graduated' | 'volume';
 
       interface TransformUsage {
         /**
@@ -156,10 +156,10 @@ declare module 'stripe' {
       }
 
       namespace TransformUsage {
-        type Round = 'down' | 'up'
+        type Round = 'down' | 'up';
       }
 
-      type UsageType = 'licensed' | 'metered'
+      type UsageType = 'licensed' | 'metered';
     }
 
     /**
@@ -272,11 +272,11 @@ declare module 'stripe' {
     }
 
     namespace PlanCreateParams {
-      type AggregateUsage = 'last_during_period' | 'last_ever' | 'max' | 'sum'
+      type AggregateUsage = 'last_during_period' | 'last_ever' | 'max' | 'sum';
 
-      type BillingScheme = 'per_unit' | 'tiered'
+      type BillingScheme = 'per_unit' | 'tiered';
 
-      type Interval = 'day' | 'month' | 'week' | 'year'
+      type Interval = 'day' | 'month' | 'week' | 'year';
 
       interface Product {
         /**
@@ -337,7 +337,7 @@ declare module 'stripe' {
         up_to: 'inf' | number;
       }
 
-      type TiersMode = 'graduated' | 'volume'
+      type TiersMode = 'graduated' | 'volume';
 
       interface TransformUsage {
         /**
@@ -352,10 +352,10 @@ declare module 'stripe' {
       }
 
       namespace TransformUsage {
-        type Round = 'down' | 'up'
+        type Round = 'down' | 'up';
       }
 
-      type UsageType = 'licensed' | 'metered'
+      type UsageType = 'licensed' | 'metered';
     }
 
     interface PlanRetrieveParams {

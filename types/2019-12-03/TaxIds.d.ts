@@ -59,7 +59,7 @@ declare module 'stripe' {
         | 'no_vat'
         | 'nz_gst'
         | 'unknown'
-        | 'za_vat'
+        | 'za_vat';
 
       interface Verification {
         /**
@@ -79,7 +79,7 @@ declare module 'stripe' {
       }
 
       namespace Verification {
-        type Status = 'pending' | 'unavailable' | 'unverified' | 'verified'
+        type Status = 'pending' | 'unavailable' | 'unverified' | 'verified';
       }
     }
 
@@ -129,7 +129,7 @@ declare module 'stripe' {
         | 'mx_rfc'
         | 'no_vat'
         | 'nz_gst'
-        | 'za_vat'
+        | 'za_vat';
     }
 
     interface TaxIdRetrieveParams {

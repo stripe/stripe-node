@@ -122,7 +122,7 @@ declare module 'stripe' {
         | 'identity_document'
         | 'pci_document'
         | 'sigma_scheduled_query'
-        | 'tax_document_user_upload'
+        | 'tax_document_user_upload';
     }
 
     class FilesResource {

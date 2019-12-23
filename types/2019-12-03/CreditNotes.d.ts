@@ -100,11 +100,11 @@ declare module 'stripe' {
         | 'duplicate'
         | 'fraudulent'
         | 'order_change'
-        | 'product_unsatisfactory'
+        | 'product_unsatisfactory';
 
-      type Status = 'issued' | 'void'
+      type Status = 'issued' | 'void';
 
-      type Type = 'post_payment' | 'pre_payment'
+      type Type = 'post_payment' | 'pre_payment';
     }
 
     interface CreditNoteCreateParams {
@@ -164,7 +164,7 @@ declare module 'stripe' {
         | 'duplicate'
         | 'fraudulent'
         | 'order_change'
-        | 'product_unsatisfactory'
+        | 'product_unsatisfactory';
     }
 
     interface CreditNoteRetrieveParams {
@@ -280,7 +280,7 @@ declare module 'stripe' {
         | 'duplicate'
         | 'fraudulent'
         | 'order_change'
-        | 'product_unsatisfactory'
+        | 'product_unsatisfactory';
     }
 
     interface CreditNoteVoidCreditNoteParams {

@@ -66,7 +66,7 @@ declare module 'stripe' {
           | 'country'
           | 'email'
           | 'ip_address'
-          | 'string'
+          | 'string';
       }
 
       /**
@@ -124,7 +124,7 @@ declare module 'stripe' {
           | 'country'
           | 'email'
           | 'ip_address'
-          | 'string'
+          | 'string';
       }
 
       interface ValueListRetrieveParams {

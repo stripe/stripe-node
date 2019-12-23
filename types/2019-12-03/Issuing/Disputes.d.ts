@@ -97,7 +97,7 @@ declare module 'stripe' {
           }
         }
 
-        type Status = 'lost' | 'under_review' | 'unsubmitted' | 'won'
+        type Status = 'lost' | 'under_review' | 'unsubmitted' | 'won';
       }
 
       interface DisputeCreateParams {
@@ -171,7 +171,7 @@ declare module 'stripe' {
           }
         }
 
-        type Reason = 'fraudulent' | 'other'
+        type Reason = 'fraudulent' | 'other';
       }
 
       interface DisputeRetrieveParams {

@@ -248,7 +248,7 @@ declare module 'stripe' {
         lte?: number;
       }
 
-      type Type = 'corporation' | 'individual'
+      type Type = 'corporation' | 'individual';
     }
 
     interface RecipientDeleteParams {}

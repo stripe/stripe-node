@@ -58,7 +58,7 @@ declare module 'stripe' {
     }
 
     namespace AccountLinkCreateParams {
-      type Collect = 'currently_due' | 'eventually_due'
+      type Collect = 'currently_due' | 'eventually_due';
     }
 
     class AccountLinksResource {

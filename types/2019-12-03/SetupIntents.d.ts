@@ -115,7 +115,7 @@ declare module 'stripe' {
       type CancellationReason =
         | 'abandoned'
         | 'duplicate'
-        | 'requested_by_customer'
+        | 'requested_by_customer';
 
       interface LastSetupError {
         /**
@@ -176,7 +176,7 @@ declare module 'stripe' {
           | 'card_error'
           | 'idempotency_error'
           | 'invalid_request_error'
-          | 'rate_limit_error'
+          | 'rate_limit_error';
       }
 
       interface NextAction {
@@ -222,7 +222,7 @@ declare module 'stripe' {
         }
 
         namespace Card {
-          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only'
+          type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
       }
 
@@ -232,7 +232,7 @@ declare module 'stripe' {
         | 'requires_action'
         | 'requires_confirmation'
         | 'requires_payment_method'
-        | 'succeeded'
+        | 'succeeded';
     }
 
     interface SetupIntentCreateParams {
@@ -350,7 +350,7 @@ declare module 'stripe' {
             user_agent: string;
           }
 
-          type Type = 'offline' | 'online'
+          type Type = 'offline' | 'online';
         }
       }
 
@@ -377,7 +377,7 @@ declare module 'stripe' {
         }
 
         namespace Card {
-          type RequestThreeDSecure = 'any' | 'automatic'
+          type RequestThreeDSecure = 'any' | 'automatic';
         }
       }
 
@@ -393,7 +393,7 @@ declare module 'stripe' {
         currency: string;
       }
 
-      type Usage = 'off_session' | 'on_session'
+      type Usage = 'off_session' | 'on_session';
     }
 
     interface SetupIntentRetrieveParams {
@@ -519,7 +519,7 @@ declare module 'stripe' {
       type CancellationReason =
         | 'abandoned'
         | 'duplicate'
-        | 'requested_by_customer'
+        | 'requested_by_customer';
     }
 
     interface SetupIntentConfirmParams {
@@ -599,7 +599,7 @@ declare module 'stripe' {
             user_agent: string;
           }
 
-          type Type = 'offline' | 'online'
+          type Type = 'offline' | 'online';
         }
       }
       interface MandateData2 {
@@ -660,7 +660,7 @@ declare module 'stripe' {
         }
 
         namespace Card {
-          type RequestThreeDSecure = 'any' | 'automatic'
+          type RequestThreeDSecure = 'any' | 'automatic';
         }
       }
     }

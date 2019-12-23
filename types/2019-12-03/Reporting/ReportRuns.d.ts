@@ -184,7 +184,7 @@ declare module 'stripe' {
             | 'topup'
             | 'topup_reversal'
             | 'transfer'
-            | 'transfer_reversal'
+            | 'transfer_reversal';
         }
       }
 
