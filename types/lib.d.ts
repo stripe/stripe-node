@@ -128,17 +128,18 @@ declare module 'stripe' {
 
     /**
      * Should be https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/node/http.d.ts#L326
+     * but we want to avoid adding a dependency on `@types/node` to avoid bundle bloat for non-TS users.
      */
     export class HttpAgent {
       maxFreeSockets: number;
       maxSockets: number;
       readonly sockets: {
-        readonly [key: string]: Record<string, any>[];
+        readonly [key: string]: any[];
       };
       readonly requests: {
-        readonly [key: string]: Record<string, any>[];
+        readonly [key: string]: any[];
       };
-      constructor(options: Record<string, any>);
+      constructor(options: any);
       destroy(): void;
     }
 
