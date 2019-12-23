@@ -163,8 +163,16 @@ declare module 'stripe' {
       town?: string;
     }
 
+    /**
+     * The resulting source of [a Connect platform debiting a connected account](https://stripe.com/docs/connect/account-debits#charging-a-connected-account).
+     */
+    type AccountDebitSource = {
+      id: string;
+      object: 'account';
+    };
+
     type CustomerSource =
-      | Account
+      | AccountDebitSource
       | AlipayAccount
       | BankAccount
       | BitcoinReceiver
