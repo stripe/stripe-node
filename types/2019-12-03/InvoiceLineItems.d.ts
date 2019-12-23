@@ -334,7 +334,7 @@ declare namespace Stripe {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: '' | SubscriptionItem.BillingThresholds;
+      billing_thresholds?: SubscriptionItem.BillingThresholds | null;
 
       /**
        * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.

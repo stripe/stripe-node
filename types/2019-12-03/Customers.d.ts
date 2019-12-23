@@ -272,7 +272,7 @@ declare namespace Stripe {
     /**
      * The customer's shipping information. Appears on invoices emailed to this customer.
      */
-    shipping?: '' | CustomerCreateParams.Shipping;
+    shipping?: CustomerCreateParams.Shipping | null;
 
     source?: string;
 
@@ -292,7 +292,7 @@ declare namespace Stripe {
       /**
        * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
        */
-      custom_fields?: '' | InvoiceSettings.CustomFields;
+      custom_fields?: InvoiceSettings.CustomFields | null;
 
       /**
        * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
@@ -440,7 +440,7 @@ declare namespace Stripe {
     /**
      * The customer's shipping information. Appears on invoices emailed to this customer.
      */
-    shipping?: '' | CustomerUpdateParams.Shipping;
+    shipping?: CustomerUpdateParams.Shipping | null;
 
     source?: string;
 
@@ -460,7 +460,7 @@ declare namespace Stripe {
       /**
        * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
        */
-      custom_fields?: '' | InvoiceSettings.CustomFields;
+      custom_fields?: InvoiceSettings.CustomFields | null;
 
       /**
        * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.

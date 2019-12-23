@@ -370,7 +370,7 @@ declare namespace Stripe {
     /**
      * The person's date of birth.
      */
-    dob?: '' | PersonCreateParams.Dob;
+    dob?: PersonCreateParams.Dob | null;
 
     /**
      * The person's email address.
@@ -605,7 +605,7 @@ declare namespace Stripe {
     /**
      * The person's date of birth.
      */
-    dob?: '' | PersonUpdateParams.Dob;
+    dob?: PersonUpdateParams.Dob | null;
 
     /**
      * The person's email address.

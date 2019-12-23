@@ -308,7 +308,7 @@ declare namespace Stripe {
     /**
      * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if `type=good`.
      */
-    package_dimensions?: '' | ProductUpdateParams.PackageDimensions;
+    package_dimensions?: ProductUpdateParams.PackageDimensions | null;
 
     /**
      * Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if `type=good`.

@@ -795,7 +795,7 @@ declare namespace Stripe {
       /**
        * The individual's date of birth.
        */
-      dob?: '' | Individual.Dob;
+      dob?: Individual.Dob | null;
 
       email?: string;
 
@@ -1385,7 +1385,7 @@ declare namespace Stripe {
       /**
        * The individual's date of birth.
        */
-      dob?: '' | Individual.Dob;
+      dob?: Individual.Dob | null;
 
       email?: string;
 

@@ -269,7 +269,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?: '' | SubscriptionCreateParams.BillingThresholds;
+    billing_thresholds?: SubscriptionCreateParams.BillingThresholds | null;
 
     /**
      * A timestamp at which the subscription should cancel. If set to a date before the current period ends this will cause a proration if `prorate=true`.
@@ -342,8 +342,8 @@ declare namespace Stripe {
      * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
      */
     pending_invoice_item_interval?:
-      | ''
-      | SubscriptionCreateParams.PendingInvoiceItemInterval;
+      | SubscriptionCreateParams.PendingInvoiceItemInterval
+      | null;
 
     /**
      * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
@@ -395,7 +395,7 @@ declare namespace Stripe {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: '' | Item.BillingThresholds;
+      billing_thresholds?: Item.BillingThresholds | null;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -477,7 +477,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?: '' | SubscriptionUpdateParams.BillingThresholds;
+    billing_thresholds?: SubscriptionUpdateParams.BillingThresholds | null;
 
     /**
      * A timestamp at which the subscription should cancel. If set to a date before the current period ends this will cause a proration if `prorate=true`.
@@ -550,8 +550,8 @@ declare namespace Stripe {
      * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
      */
     pending_invoice_item_interval?:
-      | ''
-      | SubscriptionUpdateParams.PendingInvoiceItemInterval;
+      | SubscriptionUpdateParams.PendingInvoiceItemInterval
+      | null;
 
     /**
      * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
@@ -571,7 +571,7 @@ declare namespace Stripe {
     /**
      * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
      */
-    transfer_data?: '' | SubscriptionUpdateParams.TransferData;
+    transfer_data?: SubscriptionUpdateParams.TransferData | null;
 
     /**
      * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
@@ -605,7 +605,7 @@ declare namespace Stripe {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: '' | Item.BillingThresholds;
+      billing_thresholds?: Item.BillingThresholds | null;
 
       /**
        * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.

@@ -91,7 +91,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?: '' | SubscriptionItemCreateParams.BillingThresholds;
+    billing_thresholds?: SubscriptionItemCreateParams.BillingThresholds | null;
 
     /**
      * Specifies which fields in the response should be expanded.
@@ -156,7 +156,7 @@ declare namespace Stripe {
     /**
      * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
      */
-    billing_thresholds?: '' | SubscriptionItemUpdateParams.BillingThresholds;
+    billing_thresholds?: SubscriptionItemUpdateParams.BillingThresholds | null;
 
     /**
      * Specifies which fields in the response should be expanded.

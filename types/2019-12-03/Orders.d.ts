@@ -557,7 +557,7 @@ declare namespace Stripe {
     /**
      * List of items to return.
      */
-    items?: '' | OrderReturnOrderParams.Items;
+    items?: OrderReturnOrderParams.Items | null;
   }
 
   namespace OrderReturnOrderParams {

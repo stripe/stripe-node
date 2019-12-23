@@ -694,7 +694,7 @@ declare namespace Stripe {
            * The selected installment plan to use for this payment attempt.
            * This parameter can only be provided during confirmation.
            */
-          plan?: '' | Installments.Plan;
+          plan?: Installments.Plan | null;
         }
 
         namespace Installments {
@@ -862,7 +862,7 @@ declare namespace Stripe {
     /**
      * Shipping information for this PaymentIntent.
      */
-    shipping?: '' | PaymentIntentUpdateParams.Shipping;
+    shipping?: PaymentIntentUpdateParams.Shipping | null;
 
     /**
      * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Cards and [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) objects.
@@ -1118,7 +1118,7 @@ declare namespace Stripe {
     /**
      * Shipping information for this PaymentIntent.
      */
-    shipping?: '' | PaymentIntentConfirmParams.Shipping;
+    shipping?: PaymentIntentConfirmParams.Shipping | null;
 
     /**
      * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Cards and [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) objects.
@@ -1259,7 +1259,7 @@ declare namespace Stripe {
            * The selected installment plan to use for this payment attempt.
            * This parameter can only be provided during confirmation.
            */
-          plan?: '' | Installments.Plan;
+          plan?: Installments.Plan | null;
         }
 
         namespace Installments {

@@ -159,7 +159,7 @@ declare namespace Stripe {
       /**
        * The person's date of birth.
        */
-      dob?: '' | Person.Dob;
+      dob?: Person.Dob | null;
 
       /**
        * The person's email address.

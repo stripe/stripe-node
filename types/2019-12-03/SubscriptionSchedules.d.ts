@@ -324,7 +324,7 @@ declare namespace Stripe {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: '' | DefaultSettings.BillingThresholds;
+      billing_thresholds?: DefaultSettings.BillingThresholds | null;
 
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
@@ -373,7 +373,7 @@ declare namespace Stripe {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: '' | Phase.BillingThresholds;
+      billing_thresholds?: Phase.BillingThresholds | null;
 
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
@@ -454,7 +454,7 @@ declare namespace Stripe {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
          */
-        billing_thresholds?: '' | Plan.BillingThresholds;
+        billing_thresholds?: Plan.BillingThresholds | null;
 
         /**
          * The plan ID to subscribe to.
@@ -527,7 +527,7 @@ declare namespace Stripe {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: '' | DefaultSettings.BillingThresholds;
+      billing_thresholds?: DefaultSettings.BillingThresholds | null;
 
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
@@ -576,7 +576,7 @@ declare namespace Stripe {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: '' | Phase.BillingThresholds;
+      billing_thresholds?: Phase.BillingThresholds | null;
 
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
@@ -662,7 +662,7 @@ declare namespace Stripe {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
          */
-        billing_thresholds?: '' | Plan.BillingThresholds;
+        billing_thresholds?: Plan.BillingThresholds | null;
 
         /**
          * The plan ID to subscribe to.

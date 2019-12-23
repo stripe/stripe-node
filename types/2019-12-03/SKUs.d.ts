@@ -283,7 +283,7 @@ declare namespace Stripe {
     /**
      * The dimensions of this SKU for shipping purposes.
      */
-    package_dimensions?: '' | SkuUpdateParams.PackageDimensions;
+    package_dimensions?: SkuUpdateParams.PackageDimensions | null;
 
     /**
      * The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
