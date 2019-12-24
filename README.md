@@ -31,20 +31,30 @@ The package needs to be configured with your account's secret key which is
 available in your [Stripe Dashboard][api-keys]. Require it with the key's
 value:
 
+<!-- prettier-ignore -->
 ```js
 const stripe = require('stripe')('sk_test_...');
 
 stripe.customers.create({
   email: 'customer@example.com',
-});
+})
+  .then(customer => console.log(customer.id))
+  .catch(error => console.error(error));
 ```
 
-Or using ES modules, this looks more like:
+Or using ES modules and `async`/`await`:
 
 ```js
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
-//…
+
+(async () => {
+  const customer = await stripe.customers.create({
+    email: 'customer@example.com',
+  });
+
+  console.log(customer.id);
+})();
 ```
 
 ### Usage with TypeScript
