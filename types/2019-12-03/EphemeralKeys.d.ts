@@ -52,7 +52,12 @@ declare module 'stripe' {
       issuing_card?: string;
     }
 
-    interface EphemeralKeyDeleteParams {}
+    interface EphemeralKeyDeleteParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
 
     class EphemeralKeysResource {
       /**

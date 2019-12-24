@@ -718,6 +718,11 @@ declare module 'stripe' {
 
     interface SubscriptionDeleteParams {
       /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
        * Will generate a final invoice that invoices for any un-invoiced metered usage and new/pending proration invoice items.
        */
       invoice_now?: boolean;
