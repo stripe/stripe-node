@@ -20,9 +20,9 @@ declare module 'stripe' {
       business_profile: Account.BusinessProfile | null;
 
       /**
-       * The business type. Can be `individual` or `company`.
+       * The business type.
        */
-      business_type: string | null;
+      business_type: Account.BusinessType | null;
 
       capabilities?: Account.Capabilities;
 
@@ -134,6 +134,8 @@ declare module 'stripe' {
          */
         url: string | null;
       }
+
+      type BusinessType = 'company' | 'individual';
 
       interface Capabilities {
         /**
@@ -545,9 +547,9 @@ declare module 'stripe' {
       business_profile?: AccountCreateParams.BusinessProfile;
 
       /**
-       * The business type. Can be `individual` or `company`.
+       * The business type.
        */
-      business_type?: string;
+      business_type?: AccountCreateParams.BusinessType;
 
       /**
        * Information about the company or business. This field is null unless `business_type` is set to `company`.
@@ -649,6 +651,8 @@ declare module 'stripe' {
          */
         url?: string;
       }
+
+      type BusinessType = 'company' | 'individual';
 
       interface Company {
         /**
@@ -1145,9 +1149,9 @@ declare module 'stripe' {
       business_profile?: AccountUpdateParams.BusinessProfile;
 
       /**
-       * The business type. Can be `individual` or `company`.
+       * The business type.
        */
-      business_type?: string;
+      business_type?: AccountUpdateParams.BusinessType;
 
       /**
        * Information about the company or business. This field is null unless `business_type` is set to `company`.
@@ -1239,6 +1243,8 @@ declare module 'stripe' {
          */
         url?: string;
       }
+
+      type BusinessType = 'company' | 'individual';
 
       interface Company {
         /**
