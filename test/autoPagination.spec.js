@@ -428,7 +428,7 @@ describe('auto pagination', function() {
           }
         })
       ).to.eventually.equal(
-        'You must pass a `limit` option to autoPagingToArray, eg; `autoPagingToArray({limit: 1000});`.'
+        'You must pass a `limit` option to autoPagingToArray, e.g., `autoPagingToArray({limit: 1000});`.'
       ));
 
     it('caps the `limit` arg to a reasonable ceiling', () =>
