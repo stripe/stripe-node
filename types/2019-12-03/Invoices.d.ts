@@ -689,40 +689,25 @@ declare module 'stripe' {
       }
     }
 
-    interface InvoiceListParams {
+    interface InvoiceListParams extends PaginationParams {
       /**
        * The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
        */
       collection_method?: InvoiceListParams.CollectionMethod;
 
-      created?: number | InvoiceListParams.Created;
+      created?: RangeQueryParam | number;
 
       /**
        * Only return invoices for the customer specified by this customer ID.
        */
       customer?: string;
 
-      due_date?: number | InvoiceListParams.DueDate;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
+      due_date?: RangeQueryParam | number;
 
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
 
       /**
        * The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
@@ -737,50 +722,6 @@ declare module 'stripe' {
 
     namespace InvoiceListParams {
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
-
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
-      interface DueDate {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
 
       type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
     }

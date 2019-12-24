@@ -91,8 +91,8 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface EventListParams {
-      created?: number | EventListParams.Created;
+    interface EventListParams extends PaginationParams {
+      created?: RangeQueryParam | number;
 
       /**
        * Filter events by whether all webhooks were successfully delivered. If false, events which are still pending or have failed all delivery attempts to a webhook endpoint will be returned.
@@ -100,24 +100,9 @@ declare module 'stripe' {
       delivery_success?: boolean;
 
       /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
 
       /**
        * A string containing a specific event name, or group of events using * as a wildcard. The list will be filtered to include only events with a matching event property.
@@ -128,30 +113,6 @@ declare module 'stripe' {
        * An array of up to 20 strings containing specific event names. The list will be filtered to include only events with a matching event property. You may pass either `type` or `types`, but not both.
        */
       types?: Array<string>;
-    }
-
-    namespace EventListParams {
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
     }
 
     class EventsResource {

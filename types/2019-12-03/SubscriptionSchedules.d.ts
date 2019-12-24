@@ -692,21 +692,21 @@ declare module 'stripe' {
       }
     }
 
-    interface SubscriptionScheduleListParams {
+    interface SubscriptionScheduleListParams extends PaginationParams {
       /**
        * Only return subscription schedules that were created canceled the given date interval.
        */
-      canceled_at?: number | SubscriptionScheduleListParams.CanceledAt;
+      canceled_at?: RangeQueryParam | number;
 
       /**
        * Only return subscription schedules that completed during the given date interval.
        */
-      completed_at?: number | SubscriptionScheduleListParams.CompletedAt;
+      completed_at?: RangeQueryParam | number;
 
       /**
        * Only return subscription schedules that were created during the given date interval.
        */
-      created?: number | SubscriptionScheduleListParams.Created;
+      created?: RangeQueryParam | number;
 
       /**
        * Only return subscription schedules for the given customer.
@@ -714,124 +714,19 @@ declare module 'stripe' {
       customer?: string;
 
       /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
 
       /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
        * Only return subscription schedules that were released during the given date interval.
        */
-      released_at?: number | SubscriptionScheduleListParams.ReleasedAt;
+      released_at?: RangeQueryParam | number;
 
       /**
        * Only return subscription schedules that have not started yet.
        */
       scheduled?: boolean;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-    }
-
-    namespace SubscriptionScheduleListParams {
-      interface CanceledAt {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
-      interface CompletedAt {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
-      interface ReleasedAt {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
     }
 
     interface SubscriptionScheduleCancelParams {

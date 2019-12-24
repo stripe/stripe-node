@@ -153,26 +153,16 @@ declare module 'stripe' {
         operator_account?: string;
       }
 
-      interface ReaderListParams {
+      interface ReaderListParams extends PaginationParams {
         /**
          * Filters readers by device type
          */
         device_type?: string | ReaderListParams.DeviceType;
 
         /**
-         * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-         */
-        ending_before?: string;
-
-        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
-
-        /**
-         * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-         */
-        limit?: number;
 
         /**
          * A location ID to filter the response list to only readers at the specific location
@@ -183,11 +173,6 @@ declare module 'stripe' {
          * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
          */
         operator_account?: string;
-
-        /**
-         * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-         */
-        starting_after?: string;
 
         /**
          * A status filter to filter readers to only offline or online readers

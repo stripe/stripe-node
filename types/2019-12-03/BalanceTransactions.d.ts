@@ -153,27 +153,17 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface BalanceTransactionListParams {
-      available_on?: number | BalanceTransactionListParams.AvailableOn;
+    interface BalanceTransactionListParams extends PaginationParams {
+      available_on?: RangeQueryParam | number;
 
-      created?: number | BalanceTransactionListParams.Created;
+      created?: RangeQueryParam | number;
 
       currency?: string;
-
-      /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
 
       /**
        * For automatic Stripe payouts only, only returns transactions that were paid out on the specified payout ID.
@@ -186,60 +176,9 @@ declare module 'stripe' {
       source?: string;
 
       /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
-
-      /**
        * Only returns transactions of the given type. One of: `charge`, `refund`, `adjustment`, `application_fee`, `application_fee_refund`, `transfer`, `payment`, `payout`, `payout_failure`, `stripe_fee`, or `network_cost`.
        */
       type?: string;
-    }
-
-    namespace BalanceTransactionListParams {
-      interface AvailableOn {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
     }
 
     class BalanceTransactionsResource {

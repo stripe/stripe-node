@@ -668,17 +668,17 @@ declare module 'stripe' {
       }
     }
 
-    interface SubscriptionListParams {
+    interface SubscriptionListParams extends PaginationParams {
       /**
        * The collection method of the subscriptions to retrieve. Either `charge_automatically` or `send_invoice`.
        */
       collection_method?: SubscriptionListParams.CollectionMethod;
 
-      created?: number | SubscriptionListParams.Created;
+      created?: RangeQueryParam | number;
 
-      current_period_end?: number | SubscriptionListParams.CurrentPeriodEnd;
+      current_period_end?: RangeQueryParam | number;
 
-      current_period_start?: number | SubscriptionListParams.CurrentPeriodStart;
+      current_period_start?: RangeQueryParam | number;
 
       /**
        * The ID of the customer whose subscriptions will be retrieved.
@@ -686,29 +686,14 @@ declare module 'stripe' {
       customer?: string;
 
       /**
-       * A cursor for use in pagination. `ending_before` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, starting with `obj_bar`, your subsequent call can include `ending_before=obj_bar` in order to fetch the previous page of the list.
-       */
-      ending_before?: string;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
 
       /**
-       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
-       */
-      limit?: number;
-
-      /**
        * The ID of the plan whose subscriptions will be retrieved.
        */
       plan?: string;
-
-      /**
-       * A cursor for use in pagination. `starting_after` is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with `obj_foo`, your subsequent call can include `starting_after=obj_foo` in order to fetch the next page of the list.
-       */
-      starting_after?: string;
 
       /**
        * The status of the subscriptions to retrieve. One of: `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `unpaid`, `canceled`, or `all`. Passing in a value of `canceled` will return all canceled subscriptions, including those belonging to deleted customers. Passing in a value of `all` will return subscriptions of all statuses.
@@ -718,72 +703,6 @@ declare module 'stripe' {
 
     namespace SubscriptionListParams {
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
-
-      interface Created {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
-      interface CurrentPeriodEnd {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
-
-      interface CurrentPeriodStart {
-        /**
-         * Minimum value to filter by (exclusive)
-         */
-        gt?: number;
-
-        /**
-         * Minimum value to filter by (inclusive)
-         */
-        gte?: number;
-
-        /**
-         * Maximum value to filter by (exclusive)
-         */
-        lt?: number;
-
-        /**
-         * Maximum value to filter by (inclusive)
-         */
-        lte?: number;
-      }
 
       type Status =
         | 'active'
