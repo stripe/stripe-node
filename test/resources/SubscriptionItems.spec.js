@@ -100,4 +100,18 @@ describe('SubscriptionItems Resource', () => {
       });
     });
   });
+
+  describe('listUsageRecordSummaries', () => {
+    it('Sends the correct request', () => {
+      stripe.subscriptionItems.listUsageRecordSummaries('si_123', {});
+
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/subscription_items/si_123/usage_record_summaries',
+        headers: {},
+        data: {},
+        settings: {},
+      });
+    });
+  });
 });

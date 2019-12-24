@@ -310,6 +310,21 @@ declare module 'stripe' {
         params: UsageRecordCreateParams,
         options?: RequestOptions
       ): Promise<UsageRecord>;
+
+      /**
+       * For the specified subscription item, returns a list of summary objects. Each object in the list provides usage information that's been summarized from multiple usage records and over a subscription billing period (e.g., 15 usage records in the billing plan's month of September).
+       *
+       * The list is sorted in reverse-chronological order (newest first). The first list item represents the most current usage period that hasn't ended yet. Since new usage records can still be added, the returned summary information for the subscription item's ID should be seen as unstable until the subscription billing period ends.
+       */
+      listUsageRecordSummaries(
+        id: string,
+        params?: UsageRecordSummaryListParams,
+        options?: RequestOptions
+      ): ApiListPromise<UsageRecordSummary>;
+      listUsageRecordSummaries(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<UsageRecordSummary>;
     }
   }
 }

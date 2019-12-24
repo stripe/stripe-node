@@ -73,7 +73,6 @@
 ///<reference path='./Tokens.d.ts' />
 ///<reference path='./Topups.d.ts' />
 ///<reference path='./Transfers.d.ts' />
-///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
 ///<reference path='./ExternalAccounts.d.ts' />
@@ -86,6 +85,7 @@
 ///<reference path='./TaxIds.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
 ///<reference path='./UsageRecords.d.ts' />
+///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./TransferReversals.d.ts' />
 
 declare module 'stripe' {
