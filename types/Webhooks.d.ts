@@ -4,38 +4,59 @@ declare module 'stripe' {
       /**
        * Constructs and verifies the signature of an Event from the provided details.
        *
-       * @param {string} payload    Raw text body payload received from Stripe
-       * @param {string} header     Value of the `stripe-signature` header from Stripe
-       * @param {string} secret     Your Webhook Signing Secret
-       * @param {number} tolerance  Seconds of tolerance on timestamps
-       *
-       * @returns Stripe.Event
-       *
-       * @throws Error.StripeSignatureVerificationError
+       * @throws Stripe.errors.StripeSignatureVerificationError
        */
       constructEvent(
+        /**
+         * Raw text body payload received from Stripe.
+         */
         payload: string,
+
+        /**
+         * Value of the `stripe-signature` header from Stripe.
+         */
         header: string,
+
+        /**
+         * Your Webhook Signing Secret for this endpoint (eg; 'whsec_...').
+         * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
+         */
         secret: string,
+
+        /**
+         * Seconds of tolerance on timestamps.
+         */
         tolerance?: number
       ): Stripe.Event;
 
       /**
        * Generates a header to be used for webhook mocking
-       *
-       * @typedef {object} opts
-       * @param {string} payload - JSON stringified payload object, containing the 'id' and 'object' parameters
-       * @param {number} timestamp - Timestamp of the header. Defaults to Date.now()
-       * @param {string} secret - Stripe webhook secret 'whsec_...'
-       * @param {string} scheme - Version of API to hit. Defaults to 'v1'.
-       * @param {string} signature - Computed webhook signature
        */
       generateTestHeaderString(opts: {
-        timestamp: number;
+        /**
+         * JSON stringified payload object, containing the 'id' and 'object' parameters.
+         */
         payload: string;
+
+        /**
+         * Timestamp of the header. Defaults to Date.now().
+         */
+        timestamp?: number;
+
+        /**
+         * Stripe webhook secret, eg; 'whsec_...'.
+         */
         secret: string;
+
+        /**
+         * Version of API to hit. Defaults to 'v1'.
+         */
         scheme?: string;
-        signature: string;
+
+        /**
+         * Computed webhook signature.
+         */
+        signature?: string;
       }): string;
 
       signature: Signature;
