@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 declare module 'stripe' {
   namespace Stripe {
     export class Webhooks {
@@ -10,7 +12,7 @@ declare module 'stripe' {
         /**
          * Raw text body payload received from Stripe.
          */
-        payload: string,
+        payload: string | Buffer,
 
         /**
          * Value of the `stripe-signature` header from Stripe.

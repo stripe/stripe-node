@@ -1,8 +1,12 @@
 ///<reference lib="esnext.asynciterable" />
+/// <reference types="node" />
+
+import {Agent} from 'http';
 
 declare module 'stripe' {
   namespace Stripe {
     export type LatestApiVersion = '2019-12-03';
+    export type HttpAgent = Agent;
 
     export interface StripeConfig {
       /**
@@ -155,25 +159,6 @@ declare module 'stripe' {
       request_start_time: number;
       request_end_time: number;
     }
-
-    /**
-     * Should be https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/node/http.d.ts#L326
-     * but we want to avoid adding a dependency on `@types/node` to avoid bundle bloat for non-TS users.
-     */
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    export class HttpAgent {
-      maxFreeSockets: number;
-      maxSockets: number;
-      readonly sockets: {
-        readonly [key: string]: any[];
-      };
-      readonly requests: {
-        readonly [key: string]: any[];
-      };
-      constructor(options: any);
-      destroy(): void;
-    }
-    /* eslint-enable @typescript-eslint/no-explicit-any */
 
     /**
      * Identify your plugin.
