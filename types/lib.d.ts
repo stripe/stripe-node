@@ -18,11 +18,35 @@ declare module 'stripe' {
        * @docs https://stripe.com/docs/api/versioning
        */
       apiVersion: LatestApiVersion;
+
+      /**
+       * Enables automatic network retries with exponential backoff, up to the specified number of retries (default 0).
+       * Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
+       * @docs https://github.com/stripe/stripe-node#network-retries
+       */
       maxNetworkRetries?: number;
+
+      /**
+       * Use a custom http(s) agent.
+       * Useful for making requests through a proxy.
+       */
       httpAgent?: HttpAgent;
+
+      /**
+       * Request timeout in milliseconds.
+       * The default is Node's default of 120 seconds.
+       */
       timeout?: number;
+
       host?: string;
+
       port?: string | number; // TODO: double-check
+
+      /**
+       * Pass `telemetry: false` to disable headers that provide Stripe
+       * with data about usage of the API.
+       * Currently, the only telemetry we send is latency metrics.
+       */
       telemetry?: boolean;
     }
 
