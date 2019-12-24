@@ -100,26 +100,6 @@ const customerEmail: string = (charge.customer as Stripe.Customer).email;
 const btId: string = charge.balance_transaction as string;
 ```
 
-#### Using non-public features with TypeScript
-
-Some users may have access to API functionality not generally available to the public,
-such as beta features.
-
-You may augment Stripe's types in these cases like so:
-
-```ts
-declare module 'stripe' {
-  namespace Stripe {
-    interface Charge {
-      a_preview_property: string;
-    }
-    interface ChargeCreateParams {
-      a_preview_field: string;
-    }
-  }
-}
-```
-
 ### Using Promises
 
 Every method returns a chainable promise which can be used instead of a regular
