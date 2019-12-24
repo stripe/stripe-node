@@ -9,14 +9,11 @@
 The Stripe Node library provides convenient access to the Stripe API from
 applications written in server-side JavaScript.
 
-Please keep in mind that this package is for use with server-side Node that
-uses Stripe secret keys. To maintain PCI compliance, tokenization of credit
-card information should always be done with [Stripe.js][stripe-js] on the
-client side. This package should not be used for that purpose.
+For collecting customer and payment information in the browser, use [Stripe.js][stripe-js].
 
 ## Documentation
 
-See the [`stripe-node` API docs](https://stripe.com/docs/api/node#intro) for Node.js.
+See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node.js.
 
 ## Installation
 
@@ -24,6 +21,8 @@ Install the package with:
 
 ```sh
 npm install stripe --save
+# or
+yarn add stripe
 ```
 
 ## Usage
@@ -35,7 +34,7 @@ value:
 ```js
 const stripe = require('stripe')('sk_test_...');
 
-const customer = await stripe.customers.create({
+stripe.customers.create({
   email: 'customer@example.com',
 });
 ```
@@ -50,11 +49,12 @@ const stripe = new Stripe('sk_test_...');
 
 ### Usage with TypeScript
 
-As of 8.0.0, Stripe maintains TypeScript types for the latest [API version][api-versions].
+As of 8.0.0, Stripe maintains types for the latest [API version][api-versions].
+
+Import Stripe as a default import (not `* as Stripe`, unlike the DefinitelyTyped version)
+and instantiate it as `new Stripe()` with the latest API version.
 
 ```ts
-// Import Stripe as a default import (not `* as Stripe`, unlike the DefinitelyTyped version)
-// and instantiate it as `new Stripe()` with the latest API version:
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...', {
   apiVersion: '2019-12-03',
@@ -65,7 +65,10 @@ const createCustomer = async () => {
   const params: Stripe.CustomerCreateParams = {
     description: 'test customer',
   };
+
   const customer: Stripe.Customer = await stripe.customers.create(params);
+
+  console.log(customer.id);
 };
 createCustomer();
 ```
@@ -75,7 +78,8 @@ createCustomer();
 Types can change between API versions (eg; Stripe may have changed a field from a string to a hash),
 so our types only reflect the latest API version.
 
-We therefore encourage [upgrading your API version][api-version-upgrading] if you would like to take advantage of Stripe's TypeScript definitions.
+We therefore encourage [upgrading your API version][api-version-upgrading]
+if you would like to take advantage of Stripe's TypeScript definitions.
 
 If you are on an older API version (eg; `2019-10-17`) and not able to upgrade,
 you may pass another version or `apiVersion: null` to use your account's default API version,
@@ -94,6 +98,26 @@ const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
 });
 const customerEmail: string = (charge.customer as Stripe.Customer).email;
 const btId: string = charge.balance_transaction as string;
+```
+
+#### Using non-public features with TypeScript
+
+Some users may have access to API functionality not generally available to the public,
+such as beta features.
+
+You may augment Stripe's types in these cases like so:
+
+```ts
+declare module 'stripe' {
+  namespace Stripe {
+    interface Charge {
+      a_preview_property: string;
+    }
+    interface ChargeCreateParams {
+      a_preview_field: string;
+    }
+  }
+}
 ```
 
 ### Using Promises
@@ -157,25 +181,19 @@ const stripe = Stripe('sk_test_...', {
 | `port`              | 443                           | Port that requests are made to.                                                       |
 | `telemetry`         | `true`                        | Allow Stripe to send latency [telemetry](#request-latency-telemetry)                  |
 
-Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis. `timeout` can be updated at any time with [`stripe.setTimeout`](#configuring-timeout).
+Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
 
 ### Configuring Timeout
 
-Request timeout is configurable (the default is Node's default of 120 seconds):
-
-```js
-stripe.setTimeout(20000); // in ms (this is 20 seconds)
-```
-
-Timeout can also be set globally via the config object:
+Timeout can be set globally via the config object:
 
 ```js
 const stripe = Stripe('sk_test_...', {
-  timeout: 2000,
+  timeout: 20 * 1000, // 20 seconds
 });
 ```
 
-And on a per-request basis:
+And overridden on a per-request basis:
 
 ```js
 stripe.customers.create(
@@ -183,12 +201,10 @@ stripe.customers.create(
     email: 'customer@example.com',
   },
   {
-    timeout: 1000,
+    timeout: 1000, // 1 second
   }
 );
 ```
-
-If `timeout` is set globally via the config object, the value set in a per-request basis will be favored.
 
 ### Configuring For Connect
 
@@ -196,25 +212,20 @@ A per-request `Stripe-Account` header for use with [Stripe Connect][connect]
 can be added to any method:
 
 ```js
-// Retrieve the balance for a connected account:
-stripe.balance
-  .retrieve({
+// List the balance transactions for a connected account:
+stripe.balanceTransactions.list(
+  {
+    limit: 10,
+  },
+  {
     stripeAccount: 'acct_foo',
-  })
-  .then((balance) => {
-    // The balance object for the connected account
-  })
-  .catch((err) => {
-    // Error
-  });
+  }
+);
 ```
 
 ### Configuring a Proxy
 
-An [https-proxy-agent][https-proxy-agent] can be configured with
-`setHttpAgent`.
-
-To use stripe behind a proxy you can pass to sdk on initialization:
+To use stripe behind a proxy you can pass an [https-proxy-agent][https-proxy-agent] on initialization:
 
 ```js
 if (process.env.http_proxy) {
@@ -365,7 +376,6 @@ This information is passed along when the library makes calls to the Stripe API.
 
 ### Auto-pagination
 
-As of stripe-node 6.11.0, you may auto-paginate list methods.
 We provide a few different APIs for this to aid with a variety of node versions and styles.
 
 #### Async iterators (`for-await-of`)
@@ -416,32 +426,6 @@ stripe.customers
   .catch(handleError);
 ```
 
-If you prefer callbacks to promises, you may also use a `next` callback and a second `onDone` callback:
-
-```js
-stripe.customers.list().autoPagingEach(
-  function onItem(customer, next) {
-    doSomething(customer, function(err, result) {
-      if (shouldStop(result)) {
-        next(false); // Passing `false` breaks out of the loop.
-      } else {
-        next();
-      }
-    });
-  },
-  function onDone(err) {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log('Done iterating.');
-    }
-  }
-);
-```
-
-If your `onItem` function does not accept a `next` callback parameter _or_ return a Promise,
-the return value is used to decide whether to continue (`false` breaks, anything else continues).
-
 #### `autoPagingToArray`
 
 This is a convenience for cases where you expect the number of items
@@ -464,7 +448,9 @@ numbers help Stripe improve the overall latency of its API for all users.
 You can disable this behavior if you prefer:
 
 ```js
-stripe.setTelemetryEnabled(false);
+const stripe = new Stripe('sk_test_...', {
+  telemetry: false,
+});
 ```
 
 ## More Information
