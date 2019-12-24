@@ -48,9 +48,6 @@ const stripe = Stripe('sk_test_...');
 //…
 ```
 
-On older versions of Node, you can use [promises](#using-promises)
-or [callbacks](#using-callbacks) instead of `async`/`await`.
-
 ## Initialize with config object
 
 The package can be initialized with several options:
@@ -133,28 +130,6 @@ stripe.customers
   .catch((err) => {
     // Deal with an error
   });
-```
-
-### Using callbacks
-
-On versions of Node.js prior to v7.9:
-
-```js
-var stripe = require('stripe')('sk_test_...');
-
-stripe.customers.create(
-  {
-    email: 'customer@example.com',
-  },
-  function(err, customer) {
-    if (err) {
-      // Deal with an error (will be `null` if no error occurred).
-    }
-
-    // Do something with created customer object
-    console.log(customer.id);
-  }
-);
 ```
 
 ### Configuring Timeout
