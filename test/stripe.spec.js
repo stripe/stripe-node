@@ -119,6 +119,32 @@ describe('Stripe Module', function() {
           });
         })
       ).to.eventually.have.property('lang', 'node'));
+
+    it('Should include whether typescript: true was passed, respecting reinstantiations', () => {
+      return new Promise((resolve) => resolve())
+        .then(() => {
+          const stripe = new Stripe('sk_test_123', {
+            typescript: true,
+          });
+          return expect(
+            new Promise((resolve, reject) => {
+              stripe.getClientUserAgent((c) => {
+                resolve(JSON.parse(c));
+              });
+            })
+          ).to.eventually.have.property('typescript', 'true');
+        })
+        .then(() => {
+          const stripe = new Stripe('sk_test_123', {});
+          return expect(
+            new Promise((resolve, reject) => {
+              stripe.getClientUserAgent((c) => {
+                resolve(JSON.parse(c));
+              });
+            })
+          ).to.eventually.have.property('typescript', 'false');
+        });
+    });
   });
 
   describe('GetClientUserAgentSeeded', () => {
