@@ -50,7 +50,7 @@ declare module 'stripe' {
 
       host?: string;
 
-      port?: string | number; // TODO: double-check
+      port?: string | number;
 
       /**
        * Pass `telemetry: false` to disable headers that provide Stripe
