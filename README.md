@@ -61,10 +61,13 @@ const stripe = new Stripe('sk_test_...', {
   typescript: true,
 });
 
-const params: Stripe.CustomerCreateParams = {
-  description: 'test customer',
+const createCustomer = async () => {
+  const params: Stripe.CustomerCreateParams = {
+    description: 'test customer',
+  };
+  const customer: Stripe.Customer = await stripe.customers.create(params);
 };
-const customer: Stripe.Customer = await stripe.customers.create(params);
+createCustomer();
 ```
 
 #### Using old API versions with TypeScript
