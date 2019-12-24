@@ -85,13 +85,13 @@ createCustomer();
 
 #### Using old API versions with TypeScript
 
-Types can change between API versions (eg; Stripe may have changed a field from a string to a hash),
+Types can change between API versions (e.g., Stripe may have changed a field from a string to a hash),
 so our types only reflect the latest API version.
 
 We therefore encourage [upgrading your API version][api-version-upgrading]
 if you would like to take advantage of Stripe's TypeScript definitions.
 
-If you are on an older API version (eg; `2019-10-17`) and not able to upgrade,
+If you are on an older API version (e.g., `2019-10-17`) and not able to upgrade,
 you may pass another version or `apiVersion: null` to use your account's default API version,
 and use a comment like `// @ts-ignore stripe-version-2019-10-17` to silence type errors here
 and anywhere the types differ between your API version and the latest.
@@ -100,7 +100,7 @@ When you upgrade, you should remove these comments.
 #### Using `expand` with TypeScript
 
 [Expandable][expanding_objects] fields are typed as `string | Foo`,
-so you must cast them appropriately, eg;
+so you must cast them appropriately, e.g.,
 
 ```ts
 const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {

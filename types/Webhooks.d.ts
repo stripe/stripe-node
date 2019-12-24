@@ -20,7 +20,7 @@ declare module 'stripe' {
         header: string,
 
         /**
-         * Your Webhook Signing Secret for this endpoint (eg; 'whsec_...').
+         * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
          * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
          */
         secret: string,
@@ -46,7 +46,7 @@ declare module 'stripe' {
         timestamp?: number;
 
         /**
-         * Stripe webhook secret, eg; 'whsec_...'.
+         * Stripe webhook secret, e.g., 'whsec_...'.
          */
         secret: string;
 
