@@ -20,6 +20,12 @@ declare module 'stripe' {
       apiVersion: LatestApiVersion;
 
       /**
+       * Indicate that you are using TypeScript.
+       * This currently has no runtime effect other than adding "TypeScript" to your user-agent.
+       */
+      typescript: true;
+
+      /**
        * Enables automatic network retries with exponential backoff, up to the specified number of retries (default 0).
        * Idempotency keys](https://stripe.com/docs/api/idempotent_requests) are added where appropriate to prevent duplication.
        * @docs https://github.com/stripe/stripe-node#network-retries

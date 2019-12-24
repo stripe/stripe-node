@@ -58,6 +58,7 @@ As of 8.0.0, Stripe maintains TypeScript types for the latest [API version][api-
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...', {
   apiVersion: '2019-12-03',
+  typescript: true,
 });
 
 const params: Stripe.CustomerCreateParams = {
