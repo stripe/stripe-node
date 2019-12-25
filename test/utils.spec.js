@@ -310,23 +310,41 @@ describe('utils', () => {
     });
 
     it('parses snake case for backwards compatibility', () => {
-      const args = [
-        {
-          api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-          idempotency_key: 'key',
-          stripe_account: 'acct_123',
-          stripe_version: '2019-08-08',
-        },
-      ];
+      return new Promise((resolve, reject) => {
+        const args = [
+          {
+            api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+            idempotency_key: 'key',
+            stripe_account: 'acct_123',
+            stripe_version: '2019-08-08',
+          },
+        ];
+        const desiredWarnings = [
+          "Stripe: 'api_key' is deprecated; use 'apiKey' instead.",
+          "Stripe: 'idempotency_key' is deprecated; use 'idempotencyKey' instead.",
+          "Stripe: 'stripe_account' is deprecated; use 'stripeAccount' instead.",
+          "Stripe: 'stripe_version' is deprecated; use 'stripeVersion' instead.",
+        ];
 
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-        headers: {
-          'Idempotency-Key': 'key',
-          'Stripe-Version': '2019-08-08',
-          'Stripe-Account': 'acct_123',
-        },
-        settings: {},
+        const warnings = [];
+        const onWarn = (message) => {
+          warnings.push(message);
+          if (warnings.length === desiredWarnings.length) {
+            expect(warnings).to.deep.equal(desiredWarnings);
+            resolve();
+          }
+        };
+        handleWarnings(() => {
+          expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+            auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+            headers: {
+              'Idempotency-Key': 'key',
+              'Stripe-Version': '2019-08-08',
+              'Stripe-Account': 'acct_123',
+            },
+            settings: {},
+          });
+        }, onWarn);
       });
     });
 
