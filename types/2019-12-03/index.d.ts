@@ -69,7 +69,6 @@
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
 ///<reference path='./Terminal/Readers.d.ts' />
-///<reference path='./ThreeDSecure.d.ts' />
 ///<reference path='./Tokens.d.ts' />
 ///<reference path='./Topups.d.ts' />
 ///<reference path='./Transfers.d.ts' />
@@ -139,7 +138,6 @@ declare module 'stripe' {
     subscriptionItems: Stripe.SubscriptionItemsResource;
     subscriptionSchedules: Stripe.SubscriptionSchedulesResource;
     taxRates: Stripe.TaxRatesResource;
-    threeDSecure: Stripe.ThreeDSecureResource;
     tokens: Stripe.TokensResource;
     topups: Stripe.TopupsResource;
     transfers: Stripe.TransfersResource;
