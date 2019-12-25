@@ -52,6 +52,8 @@ declare module 'stripe' {
 
       port?: string | number;
 
+      protocol?: 'https' | 'http';
+
       /**
        * Pass `telemetry: false` to disable headers that provide Stripe
        * with data about usage of the API.
