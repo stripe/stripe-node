@@ -108,7 +108,6 @@ declare module 'stripe' {
     applicationFees: Stripe.ApplicationFeesResource;
     balance: Stripe.BalanceResource;
     balanceTransactions: Stripe.BalanceTransactionsResource;
-    bitcoinReceivers: Stripe.BitcoinReceiversResource;
     charges: Stripe.ChargesResource;
     countrySpecs: Stripe.CountrySpecsResource;
     coupons: Stripe.CouponsResource;
