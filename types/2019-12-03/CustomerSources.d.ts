@@ -144,7 +144,12 @@ declare module 'stripe' {
       object?: string;
     }
 
-    interface CustomerSourceDeleteParams {}
+    interface CustomerSourceDeleteParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
 
     interface CustomerSourceVerifyParams {
       /**
