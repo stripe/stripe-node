@@ -60,6 +60,12 @@ declare module 'stripe' {
        * Currently, the only telemetry we send is latency metrics.
        */
       telemetry?: boolean;
+
+      /**
+       * For plugin authors to identify their code.
+       * @docs https://stripe.com/docs/building-plugins?lang=node#setappinfo
+       */
+      appInfo?: AppInfo;
     }
 
     export interface RequestOptions {
