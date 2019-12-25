@@ -131,7 +131,6 @@ declare module 'stripe' {
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;
     products: Stripe.ProductsResource;
-    recipients: Stripe.RecipientsResource;
     refunds: Stripe.RefundsResource;
     reviews: Stripe.ReviewsResource;
     setupIntents: Stripe.SetupIntentsResource;
