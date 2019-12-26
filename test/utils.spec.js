@@ -243,7 +243,7 @@ describe('utils', () => {
     });
 
     it('parses an api version', () => {
-      const args = [{foo: 'bar'}, {stripeVersion: '2003-03-30'}];
+      const args = [{foo: 'bar'}, {apiVersion: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
         headers: {'Stripe-Version': '2003-03-30'},
@@ -258,7 +258,7 @@ describe('utils', () => {
         {
           apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
           idempotencyKey: 'foo',
-          stripeVersion: '2010-01-10',
+          apiVersion: '2010-01-10',
         },
       ];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
@@ -277,7 +277,7 @@ describe('utils', () => {
         {
           apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
           idempotencyKey: 'foo',
-          stripeVersion: 'hunter2',
+          apiVersion: 'hunter2',
         },
       ];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
@@ -317,13 +317,15 @@ describe('utils', () => {
             idempotency_key: 'key',
             stripe_account: 'acct_123',
             stripe_version: '2019-08-08',
+            stripeVersion: '2019-08-08',
           },
         ];
         const desiredWarnings = [
           "Stripe: 'api_key' is deprecated; use 'apiKey' instead.",
           "Stripe: 'idempotency_key' is deprecated; use 'idempotencyKey' instead.",
           "Stripe: 'stripe_account' is deprecated; use 'stripeAccount' instead.",
-          "Stripe: 'stripe_version' is deprecated; use 'stripeVersion' instead.",
+          "Stripe: 'stripe_version' is deprecated; use 'apiVersion' instead.",
+          "Stripe: 'stripeVersion' is deprecated; use 'apiVersion' instead.",
         ];
 
         const warnings = [];
@@ -354,7 +356,7 @@ describe('utils', () => {
         {
           apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
           idempotencyKey: 'foo',
-          stripeVersion: '2010-01-10',
+          apiVersion: '2010-01-10',
           fishsticks: true,
           custard: true,
         },

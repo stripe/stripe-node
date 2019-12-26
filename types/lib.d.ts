@@ -94,6 +94,8 @@ declare module 'stripe' {
       /**
        * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2019-12-03').
        */
+      apiVersion?: string;
+      /** @deprecated Please use apiVersion instead. */
       stripeVersion?: string;
       /** @deprecated Please use stripeVersion instead. */
       stripe_version?: string;

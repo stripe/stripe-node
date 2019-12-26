@@ -349,7 +349,7 @@ describe('Flows', function() {
             not_a_param: 'garbage, please 400',
           },
           {
-            stripeVersion: apiVersion,
+            apiVersion: apiVersion,
             idempotencyKey: idempotencyKey,
             stripeAccount: connectedAccountId,
           }
@@ -401,7 +401,7 @@ describe('Flows', function() {
             not_a_param: 'garbage, please 400',
           },
           {
-            stripeVersion: apiVersion,
+            apiVersion: apiVersion,
             idempotencyKey: idempotencyKey,
             stripeAccount: connectedAccountId,
           }
