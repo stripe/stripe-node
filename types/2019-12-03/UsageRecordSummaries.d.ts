@@ -50,5 +50,12 @@ declare module 'stripe' {
         start: number | null;
       }
     }
+
+    interface UsageRecordSummaryListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
   }
 }

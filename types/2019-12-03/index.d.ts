@@ -69,11 +69,9 @@
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
 ///<reference path='./Terminal/Readers.d.ts' />
-///<reference path='./ThreeDSecure.d.ts' />
 ///<reference path='./Tokens.d.ts' />
 ///<reference path='./Topups.d.ts' />
 ///<reference path='./Transfers.d.ts' />
-///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
 ///<reference path='./ExternalAccounts.d.ts' />
@@ -86,6 +84,7 @@
 ///<reference path='./TaxIds.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
 ///<reference path='./UsageRecords.d.ts' />
+///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./TransferReversals.d.ts' />
 
 declare module 'stripe' {
@@ -108,7 +107,6 @@ declare module 'stripe' {
     applicationFees: Stripe.ApplicationFeesResource;
     balance: Stripe.BalanceResource;
     balanceTransactions: Stripe.BalanceTransactionsResource;
-    bitcoinReceivers: Stripe.BitcoinReceiversResource;
     charges: Stripe.ChargesResource;
     countrySpecs: Stripe.CountrySpecsResource;
     coupons: Stripe.CouponsResource;
@@ -131,7 +129,6 @@ declare module 'stripe' {
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;
     products: Stripe.ProductsResource;
-    recipients: Stripe.RecipientsResource;
     refunds: Stripe.RefundsResource;
     reviews: Stripe.ReviewsResource;
     setupIntents: Stripe.SetupIntentsResource;
@@ -141,7 +138,6 @@ declare module 'stripe' {
     subscriptionItems: Stripe.SubscriptionItemsResource;
     subscriptionSchedules: Stripe.SubscriptionSchedulesResource;
     taxRates: Stripe.TaxRatesResource;
-    threeDSecure: Stripe.ThreeDSecureResource;
     tokens: Stripe.TokensResource;
     topups: Stripe.TopupsResource;
     transfers: Stripe.TransfersResource;
