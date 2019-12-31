@@ -26,6 +26,10 @@ Install the package with:
 npm install stripe --save
 ```
 
+```sh
+yarn add stripe
+```
+
 ## Usage
 
 The package needs to be configured with your account's secret key which is
@@ -90,6 +94,10 @@ To install:
 
 ```sh
 npm install --dev @types/stripe
+```
+
+```sh
+yarn add @types/stripe
 ```
 
 To use:
