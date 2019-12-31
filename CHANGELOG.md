@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 7.15.0 - 2019-12-30
+* [#745](https://github.com/stripe/stripe-node/pull/745) Bump handlebars from 4.1.2 to 4.5.3
+* [#737](https://github.com/stripe/stripe-node/pull/737) Fix flows test
+
 ## 7.14.0 - 2019-11-26
 * [#732](https://github.com/stripe/stripe-node/pull/732) Add support for CreditNote preview
 
