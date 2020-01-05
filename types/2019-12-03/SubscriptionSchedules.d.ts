@@ -231,7 +231,7 @@ declare module 'stripe' {
           /**
            * ID of the plan to which the customer should be subscribed.
            */
-          plan: string | Plan | DeletedPlan;
+          plan: string | Stripe.Plan | DeletedPlan;
 
           /**
            * Quantity of the plan to which the customer should be subscribed.
