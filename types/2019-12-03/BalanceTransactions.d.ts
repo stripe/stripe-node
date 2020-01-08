@@ -66,21 +66,21 @@ declare module 'stripe' {
        */
       source:
         | string
-        | ApplicationFee
-        | Charge
-        | ConnectCollectionTransfer
-        | Dispute
-        | FeeRefund
-        | Issuing.Authorization
-        | Issuing.Transaction
-        | Payout
-        | PlatformTaxFee
-        | Refund
-        | ReserveTransaction
-        | TaxDeductedAtSource
-        | Topup
-        | Transfer
-        | TransferReversal
+        | Stripe.ApplicationFee
+        | Stripe.Charge
+        | Stripe.ConnectCollectionTransfer
+        | Stripe.Dispute
+        | Stripe.FeeRefund
+        | Stripe.Issuing.Authorization
+        | Stripe.Issuing.Transaction
+        | Stripe.Payout
+        | Stripe.PlatformTaxFee
+        | Stripe.Refund
+        | Stripe.ReserveTransaction
+        | Stripe.TaxDeductedAtSource
+        | Stripe.Topup
+        | Stripe.Transfer
+        | Stripe.TransferReversal
         | null;
 
       /**
@@ -196,11 +196,11 @@ declare module 'stripe' {
         id: string,
         params?: BalanceTransactionRetrieveParams,
         options?: RequestOptions
-      ): Promise<BalanceTransaction>;
+      ): Promise<Stripe.BalanceTransaction>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<BalanceTransaction>;
+      ): Promise<Stripe.BalanceTransaction>;
 
       /**
        * Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.
@@ -210,8 +210,8 @@ declare module 'stripe' {
       list(
         params?: BalanceTransactionListParams,
         options?: RequestOptions
-      ): ApiListPromise<BalanceTransaction>;
-      list(options?: RequestOptions): ApiListPromise<BalanceTransaction>;
+      ): ApiListPromise<Stripe.BalanceTransaction>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.BalanceTransaction>;
     }
   }
 }

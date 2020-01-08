@@ -31,7 +31,7 @@ declare module 'stripe' {
        */
       metadata: Metadata;
 
-      plan: Plan;
+      plan: Stripe.Plan;
 
       /**
        * The [quantity](https://stripe.com/docs/subscriptions/quantities) of the plan to which the customer should be subscribed.
@@ -46,7 +46,7 @@ declare module 'stripe' {
       /**
        * The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
        */
-      tax_rates: Array<TaxRate> | null;
+      tax_rates: Array<Stripe.TaxRate> | null;
     }
 
     namespace SubscriptionItem {
@@ -254,7 +254,7 @@ declare module 'stripe' {
       create(
         params: SubscriptionItemCreateParams,
         options?: RequestOptions
-      ): Promise<SubscriptionItem>;
+      ): Promise<Stripe.SubscriptionItem>;
 
       /**
        * Retrieves the invoice item with the given ID.
@@ -263,8 +263,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionItemRetrieveParams,
         options?: RequestOptions
-      ): Promise<SubscriptionItem>;
-      retrieve(id: string, options?: RequestOptions): Promise<SubscriptionItem>;
+      ): Promise<Stripe.SubscriptionItem>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.SubscriptionItem>;
 
       /**
        * Updates the plan or quantity of an item on a current subscription.
@@ -273,7 +276,7 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionItemUpdateParams,
         options?: RequestOptions
-      ): Promise<SubscriptionItem>;
+      ): Promise<Stripe.SubscriptionItem>;
 
       /**
        * Returns a list of your subscription items for a given subscription.
@@ -281,7 +284,7 @@ declare module 'stripe' {
       list(
         params: SubscriptionItemListParams,
         options?: RequestOptions
-      ): ApiListPromise<SubscriptionItem>;
+      ): ApiListPromise<Stripe.SubscriptionItem>;
 
       /**
        * Deletes an item from the subscription. Removing a subscription item from a subscription will not cancel the subscription.
@@ -290,11 +293,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionItemDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedSubscriptionItem>;
+      ): Promise<Stripe.DeletedSubscriptionItem>;
       del(
         id: string,
         options?: RequestOptions
-      ): Promise<DeletedSubscriptionItem>;
+      ): Promise<Stripe.DeletedSubscriptionItem>;
 
       /**
        * Creates a usage record for a specified subscription item and date, and fills it with a quantity.
@@ -309,7 +312,7 @@ declare module 'stripe' {
         id: string,
         params: UsageRecordCreateParams,
         options?: RequestOptions
-      ): Promise<UsageRecord>;
+      ): Promise<Stripe.UsageRecord>;
 
       /**
        * For the specified subscription item, returns a list of summary objects. Each object in the list provides usage information that's been summarized from multiple usage records and over a subscription billing period (e.g., 15 usage records in the billing plan's month of September).
@@ -320,11 +323,11 @@ declare module 'stripe' {
         id: string,
         params?: UsageRecordSummaryListParams,
         options?: RequestOptions
-      ): ApiListPromise<UsageRecordSummary>;
+      ): ApiListPromise<Stripe.UsageRecordSummary>;
       listUsageRecordSummaries(
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<UsageRecordSummary>;
+      ): ApiListPromise<Stripe.UsageRecordSummary>;
     }
   }
 }

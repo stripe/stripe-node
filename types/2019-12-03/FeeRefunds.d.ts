@@ -22,7 +22,7 @@ declare module 'stripe' {
       /**
        * Balance transaction that describes the impact on your account balance.
        */
-      balance_transaction: string | BalanceTransaction | null;
+      balance_transaction: string | Stripe.BalanceTransaction | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -37,7 +37,7 @@ declare module 'stripe' {
       /**
        * ID of the application fee that was refunded.
        */
-      fee: string | ApplicationFee;
+      fee: string | Stripe.ApplicationFee;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.

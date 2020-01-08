@@ -17,7 +17,7 @@ declare module 'stripe' {
       /**
        * The account this card belongs to. This attribute will not be in the card object if the card belongs to a customer or recipient instead.
        */
-      account?: string | Account | null;
+      account?: string | Stripe.Account | null;
 
       /**
        * City/District/Suburb/Town/Village.
@@ -79,7 +79,7 @@ declare module 'stripe' {
       /**
        * The customer that this card belongs to. This attribute will not be in the card object if the card belongs to an account or recipient instead.
        */
-      customer?: string | Customer | DeletedCustomer | null;
+      customer?: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
@@ -151,7 +151,7 @@ declare module 'stripe' {
       /**
        * The recipient that this card belongs to. This attribute will not be in the card object if the card belongs to a customer or account instead.
        */
-      recipient?: string | Recipient | null;
+      recipient?: string | Stripe.Recipient | null;
 
       /**
        * If the card number is tokenized, this is the method that was used. Can be `apple_pay` or `google_pay`.

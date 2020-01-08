@@ -32,7 +32,7 @@ declare module 'stripe' {
       /**
        * The file object this link points to.
        */
-      file: string | File;
+      file: string | Stripe.File;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -122,7 +122,7 @@ declare module 'stripe' {
       create(
         params: FileLinkCreateParams,
         options?: RequestOptions
-      ): Promise<FileLink>;
+      ): Promise<Stripe.FileLink>;
 
       /**
        * Retrieves the file link with the given ID.
@@ -131,8 +131,8 @@ declare module 'stripe' {
         id: string,
         params?: FileLinkRetrieveParams,
         options?: RequestOptions
-      ): Promise<FileLink>;
-      retrieve(id: string, options?: RequestOptions): Promise<FileLink>;
+      ): Promise<Stripe.FileLink>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.FileLink>;
 
       /**
        * Updates an existing file link object. Expired links can no longer be updated.
@@ -141,7 +141,7 @@ declare module 'stripe' {
         id: string,
         params?: FileLinkUpdateParams,
         options?: RequestOptions
-      ): Promise<FileLink>;
+      ): Promise<Stripe.FileLink>;
 
       /**
        * Returns a list of file links.
@@ -149,8 +149,8 @@ declare module 'stripe' {
       list(
         params?: FileLinkListParams,
         options?: RequestOptions
-      ): ApiListPromise<FileLink>;
-      list(options?: RequestOptions): ApiListPromise<FileLink>;
+      ): ApiListPromise<Stripe.FileLink>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.FileLink>;
     }
   }
 }

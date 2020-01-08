@@ -67,7 +67,7 @@ declare module 'stripe' {
       /**
        * ID of the latest charge generated for this invoice, if any.
        */
-      charge: string | Charge | null;
+      charge: string | Stripe.Charge | null;
 
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions.
@@ -89,7 +89,7 @@ declare module 'stripe' {
        */
       custom_fields: Array<Invoice.CustomField> | null;
 
-      customer: string | Customer | DeletedCustomer;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
@@ -129,7 +129,7 @@ declare module 'stripe' {
       /**
        * ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
        */
-      default_payment_method: string | PaymentMethod | null;
+      default_payment_method: string | Stripe.PaymentMethod | null;
 
       /**
        * ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription's default source, if any, or to the customer's default source.
@@ -139,7 +139,7 @@ declare module 'stripe' {
       /**
        * The tax rates applied to this invoice, if any.
        */
-      default_tax_rates: Array<TaxRate> | null;
+      default_tax_rates: Array<Stripe.TaxRate> | null;
 
       deleted?: void;
 
@@ -148,7 +148,7 @@ declare module 'stripe' {
        */
       description: string | null;
 
-      discount: Discount | null;
+      discount: Stripe.Discount | null;
 
       /**
        * The date on which payment for this invoice is due. This value will be `null` for invoices where `collection_method=charge_automatically`.
@@ -178,7 +178,7 @@ declare module 'stripe' {
       /**
        * The individual line items that make up the invoice. `lines` is sorted as follows: invoice items in reverse chronological order, followed by the subscription, if any.
        */
-      lines: ApiList<InvoiceLineItem>;
+      lines: ApiList<Stripe.InvoiceLineItem>;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -208,7 +208,7 @@ declare module 'stripe' {
       /**
        * The PaymentIntent associated with this invoice. The PaymentIntent is generated when the invoice is finalized, and can then be used to pay the invoice. Note that voiding an invoice will cancel the PaymentIntent.
        */
-      payment_intent: string | PaymentIntent | null;
+      payment_intent: string | Stripe.PaymentIntent | null;
 
       /**
        * End of the usage period during which invoice items were added to this invoice.
@@ -255,7 +255,7 @@ declare module 'stripe' {
       /**
        * The subscription that this invoice was prepared for, if any.
        */
-      subscription: string | Subscription | null;
+      subscription: string | Stripe.Subscription | null;
 
       /**
        * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
@@ -447,14 +447,14 @@ declare module 'stripe' {
         /**
          * The tax rate that was applied to get this tax amount.
          */
-        tax_rate: string | TaxRate;
+        tax_rate: string | Stripe.TaxRate;
       }
 
       interface TransferData {
         /**
          * The account (if any) where funds from the payment will be transferred to upon payment success.
          */
-        destination: string | Account;
+        destination: string | Stripe.Account;
       }
     }
 
@@ -1022,7 +1022,7 @@ declare module 'stripe' {
       create(
         params: InvoiceCreateParams,
         options?: RequestOptions
-      ): Promise<Invoice>;
+      ): Promise<Stripe.Invoice>;
 
       /**
        * Retrieves the invoice with the given ID.
@@ -1031,8 +1031,8 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceRetrieveParams,
         options?: RequestOptions
-      ): Promise<Invoice>;
-      retrieve(id: string, options?: RequestOptions): Promise<Invoice>;
+      ): Promise<Stripe.Invoice>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Invoice>;
 
       /**
        * Draft invoices are fully editable. Once an invoice is [finalized](https://stripe.com/docs/billing/invoices/workflow#finalized),
@@ -1046,7 +1046,7 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceUpdateParams,
         options?: RequestOptions
-      ): Promise<Invoice>;
+      ): Promise<Stripe.Invoice>;
 
       /**
        * You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
@@ -1054,8 +1054,8 @@ declare module 'stripe' {
       list(
         params?: InvoiceListParams,
         options?: RequestOptions
-      ): ApiListPromise<Invoice>;
-      list(options?: RequestOptions): ApiListPromise<Invoice>;
+      ): ApiListPromise<Stripe.Invoice>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Invoice>;
 
       /**
        * Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api#void_invoice).
@@ -1064,8 +1064,8 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedInvoice>;
-      del(id: string, options?: RequestOptions): Promise<DeletedInvoice>;
+      ): Promise<Stripe.DeletedInvoice>;
+      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedInvoice>;
 
       /**
        * Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
@@ -1074,8 +1074,11 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceFinalizeInvoiceParams,
         options?: RequestOptions
-      ): Promise<Invoice>;
-      finalizeInvoice(id: string, options?: RequestOptions): Promise<Invoice>;
+      ): Promise<Stripe.Invoice>;
+      finalizeInvoice(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Invoice>;
 
       /**
        * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
@@ -1084,8 +1087,11 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceMarkUncollectibleParams,
         options?: RequestOptions
-      ): Promise<Invoice>;
-      markUncollectible(id: string, options?: RequestOptions): Promise<Invoice>;
+      ): Promise<Stripe.Invoice>;
+      markUncollectible(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Invoice>;
 
       /**
        * Stripe automatically creates and then attempts to collect payment on invoices for customers on subscriptions according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to attempt payment on an invoice out of the normal collection schedule or for some other reason, you can do so.
@@ -1094,8 +1100,8 @@ declare module 'stripe' {
         id: string,
         params?: InvoicePayParams,
         options?: RequestOptions
-      ): Promise<Invoice>;
-      pay(id: string, options?: RequestOptions): Promise<Invoice>;
+      ): Promise<Stripe.Invoice>;
+      pay(id: string, options?: RequestOptions): Promise<Stripe.Invoice>;
 
       /**
        * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discount that is applicable to the customer.
@@ -1107,8 +1113,8 @@ declare module 'stripe' {
       retrieveUpcoming(
         params?: InvoiceRetrieveUpcomingParams,
         options?: RequestOptions
-      ): Promise<Invoice>;
-      retrieveUpcoming(options?: RequestOptions): Promise<Invoice>;
+      ): Promise<Stripe.Invoice>;
+      retrieveUpcoming(options?: RequestOptions): Promise<Stripe.Invoice>;
 
       /**
        * Stripe will automatically send invoices to customers according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email.
@@ -1119,8 +1125,11 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceSendInvoiceParams,
         options?: RequestOptions
-      ): Promise<Invoice>;
-      sendInvoice(id: string, options?: RequestOptions): Promise<Invoice>;
+      ): Promise<Stripe.Invoice>;
+      sendInvoice(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Invoice>;
 
       /**
        * Mark a finalized invoice as void. This cannot be undone. Voiding an invoice is similar to [deletion](https://stripe.com/docs/api#delete_invoice), however it only applies to finalized invoices and maintains a papertrail where the invoice can still be found.
@@ -1129,8 +1138,11 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceVoidInvoiceParams,
         options?: RequestOptions
-      ): Promise<Invoice>;
-      voidInvoice(id: string, options?: RequestOptions): Promise<Invoice>;
+      ): Promise<Stripe.Invoice>;
+      voidInvoice(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Invoice>;
 
       /**
        * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -1139,11 +1151,11 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceLineItemListParams,
         options?: RequestOptions
-      ): ApiListPromise<InvoiceLineItem>;
+      ): ApiListPromise<Stripe.InvoiceLineItem>;
       listLineItems(
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<InvoiceLineItem>;
+      ): ApiListPromise<Stripe.InvoiceLineItem>;
 
       /**
        * When retrieving an upcoming invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -1151,10 +1163,10 @@ declare module 'stripe' {
       listUpcomingLineItems(
         params?: InvoiceLineItemListUpcomingParams,
         options?: RequestOptions
-      ): ApiListPromise<InvoiceLineItem>;
+      ): ApiListPromise<Stripe.InvoiceLineItem>;
       listUpcomingLineItems(
         options?: RequestOptions
-      ): ApiListPromise<InvoiceLineItem>;
+      ): ApiListPromise<Stripe.InvoiceLineItem>;
     }
   }
 }

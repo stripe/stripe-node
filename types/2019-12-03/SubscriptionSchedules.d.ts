@@ -37,7 +37,7 @@ declare module 'stripe' {
       /**
        * ID of the customer who owns the subscription schedule.
        */
-      customer: string | Customer | DeletedCustomer;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       default_settings: SubscriptionSchedule.DefaultSettings;
 
@@ -84,7 +84,7 @@ declare module 'stripe' {
       /**
        * ID of the subscription managed by the subscription schedule.
        */
-      subscription: string | Subscription | null;
+      subscription: string | Stripe.Subscription | null;
     }
 
     namespace SubscriptionSchedule {
@@ -108,7 +108,7 @@ declare module 'stripe' {
         /**
          * ID of the default payment method for the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
          */
-        default_payment_method: string | PaymentMethod | null;
+        default_payment_method: string | Stripe.PaymentMethod | null;
 
         /**
          * The subscription schedule's default invoice settings.
@@ -160,14 +160,14 @@ declare module 'stripe' {
         /**
          * ID of the coupon to use during this phase of the subscription schedule.
          */
-        coupon: string | Coupon | DeletedCoupon | null;
+        coupon: string | Stripe.Coupon | Stripe.DeletedCoupon | null;
 
         /**
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
          */
-        default_payment_method: string | PaymentMethod | null;
+        default_payment_method: string | Stripe.PaymentMethod | null;
 
-        default_tax_rates?: Array<TaxRate> | null;
+        default_tax_rates?: Array<Stripe.TaxRate> | null;
 
         /**
          * The end of this phase of the subscription schedule.
@@ -231,7 +231,7 @@ declare module 'stripe' {
           /**
            * ID of the plan to which the customer should be subscribed.
            */
-          plan: string | Stripe.Plan | DeletedPlan;
+          plan: string | Stripe.Plan | Stripe.DeletedPlan;
 
           /**
            * Quantity of the plan to which the customer should be subscribed.
@@ -241,7 +241,7 @@ declare module 'stripe' {
           /**
            * The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.
            */
-          tax_rates?: Array<TaxRate> | null;
+          tax_rates?: Array<Stripe.TaxRate> | null;
         }
 
         namespace Plan {
@@ -765,8 +765,8 @@ declare module 'stripe' {
       create(
         params?: SubscriptionScheduleCreateParams,
         options?: RequestOptions
-      ): Promise<SubscriptionSchedule>;
-      create(options?: RequestOptions): Promise<SubscriptionSchedule>;
+      ): Promise<Stripe.SubscriptionSchedule>;
+      create(options?: RequestOptions): Promise<Stripe.SubscriptionSchedule>;
 
       /**
        * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
@@ -775,11 +775,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionScheduleRetrieveParams,
         options?: RequestOptions
-      ): Promise<SubscriptionSchedule>;
+      ): Promise<Stripe.SubscriptionSchedule>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<SubscriptionSchedule>;
+      ): Promise<Stripe.SubscriptionSchedule>;
 
       /**
        * Updates an existing subscription schedule.
@@ -788,7 +788,7 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionScheduleUpdateParams,
         options?: RequestOptions
-      ): Promise<SubscriptionSchedule>;
+      ): Promise<Stripe.SubscriptionSchedule>;
 
       /**
        * Retrieves the list of your subscription schedules.
@@ -796,8 +796,10 @@ declare module 'stripe' {
       list(
         params?: SubscriptionScheduleListParams,
         options?: RequestOptions
-      ): ApiListPromise<SubscriptionSchedule>;
-      list(options?: RequestOptions): ApiListPromise<SubscriptionSchedule>;
+      ): ApiListPromise<Stripe.SubscriptionSchedule>;
+      list(
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.SubscriptionSchedule>;
 
       /**
        * Cancels a subscription schedule and its associated subscription immediately (if the subscription schedule has an active subscription). A subscription schedule can only be canceled if its status is not_started or active.
@@ -806,11 +808,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionScheduleCancelParams,
         options?: RequestOptions
-      ): Promise<SubscriptionSchedule>;
+      ): Promise<Stripe.SubscriptionSchedule>;
       cancel(
         id: string,
         options?: RequestOptions
-      ): Promise<SubscriptionSchedule>;
+      ): Promise<Stripe.SubscriptionSchedule>;
 
       /**
        * Releases the subscription schedule immediately, which will stop scheduling of its phases, but leave any existing subscription in place. A schedule can only be released if its status is not_started or active. If the subscription schedule is currently associated with a subscription, releasing it will remove its subscription property and set the subscription's ID to the released_subscription property.
@@ -819,11 +821,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionScheduleReleaseParams,
         options?: RequestOptions
-      ): Promise<SubscriptionSchedule>;
+      ): Promise<Stripe.SubscriptionSchedule>;
       release(
         id: string,
         options?: RequestOptions
-      ): Promise<SubscriptionSchedule>;
+      ): Promise<Stripe.SubscriptionSchedule>;
     }
   }
 }

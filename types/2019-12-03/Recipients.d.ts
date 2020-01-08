@@ -17,9 +17,9 @@ declare module 'stripe' {
       /**
        * Hash describing the current account on the recipient, if there is one.
        */
-      active_account: BankAccount | null;
+      active_account: Stripe.BankAccount | null;
 
-      cards: ApiList<Card> | null;
+      cards: ApiList<Stripe.Card> | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -29,7 +29,7 @@ declare module 'stripe' {
       /**
        * The default card to use for creating transfers to this recipient.
        */
-      default_card: string | Card | null;
+      default_card: string | Stripe.Card | null;
 
       deleted?: void;
 
@@ -53,14 +53,14 @@ declare module 'stripe' {
       /**
        * The ID of the [Custom account](https://stripe.com/docs/connect/custom-accounts) this recipient was migrated to. If set, the recipient can no longer be updated, nor can transfers be made to it: use the Custom account instead.
        */
-      migrated_to: string | Account | null;
+      migrated_to: string | Stripe.Account | null;
 
       /**
        * Full, legal name of the recipient.
        */
       name: string | null;
 
-      rolled_back_from?: string | Account;
+      rolled_back_from?: string | Stripe.Account;
 
       /**
        * Type of the recipient, one of `individual` or `corporation`.

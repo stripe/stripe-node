@@ -98,7 +98,7 @@ declare module 'stripe' {
       /**
        * A list with one entry for each time that the customer sent bitcoin to the receiver. Hidden when viewing the receiver with a publishable key.
        */
-      transactions?: ApiList<BitcoinTransaction>;
+      transactions?: ApiList<Stripe.BitcoinTransaction>;
 
       /**
        * This receiver contains uncaptured funds that can be used for a payment or refunded.

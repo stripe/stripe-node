@@ -35,14 +35,14 @@ declare module 'stripe' {
          */
         authorized_currency: string;
 
-        balance_transactions: Array<BalanceTransaction>;
+        balance_transactions: Array<Stripe.BalanceTransaction>;
 
-        card: Issuing.Card;
+        card: Stripe.Issuing.Card;
 
         /**
          * The cardholder to whom this authorization belongs.
          */
-        cardholder: string | Issuing.Cardholder | null;
+        cardholder: string | Stripe.Issuing.Cardholder | null;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -90,7 +90,7 @@ declare module 'stripe' {
          */
         status: Authorization.Status;
 
-        transactions: Array<Issuing.Transaction>;
+        transactions: Array<Stripe.Issuing.Transaction>;
 
         verification_data: Authorization.VerificationData;
 
@@ -347,11 +347,11 @@ declare module 'stripe' {
           id: string,
           params?: AuthorizationRetrieveParams,
           options?: RequestOptions
-        ): Promise<Issuing.Authorization>;
+        ): Promise<Stripe.Issuing.Authorization>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Issuing.Authorization>;
+        ): Promise<Stripe.Issuing.Authorization>;
 
         /**
          * Updates the specified Issuing Authorization object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -360,7 +360,7 @@ declare module 'stripe' {
           id: string,
           params?: AuthorizationUpdateParams,
           options?: RequestOptions
-        ): Promise<Issuing.Authorization>;
+        ): Promise<Stripe.Issuing.Authorization>;
 
         /**
          * Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -368,8 +368,10 @@ declare module 'stripe' {
         list(
           params?: AuthorizationListParams,
           options?: RequestOptions
-        ): ApiListPromise<Issuing.Authorization>;
-        list(options?: RequestOptions): ApiListPromise<Issuing.Authorization>;
+        ): ApiListPromise<Stripe.Issuing.Authorization>;
+        list(
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Issuing.Authorization>;
 
         /**
          * Approves a pending Issuing Authorization object.
@@ -378,11 +380,11 @@ declare module 'stripe' {
           id: string,
           params?: AuthorizationApproveParams,
           options?: RequestOptions
-        ): Promise<Issuing.Authorization>;
+        ): Promise<Stripe.Issuing.Authorization>;
         approve(
           id: string,
           options?: RequestOptions
-        ): Promise<Issuing.Authorization>;
+        ): Promise<Stripe.Issuing.Authorization>;
 
         /**
          * Declines a pending Issuing Authorization object.
@@ -391,11 +393,11 @@ declare module 'stripe' {
           id: string,
           params?: AuthorizationDeclineParams,
           options?: RequestOptions
-        ): Promise<Issuing.Authorization>;
+        ): Promise<Stripe.Issuing.Authorization>;
         decline(
           id: string,
           options?: RequestOptions
-        ): Promise<Issuing.Authorization>;
+        ): Promise<Stripe.Issuing.Authorization>;
       }
     }
   }

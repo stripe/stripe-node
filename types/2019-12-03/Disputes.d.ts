@@ -22,12 +22,12 @@ declare module 'stripe' {
       /**
        * List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.
        */
-      balance_transactions: Array<BalanceTransaction>;
+      balance_transactions: Array<Stripe.BalanceTransaction>;
 
       /**
        * ID of the charge that was disputed.
        */
-      charge: string | Charge;
+      charge: string | Stripe.Charge;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -66,7 +66,7 @@ declare module 'stripe' {
       /**
        * ID of the PaymentIntent that was disputed.
        */
-      payment_intent: string | PaymentIntent | null;
+      payment_intent: string | Stripe.PaymentIntent | null;
 
       /**
        * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).
@@ -94,7 +94,7 @@ declare module 'stripe' {
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Your subscription cancellation policy, as shown to the customer.
          */
-        cancellation_policy: string | File | null;
+        cancellation_policy: string | Stripe.File | null;
 
         /**
          * An explanation of how and when the customer was shown your refund policy prior to purchase.
@@ -109,7 +109,7 @@ declare module 'stripe' {
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any communication with the customer that you feel is relevant to your case. Examples include emails proving that the customer received the product or service, or demonstrating their use of or satisfaction with the product or service.
          */
-        customer_communication: string | File | null;
+        customer_communication: string | Stripe.File | null;
 
         /**
          * The email address of the customer.
@@ -129,12 +129,12 @@ declare module 'stripe' {
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) A relevant document or contract showing the customer's signature.
          */
-        customer_signature: string | File | null;
+        customer_signature: string | Stripe.File | null;
 
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Documentation for the prior charge that can uniquely identify the charge, such as a receipt, shipping label, work order, etc. This document should be paired with a similar document from the disputed payment that proves the two payments are separate.
          */
-        duplicate_charge_documentation: string | File | null;
+        duplicate_charge_documentation: string | Stripe.File | null;
 
         /**
          * An explanation of the difference between the disputed charge versus the prior charge that appears to be a duplicate.
@@ -154,12 +154,12 @@ declare module 'stripe' {
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any receipt or message sent to the customer notifying them of the charge.
          */
-        receipt: string | File | null;
+        receipt: string | Stripe.File | null;
 
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Your refund policy, as shown to the customer.
          */
-        refund_policy: string | File | null;
+        refund_policy: string | Stripe.File | null;
 
         /**
          * Documentation demonstrating that the customer was shown your refund policy prior to purchase.
@@ -179,7 +179,7 @@ declare module 'stripe' {
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Documentation showing proof that a service was provided to the customer. This could include a copy of a signed contract, work order, or other form of written agreement.
          */
-        service_documentation: string | File | null;
+        service_documentation: string | Stripe.File | null;
 
         /**
          * The address to which a physical product was shipped. You should try to include as complete address information as possible.
@@ -199,7 +199,7 @@ declare module 'stripe' {
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Documentation showing proof that a product was shipped to the customer at the same address the customer provided to you. This could include a copy of the shipment receipt, shipping label, etc. It should show the customer's full shipping address, if possible.
          */
-        shipping_documentation: string | File | null;
+        shipping_documentation: string | Stripe.File | null;
 
         /**
          * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
@@ -209,7 +209,7 @@ declare module 'stripe' {
         /**
          * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any additional evidence or statements.
          */
-        uncategorized_file: string | File | null;
+        uncategorized_file: string | Stripe.File | null;
 
         /**
          * Any additional evidence or statements.
@@ -395,8 +395,8 @@ declare module 'stripe' {
         id: string,
         params?: DisputeRetrieveParams,
         options?: RequestOptions
-      ): Promise<Dispute>;
-      retrieve(id: string, options?: RequestOptions): Promise<Dispute>;
+      ): Promise<Stripe.Dispute>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Dispute>;
 
       /**
        * When you get a dispute, contacting your customer is always the best first step. If that doesn't work, you can submit evidence to help us resolve the dispute in your favor. You can do this in your [dashboard](https://dashboard.stripe.com/disputes), but if you prefer, you can use the API to submit evidence programmatically.
@@ -407,7 +407,7 @@ declare module 'stripe' {
         id: string,
         params?: DisputeUpdateParams,
         options?: RequestOptions
-      ): Promise<Dispute>;
+      ): Promise<Stripe.Dispute>;
 
       /**
        * Returns a list of your disputes.
@@ -415,8 +415,8 @@ declare module 'stripe' {
       list(
         params?: DisputeListParams,
         options?: RequestOptions
-      ): ApiListPromise<Dispute>;
-      list(options?: RequestOptions): ApiListPromise<Dispute>;
+      ): ApiListPromise<Stripe.Dispute>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Dispute>;
 
       /**
        * Closing the dispute for a charge indicates that you do not have any evidence to submit and are essentially dismissing the dispute, acknowledging it as lost.
@@ -427,8 +427,8 @@ declare module 'stripe' {
         id: string,
         params?: DisputeCloseParams,
         options?: RequestOptions
-      ): Promise<Dispute>;
-      close(id: string, options?: RequestOptions): Promise<Dispute>;
+      ): Promise<Stripe.Dispute>;
+      close(id: string, options?: RequestOptions): Promise<Stripe.Dispute>;
     }
   }
 }

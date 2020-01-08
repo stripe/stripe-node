@@ -19,7 +19,7 @@ declare module 'stripe' {
        */
       created: number;
 
-      customer?: string | Customer | DeletedCustomer | null;
+      customer?: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       deleted?: void;
 

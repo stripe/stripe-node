@@ -26,7 +26,7 @@ declare module 'stripe' {
       /**
        * ID of the payment method associated with this mandate.
        */
-      payment_method: string | PaymentMethod;
+      payment_method: string | Stripe.PaymentMethod;
 
       payment_method_details: Mandate.PaymentMethodDetails;
 
@@ -145,8 +145,8 @@ declare module 'stripe' {
         id: string,
         params?: MandateRetrieveParams,
         options?: RequestOptions
-      ): Promise<Mandate>;
-      retrieve(id: string, options?: RequestOptions): Promise<Mandate>;
+      ): Promise<Stripe.Mandate>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Mandate>;
     }
   }
 }

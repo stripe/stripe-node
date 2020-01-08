@@ -23,19 +23,19 @@ declare module 'stripe' {
         /**
          * The `Authorization` object that led to this transaction.
          */
-        authorization: string | Issuing.Authorization | null;
+        authorization: string | Stripe.Issuing.Authorization | null;
 
-        balance_transaction: string | BalanceTransaction | null;
+        balance_transaction: string | Stripe.BalanceTransaction | null;
 
         /**
          * The card used to make this transaction.
          */
-        card: string | Issuing.Card;
+        card: string | Stripe.Issuing.Card;
 
         /**
          * The cardholder to whom this transaction belongs.
          */
-        cardholder: string | Issuing.Cardholder | null;
+        cardholder: string | Stripe.Issuing.Cardholder | null;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -47,7 +47,7 @@ declare module 'stripe' {
          */
         currency: string;
 
-        dispute: string | Issuing.Dispute | null;
+        dispute: string | Stripe.Issuing.Dispute | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -180,11 +180,11 @@ declare module 'stripe' {
           id: string,
           params?: TransactionRetrieveParams,
           options?: RequestOptions
-        ): Promise<Issuing.Transaction>;
+        ): Promise<Stripe.Issuing.Transaction>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Issuing.Transaction>;
+        ): Promise<Stripe.Issuing.Transaction>;
 
         /**
          * Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -193,7 +193,7 @@ declare module 'stripe' {
           id: string,
           params?: TransactionUpdateParams,
           options?: RequestOptions
-        ): Promise<Issuing.Transaction>;
+        ): Promise<Stripe.Issuing.Transaction>;
 
         /**
          * Returns a list of Issuing Transaction objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -201,8 +201,10 @@ declare module 'stripe' {
         list(
           params?: TransactionListParams,
           options?: RequestOptions
-        ): ApiListPromise<Issuing.Transaction>;
-        list(options?: RequestOptions): ApiListPromise<Issuing.Transaction>;
+        ): ApiListPromise<Stripe.Issuing.Transaction>;
+        list(
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Issuing.Transaction>;
       }
     }
   }

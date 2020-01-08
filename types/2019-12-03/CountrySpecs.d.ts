@@ -100,8 +100,11 @@ declare module 'stripe' {
         id: string,
         params?: CountrySpecRetrieveParams,
         options?: RequestOptions
-      ): Promise<CountrySpec>;
-      retrieve(id: string, options?: RequestOptions): Promise<CountrySpec>;
+      ): Promise<Stripe.CountrySpec>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.CountrySpec>;
 
       /**
        * Lists all Country Spec objects available in the API.
@@ -109,8 +112,8 @@ declare module 'stripe' {
       list(
         params?: CountrySpecListParams,
         options?: RequestOptions
-      ): ApiListPromise<CountrySpec>;
-      list(options?: RequestOptions): ApiListPromise<CountrySpec>;
+      ): ApiListPromise<Stripe.CountrySpec>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.CountrySpec>;
     }
   }
 }

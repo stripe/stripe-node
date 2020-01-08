@@ -63,9 +63,9 @@ declare module 'stripe' {
       /**
        * External accounts (bank accounts and debit cards) currently attached to this account
        */
-      external_accounts?: ApiList<BankAccount | Card>;
+      external_accounts?: ApiList<Stripe.BankAccount | Stripe.Card>;
 
-      individual?: Person;
+      individual?: Stripe.Person;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -322,7 +322,7 @@ declare module 'stripe' {
             /**
              * The back of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`.
              */
-            back: string | File | null;
+            back: string | Stripe.File | null;
 
             /**
              * A user-displayable string describing the verification state of this document.
@@ -337,7 +337,7 @@ declare module 'stripe' {
             /**
              * The front of a document returned by a [file upload](#create_file) with a `purpose` value of `additional_verification`.
              */
-            front: string | File | null;
+            front: string | Stripe.File | null;
           }
         }
       }
@@ -391,12 +391,12 @@ declare module 'stripe' {
           /**
            * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be square and at least 128px x 128px.
            */
-          icon: string | File | null;
+          icon: string | Stripe.File | null;
 
           /**
            * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) A logo for the account that will be used in Checkout instead of the icon and without the account's name next to it if provided. Must be at least 128px x 128px.
            */
-          logo: string | File | null;
+          logo: string | Stripe.File | null;
 
           /**
            * A CSS hex color value representing the primary branding color for this account
@@ -1747,8 +1747,8 @@ declare module 'stripe' {
       create(
         params?: AccountCreateParams,
         options?: RequestOptions
-      ): Promise<Account>;
-      create(options?: RequestOptions): Promise<Account>;
+      ): Promise<Stripe.Account>;
+      create(options?: RequestOptions): Promise<Stripe.Account>;
 
       /**
        * Retrieves the details of an account.
@@ -1756,8 +1756,8 @@ declare module 'stripe' {
       retrieve(
         params?: AccountRetrieveParams,
         options?: RequestOptions
-      ): Promise<Account>;
-      retrieve(options?: RequestOptions): Promise<Account>;
+      ): Promise<Stripe.Account>;
+      retrieve(options?: RequestOptions): Promise<Stripe.Account>;
 
       /**
        * Retrieves the details of an account.
@@ -1766,8 +1766,8 @@ declare module 'stripe' {
         id: string,
         params?: AccountRetrieveParams,
         options?: RequestOptions
-      ): Promise<Account>;
-      retrieve(id: string, options?: RequestOptions): Promise<Account>;
+      ): Promise<Stripe.Account>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Account>;
 
       /**
        * Updates a connected [Express or Custom account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are supported by both account types.
@@ -1778,7 +1778,7 @@ declare module 'stripe' {
         id: string,
         params?: AccountUpdateParams,
         options?: RequestOptions
-      ): Promise<Account>;
+      ): Promise<Stripe.Account>;
 
       /**
        * Returns a list of accounts connected to your platform via [Connect](https://stripe.com/docs/connect). If you're not a platform, the list is empty.
@@ -1786,8 +1786,8 @@ declare module 'stripe' {
       list(
         params?: AccountListParams,
         options?: RequestOptions
-      ): ApiListPromise<Account>;
-      list(options?: RequestOptions): ApiListPromise<Account>;
+      ): ApiListPromise<Stripe.Account>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Account>;
 
       /**
        * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
@@ -1800,8 +1800,8 @@ declare module 'stripe' {
         id: string,
         params?: AccountDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedAccount>;
-      del(id: string, options?: RequestOptions): Promise<DeletedAccount>;
+      ): Promise<Stripe.DeletedAccount>;
+      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedAccount>;
 
       /**
        * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
@@ -1812,7 +1812,7 @@ declare module 'stripe' {
         id: string,
         params: AccountRejectParams,
         options?: RequestOptions
-      ): Promise<Account>;
+      ): Promise<Stripe.Account>;
 
       /**
        * Retrieves information about the specified Account Capability.
@@ -1822,12 +1822,12 @@ declare module 'stripe' {
         id: string,
         params?: CapabilityRetrieveParams,
         options?: RequestOptions
-      ): Promise<Capability>;
+      ): Promise<Stripe.Capability>;
       retrieveCapability(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Capability>;
+      ): Promise<Stripe.Capability>;
 
       /**
        * Updates an existing Account Capability.
@@ -1837,7 +1837,7 @@ declare module 'stripe' {
         id: string,
         params?: CapabilityUpdateParams,
         options?: RequestOptions
-      ): Promise<Capability>;
+      ): Promise<Stripe.Capability>;
 
       /**
        * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
@@ -1846,11 +1846,11 @@ declare module 'stripe' {
         id: string,
         params?: CapabilityListParams,
         options?: RequestOptions
-      ): ApiListPromise<Capability>;
+      ): ApiListPromise<Stripe.Capability>;
       listCapabilities(
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<Capability>;
+      ): ApiListPromise<Stripe.Capability>;
 
       /**
        * Create an external account for a given account.
@@ -1859,7 +1859,7 @@ declare module 'stripe' {
         id: string,
         params: ExternalAccountCreateParams,
         options?: RequestOptions
-      ): Promise<BankAccount | Card>;
+      ): Promise<Stripe.BankAccount | Stripe.Card>;
 
       /**
        * Retrieve a specified external account for a given account.
@@ -1869,12 +1869,12 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountRetrieveParams,
         options?: RequestOptions
-      ): Promise<BankAccount | Card>;
+      ): Promise<Stripe.BankAccount | Stripe.Card>;
       retrieveExternalAccount(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<BankAccount | Card>;
+      ): Promise<Stripe.BankAccount | Stripe.Card>;
 
       /**
        * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
@@ -1885,7 +1885,7 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountUpdateParams,
         options?: RequestOptions
-      ): Promise<BankAccount | Card>;
+      ): Promise<Stripe.BankAccount | Stripe.Card>;
 
       /**
        * List external accounts for an account.
@@ -1894,11 +1894,11 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountListParams,
         options?: RequestOptions
-      ): ApiListPromise<BankAccount | Card>;
+      ): ApiListPromise<Stripe.BankAccount | Stripe.Card>;
       listExternalAccounts(
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<BankAccount | Card>;
+      ): ApiListPromise<Stripe.BankAccount | Stripe.Card>;
 
       /**
        * Delete a specified external account for a given account.
@@ -1908,12 +1908,12 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedBankAccount | DeletedCard>;
+      ): Promise<Stripe.DeletedBankAccount | Stripe.DeletedCard>;
       deleteExternalAccount(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<DeletedBankAccount | DeletedCard>;
+      ): Promise<Stripe.DeletedBankAccount | Stripe.DeletedCard>;
 
       /**
        * Creates a single-use login link for an Express account to access their Stripe dashboard.
@@ -1924,8 +1924,11 @@ declare module 'stripe' {
         id: string,
         params?: LoginLinkCreateParams,
         options?: RequestOptions
-      ): Promise<LoginLink>;
-      createLoginLink(id: string, options?: RequestOptions): Promise<LoginLink>;
+      ): Promise<Stripe.LoginLink>;
+      createLoginLink(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.LoginLink>;
 
       /**
        * Creates a new person.
@@ -1934,8 +1937,11 @@ declare module 'stripe' {
         id: string,
         params?: PersonCreateParams,
         options?: RequestOptions
-      ): Promise<Person>;
-      createPerson(id: string, options?: RequestOptions): Promise<Person>;
+      ): Promise<Stripe.Person>;
+      createPerson(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Person>;
 
       /**
        * Retrieves an existing person.
@@ -1945,12 +1951,12 @@ declare module 'stripe' {
         id: string,
         params?: PersonRetrieveParams,
         options?: RequestOptions
-      ): Promise<Person>;
+      ): Promise<Stripe.Person>;
       retrievePerson(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Person>;
+      ): Promise<Stripe.Person>;
 
       /**
        * Updates an existing person.
@@ -1960,7 +1966,7 @@ declare module 'stripe' {
         id: string,
         params?: PersonUpdateParams,
         options?: RequestOptions
-      ): Promise<Person>;
+      ): Promise<Stripe.Person>;
 
       /**
        * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
@@ -1969,8 +1975,11 @@ declare module 'stripe' {
         id: string,
         params?: PersonListParams,
         options?: RequestOptions
-      ): ApiListPromise<Person>;
-      listPersons(id: string, options?: RequestOptions): ApiListPromise<Person>;
+      ): ApiListPromise<Stripe.Person>;
+      listPersons(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.Person>;
 
       /**
        * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
@@ -1980,12 +1989,12 @@ declare module 'stripe' {
         id: string,
         params?: PersonDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedPerson>;
+      ): Promise<Stripe.DeletedPerson>;
       deletePerson(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<DeletedPerson>;
+      ): Promise<Stripe.DeletedPerson>;
     }
   }
 }

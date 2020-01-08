@@ -214,7 +214,7 @@ declare module 'stripe' {
       create(
         params: CouponCreateParams,
         options?: RequestOptions
-      ): Promise<Coupon>;
+      ): Promise<Stripe.Coupon>;
 
       /**
        * Retrieves the coupon with the given ID.
@@ -223,8 +223,8 @@ declare module 'stripe' {
         id: string,
         params?: CouponRetrieveParams,
         options?: RequestOptions
-      ): Promise<Coupon>;
-      retrieve(id: string, options?: RequestOptions): Promise<Coupon>;
+      ): Promise<Stripe.Coupon>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Coupon>;
 
       /**
        * Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
@@ -233,7 +233,7 @@ declare module 'stripe' {
         id: string,
         params?: CouponUpdateParams,
         options?: RequestOptions
-      ): Promise<Coupon>;
+      ): Promise<Stripe.Coupon>;
 
       /**
        * Returns a list of your coupons.
@@ -241,8 +241,8 @@ declare module 'stripe' {
       list(
         params?: CouponListParams,
         options?: RequestOptions
-      ): ApiListPromise<Coupon>;
-      list(options?: RequestOptions): ApiListPromise<Coupon>;
+      ): ApiListPromise<Stripe.Coupon>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Coupon>;
 
       /**
        * You can delete coupons via the [coupon management](https://dashboard.stripe.com/coupons) page of the Stripe dashboard. However, deleting a coupon does not affect any customers who have already applied the coupon; it means that new customers can't redeem the coupon. You can also delete coupons via the API.
@@ -251,8 +251,8 @@ declare module 'stripe' {
         id: string,
         params?: CouponDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedCoupon>;
-      del(id: string, options?: RequestOptions): Promise<DeletedCoupon>;
+      ): Promise<Stripe.DeletedCoupon>;
+      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedCoupon>;
     }
   }
 }

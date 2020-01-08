@@ -27,7 +27,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer who will be billed when this invoice item is billed.
        */
-      customer: string | Customer | DeletedCustomer;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -49,7 +49,7 @@ declare module 'stripe' {
       /**
        * The ID of the invoice this invoice item belongs to.
        */
-      invoice: string | Invoice | null;
+      invoice: string | Stripe.Invoice | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -66,7 +66,7 @@ declare module 'stripe' {
       /**
        * If the invoice item is a proration, the plan of the subscription that the proration was computed for.
        */
-      plan: Plan | null;
+      plan: Stripe.Plan | null;
 
       /**
        * Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.
@@ -81,7 +81,7 @@ declare module 'stripe' {
       /**
        * The subscription that this invoice item has been created for, if any.
        */
-      subscription: string | Subscription | null;
+      subscription: string | Stripe.Subscription | null;
 
       /**
        * The subscription item that this invoice item has been created for, if any.
@@ -91,7 +91,7 @@ declare module 'stripe' {
       /**
        * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
        */
-      tax_rates: Array<TaxRate> | null;
+      tax_rates: Array<Stripe.TaxRate> | null;
 
       /**
        * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
@@ -335,7 +335,7 @@ declare module 'stripe' {
       create(
         params: InvoiceItemCreateParams,
         options?: RequestOptions
-      ): Promise<InvoiceItem>;
+      ): Promise<Stripe.InvoiceItem>;
 
       /**
        * Retrieves the invoice item with the given ID.
@@ -344,8 +344,11 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceItemRetrieveParams,
         options?: RequestOptions
-      ): Promise<InvoiceItem>;
-      retrieve(id: string, options?: RequestOptions): Promise<InvoiceItem>;
+      ): Promise<Stripe.InvoiceItem>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.InvoiceItem>;
 
       /**
        * Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it's attached to is closed.
@@ -354,7 +357,7 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceItemUpdateParams,
         options?: RequestOptions
-      ): Promise<InvoiceItem>;
+      ): Promise<Stripe.InvoiceItem>;
 
       /**
        * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
@@ -362,8 +365,8 @@ declare module 'stripe' {
       list(
         params?: InvoiceItemListParams,
         options?: RequestOptions
-      ): ApiListPromise<InvoiceItem>;
-      list(options?: RequestOptions): ApiListPromise<InvoiceItem>;
+      ): ApiListPromise<Stripe.InvoiceItem>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.InvoiceItem>;
 
       /**
        * Deletes an invoice item, removing it from an invoice. Deleting invoice items is only possible when they're not attached to invoices, or if it's attached to a draft invoice.
@@ -372,8 +375,11 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceItemDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedInvoiceItem>;
-      del(id: string, options?: RequestOptions): Promise<DeletedInvoiceItem>;
+      ): Promise<Stripe.DeletedInvoiceItem>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.DeletedInvoiceItem>;
     }
   }
 }

@@ -68,7 +68,7 @@ declare module 'stripe' {
       /**
        * The ID of the product this SKU is associated with. The product must be currently active.
        */
-      product: string | Product;
+      product: string | Stripe.Product;
 
       updated: number;
     }
@@ -382,7 +382,10 @@ declare module 'stripe' {
       /**
        * Creates a new SKU associated with a product.
        */
-      create(params: SkuCreateParams, options?: RequestOptions): Promise<Sku>;
+      create(
+        params: SkuCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Sku>;
 
       /**
        * Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
@@ -391,8 +394,11 @@ declare module 'stripe' {
         id: string,
         params?: SkuRetrieveParams,
         options?: RequestOptions
-      ): Promise<Sku | DeletedSku>;
-      retrieve(id: string, options?: RequestOptions): Promise<Sku | DeletedSku>;
+      ): Promise<Stripe.Sku | Stripe.DeletedSku>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Sku | Stripe.DeletedSku>;
 
       /**
        * Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -403,7 +409,7 @@ declare module 'stripe' {
         id: string,
         params?: SkuUpdateParams,
         options?: RequestOptions
-      ): Promise<Sku>;
+      ): Promise<Stripe.Sku>;
 
       /**
        * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
@@ -411,8 +417,8 @@ declare module 'stripe' {
       list(
         params?: SkuListParams,
         options?: RequestOptions
-      ): ApiListPromise<Sku>;
-      list(options?: RequestOptions): ApiListPromise<Sku>;
+      ): ApiListPromise<Stripe.Sku>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Sku>;
 
       /**
        * Delete a SKU. Deleting a SKU is only possible until it has been used in an order.
@@ -421,8 +427,8 @@ declare module 'stripe' {
         id: string,
         params?: SkuDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedSku>;
-      del(id: string, options?: RequestOptions): Promise<DeletedSku>;
+      ): Promise<Stripe.DeletedSku>;
+      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedSku>;
     }
   }
 }

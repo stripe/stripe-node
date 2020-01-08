@@ -30,7 +30,7 @@ declare module 'stripe' {
       /**
        * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
        */
-      customer: string | Customer | null;
+      customer: string | Stripe.Customer | null;
 
       ideal?: PaymentMethod.Ideal;
 
@@ -627,8 +627,8 @@ declare module 'stripe' {
       create(
         params?: PaymentMethodCreateParams,
         options?: RequestOptions
-      ): Promise<PaymentMethod>;
-      create(options?: RequestOptions): Promise<PaymentMethod>;
+      ): Promise<Stripe.PaymentMethod>;
+      create(options?: RequestOptions): Promise<Stripe.PaymentMethod>;
 
       /**
        * Retrieves a PaymentMethod object.
@@ -637,8 +637,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentMethodRetrieveParams,
         options?: RequestOptions
-      ): Promise<PaymentMethod>;
-      retrieve(id: string, options?: RequestOptions): Promise<PaymentMethod>;
+      ): Promise<Stripe.PaymentMethod>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.PaymentMethod>;
 
       /**
        * Updates a PaymentMethod object. A PaymentMethod must be attached a customer to be updated.
@@ -647,7 +650,7 @@ declare module 'stripe' {
         id: string,
         params?: PaymentMethodUpdateParams,
         options?: RequestOptions
-      ): Promise<PaymentMethod>;
+      ): Promise<Stripe.PaymentMethod>;
 
       /**
        * Returns a list of PaymentMethods for a given Customer
@@ -655,7 +658,7 @@ declare module 'stripe' {
       list(
         params: PaymentMethodListParams,
         options?: RequestOptions
-      ): ApiListPromise<PaymentMethod>;
+      ): ApiListPromise<Stripe.PaymentMethod>;
 
       /**
        * Attaches a PaymentMethod object to a Customer.
@@ -668,7 +671,7 @@ declare module 'stripe' {
         id: string,
         params: PaymentMethodAttachParams,
         options?: RequestOptions
-      ): Promise<PaymentMethod>;
+      ): Promise<Stripe.PaymentMethod>;
 
       /**
        * Detaches a PaymentMethod object from a Customer.
@@ -677,8 +680,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentMethodDetachParams,
         options?: RequestOptions
-      ): Promise<PaymentMethod>;
-      detach(id: string, options?: RequestOptions): Promise<PaymentMethod>;
+      ): Promise<Stripe.PaymentMethod>;
+      detach(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.PaymentMethod>;
     }
   }
 }

@@ -32,17 +32,20 @@ declare module 'stripe' {
       /**
        * ID of the customer.
        */
-      customer: string | Customer;
+      customer: string | Stripe.Customer;
 
       /**
        * Customer balance transaction related to this credit note.
        */
-      customer_balance_transaction: string | CustomerBalanceTransaction | null;
+      customer_balance_transaction:
+        | string
+        | Stripe.CustomerBalanceTransaction
+        | null;
 
       /**
        * ID of the invoice.
        */
-      invoice: string | Invoice;
+      invoice: string | Stripe.Invoice;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -77,7 +80,7 @@ declare module 'stripe' {
       /**
        * Refund related to this credit note.
        */
-      refund: string | Refund | null;
+      refund: string | Stripe.Refund | null;
 
       /**
        * Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
@@ -295,7 +298,7 @@ declare module 'stripe' {
       create(
         params: CreditNoteCreateParams,
         options?: RequestOptions
-      ): Promise<CreditNote>;
+      ): Promise<Stripe.CreditNote>;
 
       /**
        * Retrieves the credit note object with the given identifier.
@@ -304,8 +307,11 @@ declare module 'stripe' {
         id: string,
         params?: CreditNoteRetrieveParams,
         options?: RequestOptions
-      ): Promise<CreditNote>;
-      retrieve(id: string, options?: RequestOptions): Promise<CreditNote>;
+      ): Promise<Stripe.CreditNote>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.CreditNote>;
 
       /**
        * Updates an existing credit note.
@@ -314,7 +320,7 @@ declare module 'stripe' {
         id: string,
         params?: CreditNoteUpdateParams,
         options?: RequestOptions
-      ): Promise<CreditNote>;
+      ): Promise<Stripe.CreditNote>;
 
       /**
        * Returns a list of credit notes.
@@ -322,8 +328,8 @@ declare module 'stripe' {
       list(
         params?: CreditNoteListParams,
         options?: RequestOptions
-      ): ApiListPromise<CreditNote>;
-      list(options?: RequestOptions): ApiListPromise<CreditNote>;
+      ): ApiListPromise<Stripe.CreditNote>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.CreditNote>;
 
       /**
        * Get a preview of a credit note without creating it.
@@ -331,7 +337,7 @@ declare module 'stripe' {
       preview(
         params: CreditNotePreviewParams,
         options?: RequestOptions
-      ): Promise<CreditNote>;
+      ): Promise<Stripe.CreditNote>;
 
       /**
        * Marks a credit note as void. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
@@ -340,8 +346,11 @@ declare module 'stripe' {
         id: string,
         params?: CreditNoteVoidCreditNoteParams,
         options?: RequestOptions
-      ): Promise<CreditNote>;
-      voidCreditNote(id: string, options?: RequestOptions): Promise<CreditNote>;
+      ): Promise<Stripe.CreditNote>;
+      voidCreditNote(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.CreditNote>;
     }
   }
 }

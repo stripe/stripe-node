@@ -38,7 +38,7 @@ declare module 'stripe' {
 
       sepa_debit?: SourceMandateNotification.SepaDebit;
 
-      source: Source;
+      source: Stripe.Source;
 
       /**
        * The status of the mandate notification. Valid statuses are `pending` or `submitted`.

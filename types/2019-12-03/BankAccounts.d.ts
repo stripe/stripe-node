@@ -14,7 +14,7 @@ declare module 'stripe' {
        */
       object: 'bank_account';
 
-      account?: string | Account | null;
+      account?: string | Stripe.Account | null;
 
       /**
        * The name of the person or business that owns the bank account.
@@ -41,7 +41,7 @@ declare module 'stripe' {
        */
       currency: string;
 
-      customer?: string | Customer | DeletedCustomer | null;
+      customer?: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * Whether this bank account is the default external account for its currency.

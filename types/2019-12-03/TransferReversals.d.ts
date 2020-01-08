@@ -22,7 +22,7 @@ declare module 'stripe' {
       /**
        * Balance transaction that describes the impact on your account balance.
        */
-      balance_transaction: string | BalanceTransaction | null;
+      balance_transaction: string | Stripe.BalanceTransaction | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -37,7 +37,7 @@ declare module 'stripe' {
       /**
        * Linked payment refund for the transfer reversal.
        */
-      destination_payment_refund: string | Refund | null;
+      destination_payment_refund: string | Stripe.Refund | null;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -47,12 +47,12 @@ declare module 'stripe' {
       /**
        * ID of the refund responsible for the transfer reversal.
        */
-      source_refund: string | Refund | null;
+      source_refund: string | Stripe.Refund | null;
 
       /**
        * ID of the transfer that was reversed.
        */
-      transfer: string | Transfer;
+      transfer: string | Stripe.Transfer;
     }
 
     interface TransferReversalCreateParams {

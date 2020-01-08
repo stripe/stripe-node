@@ -79,7 +79,7 @@ declare module 'stripe' {
       /**
        * The product whose pricing this plan determines.
        */
-      product: string | Product | DeletedProduct | null;
+      product: string | Stripe.Product | Stripe.DeletedProduct | null;
 
       /**
        * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
@@ -425,7 +425,10 @@ declare module 'stripe' {
       /**
        * You can create plans using the API, or in the Stripe [Dashboard](https://dashboard.stripe.com/subscriptions/products).
        */
-      create(params: PlanCreateParams, options?: RequestOptions): Promise<Plan>;
+      create(
+        params: PlanCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Plan>;
 
       /**
        * Retrieves the plan with the given ID.
@@ -434,8 +437,8 @@ declare module 'stripe' {
         id: string,
         params?: PlanRetrieveParams,
         options?: RequestOptions
-      ): Promise<Plan>;
-      retrieve(id: string, options?: RequestOptions): Promise<Plan>;
+      ): Promise<Stripe.Plan>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Plan>;
 
       /**
        * Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan's ID, amount, currency, or billing cycle.
@@ -444,7 +447,7 @@ declare module 'stripe' {
         id: string,
         params?: PlanUpdateParams,
         options?: RequestOptions
-      ): Promise<Plan>;
+      ): Promise<Stripe.Plan>;
 
       /**
        * Returns a list of your plans.
@@ -452,8 +455,8 @@ declare module 'stripe' {
       list(
         params?: PlanListParams,
         options?: RequestOptions
-      ): ApiListPromise<Plan>;
-      list(options?: RequestOptions): ApiListPromise<Plan>;
+      ): ApiListPromise<Stripe.Plan>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Plan>;
 
       /**
        * Deleting plans means new subscribers can't be added. Existing subscribers aren't affected.
@@ -462,8 +465,8 @@ declare module 'stripe' {
         id: string,
         params?: PlanDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedPlan>;
-      del(id: string, options?: RequestOptions): Promise<DeletedPlan>;
+      ): Promise<Stripe.DeletedPlan>;
+      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedPlan>;
     }
   }
 }

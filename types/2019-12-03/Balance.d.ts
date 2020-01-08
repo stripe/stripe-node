@@ -131,8 +131,8 @@ declare module 'stripe' {
       retrieve(
         params?: BalanceRetrieveParams,
         options?: RequestOptions
-      ): Promise<Balance>;
-      retrieve(options?: RequestOptions): Promise<Balance>;
+      ): Promise<Stripe.Balance>;
+      retrieve(options?: RequestOptions): Promise<Stripe.Balance>;
     }
   }
 }

@@ -32,7 +32,7 @@ declare module 'stripe' {
       /**
        * The items included in this order return.
        */
-      items: Array<OrderItem>;
+      items: Array<Stripe.OrderItem>;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -42,12 +42,12 @@ declare module 'stripe' {
       /**
        * The order that this return includes items from.
        */
-      order: string | Order | null;
+      order: string | Stripe.Order | null;
 
       /**
        * The ID of the refund issued for this return.
        */
-      refund: string | Refund | null;
+      refund: string | Stripe.Refund | null;
     }
 
     interface OrderReturnRetrieveParams {
@@ -82,8 +82,11 @@ declare module 'stripe' {
         id: string,
         params?: OrderReturnRetrieveParams,
         options?: RequestOptions
-      ): Promise<OrderReturn>;
-      retrieve(id: string, options?: RequestOptions): Promise<OrderReturn>;
+      ): Promise<Stripe.OrderReturn>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.OrderReturn>;
 
       /**
        * Returns a list of your order returns. The returns are returned sorted by creation date, with the most recently created return appearing first.
@@ -91,8 +94,8 @@ declare module 'stripe' {
       list(
         params?: OrderReturnListParams,
         options?: RequestOptions
-      ): ApiListPromise<OrderReturn>;
-      list(options?: RequestOptions): ApiListPromise<OrderReturn>;
+      ): ApiListPromise<Stripe.OrderReturn>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.OrderReturn>;
     }
   }
 }

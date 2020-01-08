@@ -31,7 +31,7 @@ declare module 'stripe' {
       /**
        * The ID of the payment used to pay for the order. Present if the order status is `paid`, `fulfilled`, or `refunded`.
        */
-      charge: string | Charge | null;
+      charge: string | Stripe.Charge | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -46,7 +46,7 @@ declare module 'stripe' {
       /**
        * The customer used for the order.
        */
-      customer: string | Customer | DeletedCustomer | null;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * The email address of the customer placing the order.
@@ -58,7 +58,7 @@ declare module 'stripe' {
       /**
        * List of items constituting the order. An order can have up to 25 items.
        */
-      items: Array<OrderItem>;
+      items: Array<Stripe.OrderItem>;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -70,7 +70,7 @@ declare module 'stripe' {
        */
       metadata: Metadata;
 
-      returns: ApiList<OrderReturn> | null;
+      returns: ApiList<Stripe.OrderReturn> | null;
 
       /**
        * The shipping method that is currently selected for this order, if any. If present, it is equal to one of the `id`s of shipping methods in the `shipping_methods` array. At order creation time, if there are multiple shipping methods, Stripe will automatically selected the first method.
@@ -477,7 +477,7 @@ declare module 'stripe' {
       create(
         params: OrderCreateParams,
         options?: RequestOptions
-      ): Promise<Order>;
+      ): Promise<Stripe.Order>;
 
       /**
        * Retrieves the details of an existing order. Supply the unique order ID from either an order creation request or the order list, and Stripe will return the corresponding order information.
@@ -486,8 +486,8 @@ declare module 'stripe' {
         id: string,
         params?: OrderRetrieveParams,
         options?: RequestOptions
-      ): Promise<Order>;
-      retrieve(id: string, options?: RequestOptions): Promise<Order>;
+      ): Promise<Stripe.Order>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Order>;
 
       /**
        * Updates the specific order by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -496,7 +496,7 @@ declare module 'stripe' {
         id: string,
         params?: OrderUpdateParams,
         options?: RequestOptions
-      ): Promise<Order>;
+      ): Promise<Stripe.Order>;
 
       /**
        * Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
@@ -504,8 +504,8 @@ declare module 'stripe' {
       list(
         params?: OrderListParams,
         options?: RequestOptions
-      ): ApiListPromise<Order>;
-      list(options?: RequestOptions): ApiListPromise<Order>;
+      ): ApiListPromise<Stripe.Order>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Order>;
 
       /**
        * Pay an order by providing a source to create a payment.
@@ -514,8 +514,8 @@ declare module 'stripe' {
         id: string,
         params?: OrderPayParams,
         options?: RequestOptions
-      ): Promise<Order>;
-      pay(id: string, options?: RequestOptions): Promise<Order>;
+      ): Promise<Stripe.Order>;
+      pay(id: string, options?: RequestOptions): Promise<Stripe.Order>;
 
       /**
        * Return all or part of an order. The order must have a status of paid or fulfilled before it can be returned. Once all items have been returned, the order will become canceled or returned depending on which status the order started in.
@@ -524,8 +524,11 @@ declare module 'stripe' {
         id: string,
         params?: OrderReturnOrderParams,
         options?: RequestOptions
-      ): Promise<OrderReturn>;
-      returnOrder(id: string, options?: RequestOptions): Promise<OrderReturn>;
+      ): Promise<Stripe.OrderReturn>;
+      returnOrder(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.OrderReturn>;
     }
   }
 }

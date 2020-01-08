@@ -10,7 +10,7 @@ declare module 'stripe' {
          */
         object: 'issuing.card_details';
 
-        card: Issuing.Card;
+        card: Stripe.Issuing.Card;
 
         /**
          * The CVC number for the card.

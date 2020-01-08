@@ -42,7 +42,7 @@ declare module 'stripe' {
          * The file object representing the result of the report run (populated when
          *  `status=succeeded`).
          */
-        result: File | null;
+        result: Stripe.File | null;
 
         /**
          * Status of this report run. This will be `pending` when the run is initially created.
@@ -211,7 +211,7 @@ declare module 'stripe' {
         create(
           params: ReportRunCreateParams,
           options?: RequestOptions
-        ): Promise<Reporting.ReportRun>;
+        ): Promise<Stripe.Reporting.ReportRun>;
 
         /**
          * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
@@ -220,11 +220,11 @@ declare module 'stripe' {
           id: string,
           params?: ReportRunRetrieveParams,
           options?: RequestOptions
-        ): Promise<Reporting.ReportRun>;
+        ): Promise<Stripe.Reporting.ReportRun>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Reporting.ReportRun>;
+        ): Promise<Stripe.Reporting.ReportRun>;
 
         /**
          * Returns a list of Report Runs, with the most recent appearing first. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
@@ -232,8 +232,10 @@ declare module 'stripe' {
         list(
           params?: ReportRunListParams,
           options?: RequestOptions
-        ): ApiListPromise<Reporting.ReportRun>;
-        list(options?: RequestOptions): ApiListPromise<Reporting.ReportRun>;
+        ): ApiListPromise<Stripe.Reporting.ReportRun>;
+        list(
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Reporting.ReportRun>;
       }
     }
   }

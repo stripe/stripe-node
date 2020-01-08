@@ -51,7 +51,7 @@ declare module 'stripe' {
       /**
        * The plan of the subscription, if the line item is a subscription or a proration.
        */
-      plan: Plan | null;
+      plan: Stripe.Plan | null;
 
       /**
        * Whether this is a proration.
@@ -81,7 +81,7 @@ declare module 'stripe' {
       /**
        * The tax rates which apply to the line item.
        */
-      tax_rates?: Array<TaxRate> | null;
+      tax_rates?: Array<Stripe.TaxRate> | null;
 
       /**
        * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
@@ -121,7 +121,7 @@ declare module 'stripe' {
         /**
          * The tax rate that was applied to get this tax amount.
          */
-        tax_rate: string | TaxRate;
+        tax_rate: string | Stripe.TaxRate;
       }
 
       type Type = 'invoiceitem' | 'subscription';

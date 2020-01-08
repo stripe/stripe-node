@@ -179,7 +179,7 @@ declare module 'stripe' {
         create(
           params: LocationCreateParams,
           options?: RequestOptions
-        ): Promise<Terminal.Location>;
+        ): Promise<Stripe.Terminal.Location>;
 
         /**
          * Retrieves a Location object.
@@ -188,11 +188,11 @@ declare module 'stripe' {
           id: string,
           params?: LocationRetrieveParams,
           options?: RequestOptions
-        ): Promise<Terminal.Location>;
+        ): Promise<Stripe.Terminal.Location>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Terminal.Location>;
+        ): Promise<Stripe.Terminal.Location>;
 
         /**
          * Updates a Location object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -201,7 +201,7 @@ declare module 'stripe' {
           id: string,
           params?: LocationUpdateParams,
           options?: RequestOptions
-        ): Promise<Terminal.Location>;
+        ): Promise<Stripe.Terminal.Location>;
 
         /**
          * Returns a list of Location objects.
@@ -209,8 +209,10 @@ declare module 'stripe' {
         list(
           params?: LocationListParams,
           options?: RequestOptions
-        ): ApiListPromise<Terminal.Location>;
-        list(options?: RequestOptions): ApiListPromise<Terminal.Location>;
+        ): ApiListPromise<Stripe.Terminal.Location>;
+        list(
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Terminal.Location>;
 
         /**
          * Deletes a Location object.
@@ -219,11 +221,11 @@ declare module 'stripe' {
           id: string,
           params?: LocationDeleteParams,
           options?: RequestOptions
-        ): Promise<Terminal.DeletedLocation>;
+        ): Promise<Stripe.Terminal.DeletedLocation>;
         del(
           id: string,
           options?: RequestOptions
-        ): Promise<Terminal.DeletedLocation>;
+        ): Promise<Stripe.Terminal.DeletedLocation>;
       }
     }
   }
