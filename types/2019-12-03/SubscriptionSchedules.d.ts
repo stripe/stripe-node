@@ -460,7 +460,7 @@ declare module 'stripe' {
           /**
            * The plan ID to subscribe to.
            */
-          plan: string;
+          plan?: string;
 
           /**
            * Quantity for the given plan. Can be set only if the plan's `usage_type` is `licensed` and not `metered`.
@@ -668,7 +668,7 @@ declare module 'stripe' {
           /**
            * The plan ID to subscribe to.
            */
-          plan: string;
+          plan?: string;
 
           /**
            * Quantity for the given plan. Can be set only if the plan's `usage_type` is `licensed` and not `metered`.

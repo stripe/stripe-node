@@ -394,7 +394,7 @@ declare module 'stripe' {
         /**
          * Plan ID for this item, as a string.
          */
-        plan: string;
+        plan?: string;
 
         /**
          * Quantity for this item.

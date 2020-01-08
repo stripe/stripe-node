@@ -80,11 +80,6 @@ declare module 'stripe' {
 
     interface SubscriptionItemCreateParams {
       /**
-       * The identifier of the plan to add to the subscription.
-       */
-      plan: string;
-
-      /**
        * The identifier of the subscription to modify.
        */
       subscription: string;
@@ -110,6 +105,11 @@ declare module 'stripe' {
        * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
        */
       payment_behavior?: SubscriptionItemCreateParams.PaymentBehavior;
+
+      /**
+       * The identifier of the plan to add to the subscription.
+       */
+      plan?: string;
 
       /**
        * Flag indicating whether to [prorate](https://stripe.com/docs/billing/subscriptions/prorations) switching plans during a billing cycle.
