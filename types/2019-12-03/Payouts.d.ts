@@ -32,7 +32,7 @@ declare module 'stripe' {
       /**
        * ID of the balance transaction that describes the impact of this payout on your account balance.
        */
-      balance_transaction: string | BalanceTransaction | null;
+      balance_transaction: string | Stripe.BalanceTransaction | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -54,16 +54,16 @@ declare module 'stripe' {
        */
       destination:
         | string
-        | BankAccount
-        | Card
-        | DeletedBankAccount
-        | DeletedCard
+        | Stripe.BankAccount
+        | Stripe.Card
+        | Stripe.DeletedBankAccount
+        | Stripe.DeletedCard
         | null;
 
       /**
        * If the payout failed or was canceled, this will be the ID of the balance transaction that reversed the initial balance transaction, and puts the funds from the failed payout back in your balance.
        */
-      failure_balance_transaction: string | BalanceTransaction | null;
+      failure_balance_transaction: string | Stripe.BalanceTransaction | null;
 
       /**
        * Error code explaining reason for payout failure if available. See [Types of payout failures](https://stripe.com/docs/api#payout_failures) for a list of failure codes.
@@ -226,7 +226,7 @@ declare module 'stripe' {
       create(
         params: PayoutCreateParams,
         options?: RequestOptions
-      ): Promise<Payout>;
+      ): Promise<Stripe.Payout>;
 
       /**
        * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
@@ -235,8 +235,8 @@ declare module 'stripe' {
         id: string,
         params?: PayoutRetrieveParams,
         options?: RequestOptions
-      ): Promise<Payout>;
-      retrieve(id: string, options?: RequestOptions): Promise<Payout>;
+      ): Promise<Stripe.Payout>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Payout>;
 
       /**
        * Updates the specified payout by setting the values of the parameters passed. Any parameters not provided will be left unchanged. This request accepts only the metadata as arguments.
@@ -245,7 +245,7 @@ declare module 'stripe' {
         id: string,
         params?: PayoutUpdateParams,
         options?: RequestOptions
-      ): Promise<Payout>;
+      ): Promise<Stripe.Payout>;
 
       /**
        * Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
@@ -253,8 +253,8 @@ declare module 'stripe' {
       list(
         params?: PayoutListParams,
         options?: RequestOptions
-      ): ApiListPromise<Payout>;
-      list(options?: RequestOptions): ApiListPromise<Payout>;
+      ): ApiListPromise<Stripe.Payout>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Payout>;
 
       /**
        * A previously created payout can be canceled if it has not yet been paid out. Funds will be refunded to your available balance. You may not cancel automatic Stripe payouts.
@@ -263,8 +263,8 @@ declare module 'stripe' {
         id: string,
         params?: PayoutCancelParams,
         options?: RequestOptions
-      ): Promise<Payout>;
-      cancel(id: string, options?: RequestOptions): Promise<Payout>;
+      ): Promise<Stripe.Payout>;
+      cancel(id: string, options?: RequestOptions): Promise<Stripe.Payout>;
     }
   }
 }

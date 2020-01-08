@@ -41,7 +41,7 @@ declare module 'stripe' {
          * during the session unless an existing customer was provided when
          * the session was created.
          */
-        customer: string | Customer | null;
+        customer: string | Stripe.Customer | null;
 
         /**
          * If provided, this value will be used when the Customer object is created.
@@ -75,7 +75,7 @@ declare module 'stripe' {
         /**
          * The ID of the PaymentIntent for Checkout Sessions in `payment` mode.
          */
-        payment_intent: string | PaymentIntent | null;
+        payment_intent: string | Stripe.PaymentIntent | null;
 
         /**
          * A list of the types of payment methods (e.g. card) this Checkout
@@ -86,7 +86,7 @@ declare module 'stripe' {
         /**
          * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
          */
-        setup_intent: string | SetupIntent | null;
+        setup_intent: string | Stripe.SetupIntent | null;
 
         /**
          * Describes the type of transaction being performed by Checkout in order to customize
@@ -99,7 +99,7 @@ declare module 'stripe' {
         /**
          * The ID of the subscription for Checkout Sessions in `subscription` mode.
          */
-        subscription: string | Subscription | null;
+        subscription: string | Stripe.Subscription | null;
 
         /**
          * The URL the customer will be directed to after the payment or
@@ -122,14 +122,14 @@ declare module 'stripe' {
 
           custom?: DisplayItem.Custom;
 
-          plan?: Plan;
+          plan?: Stripe.Plan;
 
           /**
            * Quantity of the display item being purchased.
            */
           quantity?: number;
 
-          sku?: Sku;
+          sku?: Stripe.Sku;
 
           /**
            * The type of display item. One of `custom`, `plan` or `sku`
@@ -532,7 +532,7 @@ declare module 'stripe' {
         create(
           params: SessionCreateParams,
           options?: RequestOptions
-        ): Promise<Checkout.Session>;
+        ): Promise<Stripe.Checkout.Session>;
 
         /**
          * Retrieves a Session object.
@@ -541,11 +541,11 @@ declare module 'stripe' {
           id: string,
           params?: SessionRetrieveParams,
           options?: RequestOptions
-        ): Promise<Checkout.Session>;
+        ): Promise<Stripe.Checkout.Session>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Checkout.Session>;
+        ): Promise<Stripe.Checkout.Session>;
       }
     }
   }

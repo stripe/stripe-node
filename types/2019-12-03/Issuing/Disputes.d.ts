@@ -33,7 +33,7 @@ declare module 'stripe' {
         /**
          * The transaction being disputed.
          */
-        disputed_transaction: string | Issuing.Transaction;
+        disputed_transaction: string | Stripe.Issuing.Transaction;
 
         evidence: Dispute.Evidence;
 
@@ -81,7 +81,7 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
              */
-            uncategorized_file: string | File | null;
+            uncategorized_file: string | Stripe.File | null;
           }
 
           interface Other {
@@ -93,7 +93,7 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
              */
-            uncategorized_file: string | File | null;
+            uncategorized_file: string | Stripe.File | null;
           }
         }
 
@@ -217,7 +217,7 @@ declare module 'stripe' {
         create(
           params: DisputeCreateParams,
           options?: RequestOptions
-        ): Promise<Issuing.Dispute>;
+        ): Promise<Stripe.Issuing.Dispute>;
 
         /**
          * Retrieves an Issuing Dispute object.
@@ -226,11 +226,11 @@ declare module 'stripe' {
           id: string,
           params?: DisputeRetrieveParams,
           options?: RequestOptions
-        ): Promise<Issuing.Dispute>;
+        ): Promise<Stripe.Issuing.Dispute>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Issuing.Dispute>;
+        ): Promise<Stripe.Issuing.Dispute>;
 
         /**
          * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -239,7 +239,7 @@ declare module 'stripe' {
           id: string,
           params?: DisputeUpdateParams,
           options?: RequestOptions
-        ): Promise<Issuing.Dispute>;
+        ): Promise<Stripe.Issuing.Dispute>;
 
         /**
          * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -247,8 +247,8 @@ declare module 'stripe' {
         list(
           params?: DisputeListParams,
           options?: RequestOptions
-        ): ApiListPromise<Issuing.Dispute>;
-        list(options?: RequestOptions): ApiListPromise<Issuing.Dispute>;
+        ): ApiListPromise<Stripe.Issuing.Dispute>;
+        list(options?: RequestOptions): ApiListPromise<Stripe.Issuing.Dispute>;
       }
     }
   }

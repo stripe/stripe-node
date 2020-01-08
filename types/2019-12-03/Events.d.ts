@@ -123,8 +123,8 @@ declare module 'stripe' {
         id: string,
         params?: EventRetrieveParams,
         options?: RequestOptions
-      ): Promise<Event>;
-      retrieve(id: string, options?: RequestOptions): Promise<Event>;
+      ): Promise<Stripe.Event>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Event>;
 
       /**
        * List events, going back up to 30 days. Each event data is rendered according to Stripe API version at its creation time, specified in [event object](https://stripe.com/docs/api/events/object) api_version attribute (not according to your current Stripe API version or Stripe-Version header).
@@ -132,8 +132,8 @@ declare module 'stripe' {
       list(
         params?: EventListParams,
         options?: RequestOptions
-      ): ApiListPromise<Event>;
-      list(options?: RequestOptions): ApiListPromise<Event>;
+      ): ApiListPromise<Stripe.Event>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Event>;
     }
   }
 }

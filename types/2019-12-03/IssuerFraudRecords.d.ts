@@ -22,7 +22,7 @@ declare module 'stripe' {
       /**
        * ID of the charge this issuer fraud record is for, optionally expanded.
        */
-      charge: string | Charge;
+      charge: string | Stripe.Charge;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -79,11 +79,11 @@ declare module 'stripe' {
         id: string,
         params?: IssuerFraudRecordRetrieveParams,
         options?: RequestOptions
-      ): Promise<IssuerFraudRecord>;
+      ): Promise<Stripe.IssuerFraudRecord>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<IssuerFraudRecord>;
+      ): Promise<Stripe.IssuerFraudRecord>;
 
       /**
        * Returns a list of issuer fraud records.
@@ -91,8 +91,8 @@ declare module 'stripe' {
       list(
         params?: IssuerFraudRecordListParams,
         options?: RequestOptions
-      ): ApiListPromise<IssuerFraudRecord>;
-      list(options?: RequestOptions): ApiListPromise<IssuerFraudRecord>;
+      ): ApiListPromise<Stripe.IssuerFraudRecord>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.IssuerFraudRecord>;
     }
   }
 }

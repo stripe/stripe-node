@@ -32,7 +32,7 @@ declare module 'stripe' {
       /**
        * ID of the Connect application that created the PaymentIntent.
        */
-      application: string | Application | null;
+      application: string | Stripe.Application | null;
 
       /**
        * The amount of the application fee (if any) for the resulting payment. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
@@ -57,7 +57,7 @@ declare module 'stripe' {
       /**
        * Charges that were created by this PaymentIntent, if any.
        */
-      charges: ApiList<Charge>;
+      charges: ApiList<Stripe.Charge>;
 
       /**
        * The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key.
@@ -85,7 +85,7 @@ declare module 'stripe' {
        *
        * If present, payment methods used with this PaymentIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this PaymentIntent.
        */
-      customer: string | Customer | DeletedCustomer | null;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -95,7 +95,7 @@ declare module 'stripe' {
       /**
        * ID of the invoice that created this PaymentIntent, if it exists.
        */
-      invoice: string | Invoice | null;
+      invoice: string | Stripe.Invoice | null;
 
       /**
        * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
@@ -120,12 +120,12 @@ declare module 'stripe' {
       /**
        * The account (if any) for which the funds of the PaymentIntent are intended. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
        */
-      on_behalf_of: string | Account | null;
+      on_behalf_of: string | Stripe.Account | null;
 
       /**
        * ID of the payment method used in this PaymentIntent.
        */
-      payment_method: string | PaymentMethod | null;
+      payment_method: string | Stripe.PaymentMethod | null;
 
       /**
        * Payment-method-specific configuration for this PaymentIntent.
@@ -145,7 +145,7 @@ declare module 'stripe' {
       /**
        * ID of the review associated with this PaymentIntent, if any.
        */
-      review: string | Review | null;
+      review: string | Stripe.Review | null;
 
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -169,10 +169,10 @@ declare module 'stripe' {
       source:
         | string
         | CustomerSource
-        | DeletedAlipayAccount
-        | DeletedBankAccount
-        | DeletedBitcoinReceiver
-        | DeletedCard
+        | Stripe.DeletedAlipayAccount
+        | Stripe.DeletedBankAccount
+        | Stripe.DeletedBitcoinReceiver
+        | Stripe.DeletedCard
         | null;
 
       /**
@@ -246,11 +246,11 @@ declare module 'stripe' {
          */
         param?: string;
 
-        payment_intent?: PaymentIntent;
+        payment_intent?: Stripe.PaymentIntent;
 
-        payment_method?: PaymentMethod;
+        payment_method?: Stripe.PaymentMethod;
 
-        setup_intent?: SetupIntent;
+        setup_intent?: Stripe.SetupIntent;
 
         source?: CustomerSource;
 
@@ -426,7 +426,7 @@ declare module 'stripe' {
          * reporting, and where funds from the payment will be transferred to upon
          * payment success.
          */
-        destination: string | Account;
+        destination: string | Stripe.Account;
       }
     }
 
@@ -1283,7 +1283,7 @@ declare module 'stripe' {
       create(
         params: PaymentIntentCreateParams,
         options?: RequestOptions
-      ): Promise<PaymentIntent>;
+      ): Promise<Stripe.PaymentIntent>;
 
       /**
        * Retrieves the details of a PaymentIntent that has previously been created.
@@ -1296,8 +1296,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentRetrieveParams,
         options?: RequestOptions
-      ): Promise<PaymentIntent>;
-      retrieve(id: string, options?: RequestOptions): Promise<PaymentIntent>;
+      ): Promise<Stripe.PaymentIntent>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.PaymentIntent>;
 
       /**
        * Updates properties on a PaymentIntent object without confirming.
@@ -1312,7 +1315,7 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentUpdateParams,
         options?: RequestOptions
-      ): Promise<PaymentIntent>;
+      ): Promise<Stripe.PaymentIntent>;
 
       /**
        * Returns a list of PaymentIntents.
@@ -1320,8 +1323,8 @@ declare module 'stripe' {
       list(
         params?: PaymentIntentListParams,
         options?: RequestOptions
-      ): ApiListPromise<PaymentIntent>;
-      list(options?: RequestOptions): ApiListPromise<PaymentIntent>;
+      ): ApiListPromise<Stripe.PaymentIntent>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.PaymentIntent>;
 
       /**
        * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
@@ -1332,8 +1335,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentCancelParams,
         options?: RequestOptions
-      ): Promise<PaymentIntent>;
-      cancel(id: string, options?: RequestOptions): Promise<PaymentIntent>;
+      ): Promise<Stripe.PaymentIntent>;
+      cancel(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.PaymentIntent>;
 
       /**
        * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
@@ -1346,8 +1352,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentCaptureParams,
         options?: RequestOptions
-      ): Promise<PaymentIntent>;
-      capture(id: string, options?: RequestOptions): Promise<PaymentIntent>;
+      ): Promise<Stripe.PaymentIntent>;
+      capture(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.PaymentIntent>;
 
       /**
        * Confirm that your customer intends to pay with current or provided
@@ -1380,8 +1389,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentConfirmParams,
         options?: RequestOptions
-      ): Promise<PaymentIntent>;
-      confirm(id: string, options?: RequestOptions): Promise<PaymentIntent>;
+      ): Promise<Stripe.PaymentIntent>;
+      confirm(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.PaymentIntent>;
     }
   }
 }

@@ -22,7 +22,7 @@ declare module 'stripe' {
       /**
        * The charge associated with this review.
        */
-      charge: string | Charge | null;
+      charge: string | Stripe.Charge | null;
 
       /**
        * The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
@@ -62,7 +62,7 @@ declare module 'stripe' {
       /**
        * The PaymentIntent ID associated with this review, if one exists.
        */
-      payment_intent?: string | PaymentIntent;
+      payment_intent?: string | Stripe.PaymentIntent;
 
       /**
        * The reason the review is currently open or closed. One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
@@ -165,8 +165,8 @@ declare module 'stripe' {
         id: string,
         params?: ReviewRetrieveParams,
         options?: RequestOptions
-      ): Promise<Review>;
-      retrieve(id: string, options?: RequestOptions): Promise<Review>;
+      ): Promise<Stripe.Review>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Review>;
 
       /**
        * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -174,8 +174,8 @@ declare module 'stripe' {
       list(
         params?: ReviewListParams,
         options?: RequestOptions
-      ): ApiListPromise<Review>;
-      list(options?: RequestOptions): ApiListPromise<Review>;
+      ): ApiListPromise<Stripe.Review>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Review>;
 
       /**
        * Approves a Review object, closing it and removing it from the list of reviews.
@@ -184,8 +184,8 @@ declare module 'stripe' {
         id: string,
         params?: ReviewApproveParams,
         options?: RequestOptions
-      ): Promise<Review>;
-      approve(id: string, options?: RequestOptions): Promise<Review>;
+      ): Promise<Stripe.Review>;
+      approve(id: string, options?: RequestOptions): Promise<Stripe.Review>;
     }
   }
 }

@@ -83,7 +83,7 @@ declare module 'stripe' {
       create(
         params: ApplePayDomainCreateParams,
         options?: RequestOptions
-      ): Promise<ApplePayDomain>;
+      ): Promise<Stripe.ApplePayDomain>;
 
       /**
        * Retrieve an apple pay domain.
@@ -92,8 +92,11 @@ declare module 'stripe' {
         id: string,
         params?: ApplePayDomainRetrieveParams,
         options?: RequestOptions
-      ): Promise<ApplePayDomain>;
-      retrieve(id: string, options?: RequestOptions): Promise<ApplePayDomain>;
+      ): Promise<Stripe.ApplePayDomain>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.ApplePayDomain>;
 
       /**
        * List apple pay domains.
@@ -101,8 +104,8 @@ declare module 'stripe' {
       list(
         params?: ApplePayDomainListParams,
         options?: RequestOptions
-      ): ApiListPromise<ApplePayDomain>;
-      list(options?: RequestOptions): ApiListPromise<ApplePayDomain>;
+      ): ApiListPromise<Stripe.ApplePayDomain>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.ApplePayDomain>;
 
       /**
        * Delete an apple pay domain.
@@ -111,8 +114,11 @@ declare module 'stripe' {
         id: string,
         params?: ApplePayDomainDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedApplePayDomain>;
-      del(id: string, options?: RequestOptions): Promise<DeletedApplePayDomain>;
+      ): Promise<Stripe.DeletedApplePayDomain>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.DeletedApplePayDomain>;
     }
   }
 }

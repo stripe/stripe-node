@@ -290,7 +290,7 @@ declare module 'stripe' {
           /**
            * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
            */
-          back: string | File | null;
+          back: string | Stripe.File | null;
 
           /**
            * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
@@ -305,14 +305,14 @@ declare module 'stripe' {
           /**
            * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
            */
-          front: string | File | null;
+          front: string | Stripe.File | null;
         }
 
         interface Document {
           /**
            * The back of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
            */
-          back: string | File | null;
+          back: string | Stripe.File | null;
 
           /**
            * A user-displayable string describing the verification state of this document. For example, if a document is uploaded and the picture is too fuzzy, this may say "Identity document is too unclear to read".
@@ -327,7 +327,7 @@ declare module 'stripe' {
           /**
            * The front of an ID returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
            */
-          front: string | File | null;
+          front: string | Stripe.File | null;
         }
       }
     }

@@ -66,8 +66,8 @@ declare module 'stripe' {
       create(
         params?: EphemeralKeyCreateParams,
         options?: RequestOptions
-      ): Promise<EphemeralKey>;
-      create(options?: RequestOptions): Promise<EphemeralKey>;
+      ): Promise<Stripe.EphemeralKey>;
+      create(options?: RequestOptions): Promise<Stripe.EphemeralKey>;
 
       /**
        * Invalidates a short-lived API key for a given resource.
@@ -76,8 +76,8 @@ declare module 'stripe' {
         id: string,
         params?: EphemeralKeyDeleteParams,
         options?: RequestOptions
-      ): Promise<EphemeralKey>;
-      del(id: string, options?: RequestOptions): Promise<EphemeralKey>;
+      ): Promise<Stripe.EphemeralKey>;
+      del(id: string, options?: RequestOptions): Promise<Stripe.EphemeralKey>;
     }
   }
 }

@@ -27,7 +27,7 @@ declare module 'stripe' {
       /**
        * ID of the customer.
        */
-      customer: string | Customer;
+      customer: string | Stripe.Customer;
 
       deleted?: void;
 

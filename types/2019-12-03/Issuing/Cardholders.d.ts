@@ -1071,12 +1071,12 @@ declare module 'stripe' {
               /**
                * The back of a document returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
                */
-              back: string | File | null;
+              back: string | Stripe.File | null;
 
               /**
                * The front of a document returned by a [file upload](#create_file) with a `purpose` value of `identity_document`.
                */
-              front: string | File | null;
+              front: string | Stripe.File | null;
             }
           }
         }
@@ -3318,7 +3318,7 @@ declare module 'stripe' {
         create(
           params: CardholderCreateParams,
           options?: RequestOptions
-        ): Promise<Issuing.Cardholder>;
+        ): Promise<Stripe.Issuing.Cardholder>;
 
         /**
          * Retrieves an Issuing Cardholder object.
@@ -3327,11 +3327,11 @@ declare module 'stripe' {
           id: string,
           params?: CardholderRetrieveParams,
           options?: RequestOptions
-        ): Promise<Issuing.Cardholder>;
+        ): Promise<Stripe.Issuing.Cardholder>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Issuing.Cardholder>;
+        ): Promise<Stripe.Issuing.Cardholder>;
 
         /**
          * Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -3340,7 +3340,7 @@ declare module 'stripe' {
           id: string,
           params?: CardholderUpdateParams,
           options?: RequestOptions
-        ): Promise<Issuing.Cardholder>;
+        ): Promise<Stripe.Issuing.Cardholder>;
 
         /**
          * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -3348,8 +3348,10 @@ declare module 'stripe' {
         list(
           params?: CardholderListParams,
           options?: RequestOptions
-        ): ApiListPromise<Issuing.Cardholder>;
-        list(options?: RequestOptions): ApiListPromise<Issuing.Cardholder>;
+        ): ApiListPromise<Stripe.Issuing.Cardholder>;
+        list(
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Issuing.Cardholder>;
       }
     }
   }

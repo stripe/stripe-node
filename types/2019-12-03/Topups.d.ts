@@ -22,7 +22,7 @@ declare module 'stripe' {
       /**
        * ID of the balance transaction that describes the impact of this top-up on your account balance. May not be specified depending on status of top-up.
        */
-      balance_transaction: string | BalanceTransaction | null;
+      balance_transaction: string | Stripe.BalanceTransaction | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -64,7 +64,7 @@ declare module 'stripe' {
        */
       metadata: Metadata;
 
-      source: Source;
+      source: Stripe.Source;
 
       /**
        * Extra information about a top-up. This will appear on your source's bank statement. It must contain at least one letter.
@@ -197,7 +197,7 @@ declare module 'stripe' {
       create(
         params: TopupCreateParams,
         options?: RequestOptions
-      ): Promise<Topup>;
+      ): Promise<Stripe.Topup>;
 
       /**
        * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
@@ -206,8 +206,8 @@ declare module 'stripe' {
         id: string,
         params?: TopupRetrieveParams,
         options?: RequestOptions
-      ): Promise<Topup>;
-      retrieve(id: string, options?: RequestOptions): Promise<Topup>;
+      ): Promise<Stripe.Topup>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Topup>;
 
       /**
        * Updates the metadata of a top-up. Other top-up details are not editable by design.
@@ -216,7 +216,7 @@ declare module 'stripe' {
         id: string,
         params?: TopupUpdateParams,
         options?: RequestOptions
-      ): Promise<Topup>;
+      ): Promise<Stripe.Topup>;
 
       /**
        * Returns a list of top-ups.
@@ -224,8 +224,8 @@ declare module 'stripe' {
       list(
         params?: TopupListParams,
         options?: RequestOptions
-      ): ApiListPromise<Topup>;
-      list(options?: RequestOptions): ApiListPromise<Topup>;
+      ): ApiListPromise<Stripe.Topup>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Topup>;
 
       /**
        * Cancels a top-up. Only pending top-ups can be canceled.
@@ -234,8 +234,8 @@ declare module 'stripe' {
         id: string,
         params?: TopupCancelParams,
         options?: RequestOptions
-      ): Promise<Topup>;
-      cancel(id: string, options?: RequestOptions): Promise<Topup>;
+      ): Promise<Stripe.Topup>;
+      cancel(id: string, options?: RequestOptions): Promise<Stripe.Topup>;
     }
   }
 }

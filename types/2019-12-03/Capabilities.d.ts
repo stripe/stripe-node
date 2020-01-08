@@ -17,7 +17,7 @@ declare module 'stripe' {
       /**
        * The account for which the capability enables functionality.
        */
-      account: string | Account;
+      account: string | Stripe.Account;
 
       /**
        * Whether the capability has been requested.

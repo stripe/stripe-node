@@ -14,9 +14,9 @@ declare module 'stripe' {
        */
       object: 'token';
 
-      bank_account?: BankAccount;
+      bank_account?: Stripe.BankAccount;
 
-      card?: Card;
+      card?: Stripe.Card;
 
       /**
        * IP address of the client that generated the token.
@@ -382,8 +382,8 @@ declare module 'stripe' {
       create(
         params?: TokenCreateParams,
         options?: RequestOptions
-      ): Promise<Token>;
-      create(options?: RequestOptions): Promise<Token>;
+      ): Promise<Stripe.Token>;
+      create(options?: RequestOptions): Promise<Stripe.Token>;
 
       /**
        * Retrieves the token with the given ID.
@@ -392,8 +392,8 @@ declare module 'stripe' {
         id: string,
         params?: TokenRetrieveParams,
         options?: RequestOptions
-      ): Promise<Token>;
-      retrieve(id: string, options?: RequestOptions): Promise<Token>;
+      ): Promise<Stripe.Token>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Token>;
     }
   }
 }

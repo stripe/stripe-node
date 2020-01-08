@@ -27,7 +27,7 @@ declare module 'stripe' {
       /**
        * The ID of the associated object for this line item. Expandable if not null (e.g., expandable to a SKU).
        */
-      parent: string | Sku | null;
+      parent: string | Stripe.Sku | null;
 
       /**
        * A positive integer representing the number of instances of `parent` that are included in this order item. Applicable/present only if `type` is `sku`.

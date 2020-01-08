@@ -9,9 +9,9 @@ declare module 'stripe' {
        */
       object: 'discount';
 
-      coupon: Coupon;
+      coupon: Stripe.Coupon;
 
-      customer: string | Customer | DeletedCustomer | null;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       deleted?: void;
 

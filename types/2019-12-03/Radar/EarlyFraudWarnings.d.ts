@@ -23,7 +23,7 @@ declare module 'stripe' {
         /**
          * ID of the charge this early fraud warning is for, optionally expanded.
          */
-        charge: string | Charge;
+        charge: string | Stripe.Charge;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -70,11 +70,11 @@ declare module 'stripe' {
           id: string,
           params?: EarlyFraudWarningRetrieveParams,
           options?: RequestOptions
-        ): Promise<Radar.EarlyFraudWarning>;
+        ): Promise<Stripe.Radar.EarlyFraudWarning>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Radar.EarlyFraudWarning>;
+        ): Promise<Stripe.Radar.EarlyFraudWarning>;
 
         /**
          * Returns a list of early fraud warnings.
@@ -82,8 +82,10 @@ declare module 'stripe' {
         list(
           params?: EarlyFraudWarningListParams,
           options?: RequestOptions
-        ): ApiListPromise<Radar.EarlyFraudWarning>;
-        list(options?: RequestOptions): ApiListPromise<Radar.EarlyFraudWarning>;
+        ): ApiListPromise<Stripe.Radar.EarlyFraudWarning>;
+        list(
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Radar.EarlyFraudWarning>;
       }
     }
   }

@@ -553,7 +553,7 @@ declare module 'stripe' {
       create(
         params: WebhookEndpointCreateParams,
         options?: RequestOptions
-      ): Promise<WebhookEndpoint>;
+      ): Promise<Stripe.WebhookEndpoint>;
 
       /**
        * Retrieves the webhook endpoint with the given ID.
@@ -562,8 +562,11 @@ declare module 'stripe' {
         id: string,
         params?: WebhookEndpointRetrieveParams,
         options?: RequestOptions
-      ): Promise<WebhookEndpoint>;
-      retrieve(id: string, options?: RequestOptions): Promise<WebhookEndpoint>;
+      ): Promise<Stripe.WebhookEndpoint>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.WebhookEndpoint>;
 
       /**
        * Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of your endpoint.
@@ -572,7 +575,7 @@ declare module 'stripe' {
         id: string,
         params?: WebhookEndpointUpdateParams,
         options?: RequestOptions
-      ): Promise<WebhookEndpoint>;
+      ): Promise<Stripe.WebhookEndpoint>;
 
       /**
        * Returns a list of your webhook endpoints.
@@ -580,8 +583,8 @@ declare module 'stripe' {
       list(
         params?: WebhookEndpointListParams,
         options?: RequestOptions
-      ): ApiListPromise<WebhookEndpoint>;
-      list(options?: RequestOptions): ApiListPromise<WebhookEndpoint>;
+      ): ApiListPromise<Stripe.WebhookEndpoint>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.WebhookEndpoint>;
 
       /**
        * You can also delete webhook endpoints via the [webhook endpoint management](https://dashboard.stripe.com/account/webhooks) page of the Stripe dashboard.
@@ -590,11 +593,11 @@ declare module 'stripe' {
         id: string,
         params?: WebhookEndpointDeleteParams,
         options?: RequestOptions
-      ): Promise<DeletedWebhookEndpoint>;
+      ): Promise<Stripe.DeletedWebhookEndpoint>;
       del(
         id: string,
         options?: RequestOptions
-      ): Promise<DeletedWebhookEndpoint>;
+      ): Promise<Stripe.DeletedWebhookEndpoint>;
     }
   }
 }

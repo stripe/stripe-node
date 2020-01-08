@@ -44,8 +44,11 @@ declare module 'stripe' {
         id: string,
         params?: ExchangeRateRetrieveParams,
         options?: RequestOptions
-      ): Promise<ExchangeRate>;
-      retrieve(id: string, options?: RequestOptions): Promise<ExchangeRate>;
+      ): Promise<Stripe.ExchangeRate>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.ExchangeRate>;
 
       /**
        * Returns a list of objects that contain the rates at which foreign currencies are converted to one another. Only shows the currencies for which Stripe supports.
@@ -53,8 +56,8 @@ declare module 'stripe' {
       list(
         params?: ExchangeRateListParams,
         options?: RequestOptions
-      ): ApiListPromise<ExchangeRate>;
-      list(options?: RequestOptions): ApiListPromise<ExchangeRate>;
+      ): ApiListPromise<Stripe.ExchangeRate>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.ExchangeRate>;
     }
   }
 }

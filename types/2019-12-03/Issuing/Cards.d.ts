@@ -25,7 +25,7 @@ declare module 'stripe' {
         /**
          * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object to which the card belongs.
          */
-        cardholder: Issuing.Cardholder | null;
+        cardholder: Stripe.Issuing.Cardholder | null;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -75,7 +75,7 @@ declare module 'stripe' {
         /**
          * The card this card replaces, if any.
          */
-        replacement_for: string | Issuing.Card | null;
+        replacement_for: string | Stripe.Issuing.Card | null;
 
         /**
          * The reason why the previous card needed to be replaced.
@@ -3140,7 +3140,7 @@ declare module 'stripe' {
         create(
           params: CardCreateParams,
           options?: RequestOptions
-        ): Promise<Issuing.Card>;
+        ): Promise<Stripe.Issuing.Card>;
 
         /**
          * Retrieves an Issuing Card object.
@@ -3149,8 +3149,11 @@ declare module 'stripe' {
           id: string,
           params?: CardRetrieveParams,
           options?: RequestOptions
-        ): Promise<Issuing.Card>;
-        retrieve(id: string, options?: RequestOptions): Promise<Issuing.Card>;
+        ): Promise<Stripe.Issuing.Card>;
+        retrieve(
+          id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Issuing.Card>;
 
         /**
          * Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -3159,7 +3162,7 @@ declare module 'stripe' {
           id: string,
           params?: CardUpdateParams,
           options?: RequestOptions
-        ): Promise<Issuing.Card>;
+        ): Promise<Stripe.Issuing.Card>;
 
         /**
          * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -3167,8 +3170,8 @@ declare module 'stripe' {
         list(
           params?: CardListParams,
           options?: RequestOptions
-        ): ApiListPromise<Issuing.Card>;
-        list(options?: RequestOptions): ApiListPromise<Issuing.Card>;
+        ): ApiListPromise<Stripe.Issuing.Card>;
+        list(options?: RequestOptions): ApiListPromise<Stripe.Issuing.Card>;
 
         /**
          * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/management#virtual-card-info) of a virtual card.
@@ -3177,11 +3180,11 @@ declare module 'stripe' {
           id: string,
           params?: CardRetrieveDetailsParams,
           options?: RequestOptions
-        ): Promise<Issuing.CardDetails>;
+        ): Promise<Stripe.Issuing.CardDetails>;
         retrieveDetails(
           id: string,
           options?: RequestOptions
-        ): Promise<Issuing.CardDetails>;
+        ): Promise<Stripe.Issuing.CardDetails>;
       }
     }
   }

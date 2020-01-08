@@ -29,12 +29,12 @@ declare module 'stripe' {
       /**
        * ID of the Connect application that created the charge.
        */
-      application: string | Application | null;
+      application: string | Stripe.Application | null;
 
       /**
        * The application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
        */
-      application_fee: string | ApplicationFee | null;
+      application_fee: string | Stripe.ApplicationFee | null;
 
       /**
        * The amount of the application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
@@ -49,7 +49,7 @@ declare module 'stripe' {
       /**
        * ID of the balance transaction that describes the impact of this charge on your account balance (not including refunds or disputes).
        */
-      balance_transaction: string | BalanceTransaction | null;
+      balance_transaction: string | Stripe.BalanceTransaction | null;
 
       billing_details: Charge.BillingDetails;
 
@@ -71,7 +71,7 @@ declare module 'stripe' {
       /**
        * ID of the customer this charge is for if one exists.
        */
-      customer: string | Customer | DeletedCustomer | null;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -81,12 +81,12 @@ declare module 'stripe' {
       /**
        * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
        */
-      destination: string | Account | null;
+      destination: string | Stripe.Account | null;
 
       /**
        * Details about the dispute if the charge has been disputed.
        */
-      dispute: string | Dispute | null;
+      dispute: string | Stripe.Dispute | null;
 
       /**
        * Whether the charge has been disputed.
@@ -111,7 +111,7 @@ declare module 'stripe' {
       /**
        * ID of the invoice this charge is for if one exists.
        */
-      invoice: string | Invoice | null;
+      invoice: string | Stripe.Invoice | null;
 
       level3?: Charge.Level3;
 
@@ -128,12 +128,12 @@ declare module 'stripe' {
       /**
        * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
        */
-      on_behalf_of: string | Account | null;
+      on_behalf_of: string | Stripe.Account | null;
 
       /**
        * ID of the order this charge is for if one exists.
        */
-      order: string | Order | null;
+      order: string | Stripe.Order | null;
 
       /**
        * Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
@@ -183,12 +183,12 @@ declare module 'stripe' {
       /**
        * A list of refunds that have been applied to the charge.
        */
-      refunds: ApiList<Refund>;
+      refunds: ApiList<Stripe.Refund>;
 
       /**
        * ID of the review associated with this charge if one exists.
        */
-      review: string | Review | null;
+      review: string | Stripe.Review | null;
 
       /**
        * Shipping information for the charge.
@@ -203,7 +203,7 @@ declare module 'stripe' {
       /**
        * The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
        */
-      source_transfer: string | Transfer | null;
+      source_transfer: string | Stripe.Transfer | null;
 
       /**
        * For card charges, use `statement_descriptor_suffix` instead. Otherwise, you can use this value as the complete description of a charge on your customers' statements. Must contain at least one letter, maximum 22 characters.
@@ -223,7 +223,7 @@ declare module 'stripe' {
       /**
        * ID of the transfer to the `destination` account (only applicable if the charge was created using the `destination` parameter).
        */
-      transfer?: string | Transfer;
+      transfer?: string | Stripe.Transfer;
 
       /**
        * An optional dictionary including the account to automatically transfer to as part of a destination charge. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
@@ -1145,7 +1145,7 @@ declare module 'stripe' {
         /**
          * ID of an existing, connected Stripe account to transfer funds to if `transfer_data` was specified in the charge request.
          */
-        destination: string | Account;
+        destination: string | Stripe.Account;
       }
     }
 
@@ -1461,8 +1461,8 @@ declare module 'stripe' {
       create(
         params?: ChargeCreateParams,
         options?: RequestOptions
-      ): Promise<Charge>;
-      create(options?: RequestOptions): Promise<Charge>;
+      ): Promise<Stripe.Charge>;
+      create(options?: RequestOptions): Promise<Stripe.Charge>;
 
       /**
        * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
@@ -1471,8 +1471,8 @@ declare module 'stripe' {
         id: string,
         params?: ChargeRetrieveParams,
         options?: RequestOptions
-      ): Promise<Charge>;
-      retrieve(id: string, options?: RequestOptions): Promise<Charge>;
+      ): Promise<Stripe.Charge>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Charge>;
 
       /**
        * Updates the specified charge by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -1481,7 +1481,7 @@ declare module 'stripe' {
         id: string,
         params?: ChargeUpdateParams,
         options?: RequestOptions
-      ): Promise<Charge>;
+      ): Promise<Stripe.Charge>;
 
       /**
        * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
@@ -1489,8 +1489,8 @@ declare module 'stripe' {
       list(
         params?: ChargeListParams,
         options?: RequestOptions
-      ): ApiListPromise<Charge>;
-      list(options?: RequestOptions): ApiListPromise<Charge>;
+      ): ApiListPromise<Stripe.Charge>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Charge>;
 
       /**
        * Capture the payment of an existing, uncaptured, charge. This is the second half of the two-step payment flow, where first you [created a charge](https://stripe.com/docs/api#create_charge) with the capture option set to false.
@@ -1501,8 +1501,8 @@ declare module 'stripe' {
         id: string,
         params?: ChargeCaptureParams,
         options?: RequestOptions
-      ): Promise<Charge>;
-      capture(id: string, options?: RequestOptions): Promise<Charge>;
+      ): Promise<Stripe.Charge>;
+      capture(id: string, options?: RequestOptions): Promise<Stripe.Charge>;
     }
   }
 }

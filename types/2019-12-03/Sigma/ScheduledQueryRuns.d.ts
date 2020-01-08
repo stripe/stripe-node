@@ -30,7 +30,7 @@ declare module 'stripe' {
         /**
          * The file object representing the results of the query.
          */
-        file: File | null;
+        file: Stripe.File | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -89,11 +89,11 @@ declare module 'stripe' {
           id: string,
           params?: ScheduledQueryRunRetrieveParams,
           options?: RequestOptions
-        ): Promise<Sigma.ScheduledQueryRun>;
+        ): Promise<Stripe.Sigma.ScheduledQueryRun>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Sigma.ScheduledQueryRun>;
+        ): Promise<Stripe.Sigma.ScheduledQueryRun>;
 
         /**
          * Returns a list of scheduled query runs.
@@ -101,8 +101,10 @@ declare module 'stripe' {
         list(
           params?: ScheduledQueryRunListParams,
           options?: RequestOptions
-        ): ApiListPromise<Sigma.ScheduledQueryRun>;
-        list(options?: RequestOptions): ApiListPromise<Sigma.ScheduledQueryRun>;
+        ): ApiListPromise<Stripe.Sigma.ScheduledQueryRun>;
+        list(
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Sigma.ScheduledQueryRun>;
       }
     }
   }

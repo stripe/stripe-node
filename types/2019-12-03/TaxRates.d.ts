@@ -175,7 +175,7 @@ declare module 'stripe' {
       create(
         params: TaxRateCreateParams,
         options?: RequestOptions
-      ): Promise<TaxRate>;
+      ): Promise<Stripe.TaxRate>;
 
       /**
        * Retrieves a tax rate with the given ID
@@ -184,8 +184,8 @@ declare module 'stripe' {
         id: string,
         params?: TaxRateRetrieveParams,
         options?: RequestOptions
-      ): Promise<TaxRate>;
-      retrieve(id: string, options?: RequestOptions): Promise<TaxRate>;
+      ): Promise<Stripe.TaxRate>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.TaxRate>;
 
       /**
        * Updates an existing tax rate.
@@ -194,7 +194,7 @@ declare module 'stripe' {
         id: string,
         params?: TaxRateUpdateParams,
         options?: RequestOptions
-      ): Promise<TaxRate>;
+      ): Promise<Stripe.TaxRate>;
 
       /**
        * Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
@@ -202,8 +202,8 @@ declare module 'stripe' {
       list(
         params?: TaxRateListParams,
         options?: RequestOptions
-      ): ApiListPromise<TaxRate>;
-      list(options?: RequestOptions): ApiListPromise<TaxRate>;
+      ): ApiListPromise<Stripe.TaxRate>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.TaxRate>;
     }
   }
 }

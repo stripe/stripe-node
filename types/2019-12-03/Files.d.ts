@@ -24,7 +24,7 @@ declare module 'stripe' {
        */
       filename: string | null;
 
-      links?: ApiList<FileLink> | null;
+      links?: ApiList<Stripe.FileLink> | null;
 
       /**
        * The purpose of the file. Possible values are `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `identity_document`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
@@ -97,8 +97,8 @@ declare module 'stripe' {
       create(
         params?: FileCreateParams,
         options?: RequestOptions
-      ): Promise<File>;
-      create(options?: RequestOptions): Promise<File>;
+      ): Promise<Stripe.File>;
+      create(options?: RequestOptions): Promise<Stripe.File>;
 
       /**
        * Retrieves the details of an existing file object. Supply the unique file ID from a file, and Stripe will return the corresponding file object. To access file contents, see the [File Upload Guide](https://stripe.com/docs/file-upload#download-file-contents).
@@ -107,8 +107,8 @@ declare module 'stripe' {
         id: string,
         params?: FileRetrieveParams,
         options?: RequestOptions
-      ): Promise<File>;
-      retrieve(id: string, options?: RequestOptions): Promise<File>;
+      ): Promise<Stripe.File>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.File>;
 
       /**
        * Returns a list of the files that your account has access to. The files are returned sorted by creation date, with the most recently created files appearing first.
@@ -116,8 +116,8 @@ declare module 'stripe' {
       list(
         params?: FileListParams,
         options?: RequestOptions
-      ): ApiListPromise<File>;
-      list(options?: RequestOptions): ApiListPromise<File>;
+      ): ApiListPromise<Stripe.File>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.File>;
     }
   }
 }
