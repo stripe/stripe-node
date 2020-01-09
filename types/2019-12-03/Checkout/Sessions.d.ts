@@ -196,7 +196,7 @@ declare module 'stripe' {
          * is complete.
          * If you'd like access to the Checkout Session for the successful
          * payment, read more about it in our guide on [fulfilling your payments
-         * with webhooks](/docs/payments/checkout/fulfillment#webhooks).
+         * with webhooks](https://stripe.com/docs/payments/checkout/fulfillment#webhooks).
          */
         success_url: string;
 
@@ -362,7 +362,7 @@ declare module 'stripe' {
           /**
            * The Stripe account ID for which these funds are intended. For details,
            * see the PaymentIntents [use case for connected
-           * accounts](/docs/payments/connected-accounts).
+           * accounts](https://stripe.com/docs/payments/connected-accounts).
            */
           on_behalf_of?: string;
 
