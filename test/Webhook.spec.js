@@ -74,41 +74,16 @@ describe('Webhooks', () => {
       }).to.throw(/Unable to extract timestamp and signatures from header/);
     });
 
-    it('should allow a singature which is an array of one string', () => {
-      const header = stripe.webhooks.generateTestHeaderString({
-        payload: EVENT_PAYLOAD_STRING,
-        secret: SECRET,
-      });
-
-      const event = stripe.webhooks.constructEvent(
-        EVENT_PAYLOAD_STRING,
-        [header],
-        SECRET
-      );
-
-      expect(event.id).to.equal(EVENT_PAYLOAD.id);
-    });
-
-    it('should error if you pass a signature which is an array of length !1', () => {
+    it('should error if you pass a signature which is an array, even though our types say you can', () => {
       const header = stripe.webhooks.generateTestHeaderString({
         payload: EVENT_PAYLOAD_STRING,
         secret: SECRET,
       });
 
       expect(() => {
-        stripe.webhooks.constructEvent(EVENT_PAYLOAD_STRING, [], SECRET);
+        stripe.webhooks.constructEvent(EVENT_PAYLOAD_STRING, [header], SECRET);
       }).to.throw(
-        'The header arg was an array of length 0; please pass a string or an array of length 1 instead.'
-      );
-
-      expect(() => {
-        stripe.webhooks.constructEvent(
-          EVENT_PAYLOAD_STRING,
-          [header, header],
-          SECRET
-        );
-      }).to.throw(
-        'The header arg was an array of length 2; please pass a string or an array of length 1 instead.'
+        'Unexpected: An array was passed as a header, which should not be possible for the stripe-signature header.'
       );
     });
   });
