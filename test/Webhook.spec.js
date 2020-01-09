@@ -73,6 +73,19 @@ describe('Webhooks', () => {
         stripe.webhooks.constructEvent(EVENT_PAYLOAD_STRING, header, SECRET);
       }).to.throw(/Unable to extract timestamp and signatures from header/);
     });
+
+    it('should error if you pass a signature which is an array, even though our types say you can', () => {
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: EVENT_PAYLOAD_STRING,
+        secret: SECRET,
+      });
+
+      expect(() => {
+        stripe.webhooks.constructEvent(EVENT_PAYLOAD_STRING, [header], SECRET);
+      }).to.throw(
+        'Unexpected: An array was passed as a header, which should not be possible for the stripe-signature header.'
+      );
+    });
   });
 
   describe('.verifySignatureHeader', () => {
