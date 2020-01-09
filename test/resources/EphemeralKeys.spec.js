@@ -12,7 +12,7 @@ function errorsOnNoStripeVersion() {
 function sendsCorrectStripeVersion() {
   stripe.ephemeralKeys.create(
     {customer: 'cus_123'},
-    {stripe_version: '2017-06-05'}
+    {apiVersion: '2017-06-05'}
   );
 
   expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -33,7 +33,7 @@ describe('EphemeralKey Resource', () => {
     it('Sends the correct request', () => {
       stripe.ephemeralKeys.create(
         {customer: 'cus_123'},
-        {stripe_version: '2017-05-25'}
+        {apiVersion: '2017-05-25'}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',

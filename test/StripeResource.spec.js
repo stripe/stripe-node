@@ -425,12 +425,14 @@ describe('StripeResource', () => {
             ]);
           });
 
-        realStripe._setApiNumberField('maxNetworkRetries', 1);
-
-        realStripe.charges.create(options.data, {idempotency_key: key}, () => {
-          expect(headers['idempotency-key']).to.equal(key);
-          done();
-        });
+        realStripe.charges.create(
+          options.data,
+          {idempotencyKey: key, maxNetworkRetries: 1},
+          () => {
+            expect(headers['idempotency-key']).to.equal(key);
+            done();
+          }
+        );
       });
 
       it('should allow the setting of network retries on a per-request basis', (done) => {

@@ -243,7 +243,7 @@ describe('utils', () => {
     });
 
     it('parses an api version', () => {
-      const args = [{foo: 'bar'}, {stripeVersion: '2003-03-30'}];
+      const args = [{foo: 'bar'}, {apiVersion: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
         headers: {'Stripe-Version': '2003-03-30'},
@@ -258,7 +258,7 @@ describe('utils', () => {
         {
           apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
           idempotencyKey: 'foo',
-          stripeVersion: '2010-01-10',
+          apiVersion: '2010-01-10',
         },
       ];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
@@ -277,7 +277,7 @@ describe('utils', () => {
         {
           apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
           idempotencyKey: 'foo',
-          stripeVersion: 'hunter2',
+          apiVersion: 'hunter2',
         },
       ];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
@@ -310,24 +310,88 @@ describe('utils', () => {
     });
 
     it('parses snake case for backwards compatibility', () => {
+      return new Promise((resolve, reject) => {
+        const args = [
+          {
+            api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+            idempotency_key: 'key',
+            stripe_account: 'acct_123',
+            stripe_version: '2019-08-08',
+          },
+        ];
+        const desiredWarnings = [
+          "Stripe: 'api_key' is deprecated; use 'apiKey' instead.",
+          "Stripe: 'idempotency_key' is deprecated; use 'idempotencyKey' instead.",
+          "Stripe: 'stripe_account' is deprecated; use 'stripeAccount' instead.",
+          "Stripe: 'stripe_version' is deprecated; use 'apiVersion' instead.",
+        ];
+
+        const warnings = [];
+        const onWarn = (message) => {
+          warnings.push(message);
+          if (warnings.length === desiredWarnings.length) {
+            expect(warnings).to.deep.equal(desiredWarnings);
+            resolve();
+          }
+        };
+        handleWarnings(() => {
+          expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+            auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+            headers: {
+              'Idempotency-Key': 'key',
+              'Stripe-Version': '2019-08-08',
+              'Stripe-Account': 'acct_123',
+            },
+            settings: {},
+          });
+        }, onWarn);
+      });
+    });
+
+    it('parses stripeVersion for backwards compatibility', () => {
+      return new Promise((resolve, reject) => {
+        const args = [
+          {
+            apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+            stripeVersion: '2019-08-08',
+          },
+        ];
+        const desiredWarnings = [
+          "Stripe: 'stripeVersion' is deprecated; use 'apiVersion' instead.",
+        ];
+
+        const warnings = [];
+        const onWarn = (message) => {
+          warnings.push(message);
+          if (warnings.length === desiredWarnings.length) {
+            expect(warnings).to.deep.equal(desiredWarnings);
+            resolve();
+          }
+        };
+        handleWarnings(() => {
+          expect(utils.getOptionsFromArgs(args)).to.deep.equal({
+            auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+            headers: {
+              'Stripe-Version': '2019-08-08',
+            },
+            settings: {},
+          });
+        }, onWarn);
+      });
+    });
+
+    it('errors if you pass both a deprecated and non-deprecated version of the same param', () => {
       const args = [
         {
-          api_key: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-          idempotency_key: 'key',
-          stripe_account: 'acct_123',
-          stripe_version: '2019-08-08',
+          stripeVersion: 'bad',
+          apiVersion: 'good',
         },
       ];
-
-      expect(utils.getOptionsFromArgs(args)).to.deep.equal({
-        auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
-        headers: {
-          'Idempotency-Key': 'key',
-          'Stripe-Version': '2019-08-08',
-          'Stripe-Account': 'acct_123',
-        },
-        settings: {},
-      });
+      expect(() => {
+        utils.getOptionsFromArgs(args);
+      }).to.throw(
+        "Both 'apiVersion' and 'stripeVersion' were provided; please remove 'stripeVersion', which is deprecated."
+      );
     });
 
     it('warns if the hash contains something that does not belong', (done) => {
@@ -336,7 +400,7 @@ describe('utils', () => {
         {
           apiKey: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
           idempotencyKey: 'foo',
-          stripeVersion: '2010-01-10',
+          apiVersion: '2010-01-10',
           fishsticks: true,
           custard: true,
         },

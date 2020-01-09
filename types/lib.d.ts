@@ -52,12 +52,20 @@ declare module 'stripe' {
 
       port?: string | number;
 
+      protocol?: 'https' | 'http';
+
       /**
        * Pass `telemetry: false` to disable headers that provide Stripe
        * with data about usage of the API.
        * Currently, the only telemetry we send is latency metrics.
        */
       telemetry?: boolean;
+
+      /**
+       * For plugin authors to identify their code.
+       * @docs https://stripe.com/docs/building-plugins?lang=node#setappinfo
+       */
+      appInfo?: AppInfo;
     }
 
     export interface RequestOptions {
@@ -86,6 +94,8 @@ declare module 'stripe' {
       /**
        * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2019-12-03').
        */
+      apiVersion?: string;
+      /** @deprecated Please use apiVersion instead. */
       stripeVersion?: string;
       /** @deprecated Please use stripeVersion instead. */
       stripe_version?: string;
