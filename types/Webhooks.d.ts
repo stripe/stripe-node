@@ -16,8 +16,9 @@ declare module 'stripe' {
 
         /**
          * Value of the `stripe-signature` header from Stripe.
+         * Typically a string; if it is an array, it must be of length 1.
          */
-        header: string,
+        header: string | Buffer | Array<string> | Array<Buffer>,
 
         /**
          * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
