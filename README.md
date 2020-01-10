@@ -59,7 +59,7 @@ const stripe = new Stripe('sk_test_...');
 
 ### Usage with TypeScript
 
-As of 8.0.0, Stripe maintains types for the latest [API version][api-versions].
+As of 8.0.1, Stripe maintains types for the latest [API version][api-versions].
 
 Import Stripe as a default import (not `* as Stripe`, unlike the DefinitelyTyped version)
 and instantiate it as `new Stripe()` with the latest API version.
