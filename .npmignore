@@ -10,3 +10,4 @@
 !/VERSION
 !/package.json
 !/lib/**/*
+!/types/**/*
