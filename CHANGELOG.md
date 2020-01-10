@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.0.1 - 2020-01-09
+
+- [#757](https://github.com/stripe/stripe-node/pull/757) [bugfix] Add types dir to npmignore whitelist and stop warning when instantiating stripe with no args
+
 ## 8.0.0 - 2020-01-09
 
 Major version release, adding TypeScript definitions and dropping support for Node 6. [The migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v8) contains a detailed list of backwards-incompatible changes with upgrade instructions.
