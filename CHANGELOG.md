@@ -1,11 +1,23 @@
 # CHANGELOG
 
+## 8.0.0 - 2020-01-09
+
+Major version release, adding TypeScript definitions and dropping support for Node 6. [The migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v8) contains a detailed list of backwards-incompatible changes with upgrade instructions.
+
+Major pull requests included in this release (cf. [#742](https://github.com/stripe/stripe-node/pull/742)) (⚠️ = breaking changes):
+
+- [#736](https://github.com/stripe/stripe-node/pull/736) Add TypeScript definitions
+- [#744](https://github.com/stripe/stripe-node/pull/744) Remove deprecated resources and methods
+- [#752](https://github.com/stripe/stripe-node/pull/752) Deprecate many library api's, unify others
+
 ## 7.15.0 - 2019-12-30
-* [#745](https://github.com/stripe/stripe-node/pull/745) Bump handlebars from 4.1.2 to 4.5.3
-* [#737](https://github.com/stripe/stripe-node/pull/737) Fix flows test
+
+- [#745](https://github.com/stripe/stripe-node/pull/745) Bump handlebars from 4.1.2 to 4.5.3
+- [#737](https://github.com/stripe/stripe-node/pull/737) Fix flows test
 
 ## 7.14.0 - 2019-11-26
-* [#732](https://github.com/stripe/stripe-node/pull/732) Add support for CreditNote preview
+
+- [#732](https://github.com/stripe/stripe-node/pull/732) Add support for CreditNote preview
 
 ## 7.13.1 - 2019-11-22
 
