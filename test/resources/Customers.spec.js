@@ -67,10 +67,10 @@ describe('Customers Resource', () => {
       });
     });
 
-    it('Sends the correct request [with specified idempotency_key in options]', () => {
+    it('Sends the correct request [with specified idempotencyKey in options]', () => {
       stripe.customers.create(
         {description: 'Some customer'},
-        {idempotency_key: 'foo'}
+        {idempotencyKey: 'foo'}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -84,7 +84,7 @@ describe('Customers Resource', () => {
     it('Sends the correct request [with specified auth in options]', () => {
       stripe.customers.create(
         {description: 'Some customer'},
-        {api_key: TEST_AUTH_KEY}
+        {apiKey: TEST_AUTH_KEY}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -99,7 +99,7 @@ describe('Customers Resource', () => {
     it('Sends the correct request [with specified auth and idempotent key in options]', () => {
       stripe.customers.create(
         {description: 'Some customer'},
-        {api_key: TEST_AUTH_KEY, idempotency_key: 'foo'}
+        {apiKey: TEST_AUTH_KEY, idempotencyKey: 'foo'}
       );
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
@@ -112,7 +112,7 @@ describe('Customers Resource', () => {
     });
 
     it('Sends the correct request [with specified auth in options and no body]', () => {
-      stripe.customers.create({api_key: TEST_AUTH_KEY});
+      stripe.customers.create({apiKey: TEST_AUTH_KEY});
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
         url: '/v1/customers',

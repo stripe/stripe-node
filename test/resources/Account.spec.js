@@ -90,10 +90,10 @@ describe('Account Resource', () => {
     });
 
     it('Sends the correct request with secret key as first object', () => {
-      const params = {api_key: 'sk_12345678901234567890123456789012'};
+      const params = {apiKey: 'sk_12345678901234567890123456789012'};
       stripe.account.retrieve(params);
       expect(stripe.LAST_REQUEST).to.deep.equal({
-        auth: params.api_key,
+        auth: params.apiKey,
         method: 'GET',
         url: '/v1/account',
         data: {},

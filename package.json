@@ -22,14 +22,17 @@
   },
   "bugs:": "https://github.com/stripe/stripe-node/issues",
   "engines": {
-    "node": "^6 || ^8.1 || >=10.*"
+    "node": "^8.1 || >=10.*"
   },
   "main": "lib/stripe.js",
+  "types": "types/2019-12-03/index.d.ts",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
     "chai": "~4.2.0",
     "chai-as-promised": "~7.1.1",
     "coveralls": "^3.0.0",
-    "eslint": "^5.16.0",
+    "eslint": "^6.8.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-chai-friendly": "^0.4.0",
     "eslint-plugin-prettier": "^3.0.1",
@@ -37,9 +40,11 @@
     "mocha-junit-reporter": "^1.23.1",
     "nock": "^10.0.6",
     "nyc": "^14.1.0",
-    "prettier": "^1.16.4"
+    "prettier": "^1.16.4",
+    "typescript": "^3.7.2"
   },
   "dependencies": {
+    "@types/node": "^13.1.0",
     "qs": "^6.6.0"
   },
   "license": "MIT",
@@ -47,8 +52,9 @@
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage",
     "mocha": "nyc mocha",
     "mocha-only": "mocha",
-    "test": "npm run lint && npm run mocha",
-    "lint": "eslint --ext .js,.jsx .",
+    "test": "yarn lint && yarn test-typescript && yarn mocha",
+    "test-typescript": "tsc --build types/test",
+    "lint": "eslint --ext .js,.jsx,.ts .",
     "fix": "yarn lint --fix",
     "report": "nyc -r text -r lcov report",
     "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
