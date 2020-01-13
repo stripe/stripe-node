@@ -144,12 +144,12 @@ declare module 'stripe' {
 
       interface PaperCheck {
         /**
-         * String unix time for the available date.
+         * Time at which the deposited funds will be available for use. Measured in seconds since the Unix epoch.
          */
         available_at?: string;
 
         /**
-         * Invoice ID associated with the paper check.
+         * Comma-separated list of invoice IDs associated with the paper check.
          */
         invoices?: string;
       }

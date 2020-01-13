@@ -224,7 +224,7 @@ declare module 'stripe' {
       items?: Array<OrderCreateParams.Item>;
 
       /**
-       * A set of key-value pairs that you can attach to an order object. Limited to 500 characters. Metadata can be useful for storing additional information about the order in a structured format.
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam;
 
@@ -296,7 +296,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A set of key-value pairs that you can attach to a product object. It can be useful for storing additional information about the order in a structured format.
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam;
 
@@ -415,7 +415,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A set of key-value pairs that you can attach to an order object. Limited to 500 characters. Metadata can be useful for storing additional information about the order in a structured format.
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam;
 

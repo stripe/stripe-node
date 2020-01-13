@@ -749,9 +749,6 @@ declare module 'stripe' {
        */
       mandate?: SourceCreateParams.Mandate;
 
-      /**
-       * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
-       */
       metadata?: MetadataParam;
 
       /**
@@ -1058,7 +1055,7 @@ declare module 'stripe' {
       mandate?: SourceUpdateParams.Mandate;
 
       /**
-       * A set of key-value pairs that you can attach to a source object. It can be useful for storing additional information about the source in a structured format.
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam;
 
