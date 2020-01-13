@@ -313,7 +313,7 @@ declare module 'stripe' {
       items?: Array<SubscriptionCreateParams.Item>;
 
       /**
-       * A set of key-value pairs that you can attach to a `Subscription` object. It can be useful for storing additional information about the subscription in a structured format.
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam;
 
@@ -387,7 +387,7 @@ declare module 'stripe' {
         billing_thresholds?: Item.BillingThresholds | null;
 
         /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
 
@@ -519,7 +519,7 @@ declare module 'stripe' {
       items?: Array<SubscriptionUpdateParams.Item>;
 
       /**
-       * A set of key-value pairs that you can attach to a subscription object. This can be useful for storing additional information about the subscription in a structured format.
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam;
 
@@ -610,7 +610,7 @@ declare module 'stripe' {
         id?: string;
 
         /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
 

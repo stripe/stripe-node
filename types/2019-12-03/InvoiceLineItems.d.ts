@@ -37,7 +37,7 @@ declare module 'stripe' {
       invoice_item?: string;
 
       /**
-       * Whether this is a test line item.
+       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
 
@@ -258,7 +258,7 @@ declare module 'stripe' {
         invoiceitem?: string;
 
         /**
-         * A set of key-value pairs that you can attach to an invoice item object. It can be useful for storing additional information about the invoice item in a structured format.
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
 
@@ -323,7 +323,7 @@ declare module 'stripe' {
         id?: string;
 
         /**
-         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
 
