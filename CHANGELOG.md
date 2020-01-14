@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.1.0 - 2020-01-14
+* [#763](https://github.com/stripe/stripe-node/pull/763) Add support for listing line items on a `CreditNote`
+* [#762](https://github.com/stripe/stripe-node/pull/762) Improve docs for core fields such as `metadata` on Typescript definitions
+
 ## 8.0.1 - 2020-01-09
 
 - [#757](https://github.com/stripe/stripe-node/pull/757) [bugfix] Add types dir to npmignore whitelist and stop warning when instantiating stripe with no args
