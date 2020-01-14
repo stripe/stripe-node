@@ -4,7 +4,8 @@
   "description": "",
   "main": "express.js",
   "scripts": {
-    "tsc": "tsc && node express-ts.js"
+    "vanilla": "node express.js",
+    "typescript": "tsc && node express-ts.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,8 +13,8 @@
     "@types/express": "^4.17.2",
     "@types/node": "^13.1.4",
     "dotenv": "^8.2.0",
-    "express": "^4.16.4",
-    "stripe": "^6.36.0",
+    "express": "^4.17.1",
+    "stripe": "^8.0.1",
     "typescript": "^3.7.4"
   }
 }
