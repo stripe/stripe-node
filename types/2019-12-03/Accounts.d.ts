@@ -1794,7 +1794,7 @@ declare module 'stripe' {
        *
        * Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.
        *
-       * If you want to delete your own account, use the [data tab in your account settings](https://dashboard.stripe.com/account/data) instead.
+       * If you want to delete your own account, use the [account information tab in your account settings](https://dashboard.stripe.com/account) instead.
        */
       del(
         id: string,

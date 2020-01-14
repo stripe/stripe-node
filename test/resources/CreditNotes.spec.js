@@ -48,6 +48,32 @@ describe('CreditNotes Resource', () => {
     });
   });
 
+  describe('listLineItems', () => {
+    it('Sends the correct request', () => {
+      stripe.creditNotes.listLineItems('cn_123');
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/credit_notes/cn_123/lines',
+        headers: {},
+        data: {},
+        settings: {},
+      });
+    });
+  });
+
+  describe('listPreviewLineItems', () => {
+    it('Sends the correct request', () => {
+      stripe.creditNotes.listPreviewLineItems();
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: '/v1/credit_notes/preview/lines',
+        headers: {},
+        data: {},
+        settings: {},
+      });
+    });
+  });
+
   describe('update', () => {
     it('Sends the correct request', () => {
       stripe.creditNotes.update('cn_123', {application_fee: 200});

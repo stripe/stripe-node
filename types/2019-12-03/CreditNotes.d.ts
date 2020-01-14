@@ -43,9 +43,19 @@ declare module 'stripe' {
         | null;
 
       /**
+       * The integer amount in **%s** representing the amount of the discount that was credited.
+       */
+      discount_amount?: number;
+
+      /**
        * ID of the invoice.
        */
       invoice: string | Stripe.Invoice;
+
+      /**
+       * Line items that make up the credit note
+       */
+      lines?: ApiList<Stripe.CreditNoteLineItem>;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -68,6 +78,11 @@ declare module 'stripe' {
       number: string;
 
       /**
+       * Amount that was credited outside of Stripe.
+       */
+      out_of_band_amount?: number | null;
+
+      /**
        * The link to download the PDF of the credit note.
        */
       pdf: string;
@@ -88,6 +103,21 @@ declare module 'stripe' {
       status: CreditNote.Status;
 
       /**
+       * The integer amount in **%s** representing the amount of the credit note, excluding tax and discount.
+       */
+      subtotal?: number;
+
+      /**
+       * The aggregate amounts calculated per tax rate for all line items.
+       */
+      tax_amounts?: Array<CreditNote.TaxAmount>;
+
+      /**
+       * The integer amount in **%s** representing the total amount of the credit note, including tax and discount.
+       */
+      total?: number;
+
+      /**
        * Type of this credit note, one of `post_payment` or `pre_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
        */
       type: CreditNote.Type;
@@ -106,6 +136,23 @@ declare module 'stripe' {
         | 'product_unsatisfactory';
 
       type Status = 'issued' | 'void';
+
+      interface TaxAmount {
+        /**
+         * The amount, in %s, of the tax.
+         */
+        amount: number;
+
+        /**
+         * Whether this tax amount is inclusive or exclusive.
+         */
+        inclusive: boolean;
+
+        /**
+         * The tax rate that was applied to get this tax amount.
+         */
+        tax_rate: string | Stripe.TaxRate;
+      }
 
       type Type = 'post_payment' | 'pre_payment';
     }
@@ -130,6 +177,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Line items that make up the credit note.
+       */
+      lines?: Array<CreditNoteCreateParams.Line>;
 
       /**
        * The credit note's memo appears on the credit note PDF.
@@ -163,6 +215,52 @@ declare module 'stripe' {
     }
 
     namespace CreditNoteCreateParams {
+      interface Line {
+        /**
+         * The line item amount to credit. Only valid when `type` is `invoice_line_item` and the referenced invoice line item does not have a quantity, only an amount.
+         */
+        amount?: number;
+
+        /**
+         * The description of the credit note line item. Only valid when the `type` is `custom_line_item`.
+         */
+        description?: string;
+
+        /**
+         * The invoice line item to credit. Only valid when the `type` is `invoice_line_item`.
+         */
+        invoice_line_item?: string;
+
+        /**
+         * The line item quantity to credit.
+         */
+        quantity?: number;
+
+        /**
+         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item`.
+         */
+        tax_rates?: Array<string> | '';
+
+        /**
+         * Type of the credit note line item, one of `custom_line_item` or `invoice_line_item`
+         */
+        type: Line.Type;
+
+        /**
+         * The integer unit amount in **%s** of the credit note line item. This `unit_amount` will be multiplied by the quantity to get the full amount to credit for this line item. Only valid when `type` is `custom_line_item`.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace Line {
+        type Type = 'custom_line_item' | 'invoice_line_item';
+      }
+
       type Reason =
         | 'duplicate'
         | 'fraudulent'
@@ -233,6 +331,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Line items that make up the credit note.
+       */
+      lines?: Array<CreditNotePreviewParams.Line>;
+
+      /**
        * The credit note's memo appears on the credit note PDF.
        */
       memo?: string;
@@ -264,6 +367,52 @@ declare module 'stripe' {
     }
 
     namespace CreditNotePreviewParams {
+      interface Line {
+        /**
+         * The line item amount to credit. Only valid when `type` is `invoice_line_item` and the referenced invoice line item does not have a quantity, only an amount.
+         */
+        amount?: number;
+
+        /**
+         * The description of the credit note line item. Only valid when the `type` is `custom_line_item`.
+         */
+        description?: string;
+
+        /**
+         * The invoice line item to credit. Only valid when the `type` is `invoice_line_item`.
+         */
+        invoice_line_item?: string;
+
+        /**
+         * The line item quantity to credit.
+         */
+        quantity?: number;
+
+        /**
+         * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item`.
+         */
+        tax_rates?: Array<string> | '';
+
+        /**
+         * Type of the credit note line item, one of `custom_line_item` or `invoice_line_item`
+         */
+        type: Line.Type;
+
+        /**
+         * The integer unit amount in **%s** of the credit note line item. This `unit_amount` will be multiplied by the quantity to get the full amount to credit for this line item. Only valid when `type` is `custom_line_item`.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace Line {
+        type Type = 'custom_line_item' | 'invoice_line_item';
+      }
+
       type Reason =
         | 'duplicate'
         | 'fraudulent'
@@ -351,6 +500,27 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.CreditNote>;
+
+      /**
+       * When retrieving a credit note, you'll get a lines property containing the the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+       */
+      listLineItems(
+        id: string,
+        params?: CreditNoteLineItemListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CreditNoteLineItem>;
+      listLineItems(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CreditNoteLineItem>;
+
+      /**
+       * When retrieving a credit note preview, you'll get a lines property containing the first handful of those items. This URL you can retrieve the full (paginated) list of line items.
+       */
+      listPreviewLineItems(
+        params: CreditNoteLineItemListPreviewParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CreditNoteLineItem>;
     }
   }
 }
