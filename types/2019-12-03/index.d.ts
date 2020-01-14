@@ -79,6 +79,7 @@
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./BitcoinTransactions.d.ts' />
+///<reference path='./CreditNoteLineItems.d.ts' />
 ///<reference path='./CustomerBalanceTransactions.d.ts' />
 ///<reference path='./CustomerSources.d.ts' />
 ///<reference path='./TaxIds.d.ts' />
