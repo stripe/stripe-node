@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.3.0 - 2020-01-15
+* [#767](https://github.com/stripe/stripe-node/pull/767) Adding missing events for pending updates on `Subscription`
+
 ## 8.2.0 - 2020-01-15
 * [#765](https://github.com/stripe/stripe-node/pull/765) Add support for `pending_update` on `Subscription` to the Typescript definitions
 
