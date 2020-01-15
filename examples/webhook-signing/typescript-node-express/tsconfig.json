@@ -5,15 +5,10 @@
     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
     "module": "commonjs",
 
-    /* Strict Type-Checking Options */
-
-    /* Enable all strict type-checking options. */
-    "strict": true,
     /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "esModuleInterop": true,
 
     /* Advanced Options */
-
     /* Disallow inconsistently-cased references to the same file. */
     "forceConsistentCasingInFileNames": true
   }

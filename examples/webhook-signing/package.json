@@ -2,10 +2,10 @@
   "name": "webhook-signing-example-express",
   "version": "1.0.0",
   "description": "",
-  "main": "express.js",
+  "main": "node-express/express.js",
   "scripts": {
-    "vanilla": "node express.js",
-    "typescript": "tsc && node express-ts.js"
+    "vanilla": "node node-express/express.js",
+    "typescript": "tsc --build typescript-node-express/tsconfig.json && node typescript-node-express/express-ts.js"
   },
   "author": "",
   "license": "ISC",

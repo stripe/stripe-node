@@ -46,3 +46,9 @@ In a separate terminal window, start the local server:
 
     npm run vanilla # Runs the vanilla JavaScript example.
     npm run typescript # Compiles and runs the TypeScript example.
+
+In another separate terminal window, trigger an event, for example:
+
+    stripe trigger payment_intent.succeeded
+
+You should now see some webhook event details being logged to your Node.js console.

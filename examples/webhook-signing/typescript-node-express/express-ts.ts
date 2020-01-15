@@ -5,12 +5,12 @@ import env from 'dotenv';
 
 env.config();
 
-const stripe: Stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+const stripe: Stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2019-12-03',
   typescript: true,
 });
 
-const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET!;
+const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET;
 
 const app: express.Application = express();
 
@@ -34,7 +34,7 @@ app.post(
   '/webhook',
   bodyParser.raw({type: 'application/json'}),
   (req: express.Request, res: express.Response): void => {
-    const sig: string | string[] = req.headers['stripe-signature']!;
+    const sig: string | string[] = req.headers['stripe-signature'];
 
     let event: Stripe.Event;
 
@@ -50,10 +50,16 @@ app.post(
     console.log('Success:', event.id);
 
     // Cast event data to Stripe object
+    let stripeObject: Stripe.PaymentIntent | Stripe.Charge;
+
     switch (event.type) {
       case 'payment_intent.succeeded':
-        const pi = event.data.object as Stripe.PaymentIntent;
-        console.log(`PaymentIntent status: ${pi.status}`);
+        stripeObject = event.data.object as Stripe.PaymentIntent;
+        console.log(`PaymentIntent status: ${stripeObject.status}`);
+        break;
+      case 'charge.succeeded':
+        stripeObject = event.data.object as Stripe.Charge;
+        console.log(`Charge id: ${stripeObject.id}`);
         break;
     }
 
@@ -62,6 +68,9 @@ app.post(
   }
 );
 
-app.listen(3000, (): void => {
-  console.log('Example app listening on port 3000!');
-});
+app.listen(
+  3000,
+  (): void => {
+    console.log('Example app listening on port 3000!');
+  }
+);
