@@ -499,7 +499,7 @@ declare module 'stripe' {
       /**
        * A list of up to 4 custom fields to be displayed on the invoice.
        */
-      custom_fields?: InvoiceCreateParams.CustomFields | null;
+      custom_fields?: Array<InvoiceCreateParams.CustomFields> | null;
 
       /**
        * The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
@@ -613,7 +613,7 @@ declare module 'stripe' {
       /**
        * A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
        */
-      custom_fields?: InvoiceUpdateParams.CustomFields | null;
+      custom_fields?: Array<InvoiceUpdateParams.CustomFields> | null;
 
       /**
        * The number of days from which the invoice is created until it is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
