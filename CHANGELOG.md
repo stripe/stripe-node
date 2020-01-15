@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.2.0 - 2020-01-15
+* [#765](https://github.com/stripe/stripe-node/pull/765) Add support for `pending_update` on `Subscription` to the Typescript definitions
+
 ## 8.1.0 - 2020-01-14
 * [#763](https://github.com/stripe/stripe-node/pull/763) Add support for listing line items on a `CreditNote`
 * [#762](https://github.com/stripe/stripe-node/pull/762) Improve docs for core fields such as `metadata` on Typescript definitions
