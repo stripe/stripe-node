@@ -135,9 +135,9 @@ declare module 'stripe' {
       pending_setup_intent: string | Stripe.SetupIntent | null;
 
       /**
-       * If specified, [deferred upgrade](https://stripe.com/docs/billing/subscriptions/upgrading-downgrading#deferred) changes that will be applied to the subscription once the `latest_invoice` has been paid.
+       * If specified, [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates) that will be applied to the subscription once the `latest_invoice` has been paid.
        */
-      pending_update?: Subscription.PendingUpdate | null;
+      pending_update: Subscription.PendingUpdate | null;
 
       /**
        * Hash describing the plan the customer is subscribed to. Only set if the subscription contains a single plan.
@@ -372,7 +372,7 @@ declare module 'stripe' {
       prorate?: boolean;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) resulting from the `billing_cycle_anchor`. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`. `always_invoice` cannot be passed.
        */
       proration_behavior?: SubscriptionCreateParams.ProrationBehavior;
 
@@ -585,7 +585,7 @@ declare module 'stripe' {
       prorate?: boolean;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`. Passing `always_invoice` will cause an invoice to immediately be created for any prorations.
        */
       proration_behavior?: SubscriptionUpdateParams.ProrationBehavior;
 
