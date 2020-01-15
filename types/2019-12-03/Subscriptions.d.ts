@@ -135,6 +135,11 @@ declare module 'stripe' {
       pending_setup_intent: string | Stripe.SetupIntent | null;
 
       /**
+       * If specified, [deferred upgrade](https://stripe.com/docs/billing/subscriptions/upgrading-downgrading#deferred) changes that will be applied to the subscription once the `latest_invoice` has been paid.
+       */
+      pending_update?: Subscription.PendingUpdate | null;
+
+      /**
        * Hash describing the plan the customer is subscribed to. Only set if the subscription contains a single plan.
        */
       plan: Stripe.Plan | null;
@@ -217,6 +222,33 @@ declare module 'stripe' {
 
       namespace PendingInvoiceItemInterval {
         type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+
+      interface PendingUpdate {
+        /**
+         * If the update is applied, determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
+         */
+        billing_cycle_anchor: number | null;
+
+        /**
+         * The point after which the changes reflected by this update will be discarded and no longer applied.
+         */
+        expires_at: number;
+
+        /**
+         * List of subscription items, each with an attached plan, that will be set if the update is applied.
+         */
+        subscription_items: Array<Stripe.SubscriptionItem> | null;
+
+        /**
+         * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time, if the update is applied.
+         */
+        trial_end: number | null;
+
+        /**
+         * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed.
+         */
+        trial_from_plan: boolean | null;
       }
 
       type Status =
@@ -340,6 +372,11 @@ declare module 'stripe' {
       prorate?: boolean;
 
       /**
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`.
+       */
+      proration_behavior?: SubscriptionCreateParams.ProrationBehavior;
+
+      /**
        * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
        */
       tax_percent?: number | '';
@@ -436,6 +473,8 @@ declare module 'stripe' {
       namespace PendingInvoiceItemInterval {
         type Interval = 'day' | 'month' | 'week' | 'year';
       }
+
+      type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
 
       interface TransferData {
         /**
@@ -544,6 +583,11 @@ declare module 'stripe' {
        * Boolean (defaults to `true`) telling us whether to [credit for unused time](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g. when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. If `false`, the anchor period will be free (similar to a trial) and no proration adjustments will be created.
        */
       prorate?: boolean;
+
+      /**
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`.
+       */
+      proration_behavior?: SubscriptionUpdateParams.ProrationBehavior;
 
       /**
        * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](https://stripe.com/docs/api#retrieve_customer_invoice) endpoint. It can also be used to implement custom proration logic, such as prorating by day instead of by second, by providing the time that you wish to use for proration calculations.
@@ -659,6 +703,8 @@ declare module 'stripe' {
       namespace PendingInvoiceItemInterval {
         type Interval = 'day' | 'month' | 'week' | 'year';
       }
+
+      type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
 
       interface TransferData {
         /**

@@ -859,6 +859,11 @@ declare module 'stripe' {
       subscription_prorate?: boolean;
 
       /**
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`.
+       */
+      subscription_proration_behavior?: InvoiceRetrieveUpcomingParams.SubscriptionProrationBehavior;
+
+      /**
        * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration` cannot be set to false.
        */
       subscription_proration_date?: number;
@@ -1005,6 +1010,11 @@ declare module 'stripe' {
           usage_gte: number;
         }
       }
+
+      type SubscriptionProrationBehavior =
+        | 'always_invoice'
+        | 'create_prorations'
+        | 'none';
     }
 
     interface InvoiceSendInvoiceParams {

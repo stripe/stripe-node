@@ -117,6 +117,11 @@ declare module 'stripe' {
       prorate?: boolean;
 
       /**
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`.
+       */
+      proration_behavior?: SubscriptionItemCreateParams.ProrationBehavior;
+
+      /**
        * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://stripe.com/docs/api#retrieve_customer_invoice) endpoint.
        */
       proration_date?: number;
@@ -144,6 +149,8 @@ declare module 'stripe' {
         | 'allow_incomplete'
         | 'error_if_incomplete'
         | 'pending_if_incomplete';
+
+      type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
 
     interface SubscriptionItemRetrieveParams {
@@ -189,6 +196,11 @@ declare module 'stripe' {
       prorate?: boolean;
 
       /**
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`.
+       */
+      proration_behavior?: SubscriptionItemUpdateParams.ProrationBehavior;
+
+      /**
        * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://stripe.com/docs/api#retrieve_customer_invoice) endpoint.
        */
       proration_date?: number;
@@ -216,6 +228,8 @@ declare module 'stripe' {
         | 'allow_incomplete'
         | 'error_if_incomplete'
         | 'pending_if_incomplete';
+
+      type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
 
     interface SubscriptionItemListParams extends PaginationParams {
