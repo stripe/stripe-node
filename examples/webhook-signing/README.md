@@ -1,8 +1,8 @@
 # Checking webhook signatures
 
-Verify the events that Stripe sends to your webhook endpoints. Additional docs: https://stripe.com/docs/webhooks/signatures.
+Verify the events that Stripe sends to your webhook endpoints. Additional details in the Stripe [docs](https://stripe.com/docs/webhooks/signatures).
 
-Additional Node TypeScript server implementation sample: https://github.com/stripe-samples/accept-a-card-payment/tree/master/using-webhooks/server/node-typescript.
+You can find a Node.js TypeScript server example in [stripe-samples](https://github.com/stripe-samples/accept-a-card-payment/tree/master/using-webhooks/server/node-typescript).
 
 ### Requirements
 
