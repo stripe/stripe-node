@@ -53,7 +53,7 @@ declare module 'stripe' {
       /**
        * The bank account this token will represent.
        */
-      bank_account?: TokenCreateParams.BankAccount;
+      bank_account?: string | TokenCreateParams.BankAccount;
 
       card?: string | TokenCreateParams.Card;
 
