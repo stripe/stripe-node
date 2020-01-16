@@ -7,7 +7,7 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 const app = express();
 
-// Only use the raw body parser for webhooks.
+// Use JSON parser for all non-webhook routes
 app.use((req, res, next) => {
   if (req.originalUrl === '/webhook') {
     next();
@@ -25,12 +25,13 @@ app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
   try {
     event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
   } catch (err) {
-    // On error, return the error message
+    // On error, log and return the error message
+    console.log(`❌ Error message: ${err.message}`);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Do something with event
-  console.log('Success:', event.id);
+  // Successfully constructed event
+  console.log('✅ Success:', event.id);
 
   // Return a response to acknowledge receipt of the event
   res.json({received: true});

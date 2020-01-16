@@ -14,7 +14,7 @@ You’ll need the following:
 
 ### Setup
 
-Copy the environment variables file from the root of the repository:
+In this folder (`cd examples/webhook-signing/`), copy the environment variables file:
 
     cp .env.example .env
 
@@ -22,7 +22,7 @@ Update `.env` with your own [Stripe API keys](https://dashboard.stripe.com/accou
 
 ### Install and run
 
-Install dependencies using npm:
+Install dependencies:
 
     npm install
 

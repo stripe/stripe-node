@@ -5,16 +5,16 @@ import env from 'dotenv';
 
 env.config();
 
-const stripe: Stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2019-12-03',
   typescript: true,
 });
 
 const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET;
 
-const app: express.Application = express();
+const app = express();
 
-// Only use the raw body parser for webhooks.
+// Use JSON parser for all non-webhook routes
 app.use(
   (
     req: express.Request,
@@ -29,38 +29,37 @@ app.use(
   }
 );
 
-// Stripe requires the raw body to construct the event
 app.post(
   '/webhook',
+  // Stripe requires the raw body to construct the event
   bodyParser.raw({type: 'application/json'}),
   (req: express.Request, res: express.Response): void => {
-    const sig: string | string[] = req.headers['stripe-signature'];
+    const sig = req.headers['stripe-signature'];
 
     let event: Stripe.Event;
 
     try {
       event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
     } catch (err) {
-      // On error, return the error message
+      // On error, log and return the error message
+      console.log(`❌ Error message: ${err.message}`);
       res.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
 
-    // Do something with event
-    console.log('Success:', event.id);
+    // Successfully constructed event
+    console.log('✅ Success:', event.id);
 
     // Cast event data to Stripe object
-    let stripeObject: Stripe.PaymentIntent | Stripe.Charge;
-
-    switch (event.type) {
-      case 'payment_intent.succeeded':
-        stripeObject = event.data.object as Stripe.PaymentIntent;
-        console.log(`PaymentIntent status: ${stripeObject.status}`);
-        break;
-      case 'charge.succeeded':
-        stripeObject = event.data.object as Stripe.Charge;
-        console.log(`Charge id: ${stripeObject.id}`);
-        break;
+    if (event.type === 'payment_intent.succeeded') {
+      const stripeObject: Stripe.PaymentIntent = event.data
+        .object as Stripe.PaymentIntent;
+      console.log(`💰 PaymentIntent status: ${stripeObject.status}`);
+    } else if (event.type === 'charge.succeeded') {
+      const charge = event.data.object as Stripe.Charge;
+      console.log(`💵 Charge id: ${charge.id}`);
+    } else {
+      console.warn(`🤷‍♀️ Unhandled event type: ${event.type}`);
     }
 
     // Return a response to acknowledge receipt of the event

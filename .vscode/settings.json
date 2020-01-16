@@ -9,5 +9,8 @@
   // Extension settings
   "eslint.autoFixOnSave": true,
   "eslint.packageManager": "yarn",
-  "npm.packageManager": "yarn"
+  "npm.packageManager": "yarn",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }
