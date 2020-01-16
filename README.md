@@ -110,6 +110,10 @@ const customerEmail: string = (charge.customer as Stripe.Customer).email;
 const btId: string = charge.balance_transaction as string;
 ```
 
+### TypeScript examples
+
+You can find a Node.js TypeScript server example in [stripe-samples](https://github.com/stripe-samples/accept-a-card-payment/tree/master/using-webhooks/server/node-typescript) and a webhook signing example in the [`examples/webhook-signing`](examples/webhook-signing) folder.
+
 ### Using Promises
 
 Every method returns a chainable promise which can be used instead of a regular
