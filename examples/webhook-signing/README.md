@@ -14,7 +14,7 @@ You’ll need the following:
 
 ### Setup
 
-In this folder (`cd examples/webhook-signing/`), copy the environment variables file:
+In this directory (`cd examples/webhook-signing/`), copy the environment variables file:
 
     cp .env.example .env
 
