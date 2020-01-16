@@ -83,6 +83,8 @@ const createCustomer = async () => {
 createCustomer();
 ```
 
+You can find a full TS server example in [stripe-samples](https://github.com/stripe-samples/accept-a-card-payment/tree/master/using-webhooks/server/node-typescript).
+
 #### Using old API versions with TypeScript
 
 Types can change between API versions (e.g., Stripe may have changed a field from a string to a hash),
@@ -109,10 +111,6 @@ const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
 const customerEmail: string = (charge.customer as Stripe.Customer).email;
 const btId: string = charge.balance_transaction as string;
 ```
-
-### TypeScript examples
-
-You can find a Node.js TypeScript server example in [stripe-samples](https://github.com/stripe-samples/accept-a-card-payment/tree/master/using-webhooks/server/node-typescript) and a webhook signing example in the [`examples/webhook-signing`](examples/webhook-signing) folder.
 
 ### Using Promises
 
