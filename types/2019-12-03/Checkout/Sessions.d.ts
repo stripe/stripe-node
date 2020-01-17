@@ -68,6 +68,11 @@ declare module 'stripe' {
         locale: Session.Locale | null;
 
         /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata: Metadata | null;
+
+        /**
          * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
          */
         mode: Session.Mode | null;
@@ -250,6 +255,11 @@ declare module 'stripe' {
          * The IETF language tag of the locale Checkout is displayed in. If blank or `auto`, the browser's locale is used.
          */
         locale?: SessionCreateParams.Locale;
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: MetadataParam;
 
         /**
          * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.

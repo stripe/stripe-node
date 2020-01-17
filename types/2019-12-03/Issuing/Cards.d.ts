@@ -1066,11 +1066,6 @@ declare module 'stripe' {
           name: string;
 
           /**
-           * Deprecated field. It always return null and will be removed in the next client library major version
-           */
-          phone: string | null;
-
-          /**
            * The delivery status of the card.
            */
           status: Shipping.Status | null;
@@ -1119,7 +1114,7 @@ declare module 'stripe' {
         /**
          * The type of card to issue. Possible values are `physical` or `virtual`.
          */
-        type: string | CardCreateParams.Type;
+        type: CardCreateParams.Type;
 
         /**
          * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
@@ -2094,7 +2089,7 @@ declare module 'stripe' {
           /**
            * Packaging options.
            */
-          type?: string | Shipping.Type;
+          type?: Shipping.Type;
         }
 
         namespace Shipping {

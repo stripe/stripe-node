@@ -17,7 +17,7 @@ declare module 'stripe' {
       /**
        * Whether the product is currently available for purchase.
        */
-      active: boolean | null;
+      active: boolean;
 
       /**
        * A list of up to 5 attributes that each SKU can provide values for (e.g., `["color", "size"]`).
