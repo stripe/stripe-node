@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.4.0 - 2020-01-17
+* [#771](https://github.com/stripe/stripe-node/pull/771) Add `metadata` on Checkout `Session` and remove deprecated features
+* [#764](https://github.com/stripe/stripe-node/pull/764) Added typescript webhook example
+
 ## 8.3.0 - 2020-01-15
 * [#767](https://github.com/stripe/stripe-node/pull/767) Adding missing events for pending updates on `Subscription`
 
