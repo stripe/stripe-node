@@ -2096,11 +2096,6 @@ declare module 'stripe' {
 
         interface Billing {
           address: Billing.Address;
-
-          /**
-           * Deprecated param. Passing value for this param is simply discarded. It will be removed in the next client library major version
-           */
-          name?: string;
         }
 
         namespace Billing {
@@ -3176,11 +3171,6 @@ declare module 'stripe' {
 
         interface Billing {
           address: Billing.Address;
-
-          /**
-           * Deprecated param. Passing value for this param is simply discarded. It will be removed in the next client library major version
-           */
-          name?: string;
         }
 
         namespace Billing {

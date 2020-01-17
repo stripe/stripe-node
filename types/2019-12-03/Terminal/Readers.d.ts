@@ -112,11 +112,6 @@ declare module 'stripe' {
          * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
-
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
       }
 
       interface ReaderRetrieveParams {
@@ -124,11 +119,6 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
-
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
       }
 
       interface ReaderUpdateParams {
@@ -146,18 +136,13 @@ declare module 'stripe' {
          * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: MetadataParam;
-
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
       }
 
       interface ReaderListParams extends PaginationParams {
         /**
          * Filters readers by device type
          */
-        device_type?: string | ReaderListParams.DeviceType;
+        device_type?: ReaderListParams.DeviceType;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -170,14 +155,9 @@ declare module 'stripe' {
         location?: string;
 
         /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
-
-        /**
          * A status filter to filter readers to only offline or online readers
          */
-        status?: string | ReaderListParams.Status;
+        status?: ReaderListParams.Status;
       }
 
       namespace ReaderListParams {
@@ -186,12 +166,7 @@ declare module 'stripe' {
         type Status = 'offline' | 'online';
       }
 
-      interface ReaderDeleteParams {
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
-      }
+      interface ReaderDeleteParams {}
 
       class ReadersResource {
         /**

@@ -31,11 +31,6 @@ declare module 'stripe' {
          * The id of the location that this connection token is scoped to. If specified the connection token will only be usable with readers assigned to that location, otherwise the connection token will be usable with all readers.
          */
         location?: string;
-
-        /**
-         * To [group objects](https://stripe.com/docs/terminal/payments/connect#grouping-objects-by-connected-account) on your platform account by connected account, set this parameter to the connected account ID.
-         */
-        operator_account?: string;
       }
 
       class ConnectionTokensResource {

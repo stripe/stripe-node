@@ -295,7 +295,7 @@ declare module 'stripe' {
       /**
        * Indicates how the payment method is intended to be used in the future. If not provided, this value defaults to `off_session`.
        */
-      usage?: string | SetupIntentCreateParams.Usage;
+      usage?: SetupIntentCreateParams.Usage;
     }
 
     namespace SetupIntentCreateParams {
