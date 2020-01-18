@@ -89,12 +89,15 @@ declare module 'stripe' {
        */
       custom_fields: Array<Invoice.CustomField> | null;
 
+      /**
+       * The ID of the customer who will be billed.
+       */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
        */
-      customer_address: Address | null;
+      customer_address: Invoice.CustomerAddress | null;
 
       /**
        * The customer's email. Until the invoice is finalized, this field will equal `customer.email`. Once the invoice is finalized, this field will no longer be updated.
@@ -148,6 +151,9 @@ declare module 'stripe' {
        */
       description: string | null;
 
+      /**
+       * Describes the current discount applied to this invoice, if there is one.
+       */
       discount: Stripe.Discount | null;
 
       /**
@@ -325,8 +331,40 @@ declare module 'stripe' {
         value: string;
       }
 
+      interface CustomerAddress {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city: string | null;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country: string | null;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1: string | null;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2: string | null;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code: string | null;
+
+        /**
+         * State, county, province, or region.
+         */
+        state: string | null;
+      }
+
       interface CustomerShipping {
-        address?: Address;
+        address?: CustomerShipping.Address;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -347,6 +385,40 @@ declare module 'stripe' {
          * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
          */
         tracking_number?: string | null;
+      }
+
+      namespace CustomerShipping {
+        interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string | null;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string | null;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1: string | null;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2: string | null;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string | null;
+
+          /**
+           * State, county, province, or region.
+           */
+          state: string | null;
+        }
       }
 
       type CustomerTaxExempt = 'exempt' | 'none' | 'reverse';
@@ -479,6 +551,9 @@ declare module 'stripe' {
     }
 
     interface InvoiceCreateParams {
+      /**
+       * The ID of the customer who will be billed.
+       */
       customer: string;
 
       /**
@@ -521,6 +596,9 @@ declare module 'stripe' {
        */
       default_tax_rates?: Array<string>;
 
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
+       */
       description?: string;
 
       /**
@@ -635,6 +713,9 @@ declare module 'stripe' {
        */
       default_tax_rates?: Array<string> | '';
 
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
+       */
       description?: string;
 
       /**

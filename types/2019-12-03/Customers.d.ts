@@ -17,7 +17,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address: Address | null;
+      address: Customer.Address | null;
 
       /**
        * Current balance, if any, being stored on the customer. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that will be added to their next invoice. The balance does not refer to any unpaid invoices; it solely takes into account amounts that have yet to be successfully applied to any invoice. This balance is only taken into account as invoices are finalized.
@@ -122,6 +122,38 @@ declare module 'stripe' {
     }
 
     namespace Customer {
+      interface Address {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city: string | null;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country: string | null;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1: string | null;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2: string | null;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code: string | null;
+
+        /**
+         * State, county, province, or region.
+         */
+        state: string | null;
+      }
+
       interface InvoiceSettings {
         /**
          * Default custom fields to be displayed on invoices for this customer.
@@ -154,7 +186,7 @@ declare module 'stripe' {
       }
 
       interface Shipping {
-        address?: Address;
+        address?: Shipping.Address;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -175,6 +207,40 @@ declare module 'stripe' {
          * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
          */
         tracking_number?: string | null;
+      }
+
+      namespace Shipping {
+        interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string | null;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string | null;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1: string | null;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2: string | null;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string | null;
+
+          /**
+           * State, county, province, or region.
+           */
+          state: string | null;
+        }
       }
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';
@@ -204,7 +270,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: AddressParam | '';
+      address?: CustomerCreateParams.Address | null;
 
       /**
        * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -279,6 +345,38 @@ declare module 'stripe' {
     }
 
     namespace CustomerCreateParams {
+      interface Address {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1: string;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2?: string;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * State, county, province, or region.
+         */
+        state?: string;
+      }
+
       interface InvoiceSettings {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
@@ -314,7 +412,7 @@ declare module 'stripe' {
         /**
          * Customer shipping address.
          */
-        address: AddressParam;
+        address: Shipping.Address;
 
         /**
          * Customer name.
@@ -325,6 +423,40 @@ declare module 'stripe' {
          * Customer phone (including extension).
          */
         phone?: string;
+      }
+
+      namespace Shipping {
+        interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        }
       }
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';
@@ -366,7 +498,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: AddressParam | '';
+      address?: CustomerUpdateParams.Address | null;
 
       /**
        * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -448,6 +580,38 @@ declare module 'stripe' {
     }
 
     namespace CustomerUpdateParams {
+      interface Address {
+        /**
+         * City, district, suburb, town, or village.
+         */
+        city?: string;
+
+        /**
+         * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+         */
+        country?: string;
+
+        /**
+         * Address line 1 (e.g., street, PO Box, or company name).
+         */
+        line1: string;
+
+        /**
+         * Address line 2 (e.g., apartment, suite, unit, or building).
+         */
+        line2?: string;
+
+        /**
+         * ZIP or postal code.
+         */
+        postal_code?: string;
+
+        /**
+         * State, county, province, or region.
+         */
+        state?: string;
+      }
+
       interface InvoiceSettings {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
@@ -483,7 +647,7 @@ declare module 'stripe' {
         /**
          * Customer shipping address.
          */
-        address: AddressParam;
+        address: Shipping.Address;
 
         /**
          * Customer name.
@@ -494,6 +658,40 @@ declare module 'stripe' {
          * Customer phone (including extension).
          */
         phone?: string;
+      }
+
+      namespace Shipping {
+        interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        }
       }
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';

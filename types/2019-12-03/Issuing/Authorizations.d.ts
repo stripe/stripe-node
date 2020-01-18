@@ -35,6 +35,9 @@ declare module 'stripe' {
          */
         authorized_currency: string;
 
+        /**
+         * List of balance transactions associated with this authorization.
+         */
         balance_transactions: Array<Stripe.BalanceTransaction>;
 
         card: Stripe.Issuing.Card;
@@ -59,6 +62,9 @@ declare module 'stripe' {
          */
         held_currency: string;
 
+        /**
+         * If set `true`, you may provide [held_amount](https://stripe.com/docs/api/issuing/authorizations/approve#approve_issuing_authorization-held_amount) to control how much to hold for the authorization.
+         */
         is_held_amount_controllable: boolean;
 
         /**
@@ -83,6 +89,9 @@ declare module 'stripe' {
          */
         pending_held_amount: number;
 
+        /**
+         * History of every time the authorization was approved/denied (whether approved/denied by you directly, or by Stripe based on your authorization_controls). If the merchant changes the authorization by performing an [incremental authorization or partial capture](https://stripe.com/docs/issuing/authorizations/special_scenarios#incremental-authorizations), you can look at request_history to see the previous states of the authorization.
+         */
         request_history: Array<Authorization.RequestHistory>;
 
         /**
@@ -90,6 +99,9 @@ declare module 'stripe' {
          */
         status: Authorization.Status;
 
+        /**
+         * List of [transactions](https://stripe.com/docs/api/issuing/transactions) associated with this authorization.
+         */
         transactions: Array<Stripe.Issuing.Transaction>;
 
         verification_data: Authorization.VerificationData;

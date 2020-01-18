@@ -112,7 +112,7 @@ declare module 'stripe' {
         /**
          * A publicly available mailing address for sending support issues to.
          */
-        support_address: Address | null;
+        support_address: BusinessProfile.SupportAddress | null;
 
         /**
          * A publicly available email address for sending support issues to.
@@ -133,6 +133,40 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url: string | null;
+      }
+
+      namespace BusinessProfile {
+        interface SupportAddress {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string | null;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string | null;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1: string | null;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2: string | null;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string | null;
+
+          /**
+           * State, county, province, or region.
+           */
+          state: string | null;
+        }
       }
 
       type BusinessType = 'company' | 'individual';
@@ -170,7 +204,7 @@ declare module 'stripe' {
       }
 
       interface Company {
-        address?: Address;
+        address?: Company.Address;
 
         /**
          * The Kana variation of the company's primary address (Japan only).
@@ -239,6 +273,38 @@ declare module 'stripe' {
       }
 
       namespace Company {
+        interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string | null;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string | null;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1: string | null;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2: string | null;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string | null;
+
+          /**
+           * State, county, province, or region.
+           */
+          state: string | null;
+        }
+
         interface AddressKana {
           /**
            * City/Ward.
@@ -261,7 +327,7 @@ declare module 'stripe' {
           line2: string | null;
 
           /**
-           * Zip/Postal Code.
+           * ZIP or postal code.
            */
           postal_code: string | null;
 
@@ -298,7 +364,7 @@ declare module 'stripe' {
           line2: string | null;
 
           /**
-           * Zip/Postal Code.
+           * ZIP or postal code.
            */
           postal_code: string | null;
 
@@ -802,6 +868,9 @@ declare module 'stripe' {
          */
         dob?: Individual.Dob | null;
 
+        /**
+         * The individual's email address.
+         */
         email?: string;
 
         /**
@@ -1394,6 +1463,9 @@ declare module 'stripe' {
          */
         dob?: Individual.Dob | null;
 
+        /**
+         * The individual's email address.
+         */
         email?: string;
 
         /**

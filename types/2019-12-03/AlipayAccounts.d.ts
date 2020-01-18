@@ -19,6 +19,9 @@ declare module 'stripe' {
        */
       created: number;
 
+      /**
+       * The ID of the customer associated with this Alipay Account.
+       */
       customer?: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       deleted?: void;

@@ -176,6 +176,9 @@ declare module 'stripe' {
        */
       metadata?: MetadataParam;
 
+      /**
+       * Indicates if a customer is on or off-session while an invoice payment is attempted.
+       */
       off_session?: boolean;
 
       /**

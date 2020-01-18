@@ -65,7 +65,7 @@ declare module 'stripe' {
         /**
          * Billing address.
          */
-        address: Address | null;
+        address: BillingDetails.Address | null;
 
         /**
          * Email address.
@@ -81,6 +81,40 @@ declare module 'stripe' {
          * Billing phone number (including extension).
          */
         phone: string | null;
+      }
+
+      namespace BillingDetails {
+        interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city: string | null;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country: string | null;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1: string | null;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2: string | null;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code: string | null;
+
+          /**
+           * State, county, province, or region.
+           */
+          state: string | null;
+        }
       }
 
       interface Card {
@@ -210,7 +244,7 @@ declare module 'stripe' {
             /**
              * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            billing_address: Address | null;
+            billing_address: Masterpass.BillingAddress | null;
 
             /**
              * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -225,7 +259,73 @@ declare module 'stripe' {
             /**
              * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            shipping_address: Address | null;
+            shipping_address: Masterpass.ShippingAddress | null;
+          }
+
+          namespace Masterpass {
+            interface BillingAddress {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string | null;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string | null;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1: string | null;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2: string | null;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string | null;
+
+              /**
+               * State, county, province, or region.
+               */
+              state: string | null;
+            }
+
+            interface ShippingAddress {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string | null;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string | null;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1: string | null;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2: string | null;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string | null;
+
+              /**
+               * State, county, province, or region.
+               */
+              state: string | null;
+            }
           }
 
           interface SamsungPay {}
@@ -242,7 +342,7 @@ declare module 'stripe' {
             /**
              * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            billing_address: Address | null;
+            billing_address: VisaCheckout.BillingAddress | null;
 
             /**
              * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -257,7 +357,73 @@ declare module 'stripe' {
             /**
              * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            shipping_address: Address | null;
+            shipping_address: VisaCheckout.ShippingAddress | null;
+          }
+
+          namespace VisaCheckout {
+            interface BillingAddress {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string | null;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string | null;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1: string | null;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2: string | null;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string | null;
+
+              /**
+               * State, county, province, or region.
+               */
+              state: string | null;
+            }
+
+            interface ShippingAddress {
+              /**
+               * City, district, suburb, town, or village.
+               */
+              city: string | null;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string | null;
+
+              /**
+               * Address line 1 (e.g., street, PO Box, or company name).
+               */
+              line1: string | null;
+
+              /**
+               * Address line 2 (e.g., apartment, suite, unit, or building).
+               */
+              line2: string | null;
+
+              /**
+               * ZIP or postal code.
+               */
+              postal_code: string | null;
+
+              /**
+               * State, county, province, or region.
+               */
+              state: string | null;
+            }
           }
         }
       }
@@ -424,16 +590,34 @@ declare module 'stripe' {
 
       namespace BillingDetails {
         interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
           city?: string;
 
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
           country?: string;
 
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
           line1?: string;
 
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
           line2?: string;
 
+          /**
+           * ZIP or postal code.
+           */
           postal_code?: string;
 
+          /**
+           * State, county, province, or region.
+           */
           state?: string;
         }
       }
@@ -487,6 +671,9 @@ declare module 'stripe' {
       }
 
       interface SepaDebit {
+        /**
+         * IBAN of the bank account.
+         */
         iban: string;
       }
 
@@ -511,6 +698,9 @@ declare module 'stripe' {
        */
       billing_details?: PaymentMethodUpdateParams.BillingDetails;
 
+      /**
+       * If this is a `card` PaymentMethod, this hash contains the user's card details.
+       */
       card?: PaymentMethodUpdateParams.Card;
 
       /**
@@ -523,6 +713,9 @@ declare module 'stripe' {
        */
       metadata?: MetadataParam;
 
+      /**
+       * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+       */
       sepa_debit?: PaymentMethodUpdateParams.SepaDebit;
     }
 
@@ -551,16 +744,34 @@ declare module 'stripe' {
 
       namespace BillingDetails {
         interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
           city?: string;
 
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
           country?: string;
 
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
           line1?: string;
 
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
           line2?: string;
 
+          /**
+           * ZIP or postal code.
+           */
           postal_code?: string;
 
+          /**
+           * State, county, province, or region.
+           */
           state?: string;
         }
       }

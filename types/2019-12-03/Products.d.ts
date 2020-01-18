@@ -91,6 +91,9 @@ declare module 'stripe' {
        */
       unit_label: string | null;
 
+      /**
+       * Time at which the object was last updated. Measured in seconds since the Unix epoch.
+       */
       updated: number;
 
       /**

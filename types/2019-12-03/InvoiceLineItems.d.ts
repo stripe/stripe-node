@@ -34,6 +34,9 @@ declare module 'stripe' {
        */
       discountable: boolean;
 
+      /**
+       * The ID of the [invoice item](https://stripe.com/docs/api/invoiceitems) associated with this line item if any.
+       */
       invoice_item?: string;
 
       /**

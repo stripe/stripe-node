@@ -1048,7 +1048,7 @@ declare module 'stripe' {
         type ReplacementReason = 'damage' | 'expiration' | 'loss' | 'theft';
 
         interface Shipping {
-          address: Address;
+          address: Shipping.Address;
 
           /**
            * The delivery company that shipped a card.
@@ -1087,6 +1087,38 @@ declare module 'stripe' {
         }
 
         namespace Shipping {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city: string | null;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country: string | null;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1: string | null;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2: string | null;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code: string | null;
+
+            /**
+             * State, county, province, or region.
+             */
+            state: string | null;
+          }
+
           type Carrier = 'fedex' | 'usps';
 
           type Status =
@@ -2082,8 +2114,14 @@ declare module 'stripe' {
         type ReplacementReason = 'damage' | 'expiration' | 'loss' | 'theft';
 
         interface Shipping {
+          /**
+           * The address that the card is shipped to.
+           */
           address: Shipping.Address;
 
+          /**
+           * The name printed on the shipping label when shipping the card.
+           */
           name: string;
 
           /**
@@ -2094,16 +2132,34 @@ declare module 'stripe' {
 
         namespace Shipping {
           interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
             city: string;
 
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
             country: string;
 
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
             line1: string;
 
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
             line2?: string;
 
+            /**
+             * ZIP or postal code.
+             */
             postal_code: string;
 
+            /**
+             * State, county, province, or region.
+             */
             state?: string;
           }
 
