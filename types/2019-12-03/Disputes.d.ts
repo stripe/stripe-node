@@ -282,80 +282,137 @@ declare module 'stripe' {
     namespace DisputeUpdateParams {
       interface Evidence {
         /**
-         * Has a maximum character count of 20,000.
+         * Any server or activity logs showing proof that the customer accessed or downloaded the purchased digital product. This information should include IP addresses, corresponding timestamps, and any detailed recorded activity. Has a maximum character count of 20,000.
          */
         access_activity_log?: string;
 
+        /**
+         * The billing address provided by the customer.
+         */
         billing_address?: string;
 
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Your subscription cancellation policy, as shown to the customer.
+         */
         cancellation_policy?: string;
 
         /**
-         * Has a maximum character count of 20,000.
+         * An explanation of how and when the customer was shown your refund policy prior to purchase. Has a maximum character count of 20,000.
          */
         cancellation_policy_disclosure?: string;
 
         /**
-         * Has a maximum character count of 20,000.
+         * A justification for why the customer's subscription was not canceled. Has a maximum character count of 20,000.
          */
         cancellation_rebuttal?: string;
 
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any communication with the customer that you feel is relevant to your case. Examples include emails proving that the customer received the product or service, or demonstrating their use of or satisfaction with the product or service.
+         */
         customer_communication?: string;
 
+        /**
+         * The email address of the customer.
+         */
         customer_email_address?: string;
 
+        /**
+         * The name of the customer.
+         */
         customer_name?: string;
 
+        /**
+         * The IP address that the customer used when making the purchase.
+         */
         customer_purchase_ip?: string;
 
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) A relevant document or contract showing the customer's signature.
+         */
         customer_signature?: string;
 
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Documentation for the prior charge that can uniquely identify the charge, such as a receipt, shipping label, work order, etc. This document should be paired with a similar document from the disputed payment that proves the two payments are separate.
+         */
         duplicate_charge_documentation?: string;
 
         /**
-         * Has a maximum character count of 20,000.
+         * An explanation of the difference between the disputed charge versus the prior charge that appears to be a duplicate. Has a maximum character count of 20,000.
          */
         duplicate_charge_explanation?: string;
 
+        /**
+         * The Stripe ID for the prior charge which appears to be a duplicate of the disputed charge.
+         */
         duplicate_charge_id?: string;
 
         /**
-         * Has a maximum character count of 20,000.
+         * A description of the product or service that was sold. Has a maximum character count of 20,000.
          */
         product_description?: string;
 
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any receipt or message sent to the customer notifying them of the charge.
+         */
         receipt?: string;
 
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Your refund policy, as shown to the customer.
+         */
         refund_policy?: string;
 
         /**
-         * Has a maximum character count of 20,000.
+         * Documentation demonstrating that the customer was shown your refund policy prior to purchase. Has a maximum character count of 20,000.
          */
         refund_policy_disclosure?: string;
 
         /**
-         * Has a maximum character count of 20,000.
+         * A justification for why the customer is not entitled to a refund. Has a maximum character count of 20,000.
          */
         refund_refusal_explanation?: string;
 
+        /**
+         * The date on which the customer received or began receiving the purchased service, in a clear human-readable format.
+         */
         service_date?: string;
 
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Documentation showing proof that a service was provided to the customer. This could include a copy of a signed contract, work order, or other form of written agreement.
+         */
         service_documentation?: string;
 
+        /**
+         * The address to which a physical product was shipped. You should try to include as complete address information as possible.
+         */
         shipping_address?: string;
 
+        /**
+         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc. If multiple carriers were used for this purchase, please separate them with commas.
+         */
         shipping_carrier?: string;
 
+        /**
+         * The date on which a physical product began its route to the shipping address, in a clear human-readable format.
+         */
         shipping_date?: string;
 
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Documentation showing proof that a product was shipped to the customer at the same address the customer provided to you. This could include a copy of the shipment receipt, shipping label, etc. It should show the customer's full shipping address, if possible.
+         */
         shipping_documentation?: string;
 
+        /**
+         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+         */
         shipping_tracking_number?: string;
 
+        /**
+         * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Any additional evidence or statements.
+         */
         uncategorized_file?: string;
 
         /**
-         * Has a maximum character count of 20,000.
+         * Any additional evidence or statements. Has a maximum character count of 20,000.
          */
         uncategorized_text?: string;
       }

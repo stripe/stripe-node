@@ -70,6 +70,9 @@ declare module 'stripe' {
        */
       product: string | Stripe.Product;
 
+      /**
+       * Time at which the object was last updated. Measured in seconds since the Unix epoch.
+       */
       updated: number;
     }
 

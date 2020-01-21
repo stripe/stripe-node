@@ -25,6 +25,9 @@ declare module 'stripe' {
          */
         authorization: string | Stripe.Issuing.Authorization | null;
 
+        /**
+         * ID of the [balance transaction](https://stripe.com/docs/api/balance_transactions) associated with this transaction.
+         */
         balance_transaction: string | Stripe.BalanceTransaction | null;
 
         /**
@@ -47,6 +50,9 @@ declare module 'stripe' {
          */
         currency: string;
 
+        /**
+         * If you've disputed the transaction, the ID of the [dispute object](https://stripe.com/docs/api/issuing/disputes/object).
+         */
         dispute: string | Stripe.Issuing.Dispute | null;
 
         /**

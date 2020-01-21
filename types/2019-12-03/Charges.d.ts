@@ -1339,6 +1339,9 @@ declare module 'stripe' {
 
     namespace ChargeUpdateParams {
       interface FraudDetails {
+        /**
+         * Either `safe` or `fraudulent`.
+         */
         user_report: FraudDetails.UserReport | null;
       }
 

@@ -89,6 +89,9 @@ declare module 'stripe' {
        */
       custom_fields: Array<Invoice.CustomField> | null;
 
+      /**
+       * The ID of the customer who will be billed.
+       */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
@@ -148,6 +151,9 @@ declare module 'stripe' {
        */
       description: string | null;
 
+      /**
+       * Describes the current discount applied to this invoice, if there is one.
+       */
       discount: Stripe.Discount | null;
 
       /**
@@ -479,6 +485,9 @@ declare module 'stripe' {
     }
 
     interface InvoiceCreateParams {
+      /**
+       * The ID of the customer who will be billed.
+       */
       customer: string;
 
       /**
@@ -521,6 +530,9 @@ declare module 'stripe' {
        */
       default_tax_rates?: Array<string>;
 
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
+       */
       description?: string;
 
       /**
@@ -635,6 +647,9 @@ declare module 'stripe' {
        */
       default_tax_rates?: Array<string> | '';
 
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
+       */
       description?: string;
 
       /**
@@ -859,7 +874,11 @@ declare module 'stripe' {
       subscription_prorate?: boolean;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`. Passing `always_invoice` will cause an invoice to immediately be created for any prorations.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
+       *
+       * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
+       *
+       * Prorations can be disabled by passing `none`.
        */
       subscription_proration_behavior?: InvoiceRetrieveUpcomingParams.SubscriptionProrationBehavior;
 

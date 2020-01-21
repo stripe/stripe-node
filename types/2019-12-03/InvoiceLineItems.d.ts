@@ -34,6 +34,9 @@ declare module 'stripe' {
        */
       discountable: boolean;
 
+      /**
+       * The ID of the [invoice item](https://stripe.com/docs/api/invoiceitems) associated with this line item if any.
+       */
       invoice_item?: string;
 
       /**
@@ -205,7 +208,11 @@ declare module 'stripe' {
       subscription_prorate?: boolean;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The value defaults to `create_prorations`, indicating that proration invoice items should be created. Prorations can be disabled by setting the value to `none`. Passing `always_invoice` will cause an invoice to immediately be created for any prorations.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
+       *
+       * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
+       *
+       * Prorations can be disabled by passing `none`.
        */
       subscription_proration_behavior?: InvoiceLineItemListUpcomingParams.SubscriptionProrationBehavior;
 

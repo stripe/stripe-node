@@ -45,7 +45,7 @@ declare module 'stripe' {
       /**
        * The integer amount in **%s** representing the amount of the discount that was credited.
        */
-      discount_amount?: number;
+      discount_amount: number;
 
       /**
        * ID of the invoice.
@@ -55,7 +55,7 @@ declare module 'stripe' {
       /**
        * Line items that make up the credit note
        */
-      lines?: ApiList<Stripe.CreditNoteLineItem>;
+      lines: ApiList<Stripe.CreditNoteLineItem>;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -80,7 +80,7 @@ declare module 'stripe' {
       /**
        * Amount that was credited outside of Stripe.
        */
-      out_of_band_amount?: number | null;
+      out_of_band_amount: number | null;
 
       /**
        * The link to download the PDF of the credit note.
@@ -105,17 +105,17 @@ declare module 'stripe' {
       /**
        * The integer amount in **%s** representing the amount of the credit note, excluding tax and discount.
        */
-      subtotal?: number;
+      subtotal: number;
 
       /**
        * The aggregate amounts calculated per tax rate for all line items.
        */
-      tax_amounts?: Array<CreditNote.TaxAmount>;
+      tax_amounts: Array<CreditNote.TaxAmount>;
 
       /**
        * The integer amount in **%s** representing the total amount of the credit note, including tax and discount.
        */
-      total?: number;
+      total: number;
 
       /**
        * Type of this credit note, one of `post_payment` or `pre_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
