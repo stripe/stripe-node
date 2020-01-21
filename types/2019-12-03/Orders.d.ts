@@ -19,6 +19,9 @@ declare module 'stripe' {
        */
       amount: number;
 
+      /**
+       * The total amount that was returned to the customer.
+       */
       amount_returned: number | null;
 
       /**
@@ -26,6 +29,9 @@ declare module 'stripe' {
        */
       application: string | null;
 
+      /**
+       * A fee in cents that will be applied to the order and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees documentation.
+       */
       application_fee: number | null;
 
       /**
@@ -53,6 +59,9 @@ declare module 'stripe' {
        */
       email: string | null;
 
+      /**
+       * External coupon code to load for this order.
+       */
       external_coupon_code?: string;
 
       /**
@@ -70,6 +79,9 @@ declare module 'stripe' {
        */
       metadata: Metadata;
 
+      /**
+       * A list of returns that have taken place for this order.
+       */
       returns: ApiList<Stripe.OrderReturn> | null;
 
       /**
@@ -97,6 +109,9 @@ declare module 'stripe' {
        */
       status_transitions: Order.StatusTransitions | null;
 
+      /**
+       * Time at which the object was last updated. Measured in seconds since the Unix epoch.
+       */
       updated: number | null;
 
       /**
@@ -182,12 +197,24 @@ declare module 'stripe' {
       }
 
       interface StatusTransitions {
+        /**
+         * The time that the order was canceled.
+         */
         canceled: number | null;
 
+        /**
+         * The time that the order was fulfilled.
+         */
         fulfiled: number | null;
 
+        /**
+         * The time that the order was paid.
+         */
         paid: number | null;
 
+        /**
+         * The time that the order was returned.
+         */
         returned: number | null;
       }
     }

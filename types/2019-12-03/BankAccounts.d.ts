@@ -14,6 +14,9 @@ declare module 'stripe' {
        */
       object: 'bank_account';
 
+      /**
+       * The ID of the account that the bank account is associated with.
+       */
       account?: string | Stripe.Account | null;
 
       /**
@@ -41,6 +44,9 @@ declare module 'stripe' {
        */
       currency: string;
 
+      /**
+       * The ID of the customer that the bank account is associated with.
+       */
       customer?: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
@@ -55,6 +61,9 @@ declare module 'stripe' {
        */
       fingerprint: string | null;
 
+      /**
+       * The last four digits of the bank account number.
+       */
       last4: string;
 
       /**

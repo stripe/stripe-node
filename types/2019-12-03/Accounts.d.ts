@@ -261,7 +261,7 @@ declare module 'stripe' {
           line2: string | null;
 
           /**
-           * Zip/Postal Code.
+           * ZIP or postal code.
            */
           postal_code: string | null;
 
@@ -298,7 +298,7 @@ declare module 'stripe' {
           line2: string | null;
 
           /**
-           * Zip/Postal Code.
+           * ZIP or postal code.
            */
           postal_code: string | null;
 
@@ -802,6 +802,9 @@ declare module 'stripe' {
          */
         dob?: Individual.Dob | null;
 
+        /**
+         * The individual's email address.
+         */
         email?: string;
 
         /**
@@ -1394,6 +1397,9 @@ declare module 'stripe' {
          */
         dob?: Individual.Dob | null;
 
+        /**
+         * The individual's email address.
+         */
         email?: string;
 
         /**

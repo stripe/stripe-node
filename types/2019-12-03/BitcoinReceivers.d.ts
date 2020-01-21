@@ -54,6 +54,9 @@ declare module 'stripe' {
        */
       currency: string;
 
+      /**
+       * The customer ID of the bitcoin receiver.
+       */
       customer?: string | null;
 
       deleted?: void;
@@ -93,6 +96,9 @@ declare module 'stripe' {
        */
       payment?: string | null;
 
+      /**
+       * The refund address of this bitcoin receiver.
+       */
       refund_address: string | null;
 
       /**
@@ -105,6 +111,9 @@ declare module 'stripe' {
        */
       uncaptured_funds: boolean;
 
+      /**
+       * Indicate if this source is used for payment.
+       */
       used_for_payment: boolean | null;
     }
 

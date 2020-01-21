@@ -24,6 +24,9 @@ declare module 'stripe' {
        */
       filename: string | null;
 
+      /**
+       * A list of [file links](https://stripe.com/docs/api#file_links) that point at this file.
+       */
       links?: ApiList<Stripe.FileLink> | null;
 
       /**

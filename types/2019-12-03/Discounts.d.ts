@@ -11,6 +11,9 @@ declare module 'stripe' {
 
       coupon: Stripe.Coupon;
 
+      /**
+       * The ID of the customer associated with this discount.
+       */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       deleted?: void;

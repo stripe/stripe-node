@@ -424,16 +424,34 @@ declare module 'stripe' {
 
       namespace BillingDetails {
         interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
           city?: string;
 
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
           country?: string;
 
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
           line1?: string;
 
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
           line2?: string;
 
+          /**
+           * ZIP or postal code.
+           */
           postal_code?: string;
 
+          /**
+           * State, county, province, or region.
+           */
           state?: string;
         }
       }
@@ -487,6 +505,9 @@ declare module 'stripe' {
       }
 
       interface SepaDebit {
+        /**
+         * IBAN of the bank account.
+         */
         iban: string;
       }
 
@@ -511,6 +532,9 @@ declare module 'stripe' {
        */
       billing_details?: PaymentMethodUpdateParams.BillingDetails;
 
+      /**
+       * If this is a `card` PaymentMethod, this hash contains the user's card details.
+       */
       card?: PaymentMethodUpdateParams.Card;
 
       /**
@@ -523,6 +547,9 @@ declare module 'stripe' {
        */
       metadata?: MetadataParam;
 
+      /**
+       * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+       */
       sepa_debit?: PaymentMethodUpdateParams.SepaDebit;
     }
 
@@ -551,16 +578,34 @@ declare module 'stripe' {
 
       namespace BillingDetails {
         interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
           city?: string;
 
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
           country?: string;
 
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
           line1?: string;
 
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
           line2?: string;
 
+          /**
+           * ZIP or postal code.
+           */
           postal_code?: string;
 
+          /**
+           * State, county, province, or region.
+           */
           state?: string;
         }
       }
