@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.4.1 - 2020-01-21
+* [#774](https://github.com/stripe/stripe-node/pull/774) Improve docstrings for many properties and parameters
+
 ## 8.4.0 - 2020-01-17
 * [#771](https://github.com/stripe/stripe-node/pull/771) Add `metadata` on Checkout `Session` and remove deprecated features
 * [#764](https://github.com/stripe/stripe-node/pull/764) Added typescript webhook example
