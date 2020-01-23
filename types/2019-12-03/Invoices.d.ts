@@ -359,7 +359,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `au_abn`, `ch_vat`, `eu_vat`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `sg_uen`, `unknown`, or `za_vat`
+         * The type of the tax ID, one of `au_abn`, `ca_bn`, `ch_vat`, `eu_vat`, `hk_br`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `ru_inn`, `sg_uen`, `unknown`, or `za_vat`
          */
         type: CustomerTaxId.Type;
 
@@ -372,12 +372,15 @@ declare module 'stripe' {
       namespace CustomerTaxId {
         type Type =
           | 'au_abn'
+          | 'ca_bn'
           | 'ch_vat'
           | 'eu_vat'
+          | 'hk_br'
           | 'in_gst'
           | 'mx_rfc'
           | 'no_vat'
           | 'nz_gst'
+          | 'ru_inn'
           | 'sg_uen'
           | 'unknown'
           | 'za_vat';
