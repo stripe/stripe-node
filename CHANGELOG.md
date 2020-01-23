@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.6.0 - 2020-01-23
+* [#775](https://github.com/stripe/stripe-node/pull/775) Gracefully handle a missing `subprocess` module
+
 ## 8.5.0 - 2020-01-23
 * [#776](https://github.com/stripe/stripe-node/pull/776) Add support for new `type` on `CustomerTaxId`
 
