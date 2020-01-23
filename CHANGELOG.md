@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.5.0 - 2020-01-23
+* [#776](https://github.com/stripe/stripe-node/pull/776) Add support for new `type` on `CustomerTaxId`
+
 ## 8.4.1 - 2020-01-21
 * [#774](https://github.com/stripe/stripe-node/pull/774) Improve docstrings for many properties and parameters
 
