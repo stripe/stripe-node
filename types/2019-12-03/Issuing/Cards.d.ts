@@ -1066,6 +1066,11 @@ declare module 'stripe' {
           name: string;
 
           /**
+           * Shipment speed.
+           */
+          speed: Shipping.Speed;
+
+          /**
            * The delivery status of the card.
            */
           status: Shipping.Status | null;
@@ -1088,6 +1093,8 @@ declare module 'stripe' {
 
         namespace Shipping {
           type Carrier = 'fedex' | 'usps';
+
+          type Speed = 'express' | 'overnight' | 'standard';
 
           type Status =
             | 'canceled'
@@ -2093,6 +2100,11 @@ declare module 'stripe' {
           name: string;
 
           /**
+           * Shipment speed.
+           */
+          speed?: Shipping.Speed;
+
+          /**
            * Packaging options.
            */
           type?: Shipping.Type;
@@ -2130,6 +2142,8 @@ declare module 'stripe' {
              */
             state?: string;
           }
+
+          type Speed = 'express' | 'overnight' | 'standard';
 
           type Type = 'bulk' | 'individual';
         }
