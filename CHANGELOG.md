@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.7.0 - 2020-01-24
+* [#777](https://github.com/stripe/stripe-node/pull/777) Add support for `shipping[speed]` on Issuing `Card`
+
 ## 8.6.0 - 2020-01-23
 * [#775](https://github.com/stripe/stripe-node/pull/775) Gracefully handle a missing `subprocess` module
 
