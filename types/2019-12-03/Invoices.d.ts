@@ -845,7 +845,7 @@ declare module 'stripe' {
         | InvoiceRetrieveUpcomingParams.SubscriptionBillingCycleAnchor;
 
       /**
-       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period if `prorate=true`
+       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.`
        */
       subscription_cancel_at?: number | '';
 
