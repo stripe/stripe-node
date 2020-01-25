@@ -105,11 +105,13 @@ When you upgrade, you should remove these comments.
 so you must cast them appropriately, e.g.,
 
 ```ts
-const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
-  expand: ['customer'],
-});
-const customerEmail: string = (charge.customer as Stripe.Customer).email;
-const btId: string = charge.balance_transaction as string;
+const paymentIntent: Stripe.PaymentIntent = await stripe.paymentIntents.retrieve(
+  'pi_123456789',
+  {
+    expand: ['customer'],
+  }
+);
+const customerEmail: string = (paymentIntent.customer as Stripe.Customer).email;
 ```
 
 ### Using Promises
@@ -118,25 +120,26 @@ Every method returns a chainable promise which can be used instead of a regular
 callback:
 
 ```js
-// Create a new customer and then a new charge for that customer:
+// Create a new customer and then create an invoice item then invoice it:
 stripe.customers
   .create({
     email: 'foo-customer@example.com',
   })
   .then((customer) => {
-    return stripe.customers.createSource(customer.id, {
-      source: 'tok_visa',
+    return stripe.invoiceItems.create({
+    customer: 'cus_GcAjt5gZVAtChu',
+    amount: 2500,
+    currency: 'usd',
+    description: 'One-time setup fee',
+  })
+  .then((invoiceItem) => {
+    return stripe.invoices.create({
+      collection_method: 'send_invoice',
+      customer: invoiceItem.customer,
     });
   })
-  .then((source) => {
-    return stripe.charges.create({
-      amount: 1600,
-      currency: 'usd',
-      customer: source.customer,
-    });
-  })
-  .then((charge) => {
-    // New charge created on a new customer
+  .then((invoice) => {
+    // New invoice created on a new customer
   })
   .catch((err) => {
     // Deal with an error
@@ -260,8 +263,8 @@ Some information about the response which generated a resource is available
 with the `lastResponse` property:
 
 ```js
-charge.lastResponse.requestId; // see: https://stripe.com/docs/api/request_ids?lang=node
-charge.lastResponse.statusCode;
+customer.lastResponse.requestId; // see: https://stripe.com/docs/api/request_ids?lang=node
+customer.lastResponse.statusCode;
 ```
 
 ### `request` and `response` events
@@ -290,7 +293,7 @@ stripe.off('request', onRequest);
   account: 'acct_TEST',              // Only present if provided
   idempotency_key: 'abc123',         // Only present if provided
   method: 'POST',
-  path: '/v1/charges',
+  path: '/v1/customers',
   request_start_time: 1565125303932  // Unix timestamp in milliseconds
 }
 ```
@@ -303,7 +306,7 @@ stripe.off('request', onRequest);
   account: 'acct_TEST',              // Only present if provided
   idempotency_key: 'abc123',         // Only present if provided
   method: 'POST',
-  path: '/v1/charges',
+  path: '/v1/customers',
   status: 402,
   request_id: 'req_Ghc9r26ts73DRf',
   elapsed: 445                       // Elapsed time in milliseconds
