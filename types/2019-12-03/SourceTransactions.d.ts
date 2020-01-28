@@ -112,17 +112,17 @@ declare module 'stripe' {
 
       interface GbpCreditTransfer {
         /**
-         * Bank account fingerprint associated with the transfer.
+         * Bank account fingerprint associated with the Stripe owned bank account receiving the transfer.
          */
         fingerprint?: string;
 
         /**
-         * The credit transfer rails the sender used to push money. The three rails are: Faster Payments, BACS, and CHAPS.
+         * The credit transfer rails the sender used to push this transfer. The possible rails are: Faster Payments, BACS, CHAPS, and wire transfers. Currently only Faster Payments is supported.
          */
         funding_method?: string;
 
         /**
-         * Last 4 digits of account number associated with the transfer.
+         * Last 4 digits of sender account number associated with the transfer.
          */
         last4?: string;
 
@@ -132,12 +132,17 @@ declare module 'stripe' {
         reference?: string;
 
         /**
+         * Sender account number associated with the transfer.
+         */
+        sender_account_number?: string;
+
+        /**
          * Sender name associated with the transfer.
          */
         sender_name?: string;
 
         /**
-         * Sort code associated with the transfer.
+         * Sender sort code associated with the transfer.
          */
         sort_code?: string;
       }
