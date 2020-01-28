@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.8.0 - 2020-01-28
+* [#780](https://github.com/stripe/stripe-node/pull/780) Add new type for `TaxId` and `sender_account_name` on `SourceTransaction`
+
 ## 8.7.0 - 2020-01-24
 * [#777](https://github.com/stripe/stripe-node/pull/777) Add support for `shipping[speed]` on Issuing `Card`
 
