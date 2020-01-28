@@ -27,8 +27,8 @@ yarn add stripe
 
 ## Usage
 
-The package needs to be configured with your account's secret key which is
-available in your [Stripe Dashboard][api-keys]. Require it with the key's
+The package needs to be configured with your account's secret key, which is
+available in the [Stripe Dashboard][api-keys]. Require it with the key's
 value:
 
 <!-- prettier-ignore -->
@@ -174,7 +174,7 @@ const stripe = Stripe('sk_test_...', {
 | `timeout`           | 120000 (Node default timeout) | [Maximum time each request can take in ms.](#configuring-timeout)                     |
 | `host`              | `'api.stripe.com'`            | Host that requests are made to.                                                       |
 | `port`              | 443                           | Port that requests are made to.                                                       |
-| `telemetry`         | `true`                        | Allow Stripe to send latency [telemetry](#request-latency-telemetry)                  |
+| `telemetry`         | `true`                        | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                  |
 
 Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
 
