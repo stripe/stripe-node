@@ -37,7 +37,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * Type of the tax ID, one of `au_abn`, `ca_bn`, `ch_vat`, `eu_vat`, `hk_br`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `ru_inn`, `sg_uen`, `za_vat`, or `unknown`
+       * Type of the tax ID, one of `au_abn`, `ca_bn`, `ch_vat`, `es_cif`, `eu_vat`, `hk_br`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `ru_inn`, `sg_uen`, `za_vat`, or `unknown`
        */
       type: TaxId.Type;
 
@@ -54,6 +54,7 @@ declare module 'stripe' {
         | 'au_abn'
         | 'ca_bn'
         | 'ch_vat'
+        | 'es_cif'
         | 'eu_vat'
         | 'hk_br'
         | 'in_gst'
@@ -109,7 +110,7 @@ declare module 'stripe' {
 
     interface TaxIdCreateParams {
       /**
-       * Type of the tax ID, one of `au_abn`, `ca_bn`, `ch_vat`, `eu_vat`, `hk_br`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `ru_inn`, `sg_uen`, or `za_vat`
+       * Type of the tax ID, one of `au_abn`, `ca_bn`, `ch_vat`, `es_cif`, `eu_vat`, `hk_br`, `in_gst`, `mx_rfc`, `no_vat`, `nz_gst`, `ru_inn`, `sg_uen`, or `za_vat`
        */
       type: TaxIdCreateParams.Type;
 
@@ -129,6 +130,7 @@ declare module 'stripe' {
         | 'au_abn'
         | 'ca_bn'
         | 'ch_vat'
+        | 'es_cif'
         | 'eu_vat'
         | 'hk_br'
         | 'in_gst'
