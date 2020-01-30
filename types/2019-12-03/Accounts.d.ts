@@ -15,7 +15,7 @@ declare module 'stripe' {
       object: 'account';
 
       /**
-       * Optional information related to the business.
+       * Business information about the account.
        */
       business_profile: Account.BusinessProfile | null;
 
@@ -95,7 +95,7 @@ declare module 'stripe' {
     namespace Account {
       interface BusinessProfile {
         /**
-         * The merchant category code for the account. MCCs are used to classify businesses based on the goods or services they provide.
+         * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc: string | null;
 
@@ -542,7 +542,7 @@ declare module 'stripe' {
       account_token?: string;
 
       /**
-       * Non-essential business information about the account
+       * Business information about the account.
        */
       business_profile?: AccountCreateParams.BusinessProfile;
 
@@ -617,7 +617,7 @@ declare module 'stripe' {
     namespace AccountCreateParams {
       interface BusinessProfile {
         /**
-         * The merchant category code for the account. MCCs are used to classify businesses based on the goods or services they provide.
+         * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc?: string;
 
@@ -1147,7 +1147,7 @@ declare module 'stripe' {
       account_token?: string;
 
       /**
-       * Non-essential business information about the account
+       * Business information about the account.
        */
       business_profile?: AccountUpdateParams.BusinessProfile;
 
@@ -1212,7 +1212,7 @@ declare module 'stripe' {
     namespace AccountUpdateParams {
       interface BusinessProfile {
         /**
-         * The merchant category code for the account. MCCs are used to classify businesses based on the goods or services they provide.
+         * [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
          */
         mcc?: string;
 
