@@ -1,33 +1,46 @@
 # CHANGELOG
 
+## 8.8.1 - 2020-01-29
+
+- [#784](https://github.com/stripe/stripe-node/pull/784) Allow @types/node 8.1
+
 ## 8.8.0 - 2020-01-28
-* [#780](https://github.com/stripe/stripe-node/pull/780) Add new type for `TaxId` and `sender_account_name` on `SourceTransaction`
+
+- [#780](https://github.com/stripe/stripe-node/pull/780) Add new type for `TaxId` and `sender_account_name` on `SourceTransaction`
 
 ## 8.7.0 - 2020-01-24
-* [#777](https://github.com/stripe/stripe-node/pull/777) Add support for `shipping[speed]` on Issuing `Card`
+
+- [#777](https://github.com/stripe/stripe-node/pull/777) Add support for `shipping[speed]` on Issuing `Card`
 
 ## 8.6.0 - 2020-01-23
-* [#775](https://github.com/stripe/stripe-node/pull/775) Gracefully handle a missing `subprocess` module
+
+- [#775](https://github.com/stripe/stripe-node/pull/775) Gracefully handle a missing `subprocess` module
 
 ## 8.5.0 - 2020-01-23
-* [#776](https://github.com/stripe/stripe-node/pull/776) Add support for new `type` on `CustomerTaxId`
+
+- [#776](https://github.com/stripe/stripe-node/pull/776) Add support for new `type` on `CustomerTaxId`
 
 ## 8.4.1 - 2020-01-21
-* [#774](https://github.com/stripe/stripe-node/pull/774) Improve docstrings for many properties and parameters
+
+- [#774](https://github.com/stripe/stripe-node/pull/774) Improve docstrings for many properties and parameters
 
 ## 8.4.0 - 2020-01-17
-* [#771](https://github.com/stripe/stripe-node/pull/771) Add `metadata` on Checkout `Session` and remove deprecated features
-* [#764](https://github.com/stripe/stripe-node/pull/764) Added typescript webhook example
+
+- [#771](https://github.com/stripe/stripe-node/pull/771) Add `metadata` on Checkout `Session` and remove deprecated features
+- [#764](https://github.com/stripe/stripe-node/pull/764) Added typescript webhook example
 
 ## 8.3.0 - 2020-01-15
-* [#767](https://github.com/stripe/stripe-node/pull/767) Adding missing events for pending updates on `Subscription`
+
+- [#767](https://github.com/stripe/stripe-node/pull/767) Adding missing events for pending updates on `Subscription`
 
 ## 8.2.0 - 2020-01-15
-* [#765](https://github.com/stripe/stripe-node/pull/765) Add support for `pending_update` on `Subscription` to the Typescript definitions
+
+- [#765](https://github.com/stripe/stripe-node/pull/765) Add support for `pending_update` on `Subscription` to the Typescript definitions
 
 ## 8.1.0 - 2020-01-14
-* [#763](https://github.com/stripe/stripe-node/pull/763) Add support for listing line items on a `CreditNote`
-* [#762](https://github.com/stripe/stripe-node/pull/762) Improve docs for core fields such as `metadata` on Typescript definitions
+
+- [#763](https://github.com/stripe/stripe-node/pull/763) Add support for listing line items on a `CreditNote`
+- [#762](https://github.com/stripe/stripe-node/pull/762) Improve docs for core fields such as `metadata` on Typescript definitions
 
 ## 8.0.1 - 2020-01-09
 
