@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.8.2 - 2020-01-30
+* [#785](https://github.com/stripe/stripe-node/pull/785) Fix file uploads with nested params
+
 ## 8.8.1 - 2020-01-29
 
 - [#784](https://github.com/stripe/stripe-node/pull/784) Allow @types/node 8.1
