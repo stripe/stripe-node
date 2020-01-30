@@ -32,6 +32,8 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | null;
 
+      fpx?: PaymentMethod.Fpx;
+
       ideal?: PaymentMethod.Ideal;
 
       /**
@@ -264,6 +266,45 @@ declare module 'stripe' {
 
       interface CardPresent {}
 
+      interface Fpx {
+        /**
+         * Account holder type, if provided. Can be one of `individual` or `company`.
+         */
+        account_holder_type: Fpx.AccountHolderType | null;
+
+        /**
+         * The customer's bank, if provided. Can be one of `affin_bank`, `alliance_bank`, `ambank`, `cimb`, `bank_islam`, `bank_rakyat`, `bank_muamalat`, `bsn`, `deutsche_bank`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `maybank2e`, `ocbc`, `public_bank`, `pb_enterprise`, `rhb`, `standard_chartered`, `uob`, or `uob_regional`.
+         */
+        bank: Fpx.Bank;
+      }
+
+      namespace Fpx {
+        type AccountHolderType = 'company' | 'individual';
+
+        type Bank =
+          | 'affin_bank'
+          | 'alliance_bank'
+          | 'ambank'
+          | 'bank_islam'
+          | 'bank_muamalat'
+          | 'bank_rakyat'
+          | 'bsn'
+          | 'cimb'
+          | 'deutsche_bank'
+          | 'hong_leong_bank'
+          | 'hsbc'
+          | 'kfh'
+          | 'maybank2e'
+          | 'maybank2u'
+          | 'ocbc'
+          | 'pb_enterprise'
+          | 'public_bank'
+          | 'rhb'
+          | 'standard_chartered'
+          | 'uob'
+          | 'uob_regional';
+      }
+
       interface Ideal {
         /**
          * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
@@ -337,6 +378,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'card'
         | 'card_present'
+        | 'fpx'
         | 'ideal'
         | 'sepa_debit';
     }
@@ -366,6 +408,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
+       */
+      fpx?: PaymentMethodCreateParams.Fpx;
 
       /**
        * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -481,6 +528,45 @@ declare module 'stripe' {
         token: string;
       }
 
+      interface Fpx {
+        /**
+         * Account holder type for FPX transaction
+         */
+        account_holder_type?: Fpx.AccountHolderType;
+
+        /**
+         * The customer's bank.
+         */
+        bank: Fpx.Bank;
+      }
+
+      namespace Fpx {
+        type AccountHolderType = 'company' | 'individual';
+
+        type Bank =
+          | 'affin_bank'
+          | 'alliance_bank'
+          | 'ambank'
+          | 'bank_islam'
+          | 'bank_muamalat'
+          | 'bank_rakyat'
+          | 'bsn'
+          | 'cimb'
+          | 'deutsche_bank'
+          | 'hong_leong_bank'
+          | 'hsbc'
+          | 'kfh'
+          | 'maybank2e'
+          | 'maybank2u'
+          | 'ocbc'
+          | 'pb_enterprise'
+          | 'public_bank'
+          | 'rhb'
+          | 'standard_chartered'
+          | 'uob'
+          | 'uob_regional';
+      }
+
       interface Ideal {
         /**
          * The customer's bank.
@@ -515,6 +601,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'card'
         | 'card_present'
+        | 'fpx'
         | 'ideal'
         | 'sepa_debit';
     }
