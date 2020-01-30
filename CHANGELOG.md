@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.9.0 - 2020-01-30
+* [#787](https://github.com/stripe/stripe-node/pull/787) Add support for FPX as a `PaymentMethod`
+* [#769](https://github.com/stripe/stripe-node/pull/769) Fix Typescript definition on `Token` creation for bank accounts
+
 ## 8.8.2 - 2020-01-30
 * [#785](https://github.com/stripe/stripe-node/pull/785) Fix file uploads with nested params
 
