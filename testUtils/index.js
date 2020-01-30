@@ -56,8 +56,22 @@ const utils = (module.exports = {
         if (host) {
           req.host = host;
         }
-        stripeInstance.REQUESTS.push(req);
-        cb.call(this, null, {});
+
+        const handleMockRequest = (err, req) => {
+          stripeInstance.REQUESTS.push(req);
+          cb.call(this, err, {});
+        };
+
+        if (this.requestDataProcessor) {
+          this.requestDataProcessor(
+            method,
+            data,
+            options.headers,
+            handleMockRequest
+          );
+        } else {
+          handleMockRequest(null, req);
+        }
       };
     }
 
