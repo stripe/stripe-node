@@ -297,12 +297,12 @@ declare module 'stripe' {
           /**
            * The amount to be collected per unit of the line item.
            */
-          amount: number;
+          amount?: number;
 
           /**
            * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
            */
-          currency: string;
+          currency?: string;
 
           /**
            * The description for the line item.
@@ -317,7 +317,7 @@ declare module 'stripe' {
           /**
            * The name for the line item.
            */
-          name: string;
+          name?: string;
 
           /**
            * The quantity of the line item being purchased.
@@ -481,11 +481,9 @@ declare module 'stripe' {
           application_fee_percent?: number;
 
           /**
-           * A list of items, each with an attached plan, that the customer is
-           * subscribing to. Use this parameter for subscriptions. To create one-time
-           * payments, use `line_items`.
+           * A list of items, each with an attached plan, that the customer is subscribing to. Use this parameter for subscriptions. To create one-time payments, use `line_items`.
            */
-          items: Array<SubscriptionData.Item>;
+          items?: Array<SubscriptionData.Item>;
 
           /**
            * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
