@@ -68,7 +68,6 @@ and instantiate it as `new Stripe()` with the latest API version.
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...', {
   apiVersion: '2019-12-03',
-  typescript: true,
 });
 
 const createCustomer = async () => {
@@ -174,7 +173,7 @@ const stripe = Stripe('sk_test_...', {
 | `timeout`           | 120000 (Node default timeout) | [Maximum time each request can take in ms.](#configuring-timeout)                     |
 | `host`              | `'api.stripe.com'`            | Host that requests are made to.                                                       |
 | `port`              | 443                           | Port that requests are made to.                                                       |
-| `telemetry`         | `true`                        | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                  |
+| `telemetry`         | `true`                        | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                 |
 
 Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
 
