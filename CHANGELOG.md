@@ -1,8 +1,5 @@
 # CHANGELOG
 
-## 8.11.0 - 2020-01-30
-* [#999](https://github.com/stripe/stripe-node/pull/999) DESCRIBE CHANGES HERE (try to use the same style, tense, etc. as the other entries)
-
 ## 8.10.0 - 2020-01-30
 
 - [#788](https://github.com/stripe/stripe-node/pull/788) Make typescript param optional
