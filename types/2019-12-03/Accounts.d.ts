@@ -135,7 +135,11 @@ declare module 'stripe' {
         url: string | null;
       }
 
-      type BusinessType = 'company' | 'individual';
+      type BusinessType =
+        | 'company'
+        | 'government_entity'
+        | 'individual'
+        | 'non_profit';
 
       interface Capabilities {
         /**
@@ -216,6 +220,11 @@ declare module 'stripe' {
          * The company's phone number (used for verification).
          */
         phone?: string | null;
+
+        /**
+         * The category identifying the legal structure of the company or legal entity.
+         */
+        structure?: Company.Structure | null;
 
         /**
          * Whether the company's business ID number was provided.
@@ -312,6 +321,19 @@ declare module 'stripe' {
            */
           town: string | null;
         }
+
+        type Structure =
+          | 'government_instrumentality'
+          | 'governmental_unit'
+          | 'incorporated_non_profit'
+          | 'multi_member_llc'
+          | 'private_corporation'
+          | 'private_partnership'
+          | 'public_corporation'
+          | 'public_partnership'
+          | 'tax_exempt_government_instrumentality'
+          | 'unincorporated_association'
+          | 'unincorporated_non_profit';
 
         interface Verification {
           document: Verification.Document;
@@ -552,7 +574,7 @@ declare module 'stripe' {
       business_type?: AccountCreateParams.BusinessType;
 
       /**
-       * Information about the company or business. This field is null unless `business_type` is set to `company`.
+       * Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
        */
       company?: AccountCreateParams.Company;
 
@@ -652,7 +674,11 @@ declare module 'stripe' {
         url?: string;
       }
 
-      type BusinessType = 'company' | 'individual';
+      type BusinessType =
+        | 'company'
+        | 'government_entity'
+        | 'individual'
+        | 'non_profit';
 
       interface Company {
         /**
@@ -704,6 +730,11 @@ declare module 'stripe' {
          * The company's phone number (used for verification).
          */
         phone?: string;
+
+        /**
+         * The category identifying the legal structure of the company or legal entity.
+         */
+        structure?: Company.Structure | null;
 
         /**
          * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
@@ -758,6 +789,19 @@ declare module 'stripe' {
            */
           state?: string;
         }
+
+        type Structure =
+          | 'government_instrumentality'
+          | 'governmental_unit'
+          | 'incorporated_non_profit'
+          | 'multi_member_llc'
+          | 'private_corporation'
+          | 'private_partnership'
+          | 'public_corporation'
+          | 'public_partnership'
+          | 'tax_exempt_government_instrumentality'
+          | 'unincorporated_association'
+          | 'unincorporated_non_profit';
 
         interface Verification {
           /**
@@ -1157,7 +1201,7 @@ declare module 'stripe' {
       business_type?: AccountUpdateParams.BusinessType;
 
       /**
-       * Information about the company or business. This field is null unless `business_type` is set to `company`.
+       * Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
        */
       company?: AccountUpdateParams.Company;
 
@@ -1247,7 +1291,11 @@ declare module 'stripe' {
         url?: string;
       }
 
-      type BusinessType = 'company' | 'individual';
+      type BusinessType =
+        | 'company'
+        | 'government_entity'
+        | 'individual'
+        | 'non_profit';
 
       interface Company {
         /**
@@ -1299,6 +1347,11 @@ declare module 'stripe' {
          * The company's phone number (used for verification).
          */
         phone?: string;
+
+        /**
+         * The category identifying the legal structure of the company or legal entity.
+         */
+        structure?: Company.Structure | null;
 
         /**
          * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
@@ -1353,6 +1406,19 @@ declare module 'stripe' {
            */
           state?: string;
         }
+
+        type Structure =
+          | 'government_instrumentality'
+          | 'governmental_unit'
+          | 'incorporated_non_profit'
+          | 'multi_member_llc'
+          | 'private_corporation'
+          | 'private_partnership'
+          | 'public_corporation'
+          | 'public_partnership'
+          | 'tax_exempt_government_instrumentality'
+          | 'unincorporated_association'
+          | 'unincorporated_non_profit';
 
         interface Verification {
           /**
