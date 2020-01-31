@@ -10,7 +10,6 @@ import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
   apiVersion: '2019-12-03',
-  typescript: true,
 });
 
 // @ts-ignore lazily ignore apiVersion requirement.

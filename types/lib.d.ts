@@ -24,10 +24,10 @@ declare module 'stripe' {
       apiVersion: LatestApiVersion;
 
       /**
-       * Indicate that you are using TypeScript.
+       * Optionally indicate that you are using TypeScript.
        * This currently has no runtime effect other than adding "TypeScript" to your user-agent.
        */
-      typescript: true;
+      typescript?: true;
 
       /**
        * Enables automatic network retries with exponential backoff, up to the specified number of retries (default 0).

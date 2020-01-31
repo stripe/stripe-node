@@ -7,7 +7,6 @@ env.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2019-12-03',
-  typescript: true,
 });
 
 const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET;
