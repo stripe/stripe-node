@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.12.0 - 2020-01-31
+* [#790](https://github.com/stripe/stripe-node/pull/790) Add new type of `TaxId`
+
 ## 8.11.0 - 2020-01-30
 
 * [#789](https://github.com/stripe/stripe-node/pull/789) Add support for `company.structure` on `Account` and other docs changes
