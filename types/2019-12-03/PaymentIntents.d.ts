@@ -473,6 +473,11 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions. This can only be set when `confirm=true` is supplied.
+       */
+      error_on_requires_action?: boolean;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -1000,6 +1005,11 @@ declare module 'stripe' {
     }
 
     interface PaymentIntentConfirmParams {
+      /**
+       * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions.
+       */
+      error_on_requires_action?: boolean;
+
       /**
        * Specifies which fields in the response should be expanded.
        */

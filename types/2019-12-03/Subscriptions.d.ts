@@ -340,7 +340,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * List of subscription items, each with an attached plan.
+       * A list of up to 25 subscription items, each with an attached plan.
        */
       items?: Array<SubscriptionCreateParams.Item>;
 
