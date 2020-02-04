@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.13.0 - 2020-02-03
+* [#792](https://github.com/stripe/stripe-node/pull/792) Multiple API changes
+  * Add new `purpose` for `File`: `additional_verification`
+  * Add `error_on_requires_action` as a parameter for `PaymentIntent` creation and confirmation
+
 ## 8.12.0 - 2020-01-31
 * [#790](https://github.com/stripe/stripe-node/pull/790) Add new type of `TaxId`
 
