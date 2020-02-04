@@ -144,7 +144,7 @@ declare module 'stripe' {
         /**
          * Sender sort code associated with the transfer.
          */
-        sort_code?: string;
+        sender_sort_code?: string;
       }
 
       interface PaperCheck {

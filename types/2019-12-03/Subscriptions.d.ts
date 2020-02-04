@@ -340,7 +340,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A list of up to 25 subscription items, each with an attached plan.
+       * A list of up to 20 subscription items, each with an attached plan.
        */
       items?: Array<SubscriptionCreateParams.Item>;
 
@@ -789,7 +789,7 @@ declare module 'stripe' {
 
     class SubscriptionsResource {
       /**
-       * Creates a new subscription on an existing customer.
+       * Creates a new subscription on an existing customer. Each customer can have up to 25 active or scheduled subscriptions.
        */
       create(
         params: SubscriptionCreateParams,
