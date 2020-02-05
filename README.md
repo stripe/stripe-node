@@ -212,7 +212,7 @@ stripe.balanceTransactions.list(
     limit: 10,
   },
   {
-    stripeAccount: 'acct_foo',
+    stripe_account: 'acct_foo',
   }
 );
 ```
