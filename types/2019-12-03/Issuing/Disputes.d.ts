@@ -48,12 +48,12 @@ declare module 'stripe' {
         metadata: Metadata;
 
         /**
-         * Reason for this dispute. One of `other` or `fraudulent`.
+         * Reason for this dispute. One of `fraudulent` or `other`.
          */
         reason: string;
 
         /**
-         * Current status of dispute. One of `lost`, `under_review`, `unsubmitted`, or `won`.
+         * Current status of dispute. One of `unsubmitted`, `under_review`, `won`, or `lost`.
          */
         status: Dispute.Status;
       }
@@ -107,9 +107,9 @@ declare module 'stripe' {
         disputed_transaction: string;
 
         /**
-         * The reason for the dispute. One of `other` or `fraudulent`.
+         * The reason for the dispute. One of `fraudulent` or `other`.
          */
-        reason: DisputeCreateParams.Reason;
+        reason: string;
 
         /**
          * Amount to dispute, defaults to full value, given in the currency the transaction was made in.
@@ -170,8 +170,6 @@ declare module 'stripe' {
             uncategorized_file?: string;
           }
         }
-
-        type Reason = 'fraudulent' | 'other';
       }
 
       interface DisputeRetrieveParams {

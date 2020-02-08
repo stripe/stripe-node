@@ -118,7 +118,7 @@ declare module 'stripe' {
       total: number;
 
       /**
-       * Type of this credit note, one of `post_payment` or `pre_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
+       * Type of this credit note, one of `pre_payment` or `post_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
        */
       type: CreditNote.Type;
 
@@ -242,7 +242,7 @@ declare module 'stripe' {
         tax_rates?: Array<string> | '';
 
         /**
-         * Type of the credit note line item, one of `custom_line_item` or `invoice_line_item`
+         * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
          */
         type: Line.Type;
 
@@ -394,7 +394,7 @@ declare module 'stripe' {
         tax_rates?: Array<string> | '';
 
         /**
-         * Type of the credit note line item, one of `custom_line_item` or `invoice_line_item`
+         * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
          */
         type: Line.Type;
 
