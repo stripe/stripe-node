@@ -268,19 +268,12 @@ declare module 'stripe' {
 
       interface Fpx {
         /**
-         * Account holder type, if provided. Can be one of `individual` or `company`.
-         */
-        account_holder_type: Fpx.AccountHolderType | null;
-
-        /**
-         * The customer's bank, if provided. Can be one of `affin_bank`, `alliance_bank`, `ambank`, `cimb`, `bank_islam`, `bank_rakyat`, `bank_muamalat`, `bsn`, `deutsche_bank`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `maybank2e`, `ocbc`, `public_bank`, `pb_enterprise`, `rhb`, `standard_chartered`, `uob`, or `uob_regional`.
+         * The customer's bank, if provided. Can be one of `affin_bank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `pb_enterprise`, or `uob_regional`.
          */
         bank: Fpx.Bank;
       }
 
       namespace Fpx {
-        type AccountHolderType = 'company' | 'individual';
-
         type Bank =
           | 'affin_bank'
           | 'alliance_bank'
@@ -530,19 +523,12 @@ declare module 'stripe' {
 
       interface Fpx {
         /**
-         * Account holder type for FPX transaction
-         */
-        account_holder_type?: Fpx.AccountHolderType;
-
-        /**
          * The customer's bank.
          */
         bank: Fpx.Bank;
       }
 
       namespace Fpx {
-        type AccountHolderType = 'company' | 'individual';
-
         type Bank =
           | 'affin_bank'
           | 'alliance_bank'

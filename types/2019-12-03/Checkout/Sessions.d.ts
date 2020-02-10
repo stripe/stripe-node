@@ -404,6 +404,13 @@ declare module 'stripe' {
           statement_descriptor?: string;
 
           /**
+           * Provides information about the charge that customers see on their statements. Concatenated with the
+           * prefix (shortened descriptor) or statement descriptor that's set on the account to form the complete
+           * statement descriptor. Maximum 22 characters for the concatenated descriptor.
+           */
+          statement_descriptor_suffix?: string;
+
+          /**
            * The parameters used to automatically create a Transfer when the payment succeeds.
            * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
            */
