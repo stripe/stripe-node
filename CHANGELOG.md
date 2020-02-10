@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.15.0 - 2020-02-10
+* [#801](https://github.com/stripe/stripe-node/pull/801) Multiple API changes
+  * Add support for new `type` values for `TaxId`.
+  * Add support for `payment_intent_data[statement_descriptor_suffix]` on Checkout `Session`.
+
 ## 8.14.0 - 2020-02-04
 * [#793](https://github.com/stripe/stripe-node/pull/793) Rename `sort_code` to `sender_sort_code` on `SourceTransaction` for BACS debit.
 
