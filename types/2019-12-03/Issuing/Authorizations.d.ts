@@ -225,12 +225,12 @@ declare module 'stripe' {
 
           interface ViolatedAuthorizationControl {
             /**
-             * Entity which the authorization control acts on. One of `account`, `card`, or `cardholder`.
+             * Entity which the authorization control acts on. One of `card`, `cardholder`, or `account`.
              */
             entity: ViolatedAuthorizationControl.Entity;
 
             /**
-             * Name of the authorization control. One of `allowed_categories`, `blocked_categories`, `max_amount`, `max_approvals`, or `spending_limits`.
+             * Name of the authorization control. One of `allowed_categories`, `blocked_categories`, `spending_limits`, `max_approvals`, or `max_amount`.
              */
             name: ViolatedAuthorizationControl.Name;
           }
@@ -261,7 +261,7 @@ declare module 'stripe' {
           address_zip_check: string;
 
           /**
-           * One of `exempt`, `failure`, `none`, or `success`.
+           * One of `success`, `failure`, `exempt`, or `none`.
            */
           authentication: string;
 

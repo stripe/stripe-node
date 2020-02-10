@@ -48,12 +48,12 @@ declare module 'stripe' {
         metadata: Metadata;
 
         /**
-         * Reason for this dispute. One of `other` or `fraudulent`.
+         * Reason for this dispute. One of `fraudulent` or `other`.
          */
         reason: string;
 
         /**
-         * Current status of dispute. One of `lost`, `under_review`, `unsubmitted`, or `won`.
+         * Current status of dispute. One of `unsubmitted`, `under_review`, `won`, or `lost`.
          */
         status: Dispute.Status;
       }
@@ -107,7 +107,7 @@ declare module 'stripe' {
         disputed_transaction: string;
 
         /**
-         * The reason for the dispute. One of `other` or `fraudulent`.
+         * The reason for the dispute.
          */
         reason: DisputeCreateParams.Reason;
 

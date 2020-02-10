@@ -33,12 +33,12 @@ declare module 'stripe' {
       single_use?: Mandate.SingleUse;
 
       /**
-       * The status of the Mandate, one of `active`, `inactive`, or `pending`. The Mandate can be used to initiate a payment only if status=active.
+       * The status of the Mandate, one of `pending`, `inactive`, or `active`. The Mandate can be used to initiate a payment only if status=active.
        */
       status: Mandate.Status;
 
       /**
-       * The type of the mandate, one of `multi_use` or `single_use`
+       * The type of the mandate, one of `single_use` or `multi_use`
        */
       type: Mandate.Type;
     }
