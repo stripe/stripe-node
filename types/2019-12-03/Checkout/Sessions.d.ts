@@ -460,7 +460,7 @@ declare module 'stripe' {
           }
         }
 
-        type PaymentMethodType = 'card' | 'ideal';
+        type PaymentMethodType = 'card' | 'fpx' | 'ideal';
 
         interface SetupIntentData {
           /**

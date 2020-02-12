@@ -56,10 +56,19 @@ declare module 'stripe' {
 
     namespace PaymentMethod {
       interface AuBecsDebit {
+        /**
+         * Six-digit number identifying bank and branch associated with this bank account.
+         */
         bsb_number: string | null;
 
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
         fingerprint: string | null;
 
+        /**
+         * Last four digits of the bank account number.
+         */
         last4: string | null;
       }
 
@@ -385,7 +394,7 @@ declare module 'stripe' {
 
     interface PaymentMethodCreateParams {
       /**
-       * If this is a `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+       * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
        */
       au_becs_debit?: PaymentMethodCreateParams.AuBecsDebit;
 
@@ -730,7 +739,7 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodListParams {
-      type Type = 'card' | 'card_present' | 'ideal' | 'sepa_debit';
+      type Type = 'card' | 'card_present' | 'fpx' | 'ideal' | 'sepa_debit';
     }
 
     interface PaymentMethodAttachParams {
