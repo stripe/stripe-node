@@ -473,7 +473,7 @@ declare module 'stripe' {
       description?: string;
 
       /**
-       * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions. This can only be set when `confirm=true` is supplied.
+       * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions, like [saving cards without authentication](https://stripe.com/docs/payments/save-card-without-authentication). This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
       error_on_requires_action?: boolean;
 
@@ -1080,7 +1080,7 @@ declare module 'stripe' {
 
     interface PaymentIntentConfirmParams {
       /**
-       * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions.
+       * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions, like [saving cards without authentication](https://stripe.com/docs/payments/save-card-without-authentication).
        */
       error_on_requires_action?: boolean;
 
