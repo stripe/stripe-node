@@ -55,7 +55,7 @@ declare module 'stripe' {
        */
       bank_account?: string | TokenCreateParams.BankAccount;
 
-      card?: string | TokenCreateParams.Card;
+      card?: TokenCreateParams.Card | string;
 
       /**
        * The customer (owned by the application's account) for which to create a token. This can be used only with an [OAuth access token](https://stripe.com/docs/connect/standard-accounts) or [Stripe-Account header](https://stripe.com/docs/connect/authentication). For more details, see [Cloning Saved Payment Methods](https://stripe.com/docs/connect/cloning-saved-payment-methods).

@@ -524,6 +524,7 @@ declare module 'stripe' {
          */
         number: string;
       }
+
       interface Card2 {
         token: string;
       }

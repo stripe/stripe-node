@@ -557,6 +557,7 @@ declare module 'stripe' {
           type Type = 'offline' | 'online';
         }
       }
+
       interface MandateData2 {
         /**
          * This hash contains details about the customer acceptance of the Mandate.

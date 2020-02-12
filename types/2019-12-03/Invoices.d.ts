@@ -850,8 +850,8 @@ declare module 'stripe' {
        * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
        */
       subscription_billing_cycle_anchor?:
-        | number
-        | InvoiceRetrieveUpcomingParams.SubscriptionBillingCycleAnchor;
+        | InvoiceRetrieveUpcomingParams.SubscriptionBillingCycleAnchor
+        | number;
 
       /**
        * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.`
