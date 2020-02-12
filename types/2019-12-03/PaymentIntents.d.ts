@@ -823,6 +823,11 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * Payment-method-specific configuration for this PaymentIntent.
+       */
+      payment_method_options?: PaymentIntentUpdateParams.PaymentMethodOptions;
+
+      /**
        * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
        */
       payment_method_types?: Array<string>;
@@ -886,6 +891,75 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
+      interface PaymentMethodOptions {
+        /**
+         * Configuration for any card payments attempted on this PaymentIntent.
+         */
+        card?: PaymentMethodOptions.Card;
+      }
+
+      namespace PaymentMethodOptions {
+        interface Card {
+          /**
+           * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
+           *
+           * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+           */
+          installments?: Card.Installments;
+
+          /**
+           * When specified, this parameter indicates that a transaction will be marked
+           * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
+           * parameter can only be provided during confirmation.
+           */
+          moto?: boolean;
+
+          /**
+           * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+           */
+          request_three_d_secure?: Card.RequestThreeDSecure;
+        }
+
+        namespace Card {
+          interface Installments {
+            /**
+             * Setting to true enables installments for this PaymentIntent.
+             * This will cause the response to contain a list of available installment plans.
+             * Setting to false will prevent any selected plan from applying to a charge.
+             */
+            enabled?: boolean;
+
+            /**
+             * The selected installment plan to use for this payment attempt.
+             * This parameter can only be provided during confirmation.
+             */
+            plan?: Installments.Plan | null;
+          }
+
+          namespace Installments {
+            interface Plan {
+              /**
+               * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+               */
+              count: number;
+
+              /**
+               * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+               * One of `month`.
+               */
+              interval: 'month';
+
+              /**
+               * Type of installment plan, one of `fixed_count`.
+               */
+              type: 'fixed_count';
+            }
+          }
+
+          type RequestThreeDSecure = 'any' | 'automatic';
+        }
+      }
+
       type SetupFutureUsage = 'off_session' | 'on_session';
 
       interface Shipping {

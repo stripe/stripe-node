@@ -251,24 +251,34 @@ declare module 'stripe' {
 
         interface VerificationData {
           /**
-           * Whether the cardholder provided an address first line and if it matched the cardholder's `billing.address.line1`. One of `match`, `mismatch`, or `not_provided`.
+           * Whether the cardholder provided an address first line and if it matched the cardholder's `billing.address.line1`.
            */
-          address_line1_check: string;
+          address_line1_check: VerificationData.AddressLine1Check;
 
           /**
-           * Whether the cardholder provided a zip (or postal code) and if it matched the cardholder's `billing.address.postal_code`. One of `match`, `mismatch`, or `not_provided`.
+           * Whether the cardholder provided a zip (or postal code) and if it matched the cardholder's `billing.address.postal_code`.
            */
-          address_zip_check: string;
+          address_zip_check: VerificationData.AddressZipCheck;
 
           /**
-           * One of `success`, `failure`, `exempt`, or `none`.
+           * Whether 3DS authentication was performed.
            */
-          authentication: string;
+          authentication: VerificationData.Authentication;
 
           /**
-           * Whether the cardholder provided a CVC and if it matched Stripe's record. One of `match`, `mismatch`, or `not_provided`.
+           * Whether the cardholder provided a CVC and if it matched Stripe's record.
            */
-          cvc_check: string;
+          cvc_check: VerificationData.CvcCheck;
+        }
+
+        namespace VerificationData {
+          type AddressLine1Check = 'match' | 'mismatch' | 'not_provided';
+
+          type AddressZipCheck = 'match' | 'mismatch' | 'not_provided';
+
+          type Authentication = 'failure' | 'none' | 'success';
+
+          type CvcCheck = 'match' | 'mismatch' | 'not_provided';
         }
       }
 

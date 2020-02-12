@@ -20,7 +20,7 @@ declare module 'stripe' {
       active: boolean;
 
       /**
-       * Specifies a usage aggregation strategy for plans of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for picking the last usage record reported within a period, `last_ever` for picking the last usage record ever (across period bounds) or `max` which picks the usage record with the maximum reported usage during a period. Defaults to `sum`.
+       * Specifies a usage aggregation strategy for plans of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
        */
       aggregate_usage: Plan.AggregateUsage | null;
 
@@ -52,12 +52,12 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
-       * One of `day`, `week`, `month` or `year`. The frequency with which a subscription should be billed.
+       * The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
        */
       interval: Plan.Interval;
 
       /**
-       * The number of intervals (specified in the `interval` property) between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months.
+       * The number of intervals (specified in the `interval` attribute) between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months.
        */
       interval_count: number;
 
@@ -87,12 +87,12 @@ declare module 'stripe' {
       tiers: Array<Plan.Tier> | null;
 
       /**
-       * Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price, in `graduated` tiering pricing can successively change as the quantity grows.
+       * Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price. In `graduated` tiering, pricing can change as the quantity grows.
        */
       tiers_mode: Plan.TiersMode | null;
 
       /**
-       * Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
+       * Apply a transformation to the reported usage or set quantity before computing the amount billed. Cannot be combined with `tiers`.
        */
       transform_usage: Plan.TransformUsage | null;
 
@@ -102,7 +102,7 @@ declare module 'stripe' {
       trial_period_days: number | null;
 
       /**
-       * Configures how the quantity per period should be determined, can be either `metered` or `licensed`. `licensed` will automatically bill the `quantity` set when adding it to a subscription, `metered` will aggregate the total usage based on usage records. Defaults to `licensed`.
+       * Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
        */
       usage_type: Plan.UsageType;
     }
@@ -199,7 +199,7 @@ declare module 'stripe' {
       active?: boolean;
 
       /**
-       * Specifies a usage aggregation strategy for plans of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for picking the last usage record reported within a period, `last_ever` for picking the last usage record ever (across period bounds) or `max` which picks the usage record with the maximum reported usage during a period. Defaults to `sum`.
+       * Specifies a usage aggregation strategy for plans of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
        */
       aggregate_usage?: PlanCreateParams.AggregateUsage;
 
@@ -266,7 +266,7 @@ declare module 'stripe' {
       trial_period_days?: number;
 
       /**
-       * Configures how the quantity per period should be determined, can be either `metered` or `licensed`. `licensed` will automatically bill the `quantity` set for a plan when adding it to a subscription, `metered` will aggregate the total usage based on usage records. Defaults to `licensed`.
+       * Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
        */
       usage_type?: PlanCreateParams.UsageType;
     }

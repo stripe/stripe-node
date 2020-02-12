@@ -80,7 +80,7 @@ declare module 'stripe' {
       source_transaction: string | Stripe.Charge | null;
 
       /**
-       * The source balance this transfer came from. One of `card` or `bank_account`.
+       * The source balance this transfer came from. One of `card`, `fpx`, or `bank_account`.
        */
       source_type: string | null;
 
@@ -127,7 +127,7 @@ declare module 'stripe' {
       source_transaction?: string;
 
       /**
-       * The source balance to use for this transfer. One of `bank_account` or `card`. For most users, this will default to `card`.
+       * The source balance to use for this transfer. One of `bank_account`, `card`, or `fpx`. For most users, this will default to `card`.
        */
       source_type?: TransferCreateParams.SourceType;
 
@@ -138,7 +138,7 @@ declare module 'stripe' {
     }
 
     namespace TransferCreateParams {
-      type SourceType = 'bank_account' | 'card';
+      type SourceType = 'bank_account' | 'card' | 'fpx';
     }
 
     interface TransferRetrieveParams {

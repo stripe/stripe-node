@@ -91,7 +91,7 @@ declare module 'stripe' {
       method: string;
 
       /**
-       * The source balance this payout came from. One of `card` or `bank_account`.
+       * The source balance this payout came from. One of `card`, `fpx`, or `bank_account`.
        */
       source_type: string;
 
@@ -152,7 +152,7 @@ declare module 'stripe' {
       method?: PayoutCreateParams.Method;
 
       /**
-       * The balance type of your Stripe balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the balances API. One of `bank_account` or `card`.
+       * The balance type of your Stripe balance to draw this payout from. Balances for different payment sources are kept separately. You can find the amounts with the balances API. One of `bank_account`, `card`, or `fpx`.
        */
       source_type?: PayoutCreateParams.SourceType;
 
@@ -165,7 +165,7 @@ declare module 'stripe' {
     namespace PayoutCreateParams {
       type Method = 'instant' | 'standard';
 
-      type SourceType = 'bank_account' | 'card';
+      type SourceType = 'bank_account' | 'card' | 'fpx';
     }
 
     interface PayoutRetrieveParams {

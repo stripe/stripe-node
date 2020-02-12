@@ -56,6 +56,11 @@ declare module 'stripe' {
            * Amount for card.
            */
           card?: number;
+
+          /**
+           * Amount for FPX.
+           */
+          fpx?: number;
         }
       }
 
@@ -84,6 +89,11 @@ declare module 'stripe' {
            * Amount for card.
            */
           card?: number;
+
+          /**
+           * Amount for FPX.
+           */
+          fpx?: number;
         }
       }
 
@@ -112,6 +122,11 @@ declare module 'stripe' {
            * Amount for card.
            */
           card?: number;
+
+          /**
+           * Amount for FPX.
+           */
+          fpx?: number;
         }
       }
     }
