@@ -657,7 +657,7 @@ declare module 'stripe' {
       /**
        * The tax rates that will apply to any line item that does not have `tax_rates` set. Pass an empty string to remove previously-defined tax rates.
        */
-      default_tax_rates?: Array<string> | '';
+      default_tax_rates?: Array<string> | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
@@ -692,7 +692,7 @@ declare module 'stripe' {
       /**
        * The percent tax rate applied to the invoice, represented as a non-negative decimal number (with at most four decimal places) between 0 and 100. To unset a previously-set value, pass an empty string. This field can be updated only on `draft` invoices. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
        */
-      tax_percent?: number | '';
+      tax_percent?: number | null;
 
       /**
        * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
@@ -856,7 +856,7 @@ declare module 'stripe' {
       /**
        * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.`
        */
-      subscription_cancel_at?: number | '';
+      subscription_cancel_at?: number | null;
 
       /**
        * Boolean indicating whether this subscription should cancel at the end of the current period.
@@ -871,7 +871,7 @@ declare module 'stripe' {
       /**
        * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
        */
-      subscription_default_tax_rates?: Array<string> | '';
+      subscription_default_tax_rates?: Array<string> | null;
 
       /**
        * List of subscription items, each with an attached plan.
@@ -962,7 +962,7 @@ declare module 'stripe' {
          */
         quantity?: number;
 
-        tax_rates?: Array<string> | '';
+        tax_rates?: Array<string> | null;
 
         /**
          * The integer unit amount in **%s** of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
@@ -1030,7 +1030,7 @@ declare module 'stripe' {
         /**
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
-        tax_rates?: Array<string> | '';
+        tax_rates?: Array<string> | null;
       }
 
       namespace SubscriptionItem {

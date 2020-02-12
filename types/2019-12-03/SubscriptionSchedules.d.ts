@@ -406,7 +406,7 @@ declare module 'stripe' {
         /**
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase. When updating, pass an empty string to remove previously-defined tax rates.
          */
-        default_tax_rates?: Array<string> | '';
+        default_tax_rates?: Array<string> | null;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
@@ -485,7 +485,7 @@ declare module 'stripe' {
           /**
            * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
            */
-          tax_rates?: Array<string> | '';
+          tax_rates?: Array<string> | null;
         }
 
         namespace Plan {
@@ -615,7 +615,7 @@ declare module 'stripe' {
         /**
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase. When updating, pass an empty string to remove previously-defined tax rates.
          */
-        default_tax_rates?: Array<string> | '';
+        default_tax_rates?: Array<string> | null;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
@@ -699,7 +699,7 @@ declare module 'stripe' {
           /**
            * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
            */
-          tax_rates?: Array<string> | '';
+          tax_rates?: Array<string> | null;
         }
 
         namespace Plan {

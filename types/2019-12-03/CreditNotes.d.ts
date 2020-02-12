@@ -239,7 +239,7 @@ declare module 'stripe' {
         /**
          * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item`.
          */
-        tax_rates?: Array<string> | '';
+        tax_rates?: Array<string> | null;
 
         /**
          * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`
@@ -391,7 +391,7 @@ declare module 'stripe' {
         /**
          * The tax rates which apply to the credit note line item. Only valid when the `type` is `custom_line_item`.
          */
-        tax_rates?: Array<string> | '';
+        tax_rates?: Array<string> | null;
 
         /**
          * Type of the credit note line item, one of `invoice_line_item` or `custom_line_item`

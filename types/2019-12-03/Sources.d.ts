@@ -806,7 +806,7 @@ declare module 'stripe' {
         /**
          * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
          */
-        amount?: number | '';
+        amount?: number | null;
 
         /**
          * The currency specified by the mandate. (Must match `currency` of the source)
@@ -1098,7 +1098,7 @@ declare module 'stripe' {
         /**
          * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
          */
-        amount?: number | '';
+        amount?: number | null;
 
         /**
          * The currency specified by the mandate. (Must match `currency` of the source)
