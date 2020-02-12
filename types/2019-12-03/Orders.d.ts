@@ -461,11 +461,11 @@ declare module 'stripe' {
       /**
        * List of items to return.
        */
-      items?: OrderReturnOrderParams.Items | null;
+      items?: Array<OrderReturnOrderParams.Item> | null;
     }
 
     namespace OrderReturnOrderParams {
-      interface Items {
+      interface Item {
         /**
          * The amount (price) for this order item to return.
          */
@@ -489,10 +489,10 @@ declare module 'stripe' {
         /**
          * The type of this order item. Must be `sku`, `tax`, or `shipping`.
          */
-        type?: Items.Type;
+        type?: Item.Type;
       }
 
-      namespace Items {
+      namespace Item {
         type Type = 'discount' | 'shipping' | 'sku' | 'tax';
       }
     }

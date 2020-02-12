@@ -319,18 +319,6 @@ declare module 'stripe' {
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
-      interface CustomField {
-        /**
-         * The name of the custom field.
-         */
-        name: string;
-
-        /**
-         * The value of the custom field.
-         */
-        value: string;
-      }
-
       interface CustomerShipping {
         address?: Address;
 
@@ -393,6 +381,18 @@ declare module 'stripe' {
           | 'unknown'
           | 'us_ein'
           | 'za_vat';
+      }
+
+      interface CustomField {
+        /**
+         * The name of the custom field.
+         */
+        name: string;
+
+        /**
+         * The value of the custom field.
+         */
+        value: string;
       }
 
       type Status =
@@ -520,7 +520,7 @@ declare module 'stripe' {
       /**
        * A list of up to 4 custom fields to be displayed on the invoice.
        */
-      custom_fields?: InvoiceCreateParams.CustomFields | null;
+      custom_fields?: Array<InvoiceCreateParams.CustomField> | null;
 
       /**
        * The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
@@ -591,7 +591,7 @@ declare module 'stripe' {
     namespace InvoiceCreateParams {
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
-      interface CustomFields {
+      interface CustomField {
         /**
          * The name of the custom field. This may be up to 30 characters.
          */
@@ -637,7 +637,7 @@ declare module 'stripe' {
       /**
        * A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
        */
-      custom_fields?: InvoiceUpdateParams.CustomFields | null;
+      custom_fields?: Array<InvoiceUpdateParams.CustomField> | null;
 
       /**
        * The number of days from which the invoice is created until it is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
@@ -703,7 +703,7 @@ declare module 'stripe' {
     namespace InvoiceUpdateParams {
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
-      interface CustomFields {
+      interface CustomField {
         /**
          * The name of the custom field. This may be up to 30 characters.
          */

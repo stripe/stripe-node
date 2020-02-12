@@ -283,7 +283,7 @@ declare module 'stripe' {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
-        custom_fields?: InvoiceSettings.CustomFields | null;
+        custom_fields?: Array<InvoiceSettings.CustomField> | null;
 
         /**
          * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
@@ -297,7 +297,7 @@ declare module 'stripe' {
       }
 
       namespace InvoiceSettings {
-        interface CustomFields {
+        interface CustomField {
           /**
            * The name of the custom field. This may be up to 30 characters.
            */
@@ -464,7 +464,7 @@ declare module 'stripe' {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
-        custom_fields?: InvoiceSettings.CustomFields | null;
+        custom_fields?: Array<InvoiceSettings.CustomField> | null;
 
         /**
          * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
@@ -478,7 +478,7 @@ declare module 'stripe' {
       }
 
       namespace InvoiceSettings {
-        interface CustomFields {
+        interface CustomField {
           /**
            * The name of the custom field. This may be up to 30 characters.
            */
