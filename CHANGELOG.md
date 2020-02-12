@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.16.0 - 2020-02-12
+* [#803](https://github.com/stripe/stripe-node/pull/803) Multiple API changes reflect in Typescript definitions
+  * Add `fpx` as a valid `source_type` on `Balance`, `Payout` and `Transfer`
+  * Add `fpx` support on Checkout `Session`
+  * Fields inside `verification_data` on Issuing `Authorization` are now enums
+  * Support updating `payment_method_options` on `PaymentIntent` and `SetupIntent`
+
 ## 8.15.0 - 2020-02-10
 * [#801](https://github.com/stripe/stripe-node/pull/801) Multiple API changes
   * Add support for new `type` values for `TaxId`.
