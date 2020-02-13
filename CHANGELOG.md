@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.17.0 - 2020-02-12
+* [#804](https://github.com/stripe/stripe-node/pull/804) Add support for `payment_intent_data[transfer_data][amount]` on Checkout `Session`
+
 ## 8.16.0 - 2020-02-12
 * [#803](https://github.com/stripe/stripe-node/pull/803) Multiple API changes reflect in Typescript definitions
   * Add `fpx` as a valid `source_type` on `Balance`, `Payout` and `Transfer`
