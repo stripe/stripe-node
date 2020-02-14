@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.18.0 - 2020-02-14
+* [#802](https://github.com/stripe/stripe-node/pull/802) TS Fixes
+  * Correctly type `Array<CustomField>`
+  * More consistently describe nullable fields as `| null`, vs `| ''`.
+
 ## 8.17.0 - 2020-02-12
 * [#804](https://github.com/stripe/stripe-node/pull/804) Add support for `payment_intent_data[transfer_data][amount]` on Checkout `Session`
 
