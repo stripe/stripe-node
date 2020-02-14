@@ -275,7 +275,7 @@ declare module 'stripe' {
       /**
        * A list of up to 5 alphanumeric attributes that each SKU can provide values for (e.g., `["color", "size"]`). If a value for `attributes` is specified, the list specified will replace the existing attributes list on this product. Any attributes not present after the update will be deleted from the SKUs for this product.
        */
-      attributes?: Array<string> | '';
+      attributes?: Array<string> | null;
 
       /**
        * A short one-line description of the product, meant to be displayable to the customer. May only be set if `type=good`.
@@ -300,7 +300,7 @@ declare module 'stripe' {
       /**
        * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. May only be set if `type=good`.
        */
-      images?: Array<string> | '';
+      images?: Array<string> | null;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

@@ -55,7 +55,7 @@ declare module 'stripe' {
        */
       bank_account?: string | TokenCreateParams.BankAccount;
 
-      card?: string | TokenCreateParams.Card;
+      card?: TokenCreateParams.Card | string;
 
       /**
        * The customer (owned by the application's account) for which to create a token. This can be used only with an [OAuth access token](https://stripe.com/docs/connect/standard-accounts) or [Stripe-Account header](https://stripe.com/docs/connect/authentication). For more details, see [Cloning Saved Payment Methods](https://stripe.com/docs/connect/cloning-saved-payment-methods).
@@ -307,7 +307,7 @@ declare module 'stripe' {
           /**
            * The percent owned by the person of the account's legal entity.
            */
-          percent_ownership?: number | '';
+          percent_ownership?: number | null;
 
           /**
            * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.

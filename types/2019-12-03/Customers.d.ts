@@ -204,7 +204,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: AddressParam | '';
+      address?: AddressParam | null;
 
       /**
        * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -283,7 +283,7 @@ declare module 'stripe' {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
-        custom_fields?: InvoiceSettings.CustomFields | null;
+        custom_fields?: Array<InvoiceSettings.CustomField> | null;
 
         /**
          * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
@@ -297,7 +297,7 @@ declare module 'stripe' {
       }
 
       namespace InvoiceSettings {
-        interface CustomFields {
+        interface CustomField {
           /**
            * The name of the custom field. This may be up to 30 characters.
            */
@@ -378,7 +378,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: AddressParam | '';
+      address?: AddressParam | null;
 
       /**
        * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -464,7 +464,7 @@ declare module 'stripe' {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
-        custom_fields?: InvoiceSettings.CustomFields | null;
+        custom_fields?: Array<InvoiceSettings.CustomField> | null;
 
         /**
          * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
@@ -478,7 +478,7 @@ declare module 'stripe' {
       }
 
       namespace InvoiceSettings {
-        interface CustomFields {
+        interface CustomField {
           /**
            * The name of the custom field. This may be up to 30 characters.
            */

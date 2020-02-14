@@ -319,18 +319,6 @@ declare module 'stripe' {
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
-      interface CustomField {
-        /**
-         * The name of the custom field.
-         */
-        name: string;
-
-        /**
-         * The value of the custom field.
-         */
-        value: string;
-      }
-
       interface CustomerShipping {
         address?: Address;
 
@@ -393,6 +381,18 @@ declare module 'stripe' {
           | 'unknown'
           | 'us_ein'
           | 'za_vat';
+      }
+
+      interface CustomField {
+        /**
+         * The name of the custom field.
+         */
+        name: string;
+
+        /**
+         * The value of the custom field.
+         */
+        value: string;
       }
 
       type Status =
@@ -520,7 +520,7 @@ declare module 'stripe' {
       /**
        * A list of up to 4 custom fields to be displayed on the invoice.
        */
-      custom_fields?: InvoiceCreateParams.CustomFields | null;
+      custom_fields?: Array<InvoiceCreateParams.CustomField> | null;
 
       /**
        * The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
@@ -591,7 +591,7 @@ declare module 'stripe' {
     namespace InvoiceCreateParams {
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
-      interface CustomFields {
+      interface CustomField {
         /**
          * The name of the custom field. This may be up to 30 characters.
          */
@@ -637,7 +637,7 @@ declare module 'stripe' {
       /**
        * A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
        */
-      custom_fields?: InvoiceUpdateParams.CustomFields | null;
+      custom_fields?: Array<InvoiceUpdateParams.CustomField> | null;
 
       /**
        * The number of days from which the invoice is created until it is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
@@ -657,7 +657,7 @@ declare module 'stripe' {
       /**
        * The tax rates that will apply to any line item that does not have `tax_rates` set. Pass an empty string to remove previously-defined tax rates.
        */
-      default_tax_rates?: Array<string> | '';
+      default_tax_rates?: Array<string> | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
@@ -692,7 +692,7 @@ declare module 'stripe' {
       /**
        * The percent tax rate applied to the invoice, represented as a non-negative decimal number (with at most four decimal places) between 0 and 100. To unset a previously-set value, pass an empty string. This field can be updated only on `draft` invoices. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
        */
-      tax_percent?: number | '';
+      tax_percent?: number | null;
 
       /**
        * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
@@ -703,7 +703,7 @@ declare module 'stripe' {
     namespace InvoiceUpdateParams {
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
-      interface CustomFields {
+      interface CustomField {
         /**
          * The name of the custom field. This may be up to 30 characters.
          */
@@ -850,13 +850,13 @@ declare module 'stripe' {
        * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
        */
       subscription_billing_cycle_anchor?:
-        | number
-        | InvoiceRetrieveUpcomingParams.SubscriptionBillingCycleAnchor;
+        | InvoiceRetrieveUpcomingParams.SubscriptionBillingCycleAnchor
+        | number;
 
       /**
        * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.`
        */
-      subscription_cancel_at?: number | '';
+      subscription_cancel_at?: number | null;
 
       /**
        * Boolean indicating whether this subscription should cancel at the end of the current period.
@@ -871,7 +871,7 @@ declare module 'stripe' {
       /**
        * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
        */
-      subscription_default_tax_rates?: Array<string> | '';
+      subscription_default_tax_rates?: Array<string> | null;
 
       /**
        * List of subscription items, each with an attached plan.
@@ -962,7 +962,7 @@ declare module 'stripe' {
          */
         quantity?: number;
 
-        tax_rates?: Array<string> | '';
+        tax_rates?: Array<string> | null;
 
         /**
          * The integer unit amount in **%s** of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
@@ -1030,7 +1030,7 @@ declare module 'stripe' {
         /**
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
-        tax_rates?: Array<string> | '';
+        tax_rates?: Array<string> | null;
       }
 
       namespace SubscriptionItem {

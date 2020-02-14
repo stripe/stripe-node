@@ -275,7 +275,7 @@ declare module 'stripe' {
       /**
        * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item. Pass an empty string to remove previously-defined tax rates.
        */
-      tax_rates?: Array<string> | '';
+      tax_rates?: Array<string> | null;
 
       /**
        * The integer unit amount in **%s** of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.

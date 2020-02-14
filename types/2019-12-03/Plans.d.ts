@@ -243,7 +243,7 @@ declare module 'stripe' {
        */
       nickname?: string;
 
-      product?: string | PlanCreateParams.Product;
+      product?: PlanCreateParams.Product | string;
 
       /**
        * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.

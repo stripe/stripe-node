@@ -788,7 +788,7 @@ declare module 'stripe' {
       /**
        * The amount of the application fee (if any) for the resulting payment. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
        */
-      application_fee_amount?: number | '';
+      application_fee_amount?: number | null;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -835,7 +835,7 @@ declare module 'stripe' {
       /**
        * Email address that the receipt for the resulting payment will be sent to.
        */
-      receipt_email?: string | '';
+      receipt_email?: string | null;
 
       /**
        * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer. Defaults to `false`.
@@ -1119,7 +1119,7 @@ declare module 'stripe' {
       /**
        * Email address that the receipt for the resulting payment will be sent to.
        */
-      receipt_email?: string | '';
+      receipt_email?: string | null;
 
       /**
        * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
@@ -1215,6 +1215,7 @@ declare module 'stripe' {
           type Type = 'offline' | 'online';
         }
       }
+
       interface MandateData2 {
         /**
          * This hash contains details about the customer acceptance of the Mandate.
