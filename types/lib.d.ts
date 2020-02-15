@@ -44,7 +44,7 @@ declare module 'stripe' {
 
       /**
        * Request timeout in milliseconds.
-       * The default is Node's default of 120 seconds.
+       * The default is 80000
        */
       timeout?: number;
 
