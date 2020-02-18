@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.19.0 - 2020-02-18
+* [#807](https://github.com/stripe/stripe-node/pull/807) Change timeout default to constant 80000 instead Node default
+
 ## 8.18.0 - 2020-02-14
 * [#802](https://github.com/stripe/stripe-node/pull/802) TS Fixes
   * Correctly type `Array<CustomField>`
