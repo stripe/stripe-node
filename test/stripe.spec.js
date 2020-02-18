@@ -7,8 +7,6 @@ const utils = require('../lib/utils');
 const Stripe = require('../lib/stripe');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 
-const http = require('http');
-
 const expect = require('chai').expect;
 
 const CUSTOMER_DETAILS = {
@@ -208,10 +206,9 @@ describe('Stripe Module', function() {
   });
 
   describe('setTimeout', () => {
-    it('Should define a default equal to the node default', () => {
-      expect(stripe.getApiField('timeout')).to.equal(
-        http.createServer().timeout
-      );
+    const defaultTimeout = 80000;
+    it('Should define a default of 80000', () => {
+      expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
     });
     it('Should allow me to set a custom timeout', () => {
       stripe.setTimeout(900);
@@ -219,9 +216,7 @@ describe('Stripe Module', function() {
     });
     it('Should allow me to set null, to reset to the default', () => {
       stripe.setTimeout(null);
-      expect(stripe.getApiField('timeout')).to.equal(
-        http.createServer().timeout
-      );
+      expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
     });
   });
 
