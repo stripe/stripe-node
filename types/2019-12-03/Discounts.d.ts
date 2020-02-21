@@ -9,6 +9,11 @@ declare module 'stripe' {
        */
       object: 'discount';
 
+      /**
+       * A coupon contains information about a percent-off or amount-off discount you
+       * might want to apply to a customer. Coupons may be applied to [invoices](https://stripe.com/docs/api#invoices) or
+       * [orders](https://stripe.com/docs/api#create_order-coupon). Coupons do not work with conventional one-off [charges](https://stripe.com/docs/api#create_charge).
+       */
       coupon: Stripe.Coupon;
 
       /**

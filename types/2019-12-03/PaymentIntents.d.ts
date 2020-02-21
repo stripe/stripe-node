@@ -152,7 +152,7 @@ declare module 'stripe' {
        *
        * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
        *
-       * For more, learn to [save card details after a payment](https://stripe.com/docs/payments/save-after-payment).
+       * For more, learn to [save card details during payment](https://stripe.com/docs/payments/save-during-payment).
        *
        * Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by [SCA](https://stripe.com/docs/strong-customer-authentication), using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect [off-session payments](https://stripe.com/docs/payments/cards/charging-saved-cards#off-session-payments-with-saved-cards) for this customer.
        */
@@ -246,10 +246,48 @@ declare module 'stripe' {
          */
         param?: string;
 
+        /**
+         * A PaymentIntent guides you through the process of collecting a payment from your customer.
+         * We recommend that you create exactly one PaymentIntent for each order or
+         * customer session in your system. You can reference the PaymentIntent later to
+         * see the history of payment attempts for a particular session.
+         *
+         * A PaymentIntent transitions through
+         * [multiple statuses](https://stripe.com/docs/payments/intents#intent-statuses)
+         * throughout its lifetime as it interfaces with Stripe.js to perform
+         * authentication flows and ultimately creates at most one successful charge.
+         *
+         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents/creating-payment-intents).
+         */
         payment_intent?: Stripe.PaymentIntent;
 
+        /**
+         * PaymentMethod objects represent your customer's payment instruments.
+         * They can be used with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or saved to
+         * Customer objects to store instrument details for future payments.
+         *
+         * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+         */
         payment_method?: Stripe.PaymentMethod;
 
+        /**
+         * A SetupIntent guides you through the process of setting up a customer's payment credentials for future payments.
+         * For example, you could use a SetupIntent to set up your customer's card without immediately collecting a payment.
+         * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
+         *
+         * Create a SetupIntent as soon as you're ready to collect your customer's payment credentials.
+         * Do not maintain long-lived, unconfirmed SetupIntents as they may no longer be valid.
+         * The SetupIntent then transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+         * you through the setup process.
+         *
+         * Successful SetupIntents result in payment credentials that are optimized for future payments.
+         * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) may need to be run through
+         * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) at the time of payment method collection
+         * in order to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         *
+         * By using SetupIntents, you ensure that your customers experience the minimum set of required friction,
+         * even as regulations change over time.
+         */
         setup_intent?: Stripe.SetupIntent;
 
         source?: CustomerSource;
@@ -548,7 +586,7 @@ declare module 'stripe' {
        *
        * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
        *
-       * For more, learn to [save card details after a payment](https://stripe.com/docs/payments/save-after-payment).
+       * For more, learn to [save card details during payment](https://stripe.com/docs/payments/save-during-payment).
        *
        * Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by [SCA](https://stripe.com/docs/strong-customer-authentication), using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect [off-session payments](https://stripe.com/docs/payments/cards/charging-saved-cards#off-session-payments-with-saved-cards) for this customer.
        */

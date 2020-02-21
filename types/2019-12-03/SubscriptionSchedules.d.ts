@@ -194,6 +194,11 @@ declare module 'stripe' {
         plans: Array<Phase.Plan>;
 
         /**
+         * Controls whether or not the subscription schedule will prorate when transitioning to this phase. Values are `create_prorations` and `none`.
+         */
+        proration_behavior: Phase.ProrationBehavior | null;
+
+        /**
          * The start of this phase of the subscription schedule.
          */
         start_date: number;
@@ -261,6 +266,11 @@ declare module 'stripe' {
             usage_gte: number | null;
           }
         }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
 
       interface RenewalInterval {
@@ -429,6 +439,11 @@ declare module 'stripe' {
         plans: Array<Phase.Plan>;
 
         /**
+         * Controls whether or not a subscription schedule will create prorations when transitioning to this phase. Valid values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
+         */
+        proration_behavior?: Phase.ProrationBehavior;
+
+        /**
          * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period during thise phase of the schedule. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
          */
         tax_percent?: number;
@@ -496,6 +511,11 @@ declare module 'stripe' {
             usage_gte: number;
           }
         }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
     }
 
@@ -533,9 +553,14 @@ declare module 'stripe' {
       phases?: Array<SubscriptionScheduleUpdateParams.Phase>;
 
       /**
-       * If the update changes the current phase, indicates if the changes should be prorated. Defaults to `true`.
+       * This field has been renamed to `proration_behavior`. `prorate=true` can be replaced with `proration_behavior=create_prorations` and `prorate=false` can be replaced with `proration_behavior=none`.
        */
       prorate?: boolean;
+
+      /**
+       * If the update changes the current phase, indicates if the changes should be prorated. Valid values are `create_prorations` or `none`, and the default value is `create_prorations`.
+       */
+      proration_behavior?: SubscriptionScheduleUpdateParams.ProrationBehavior;
     }
 
     namespace SubscriptionScheduleUpdateParams {
@@ -638,6 +663,11 @@ declare module 'stripe' {
         plans: Array<Phase.Plan>;
 
         /**
+         * Controls whether or not a subscription schedule will create prorations when transitioning to this phase. Valid values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
+         */
+        proration_behavior?: Phase.ProrationBehavior;
+
+        /**
          * The date at which this phase of the subscription schedule starts or `now`. Must be set on the first phase.
          */
         start_date?: number | 'now';
@@ -710,7 +740,14 @@ declare module 'stripe' {
             usage_gte: number;
           }
         }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
+
+      type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
 
     interface SubscriptionScheduleListParams extends PaginationParams {

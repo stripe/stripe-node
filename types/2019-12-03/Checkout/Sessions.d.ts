@@ -127,6 +127,14 @@ declare module 'stripe' {
 
           custom?: DisplayItem.Custom;
 
+          /**
+           * Plans define the base price, currency, and billing cycle for subscriptions.
+           * For example, you might have a 5/month plan
+           * that provides limited access to your products, and a
+           * 15/month plan that allows full access.
+           *
+           * Related guide: [Managing Products and Plans](https://stripe.com/docs/billing/subscriptions/products-and-plans).
+           */
           plan?: Stripe.Plan;
 
           /**
@@ -134,6 +142,16 @@ declare module 'stripe' {
            */
           quantity?: number;
 
+          /**
+           * Stores representations of [stock keeping units](http://en.wikipedia.org/wiki/Stock_keeping_unit).
+           * SKUs describe specific product variations, taking into account any combination of: attributes,
+           * currency, and cost. For example, a product may be a T-shirt, whereas a specific SKU represents
+           * the `size: large`, `color: red` version of that shirt.
+           *
+           * Can also be used to manage inventory.
+           *
+           * Related guide: [Tax, Shipping, and Inventory](https://stripe.com/docs/orders).
+           */
           sku?: Stripe.Sku;
 
           /**
@@ -386,7 +404,7 @@ declare module 'stripe' {
            *
            * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
            *
-           * For more, learn to [save card details after a payment](https://stripe.com/docs/payments/save-after-payment).
+           * For more, learn to [save card details during payment](https://stripe.com/docs/payments/save-during-payment).
            *
            * Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by [SCA](https://stripe.com/docs/strong-customer-authentication), using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect [off-session payments](https://stripe.com/docs/payments/cards/charging-saved-cards#off-session-payments-with-saved-cards) for this customer.
            */
