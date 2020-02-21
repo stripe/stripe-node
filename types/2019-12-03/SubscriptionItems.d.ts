@@ -31,6 +31,14 @@ declare module 'stripe' {
        */
       metadata: Metadata;
 
+      /**
+       * Plans define the base price, currency, and billing cycle for subscriptions.
+       * For example, you might have a 5/month plan
+       * that provides limited access to your products, and a
+       * 15/month plan that allows full access.
+       *
+       * Related guide: [Managing Products and Plans](https://stripe.com/docs/billing/subscriptions/products-and-plans).
+       */
       plan: Stripe.Plan;
 
       /**

@@ -14,8 +14,24 @@ declare module 'stripe' {
        */
       object: 'token';
 
+      /**
+       * These bank accounts are payment methods on `Customer` objects.
+       *
+       * On the other hand [External Accounts](https://stripe.com/docs/api#external_accounts) are transfer
+       * destinations on `Account` objects for [Custom accounts](https://stripe.com/docs/connect/custom-accounts).
+       * They can be bank accounts or debit cards as well, and are documented in the links above.
+       *
+       * Related guide: [Processing ACH & Bank Transfers](https://stripe.com/docs/payments/ach-bank-transfers).
+       */
       bank_account?: Stripe.BankAccount;
 
+      /**
+       * You can store multiple cards on a customer in order to charge the customer
+       * later. You can also store multiple debit cards on a recipient in order to
+       * transfer to those cards later.
+       *
+       * Related guide: [Card Payments with Sources](https://stripe.com/docs/sources/cards).
+       */
       card?: Stripe.Card;
 
       /**

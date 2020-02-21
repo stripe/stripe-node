@@ -190,7 +190,7 @@ declare module 'stripe' {
       id?: string;
 
       /**
-       * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. May only be set if type=`good`.
+       * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
        */
       images?: Array<string>;
 
@@ -298,7 +298,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. May only be set if `type=good`.
+       * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
        */
       images?: Array<string> | null;
 

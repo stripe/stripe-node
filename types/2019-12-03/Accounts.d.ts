@@ -65,6 +65,11 @@ declare module 'stripe' {
        */
       external_accounts?: ApiList<Stripe.BankAccount | Stripe.Card>;
 
+      /**
+       * This is an object representing a person associated with a Stripe account.
+       *
+       * Related guide: [Handling Identity Verification with the API](https://stripe.com/docs/connect/identity-verification-api#person-information).
+       */
       individual?: Stripe.Person;
 
       /**
