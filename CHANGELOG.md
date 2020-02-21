@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.20.0 - 2020-02-21
+* [#813](https://github.com/stripe/stripe-node/pull/813) Multiple API changes
+  * Add support for `timezone` on `ReportRun`
+  * Add support for `proration_behavior` on `SubscriptionSchedule`
+
 ## 8.19.0 - 2020-02-18
 * [#807](https://github.com/stripe/stripe-node/pull/807) Change timeout default to constant 80000 instead Node default
 
