@@ -341,6 +341,11 @@ declare module 'stripe' {
            * The quantity of the line item being purchased.
            */
           quantity: number;
+
+          /**
+           * The tax rates which apply to this line item. This is only allowed in subscription mode.
+           */
+          tax_rates?: Array<string>;
         }
 
         type Locale =
@@ -511,6 +516,13 @@ declare module 'stripe' {
           application_fee_percent?: number;
 
           /**
+           * The tax rates that will apply to any subscription item that does not have
+           * `tax_rates` set. Invoices created will have their `default_tax_rates` populated
+           * from the subscription.
+           */
+          default_tax_rates?: Array<string>;
+
+          /**
            * A list of items, each with an attached plan, that the customer is subscribing to. Use this parameter for subscriptions. To create one-time payments, use `line_items`.
            */
           items?: Array<SubscriptionData.Item>;
@@ -552,6 +564,12 @@ declare module 'stripe' {
              * Quantity for this item.
              */
             quantity?: number;
+
+            /**
+             * The tax rates which apply to this item. When set, the `default_tax_rates`
+             * on `subscription_data` do not apply to this item.
+             */
+            tax_rates?: Array<string>;
           }
         }
       }
@@ -561,6 +579,23 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+      }
+
+      interface SessionListParams extends PaginationParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Only return the Checkout Session for the PaymentIntent specified.
+         */
+        payment_intent?: string;
+
+        /**
+         * Only return the Checkout Session for the subscription specified.
+         */
+        subscription?: string;
       }
 
       class SessionsResource {
@@ -584,6 +619,15 @@ declare module 'stripe' {
           id: string,
           options?: RequestOptions
         ): Promise<Stripe.Checkout.Session>;
+
+        /**
+         * Returns a list of Checkout Sessions.
+         */
+        list(
+          params?: SessionListParams,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Checkout.Session>;
+        list(options?: RequestOptions): ApiListPromise<Stripe.Checkout.Session>;
       }
     }
   }
