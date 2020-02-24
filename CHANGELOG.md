@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.21.0 - 2020-02-24
+* [#819](https://github.com/stripe/stripe-node/pull/819) Add support for listing Checkout `Session` and passing tax rate information
+
 ## 8.20.0 - 2020-02-21
 * [#813](https://github.com/stripe/stripe-node/pull/813) Multiple API changes
   * Add support for `timezone` on `ReportRun`
