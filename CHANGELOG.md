@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.22.0 - 2020-02-24
+* [#820](https://github.com/stripe/stripe-node/pull/820) Add new enum values in `reason` for Issuing `Dispute` creation
+
 ## 8.21.0 - 2020-02-24
 * [#819](https://github.com/stripe/stripe-node/pull/819) Add support for listing Checkout `Session` and passing tax rate information
 
