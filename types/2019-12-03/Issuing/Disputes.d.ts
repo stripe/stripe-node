@@ -48,7 +48,7 @@ declare module 'stripe' {
         metadata: Metadata;
 
         /**
-         * Reason for this dispute. One of `fraudulent` or `other`.
+         * Reason for this dispute. One of `duplicate`, `product_not_received`, `fraudulent`, or `other`.
          */
         reason: string;
 
@@ -61,6 +61,11 @@ declare module 'stripe' {
       namespace Dispute {
         interface Evidence {
           /**
+           * Evidence to support a duplicate product dispute. This will only be present if your dispute's `reason` is `duplicate`.
+           */
+          duplicate: Evidence.Duplicate | null;
+
+          /**
            * Evidence to support a fraudulent dispute. This will only be present if your dispute's `reason` is `fraudulent`.
            */
           fraudulent: Evidence.Fraudulent | null;
@@ -69,9 +74,31 @@ declare module 'stripe' {
            * Evidence to support an uncategorized dispute. This will only be present if your dispute's `reason` is `other`.
            */
           other: Evidence.Other | null;
+
+          /**
+           * Evidence to support a dispute where the product wasn't received. This will only be present if your dispute's `reason` is `product_not_received`.
+           */
+          product_not_received: Evidence.ProductNotReceived | null;
         }
 
         namespace Evidence {
+          interface Duplicate {
+            /**
+             * Brief freeform text explaining why you are disputing this transaction.
+             */
+            dispute_explanation: string | null;
+
+            /**
+             * Transaction (e.g., ipi_...) that the disputed transaction is a duplicate of. Of the two or more transactions that are copies of each other, this is original undisputed one.
+             */
+            original_transaction: string | null;
+
+            /**
+             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+             */
+            uncategorized_file: string | Stripe.File | null;
+          }
+
           interface Fraudulent {
             /**
              * Brief freeform text explaining why you are disputing this transaction.
@@ -89,6 +116,18 @@ declare module 'stripe' {
              * Brief freeform text explaining why you are disputing this transaction.
              */
             dispute_explanation: string;
+
+            /**
+             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+             */
+            uncategorized_file: string | Stripe.File | null;
+          }
+
+          interface ProductNotReceived {
+            /**
+             * Brief freeform text explaining why you are disputing this transaction.
+             */
+            dispute_explanation: string | null;
 
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
@@ -135,6 +174,11 @@ declare module 'stripe' {
       namespace DisputeCreateParams {
         interface Evidence {
           /**
+           * Evidence to support a duplicate dispute. Only provide this if your dispute's `reason` is `duplicate`.
+           */
+          duplicate?: Evidence.Duplicate;
+
+          /**
            * Evidence to support a fraudulent dispute. Only provide this if your dispute's `reason` is `fraudulent`.
            */
           fraudulent?: Evidence.Fraudulent;
@@ -143,9 +187,31 @@ declare module 'stripe' {
            * Evidence to support an uncategorized dispute. Only provide this if your dispute's `reason` is `other`.
            */
           other?: Evidence.Other;
+
+          /**
+           * Evidence to support a dispute for a product that wasn't received. Only provide this if your dispute's `reason` is `product_not_received`.
+           */
+          product_not_received?: Evidence.ProductNotReceived;
         }
 
         namespace Evidence {
+          interface Duplicate {
+            /**
+             * Brief freeform text explaining why you are disputing this transaction.
+             */
+            dispute_explanation: string;
+
+            /**
+             * Transaction (e.g., ipi_...) that the disputed transaction is a duplicate of. Of the two or more transactions that are copies of each other, this is original undisputed one.
+             */
+            original_transaction?: string;
+
+            /**
+             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+             */
+            uncategorized_file?: string;
+          }
+
           interface Fraudulent {
             /**
              * Brief freeform text explaining why you are disputing this transaction.
@@ -169,9 +235,25 @@ declare module 'stripe' {
              */
             uncategorized_file?: string;
           }
+
+          interface ProductNotReceived {
+            /**
+             * Brief freeform text explaining why you are disputing this transaction.
+             */
+            dispute_explanation: string;
+
+            /**
+             * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional file evidence supporting your dispute.
+             */
+            uncategorized_file?: string;
+          }
         }
 
-        type Reason = 'fraudulent' | 'other';
+        type Reason =
+          | 'duplicate'
+          | 'fraudulent'
+          | 'other'
+          | 'product_not_received';
       }
 
       interface DisputeRetrieveParams {
