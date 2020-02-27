@@ -44,7 +44,7 @@ declare module 'stripe' {
       /**
        * The type of account link the user is requesting. Possible values are `custom_account_verification` or `custom_account_update`.
        */
-      type: string;
+      type: AccountLinkCreateParams.Type;
 
       /**
        * Which information the platform needs to collect from the user. One of `currently_due` or `eventually_due`. Default is `currently_due`.
@@ -59,6 +59,8 @@ declare module 'stripe' {
 
     namespace AccountLinkCreateParams {
       type Collect = 'currently_due' | 'eventually_due';
+
+      type Type = 'custom_account_update' | 'custom_account_verification';
     }
 
     class AccountLinksResource {

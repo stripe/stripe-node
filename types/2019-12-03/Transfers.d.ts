@@ -85,7 +85,7 @@ declare module 'stripe' {
       source_type: string | null;
 
       /**
-       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
+       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
        */
       transfer_group: string | null;
     }
@@ -132,7 +132,7 @@ declare module 'stripe' {
       source_type?: TransferCreateParams.SourceType;
 
       /**
-       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
+       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
        */
       transfer_group?: string;
     }
