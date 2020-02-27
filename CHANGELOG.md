@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.23.0 - 2020-02-27
+* [#821](https://github.com/stripe/stripe-node/pull/821) Make `type` on `AccountLink` an enum
+
 ## 8.22.0 - 2020-02-24
 * [#820](https://github.com/stripe/stripe-node/pull/820) Add new enum values in `reason` for Issuing `Dispute` creation
 
