@@ -231,7 +231,7 @@ declare module 'stripe' {
       transfer_data: Charge.TransferData | null;
 
       /**
-       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
+       * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
        */
       transfer_group: string | null;
     }
@@ -1276,7 +1276,7 @@ declare module 'stripe' {
       transfer_data?: ChargeCreateParams.TransferData;
 
       /**
-       * A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#grouping-transactions).
+       * A string that identifies this transaction as part of a group. For details, see [Grouping transactions](https://stripe.com/docs/connect/charges-transfers#transfer-options).
        */
       transfer_group?: string;
     }
@@ -1378,7 +1378,7 @@ declare module 'stripe' {
       shipping?: ChargeUpdateParams.Shipping;
 
       /**
-       * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
+       * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
        */
       transfer_group?: string;
     }
@@ -1489,7 +1489,7 @@ declare module 'stripe' {
       transfer_data?: ChargeCaptureParams.TransferData;
 
       /**
-       * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#grouping-transactions) for details.
+       * A string that identifies this transaction as part of a group. `transfer_group` may only be provided if it has not been set. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
        */
       transfer_group?: string;
     }
