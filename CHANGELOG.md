@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.24.0 - 2020-02-28
+* [#822](https://github.com/stripe/stripe-node/pull/822) Add `my_sst` as a valid value for `type` on `TaxId`
+
 ## 8.23.0 - 2020-02-27
 * [#821](https://github.com/stripe/stripe-node/pull/821) Make `type` on `AccountLink` an enum
 
