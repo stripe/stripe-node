@@ -203,7 +203,7 @@ declare module 'stripe' {
       | 'authentication_error'
       | 'invalid_grant';
 
-    class StripeError {
+    class StripeError extends Error {
       static populate(type: RawErrorType): StripeError;
 
       /**
