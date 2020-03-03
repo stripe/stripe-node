@@ -6,7 +6,7 @@ import env from 'dotenv';
 env.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2019-12-03',
+  apiVersion: '2020-03-02',
 });
 
 const webhookSecret: string = process.env.STRIPE_WEBHOOK_SECRET;

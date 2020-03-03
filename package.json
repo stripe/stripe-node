@@ -25,7 +25,7 @@
     "node": "^8.1 || >=10.*"
   },
   "main": "lib/stripe.js",
-  "types": "types/2019-12-03/index.d.ts",
+  "types": "types/2020-03-02/index.d.ts",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",

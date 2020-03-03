@@ -5,7 +5,7 @@ import {Agent} from 'http';
 
 declare module 'stripe' {
   namespace Stripe {
-    export type LatestApiVersion = '2019-12-03';
+    export type LatestApiVersion = '2020-03-02';
     export type HttpAgent = Agent;
 
     export interface StripeConfig {
@@ -92,7 +92,7 @@ declare module 'stripe' {
       stripe_account?: string;
 
       /**
-       * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2019-12-03').
+       * The [API Version](https://stripe.com/docs/upgrades) to use for a given request (e.g., '2020-03-02').
        */
       apiVersion?: string;
       /** @deprecated Please use apiVersion instead. */
