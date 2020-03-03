@@ -5,11 +5,11 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-///<reference types="../2019-12-03" />
+///<reference types="../2020-03-02" />
 import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
-  apiVersion: '2019-12-03',
+  apiVersion: '2020-03-02',
 });
 
 // @ts-ignore lazily ignore apiVersion requirement.
@@ -27,7 +27,7 @@ stripe = new Stripe('sk_test_123', {
 
 // Check config object.
 stripe = new Stripe('sk_test_123', {
-  apiVersion: '2019-12-03',
+  apiVersion: '2020-03-02',
   typescript: true,
   maxNetworkRetries: 1,
   timeout: 1000,
@@ -48,7 +48,7 @@ stripe.setHost('host', 'port', 'protocol');
     description: 'test',
   };
   const opts: Stripe.RequestOptions = {
-    apiVersion: '2019-12-03',
+    apiVersion: '2020-03-02',
   };
   const customer: Stripe.Customer = await stripe.customers.create(params, opts);
 

@@ -122,7 +122,7 @@ declare module 'stripe' {
       plan?: string;
 
       /**
-       * Flag indicating whether to [prorate](https://stripe.com/docs/billing/subscriptions/prorations) switching plans during a billing cycle. This field has been deprecated and will be removed in a future API version. Use `proration_behavior=create_prorations` as a replacement for `prorate=true` and `proration_behavior=none` for `prorate=false`.
+       * This field has been renamed to `proration_behavior`. `prorate=true` can be replaced with `proration_behavior=create_prorations` and `prorate=false` can be replaced with `proration_behavior=none`.
        */
       prorate?: boolean;
 
@@ -210,7 +210,7 @@ declare module 'stripe' {
       plan?: string;
 
       /**
-       * Flag indicating whether to [prorate](https://stripe.com/docs/billing/subscriptions/prorations) switching plans during a billing cycle. This field has been deprecated and will be removed in a future API version. Use `proration_behavior=create_prorations` as a replacement for `prorate=true` and `proration_behavior=none` for `prorate=false`.
+       * This field has been renamed to `proration_behavior`. `prorate=true` can be replaced with `proration_behavior=create_prorations` and `prorate=false` can be replaced with `proration_behavior=none`.
        */
       prorate?: boolean;
 
@@ -274,14 +274,27 @@ declare module 'stripe' {
       clear_usage?: boolean;
 
       /**
-       * Flag indicating whether to [prorate](https://stripe.com/docs/billing/subscriptions/prorations) switching plans during a billing cycle.
+       * This field has been renamed to `proration_behavior`. `prorate=true` can be replaced with `proration_behavior=create_prorations` and `prorate=false` can be replaced with `proration_behavior=none`.
        */
       prorate?: boolean;
+
+      /**
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
+       *
+       * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
+       *
+       * Prorations can be disabled by passing `none`.
+       */
+      proration_behavior?: SubscriptionItemDeleteParams.ProrationBehavior;
 
       /**
        * If set, the proration will be calculated as though the subscription was updated at the given time. This can be used to apply the same proration that was previewed with the [upcoming invoice](https://stripe.com/docs/api#retrieve_customer_invoice) endpoint.
        */
       proration_date?: number;
+    }
+
+    namespace SubscriptionItemDeleteParams {
+      type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
 
     class SubscriptionItemsResource {

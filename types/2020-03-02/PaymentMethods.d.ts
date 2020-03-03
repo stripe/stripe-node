@@ -282,7 +282,7 @@ declare module 'stripe' {
         account_holder_type: Fpx.AccountHolderType | null;
 
         /**
-         * The customer's bank, if provided. Can be one of `affin_bank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `pb_enterprise`, or `uob_regional`.
+         * The customer's bank, if provided. Can be one of `affin_bank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, or `pb_enterprise`.
          */
         bank: Fpx.Bank;
       }
@@ -310,8 +310,7 @@ declare module 'stripe' {
           | 'public_bank'
           | 'rhb'
           | 'standard_chartered'
-          | 'uob'
-          | 'uob_regional';
+          | 'uob';
       }
 
       interface Ideal {
@@ -573,8 +572,7 @@ declare module 'stripe' {
           | 'public_bank'
           | 'rhb'
           | 'standard_chartered'
-          | 'uob'
-          | 'uob_regional';
+          | 'uob';
       }
 
       interface Ideal {

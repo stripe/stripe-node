@@ -86,6 +86,11 @@ declare module 'stripe' {
       name: string | null;
 
       /**
+       * The suffix of the customer's next invoice number, e.g., 0001.
+       */
+      next_invoice_sequence?: number;
+
+      /**
        * The customer's phone number.
        */
       phone: string | null;
@@ -247,6 +252,11 @@ declare module 'stripe' {
        * The customer's full name or business name.
        */
       name?: string;
+
+      /**
+       * The sequence to be used on the customer's next invoice. Defaults to 1.
+       */
+      next_invoice_sequence?: number;
 
       payment_method?: string;
 
@@ -431,6 +441,11 @@ declare module 'stripe' {
        * The customer's full name or business name.
        */
       name?: string;
+
+      /**
+       * The sequence to be used on the customer's next invoice. Defaults to 1.
+       */
+      next_invoice_sequence?: number;
 
       /**
        * The customer's phone number.
