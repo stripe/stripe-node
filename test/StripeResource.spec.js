@@ -77,6 +77,28 @@ describe('StripeResource', () => {
         });
       });
 
+      it('works correctly with undefined optional arguments', (done) => {
+        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
+          .get('/v1/accounts/acct_123')
+          .reply(200, '{}');
+
+        realStripe.accounts.retrieve('acct_123', undefined, (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('works correctly with null optional arguments', (done) => {
+        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
+          .get('/v1/accounts/acct_123')
+          .reply(200, '{}');
+
+        realStripe.accounts.retrieve('acct_123', null, (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
       it('encodes data for DELETE requests as query params', (done) => {
         const data = {
           foo: 'bar',
