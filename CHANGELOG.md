@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.25.0 - 2020-03-03
+* [#826](https://github.com/stripe/stripe-node/pull/826) Multiple API changes:
+  * Types are now for the API version `2020-03-02`
+  * Remove `uob_regional` as a value on `bank` for FPX as this is deprecated and was never used
+  * Add support for `next_invoice_sequence` on `Customer`
+  * Add support for `proration_behavior` on `SubscriptionItem` delete
+
 ## 8.24.1 - 2020-03-02
 
 - [#824](https://github.com/stripe/stripe-node/pull/824) Update type for StripeError to extend Error
