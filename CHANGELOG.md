@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.27.0 - 2020-03-04
+* [#829](https://github.com/stripe/stripe-node/pull/829) Multiple API changes
+  * Add support for `account` as a parameter on `Token` to create Account tokens
+  * Add support for `verification_data.expiry_check` on Issuing `Authorization`
+  * Add support for `incorrect_cvc` and `incorrect_expiry` as a value for `request_history.reason` on Issuing `Authorization`
+
 ## 8.26.0 - 2020-03-04
 * [#828](https://github.com/stripe/stripe-node/pull/828) Multiple API changes
   * Add support for `errors` in `requirements` on `Account`, `Capability` and `Person`
