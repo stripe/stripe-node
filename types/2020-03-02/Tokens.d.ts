@@ -67,6 +67,11 @@ declare module 'stripe' {
 
     interface TokenCreateParams {
       /**
+       * Information for the account this token will represent.
+       */
+      account?: TokenCreateParams.Account;
+
+      /**
        * The bank account this token will represent.
        */
       bank_account?: string | TokenCreateParams.BankAccount;
@@ -95,6 +100,362 @@ declare module 'stripe' {
     }
 
     namespace TokenCreateParams {
+      interface Account {
+        /**
+         * The business type.
+         */
+        business_type?: Account.BusinessType;
+
+        /**
+         * Information about the company or business.
+         */
+        company?: Account.Company;
+
+        /**
+         * Information about the person represented by the account.
+         */
+        individual?: Account.Individual;
+
+        /**
+         * Whether the user described by the data in the token has been shown [the Stripe Connected Account Agreement](https://stripe.com/docs/connect/account-tokens#stripe-connected-account-agreement). When creating an account token to create a new Connect account, this value must be `true`.
+         */
+        tos_shown_and_accepted?: boolean;
+      }
+
+      namespace Account {
+        type BusinessType =
+          | 'company'
+          | 'government_entity'
+          | 'individual'
+          | 'non_profit';
+
+        interface Company {
+          /**
+           * The company's primary address.
+           */
+          address?: Company.Address;
+
+          /**
+           * The Kana variation of the company's primary address (Japan only).
+           */
+          address_kana?: JapanAddressParam;
+
+          /**
+           * The Kanji variation of the company's primary address (Japan only).
+           */
+          address_kanji?: JapanAddressParam;
+
+          /**
+           * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
+           */
+          directors_provided?: boolean;
+
+          /**
+           * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.executive` requirement.
+           */
+          executives_provided?: boolean;
+
+          /**
+           * The company's legal name.
+           */
+          name?: string;
+
+          /**
+           * The Kana variation of the company's legal name (Japan only).
+           */
+          name_kana?: string;
+
+          /**
+           * The Kanji variation of the company's legal name (Japan only).
+           */
+          name_kanji?: string;
+
+          /**
+           * Whether the company's owners have been provided. Set this Boolean to `true` after creating all the company's owners with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.owner` requirement.
+           */
+          owners_provided?: boolean;
+
+          /**
+           * The company's phone number (used for verification).
+           */
+          phone?: string;
+
+          /**
+           * The category identifying the legal structure of the company or legal entity.
+           */
+          structure?: Company.Structure | null;
+
+          /**
+           * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
+           */
+          tax_id?: string;
+
+          /**
+           * The jurisdiction in which the `tax_id` is registered (Germany-based companies only).
+           */
+          tax_id_registrar?: string;
+
+          /**
+           * The VAT number of the company.
+           */
+          vat_id?: string;
+
+          /**
+           * Information on the verification state of the company.
+           */
+          verification?: Company.Verification;
+        }
+
+        namespace Company {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+          }
+
+          type Structure =
+            | 'government_instrumentality'
+            | 'governmental_unit'
+            | 'incorporated_non_profit'
+            | 'multi_member_llc'
+            | 'private_corporation'
+            | 'private_partnership'
+            | 'public_corporation'
+            | 'public_partnership'
+            | 'tax_exempt_government_instrumentality'
+            | 'unincorporated_association'
+            | 'unincorporated_non_profit';
+
+          interface Verification {
+            /**
+             * A document verifying the business.
+             */
+            document?: Verification.Document;
+          }
+
+          namespace Verification {
+            interface Document {
+              /**
+               * The back of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              back?: string;
+
+              /**
+               * The front of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              front?: string;
+            }
+          }
+        }
+
+        interface Individual {
+          /**
+           * The individual's primary address.
+           */
+          address?: Individual.Address;
+
+          /**
+           * The Kana variation of the the individual's primary address (Japan only).
+           */
+          address_kana?: JapanAddressParam;
+
+          /**
+           * The Kanji variation of the the individual's primary address (Japan only).
+           */
+          address_kanji?: JapanAddressParam;
+
+          /**
+           * The individual's date of birth.
+           */
+          dob?: Individual.Dob | null;
+
+          /**
+           * The individual's email address.
+           */
+          email?: string;
+
+          /**
+           * The individual's first name.
+           */
+          first_name?: string;
+
+          /**
+           * The Kana variation of the the individual's first name (Japan only).
+           */
+          first_name_kana?: string;
+
+          /**
+           * The Kanji variation of the individual's first name (Japan only).
+           */
+          first_name_kanji?: string;
+
+          /**
+           * The individual's gender (International regulations require either "male" or "female").
+           */
+          gender?: string;
+
+          /**
+           * The government-issued ID number of the individual, as appropriate for the representative's country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/stripe.js#collecting-pii-data).
+           */
+          id_number?: string;
+
+          /**
+           * The individual's last name.
+           */
+          last_name?: string;
+
+          /**
+           * The Kana varation of the individual's last name (Japan only).
+           */
+          last_name_kana?: string;
+
+          /**
+           * The Kanji varation of the individual's last name (Japan only).
+           */
+          last_name_kanji?: string;
+
+          /**
+           * The individual's maiden name.
+           */
+          maiden_name?: string;
+
+          /**
+           * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: MetadataParam;
+
+          /**
+           * The individual's phone number.
+           */
+          phone?: string;
+
+          /**
+           * The last four digits of the individual's Social Security Number (U.S. only).
+           */
+          ssn_last_4?: string;
+
+          /**
+           * The individual's verification document information.
+           */
+          verification?: Individual.Verification;
+        }
+
+        namespace Individual {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+          }
+
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+
+          interface Verification {
+            /**
+             * A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
+             */
+            additional_document?: Verification.AdditionalDocument;
+
+            /**
+             * An identifying document, either a passport or local ID card.
+             */
+            document?: Verification.Document;
+          }
+
+          namespace Verification {
+            interface AdditionalDocument {
+              /**
+               * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              back?: string;
+
+              /**
+               * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              front?: string;
+            }
+
+            interface Document {
+              /**
+               * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              back?: string;
+
+              /**
+               * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
+               */
+              front?: string;
+            }
+          }
+        }
+      }
+
       interface BankAccount {
         /**
          * The name of the person or business that owns the bank account.This field is required when attaching the bank account to a `Customer` object.
