@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.26.0 - 2020-03-04
+* [#828](https://github.com/stripe/stripe-node/pull/828) Multiple API changes
+  * Add support for `errors` in `requirements` on `Account`, `Capability` and `Person`
+  * Add support for `payment_intent.processing` as a new `type` on `Event`.
+
 ## 8.25.0 - 2020-03-03
 * [#826](https://github.com/stripe/stripe-node/pull/826) Multiple API changes:
   * Types are now for the API version `2020-03-02`
