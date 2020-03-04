@@ -386,6 +386,11 @@ declare module 'stripe' {
         disabled_reason: string | null;
 
         /**
+         * The fields that need to be collected again because validation or verification failed for some reason.
+         */
+        errors?: Array<Requirements.Error> | null;
+
+        /**
          * The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
          */
         eventually_due: Array<string> | null;
@@ -399,6 +404,67 @@ declare module 'stripe' {
          * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
          */
         pending_verification: Array<string> | null;
+      }
+
+      namespace Requirements {
+        interface Error {
+          /**
+           * The code for the type of error.
+           */
+          code: Error.Code;
+
+          /**
+           * An informative message that indicates the error type and provides additional details about the error.
+           */
+          reason: string;
+
+          /**
+           * The specific user onboarding requirement field (in the requirements hash) that needs to be resolved.
+           */
+          requirement: string;
+        }
+
+        namespace Error {
+          type Code =
+            | 'invalid_address_city_state_postal_code'
+            | 'invalid_street_address'
+            | 'invalid_value_other'
+            | 'verification_document_address_mismatch'
+            | 'verification_document_address_missing'
+            | 'verification_document_corrupt'
+            | 'verification_document_country_not_supported'
+            | 'verification_document_dob_mismatch'
+            | 'verification_document_duplicate_type'
+            | 'verification_document_expired'
+            | 'verification_document_failed_copy'
+            | 'verification_document_failed_greyscale'
+            | 'verification_document_failed_other'
+            | 'verification_document_failed_test_mode'
+            | 'verification_document_fraudulent'
+            | 'verification_document_id_number_mismatch'
+            | 'verification_document_id_number_missing'
+            | 'verification_document_incomplete'
+            | 'verification_document_invalid'
+            | 'verification_document_manipulated'
+            | 'verification_document_missing_back'
+            | 'verification_document_missing_front'
+            | 'verification_document_name_mismatch'
+            | 'verification_document_name_missing'
+            | 'verification_document_nationality_mismatch'
+            | 'verification_document_not_readable'
+            | 'verification_document_not_uploaded'
+            | 'verification_document_photo_mismatch'
+            | 'verification_document_too_large'
+            | 'verification_document_type_not_supported'
+            | 'verification_failed_address_match'
+            | 'verification_failed_business_iec_number'
+            | 'verification_failed_document_match'
+            | 'verification_failed_id_number_match'
+            | 'verification_failed_keyed_identity'
+            | 'verification_failed_keyed_match'
+            | 'verification_failed_name_match'
+            | 'verification_failed_other';
+        }
       }
 
       interface Settings {
@@ -818,12 +884,12 @@ declare module 'stripe' {
         namespace Verification {
           interface Document {
             /**
-             * The back of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The back of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             back?: string;
 
             /**
-             * The front of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The front of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             front?: string;
           }
@@ -987,24 +1053,24 @@ declare module 'stripe' {
         namespace Verification {
           interface AdditionalDocument {
             /**
-             * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             back?: string;
 
             /**
-             * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             front?: string;
           }
 
           interface Document {
             /**
-             * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             back?: string;
 
             /**
-             * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             front?: string;
           }
@@ -1435,12 +1501,12 @@ declare module 'stripe' {
         namespace Verification {
           interface Document {
             /**
-             * The back of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The back of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             back?: string;
 
             /**
-             * The front of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The front of a document returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `additional_verification`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             front?: string;
           }
@@ -1604,24 +1670,24 @@ declare module 'stripe' {
         namespace Verification {
           interface AdditionalDocument {
             /**
-             * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             back?: string;
 
             /**
-             * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             front?: string;
           }
 
           interface Document {
             /**
-             * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             back?: string;
 
             /**
-             * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG or PNG format, and less than 10 MB in size.
+             * The front of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`. The uploaded file needs to be a color image (smaller than 8,000px by 8,000px), in JPG, PNG, or PDF format, and less than 10 MB in size.
              */
             front?: string;
           }
