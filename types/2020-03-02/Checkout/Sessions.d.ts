@@ -209,8 +209,7 @@ declare module 'stripe' {
         cancel_url: string;
 
         /**
-         * A list of the types of payment methods (e.g. card) this Checkout
-         * Session is allowed to accept. The only supported values today are `card` and `ideal`.
+         * A list of the types of payment methods (e.g., card) this Checkout session can accept.
          */
         payment_method_types: Array<SessionCreateParams.PaymentMethodType>;
 

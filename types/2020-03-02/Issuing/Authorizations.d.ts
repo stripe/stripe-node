@@ -219,6 +219,8 @@ declare module 'stripe' {
             | 'card_inactive'
             | 'cardholder_inactive'
             | 'cardholder_verification_required'
+            | 'incorrect_cvc'
+            | 'incorrect_expiry'
             | 'insufficient_funds'
             | 'not_allowed'
             | 'suspected_fraud'
@@ -272,6 +274,11 @@ declare module 'stripe' {
            * Whether the cardholder provided a CVC and if it matched Stripe's record.
            */
           cvc_check: VerificationData.CvcCheck;
+
+          /**
+           * Whether the cardholder provided an expiry date and if it matched Stripe's record.
+           */
+          expiry_check: VerificationData.ExpiryCheck;
         }
 
         namespace VerificationData {
@@ -282,6 +289,8 @@ declare module 'stripe' {
           type Authentication = 'failure' | 'none' | 'success';
 
           type CvcCheck = 'match' | 'mismatch' | 'not_provided';
+
+          type ExpiryCheck = 'match' | 'mismatch' | 'not_provided';
         }
       }
 
