@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.28.0 - 2020-03-04
+* [#830](https://github.com/stripe/stripe-node/pull/830) Add support for `metadata` on `WebhookEndpoint`
+
 ## 8.27.0 - 2020-03-04
 * [#829](https://github.com/stripe/stripe-node/pull/829) Multiple API changes
   * Add support for `account` as a parameter on `Token` to create Account tokens
