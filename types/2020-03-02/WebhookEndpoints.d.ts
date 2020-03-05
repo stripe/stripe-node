@@ -42,6 +42,11 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata: Metadata;
+
+      /**
        * The endpoint's secret, used to generate [webhook signatures](https://stripe.com/docs/webhooks/signatures). Only returned at creation.
        */
       secret?: string;
@@ -102,6 +107,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: MetadataParam;
     }
 
     namespace WebhookEndpointCreateParams {
@@ -380,6 +390,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: MetadataParam | null;
 
       /**
        * The URL of the webhook endpoint.
