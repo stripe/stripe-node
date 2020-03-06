@@ -1,25 +1,35 @@
 # CHANGELOG
 
+## 8.28.1 - 2020-03-05
+
+- [#827](https://github.com/stripe/stripe-node/pull/827) Allow `null`/`undefined` to be passed for `options` arg.
+
 ## 8.28.0 - 2020-03-04
-* [#830](https://github.com/stripe/stripe-node/pull/830) Add support for `metadata` on `WebhookEndpoint`
+
+- [#830](https://github.com/stripe/stripe-node/pull/830) Add support for `metadata` on `WebhookEndpoint`
 
 ## 8.27.0 - 2020-03-04
-* [#829](https://github.com/stripe/stripe-node/pull/829) Multiple API changes
-  * Add support for `account` as a parameter on `Token` to create Account tokens
-  * Add support for `verification_data.expiry_check` on Issuing `Authorization`
-  * Add support for `incorrect_cvc` and `incorrect_expiry` as a value for `request_history.reason` on Issuing `Authorization`
+
+- [#829](https://github.com/stripe/stripe-node/pull/829) Multiple API changes
+  - Add support for `account` as a parameter on `Token` to create Account tokens
+  - Add support for `verification_data.expiry_check` on Issuing `Authorization`
+  - Add support for `incorrect_cvc` and `incorrect_expiry` as a value for `request_history.reason` on Issuing `Authorization`
 
 ## 8.26.0 - 2020-03-04
-* [#828](https://github.com/stripe/stripe-node/pull/828) Multiple API changes
-  * Add support for `errors` in `requirements` on `Account`, `Capability` and `Person`
-  * Add support for `payment_intent.processing` as a new `type` on `Event`.
+
+- [#828](https://github.com/stripe/stripe-node/pull/828) Multiple API changes
+  - Add support for `errors` in `requirements` on `Account`, `Capability` and `Person`
+  - Add support for `payment_intent.processing` as a new `type` on `Event`.
 
 ## 8.25.0 - 2020-03-03
-* [#826](https://github.com/stripe/stripe-node/pull/826) Multiple API changes:
-  * Types are now for the API version `2020-03-02`
-  * Remove `uob_regional` as a value on `bank` for FPX as this is deprecated and was never used
-  * Add support for `next_invoice_sequence` on `Customer`
-  * Add support for `proration_behavior` on `SubscriptionItem` delete
+
+⚠️ This is a breaking change for TypeScript users.
+
+- [#826](https://github.com/stripe/stripe-node/pull/826) Multiple API changes:
+  - ⚠️ Types are now for the API version `2020-03-02`. This is a breaking change for TypeScript users
+  - Remove `uob_regional` as a value on `bank` for FPX as this is deprecated and was never used
+  - Add support for `next_invoice_sequence` on `Customer`
+  - Add support for `proration_behavior` on `SubscriptionItem` delete
 
 ## 8.24.1 - 2020-03-02
 
