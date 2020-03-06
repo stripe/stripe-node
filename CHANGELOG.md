@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.29.0 - 2020-03-05
+* [#833](https://github.com/stripe/stripe-node/pull/833) Make metadata nullable in many endpoints
+
 ## 8.28.1 - 2020-03-05
 
 - [#827](https://github.com/stripe/stripe-node/pull/827) Allow `null`/`undefined` to be passed for `options` arg.
