@@ -229,7 +229,7 @@ declare module 'stripe' {
         /**
          * The category identifying the legal structure of the company or legal entity.
          */
-        structure?: Company.Structure | null;
+        structure?: Company.Structure;
 
         /**
          * Whether the company's business ID number was provided.
@@ -684,7 +684,7 @@ declare module 'stripe' {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: MetadataParam | null;
 
       /**
        * The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
@@ -970,7 +970,7 @@ declare module 'stripe' {
         /**
          * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam;
+        metadata?: MetadataParam | null;
 
         /**
          * The individual's phone number.
@@ -1306,7 +1306,7 @@ declare module 'stripe' {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: MetadataParam | null;
 
       /**
        * The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
@@ -1587,7 +1587,7 @@ declare module 'stripe' {
         /**
          * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam;
+        metadata?: MetadataParam | null;
 
         /**
          * The individual's phone number.
