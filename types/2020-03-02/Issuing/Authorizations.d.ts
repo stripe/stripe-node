@@ -266,9 +266,9 @@ declare module 'stripe' {
           address_zip_check: VerificationData.AddressZipCheck;
 
           /**
-           * Whether 3DS authentication was performed.
+           * [DEPRECATED] Whether 3DS authentication was performed.
            */
-          authentication: VerificationData.Authentication;
+          authentication?: VerificationData.Authentication;
 
           /**
            * Whether the cardholder provided a CVC and if it matched Stripe's record.
@@ -279,6 +279,11 @@ declare module 'stripe' {
            * Whether the cardholder provided an expiry date and if it matched Stripe's record.
            */
           expiry_check: VerificationData.ExpiryCheck;
+
+          /**
+           * 3D Secure details on this authorization.
+           */
+          three_d_secure: VerificationData.ThreeDSecure | null;
         }
 
         namespace VerificationData {
@@ -291,6 +296,17 @@ declare module 'stripe' {
           type CvcCheck = 'match' | 'mismatch' | 'not_provided';
 
           type ExpiryCheck = 'match' | 'mismatch' | 'not_provided';
+
+          interface ThreeDSecure {
+            /**
+             * The outcome of the 3D Secure authentication request.
+             */
+            result: ThreeDSecure.Result;
+          }
+
+          namespace ThreeDSecure {
+            type Result = 'attempt_acknowledged' | 'authenticated' | 'failed';
+          }
         }
       }
 

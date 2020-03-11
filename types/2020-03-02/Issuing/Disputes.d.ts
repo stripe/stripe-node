@@ -277,12 +277,12 @@ declare module 'stripe' {
 
       interface DisputeListParams extends PaginationParams {
         /**
-         * Only return issuing disputes that were created during the given date interval.
+         * Select issuing disputes that were created during the given date interval.
          */
         created?: RangeQueryParam | number;
 
         /**
-         * Only return issuing disputes for the given transaction.
+         * Select the issuing dispute for the given transaction.
          */
         disputed_transaction?: string;
 

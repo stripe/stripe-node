@@ -47,7 +47,7 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * A list of up to 8 URLs of images for this product, meant to be displayable to the customer. Only applicable to products of `type=good`.
+       * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
        */
       images: Array<string>;
 
