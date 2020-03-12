@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.31.0 - 2020-03-12
+* [#835](https://github.com/stripe/stripe-node/pull/835) Add support for `shipping` and `shipping_address_collection` on Checkout `Session`
+
 ## 8.30.0 - 2020-03-12
 * [#834](https://github.com/stripe/stripe-node/pull/834) Add support for `ThreeDSecure` on Issuing `Authorization`
 
