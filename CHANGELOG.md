@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.30.0 - 2020-03-12
+* [#834](https://github.com/stripe/stripe-node/pull/834) Add support for `ThreeDSecure` on Issuing `Authorization`
+
 ## 8.29.0 - 2020-03-05
 * [#833](https://github.com/stripe/stripe-node/pull/833) Make metadata nullable in many endpoints
 
