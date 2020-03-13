@@ -112,7 +112,12 @@ declare module 'stripe' {
         /**
          * What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
          */
-        wallet_provider: string | null;
+        wallet: string | null;
+
+        /**
+         * [DEPRECATED] What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
+         */
+        wallet_provider?: string | null;
       }
 
       namespace Authorization {
@@ -261,9 +266,14 @@ declare module 'stripe' {
           address_line1_check: VerificationData.AddressLine1Check;
 
           /**
-           * Whether the cardholder provided a zip (or postal code) and if it matched the cardholder's `billing.address.postal_code`.
+           * Whether the cardholder provided a postal code and if it matched the cardholder's `billing.address.postal_code`.
            */
-          address_zip_check: VerificationData.AddressZipCheck;
+          address_postal_code_check: VerificationData.AddressPostalCodeCheck;
+
+          /**
+           * [DEPRECATED] Whether the cardholder provided a postal code and if it matched the cardholder's `billing.address.postal_code`.
+           */
+          address_zip_check?: VerificationData.AddressZipCheck;
 
           /**
            * [DEPRECATED] Whether 3DS authentication was performed.
@@ -288,6 +298,8 @@ declare module 'stripe' {
 
         namespace VerificationData {
           type AddressLine1Check = 'match' | 'mismatch' | 'not_provided';
+
+          type AddressPostalCodeCheck = 'match' | 'mismatch' | 'not_provided';
 
           type AddressZipCheck = 'match' | 'mismatch' | 'not_provided';
 

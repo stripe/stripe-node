@@ -43,9 +43,9 @@ declare module 'stripe' {
         individual: Cardholder.Individual | null;
 
         /**
-         * Whether or not this cardholder is the default cardholder.
+         * [DEPRECATED] Whether or not this cardholder is the default cardholder.
          */
-        is_default: boolean;
+        is_default?: boolean;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -1155,7 +1155,7 @@ declare module 'stripe' {
         individual?: CardholderCreateParams.Individual;
 
         /**
-         * Specifies whether to set this as the default cardholder.
+         * [DEPRECATED] Specifies whether to set this as the default cardholder.
          */
         is_default?: boolean;
 
@@ -2251,7 +2251,7 @@ declare module 'stripe' {
         individual?: CardholderUpdateParams.Individual;
 
         /**
-         * Specifies whether to set this as the default cardholder.
+         * [DEPRECATED] Specifies whether to set this as the default cardholder.
          */
         is_default?: boolean;
 
@@ -3323,7 +3323,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Only return the default cardholder.
+         * [DEPRECATED] Only return the default cardholder.
          */
         is_default?: boolean;
 
