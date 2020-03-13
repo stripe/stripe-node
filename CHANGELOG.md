@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.32.0 - 2020-03-13
+* [#836](https://github.com/stripe/stripe-node/pull/836) Multiple API changes for Issuing resources
+
 ## 8.31.0 - 2020-03-12
 * [#835](https://github.com/stripe/stripe-node/pull/835) Add support for `shipping` and `shipping_address_collection` on Checkout `Session`
 
