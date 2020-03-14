@@ -7,7 +7,6 @@
   "beautify.ignore": ["**/*.js", "**/*.md"],
 
   // Extension settings
-  "eslint.autoFixOnSave": true,
   "eslint.packageManager": "yarn",
   "npm.packageManager": "yarn",
   "editor.codeActionsOnSave": {
