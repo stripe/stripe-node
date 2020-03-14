@@ -100,13 +100,11 @@ stripe.setHost('host', 'port', 'protocol');
     }
   }
 
-  const cusList: Stripe.ApiList<
-    Stripe.Customer
-  > = await stripe.customers.list();
+  const cusList: Stripe.ApiList<Stripe.Customer> = await stripe.customers.list();
 
-  const aThousandCustomers: Array<
-    Stripe.Customer
-  > = await stripe.customers.list().autoPagingToArray({limit: 1000});
+  const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
+    .list()
+    .autoPagingToArray({limit: 1000});
 
   const nothing: void = await stripe.customers
     .list()
