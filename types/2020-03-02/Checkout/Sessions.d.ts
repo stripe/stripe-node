@@ -518,12 +518,10 @@ declare module 'stripe' {
         client_reference_id?: string;
 
         /**
-         * ID of an existing customer, if one exists. Only supported for Checkout
-         * Sessions in `payment` or `subscription` mode, but not Checkout Sessions
-         * in `setup` mode. The email stored on the customer will be used to prefill
-         * the email field on the Checkout page. If the customer changes their email
-         * on the Checkout page, the Customer object will be updated with the new
-         * email.
+         * ID of an existing customer, if one exists. The email stored on the
+         * customer will be used to prefill the email field on the Checkout page.
+         * If the customer changes their email on the Checkout page, the Customer
+         * object will be updated with the new email.
          * If blank for Checkout Sessions in `payment` or `subscription` mode,
          * Checkout will create a new customer object based on information
          * provided during the session.
@@ -610,7 +608,7 @@ declare module 'stripe' {
           currency?: string;
 
           /**
-           * The description for the line item.
+           * The description for the line item, to be displayed on the Checkout page.
            */
           description?: string;
 
@@ -694,7 +692,7 @@ declare module 'stripe' {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
-           * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
+           * Providing this parameter will attach the payment method to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
            *
            * For more, learn to [save card details during payment](https://stripe.com/docs/payments/save-during-payment).
            *

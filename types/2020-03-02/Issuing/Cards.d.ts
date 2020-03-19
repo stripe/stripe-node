@@ -73,6 +73,11 @@ declare module 'stripe' {
         pin: Card.Pin | null;
 
         /**
+         * The latest card that replaces this card, if any.
+         */
+        replaced_by: string | Stripe.Issuing.Card | null;
+
+        /**
          * The card this card replaces, if any.
          */
         replacement_for: string | Stripe.Issuing.Card | null;
@@ -1131,7 +1136,7 @@ declare module 'stripe' {
         type: CardCreateParams.Type;
 
         /**
-         * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
+         * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/purchases/authorizations) documentation for more details.
          */
         authorization_controls?: CardCreateParams.AuthorizationControls;
 
@@ -2176,7 +2181,7 @@ declare module 'stripe' {
 
       interface CardUpdateParams {
         /**
-         * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
+         * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/purchases/authorizations) documentation for more details.
          */
         authorization_controls?: CardUpdateParams.AuthorizationControls;
 
@@ -3227,7 +3232,7 @@ declare module 'stripe' {
         list(options?: RequestOptions): ApiListPromise<Stripe.Issuing.Card>;
 
         /**
-         * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/management#virtual-card-info) of a virtual card.
+         * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/virtual#virtual-card-info) of a virtual card.
          */
         retrieveDetails(
           id: string,
