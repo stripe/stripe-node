@@ -16,7 +16,7 @@ declare module 'stripe' {
         object: 'issuing.cardholder';
 
         /**
-         * Spending rules that give you some control over how this cardholder's cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
+         * Spending rules that give you some control over how this cardholder's cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/purchases/authorizations) documentation for more details.
          */
         authorization_controls: Cardholder.AuthorizationControls | null;
 
@@ -1130,7 +1130,7 @@ declare module 'stripe' {
         type: CardholderCreateParams.Type;
 
         /**
-         * Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
+         * Spending rules that give you control over how your cardholders can make charges. Refer to our [authorizations](https://stripe.com/docs/issuing/purchases/authorizations) documentation for more details.
          */
         authorization_controls?: CardholderCreateParams.AuthorizationControls;
 
@@ -2221,7 +2221,7 @@ declare module 'stripe' {
 
       interface CardholderUpdateParams {
         /**
-         * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/authorizations) documentation for more details.
+         * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/purchases/authorizations) documentation for more details.
          */
         authorization_controls?: CardholderUpdateParams.AuthorizationControls;
 
