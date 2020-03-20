@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 8.33.0 - 2020-03-20
+* [#842](https://github.com/stripe/stripe-node/pull/842) Multiple API changes for Issuing:
+  * Add `amount`, `currency`, `merchant_amount` and `merchant_currency` on `Authorization`
+  * Add `amount`, `currency`, `merchant_amount` and `merchant_currency` inside `request_history` on `Authorization`
+  * Add `pending_request` on `Authorization`
+  * Add `amount` when approving an `Authorization`
+  * Add `replaced_by` on `Card`
+
 ## 8.32.0 - 2020-03-13
 * [#836](https://github.com/stripe/stripe-node/pull/836) Multiple API changes for Issuing:
   * Rename `speed` to `service` on Issuing `Card`
