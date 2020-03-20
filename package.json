@@ -55,7 +55,7 @@
     "test": "yarn lint && yarn test-typescript && yarn mocha",
     "test-typescript": "tsc --build types/test",
     "lint": "eslint --ext .js,.jsx,.ts .",
-    "fix": "yarn lint --fix",
+    "fix": "yarn lint --fix && ./scripts/updateAPIVersion.js",
     "report": "nyc -r text -r lcov report",
     "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   }
