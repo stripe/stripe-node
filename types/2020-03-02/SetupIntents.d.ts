@@ -39,7 +39,7 @@ declare module 'stripe' {
       /**
        * ID of the Customer this SetupIntent belongs to, if one exists.
        *
-       * If present, payment methods used with this SetupIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this SetupIntent.
+       * If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
@@ -173,8 +173,8 @@ declare module 'stripe' {
         payment_method?: Stripe.PaymentMethod;
 
         /**
-         * A SetupIntent guides you through the process of setting up a customer's payment credentials for future payments.
-         * For example, you could use a SetupIntent to set up your customer's card without immediately collecting a payment.
+         * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
+         * For example, you could use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
          * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
          *
          * Create a SetupIntent as soon as you're ready to collect your customer's payment credentials.
@@ -186,6 +186,10 @@ declare module 'stripe' {
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) may need to be run through
          * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) at the time of payment method collection
          * in order to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         * If the SetupIntent is used with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer), upon success,
+         * it will automatically attach the resulting payment method to that Customer.
+         * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
+         * PaymentIntents to save payment methods in order to prevent saving invalid or unoptimized payment methods.
          *
          * By using SetupIntents, you ensure that your customers experience the minimum set of required friction,
          * even as regulations change over time.
@@ -278,7 +282,7 @@ declare module 'stripe' {
       /**
        * ID of the Customer this SetupIntent belongs to, if one exists.
        *
-       * If present, payment methods used with this SetupIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this SetupIntent.
+       * If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
        */
       customer?: string;
 
@@ -417,7 +421,7 @@ declare module 'stripe' {
 
       interface SingleUse {
         /**
-         * Amount intended to be collected by this PaymentIntent. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
+         * Amount the customer is granting permission to collect later. A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency). The minimum amount is $0.50 US or [equivalent in charge currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts). The amount value supports up to eight digits (e.g., a value of 99999999 for a USD charge of $999,999.99).
          */
         amount: number;
 
@@ -446,7 +450,7 @@ declare module 'stripe' {
       /**
        * ID of the Customer this SetupIntent belongs to, if one exists.
        *
-       * If present, payment methods used with this SetupIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this SetupIntent.
+       * If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
        */
       customer?: string;
 

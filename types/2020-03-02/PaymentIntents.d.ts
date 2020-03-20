@@ -83,7 +83,9 @@ declare module 'stripe' {
       /**
        * ID of the Customer this PaymentIntent belongs to, if one exists.
        *
-       * If present, payment methods used with this PaymentIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this PaymentIntent.
+       * Payment methods attached to other Customers cannot be used with this PaymentIntent.
+       *
+       * If present in combination with [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage), this PaymentIntent's payment method will be attached to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
@@ -150,7 +152,7 @@ declare module 'stripe' {
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
-       * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
+       * Providing this parameter will attach the payment method to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
        *
        * For more, learn to [save card details during payment](https://stripe.com/docs/payments/save-during-payment).
        *
@@ -271,8 +273,8 @@ declare module 'stripe' {
         payment_method?: Stripe.PaymentMethod;
 
         /**
-         * A SetupIntent guides you through the process of setting up a customer's payment credentials for future payments.
-         * For example, you could use a SetupIntent to set up your customer's card without immediately collecting a payment.
+         * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
+         * For example, you could use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
          * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
          *
          * Create a SetupIntent as soon as you're ready to collect your customer's payment credentials.
@@ -284,6 +286,10 @@ declare module 'stripe' {
          * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) may need to be run through
          * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) at the time of payment method collection
          * in order to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         * If the SetupIntent is used with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer), upon success,
+         * it will automatically attach the resulting payment method to that Customer.
+         * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
+         * PaymentIntents to save payment methods in order to prevent saving invalid or unoptimized payment methods.
          *
          * By using SetupIntents, you ensure that your customers experience the minimum set of required friction,
          * even as regulations change over time.
@@ -503,7 +509,9 @@ declare module 'stripe' {
       /**
        * ID of the Customer this PaymentIntent belongs to, if one exists.
        *
-       * If present, payment methods used with this PaymentIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this PaymentIntent.
+       * Payment methods attached to other Customers cannot be used with this PaymentIntent.
+       *
+       * If present in combination with [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage), this PaymentIntent's payment method will be attached to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete.
        */
       customer?: string;
 
@@ -575,18 +583,18 @@ declare module 'stripe' {
       return_url?: string;
 
       /**
-       * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer. Defaults to `false`.
+       * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer immediately.
        *
-       * If the payment method is already saved to a customer, this does nothing. If this type of payment method cannot be saved to a customer, the request will error.
+       * If the payment method is already saved to a customer, this parameter does nothing. If this type of payment method cannot be saved to a customer, the request will error.
        *
-       * _Note that saving a payment method using this parameter does not guarantee that the payment method can be charged._ To ensure that only payment methods which can be charged are saved to a customer, you can [manually save](https://stripe.com/docs/api/customers/create#create_customer-source) the payment method in response to the [`payment_intent.succeeded` webhook](https://stripe.com/docs/api/events/types#event_types-payment_intent.succeeded).
+       * Saving a payment method using this parameter is _not recommended_ because it will save the payment method even if it cannot be charged (e.g. the user made a typo). To ensure that only payment methods which are likely to be chargeable are saved to a customer, use the (setup_future_usage)[#payment_intents/object#payment_intent_object-setup_future_usage] property, which saves the payment method after the PaymentIntent has been confirmed and all required actions by the customer are complete.
        */
       save_payment_method?: boolean;
 
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
-       * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
+       * Providing this parameter will attach the payment method to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
        *
        * For more, learn to [save card details during payment](https://stripe.com/docs/payments/save-during-payment).
        *
@@ -838,7 +846,9 @@ declare module 'stripe' {
       /**
        * ID of the Customer this PaymentIntent belongs to, if one exists.
        *
-       * If present, payment methods used with this PaymentIntent can only be attached to this Customer, and payment methods attached to other Customers cannot be used with this PaymentIntent.
+       * Payment methods attached to other Customers cannot be used with this PaymentIntent.
+       *
+       * If present in combination with [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage), this PaymentIntent's payment method will be attached to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete.
        */
       customer?: string;
 
@@ -878,20 +888,20 @@ declare module 'stripe' {
       receipt_email?: string | null;
 
       /**
-       * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer. Defaults to `false`.
+       * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer immediately.
        *
-       * If the payment method is already saved to a customer, this does nothing. If this type of payment method cannot be saved to a customer, the request will error.
+       * If the payment method is already saved to a customer, this parameter does nothing. If this type of payment method cannot be saved to a customer, the request will error.
        *
-       * _Note that saving a payment method using this parameter does not guarantee that the payment method can be charged._ To ensure that only payment methods which can be charged are saved to a customer, you can [manually save](https://stripe.com/docs/api/customers/create#create_customer-source) the payment method in response to the [`payment_intent.succeeded` webhook](https://stripe.com/docs/api/events/types#event_types-payment_intent.succeeded).
+       * Saving a payment method using this parameter is _not recommended_ because it will save the payment method even if it cannot be charged (e.g. the user made a typo). To ensure that only payment methods which are likely to be chargeable are saved to a customer, use the (setup_future_usage)[#payment_intents/object#payment_intent_object-setup_future_usage] property, which saves the payment method after the PaymentIntent has been confirmed and all required actions by the customer are complete.
        */
       save_payment_method?: boolean;
 
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
-       * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
+       * Providing this parameter will attach the payment method to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
        *
-       * Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow.
+       * For more, learn to [save card details during payment](https://stripe.com/docs/payments/save-during-payment).
        *
        * Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by [SCA](https://stripe.com/docs/strong-customer-authentication), using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect [off-session payments](https://stripe.com/docs/payments/cards/charging-saved-cards#off-session-payments-with-saved-cards) for this customer.
        *
@@ -1169,20 +1179,20 @@ declare module 'stripe' {
       return_url?: string;
 
       /**
-       * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer. Defaults to `false`.
+       * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer immediately.
        *
-       * If the payment method is already saved to a customer, this does nothing. If this type of payment method cannot be saved to a customer, the request will error.
+       * If the payment method is already saved to a customer, this parameter does nothing. If this type of payment method cannot be saved to a customer, the request will error.
        *
-       * _Note that saving a payment method using this parameter does not guarantee that the payment method can be charged._ To ensure that only payment methods which can be charged are saved to a customer, you can [manually save](https://stripe.com/docs/api/customers/create#create_customer-source) the payment method in response to the [`payment_intent.succeeded` webhook](https://stripe.com/docs/api/events/types#event_types-payment_intent.succeeded).
+       * Saving a payment method using this parameter is _not recommended_ because it will save the payment method even if it cannot be charged (e.g. the user made a typo). To ensure that only payment methods which are likely to be chargeable are saved to a customer, use the (setup_future_usage)[#payment_intents/object#payment_intent_object-setup_future_usage] property, which saves the payment method after the PaymentIntent has been confirmed and all required actions by the customer are complete.
        */
       save_payment_method?: boolean;
 
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
-       * If present, the payment method used with this PaymentIntent can be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer, even after the transaction completes.
+       * Providing this parameter will attach the payment method to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
        *
-       * Use `on_session` if you intend to only reuse the payment method when your customer is present in your checkout flow. Use `off_session` if your customer may or may not be in your checkout flow.
+       * For more, learn to [save card details during payment](https://stripe.com/docs/payments/save-during-payment).
        *
        * Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by [SCA](https://stripe.com/docs/strong-customer-authentication), using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect [off-session payments](https://stripe.com/docs/payments/cards/charging-saved-cards#off-session-payments-with-saved-cards) for this customer.
        *

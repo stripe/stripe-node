@@ -35,7 +35,7 @@ declare module 'stripe' {
       fraud_type: string;
 
       /**
-       * If true, the associated charge is subject to [liability shift](https://stripe.com/docs/sources/three-d-secure#disputed-payments).
+       * If true, the associated charge is subject to [liability shift](https://stripe.com/docs/payments/3d-secure#disputed-payments).
        */
       has_liability_shift: boolean;
 
