@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.34.0 - 2020-03-24
+* [#847](https://github.com/stripe/stripe-node/pull/847) Add new capabilities for AU Becs Debit and tax reporting
+
 ## 8.33.0 - 2020-03-20
 * [#842](https://github.com/stripe/stripe-node/pull/842) Multiple API changes for Issuing:
   * Add `amount`, `currency`, `merchant_amount` and `merchant_currency` on `Authorization`
