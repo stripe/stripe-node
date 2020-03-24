@@ -125,6 +125,11 @@ declare module 'stripe' {
       next_pending_invoice_item_invoice: number | null;
 
       /**
+       * If specified, payment collection for this subscription will be paused.
+       */
+      pause_collection: Subscription.PauseCollection | null;
+
+      /**
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
        */
       pending_invoice_item_interval: Subscription.PendingInvoiceItemInterval | null;
@@ -207,6 +212,22 @@ declare module 'stripe' {
       }
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
+
+      interface PauseCollection {
+        /**
+         * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+         */
+        behavior: PauseCollection.Behavior;
+
+        /**
+         * The time after which the subscription will resume collecting payments.
+         */
+        resumes_at: number | null;
+      }
+
+      namespace PauseCollection {
+        type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+      }
 
       interface PendingInvoiceItemInterval {
         /**
@@ -572,6 +593,11 @@ declare module 'stripe' {
       off_session?: boolean;
 
       /**
+       * If specified, payment collection for this subscription will be paused.
+       */
+      pause_collection?: SubscriptionUpdateParams.PauseCollection | null;
+
+      /**
        * Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
        *
        * Use `pending_if_incomplete` to update the subscription using [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates). When you use `pending_if_incomplete` you can only pass the parameters [supported by pending updates](https://stripe.com/docs/billing/pending-updates-reference#supported-attributes).
@@ -691,6 +717,22 @@ declare module 'stripe' {
            */
           usage_gte: number;
         }
+      }
+
+      interface PauseCollection {
+        /**
+         * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+         */
+        behavior: PauseCollection.Behavior;
+
+        /**
+         * The time after which the subscription will resume collecting payments.
+         */
+        resumes_at?: number;
+      }
+
+      namespace PauseCollection {
+        type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
       }
 
       type PaymentBehavior =

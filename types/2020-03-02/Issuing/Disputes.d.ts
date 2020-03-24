@@ -18,24 +18,24 @@ declare module 'stripe' {
         /**
          * Disputed amount. Usually the amount of the `disputed_transaction`, but can differ (usually because of currency fluctuation or because only part of the order is disputed).
          */
-        amount: number;
+        amount?: number;
 
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
          */
-        created: number;
+        created?: number;
 
         /**
          * The currency the `disputed_transaction` was made in.
          */
-        currency: string;
+        currency?: string;
 
         /**
          * The transaction being disputed.
          */
-        disputed_transaction: string | Stripe.Issuing.Transaction;
+        disputed_transaction?: string | Stripe.Issuing.Transaction;
 
-        evidence: Dispute.Evidence;
+        evidence?: Dispute.Evidence;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -45,17 +45,17 @@ declare module 'stripe' {
         /**
          * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
-        metadata: Metadata;
+        metadata?: Metadata;
 
         /**
          * Reason for this dispute. One of `duplicate`, `product_not_received`, `fraudulent`, or `other`.
          */
-        reason: string;
+        reason?: string;
 
         /**
          * Current status of dispute. One of `unsubmitted`, `under_review`, `won`, or `lost`.
          */
-        status: Dispute.Status;
+        status?: Dispute.Status;
       }
 
       namespace Dispute {
