@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.35.0 - 2020-03-24
+* [#849](https://github.com/stripe/stripe-node/pull/849) Add support for `pause_collection` on `Subscription`
+
 ## 8.34.0 - 2020-03-24
 * [#847](https://github.com/stripe/stripe-node/pull/847) Add new capabilities for AU Becs Debit and tax reporting
 
