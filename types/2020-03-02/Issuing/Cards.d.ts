@@ -3163,7 +3163,7 @@ declare module 'stripe' {
         name?: string;
 
         /**
-         * Only return cards whose full card number matches that of this card source ID.
+         * [DEPRECATED] Only return cards whose full card number matches that of this card source ID.
          */
         source?: string;
 

@@ -1010,9 +1010,9 @@ declare module 'stripe' {
           address: Address;
 
           /**
-           * The cardholder's billing name.
+           * [DEPRECATED] The cardholder's billing name.
            */
-          name: string | null;
+          name?: string | null;
         }
 
         interface Company {
