@@ -450,8 +450,14 @@ declare module 'stripe' {
 
     namespace PaymentMethodCreateParams {
       interface AuBecsDebit {
+        /**
+         * The account number for the bank account.
+         */
         account_number: string;
 
+        /**
+         * Bank-State-Branch number of the bank account.
+         */
         bsb_number: string;
       }
 
@@ -738,7 +744,13 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodListParams {
-      type Type = 'card' | 'card_present' | 'fpx' | 'ideal' | 'sepa_debit';
+      type Type =
+        | 'au_becs_debit'
+        | 'card'
+        | 'card_present'
+        | 'fpx'
+        | 'ideal'
+        | 'sepa_debit';
     }
 
     interface PaymentMethodAttachParams {
