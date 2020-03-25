@@ -23,7 +23,7 @@ declare module 'stripe' {
         billing: Cardholder.Billing;
 
         /**
-         * Additional information about a `business_entity` cardholder.
+         * Additional information about a `company` cardholder.
          */
         company: Cardholder.Company | null;
 
@@ -75,7 +75,7 @@ declare module 'stripe' {
         status: Cardholder.Status;
 
         /**
-         * One of `individual` or `business_entity`.
+         * One of `individual` or `company`.
          */
         type: Cardholder.Type;
       }
@@ -1110,7 +1110,7 @@ declare module 'stripe' {
 
         type Status = 'active' | 'blocked' | 'inactive';
 
-        type Type = 'business_entity' | 'individual';
+        type Type = 'business_entity' | 'company' | 'individual';
       }
 
       interface CardholderCreateParams {
@@ -1125,7 +1125,7 @@ declare module 'stripe' {
         name: string;
 
         /**
-         * One of `individual` or `business_entity`.
+         * One of `individual`, `business_entity`, or `company`.
          */
         type: CardholderCreateParams.Type;
 
@@ -1135,7 +1135,7 @@ declare module 'stripe' {
         authorization_controls?: CardholderCreateParams.AuthorizationControls;
 
         /**
-         * Additional information about a `business_entity` cardholder.
+         * Additional information about a `company` cardholder.
          */
         company?: CardholderCreateParams.Company;
 
@@ -2209,7 +2209,7 @@ declare module 'stripe' {
 
         type Status = 'active' | 'inactive';
 
-        type Type = 'business_entity' | 'individual';
+        type Type = 'business_entity' | 'company' | 'individual';
       }
 
       interface CardholderRetrieveParams {
@@ -2231,7 +2231,7 @@ declare module 'stripe' {
         billing?: CardholderUpdateParams.Billing;
 
         /**
-         * Additional information about a `business_entity` cardholder.
+         * Additional information about a `company` cardholder.
          */
         company?: CardholderUpdateParams.Company;
 
@@ -3338,7 +3338,7 @@ declare module 'stripe' {
         status?: CardholderListParams.Status;
 
         /**
-         * Only return cardholders that have the given type. One of `individual` or `business_entity`.
+         * Only return cardholders that have the given type. One of `individual`, `business_entity`, or `company`.
          */
         type?: CardholderListParams.Type;
       }
@@ -3346,7 +3346,7 @@ declare module 'stripe' {
       namespace CardholderListParams {
         type Status = 'active' | 'blocked' | 'inactive';
 
-        type Type = 'business_entity' | 'individual';
+        type Type = 'business_entity' | 'company' | 'individual';
       }
 
       class CardholdersResource {

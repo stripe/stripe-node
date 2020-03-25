@@ -204,6 +204,7 @@ declare module 'stripe' {
           | 'nl'
           | 'pl'
           | 'pt'
+          | 'pt-BR'
           | 'sv'
           | 'zh';
 
@@ -648,6 +649,7 @@ declare module 'stripe' {
           | 'nl'
           | 'pl'
           | 'pt'
+          | 'pt-BR'
           | 'sv'
           | 'zh';
 
