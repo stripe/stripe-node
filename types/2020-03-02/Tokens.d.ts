@@ -181,7 +181,7 @@ declare module 'stripe' {
           phone?: string;
 
           /**
-           * The category identifying the legal structure of the company or legal entity.
+           * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
            */
           structure?: Company.Structure | null;
 
