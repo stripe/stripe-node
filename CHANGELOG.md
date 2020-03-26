@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.37.0 - 2020-03-26
+* [#851](https://github.com/stripe/stripe-node/pull/851) Add support for `spending_controls` on Issuing `Card` and `Cardholder`
+
 ## 8.36.0 - 2020-03-25
 * [#850](https://github.com/stripe/stripe-node/pull/850) Multiple API changes
   * Add support for `pt-BR` as a `locale` on Checkout `Session`
