@@ -279,9 +279,9 @@ declare module 'stripe' {
           reason: RequestHistory.Reason;
 
           /**
-           * When an authorization is declined due to `authorization_controls`, this array contains details about the authorization controls that were violated. Otherwise, it is empty.
+           * [DEPRECATED] When an authorization is declined due to `authorization_controls`, this array contains details about the authorization controls that were violated. Otherwise, it is empty.
            */
-          violated_authorization_controls: Array<
+          violated_authorization_controls?: Array<
             RequestHistory.ViolatedAuthorizationControl
           >;
         }
@@ -300,7 +300,9 @@ declare module 'stripe' {
             | 'incorrect_expiry'
             | 'insufficient_funds'
             | 'not_allowed'
+            | 'spending_controls'
             | 'suspected_fraud'
+            | 'verification_failed'
             | 'webhook_approved'
             | 'webhook_declined'
             | 'webhook_timeout';
