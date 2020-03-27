@@ -1,7 +1,8 @@
 ///<reference path='../lib.d.ts' />
 ///<reference path='../shared.d.ts' />
-///<reference path='../Webhooks.d.ts' />
+///<reference path='../Errors.d.ts' />
 ///<reference path='../OAuth.d.ts' />
+///<reference path='../Webhooks.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./AlipayAccounts.d.ts' />
