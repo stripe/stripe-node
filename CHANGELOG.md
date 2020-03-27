@@ -1,41 +1,59 @@
 # CHANGELOG
 
+## 8.38.0 - 2020-03-27
+
+- [#853](https://github.com/stripe/stripe-node/pull/853) Improve StripeError.generate()
+  - Add `doc_url` field to StripeError.
+  - Expose `Stripe.errors.generate()` as a convenience for `Stripe.errors.StripeError.generate()`.
+  - Fix several TS types related to StripeErrors.
+  - Add types for `StripeInvalidGrantError`.
+  - Add support for `authentication_error` and `rate_limit_error` in `.generate()`.
+
 ## 8.37.0 - 2020-03-26
-* [#851](https://github.com/stripe/stripe-node/pull/851) Add support for `spending_controls` on Issuing `Card` and `Cardholder`
+
+- [#851](https://github.com/stripe/stripe-node/pull/851) Add support for `spending_controls` on Issuing `Card` and `Cardholder`
 
 ## 8.36.0 - 2020-03-25
-* [#850](https://github.com/stripe/stripe-node/pull/850) Multiple API changes
-  * Add support for `pt-BR` as a `locale` on Checkout `Session`
-  * Add support for `company` as a `type` on Issuing `Cardholder`
+
+- [#850](https://github.com/stripe/stripe-node/pull/850) Multiple API changes
+  - Add support for `pt-BR` as a `locale` on Checkout `Session`
+  - Add support for `company` as a `type` on Issuing `Cardholder`
 
 ## 8.35.0 - 2020-03-24
-* [#849](https://github.com/stripe/stripe-node/pull/849) Add support for `pause_collection` on `Subscription`
+
+- [#849](https://github.com/stripe/stripe-node/pull/849) Add support for `pause_collection` on `Subscription`
 
 ## 8.34.0 - 2020-03-24
-* [#847](https://github.com/stripe/stripe-node/pull/847) Add new capabilities for AU Becs Debit and tax reporting
+
+- [#847](https://github.com/stripe/stripe-node/pull/847) Add new capabilities for AU Becs Debit and tax reporting
 
 ## 8.33.0 - 2020-03-20
-* [#842](https://github.com/stripe/stripe-node/pull/842) Multiple API changes for Issuing:
-  * Add `amount`, `currency`, `merchant_amount` and `merchant_currency` on `Authorization`
-  * Add `amount`, `currency`, `merchant_amount` and `merchant_currency` inside `request_history` on `Authorization`
-  * Add `pending_request` on `Authorization`
-  * Add `amount` when approving an `Authorization`
-  * Add `replaced_by` on `Card`
+
+- [#842](https://github.com/stripe/stripe-node/pull/842) Multiple API changes for Issuing:
+  - Add `amount`, `currency`, `merchant_amount` and `merchant_currency` on `Authorization`
+  - Add `amount`, `currency`, `merchant_amount` and `merchant_currency` inside `request_history` on `Authorization`
+  - Add `pending_request` on `Authorization`
+  - Add `amount` when approving an `Authorization`
+  - Add `replaced_by` on `Card`
 
 ## 8.32.0 - 2020-03-13
-* [#836](https://github.com/stripe/stripe-node/pull/836) Multiple API changes for Issuing:
-  * Rename `speed` to `service` on Issuing `Card`
-  * Rename `wallet_provider` to `wallet` and `address_zip_check` to `address_postal_code_check` on Issuing `Authorization`
-  * Mark `is_default` as deprecated on Issuing `Cardholder`
+
+- [#836](https://github.com/stripe/stripe-node/pull/836) Multiple API changes for Issuing:
+  - Rename `speed` to `service` on Issuing `Card`
+  - Rename `wallet_provider` to `wallet` and `address_zip_check` to `address_postal_code_check` on Issuing `Authorization`
+  - Mark `is_default` as deprecated on Issuing `Cardholder`
 
 ## 8.31.0 - 2020-03-12
-* [#835](https://github.com/stripe/stripe-node/pull/835) Add support for `shipping` and `shipping_address_collection` on Checkout `Session`
+
+- [#835](https://github.com/stripe/stripe-node/pull/835) Add support for `shipping` and `shipping_address_collection` on Checkout `Session`
 
 ## 8.30.0 - 2020-03-12
-* [#834](https://github.com/stripe/stripe-node/pull/834) Add support for `ThreeDSecure` on Issuing `Authorization`
+
+- [#834](https://github.com/stripe/stripe-node/pull/834) Add support for `ThreeDSecure` on Issuing `Authorization`
 
 ## 8.29.0 - 2020-03-05
-* [#833](https://github.com/stripe/stripe-node/pull/833) Make metadata nullable in many endpoints
+
+- [#833](https://github.com/stripe/stripe-node/pull/833) Make metadata nullable in many endpoints
 
 ## 8.28.1 - 2020-03-05
 
