@@ -51,7 +51,7 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * If you've disputed the transaction, the ID of the [dispute object](https://stripe.com/docs/api/issuing/disputes/object).
+         * If you've disputed the transaction, the ID of the dispute.
          */
         dispute: string | Stripe.Issuing.Dispute | null;
 
@@ -126,13 +126,7 @@ declare module 'stripe' {
           url: string | null;
         }
 
-        type Type =
-          | 'capture'
-          | 'cash_withdrawal'
-          | 'dispute'
-          | 'dispute_loss'
-          | 'refund'
-          | 'refund_reversal';
+        type Type = 'capture' | 'dispute' | 'refund';
       }
 
       interface TransactionRetrieveParams {
