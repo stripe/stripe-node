@@ -1529,6 +1529,13 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.PaymentIntent>;
+
+      constants: {
+        cancellation_reason: {[K in PaymentIntent.CancellationReason]: K};
+        last_payment_error: {
+          type: {[K in PaymentIntent.LastPaymentError.Type]: K};
+        };
+      };
     }
   }
 }
