@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.39.0 - 2020-04-03
+* [#859](https://github.com/stripe/stripe-node/pull/859) Add support for `calculatedStatementDescriptor` on `Charge`
+
 ## 8.38.0 - 2020-03-27
 
 - [#853](https://github.com/stripe/stripe-node/pull/853) Improve StripeError.generate()
