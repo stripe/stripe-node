@@ -143,7 +143,7 @@ declare module 'stripe' {
            * that provides limited access to your products, and a
            * 15/month plan that allows full access.
            *
-           * Related guide: [Managing Products and Plans](https://stripe.com/docs/billing/subscriptions/products-and-plans).
+           * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and plans](https://stripe.com/docs/billing/subscriptions/products-and-plans).
            */
           plan?: Stripe.Plan;
 
@@ -694,11 +694,9 @@ declare module 'stripe' {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
-           * Providing this parameter will attach the payment method to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
            *
-           * For more, learn to [save card details during payment](https://stripe.com/docs/payments/save-during-payment).
-           *
-           * Stripe uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules. For example, if your customer is impacted by [SCA](https://stripe.com/docs/strong-customer-authentication), using `off_session` will ensure that they are authenticated while processing this PaymentIntent. You will then be able to collect [off-session payments](https://stripe.com/docs/payments/cards/charging-saved-cards#off-session-payments-with-saved-cards) for this customer.
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
            */
           setup_future_usage?: PaymentIntentData.SetupFutureUsage;
 

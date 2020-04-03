@@ -129,9 +129,9 @@ declare module 'stripe' {
           currency?: string | null;
 
           /**
-           * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
+           * [DEPRECATED] Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
            */
-          max_approvals: number | null;
+          max_approvals?: number | null;
 
           /**
            * Limit the spending with rules based on time intervals and categories.
@@ -1140,9 +1140,9 @@ declare module 'stripe' {
           currency?: string | null;
 
           /**
-           * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
+           * [DEPRECATED] Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
            */
-          max_approvals: number | null;
+          max_approvals?: number | null;
 
           /**
            * Limit the spending with rules based on time intervals and categories.
@@ -2129,7 +2129,7 @@ declare module 'stripe' {
           blocked_categories?: Array<AuthorizationControls.BlockedCategory>;
 
           /**
-           * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
+           * [DEPRECATED] Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
            */
           max_approvals?: number;
 
@@ -3119,7 +3119,7 @@ declare module 'stripe' {
           blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
           /**
-           * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
+           * [DEPRECATED] Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
            */
           max_approvals?: number;
 
@@ -4080,7 +4080,7 @@ declare module 'stripe' {
           blocked_categories?: Array<AuthorizationControls.BlockedCategory>;
 
           /**
-           * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
+           * [DEPRECATED] Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
            */
           max_approvals?: number;
 
@@ -5001,7 +5001,7 @@ declare module 'stripe' {
           blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
           /**
-           * Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
+           * [DEPRECATED] Maximum count of approved authorizations on this card. Counts all authorizations retroactively.
            */
           max_approvals?: number;
 

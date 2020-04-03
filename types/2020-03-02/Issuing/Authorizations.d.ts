@@ -31,12 +31,12 @@ declare module 'stripe' {
         authorization_method: Authorization.AuthorizationMethod;
 
         /**
-         * The amount that has been authorized. This will be `0` when the object is created, and increase after it has been approved.
+         * [DEPRECATED] The amount that has been authorized. This will be `0` when the object is created, and increase after it has been approved.
          */
         authorized_amount?: number;
 
         /**
-         * The currency that was presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         * [DEPRECATED] The currency that was presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         authorized_currency?: string;
 
@@ -66,17 +66,17 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * The amount the authorization is expected to be in `held_currency`. When Stripe holds funds from you, this is the amount reserved for the authorization. This will be `0` when the object is created, and increase after it has been approved. For multi-currency transactions, `held_amount` can be used to determine the expected exchange rate.
+         * [DEPRECATED] The amount the authorization is expected to be in `held_currency`. When Stripe holds funds from you, this is the amount reserved for the authorization. This will be `0` when the object is created, and increase after it has been approved. For multi-currency transactions, `held_amount` can be used to determine the expected exchange rate.
          */
         held_amount?: number;
 
         /**
-         * The currency of the [held amount](https://stripe.com/docs/api#issuing_authorization_object-held_amount). This will always be the card currency.
+         * [DEPRECATED] The currency of the [held amount](https://stripe.com/docs/api#issuing_authorization_object-held_amount). This will always be the card currency.
          */
         held_currency?: string;
 
         /**
-         * If set `true`, you may provide [held_amount](https://stripe.com/docs/api/issuing/authorizations/approve#approve_issuing_authorization-held_amount) to control how much to hold for the authorization.
+         * [DEPRECATED] If set `true`, you may provide [held_amount](https://stripe.com/docs/api/issuing/authorizations/approve#approve_issuing_authorization-held_amount) to control how much to hold for the authorization.
          */
         is_held_amount_controllable?: boolean;
 
@@ -103,17 +103,17 @@ declare module 'stripe' {
         metadata: Metadata;
 
         /**
-         * The amount the user is requesting to be authorized. This field will only be non-zero during an `issuing.authorization.request` webhook.
+         * [DEPRECATED] The amount the user is requesting to be authorized. This field will only be non-zero during an `issuing_authorization.request` webhook.
          */
         pending_authorized_amount?: number;
 
         /**
-         * The additional amount Stripe will hold if the authorization is approved. This field will only be non-zero during an `issuing.authorization.request` webhook.
+         * [DEPRECATED] The additional amount Stripe will hold if the authorization is approved. This field will only be non-zero during an `issuing_authorization.request` webhook.
          */
         pending_held_amount?: number;
 
         /**
-         * The pending authorization request. This field will only be non-null during an `issuing.authorization.request` webhook.
+         * The pending authorization request. This field will only be non-null during an `issuing_authorization.request` webhook.
          */
         pending_request: Authorization.PendingRequest | null;
 
@@ -224,7 +224,7 @@ declare module 'stripe' {
 
         interface RequestHistory {
           /**
-           * The amount of the authorization is your card's currency. Stripe held this amount from your account to fund the authorization, if the request was approved
+           * The amount of the authorization in your card's currency. Stripe held this amount from your account to fund the authorization, if the request was approved.
            */
           amount: number;
 
@@ -234,12 +234,12 @@ declare module 'stripe' {
           approved: boolean;
 
           /**
-           * The amount that was authorized at the time of this request
+           * [DEPRECATED] The amount that was authorized at the time of this request.
            */
           authorized_amount?: number;
 
           /**
-           * The currency that was presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           * [DEPRECATED] The currency that was presented to the cardholder for the authorization. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
            */
           authorized_currency?: string;
 
@@ -254,17 +254,17 @@ declare module 'stripe' {
           currency: string;
 
           /**
-           * The amount Stripe held from your account to fund the authorization, if the request was approved
+           * [DEPRECATED] The amount Stripe held from your account to fund the authorization, if the request was approved.
            */
           held_amount?: number;
 
           /**
-           * The currency of the [held amount](https://stripe.com/docs/api#issuing_authorization_object-held_amount)
+           * [DEPRECATED] The currency of the [held amount](https://stripe.com/docs/api#issuing_authorization_object-held_amount).
            */
           held_currency?: string;
 
           /**
-           * The amount that was authorized at the time of this request
+           * The amount that was authorized at the time of this request.
            */
           merchant_amount: number;
 
@@ -289,6 +289,7 @@ declare module 'stripe' {
         namespace RequestHistory {
           type Reason =
             | 'account_compliance_disabled'
+            | 'account_disabled'
             | 'account_inactive'
             | 'authentication_failed'
             | 'authorization_controls'
@@ -458,7 +459,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * If the authorization's `is_held_amount_controllable` property is `true`, you may provide this value to control how much to hold for the authorization. Must be positive (use [`decline`](https://stripe.com/docs/api/issuing/authorizations/decline) to decline an authorization request).
+         * [DEPRECATED] If the authorization's `is_held_amount_controllable` property is `true`, you may provide this value to control how much to hold for the authorization. Must be positive (use [`decline`](https://stripe.com/docs/api/issuing/authorizations/decline) to decline an authorization request).
          */
         held_amount?: number;
 

@@ -54,6 +54,11 @@ declare module 'stripe' {
       billing_details: Charge.BillingDetails;
 
       /**
+       * The full statement descriptor that is passed to card networks, and that is displayed on your customers' credit card and bank statements. Allows you to see what the statement descriptor looks like after the static and dynamic portions are combined.
+       */
+      calculated_statement_descriptor: string | null;
+
+      /**
        * If the charge was created without capturing, this Boolean represents whether it is still uncaptured or has since been captured.
        */
       captured: boolean;

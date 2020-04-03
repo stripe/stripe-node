@@ -37,7 +37,7 @@ declare module 'stripe' {
        * that provides limited access to your products, and a
        * 15/month plan that allows full access.
        *
-       * Related guide: [Managing Products and Plans](https://stripe.com/docs/billing/subscriptions/products-and-plans).
+       * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and plans](https://stripe.com/docs/billing/subscriptions/products-and-plans).
        */
       plan: Stripe.Plan;
 
