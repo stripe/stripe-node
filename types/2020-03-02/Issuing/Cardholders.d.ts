@@ -2051,7 +2051,7 @@ declare module 'stripe' {
         name: string;
 
         /**
-         * One of `individual`, `business_entity`, or `company`.
+         * One of `individual` or `company`.
          */
         type: CardholderCreateParams.Type;
 
@@ -6116,7 +6116,7 @@ declare module 'stripe' {
         status?: CardholderListParams.Status;
 
         /**
-         * Only return cardholders that have the given type. One of `individual`, `business_entity`, or `company`.
+         * Only return cardholders that have the given type. One of `individual` or `company`.
          */
         type?: CardholderListParams.Type;
       }
