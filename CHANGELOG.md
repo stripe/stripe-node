@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.39.1 - 2020-04-08
+* [#848](https://github.com/stripe/stripe-node/pull/848) Fix TS return type for autoPagingEach
+
 ## 8.39.0 - 2020-04-03
 * [#859](https://github.com/stripe/stripe-node/pull/859) Add support for `calculatedStatementDescriptor` on `Charge`
 
