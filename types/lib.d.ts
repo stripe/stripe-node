@@ -143,7 +143,7 @@ declare module 'stripe' {
         AsyncIterableIterator<T> {
       autoPagingEach(
         handler: (item: T) => boolean | void | Promise<boolean | void>
-      ): void;
+      ): Promise<void>;
 
       autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
     }
