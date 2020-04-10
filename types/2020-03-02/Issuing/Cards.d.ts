@@ -23,6 +23,11 @@ declare module 'stripe' {
         brand: string;
 
         /**
+         * The reason why the card was canceled.
+         */
+        cancellation_reason: Card.CancellationReason | null;
+
+        /**
          * An Issuing `Cardholder` object represents an individual or business entity who is [issued](https://stripe.com/docs/issuing) cards.
          *
          * Related guide: [How to create a Cardholder](https://stripe.com/docs/issuing/cards#create-cardholder)
@@ -1043,6 +1048,8 @@ declare module 'stripe' {
           }
         }
 
+        type CancellationReason = 'lost' | 'stolen';
+
         interface Pin {
           /**
            * Wether the PIN will be accepted or not.
@@ -1054,7 +1061,15 @@ declare module 'stripe' {
           type Status = 'active' | 'blocked';
         }
 
-        type ReplacementReason = 'damage' | 'expiration' | 'loss' | 'theft';
+        type ReplacementReason =
+          | 'damage'
+          | 'damaged'
+          | 'expiration'
+          | 'expired'
+          | 'loss'
+          | 'lost'
+          | 'stolen'
+          | 'theft';
 
         interface Shipping {
           address: Address;
@@ -3038,7 +3053,15 @@ declare module 'stripe' {
           }
         }
 
-        type ReplacementReason = 'damage' | 'expiration' | 'loss' | 'theft';
+        type ReplacementReason =
+          | 'damage'
+          | 'damaged'
+          | 'expiration'
+          | 'expired'
+          | 'loss'
+          | 'lost'
+          | 'stolen'
+          | 'theft';
 
         interface Shipping {
           /**
@@ -4047,6 +4070,11 @@ declare module 'stripe' {
         authorization_controls?: CardUpdateParams.AuthorizationControls;
 
         /**
+         * Reason why the `status` of this card is `canceled`.
+         */
+        cancellation_reason?: CardUpdateParams.CancellationReason;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -4062,7 +4090,7 @@ declare module 'stripe' {
         spending_controls?: CardUpdateParams.SpendingControls;
 
         /**
-         * Whether authorizations can be approved on this card.
+         * Dictates whether authorizations can be approved on this card. If this card is being canceled because it was lost or stolen, this information should be provided as `cancellation_reason`.
          */
         status?: CardUpdateParams.Status;
       }
@@ -4988,6 +5016,8 @@ declare module 'stripe' {
               | 'yearly';
           }
         }
+
+        type CancellationReason = 'lost' | 'stolen';
 
         interface SpendingControls {
           /**

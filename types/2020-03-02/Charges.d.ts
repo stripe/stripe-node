@@ -153,7 +153,7 @@ declare module 'stripe' {
       /**
        * ID of the PaymentIntent associated with this charge, if one exists.
        */
-      payment_intent: string | null;
+      payment_intent: string | Stripe.PaymentIntent | null;
 
       /**
        * ID of the payment method used in this charge.
@@ -178,7 +178,7 @@ declare module 'stripe' {
       /**
        * This is the URL to view the receipt for this charge. The receipt is kept up-to-date to the latest state of the charge, including any refunds. If the charge is for an Invoice, the receipt will be stylized as an Invoice receipt.
        */
-      receipt_url: string;
+      receipt_url: string | null;
 
       /**
        * Whether the charge has been fully refunded. If the charge is only partially refunded, this attribute will still be false.

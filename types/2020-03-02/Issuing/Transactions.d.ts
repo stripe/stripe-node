@@ -16,7 +16,7 @@ declare module 'stripe' {
         object: 'issuing.transaction';
 
         /**
-         * The amount of this transaction in your currency. This is the amount that your balance will be updated by.
+         * The transaction amount, which will be reflected in your balance. This amount is in your currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
          */
         amount: number;
 
@@ -61,7 +61,7 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * The amount that the merchant will receive, denominated in `merchant_currency`. It will be different from `amount` if the merchant is taking payment in a different currency.
+         * The amount that the merchant will receive, denominated in `merchant_currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). It will be different from `amount` if the merchant is taking payment in a different currency.
          */
         merchant_amount: number;
 

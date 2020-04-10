@@ -301,7 +301,7 @@ declare module 'stripe' {
       transfer_data?: Invoice.TransferData | null;
 
       /**
-       * The time at which webhooks for this invoice were successfully delivered (if the invoice had no webhooks to deliver, this will match `created`). Invoice payment is delayed until webhooks are delivered, or until all webhook delivery attempts have been exhausted.
+       * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
        */
       webhooks_delivered_at: number | null;
     }
@@ -347,7 +347,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `eu_vat`, `nz_gst`, `au_abn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `my_sst`, or `unknown`
+         * The type of the tax ID, one of `eu_vat`, `nz_gst`, `au_abn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `my_sst`, `sg_gst`, or `unknown`
          */
         type: CustomerTaxId.Type;
 
@@ -376,6 +376,7 @@ declare module 'stripe' {
           | 'no_vat'
           | 'nz_gst'
           | 'ru_inn'
+          | 'sg_gst'
           | 'sg_uen'
           | 'th_vat'
           | 'tw_vat'
@@ -471,7 +472,7 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * The account (if any) where funds from the payment will be transferred to upon payment success.
+         * The account where funds from the payment will be transferred to upon payment success.
          */
         destination: string | Stripe.Account;
       }
@@ -584,7 +585,7 @@ declare module 'stripe' {
       tax_percent?: number;
 
       /**
-       * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
+       * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
        */
       transfer_data?: InvoiceCreateParams.TransferData;
     }
