@@ -283,7 +283,7 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
-         * The account (if any) where funds from the payment will be transferred to upon payment success.
+         * The account where funds from the payment will be transferred to upon payment success.
          */
         destination: string | Stripe.Account;
       }
@@ -407,7 +407,7 @@ declare module 'stripe' {
       tax_percent?: number | null;
 
       /**
-       * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
+       * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
        */
       transfer_data?: SubscriptionCreateParams.TransferData;
 

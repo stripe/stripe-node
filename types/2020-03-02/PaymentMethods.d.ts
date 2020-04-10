@@ -815,6 +815,12 @@ declare module 'stripe' {
       /**
        * Attaches a PaymentMethod object to a Customer.
        *
+       * To attach a new PaymentMethod to a customer for future payments, we recommend you use a [SetupIntent](https://stripe.com/docs/api/setup_intents)
+       * or a PaymentIntent with [setup_future_usage](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-setup_future_usage).
+       * These approaches will perform any necessary steps to ensure that the PaymentMethod can be used in a future payment. Using the
+       * /v1/payment_methods/:id/attach endpoint does not ensure that future payments can be made with the attached PaymentMethod.
+       * See [Optimizing cards for future payments](https://stripe.com/docs/payments/payment-intents#future-usage) for more information about setting up future payments.
+       *
        * To use this PaymentMethod as the default for invoice or subscription payments,
        * set [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method),
        * on the Customer to the PaymentMethod's ID.

@@ -16,7 +16,7 @@ declare module 'stripe' {
         object: 'issuing.authorization';
 
         /**
-         * The total amount in the card's currency that was authorized or rejected.
+         * The total amount that was authorized or rejected. This amount is in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
          */
         amount: number;
 
@@ -86,7 +86,7 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * The total amount that was authorized or rejected in the local merchant_currency.
+         * The total amount that was authorized or rejected. This amount is in the `merchant_currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
          */
         merchant_amount: number;
 
@@ -197,7 +197,7 @@ declare module 'stripe' {
 
         interface PendingRequest {
           /**
-           * The additional amount Stripe will hold if the authorization is approved, in the [currency](https://stripe.com/docs/api#issuing_authorization_object-pending-request-currency), which is always the card's currency.
+           * The additional amount Stripe will hold if the authorization is approved, in the card's [currency](https://stripe.com/docs/api#issuing_authorization_object-pending-request-currency) and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
            */
           amount: number;
 
@@ -212,7 +212,7 @@ declare module 'stripe' {
           is_amount_controllable: boolean;
 
           /**
-           * The amount the merchant is requesting to be authorized in the `merchant_currency`.
+           * The amount the merchant is requesting to be authorized in the `merchant_currency`. The amount is in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
            */
           merchant_amount: number;
 
@@ -224,7 +224,7 @@ declare module 'stripe' {
 
         interface RequestHistory {
           /**
-           * The amount of the authorization in your card's currency. Stripe held this amount from your account to fund the authorization, if the request was approved.
+           * The authorization amount in your card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Stripe held this amount from your account to fund the authorization if the request was approved.
            */
           amount: number;
 
@@ -264,7 +264,7 @@ declare module 'stripe' {
           held_currency?: string;
 
           /**
-           * The amount that was authorized at the time of this request.
+           * The amount that was authorized at the time of this request. This amount is in the `merchant_currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
            */
           merchant_amount: number;
 
@@ -516,7 +516,7 @@ declare module 'stripe' {
         ): ApiListPromise<Stripe.Issuing.Authorization>;
 
         /**
-         * Approves a pending Issuing Authorization object.
+         * Approves a pending Issuing Authorization object. This request should be made within the timeout window of the [real time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
          */
         approve(
           id: string,
@@ -529,7 +529,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Issuing.Authorization>;
 
         /**
-         * Declines a pending Issuing Authorization object.
+         * Declines a pending Issuing Authorization object. This request should be made within the timeout window of the [real time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
          */
         decline(
           id: string,

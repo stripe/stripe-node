@@ -341,7 +341,7 @@ declare module 'stripe' {
 
       interface TaxIdDatum {
         /**
-         * Type of the tax ID, one of `eu_vat`, `nz_gst`, `au_abn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, or `my_sst`
+         * Type of the tax ID, one of `eu_vat`, `nz_gst`, `au_abn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `my_sst`, or `sg_gst`
          */
         type: TaxIdDatum.Type;
 
@@ -370,6 +370,7 @@ declare module 'stripe' {
           | 'no_vat'
           | 'nz_gst'
           | 'ru_inn'
+          | 'sg_gst'
           | 'sg_uen'
           | 'th_vat'
           | 'tw_vat'

@@ -1096,7 +1096,7 @@ declare module 'stripe' {
           disabled_reason: Requirements.DisabledReason | null;
 
           /**
-           * If not empty, this field contains the list of fields that need to be collected in order to verify and re-enabled the cardholder.
+           * Array of fields that need to be collected in order to verify and re-enable the cardholder.
            */
           past_due: Array<Requirements.PastDue> | null;
         }
@@ -1105,6 +1105,7 @@ declare module 'stripe' {
           type DisabledReason = 'listed' | 'rejected.listed' | 'under_review';
 
           type PastDue =
+            | 'business_entity.tax_id'
             | 'individual.dob.day'
             | 'individual.dob.month'
             | 'individual.dob.year'
