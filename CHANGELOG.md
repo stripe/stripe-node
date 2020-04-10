@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.39.2 - 2020-04-10
+* [#864](https://github.com/stripe/stripe-node/pull/864) Multiple API changes
+  * Make `payment_intent` expandable on `Charge`
+  * Add support for `sg_gst` as a value for `type` on `TaxId` and related APIs
+  * Add `cancellation_reason` and new enum values for `replacement_reason` on Issuing `Card`
+
 ## 8.39.1 - 2020-04-08
 * [#848](https://github.com/stripe/stripe-node/pull/848) Fix TS return type for autoPagingEach
 
