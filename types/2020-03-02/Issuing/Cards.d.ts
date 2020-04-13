@@ -77,7 +77,7 @@ declare module 'stripe' {
         /**
          * Metadata about the PIN on the card.
          */
-        pin: Card.Pin | null;
+        pin?: Card.Pin | null;
 
         /**
          * The latest card that replaces this card, if any.
