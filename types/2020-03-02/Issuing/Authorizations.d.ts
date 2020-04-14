@@ -190,9 +190,9 @@ declare module 'stripe' {
           state: string | null;
 
           /**
-           * The url an online purchase was made from
+           * URL provided by the merchant on a 3DS request
            */
-          url: string | null;
+          url?: string | null;
         }
 
         interface PendingRequest {
@@ -366,9 +366,9 @@ declare module 'stripe' {
           expiry_check: VerificationData.ExpiryCheck;
 
           /**
-           * 3D Secure details on this authorization.
+           * 3D Secure details.
            */
-          three_d_secure: VerificationData.ThreeDSecure | null;
+          three_d_secure?: VerificationData.ThreeDSecure | null;
         }
 
         namespace VerificationData {
@@ -516,7 +516,7 @@ declare module 'stripe' {
         ): ApiListPromise<Stripe.Issuing.Authorization>;
 
         /**
-         * Approves a pending Issuing Authorization object. This request should be made within the timeout window of the [real time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
+         * Approves a pending Issuing Authorization object. This request should be made within the timeout window of the [real-time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
          */
         approve(
           id: string,

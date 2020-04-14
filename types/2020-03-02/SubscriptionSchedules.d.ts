@@ -250,7 +250,7 @@ declare module 'stripe' {
           /**
            * Quantity of the plan to which the customer should be subscribed.
            */
-          quantity: number | null;
+          quantity?: number;
 
           /**
            * The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.

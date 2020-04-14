@@ -32,6 +32,11 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
+       * An optional description of what the wehbook is used for.
+       */
+      description: string | null;
+
+      /**
        * The list of events to enable for this endpoint. `['*']` indicates that all events are enabled, except those that require explicit selection.
        */
       enabled_events: Array<string>;
@@ -102,6 +107,11 @@ declare module 'stripe' {
        * Whether this endpoint should receive events from connected accounts (`true`), or from your account (`false`). Defaults to `false`.
        */
       connect?: boolean;
+
+      /**
+       * An optional description of what the wehbook is used for.
+       */
+      description?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -376,6 +386,11 @@ declare module 'stripe' {
     }
 
     interface WebhookEndpointUpdateParams {
+      /**
+       * An optional description of what the wehbook is used for.
+       */
+      description?: string;
+
       /**
        * Disable the webhook endpoint if set to true.
        */

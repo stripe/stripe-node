@@ -121,9 +121,9 @@ declare module 'stripe' {
           state: string | null;
 
           /**
-           * The url an online purchase was made from
+           * URL provided by the merchant on a 3DS request
            */
-          url: string | null;
+          url?: string | null;
         }
 
         type Type =
