@@ -516,6 +516,11 @@ declare module 'stripe' {
            * A CSS hex color value representing the primary branding color for this account
            */
           primary_color: string | null;
+
+          /**
+           * A CSS hex color value representing the secondary branding color for this account
+           */
+          secondary_color: string | null;
         }
 
         interface CardPayments {
@@ -1145,6 +1150,11 @@ declare module 'stripe' {
            * A CSS hex color value representing the primary branding color for this account.
            */
           primary_color?: string;
+
+          /**
+           * A CSS hex color value representing the secondary branding color for this account.
+           */
+          secondary_color?: string;
         }
 
         interface CardPayments {
@@ -1765,6 +1775,11 @@ declare module 'stripe' {
            * A CSS hex color value representing the primary branding color for this account.
            */
           primary_color?: string;
+
+          /**
+           * A CSS hex color value representing the secondary branding color for this account.
+           */
+          secondary_color?: string;
         }
 
         interface CardPayments {

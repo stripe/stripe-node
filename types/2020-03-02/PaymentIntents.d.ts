@@ -695,7 +695,7 @@ declare module 'stripe' {
         /**
          * Configuration for any card payments attempted on this PaymentIntent.
          */
-        card?: PaymentMethodOptions.Card;
+        card?: PaymentMethodOptions.Card | null;
       }
 
       namespace PaymentMethodOptions {
@@ -861,7 +861,7 @@ declare module 'stripe' {
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: MetadataParam | null;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
@@ -939,7 +939,7 @@ declare module 'stripe' {
         /**
          * Configuration for any card payments attempted on this PaymentIntent.
          */
-        card?: PaymentMethodOptions.Card;
+        card?: PaymentMethodOptions.Card | null;
       }
 
       namespace PaymentMethodOptions {
@@ -1299,7 +1299,7 @@ declare module 'stripe' {
         /**
          * Configuration for any card payments attempted on this PaymentIntent.
          */
-        card?: PaymentMethodOptions.Card;
+        card?: PaymentMethodOptions.Card | null;
       }
 
       namespace PaymentMethodOptions {
