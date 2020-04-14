@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.41.0 - 2020-04-14
+* [#866](https://github.com/stripe/stripe-node/pull/866) Add support for `settings[branding][secondary_color]` on `Account`
+
 ## 8.40.0 - 2020-04-13
 * [#865](https://github.com/stripe/stripe-node/pull/865) Add support for `description` on `WebhookEndpoint`
 
