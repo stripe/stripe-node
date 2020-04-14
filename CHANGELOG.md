@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.40.0 - 2020-04-13
+* [#865](https://github.com/stripe/stripe-node/pull/865) Add support for `description` on `WebhookEndpoint`
+
 ## 8.39.2 - 2020-04-10
 * [#864](https://github.com/stripe/stripe-node/pull/864) Multiple API changes
   * Make `payment_intent` expandable on `Charge`
