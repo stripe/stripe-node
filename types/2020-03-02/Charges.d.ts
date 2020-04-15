@@ -486,11 +486,6 @@ declare module 'stripe' {
 
         interface AcssDebit {
           /**
-           * Two-letter ISO code representing the country the bank account is located in.
-           */
-          country: string | null;
-
-          /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
           fingerprint: string | null;
@@ -499,11 +494,6 @@ declare module 'stripe' {
            * Last four digits of the bank account number.
            */
           last4: string | null;
-
-          /**
-           * Routing transit number of the bank account.
-           */
-          routing_number: string | null;
         }
 
         interface Alipay {}

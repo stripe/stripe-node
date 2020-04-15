@@ -51,11 +51,6 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * If you've disputed the transaction, the ID of the dispute.
-         */
-        dispute: string | Stripe.Issuing.Dispute | null;
-
-        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -119,20 +114,9 @@ declare module 'stripe' {
            * State where the seller is located
            */
           state: string | null;
-
-          /**
-           * URL provided by the merchant on a 3DS request
-           */
-          url?: string | null;
         }
 
-        type Type =
-          | 'capture'
-          | 'cash_withdrawal'
-          | 'dispute'
-          | 'dispute_loss'
-          | 'refund'
-          | 'refund_reversal';
+        type Type = 'capture' | 'refund';
       }
 
       interface TransactionRetrieveParams {
@@ -169,11 +153,6 @@ declare module 'stripe' {
          * Only return transactions that were created during the given date interval.
          */
         created?: RangeQueryParam | number;
-
-        /**
-         * Only return transactions that originate from a given dispute.
-         */
-        dispute?: string;
 
         /**
          * Specifies which fields in the response should be expanded.
