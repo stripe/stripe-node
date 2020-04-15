@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.42.0 - 2020-04-15
+* [#867](https://github.com/stripe/stripe-node/pull/867) Clean up deprecated features in our Typescript definitions for Issuing and other resources
+
 ## 8.41.0 - 2020-04-14
 * [#866](https://github.com/stripe/stripe-node/pull/866) Add support for `settings[branding][secondary_color]` on `Account`
 
