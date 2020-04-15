@@ -161,11 +161,6 @@ declare module 'stripe' {
        * Optional flag to filter by tax rates that are inclusive (or those that are not inclusive)
        */
       inclusive?: boolean;
-
-      /**
-       * Optional range for tax rate percentage filtering
-       */
-      percentage?: RangeQueryParam | number;
     }
 
     class TaxRatesResource {

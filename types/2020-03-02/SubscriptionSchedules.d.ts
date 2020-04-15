@@ -72,11 +72,6 @@ declare module 'stripe' {
       released_subscription: string | null;
 
       /**
-       * This field has been deprecated. Interval and duration at which the subscription schedule renews for when it ends if `renewal_behavior` is `renew`.
-       */
-      renewal_interval: SubscriptionSchedule.RenewalInterval | null;
-
-      /**
        * The present status of the subscription schedule. Possible values are `not_started`, `active`, `completed`, `released`, and `canceled`. You can read more about the different states in our [behavior guide](https://stripe.com/docs/billing/subscriptions/subscription-schedules).
        */
       status: SubscriptionSchedule.Status;
@@ -271,22 +266,6 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
-      }
-
-      interface RenewalInterval {
-        /**
-         * Interval at which to renew the subscription schedule for when it ends.
-         */
-        interval: RenewalInterval.Interval;
-
-        /**
-         * Number of intervals to renew the subscription schedule for when it ends.
-         */
-        length: number;
-      }
-
-      namespace RenewalInterval {
-        type Interval = 'day' | 'month' | 'week' | 'year';
       }
 
       type Status =

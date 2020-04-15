@@ -45,11 +45,6 @@ declare module 'stripe' {
       created: number;
 
       /**
-       * Email of the user, whose token is created during Stripe Checkout. This field is non-standard, and maybe removed in the future.
-       */
-      email?: string;
-
-      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
