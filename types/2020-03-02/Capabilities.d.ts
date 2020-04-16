@@ -57,7 +57,7 @@ declare module 'stripe' {
         /**
          * The fields that need to be collected again because validation or verification failed for some reason.
          */
-        errors?: Array<Requirements.Error>;
+        errors: Array<Requirements.Error>;
 
         /**
          * The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.

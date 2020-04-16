@@ -248,7 +248,7 @@ declare module 'stripe' {
         /**
          * The fields that need to be collected again because validation or verification failed for some reason.
          */
-        errors?: Array<Requirements.Error>;
+        errors: Array<Requirements.Error>;
 
         /**
          * Fields that need to be collected assuming all volume thresholds are reached. As fields are needed, they are moved to `currently_due` and the account's `current_deadline` is set.
