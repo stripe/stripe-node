@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.43.0 - 2020-04-16
+* [#868](https://github.com/stripe/stripe-node/pull/868) Multiple API changes
+
 ## 8.42.0 - 2020-04-15
 * [#867](https://github.com/stripe/stripe-node/pull/867) Clean up deprecated features in our Typescript definitions for Issuing and other resources
 
