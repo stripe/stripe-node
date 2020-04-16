@@ -43,6 +43,11 @@ declare module 'stripe' {
         currency: string;
 
         /**
+         * The card's CVC. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://stripe.com/docs/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://stripe.com/docs/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
+         */
+        cvc?: string;
+
+        /**
          * The expiration month of the card.
          */
         exp_month: number;
@@ -66,6 +71,11 @@ declare module 'stripe' {
          * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
         metadata: Metadata;
+
+        /**
+         * The full unredacted card number. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://stripe.com/docs/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://stripe.com/docs/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
+         */
+        number?: string;
 
         /**
          * The latest card that replaces this card, if any.

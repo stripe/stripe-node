@@ -491,9 +491,19 @@ declare module 'stripe' {
           fingerprint: string | null;
 
           /**
+           * Institution number of the bank account
+           */
+          institution_number: string | null;
+
+          /**
            * Last four digits of the bank account number.
            */
           last4: string | null;
+
+          /**
+           * Transit number of the bank account.
+           */
+          transit_number: string | null;
         }
 
         interface Alipay {}
