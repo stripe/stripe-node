@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.44.0 - 2020-04-17
+* [#873](https://github.com/stripe/stripe-node/pull/873) Multiple API changes
+  * Add support for `cardholder_name` in `payment_method_details[card_present]` on `Charge`
+  * Add new enum values for `company.structure` on `Account`
+
 ## 8.43.0 - 2020-04-16
 * [#868](https://github.com/stripe/stripe-node/pull/868) Multiple API changes
 
