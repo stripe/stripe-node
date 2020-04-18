@@ -822,6 +822,11 @@ declare module 'stripe' {
           brand: string | null;
 
           /**
+           * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`).
+           */
+          cardholder_name: string | null;
+
+          /**
            * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
            */
           country: string | null;
