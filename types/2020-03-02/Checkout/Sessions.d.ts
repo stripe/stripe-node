@@ -1050,6 +1050,11 @@ declare module 'stripe' {
           application_fee_percent?: number;
 
           /**
+           * The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
+           */
+          coupon?: string;
+
+          /**
            * The tax rates that will apply to any subscription item that does not have
            * `tax_rates` set. Invoices created will have their `default_tax_rates` populated
            * from the subscription.
