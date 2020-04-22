@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.45.0 - 2020-04-22
+* [#874](https://github.com/stripe/stripe-node/pull/874) Add support for `billingPortal` namespace and `session` resource and APIs
+
 ## 8.44.0 - 2020-04-17
 * [#873](https://github.com/stripe/stripe-node/pull/873) Multiple API changes
   * Add support for `cardholder_name` in `payment_method_details[card_present]` on `Charge`
