@@ -33,9 +33,9 @@ declare module 'stripe' {
 
       /**
        * Plans define the base price, currency, and billing cycle for subscriptions.
-       * For example, you might have a 5/month plan
+       * For example, you might have a $5/month plan
        * that provides limited access to your products, and a
-       * 15/month plan that allows full access.
+       * $15/month plan that allows full access.
        *
        * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and plans](https://stripe.com/docs/billing/subscriptions/products-and-plans).
        */
