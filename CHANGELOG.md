@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.47.0 - 2020-04-24
+* [#876](https://github.com/stripe/stripe-node/pull/876) Add support for `jcb_payments` as a `Capability`
+
 ## 8.46.0 - 2020-04-22
 * [#875](https://github.com/stripe/stripe-node/pull/875) Add support for `coupon` when for subscriptions on Checkout
 
