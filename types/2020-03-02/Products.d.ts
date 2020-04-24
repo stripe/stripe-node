@@ -410,7 +410,7 @@ declare module 'stripe' {
 
     class ProductsResource {
       /**
-       * Creates a new product object. To create a product for use with orders, see [Products](https://stripe.com/docs/api#create_product).
+       * Creates a new product object.
        */
       create(
         params: ProductCreateParams,
