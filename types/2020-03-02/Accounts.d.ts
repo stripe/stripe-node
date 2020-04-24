@@ -163,6 +163,11 @@ declare module 'stripe' {
         card_payments?: Capabilities.CardPayments;
 
         /**
+         * The status of the JCB payments capability of the account, or whether the account (Japan only) can directly process JCB credit card charges in JPY currency.
+         */
+        jcb_payments?: Capabilities.JcbPayments;
+
+        /**
          * The status of the legacy payments capability of the account.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -189,6 +194,8 @@ declare module 'stripe' {
         type CardIssuing = 'active' | 'inactive' | 'pending';
 
         type CardPayments = 'active' | 'inactive' | 'pending';
+
+        type JcbPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
@@ -1115,6 +1122,7 @@ declare module 'stripe' {
         | 'au_becs_debit_payments'
         | 'card_issuing'
         | 'card_payments'
+        | 'jcb_payments'
         | 'legacy_payments'
         | 'tax_reporting_us_1099_k'
         | 'tax_reporting_us_1099_misc'
@@ -1744,6 +1752,7 @@ declare module 'stripe' {
         | 'au_becs_debit_payments'
         | 'card_issuing'
         | 'card_payments'
+        | 'jcb_payments'
         | 'legacy_payments'
         | 'tax_reporting_us_1099_k'
         | 'tax_reporting_us_1099_misc'
