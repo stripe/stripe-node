@@ -55,7 +55,7 @@ declare module 'stripe' {
         /**
          * The line items, plans, or SKUs purchased by the customer.
          */
-        display_items: Array<Session.DisplayItem> | null;
+        display_items?: Array<Session.DisplayItem>;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -614,7 +614,7 @@ declare module 'stripe' {
           description?: string;
 
           /**
-           * A list of images representing this line item.
+           * A list of images representing this line item. Each image can be up to 5 MB in size.
            */
           images?: Array<string>;
 
