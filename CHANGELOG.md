@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.47.1 - 2020-04-28
+* [#880](https://github.com/stripe/stripe-node/pull/880) Make `display_items` on Checkout `Session` optional
+
 ## 8.47.0 - 2020-04-24
 * [#876](https://github.com/stripe/stripe-node/pull/876) Add support for `jcb_payments` as a `Capability`
 
