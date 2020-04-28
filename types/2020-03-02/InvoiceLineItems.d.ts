@@ -203,7 +203,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * If previewing an update to a subscription, this decides whether the preview will show the result of applying prorations or not. If set, one of `subscription_items` or `subscription`, and one of `subscription_items` or `subscription_trial_end` are required.
+       * If previewing an update to a subscription, this decides whether the preview will show the result of applying prorations or not. If set, one of `subscription_items` or `subscription`, and one of `subscription_items` or `subscription_trial_end` are required. This field has been deprecated and will be removed in a future API version. Use `subscription_proration_behavior=create_prorations` as a replacement for `subscription_prorate=true` and `subscription_proration_behavior=none` for `subscription_prorate=false`.
        */
       subscription_prorate?: boolean;
 
