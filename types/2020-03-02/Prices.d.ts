@@ -1,0 +1,569 @@
+declare module 'stripe' {
+  namespace Stripe {
+    /**
+     * The Price object.
+     */
+    interface Price {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'price';
+
+      /**
+       * Whether the price can be used for new purchases.
+       */
+      active: boolean;
+
+      /**
+       * Describes how to compute the price per period. Either `per_unit` or `tiered`. `per_unit` indicates that the fixed amount (specified in `unit_amount` or `unit_amount_decimal`) will be charged per unit in `quantity` (for prices with `usage_type=licensed`), or per unit of total usage (for prices with `usage_type=metered`). `tiered` indicates that the unit pricing will be computed using a tiering strategy as defined using the `tiers` and `tiers_mode` attributes.
+       */
+      billing_scheme: Price.BillingScheme;
+
+      /**
+       * Time at which the object was created. Measured in seconds since the Unix epoch.
+       */
+      created: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      deleted?: void;
+
+      /**
+       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       */
+      livemode: boolean;
+
+      /**
+       * A lookup key used to retrieve prices dynamically from a static string.
+       */
+      lookup_key: string | null;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+       */
+      metadata: Metadata;
+
+      /**
+       * A brief description of the plan, hidden from customers.
+       */
+      nickname: string | null;
+
+      /**
+       * The ID of the product this price is associated with.
+       */
+      product: string | Stripe.Product;
+
+      /**
+       * The recurring components of a price such as `interval` and `usage_type`.
+       */
+      recurring: Price.Recurring | null;
+
+      /**
+       * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
+       */
+      tiers: Array<Price.Tier> | null;
+
+      /**
+       * Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price. In `graduated` tiering, pricing can change as the quantity grows.
+       */
+      tiers_mode: Price.TiersMode | null;
+
+      /**
+       * Apply a transformation to the reported usage or set quantity before computing the amount billed. Cannot be combined with `tiers`.
+       */
+      transform_quantity: Price.TransformQuantity | null;
+
+      /**
+       * One of `one_time` or `recurring` depending on whether the price is for a one-time purchase or a recurring (subscription) purchase.
+       */
+      type: Price.Type;
+
+      /**
+       * The unit amount in %s to be charged.
+       */
+      unit_amount: number | null;
+
+      /**
+       * Same as `amount`, but contains a decimal value with at most 12 decimal places.
+       */
+      unit_amount_decimal: string | null;
+    }
+
+    namespace Price {
+      type BillingScheme = 'per_unit' | 'tiered';
+
+      interface Recurring {
+        /**
+         * Specifies a usage aggregation strategy for prices of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
+         */
+        aggregate_usage: Recurring.AggregateUsage | null;
+
+        /**
+         * The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
+         */
+        interval: Recurring.Interval;
+
+        /**
+         * The number of intervals (specified in the `interval` attribute) between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months.
+         */
+        interval_count: number;
+
+        /**
+         * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+         */
+        trial_period_days: number | null;
+
+        /**
+         * Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
+         */
+        usage_type: Recurring.UsageType;
+      }
+
+      namespace Recurring {
+        type AggregateUsage =
+          | 'last_during_period'
+          | 'last_ever'
+          | 'max'
+          | 'sum';
+
+        type Interval = 'day' | 'month' | 'week' | 'year';
+
+        type UsageType = 'licensed' | 'metered';
+      }
+
+      interface Tier {
+        /**
+         * Price for the entire tier.
+         */
+        flat_amount: number | null;
+
+        /**
+         * Same as `flat_amount`, but contains a decimal value with at most 12 decimal places.
+         */
+        flat_amount_decimal: string | null;
+
+        /**
+         * Per unit price for units relevant to the tier.
+         */
+        unit_amount: number | null;
+
+        /**
+         * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
+         */
+        unit_amount_decimal: string | null;
+
+        /**
+         * Up to and including to this quantity will be contained in the tier.
+         */
+        up_to: number | null;
+      }
+
+      type TiersMode = 'graduated' | 'volume';
+
+      interface TransformQuantity {
+        /**
+         * Divide usage by this number.
+         */
+        divide_by: number;
+
+        /**
+         * After division, either round the result `up` or `down`.
+         */
+        round: TransformQuantity.Round;
+      }
+
+      namespace TransformQuantity {
+        type Round = 'down' | 'up';
+      }
+
+      type Type = 'one_time' | 'recurring';
+    }
+
+    /**
+     * The DeletedPrice object.
+     */
+    interface DeletedPrice {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'price';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
+
+    interface PriceCreateParams {
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * Whether the price is currently active. Defaults to `true`.
+       */
+      active?: boolean;
+
+      /**
+       * Describes how to compute the price per period. Either `per_unit` or `tiered`. `per_unit` indicates that the fixed amount (specified in `unit_amount` or `unit_amount_decimal`) will be charged per unit in `quantity` (for prices with `usage_type=licensed`), or per unit of total usage (for prices with `usage_type=metered`). `tiered` indicates that the unit pricing will be computed using a tiering strategy as defined using the `tiers` and `tiers_mode` attributes.
+       */
+      billing_scheme?: PriceCreateParams.BillingScheme;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A lookup key used to retrieve prices dynamically from a static string.
+       */
+      lookup_key?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: MetadataParam;
+
+      /**
+       * A brief description of the price, hidden from customers.
+       */
+      nickname?: string;
+
+      /**
+       * The ID of the product that this price will belong to.
+       */
+      product?: string;
+
+      /**
+       * These fields can be used to create a new product that this price will belong to.
+       */
+      product_data?: PriceCreateParams.ProductData;
+
+      /**
+       * The recurring components of a price such as `interval` and `usage_type`.
+       */
+      recurring?: PriceCreateParams.Recurring;
+
+      /**
+       * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
+       */
+      tiers?: Array<PriceCreateParams.Tier>;
+
+      /**
+       * Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price, in `graduated` tiering pricing can successively change as the quantity grows.
+       */
+      tiers_mode?: PriceCreateParams.TiersMode;
+
+      /**
+       * If set to true, will atomically remove the lookup key from the existing price, and assign it to this price.
+       */
+      transfer_lookup_key?: boolean;
+
+      /**
+       * Apply a transformation to the reported usage or set quantity before computing the billed price. Cannot be combined with `tiers`.
+       */
+      transform_quantity?: PriceCreateParams.TransformQuantity;
+
+      /**
+       * A positive integer in %s (or 0 for a free price) representing how much to charge.
+       */
+      unit_amount?: number;
+
+      /**
+       * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+       */
+      unit_amount_decimal?: string;
+    }
+
+    namespace PriceCreateParams {
+      type BillingScheme = 'per_unit' | 'tiered';
+
+      interface ProductData {
+        /**
+         * Whether the product is currently available for purchase. Defaults to `true`.
+         */
+        active?: boolean;
+
+        /**
+         * The identifier for the product. Must be unique. If not provided, an identifier will be randomly generated.
+         */
+        id?: string;
+
+        /**
+         * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+         */
+        name: string;
+
+        /**
+         * An arbitrary string to be displayed on your customer's credit card or bank statement. While most banks display this information consistently, some may display it incorrectly or not at all.
+         *
+         * This may be up to 22 characters. The statement description may not include `<`, `>`, `\`, `"`, `'` characters, and will appear on your customer's statement in capital letters. Non-ASCII characters are automatically stripped.
+         */
+        statement_descriptor?: string;
+
+        /**
+         * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
+         */
+        unit_label?: string;
+      }
+
+      interface Recurring {
+        /**
+         * Specifies a usage aggregation strategy for prices of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
+         */
+        aggregate_usage?: Recurring.AggregateUsage;
+
+        /**
+         * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+         */
+        interval: Recurring.Interval;
+
+        /**
+         * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+         */
+        interval_count?: number;
+
+        /**
+         * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+         */
+        trial_period_days?: number;
+
+        /**
+         * Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
+         */
+        usage_type?: Recurring.UsageType;
+      }
+
+      namespace Recurring {
+        type AggregateUsage =
+          | 'last_during_period'
+          | 'last_ever'
+          | 'max'
+          | 'sum';
+
+        type Interval = 'day' | 'month' | 'week' | 'year';
+
+        type UsageType = 'licensed' | 'metered';
+      }
+
+      interface Tier {
+        /**
+         * The flat billing amount for an entire tier, regardless of the number of units in the tier.
+         */
+        flat_amount?: number;
+
+        /**
+         * Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
+         */
+        flat_amount_decimal?: string;
+
+        /**
+         * The per unit billing amount for each individual unit for which this tier applies.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+
+        /**
+         * Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous tier adding one. Use `inf` to define a fallback tier.
+         */
+        up_to: 'inf' | number;
+      }
+
+      type TiersMode = 'graduated' | 'volume';
+
+      interface TransformQuantity {
+        /**
+         * Divide usage by this number.
+         */
+        divide_by: number;
+
+        /**
+         * After division, either round the result `up` or `down`.
+         */
+        round: TransformQuantity.Round;
+      }
+
+      namespace TransformQuantity {
+        type Round = 'down' | 'up';
+      }
+    }
+
+    interface PriceRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface PriceUpdateParams {
+      /**
+       * Whether the price is currently active. Defaults to `true`.
+       */
+      active?: boolean;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A lookup key used to retrieve prices dynamically from a static string.
+       */
+      lookup_key?: string;
+
+      /**
+       * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: MetadataParam | null;
+
+      /**
+       * A brief description of the price, hidden from customers.
+       */
+      nickname?: string;
+
+      /**
+       * The recurring components of a price such as `interval` and `usage_type`.
+       */
+      recurring?: PriceUpdateParams.Recurring | null;
+
+      /**
+       * If set to true, will atomically remove the lookup key from the existing price, and assign it to this price.
+       */
+      transfer_lookup_key?: boolean;
+    }
+
+    namespace PriceUpdateParams {
+      interface Recurring {
+        /**
+         * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+         */
+        trial_period_days?: number;
+      }
+    }
+
+    interface PriceListParams extends PaginationParams {
+      /**
+       * Only return prices that are active or inactive (e.g., pass `false` to list all inactive prices).
+       */
+      active?: boolean;
+
+      /**
+       * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
+       */
+      created?: RangeQueryParam | number;
+
+      /**
+       * Only return prices for the given currency.
+       */
+      currency?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Only return the price with these lookup_keys, if any exist.
+       */
+      lookup_keys?: Array<string>;
+
+      /**
+       * Only return prices for the given product.
+       */
+      product?: string;
+
+      /**
+       * Only return prices with these recurring fields.
+       */
+      recurring?: PriceListParams.Recurring;
+
+      /**
+       * Only return prices of type `recurring` or `one_time`.
+       */
+      type?: PriceListParams.Type;
+    }
+
+    namespace PriceListParams {
+      interface Recurring {
+        /**
+         * Filter by billing frequency. Either `day`, `week`, `month` or `year`.
+         */
+        interval?: Recurring.Interval;
+
+        /**
+         * Filter by the usage type for this price. Can be either `metered` or `licensed`.
+         */
+        usage_type?: Recurring.UsageType;
+      }
+
+      namespace Recurring {
+        type Interval = 'day' | 'month' | 'week' | 'year';
+
+        type UsageType = 'licensed' | 'metered';
+      }
+
+      type Type = 'one_time' | 'recurring';
+    }
+
+    class PricesResource {
+      /**
+       * Creates a new price for an existing product. The price can be recurring or one-time.
+       */
+      create(
+        params: PriceCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Price>;
+
+      /**
+       * Retrieves the price with the given ID.
+       */
+      retrieve(
+        id: string,
+        params?: PriceRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Price>;
+      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Price>;
+
+      /**
+       * Updates the specified price by setting the values of the parameters passed. Any parameters not provided are left unchanged.
+       */
+      update(
+        id: string,
+        params?: PriceUpdateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Price>;
+
+      /**
+       * Returns a list of your prices.
+       */
+      list(
+        params?: PriceListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.Price>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.Price>;
+    }
+  }
+}
