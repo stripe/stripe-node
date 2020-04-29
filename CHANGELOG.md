@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.48.0 - 2020-04-29
+* [#881](https://github.com/stripe/stripe-node/pull/881) Add support for the `Price` resource and APIs
+
 ## 8.47.1 - 2020-04-28
 * [#880](https://github.com/stripe/stripe-node/pull/880) Make `display_items` on Checkout `Session` optional
 
