@@ -254,6 +254,11 @@ declare module 'stripe' {
           plan: string | Stripe.Plan | Stripe.DeletedPlan;
 
           /**
+           * ID of the price to which the customer should be subscribed.
+           */
+          price?: string | Stripe.Price | Stripe.DeletedPrice;
+
+          /**
            * Quantity of the plan to which the customer should be subscribed.
            */
           quantity?: number;
