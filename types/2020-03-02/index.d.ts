@@ -57,6 +57,7 @@
 ///<reference path='./Persons.d.ts' />
 ///<reference path='./Plans.d.ts' />
 ///<reference path='./PlatformTaxFees.d.ts' />
+///<reference path='./Prices.d.ts' />
 ///<reference path='./Products.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
@@ -131,6 +132,7 @@ declare module 'stripe' {
     paymentMethods: Stripe.PaymentMethodsResource;
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;
+    prices: Stripe.PricesResource;
     products: Stripe.ProductsResource;
     refunds: Stripe.RefundsResource;
     reviews: Stripe.ReviewsResource;

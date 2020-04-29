@@ -296,6 +296,11 @@ declare module 'stripe' {
       customer: string;
 
       /**
+       * A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
+       */
+      add_invoice_items?: Array<SubscriptionCreateParams.AddInvoiceItem>;
+
+      /**
        * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
        */
       application_fee_percent?: number;
@@ -428,6 +433,47 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionCreateParams {
+      interface AddInvoiceItem {
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
+
+        /**
+         * Data used to generate a new price object inline.
+         */
+        price_data?: AddInvoiceItem.PriceData;
+
+        /**
+         * Quantity for this item. Defaults to 1.
+         */
+        quantity?: number;
+      }
+
+      namespace AddInvoiceItem {
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the product that this price will belong to.
+           */
+          product: string;
+
+          /**
+           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+      }
+
       interface BillingThresholds {
         /**
          * Monetary threshold that triggers the subscription to advance to a new billing period
@@ -459,6 +505,16 @@ declare module 'stripe' {
         plan?: string;
 
         /**
+         * The ID of the price object.
+         */
+        price?: string;
+
+        /**
+         * Data used to generate a new price object inline.
+         */
+        price_data?: Item.PriceData;
+
+        /**
          * Quantity for this item.
          */
         quantity?: number;
@@ -475,6 +531,74 @@ declare module 'stripe' {
            * Usage threshold that triggers the subscription to advance to a new billing period
            */
           usage_gte: number;
+        }
+
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the product that this price will belong to.
+           */
+          product: string;
+
+          /**
+           * The recurring components of a price such as `interval` and `usage_type`.
+           */
+          recurring: PriceData.Recurring;
+
+          /**
+           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+
+        namespace PriceData {
+          interface Recurring {
+            /**
+             * Specifies a usage aggregation strategy for prices of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
+             */
+            aggregate_usage?: Recurring.AggregateUsage;
+
+            /**
+             * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Recurring.Interval;
+
+            /**
+             * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+             */
+            interval_count?: number;
+
+            /**
+             * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+             */
+            trial_period_days?: number;
+
+            /**
+             * Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
+             */
+            usage_type?: Recurring.UsageType;
+          }
+
+          namespace Recurring {
+            type AggregateUsage =
+              | 'last_during_period'
+              | 'last_ever'
+              | 'max'
+              | 'sum';
+
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            type UsageType = 'licensed' | 'metered';
+          }
         }
       }
 
@@ -517,6 +641,11 @@ declare module 'stripe' {
     }
 
     interface SubscriptionUpdateParams {
+      /**
+       * A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 10 items.
+       */
+      add_invoice_items?: Array<SubscriptionUpdateParams.AddInvoiceItem>;
+
       /**
        * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
        */
@@ -652,6 +781,47 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionUpdateParams {
+      interface AddInvoiceItem {
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
+
+        /**
+         * Data used to generate a new price object inline.
+         */
+        price_data?: AddInvoiceItem.PriceData;
+
+        /**
+         * Quantity for this item. Defaults to 1.
+         */
+        quantity?: number;
+      }
+
+      namespace AddInvoiceItem {
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the product that this price will belong to.
+           */
+          product: string;
+
+          /**
+           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+      }
+
       type BillingCycleAnchor = 'now' | 'unchanged';
 
       interface BillingThresholds {
@@ -700,6 +870,16 @@ declare module 'stripe' {
         plan?: string;
 
         /**
+         * The ID of the price object.
+         */
+        price?: string;
+
+        /**
+         * Data used to generate a new price object inline.
+         */
+        price_data?: Item.PriceData;
+
+        /**
          * Quantity for this item.
          */
         quantity?: number;
@@ -716,6 +896,74 @@ declare module 'stripe' {
            * Usage threshold that triggers the subscription to advance to a new billing period
            */
           usage_gte: number;
+        }
+
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the product that this price will belong to.
+           */
+          product: string;
+
+          /**
+           * The recurring components of a price such as `interval` and `usage_type`.
+           */
+          recurring: PriceData.Recurring;
+
+          /**
+           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+
+        namespace PriceData {
+          interface Recurring {
+            /**
+             * Specifies a usage aggregation strategy for prices of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
+             */
+            aggregate_usage?: Recurring.AggregateUsage;
+
+            /**
+             * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Recurring.Interval;
+
+            /**
+             * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+             */
+            interval_count?: number;
+
+            /**
+             * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+             */
+            trial_period_days?: number;
+
+            /**
+             * Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
+             */
+            usage_type?: Recurring.UsageType;
+          }
+
+          namespace Recurring {
+            type AggregateUsage =
+              | 'last_during_period'
+              | 'last_ever'
+              | 'max'
+              | 'sum';
+
+            type Interval = 'day' | 'month' | 'week' | 'year';
+
+            type UsageType = 'licensed' | 'metered';
+          }
         }
       }
 
@@ -792,6 +1040,11 @@ declare module 'stripe' {
        * The ID of the plan whose subscriptions will be retrieved.
        */
       plan?: string;
+
+      /**
+       * Filter for subscriptions that contain this recurring price ID.
+       */
+      price?: string;
 
       /**
        * The status of the subscriptions to retrieve. One of: `incomplete`, `incomplete_expired`, `trialing`, `active`, `past_due`, `unpaid`, `canceled`, or `all`. Passing in a value of `canceled` will return all canceled subscriptions, including those belonging to deleted customers. Passing in a value of `all` will return subscriptions of all statuses.

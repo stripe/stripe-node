@@ -69,6 +69,11 @@ declare module 'stripe' {
       plan: Stripe.Plan | null;
 
       /**
+       * The price of the invoice item.
+       */
+      price?: Stripe.Price | null;
+
+      /**
        * Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.
        */
       proration: boolean;
@@ -190,6 +195,16 @@ declare module 'stripe' {
       period?: InvoiceItemCreateParams.Period;
 
       /**
+       * The ID of the price object.
+       */
+      price?: string;
+
+      /**
+       * Data used to generate a new price object inline.
+       */
+      price_data?: InvoiceItemCreateParams.PriceData;
+
+      /**
        * Non-negative integer. The quantity of units for the invoice item.
        */
       quantity?: number;
@@ -226,6 +241,28 @@ declare module 'stripe' {
          * The start of the period.
          */
         start: number;
+      }
+
+      interface PriceData {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * The ID of the product that this price will belong to.
+         */
+        product: string;
+
+        /**
+         * A positive integer in %s (or 0 for a free price) representing how much to charge.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
       }
     }
 
@@ -268,6 +305,16 @@ declare module 'stripe' {
       period?: InvoiceItemUpdateParams.Period;
 
       /**
+       * The ID of the price object.
+       */
+      price?: string;
+
+      /**
+       * Data used to generate a new price object inline.
+       */
+      price_data?: InvoiceItemUpdateParams.PriceData;
+
+      /**
        * Non-negative integer. The quantity of units for the invoice item.
        */
       quantity?: number;
@@ -299,6 +346,28 @@ declare module 'stripe' {
          * The start of the period.
          */
         start: number;
+      }
+
+      interface PriceData {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * The ID of the product that this price will belong to.
+         */
+        product: string;
+
+        /**
+         * A positive integer in %s (or 0 for a free price) representing how much to charge.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
       }
     }
 

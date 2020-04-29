@@ -42,6 +42,16 @@ declare module 'stripe' {
       plan: Stripe.Plan;
 
       /**
+       * Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products.
+       * Products help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
+       *
+       * For example, you might have a single "gold" product that has prices for $10/month, $100/year, and €9 once.
+       *
+       * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription), [create an invoice](https://stripe.com/docs/billing/invoices/create), and more about [products and prices](https://stripe.com/docs/billing/prices-guide).
+       */
+      price?: Stripe.Price;
+
+      /**
        * The [quantity](https://stripe.com/docs/subscriptions/quantities) of the plan to which the customer should be subscribed.
        */
       quantity?: number;
@@ -122,6 +132,16 @@ declare module 'stripe' {
       plan?: string;
 
       /**
+       * The ID of the price object.
+       */
+      price?: string;
+
+      /**
+       * Data used to generate a new price object inline.
+       */
+      price_data?: SubscriptionItemCreateParams.PriceData;
+
+      /**
        * This field has been renamed to `proration_behavior`. `prorate=true` can be replaced with `proration_behavior=create_prorations` and `prorate=false` can be replaced with `proration_behavior=none`.
        */
       prorate?: boolean;
@@ -163,6 +183,74 @@ declare module 'stripe' {
         | 'allow_incomplete'
         | 'error_if_incomplete'
         | 'pending_if_incomplete';
+
+      interface PriceData {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * The ID of the product that this price will belong to.
+         */
+        product: string;
+
+        /**
+         * The recurring components of a price such as `interval` and `usage_type`.
+         */
+        recurring: PriceData.Recurring;
+
+        /**
+         * A positive integer in %s (or 0 for a free price) representing how much to charge.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace PriceData {
+        interface Recurring {
+          /**
+           * Specifies a usage aggregation strategy for prices of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
+           */
+          aggregate_usage?: Recurring.AggregateUsage;
+
+          /**
+           * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+           */
+          interval: Recurring.Interval;
+
+          /**
+           * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+           */
+          interval_count?: number;
+
+          /**
+           * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+           */
+          trial_period_days?: number;
+
+          /**
+           * Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
+           */
+          usage_type?: Recurring.UsageType;
+        }
+
+        namespace Recurring {
+          type AggregateUsage =
+            | 'last_during_period'
+            | 'last_ever'
+            | 'max'
+            | 'sum';
+
+          type Interval = 'day' | 'month' | 'week' | 'year';
+
+          type UsageType = 'licensed' | 'metered';
+        }
+      }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
@@ -210,6 +298,16 @@ declare module 'stripe' {
       plan?: string;
 
       /**
+       * The ID of the price object.
+       */
+      price?: string;
+
+      /**
+       * Data used to generate a new price object inline.
+       */
+      price_data?: SubscriptionItemUpdateParams.PriceData;
+
+      /**
        * This field has been renamed to `proration_behavior`. `prorate=true` can be replaced with `proration_behavior=create_prorations` and `prorate=false` can be replaced with `proration_behavior=none`.
        */
       prorate?: boolean;
@@ -251,6 +349,74 @@ declare module 'stripe' {
         | 'allow_incomplete'
         | 'error_if_incomplete'
         | 'pending_if_incomplete';
+
+      interface PriceData {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * The ID of the product that this price will belong to.
+         */
+        product: string;
+
+        /**
+         * The recurring components of a price such as `interval` and `usage_type`.
+         */
+        recurring: PriceData.Recurring;
+
+        /**
+         * A positive integer in %s (or 0 for a free price) representing how much to charge.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace PriceData {
+        interface Recurring {
+          /**
+           * Specifies a usage aggregation strategy for prices of `usage_type=metered`. Allowed values are `sum` for summing up all usage during a period, `last_during_period` for using the last usage record reported within a period, `last_ever` for using the last usage record ever (across period bounds) or `max` which uses the usage record with the maximum reported usage during a period. Defaults to `sum`.
+           */
+          aggregate_usage?: Recurring.AggregateUsage;
+
+          /**
+           * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+           */
+          interval: Recurring.Interval;
+
+          /**
+           * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+           */
+          interval_count?: number;
+
+          /**
+           * Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
+           */
+          trial_period_days?: number;
+
+          /**
+           * Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
+           */
+          usage_type?: Recurring.UsageType;
+        }
+
+        namespace Recurring {
+          type AggregateUsage =
+            | 'last_during_period'
+            | 'last_ever'
+            | 'max'
+            | 'sum';
+
+          type Interval = 'day' | 'month' | 'week' | 'year';
+
+          type UsageType = 'licensed' | 'metered';
+        }
+      }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
