@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.49.0 - 2020-05-01
+* [#883](https://github.com/stripe/stripe-node/pull/883) Multiple API changes
+  * Add `issuing` on `Balance`
+  * Add `br_cnpj` and `br_cpf` as `type` on `TaxId`
+  * Add `price` support in phases on `SubscriptionSchedule`
+  * Make `quantity` nullable on `SubscriptionSchedule` for upcoming API version change
+
 ## 8.48.0 - 2020-04-29
 * [#881](https://github.com/stripe/stripe-node/pull/881) Add support for the `Price` resource and APIs
 
