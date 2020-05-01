@@ -254,9 +254,14 @@ declare module 'stripe' {
           plan: string | Stripe.Plan | Stripe.DeletedPlan;
 
           /**
+           * ID of the price to which the customer should be subscribed.
+           */
+          price?: string | Stripe.Price | Stripe.DeletedPrice;
+
+          /**
            * Quantity of the plan to which the customer should be subscribed.
            */
-          quantity?: number;
+          quantity: number | null;
 
           /**
            * The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.

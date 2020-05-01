@@ -19,6 +19,8 @@ declare module 'stripe' {
        */
       connect_reserved?: Array<Balance.ConnectReserved>;
 
+      issuing?: Balance.Issuing;
+
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
@@ -94,6 +96,48 @@ declare module 'stripe' {
            * Amount for FPX.
            */
           fpx?: number;
+        }
+      }
+
+      interface Issuing {
+        /**
+         * Funds that are available for use.
+         */
+        available: Array<Issuing.Available>;
+      }
+
+      namespace Issuing {
+        interface Available {
+          /**
+           * Balance amount.
+           */
+          amount: number;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          source_types?: Available.SourceTypes;
+        }
+
+        namespace Available {
+          interface SourceTypes {
+            /**
+             * Amount for bank account.
+             */
+            bank_account?: number;
+
+            /**
+             * Amount for card.
+             */
+            card?: number;
+
+            /**
+             * Amount for FPX.
+             */
+            fpx?: number;
+          }
         }
       }
 
