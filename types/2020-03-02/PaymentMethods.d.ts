@@ -629,6 +629,11 @@ declare module 'stripe' {
 
     interface PaymentMethodUpdateParams {
       /**
+       * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+       */
+      au_becs_debit?: PaymentMethodUpdateParams.AuBecsDebit;
+
+      /**
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
        */
       billing_details?: PaymentMethodUpdateParams.BillingDetails;
@@ -655,6 +660,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodUpdateParams {
+      interface AuBecsDebit {}
+
       interface BillingDetails {
         /**
          * Billing address.

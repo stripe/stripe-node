@@ -762,6 +762,11 @@ declare module 'stripe' {
         product_description?: string;
 
         /**
+         * A publicly available mailing address for sending support issues to.
+         */
+        support_address?: BusinessProfile.SupportAddress;
+
+        /**
          * A publicly available email address for sending support issues to.
          */
         support_email?: string;
@@ -780,6 +785,40 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url?: string;
+      }
+
+      namespace BusinessProfile {
+        interface SupportAddress {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        }
       }
 
       type BusinessType =
@@ -1392,6 +1431,11 @@ declare module 'stripe' {
         product_description?: string;
 
         /**
+         * A publicly available mailing address for sending support issues to.
+         */
+        support_address?: BusinessProfile.SupportAddress;
+
+        /**
          * A publicly available email address for sending support issues to.
          */
         support_email?: string;
@@ -1410,6 +1454,40 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url?: string;
+      }
+
+      namespace BusinessProfile {
+        interface SupportAddress {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        }
       }
 
       type BusinessType =
