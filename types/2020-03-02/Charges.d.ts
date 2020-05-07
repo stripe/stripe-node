@@ -725,7 +725,11 @@ declare module 'stripe' {
             /**
              * The version of 3D Secure that was used for this payment.
              */
-            version: string;
+            version: ThreeDSecure.Version;
+          }
+
+          namespace ThreeDSecure {
+            type Version = '1.0.2' | '2.1.0' | '2.2.0';
           }
 
           interface Wallet {
