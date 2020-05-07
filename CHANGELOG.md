@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.50.0 - 2020-05-07
+* [#888](https://github.com/stripe/stripe-node/pull/888) Multiple API changes
+  * Remove parameters in `price_data[recurring]` across APIs as they were never supported
+  * Move `payment_method_details[card][three_d_secure]` to a list of enum values on `Charge`
+  * Add support for for `business_profile[support_adress]` on `Account` create and update
+
 ## 8.49.0 - 2020-05-01
 * [#883](https://github.com/stripe/stripe-node/pull/883) Multiple API changes
   * Add `issuing` on `Balance`
