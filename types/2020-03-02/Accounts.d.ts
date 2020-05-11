@@ -2024,9 +2024,6 @@ declare module 'stripe' {
       /**
        * With [Connect](https://stripe.com/docs/connect), you can create Stripe accounts for your users.
        * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
-       *
-       * For Standard accounts, parameters other than country, email, and type
-       * are used to prefill the account application that we ask the account holder to complete.
        */
       create(
         params?: AccountCreateParams,

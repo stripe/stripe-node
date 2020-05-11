@@ -296,7 +296,7 @@ declare module 'stripe' {
       total_tax_amounts: Array<Invoice.TotalTaxAmount> | null;
 
       /**
-       * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
+       * The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
        */
       transfer_data?: Invoice.TransferData | null;
 

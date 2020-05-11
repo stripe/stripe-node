@@ -183,7 +183,7 @@ declare module 'stripe' {
       tax_percent: number | null;
 
       /**
-       * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
+       * The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
        */
       transfer_data?: Subscription.TransferData | null;
 

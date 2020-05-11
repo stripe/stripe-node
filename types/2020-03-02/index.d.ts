@@ -46,6 +46,7 @@
 ///<reference path='./Issuing/Cards.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />
 ///<reference path='./Issuing/Transactions.d.ts' />
+///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
 ///<reference path='./OrderItems.d.ts' />

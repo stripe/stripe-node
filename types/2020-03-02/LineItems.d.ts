@@ -1,0 +1,81 @@
+declare module 'stripe' {
+  namespace Stripe {
+    /**
+     * The LineItem object.
+     */
+    interface LineItem {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'item';
+
+      /**
+       * Total before any discounts or taxes is applied.
+       */
+      amount_subtotal: number | null;
+
+      /**
+       * Total after discounts and taxes.
+       */
+      amount_total: number | null;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users. Defaults to product name.
+       */
+      description: string;
+
+      /**
+       * Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products.
+       * Products help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
+       *
+       * For example, you might have a single "gold" product that has prices for $10/month, $100/year, and €9 once.
+       *
+       * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription), [create an invoice](https://stripe.com/docs/billing/invoices/create), and more about [products and prices](https://stripe.com/docs/billing/prices-guide).
+       */
+      price: Stripe.Price;
+
+      /**
+       * The quantity of products being purchased.
+       */
+      quantity: number | null;
+
+      /**
+       * The taxes applied to the line item.
+       */
+      taxes: Array<LineItem.Tax> | null;
+    }
+
+    namespace LineItem {
+      interface Tax {
+        /**
+         * Amount of tax for this line item.
+         */
+        amount: number;
+
+        /**
+         * Tax rates can be applied to invoices and subscriptions to collect tax.
+         *
+         * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+         */
+        rate: Stripe.TaxRate;
+      }
+    }
+
+    interface LineItemListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+  }
+}
