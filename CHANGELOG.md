@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.51.0 - 2020-05-11
+* [#890](https://github.com/stripe/stripe-node/pull/890) Add support for the `LineItem` resource and APIs
+
 ## 8.50.0 - 2020-05-07
 * [#888](https://github.com/stripe/stripe-node/pull/888) Multiple API changes
   * Remove parameters in `price_data[recurring]` across APIs as they were never supported
