@@ -51,5 +51,18 @@ describe('Checkout', () => {
         });
       });
     });
+
+    describe('listLineItems', () => {
+      it('Sends the correct request', () => {
+        stripe.checkout.sessions.listLineItems('cs_123');
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'GET',
+          url: '/v1/checkout/sessions/cs_123/line_items',
+          headers: {},
+          data: {},
+          settings: {},
+        });
+      });
+    });
   });
 });

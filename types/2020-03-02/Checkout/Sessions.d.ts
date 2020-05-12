@@ -58,6 +58,11 @@ declare module 'stripe' {
         display_items?: Array<Session.DisplayItem>;
 
         /**
+         * The line items purchased by the customer. [Expand](https://stripe.com/docs/api/expanding_objects) this field to include it in the response.
+         */
+        line_items?: ApiList<Stripe.LineItem> | null;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -547,6 +552,8 @@ declare module 'stripe' {
          * A list of items the customer is purchasing. Use this parameter for
          * one-time payments or adding invoice line items to a subscription (used
          * in conjunction with `subscription_data`).
+         * There is a maximum of 100 line items, however it is recommended to
+         * consolidate line items if there are more than a few dozen.
          */
         line_items?: Array<SessionCreateParams.LineItem>;
 
@@ -624,6 +631,16 @@ declare module 'stripe' {
           name?: string;
 
           /**
+           * The ID of the price object.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new price object inline.
+           */
+          price_data?: LineItem.PriceData;
+
+          /**
            * The quantity of the line item being purchased.
            */
           quantity: number;
@@ -632,6 +649,53 @@ declare module 'stripe' {
            * The tax rates which apply to this line item. This is only allowed in subscription mode.
            */
           tax_rates?: Array<string>;
+        }
+
+        namespace LineItem {
+          interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the product that this price will belong to.
+             */
+            product: string;
+
+            /**
+             * The recurring components of a price such as `interval` and `usage_type`.
+             */
+            recurring?: PriceData.Recurring;
+
+            /**
+             * A positive integer in %s (or 0 for a free price) representing how much to charge.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+          }
+
+          namespace PriceData {
+            interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+               */
+              interval_count?: number;
+            }
+
+            namespace Recurring {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+          }
         }
 
         type Locale =
@@ -1167,6 +1231,19 @@ declare module 'stripe' {
           options?: RequestOptions
         ): ApiListPromise<Stripe.Checkout.Session>;
         list(options?: RequestOptions): ApiListPromise<Stripe.Checkout.Session>;
+
+        /**
+         * When retrieving a Checkout Session, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+         */
+        listLineItems(
+          id: string,
+          params?: LineItemListParams,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.LineItem>;
+        listLineItems(
+          id: string,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.LineItem>;
       }
     }
   }

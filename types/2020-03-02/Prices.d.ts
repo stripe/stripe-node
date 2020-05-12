@@ -87,12 +87,12 @@ declare module 'stripe' {
       type: Price.Type;
 
       /**
-       * The unit amount in %s to be charged.
+       * The unit amount in %s to be charged, represented as a whole integer if possible.
        */
       unit_amount: number | null;
 
       /**
-       * Same as `amount`, but contains a decimal value with at most 12 decimal places.
+       * The unit amount in %s to be charged, represented as a decimal string with at most 12 decimal places.
        */
       unit_amount_decimal: string | null;
     }

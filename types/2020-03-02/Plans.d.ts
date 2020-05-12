@@ -25,12 +25,12 @@ declare module 'stripe' {
       aggregate_usage: Plan.AggregateUsage | null;
 
       /**
-       * The amount in %s to be charged on the interval specified.
+       * The unit amount in %s to be charged, represented as a whole integer if possible.
        */
       amount: number | null;
 
       /**
-       * Same as `amount`, but contains a decimal value with at most 12 decimal places.
+       * The unit amount in %s to be charged, represented as a decimal string with at most 12 decimal places.
        */
       amount_decimal: string | null;
 
