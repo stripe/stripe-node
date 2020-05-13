@@ -73,6 +73,11 @@ declare module 'stripe' {
         metadata: Metadata;
 
         /**
+         * Additional purchase information that is optionally provided by the merchant.
+         */
+        purchase_details: Transaction.PurchaseDetails | null;
+
+        /**
          * The nature of the transaction.
          */
         type: Transaction.Type;
@@ -114,6 +119,152 @@ declare module 'stripe' {
            * State where the seller is located
            */
           state: string | null;
+        }
+
+        interface PurchaseDetails {
+          /**
+           * Information about the flight that was purchased with this transaction.
+           */
+          flight: PurchaseDetails.Flight | null;
+
+          /**
+           * Information about fuel that was purchased with this transaction.
+           */
+          fuel: PurchaseDetails.Fuel | null;
+
+          /**
+           * Information about lodging that was purchased with this transaction.
+           */
+          lodging: PurchaseDetails.Lodging | null;
+
+          /**
+           * The line items in the purchase.
+           */
+          receipt: Array<PurchaseDetails.Receipt> | null;
+
+          /**
+           * A merchant-specific order number.
+           */
+          reference: string | null;
+        }
+
+        namespace PurchaseDetails {
+          interface Flight {
+            /**
+             * The time that the flight departed.
+             */
+            departure_at: number | null;
+
+            /**
+             * The name of the passenger.
+             */
+            passenger_name: string | null;
+
+            /**
+             * Whether the ticket is refundable.
+             */
+            refundable: boolean | null;
+
+            /**
+             * The legs of the trip.
+             */
+            segments: Array<Flight.Segment> | null;
+
+            /**
+             * The travel agency that issued the ticket.
+             */
+            travel_agency: string | null;
+          }
+
+          namespace Flight {
+            interface Segment {
+              /**
+               * The flight's destination airport code.
+               */
+              arrival_airport_code: string | null;
+
+              /**
+               * The airline carrier code.
+               */
+              carrier: string | null;
+
+              /**
+               * The airport code that the flight departed from.
+               */
+              departure_airport_code: string | null;
+
+              /**
+               * The flight number.
+               */
+              flight_number: string | null;
+
+              /**
+               * The flight's service class.
+               */
+              service_class: string | null;
+
+              /**
+               * Whether a stopover is allowed on this flight.
+               */
+              stopover_allowed: boolean | null;
+            }
+          }
+
+          interface Fuel {
+            /**
+             * The type of fuel that was purchased. One of `diesel`, `unleaded_plus`, `unleaded_regular`, `unleaded_super`, or `other`.
+             */
+            type: string;
+
+            /**
+             * The units for `volume`. One of `us_gallon` or `liter`.
+             */
+            unit: string;
+
+            /**
+             * The cost in cents per each unit of fuel, represented as a decimal string with at most 12 decimal places.
+             */
+            unit_cost_decimal: string;
+
+            /**
+             * The volume of the fuel that was pumped, represented as a decimal string with at most 12 decimal places.
+             */
+            volume_decimal: string | null;
+          }
+
+          interface Lodging {
+            /**
+             * The time of checking into the lodging.
+             */
+            check_in_at: number | null;
+
+            /**
+             * The number of nights stayed at the lodging.
+             */
+            nights: number | null;
+          }
+
+          interface Receipt {
+            /**
+             * The description of the item. The maximum length of this field is 26 characters.
+             */
+            description: string | null;
+
+            /**
+             * The quantity of the item.
+             */
+            quantity: number | null;
+
+            /**
+             * The total for this line item in cents.
+             */
+            total: number | null;
+
+            /**
+             * The unit cost of the item in cents.
+             */
+            unit_cost: number | null;
+          }
         }
 
         type Type = 'capture' | 'refund';

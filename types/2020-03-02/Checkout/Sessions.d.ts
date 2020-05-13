@@ -549,9 +549,11 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * A list of items the customer is purchasing. Use this parameter for
-         * one-time payments or adding invoice line items to a subscription (used
-         * in conjunction with `subscription_data`).
+         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [prices](https://stripe.com/docs/api/prices).
+         *
+         * Alternatively, if not using recurring prices, this parameter is for one-time payments or
+         * adding invoice line items to a subscription (used in conjunction with `subscription_data.items`).
+         *
          * There is a maximum of 100 line items, however it is recommended to
          * consolidate line items if there are more than a few dozen.
          */
@@ -568,7 +570,7 @@ declare module 'stripe' {
         metadata?: MetadataParam;
 
         /**
-         * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
+         * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`. Required when using prices or `setup` mode. Pass `subscription` if Checkout session includes at least one recurring item.
          */
         mode?: SessionCreateParams.Mode;
 
@@ -606,37 +608,39 @@ declare module 'stripe' {
 
         interface LineItem {
           /**
-           * The amount to be collected per unit of the line item.
+           * The amount to be collected per unit of the line item. If specified, must also pass `currency` and `name`.
            */
           amount?: number;
 
           /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Required if `amount` is passed.
            */
           currency?: string;
 
           /**
            * The description for the line item, to be displayed on the Checkout page.
+           *
+           * If using `price` or `price_data`, will default to the name of the associated product.
            */
           description?: string;
 
           /**
-           * A list of images representing this line item. Each image can be up to 5 MB in size.
+           * A list of image URLs representing this line item. Each image can be up to 5 MB in size. If passing `price` or `price_data`, specify images on the associated product instead.
            */
           images?: Array<string>;
 
           /**
-           * The name for the line item.
+           * The name for the item to be displayed on the Checkout page. Required if `amount` is passed.
            */
           name?: string;
 
           /**
-           * The ID of the price object.
+           * The ID of the price object. One of `price`, `price_data` or `amount` is required.
            */
           price?: string;
 
           /**
-           * Data used to generate a new price object inline.
+           * Data used to generate a new price object inline. One of `price`, `price_data` or `amount` is required.
            */
           price_data?: LineItem.PriceData;
 
