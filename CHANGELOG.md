@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.52.0 - 2020-05-13
+* [#891](https://github.com/stripe/stripe-node/pull/891) Add support for `purchase_details` on Issuing `Transaction`
+
 ## 8.51.0 - 2020-05-11
 * [#890](https://github.com/stripe/stripe-node/pull/890) Add support for the `LineItem` resource and APIs
 
