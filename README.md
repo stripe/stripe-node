@@ -98,6 +98,8 @@ and use a comment like `// @ts-ignore stripe-version-2019-10-17` to silence type
 and anywhere the types differ between your API version and the latest.
 When you upgrade, you should remove these comments.
 
+We also recommend using `// @ts-ignore` if you have access to a beta feature and need to send parameters beyond the type definitions.
+
 #### Using `expand` with TypeScript
 
 [Expandable][expanding_objects] fields are typed as `string | Foo`,
