@@ -71,7 +71,7 @@ declare module 'stripe' {
       /**
        * The price of the invoice item.
        */
-      price?: Stripe.Price | null;
+      price: Stripe.Price | null;
 
       /**
        * Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.

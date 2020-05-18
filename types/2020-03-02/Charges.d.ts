@@ -506,7 +506,17 @@ declare module 'stripe' {
           transit_number: string | null;
         }
 
-        interface Alipay {}
+        interface Alipay {
+          /**
+           * Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
+           */
+          fingerprint: string | null;
+
+          /**
+           * Transaction ID of this particular Alipay transaction.
+           */
+          transaction_id: string | null;
+        }
 
         interface AuBecsDebit {
           /**

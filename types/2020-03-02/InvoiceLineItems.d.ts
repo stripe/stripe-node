@@ -59,7 +59,7 @@ declare module 'stripe' {
       /**
        * The price of the line item.
        */
-      price?: Stripe.Price | null;
+      price: Stripe.Price | null;
 
       /**
        * Whether this is a proration.

@@ -179,6 +179,7 @@ declare module 'stripe' {
             | 'financing_payout_reversal'
             | 'issuing_authorization_hold'
             | 'issuing_authorization_release'
+            | 'issuing_dispute'
             | 'issuing_transaction'
             | 'network_cost'
             | 'other_adjustment'

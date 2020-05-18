@@ -446,7 +446,7 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Product>;
 
       /**
-       * Delete a product. Deleting a product with type=good is only possible if it has no SKUs associated with it. Deleting a product with type=service is only possible if it has no plans associated with it.
+       * Delete a product. Deleting a product is only possible if it has no prices associated with it. Additionally, deleting a product with type=good is only possible if it has no SKUs associated with it.
        */
       del(
         id: string,
