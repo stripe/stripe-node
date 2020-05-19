@@ -143,7 +143,10 @@ declare module 'stripe' {
       type EndBehavior = 'cancel' | 'none' | 'release' | 'renew';
 
       interface Phase {
-        add_invoice_items?: Array<Phase.AddInvoiceItem>;
+        /**
+         * A list of prices and quantities that will generate invoice items appended to the first invoice for this phase.
+         */
+        add_invoice_items: Array<Phase.AddInvoiceItem>;
 
         /**
          * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account during this phase of the schedule.
@@ -218,6 +221,9 @@ declare module 'stripe' {
            */
           price: string | Stripe.Price | Stripe.DeletedPrice;
 
+          /**
+           * The quantity of the invoice item.
+           */
           quantity: number | null;
         }
 
@@ -256,7 +262,7 @@ declare module 'stripe' {
           /**
            * ID of the price to which the customer should be subscribed.
            */
-          price?: string | Stripe.Price | Stripe.DeletedPrice;
+          price: string | Stripe.Price | Stripe.DeletedPrice;
 
           /**
            * Quantity of the plan to which the customer should be subscribed.

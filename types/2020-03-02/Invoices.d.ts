@@ -474,6 +474,11 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
+         * The amount in %s that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
+         */
+        amount: number | null;
+
+        /**
          * The account where funds from the payment will be transferred to upon payment success.
          */
         destination: string | Stripe.Account;
@@ -609,6 +614,11 @@ declare module 'stripe' {
 
       interface TransferData {
         /**
+         * The amount that will be transferred automatically when the invoice is paid. If no amount is set, the full amount is transferred.
+         */
+        amount?: number;
+
+        /**
          * ID of an existing, connected Stripe account.
          */
         destination: string;
@@ -720,6 +730,11 @@ declare module 'stripe' {
       }
 
       interface TransferData {
+        /**
+         * The amount that will be transferred automatically when the invoice is paid. If no amount is set, the full amount is transferred.
+         */
+        amount?: number;
+
         /**
          * ID of an existing, connected Stripe account.
          */
@@ -1196,7 +1211,7 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Invoice>;
 
       /**
-       * Permanently deletes a draft invoice. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized, it must be [voided](https://stripe.com/docs/api#void_invoice).
+       * Permanently deletes a one-off invoice draft. This cannot be undone. Attempts to delete invoices that are no longer in a draft state will fail; once an invoice has been finalized or if an invoice is for a subscription, it must be [voided](https://stripe.com/docs/api#void_invoice).
        */
       del(
         id: string,

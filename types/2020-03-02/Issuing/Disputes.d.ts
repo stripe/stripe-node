@@ -16,6 +16,11 @@ declare module 'stripe' {
         object: 'issuing.dispute';
 
         /**
+         * List of balance transactions associated with this dispute.
+         */
+        balance_transactions: Array<Stripe.BalanceTransaction>;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;

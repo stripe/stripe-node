@@ -59,7 +59,7 @@ declare module 'stripe' {
       /**
        * The ID of the product this price is associated with.
        */
-      product: string | Stripe.Product;
+      product: string | Stripe.Product | Stripe.DeletedProduct;
 
       /**
        * The recurring components of a price such as `interval` and `usage_type`.
