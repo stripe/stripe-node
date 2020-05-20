@@ -58,9 +58,9 @@ declare module 'stripe' {
         display_items?: Array<Session.DisplayItem>;
 
         /**
-         * The line items purchased by the customer. [Expand](https://stripe.com/docs/api/expanding_objects) this field to include it in the response.
+         * The line items purchased by the customer.
          */
-        line_items?: ApiList<Stripe.LineItem> | null;
+        line_items?: ApiList<Stripe.LineItem>;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -150,7 +150,7 @@ declare module 'stripe' {
            *
            * For example, you might have a single "gold" product that has plans for $10/month, $100/year, €9/month, and €90/year.
            *
-           * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and prices](https://stripe.com/docs/billing/subscriptions/products-and-prices).
+           * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and prices](https://stripe.com/docs/billing/prices-guide).
            */
           plan?: Stripe.Plan;
 
@@ -509,7 +509,7 @@ declare module 'stripe' {
          * is complete.
          * If you'd like access to the Checkout Session for the successful
          * payment, read more about it in our guide on [fulfilling your payments
-         * with webhooks](https://stripe.com/docs/payments/checkout/fulfillment#webhooks).
+         * with webhooks](https://stripe.com/docs/payments/checkout/accept-a-payment#payment-success).
          */
         success_url: string;
 

@@ -434,9 +434,9 @@ declare module 'stripe' {
        * in any combination of the following:
        *
        *
-       *  Refund: create a new refund (using refund_amount) or link an existing refund (using refund).
-       *  Customer balance credit: credit the customer's balance (using credit_amount) which will be automatically applied to their next invoice when it's finalized.
-       *  Outside of Stripe credit: record the amount that is or will be credited outside of Stripe (using out_of_band_amount).
+       * Refund: create a new refund (using refund_amount) or link an existing refund (using refund).
+       * Customer balance credit: credit the customer's balance (using credit_amount) which will be automatically applied to their next invoice when it's finalized.
+       * Outside of Stripe credit: record the amount that is or will be credited outside of Stripe (using out_of_band_amount).
        *
        *
        * For post-payment credit notes the sum of the refund, credit and outside of Stripe amounts must equal the credit note total.

@@ -36,6 +36,8 @@ declare module 'stripe' {
 
       ideal?: PaymentMethod.Ideal;
 
+      interac_present?: PaymentMethod.InteracPresent;
+
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
@@ -355,6 +357,8 @@ declare module 'stripe' {
           | 'TRIONL2U';
       }
 
+      interface InteracPresent {}
+
       interface SepaDebit {
         /**
          * Bank code of bank associated with the bank account.
@@ -426,6 +430,11 @@ declare module 'stripe' {
        * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
        */
       ideal?: PaymentMethodCreateParams.Ideal;
+
+      /**
+       * If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present payment method.
+       */
+      interac_present?: PaymentMethodCreateParams.InteracPresent;
 
       /**
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -603,6 +612,8 @@ declare module 'stripe' {
           | 'triodos_bank'
           | 'van_lanschot';
       }
+
+      interface InteracPresent {}
 
       interface SepaDebit {
         /**
