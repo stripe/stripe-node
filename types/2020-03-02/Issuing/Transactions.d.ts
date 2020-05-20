@@ -179,7 +179,7 @@ declare module 'stripe' {
           namespace Flight {
             interface Segment {
               /**
-               * The flight's destination airport code.
+               * The three-letter IATA airport code of the flight's destination.
                */
               arrival_airport_code: string | null;
 
@@ -189,7 +189,7 @@ declare module 'stripe' {
               carrier: string | null;
 
               /**
-               * The airport code that the flight departed from.
+               * The three-letter IATA airport code that the flight departed from.
                */
               departure_airport_code: string | null;
 

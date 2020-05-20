@@ -60,7 +60,7 @@ declare module 'stripe' {
 
       class SessionsResource {
         /**
-         * Creates a session of the self-serve Portal.
+         * Creates a session of the self-serve portal.
          */
         create(
           params: SessionCreateParams,

@@ -69,7 +69,7 @@ declare module 'stripe' {
       /**
        * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
        */
-      tiers: Array<Price.Tier> | null;
+      tiers?: Array<Price.Tier>;
 
       /**
        * Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price. In `graduated` tiering, pricing can change as the quantity grows.

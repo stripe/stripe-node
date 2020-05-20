@@ -166,6 +166,7 @@ declare module 'stripe' {
           type ReportingCategory =
             | 'advance'
             | 'advance_funding'
+            | 'anticipation_repayment'
             | 'charge'
             | 'charge_failure'
             | 'connect_collection_transfer'

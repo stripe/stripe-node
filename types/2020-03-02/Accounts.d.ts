@@ -2159,6 +2159,7 @@ declare module 'stripe' {
 
       /**
        * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
+       *
        * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
        */
       updateExternalAccount(
