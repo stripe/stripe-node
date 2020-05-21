@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.54.0 - 2020-05-20
+* [#897](https://github.com/stripe/stripe-node/pull/897) Multiple API changes
+  * Add `anticipation_repayment` as a `type` on `BalanceTransaction`
+  * Add `interac_present` as a `type` on `PaymentMethod`
+  * Add `payment_method_details[interac_present]` on `Charge`
+  * Add `transfer_data` on `SubscriptionSchedule`
+
 ## 8.53.0 - 2020-05-18
 * [#895](https://github.com/stripe/stripe-node/pull/895) Multiple API changes
   * Add support for `issuing_dispute` as a `type` on `BalanceTransaction`
