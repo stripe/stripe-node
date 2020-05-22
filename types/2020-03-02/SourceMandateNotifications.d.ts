@@ -14,6 +14,8 @@ declare module 'stripe' {
        */
       object: 'source_mandate_notification';
 
+      acss_debit?: SourceMandateNotification.AcssDebit;
+
       /**
        * A positive integer in the smallest currency unit (that is, 100 cents for $1.00, or 1 for ¥1, Japanese Yen being a zero-decimal currency) representing the amount associated with the mandate notification. The amount is expressed in the currency of the underlying source. Required if the notification type is `debit_initiated`.
        */
@@ -60,6 +62,13 @@ declare module 'stripe' {
     }
 
     namespace SourceMandateNotification {
+      interface AcssDebit {
+        /**
+         * The statement descriptor associate with the debit.
+         */
+        statement_descriptor?: string;
+      }
+
       interface BacsDebit {
         /**
          * Last 4 digits of the account number associated with the debit.

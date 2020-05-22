@@ -730,17 +730,43 @@ declare module 'stripe' {
             authenticated?: boolean;
 
             /**
+             * Indicates the outcome of 3D Secure authentication.
+             */
+            result: ThreeDSecure.Result;
+
+            /**
+             * Additional information about why 3D Secure succeeded or failed.
+             */
+            result_reason: ThreeDSecure.ResultReason | null;
+
+            /**
              * Whether or not 3D Secure succeeded.
              */
             succeeded?: boolean;
 
             /**
-             * The version of 3D Secure that was used for this payment.
+             * The version of 3D Secure that was used.
              */
             version: ThreeDSecure.Version;
           }
 
           namespace ThreeDSecure {
+            type Result =
+              | 'attempt_acknowledged'
+              | 'authenticated'
+              | 'failed'
+              | 'not_supported'
+              | 'processing_error';
+
+            type ResultReason =
+              | 'abandoned'
+              | 'bypassed'
+              | 'canceled'
+              | 'card_not_enrolled'
+              | 'network_not_supported'
+              | 'protocol_error'
+              | 'rejected';
+
             type Version = '1.0.2' | '2.1.0' | '2.2.0';
           }
 

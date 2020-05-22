@@ -667,7 +667,7 @@ declare module 'stripe' {
             /**
              * The ID of the product that this price will belong to.
              */
-            product: string;
+            product?: string;
 
             /**
              * The recurring components of a price such as `interval` and `usage_type`.

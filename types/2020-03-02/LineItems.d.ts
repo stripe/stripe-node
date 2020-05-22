@@ -52,7 +52,7 @@ declare module 'stripe' {
       /**
        * The taxes applied to the line item.
        */
-      taxes: Array<LineItem.Tax> | null;
+      taxes?: Array<LineItem.Tax>;
     }
 
     namespace LineItem {
