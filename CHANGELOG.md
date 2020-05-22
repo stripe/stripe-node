@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.55.0 - 2020-05-22
+* [#899](https://github.com/stripe/stripe-node/pull/899) Multiple API changes
+  * Add support for `ae_trn`, `cl_tin` and `sa_vat` as `type` on `TaxId`
+  * Add `result` and `result_reason` inside `payment_method_details[card][three_d_secure]` on `Charge`
+
 ## 8.54.0 - 2020-05-20
 * [#897](https://github.com/stripe/stripe-node/pull/897) Multiple API changes
   * Add `anticipation_repayment` as a `type` on `BalanceTransaction`
