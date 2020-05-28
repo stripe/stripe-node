@@ -730,6 +730,13 @@ declare module 'stripe' {
             authenticated?: boolean;
 
             /**
+             * For authenticated transactions: whether issuing bank authenticated the
+             * cardholder with a traditional challenge screen, or with device data
+             * via the 3DS2 frictionless flow.
+             */
+            authentication_flow: ThreeDSecure.AuthenticationFlow | null;
+
+            /**
              * Indicates the outcome of 3D Secure authentication.
              */
             result: ThreeDSecure.Result;
@@ -751,6 +758,8 @@ declare module 'stripe' {
           }
 
           namespace ThreeDSecure {
+            type AuthenticationFlow = 'challenge' | 'frictionless';
+
             type Result =
               | 'attempt_acknowledged'
               | 'authenticated'
@@ -972,6 +981,7 @@ declare module 'stripe' {
           /**
            * Owner's verified full name. Values are verified or provided by EPS directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           * EPS rarely provides this information so the attribute is usually empty.
            */
           verified_name: string | null;
         }
@@ -1038,6 +1048,7 @@ declare module 'stripe' {
           /**
            * Owner's verified full name. Values are verified or provided by Giropay directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           * Giropay rarely provides this information so the attribute is usually empty.
            */
           verified_name: string | null;
         }
@@ -1234,6 +1245,7 @@ declare module 'stripe' {
           /**
            * Owner's verified full name. Values are verified or provided by Przelewy24 directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           * Przelewy24 rarely provides this information so the attribute is usually empty.
            */
           verified_name: string | null;
         }
