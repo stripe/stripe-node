@@ -429,7 +429,7 @@ declare module 'stripe' {
       ): Promise<Stripe.SubscriptionItem>;
 
       /**
-       * Retrieves the invoice item with the given ID.
+       * Retrieves the subscription item with the given ID.
        */
       retrieve(
         id: string,

@@ -665,9 +665,14 @@ declare module 'stripe' {
             currency: string;
 
             /**
-             * The ID of the product that this price will belong to.
+             * The ID of the product that this price will belong to. One of `product` or `product_data` is required.
              */
             product?: string;
+
+            /**
+             * Data used to generate a new product object inline. One of `product` or `product_data` is required.
+             */
+            product_data?: PriceData.ProductData;
 
             /**
              * The recurring components of a price such as `interval` and `usage_type`.
@@ -686,6 +691,28 @@ declare module 'stripe' {
           }
 
           namespace PriceData {
+            interface ProductData {
+              /**
+               * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+               */
+              description?: string;
+
+              /**
+               * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+               */
+              images?: Array<string>;
+
+              /**
+               * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+               */
+              metadata?: MetadataParam;
+
+              /**
+               * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+               */
+              name: string;
+            }
+
             interface Recurring {
               /**
                * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
