@@ -83,6 +83,8 @@ declare module 'stripe' {
       interface PaymentMethodDetails {
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
 
+        bacs_debit?: PaymentMethodDetails.BacsDebit;
+
         card?: PaymentMethodDetails.Card;
 
         sepa_debit?: PaymentMethodDetails.SepaDebit;
@@ -99,6 +101,18 @@ declare module 'stripe' {
            * The URL of the mandate. This URL generally contains sensitive information about the customer and should be shared with them exclusively.
            */
           url: string;
+        }
+
+        interface BacsDebit {
+          network_status: BacsDebit.NetworkStatus;
+
+          reference: string;
+
+          url: string;
+        }
+
+        namespace BacsDebit {
+          type NetworkStatus = 'accepted' | 'pending' | 'refused' | 'revoked';
         }
 
         interface Card {}

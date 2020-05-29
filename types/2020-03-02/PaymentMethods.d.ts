@@ -16,6 +16,8 @@ declare module 'stripe' {
 
       au_becs_debit?: PaymentMethod.AuBecsDebit;
 
+      bacs_debit?: PaymentMethod.BacsDebit;
+
       billing_details: PaymentMethod.BillingDetails;
 
       card?: PaymentMethod.Card;
@@ -72,6 +74,23 @@ declare module 'stripe' {
          * Last four digits of the bank account number.
          */
         last4: string | null;
+      }
+
+      interface BacsDebit {
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
+        fingerprint: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4: string | null;
+
+        /**
+         * Sort code of the bank account. (e.g., `10-20-30`)
+         */
+        sort_code: string | null;
       }
 
       interface BillingDetails {
@@ -388,6 +407,7 @@ declare module 'stripe' {
 
       type Type =
         | 'au_becs_debit'
+        | 'bacs_debit'
         | 'card'
         | 'card_present'
         | 'fpx'
@@ -400,6 +420,11 @@ declare module 'stripe' {
        * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
        */
       au_becs_debit?: PaymentMethodCreateParams.AuBecsDebit;
+
+      /**
+       * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
+       */
+      bacs_debit?: PaymentMethodCreateParams.BacsDebit;
 
       /**
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
@@ -468,6 +493,18 @@ declare module 'stripe' {
          * Bank-State-Branch number of the bank account.
          */
         bsb_number: string;
+      }
+
+      interface BacsDebit {
+        /**
+         * Account number of the bank account that the funds will be debited from.
+         */
+        account_number?: string;
+
+        /**
+         * Sort code of the bank account. (e.g., `10-20-30`)
+         */
+        sort_code?: string;
       }
 
       interface BillingDetails {
@@ -624,6 +661,7 @@ declare module 'stripe' {
 
       type Type =
         | 'au_becs_debit'
+        | 'bacs_debit'
         | 'card'
         | 'card_present'
         | 'fpx'

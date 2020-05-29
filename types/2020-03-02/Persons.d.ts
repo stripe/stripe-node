@@ -108,7 +108,7 @@ declare module 'stripe' {
       requirements?: Person.Requirements | null;
 
       /**
-       * Whether the last 4 digits of this person's SSN have been provided.
+       * Whether the last four digits of the person's Social Security number have been provided (U.S. only).
        */
       ssn_last_4_provided?: boolean;
 
@@ -515,7 +515,7 @@ declare module 'stripe' {
       relationship?: PersonCreateParams.Relationship;
 
       /**
-       * The last 4 digits of the person's social security number.
+       * The last four digits of the person's Social Security number (U.S. only).
        */
       ssn_last_4?: string;
 
@@ -750,7 +750,7 @@ declare module 'stripe' {
       relationship?: PersonUpdateParams.Relationship;
 
       /**
-       * The last 4 digits of the person's social security number.
+       * The last four digits of the person's Social Security number (U.S. only).
        */
       ssn_last_4?: string;
 
