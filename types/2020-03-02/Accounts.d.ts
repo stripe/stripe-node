@@ -500,6 +500,8 @@ declare module 'stripe' {
       }
 
       interface Settings {
+        bacs_debit_payments?: Settings.BacsDebitPayments;
+
         branding: Settings.Branding;
 
         card_payments: Settings.CardPayments;
@@ -512,6 +514,13 @@ declare module 'stripe' {
       }
 
       namespace Settings {
+        interface BacsDebitPayments {
+          /**
+           * The Bacs Direct Debit Display Name for this account. For payments made with Bacs Direct Debit, this will appear on the mandate, and as the statement descriptor.
+           */
+          display_name?: string;
+        }
+
         interface Branding {
           /**
            * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) An icon for the account. Must be square and at least 128px x 128px.

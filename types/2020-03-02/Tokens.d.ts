@@ -604,7 +604,7 @@ declare module 'stripe' {
         relationship?: Person.Relationship;
 
         /**
-         * The last 4 digits of the person's social security number.
+         * The last four digits of the person's Social Security number (U.S. only).
          */
         ssn_last_4?: string;
 

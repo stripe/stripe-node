@@ -425,7 +425,7 @@ declare module 'stripe' {
 
     class PlansResource {
       /**
-       * You can create plans using the API, or in the Stripe [Dashboard](https://dashboard.stripe.com/subscriptions/products).
+       * You can create plans using the API, or in the Stripe [Dashboard](https://dashboard.stripe.com/products).
        */
       create(
         params: PlanCreateParams,

@@ -48,12 +48,12 @@ declare module 'stripe' {
          * If not provided, customers will be asked to enter their email address.
          * Use this parameter to prefill customer data if you already have an email
          * on file. To access information about the customer once a session is
-         * complete, use the `customer` field.
+         * complete, use the `customer` attribute.
          */
         customer_email: string | null;
 
         /**
-         * The line items, plans, or SKUs purchased by the customer.
+         * The line items, plans, or SKUs purchased by the customer. Prefer using `line_items`.
          */
         display_items?: Array<Session.DisplayItem>;
 
@@ -553,7 +553,7 @@ declare module 'stripe' {
         /**
          * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [prices](https://stripe.com/docs/api/prices).
          *
-         * Alternatively, if not using recurring prices, this parameter is for one-time payments or
+         * If not using recurring prices, this parameter is for one-time payments or
          * adding invoice line items to a subscription (used in conjunction with `subscription_data.items`).
          *
          * There is a maximum of 100 line items, however it is recommended to
@@ -637,7 +637,7 @@ declare module 'stripe' {
           name?: string;
 
           /**
-           * The ID of the price object. One of `price`, `price_data` or `amount` is required.
+           * The ID of the price or plan object. One of `price`, `price_data` or `amount` is required.
            */
           price?: string;
 
@@ -1159,7 +1159,7 @@ declare module 'stripe' {
           default_tax_rates?: Array<string>;
 
           /**
-           * A list of items, each with an attached plan, that the customer is subscribing to. Use this parameter for subscriptions. To create one-time payments, use `line_items`.
+           * A list of items, each with an attached plan, that the customer is subscribing to. Prefer using `line_items`.
            */
           items?: Array<SubscriptionData.Item>;
 

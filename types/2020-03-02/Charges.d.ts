@@ -385,6 +385,8 @@ declare module 'stripe' {
 
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
 
+        bacs_debit?: PaymentMethodDetails.BacsDebit;
+
         bancontact?: PaymentMethodDetails.Bancontact;
 
         bitcoin?: PaymentMethodDetails.Bitcoin;
@@ -540,6 +542,28 @@ declare module 'stripe' {
            * ID of the mandate used to make this payment.
            */
           mandate?: string;
+        }
+
+        interface BacsDebit {
+          /**
+           * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+           */
+          fingerprint: string | null;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string | null;
+
+          /**
+           * ID of the mandate used to make this payment.
+           */
+          mandate: string | null;
+
+          /**
+           * Sort code of the bank account. (e.g., `10-20-30`)
+           */
+          sort_code: string | null;
         }
 
         interface Bancontact {
@@ -730,9 +754,8 @@ declare module 'stripe' {
             authenticated?: boolean;
 
             /**
-             * For authenticated transactions: whether issuing bank authenticated the
-             * cardholder with a traditional challenge screen, or with device data
-             * via the 3DS2 frictionless flow.
+             * For authenticated transactions: how the customer was authenticated by
+             * the issuing bank.
              */
             authentication_flow: ThreeDSecure.AuthenticationFlow | null;
 
@@ -742,7 +765,8 @@ declare module 'stripe' {
             result: ThreeDSecure.Result;
 
             /**
-             * Additional information about why 3D Secure succeeded or failed.
+             * Additional information about why 3D Secure succeeded or failed based
+             * on the `result`.
              */
             result_reason: ThreeDSecure.ResultReason | null;
 
