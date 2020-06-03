@@ -104,10 +104,19 @@ declare module 'stripe' {
         }
 
         interface BacsDebit {
+          /**
+           * The status of the mandate on the Bacs network. Can be one of `pending`, `revoked`, `refused`, or `accepted`.
+           */
           network_status: BacsDebit.NetworkStatus;
 
+          /**
+           * The unique reference identifying the mandate on the Bacs network.
+           */
           reference: string;
 
+          /**
+           * The URL that will contain the mandate that the customer has signed.
+           */
           url: string;
         }
 

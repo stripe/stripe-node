@@ -901,7 +901,7 @@ declare module 'stripe' {
           }
         }
 
-        type PaymentMethodType = 'card' | 'fpx' | 'ideal';
+        type PaymentMethodType = 'bacs_debit' | 'card' | 'fpx' | 'ideal';
 
         interface SetupIntentData {
           /**
