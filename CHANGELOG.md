@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 8.57.0 - 2020-06-03
+* [#908](https://github.com/stripe/stripe-node/pull/908) Multiple API changes
+  * Add support for bg, cs, el, et, hu, lt, lv, mt, ro, ru, sk, sl and tr as new locale on Checkout `Session`
+  * Add `settings[sepa_debit_payments][creditor_id]` on `Account`
+  * Add support for Bancontact, EPS, Giropay and P24 on `PaymentMethod`, `PaymentIntent` and `SetupIntent`
+  * Add support for `order_item[parent]` on `Source` for Klarna
+* [#905](https://github.com/stripe/stripe-node/pull/905) Add support for BACS Debit as a `PaymentMethod`
+
 ## 8.56.0 - 2020-05-28
 * [#904](https://github.com/stripe/stripe-node/pull/904) Multiple API changes
   * Add `payment_method_details[card][three_d_secure][authentication_flow]` on `Charge`
