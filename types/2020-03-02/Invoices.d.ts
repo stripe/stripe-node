@@ -298,7 +298,7 @@ declare module 'stripe' {
       /**
        * The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
        */
-      transfer_data?: Invoice.TransferData | null;
+      transfer_data: Invoice.TransferData | null;
 
       /**
        * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
