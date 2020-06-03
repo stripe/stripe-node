@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.58.0 - 2020-06-03
+* [#909](https://github.com/stripe/stripe-node/pull/909) Multiple API changes
+  * Add `bacs_debit_payments` as a `Capability`
+  * Add support for BACS Debit on Checkout `Session`
+  * Add support for `checkout.session.async_payment_failed` and `checkout.session.async_payment_succeeded` as `type` on `Event`
+
 ## 8.57.0 - 2020-06-03
 * [#908](https://github.com/stripe/stripe-node/pull/908) Multiple API changes
   * Add support for bg, cs, el, et, hu, lt, lv, mt, ro, ru, sk, sl and tr as new locale on Checkout `Session`
