@@ -854,6 +854,7 @@ declare module 'stripe' {
     namespace PaymentMethodListParams {
       type Type =
         | 'au_becs_debit'
+        | 'bacs_debit'
         | 'bancontact'
         | 'card'
         | 'card_present'

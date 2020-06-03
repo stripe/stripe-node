@@ -153,6 +153,11 @@ declare module 'stripe' {
         au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
 
         /**
+         * The status of the Bacs Direct Debits payments capability of the account, or whether the account can directly process Bacs Direct Debits charges.
+         */
+        bacs_debit_payments?: Capabilities.BacsDebitPayments;
+
+        /**
          * The status of the card issuing capability of the account, or whether you can use Issuing to distribute funds on cards
          */
         card_issuing?: Capabilities.CardIssuing;
@@ -190,6 +195,8 @@ declare module 'stripe' {
 
       namespace Capabilities {
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
+
+        type BacsDebitPayments = 'active' | 'inactive' | 'pending';
 
         type CardIssuing = 'active' | 'inactive' | 'pending';
 
@@ -1177,6 +1184,7 @@ declare module 'stripe' {
 
       type RequestedCapability =
         | 'au_becs_debit_payments'
+        | 'bacs_debit_payments'
         | 'card_issuing'
         | 'card_payments'
         | 'jcb_payments'
@@ -1846,6 +1854,7 @@ declare module 'stripe' {
 
       type RequestedCapability =
         | 'au_becs_debit_payments'
+        | 'bacs_debit_payments'
         | 'card_issuing'
         | 'card_payments'
         | 'jcb_payments'

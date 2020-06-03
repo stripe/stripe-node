@@ -36,7 +36,7 @@ declare module 'stripe' {
         return_url: string;
 
         /**
-         * The short-lived URL of the session giving customers access to the self-serve portal.
+         * The short-lived URL of the session giving customers access to the customer portal.
          */
         url: string;
       }
@@ -60,7 +60,7 @@ declare module 'stripe' {
 
       class SessionsResource {
         /**
-         * Creates a session of the self-serve portal.
+         * Creates a session of the customer portal.
          */
         create(
           params: SessionCreateParams,
