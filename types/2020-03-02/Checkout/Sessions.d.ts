@@ -851,6 +851,11 @@ declare module 'stripe' {
            * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
            */
           transfer_data?: PaymentIntentData.TransferData;
+
+          /**
+           * A string that identifies the resulting payment as part of a group. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+           */
+          transfer_group?: string;
         }
 
         namespace PaymentIntentData {
