@@ -18,6 +18,8 @@ declare module 'stripe' {
 
       bacs_debit?: PaymentMethod.BacsDebit;
 
+      bancontact?: PaymentMethod.Bancontact;
+
       billing_details: PaymentMethod.BillingDetails;
 
       card?: PaymentMethod.Card;
@@ -34,7 +36,11 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | null;
 
+      eps?: PaymentMethod.Eps;
+
       fpx?: PaymentMethod.Fpx;
+
+      giropay?: PaymentMethod.Giropay;
 
       ideal?: PaymentMethod.Ideal;
 
@@ -49,6 +55,8 @@ declare module 'stripe' {
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Metadata;
+
+      p24?: PaymentMethod.P24;
 
       sepa_debit?: PaymentMethod.SepaDebit;
 
@@ -92,6 +100,8 @@ declare module 'stripe' {
          */
         sort_code: string | null;
       }
+
+      interface Bancontact {}
 
       interface BillingDetails {
         /**
@@ -296,6 +306,8 @@ declare module 'stripe' {
 
       interface CardPresent {}
 
+      interface Eps {}
+
       interface Fpx {
         /**
          * Account holder type, if provided. Can be one of `individual` or `company`.
@@ -333,6 +345,8 @@ declare module 'stripe' {
           | 'standard_chartered'
           | 'uob';
       }
+
+      interface Giropay {}
 
       interface Ideal {
         /**
@@ -378,6 +392,8 @@ declare module 'stripe' {
 
       interface InteracPresent {}
 
+      interface P24 {}
+
       interface SepaDebit {
         /**
          * Bank code of bank associated with the bank account.
@@ -408,10 +424,14 @@ declare module 'stripe' {
       type Type =
         | 'au_becs_debit'
         | 'bacs_debit'
+        | 'bancontact'
         | 'card'
         | 'card_present'
+        | 'eps'
         | 'fpx'
+        | 'giropay'
         | 'ideal'
+        | 'p24'
         | 'sepa_debit';
     }
 
@@ -425,6 +445,11 @@ declare module 'stripe' {
        * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
        */
       bacs_debit?: PaymentMethodCreateParams.BacsDebit;
+
+      /**
+       * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
+       */
+      bancontact?: PaymentMethodCreateParams.Bancontact;
 
       /**
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
@@ -442,6 +467,11 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
+       */
+      eps?: PaymentMethodCreateParams.Eps;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -450,6 +480,11 @@ declare module 'stripe' {
        * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
        */
       fpx?: PaymentMethodCreateParams.Fpx;
+
+      /**
+       * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
+       */
+      giropay?: PaymentMethodCreateParams.Giropay;
 
       /**
        * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -465,6 +500,11 @@ declare module 'stripe' {
        * Set of key-value pairs that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam;
+
+      /**
+       * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
+       */
+      p24?: PaymentMethodCreateParams.P24;
 
       /**
        * The PaymentMethod to share.
@@ -506,6 +546,8 @@ declare module 'stripe' {
          */
         sort_code?: string;
       }
+
+      interface Bancontact {}
 
       interface BillingDetails {
         /**
@@ -589,6 +631,8 @@ declare module 'stripe' {
         token: string;
       }
 
+      interface Eps {}
+
       interface Fpx {
         /**
          * Account holder type for FPX transaction
@@ -627,6 +671,8 @@ declare module 'stripe' {
           | 'uob';
       }
 
+      interface Giropay {}
+
       interface Ideal {
         /**
          * The customer's bank.
@@ -652,6 +698,8 @@ declare module 'stripe' {
 
       interface InteracPresent {}
 
+      interface P24 {}
+
       interface SepaDebit {
         /**
          * IBAN of the bank account.
@@ -662,10 +710,14 @@ declare module 'stripe' {
       type Type =
         | 'au_becs_debit'
         | 'bacs_debit'
+        | 'bancontact'
         | 'card'
         | 'card_present'
+        | 'eps'
         | 'fpx'
+        | 'giropay'
         | 'ideal'
+        | 'p24'
         | 'sepa_debit';
     }
 
@@ -802,10 +854,14 @@ declare module 'stripe' {
     namespace PaymentMethodListParams {
       type Type =
         | 'au_becs_debit'
+        | 'bancontact'
         | 'card'
         | 'card_present'
+        | 'eps'
         | 'fpx'
+        | 'giropay'
         | 'ideal'
+        | 'p24'
         | 'sepa_debit';
     }
 

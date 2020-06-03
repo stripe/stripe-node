@@ -119,7 +119,7 @@ declare module 'stripe' {
         /**
          * The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
          */
-        transfer_data?: DefaultSettings.TransferData | null;
+        transfer_data: DefaultSettings.TransferData | null;
       }
 
       namespace DefaultSettings {
@@ -228,7 +228,7 @@ declare module 'stripe' {
         /**
          * The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
          */
-        transfer_data?: Phase.TransferData | null;
+        transfer_data: Phase.TransferData | null;
 
         /**
          * When the trial ends within the phase.

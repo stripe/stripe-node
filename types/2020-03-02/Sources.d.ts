@@ -611,6 +611,11 @@ declare module 'stripe' {
           description: string | null;
 
           /**
+           * The ID of the associated object for this line item. Expandable if not null (e.g., expandable to a SKU).
+           */
+          parent: string | null;
+
+          /**
            * The quantity of this order item. When type is `sku`, this is the number of instances of the SKU to be ordered.
            */
           quantity?: number;

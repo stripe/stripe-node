@@ -346,10 +346,23 @@ declare module 'stripe' {
       }
 
       interface PaymentMethodOptions {
+        bancontact?: PaymentMethodOptions.Bancontact;
+
         card?: PaymentMethodOptions.Card;
       }
 
       namespace PaymentMethodOptions {
+        interface Bancontact {
+          /**
+           * Preferred language of the Bancontact authorization page that the customer is redirected to.
+           */
+          preferred_language: Bancontact.PreferredLanguage;
+        }
+
+        namespace Bancontact {
+          type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        }
+
         interface Card {
           /**
            * Installment details for this payment (Mexico only).
@@ -693,12 +706,28 @@ declare module 'stripe' {
 
       interface PaymentMethodOptions {
         /**
+         * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
+         */
+        bancontact?: PaymentMethodOptions.Bancontact | null;
+
+        /**
          * Configuration for any card payments attempted on this PaymentIntent.
          */
         card?: PaymentMethodOptions.Card | null;
       }
 
       namespace PaymentMethodOptions {
+        interface Bancontact {
+          /**
+           * Preferred language of the Bancontact authorization page that the customer is redirected to.
+           */
+          preferred_language?: Bancontact.PreferredLanguage;
+        }
+
+        namespace Bancontact {
+          type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        }
+
         interface Card {
           /**
            * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
@@ -937,12 +966,28 @@ declare module 'stripe' {
     namespace PaymentIntentUpdateParams {
       interface PaymentMethodOptions {
         /**
+         * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
+         */
+        bancontact?: PaymentMethodOptions.Bancontact | null;
+
+        /**
          * Configuration for any card payments attempted on this PaymentIntent.
          */
         card?: PaymentMethodOptions.Card | null;
       }
 
       namespace PaymentMethodOptions {
+        interface Bancontact {
+          /**
+           * Preferred language of the Bancontact authorization page that the customer is redirected to.
+           */
+          preferred_language?: Bancontact.PreferredLanguage;
+        }
+
+        namespace Bancontact {
+          type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        }
+
         interface Card {
           /**
            * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
@@ -1297,12 +1342,28 @@ declare module 'stripe' {
 
       interface PaymentMethodOptions {
         /**
+         * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
+         */
+        bancontact?: PaymentMethodOptions.Bancontact | null;
+
+        /**
          * Configuration for any card payments attempted on this PaymentIntent.
          */
         card?: PaymentMethodOptions.Card | null;
       }
 
       namespace PaymentMethodOptions {
+        interface Bancontact {
+          /**
+           * Preferred language of the Bancontact authorization page that the customer is redirected to.
+           */
+          preferred_language?: Bancontact.PreferredLanguage;
+        }
+
+        namespace Bancontact {
+          type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        }
+
         interface Card {
           /**
            * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).

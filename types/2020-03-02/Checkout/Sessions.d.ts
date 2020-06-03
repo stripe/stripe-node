@@ -198,21 +198,34 @@ declare module 'stripe' {
 
         type Locale =
           | 'auto'
+          | 'bg'
+          | 'cs'
           | 'da'
           | 'de'
+          | 'el'
           | 'en'
           | 'es'
+          | 'et'
           | 'fi'
           | 'fr'
+          | 'hu'
           | 'it'
           | 'ja'
+          | 'lt'
+          | 'lv'
           | 'ms'
+          | 'mt'
           | 'nb'
           | 'nl'
           | 'pl'
           | 'pt'
           | 'pt-BR'
+          | 'ro'
+          | 'ru'
+          | 'sk'
+          | 'sl'
           | 'sv'
+          | 'tr'
           | 'zh';
 
         type Mode = 'payment' | 'setup' | 'subscription';
@@ -500,7 +513,14 @@ declare module 'stripe' {
         cancel_url: string;
 
         /**
-         * A list of the types of payment methods (e.g., card) this Checkout session can accept.
+         * A list of the types of payment methods (e.g., `card`) this Checkout session can accept.
+         *
+         * Read more about the supported payment methods and their requirements in our [payment
+         * method details guide](https://stripe.com/docs/payments/checkout/payment-methods).
+         *
+         * If multiple payment methods are passed, Checkout will dynamically reorder them to
+         * prioritize the most relevant payment methods based on the customer's location and
+         * other characteristics.
          */
         payment_method_types: Array<SessionCreateParams.PaymentMethodType>;
 
@@ -552,9 +572,7 @@ declare module 'stripe' {
 
         /**
          * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [prices](https://stripe.com/docs/api/prices).
-         *
-         * If not using recurring prices, this parameter is for one-time payments or
-         * adding invoice line items to a subscription (used in conjunction with `subscription_data.items`).
+         * One-time prices in `subscription` mode will be on the initial invoice only.
          *
          * There is a maximum of 100 line items, however it is recommended to
          * consolidate line items if there are more than a few dozen.
@@ -680,7 +698,7 @@ declare module 'stripe' {
             recurring?: PriceData.Recurring;
 
             /**
-             * A positive integer in %s (or 0 for a free price) representing how much to charge.
+             * A positive integer in %s representing how much to charge.
              */
             unit_amount?: number;
 
@@ -733,21 +751,34 @@ declare module 'stripe' {
 
         type Locale =
           | 'auto'
+          | 'bg'
+          | 'cs'
           | 'da'
           | 'de'
+          | 'el'
           | 'en'
           | 'es'
+          | 'et'
           | 'fi'
           | 'fr'
+          | 'hu'
           | 'it'
           | 'ja'
+          | 'lt'
+          | 'lv'
           | 'ms'
+          | 'mt'
           | 'nb'
           | 'nl'
           | 'pl'
           | 'pt'
           | 'pt-BR'
+          | 'ro'
+          | 'ru'
+          | 'sk'
+          | 'sl'
           | 'sv'
+          | 'tr'
           | 'zh';
 
         type Mode = 'payment' | 'setup' | 'subscription';

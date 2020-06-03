@@ -511,6 +511,8 @@ declare module 'stripe' {
         payments: Settings.Payments;
 
         payouts?: Settings.Payouts;
+
+        sepa_debit_payments?: Settings.SepaDebitPayments;
       }
 
       namespace Settings {
@@ -631,6 +633,13 @@ declare module 'stripe' {
              */
             weekly_anchor?: string;
           }
+        }
+
+        interface SepaDebitPayments {
+          /**
+           * SEPA creditor identifier that identifies the company making the payment.
+           */
+          creditor_id?: string;
         }
       }
 
