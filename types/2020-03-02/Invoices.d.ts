@@ -347,7 +347,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `nz_gst`, `au_abn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, or `unknown`
+         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `nz_gst`, `au_abn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, or `unknown`
          */
         type: CustomerTaxId.Type;
 
@@ -370,11 +370,13 @@ declare module 'stripe' {
           | 'es_cif'
           | 'eu_vat'
           | 'hk_br'
+          | 'id_npwp'
           | 'in_gst'
           | 'jp_cn'
           | 'kr_brn'
           | 'li_uid'
           | 'mx_rfc'
+          | 'my_frp'
           | 'my_itn'
           | 'my_sst'
           | 'no_vat'
@@ -876,7 +878,7 @@ declare module 'stripe' {
         | number;
 
       /**
-       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.`
+       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.
        */
       subscription_cancel_at?: number | null;
 

@@ -181,7 +181,7 @@ declare module 'stripe' {
         | number;
 
       /**
-       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.`
+       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.
        */
       subscription_cancel_at?: number | null;
 
@@ -208,7 +208,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * If previewing an update to a subscription, this decides whether the preview will show the result of applying prorations or not. If set, one of `subscription_items` or `subscription`, and one of `subscription_items` or `subscription_trial_end` are required. This field has been deprecated and will be removed in a future API version. Use `subscription_proration_behavior=create_prorations` as a replacement for `subscription_prorate=true` and `subscription_proration_behavior=none` for `subscription_prorate=false`.
+       * This field has been renamed to `subscription_proration_behavior`. `subscription_prorate=true` can be replaced with `subscription_proration_behavior=create_prorations` and `subscription_prorate=false` can be replaced with `subscription_proration_behavior=none`.
        */
       subscription_prorate?: boolean;
 
