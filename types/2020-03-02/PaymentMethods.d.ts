@@ -730,7 +730,7 @@ declare module 'stripe' {
 
     interface PaymentMethodUpdateParams {
       /**
-       * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
        */
       au_becs_debit?: PaymentMethodUpdateParams.AuBecsDebit;
 
@@ -755,7 +755,7 @@ declare module 'stripe' {
       metadata?: MetadataParam | null;
 
       /**
-       * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
        */
       sepa_debit?: PaymentMethodUpdateParams.SepaDebit;
     }

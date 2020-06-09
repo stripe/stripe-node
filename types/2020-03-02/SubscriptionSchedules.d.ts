@@ -354,7 +354,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Migrate an existing subscription to be managed by a subscription schedule. If this parameter is set, a subscription schedule will be created using the subscription's plan(s), set to auto-renew using the subscription's interval. When using this parameter, other parameters (such as phase values) cannot be set. To create a subscription schedule with other modifications, we recommend making two separate API calls.
+       * Migrate an existing subscription to be managed by a subscription schedule. If this parameter is set, a subscription schedule will be created using the subscription's item(s), set to auto-renew using the subscription's interval. When using this parameter, other parameters (such as phase values) cannot be set. To create a subscription schedule with other modifications, we recommend making two separate API calls.
        */
       from_subscription?: string;
 
@@ -486,12 +486,12 @@ declare module 'stripe' {
         invoice_settings?: Phase.InvoiceSettings;
 
         /**
-         * Integer representing the multiplier applied to the plan interval. For example, `iterations=2` applied to a plan with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
          */
         iterations?: number;
 
         /**
-         * List of configuration items, each with an attached plan, to apply during this phase of the subscription schedule.
+         * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
          */
         plans: Array<Phase.Plan>;
 
@@ -501,7 +501,7 @@ declare module 'stripe' {
         proration_behavior?: Phase.ProrationBehavior;
 
         /**
-         * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period during thise phase of the schedule. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
+         * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period during thise phase of the schedule. For example, a price which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
          */
         tax_percent?: number;
 
@@ -591,7 +591,7 @@ declare module 'stripe' {
           billing_thresholds?: Plan.BillingThresholds | null;
 
           /**
-           * The plan ID to subscribe to.
+           * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
            */
           plan?: string;
 
@@ -606,7 +606,7 @@ declare module 'stripe' {
           price_data?: Plan.PriceData;
 
           /**
-           * Quantity for the given plan. Can be set only if the plan's `usage_type` is `licensed` and not `metered`.
+           * Quantity for the given price. Can be set only if the price's `usage_type` is `licensed` and not `metered`.
            */
           quantity?: number;
 
@@ -845,12 +845,12 @@ declare module 'stripe' {
         invoice_settings?: Phase.InvoiceSettings;
 
         /**
-         * Integer representing the multiplier applied to the plan interval. For example, `iterations=2` applied to a plan with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
          */
         iterations?: number;
 
         /**
-         * List of configuration items, each with an attached plan, to apply during this phase of the subscription schedule.
+         * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
          */
         plans: Array<Phase.Plan>;
 
@@ -865,7 +865,7 @@ declare module 'stripe' {
         start_date?: number | 'now';
 
         /**
-         * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period during thise phase of the schedule. For example, a plan which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
+         * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period during thise phase of the schedule. For example, a price which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
          */
         tax_percent?: number;
 
@@ -955,7 +955,7 @@ declare module 'stripe' {
           billing_thresholds?: Plan.BillingThresholds | null;
 
           /**
-           * The plan ID to subscribe to.
+           * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
            */
           plan?: string;
 
@@ -970,7 +970,7 @@ declare module 'stripe' {
           price_data?: Plan.PriceData;
 
           /**
-           * Quantity for the given plan. Can be set only if the plan's `usage_type` is `licensed` and not `metered`.
+           * Quantity for the given price. Can be set only if the price's `usage_type` is `licensed` and not `metered`.
            */
           quantity?: number;
 

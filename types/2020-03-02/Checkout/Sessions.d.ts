@@ -820,11 +820,16 @@ declare module 'stripe' {
           receipt_email?: string;
 
           /**
-           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           * Indicates that you intend to make future payments with the payment
+           * method collected by this Checkout Session.
            *
-           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           * When setting this to `off_session`, Checkout will show a notice to the
+           * customer that their payment details will be saved and used for future
+           * payments.
            *
-           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           * When processing card payments, Checkout also uses `setup_future_usage`
+           * to dynamically optimize your payment flow and comply with regional
+           * legislation and network rules, such as SCA.
            */
           setup_future_usage?: PaymentIntentData.SetupFutureUsage;
 
