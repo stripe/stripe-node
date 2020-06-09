@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.61.0 - 2020-06-09
+* [#917](https://github.com/stripe/stripe-node/pull/917) Add support for `id_npwp` and `my_frp` as `type` on `TaxId`
+
 ## 8.60.0 - 2020-06-03
 * [#911](https://github.com/stripe/stripe-node/pull/911) Add support for `payment_intent_data[transfer_group]` on Checkout `Session`
 
