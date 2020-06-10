@@ -182,6 +182,11 @@ declare module 'stripe' {
         last4: string;
 
         /**
+         * Contains information about card networks that can be used to process the payment.
+         */
+        networks: Card.Networks | null;
+
+        /**
          * Contains details on how this Card maybe be used for 3D Secure authentication.
          */
         three_d_secure_usage: Card.ThreeDSecureUsage | null;
@@ -208,6 +213,18 @@ declare module 'stripe' {
            * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
            */
           cvc_check: string | null;
+        }
+
+        interface Networks {
+          /**
+           * All available networks for the card.
+           */
+          available: Array<string>;
+
+          /**
+           * The preferred network for the card.
+           */
+          preferred: string | null;
         }
 
         interface ThreeDSecureUsage {
