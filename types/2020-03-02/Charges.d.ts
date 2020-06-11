@@ -505,6 +505,11 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
+           * ID of the mandate used to make this payment.
+           */
+          mandate?: string;
+
+          /**
            * Transit number of the bank account.
            */
           transit_number: string | null;
