@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.63.0 - 2020-06-11
+* [#919](https://github.com/stripe/stripe-node/pull/919) Multiple API changes
+  * Add `transaction` on Issuing `Dispute`
+  * Add `payment_method_details[acss_debit][mandate]` on `Charge`
+
 ## 8.62.0 - 2020-06-10
 * [#918](https://github.com/stripe/stripe-node/pull/918) Add support for Cartes Bancaires payments on `PaymentIntent` and `Pay…
 
