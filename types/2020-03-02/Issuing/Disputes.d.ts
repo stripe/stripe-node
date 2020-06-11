@@ -24,6 +24,11 @@ declare module 'stripe' {
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
+
+        /**
+         * The transaction being disputed.
+         */
+        transaction: string | Stripe.Issuing.Transaction;
       }
 
       interface DisputeCreateParams {
