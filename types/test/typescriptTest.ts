@@ -168,3 +168,11 @@ const stripeCardError: Stripe.StripeCardError = Stripe.errors.generate({
   code: 'card_declined',
   charge: 'ch_123',
 });
+
+Stripe.StripeResource.extend({
+  includeBasic: ['retrieve'],
+  foo: Stripe.StripeResource.method({
+    method: 'create',
+    path: 'foo',
+  }),
+});

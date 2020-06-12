@@ -105,6 +105,8 @@ declare module 'stripe' {
 
     setAppInfo(info: Stripe.AppInfo): void;
 
+    StripeResource: Stripe.StripeResource;
+
     /**
      * Top Level Resources
      */
