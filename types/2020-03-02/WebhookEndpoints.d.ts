@@ -32,7 +32,7 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
-       * An optional description of what the wehbook is used for.
+       * An optional description of what the webhook is used for.
        */
       description: string | null;
 
@@ -109,7 +109,7 @@ declare module 'stripe' {
       connect?: boolean;
 
       /**
-       * An optional description of what the wehbook is used for.
+       * An optional description of what the webhook is used for.
        */
       description?: string;
 
@@ -298,6 +298,9 @@ declare module 'stripe' {
         | 'issuing_card.updated'
         | 'issuing_cardholder.created'
         | 'issuing_cardholder.updated'
+        | 'issuing_dispute.created'
+        | 'issuing_dispute.funds_reinstated'
+        | 'issuing_dispute.updated'
         | 'issuing_transaction.created'
         | 'issuing_transaction.updated'
         | 'mandate.updated'
@@ -388,7 +391,7 @@ declare module 'stripe' {
 
     interface WebhookEndpointUpdateParams {
       /**
-       * An optional description of what the wehbook is used for.
+       * An optional description of what the webhook is used for.
        */
       description?: string;
 
@@ -495,6 +498,9 @@ declare module 'stripe' {
         | 'issuing_card.updated'
         | 'issuing_cardholder.created'
         | 'issuing_cardholder.updated'
+        | 'issuing_dispute.created'
+        | 'issuing_dispute.funds_reinstated'
+        | 'issuing_dispute.updated'
         | 'issuing_transaction.created'
         | 'issuing_transaction.updated'
         | 'mandate.updated'

@@ -32,16 +32,6 @@ declare module 'stripe' {
       account: string;
 
       /**
-       * The URL that the user will be redirected to if the account link is no longer valid.
-       */
-      failure_url: string;
-
-      /**
-       * The URL that the user will be redirected to upon leaving or completing the linked flow successfully.
-       */
-      success_url: string;
-
-      /**
        * The type of account link the user is requesting. Possible values are `custom_account_verification` or `custom_account_update`.
        */
       type: AccountLinkCreateParams.Type;
@@ -55,6 +45,26 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Alternate name for refresh_url to ensure backwards compatibility
+       */
+      failure_url?: string;
+
+      /**
+       * The URL that the user will be redirected to if the account link is no longer valid. Your `refresh_url` should trigger a method on your server to create a new account link using this API, with the same parameters, and redirect the user to the new account link.
+       */
+      refresh_url?: string;
+
+      /**
+       * The URL that the user will be redirected to upon leaving or completing the linked flow.
+       */
+      return_url?: string;
+
+      /**
+       * Alternate name for return_url to ensure backwards compatibility
+       */
+      success_url?: string;
     }
 
     namespace AccountLinkCreateParams {
@@ -65,7 +75,7 @@ declare module 'stripe' {
 
     class AccountLinksResource {
       /**
-       * Creates an AccountLink object that returns a single-use Stripe URL that the user can redirect their user to in order to take them through the Connect Onboarding flow.
+       * Creates an AccountLink object that includes a single-use Stripe URL that the platform can redirect their user to in order to take them through the Connect Onboarding flow.
        */
       create(
         params: AccountLinkCreateParams,
