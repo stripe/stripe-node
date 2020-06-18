@@ -21,7 +21,7 @@ declare module 'stripe' {
        * destinations on `Account` objects for [Custom accounts](https://stripe.com/docs/connect/custom-accounts).
        * They can be bank accounts or debit cards as well, and are documented in the links above.
        *
-       * Related guide: [Processing ACH & Bank Transfers](https://stripe.com/docs/payments/ach-bank-transfers).
+       * Related guide: [Bank Debits and Transfers](https://stripe.com/docs/payments/bank-debits-transfers).
        */
       bank_account?: Stripe.BankAccount;
 
