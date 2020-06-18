@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.64.0 - 2020-06-18
+* [#924](https://github.com/stripe/stripe-node/pull/924) Multiple API changes
+  * Add support for `refresh_url` and `return_url` on `AccountLink`
+  * Add support for `issuing_dispute.*` events
+
 ## 8.63.0 - 2020-06-11
 * [#919](https://github.com/stripe/stripe-node/pull/919) Multiple API changes
   * Add `transaction` on Issuing `Dispute`
