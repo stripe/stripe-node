@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.65.0 - 2020-06-23
+* [#926](https://github.com/stripe/stripe-node/pull/926) Multiple API changes
+  * Add `discounts` on `LineItem`
+  * Add `document_provider_identity_document` as a `purpose` on `File`
+  * Support nullable `metadata` on Issuing `Dispute`
+  * Add `klarna[shipping_delay]` on `Source`
+
 ## 8.64.0 - 2020-06-18
 * [#924](https://github.com/stripe/stripe-node/pull/924) Multiple API changes
   * Add support for `refresh_url` and `return_url` on `AccountLink`
