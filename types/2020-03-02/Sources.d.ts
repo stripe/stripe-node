@@ -386,6 +386,8 @@ declare module 'stripe' {
 
         redirect_url?: string;
 
+        shipping_delay?: number;
+
         shipping_first_name?: string;
 
         shipping_last_name?: string;

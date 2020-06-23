@@ -30,7 +30,7 @@ declare module 'stripe' {
       links?: ApiList<Stripe.FileLink> | null;
 
       /**
-       * The purpose of the file. Possible values are `additional_verification`, `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `finance_report_run`, `identity_document`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
+       * The purpose of the file. Possible values are `additional_verification`, `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `document_provider_identity_document`, `finance_report_run`, `identity_document`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
        */
       purpose: string;
 
@@ -85,6 +85,7 @@ declare module 'stripe' {
         | 'business_logo'
         | 'customer_signature'
         | 'dispute_evidence'
+        | 'document_provider_identity_document'
         | 'finance_report_run'
         | 'identity_document'
         | 'pci_document'
