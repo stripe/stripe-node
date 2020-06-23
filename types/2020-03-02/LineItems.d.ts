@@ -35,6 +35,11 @@ declare module 'stripe' {
       description: string;
 
       /**
+       * The discounts applied to the line item.
+       */
+      discounts?: Array<LineItem.Discount>;
+
+      /**
        * Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products.
        * [Products](https://stripe.com/docs/api#products) help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
        *
@@ -56,6 +61,22 @@ declare module 'stripe' {
     }
 
     namespace LineItem {
+      interface Discount {
+        /**
+         * Discount amount for this line item.
+         */
+        amount: number;
+
+        /**
+         * A discount represents the actual application of a coupon to a particular
+         * customer. It contains information about when the discount began and when it
+         * will end.
+         *
+         * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
+         */
+        discount: Stripe.Discount;
+      }
+
       interface Tax {
         /**
          * Amount of tax for this line item.
