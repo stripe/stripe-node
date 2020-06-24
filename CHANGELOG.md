@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.66.0 - 2020-06-23
+* [#927](https://github.com/stripe/stripe-node/pull/927) Add support for `payment_method_data` on `PaymentIntent`
+
 ## 8.65.0 - 2020-06-23
 * [#926](https://github.com/stripe/stripe-node/pull/926) Multiple API changes
   * Add `discounts` on `LineItem`
