@@ -591,6 +591,13 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear
+       * in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method)
+       * property on the PaymentIntent.
+       */
+      payment_method_data?: PaymentIntentCreateParams.PaymentMethodData;
+
+      /**
        * Payment-method-specific configuration for this PaymentIntent.
        */
       payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
@@ -720,6 +727,245 @@ declare module 'stripe' {
       }
 
       type OffSession = 'one_off' | 'recurring';
+
+      interface PaymentMethodData {
+        /**
+         * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+         */
+        au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+        /**
+         * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
+         */
+        bacs_debit?: PaymentMethodData.BacsDebit;
+
+        /**
+         * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
+         */
+        bancontact?: PaymentMethodData.Bancontact;
+
+        /**
+         * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+         */
+        billing_details?: PaymentMethodData.BillingDetails;
+
+        /**
+         * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
+         */
+        eps?: PaymentMethodData.Eps;
+
+        /**
+         * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
+         */
+        fpx?: PaymentMethodData.Fpx;
+
+        /**
+         * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
+         */
+        giropay?: PaymentMethodData.Giropay;
+
+        /**
+         * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
+         */
+        ideal?: PaymentMethodData.Ideal;
+
+        /**
+         * If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present payment method.
+         */
+        interac_present?: PaymentMethodData.InteracPresent;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
+         */
+        p24?: PaymentMethodData.P24;
+
+        /**
+         * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+         */
+        sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+         */
+        type: PaymentMethodData.Type;
+      }
+
+      namespace PaymentMethodData {
+        interface AuBecsDebit {
+          /**
+           * The account number for the bank account.
+           */
+          account_number: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number: string;
+        }
+
+        interface BacsDebit {
+          /**
+           * Account number of the bank account that the funds will be debited from.
+           */
+          account_number?: string;
+
+          /**
+           * Sort code of the bank account. (e.g., `10-20-30`)
+           */
+          sort_code?: string;
+        }
+
+        interface Bancontact {}
+
+        interface BillingDetails {
+          /**
+           * Billing address.
+           */
+          address?: BillingDetails.Address;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Billing phone number (including extension).
+           */
+          phone?: string;
+        }
+
+        namespace BillingDetails {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+          }
+        }
+
+        interface Eps {}
+
+        interface Fpx {
+          /**
+           * Account holder type for FPX transaction
+           */
+          account_holder_type?: Fpx.AccountHolderType;
+
+          /**
+           * The customer's bank.
+           */
+          bank: Fpx.Bank;
+        }
+
+        namespace Fpx {
+          type AccountHolderType = 'company' | 'individual';
+
+          type Bank =
+            | 'affin_bank'
+            | 'alliance_bank'
+            | 'ambank'
+            | 'bank_islam'
+            | 'bank_muamalat'
+            | 'bank_rakyat'
+            | 'bsn'
+            | 'cimb'
+            | 'deutsche_bank'
+            | 'hong_leong_bank'
+            | 'hsbc'
+            | 'kfh'
+            | 'maybank2e'
+            | 'maybank2u'
+            | 'ocbc'
+            | 'pb_enterprise'
+            | 'public_bank'
+            | 'rhb'
+            | 'standard_chartered'
+            | 'uob';
+        }
+
+        interface Giropay {}
+
+        interface Ideal {
+          /**
+           * The customer's bank.
+           */
+          bank?: Ideal.Bank;
+        }
+
+        namespace Ideal {
+          type Bank =
+            | 'abn_amro'
+            | 'asn_bank'
+            | 'bunq'
+            | 'handelsbanken'
+            | 'ing'
+            | 'knab'
+            | 'moneyou'
+            | 'rabobank'
+            | 'regiobank'
+            | 'sns_bank'
+            | 'triodos_bank'
+            | 'van_lanschot';
+        }
+
+        interface InteracPresent {}
+
+        interface P24 {}
+
+        interface SepaDebit {
+          /**
+           * IBAN of the bank account.
+           */
+          iban: string;
+        }
+
+        type Type =
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'card_present'
+          | 'eps'
+          | 'fpx'
+          | 'giropay'
+          | 'ideal'
+          | 'p24'
+          | 'sepa_debit';
+      }
 
       interface PaymentMethodOptions {
         /**
@@ -932,6 +1178,13 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear
+       * in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method)
+       * property on the PaymentIntent.
+       */
+      payment_method_data?: PaymentIntentUpdateParams.PaymentMethodData;
+
+      /**
        * Payment-method-specific configuration for this PaymentIntent.
        */
       payment_method_options?: PaymentIntentUpdateParams.PaymentMethodOptions;
@@ -998,6 +1251,245 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
+      interface PaymentMethodData {
+        /**
+         * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+         */
+        au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+        /**
+         * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
+         */
+        bacs_debit?: PaymentMethodData.BacsDebit;
+
+        /**
+         * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
+         */
+        bancontact?: PaymentMethodData.Bancontact;
+
+        /**
+         * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+         */
+        billing_details?: PaymentMethodData.BillingDetails;
+
+        /**
+         * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
+         */
+        eps?: PaymentMethodData.Eps;
+
+        /**
+         * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
+         */
+        fpx?: PaymentMethodData.Fpx;
+
+        /**
+         * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
+         */
+        giropay?: PaymentMethodData.Giropay;
+
+        /**
+         * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
+         */
+        ideal?: PaymentMethodData.Ideal;
+
+        /**
+         * If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present payment method.
+         */
+        interac_present?: PaymentMethodData.InteracPresent;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
+         */
+        p24?: PaymentMethodData.P24;
+
+        /**
+         * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+         */
+        sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+         */
+        type: PaymentMethodData.Type;
+      }
+
+      namespace PaymentMethodData {
+        interface AuBecsDebit {
+          /**
+           * The account number for the bank account.
+           */
+          account_number: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number: string;
+        }
+
+        interface BacsDebit {
+          /**
+           * Account number of the bank account that the funds will be debited from.
+           */
+          account_number?: string;
+
+          /**
+           * Sort code of the bank account. (e.g., `10-20-30`)
+           */
+          sort_code?: string;
+        }
+
+        interface Bancontact {}
+
+        interface BillingDetails {
+          /**
+           * Billing address.
+           */
+          address?: BillingDetails.Address;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Billing phone number (including extension).
+           */
+          phone?: string;
+        }
+
+        namespace BillingDetails {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+          }
+        }
+
+        interface Eps {}
+
+        interface Fpx {
+          /**
+           * Account holder type for FPX transaction
+           */
+          account_holder_type?: Fpx.AccountHolderType;
+
+          /**
+           * The customer's bank.
+           */
+          bank: Fpx.Bank;
+        }
+
+        namespace Fpx {
+          type AccountHolderType = 'company' | 'individual';
+
+          type Bank =
+            | 'affin_bank'
+            | 'alliance_bank'
+            | 'ambank'
+            | 'bank_islam'
+            | 'bank_muamalat'
+            | 'bank_rakyat'
+            | 'bsn'
+            | 'cimb'
+            | 'deutsche_bank'
+            | 'hong_leong_bank'
+            | 'hsbc'
+            | 'kfh'
+            | 'maybank2e'
+            | 'maybank2u'
+            | 'ocbc'
+            | 'pb_enterprise'
+            | 'public_bank'
+            | 'rhb'
+            | 'standard_chartered'
+            | 'uob';
+        }
+
+        interface Giropay {}
+
+        interface Ideal {
+          /**
+           * The customer's bank.
+           */
+          bank?: Ideal.Bank;
+        }
+
+        namespace Ideal {
+          type Bank =
+            | 'abn_amro'
+            | 'asn_bank'
+            | 'bunq'
+            | 'handelsbanken'
+            | 'ing'
+            | 'knab'
+            | 'moneyou'
+            | 'rabobank'
+            | 'regiobank'
+            | 'sns_bank'
+            | 'triodos_bank'
+            | 'van_lanschot';
+        }
+
+        interface InteracPresent {}
+
+        interface P24 {}
+
+        interface SepaDebit {
+          /**
+           * IBAN of the bank account.
+           */
+          iban: string;
+        }
+
+        type Type =
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'card_present'
+          | 'eps'
+          | 'fpx'
+          | 'giropay'
+          | 'ideal'
+          | 'p24'
+          | 'sepa_debit';
+      }
+
       interface PaymentMethodOptions {
         /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
@@ -1252,6 +1744,13 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * If provided, this hash will be used to create a PaymentMethod. The new PaymentMethod will appear
+       * in the [payment_method](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method)
+       * property on the PaymentIntent.
+       */
+      payment_method_data?: PaymentIntentConfirmParams.PaymentMethodData;
+
+      /**
        * Payment-method-specific configuration for this PaymentIntent.
        */
       payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
@@ -1390,6 +1889,245 @@ declare module 'stripe' {
       }
 
       type OffSession = 'one_off' | 'recurring';
+
+      interface PaymentMethodData {
+        /**
+         * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+         */
+        au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+        /**
+         * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
+         */
+        bacs_debit?: PaymentMethodData.BacsDebit;
+
+        /**
+         * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
+         */
+        bancontact?: PaymentMethodData.Bancontact;
+
+        /**
+         * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+         */
+        billing_details?: PaymentMethodData.BillingDetails;
+
+        /**
+         * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
+         */
+        eps?: PaymentMethodData.Eps;
+
+        /**
+         * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
+         */
+        fpx?: PaymentMethodData.Fpx;
+
+        /**
+         * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
+         */
+        giropay?: PaymentMethodData.Giropay;
+
+        /**
+         * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
+         */
+        ideal?: PaymentMethodData.Ideal;
+
+        /**
+         * If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present payment method.
+         */
+        interac_present?: PaymentMethodData.InteracPresent;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: MetadataParam;
+
+        /**
+         * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
+         */
+        p24?: PaymentMethodData.P24;
+
+        /**
+         * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+         */
+        sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+         */
+        type: PaymentMethodData.Type;
+      }
+
+      namespace PaymentMethodData {
+        interface AuBecsDebit {
+          /**
+           * The account number for the bank account.
+           */
+          account_number: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number: string;
+        }
+
+        interface BacsDebit {
+          /**
+           * Account number of the bank account that the funds will be debited from.
+           */
+          account_number?: string;
+
+          /**
+           * Sort code of the bank account. (e.g., `10-20-30`)
+           */
+          sort_code?: string;
+        }
+
+        interface Bancontact {}
+
+        interface BillingDetails {
+          /**
+           * Billing address.
+           */
+          address?: BillingDetails.Address;
+
+          /**
+           * Email address.
+           */
+          email?: string;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Billing phone number (including extension).
+           */
+          phone?: string;
+        }
+
+        namespace BillingDetails {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+          }
+        }
+
+        interface Eps {}
+
+        interface Fpx {
+          /**
+           * Account holder type for FPX transaction
+           */
+          account_holder_type?: Fpx.AccountHolderType;
+
+          /**
+           * The customer's bank.
+           */
+          bank: Fpx.Bank;
+        }
+
+        namespace Fpx {
+          type AccountHolderType = 'company' | 'individual';
+
+          type Bank =
+            | 'affin_bank'
+            | 'alliance_bank'
+            | 'ambank'
+            | 'bank_islam'
+            | 'bank_muamalat'
+            | 'bank_rakyat'
+            | 'bsn'
+            | 'cimb'
+            | 'deutsche_bank'
+            | 'hong_leong_bank'
+            | 'hsbc'
+            | 'kfh'
+            | 'maybank2e'
+            | 'maybank2u'
+            | 'ocbc'
+            | 'pb_enterprise'
+            | 'public_bank'
+            | 'rhb'
+            | 'standard_chartered'
+            | 'uob';
+        }
+
+        interface Giropay {}
+
+        interface Ideal {
+          /**
+           * The customer's bank.
+           */
+          bank?: Ideal.Bank;
+        }
+
+        namespace Ideal {
+          type Bank =
+            | 'abn_amro'
+            | 'asn_bank'
+            | 'bunq'
+            | 'handelsbanken'
+            | 'ing'
+            | 'knab'
+            | 'moneyou'
+            | 'rabobank'
+            | 'regiobank'
+            | 'sns_bank'
+            | 'triodos_bank'
+            | 'van_lanschot';
+        }
+
+        interface InteracPresent {}
+
+        interface P24 {}
+
+        interface SepaDebit {
+          /**
+           * IBAN of the bank account.
+           */
+          iban: string;
+        }
+
+        type Type =
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'card_present'
+          | 'eps'
+          | 'fpx'
+          | 'giropay'
+          | 'ideal'
+          | 'p24'
+          | 'sepa_debit';
+      }
 
       interface PaymentMethodOptions {
         /**
