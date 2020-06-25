@@ -516,9 +516,7 @@ declare module 'stripe' {
       currency: string;
 
       /**
-       * The amount of the application fee (if any) that will be applied to the
-       * payment and transferred to the application owner's Stripe account. For
-       * more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be applied to the payment and transferred to the application owner's Stripe account. Must be greater than zero when provided. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
 
@@ -1139,7 +1137,7 @@ declare module 'stripe' {
       amount?: number;
 
       /**
-       * The amount of the application fee (if any) for the resulting payment. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+       * The amount of the application fee (if any) that will be applied to the payment and transferred to the application owner's Stripe account. Must be greater than zero when provided. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number | null;
 
@@ -1673,9 +1671,7 @@ declare module 'stripe' {
       amount_to_capture?: number;
 
       /**
-       * The amount of the application fee (if any) that will be applied to the
-       * payment and transferred to the application owner's Stripe account. For
-       * more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be applied to the payment and transferred to the application owner's Stripe account. Must be greater than zero when provided. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
 
