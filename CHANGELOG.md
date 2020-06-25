@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.67.0 - 2020-06-24
+* [#929](https://github.com/stripe/stripe-node/pull/929) Add support for `invoice.paid` event
+
 ## 8.66.0 - 2020-06-23
 * [#927](https://github.com/stripe/stripe-node/pull/927) Add support for `payment_method_data` on `PaymentIntent`
 
