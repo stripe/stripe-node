@@ -50,15 +50,14 @@ describe('Plans Resource', () => {
 
   describe('update', () => {
     it('Sends the correct request', () => {
-      stripe.prices.update('priceId3', {
-        amount: 1900,
-        currency: 'usd',
+      stripe.prices.update('price_123', {
+        active: false,
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/prices/priceId3',
+        url: '/v1/prices/price_123',
         headers: {},
-        data: {amount: 1900, currency: 'usd'},
+        data: {active: false},
         settings: {},
       });
     });

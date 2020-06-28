@@ -6,10 +6,10 @@ const expect = require('chai').expect;
 describe('Plans Resource', () => {
   describe('retrieve', () => {
     it('Sends the correct request', () => {
-      stripe.plans.retrieve('planId1');
+      stripe.plans.retrieve('plan_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url: '/v1/plans/planId1',
+        url: '/v1/plans/plan_123',
         headers: {},
         data: {},
         settings: {},
@@ -96,15 +96,14 @@ describe('Plans Resource', () => {
 
   describe('update', () => {
     it('Sends the correct request', () => {
-      stripe.plans.update('planId3', {
-        amount: 1900,
-        currency: 'usd',
+      stripe.plans.update('plan_123', {
+        active: false,
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'POST',
-        url: '/v1/plans/planId3',
+        url: '/v1/plans/plan_123',
         headers: {},
-        data: {amount: 1900, currency: 'usd'},
+        data: {active: false},
         settings: {},
       });
     });
@@ -112,10 +111,10 @@ describe('Plans Resource', () => {
 
   describe('del', () => {
     it('Sends the correct request', () => {
-      stripe.plans.del('planId4');
+      stripe.plans.del('plan_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'DELETE',
-        url: '/v1/plans/planId4',
+        url: '/v1/plans/plan_123',
         headers: {},
         data: {},
         settings: {},
