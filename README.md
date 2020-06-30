@@ -163,6 +163,7 @@ const stripe = Stripe('sk_test_...', {
   timeout: 1000,
   host: 'api.example.com',
   port: 123,
+  protocol: 'http',
   telemetry: true,
 });
 ```
@@ -175,6 +176,7 @@ const stripe = Stripe('sk_test_...', {
 | `timeout`           | 80000              | [Maximum time each request can take in ms.](#configuring-timeout)                     |
 | `host`              | `'api.stripe.com'` | Host that requests are made to.                                                       |
 | `port`              | 443                | Port that requests are made to.                                                       |
+| `protocol`          | `'https'`          | Port that requests use.                                                               |
 | `telemetry`         | `true`             | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                 |
 
 Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
