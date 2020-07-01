@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.68.0 - 2020-07-01
+* [#940](https://github.com/stripe/stripe-node/pull/940) Document but discourage `protocol` config option
+* [#933](https://github.com/stripe/stripe-node/pull/933) Fix tests for `Plan` and `Price` to not appear as amount can be updated.
+
 ## 8.67.0 - 2020-06-24
 * [#929](https://github.com/stripe/stripe-node/pull/929) Add support for `invoice.paid` event
 
