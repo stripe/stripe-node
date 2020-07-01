@@ -175,6 +175,7 @@ const stripe = Stripe('sk_test_...', {
 | `timeout`           | 80000              | [Maximum time each request can take in ms.](#configuring-timeout)                     |
 | `host`              | `'api.stripe.com'` | Host that requests are made to.                                                       |
 | `port`              | 443                | Port that requests are made to.                                                       |
+| `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel.
 | `telemetry`         | `true`             | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                 |
 
 Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.

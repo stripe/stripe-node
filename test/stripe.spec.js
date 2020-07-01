@@ -58,6 +58,47 @@ describe('Stripe Module', function() {
         });
       }).to.not.throw();
     });
+    it('should forbid sending http to *.stripe.com', () => {
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          host: 'foo.stripe.com',
+          protocol: 'http',
+        });
+      }).to.throw(/The `https` protocol must be used/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          protocol: 'http',
+        });
+      }).to.throw(/The `https` protocol must be used/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          protocol: 'http',
+          host: 'api.stripe.com',
+        });
+      }).to.throw(/The `https` protocol must be used/);
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          protocol: 'https',
+          host: 'api.stripe.com',
+        });
+      }).not.to.throw();
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          host: 'api.stripe.com',
+        });
+      }).not.to.throw();
+
+      expect(() => {
+        Stripe(testUtils.getUserStripeKey(), {
+          protocol: 'http',
+          host: 'localhost',
+        });
+      }).not.to.throw();
+    });
 
     it('should perform a no-op if null, undefined or empty values are passed', () => {
       const cases = [null, undefined, '', {}];
