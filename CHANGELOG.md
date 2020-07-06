@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.69.0 - 2020-07-06
+* [#946](https://github.com/stripe/stripe-node/pull/946) Fix `assert_capabilities` type definition
+* [#920](https://github.com/stripe/stripe-node/pull/920) Expose StripeResource on instance
+
 ## 8.68.0 - 2020-07-01
 * [#940](https://github.com/stripe/stripe-node/pull/940) Document but discourage `protocol` config option
 * [#933](https://github.com/stripe/stripe-node/pull/933) Fix tests for `Plan` and `Price` to not appear as amount can be updated.
