@@ -320,7 +320,7 @@ declare module 'stripe' {
        * Express only
        * Check whether the suggested_capabilities were applied to the connected account.
        */
-      assert_capabilities?: string;
+      assert_capabilities?: Array<string>;
     }
 
     export class OAuthResource {
