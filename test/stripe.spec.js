@@ -100,6 +100,18 @@ describe('Stripe Module', function() {
       }).not.to.throw();
     });
 
+    it('Should forbid api keys that begin with a single quote', () => {
+      expect(() => {
+        Stripe(`'${testUtils.getUserStripeKey()}'`);
+      }).to.throw(/API keys should not begin with quotation marks/);
+    });
+
+    it('Should forbid api keys that begin with a double quote', () => {
+      expect(() => {
+        Stripe(`"${testUtils.getUserStripeKey()}"`);
+      }).to.throw(/API keys should not begin with quotation marks/);
+    });
+
     it('should perform a no-op if null, undefined or empty values are passed', () => {
       const cases = [null, undefined, '', {}];
 
