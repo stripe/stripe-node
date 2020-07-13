@@ -55,7 +55,7 @@ declare module 'stripe' {
         disabled_reason: string | null;
 
         /**
-         * The fields that need to be collected again because validation or verification failed for some reason.
+         * The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
          */
         errors: Array<Requirements.Error>;
 

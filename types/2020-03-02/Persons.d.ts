@@ -246,7 +246,7 @@ declare module 'stripe' {
         currently_due: Array<string>;
 
         /**
-         * The fields that need to be collected again because validation or verification failed for some reason.
+         * The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
          */
         errors: Array<Requirements.Error>;
 

@@ -15,7 +15,7 @@ declare module 'stripe' {
       object: 'tax_rate';
 
       /**
-       * Defaults to `true`. When set to `false`, this tax rate cannot be applied to objects in the API, but will still be applied to subscriptions and invoices that already have it set.
+       * Defaults to `true`. When set to `false`, this tax rate is considered archived and cannot be applied to new applications or Checkout Sessions, but will still be applied to subscriptions and invoices that already have it set.
        */
       active: boolean;
 
@@ -77,7 +77,7 @@ declare module 'stripe' {
       percentage: number;
 
       /**
-       * Flag determining whether the tax rate is active or inactive. Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications.
+       * Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications or Checkout Sessions.
        */
       active?: boolean;
 
@@ -111,7 +111,7 @@ declare module 'stripe' {
 
     interface TaxRateUpdateParams {
       /**
-       * Flag determining whether the tax rate is active or inactive. Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications.
+       * Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications or Checkout Sessions.
        */
       active?: boolean;
 
@@ -143,12 +143,12 @@ declare module 'stripe' {
 
     interface TaxRateListParams extends PaginationParams {
       /**
-       * Optional flag to filter by tax rates that are either active or not active (archived)
+       * Optional flag to filter by tax rates that are either active or inactive (archived).
        */
       active?: boolean;
 
       /**
-       * Optional range for filtering created date
+       * Optional range for filtering created date.
        */
       created?: RangeQueryParam | number;
 
@@ -158,7 +158,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Optional flag to filter by tax rates that are inclusive (or those that are not inclusive)
+       * Optional flag to filter by tax rates that are inclusive (or those that are not inclusive).
        */
       inclusive?: boolean;
     }

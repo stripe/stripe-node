@@ -205,6 +205,7 @@ declare module 'stripe' {
           | 'el'
           | 'en'
           | 'es'
+          | 'es-419'
           | 'et'
           | 'fi'
           | 'fr'
@@ -670,7 +671,7 @@ declare module 'stripe' {
           quantity: number;
 
           /**
-           * The tax rates which apply to this line item. This is only allowed in subscription mode.
+           * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item. This is only allowed in subscription mode.
            */
           tax_rates?: Array<string>;
         }
@@ -758,6 +759,7 @@ declare module 'stripe' {
           | 'el'
           | 'en'
           | 'es'
+          | 'es-419'
           | 'et'
           | 'fi'
           | 'fr'

@@ -154,7 +154,7 @@ declare module 'stripe' {
       recipient?: string | Stripe.Recipient | null;
 
       /**
-       * If the card number is tokenized, this is the method that was used. Can be `amex_express_checkout`, `android_pay` (includes Google Pay), `apple_pay`, `masterpass`, `visa_checkout`, or null.
+       * If the card number is tokenized, this is the method that was used. Can be `android_pay` (includes Google Pay), `apple_pay`, `masterpass`, `visa_checkout`, or null.
        */
       tokenization_method: string | null;
     }
