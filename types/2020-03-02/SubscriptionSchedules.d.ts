@@ -97,6 +97,11 @@ declare module 'stripe' {
 
       interface DefaultSettings {
         /**
+         * Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+         */
+        billing_cycle_anchor: DefaultSettings.BillingCycleAnchor;
+
+        /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
          */
         billing_thresholds: DefaultSettings.BillingThresholds | null;
@@ -123,6 +128,8 @@ declare module 'stripe' {
       }
 
       namespace DefaultSettings {
+        type BillingCycleAnchor = 'automatic' | 'phase_start';
+
         interface BillingThresholds {
           /**
            * Monetary threshold that triggers the subscription to create an invoice
@@ -169,6 +176,11 @@ declare module 'stripe' {
          * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account during this phase of the schedule.
          */
         application_fee_percent: number | null;
+
+        /**
+         * Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+         */
+        billing_cycle_anchor: Phase.BillingCycleAnchor | null;
 
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period
@@ -248,6 +260,8 @@ declare module 'stripe' {
            */
           quantity: number | null;
         }
+
+        type BillingCycleAnchor = 'automatic' | 'phase_start';
 
         interface BillingThresholds {
           /**
@@ -377,6 +391,11 @@ declare module 'stripe' {
     namespace SubscriptionScheduleCreateParams {
       interface DefaultSettings {
         /**
+         * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+         */
+        billing_cycle_anchor?: DefaultSettings.BillingCycleAnchor;
+
+        /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
          */
         billing_thresholds?: DefaultSettings.BillingThresholds | null;
@@ -403,6 +422,8 @@ declare module 'stripe' {
       }
 
       namespace DefaultSettings {
+        type BillingCycleAnchor = 'automatic' | 'phase_start';
+
         interface BillingThresholds {
           /**
            * Monetary threshold that triggers the subscription to advance to a new billing period
@@ -449,6 +470,11 @@ declare module 'stripe' {
          * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
          */
         application_fee_percent?: number;
+
+        /**
+         * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+         */
+        billing_cycle_anchor?: Phase.BillingCycleAnchor;
 
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
@@ -562,6 +588,8 @@ declare module 'stripe' {
             unit_amount_decimal?: string;
           }
         }
+
+        type BillingCycleAnchor = 'automatic' | 'phase_start';
 
         interface BillingThresholds {
           /**
@@ -736,6 +764,11 @@ declare module 'stripe' {
     namespace SubscriptionScheduleUpdateParams {
       interface DefaultSettings {
         /**
+         * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+         */
+        billing_cycle_anchor?: DefaultSettings.BillingCycleAnchor;
+
+        /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
          */
         billing_thresholds?: DefaultSettings.BillingThresholds | null;
@@ -762,6 +795,8 @@ declare module 'stripe' {
       }
 
       namespace DefaultSettings {
+        type BillingCycleAnchor = 'automatic' | 'phase_start';
+
         interface BillingThresholds {
           /**
            * Monetary threshold that triggers the subscription to advance to a new billing period
@@ -808,6 +843,11 @@ declare module 'stripe' {
          * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
          */
         application_fee_percent?: number;
+
+        /**
+         * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+         */
+        billing_cycle_anchor?: Phase.BillingCycleAnchor;
 
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
@@ -926,6 +966,8 @@ declare module 'stripe' {
             unit_amount_decimal?: string;
           }
         }
+
+        type BillingCycleAnchor = 'automatic' | 'phase_start';
 
         interface BillingThresholds {
           /**

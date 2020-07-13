@@ -113,7 +113,7 @@ declare module 'stripe' {
       /**
        * The customer's current subscriptions, if any.
        */
-      subscriptions?: ApiList<Stripe.Subscription>;
+      subscriptions: ApiList<Stripe.Subscription> | null;
 
       /**
        * Describes the customer's tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text **"Reverse charge"**.
