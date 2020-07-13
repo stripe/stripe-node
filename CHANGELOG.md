@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.70.0 - 2020-07-13
+* [#953](https://github.com/stripe/stripe-node/pull/953) Multiple API changes
+  * Adds `es-419` as a `locale` to Checkout `Session`
+  * Adds `billing_cycle_anchor` to `default_settings` and `phases` for `SubscriptionSchedule`
+
 ## 8.69.0 - 2020-07-06
 * [#946](https://github.com/stripe/stripe-node/pull/946) Fix `assert_capabilities` type definition
 * [#920](https://github.com/stripe/stripe-node/pull/920) Expose StripeResource on instance
