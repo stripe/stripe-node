@@ -17,10 +17,9 @@ declare module 'stripe' {
         object: 'checkout.session';
 
         /**
-         * The value (`auto` or `required`) for whether Checkout collected the
-         * customer's billing address.
+         * Describes whether Checkout should collect the customer's billing address.
          */
-        billing_address_collection: string | null;
+        billing_address_collection: Session.BillingAddressCollection | null;
 
         /**
          * The URL the customer will be directed to if they decide to cancel payment and return to your website.
@@ -129,6 +128,8 @@ declare module 'stripe' {
       }
 
       namespace Session {
+        type BillingAddressCollection = 'auto' | 'required';
+
         interface DisplayItem {
           /**
            * Amount for the display item.
