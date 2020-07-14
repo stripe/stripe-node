@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.71.0 - 2020-07-14
+* [#955](https://github.com/stripe/stripe-node/pull/955) Change from string to enum value for `billing_address_collection` on Checkout `Session`
+
 ## 8.70.0 - 2020-07-13
 * [#953](https://github.com/stripe/stripe-node/pull/953) Multiple API changes
   * Adds `es-419` as a `locale` to Checkout `Session`
