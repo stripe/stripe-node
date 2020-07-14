@@ -42,7 +42,7 @@ declare module 'stripe' {
       default_settings: SubscriptionSchedule.DefaultSettings;
 
       /**
-       * Behavior of the subscription schedule and underlying subscription when it ends.
+       * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` and `cancel`.
        */
       end_behavior: SubscriptionSchedule.EndBehavior;
 
@@ -223,7 +223,7 @@ declare module 'stripe' {
         plans: Array<Phase.Plan>;
 
         /**
-         * Controls whether or not the subscription schedule will prorate when transitioning to this phase. Values are `create_prorations` and `none`.
+         * Controls whether or not the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
          */
         proration_behavior: Phase.ProrationBehavior | null;
 
@@ -522,7 +522,7 @@ declare module 'stripe' {
         plans: Array<Phase.Plan>;
 
         /**
-         * Controls whether or not a subscription schedule will create prorations when transitioning to this phase. Valid values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
+         * Controls whether or not a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
          */
         proration_behavior?: Phase.ProrationBehavior;
 
@@ -756,7 +756,7 @@ declare module 'stripe' {
       prorate?: boolean;
 
       /**
-       * If the update changes the current phase, indicates if the changes should be prorated. Valid values are `create_prorations` or `none`, and the default value is `create_prorations`.
+       * If the update changes the current phase, indicates if the changes should be prorated. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionScheduleUpdateParams.ProrationBehavior;
     }
@@ -895,7 +895,7 @@ declare module 'stripe' {
         plans: Array<Phase.Plan>;
 
         /**
-         * Controls whether or not a subscription schedule will create prorations when transitioning to this phase. Valid values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
+         * Controls whether or not a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
          */
         proration_behavior?: Phase.ProrationBehavior;
 
