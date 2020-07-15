@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.72.0 - 2020-07-15
+* [#956](https://github.com/stripe/stripe-node/pull/956) Add support for `amount_total`, `amount_subtotal`, `currency` and `total_details` on Checkout `Session`
+
 ## 8.71.0 - 2020-07-14
 * [#955](https://github.com/stripe/stripe-node/pull/955) Change from string to enum value for `billing_address_collection` on Checkout `Session`
 
