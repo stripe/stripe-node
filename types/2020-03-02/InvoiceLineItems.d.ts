@@ -201,7 +201,7 @@ declare module 'stripe' {
       subscription_default_tax_rates?: Array<string> | null;
 
       /**
-       * List of subscription items, each with an attached plan.
+       * A list of up to 20 subscription items, each with an attached price.
        */
       subscription_items?: Array<
         InvoiceLineItemListUpcomingParams.SubscriptionItem

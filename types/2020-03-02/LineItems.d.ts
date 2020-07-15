@@ -63,7 +63,7 @@ declare module 'stripe' {
     namespace LineItem {
       interface Discount {
         /**
-         * Discount amount for this line item.
+         * The amount discounted.
          */
         amount: number;
 
@@ -79,7 +79,7 @@ declare module 'stripe' {
 
       interface Tax {
         /**
-         * Amount of tax for this line item.
+         * Amount of tax applied for this rate.
          */
         amount: number;
 

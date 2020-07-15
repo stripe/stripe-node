@@ -748,7 +748,7 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.SetupIntent>;
 
       /**
-       * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
+       * A SetupIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_confirmation, or requires_action.
        *
        * Once canceled, setup is abandoned and any operations on the SetupIntent will fail with an error.
        */

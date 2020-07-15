@@ -17,6 +17,16 @@ declare module 'stripe' {
         object: 'checkout.session';
 
         /**
+         * Total of all items before discounts or taxes are applied.
+         */
+        amount_subtotal: number | null;
+
+        /**
+         * Total of all items after discounts and taxes are applied.
+         */
+        amount_total: number | null;
+
+        /**
          * Describes whether Checkout should collect the customer's billing address.
          */
         billing_address_collection: Session.BillingAddressCollection | null;
@@ -32,6 +42,11 @@ declare module 'stripe' {
          * session with your internal systems.
          */
         client_reference_id: string | null;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string | null;
 
         /**
          * The ID of the customer for this session.
@@ -125,6 +140,11 @@ declare module 'stripe' {
          * subscription creation is successful.
          */
         success_url: string;
+
+        /**
+         * Tax and discount details for the computed total amount.
+         */
+        total_details: Session.TotalDetails | null;
       }
 
       namespace Session {
@@ -506,6 +526,66 @@ declare module 'stripe' {
         }
 
         type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+
+        interface TotalDetails {
+          /**
+           * This is the sum of all the line item discounts.
+           */
+          amount_discount: number;
+
+          /**
+           * This is the sum of all the line item tax amounts.
+           */
+          amount_tax: number;
+
+          breakdown?: TotalDetails.Breakdown;
+        }
+
+        namespace TotalDetails {
+          interface Breakdown {
+            /**
+             * The aggregated line item discounts.
+             */
+            discounts: Array<Breakdown.Discount>;
+
+            /**
+             * The aggregated line item tax amounts by rate.
+             */
+            taxes: Array<Breakdown.Tax>;
+          }
+
+          namespace Breakdown {
+            interface Discount {
+              /**
+               * The amount discounted.
+               */
+              amount: number;
+
+              /**
+               * A discount represents the actual application of a coupon to a particular
+               * customer. It contains information about when the discount began and when it
+               * will end.
+               *
+               * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
+               */
+              discount: Stripe.Discount;
+            }
+
+            interface Tax {
+              /**
+               * Amount of tax applied for this rate.
+               */
+              amount: number;
+
+              /**
+               * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+               *
+               * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+               */
+              rate: Stripe.TaxRate;
+            }
+          }
+        }
       }
 
       interface SessionCreateParams {
@@ -818,7 +898,7 @@ declare module 'stripe' {
           on_behalf_of?: string;
 
           /**
-           * Email address that the receipt for the resulting payment will be sent to.
+           * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
            */
           receipt_email?: string;
 
