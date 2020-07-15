@@ -140,7 +140,7 @@ declare module 'stripe' {
       payment_method_types: Array<string>;
 
       /**
-       * Email address that the receipt for the resulting payment will be sent to.
+       * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
       receipt_email: string | null;
 
@@ -606,7 +606,7 @@ declare module 'stripe' {
       payment_method_types?: Array<string>;
 
       /**
-       * Email address that the receipt for the resulting payment will be sent to.
+       * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
       receipt_email?: string;
 
@@ -1193,7 +1193,7 @@ declare module 'stripe' {
       payment_method_types?: Array<string>;
 
       /**
-       * Email address that the receipt for the resulting payment will be sent to.
+       * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
       receipt_email?: string | null;
 
@@ -1752,7 +1752,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
       /**
-       * Email address that the receipt for the resulting payment will be sent to.
+       * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
       receipt_email?: string | null;
 
@@ -2317,7 +2317,7 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.PaymentIntent>;
 
       /**
-       * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action.
+       * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, or requires_action.
        *
        * Once canceled, no additional charges will be made by the PaymentIntent and any operations on the PaymentIntent will fail with an error. For PaymentIntents with status='requires_capture', the remaining amount_capturable will automatically be refunded.
        */

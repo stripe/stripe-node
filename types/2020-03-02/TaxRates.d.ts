@@ -15,7 +15,7 @@ declare module 'stripe' {
       object: 'tax_rate';
 
       /**
-       * Defaults to `true`. When set to `false`, this tax rate is considered archived and cannot be applied to new applications or Checkout Sessions, but will still be applied to subscriptions and invoices that already have it set.
+       * Defaults to `true`. When set to `false`, this tax rate cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
        */
       active: boolean;
 
@@ -77,7 +77,7 @@ declare module 'stripe' {
       percentage: number;
 
       /**
-       * Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications or Checkout Sessions.
+       * Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
        */
       active?: boolean;
 
@@ -111,7 +111,7 @@ declare module 'stripe' {
 
     interface TaxRateUpdateParams {
       /**
-       * Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates continue to work where they are currently applied however they cannot be used for new applications or Checkout Sessions.
+       * Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
        */
       active?: boolean;
 
