@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.74.0 - 2020-07-16
+* [#959](https://github.com/stripe/stripe-node/pull/959) Refactor remaining 'var' to 'let/const' usages
+* [#960](https://github.com/stripe/stripe-node/pull/960) Use strict equality check for 'protocol' field for consistency
+* [#952](https://github.com/stripe/stripe-node/pull/952) Add new fields to lastResponse: apiVersion, stripeAccount, idempotencyKey
+
 ## 8.73.0 - 2020-07-15
 * [#958](https://github.com/stripe/stripe-node/pull/958) Multiple API changes
   * Add support for `en-GB`, `fr-CA` and `id` as `locale` on Checkout `Session`
