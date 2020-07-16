@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.73.0 - 2020-07-15
+* [#958](https://github.com/stripe/stripe-node/pull/958) Multiple API changes
+  * Add support for `en-GB`, `fr-CA` and `id` as `locale` on Checkout `Session`
+  * Move `purpose` to an enum on `File`
+* [#957](https://github.com/stripe/stripe-node/pull/957) Bump lodash from 4.17.15 to 4.17.19
+
 ## 8.72.0 - 2020-07-15
 * [#956](https://github.com/stripe/stripe-node/pull/956) Add support for `amount_total`, `amount_subtotal`, `currency` and `total_details` on Checkout `Session`
 
