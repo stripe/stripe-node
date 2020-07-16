@@ -30,9 +30,9 @@ declare module 'stripe' {
       links?: ApiList<Stripe.FileLink> | null;
 
       /**
-       * The purpose of the file. Possible values are `additional_verification`, `business_icon`, `business_logo`, `customer_signature`, `dispute_evidence`, `document_provider_identity_document`, `finance_report_run`, `identity_document`, `pci_document`, `sigma_scheduled_query`, or `tax_document_user_upload`.
+       * The [purpose](https://stripe.com/docs/file-upload#uploading-a-file) of the uploaded file.
        */
-      purpose: string;
+      purpose: File.Purpose;
 
       /**
        * The size in bytes of the file object.
@@ -53,6 +53,18 @@ declare module 'stripe' {
        * The URL from which the file can be downloaded using your live secret API key.
        */
       url: string | null;
+    }
+
+    namespace File {
+      type Purpose =
+        | 'additional_verification'
+        | 'business_icon'
+        | 'business_logo'
+        | 'customer_signature'
+        | 'dispute_evidence'
+        | 'identity_document'
+        | 'pci_document'
+        | 'tax_document_user_upload';
     }
 
     interface FileCreateParams {}
