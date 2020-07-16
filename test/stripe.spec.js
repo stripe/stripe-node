@@ -6,6 +6,7 @@ const testUtils = require('../testUtils');
 const utils = require('../lib/utils');
 const Stripe = require('../lib/stripe');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
+const crypto = require('crypto');
 
 const expect = require('chai').expect;
 
@@ -390,22 +391,58 @@ describe('Stripe Module', function() {
           })
         ).to.eventually.equal('Called!'));
 
-      it('Will expose HTTP response object', () =>
-        expect(
-          new Promise((resolve, reject) => {
-            stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
-              cleanup.deleteCustomer(customer.id);
+      describe('lastResponse', () => {
+        it('Will expose HTTP response object', () =>
+          expect(
+            new Promise((resolve, reject) => {
+              stripe.customers.create(CUSTOMER_DETAILS, (err, customer) => {
+                cleanup.deleteCustomer(customer.id);
 
-              const headers = customer.lastResponse.headers;
-              expect(headers).to.contain.keys('request-id');
+                const headers = customer.lastResponse.headers;
+                expect(headers).to.contain.keys('request-id');
 
-              expect(customer.lastResponse.requestId).to.match(/^req_/);
-              expect(customer.lastResponse.statusCode).to.equal(200);
+                resolve('Called!');
+              });
+            })
+          ).to.eventually.equal('Called!'));
 
-              resolve('Called!');
-            });
-          })
-        ).to.eventually.equal('Called!'));
+        it('Will have request id, status code and version', () =>
+          expect(
+            new Promise((resolve, reject) => {
+              stripe.customers.create(CUSTOMER_DETAILS, (_err, customer) => {
+                cleanup.deleteCustomer(customer.id);
+
+                expect(customer.lastResponse.requestId).to.match(/^req_/);
+                expect(customer.lastResponse.statusCode).to.equal(200);
+                expect(customer.lastResponse.apiVersion).to.be.a('string').that
+                  .is.not.empty;
+
+                resolve('Called!');
+              });
+            })
+          ).to.eventually.equal('Called!'));
+
+        it('Will have the idempotency key', () =>
+          expect(
+            new Promise((resolve, reject) => {
+              const key = crypto.randomBytes(16).toString('hex');
+
+              stripe.customers.create(
+                CUSTOMER_DETAILS,
+                {
+                  idempotencyKey: key,
+                },
+                (err, customer) => {
+                  cleanup.deleteCustomer(customer.id);
+
+                  expect(customer.lastResponse.idempotencyKey).to.equal(key);
+
+                  resolve('Called!');
+                }
+              );
+            })
+          ).to.eventually.equal('Called!'));
+      });
 
       it('Given an error the callback will receive it', () =>
         expect(
