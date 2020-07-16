@@ -510,8 +510,8 @@ describe('utils', () => {
     it('handles being unable to require `child_process`', () => {
       utils._exec = null;
 
-      var actualErr = null;
-      var actualRes = null;
+      let actualErr = null;
+      let actualRes = null;
       function myCb(err, res) {
         actualErr = err;
         actualRes = res;
