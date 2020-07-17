@@ -32,7 +32,7 @@ declare module 'stripe' {
       account: string;
 
       /**
-       * The type of account link the user is requesting. Possible values are `custom_account_verification` or `custom_account_update`.
+       * The type of account link the user is requesting. Possible values are `account_onboarding` or `account_update`.
        */
       type: AccountLinkCreateParams.Type;
 
@@ -70,7 +70,11 @@ declare module 'stripe' {
     namespace AccountLinkCreateParams {
       type Collect = 'currently_due' | 'eventually_due';
 
-      type Type = 'custom_account_update' | 'custom_account_verification';
+      type Type =
+        | 'account_onboarding'
+        | 'account_update'
+        | 'custom_account_update'
+        | 'custom_account_verification';
     }
 
     class AccountLinksResource {
