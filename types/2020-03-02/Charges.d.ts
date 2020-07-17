@@ -647,12 +647,12 @@ declare module 'stripe' {
           /**
            * Two-digit number representing the card's expiration month.
            */
-          exp_month: number | null;
+          exp_month: number;
 
           /**
            * Four-digit number representing the card's expiration year.
            */
-          exp_year: number | null;
+          exp_year: number;
 
           /**
            * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number,for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
@@ -919,12 +919,12 @@ declare module 'stripe' {
           /**
            * Two-digit number representing the card's expiration month.
            */
-          exp_month: number | null;
+          exp_month: number;
 
           /**
            * Four-digit number representing the card's expiration year.
            */
-          exp_year: number | null;
+          exp_year: number;
 
           /**
            * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number,for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
@@ -1159,12 +1159,12 @@ declare module 'stripe' {
           /**
            * Two-digit number representing the card's expiration month.
            */
-          exp_month: number | null;
+          exp_month: number;
 
           /**
            * Four-digit number representing the card's expiration year.
            */
-          exp_year: number | null;
+          exp_year: number;
 
           /**
            * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number,for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
