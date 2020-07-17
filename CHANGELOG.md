@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.75.0 - 2020-07-16
+* [#961](https://github.com/stripe/stripe-node/pull/961) Add support for `account_onboarding` and `account_update` as `type` on `AccountLink`
+
 ## 8.74.0 - 2020-07-16
 * [#959](https://github.com/stripe/stripe-node/pull/959) Refactor remaining 'var' to 'let/const' usages
 * [#960](https://github.com/stripe/stripe-node/pull/960) Use strict equality check for 'protocol' field for consistency
