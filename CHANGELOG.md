@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.76.0 - 2020-07-17
+* [#962](https://github.com/stripe/stripe-node/pull/962) Add support for `political_exposure` on `Person`
+
 ## 8.75.0 - 2020-07-16
 * [#961](https://github.com/stripe/stripe-node/pull/961) Add support for `account_onboarding` and `account_update` as `type` on `AccountLink`
 
