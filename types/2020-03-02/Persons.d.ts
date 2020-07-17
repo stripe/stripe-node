@@ -100,6 +100,11 @@ declare module 'stripe' {
        */
       phone?: string | null;
 
+      /**
+       * Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
+       */
+      political_exposure?: Person.PoliticalExposure;
+
       relationship?: Person.Relationship;
 
       /**
@@ -206,6 +211,8 @@ declare module 'stripe' {
          */
         year: number | null;
       }
+
+      type PoliticalExposure = 'existing' | 'none';
 
       interface Relationship {
         /**
@@ -510,6 +517,11 @@ declare module 'stripe' {
       phone?: string;
 
       /**
+       * Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
+       */
+      political_exposure?: string;
+
+      /**
        * The relationship that this person has with the account's legal entity.
        */
       relationship?: PersonCreateParams.Relationship;
@@ -743,6 +755,11 @@ declare module 'stripe' {
        * The person's phone number.
        */
       phone?: string;
+
+      /**
+       * Indicates if the person or any of their representatives, family members, or other closely related persons, declares that they hold or have held an important public job or function, in any jurisdiction.
+       */
+      political_exposure?: string;
 
       /**
        * The relationship that this person has with the account's legal entity.
