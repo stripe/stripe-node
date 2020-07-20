@@ -707,6 +707,11 @@ declare module 'stripe' {
       business_type?: AccountCreateParams.BusinessType;
 
       /**
+       * Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
+       */
+      capabilities?: AccountCreateParams.Capabilities;
+
+      /**
        * Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
        */
       company?: AccountCreateParams.Company;
@@ -749,7 +754,7 @@ declare module 'stripe' {
       metadata?: MetadataParam | null;
 
       /**
-       * The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
+       * (Deprecated) Alternative to `capabilities`. The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
        */
       requested_capabilities?: Array<AccountCreateParams.RequestedCapability>;
 
@@ -851,6 +856,118 @@ declare module 'stripe' {
         | 'government_entity'
         | 'individual'
         | 'non_profit';
+
+      interface Capabilities {
+        /**
+         * The au_becs_debit_payments capability.
+         */
+        au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
+
+        /**
+         * The bacs_debit_payments capability.
+         */
+        bacs_debit_payments?: Capabilities.BacsDebitPayments;
+
+        /**
+         * The card_issuing capability.
+         */
+        card_issuing?: Capabilities.CardIssuing;
+
+        /**
+         * The card_payments capability.
+         */
+        card_payments?: Capabilities.CardPayments;
+
+        /**
+         * The jcb_payments capability.
+         */
+        jcb_payments?: Capabilities.JcbPayments;
+
+        /**
+         * The legacy_payments capability.
+         */
+        legacy_payments?: Capabilities.LegacyPayments;
+
+        /**
+         * The tax_reporting_us_1099_k capability.
+         */
+        tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
+
+        /**
+         * The tax_reporting_us_1099_misc capability.
+         */
+        tax_reporting_us_1099_misc?: Capabilities.TaxReportingUs1099Misc;
+
+        /**
+         * The transfers capability.
+         */
+        transfers?: Capabilities.Transfers;
+      }
+
+      namespace Capabilities {
+        interface AuBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BacsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CardIssuing {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CardPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface JcbPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface LegacyPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TaxReportingUs1099K {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TaxReportingUs1099Misc {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface Transfers {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+      }
 
       interface Company {
         /**
@@ -1394,6 +1511,11 @@ declare module 'stripe' {
       business_type?: AccountUpdateParams.BusinessType;
 
       /**
+       * Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
+       */
+      capabilities?: AccountUpdateParams.Capabilities;
+
+      /**
        * Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
        */
       company?: AccountUpdateParams.Company;
@@ -1431,7 +1553,7 @@ declare module 'stripe' {
       metadata?: MetadataParam | null;
 
       /**
-       * The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
+       * (Deprecated) Alternative to `capabilities`. The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
        */
       requested_capabilities?: Array<AccountUpdateParams.RequestedCapability>;
 
@@ -1528,6 +1650,118 @@ declare module 'stripe' {
         | 'government_entity'
         | 'individual'
         | 'non_profit';
+
+      interface Capabilities {
+        /**
+         * The au_becs_debit_payments capability.
+         */
+        au_becs_debit_payments?: Capabilities.AuBecsDebitPayments;
+
+        /**
+         * The bacs_debit_payments capability.
+         */
+        bacs_debit_payments?: Capabilities.BacsDebitPayments;
+
+        /**
+         * The card_issuing capability.
+         */
+        card_issuing?: Capabilities.CardIssuing;
+
+        /**
+         * The card_payments capability.
+         */
+        card_payments?: Capabilities.CardPayments;
+
+        /**
+         * The jcb_payments capability.
+         */
+        jcb_payments?: Capabilities.JcbPayments;
+
+        /**
+         * The legacy_payments capability.
+         */
+        legacy_payments?: Capabilities.LegacyPayments;
+
+        /**
+         * The tax_reporting_us_1099_k capability.
+         */
+        tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
+
+        /**
+         * The tax_reporting_us_1099_misc capability.
+         */
+        tax_reporting_us_1099_misc?: Capabilities.TaxReportingUs1099Misc;
+
+        /**
+         * The transfers capability.
+         */
+        transfers?: Capabilities.Transfers;
+      }
+
+      namespace Capabilities {
+        interface AuBecsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BacsDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CardIssuing {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CardPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface JcbPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface LegacyPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TaxReportingUs1099K {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface TaxReportingUs1099Misc {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface Transfers {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+      }
 
       interface Company {
         /**
