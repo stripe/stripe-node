@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.77.0 - 2020-07-20
+* [#963](https://github.com/stripe/stripe-node/pull/963) Add support for `capabilities` as a parameter on `Account` create and update
+
 ## 8.76.0 - 2020-07-17
 * [#962](https://github.com/stripe/stripe-node/pull/962) Add support for `political_exposure` on `Person`
 
