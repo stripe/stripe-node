@@ -223,7 +223,7 @@ declare module 'stripe' {
         plans: Array<Phase.Plan>;
 
         /**
-         * Controls whether or not the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
+         * If the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
          */
         proration_behavior: Phase.ProrationBehavior | null;
 
@@ -522,7 +522,7 @@ declare module 'stripe' {
         plans: Array<Phase.Plan>;
 
         /**
-         * Controls whether or not a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
+         * If a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
          */
         proration_behavior?: Phase.ProrationBehavior;
 
@@ -895,7 +895,7 @@ declare module 'stripe' {
         plans: Array<Phase.Plan>;
 
         /**
-         * Controls whether or not a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
+         * If a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
          */
         proration_behavior?: Phase.ProrationBehavior;
 
@@ -1141,7 +1141,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * If the subscription schedule is `active`, indicates whether or not to generate a final invoice that contains any un-invoiced metered usage and new/pending proration invoice items. Defaults to `true`.
+       * If the subscription schedule is `active`, indicates if a final invoice will be generated that contains any un-invoiced metered usage and new/pending proration invoice items. Defaults to `true`.
        */
       invoice_now?: boolean;
 
