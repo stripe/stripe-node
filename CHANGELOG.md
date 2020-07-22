@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.78.0 - 2020-07-22
+* [#965](https://github.com/stripe/stripe-node/pull/965) Add support for `cartes_bancaires_payments` as a `Capability`
+
 ## 8.77.0 - 2020-07-20
 * [#963](https://github.com/stripe/stripe-node/pull/963) Add support for `capabilities` as a parameter on `Account` create and update
 
