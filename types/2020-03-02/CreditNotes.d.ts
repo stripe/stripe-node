@@ -43,7 +43,7 @@ declare module 'stripe' {
         | null;
 
       /**
-       * The integer amount in **%s** representing the amount of the discount that was credited.
+       * The integer amount in **%s** representing the total amount of discount that was credited.
        */
       discount_amount: number;
 
@@ -103,7 +103,7 @@ declare module 'stripe' {
       status: CreditNote.Status;
 
       /**
-       * The integer amount in **%s** representing the amount of the credit note, excluding tax and discount.
+       * The integer amount in **%s** representing the amount of the credit note, excluding tax and invoice level discounts.
        */
       subtotal: number;
 
@@ -113,7 +113,7 @@ declare module 'stripe' {
       tax_amounts: Array<CreditNote.TaxAmount>;
 
       /**
-       * The integer amount in **%s** representing the total amount of the credit note, including tax and discount.
+       * The integer amount in **%s** representing the total amount of the credit note, including tax and all discount.
        */
       total: number;
 
