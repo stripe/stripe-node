@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.79.0 - 2020-07-24
+* [#967](https://github.com/stripe/stripe-node/pull/967) Multiple API changes
+  * Make all properties from `Discount` available on `DeletedDiscount`
+  * Add `capabilities[fpx_payments]` on `Account` create and update
+
 ## 8.78.0 - 2020-07-22
 * [#965](https://github.com/stripe/stripe-node/pull/965) Add support for `cartes_bancaires_payments` as a `Capability`
 
