@@ -173,6 +173,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The status of the FPX payments capability of the account, or whether the account can directly process FPX charges.
+         */
+        fpx_payments?: Capabilities.FpxPayments;
+
+        /**
          * The status of the JCB payments capability of the account, or whether the account (Japan only) can directly process JCB credit card charges in JPY currency.
          */
         jcb_payments?: Capabilities.JcbPayments;
@@ -208,6 +213,8 @@ declare module 'stripe' {
         type CardPayments = 'active' | 'inactive' | 'pending';
 
         type CartesBancairesPayments = 'active' | 'inactive' | 'pending';
+
+        type FpxPayments = 'active' | 'inactive' | 'pending';
 
         type JcbPayments = 'active' | 'inactive' | 'pending';
 
@@ -891,6 +898,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The fpx_payments capability.
+         */
+        fpx_payments?: Capabilities.FpxPayments;
+
+        /**
          * The jcb_payments capability.
          */
         jcb_payments?: Capabilities.JcbPayments;
@@ -946,6 +958,13 @@ declare module 'stripe' {
         }
 
         interface CartesBancairesPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface FpxPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1331,6 +1350,7 @@ declare module 'stripe' {
         | 'card_issuing'
         | 'card_payments'
         | 'cartes_bancaires_payments'
+        | 'fpx_payments'
         | 'jcb_payments'
         | 'legacy_payments'
         | 'tax_reporting_us_1099_k'
@@ -1698,6 +1718,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The fpx_payments capability.
+         */
+        fpx_payments?: Capabilities.FpxPayments;
+
+        /**
          * The jcb_payments capability.
          */
         jcb_payments?: Capabilities.JcbPayments;
@@ -1753,6 +1778,13 @@ declare module 'stripe' {
         }
 
         interface CartesBancairesPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface FpxPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2138,6 +2170,7 @@ declare module 'stripe' {
         | 'card_issuing'
         | 'card_payments'
         | 'cartes_bancaires_payments'
+        | 'fpx_payments'
         | 'jcb_payments'
         | 'legacy_payments'
         | 'tax_reporting_us_1099_k'
