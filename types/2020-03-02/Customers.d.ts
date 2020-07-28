@@ -207,6 +207,11 @@ declare module 'stripe' {
 
     interface CustomerCreateParams {
       /**
+       * Unique identifier for the object.
+       */
+      id?: string;
+      
+      /**
        * The customer's address.
        */
       address?: AddressParam | null;
