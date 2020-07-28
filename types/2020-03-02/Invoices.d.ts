@@ -158,6 +158,13 @@ declare module 'stripe' {
       discount: Stripe.Discount | null;
 
       /**
+       * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
+       */
+      discounts?: Array<
+        string | Stripe.Discount | Stripe.DeletedDiscount
+      > | null;
+
+      /**
        * The date on which payment for this invoice is due. This value will be `null` for invoices where `collection_method=charge_automatically`.
        */
       due_date: number | null;
@@ -290,6 +297,11 @@ declare module 'stripe' {
        * Total after discounts and taxes.
        */
       total: number;
+
+      /**
+       * The aggregate amounts calculated per discount across all line items.
+       */
+      total_discount_amounts?: Array<Invoice.TotalDiscountAmount> | null;
 
       /**
        * The aggregate amounts calculated per tax rate for all line items.
@@ -461,6 +473,18 @@ declare module 'stripe' {
         }
       }
 
+      interface TotalDiscountAmount {
+        /**
+         * The amount, in %s, of the discount.
+         */
+        amount: number;
+
+        /**
+         * The discount that was applied to get this discount amount.
+         */
+        discount: string | Stripe.Discount | Stripe.DeletedDiscount;
+      }
+
       interface TotalTaxAmount {
         /**
          * The amount, in %s, of the tax.
@@ -563,6 +587,11 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * The coupons to redeem into discounts for the invoice. If not specified, inherits the discount from the invoice's customer. Pass an empty string to avoid inheriting any discounts.
+       */
+      discounts?: Array<InvoiceCreateParams.Discount> | null;
+
+      /**
        * The date on which payment for this invoice is due. Valid only for invoices where `collection_method=send_invoice`.
        */
       due_date?: number;
@@ -616,6 +645,18 @@ declare module 'stripe' {
          * The value of the custom field. This may be up to 30 characters.
          */
         value: string;
+      }
+
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
       }
 
       interface TransferData {
@@ -685,6 +726,11 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * The discounts that will apply to the invoice. Pass an empty string to remove previously-defined discounts.
+       */
+      discounts?: Array<InvoiceUpdateParams.Discount> | null;
+
+      /**
        * The date on which payment for this invoice is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
        */
       due_date?: number;
@@ -733,6 +779,18 @@ declare module 'stripe' {
          * The value of the custom field. This may be up to 30 characters.
          */
         value: string;
+      }
+
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
       }
 
       interface TransferData {
@@ -851,6 +909,8 @@ declare module 'stripe' {
        */
       customer?: string;
 
+      discounts?: Array<InvoiceRetrieveUpcomingParams.Discount> | null;
+
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -946,6 +1006,18 @@ declare module 'stripe' {
     }
 
     namespace InvoiceRetrieveUpcomingParams {
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+      }
+
       interface InvoiceItem {
         /**
          * The integer amount in **%s** of previewed invoice item.
@@ -968,6 +1040,11 @@ declare module 'stripe' {
         discountable?: boolean;
 
         /**
+         * The coupons to redeem into discounts for the invoice item in the preview.
+         */
+        discounts?: Array<InvoiceItem.Discount> | null;
+
+        /**
          * The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
          */
         invoiceitem?: string;
@@ -988,7 +1065,7 @@ declare module 'stripe' {
         price?: string;
 
         /**
-         * Data used to generate a new price object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
          */
         price_data?: InvoiceItem.PriceData;
 
@@ -1011,6 +1088,18 @@ declare module 'stripe' {
       }
 
       namespace InvoiceItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+        }
+
         interface Period {
           /**
            * The end of the period, which must be greater than or equal to the start.
@@ -1085,7 +1174,7 @@ declare module 'stripe' {
         price?: string;
 
         /**
-         * Data used to generate a new price object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
          */
         price_data?: SubscriptionItem.PriceData;
 

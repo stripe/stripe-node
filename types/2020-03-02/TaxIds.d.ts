@@ -28,7 +28,7 @@ declare module 'stripe' {
       /**
        * ID of the customer.
        */
-      customer: string | Stripe.Customer;
+      customer: string | Stripe.Customer | null;
 
       deleted?: void;
 
@@ -47,7 +47,10 @@ declare module 'stripe' {
        */
       value: string;
 
-      verification: TaxId.Verification;
+      /**
+       * Tax ID verification information.
+       */
+      verification: TaxId.Verification | null;
     }
 
     namespace TaxId {

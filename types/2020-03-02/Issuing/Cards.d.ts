@@ -178,22 +178,22 @@ declare module 'stripe' {
 
         interface SpendingControls {
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this card.
+           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
            */
           allowed_categories: Array<SpendingControls.AllowedCategory> | null;
 
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to always decline on this card.
+           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
            */
           blocked_categories: Array<SpendingControls.BlockedCategory> | null;
 
           /**
-           * Limit the spending with rules based on time intervals and categories.
+           * Limit spending with amount-based rules.
            */
           spending_limits: Array<SpendingControls.SpendingLimit> | null;
 
           /**
-           * Currency for the amounts within spending_limits. Locked to the currency of the card.
+           * Currency of the amounts within `spending_limits`. Always the same as the currency of the card.
            */
           spending_limits_currency: string | null;
         }
@@ -781,17 +781,17 @@ declare module 'stripe' {
 
           interface SpendingLimit {
             /**
-             * Maximum amount allowed to spend per time interval.
+             * Maximum amount allowed to spend per interval.
              */
             amount: number;
 
             /**
-             * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) on which to apply the spending limit. Leave this blank to limit all charges.
+             * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
              */
             categories: Array<SpendingLimit.Category> | null;
 
             /**
-             * The time interval or event with which to apply this spending limit towards.
+             * Interval (or event) to which the amount applies.
              */
             interval: SpendingLimit.Interval;
           }
@@ -1144,7 +1144,7 @@ declare module 'stripe' {
         shipping?: CardCreateParams.Shipping;
 
         /**
-         * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/purchases/authorizations) documentation for more details.
+         * Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
          */
         spending_controls?: CardCreateParams.SpendingControls;
 
@@ -1219,17 +1219,17 @@ declare module 'stripe' {
 
         interface SpendingControls {
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this card.
+           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
            */
           allowed_categories?: Array<SpendingControls.AllowedCategory>;
 
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to always decline on this card.
+           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
            */
           blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
           /**
-           * Limit the spending with rules based on time intervals and categories.
+           * Limit spending with amount-based rules.
            */
           spending_limits?: Array<SpendingControls.SpendingLimit>;
         }
@@ -1817,17 +1817,17 @@ declare module 'stripe' {
 
           interface SpendingLimit {
             /**
-             * Maximum amount allowed to spend per time interval.
+             * Maximum amount allowed to spend per interval.
              */
             amount: number;
 
             /**
-             * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) on which to apply the spending limit. Leave this blank to limit all charges.
+             * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
              */
             categories?: Array<SpendingLimit.Category>;
 
             /**
-             * The time interval with which to apply this spending limit towards.
+             * Interval (or event) to which the amount applies.
              */
             interval: SpendingLimit.Interval;
           }
@@ -2162,7 +2162,7 @@ declare module 'stripe' {
         metadata?: MetadataParam | null;
 
         /**
-         * Spending rules that give you some control over how your cards can be used. Refer to our [authorizations](https://stripe.com/docs/issuing/purchases/authorizations) documentation for more details.
+         * Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
          */
         spending_controls?: CardUpdateParams.SpendingControls;
 
@@ -2177,17 +2177,17 @@ declare module 'stripe' {
 
         interface SpendingControls {
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations permitted on this card.
+           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to allow. All other categories will be blocked. Cannot be set with `blocked_categories`.
            */
           allowed_categories?: Array<SpendingControls.AllowedCategory>;
 
           /**
-           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to always decline on this card.
+           * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) of authorizations to decline. All other categories will be allowed. Cannot be set with `allowed_categories`.
            */
           blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
           /**
-           * Limit the spending with rules based on time intervals and categories.
+           * Limit spending with amount-based rules.
            */
           spending_limits?: Array<SpendingControls.SpendingLimit>;
         }
@@ -2775,17 +2775,17 @@ declare module 'stripe' {
 
           interface SpendingLimit {
             /**
-             * Maximum amount allowed to spend per time interval.
+             * Maximum amount allowed to spend per interval.
              */
             amount: number;
 
             /**
-             * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) on which to apply the spending limit. Leave this blank to limit all charges.
+             * Array of strings containing [categories](https://stripe.com/docs/api#issuing_authorization_object-merchant_data-category) this limit applies to. Omitting this field will apply the limit to all categories.
              */
             categories?: Array<SpendingLimit.Category>;
 
             /**
-             * The time interval with which to apply this spending limit towards.
+             * Interval (or event) to which the amount applies.
              */
             interval: SpendingLimit.Interval;
           }

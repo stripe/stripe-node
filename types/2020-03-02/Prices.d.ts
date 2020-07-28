@@ -215,7 +215,7 @@ declare module 'stripe' {
       currency: string;
 
       /**
-       * Whether the price is currently active. Defaults to `true`.
+       * Whether the price can be used for new purchases. Defaults to `true`.
        */
       active?: boolean;
 
@@ -421,7 +421,7 @@ declare module 'stripe' {
 
     interface PriceUpdateParams {
       /**
-       * Whether the price is currently active. Defaults to `true`.
+       * Whether the price can be used for new purchases. Defaults to `true`.
        */
       active?: boolean;
 

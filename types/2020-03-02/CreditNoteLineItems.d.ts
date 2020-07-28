@@ -31,6 +31,11 @@ declare module 'stripe' {
       discount_amount: number;
 
       /**
+       * The amount of discount calculated per discount for this line item
+       */
+      discount_amounts?: Array<CreditNoteLineItem.DiscountAmount>;
+
+      /**
        * ID of the invoice line item being credited
        */
       invoice_line_item?: string;
@@ -72,6 +77,18 @@ declare module 'stripe' {
     }
 
     namespace CreditNoteLineItem {
+      interface DiscountAmount {
+        /**
+         * The amount, in %s, of the discount.
+         */
+        amount: number;
+
+        /**
+         * The discount that was applied to get this discount amount.
+         */
+        discount: string | Stripe.Discount | Stripe.DeletedDiscount;
+      }
+
       interface TaxAmount {
         /**
          * The amount, in %s, of the tax.

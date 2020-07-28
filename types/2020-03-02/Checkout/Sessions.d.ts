@@ -657,8 +657,8 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [prices](https://stripe.com/docs/api/prices).
-         * One-time prices in `subscription` mode will be on the initial invoice only.
+         * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
+         * One-time Prices in `subscription` mode will be on the initial invoice only.
          *
          * There is a maximum of 100 line items, however it is recommended to
          * consolidate line items if there are more than a few dozen.
@@ -741,12 +741,12 @@ declare module 'stripe' {
           name?: string;
 
           /**
-           * The ID of the price or plan object. One of `price`, `price_data` or `amount` is required.
+           * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price`, `price_data` or `amount` is required.
            */
           price?: string;
 
           /**
-           * Data used to generate a new price object inline. One of `price`, `price_data` or `amount` is required.
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price`, `price_data` or `amount` is required.
            */
           price_data?: LineItem.PriceData;
 

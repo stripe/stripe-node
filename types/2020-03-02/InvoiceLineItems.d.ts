@@ -31,9 +31,19 @@ declare module 'stripe' {
       description: string | null;
 
       /**
+       * The amount of discount calculated per discount for this line item.
+       */
+      discount_amounts?: Array<InvoiceLineItem.DiscountAmount> | null;
+
+      /**
        * If true, discounts will apply to this line item. Always false for prorations.
        */
       discountable: boolean;
+
+      /**
+       * The discounts applied to the invoice line item. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
+       */
+      discounts?: Array<string | Stripe.Discount> | null;
 
       /**
        * The ID of the [invoice item](https://stripe.com/docs/api/invoiceitems) associated with this line item if any.
@@ -104,6 +114,18 @@ declare module 'stripe' {
     }
 
     namespace InvoiceLineItem {
+      interface DiscountAmount {
+        /**
+         * The amount, in %s, of the discount.
+         */
+        amount: number;
+
+        /**
+         * The discount that was applied to get this discount amount.
+         */
+        discount: string | Stripe.Discount | Stripe.DeletedDiscount;
+      }
+
       interface Period {
         /**
          * End of the line item's billing period
@@ -153,6 +175,8 @@ declare module 'stripe' {
        * The identifier of the customer whose upcoming invoice you'd like to retrieve.
        */
       customer?: string;
+
+      discounts?: Array<InvoiceLineItemListUpcomingParams.Discount> | null;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -249,6 +273,18 @@ declare module 'stripe' {
     }
 
     namespace InvoiceLineItemListUpcomingParams {
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+      }
+
       interface InvoiceItem {
         /**
          * The integer amount in **%s** of previewed invoice item.
@@ -271,6 +307,11 @@ declare module 'stripe' {
         discountable?: boolean;
 
         /**
+         * The coupons to redeem into discounts for the invoice item in the preview.
+         */
+        discounts?: Array<InvoiceItem.Discount> | null;
+
+        /**
          * The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
          */
         invoiceitem?: string;
@@ -291,7 +332,7 @@ declare module 'stripe' {
         price?: string;
 
         /**
-         * Data used to generate a new price object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
          */
         price_data?: InvoiceItem.PriceData;
 
@@ -314,6 +355,18 @@ declare module 'stripe' {
       }
 
       namespace InvoiceItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+        }
+
         interface Period {
           /**
            * The end of the period, which must be greater than or equal to the start.
@@ -388,7 +441,7 @@ declare module 'stripe' {
         price?: string;
 
         /**
-         * Data used to generate a new price object inline.
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
          */
         price_data?: SubscriptionItem.PriceData;
 
