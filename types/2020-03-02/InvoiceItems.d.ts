@@ -48,6 +48,11 @@ declare module 'stripe' {
       discountable: boolean;
 
       /**
+       * The discounts which apply to the invoice item. Item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
+       */
+      discounts?: Array<string | Stripe.Discount> | null;
+
+      /**
        * The ID of the invoice this invoice item belongs to.
        */
       invoice: string | Stripe.Invoice | null;
@@ -176,6 +181,11 @@ declare module 'stripe' {
       discountable?: boolean;
 
       /**
+       * The coupons to redeem into discounts for the invoice item or invoice line item.
+       */
+      discounts?: Array<InvoiceItemCreateParams.Discount> | null;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -201,7 +211,7 @@ declare module 'stripe' {
       price?: string;
 
       /**
-       * Data used to generate a new price object inline.
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
        */
       price_data?: InvoiceItemCreateParams.PriceData;
 
@@ -232,6 +242,18 @@ declare module 'stripe' {
     }
 
     namespace InvoiceItemCreateParams {
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+      }
+
       interface Period {
         /**
          * The end of the period, which must be greater than or equal to the start.
@@ -291,6 +313,11 @@ declare module 'stripe' {
       discountable?: boolean;
 
       /**
+       * The coupons & existing discounts which apply to the invoice item or invoice line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
+       */
+      discounts?: Array<InvoiceItemUpdateParams.Discount> | null;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -311,7 +338,7 @@ declare module 'stripe' {
       price?: string;
 
       /**
-       * Data used to generate a new price object inline.
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
        */
       price_data?: InvoiceItemUpdateParams.PriceData;
 
@@ -337,6 +364,18 @@ declare module 'stripe' {
     }
 
     namespace InvoiceItemUpdateParams {
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+      }
+
       interface Period {
         /**
          * The end of the period, which must be greater than or equal to the start.

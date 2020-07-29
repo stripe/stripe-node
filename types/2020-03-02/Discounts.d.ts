@@ -6,6 +6,11 @@ declare module 'stripe' {
      */
     interface Discount {
       /**
+       * The ID of the discount object. Discounts cannot be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.
+       */
+      id?: string;
+
+      /**
        * String representing the object's type. Objects of the same type share the same value.
        */
       object: 'discount';
@@ -30,6 +35,16 @@ declare module 'stripe' {
       end: number | null;
 
       /**
+       * The invoice that the discount's coupon was applied to, if it was applied directly to a particular invoice.
+       */
+      invoice?: string | null;
+
+      /**
+       * The invoice item `id` (or invoice line item `id` for invoice line items of type='subscription') that the discount's coupon was applied to, if it was applied directly to a particular invoice item or invoice line item.
+       */
+      invoice_item?: string | null;
+
+      /**
        * Date that the coupon was applied.
        */
       start: number;
@@ -44,6 +59,11 @@ declare module 'stripe' {
      * The DeletedDiscount object.
      */
     interface DeletedDiscount {
+      /**
+       * The ID of the discount object. Discounts cannot be fetched by ID. Use `expand[]=discounts` in API calls to expand discount IDs in an array.
+       */
+      id?: string;
+
       /**
        * String representing the object's type. Objects of the same type share the same value.
        */
@@ -65,6 +85,16 @@ declare module 'stripe' {
        * Always true for a deleted object
        */
       deleted: true;
+
+      /**
+       * The invoice that the discount's coupon was applied to, if it was applied directly to a particular invoice.
+       */
+      invoice?: string | null;
+
+      /**
+       * The invoice item `id` (or invoice line item `id` for invoice line items of type='subscription') that the discount's coupon was applied to, if it was applied directly to a particular invoice item or invoice line item.
+       */
+      invoice_item?: string | null;
 
       /**
        * Date that the coupon was applied.

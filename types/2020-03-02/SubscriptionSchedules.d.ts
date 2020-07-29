@@ -556,7 +556,7 @@ declare module 'stripe' {
           price?: string;
 
           /**
-           * Data used to generate a new price object inline.
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
            */
           price_data?: AddInvoiceItem.PriceData;
 
@@ -630,7 +630,7 @@ declare module 'stripe' {
           price?: string;
 
           /**
-           * Data used to generate a new price object inline.
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
            */
           price_data?: Plan.PriceData;
 
@@ -934,7 +934,7 @@ declare module 'stripe' {
           price?: string;
 
           /**
-           * Data used to generate a new price object inline.
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
            */
           price_data?: AddInvoiceItem.PriceData;
 
@@ -1008,7 +1008,7 @@ declare module 'stripe' {
           price?: string;
 
           /**
-           * Data used to generate a new price object inline.
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
            */
           price_data?: Plan.PriceData;
 
