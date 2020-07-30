@@ -33,7 +33,7 @@ declare module 'stripe' {
       /**
        * ID of the customer.
        */
-      customer: string | Stripe.Customer;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
        * Customer balance transaction related to this credit note.
