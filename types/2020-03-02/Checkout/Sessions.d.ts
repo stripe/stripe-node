@@ -1286,7 +1286,7 @@ declare module 'stripe' {
           application_fee_percent?: number;
 
           /**
-           * The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
+           * The ID of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
            */
           coupon?: string;
 
