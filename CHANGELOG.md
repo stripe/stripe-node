@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.81.0 - 2020-07-30
+* [#970](https://github.com/stripe/stripe-node/pull/970) Improve types for `customer` on `CreditNote` to support `DeletedCustomer`
+
 ## 8.80.0 - 2020-07-29
 * [#969](https://github.com/stripe/stripe-node/pull/969) Multiple API changes
   * Add support for `id`, `invoice` and `invoice_item` on `Discount` and `DeletedDiscount`
