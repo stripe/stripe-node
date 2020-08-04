@@ -390,7 +390,7 @@ declare module 'stripe' {
       nickname?: string;
 
       /**
-       * The product the plan belongs to. Note that after updating, statement descriptors and line items of the plan in active subscriptions will be affected.
+       * The product the plan belongs to. This cannot be changed once it has been used in a subscription or subscription schedule.
        */
       product?: string;
 

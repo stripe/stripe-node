@@ -252,7 +252,9 @@ declare module 'stripe' {
           | 'sl'
           | 'sv'
           | 'tr'
-          | 'zh';
+          | 'zh'
+          | 'zh-HK'
+          | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
 
@@ -869,7 +871,9 @@ declare module 'stripe' {
           | 'sl'
           | 'sv'
           | 'tr'
-          | 'zh';
+          | 'zh'
+          | 'zh-HK'
+          | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
 
