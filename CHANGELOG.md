@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.82.0 - 2020-08-04
+* [#972](https://github.com/stripe/stripe-node/pull/972) Multiple API changes
+  * Add `zh-HK` and `zh-TW` as `locale` on Checkout `Session`
+  * Add `payment_method_details[card_present][receipt][account_type]` on `Charge`
+
 ## 8.81.0 - 2020-07-30
 * [#970](https://github.com/stripe/stripe-node/pull/970) Improve types for `customer` on `CreditNote` to support `DeletedCustomer`
 
