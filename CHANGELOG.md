@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 8.83.0 - 2020-08-05
+* [#973](https://github.com/stripe/stripe-node/pull/973) Multiple API changes
+  * Add support for the `PromotionCode` resource and APIs
+  * Add support for `allow_promotion_codes` on Checkout `Session`
+  * Add support for `applies_to[products]` on `Coupon`
+  * Add support for `promotion_code` on `Customer` and `Subscription`
+  * Add support for `promotion_code` on `Discount`
+
 ## 8.82.0 - 2020-08-04
 * [#972](https://github.com/stripe/stripe-node/pull/972) Multiple API changes
   * Add `zh-HK` and `zh-TW` as `locale` on Checkout `Session`
