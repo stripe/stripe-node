@@ -20,6 +20,8 @@ declare module 'stripe' {
        */
       amount_off: number | null;
 
+      applies_to?: Coupon.AppliesTo;
+
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
@@ -84,6 +86,13 @@ declare module 'stripe' {
     }
 
     namespace Coupon {
+      interface AppliesTo {
+        /**
+         * A list of product IDs this coupon applies to
+         */
+        products: Array<string>;
+      }
+
       type Duration = 'forever' | 'once' | 'repeating';
     }
 
@@ -117,6 +126,11 @@ declare module 'stripe' {
        * A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
        */
       amount_off?: number;
+
+      /**
+       * A hash containing directions for what this Coupon will apply discounts to.
+       */
+      applies_to?: CouponCreateParams.AppliesTo;
 
       /**
        * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `amount_off` parameter (required if `amount_off` is passed).
@@ -165,6 +179,13 @@ declare module 'stripe' {
     }
 
     namespace CouponCreateParams {
+      interface AppliesTo {
+        /**
+         * An array of Product IDs that this Coupon will apply to.
+         */
+        products: Array<string>;
+      }
+
       type Duration = 'forever' | 'once' | 'repeating';
     }
 
