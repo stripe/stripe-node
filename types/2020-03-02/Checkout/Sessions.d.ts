@@ -18,6 +18,11 @@ declare module 'stripe' {
         object: 'checkout.session';
 
         /**
+         * Enables user redeemable promotion codes.
+         */
+        allow_promotion_codes?: boolean | null;
+
+        /**
          * Total of all items before discounts or taxes are applied.
          */
         amount_subtotal: number | null;
@@ -620,6 +625,11 @@ declare module 'stripe' {
          * with webhooks](https://stripe.com/docs/payments/checkout/accept-a-payment#payment-success).
          */
         success_url: string;
+
+        /**
+         * Enables user redeemable promotion codes.
+         */
+        allow_promotion_codes?: boolean;
 
         /**
          * Specify whether Checkout should collect the customer's billing address.

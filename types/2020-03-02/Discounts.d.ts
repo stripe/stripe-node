@@ -45,6 +45,11 @@ declare module 'stripe' {
       invoice_item?: string | null;
 
       /**
+       * The promotion code applied to create this discount.
+       */
+      promotion_code?: string | Stripe.PromotionCode | null;
+
+      /**
        * Date that the coupon was applied.
        */
       start: number;
@@ -95,6 +100,11 @@ declare module 'stripe' {
        * The invoice item `id` (or invoice line item `id` for invoice line items of type='subscription') that the discount's coupon was applied to, if it was applied directly to a particular invoice item or invoice line item.
        */
       invoice_item?: string | null;
+
+      /**
+       * The promotion code applied to create this discount.
+       */
+      promotion_code?: string | Stripe.PromotionCode | null;
 
       /**
        * Date that the coupon was applied.

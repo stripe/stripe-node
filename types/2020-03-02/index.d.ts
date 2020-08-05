@@ -61,6 +61,7 @@
 ///<reference path='./PlatformTaxFees.d.ts' />
 ///<reference path='./Prices.d.ts' />
 ///<reference path='./Products.d.ts' />
+///<reference path='./PromotionCodes.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
 ///<reference path='./Radar/ValueLists.d.ts' />
@@ -136,6 +137,7 @@ declare module 'stripe' {
     plans: Stripe.PlansResource;
     prices: Stripe.PricesResource;
     products: Stripe.ProductsResource;
+    promotionCodes: Stripe.PromotionCodesResource;
     refunds: Stripe.RefundsResource;
     reviews: Stripe.ReviewsResource;
     setupIntents: Stripe.SetupIntentsResource;

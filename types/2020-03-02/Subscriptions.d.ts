@@ -401,6 +401,11 @@ declare module 'stripe' {
       pending_invoice_item_interval?: SubscriptionCreateParams.PendingInvoiceItemInterval | null;
 
       /**
+       * The API ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
+       */
+      promotion_code?: string;
+
+      /**
        * This field has been renamed to `proration_behavior`. `prorate=true` can be replaced with `proration_behavior=create_prorations` and `prorate=false` can be replaced with `proration_behavior=none`.
        */
       prorate?: boolean;
@@ -727,6 +732,11 @@ declare module 'stripe' {
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
        */
       pending_invoice_item_interval?: SubscriptionUpdateParams.PendingInvoiceItemInterval | null;
+
+      /**
+       * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
+       */
+      promotion_code?: string;
 
       /**
        * This field has been renamed to `proration_behavior`. `prorate=true` can be replaced with `proration_behavior=create_prorations` and `prorate=false` can be replaced with `proration_behavior=none`.
