@@ -426,7 +426,7 @@ declare module 'stripe' {
 
     class PlansResource {
       /**
-       * You can create plans using the API, or in the Stripe [Dashboard](https://dashboard.stripe.com/products).
+       * You can now model subscriptions more flexibly using the [Prices API](https://stripe.com/docs/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
        */
       create(
         params: PlanCreateParams,

@@ -47,7 +47,7 @@ declare module 'stripe' {
       /**
        * The promotion code applied to create this discount.
        */
-      promotion_code?: string | Stripe.PromotionCode | null;
+      promotion_code: string | Stripe.PromotionCode | null;
 
       /**
        * Date that the coupon was applied.
@@ -104,7 +104,7 @@ declare module 'stripe' {
       /**
        * The promotion code applied to create this discount.
        */
-      promotion_code?: string | Stripe.PromotionCode | null;
+      promotion_code: string | Stripe.PromotionCode | null;
 
       /**
        * Date that the coupon was applied.
