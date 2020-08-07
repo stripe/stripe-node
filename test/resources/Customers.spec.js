@@ -220,35 +220,39 @@ describe('Customers Resource', () => {
 
     describe('createSource', () => {
       it('Sends the correct request', () => {
-        stripe.customers.createSource('cus_123', {
-          object: 'card',
-          number: '123456',
-          exp_month: '12',
-        });
+        const params = {
+          source: {
+            object: 'card',
+            number: '123456',
+            exp_month: '12',
+            exp_year: '30',
+          },
+        };
+        stripe.customers.createSource('cus_123', params);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/customers/cus_123/sources',
           headers: {},
-          data: {object: 'card', number: '123456', exp_month: '12'},
+          data: params,
           settings: {},
         });
       });
 
       it('Sends the correct request [with specified auth]', () => {
-        stripe.customers.createSource(
-          'cus_123',
-          {
+        const params = {
+          source: {
             object: 'card',
             number: '123456',
             exp_month: '12',
+            exp_year: '30',
           },
-          TEST_AUTH_KEY
-        );
+        };
+        stripe.customers.createSource('cus_123', params, TEST_AUTH_KEY);
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
           url: '/v1/customers/cus_123/sources',
           headers: {},
-          data: {object: 'card', number: '123456', exp_month: '12'},
+          data: params,
           auth: TEST_AUTH_KEY,
           settings: {},
         });
