@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.84.0 - 2020-08-07
+* [#975](https://github.com/stripe/stripe-node/pull/975) Add support for Alipay on `PaymentMethod` and `PaymentIntent`
+
 ## 8.83.0 - 2020-08-05
 * [#973](https://github.com/stripe/stripe-node/pull/973) Multiple API changes
   * Add support for the `PromotionCode` resource and APIs
