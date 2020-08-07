@@ -62,7 +62,7 @@ declare module 'stripe' {
        */
       metadata: Metadata;
 
-      restrictions?: PromotionCode.Restrictions;
+      restrictions: PromotionCode.Restrictions;
 
       /**
        * Number of times this promotion code has been used.

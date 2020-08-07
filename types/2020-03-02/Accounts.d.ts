@@ -742,7 +742,7 @@ declare module 'stripe' {
       default_currency?: string;
 
       /**
-       * The email address of the account holder. For Custom accounts, this is only to make the account easier to identify to you: Stripe will never directly email your users.
+       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe will never directly email Custom accounts.
        */
       email?: string;
 
@@ -784,7 +784,7 @@ declare module 'stripe' {
       tos_acceptance?: AccountCreateParams.TosAcceptance;
 
       /**
-       * The type of Stripe account to create. Currently must be `custom`, as only [Custom accounts](https://stripe.com/docs/connect/custom-accounts) may be created via the API.
+       * The type of Stripe account to create. May be one of `custom`, `express` or `standard`.
        */
       type?: AccountCreateParams.Type;
     }
@@ -1567,7 +1567,7 @@ declare module 'stripe' {
       default_currency?: string;
 
       /**
-       * Email address of the account representative. For Standard accounts, this is used to ask them to claim their Stripe account. For Custom accounts, this only makes the account easier to identify to platforms; Stripe does not email the account representative.
+       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe will never directly email Custom accounts.
        */
       email?: string;
 

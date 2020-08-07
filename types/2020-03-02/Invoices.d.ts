@@ -1129,7 +1129,7 @@ declare module 'stripe' {
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set, but at least one is required.
            */
           unit_amount_decimal?: string;
         }
@@ -1219,7 +1219,7 @@ declare module 'stripe' {
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set, but at least one is required.
            */
           unit_amount_decimal?: string;
         }

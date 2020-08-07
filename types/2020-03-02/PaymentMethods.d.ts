@@ -15,6 +15,8 @@ declare module 'stripe' {
        */
       object: 'payment_method';
 
+      alipay?: PaymentMethod.Alipay;
+
       au_becs_debit?: PaymentMethod.AuBecsDebit;
 
       bacs_debit?: PaymentMethod.BacsDebit;
@@ -68,6 +70,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethod {
+      interface Alipay {}
+
       interface AuBecsDebit {
         /**
          * Six-digit number identifying bank and branch associated with this bank account.
@@ -440,6 +444,7 @@ declare module 'stripe' {
       }
 
       type Type =
+        | 'alipay'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
@@ -454,6 +459,11 @@ declare module 'stripe' {
     }
 
     interface PaymentMethodCreateParams {
+      /**
+       * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
+       */
+      alipay?: PaymentMethodCreateParams.Alipay;
+
       /**
        * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
        */
@@ -541,6 +551,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodCreateParams {
+      interface Alipay {}
+
       interface AuBecsDebit {
         /**
          * The account number for the bank account.
@@ -726,6 +738,7 @@ declare module 'stripe' {
       }
 
       type Type =
+        | 'alipay'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'

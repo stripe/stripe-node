@@ -317,6 +317,8 @@ declare module 'stripe' {
       }
 
       interface NextAction {
+        alipay_handle_redirect?: NextAction.AlipayHandleRedirect;
+
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
@@ -331,6 +333,28 @@ declare module 'stripe' {
       }
 
       namespace NextAction {
+        interface AlipayHandleRedirect {
+          /**
+           * The native data to be used with Alipay SDK you must redirect your customer to in order to authenticate the payment in an Android App.
+           */
+          native_data: string | null;
+
+          /**
+           * The native URL you must redirect your customer to in order to authenticate the payment in an iOS App.
+           */
+          native_url: string | null;
+
+          /**
+           * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
+           */
+          return_url: string | null;
+
+          /**
+           * The URL you must redirect your customer to in order to authenticate the payment.
+           */
+          url: string | null;
+        }
+
         interface RedirectToUrl {
           /**
            * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
@@ -347,12 +371,16 @@ declare module 'stripe' {
       }
 
       interface PaymentMethodOptions {
+        alipay?: PaymentMethodOptions.Alipay;
+
         bancontact?: PaymentMethodOptions.Bancontact;
 
         card?: PaymentMethodOptions.Card;
       }
 
       namespace PaymentMethodOptions {
+        interface Alipay {}
+
         interface Bancontact {
           /**
            * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -729,6 +757,11 @@ declare module 'stripe' {
 
       interface PaymentMethodData {
         /**
+         * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
+         */
+        alipay?: PaymentMethodData.Alipay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -795,6 +828,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodData {
+        interface Alipay {}
+
         interface AuBecsDebit {
           /**
            * The account number for the bank account.
@@ -954,6 +989,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'alipay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -968,6 +1004,11 @@ declare module 'stripe' {
 
       interface PaymentMethodOptions {
         /**
+         * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
+         */
+        alipay?: PaymentMethodOptions.Alipay | null;
+
+        /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: PaymentMethodOptions.Bancontact | null;
@@ -979,6 +1020,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface Alipay {}
+
         interface Bancontact {
           /**
            * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -1252,6 +1295,11 @@ declare module 'stripe' {
     namespace PaymentIntentUpdateParams {
       interface PaymentMethodData {
         /**
+         * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
+         */
+        alipay?: PaymentMethodData.Alipay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -1318,6 +1366,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodData {
+        interface Alipay {}
+
         interface AuBecsDebit {
           /**
            * The account number for the bank account.
@@ -1477,6 +1527,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'alipay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -1491,6 +1542,11 @@ declare module 'stripe' {
 
       interface PaymentMethodOptions {
         /**
+         * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
+         */
+        alipay?: PaymentMethodOptions.Alipay | null;
+
+        /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: PaymentMethodOptions.Bancontact | null;
@@ -1502,6 +1558,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface Alipay {}
+
         interface Bancontact {
           /**
            * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -1889,6 +1947,11 @@ declare module 'stripe' {
 
       interface PaymentMethodData {
         /**
+         * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
+         */
+        alipay?: PaymentMethodData.Alipay;
+
+        /**
          * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
          */
         au_becs_debit?: PaymentMethodData.AuBecsDebit;
@@ -1955,6 +2018,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodData {
+        interface Alipay {}
+
         interface AuBecsDebit {
           /**
            * The account number for the bank account.
@@ -2114,6 +2179,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'alipay'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -2128,6 +2194,11 @@ declare module 'stripe' {
 
       interface PaymentMethodOptions {
         /**
+         * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
+         */
+        alipay?: PaymentMethodOptions.Alipay | null;
+
+        /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: PaymentMethodOptions.Bancontact | null;
@@ -2139,6 +2210,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface Alipay {}
+
         interface Bancontact {
           /**
            * Preferred language of the Bancontact authorization page that the customer is redirected to.
