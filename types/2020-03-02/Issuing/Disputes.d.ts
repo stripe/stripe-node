@@ -19,7 +19,7 @@ declare module 'stripe' {
         /**
          * List of balance transactions associated with this dispute.
          */
-        balance_transactions: Array<Stripe.BalanceTransaction>;
+        balance_transactions: Array<Stripe.BalanceTransaction> | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
