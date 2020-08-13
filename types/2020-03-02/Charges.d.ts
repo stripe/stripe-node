@@ -491,6 +491,11 @@ declare module 'stripe' {
 
         interface AcssDebit {
           /**
+           * Name of the bank associated with the bank account.
+           */
+          bank_name: string | null;
+
+          /**
            * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
            */
           fingerprint: string | null;
@@ -755,7 +760,8 @@ declare module 'stripe' {
 
           interface ThreeDSecure {
             /**
-             * Whether or not authentication was performed. 3D Secure will succeed without authentication when the card is not enrolled.
+             * Whether or not authentication was performed. 3D Secure will succeed
+             * without authentication when the card is not enrolled.
              */
             authenticated?: boolean;
 
