@@ -1016,6 +1016,7 @@ declare module 'stripe' {
         }
 
         type PaymentMethodType =
+          | 'alipay'
           | 'bacs_debit'
           | 'bancontact'
           | 'card'
