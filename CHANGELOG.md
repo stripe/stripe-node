@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.86.0 - 2020-08-13
+* [#981](https://github.com/stripe/stripe-node/pull/981) Add support for Alipay on Checkout `Session`
+
 ## 8.85.0 - 2020-08-13
 * [#980](https://github.com/stripe/stripe-node/pull/980) [codegen] Multiple API Changes
   * Added support for bank_name on `Charge.payment_method_details.acss_debit`
