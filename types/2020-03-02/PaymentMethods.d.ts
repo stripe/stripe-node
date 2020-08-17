@@ -884,6 +884,7 @@ declare module 'stripe' {
 
     namespace PaymentMethodListParams {
       type Type =
+        | 'alipay'
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
