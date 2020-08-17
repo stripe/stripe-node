@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.87.0 - 2020-08-17
+* [#984](https://github.com/stripe/stripe-node/pull/984) Multiple API changes
+  * Add `alipay` on `type` for the List PaymentMethods API
+  * Add `payment_intent.requires_action` as a new `type` on `Event`
+
 ## 8.86.0 - 2020-08-13
 * [#981](https://github.com/stripe/stripe-node/pull/981) Add support for Alipay on Checkout `Session`
 
