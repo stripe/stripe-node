@@ -22,6 +22,11 @@ declare module 'stripe' {
         amount: number;
 
         /**
+         * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         */
+        amount_details: Authorization.AmountDetails | null;
+
+        /**
          * Whether the authorization has been approved.
          */
         approved: boolean;
@@ -107,6 +112,13 @@ declare module 'stripe' {
       }
 
       namespace Authorization {
+        interface AmountDetails {
+          /**
+           * The fee charged by the ATM for the cash withdrawal.
+           */
+          atm_fee: number | null;
+        }
+
         type AuthorizationMethod =
           | 'chip'
           | 'contactless'
@@ -158,6 +170,11 @@ declare module 'stripe' {
           amount: number;
 
           /**
+           * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount_details: PendingRequest.AmountDetails | null;
+
+          /**
            * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
            */
           currency: string;
@@ -178,11 +195,25 @@ declare module 'stripe' {
           merchant_currency: string;
         }
 
+        namespace PendingRequest {
+          interface AmountDetails {
+            /**
+             * The fee charged by the ATM for the cash withdrawal.
+             */
+            atm_fee: number | null;
+          }
+        }
+
         interface RequestHistory {
           /**
            * The authorization amount in your card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Stripe held this amount from your account to fund the authorization if the request was approved.
            */
           amount: number;
+
+          /**
+           * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+           */
+          amount_details: RequestHistory.AmountDetails | null;
 
           /**
            * Whether this request was approved.
@@ -216,6 +247,13 @@ declare module 'stripe' {
         }
 
         namespace RequestHistory {
+          interface AmountDetails {
+            /**
+             * The fee charged by the ATM for the cash withdrawal.
+             */
+            atm_fee: number | null;
+          }
+
           type Reason =
             | 'account_disabled'
             | 'card_active'

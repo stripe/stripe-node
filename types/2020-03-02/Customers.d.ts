@@ -109,7 +109,7 @@ declare module 'stripe' {
       /**
        * The customer's payment sources, if any.
        */
-      sources: ApiList<CustomerSource>;
+      sources: ApiList<CustomerSource> | null;
 
       /**
        * The customer's current subscriptions, if any.
