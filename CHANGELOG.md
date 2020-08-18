@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.88.0 - 2020-08-17
+* [#987](https://github.com/stripe/stripe-node/pull/987) Add support for `amount_details` on Issuing `Authorization` and `Transaction`
+
 ## 8.87.0 - 2020-08-17
 * [#984](https://github.com/stripe/stripe-node/pull/984) Multiple API changes
   * Add `alipay` on `type` for the List PaymentMethods API
