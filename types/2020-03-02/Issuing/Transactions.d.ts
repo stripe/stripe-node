@@ -22,6 +22,11 @@ declare module 'stripe' {
         amount: number;
 
         /**
+         * Detailed breakdown of amount components. These amounts are denominated in `currency` and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         */
+        amount_details: Transaction.AmountDetails | null;
+
+        /**
          * The `Authorization` object that led to this transaction.
          */
         authorization: string | Stripe.Issuing.Authorization | null;
@@ -85,6 +90,13 @@ declare module 'stripe' {
       }
 
       namespace Transaction {
+        interface AmountDetails {
+          /**
+           * The fee charged by the ATM for the cash withdrawal.
+           */
+          atm_fee: number | null;
+        }
+
         interface MerchantData {
           /**
            * A categorization of the seller's type of business. See our [merchant categories guide](https://stripe.com/docs/issuing/merchant-categories) for a list of possible values.
