@@ -124,7 +124,7 @@ declare module 'stripe' {
       /**
        * The customer's tax IDs.
        */
-      tax_ids: ApiList<Stripe.TaxId>;
+      tax_ids: ApiList<Stripe.TaxId> | null;
     }
 
     namespace Customer {
