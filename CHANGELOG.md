@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.89.0 - 2020-08-19
+* [#988](https://github.com/stripe/stripe-node/pull/988) Multiple API changes
+  * `tax_ids` on `Customer` can now be nullable
+  * Added support for `expires_at` on `File`
+
 ## 8.88.0 - 2020-08-17
 * [#987](https://github.com/stripe/stripe-node/pull/987) Add support for `amount_details` on Issuing `Authorization` and `Transaction`
 
