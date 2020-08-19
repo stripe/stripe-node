@@ -21,6 +21,11 @@ declare module 'stripe' {
       created: number;
 
       /**
+       * The time at which the file expires and is no longer available in epoch seconds.
+       */
+      expires_at: number | null;
+
+      /**
        * A filename for the file, suitable for saving to a filesystem.
        */
       filename: string | null;
