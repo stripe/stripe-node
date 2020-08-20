@@ -1171,8 +1171,10 @@ declare module 'stripe' {
       create(
         params?: SubscriptionScheduleCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionSchedule>;
-      create(options?: RequestOptions): Promise<Stripe.SubscriptionSchedule>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
+      create(
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
 
       /**
        * Retrieves the details of an existing subscription schedule. You only need to supply the unique subscription schedule identifier that was returned upon subscription schedule creation.
@@ -1181,11 +1183,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionScheduleRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionSchedule>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionSchedule>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
 
       /**
        * Updates an existing subscription schedule.
@@ -1194,7 +1196,7 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionScheduleUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionSchedule>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
 
       /**
        * Retrieves the list of your subscription schedules.
@@ -1214,11 +1216,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionScheduleCancelParams,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionSchedule>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
       cancel(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionSchedule>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
 
       /**
        * Releases the subscription schedule immediately, which will stop scheduling of its phases, but leave any existing subscription in place. A schedule can only be released if its status is not_started or active. If the subscription schedule is currently associated with a subscription, releasing it will remove its subscription property and set the subscription's ID to the released_subscription property.
@@ -1227,11 +1229,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionScheduleReleaseParams,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionSchedule>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
       release(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionSchedule>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
     }
   }
 }

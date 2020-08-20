@@ -176,7 +176,7 @@ declare module 'stripe' {
         create(
           params: ReaderCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.Reader>;
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
          * Retrieves a Reader object.
@@ -185,11 +185,11 @@ declare module 'stripe' {
           id: string,
           params?: ReaderRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.Reader>;
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.Reader>;
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
          * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -198,7 +198,7 @@ declare module 'stripe' {
           id: string,
           params?: ReaderUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.Reader>;
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
          * Returns a list of Reader objects.
@@ -216,11 +216,11 @@ declare module 'stripe' {
           id: string,
           params?: ReaderDeleteParams,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.DeletedReader>;
+        ): Promise<Stripe.Response<Stripe.Terminal.DeletedReader>>;
         del(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.DeletedReader>;
+        ): Promise<Stripe.Response<Stripe.Terminal.DeletedReader>>;
       }
     }
   }

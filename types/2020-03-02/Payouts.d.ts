@@ -227,7 +227,7 @@ declare module 'stripe' {
       create(
         params: PayoutCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Payout>;
+      ): Promise<Stripe.Response<Stripe.Payout>>;
 
       /**
        * Retrieves the details of an existing payout. Supply the unique payout ID from either a payout creation request or the payout list, and Stripe will return the corresponding payout information.
@@ -236,8 +236,11 @@ declare module 'stripe' {
         id: string,
         params?: PayoutRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Payout>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Payout>;
+      ): Promise<Stripe.Response<Stripe.Payout>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Payout>>;
 
       /**
        * Updates the specified payout by setting the values of the parameters passed. Any parameters not provided will be left unchanged. This request accepts only the metadata as arguments.
@@ -246,7 +249,7 @@ declare module 'stripe' {
         id: string,
         params?: PayoutUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Payout>;
+      ): Promise<Stripe.Response<Stripe.Payout>>;
 
       /**
        * Returns a list of existing payouts sent to third-party bank accounts or that Stripe has sent you. The payouts are returned in sorted order, with the most recently created payouts appearing first.
@@ -264,8 +267,11 @@ declare module 'stripe' {
         id: string,
         params?: PayoutCancelParams,
         options?: RequestOptions
-      ): Promise<Stripe.Payout>;
-      cancel(id: string, options?: RequestOptions): Promise<Stripe.Payout>;
+      ): Promise<Stripe.Response<Stripe.Payout>>;
+      cancel(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Payout>>;
     }
   }
 }

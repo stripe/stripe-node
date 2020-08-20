@@ -45,11 +45,11 @@ declare module 'stripe' {
         id: string,
         params?: ExchangeRateRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.ExchangeRate>;
+      ): Promise<Stripe.Response<Stripe.ExchangeRate>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.ExchangeRate>;
+      ): Promise<Stripe.Response<Stripe.ExchangeRate>>;
 
       /**
        * Returns a list of objects that contain the rates at which foreign currencies are converted to one another. Only shows the currencies for which Stripe supports.

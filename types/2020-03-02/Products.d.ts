@@ -416,7 +416,7 @@ declare module 'stripe' {
       create(
         params: ProductCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Product>;
+      ): Promise<Stripe.Response<Stripe.Product>>;
 
       /**
        * Retrieves the details of an existing product. Supply the unique product ID from either a product creation request or the product list, and Stripe will return the corresponding product information.
@@ -425,8 +425,11 @@ declare module 'stripe' {
         id: string,
         params?: ProductRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Product>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Product>;
+      ): Promise<Stripe.Response<Stripe.Product>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Product>>;
 
       /**
        * Updates the specific product by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -435,7 +438,7 @@ declare module 'stripe' {
         id: string,
         params?: ProductUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Product>;
+      ): Promise<Stripe.Response<Stripe.Product>>;
 
       /**
        * Returns a list of your products. The products are returned sorted by creation date, with the most recently created products appearing first.
@@ -453,8 +456,11 @@ declare module 'stripe' {
         id: string,
         params?: ProductDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedProduct>;
-      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedProduct>;
+      ): Promise<Stripe.Response<Stripe.DeletedProduct>>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.DeletedProduct>>;
     }
   }
 }

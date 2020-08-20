@@ -105,11 +105,11 @@ declare module 'stripe' {
         id: string,
         params?: ApplicationFeeRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.ApplicationFee>;
+      ): Promise<Stripe.Response<Stripe.ApplicationFee>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.ApplicationFee>;
+      ): Promise<Stripe.Response<Stripe.ApplicationFee>>;
 
       /**
        * Returns a list of application fees you've previously collected. The application fees are returned in sorted order, with the most recent fees appearing first.
@@ -135,11 +135,11 @@ declare module 'stripe' {
         id: string,
         params?: FeeRefundCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.FeeRefund>;
+      ): Promise<Stripe.Response<Stripe.FeeRefund>>;
       createRefund(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.FeeRefund>;
+      ): Promise<Stripe.Response<Stripe.FeeRefund>>;
 
       /**
        * By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.
@@ -149,12 +149,12 @@ declare module 'stripe' {
         id: string,
         params?: FeeRefundRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.FeeRefund>;
+      ): Promise<Stripe.Response<Stripe.FeeRefund>>;
       retrieveRefund(
         feeId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.FeeRefund>;
+      ): Promise<Stripe.Response<Stripe.FeeRefund>>;
 
       /**
        * Updates the specified application fee refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -166,7 +166,7 @@ declare module 'stripe' {
         id: string,
         params?: FeeRefundUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.FeeRefund>;
+      ): Promise<Stripe.Response<Stripe.FeeRefund>>;
 
       /**
        * You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.

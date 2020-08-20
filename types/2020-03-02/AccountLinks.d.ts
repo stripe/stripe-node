@@ -85,7 +85,7 @@ declare module 'stripe' {
       create(
         params: AccountLinkCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.AccountLink>;
+      ): Promise<Stripe.Response<Stripe.AccountLink>>;
     }
   }
 }

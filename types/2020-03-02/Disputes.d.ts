@@ -453,8 +453,11 @@ declare module 'stripe' {
         id: string,
         params?: DisputeRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Dispute>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Dispute>;
+      ): Promise<Stripe.Response<Stripe.Dispute>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Dispute>>;
 
       /**
        * When you get a dispute, contacting your customer is always the best first step. If that doesn't work, you can submit evidence to help us resolve the dispute in your favor. You can do this in your [dashboard](https://dashboard.stripe.com/disputes), but if you prefer, you can use the API to submit evidence programmatically.
@@ -465,7 +468,7 @@ declare module 'stripe' {
         id: string,
         params?: DisputeUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Dispute>;
+      ): Promise<Stripe.Response<Stripe.Dispute>>;
 
       /**
        * Returns a list of your disputes.
@@ -485,8 +488,11 @@ declare module 'stripe' {
         id: string,
         params?: DisputeCloseParams,
         options?: RequestOptions
-      ): Promise<Stripe.Dispute>;
-      close(id: string, options?: RequestOptions): Promise<Stripe.Dispute>;
+      ): Promise<Stripe.Response<Stripe.Dispute>>;
+      close(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Dispute>>;
     }
   }
 }

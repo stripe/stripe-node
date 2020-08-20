@@ -123,7 +123,7 @@ declare module 'stripe' {
       create(
         params: FileLinkCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.FileLink>;
+      ): Promise<Stripe.Response<Stripe.FileLink>>;
 
       /**
        * Retrieves the file link with the given ID.
@@ -132,8 +132,11 @@ declare module 'stripe' {
         id: string,
         params?: FileLinkRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.FileLink>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.FileLink>;
+      ): Promise<Stripe.Response<Stripe.FileLink>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.FileLink>>;
 
       /**
        * Updates an existing file link object. Expired links can no longer be updated.
@@ -142,7 +145,7 @@ declare module 'stripe' {
         id: string,
         params?: FileLinkUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.FileLink>;
+      ): Promise<Stripe.Response<Stripe.FileLink>>;
 
       /**
        * Returns a list of file links.

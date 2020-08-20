@@ -771,8 +771,8 @@ declare module 'stripe' {
       create(
         params?: TokenCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Token>;
-      create(options?: RequestOptions): Promise<Stripe.Token>;
+      ): Promise<Stripe.Response<Stripe.Token>>;
+      create(options?: RequestOptions): Promise<Stripe.Response<Stripe.Token>>;
 
       /**
        * Retrieves the token with the given ID.
@@ -781,8 +781,11 @@ declare module 'stripe' {
         id: string,
         params?: TokenRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Token>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Token>;
+      ): Promise<Stripe.Response<Stripe.Token>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Token>>;
     }
   }
 }

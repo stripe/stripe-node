@@ -192,7 +192,7 @@ declare module 'stripe' {
       create(
         params: TransferCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Transfer>;
+      ): Promise<Stripe.Response<Stripe.Transfer>>;
 
       /**
        * Retrieves the details of an existing transfer. Supply the unique transfer ID from either a transfer creation request or the transfer list, and Stripe will return the corresponding transfer information.
@@ -201,8 +201,11 @@ declare module 'stripe' {
         id: string,
         params?: TransferRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Transfer>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Transfer>;
+      ): Promise<Stripe.Response<Stripe.Transfer>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Transfer>>;
 
       /**
        * Updates the specified transfer by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -213,7 +216,7 @@ declare module 'stripe' {
         id: string,
         params?: TransferUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Transfer>;
+      ): Promise<Stripe.Response<Stripe.Transfer>>;
 
       /**
        * Returns a list of existing transfers sent to connected accounts. The transfers are returned in sorted order, with the most recently created transfers appearing first.
@@ -235,11 +238,11 @@ declare module 'stripe' {
         id: string,
         params?: TransferReversalCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.TransferReversal>;
+      ): Promise<Stripe.Response<Stripe.TransferReversal>>;
       createReversal(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.TransferReversal>;
+      ): Promise<Stripe.Response<Stripe.TransferReversal>>;
 
       /**
        * By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.
@@ -249,12 +252,12 @@ declare module 'stripe' {
         id: string,
         params?: TransferReversalRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.TransferReversal>;
+      ): Promise<Stripe.Response<Stripe.TransferReversal>>;
       retrieveReversal(
         idId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.TransferReversal>;
+      ): Promise<Stripe.Response<Stripe.TransferReversal>>;
 
       /**
        * Updates the specified reversal by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -266,7 +269,7 @@ declare module 'stripe' {
         id: string,
         params?: TransferReversalUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.TransferReversal>;
+      ): Promise<Stripe.Response<Stripe.TransferReversal>>;
 
       /**
        * You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.

@@ -1395,7 +1395,7 @@ declare module 'stripe' {
         create(
           params: SessionCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Checkout.Session>;
+        ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
          * Retrieves a Session object.
@@ -1404,11 +1404,11 @@ declare module 'stripe' {
           id: string,
           params?: SessionRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Checkout.Session>;
+        ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Checkout.Session>;
+        ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
          * Returns a list of Checkout Sessions.

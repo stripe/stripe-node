@@ -185,7 +185,7 @@ declare module 'stripe' {
         create(
           params: ValueListCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.ValueList>;
+        ): Promise<Stripe.Response<Stripe.Radar.ValueList>>;
 
         /**
          * Retrieves a ValueList object.
@@ -194,11 +194,11 @@ declare module 'stripe' {
           id: string,
           params?: ValueListRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.ValueList>;
+        ): Promise<Stripe.Response<Stripe.Radar.ValueList>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.ValueList>;
+        ): Promise<Stripe.Response<Stripe.Radar.ValueList>>;
 
         /**
          * Updates a ValueList object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Note that item_type is immutable.
@@ -207,7 +207,7 @@ declare module 'stripe' {
           id: string,
           params?: ValueListUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.ValueList>;
+        ): Promise<Stripe.Response<Stripe.Radar.ValueList>>;
 
         /**
          * Returns a list of ValueList objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -225,11 +225,11 @@ declare module 'stripe' {
           id: string,
           params?: ValueListDeleteParams,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.DeletedValueList>;
+        ): Promise<Stripe.Response<Stripe.Radar.DeletedValueList>>;
         del(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.DeletedValueList>;
+        ): Promise<Stripe.Response<Stripe.Radar.DeletedValueList>>;
       }
     }
   }

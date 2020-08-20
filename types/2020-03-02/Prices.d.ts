@@ -536,7 +536,7 @@ declare module 'stripe' {
       create(
         params: PriceCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Price>;
+      ): Promise<Stripe.Response<Stripe.Price>>;
 
       /**
        * Retrieves the price with the given ID.
@@ -545,8 +545,11 @@ declare module 'stripe' {
         id: string,
         params?: PriceRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Price>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Price>;
+      ): Promise<Stripe.Response<Stripe.Price>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Price>>;
 
       /**
        * Updates the specified price by setting the values of the parameters passed. Any parameters not provided are left unchanged.
@@ -555,7 +558,7 @@ declare module 'stripe' {
         id: string,
         params?: PriceUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Price>;
+      ): Promise<Stripe.Response<Stripe.Price>>;
 
       /**
        * Returns a list of your prices.

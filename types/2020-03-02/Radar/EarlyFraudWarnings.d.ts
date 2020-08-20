@@ -71,11 +71,11 @@ declare module 'stripe' {
           id: string,
           params?: EarlyFraudWarningRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.EarlyFraudWarning>;
+        ): Promise<Stripe.Response<Stripe.Radar.EarlyFraudWarning>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.EarlyFraudWarning>;
+        ): Promise<Stripe.Response<Stripe.Radar.EarlyFraudWarning>>;
 
         /**
          * Returns a list of early fraud warnings.

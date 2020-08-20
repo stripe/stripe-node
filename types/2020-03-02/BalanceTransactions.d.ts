@@ -208,11 +208,11 @@ declare module 'stripe' {
         id: string,
         params?: BalanceTransactionRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.BalanceTransaction>;
+      ): Promise<Stripe.Response<Stripe.BalanceTransaction>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.BalanceTransaction>;
+      ): Promise<Stripe.Response<Stripe.BalanceTransaction>>;
 
       /**
        * Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth). The transactions are returned in sorted order, with the most recent transactions appearing first.

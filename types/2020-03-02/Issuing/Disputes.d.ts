@@ -77,8 +77,10 @@ declare module 'stripe' {
         create(
           params?: DisputeCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Dispute>;
-        create(options?: RequestOptions): Promise<Stripe.Issuing.Dispute>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Dispute>>;
+        create(
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Issuing.Dispute>>;
 
         /**
          * Retrieves an Issuing Dispute object.
@@ -87,11 +89,11 @@ declare module 'stripe' {
           id: string,
           params?: DisputeRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Dispute>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Dispute>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Dispute>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Dispute>>;
 
         /**
          * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -100,7 +102,7 @@ declare module 'stripe' {
           id: string,
           params?: DisputeUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Dispute>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Dispute>>;
 
         /**
          * Returns a list of Issuing Dispute objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.

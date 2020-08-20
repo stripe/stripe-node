@@ -116,7 +116,7 @@ declare module 'stripe' {
         create(
           params: ValueListItemCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.ValueListItem>;
+        ): Promise<Stripe.Response<Stripe.Radar.ValueListItem>>;
 
         /**
          * Retrieves a ValueListItem object.
@@ -125,11 +125,11 @@ declare module 'stripe' {
           id: string,
           params?: ValueListItemRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.ValueListItem>;
+        ): Promise<Stripe.Response<Stripe.Radar.ValueListItem>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.ValueListItem>;
+        ): Promise<Stripe.Response<Stripe.Radar.ValueListItem>>;
 
         /**
          * Returns a list of ValueListItem objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -146,11 +146,11 @@ declare module 'stripe' {
           id: string,
           params?: ValueListItemDeleteParams,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.DeletedValueListItem>;
+        ): Promise<Stripe.Response<Stripe.Radar.DeletedValueListItem>>;
         del(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Radar.DeletedValueListItem>;
+        ): Promise<Stripe.Response<Stripe.Radar.DeletedValueListItem>>;
       }
     }
   }

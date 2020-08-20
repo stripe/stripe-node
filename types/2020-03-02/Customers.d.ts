@@ -571,8 +571,10 @@ declare module 'stripe' {
       create(
         params?: CustomerCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Customer>;
-      create(options?: RequestOptions): Promise<Stripe.Customer>;
+      ): Promise<Stripe.Response<Stripe.Customer>>;
+      create(
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Customer>>;
 
       /**
        * Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
@@ -581,11 +583,11 @@ declare module 'stripe' {
         id: string,
         params?: CustomerRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Customer | Stripe.DeletedCustomer>;
+      ): Promise<Stripe.Response<Stripe.Customer | Stripe.DeletedCustomer>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Customer | Stripe.DeletedCustomer>;
+      ): Promise<Stripe.Response<Stripe.Customer | Stripe.DeletedCustomer>>;
 
       /**
        * Updates the specified customer by setting the values of the parameters passed. Any parameters not provided will be left unchanged. For example, if you pass the source parameter, that becomes the customer's active source (e.g., a card) to be used for all charges in the future. When you update a customer to a new valid card source by passing the source parameter: for each of the customer's current subscriptions, if the subscription bills automatically and is in the past_due state, then the latest open invoice for the subscription with automatic collection enabled will be retried. This retry will not count as an automatic retry, and will not affect the next regularly scheduled payment for the invoice. Changing the default_source for a customer will not trigger this behavior.
@@ -596,7 +598,7 @@ declare module 'stripe' {
         id: string,
         params?: CustomerUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Customer>;
+      ): Promise<Stripe.Response<Stripe.Customer>>;
 
       /**
        * Returns a list of your customers. The customers are returned sorted by creation date, with the most recent customers appearing first.
@@ -614,11 +616,11 @@ declare module 'stripe' {
         id: string,
         params?: CustomerDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedCustomer>;
+      ): Promise<Stripe.Response<Stripe.DeletedCustomer>>;
       del(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedCustomer>;
+      ): Promise<Stripe.Response<Stripe.DeletedCustomer>>;
 
       /**
        * Removes the currently applied discount on a customer.
@@ -627,11 +629,11 @@ declare module 'stripe' {
         id: string,
         params?: CustomerDeleteDiscountParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedDiscount>;
+      ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
       deleteDiscount(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedDiscount>;
+      ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
 
       /**
        * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
@@ -640,7 +642,7 @@ declare module 'stripe' {
         id: string,
         params: CustomerBalanceTransactionCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.CustomerBalanceTransaction>;
+      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
 
       /**
        * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
@@ -650,12 +652,12 @@ declare module 'stripe' {
         id: string,
         params?: CustomerBalanceTransactionRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.CustomerBalanceTransaction>;
+      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
       retrieveBalanceTransaction(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.CustomerBalanceTransaction>;
+      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
 
       /**
        * Most customer balance transaction fields are immutable, but you may update its description and metadata.
@@ -665,7 +667,7 @@ declare module 'stripe' {
         id: string,
         params?: CustomerBalanceTransactionUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.CustomerBalanceTransaction>;
+      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
 
       /**
        * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
@@ -691,7 +693,7 @@ declare module 'stripe' {
         id: string,
         params: CustomerSourceCreateParams,
         options?: RequestOptions
-      ): Promise<CustomerSource>;
+      ): Promise<Stripe.Response<CustomerSource>>;
 
       /**
        * Retrieve a specified source for a given customer.
@@ -701,12 +703,12 @@ declare module 'stripe' {
         id: string,
         params?: CustomerSourceRetrieveParams,
         options?: RequestOptions
-      ): Promise<CustomerSource>;
+      ): Promise<Stripe.Response<CustomerSource>>;
       retrieveSource(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<CustomerSource>;
+      ): Promise<Stripe.Response<CustomerSource>>;
 
       /**
        * Update a specified source for a given customer.
@@ -716,12 +718,16 @@ declare module 'stripe' {
         id: string,
         params?: CustomerSourceUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Card | Stripe.BankAccount | Stripe.Source>;
+      ): Promise<
+        Stripe.Response<Stripe.Card | Stripe.BankAccount | Stripe.Source>
+      >;
       updateSource(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Card | Stripe.BankAccount | Stripe.Source>;
+      ): Promise<
+        Stripe.Response<Stripe.Card | Stripe.BankAccount | Stripe.Source>
+      >;
 
       /**
        * List sources for a specified customer.
@@ -745,22 +751,26 @@ declare module 'stripe' {
         params?: CustomerSourceDeleteParams,
         options?: RequestOptions
       ): Promise<
-        | CustomerSource
-        | Stripe.DeletedAlipayAccount
-        | Stripe.DeletedBankAccount
-        | Stripe.DeletedBitcoinReceiver
-        | Stripe.DeletedCard
+        Stripe.Response<
+          | CustomerSource
+          | Stripe.DeletedAlipayAccount
+          | Stripe.DeletedBankAccount
+          | Stripe.DeletedBitcoinReceiver
+          | Stripe.DeletedCard
+        >
       >;
       deleteSource(
         customerId: string,
         id: string,
         options?: RequestOptions
       ): Promise<
-        | CustomerSource
-        | Stripe.DeletedAlipayAccount
-        | Stripe.DeletedBankAccount
-        | Stripe.DeletedBitcoinReceiver
-        | Stripe.DeletedCard
+        Stripe.Response<
+          | CustomerSource
+          | Stripe.DeletedAlipayAccount
+          | Stripe.DeletedBankAccount
+          | Stripe.DeletedBitcoinReceiver
+          | Stripe.DeletedCard
+        >
       >;
 
       /**
@@ -771,12 +781,12 @@ declare module 'stripe' {
         id: string,
         params?: CustomerSourceVerifyParams,
         options?: RequestOptions
-      ): Promise<Stripe.BankAccount>;
+      ): Promise<Stripe.Response<Stripe.BankAccount>>;
       verifySource(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.BankAccount>;
+      ): Promise<Stripe.Response<Stripe.BankAccount>>;
 
       /**
        * Creates a new TaxID object for a customer.
@@ -785,7 +795,7 @@ declare module 'stripe' {
         id: string,
         params: TaxIdCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.TaxId>;
+      ): Promise<Stripe.Response<Stripe.TaxId>>;
 
       /**
        * Retrieves the TaxID object with the given identifier.
@@ -795,12 +805,12 @@ declare module 'stripe' {
         id: string,
         params?: TaxIdRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.TaxId>;
+      ): Promise<Stripe.Response<Stripe.TaxId>>;
       retrieveTaxId(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.TaxId>;
+      ): Promise<Stripe.Response<Stripe.TaxId>>;
 
       /**
        * Returns a list of tax IDs for a customer.
@@ -823,12 +833,12 @@ declare module 'stripe' {
         id: string,
         params?: TaxIdDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedTaxId>;
+      ): Promise<Stripe.Response<Stripe.DeletedTaxId>>;
       deleteTaxId(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedTaxId>;
+      ): Promise<Stripe.Response<Stripe.DeletedTaxId>>;
     }
   }
 }

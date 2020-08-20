@@ -3156,7 +3156,7 @@ declare module 'stripe' {
         create(
           params: CardCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Card>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Card>>;
 
         /**
          * Retrieves an Issuing Card object.
@@ -3165,11 +3165,11 @@ declare module 'stripe' {
           id: string,
           params?: CardRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Card>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Card>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Card>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Card>>;
 
         /**
          * Updates the specified Issuing Card object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -3178,7 +3178,7 @@ declare module 'stripe' {
           id: string,
           params?: CardUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Card>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Card>>;
 
         /**
          * Returns a list of Issuing Card objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -3196,11 +3196,11 @@ declare module 'stripe' {
           id: string,
           params?: CardRetrieveDetailsParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.CardDetails>;
+        ): Promise<Stripe.Response<Stripe.Issuing.CardDetails>>;
         retrieveDetails(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.CardDetails>;
+        ): Promise<Stripe.Response<Stripe.Issuing.CardDetails>>;
       }
     }
   }

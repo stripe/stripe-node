@@ -820,7 +820,7 @@ declare module 'stripe' {
         create(
           params: ReportRunCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Reporting.ReportRun>;
+        ): Promise<Stripe.Response<Stripe.Reporting.ReportRun>>;
 
         /**
          * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
@@ -829,11 +829,11 @@ declare module 'stripe' {
           id: string,
           params?: ReportRunRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Reporting.ReportRun>;
+        ): Promise<Stripe.Response<Stripe.Reporting.ReportRun>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Reporting.ReportRun>;
+        ): Promise<Stripe.Response<Stripe.Reporting.ReportRun>>;
 
         /**
          * Returns a list of Report Runs, with the most recent appearing first. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)

@@ -710,8 +710,10 @@ declare module 'stripe' {
       create(
         params?: SetupIntentCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.SetupIntent>;
-      create(options?: RequestOptions): Promise<Stripe.SetupIntent>;
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
+      create(
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
 
       /**
        * Retrieves the details of a SetupIntent that has previously been created.
@@ -724,11 +726,11 @@ declare module 'stripe' {
         id: string,
         params?: SetupIntentRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.SetupIntent>;
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.SetupIntent>;
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
 
       /**
        * Updates a SetupIntent object.
@@ -737,7 +739,7 @@ declare module 'stripe' {
         id: string,
         params?: SetupIntentUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.SetupIntent>;
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
 
       /**
        * Returns a list of SetupIntents.
@@ -757,8 +759,11 @@ declare module 'stripe' {
         id: string,
         params?: SetupIntentCancelParams,
         options?: RequestOptions
-      ): Promise<Stripe.SetupIntent>;
-      cancel(id: string, options?: RequestOptions): Promise<Stripe.SetupIntent>;
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
+      cancel(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
 
       /**
        * Confirm that your customer intends to set up the current or
@@ -779,11 +784,11 @@ declare module 'stripe' {
         id: string,
         params?: SetupIntentConfirmParams,
         options?: RequestOptions
-      ): Promise<Stripe.SetupIntent>;
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
       confirm(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.SetupIntent>;
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
     }
   }
 }

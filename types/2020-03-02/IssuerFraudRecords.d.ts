@@ -80,11 +80,11 @@ declare module 'stripe' {
         id: string,
         params?: IssuerFraudRecordRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.IssuerFraudRecord>;
+      ): Promise<Stripe.Response<Stripe.IssuerFraudRecord>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.IssuerFraudRecord>;
+      ): Promise<Stripe.Response<Stripe.IssuerFraudRecord>>;
 
       /**
        * Returns a list of issuer fraud records.

@@ -2370,8 +2370,10 @@ declare module 'stripe' {
       create(
         params?: AccountCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Account>;
-      create(options?: RequestOptions): Promise<Stripe.Account>;
+      ): Promise<Stripe.Response<Stripe.Account>>;
+      create(
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Account>>;
 
       /**
        * Retrieves the details of an account.
@@ -2379,8 +2381,10 @@ declare module 'stripe' {
       retrieve(
         params?: AccountRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Account>;
-      retrieve(options?: RequestOptions): Promise<Stripe.Account>;
+      ): Promise<Stripe.Response<Stripe.Account>>;
+      retrieve(
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Account>>;
 
       /**
        * Retrieves the details of an account.
@@ -2389,8 +2393,11 @@ declare module 'stripe' {
         id: string,
         params?: AccountRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Account>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Account>;
+      ): Promise<Stripe.Response<Stripe.Account>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Account>>;
 
       /**
        * Updates a connected [Express or Custom account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are supported by both account types.
@@ -2401,7 +2408,7 @@ declare module 'stripe' {
         id: string,
         params?: AccountUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Account>;
+      ): Promise<Stripe.Response<Stripe.Account>>;
 
       /**
        * Returns a list of accounts connected to your platform via [Connect](https://stripe.com/docs/connect). If you're not a platform, the list is empty.
@@ -2423,8 +2430,11 @@ declare module 'stripe' {
         id: string,
         params?: AccountDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedAccount>;
-      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedAccount>;
+      ): Promise<Stripe.Response<Stripe.DeletedAccount>>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.DeletedAccount>>;
 
       /**
        * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
@@ -2435,7 +2445,7 @@ declare module 'stripe' {
         id: string,
         params: AccountRejectParams,
         options?: RequestOptions
-      ): Promise<Stripe.Account>;
+      ): Promise<Stripe.Response<Stripe.Account>>;
 
       /**
        * Retrieves information about the specified Account Capability.
@@ -2445,12 +2455,12 @@ declare module 'stripe' {
         id: string,
         params?: CapabilityRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Capability>;
+      ): Promise<Stripe.Response<Stripe.Capability>>;
       retrieveCapability(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Capability>;
+      ): Promise<Stripe.Response<Stripe.Capability>>;
 
       /**
        * Updates an existing Account Capability.
@@ -2460,7 +2470,7 @@ declare module 'stripe' {
         id: string,
         params?: CapabilityUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Capability>;
+      ): Promise<Stripe.Response<Stripe.Capability>>;
 
       /**
        * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
@@ -2482,7 +2492,7 @@ declare module 'stripe' {
         id: string,
         params: ExternalAccountCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.BankAccount | Stripe.Card>;
+      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
 
       /**
        * Retrieve a specified external account for a given account.
@@ -2492,12 +2502,12 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.BankAccount | Stripe.Card>;
+      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
       retrieveExternalAccount(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.BankAccount | Stripe.Card>;
+      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
 
       /**
        * Updates the metadata, account holder name, and account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
@@ -2509,7 +2519,7 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.BankAccount | Stripe.Card>;
+      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
 
       /**
        * List external accounts for an account.
@@ -2532,12 +2542,16 @@ declare module 'stripe' {
         id: string,
         params?: ExternalAccountDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedBankAccount | Stripe.DeletedCard>;
+      ): Promise<
+        Stripe.Response<Stripe.DeletedBankAccount | Stripe.DeletedCard>
+      >;
       deleteExternalAccount(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedBankAccount | Stripe.DeletedCard>;
+      ): Promise<
+        Stripe.Response<Stripe.DeletedBankAccount | Stripe.DeletedCard>
+      >;
 
       /**
        * Creates a single-use login link for an Express account to access their Stripe dashboard.
@@ -2548,11 +2562,11 @@ declare module 'stripe' {
         id: string,
         params?: LoginLinkCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.LoginLink>;
+      ): Promise<Stripe.Response<Stripe.LoginLink>>;
       createLoginLink(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.LoginLink>;
+      ): Promise<Stripe.Response<Stripe.LoginLink>>;
 
       /**
        * Creates a new person.
@@ -2561,11 +2575,11 @@ declare module 'stripe' {
         id: string,
         params?: PersonCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Person>;
+      ): Promise<Stripe.Response<Stripe.Person>>;
       createPerson(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Person>;
+      ): Promise<Stripe.Response<Stripe.Person>>;
 
       /**
        * Retrieves an existing person.
@@ -2575,12 +2589,12 @@ declare module 'stripe' {
         id: string,
         params?: PersonRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Person>;
+      ): Promise<Stripe.Response<Stripe.Person>>;
       retrievePerson(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Person>;
+      ): Promise<Stripe.Response<Stripe.Person>>;
 
       /**
        * Updates an existing person.
@@ -2590,7 +2604,7 @@ declare module 'stripe' {
         id: string,
         params?: PersonUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Person>;
+      ): Promise<Stripe.Response<Stripe.Person>>;
 
       /**
        * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
@@ -2613,12 +2627,12 @@ declare module 'stripe' {
         id: string,
         params?: PersonDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedPerson>;
+      ): Promise<Stripe.Response<Stripe.DeletedPerson>>;
       deletePerson(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedPerson>;
+      ): Promise<Stripe.Response<Stripe.DeletedPerson>>;
     }
   }
 }

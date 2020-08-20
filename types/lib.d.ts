@@ -112,6 +112,17 @@ declare module 'stripe' {
       timeout?: number;
     }
 
+    export type Response<T> = T & {
+      headers: {[key: string]: string};
+      lastResponse: {
+        requestId: string;
+        statusCode: number;
+        apiVersion?: string;
+        idempotencyKey?: string;
+        stripeAccount?: string;
+      };
+    };
+
     /**
      * A container for paginated lists of objects.
      * The array of objects is on the `.data` property,
@@ -139,7 +150,7 @@ declare module 'stripe' {
     }
 
     export interface ApiListPromise<T>
-      extends Promise<ApiList<T>>,
+      extends Promise<Response<ApiList<T>>>,
         AsyncIterableIterator<T> {
       autoPagingEach(
         handler: (item: T) => boolean | void | Promise<boolean | void>
