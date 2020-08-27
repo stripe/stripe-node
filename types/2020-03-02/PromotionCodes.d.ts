@@ -218,7 +218,7 @@ declare module 'stripe' {
       create(
         params: PromotionCodeCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.PromotionCode>;
+      ): Promise<Stripe.Response<Stripe.PromotionCode>>;
 
       /**
        * Retrieves the promotion code with the given ID.
@@ -227,11 +227,11 @@ declare module 'stripe' {
         id: string,
         params?: PromotionCodeRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.PromotionCode>;
+      ): Promise<Stripe.Response<Stripe.PromotionCode>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.PromotionCode>;
+      ): Promise<Stripe.Response<Stripe.PromotionCode>>;
 
       /**
        * Updates the specified promotion code by setting the values of the parameters passed. Most fields are, by design, not editable.
@@ -240,7 +240,7 @@ declare module 'stripe' {
         id: string,
         params?: PromotionCodeUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.PromotionCode>;
+      ): Promise<Stripe.Response<Stripe.PromotionCode>>;
 
       /**
        * Returns a list of your promotion codes.

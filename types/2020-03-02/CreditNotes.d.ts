@@ -465,7 +465,7 @@ declare module 'stripe' {
       create(
         params: CreditNoteCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.CreditNote>;
+      ): Promise<Stripe.Response<Stripe.CreditNote>>;
 
       /**
        * Retrieves the credit note object with the given identifier.
@@ -474,11 +474,11 @@ declare module 'stripe' {
         id: string,
         params?: CreditNoteRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.CreditNote>;
+      ): Promise<Stripe.Response<Stripe.CreditNote>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.CreditNote>;
+      ): Promise<Stripe.Response<Stripe.CreditNote>>;
 
       /**
        * Updates an existing credit note.
@@ -487,7 +487,7 @@ declare module 'stripe' {
         id: string,
         params?: CreditNoteUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.CreditNote>;
+      ): Promise<Stripe.Response<Stripe.CreditNote>>;
 
       /**
        * Returns a list of credit notes.
@@ -504,7 +504,7 @@ declare module 'stripe' {
       preview(
         params: CreditNotePreviewParams,
         options?: RequestOptions
-      ): Promise<Stripe.CreditNote>;
+      ): Promise<Stripe.Response<Stripe.CreditNote>>;
 
       /**
        * Marks a credit note as void. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
@@ -513,11 +513,11 @@ declare module 'stripe' {
         id: string,
         params?: CreditNoteVoidCreditNoteParams,
         options?: RequestOptions
-      ): Promise<Stripe.CreditNote>;
+      ): Promise<Stripe.Response<Stripe.CreditNote>>;
       voidCreditNote(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.CreditNote>;
+      ): Promise<Stripe.Response<Stripe.CreditNote>>;
 
       /**
        * When retrieving a credit note, you'll get a lines property containing the the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.

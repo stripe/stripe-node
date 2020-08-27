@@ -178,8 +178,8 @@ declare module 'stripe' {
       create(
         params?: RefundCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Refund>;
-      create(options?: RequestOptions): Promise<Stripe.Refund>;
+      ): Promise<Stripe.Response<Stripe.Refund>>;
+      create(options?: RequestOptions): Promise<Stripe.Response<Stripe.Refund>>;
 
       /**
        * Retrieves the details of an existing refund.
@@ -189,12 +189,12 @@ declare module 'stripe' {
         id: string,
         params?: RefundRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Refund>;
+      ): Promise<Stripe.Response<Stripe.Refund>>;
       retrieve(
         chargeId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Refund>;
+      ): Promise<Stripe.Response<Stripe.Refund>>;
 
       /**
        * Retrieves the details of an existing refund.
@@ -203,8 +203,11 @@ declare module 'stripe' {
         id: string,
         params?: RefundRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Refund>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Refund>;
+      ): Promise<Stripe.Response<Stripe.Refund>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Refund>>;
 
       /**
        * Updates the specified refund by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -215,7 +218,7 @@ declare module 'stripe' {
         id: string,
         params?: RefundUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Refund>;
+      ): Promise<Stripe.Response<Stripe.Refund>>;
 
       /**
        * You can see a list of the refunds belonging to a specific charge. Note that the 10 most recent refunds are always available by default on the charge object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.

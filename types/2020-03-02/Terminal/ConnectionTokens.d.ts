@@ -41,10 +41,10 @@ declare module 'stripe' {
         create(
           params?: ConnectionTokenCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.ConnectionToken>;
+        ): Promise<Stripe.Response<Stripe.Terminal.ConnectionToken>>;
         create(
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.ConnectionToken>;
+        ): Promise<Stripe.Response<Stripe.Terminal.ConnectionToken>>;
       }
     }
   }

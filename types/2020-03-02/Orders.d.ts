@@ -505,7 +505,7 @@ declare module 'stripe' {
       create(
         params: OrderCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Order>;
+      ): Promise<Stripe.Response<Stripe.Order>>;
 
       /**
        * Retrieves the details of an existing order. Supply the unique order ID from either an order creation request or the order list, and Stripe will return the corresponding order information.
@@ -514,8 +514,11 @@ declare module 'stripe' {
         id: string,
         params?: OrderRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Order>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Order>;
+      ): Promise<Stripe.Response<Stripe.Order>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Order>>;
 
       /**
        * Updates the specific order by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -524,7 +527,7 @@ declare module 'stripe' {
         id: string,
         params?: OrderUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Order>;
+      ): Promise<Stripe.Response<Stripe.Order>>;
 
       /**
        * Returns a list of your orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
@@ -542,8 +545,11 @@ declare module 'stripe' {
         id: string,
         params?: OrderPayParams,
         options?: RequestOptions
-      ): Promise<Stripe.Order>;
-      pay(id: string, options?: RequestOptions): Promise<Stripe.Order>;
+      ): Promise<Stripe.Response<Stripe.Order>>;
+      pay(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Order>>;
 
       /**
        * Return all or part of an order. The order must have a status of paid or fulfilled before it can be returned. Once all items have been returned, the order will become canceled or returned depending on which status the order started in.
@@ -552,11 +558,11 @@ declare module 'stripe' {
         id: string,
         params?: OrderReturnOrderParams,
         options?: RequestOptions
-      ): Promise<Stripe.OrderReturn>;
+      ): Promise<Stripe.Response<Stripe.OrderReturn>>;
       returnOrder(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.OrderReturn>;
+      ): Promise<Stripe.Response<Stripe.OrderReturn>>;
     }
   }
 }

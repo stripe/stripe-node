@@ -236,7 +236,7 @@ declare module 'stripe' {
       create(
         params: CouponCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Coupon>;
+      ): Promise<Stripe.Response<Stripe.Coupon>>;
 
       /**
        * Retrieves the coupon with the given ID.
@@ -245,8 +245,11 @@ declare module 'stripe' {
         id: string,
         params?: CouponRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Coupon>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Coupon>;
+      ): Promise<Stripe.Response<Stripe.Coupon>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Coupon>>;
 
       /**
        * Updates the metadata of a coupon. Other coupon details (currency, duration, amount_off) are, by design, not editable.
@@ -255,7 +258,7 @@ declare module 'stripe' {
         id: string,
         params?: CouponUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Coupon>;
+      ): Promise<Stripe.Response<Stripe.Coupon>>;
 
       /**
        * Returns a list of your coupons.
@@ -273,8 +276,11 @@ declare module 'stripe' {
         id: string,
         params?: CouponDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedCoupon>;
-      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedCoupon>;
+      ): Promise<Stripe.Response<Stripe.DeletedCoupon>>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.DeletedCoupon>>;
     }
   }
 }

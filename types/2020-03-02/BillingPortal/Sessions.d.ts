@@ -66,7 +66,7 @@ declare module 'stripe' {
         create(
           params: SessionCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.BillingPortal.Session>;
+        ): Promise<Stripe.Response<Stripe.BillingPortal.Session>>;
       }
     }
   }

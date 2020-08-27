@@ -444,7 +444,7 @@ declare module 'stripe' {
       create(
         params: InvoiceItemCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.InvoiceItem>;
+      ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
 
       /**
        * Retrieves the invoice item with the given ID.
@@ -453,11 +453,11 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceItemRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.InvoiceItem>;
+      ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.InvoiceItem>;
+      ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
 
       /**
        * Updates the amount or description of an invoice item on an upcoming invoice. Updating an invoice item is only possible before the invoice it's attached to is closed.
@@ -466,7 +466,7 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceItemUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.InvoiceItem>;
+      ): Promise<Stripe.Response<Stripe.InvoiceItem>>;
 
       /**
        * Returns a list of your invoice items. Invoice items are returned sorted by creation date, with the most recently created invoice items appearing first.
@@ -484,11 +484,11 @@ declare module 'stripe' {
         id: string,
         params?: InvoiceItemDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedInvoiceItem>;
+      ): Promise<Stripe.Response<Stripe.DeletedInvoiceItem>>;
       del(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedInvoiceItem>;
+      ): Promise<Stripe.Response<Stripe.DeletedInvoiceItem>>;
     }
   }
 }

@@ -427,7 +427,7 @@ declare module 'stripe' {
       create(
         params: SubscriptionItemCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionItem>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionItem>>;
 
       /**
        * Retrieves the subscription item with the given ID.
@@ -436,11 +436,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionItemRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionItem>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionItem>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionItem>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionItem>>;
 
       /**
        * Updates the plan or quantity of an item on a current subscription.
@@ -449,7 +449,7 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionItemUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.SubscriptionItem>;
+      ): Promise<Stripe.Response<Stripe.SubscriptionItem>>;
 
       /**
        * Returns a list of your subscription items for a given subscription.
@@ -466,11 +466,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionItemDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedSubscriptionItem>;
+      ): Promise<Stripe.Response<Stripe.DeletedSubscriptionItem>>;
       del(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedSubscriptionItem>;
+      ): Promise<Stripe.Response<Stripe.DeletedSubscriptionItem>>;
 
       /**
        * Creates a usage record for a specified subscription item and date, and fills it with a quantity.
@@ -485,7 +485,7 @@ declare module 'stripe' {
         id: string,
         params: UsageRecordCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.UsageRecord>;
+      ): Promise<Stripe.Response<Stripe.UsageRecord>>;
 
       /**
        * For the specified subscription item, returns a list of summary objects. Each object in the list provides usage information that's been summarized from multiple usage records and over a subscription billing period (e.g., 15 usage records in the month of September).

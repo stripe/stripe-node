@@ -90,11 +90,11 @@ declare module 'stripe' {
           id: string,
           params?: ScheduledQueryRunRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Sigma.ScheduledQueryRun>;
+        ): Promise<Stripe.Response<Stripe.Sigma.ScheduledQueryRun>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Sigma.ScheduledQueryRun>;
+        ): Promise<Stripe.Response<Stripe.Sigma.ScheduledQueryRun>>;
 
         /**
          * Returns a list of scheduled query runs.

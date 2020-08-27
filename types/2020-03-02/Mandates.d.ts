@@ -172,8 +172,11 @@ declare module 'stripe' {
         id: string,
         params?: MandateRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Mandate>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Mandate>;
+      ): Promise<Stripe.Response<Stripe.Mandate>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Mandate>>;
     }
   }
 }

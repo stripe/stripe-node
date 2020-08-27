@@ -166,8 +166,11 @@ declare module 'stripe' {
         id: string,
         params?: ReviewRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Review>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Review>;
+      ): Promise<Stripe.Response<Stripe.Review>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Review>>;
 
       /**
        * Returns a list of Review objects that have open set to true. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -185,8 +188,11 @@ declare module 'stripe' {
         id: string,
         params?: ReviewApproveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Review>;
-      approve(id: string, options?: RequestOptions): Promise<Stripe.Review>;
+      ): Promise<Stripe.Response<Stripe.Review>>;
+      approve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Review>>;
     }
   }
 }

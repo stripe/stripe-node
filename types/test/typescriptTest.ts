@@ -131,6 +131,36 @@ stripe.setHost('host', 'port', 'protocol');
       const declineCode: string = err.decline_code;
     }
   }
+
+  {
+    const custs = await stripe.customers.list();
+    const lr = custs.lastResponse;
+    const requestId: string = lr.requestId;
+    const statusCode: number = lr.statusCode;
+    const apiVersion: string | undefined = lr.apiVersion;
+    const idempotencyKey: string | undefined = lr.idempotencyKey;
+    const headers = custs.headers;
+    const header: string | undefined = custs.headers['request-id'];
+  }
+
+  {
+    const cust = await stripe.customers.retrieve('foo');
+    const lr = cust.lastResponse;
+    const requestId: string = lr.requestId;
+    const statusCode: number = lr.statusCode;
+    const apiVersion: string | undefined = lr.apiVersion;
+    const idempotencyKey: string | undefined = lr.idempotencyKey;
+    const headers = cust.headers;
+    const header: string | undefined = cust.headers['request-id'];
+  }
+  {
+    const acct = await stripe.accounts.createExternalAccount('foo', {
+      ['external_account']: 'foo',
+    });
+    if (acct.object === 'card') {
+      const rid: string = acct.lastResponse.requestId;
+    }
+  }
 })();
 
 const stripeCardError: Stripe.StripeCardError = Stripe.errors.generate({

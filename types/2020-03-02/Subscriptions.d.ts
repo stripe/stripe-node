@@ -1073,7 +1073,7 @@ declare module 'stripe' {
       create(
         params: SubscriptionCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Subscription>;
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
        * Retrieves the subscription with the given ID.
@@ -1082,11 +1082,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Subscription>;
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Subscription>;
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
        * Updates an existing subscription on a customer to match the specified parameters. When changing plans or quantities, we will optionally prorate the price we charge next month to make up for any price changes. To preview how the proration will be calculated, use the [upcoming invoice](https://stripe.com/docs/api#upcoming_invoice) endpoint.
@@ -1095,7 +1095,7 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Subscription>;
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
        * By default, returns a list of subscriptions that have not been canceled. In order to list canceled subscriptions, specify status=canceled.
@@ -1117,8 +1117,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.Subscription>;
-      del(id: string, options?: RequestOptions): Promise<Stripe.Subscription>;
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
        * Removes the currently applied discount on a subscription.
@@ -1127,11 +1130,11 @@ declare module 'stripe' {
         id: string,
         params?: SubscriptionDeleteDiscountParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedDiscount>;
+      ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
       deleteDiscount(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedDiscount>;
+      ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
     }
   }
 }

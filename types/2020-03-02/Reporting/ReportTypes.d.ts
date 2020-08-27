@@ -69,11 +69,11 @@ declare module 'stripe' {
           id: string,
           params?: ReportTypeRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Reporting.ReportType>;
+        ): Promise<Stripe.Response<Stripe.Reporting.ReportType>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Reporting.ReportType>;
+        ): Promise<Stripe.Response<Stripe.Reporting.ReportType>>;
 
         /**
          * Returns a full list of Report Types. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)

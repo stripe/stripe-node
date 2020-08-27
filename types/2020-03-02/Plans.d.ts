@@ -431,7 +431,7 @@ declare module 'stripe' {
       create(
         params: PlanCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Plan>;
+      ): Promise<Stripe.Response<Stripe.Plan>>;
 
       /**
        * Retrieves the plan with the given ID.
@@ -440,8 +440,11 @@ declare module 'stripe' {
         id: string,
         params?: PlanRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Plan>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Plan>;
+      ): Promise<Stripe.Response<Stripe.Plan>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Plan>>;
 
       /**
        * Updates the specified plan by setting the values of the parameters passed. Any parameters not provided are left unchanged. By design, you cannot change a plan's ID, amount, currency, or billing cycle.
@@ -450,7 +453,7 @@ declare module 'stripe' {
         id: string,
         params?: PlanUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Plan>;
+      ): Promise<Stripe.Response<Stripe.Plan>>;
 
       /**
        * Returns a list of your plans.
@@ -468,8 +471,11 @@ declare module 'stripe' {
         id: string,
         params?: PlanDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedPlan>;
-      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedPlan>;
+      ): Promise<Stripe.Response<Stripe.DeletedPlan>>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.DeletedPlan>>;
     }
   }
 }

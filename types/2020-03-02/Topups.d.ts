@@ -206,7 +206,7 @@ declare module 'stripe' {
       create(
         params: TopupCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Topup>;
+      ): Promise<Stripe.Response<Stripe.Topup>>;
 
       /**
        * Retrieves the details of a top-up that has previously been created. Supply the unique top-up ID that was returned from your previous request, and Stripe will return the corresponding top-up information.
@@ -215,8 +215,11 @@ declare module 'stripe' {
         id: string,
         params?: TopupRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Topup>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Topup>;
+      ): Promise<Stripe.Response<Stripe.Topup>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Topup>>;
 
       /**
        * Updates the metadata of a top-up. Other top-up details are not editable by design.
@@ -225,7 +228,7 @@ declare module 'stripe' {
         id: string,
         params?: TopupUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Topup>;
+      ): Promise<Stripe.Response<Stripe.Topup>>;
 
       /**
        * Returns a list of top-ups.
@@ -243,8 +246,11 @@ declare module 'stripe' {
         id: string,
         params?: TopupCancelParams,
         options?: RequestOptions
-      ): Promise<Stripe.Topup>;
-      cancel(id: string, options?: RequestOptions): Promise<Stripe.Topup>;
+      ): Promise<Stripe.Response<Stripe.Topup>>;
+      cancel(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Topup>>;
     }
   }
 }

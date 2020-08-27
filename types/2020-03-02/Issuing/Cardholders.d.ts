@@ -3329,7 +3329,7 @@ declare module 'stripe' {
         create(
           params: CardholderCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Cardholder>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Cardholder>>;
 
         /**
          * Retrieves an Issuing Cardholder object.
@@ -3338,11 +3338,11 @@ declare module 'stripe' {
           id: string,
           params?: CardholderRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Cardholder>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Cardholder>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Cardholder>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Cardholder>>;
 
         /**
          * Updates the specified Issuing Cardholder object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -3351,7 +3351,7 @@ declare module 'stripe' {
           id: string,
           params?: CardholderUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Cardholder>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Cardholder>>;
 
         /**
          * Returns a list of Issuing Cardholder objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.

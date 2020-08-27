@@ -332,11 +332,11 @@ declare module 'stripe' {
           id: string,
           params?: TransactionRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Transaction>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Transaction>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Transaction>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Transaction>>;
 
         /**
          * Updates the specified Issuing Transaction object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -345,7 +345,7 @@ declare module 'stripe' {
           id: string,
           params?: TransactionUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Transaction>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Transaction>>;
 
         /**
          * Returns a list of Issuing Transaction objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.

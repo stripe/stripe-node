@@ -83,11 +83,11 @@ declare module 'stripe' {
         id: string,
         params?: OrderReturnRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.OrderReturn>;
+      ): Promise<Stripe.Response<Stripe.OrderReturn>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.OrderReturn>;
+      ): Promise<Stripe.Response<Stripe.OrderReturn>>;
 
       /**
        * Returns a list of your order returns. The returns are returned sorted by creation date, with the most recently created return appearing first.

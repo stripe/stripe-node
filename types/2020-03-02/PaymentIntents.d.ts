@@ -2347,7 +2347,7 @@ declare module 'stripe' {
       create(
         params: PaymentIntentCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
        * Retrieves the details of a PaymentIntent that has previously been created.
@@ -2360,11 +2360,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
        * Updates properties on a PaymentIntent object without confirming.
@@ -2379,7 +2379,7 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
        * Returns a list of PaymentIntents.
@@ -2399,11 +2399,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentCancelParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
       cancel(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
        * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
@@ -2416,11 +2416,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentCaptureParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
       capture(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
        * Confirm that your customer intends to pay with current or provided
@@ -2453,11 +2453,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentIntentConfirmParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
       confirm(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentIntent>;
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
     }
   }
 }

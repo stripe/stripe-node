@@ -603,7 +603,7 @@ declare module 'stripe' {
       create(
         params: WebhookEndpointCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.WebhookEndpoint>;
+      ): Promise<Stripe.Response<Stripe.WebhookEndpoint>>;
 
       /**
        * Retrieves the webhook endpoint with the given ID.
@@ -612,11 +612,11 @@ declare module 'stripe' {
         id: string,
         params?: WebhookEndpointRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.WebhookEndpoint>;
+      ): Promise<Stripe.Response<Stripe.WebhookEndpoint>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.WebhookEndpoint>;
+      ): Promise<Stripe.Response<Stripe.WebhookEndpoint>>;
 
       /**
        * Updates the webhook endpoint. You may edit the url, the list of enabled_events, and the status of your endpoint.
@@ -625,7 +625,7 @@ declare module 'stripe' {
         id: string,
         params?: WebhookEndpointUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.WebhookEndpoint>;
+      ): Promise<Stripe.Response<Stripe.WebhookEndpoint>>;
 
       /**
        * Returns a list of your webhook endpoints.
@@ -643,11 +643,11 @@ declare module 'stripe' {
         id: string,
         params?: WebhookEndpointDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedWebhookEndpoint>;
+      ): Promise<Stripe.Response<Stripe.DeletedWebhookEndpoint>>;
       del(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedWebhookEndpoint>;
+      ): Promise<Stripe.Response<Stripe.DeletedWebhookEndpoint>>;
     }
   }
 }

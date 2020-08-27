@@ -101,11 +101,11 @@ declare module 'stripe' {
         id: string,
         params?: CountrySpecRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.CountrySpec>;
+      ): Promise<Stripe.Response<Stripe.CountrySpec>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.CountrySpec>;
+      ): Promise<Stripe.Response<Stripe.CountrySpec>>;
 
       /**
        * Lists all Country Spec objects available in the API.

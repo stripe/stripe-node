@@ -1350,8 +1350,8 @@ declare module 'stripe' {
       create(
         params?: SourceCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Source>;
-      create(options?: RequestOptions): Promise<Stripe.Source>;
+      ): Promise<Stripe.Response<Stripe.Source>>;
+      create(options?: RequestOptions): Promise<Stripe.Response<Stripe.Source>>;
 
       /**
        * Retrieves an existing source object. Supply the unique source ID from a source creation request and Stripe will return the corresponding up-to-date source object information.
@@ -1360,8 +1360,11 @@ declare module 'stripe' {
         id: string,
         params?: SourceRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Source>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Source>;
+      ): Promise<Stripe.Response<Stripe.Source>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Source>>;
 
       /**
        * Updates the specified source by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -1372,7 +1375,7 @@ declare module 'stripe' {
         id: string,
         params?: SourceUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Source>;
+      ): Promise<Stripe.Response<Stripe.Source>>;
 
       /**
        * List source transactions for a given source.
@@ -1394,7 +1397,7 @@ declare module 'stripe' {
         id: string,
         params: SourceVerifyParams,
         options?: RequestOptions
-      ): Promise<Stripe.Source>;
+      ): Promise<Stripe.Response<Stripe.Source>>;
     }
   }
 }

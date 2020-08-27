@@ -1738,8 +1738,8 @@ declare module 'stripe' {
       create(
         params?: ChargeCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Charge>;
-      create(options?: RequestOptions): Promise<Stripe.Charge>;
+      ): Promise<Stripe.Response<Stripe.Charge>>;
+      create(options?: RequestOptions): Promise<Stripe.Response<Stripe.Charge>>;
 
       /**
        * Retrieves the details of a charge that has previously been created. Supply the unique charge ID that was returned from your previous request, and Stripe will return the corresponding charge information. The same information is returned when creating or refunding the charge.
@@ -1748,8 +1748,11 @@ declare module 'stripe' {
         id: string,
         params?: ChargeRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Charge>;
-      retrieve(id: string, options?: RequestOptions): Promise<Stripe.Charge>;
+      ): Promise<Stripe.Response<Stripe.Charge>>;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Charge>>;
 
       /**
        * Updates the specified charge by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -1758,7 +1761,7 @@ declare module 'stripe' {
         id: string,
         params?: ChargeUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Charge>;
+      ): Promise<Stripe.Response<Stripe.Charge>>;
 
       /**
        * Returns a list of charges you've previously created. The charges are returned in sorted order, with the most recent charges appearing first.
@@ -1778,8 +1781,11 @@ declare module 'stripe' {
         id: string,
         params?: ChargeCaptureParams,
         options?: RequestOptions
-      ): Promise<Stripe.Charge>;
-      capture(id: string, options?: RequestOptions): Promise<Stripe.Charge>;
+      ): Promise<Stripe.Response<Stripe.Charge>>;
+      capture(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Charge>>;
     }
   }
 }

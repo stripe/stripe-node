@@ -924,8 +924,10 @@ declare module 'stripe' {
       create(
         params?: PaymentMethodCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentMethod>;
-      create(options?: RequestOptions): Promise<Stripe.PaymentMethod>;
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
+      create(
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
        * Retrieves a PaymentMethod object.
@@ -934,11 +936,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentMethodRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentMethod>;
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentMethod>;
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
        * Updates a PaymentMethod object. A PaymentMethod must be attached a customer to be updated.
@@ -947,7 +949,7 @@ declare module 'stripe' {
         id: string,
         params?: PaymentMethodUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentMethod>;
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
        * Returns a list of PaymentMethods for a given Customer
@@ -974,7 +976,7 @@ declare module 'stripe' {
         id: string,
         params: PaymentMethodAttachParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentMethod>;
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
        * Detaches a PaymentMethod object from a Customer.
@@ -983,11 +985,11 @@ declare module 'stripe' {
         id: string,
         params?: PaymentMethodDetachParams,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentMethod>;
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
       detach(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.PaymentMethod>;
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
     }
   }
 }

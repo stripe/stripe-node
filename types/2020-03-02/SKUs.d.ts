@@ -389,7 +389,7 @@ declare module 'stripe' {
       create(
         params: SkuCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Sku>;
+      ): Promise<Stripe.Response<Stripe.Sku>>;
 
       /**
        * Retrieves the details of an existing SKU. Supply the unique SKU identifier from either a SKU creation request or from the product, and Stripe will return the corresponding SKU information.
@@ -398,11 +398,11 @@ declare module 'stripe' {
         id: string,
         params?: SkuRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Sku | Stripe.DeletedSku>;
+      ): Promise<Stripe.Response<Stripe.Sku | Stripe.DeletedSku>>;
       retrieve(
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Sku | Stripe.DeletedSku>;
+      ): Promise<Stripe.Response<Stripe.Sku | Stripe.DeletedSku>>;
 
       /**
        * Updates the specific SKU by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -413,7 +413,7 @@ declare module 'stripe' {
         id: string,
         params?: SkuUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Sku>;
+      ): Promise<Stripe.Response<Stripe.Sku>>;
 
       /**
        * Returns a list of your SKUs. The SKUs are returned sorted by creation date, with the most recently created SKUs appearing first.
@@ -431,8 +431,11 @@ declare module 'stripe' {
         id: string,
         params?: SkuDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.DeletedSku>;
-      del(id: string, options?: RequestOptions): Promise<Stripe.DeletedSku>;
+      ): Promise<Stripe.Response<Stripe.DeletedSku>>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.DeletedSku>>;
     }
   }
 }

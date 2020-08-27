@@ -191,7 +191,7 @@ declare module 'stripe' {
         create(
           params: LocationCreateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.Location>;
+        ): Promise<Stripe.Response<Stripe.Terminal.Location>>;
 
         /**
          * Retrieves a Location object.
@@ -200,11 +200,11 @@ declare module 'stripe' {
           id: string,
           params?: LocationRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.Location>;
+        ): Promise<Stripe.Response<Stripe.Terminal.Location>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.Location>;
+        ): Promise<Stripe.Response<Stripe.Terminal.Location>>;
 
         /**
          * Updates a Location object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -213,7 +213,7 @@ declare module 'stripe' {
           id: string,
           params?: LocationUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.Location>;
+        ): Promise<Stripe.Response<Stripe.Terminal.Location>>;
 
         /**
          * Returns a list of Location objects.
@@ -233,11 +233,11 @@ declare module 'stripe' {
           id: string,
           params?: LocationDeleteParams,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.DeletedLocation>;
+        ): Promise<Stripe.Response<Stripe.Terminal.DeletedLocation>>;
         del(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Terminal.DeletedLocation>;
+        ): Promise<Stripe.Response<Stripe.Terminal.DeletedLocation>>;
       }
     }
   }

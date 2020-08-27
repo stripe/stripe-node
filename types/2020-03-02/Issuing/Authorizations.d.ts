@@ -392,11 +392,11 @@ declare module 'stripe' {
           id: string,
           params?: AuthorizationRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Authorization>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Authorization>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
 
         /**
          * Updates the specified Issuing Authorization object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -405,7 +405,7 @@ declare module 'stripe' {
           id: string,
           params?: AuthorizationUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Authorization>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
 
         /**
          * Returns a list of Issuing Authorization objects. The objects are sorted in descending order by creation date, with the most recently created object appearing first.
@@ -425,11 +425,11 @@ declare module 'stripe' {
           id: string,
           params?: AuthorizationApproveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Authorization>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
         approve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Authorization>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
 
         /**
          * Declines a pending Issuing Authorization object. This request should be made within the timeout window of the [real time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
@@ -438,11 +438,11 @@ declare module 'stripe' {
           id: string,
           params?: AuthorizationDeclineParams,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Authorization>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
         decline(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Issuing.Authorization>;
+        ): Promise<Stripe.Response<Stripe.Issuing.Authorization>>;
       }
     }
   }
