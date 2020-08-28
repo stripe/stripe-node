@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.90.0 - 2020-08-28
+* [#991](https://github.com/stripe/stripe-node/pull/991) Multiple API changes
+* [#990](https://github.com/stripe/stripe-node/pull/990) Typescript: add 'lastResponse' to return types
+
 ## 8.89.0 - 2020-08-19
 * [#988](https://github.com/stripe/stripe-node/pull/988) Multiple API changes
   * `tax_ids` on `Customer` can now be nullable
