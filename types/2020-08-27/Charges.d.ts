@@ -390,8 +390,6 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodDetails.Bancontact;
 
-        bitcoin?: PaymentMethodDetails.Bitcoin;
-
         card?: PaymentMethodDetails.Card;
 
         card_present?: PaymentMethodDetails.CardPresent;
@@ -615,20 +613,6 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
 
-        interface Bitcoin {
-          address: string | null;
-
-          amount: number | null;
-
-          amount_charged: number | null;
-
-          amount_received: number | null;
-
-          amount_returned: number | null;
-
-          refund_address: string | null;
-        }
-
         interface Card {
           /**
            * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
@@ -760,12 +744,6 @@ declare module 'stripe' {
 
           interface ThreeDSecure {
             /**
-             * Whether or not authentication was performed. 3D Secure will succeed
-             * without authentication when the card is not enrolled.
-             */
-            authenticated?: boolean;
-
-            /**
              * For authenticated transactions: how the customer was authenticated by
              * the issuing bank.
              */
@@ -781,11 +759,6 @@ declare module 'stripe' {
              * on the `result`.
              */
             result_reason: ThreeDSecure.ResultReason | null;
-
-            /**
-             * Whether or not 3D Secure succeeded.
-             */
-            succeeded?: boolean;
 
             /**
              * The version of 3D Secure that was used.
@@ -959,9 +932,9 @@ declare module 'stripe' {
           network: string | null;
 
           /**
-           * How were card details read in this transaction. Can be contact_emv, contactless_emv, magnetic_stripe_fallback, magnetic_stripe_track2, or contactless_magstripe_mode
+           * How card details were read in this transaction.
            */
-          read_method: string | null;
+          read_method: CardPresent.ReadMethod | null;
 
           /**
            * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
@@ -970,6 +943,13 @@ declare module 'stripe' {
         }
 
         namespace CardPresent {
+          type ReadMethod =
+            | 'contact_emv'
+            | 'contactless_emv'
+            | 'contactless_magstripe_mode'
+            | 'magnetic_stripe_fallback'
+            | 'magnetic_stripe_track2';
+
           interface Receipt {
             /**
              * The type of account being debited or credited
@@ -1208,9 +1188,9 @@ declare module 'stripe' {
           network: string | null;
 
           /**
-           * How were card details read in this transaction. Can be contact_emv, contactless_emv, magnetic_stripe_fallback, magnetic_stripe_track2, or contactless_magstripe_mode
+           * How card details were read in this transaction.
            */
-          read_method: string | null;
+          read_method: InteracPresent.ReadMethod | null;
 
           /**
            * A collection of fields required to be displayed on receipts. Only required for EMV transactions.
@@ -1219,6 +1199,13 @@ declare module 'stripe' {
         }
 
         namespace InteracPresent {
+          type ReadMethod =
+            | 'contact_emv'
+            | 'contactless_emv'
+            | 'contactless_magstripe_mode'
+            | 'magnetic_stripe_fallback'
+            | 'magnetic_stripe_track2';
+
           interface Receipt {
             /**
              * The type of account being debited or credited

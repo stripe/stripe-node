@@ -645,15 +645,6 @@ declare module 'stripe' {
       return_url?: string;
 
       /**
-       * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer immediately.
-       *
-       * If the payment method is already saved to a customer, this parameter does nothing. If this type of payment method cannot be saved to a customer, the request will error.
-       *
-       * Saving a payment method using this parameter is _not recommended_ because it will save the payment method even if it cannot be charged (e.g. the user made a typo). To ensure that only payment methods which are likely to be chargeable are saved to a customer, use the (setup_future_usage)[#payment_intents/object#payment_intent_object-setup_future_usage] property, which saves the payment method after the PaymentIntent has been confirmed and all required actions by the customer are complete.
-       */
-      save_payment_method?: boolean;
-
-      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -666,11 +657,6 @@ declare module 'stripe' {
        * Shipping information for this PaymentIntent.
        */
       shipping?: PaymentIntentCreateParams.Shipping;
-
-      /**
-       * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Cards and [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) objects.If neither the `payment_method` parameter nor the `source` parameter are provided with `confirm=true`, this field will be automatically populated with `customer.default_source` to improve the migration experience for users of the Charges API. We recommend that you explicitly provide the `source` or `payment_method` parameter going forward.
-       */
-      source?: string;
 
       /**
        * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
@@ -860,7 +846,7 @@ declare module 'stripe' {
           /**
            * Billing address.
            */
-          address?: BillingDetails.Address;
+          address?: BillingDetails.Address | null;
 
           /**
            * Email address.
@@ -993,7 +979,6 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
-          | 'card_present'
           | 'eps'
           | 'fpx'
           | 'giropay'
@@ -1242,15 +1227,6 @@ declare module 'stripe' {
       receipt_email?: string | null;
 
       /**
-       * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer immediately.
-       *
-       * If the payment method is already saved to a customer, this parameter does nothing. If this type of payment method cannot be saved to a customer, the request will error.
-       *
-       * Saving a payment method using this parameter is _not recommended_ because it will save the payment method even if it cannot be charged (e.g. the user made a typo). To ensure that only payment methods which are likely to be chargeable are saved to a customer, use the (setup_future_usage)[#payment_intents/object#payment_intent_object-setup_future_usage] property, which saves the payment method after the PaymentIntent has been confirmed and all required actions by the customer are complete.
-       */
-      save_payment_method?: boolean;
-
-      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -1265,11 +1241,6 @@ declare module 'stripe' {
        * Shipping information for this PaymentIntent.
        */
       shipping?: PaymentIntentUpdateParams.Shipping | null;
-
-      /**
-       * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Cards and [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) objects.
-       */
-      source?: string;
 
       /**
        * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
@@ -1398,7 +1369,7 @@ declare module 'stripe' {
           /**
            * Billing address.
            */
-          address?: BillingDetails.Address;
+          address?: BillingDetails.Address | null;
 
           /**
            * Email address.
@@ -1531,7 +1502,6 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
-          | 'card_present'
           | 'eps'
           | 'fpx'
           | 'giropay'
@@ -1823,15 +1793,6 @@ declare module 'stripe' {
       return_url?: string;
 
       /**
-       * If the PaymentIntent has a `payment_method` and a `customer` or if you're attaching a payment method to the PaymentIntent in this request, you can pass `save_payment_method=true` to save the payment method to the customer immediately.
-       *
-       * If the payment method is already saved to a customer, this parameter does nothing. If this type of payment method cannot be saved to a customer, the request will error.
-       *
-       * Saving a payment method using this parameter is _not recommended_ because it will save the payment method even if it cannot be charged (e.g. the user made a typo). To ensure that only payment methods which are likely to be chargeable are saved to a customer, use the (setup_future_usage)[#payment_intents/object#payment_intent_object-setup_future_usage] property, which saves the payment method after the PaymentIntent has been confirmed and all required actions by the customer are complete.
-       */
-      save_payment_method?: boolean;
-
-      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -1846,11 +1807,6 @@ declare module 'stripe' {
        * Shipping information for this PaymentIntent.
        */
       shipping?: PaymentIntentConfirmParams.Shipping | null;
-
-      /**
-       * This is a legacy field that will be removed in the future. It is the ID of the Source object to attach to this PaymentIntent. Please use the `payment_method` field instead, which also supports Cards and [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) objects.
-       */
-      source?: string;
 
       /**
        * Set to `true` only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
@@ -2050,7 +2006,7 @@ declare module 'stripe' {
           /**
            * Billing address.
            */
-          address?: BillingDetails.Address;
+          address?: BillingDetails.Address | null;
 
           /**
            * Email address.
@@ -2183,7 +2139,6 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
-          | 'card_present'
           | 'eps'
           | 'fpx'
           | 'giropay'

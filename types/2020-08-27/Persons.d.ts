@@ -313,6 +313,7 @@ declare module 'stripe' {
             | 'verification_document_id_number_missing'
             | 'verification_document_incomplete'
             | 'verification_document_invalid'
+            | 'verification_document_issue_or_expiry_date_missing'
             | 'verification_document_manipulated'
             | 'verification_document_missing_back'
             | 'verification_document_missing_front'
@@ -320,6 +321,7 @@ declare module 'stripe' {
             | 'verification_document_name_missing'
             | 'verification_document_nationality_mismatch'
             | 'verification_document_not_readable'
+            | 'verification_document_not_signed'
             | 'verification_document_not_uploaded'
             | 'verification_document_photo_mismatch'
             | 'verification_document_too_large'
@@ -331,7 +333,9 @@ declare module 'stripe' {
             | 'verification_failed_keyed_identity'
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
-            | 'verification_failed_other';
+            | 'verification_failed_other'
+            | 'verification_failed_tax_id_match'
+            | 'verification_failed_tax_id_not_issued';
         }
       }
 

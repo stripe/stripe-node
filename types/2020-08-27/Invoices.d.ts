@@ -286,11 +286,6 @@ declare module 'stripe' {
        */
       tax: number | null;
 
-      /**
-       * This percentage of the subtotal has been added to the total amount of the invoice, including invoice line items and discounts. This field is inherited from the subscription's `tax_percent` field, but can be changed before the invoice is paid. This field defaults to null.
-       */
-      tax_percent: number | null;
-
       threshold_reason?: Invoice.ThresholdReason;
 
       /**
@@ -622,11 +617,6 @@ declare module 'stripe' {
       subscription?: string;
 
       /**
-       * The percent tax rate applied to the invoice, represented as a decimal number. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-       */
-      tax_percent?: number;
-
-      /**
        * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
        */
       transfer_data?: InvoiceCreateParams.TransferData;
@@ -756,11 +746,6 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * The percent tax rate applied to the invoice, represented as a non-negative decimal number (with at most four decimal places) between 0 and 100. To unset a previously-set value, pass an empty string. This field can be updated only on `draft` invoices. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-       */
-      tax_percent?: number | null;
-
-      /**
        * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
        */
       transfer_data?: InvoiceUpdateParams.TransferData | null;
@@ -873,17 +858,17 @@ declare module 'stripe' {
       /**
        * In cases where the source used to pay the invoice has insufficient funds, passing `forgive=true` controls whether a charge should be attempted for the full amount available on the source, up to the amount to fully pay the invoice. This effectively forgives the difference between the amount available on the source and the amount due.
        *
-       * Passing `forgive=false` will fail the charge if the source hasn't been pre-funded with the right amount. An example for this case is with ACH Credit Transfers and wires: if the amount wired is less than the amount due by a small amount, you might want to forgive the difference.
+       * Passing `forgive=false` will fail the charge if the source hasn't been pre-funded with the right amount. An example for this case is with ACH Credit Transfers and wires: if the amount wired is less than the amount due by a small amount, you might want to forgive the difference. Defaults to `false`.
        */
       forgive?: boolean;
 
       /**
-       * Indicates if a customer is on or off-session while an invoice payment is attempted.
+       * Indicates if a customer is on or off-session while an invoice payment is attempted. Defaults to `true` (off-session).
        */
       off_session?: boolean;
 
       /**
-       * Boolean representing whether an invoice is paid outside of Stripe. This will result in no charge being made.
+       * Boolean representing whether an invoice is paid outside of Stripe. This will result in no charge being made. Defaults to `false`.
        */
       paid_out_of_band?: boolean;
 
@@ -966,11 +951,6 @@ declare module 'stripe' {
       >;
 
       /**
-       * This field has been renamed to `subscription_proration_behavior`. `subscription_prorate=true` can be replaced with `subscription_proration_behavior=create_prorations` and `subscription_prorate=false` can be replaced with `subscription_proration_behavior=none`.
-       */
-      subscription_prorate?: boolean;
-
-      /**
        * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
        *
        * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
@@ -980,7 +960,7 @@ declare module 'stripe' {
       subscription_proration_behavior?: InvoiceRetrieveUpcomingParams.SubscriptionProrationBehavior;
 
       /**
-       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration` cannot be set to false.
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
        */
       subscription_proration_date?: number;
 
@@ -988,11 +968,6 @@ declare module 'stripe' {
        * Date a subscription is intended to start (can be future or past)
        */
       subscription_start_date?: number;
-
-      /**
-       * If provided, the invoice returned will preview updating or creating a subscription with that tax percent. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-       */
-      subscription_tax_percent?: number;
 
       /**
        * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.

@@ -499,6 +499,7 @@ declare module 'stripe' {
             | 'verification_document_id_number_missing'
             | 'verification_document_incomplete'
             | 'verification_document_invalid'
+            | 'verification_document_issue_or_expiry_date_missing'
             | 'verification_document_manipulated'
             | 'verification_document_missing_back'
             | 'verification_document_missing_front'
@@ -506,6 +507,7 @@ declare module 'stripe' {
             | 'verification_document_name_missing'
             | 'verification_document_nationality_mismatch'
             | 'verification_document_not_readable'
+            | 'verification_document_not_signed'
             | 'verification_document_not_uploaded'
             | 'verification_document_photo_mismatch'
             | 'verification_document_too_large'
@@ -517,7 +519,9 @@ declare module 'stripe' {
             | 'verification_failed_keyed_identity'
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
-            | 'verification_failed_other';
+            | 'verification_failed_other'
+            | 'verification_failed_tax_id_match'
+            | 'verification_failed_tax_id_not_issued';
         }
       }
 
@@ -669,17 +673,17 @@ declare module 'stripe' {
         /**
          * The Unix timestamp marking when the Stripe Services Agreement was accepted by the account representative
          */
-        date: number | null;
+        date?: number | null;
 
         /**
          * The IP address from which the Stripe Services Agreement was accepted by the account representative
          */
-        ip: string | null;
+        ip?: string | null;
 
         /**
          * The user agent of the browser from which the Stripe Services Agreement was accepted by the account representative
          */
-        user_agent: string | null;
+        user_agent?: string | null;
       }
 
       type Type = 'custom' | 'express' | 'standard';
@@ -727,7 +731,7 @@ declare module 'stripe' {
       capabilities?: AccountCreateParams.Capabilities;
 
       /**
-       * Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
+       * Information about the company or business. This field is available for any `business_type`.
        */
       company?: AccountCreateParams.Company;
 
@@ -767,11 +771,6 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam | null;
-
-      /**
-       * (Deprecated) Alternative to `capabilities`. The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
-       */
-      requested_capabilities?: Array<AccountCreateParams.RequestedCapability>;
 
       /**
        * Options for customizing how the account functions within Stripe.
@@ -1345,19 +1344,6 @@ declare module 'stripe' {
         }
       }
 
-      type RequestedCapability =
-        | 'au_becs_debit_payments'
-        | 'bacs_debit_payments'
-        | 'card_issuing'
-        | 'card_payments'
-        | 'cartes_bancaires_payments'
-        | 'fpx_payments'
-        | 'jcb_payments'
-        | 'legacy_payments'
-        | 'tax_reporting_us_1099_k'
-        | 'tax_reporting_us_1099_misc'
-        | 'transfers';
-
       interface Settings {
         /**
          * Settings used to apply the account's branding to email receipts, invoices, Checkout, and other products.
@@ -1557,7 +1543,7 @@ declare module 'stripe' {
       capabilities?: AccountUpdateParams.Capabilities;
 
       /**
-       * Information about the company or business. This field is null unless `business_type` is set to `company`, `government_entity`, or `non_profit`.
+       * Information about the company or business. This field is available for any `business_type`.
        */
       company?: AccountUpdateParams.Company;
 
@@ -1592,11 +1578,6 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam | null;
-
-      /**
-       * (Deprecated) Alternative to `capabilities`. The set of capabilities you want to unlock for this account. Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
-       */
-      requested_capabilities?: Array<AccountUpdateParams.RequestedCapability>;
 
       /**
        * Options for customizing how the account functions within Stripe.
@@ -2164,19 +2145,6 @@ declare module 'stripe' {
           }
         }
       }
-
-      type RequestedCapability =
-        | 'au_becs_debit_payments'
-        | 'bacs_debit_payments'
-        | 'card_issuing'
-        | 'card_payments'
-        | 'cartes_bancaires_payments'
-        | 'fpx_payments'
-        | 'jcb_payments'
-        | 'legacy_payments'
-        | 'tax_reporting_us_1099_k'
-        | 'tax_reporting_us_1099_misc'
-        | 'transfers';
 
       interface Settings {
         /**

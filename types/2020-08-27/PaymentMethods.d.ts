@@ -449,7 +449,6 @@ declare module 'stripe' {
         | 'bacs_debit'
         | 'bancontact'
         | 'card'
-        | 'card_present'
         | 'eps'
         | 'fpx'
         | 'giropay'
@@ -583,7 +582,7 @@ declare module 'stripe' {
         /**
          * Billing address.
          */
-        address?: BillingDetails.Address;
+        address?: BillingDetails.Address | null;
 
         /**
          * Email address.
@@ -743,7 +742,6 @@ declare module 'stripe' {
         | 'bacs_debit'
         | 'bancontact'
         | 'card'
-        | 'card_present'
         | 'eps'
         | 'fpx'
         | 'giropay'
@@ -798,7 +796,7 @@ declare module 'stripe' {
         /**
          * Billing address.
          */
-        address?: BillingDetails.Address;
+        address?: BillingDetails.Address | null;
 
         /**
          * Email address.

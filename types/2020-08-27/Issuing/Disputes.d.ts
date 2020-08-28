@@ -17,7 +17,7 @@ declare module 'stripe' {
         object: 'issuing.dispute';
 
         /**
-         * List of balance transactions associated with this dispute.
+         * List of balance transactions associated with the dispute.
          */
         balance_transactions: Array<Stripe.BalanceTransaction> | null;
 
@@ -72,7 +72,7 @@ declare module 'stripe' {
 
       class DisputesResource {
         /**
-         * Creates an Issuing Dispute object.
+         * Creates an Issuing Dispute object. Individual pieces of evidence within the evidence object are optional at this point. Stripe only validates that required evidence is present during submission. Refer to [Dispute reasons and evidence](https://stripe.com/docs/issuing/purchases/disputes#dispute-reasons-and-evidence) for more details about evidence requirements.
          */
         create(
           params?: DisputeCreateParams,
@@ -96,7 +96,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Issuing.Dispute>>;
 
         /**
-         * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+         * Updates the specified Issuing Dispute object by setting the values of the parameters passed. Any parameters not provided will be left unchanged. Properties on the evidence object can be unset by passing in an empty string.
          */
         update(
           id: string,
