@@ -5,7 +5,7 @@ import {Agent} from 'http';
 
 declare module 'stripe' {
   namespace Stripe {
-    export type LatestApiVersion = '2020-03-02';
+    export type LatestApiVersion = '2020-08-27';
     export type HttpAgent = Agent;
 
     export interface StripeConfig {

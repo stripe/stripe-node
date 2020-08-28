@@ -106,11 +106,6 @@ declare module 'stripe' {
        * A string identifying the type of the source of this line item, either an `invoiceitem` or a `subscription`.
        */
       type: InvoiceLineItem.Type;
-
-      /**
-       * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
-       */
-      unified_proration?: boolean;
     }
 
     namespace InvoiceLineItem {
@@ -233,11 +228,6 @@ declare module 'stripe' {
       >;
 
       /**
-       * This field has been renamed to `subscription_proration_behavior`. `subscription_prorate=true` can be replaced with `subscription_proration_behavior=create_prorations` and `subscription_prorate=false` can be replaced with `subscription_proration_behavior=none`.
-       */
-      subscription_prorate?: boolean;
-
-      /**
        * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
        *
        * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
@@ -247,7 +237,7 @@ declare module 'stripe' {
       subscription_proration_behavior?: InvoiceLineItemListUpcomingParams.SubscriptionProrationBehavior;
 
       /**
-       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration` cannot be set to false.
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
        */
       subscription_proration_date?: number;
 
@@ -255,11 +245,6 @@ declare module 'stripe' {
        * Date a subscription is intended to start (can be future or past)
        */
       subscription_start_date?: number;
-
-      /**
-       * If provided, the invoice returned will preview updating or creating a subscription with that tax percent. If set, one of `subscription_items` or `subscription` is required. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-       */
-      subscription_tax_percent?: number;
 
       /**
        * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.

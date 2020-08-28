@@ -221,7 +221,8 @@ declare module 'stripe' {
         | '2019-10-17'
         | '2019-11-05'
         | '2019-12-03'
-        | '2020-03-02';
+        | '2020-03-02'
+        | '2020-08-27';
 
       type EnabledEvent =
         | '*'
@@ -285,7 +286,6 @@ declare module 'stripe' {
         | 'invoice.paid'
         | 'invoice.payment_action_required'
         | 'invoice.payment_failed'
-        | 'invoice.payment_succeeded'
         | 'invoice.sent'
         | 'invoice.upcoming'
         | 'invoice.updated'
@@ -319,7 +319,6 @@ declare module 'stripe' {
         | 'payment_intent.requires_action'
         | 'payment_intent.succeeded'
         | 'payment_method.attached'
-        | 'payment_method.card_automatically_updated'
         | 'payment_method.detached'
         | 'payment_method.updated'
         | 'payout.canceled'
@@ -487,7 +486,6 @@ declare module 'stripe' {
         | 'invoice.paid'
         | 'invoice.payment_action_required'
         | 'invoice.payment_failed'
-        | 'invoice.payment_succeeded'
         | 'invoice.sent'
         | 'invoice.upcoming'
         | 'invoice.updated'
@@ -521,7 +519,6 @@ declare module 'stripe' {
         | 'payment_intent.requires_action'
         | 'payment_intent.succeeded'
         | 'payment_method.attached'
-        | 'payment_method.card_automatically_updated'
         | 'payment_method.detached'
         | 'payment_method.updated'
         | 'payout.canceled'

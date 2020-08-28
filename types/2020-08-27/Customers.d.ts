@@ -109,12 +109,12 @@ declare module 'stripe' {
       /**
        * The customer's payment sources, if any.
        */
-      sources: ApiList<CustomerSource> | null;
+      sources?: ApiList<CustomerSource>;
 
       /**
        * The customer's current subscriptions, if any.
        */
-      subscriptions: ApiList<Stripe.Subscription> | null;
+      subscriptions?: ApiList<Stripe.Subscription>;
 
       /**
        * Describes the customer's tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text **"Reverse charge"**.
@@ -124,7 +124,7 @@ declare module 'stripe' {
       /**
        * The customer's tax IDs.
        */
-      tax_ids: ApiList<Stripe.TaxId> | null;
+      tax_ids: ApiList<Stripe.TaxId>;
     }
 
     namespace Customer {

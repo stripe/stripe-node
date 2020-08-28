@@ -123,7 +123,7 @@ declare module 'stripe' {
         invoice_settings: DefaultSettings.InvoiceSettings | null;
 
         /**
-         * The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
+         * The account (if any) the associated subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
          */
         transfer_data: DefaultSettings.TransferData | null;
       }
@@ -219,14 +219,14 @@ declare module 'stripe' {
         invoice_settings: Phase.InvoiceSettings | null;
 
         /**
-         * Plans to subscribe during this phase of the subscription schedule.
+         * Subscription items to configure the subscription to during this phase of the subscription schedule.
          */
-        plans: Array<Phase.Plan>;
+        items: Array<Phase.Item>;
 
         /**
          * If the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
          */
-        proration_behavior: Phase.ProrationBehavior | null;
+        proration_behavior: Phase.ProrationBehavior;
 
         /**
          * The start of this phase of the subscription schedule.
@@ -234,12 +234,7 @@ declare module 'stripe' {
         start_date: number;
 
         /**
-         * If provided, each invoice created during this phase of the subscription schedule will apply the tax rate, increasing the amount billed to the customer.
-         */
-        tax_percent: number | null;
-
-        /**
-         * The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
+         * The account (if any) the associated subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
          */
         transfer_data: Phase.TransferData | null;
 
@@ -285,11 +280,11 @@ declare module 'stripe' {
           days_until_due: number | null;
         }
 
-        interface Plan {
+        interface Item {
           /**
            * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
            */
-          billing_thresholds: Plan.BillingThresholds | null;
+          billing_thresholds: Item.BillingThresholds | null;
 
           /**
            * ID of the plan to which the customer should be subscribed.
@@ -304,7 +299,7 @@ declare module 'stripe' {
           /**
            * Quantity of the plan to which the customer should be subscribed.
            */
-          quantity: number | null;
+          quantity?: number;
 
           /**
            * The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.
@@ -312,7 +307,7 @@ declare module 'stripe' {
           tax_rates?: Array<Stripe.TaxRate> | null;
         }
 
-        namespace Plan {
+        namespace Item {
           interface BillingThresholds {
             /**
              * Usage threshold that triggers the subscription to create an invoice
@@ -417,7 +412,7 @@ declare module 'stripe' {
         invoice_settings?: DefaultSettings.InvoiceSettings;
 
         /**
-         * The data with which to automatically create a Transfer for each of the subscription's invoices.
+         * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
         transfer_data?: DefaultSettings.TransferData | null;
       }
@@ -513,14 +508,14 @@ declare module 'stripe' {
         invoice_settings?: Phase.InvoiceSettings;
 
         /**
+         * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
+         */
+        items: Array<Phase.Item>;
+
+        /**
          * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
          */
         iterations?: number;
-
-        /**
-         * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
-         */
-        plans: Array<Phase.Plan>;
 
         /**
          * If a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
@@ -528,12 +523,7 @@ declare module 'stripe' {
         proration_behavior?: Phase.ProrationBehavior;
 
         /**
-         * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period during thise phase of the schedule. For example, a price which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-         */
-        tax_percent?: number;
-
-        /**
-         * The data with which to automatically create a Transfer for each of the subscription's invoices.
+         * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
         transfer_data?: Phase.TransferData;
 
@@ -613,11 +603,11 @@ declare module 'stripe' {
           days_until_due?: number;
         }
 
-        interface Plan {
+        interface Item {
           /**
            * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
            */
-          billing_thresholds?: Plan.BillingThresholds | null;
+          billing_thresholds?: Item.BillingThresholds | null;
 
           /**
            * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
@@ -632,7 +622,7 @@ declare module 'stripe' {
           /**
            * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
            */
-          price_data?: Plan.PriceData;
+          price_data?: Item.PriceData;
 
           /**
            * Quantity for the given price. Can be set only if the price's `usage_type` is `licensed` and not `metered`.
@@ -645,7 +635,7 @@ declare module 'stripe' {
           tax_rates?: Array<string> | null;
         }
 
-        namespace Plan {
+        namespace Item {
           interface BillingThresholds {
             /**
              * Usage threshold that triggers the subscription to advance to a new billing period
@@ -752,11 +742,6 @@ declare module 'stripe' {
       phases?: Array<SubscriptionScheduleUpdateParams.Phase>;
 
       /**
-       * This field has been renamed to `proration_behavior`. `prorate=true` can be replaced with `proration_behavior=create_prorations` and `prorate=false` can be replaced with `proration_behavior=none`.
-       */
-      prorate?: boolean;
-
-      /**
        * If the update changes the current phase, indicates if the changes should be prorated. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionScheduleUpdateParams.ProrationBehavior;
@@ -790,7 +775,7 @@ declare module 'stripe' {
         invoice_settings?: DefaultSettings.InvoiceSettings;
 
         /**
-         * The data with which to automatically create a Transfer for each of the subscription's invoices.
+         * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
         transfer_data?: DefaultSettings.TransferData | null;
       }
@@ -886,14 +871,14 @@ declare module 'stripe' {
         invoice_settings?: Phase.InvoiceSettings;
 
         /**
+         * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
+         */
+        items: Array<Phase.Item>;
+
+        /**
          * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
          */
         iterations?: number;
-
-        /**
-         * List of configuration items, each with an attached price, to apply during this phase of the subscription schedule.
-         */
-        plans: Array<Phase.Plan>;
 
         /**
          * If a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
@@ -906,12 +891,7 @@ declare module 'stripe' {
         start_date?: number | 'now';
 
         /**
-         * A non-negative decimal (with at most four decimal places) between 0 and 100. This represents the percentage of the subscription invoice subtotal that will be calculated and added as tax to the final amount in each billing period during thise phase of the schedule. For example, a price which charges $10/month with a `tax_percent` of `20.0` will charge $12 per invoice. To unset a previously-set value, pass an empty string. This field has been deprecated and will be removed in a future API version, for further information view the [migration docs](https://stripe.com/docs/billing/migration/taxes) for `tax_rates`.
-         */
-        tax_percent?: number;
-
-        /**
-         * The data with which to automatically create a Transfer for each of the subscription's invoices.
+         * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
         transfer_data?: Phase.TransferData;
 
@@ -991,11 +971,11 @@ declare module 'stripe' {
           days_until_due?: number;
         }
 
-        interface Plan {
+        interface Item {
           /**
            * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
            */
-          billing_thresholds?: Plan.BillingThresholds | null;
+          billing_thresholds?: Item.BillingThresholds | null;
 
           /**
            * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
@@ -1010,7 +990,7 @@ declare module 'stripe' {
           /**
            * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
            */
-          price_data?: Plan.PriceData;
+          price_data?: Item.PriceData;
 
           /**
            * Quantity for the given price. Can be set only if the price's `usage_type` is `licensed` and not `metered`.
@@ -1023,7 +1003,7 @@ declare module 'stripe' {
           tax_rates?: Array<string> | null;
         }
 
-        namespace Plan {
+        namespace Item {
           interface BillingThresholds {
             /**
              * Usage threshold that triggers the subscription to advance to a new billing period

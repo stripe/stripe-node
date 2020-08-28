@@ -61,7 +61,7 @@ declare module 'stripe' {
          * during the session unless an existing customer was provided when
          * the session was created.
          */
-        customer: string | Stripe.Customer | null;
+        customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
         /**
          * If provided, this value will be used when the Customer object is created.
@@ -71,11 +71,6 @@ declare module 'stripe' {
          * complete, use the `customer` attribute.
          */
         customer_email: string | null;
-
-        /**
-         * The line items, plans, or SKUs purchased by the customer. Prefer using `line_items`.
-         */
-        display_items?: Array<Session.DisplayItem>;
 
         /**
          * The line items purchased by the customer.
@@ -155,73 +150,6 @@ declare module 'stripe' {
 
       namespace Session {
         type BillingAddressCollection = 'auto' | 'required';
-
-        interface DisplayItem {
-          /**
-           * Amount for the display item.
-           */
-          amount?: number;
-
-          /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-           */
-          currency?: string;
-
-          custom?: DisplayItem.Custom;
-
-          /**
-           * You can now model subscriptions more flexibly using the [Prices API](https://stripe.com/docs/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
-           *
-           * Plans define the base price, currency, and billing cycle for recurring purchases of products.
-           * [Products](https://stripe.com/docs/api#products) help you track inventory or provisioning, and plans help you track pricing. Different physical goods or levels of service should be represented by products, and pricing options should be represented by plans. This approach lets you change prices without having to change your provisioning scheme.
-           *
-           * For example, you might have a single "gold" product that has plans for $10/month, $100/year, €9/month, and €90/year.
-           *
-           * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and prices](https://stripe.com/docs/billing/prices-guide).
-           */
-          plan?: Stripe.Plan;
-
-          /**
-           * Quantity of the display item being purchased.
-           */
-          quantity?: number;
-
-          /**
-           * Stores representations of [stock keeping units](http://en.wikipedia.org/wiki/Stock_keeping_unit).
-           * SKUs describe specific product variations, taking into account any combination of: attributes,
-           * currency, and cost. For example, a product may be a T-shirt, whereas a specific SKU represents
-           * the `size: large`, `color: red` version of that shirt.
-           *
-           * Can also be used to manage inventory.
-           *
-           * Related guide: [Tax, Shipping, and Inventory](https://stripe.com/docs/orders).
-           */
-          sku?: Stripe.Sku;
-
-          /**
-           * The type of display item. One of `custom`, `plan` or `sku`
-           */
-          type?: string;
-        }
-
-        namespace DisplayItem {
-          interface Custom {
-            /**
-             * The description of the line item.
-             */
-            description: string | null;
-
-            /**
-             * The images of the line item.
-             */
-            images: Array<string> | null;
-
-            /**
-             * The name of the line item.
-             */
-            name: string;
-          }
-        }
 
         type Locale =
           | 'auto'

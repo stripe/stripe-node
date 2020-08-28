@@ -105,11 +105,6 @@ declare module 'stripe' {
       tax_rates: Array<Stripe.TaxRate> | null;
 
       /**
-       * For prorations this indicates whether Stripe automatically grouped multiple related debit and credit line items into a single combined line item.
-       */
-      unified_proration?: boolean;
-
-      /**
        * Unit Amount (in the `currency` specified) of the invoice item.
        */
       unit_amount: number | null;
@@ -191,7 +186,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * The ID of an existing invoice to add this invoice item to. When left blank, the invoice item will be added to the next upcoming scheduled invoice. This is useful when adding invoice items in response to an invoice.created webhook. You can only add invoice items to draft invoices.
+       * The ID of an existing invoice to add this invoice item to. When left blank, the invoice item will be added to the next upcoming scheduled invoice. This is useful when adding invoice items in response to an invoice.created webhook. You can only add invoice items to draft invoices and there is a maximum of 250 items per invoice.
        */
       invoice?: string;
 
@@ -439,7 +434,7 @@ declare module 'stripe' {
 
     class InvoiceItemsResource {
       /**
-       * Creates an item to be added to a draft invoice. If no invoice is specified, the item will be on the next invoice created for the customer specified.
+       * Creates an item to be added to a draft invoice (up to 250 items per invoice). If no invoice is specified, the item will be on the next invoice created for the customer specified.
        */
       create(
         params: InvoiceItemCreateParams,
