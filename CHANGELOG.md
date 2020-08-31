@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.91.0 - 2020-08-31
+* [#992](https://github.com/stripe/stripe-node/pull/992) Add support for `payment_method.automatically_updated` on `WebhookEndpoint`
+
 ## 8.90.0 - 2020-08-28
 * [#991](https://github.com/stripe/stripe-node/pull/991) Multiple API changes
 * [#990](https://github.com/stripe/stripe-node/pull/990) Typescript: add 'lastResponse' to return types
