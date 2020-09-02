@@ -57,6 +57,11 @@ declare module 'stripe' {
         currency: string;
 
         /**
+         * If you've disputed the transaction, the ID of the dispute.
+         */
+        dispute?: string | Stripe.Issuing.Dispute | null;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -280,7 +285,7 @@ declare module 'stripe' {
           }
         }
 
-        type Type = 'capture' | 'refund';
+        type Type = 'capture' | 'dispute' | 'refund';
       }
 
       interface TransactionRetrieveParams {

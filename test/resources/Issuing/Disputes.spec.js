@@ -72,5 +72,28 @@ describe('Issuing', () => {
         });
       });
     });
+
+    describe('submit', () => {
+      it('Sends the correct request', () => {
+        stripe.issuing.disputes.submit('idp_123', {
+          metadata: {
+            thing1: true,
+            thing2: 'yes',
+          },
+        });
+        expect(stripe.LAST_REQUEST).to.deep.equal({
+          method: 'POST',
+          url: '/v1/issuing/disputes/idp_123/submit',
+          headers: {},
+          data: {
+            metadata: {
+              thing1: true,
+              thing2: 'yes',
+            },
+          },
+          settings: {},
+        });
+      });
+    });
   });
 });
