@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.92.0 - 2020-09-02
+* [#993](https://github.com/stripe/stripe-node/pull/993) Multiple API changes
+  * Add support for the Issuing `Dispute` submit API
+  * Add support for evidence details on Issuing `Dispute` creation, update and the resource.
+  * Add `available_payout_methods` on `BankAccount`
+  * Add `payment_status` on Checkout `Session`
+
 ## 8.91.0 - 2020-08-31
 * [#992](https://github.com/stripe/stripe-node/pull/992) Add support for `payment_method.automatically_updated` on `WebhookEndpoint`
 
