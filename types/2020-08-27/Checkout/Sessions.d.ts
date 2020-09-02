@@ -109,6 +109,12 @@ declare module 'stripe' {
         payment_method_types: Array<string>;
 
         /**
+         * The payment status of the Checkout Session, one of `paid`, `unpaid`, or `no_payment_required`.
+         * You can use this value to decide when to fulfill your customer's order.
+         */
+        payment_status: Session.PaymentStatus;
+
+        /**
          * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
          */
         setup_intent: string | Stripe.SetupIntent | null;
@@ -190,6 +196,8 @@ declare module 'stripe' {
           | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
+
+        type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
 
         interface Shipping {
           address?: Address;
