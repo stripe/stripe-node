@@ -31,6 +31,13 @@ declare module 'stripe' {
       account_holder_type: string | null;
 
       /**
+       * A set of available payout methods for this bank account. Only values from this set should be passed as the `method` when creating a payout.
+       */
+      available_payout_methods?: Array<
+        BankAccount.AvailablePayoutMethod
+      > | null;
+
+      /**
        * Name of the bank associated with the routing number (e.g., `WELLS FARGO`).
        */
       bank_name: string | null;
@@ -83,6 +90,10 @@ declare module 'stripe' {
        * For external accounts, possible values are `new` and `errored`. Validations aren't run against external accounts because they're only used for payouts. This means the other statuses don't apply. If a transfer fails, the status is set to `errored` and transfers are stopped until account details are updated.
        */
       status: string;
+    }
+
+    namespace BankAccount {
+      type AvailablePayoutMethod = 'instant' | 'standard';
     }
 
     /**

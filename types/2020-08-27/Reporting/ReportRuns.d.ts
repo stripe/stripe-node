@@ -35,7 +35,7 @@ declare module 'stripe' {
         parameters: ReportRun.Parameters;
 
         /**
-         * The ID of the [report type](https://stripe.com/docs/reporting/statements/api#report-types) to run, such as `"balance.summary.1"`.
+         * The ID of the [report type](https://stripe.com/docs/reports/report-types) to run, such as `"balance.summary.1"`.
          */
         report_type: string;
 

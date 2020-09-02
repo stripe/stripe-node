@@ -61,7 +61,7 @@ declare module 'stripe' {
       address_zip_check: string | null;
 
       /**
-       * A set of available payout methods for this card. Will be either `["standard"]` or `["standard", "instant"]`. Only values from this set should be passed as the `method` when creating a transfer.
+       * A set of available payout methods for this card. Only values from this set should be passed as the `method` when creating a payout.
        */
       available_payout_methods?: Array<Card.AvailablePayoutMethod> | null;
 
