@@ -38,7 +38,7 @@ declare module 'stripe' {
       application_fee: string | Stripe.ApplicationFee | null;
 
       /**
-       * The amount of the application fee (if any) for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
+       * The amount of the application fee (if any) requested for the charge. [See the Connect documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees) for details.
        */
       application_fee_amount: number | null;
 
@@ -1362,10 +1362,27 @@ declare module 'stripe' {
           iban_last4: string | null;
 
           /**
+           * Preferred language of the SOFORT authorization page that the customer is redirected to.
+           * Can be one of `de`, `en`, `es`, `fr`, `it`, `nl`, or `pl`
+           */
+          preferred_language?: Sofort.PreferredLanguage | null;
+
+          /**
            * Owner's verified full name. Values are verified or provided by SOFORT directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
           verified_name: string | null;
+        }
+
+        namespace Sofort {
+          type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'es'
+            | 'fr'
+            | 'it'
+            | 'nl'
+            | 'pl';
         }
 
         interface StripeAccount {}

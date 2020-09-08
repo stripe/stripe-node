@@ -63,6 +63,8 @@ declare module 'stripe' {
 
       sepa_debit?: PaymentMethod.SepaDebit;
 
+      sofort?: PaymentMethod.Sofort;
+
       /**
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
@@ -443,6 +445,13 @@ declare module 'stripe' {
         last4: string | null;
       }
 
+      interface Sofort {
+        /**
+         * Two-letter ISO code representing the country the bank account is located in.
+         */
+        country: string | null;
+      }
+
       type Type =
         | 'alipay'
         | 'au_becs_debit'
@@ -454,7 +463,8 @@ declare module 'stripe' {
         | 'giropay'
         | 'ideal'
         | 'p24'
-        | 'sepa_debit';
+        | 'sepa_debit'
+        | 'sofort';
     }
 
     interface PaymentMethodCreateParams {
@@ -542,6 +552,11 @@ declare module 'stripe' {
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
        */
       sepa_debit?: PaymentMethodCreateParams.SepaDebit;
+
+      /**
+       * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
+       */
+      sofort?: PaymentMethodCreateParams.Sofort;
 
       /**
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
@@ -736,6 +751,17 @@ declare module 'stripe' {
         iban: string;
       }
 
+      interface Sofort {
+        /**
+         * Two-letter ISO code representing the country the bank account is located in.
+         */
+        country: Sofort.Country;
+      }
+
+      namespace Sofort {
+        type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+      }
+
       type Type =
         | 'alipay'
         | 'au_becs_debit'
@@ -747,7 +773,8 @@ declare module 'stripe' {
         | 'giropay'
         | 'ideal'
         | 'p24'
-        | 'sepa_debit';
+        | 'sepa_debit'
+        | 'sofort';
     }
 
     interface PaymentMethodRetrieveParams {

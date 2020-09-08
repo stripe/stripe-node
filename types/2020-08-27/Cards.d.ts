@@ -83,7 +83,7 @@ declare module 'stripe' {
       customer?: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
-       * If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`.
+       * If a CVC was provided, results of the check: `pass`, `fail`, `unavailable`, or `unchecked`. A result of unchecked indicates that CVC was provided but hasn't been checked yet. Checks are typically performed when attaching a card to a Customer object, or when creating a charge. For more details, see [Check if a card is valid without a charge](https://support.stripe.com/questions/check-if-a-card-is-valid-without-a-charge).
        */
       cvc_check: string | null;
 

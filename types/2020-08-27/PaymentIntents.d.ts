@@ -36,7 +36,7 @@ declare module 'stripe' {
       application: string | Stripe.Application | null;
 
       /**
-       * The amount of the application fee (if any) for the resulting payment. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+       * The amount of the application fee (if any) requested for the resulting payment. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
        */
       application_fee_amount: number | null;
 
@@ -376,6 +376,8 @@ declare module 'stripe' {
         bancontact?: PaymentMethodOptions.Bancontact;
 
         card?: PaymentMethodOptions.Card;
+
+        sofort?: PaymentMethodOptions.Sofort;
       }
 
       namespace PaymentMethodOptions {
@@ -481,6 +483,24 @@ declare module 'stripe' {
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
+
+        interface Sofort {
+          /**
+           * Preferred language of the SOFORT authorization page that the customer is redirected to.
+           */
+          preferred_language: Sofort.PreferredLanguage | null;
+        }
+
+        namespace Sofort {
+          type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'es'
+            | 'fr'
+            | 'it'
+            | 'nl'
+            | 'pl';
+        }
       }
 
       type SetupFutureUsage = 'off_session' | 'on_session';
@@ -545,7 +565,7 @@ declare module 'stripe' {
       currency: string;
 
       /**
-       * The amount of the application fee (if any) that will be applied to the payment and transferred to the application owner's Stripe account. Must be greater than zero when provided. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. Must be greater than zero when provided. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
 
@@ -808,6 +828,11 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodData.SepaDebit;
 
         /**
+         * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
+         */
+        sofort?: PaymentMethodData.Sofort;
+
+        /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
@@ -974,6 +999,17 @@ declare module 'stripe' {
           iban: string;
         }
 
+        interface Sofort {
+          /**
+           * Two-letter ISO code representing the country the bank account is located in.
+           */
+          country: Sofort.Country;
+        }
+
+        namespace Sofort {
+          type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        }
+
         type Type =
           | 'alipay'
           | 'au_becs_debit'
@@ -984,7 +1020,8 @@ declare module 'stripe' {
           | 'giropay'
           | 'ideal'
           | 'p24'
-          | 'sepa_debit';
+          | 'sepa_debit'
+          | 'sofort';
       }
 
       interface PaymentMethodOptions {
@@ -1002,6 +1039,11 @@ declare module 'stripe' {
          * Configuration for any card payments attempted on this PaymentIntent.
          */
         card?: PaymentMethodOptions.Card | null;
+
+        /**
+         * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
+         */
+        sofort?: PaymentMethodOptions.Sofort | null;
       }
 
       namespace PaymentMethodOptions {
@@ -1094,6 +1136,21 @@ declare module 'stripe' {
 
           type RequestThreeDSecure = 'any' | 'automatic';
         }
+
+        interface Sofort {
+          preferred_language?: Sofort.PreferredLanguage;
+        }
+
+        namespace Sofort {
+          type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'es'
+            | 'fr'
+            | 'it'
+            | 'nl'
+            | 'pl';
+        }
       }
 
       type SetupFutureUsage = 'off_session' | 'on_session';
@@ -1166,7 +1223,7 @@ declare module 'stripe' {
       amount?: number;
 
       /**
-       * The amount of the application fee (if any) that will be applied to the payment and transferred to the application owner's Stripe account. Must be greater than zero when provided. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. Must be greater than zero when provided. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number | null;
 
@@ -1331,6 +1388,11 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodData.SepaDebit;
 
         /**
+         * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
+         */
+        sofort?: PaymentMethodData.Sofort;
+
+        /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
@@ -1497,6 +1559,17 @@ declare module 'stripe' {
           iban: string;
         }
 
+        interface Sofort {
+          /**
+           * Two-letter ISO code representing the country the bank account is located in.
+           */
+          country: Sofort.Country;
+        }
+
+        namespace Sofort {
+          type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        }
+
         type Type =
           | 'alipay'
           | 'au_becs_debit'
@@ -1507,7 +1580,8 @@ declare module 'stripe' {
           | 'giropay'
           | 'ideal'
           | 'p24'
-          | 'sepa_debit';
+          | 'sepa_debit'
+          | 'sofort';
       }
 
       interface PaymentMethodOptions {
@@ -1525,6 +1599,11 @@ declare module 'stripe' {
          * Configuration for any card payments attempted on this PaymentIntent.
          */
         card?: PaymentMethodOptions.Card | null;
+
+        /**
+         * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
+         */
+        sofort?: PaymentMethodOptions.Sofort | null;
       }
 
       namespace PaymentMethodOptions {
@@ -1617,6 +1696,21 @@ declare module 'stripe' {
 
           type RequestThreeDSecure = 'any' | 'automatic';
         }
+
+        interface Sofort {
+          preferred_language?: Sofort.PreferredLanguage;
+        }
+
+        namespace Sofort {
+          type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'es'
+            | 'fr'
+            | 'it'
+            | 'nl'
+            | 'pl';
+        }
       }
 
       type SetupFutureUsage = 'off_session' | 'on_session';
@@ -1700,7 +1794,7 @@ declare module 'stripe' {
       amount_to_capture?: number;
 
       /**
-       * The amount of the application fee (if any) that will be applied to the payment and transferred to the application owner's Stripe account. Must be greater than zero when provided. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. Must be greater than zero when provided. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount?: number;
 
@@ -1968,6 +2062,11 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodData.SepaDebit;
 
         /**
+         * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
+         */
+        sofort?: PaymentMethodData.Sofort;
+
+        /**
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
@@ -2134,6 +2233,17 @@ declare module 'stripe' {
           iban: string;
         }
 
+        interface Sofort {
+          /**
+           * Two-letter ISO code representing the country the bank account is located in.
+           */
+          country: Sofort.Country;
+        }
+
+        namespace Sofort {
+          type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        }
+
         type Type =
           | 'alipay'
           | 'au_becs_debit'
@@ -2144,7 +2254,8 @@ declare module 'stripe' {
           | 'giropay'
           | 'ideal'
           | 'p24'
-          | 'sepa_debit';
+          | 'sepa_debit'
+          | 'sofort';
       }
 
       interface PaymentMethodOptions {
@@ -2162,6 +2273,11 @@ declare module 'stripe' {
          * Configuration for any card payments attempted on this PaymentIntent.
          */
         card?: PaymentMethodOptions.Card | null;
+
+        /**
+         * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
+         */
+        sofort?: PaymentMethodOptions.Sofort | null;
       }
 
       namespace PaymentMethodOptions {
@@ -2253,6 +2369,21 @@ declare module 'stripe' {
             | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
+        }
+
+        interface Sofort {
+          preferred_language?: Sofort.PreferredLanguage;
+        }
+
+        namespace Sofort {
+          type PreferredLanguage =
+            | 'de'
+            | 'en'
+            | 'es'
+            | 'fr'
+            | 'it'
+            | 'nl'
+            | 'pl';
         }
       }
 
