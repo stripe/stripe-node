@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.93.0 - 2020-09-08
+* [#995](https://github.com/stripe/stripe-node/pull/995) Add support for Sofort on `PaymentMethod` and `PaymentIntent`
+
 ## 8.92.0 - 2020-09-02
 * [#993](https://github.com/stripe/stripe-node/pull/993) Multiple API changes
   * Add support for the Issuing `Dispute` submit API
