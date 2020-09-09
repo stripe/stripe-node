@@ -1268,9 +1268,7 @@ declare module 'stripe' {
           trial_end?: number;
 
           /**
-           * Indicates if a plan's `trial_period_days` should be applied to the
-           * subscription. Setting `trial_end` on `subscription_data` is preferred.
-           * Defaults to `false`.
+           * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` on `subscription_data` is preferred. Defaults to `false`.
            */
           trial_from_plan?: boolean;
 

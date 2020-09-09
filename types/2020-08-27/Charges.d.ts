@@ -1365,7 +1365,7 @@ declare module 'stripe' {
            * Preferred language of the SOFORT authorization page that the customer is redirected to.
            * Can be one of `de`, `en`, `es`, `fr`, `it`, `nl`, or `pl`
            */
-          preferred_language?: Sofort.PreferredLanguage | null;
+          preferred_language: Sofort.PreferredLanguage | null;
 
           /**
            * Owner's verified full name. Values are verified or provided by SOFORT directly

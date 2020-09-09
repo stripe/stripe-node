@@ -324,7 +324,7 @@ declare module 'stripe' {
         transaction: string;
 
         /**
-         * A hash containing all the evidence related to the dispute.
+         * Evidence provided for the dispute.
          */
         evidence?: DisputeCreateParams.Evidence;
 
@@ -625,7 +625,7 @@ declare module 'stripe' {
 
       interface DisputeUpdateParams {
         /**
-         * A hash containing all the evidence related to the dispute.
+         * Evidence provided for the dispute.
          */
         evidence?: DisputeUpdateParams.Evidence;
 

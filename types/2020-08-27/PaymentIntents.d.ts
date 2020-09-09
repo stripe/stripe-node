@@ -1138,6 +1138,9 @@ declare module 'stripe' {
         }
 
         interface Sofort {
+          /**
+           * Language shown to the payer on redirect.
+           */
           preferred_language?: Sofort.PreferredLanguage;
         }
 
@@ -1698,6 +1701,9 @@ declare module 'stripe' {
         }
 
         interface Sofort {
+          /**
+           * Language shown to the payer on redirect.
+           */
           preferred_language?: Sofort.PreferredLanguage;
         }
 
@@ -2372,6 +2378,9 @@ declare module 'stripe' {
         }
 
         interface Sofort {
+          /**
+           * Language shown to the payer on redirect.
+           */
           preferred_language?: Sofort.PreferredLanguage;
         }
 
