@@ -41,7 +41,7 @@ declare module 'stripe' {
       inclusive: boolean;
 
       /**
-       * The jurisdiction for the tax rate.
+       * The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer's invoice.
        */
       jurisdiction: string | null;
 
@@ -93,7 +93,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * The jurisdiction for the tax rate.
+       * The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer's invoice.
        */
       jurisdiction?: string;
 
@@ -132,7 +132,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * The jurisdiction for the tax rate.
+       * The jurisdiction for the tax rate. You can use this label field for tax reporting purposes. It also appears on your customer's invoice.
        */
       jurisdiction?: string;
 

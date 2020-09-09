@@ -920,7 +920,8 @@ declare module 'stripe' {
         | 'giropay'
         | 'ideal'
         | 'p24'
-        | 'sepa_debit';
+        | 'sepa_debit'
+        | 'sofort';
     }
 
     interface PaymentMethodAttachParams {
