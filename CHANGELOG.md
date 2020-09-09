@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.94.0 - 2020-09-09
+* [#998](https://github.com/stripe/stripe-node/pull/998) Multiple API changes
+  * Add support for `sofort` as a `type` on the List PaymentMethods API
+  * Add back support for `invoice.payment_succeeded`
+
 ## 8.93.0 - 2020-09-08
 * [#995](https://github.com/stripe/stripe-node/pull/995) Add support for Sofort on `PaymentMethod` and `PaymentIntent`
 
