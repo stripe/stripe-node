@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.95.0 - 2020-09-10
+* [#999](https://github.com/stripe/stripe-node/pull/999) Add support for SEPA debit on Checkout
+
 ## 8.94.0 - 2020-09-09
 * [#998](https://github.com/stripe/stripe-node/pull/998) Multiple API changes
   * Add support for `sofort` as a `type` on the List PaymentMethods API
