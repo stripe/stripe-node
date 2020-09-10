@@ -962,6 +962,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'ideal'
           | 'p24'
+          | 'sepa_debit'
           | 'sofort';
 
         interface SetupIntentData {
