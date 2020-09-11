@@ -7,7 +7,7 @@
 [![Try on RunKit](https://badge.runkitcdn.com/stripe.svg)](https://runkit.com/npm/stripe)
 
 The Stripe Node library provides convenient access to the Stripe API from
-applications written in server-side JavaScript.
+applications are written in server-side JavaScript.
 
 For collecting customer and payment information in the browser, use [Stripe.js][stripe-js].
 
@@ -89,7 +89,7 @@ You can find a full TS server example in [stripe-samples](https://github.com/str
 Types can change between API versions (e.g., Stripe may have changed a field from a string to a hash),
 so our types only reflect the latest API version.
 
-We therefore encourage [upgrading your API version][api-version-upgrading]
+We, therefore, encourage [upgrading your API version][api-version-upgrading]
 if you would like to take advantage of Stripe's TypeScript definitions.
 
 If you are on an older API version (e.g., `2019-10-17`) and not able to upgrade,
@@ -149,7 +149,7 @@ stripe.customers
 
 ## Configuration
 
-### Initialize with config object
+### Initialize with the config object
 
 The package can be initialized with several options:
 
@@ -442,7 +442,7 @@ const allNewCustomers = await stripe.customers
 By default, the library sends request latency telemetry to Stripe. These
 numbers help Stripe improve the overall latency of its API for all users.
 
-You can disable this behavior if you prefer:
+You can disable this behaviour if you prefer:
 
 ```js
 const stripe = new Stripe('sk_test_...', {
