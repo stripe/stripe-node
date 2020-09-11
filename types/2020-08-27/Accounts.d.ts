@@ -833,6 +833,11 @@ declare module 'stripe' {
 
       interface ExternalAccount {
         /**
+         * The type of external account.
+         */
+        object: string;
+
+        /**
          * The country in which the bank account is located.
          */
         country: string;
