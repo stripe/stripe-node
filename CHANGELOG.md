@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.96.0 - 2020-09-13
+* [#1003](https://github.com/stripe/stripe-node/pull/1003) Add support for `promotion_code.created` and `promotion_code.updated` on `Event`
+
 ## 8.95.0 - 2020-09-10
 * [#999](https://github.com/stripe/stripe-node/pull/999) Add support for SEPA debit on Checkout
 
