@@ -1033,7 +1033,7 @@ declare module 'stripe' {
 
     class SubscriptionsResource {
       /**
-       * Creates a new subscription on an existing customer. Each customer can have up to 25 active or scheduled subscriptions.
+       * Creates a new subscription on an existing customer. Each customer can have up to 500 active or scheduled subscriptions.
        */
       create(
         params: SubscriptionCreateParams,

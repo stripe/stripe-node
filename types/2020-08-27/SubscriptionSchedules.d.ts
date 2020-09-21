@@ -1146,7 +1146,7 @@ declare module 'stripe' {
 
     class SubscriptionSchedulesResource {
       /**
-       * Creates a new subscription schedule object. Each customer can have up to 25 active or scheduled subscriptions.
+       * Creates a new subscription schedule object. Each customer can have up to 500 active or scheduled subscriptions.
        */
       create(
         params?: SubscriptionScheduleCreateParams,
