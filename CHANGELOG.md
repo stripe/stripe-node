@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.97.0 - 2020-09-21
+* [#1012](https://github.com/stripe/stripe-node/pull/1012) Multiple API changes
+  * `metadata` is now always nullable on all resources
+  * Add support for `amount_captured` on `Charge`
+  * Add `checkout_session` on `Discount`
+
 ## 8.96.0 - 2020-09-13
 * [#1003](https://github.com/stripe/stripe-node/pull/1003) Add support for `promotion_code.created` and `promotion_code.updated` on `Event`
 
