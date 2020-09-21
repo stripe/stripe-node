@@ -23,6 +23,11 @@ declare module 'stripe' {
       amount: number;
 
       /**
+       * Amount in %s captured (can be less than the amount attribute on the charge if a partial capture was made).
+       */
+      amount_captured: number;
+
+      /**
        * Amount in %s refunded (can be less than the amount attribute on the charge if a partial refund was issued).
        */
       amount_refunded: number;

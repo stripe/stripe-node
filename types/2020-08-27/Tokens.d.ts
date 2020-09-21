@@ -485,7 +485,7 @@ declare module 'stripe' {
         country: string;
 
         /**
-         * The currency the bank account is in. This must be a country/currency pairing that [Stripe supports.](docs/payouts)
+         * The currency the bank account is in. This must be a country/currency pairing that [Stripe supports.](https://stripe.com/docs/payouts)
          */
         currency?: string;
 

@@ -16,6 +16,11 @@ declare module 'stripe' {
       object: 'discount';
 
       /**
+       * The Checkout session that this coupon is applied to, if it is applied to a particular session in payment mode. Will not be present for subscription mode.
+       */
+      checkout_session: string | null;
+
+      /**
        * A coupon contains information about a percent-off or amount-off discount you
        * might want to apply to a customer. Coupons may be applied to [invoices](https://stripe.com/docs/api#invoices) or
        * [orders](https://stripe.com/docs/api#create_order-coupon). Coupons do not work with conventional one-off [charges](https://stripe.com/docs/api#create_charge).
@@ -73,6 +78,11 @@ declare module 'stripe' {
        * String representing the object's type. Objects of the same type share the same value.
        */
       object: 'discount';
+
+      /**
+       * The Checkout session that this coupon is applied to, if it is applied to a particular session in payment mode. Will not be present for subscription mode.
+       */
+      checkout_session: string | null;
 
       /**
        * A coupon contains information about a percent-off or amount-off discount you
