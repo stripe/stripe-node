@@ -176,3 +176,6 @@ Stripe.StripeResource.extend({
     path: 'foo',
   }),
 });
+
+const maxBufferedRequestMetrics: number =
+  Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;

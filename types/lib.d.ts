@@ -40,6 +40,7 @@ declare module 'stripe' {
         ): ApiListPromise<T>;
         del<T>(id: string, options?: RequestOptions): Promise<T>;
       };
+      static MAX_BUFFERED_REQUEST_METRICS: number;
     }
     export type LatestApiVersion = '2020-08-27';
     export type HttpAgent = Agent;
