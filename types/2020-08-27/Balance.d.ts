@@ -20,6 +20,11 @@ declare module 'stripe' {
        */
       connect_reserved?: Array<Balance.ConnectReserved>;
 
+      /**
+       * Funds that can be paid out using Instant Payouts.
+       */
+      instant_available?: Array<Balance.InstantAvailable>;
+
       issuing?: Balance.Issuing;
 
       /**
@@ -82,6 +87,39 @@ declare module 'stripe' {
       }
 
       namespace ConnectReserved {
+        interface SourceTypes {
+          /**
+           * Amount for bank account.
+           */
+          bank_account?: number;
+
+          /**
+           * Amount for card.
+           */
+          card?: number;
+
+          /**
+           * Amount for FPX.
+           */
+          fpx?: number;
+        }
+      }
+
+      interface InstantAvailable {
+        /**
+         * Balance amount.
+         */
+        amount: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        source_types?: InstantAvailable.SourceTypes;
+      }
+
+      namespace InstantAvailable {
         interface SourceTypes {
           /**
            * Amount for bank account.

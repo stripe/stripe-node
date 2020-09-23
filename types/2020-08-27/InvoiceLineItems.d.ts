@@ -272,7 +272,7 @@ declare module 'stripe' {
 
       interface InvoiceItem {
         /**
-         * The integer amount in **%s** of previewed invoice item.
+         * The integer amount in %s of previewed invoice item.
          */
         amount?: number;
 
@@ -329,12 +329,12 @@ declare module 'stripe' {
         tax_rates?: Array<string> | null;
 
         /**
-         * The integer unit amount in **%s** of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
+         * The integer unit amount in %s of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
          */
         unit_amount?: number;
 
         /**
-         * Same as `unit_amount`, but accepts a decimal string with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
       }
@@ -381,7 +381,7 @@ declare module 'stripe' {
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set, but at least one is required.
+           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -471,7 +471,7 @@ declare module 'stripe' {
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set, but at least one is required.
+           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }

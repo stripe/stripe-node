@@ -16,7 +16,7 @@ declare module 'stripe' {
       object: 'credit_note';
 
       /**
-       * The integer amount in **%s** representing the total amount of the credit note, including tax.
+       * The integer amount in %s representing the total amount of the credit note, including tax.
        */
       amount: number;
 
@@ -44,7 +44,7 @@ declare module 'stripe' {
         | null;
 
       /**
-       * The integer amount in **%s** representing the total amount of discount that was credited.
+       * The integer amount in %s representing the total amount of discount that was credited.
        */
       discount_amount: number;
 
@@ -109,7 +109,7 @@ declare module 'stripe' {
       status: CreditNote.Status;
 
       /**
-       * The integer amount in **%s** representing the amount of the credit note, excluding tax and invoice level discounts.
+       * The integer amount in %s representing the amount of the credit note, excluding tax and invoice level discounts.
        */
       subtotal: number;
 
@@ -119,7 +119,7 @@ declare module 'stripe' {
       tax_amounts: Array<CreditNote.TaxAmount>;
 
       /**
-       * The integer amount in **%s** representing the total amount of the credit note, including tax and all discount.
+       * The integer amount in %s representing the total amount of the credit note, including tax and all discount.
        */
       total: number;
 
@@ -182,12 +182,12 @@ declare module 'stripe' {
       invoice: string;
 
       /**
-       * The integer amount in **%s** representing the total amount of the credit note.
+       * The integer amount in %s representing the total amount of the credit note.
        */
       amount?: number;
 
       /**
-       * The integer amount in **%s** representing the amount to credit the customer's balance, which will be automatically applied to their next invoice.
+       * The integer amount in %s representing the amount to credit the customer's balance, which will be automatically applied to their next invoice.
        */
       credit_amount?: number;
 
@@ -212,7 +212,7 @@ declare module 'stripe' {
       metadata?: MetadataParam;
 
       /**
-       * The integer amount in **%s** representing the amount that is credited outside of Stripe.
+       * The integer amount in %s representing the amount that is credited outside of Stripe.
        */
       out_of_band_amount?: number;
 
@@ -227,7 +227,7 @@ declare module 'stripe' {
       refund?: string;
 
       /**
-       * The integer amount in **%s** representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
+       * The integer amount in %s representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
        */
       refund_amount?: number;
     }
@@ -265,12 +265,12 @@ declare module 'stripe' {
         type: Line.Type;
 
         /**
-         * The integer unit amount in **%s** of the credit note line item. This `unit_amount` will be multiplied by the quantity to get the full amount to credit for this line item. Only valid when `type` is `custom_line_item`.
+         * The integer unit amount in %s of the credit note line item. This `unit_amount` will be multiplied by the quantity to get the full amount to credit for this line item. Only valid when `type` is `custom_line_item`.
          */
         unit_amount?: number;
 
         /**
-         * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
       }
@@ -334,12 +334,12 @@ declare module 'stripe' {
       invoice: string;
 
       /**
-       * The integer amount in **%s** representing the total amount of the credit note.
+       * The integer amount in %s representing the total amount of the credit note.
        */
       amount?: number;
 
       /**
-       * The integer amount in **%s** representing the amount to credit the customer's balance, which will be automatically applied to their next invoice.
+       * The integer amount in %s representing the amount to credit the customer's balance, which will be automatically applied to their next invoice.
        */
       credit_amount?: number;
 
@@ -364,7 +364,7 @@ declare module 'stripe' {
       metadata?: MetadataParam;
 
       /**
-       * The integer amount in **%s** representing the amount that is credited outside of Stripe.
+       * The integer amount in %s representing the amount that is credited outside of Stripe.
        */
       out_of_band_amount?: number;
 
@@ -379,7 +379,7 @@ declare module 'stripe' {
       refund?: string;
 
       /**
-       * The integer amount in **%s** representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
+       * The integer amount in %s representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
        */
       refund_amount?: number;
     }
@@ -417,12 +417,12 @@ declare module 'stripe' {
         type: Line.Type;
 
         /**
-         * The integer unit amount in **%s** of the credit note line item. This `unit_amount` will be multiplied by the quantity to get the full amount to credit for this line item. Only valid when `type` is `custom_line_item`.
+         * The integer unit amount in %s of the credit note line item. This `unit_amount` will be multiplied by the quantity to get the full amount to credit for this line item. Only valid when `type` is `custom_line_item`.
          */
         unit_amount?: number;
 
         /**
-         * Same as `unit_amount`, but accepts a decimal value with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
       }
