@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.98.0 - 2020-09-23
+* [#1014](https://github.com/stripe/stripe-node/pull/1014) Multiple API changes
+  * Add support for `issuing_dispute.closed` and `issuing_dispute.submitted` events
+  * Add support for `instant_available` on `Balance`
+
 ## 8.97.0 - 2020-09-21
 * [#1012](https://github.com/stripe/stripe-node/pull/1012) Multiple API changes
   * `metadata` is now always nullable on all resources
