@@ -319,6 +319,8 @@ declare module 'stripe' {
       interface NextAction {
         alipay_handle_redirect?: NextAction.AlipayHandleRedirect;
 
+        oxxo_display_details?: NextAction.OxxoDisplayDetails;
+
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
@@ -355,6 +357,23 @@ declare module 'stripe' {
           url: string | null;
         }
 
+        interface OxxoDisplayDetails {
+          /**
+           * The timestamp after which the OXXO voucher expires.
+           */
+          expires_after: number | null;
+
+          /**
+           * The URL for the hosted OXXO voucher page, which allows customers to view and print an OXXO voucher.
+           */
+          hosted_voucher_url: string | null;
+
+          /**
+           * OXXO reference number.
+           */
+          number: string | null;
+        }
+
         interface RedirectToUrl {
           /**
            * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
@@ -376,6 +395,8 @@ declare module 'stripe' {
         bancontact?: PaymentMethodOptions.Bancontact;
 
         card?: PaymentMethodOptions.Card;
+
+        oxxo?: PaymentMethodOptions.Oxxo;
 
         sofort?: PaymentMethodOptions.Sofort;
       }
@@ -482,6 +503,13 @@ declare module 'stripe' {
             | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
+        }
+
+        interface Oxxo {
+          /**
+           * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
+           */
+          expires_after_days: number;
         }
 
         interface Sofort {
@@ -818,6 +846,11 @@ declare module 'stripe' {
         metadata?: MetadataParam;
 
         /**
+         * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
+         */
+        oxxo?: PaymentMethodData.Oxxo;
+
+        /**
          * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
          */
         p24?: PaymentMethodData.P24;
@@ -990,6 +1023,8 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface Oxxo {}
+
         interface P24 {}
 
         interface SepaDebit {
@@ -1019,6 +1054,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'ideal'
+          | 'oxxo'
           | 'p24'
           | 'sepa_debit'
           | 'sofort';
@@ -1039,6 +1075,11 @@ declare module 'stripe' {
          * Configuration for any card payments attempted on this PaymentIntent.
          */
         card?: PaymentMethodOptions.Card | null;
+
+        /**
+         * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
+         */
+        oxxo?: PaymentMethodOptions.Oxxo | null;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
@@ -1135,6 +1176,13 @@ declare module 'stripe' {
             | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
+        }
+
+        interface Oxxo {
+          /**
+           * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
+           */
+          expires_after_days?: number;
         }
 
         interface Sofort {
@@ -1381,6 +1429,11 @@ declare module 'stripe' {
         metadata?: MetadataParam;
 
         /**
+         * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
+         */
+        oxxo?: PaymentMethodData.Oxxo;
+
+        /**
          * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
          */
         p24?: PaymentMethodData.P24;
@@ -1553,6 +1606,8 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface Oxxo {}
+
         interface P24 {}
 
         interface SepaDebit {
@@ -1582,6 +1637,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'ideal'
+          | 'oxxo'
           | 'p24'
           | 'sepa_debit'
           | 'sofort';
@@ -1602,6 +1658,11 @@ declare module 'stripe' {
          * Configuration for any card payments attempted on this PaymentIntent.
          */
         card?: PaymentMethodOptions.Card | null;
+
+        /**
+         * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
+         */
+        oxxo?: PaymentMethodOptions.Oxxo | null;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
@@ -1698,6 +1759,13 @@ declare module 'stripe' {
             | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
+        }
+
+        interface Oxxo {
+          /**
+           * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
+           */
+          expires_after_days?: number;
         }
 
         interface Sofort {
@@ -2058,6 +2126,11 @@ declare module 'stripe' {
         metadata?: MetadataParam;
 
         /**
+         * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
+         */
+        oxxo?: PaymentMethodData.Oxxo;
+
+        /**
          * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
          */
         p24?: PaymentMethodData.P24;
@@ -2230,6 +2303,8 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface Oxxo {}
+
         interface P24 {}
 
         interface SepaDebit {
@@ -2259,6 +2334,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'ideal'
+          | 'oxxo'
           | 'p24'
           | 'sepa_debit'
           | 'sofort';
@@ -2279,6 +2355,11 @@ declare module 'stripe' {
          * Configuration for any card payments attempted on this PaymentIntent.
          */
         card?: PaymentMethodOptions.Card | null;
+
+        /**
+         * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
+         */
+        oxxo?: PaymentMethodOptions.Oxxo | null;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
@@ -2375,6 +2456,13 @@ declare module 'stripe' {
             | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
+        }
+
+        interface Oxxo {
+          /**
+           * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
+           */
+          expires_after_days?: number;
         }
 
         interface Sofort {
