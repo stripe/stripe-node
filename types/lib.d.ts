@@ -5,6 +5,43 @@ import {Agent} from 'http';
 
 declare module 'stripe' {
   namespace Stripe {
+    export class StripeResource {
+      static extend<
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        T extends {[prop: string]: any} & {
+          includeBasic?: Array<
+            'create' | 'retrieve' | 'update' | 'list' | 'del'
+          >;
+        }
+      >(spec: T): StripeResource & T;
+      static method(spec: {
+        method: string;
+        path: string;
+        methodType?: 'list';
+      }): (...args: any[]) => object; //eslint-disable-line @typescript-eslint/no-explicit-any
+      static BASIC_METHODS: {
+        create<T>(
+          params: CouponCreateParams,
+          options?: RequestOptions
+        ): Promise<T>;
+        retrieve<T>(
+          id: string,
+          params?: CouponRetrieveParams,
+          options?: RequestOptions
+        ): Promise<T>;
+        update<T>(
+          id: string,
+          params?: CouponUpdateParams,
+          options?: RequestOptions
+        ): Promise<T>;
+        list<T>(
+          params?: CouponListParams,
+          options?: RequestOptions
+        ): ApiListPromise<T>;
+        del<T>(id: string, options?: RequestOptions): Promise<T>;
+      };
+      static MAX_BUFFERED_REQUEST_METRICS: number;
+    }
     export type LatestApiVersion = '2020-08-27';
     export type HttpAgent = Agent;
 

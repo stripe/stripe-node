@@ -168,3 +168,14 @@ const stripeCardError: Stripe.StripeCardError = Stripe.errors.generate({
   code: 'card_declined',
   charge: 'ch_123',
 });
+
+Stripe.StripeResource.extend({
+  includeBasic: ['retrieve'],
+  foo: Stripe.StripeResource.method({
+    method: 'create',
+    path: 'foo',
+  }),
+});
+
+const maxBufferedRequestMetrics: number =
+  Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;
