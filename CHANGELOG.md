@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.99.0 - 2020-09-24
+* [#1011](https://github.com/stripe/stripe-node/pull/1011) Add type definition for Stripe.StripeResource
+
 ## 8.98.0 - 2020-09-23
 * [#1014](https://github.com/stripe/stripe-node/pull/1014) Multiple API changes
   * Add support for `issuing_dispute.closed` and `issuing_dispute.submitted` events
