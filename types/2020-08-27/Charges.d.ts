@@ -413,6 +413,8 @@ declare module 'stripe' {
 
         multibanco?: PaymentMethodDetails.Multibanco;
 
+        oxxo?: PaymentMethodDetails.Oxxo;
+
         p24?: PaymentMethodDetails.P24;
 
         sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
@@ -1275,6 +1277,13 @@ declare module 'stripe' {
            * Reference number associated with this Multibanco payment.
            */
           reference: string | null;
+        }
+
+        interface Oxxo {
+          /**
+           * OXXO reference number
+           */
+          number: string | null;
         }
 
         interface P24 {

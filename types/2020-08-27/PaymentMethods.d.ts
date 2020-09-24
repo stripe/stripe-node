@@ -59,6 +59,8 @@ declare module 'stripe' {
        */
       metadata: Metadata | null;
 
+      oxxo?: PaymentMethod.Oxxo;
+
       p24?: PaymentMethod.P24;
 
       sepa_debit?: PaymentMethod.SepaDebit;
@@ -416,6 +418,8 @@ declare module 'stripe' {
 
       interface InteracPresent {}
 
+      interface Oxxo {}
+
       interface P24 {}
 
       interface SepaDebit {
@@ -462,6 +466,7 @@ declare module 'stripe' {
         | 'fpx'
         | 'giropay'
         | 'ideal'
+        | 'oxxo'
         | 'p24'
         | 'sepa_debit'
         | 'sofort';
@@ -537,6 +542,11 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: MetadataParam;
+
+      /**
+       * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
+       */
+      oxxo?: PaymentMethodCreateParams.Oxxo;
 
       /**
        * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
@@ -742,6 +752,8 @@ declare module 'stripe' {
 
       interface InteracPresent {}
 
+      interface Oxxo {}
+
       interface P24 {}
 
       interface SepaDebit {
@@ -772,6 +784,7 @@ declare module 'stripe' {
         | 'fpx'
         | 'giropay'
         | 'ideal'
+        | 'oxxo'
         | 'p24'
         | 'sepa_debit'
         | 'sofort';
