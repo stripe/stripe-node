@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.100.0 - 2020-09-24
+* [#1016](https://github.com/stripe/stripe-node/pull/1016) Multiple API changes
+  * Add support for OXXO on `PaymentMethod` and `PaymentIntent`
+  * Add support for `contribution` on `BalanceTransaction`
+
 ## 8.99.0 - 2020-09-24
 * [#1011](https://github.com/stripe/stripe-node/pull/1011) Add type definition for Stripe.StripeResource
 
