@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.102.0 - 2020-09-25
+* [#1019](https://github.com/stripe/stripe-node/pull/1019) Add support for `oxxo` as a valid `type` on the List PaymentMethod API
+
 ## 8.101.0 - 2020-09-25
 * [#1018](https://github.com/stripe/stripe-node/pull/1018) More idiomatic types
 
