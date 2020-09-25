@@ -932,6 +932,7 @@ declare module 'stripe' {
         | 'fpx'
         | 'giropay'
         | 'ideal'
+        | 'oxxo'
         | 'p24'
         | 'sepa_debit'
         | 'sofort';
