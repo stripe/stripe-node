@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.101.0 - 2020-09-25
+* [#1018](https://github.com/stripe/stripe-node/pull/1018) More idiomatic types
+
 ## 8.100.0 - 2020-09-24
 * [#1016](https://github.com/stripe/stripe-node/pull/1016) Multiple API changes
   * Add support for OXXO on `PaymentMethod` and `PaymentIntent`
