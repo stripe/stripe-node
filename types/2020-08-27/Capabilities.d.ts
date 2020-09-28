@@ -53,7 +53,7 @@ declare module 'stripe' {
         /**
          * If the capability is disabled, this string describes why. Possible values are `requirement.fields_needed`, `pending.onboarding`, `pending.review`, `rejected_fraud`, or `rejected.other`.
          */
-        disabled_reason: string | null;
+        disabled_reason: Requirements.DisabledReason | null;
 
         /**
          * The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
@@ -139,6 +139,17 @@ declare module 'stripe' {
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued';
         }
+
+        type DisabledReason =
+          | 'requirements.past_due'
+          | 'requirements.pending_verification'
+          | 'rejected.fraud'
+          | 'rejected.terms_of_service'
+          | 'rejected.listed'
+          | 'rejected.other'
+          | 'listed'
+          | 'under_review'
+          | 'other';
       }
 
       type Status =

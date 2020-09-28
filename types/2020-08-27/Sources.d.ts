@@ -498,7 +498,7 @@ declare module 'stripe' {
         /**
          * The failure reason for the redirect, either `user_abort` (the customer aborted or dropped out of the redirect flow), `declined` (the authentication failed or the transaction was declined), or `processing_error` (the redirect failed due to a technical error). Present only if the redirect status is `failed`.
          */
-        failure_reason: string | null;
+        failure_reason: Redirect.FailureReason | null;
 
         /**
          * The URL you provide to redirect the customer to after they authenticated their payment.
@@ -514,6 +514,10 @@ declare module 'stripe' {
          * The URL provided to you to redirect a customer to as part of a `redirect` authentication flow.
          */
         url: string;
+      }
+
+      namespace Redirect {
+        type FailureReason = 'user_abort' | 'declined' | 'processing_error';
       }
 
       interface SepaCreditTransfer {
