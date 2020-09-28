@@ -72,7 +72,7 @@ declare module 'stripe' {
       /**
        * Reason given by cardholder for dispute. Possible values are `bank_cannot_process`, `check_returned`, `credit_not_processed`, `customer_initiated`, `debit_not_authorized`, `duplicate`, `fraudulent`, `general`, `incorrect_account_details`, `insufficient_funds`, `product_not_received`, `product_unacceptable`, `subscription_canceled`, or `unrecognized`. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).
        */
-      reason: string;
+      reason: Dispute.Reason;
 
       /**
        * Current status of dispute. Possible values are `warning_needs_response`, `warning_under_review`, `warning_closed`, `needs_response`, `under_review`, `charge_refunded`, `won`, or `lost`.
@@ -239,6 +239,22 @@ declare module 'stripe' {
          */
         submission_count: number;
       }
+
+      type Reason =
+        | 'bank_cannot_process'
+        | 'check_returned'
+        | 'credit_not_processed'
+        | 'customer_initiated'
+        | 'debit_not_authorized'
+        | 'duplicate'
+        | 'fraudulent'
+        | 'general'
+        | 'incorrect_account_details'
+        | 'insufficient_funds'
+        | 'product_not_received'
+        | 'product_unacceptable'
+        | 'subscription_canceled'
+        | 'unrecognized';
 
       type Status =
         | 'charge_refunded'

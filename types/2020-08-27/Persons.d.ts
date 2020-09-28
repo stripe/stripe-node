@@ -360,7 +360,7 @@ declare module 'stripe' {
         /**
          * The state of verification for the person. Possible values are `unverified`, `pending`, or `verified`.
          */
-        status: string;
+        status: Verification.Status;
       }
 
       namespace Verification {
@@ -407,6 +407,8 @@ declare module 'stripe' {
            */
           front: string | Stripe.File | null;
         }
+
+        type Status = 'unverified' | 'pending' | 'verified';
       }
     }
 

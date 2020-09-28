@@ -229,7 +229,7 @@ declare module 'stripe' {
       /**
        * The status of the payment is either `succeeded`, `pending`, or `failed`.
        */
-      status: string;
+      status: Charge.Status;
 
       /**
        * ID of the transfer to the `destination` account (only applicable if the charge was created using the `destination` parameter).
@@ -291,7 +291,11 @@ declare module 'stripe' {
         /**
          * Assessments reported by you. If set, possible values of are `safe` and `fraudulent`.
          */
-        user_report?: string;
+        user_report?: FraudDetails.UserReport;
+      }
+
+      namespace FraudDetails {
+        type UserReport = 'safe' | 'fraudulent';
       }
 
       interface Level3 {
@@ -328,17 +332,17 @@ declare module 'stripe' {
         /**
          * Possible values are `approved_by_network`, `declined_by_network`, `not_sent_to_network`, and `reversed_after_approval`. The value `reversed_after_approval` indicates the payment was [blocked by Stripe](https://stripe.com/docs/declines#blocked-payments) after bank authorization, and may temporarily appear as "pending" on a cardholder's statement.
          */
-        network_status: string | null;
+        network_status: Outcome.NetworkStatus | null;
 
         /**
          * An enumerated value providing a more detailed explanation of the outcome's `type`. Charges blocked by Radar's default block rule have the value `highest_risk_level`. Charges placed in review by Radar's default review rule have the value `elevated_risk_level`. Charges authorized, blocked, or placed in review by custom rules have the value `rule`. See [understanding declines](https://stripe.com/docs/declines) for more details.
          */
-        reason: string | null;
+        reason: Outcome.Reason | null;
 
         /**
          * Stripe's evaluation of the riskiness of the payment. Possible values for evaluated payments are `normal`, `elevated`, `highest`. For non-card payments, and card-based payments predating the public assignment of risk levels, this field will have the value `not_assessed`. In the event of an error in the evaluation, this field will have the value `unknown`.
          */
-        risk_level?: string;
+        risk_level?: Outcome.RiskLevel;
 
         /**
          * Stripe's evaluation of the riskiness of the payment. Possible values for evaluated payments are between 0 and 100. For non-card payments, card-based payments predating the public assignment of risk scores, or in the event of an error during evaluation, this field will not be present. This field is only available with Radar for Fraud Teams.
@@ -358,10 +362,32 @@ declare module 'stripe' {
         /**
          * Possible values are `authorized`, `manual_review`, `issuer_declined`, `blocked`, and `invalid`. See [understanding declines](https://stripe.com/docs/declines) and [Radar reviews](https://stripe.com/docs/radar/reviews) for details.
          */
-        type: string;
+        type: Outcome.Type;
       }
 
       namespace Outcome {
+        type NetworkStatus =
+          | 'approved_by_network'
+          | 'declined_by_network'
+          | 'not_sent_to_network'
+          | 'reversed_after_approval';
+
+        type Reason = 'highest_risk_level' | 'eleveted_risk_level';
+
+        type RiskLevel =
+          | 'normal'
+          | 'eleveted'
+          | 'highest'
+          | 'not_assessed'
+          | 'unkown';
+
+        type Type =
+          | 'authorized'
+          | 'manual_review'
+          | 'issuer_declined'
+          | 'blocked'
+          | 'invalid';
+
         interface Rule {
           /**
            * The action taken on the payment.
@@ -1427,6 +1453,8 @@ declare module 'stripe' {
          */
         tracking_number?: string | null;
       }
+
+      type Status = 'succeeded' | 'pending' | 'failed';
 
       interface TransferData {
         /**

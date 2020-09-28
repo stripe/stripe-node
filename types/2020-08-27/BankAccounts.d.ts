@@ -89,11 +89,22 @@ declare module 'stripe' {
        *
        * For external accounts, possible values are `new` and `errored`. Validations aren't run against external accounts because they're only used for payouts. This means the other statuses don't apply. If a transfer fails, the status is set to `errored` and transfers are stopped until account details are updated.
        */
-      status: string;
+      status: BankAccount.Status | ExternalAccount.Status;
     }
 
     namespace BankAccount {
       type AvailablePayoutMethod = 'instant' | 'standard';
+
+      type Status =
+        | 'new'
+        | 'validated'
+        | 'verified'
+        | 'verification_failed'
+        | 'errored';
+    }
+
+    namespace ExternalAccount {
+      type Status = 'new' | 'errored';
     }
 
     /**

@@ -60,12 +60,16 @@ declare module 'stripe' {
       /**
        * The status of the webhook. It can be `enabled` or `disabled`.
        */
-      status: string;
+      status: WebHookEndPoint.Status;
 
       /**
        * The URL of the webhook endpoint.
        */
       url: string;
+    }
+
+    namespace WebHookEndPoint {
+      type Status = 'enabled' | 'disabled';
     }
 
     /**

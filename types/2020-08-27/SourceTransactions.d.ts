@@ -53,7 +53,7 @@ declare module 'stripe' {
       /**
        * The status of the transaction, one of `succeeded`, `pending`, or `failed`.
        */
-      status: string;
+      status: SourceTransaction.Status;
 
       /**
        * The type of source this transaction is attached to.
@@ -176,6 +176,8 @@ declare module 'stripe' {
          */
         sender_name?: string;
       }
+
+      type Status = 'succeeded' | 'pending' | 'failed';
 
       type Type =
         | 'ach_credit_transfer'

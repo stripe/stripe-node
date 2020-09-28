@@ -104,7 +104,7 @@ declare module 'stripe' {
       /**
        * Current status of the payout: `paid`, `pending`, `in_transit`, `canceled` or `failed`. A payout is `pending` until it is submitted to the bank, when it becomes `in_transit`. The status then changes to `paid` if the transaction goes through, or to `failed` or `canceled` (within 5 business days). Some failed payouts may initially show as `paid` but then change to `failed`.
        */
-      status: string;
+      status: Payout.Status;
 
       /**
        * Can be `bank_account` or `card`.
@@ -113,6 +113,8 @@ declare module 'stripe' {
     }
 
     namespace Payout {
+      type Status = 'paid' | 'pending' | 'in_transit' | 'canceled' | 'failed';
+
       type Type = 'bank_account' | 'card';
     }
 

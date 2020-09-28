@@ -50,7 +50,7 @@ declare module 'stripe' {
          *  When the run finishes, this will be set to `succeeded` and the `result` field will be populated.
          *  Rarely, we may encounter an error, at which point this will be set to `failed` and the `error` field will be populated.
          */
-        status: string;
+        status: ReportRun.Status;
 
         /**
          * Timestamp at which this run successfully finished (populated when
@@ -101,6 +101,8 @@ declare module 'stripe' {
            */
           timezone?: string;
         }
+
+        type Status = 'pending' | 'succeeded' | 'failed';
       }
 
       interface ReportRunCreateParams {
