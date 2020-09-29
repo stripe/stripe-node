@@ -189,6 +189,11 @@ declare module 'stripe' {
         legacy_payments?: Capabilities.LegacyPayments;
 
         /**
+         * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
+         */
+        oxxo_payments?: Capabilities.OxxoPayments;
+
+        /**
          * The status of the tax reporting 1099-K (US) capability of the account.
          */
         tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
@@ -220,6 +225,8 @@ declare module 'stripe' {
         type JcbPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
+
+        type OxxoPayments = 'active' | 'inactive' | 'pending';
 
         type TaxReportingUs1099K = 'active' | 'inactive' | 'pending';
 
@@ -913,6 +920,11 @@ declare module 'stripe' {
         legacy_payments?: Capabilities.LegacyPayments;
 
         /**
+         * The oxxo_payments capability.
+         */
+        oxxo_payments?: Capabilities.OxxoPayments;
+
+        /**
          * The tax_reporting_us_1099_k capability.
          */
         tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
@@ -979,6 +991,13 @@ declare module 'stripe' {
         }
 
         interface LegacyPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface OxxoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1715,6 +1734,11 @@ declare module 'stripe' {
         legacy_payments?: Capabilities.LegacyPayments;
 
         /**
+         * The oxxo_payments capability.
+         */
+        oxxo_payments?: Capabilities.OxxoPayments;
+
+        /**
          * The tax_reporting_us_1099_k capability.
          */
         tax_reporting_us_1099_k?: Capabilities.TaxReportingUs1099K;
@@ -1781,6 +1805,13 @@ declare module 'stripe' {
         }
 
         interface LegacyPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface OxxoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
