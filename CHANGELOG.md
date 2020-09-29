@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.104.0 - 2020-09-28
+* [#1022](https://github.com/stripe/stripe-node/pull/1022) Add support for `oxxo_payments` capability on `Account`
+
 ## 8.103.0 - 2020-09-28
 * [#1021](https://github.com/stripe/stripe-node/pull/1021) Add VERSION constant to instantiated Stripe client.
 
