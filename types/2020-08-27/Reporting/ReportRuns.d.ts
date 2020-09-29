@@ -172,6 +172,7 @@ declare module 'stripe' {
             | 'charge_failure'
             | 'connect_collection_transfer'
             | 'connect_reserved_funds'
+            | 'contribution'
             | 'dispute'
             | 'dispute_reversal'
             | 'fee'
