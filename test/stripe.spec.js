@@ -519,4 +519,12 @@ describe('Stripe Module', function() {
       });
     });
   });
+
+  describe('VERSION', () => {
+    it('should return the current package version', () => {
+      const newStripe = Stripe(testUtils.getUserStripeKey());
+
+      expect(newStripe.VERSION).to.equal(Stripe.PACKAGE_VERSION);
+    });
+  });
 });
