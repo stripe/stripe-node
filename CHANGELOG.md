@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.103.0 - 2020-09-28
+* [#1021](https://github.com/stripe/stripe-node/pull/1021) Add VERSION constant to instantiated Stripe client.
+
 ## 8.102.0 - 2020-09-25
 * [#1019](https://github.com/stripe/stripe-node/pull/1019) Add support for `oxxo` as a valid `type` on the List PaymentMethod API
 
