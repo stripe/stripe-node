@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.106.0 - 2020-09-29
+* [#1024](https://github.com/stripe/stripe-node/pull/1024) Add support for the `SetupAttempt` resource and List API
+
 ## 8.105.0 - 2020-09-29
 * [#1023](https://github.com/stripe/stripe-node/pull/1023) Add support for `contribution` in `reporting_category` on `ReportRun`
 
