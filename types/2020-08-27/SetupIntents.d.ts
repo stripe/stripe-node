@@ -55,6 +55,11 @@ declare module 'stripe' {
       last_setup_error: SetupIntent.LastSetupError | null;
 
       /**
+       * The most recent SetupAttempt for this SetupIntent.
+       */
+      latest_attempt: string | Stripe.SetupAttempt | null;
+
+      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
