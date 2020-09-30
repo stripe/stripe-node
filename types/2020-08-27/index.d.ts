@@ -72,6 +72,7 @@
 ///<reference path='./ReserveTransactions.d.ts' />
 ///<reference path='./Reviews.d.ts' />
 ///<reference path='./SKUs.d.ts' />
+///<reference path='./SetupAttempts.d.ts' />
 ///<reference path='./SetupIntents.d.ts' />
 ///<reference path='./Sigma/ScheduledQueryRuns.d.ts' />
 ///<reference path='./SourceMandateNotifications.d.ts' />
@@ -142,6 +143,7 @@ declare module 'stripe' {
     promotionCodes: Stripe.PromotionCodesResource;
     refunds: Stripe.RefundsResource;
     reviews: Stripe.ReviewsResource;
+    setupAttempts: Stripe.SetupAttemptsResource;
     setupIntents: Stripe.SetupIntentsResource;
     skus: Stripe.SkusResource;
     sources: Stripe.SourcesResource;
