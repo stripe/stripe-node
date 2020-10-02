@@ -159,6 +159,11 @@ declare module 'stripe' {
         bacs_debit_payments?: Capabilities.BacsDebitPayments;
 
         /**
+         * The status of the Bancontact payments capability of the account, or whether the account can directly process Bancontact charges.
+         */
+        bancontact_payments?: Capabilities.BancontactPayments;
+
+        /**
          * The status of the card issuing capability of the account, or whether you can use Issuing to distribute funds on cards
          */
         card_issuing?: Capabilities.CardIssuing;
@@ -174,9 +179,24 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The status of the EPS payments capability of the account, or whether the account can directly process EPS charges.
+         */
+        eps_payments?: Capabilities.EpsPayments;
+
+        /**
          * The status of the FPX payments capability of the account, or whether the account can directly process FPX charges.
          */
         fpx_payments?: Capabilities.FpxPayments;
+
+        /**
+         * The status of the giropay payments capability of the account, or whether the account can directly process giropay charges.
+         */
+        giropay_payments?: Capabilities.GiropayPayments;
+
+        /**
+         * The status of the iDEAL payments capability of the account, or whether the account can directly process iDEAL charges.
+         */
+        ideal_payments?: Capabilities.IdealPayments;
 
         /**
          * The status of the JCB payments capability of the account, or whether the account (Japan only) can directly process JCB credit card charges in JPY currency.
@@ -192,6 +212,21 @@ declare module 'stripe' {
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
+
+        /**
+         * The status of the P24 payments capability of the account, or whether the account can directly process P24 charges.
+         */
+        p24_payments?: Capabilities.P24Payments;
+
+        /**
+         * The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
+         */
+        sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+        /**
+         * The status of the Sofort payments capability of the account, or whether the account can directly process Sofort charges.
+         */
+        sofort_payments?: Capabilities.SofortPayments;
 
         /**
          * The status of the tax reporting 1099-K (US) capability of the account.
@@ -214,19 +249,33 @@ declare module 'stripe' {
 
         type BacsDebitPayments = 'active' | 'inactive' | 'pending';
 
+        type BancontactPayments = 'active' | 'inactive' | 'pending';
+
         type CardIssuing = 'active' | 'inactive' | 'pending';
 
         type CardPayments = 'active' | 'inactive' | 'pending';
 
         type CartesBancairesPayments = 'active' | 'inactive' | 'pending';
 
+        type EpsPayments = 'active' | 'inactive' | 'pending';
+
         type FpxPayments = 'active' | 'inactive' | 'pending';
+
+        type GiropayPayments = 'active' | 'inactive' | 'pending';
+
+        type IdealPayments = 'active' | 'inactive' | 'pending';
 
         type JcbPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
         type OxxoPayments = 'active' | 'inactive' | 'pending';
+
+        type P24Payments = 'active' | 'inactive' | 'pending';
+
+        type SepaDebitPayments = 'active' | 'inactive' | 'pending';
+
+        type SofortPayments = 'active' | 'inactive' | 'pending';
 
         type TaxReportingUs1099K = 'active' | 'inactive' | 'pending';
 
@@ -890,6 +939,11 @@ declare module 'stripe' {
         bacs_debit_payments?: Capabilities.BacsDebitPayments;
 
         /**
+         * The bancontact_payments capability.
+         */
+        bancontact_payments?: Capabilities.BancontactPayments;
+
+        /**
          * The card_issuing capability.
          */
         card_issuing?: Capabilities.CardIssuing;
@@ -905,9 +959,24 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The eps_payments capability.
+         */
+        eps_payments?: Capabilities.EpsPayments;
+
+        /**
          * The fpx_payments capability.
          */
         fpx_payments?: Capabilities.FpxPayments;
+
+        /**
+         * The giropay_payments capability.
+         */
+        giropay_payments?: Capabilities.GiropayPayments;
+
+        /**
+         * The ideal_payments capability.
+         */
+        ideal_payments?: Capabilities.IdealPayments;
 
         /**
          * The jcb_payments capability.
@@ -923,6 +992,21 @@ declare module 'stripe' {
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
+
+        /**
+         * The p24_payments capability.
+         */
+        p24_payments?: Capabilities.P24Payments;
+
+        /**
+         * The sepa_debit_payments capability.
+         */
+        sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+        /**
+         * The sofort_payments capability.
+         */
+        sofort_payments?: Capabilities.SofortPayments;
 
         /**
          * The tax_reporting_us_1099_k capability.
@@ -955,6 +1039,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface BancontactPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface CardIssuing {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -976,7 +1067,28 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface EpsPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface FpxPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface GiropayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdealPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -998,6 +1110,27 @@ declare module 'stripe' {
         }
 
         interface OxxoPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface P24Payments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SepaDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SofortPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1704,6 +1837,11 @@ declare module 'stripe' {
         bacs_debit_payments?: Capabilities.BacsDebitPayments;
 
         /**
+         * The bancontact_payments capability.
+         */
+        bancontact_payments?: Capabilities.BancontactPayments;
+
+        /**
          * The card_issuing capability.
          */
         card_issuing?: Capabilities.CardIssuing;
@@ -1719,9 +1857,24 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The eps_payments capability.
+         */
+        eps_payments?: Capabilities.EpsPayments;
+
+        /**
          * The fpx_payments capability.
          */
         fpx_payments?: Capabilities.FpxPayments;
+
+        /**
+         * The giropay_payments capability.
+         */
+        giropay_payments?: Capabilities.GiropayPayments;
+
+        /**
+         * The ideal_payments capability.
+         */
+        ideal_payments?: Capabilities.IdealPayments;
 
         /**
          * The jcb_payments capability.
@@ -1737,6 +1890,21 @@ declare module 'stripe' {
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
+
+        /**
+         * The p24_payments capability.
+         */
+        p24_payments?: Capabilities.P24Payments;
+
+        /**
+         * The sepa_debit_payments capability.
+         */
+        sepa_debit_payments?: Capabilities.SepaDebitPayments;
+
+        /**
+         * The sofort_payments capability.
+         */
+        sofort_payments?: Capabilities.SofortPayments;
 
         /**
          * The tax_reporting_us_1099_k capability.
@@ -1769,6 +1937,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface BancontactPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface CardIssuing {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -1790,7 +1965,28 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface EpsPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface FpxPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface GiropayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IdealPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1812,6 +2008,27 @@ declare module 'stripe' {
         }
 
         interface OxxoPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface P24Payments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SepaDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface SofortPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

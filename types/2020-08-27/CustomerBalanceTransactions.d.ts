@@ -86,7 +86,7 @@ declare module 'stripe' {
 
     interface CustomerBalanceTransactionCreateParams {
       /**
-       * The integer amount in **%s** to apply to the customer's balance. Pass a negative amount to credit the customer's balance, and pass in a positive amount to debit the customer's balance.
+       * The integer amount in **%s** to apply to the customer's credit balance.
        */
       amount: number;
 

@@ -636,7 +636,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
 
       /**
-       * Creates an immutable transaction that updates the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+       * Creates an immutable transaction that updates the customer's credit [balance](https://stripe.com/docs/billing/customer/balance).
        */
       createBalanceTransaction(
         id: string,
@@ -645,7 +645,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
 
       /**
-       * Retrieves a specific transaction that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+       * Retrieves a specific customer balance transaction that updated the customer's [balances](https://stripe.com/docs/billing/customer/balance).
        */
       retrieveBalanceTransaction(
         customerId: string,
@@ -660,7 +660,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
 
       /**
-       * Most customer balance transaction fields are immutable, but you may update its description and metadata.
+       * Most credit balance transaction fields are immutable, but you may update its description and metadata.
        */
       updateBalanceTransaction(
         customerId: string,
@@ -670,7 +670,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
 
       /**
-       * Returns a list of transactions that updated the customer's [balance](https://stripe.com/docs/api/customers/object#customer_object-balance).
+       * Returns a list of transactions that updated the customer's [balances](https://stripe.com/docs/billing/customer/balance).
        */
       listBalanceTransactions(
         id: string,
