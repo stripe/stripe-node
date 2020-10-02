@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.107.0 - 2020-10-02
+* [#1026](https://github.com/stripe/stripe-node/pull/1026) Add support for `tos_acceptance[service_agreement]` on `Account`
+* [#1025](https://github.com/stripe/stripe-node/pull/1025) Add support for new payments capabilities on `Account`
+
 ## 8.106.0 - 2020-09-29
 * [#1024](https://github.com/stripe/stripe-node/pull/1024) Add support for the `SetupAttempt` resource and List API
 
