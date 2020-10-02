@@ -727,17 +727,22 @@ declare module 'stripe' {
 
       interface TosAcceptance {
         /**
-         * The Unix timestamp marking when the Stripe Services Agreement was accepted by the account representative
+         * The Unix timestamp marking when the account representative accepted their service agreement
          */
         date?: number | null;
 
         /**
-         * The IP address from which the Stripe Services Agreement was accepted by the account representative
+         * The IP address from which the account representative accepted their service agreement
          */
         ip?: string | null;
 
         /**
-         * The user agent of the browser from which the Stripe Services Agreement was accepted by the account representative
+         * The user's service agreement type
+         */
+        service_agreement?: string;
+
+        /**
+         * The user agent of the browser from which the account representative accepted their service agreement
          */
         user_agent?: string | null;
       }
@@ -1641,17 +1646,22 @@ declare module 'stripe' {
 
       interface TosAcceptance {
         /**
-         * The Unix timestamp marking when the account representative accepted the Stripe Services Agreement.
+         * The Unix timestamp marking when the account representative accepted their service agreement.
          */
         date?: number;
 
         /**
-         * The IP address from which the account representative accepted the Stripe Services Agreement.
+         * The IP address from which the account representative accepted their service agreement.
          */
         ip?: string;
 
         /**
-         * The user agent of the browser from which the account representative accepted the Stripe Services Agreement.
+         * The user's service agreement type.
+         */
+        service_agreement?: string;
+
+        /**
+         * The user agent of the browser from which the account representative accepted their service agreement.
          */
         user_agent?: string;
       }
@@ -2539,17 +2549,22 @@ declare module 'stripe' {
 
       interface TosAcceptance {
         /**
-         * The Unix timestamp marking when the account representative accepted the Stripe Services Agreement.
+         * The Unix timestamp marking when the account representative accepted their service agreement.
          */
         date?: number;
 
         /**
-         * The IP address from which the account representative accepted the Stripe Services Agreement.
+         * The IP address from which the account representative accepted their service agreement.
          */
         ip?: string;
 
         /**
-         * The user agent of the browser from which the account representative accepted the Stripe Services Agreement.
+         * The user's service agreement type.
+         */
+        service_agreement?: string;
+
+        /**
+         * The user agent of the browser from which the account representative accepted their service agreement.
          */
         user_agent?: string;
       }
