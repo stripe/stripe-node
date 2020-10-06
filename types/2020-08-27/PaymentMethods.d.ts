@@ -444,9 +444,28 @@ declare module 'stripe' {
         fingerprint: string | null;
 
         /**
+         * Information about the object that generated this PaymentMethod.
+         */
+        generated_from: SepaDebit.GeneratedFrom | null;
+
+        /**
          * Last four characters of the IBAN.
          */
         last4: string | null;
+      }
+
+      namespace SepaDebit {
+        interface GeneratedFrom {
+          /**
+           * The ID of the Charge that generated this PaymentMethod, if any.
+           */
+          charge: string | Stripe.Charge | null;
+
+          /**
+           * The ID of the SetupAttempt that generated this PaymentMethod, if any.
+           */
+          setup_attempt: string | Stripe.SetupAttempt | null;
+        }
       }
 
       interface Sofort {
