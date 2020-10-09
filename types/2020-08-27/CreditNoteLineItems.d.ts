@@ -33,7 +33,7 @@ declare module 'stripe' {
       /**
        * The amount of discount calculated per discount for this line item
        */
-      discount_amounts?: Array<CreditNoteLineItem.DiscountAmount>;
+      discount_amounts: Array<CreditNoteLineItem.DiscountAmount>;
 
       /**
        * ID of the invoice line item being credited

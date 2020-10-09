@@ -33,7 +33,7 @@ declare module 'stripe' {
       /**
        * The amount of discount calculated per discount for this line item.
        */
-      discount_amounts?: Array<InvoiceLineItem.DiscountAmount> | null;
+      discount_amounts: Array<InvoiceLineItem.DiscountAmount> | null;
 
       /**
        * If true, discounts will apply to this line item. Always false for prorations.
@@ -43,7 +43,7 @@ declare module 'stripe' {
       /**
        * The discounts applied to the invoice line item. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
        */
-      discounts?: Array<string | Stripe.Discount> | null;
+      discounts: Array<string | Stripe.Discount> | null;
 
       /**
        * The ID of the [invoice item](https://stripe.com/docs/api/invoiceitems) associated with this line item if any.
@@ -171,6 +171,9 @@ declare module 'stripe' {
        */
       customer?: string;
 
+      /**
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. Pass an empty string to avoid inheriting any discounts.
+       */
       discounts?: Array<InvoiceLineItemListUpcomingParams.Discount> | null;
 
       /**

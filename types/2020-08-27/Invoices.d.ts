@@ -153,14 +153,14 @@ declare module 'stripe' {
       description: string | null;
 
       /**
-       * Describes the current discount applied to this invoice, if there is one.
+       * Describes the current discount applied to this invoice, if there is one. Not populated if there are multiple discounts.
        */
       discount: Stripe.Discount | null;
 
       /**
        * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
        */
-      discounts?: Array<
+      discounts: Array<
         string | Stripe.Discount | Stripe.DeletedDiscount
       > | null;
 
@@ -296,7 +296,7 @@ declare module 'stripe' {
       /**
        * The aggregate amounts calculated per discount across all line items.
        */
-      total_discount_amounts?: Array<Invoice.TotalDiscountAmount> | null;
+      total_discount_amounts: Array<Invoice.TotalDiscountAmount> | null;
 
       /**
        * The aggregate amounts calculated per tax rate for all line items.
@@ -894,6 +894,9 @@ declare module 'stripe' {
        */
       customer?: string;
 
+      /**
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. Pass an empty string to avoid inheriting any discounts.
+       */
       discounts?: Array<InvoiceRetrieveUpcomingParams.Discount> | null;
 
       /**
@@ -1336,7 +1339,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 
       /**
-       * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discount that is applicable to the customer.
+       * At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
        *
        * Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
        *

@@ -51,7 +51,7 @@ declare module 'stripe' {
       /**
        * The aggregate amounts calculated per discount for all line items.
        */
-      discount_amounts?: Array<CreditNote.DiscountAmount>;
+      discount_amounts: Array<CreditNote.DiscountAmount>;
 
       /**
        * ID of the invoice.
