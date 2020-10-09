@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.109.0 - 2020-10-09
+* [#1033](https://github.com/stripe/stripe-node/pull/1033) Add support for internal-only `description`, `iin`, and `issuer` for `card_present` and `interac_present` on `Charge.payment_method_details` 
+
 ## 8.108.0 - 2020-10-08
 * [#1028](https://github.com/stripe/stripe-node/pull/1028) Add support for `Bancontact/iDEAL/Sofort -> SEPA`
   * Add support for `generated_sepa_debit` and `generated_sepa_debit_mandate` on `Charge.payment_method_details.ideal`, `Charge.payment_method_details.bancontact` and `Charge.payment_method_details.sofort`
