@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.110.0 - 2020-10-12
+* [#1035](https://github.com/stripe/stripe-node/pull/1035) Add support for `setup_intent.requires_action` on Event
+
 ## 8.109.0 - 2020-10-09
 * [#1033](https://github.com/stripe/stripe-node/pull/1033) Add support for internal-only `description`, `iin`, and `issuer` for `card_present` and `interac_present` on `Charge.payment_method_details` 
 
