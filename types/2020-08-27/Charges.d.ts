@@ -647,7 +647,7 @@ declare module 'stripe' {
           country: string | null;
 
           /**
-           * Card description. (Only for internal use only and not typically available in standard API requests.)
+           * Card description. (For internal use only and not typically available in standard API requests.)
            */
           description?: string | null;
 
@@ -672,7 +672,7 @@ declare module 'stripe' {
           funding: string | null;
 
           /**
-           * Issuer identification number of the card. (Only for internal use only and not typically available in standard API requests.)
+           * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
            */
           iin?: string | null;
 
@@ -684,7 +684,7 @@ declare module 'stripe' {
           installments: Card.Installments | null;
 
           /**
-           * Issuer bank name of the card. (Only for internal use only and not typically available in standard API requests.)
+           * Issuer bank name of the card. (For internal use only and not typically available in standard API requests.)
            */
           issuer?: string | null;
 
@@ -909,6 +909,11 @@ declare module 'stripe' {
           country: string | null;
 
           /**
+           * Card description. (For internal use only and not typically available in standard API requests.)
+           */
+          description?: string | null;
+
+          /**
            * Authorization response cryptogram.
            */
           emv_auth_data: string | null;
@@ -937,6 +942,16 @@ declare module 'stripe' {
            * ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
            */
           generated_card: string | null;
+
+          /**
+           * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
+           */
+          iin?: string | null;
+
+          /**
+           * Issuer bank name of the card. (For internal use only and not typically available in standard API requests.)
+           */
+          issuer?: string | null;
 
           /**
            * The last four digits of the card.
@@ -1175,6 +1190,11 @@ declare module 'stripe' {
           country: string | null;
 
           /**
+           * Card description. (For internal use only and not typically available in standard API requests.)
+           */
+          description?: string | null;
+
+          /**
            * Authorization response cryptogram.
            */
           emv_auth_data: string | null;
@@ -1203,6 +1223,16 @@ declare module 'stripe' {
            * ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
            */
           generated_card: string | null;
+
+          /**
+           * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
+           */
+          iin?: string | null;
+
+          /**
+           * Issuer bank name of the card. (For internal use only and not typically available in standard API requests.)
+           */
+          issuer?: string | null;
 
           /**
            * The last four digits of the card.

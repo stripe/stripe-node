@@ -98,7 +98,7 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
-       * Card description. (Only for internal use only and not typically available in standard API requests.)
+       * Card description. (For internal use only and not typically available in standard API requests.)
        */
       description?: string;
 
@@ -128,12 +128,12 @@ declare module 'stripe' {
       funding: string;
 
       /**
-       * Issuer identification number of the card. (Only for internal use only and not typically available in standard API requests.)
+       * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
        */
       iin?: string;
 
       /**
-       * Issuer bank name of the card. (Only for internal use only and not typically available in standard API requests.)
+       * Issuer bank name of the card. (For internal use only and not typically available in standard API requests.)
        */
       issuer?: string;
 
