@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.111.0 - 2020-10-12
+* [#1038](https://github.com/stripe/stripe-node/pull/1038) Add support for `description`, `iin` and `issuer` in `payment_method_details[card_present]` and `payment_method_details[interac_present]` on `Charge`
+
 ## 8.110.0 - 2020-10-12
 * [#1035](https://github.com/stripe/stripe-node/pull/1035) Add support for `setup_intent.requires_action` on Event
 
