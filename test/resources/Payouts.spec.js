@@ -75,4 +75,17 @@ describe('Payouts Resource', () => {
       });
     });
   });
+
+  describe('reverse', () => {
+    it('Sends the correct request', () => {
+      stripe.payouts.reverse(PAYOUT_TEST_ID);
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'POST',
+        url: `/v1/payouts/${PAYOUT_TEST_ID}/reverse`,
+        headers: {},
+        data: {},
+        settings: {},
+      });
+    });
+  });
 });
