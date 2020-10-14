@@ -599,6 +599,11 @@ declare module 'stripe' {
         customer_email?: string;
 
         /**
+         * The coupon or promotion code to apply to this session. Currently, only up to one may be specified.
+         */
+        discounts?: Array<SessionCreateParams.Discount>;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -658,6 +663,18 @@ declare module 'stripe' {
 
       namespace SessionCreateParams {
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface Discount {
+          /**
+           * The ID of the coupon to apply to this session.
+           */
+          coupon?: string;
+
+          /**
+           * The ID of a promotion code to apply to this session.
+           */
+          promotion_code?: string;
+        }
 
         interface LineItem {
           /**
