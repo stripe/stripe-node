@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.112.0 - 2020-10-14
+* [#1042](https://github.com/stripe/stripe-node/pull/1042) Add support for the Payout Reverse API
+* [#1041](https://github.com/stripe/stripe-node/pull/1041) Do not mutate user-supplied opts
+
 ## 8.111.0 - 2020-10-12
 * [#1038](https://github.com/stripe/stripe-node/pull/1038) Add support for `description`, `iin` and `issuer` in `payment_method_details[card_present]` and `payment_method_details[interac_present]` on `Charge`
 
