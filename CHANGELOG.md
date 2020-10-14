@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.113.0 - 2020-10-14
+* [#1044](https://github.com/stripe/stripe-node/pull/1044) Add support for `discounts` on `Session.create`
+
 ## 8.112.0 - 2020-10-14
 * [#1042](https://github.com/stripe/stripe-node/pull/1042) Add support for the Payout Reverse API
 * [#1041](https://github.com/stripe/stripe-node/pull/1041) Do not mutate user-supplied opts
