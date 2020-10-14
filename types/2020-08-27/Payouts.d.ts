@@ -92,6 +92,16 @@ declare module 'stripe' {
       method: string;
 
       /**
+       * If the payout reverses another, this is the ID of the original payout.
+       */
+      original_payout?: string | Stripe.Payout | null;
+
+      /**
+       * If the payout was reversed, this is the ID of the payout that reverses this payout.
+       */
+      reversed_by?: string | Stripe.Payout | null;
+
+      /**
        * The source balance this payout came from. One of `card`, `fpx`, or `bank_account`.
        */
       source_type: string;
@@ -216,6 +226,18 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface PayoutReverseParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: MetadataParam;
+    }
+
     class PayoutsResource {
       /**
        * To send funds to your own bank account, you create a new payout object. Your [Stripe balance](https://stripe.com/docs/api#balance) must be able to cover the payout amount, or you'll receive an “Insufficient Funds” error.
@@ -269,6 +291,21 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Payout>>;
       cancel(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Payout>>;
+
+      /**
+       * Reverses a payout by debiting the destination bank account. Only payouts for connected accounts to US bank accounts may be reversed at this time. If the payout is in the pending status, /v1/payouts/:id/cancel should be used instead.
+       *
+       * By requesting a reversal via /v1/payouts/:id/reverse, you confirm that the authorized signatory of the selected bank account has authorized the debit on the bank account and that no other authorization is required.
+       */
+      reverse(
+        id: string,
+        params?: PayoutReverseParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Payout>>;
+      reverse(
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Payout>>;
