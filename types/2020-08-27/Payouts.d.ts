@@ -94,12 +94,12 @@ declare module 'stripe' {
       /**
        * If the payout reverses another, this is the ID of the original payout.
        */
-      original_payout?: string | Stripe.Payout | null;
+      original_payout: string | Stripe.Payout | null;
 
       /**
        * If the payout was reversed, this is the ID of the payout that reverses this payout.
        */
-      reversed_by?: string | Stripe.Payout | null;
+      reversed_by: string | Stripe.Payout | null;
 
       /**
        * The source balance this payout came from. One of `card`, `fpx`, or `bank_account`.
