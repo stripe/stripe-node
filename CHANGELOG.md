@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.114.0 - 2020-10-15
+* [#1045](https://github.com/stripe/stripe-node/pull/1045) Make `original_payout` and `reversed_by` not optional anymore
+
 ## 8.113.0 - 2020-10-14
 * [#1044](https://github.com/stripe/stripe-node/pull/1044) Add support for `discounts` on `Session.create`
 
