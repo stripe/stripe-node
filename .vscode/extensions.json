@@ -2,7 +2,7 @@
   "recommendations": [
     // JS Language plugins (~required)
     "dbaeumer.vscode-eslint",
-    "joshpeng.sublime-babel-vscode",
+    "mgmcdermott.vscode-language-babel",
     "esbenp.prettier-vscode",
 
     // Highly recommended
