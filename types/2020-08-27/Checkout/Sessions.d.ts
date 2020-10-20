@@ -93,7 +93,7 @@ declare module 'stripe' {
         metadata: Metadata | null;
 
         /**
-         * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`.
+         * The mode of the Checkout Session.
          */
         mode: Session.Mode;
 
@@ -628,7 +628,7 @@ declare module 'stripe' {
         metadata?: MetadataParam;
 
         /**
-         * The mode of the Checkout Session, one of `payment`, `setup`, or `subscription`. Required when using prices or `setup` mode. Pass `subscription` if Checkout session includes at least one recurring item.
+         * The mode of the Checkout Session. Required when using prices or `setup` mode. Pass `subscription` if Checkout session includes at least one recurring item.
          */
         mode?: SessionCreateParams.Mode;
 
