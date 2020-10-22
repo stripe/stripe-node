@@ -434,6 +434,11 @@ declare module 'stripe' {
          * Quantity for this item. Defaults to 1.
          */
         quantity?: number;
+
+        /**
+         * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
+         */
+        tax_rates?: Array<string> | null;
       }
 
       namespace AddInvoiceItem {
@@ -759,6 +764,11 @@ declare module 'stripe' {
          * Quantity for this item. Defaults to 1.
          */
         quantity?: number;
+
+        /**
+         * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
+         */
+        tax_rates?: Array<string> | null;
       }
 
       namespace AddInvoiceItem {
