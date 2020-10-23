@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.117.0 - 2020-10-23
+* [#1050](https://github.com/stripe/stripe-node/pull/1050) Add support for passing `p24[bank]` for P24 on `PaymentIntent` or `PaymentMethod`
+
 ## 8.116.0 - 2020-10-22
 * [#1049](https://github.com/stripe/stripe-node/pull/1049) Support passing `tax_rates` when creating invoice items through `Subscription` or `SubscriptionSchedule`
 
