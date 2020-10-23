@@ -420,7 +420,41 @@ declare module 'stripe' {
 
       interface Oxxo {}
 
-      interface P24 {}
+      interface P24 {
+        /**
+         * The customer's bank, if provided.
+         */
+        bank: P24.Bank | null;
+      }
+
+      namespace P24 {
+        type Bank =
+          | 'alior_bank'
+          | 'bank_millennium'
+          | 'bank_nowy_bfg_sa'
+          | 'bank_pekao_sa'
+          | 'banki_spbdzielcze'
+          | 'blik'
+          | 'bnp_paribas'
+          | 'boz'
+          | 'citi_handlowy'
+          | 'credit_agricole'
+          | 'envelobank'
+          | 'etransfer_pocztowy24'
+          | 'getin_bank'
+          | 'ideabank'
+          | 'ing'
+          | 'inteligo'
+          | 'mbank_mtransfer'
+          | 'nest_przelew'
+          | 'noble_pay'
+          | 'pbac_z_ipko'
+          | 'plus_bank'
+          | 'santander_przelew24'
+          | 'tmobile_usbugi_bankowe'
+          | 'toyota_bank'
+          | 'volkswagen_bank';
+      }
 
       interface SepaDebit {
         /**
@@ -773,7 +807,41 @@ declare module 'stripe' {
 
       interface Oxxo {}
 
-      interface P24 {}
+      interface P24 {
+        /**
+         * The customer's bank.
+         */
+        bank?: P24.Bank;
+      }
+
+      namespace P24 {
+        type Bank =
+          | 'alior_bank'
+          | 'bank_millennium'
+          | 'bank_nowy_bfg_sa'
+          | 'bank_pekao_sa'
+          | 'banki_spbdzielcze'
+          | 'blik'
+          | 'bnp_paribas'
+          | 'boz'
+          | 'citi_handlowy'
+          | 'credit_agricole'
+          | 'envelobank'
+          | 'etransfer_pocztowy24'
+          | 'getin_bank'
+          | 'ideabank'
+          | 'ing'
+          | 'inteligo'
+          | 'mbank_mtransfer'
+          | 'nest_przelew'
+          | 'noble_pay'
+          | 'pbac_z_ipko'
+          | 'plus_bank'
+          | 'santander_przelew24'
+          | 'tmobile_usbugi_bankowe'
+          | 'toyota_bank'
+          | 'volkswagen_bank';
+      }
 
       interface SepaDebit {
         /**
