@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.116.0 - 2020-10-22
+* [#1049](https://github.com/stripe/stripe-node/pull/1049) Support passing `tax_rates` when creating invoice items through `Subscription` or `SubscriptionSchedule`
+
 ## 8.115.0 - 2020-10-20
 * [#1048](https://github.com/stripe/stripe-node/pull/1048) Add support for `jp_rn` and `ru_kpp` as a `type` on `TaxId`
 * [#1046](https://github.com/stripe/stripe-node/pull/1046) chore: replace recommended extension sublime babel with babel javascript
