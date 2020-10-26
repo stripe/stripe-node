@@ -196,6 +196,13 @@ declare module 'stripe' {
       autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
     }
 
+    /**
+     * The Stripe API uses url-encoding for requests, and stripe-node encodes a
+     * `null` param as an empty string, because there is no concept of `null`
+     * in url-encoding. Both `null` and `''` behave identically.
+     */
+    export type Emptyable<T> = null | '' | T;
+
     export interface RequestEvent {
       api_version: string;
       account?: string;
