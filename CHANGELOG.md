@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.118.0 - 2020-10-26
+* [#1053](https://github.com/stripe/stripe-node/pull/1053) Multiple API changes
+  * Improving Typescript types for nullable parameters and introduced `Stripe.Emptyable` as a type
+  * Add support for `payment_method_options[card][cvc_token]` on `PaymentIntent`
+  * Add support for `cvc_update[cvc]` on `Token` creation
+* [#1052](https://github.com/stripe/stripe-node/pull/1052) Add Stripe.Emptyable type definition
+
 ## 8.117.0 - 2020-10-23
 * [#1050](https://github.com/stripe/stripe-node/pull/1050) Add support for passing `p24[bank]` for P24 on `PaymentIntent` or `PaymentMethod`
 
