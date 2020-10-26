@@ -344,32 +344,34 @@ declare module 'stripe' {
           /**
            * Evidence provided when `reason` is 'canceled'.
            */
-          canceled?: Evidence.Canceled | null;
+          canceled?: Stripe.Emptyable<Evidence.Canceled>;
 
           /**
            * Evidence provided when `reason` is 'duplicate'.
            */
-          duplicate?: Evidence.Duplicate | null;
+          duplicate?: Stripe.Emptyable<Evidence.Duplicate>;
 
           /**
            * Evidence provided when `reason` is 'fraudulent'.
            */
-          fraudulent?: Evidence.Fraudulent | null;
+          fraudulent?: Stripe.Emptyable<Evidence.Fraudulent>;
 
           /**
            * Evidence provided when `reason` is 'merchandise_not_as_described'.
            */
-          merchandise_not_as_described?: Evidence.MerchandiseNotAsDescribed | null;
+          merchandise_not_as_described?: Stripe.Emptyable<
+            Evidence.MerchandiseNotAsDescribed
+          >;
 
           /**
            * Evidence provided when `reason` is 'not_received'.
            */
-          not_received?: Evidence.NotReceived | null;
+          not_received?: Stripe.Emptyable<Evidence.NotReceived>;
 
           /**
            * Evidence provided when `reason` is 'other'.
            */
-          other?: Evidence.Other | null;
+          other?: Stripe.Emptyable<Evidence.Other>;
 
           /**
            * The reason for filing the dispute. The evidence should be submitted in the field of the same name.
@@ -379,7 +381,9 @@ declare module 'stripe' {
           /**
            * Evidence provided when `reason` is 'service_not_as_described'.
            */
-          service_not_as_described?: Evidence.ServiceNotAsDescribed | null;
+          service_not_as_described?: Stripe.Emptyable<
+            Evidence.ServiceNotAsDescribed
+          >;
         }
 
         namespace Evidence {
@@ -387,17 +391,17 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Date when order was canceled.
              */
-            canceled_at?: number | null;
+            canceled_at?: Stripe.Emptyable<number>;
 
             /**
              * Whether the cardholder was provided with a cancellation policy.
              */
-            cancellation_policy_provided?: boolean | null;
+            cancellation_policy_provided?: Stripe.Emptyable<boolean>;
 
             /**
              * Reason for canceling the order.
@@ -407,7 +411,7 @@ declare module 'stripe' {
             /**
              * Date when the cardholder expected to receive the product.
              */
-            expected_at?: number | null;
+            expected_at?: Stripe.Emptyable<number>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -422,17 +426,17 @@ declare module 'stripe' {
             /**
              * Whether the product was a merchandise or service.
              */
-            product_type?: Canceled.ProductType | null;
+            product_type?: Stripe.Emptyable<Canceled.ProductType>;
 
             /**
              * Result of cardholder's attempt to return the product.
              */
-            return_status?: Canceled.ReturnStatus | null;
+            return_status?: Stripe.Emptyable<Canceled.ReturnStatus>;
 
             /**
              * Date when the product was returned or attempted to be returned.
              */
-            returned_at?: number | null;
+            returned_at?: Stripe.Emptyable<number>;
           }
 
           namespace Canceled {
@@ -445,22 +449,22 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Copy of the card statement showing that the product had already been paid for.
              */
-            card_statement?: string | null;
+            card_statement?: Stripe.Emptyable<string>;
 
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Copy of the receipt showing that the product had been paid for in cash.
              */
-            cash_receipt?: string | null;
+            cash_receipt?: Stripe.Emptyable<string>;
 
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Image of the front and back of the check that was used to pay for the product.
              */
-            check_image?: string | null;
+            check_image?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -477,7 +481,7 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -489,7 +493,7 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -499,7 +503,7 @@ declare module 'stripe' {
             /**
              * Date when the product was received.
              */
-            received_at?: number | null;
+            received_at?: Stripe.Emptyable<number>;
 
             /**
              * Description of the cardholder's attempt to return the product.
@@ -509,12 +513,14 @@ declare module 'stripe' {
             /**
              * Result of cardholder's attempt to return the product.
              */
-            return_status?: MerchandiseNotAsDescribed.ReturnStatus | null;
+            return_status?: Stripe.Emptyable<
+              MerchandiseNotAsDescribed.ReturnStatus
+            >;
 
             /**
              * Date when the product was returned or attempted to be returned.
              */
-            returned_at?: number | null;
+            returned_at?: Stripe.Emptyable<number>;
           }
 
           namespace MerchandiseNotAsDescribed {
@@ -525,12 +531,12 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Date when the cardholder expected to receive the product.
              */
-            expected_at?: number | null;
+            expected_at?: Stripe.Emptyable<number>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -545,7 +551,7 @@ declare module 'stripe' {
             /**
              * Whether the product was a merchandise or service.
              */
-            product_type?: NotReceived.ProductType | null;
+            product_type?: Stripe.Emptyable<NotReceived.ProductType>;
           }
 
           namespace NotReceived {
@@ -556,7 +562,7 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -571,7 +577,7 @@ declare module 'stripe' {
             /**
              * Whether the product was a merchandise or service.
              */
-            product_type?: Other.ProductType | null;
+            product_type?: Stripe.Emptyable<Other.ProductType>;
           }
 
           namespace Other {
@@ -591,12 +597,12 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Date when order was canceled.
              */
-            canceled_at?: number | null;
+            canceled_at?: Stripe.Emptyable<number>;
 
             /**
              * Reason for canceling the order.
@@ -611,7 +617,7 @@ declare module 'stripe' {
             /**
              * Date when the product was received.
              */
-            received_at?: number | null;
+            received_at?: Stripe.Emptyable<number>;
           }
         }
       }
@@ -637,7 +643,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam | null;
+        metadata?: Stripe.Emptyable<MetadataParam>;
       }
 
       namespace DisputeUpdateParams {
@@ -645,32 +651,34 @@ declare module 'stripe' {
           /**
            * Evidence provided when `reason` is 'canceled'.
            */
-          canceled?: Evidence.Canceled | null;
+          canceled?: Stripe.Emptyable<Evidence.Canceled>;
 
           /**
            * Evidence provided when `reason` is 'duplicate'.
            */
-          duplicate?: Evidence.Duplicate | null;
+          duplicate?: Stripe.Emptyable<Evidence.Duplicate>;
 
           /**
            * Evidence provided when `reason` is 'fraudulent'.
            */
-          fraudulent?: Evidence.Fraudulent | null;
+          fraudulent?: Stripe.Emptyable<Evidence.Fraudulent>;
 
           /**
            * Evidence provided when `reason` is 'merchandise_not_as_described'.
            */
-          merchandise_not_as_described?: Evidence.MerchandiseNotAsDescribed | null;
+          merchandise_not_as_described?: Stripe.Emptyable<
+            Evidence.MerchandiseNotAsDescribed
+          >;
 
           /**
            * Evidence provided when `reason` is 'not_received'.
            */
-          not_received?: Evidence.NotReceived | null;
+          not_received?: Stripe.Emptyable<Evidence.NotReceived>;
 
           /**
            * Evidence provided when `reason` is 'other'.
            */
-          other?: Evidence.Other | null;
+          other?: Stripe.Emptyable<Evidence.Other>;
 
           /**
            * The reason for filing the dispute. The evidence should be submitted in the field of the same name.
@@ -680,7 +688,9 @@ declare module 'stripe' {
           /**
            * Evidence provided when `reason` is 'service_not_as_described'.
            */
-          service_not_as_described?: Evidence.ServiceNotAsDescribed | null;
+          service_not_as_described?: Stripe.Emptyable<
+            Evidence.ServiceNotAsDescribed
+          >;
         }
 
         namespace Evidence {
@@ -688,17 +698,17 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Date when order was canceled.
              */
-            canceled_at?: number | null;
+            canceled_at?: Stripe.Emptyable<number>;
 
             /**
              * Whether the cardholder was provided with a cancellation policy.
              */
-            cancellation_policy_provided?: boolean | null;
+            cancellation_policy_provided?: Stripe.Emptyable<boolean>;
 
             /**
              * Reason for canceling the order.
@@ -708,7 +718,7 @@ declare module 'stripe' {
             /**
              * Date when the cardholder expected to receive the product.
              */
-            expected_at?: number | null;
+            expected_at?: Stripe.Emptyable<number>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -723,17 +733,17 @@ declare module 'stripe' {
             /**
              * Whether the product was a merchandise or service.
              */
-            product_type?: Canceled.ProductType | null;
+            product_type?: Stripe.Emptyable<Canceled.ProductType>;
 
             /**
              * Result of cardholder's attempt to return the product.
              */
-            return_status?: Canceled.ReturnStatus | null;
+            return_status?: Stripe.Emptyable<Canceled.ReturnStatus>;
 
             /**
              * Date when the product was returned or attempted to be returned.
              */
-            returned_at?: number | null;
+            returned_at?: Stripe.Emptyable<number>;
           }
 
           namespace Canceled {
@@ -746,22 +756,22 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Copy of the card statement showing that the product had already been paid for.
              */
-            card_statement?: string | null;
+            card_statement?: Stripe.Emptyable<string>;
 
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Copy of the receipt showing that the product had been paid for in cash.
              */
-            cash_receipt?: string | null;
+            cash_receipt?: Stripe.Emptyable<string>;
 
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Image of the front and back of the check that was used to pay for the product.
              */
-            check_image?: string | null;
+            check_image?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -778,7 +788,7 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -790,7 +800,7 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -800,7 +810,7 @@ declare module 'stripe' {
             /**
              * Date when the product was received.
              */
-            received_at?: number | null;
+            received_at?: Stripe.Emptyable<number>;
 
             /**
              * Description of the cardholder's attempt to return the product.
@@ -810,12 +820,14 @@ declare module 'stripe' {
             /**
              * Result of cardholder's attempt to return the product.
              */
-            return_status?: MerchandiseNotAsDescribed.ReturnStatus | null;
+            return_status?: Stripe.Emptyable<
+              MerchandiseNotAsDescribed.ReturnStatus
+            >;
 
             /**
              * Date when the product was returned or attempted to be returned.
              */
-            returned_at?: number | null;
+            returned_at?: Stripe.Emptyable<number>;
           }
 
           namespace MerchandiseNotAsDescribed {
@@ -826,12 +838,12 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Date when the cardholder expected to receive the product.
              */
-            expected_at?: number | null;
+            expected_at?: Stripe.Emptyable<number>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -846,7 +858,7 @@ declare module 'stripe' {
             /**
              * Whether the product was a merchandise or service.
              */
-            product_type?: NotReceived.ProductType | null;
+            product_type?: Stripe.Emptyable<NotReceived.ProductType>;
           }
 
           namespace NotReceived {
@@ -857,7 +869,7 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Explanation of why the cardholder is disputing this transaction.
@@ -872,7 +884,7 @@ declare module 'stripe' {
             /**
              * Whether the product was a merchandise or service.
              */
-            product_type?: Other.ProductType | null;
+            product_type?: Stripe.Emptyable<Other.ProductType>;
           }
 
           namespace Other {
@@ -892,12 +904,12 @@ declare module 'stripe' {
             /**
              * (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
              */
-            additional_documentation?: string | null;
+            additional_documentation?: Stripe.Emptyable<string>;
 
             /**
              * Date when order was canceled.
              */
-            canceled_at?: number | null;
+            canceled_at?: Stripe.Emptyable<number>;
 
             /**
              * Reason for canceling the order.
@@ -912,7 +924,7 @@ declare module 'stripe' {
             /**
              * Date when the product was received.
              */
-            received_at?: number | null;
+            received_at?: Stripe.Emptyable<number>;
           }
         }
       }
@@ -952,7 +964,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam | null;
+        metadata?: Stripe.Emptyable<MetadataParam>;
       }
 
       class DisputesResource {

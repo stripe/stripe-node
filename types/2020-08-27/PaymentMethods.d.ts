@@ -660,7 +660,7 @@ declare module 'stripe' {
         /**
          * Billing address.
          */
-        address?: BillingDetails.Address | null;
+        address?: Stripe.Emptyable<BillingDetails.Address>;
 
         /**
          * Email address.
@@ -908,7 +908,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
@@ -923,7 +923,7 @@ declare module 'stripe' {
         /**
          * Billing address.
          */
-        address?: BillingDetails.Address | null;
+        address?: Stripe.Emptyable<BillingDetails.Address>;
 
         /**
          * Email address.

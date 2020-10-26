@@ -276,7 +276,7 @@ declare module 'stripe' {
       /**
        * A list of up to 5 alphanumeric attributes that each SKU can provide values for (e.g., `["color", "size"]`). If a value for `attributes` is specified, the list specified will replace the existing attributes list on this product. Any attributes not present after the update will be deleted from the SKUs for this product.
        */
-      attributes?: Array<string> | null;
+      attributes?: Stripe.Emptyable<Array<string>>;
 
       /**
        * A short one-line description of the product, meant to be displayable to the customer. May only be set if `type=good`.
@@ -301,12 +301,12 @@ declare module 'stripe' {
       /**
        * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
        */
-      images?: Array<string> | null;
+      images?: Stripe.Emptyable<Array<string>>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
@@ -316,7 +316,9 @@ declare module 'stripe' {
       /**
        * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if `type=good`.
        */
-      package_dimensions?: ProductUpdateParams.PackageDimensions | null;
+      package_dimensions?: Stripe.Emptyable<
+        ProductUpdateParams.PackageDimensions
+      >;
 
       /**
        * Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if `type=good`.

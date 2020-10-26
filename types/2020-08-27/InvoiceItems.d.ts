@@ -178,7 +178,7 @@ declare module 'stripe' {
       /**
        * The coupons to redeem into discounts for the invoice item or invoice line item.
        */
-      discounts?: Array<InvoiceItemCreateParams.Discount> | null;
+      discounts?: Stripe.Emptyable<Array<InvoiceItemCreateParams.Discount>>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -193,7 +193,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * The period associated with this invoice item.
@@ -310,7 +310,7 @@ declare module 'stripe' {
       /**
        * The coupons & existing discounts which apply to the invoice item or invoice line item. Item discounts are applied before invoice discounts. Pass an empty string to remove previously-defined discounts.
        */
-      discounts?: Array<InvoiceItemUpdateParams.Discount> | null;
+      discounts?: Stripe.Emptyable<Array<InvoiceItemUpdateParams.Discount>>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -320,7 +320,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * The period associated with this invoice item.
@@ -345,7 +345,7 @@ declare module 'stripe' {
       /**
        * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item. Pass an empty string to remove previously-defined tax rates.
        */
-      tax_rates?: Array<string> | null;
+      tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
        * The integer unit amount in %s of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.

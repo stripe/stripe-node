@@ -438,7 +438,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * A brief description of the price, hidden from customers.
@@ -448,7 +448,7 @@ declare module 'stripe' {
       /**
        * The recurring components of a price such as `interval` and `usage_type`.
        */
-      recurring?: PriceUpdateParams.Recurring | null;
+      recurring?: Stripe.Emptyable<PriceUpdateParams.Recurring>;
 
       /**
        * If set to true, will atomically remove the lookup key from the existing price, and assign it to this price.

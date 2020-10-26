@@ -904,7 +904,7 @@ declare module 'stripe' {
           /**
            * Billing address.
            */
-          address?: BillingDetails.Address | null;
+          address?: Stripe.Emptyable<BillingDetails.Address>;
 
           /**
            * Email address.
@@ -1098,27 +1098,27 @@ declare module 'stripe' {
         /**
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
-        alipay?: PaymentMethodOptions.Alipay | null;
+        alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
 
         /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
-        bancontact?: PaymentMethodOptions.Bancontact | null;
+        bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
 
         /**
          * Configuration for any card payments attempted on this PaymentIntent.
          */
-        card?: PaymentMethodOptions.Card | null;
+        card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
-        oxxo?: PaymentMethodOptions.Oxxo | null;
+        oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
-        sofort?: PaymentMethodOptions.Sofort | null;
+        sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
       }
 
       namespace PaymentMethodOptions {
@@ -1136,6 +1136,11 @@ declare module 'stripe' {
         }
 
         interface Card {
+          /**
+           * A single-use `cvc_update` Token that represents a card CVC value. When provided, the CVC value will be verified during the card payment attempt. This parameter can only be provided during confirmation.
+           */
+          cvc_token?: string;
+
           /**
            * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
            *
@@ -1174,7 +1179,7 @@ declare module 'stripe' {
              * The selected installment plan to use for this payment attempt.
              * This parameter can only be provided during confirmation.
              */
-            plan?: Installments.Plan | null;
+            plan?: Stripe.Emptyable<Installments.Plan>;
           }
 
           namespace Installments {
@@ -1310,7 +1315,7 @@ declare module 'stripe' {
       /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
-      application_fee_amount?: number | null;
+      application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -1339,7 +1344,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
@@ -1366,7 +1371,7 @@ declare module 'stripe' {
       /**
        * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
-      receipt_email?: string | null;
+      receipt_email?: Stripe.Emptyable<string>;
 
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -1377,12 +1382,14 @@ declare module 'stripe' {
        *
        * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: PaymentIntentUpdateParams.SetupFutureUsage | null;
+      setup_future_usage?: Stripe.Emptyable<
+        PaymentIntentUpdateParams.SetupFutureUsage
+      >;
 
       /**
        * Shipping information for this PaymentIntent.
        */
-      shipping?: PaymentIntentUpdateParams.Shipping | null;
+      shipping?: Stripe.Emptyable<PaymentIntentUpdateParams.Shipping>;
 
       /**
        * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
@@ -1521,7 +1528,7 @@ declare module 'stripe' {
           /**
            * Billing address.
            */
-          address?: BillingDetails.Address | null;
+          address?: Stripe.Emptyable<BillingDetails.Address>;
 
           /**
            * Email address.
@@ -1715,27 +1722,27 @@ declare module 'stripe' {
         /**
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
-        alipay?: PaymentMethodOptions.Alipay | null;
+        alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
 
         /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
-        bancontact?: PaymentMethodOptions.Bancontact | null;
+        bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
 
         /**
          * Configuration for any card payments attempted on this PaymentIntent.
          */
-        card?: PaymentMethodOptions.Card | null;
+        card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
-        oxxo?: PaymentMethodOptions.Oxxo | null;
+        oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
-        sofort?: PaymentMethodOptions.Sofort | null;
+        sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
       }
 
       namespace PaymentMethodOptions {
@@ -1753,6 +1760,11 @@ declare module 'stripe' {
         }
 
         interface Card {
+          /**
+           * A single-use `cvc_update` Token that represents a card CVC value. When provided, the CVC value will be verified during the card payment attempt. This parameter can only be provided during confirmation.
+           */
+          cvc_token?: string;
+
           /**
            * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
            *
@@ -1791,7 +1803,7 @@ declare module 'stripe' {
              * The selected installment plan to use for this payment attempt.
              * This parameter can only be provided during confirmation.
              */
-            plan?: Installments.Plan | null;
+            plan?: Stripe.Emptyable<Installments.Plan>;
           }
 
           namespace Installments {
@@ -2019,7 +2031,7 @@ declare module 'stripe' {
       /**
        * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
-      receipt_email?: string | null;
+      receipt_email?: Stripe.Emptyable<string>;
 
       /**
        * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site.
@@ -2037,12 +2049,14 @@ declare module 'stripe' {
        *
        * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
        */
-      setup_future_usage?: PaymentIntentConfirmParams.SetupFutureUsage | null;
+      setup_future_usage?: Stripe.Emptyable<
+        PaymentIntentConfirmParams.SetupFutureUsage
+      >;
 
       /**
        * Shipping information for this PaymentIntent.
        */
-      shipping?: PaymentIntentConfirmParams.Shipping | null;
+      shipping?: Stripe.Emptyable<PaymentIntentConfirmParams.Shipping>;
 
       /**
        * Set to `true` only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
@@ -2252,7 +2266,7 @@ declare module 'stripe' {
           /**
            * Billing address.
            */
-          address?: BillingDetails.Address | null;
+          address?: Stripe.Emptyable<BillingDetails.Address>;
 
           /**
            * Email address.
@@ -2446,27 +2460,27 @@ declare module 'stripe' {
         /**
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
-        alipay?: PaymentMethodOptions.Alipay | null;
+        alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
 
         /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
-        bancontact?: PaymentMethodOptions.Bancontact | null;
+        bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
 
         /**
          * Configuration for any card payments attempted on this PaymentIntent.
          */
-        card?: PaymentMethodOptions.Card | null;
+        card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
-        oxxo?: PaymentMethodOptions.Oxxo | null;
+        oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
 
         /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
-        sofort?: PaymentMethodOptions.Sofort | null;
+        sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
       }
 
       namespace PaymentMethodOptions {
@@ -2484,6 +2498,11 @@ declare module 'stripe' {
         }
 
         interface Card {
+          /**
+           * A single-use `cvc_update` Token that represents a card CVC value. When provided, the CVC value will be verified during the card payment attempt. This parameter can only be provided during confirmation.
+           */
+          cvc_token?: string;
+
           /**
            * Installment configuration for payments attempted on this PaymentIntent (Mexico Only).
            *
@@ -2522,7 +2541,7 @@ declare module 'stripe' {
              * The selected installment plan to use for this payment attempt.
              * This parameter can only be provided during confirmation.
              */
-            plan?: Installments.Plan | null;
+            plan?: Stripe.Emptyable<Installments.Plan>;
           }
 
           namespace Installments {

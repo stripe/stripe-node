@@ -210,7 +210,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: AddressParam | null;
+      address?: Stripe.Emptyable<AddressParam>;
 
       /**
        * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -247,7 +247,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * The customer's full name or business name.
@@ -279,14 +279,14 @@ declare module 'stripe' {
       /**
        * The customer's shipping information. Appears on invoices emailed to this customer.
        */
-      shipping?: CustomerCreateParams.Shipping | null;
+      shipping?: Stripe.Emptyable<CustomerCreateParams.Shipping>;
 
       source?: string;
 
       /**
        * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
        */
-      tax_exempt?: CustomerCreateParams.TaxExempt | null;
+      tax_exempt?: Stripe.Emptyable<CustomerCreateParams.TaxExempt>;
 
       /**
        * The customer's tax IDs.
@@ -299,7 +299,7 @@ declare module 'stripe' {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
-        custom_fields?: Array<InvoiceSettings.CustomField> | null;
+        custom_fields?: Stripe.Emptyable<Array<InvoiceSettings.CustomField>>;
 
         /**
          * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.
@@ -405,7 +405,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: AddressParam | null;
+      address?: Stripe.Emptyable<AddressParam>;
 
       /**
        * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -451,7 +451,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * The customer's full name or business name.
@@ -481,14 +481,14 @@ declare module 'stripe' {
       /**
        * The customer's shipping information. Appears on invoices emailed to this customer.
        */
-      shipping?: CustomerUpdateParams.Shipping | null;
+      shipping?: Stripe.Emptyable<CustomerUpdateParams.Shipping>;
 
       source?: string;
 
       /**
        * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
        */
-      tax_exempt?: CustomerUpdateParams.TaxExempt | null;
+      tax_exempt?: Stripe.Emptyable<CustomerUpdateParams.TaxExempt>;
 
       /**
        * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
@@ -501,7 +501,7 @@ declare module 'stripe' {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
          */
-        custom_fields?: Array<InvoiceSettings.CustomField> | null;
+        custom_fields?: Stripe.Emptyable<Array<InvoiceSettings.CustomField>>;
 
         /**
          * ID of a payment method that's attached to the customer, to be used as the customer's default payment method for subscriptions and invoices.

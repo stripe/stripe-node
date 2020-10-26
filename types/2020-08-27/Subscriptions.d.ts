@@ -41,7 +41,7 @@ declare module 'stripe' {
       cancel_at_period_end: boolean;
 
       /**
-       * If the subscription has been canceled, the date of that cancellation. If the subscription was canceled with `cancel_at_period_end`, `canceled_at` will still reflect the date of the initial cancellation request, not the end of the subscription period when the subscription is automatically moved to a canceled state.
+       * If the subscription has been canceled, the date of that cancellation. If the subscription was canceled with `cancel_at_period_end`, `canceled_at` will reflect the time of the most recent update request, not the end of the subscription period when the subscription is automatically moved to a canceled state.
        */
       canceled_at: number | null;
 
@@ -309,7 +309,9 @@ declare module 'stripe' {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: SubscriptionCreateParams.BillingThresholds | null;
+      billing_thresholds?: Stripe.Emptyable<
+        SubscriptionCreateParams.BillingThresholds
+      >;
 
       /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
@@ -349,7 +351,7 @@ declare module 'stripe' {
       /**
        * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
        */
-      default_tax_rates?: Array<string> | null;
+      default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -364,7 +366,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * Indicates if a customer is on or off-session while an invoice payment is attempted.
@@ -383,7 +385,9 @@ declare module 'stripe' {
       /**
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
        */
-      pending_invoice_item_interval?: SubscriptionCreateParams.PendingInvoiceItemInterval | null;
+      pending_invoice_item_interval?: Stripe.Emptyable<
+        SubscriptionCreateParams.PendingInvoiceItemInterval
+      >;
 
       /**
        * The API ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
@@ -438,7 +442,7 @@ declare module 'stripe' {
         /**
          * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
          */
-        tax_rates?: Array<string> | null;
+        tax_rates?: Stripe.Emptyable<Array<string>>;
       }
 
       namespace AddInvoiceItem {
@@ -483,7 +487,7 @@ declare module 'stripe' {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
          */
-        billing_thresholds?: Item.BillingThresholds | null;
+        billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -513,7 +517,7 @@ declare module 'stripe' {
         /**
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
-        tax_rates?: Array<string> | null;
+        tax_rates?: Stripe.Emptyable<Array<string>>;
       }
 
       namespace Item {
@@ -632,12 +636,14 @@ declare module 'stripe' {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: SubscriptionUpdateParams.BillingThresholds | null;
+      billing_thresholds?: Stripe.Emptyable<
+        SubscriptionUpdateParams.BillingThresholds
+      >;
 
       /**
        * A timestamp at which the subscription should cancel. If set to a date before the current period ends, this will cause a proration if prorations have been enabled using `proration_behavior`. If set during a future period, this will always cause a proration for that period.
        */
-      cancel_at?: number | null;
+      cancel_at?: Stripe.Emptyable<number>;
 
       /**
        * Boolean indicating whether this subscription should cancel at the end of the current period.
@@ -672,7 +678,7 @@ declare module 'stripe' {
       /**
        * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription. Pass an empty string to remove previously-defined tax rates.
        */
-      default_tax_rates?: Array<string> | null;
+      default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -687,7 +693,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * Indicates if a customer is on or off-session while an invoice payment is attempted.
@@ -697,7 +703,9 @@ declare module 'stripe' {
       /**
        * If specified, payment collection for this subscription will be paused.
        */
-      pause_collection?: SubscriptionUpdateParams.PauseCollection | null;
+      pause_collection?: Stripe.Emptyable<
+        SubscriptionUpdateParams.PauseCollection
+      >;
 
       /**
        * Use `allow_incomplete` to transition the subscription to `status=past_due` if a payment is required but cannot be paid. This allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
@@ -711,7 +719,9 @@ declare module 'stripe' {
       /**
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
        */
-      pending_invoice_item_interval?: SubscriptionUpdateParams.PendingInvoiceItemInterval | null;
+      pending_invoice_item_interval?: Stripe.Emptyable<
+        SubscriptionUpdateParams.PendingInvoiceItemInterval
+      >;
 
       /**
        * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
@@ -735,7 +745,7 @@ declare module 'stripe' {
       /**
        * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges. This will be unset if you POST an empty value.
        */
-      transfer_data?: SubscriptionUpdateParams.TransferData | null;
+      transfer_data?: Stripe.Emptyable<SubscriptionUpdateParams.TransferData>;
 
       /**
        * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
@@ -768,7 +778,7 @@ declare module 'stripe' {
         /**
          * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
          */
-        tax_rates?: Array<string> | null;
+        tax_rates?: Stripe.Emptyable<Array<string>>;
       }
 
       namespace AddInvoiceItem {
@@ -815,7 +825,7 @@ declare module 'stripe' {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
          */
-        billing_thresholds?: Item.BillingThresholds | null;
+        billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
 
         /**
          * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
@@ -835,7 +845,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam | null;
+        metadata?: Stripe.Emptyable<MetadataParam>;
 
         /**
          * Plan ID for this item, as a string.
@@ -860,7 +870,7 @@ declare module 'stripe' {
         /**
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
-        tax_rates?: Array<string> | null;
+        tax_rates?: Stripe.Emptyable<Array<string>>;
       }
 
       namespace Item {

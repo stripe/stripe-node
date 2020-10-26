@@ -814,7 +814,7 @@ declare module 'stripe' {
         /**
          * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
          */
-        amount?: number | null;
+        amount?: Stripe.Emptyable<number>;
 
         /**
          * The currency specified by the mandate. (Must match `currency` of the source)
@@ -1083,7 +1083,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * Information about the owner of the payment instrument that may be used or required by particular source types.
@@ -1106,7 +1106,7 @@ declare module 'stripe' {
         /**
          * The amount specified by the mandate. (Leave null for a mandate covering all amounts)
          */
-        amount?: number | null;
+        amount?: Stripe.Emptyable<number>;
 
         /**
          * The currency specified by the mandate. (Must match `currency` of the source)
