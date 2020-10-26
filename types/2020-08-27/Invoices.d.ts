@@ -556,7 +556,7 @@ declare module 'stripe' {
       /**
        * A list of up to 4 custom fields to be displayed on the invoice.
        */
-      custom_fields?: Array<InvoiceCreateParams.CustomField> | null;
+      custom_fields?: Stripe.Emptyable<Array<InvoiceCreateParams.CustomField>>;
 
       /**
        * The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
@@ -586,7 +586,7 @@ declare module 'stripe' {
       /**
        * The coupons to redeem into discounts for the invoice. If not specified, inherits the discount from the invoice's customer. Pass an empty string to avoid inheriting any discounts.
        */
-      discounts?: Array<InvoiceCreateParams.Discount> | null;
+      discounts?: Stripe.Emptyable<Array<InvoiceCreateParams.Discount>>;
 
       /**
        * The date on which payment for this invoice is due. Valid only for invoices where `collection_method=send_invoice`.
@@ -606,7 +606,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -690,7 +690,7 @@ declare module 'stripe' {
       /**
        * A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
        */
-      custom_fields?: Array<InvoiceUpdateParams.CustomField> | null;
+      custom_fields?: Stripe.Emptyable<Array<InvoiceUpdateParams.CustomField>>;
 
       /**
        * The number of days from which the invoice is created until it is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
@@ -710,7 +710,7 @@ declare module 'stripe' {
       /**
        * The tax rates that will apply to any line item that does not have `tax_rates` set. Pass an empty string to remove previously-defined tax rates.
        */
-      default_tax_rates?: Array<string> | null;
+      default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
@@ -720,7 +720,7 @@ declare module 'stripe' {
       /**
        * The discounts that will apply to the invoice. Pass an empty string to remove previously-defined discounts.
        */
-      discounts?: Array<InvoiceUpdateParams.Discount> | null;
+      discounts?: Stripe.Emptyable<Array<InvoiceUpdateParams.Discount>>;
 
       /**
        * The date on which payment for this invoice is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
@@ -740,7 +740,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -750,7 +750,7 @@ declare module 'stripe' {
       /**
        * If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
        */
-      transfer_data?: InvoiceUpdateParams.TransferData | null;
+      transfer_data?: Stripe.Emptyable<InvoiceUpdateParams.TransferData>;
     }
 
     namespace InvoiceUpdateParams {
@@ -899,7 +899,9 @@ declare module 'stripe' {
       /**
        * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. Pass an empty string to avoid inheriting any discounts.
        */
-      discounts?: Array<InvoiceRetrieveUpcomingParams.Discount> | null;
+      discounts?: Stripe.Emptyable<
+        Array<InvoiceRetrieveUpcomingParams.Discount>
+      >;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -931,7 +933,7 @@ declare module 'stripe' {
       /**
        * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.
        */
-      subscription_cancel_at?: number | null;
+      subscription_cancel_at?: Stripe.Emptyable<number>;
 
       /**
        * Boolean indicating whether this subscription should cancel at the end of the current period.
@@ -946,7 +948,7 @@ declare module 'stripe' {
       /**
        * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
        */
-      subscription_default_tax_rates?: Array<string> | null;
+      subscription_default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
        * A list of up to 20 subscription items, each with an attached price.
@@ -1022,7 +1024,7 @@ declare module 'stripe' {
         /**
          * The coupons to redeem into discounts for the invoice item in the preview.
          */
-        discounts?: Array<InvoiceItem.Discount> | null;
+        discounts?: Stripe.Emptyable<Array<InvoiceItem.Discount>>;
 
         /**
          * The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
@@ -1032,7 +1034,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam | null;
+        metadata?: Stripe.Emptyable<MetadataParam>;
 
         /**
          * The period associated with this invoice item.
@@ -1054,7 +1056,7 @@ declare module 'stripe' {
          */
         quantity?: number;
 
-        tax_rates?: Array<string> | null;
+        tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
          * The integer unit amount in %s of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
@@ -1121,7 +1123,9 @@ declare module 'stripe' {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
          */
-        billing_thresholds?: SubscriptionItem.BillingThresholds | null;
+        billing_thresholds?: Stripe.Emptyable<
+          SubscriptionItem.BillingThresholds
+        >;
 
         /**
          * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
@@ -1141,7 +1145,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam | null;
+        metadata?: Stripe.Emptyable<MetadataParam>;
 
         /**
          * Plan ID for this item, as a string.
@@ -1166,7 +1170,7 @@ declare module 'stripe' {
         /**
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
-        tax_rates?: Array<string> | null;
+        tax_rates?: Stripe.Emptyable<Array<string>>;
       }
 
       namespace SubscriptionItem {

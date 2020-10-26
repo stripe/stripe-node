@@ -831,7 +831,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * Options for customizing how the account functions within Stripe.
@@ -1218,7 +1218,7 @@ declare module 'stripe' {
         /**
          * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
          */
-        structure?: Company.Structure | null;
+        structure?: Stripe.Emptyable<Company.Structure>;
 
         /**
          * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
@@ -1332,7 +1332,7 @@ declare module 'stripe' {
         /**
          * The individual's date of birth.
          */
-        dob?: Individual.Dob | null;
+        dob?: Stripe.Emptyable<Individual.Dob>;
 
         /**
          * The individual's email address.
@@ -1387,7 +1387,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam | null;
+        metadata?: Stripe.Emptyable<MetadataParam>;
 
         /**
          * The individual's phone number.
@@ -1739,7 +1739,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * Options for customizing how the account functions within Stripe.
@@ -2121,7 +2121,7 @@ declare module 'stripe' {
         /**
          * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
          */
-        structure?: Company.Structure | null;
+        structure?: Stripe.Emptyable<Company.Structure>;
 
         /**
          * The business ID number of the company, as appropriate for the company's country. (Examples are an Employer ID Number in the U.S., a Business Number in Canada, or a Company Number in the UK.)
@@ -2235,7 +2235,7 @@ declare module 'stripe' {
         /**
          * The individual's date of birth.
          */
-        dob?: Individual.Dob | null;
+        dob?: Stripe.Emptyable<Individual.Dob>;
 
         /**
          * The individual's email address.
@@ -2290,7 +2290,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam | null;
+        metadata?: Stripe.Emptyable<MetadataParam>;
 
         /**
          * The individual's phone number.

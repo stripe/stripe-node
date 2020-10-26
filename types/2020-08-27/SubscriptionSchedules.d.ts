@@ -376,7 +376,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
@@ -399,7 +399,9 @@ declare module 'stripe' {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
          */
-        billing_thresholds?: DefaultSettings.BillingThresholds | null;
+        billing_thresholds?: Stripe.Emptyable<
+          DefaultSettings.BillingThresholds
+        >;
 
         /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
@@ -419,7 +421,7 @@ declare module 'stripe' {
         /**
          * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
-        transfer_data?: DefaultSettings.TransferData | null;
+        transfer_data?: Stripe.Emptyable<DefaultSettings.TransferData>;
       }
 
       namespace DefaultSettings {
@@ -480,7 +482,7 @@ declare module 'stripe' {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
          */
-        billing_thresholds?: Phase.BillingThresholds | null;
+        billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
 
         /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
@@ -500,7 +502,7 @@ declare module 'stripe' {
         /**
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
          */
-        default_tax_rates?: Array<string> | null;
+        default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
@@ -563,7 +565,7 @@ declare module 'stripe' {
           /**
            * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
            */
-          tax_rates?: Array<string> | null;
+          tax_rates?: Stripe.Emptyable<Array<string>>;
         }
 
         namespace AddInvoiceItem {
@@ -617,7 +619,7 @@ declare module 'stripe' {
           /**
            * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
            */
-          billing_thresholds?: Item.BillingThresholds | null;
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
 
           /**
            * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
@@ -642,7 +644,7 @@ declare module 'stripe' {
           /**
            * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
            */
-          tax_rates?: Array<string> | null;
+          tax_rates?: Stripe.Emptyable<Array<string>>;
         }
 
         namespace Item {
@@ -744,7 +746,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase. Note that past phases can be omitted.
@@ -767,7 +769,9 @@ declare module 'stripe' {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
          */
-        billing_thresholds?: DefaultSettings.BillingThresholds | null;
+        billing_thresholds?: Stripe.Emptyable<
+          DefaultSettings.BillingThresholds
+        >;
 
         /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
@@ -787,7 +791,7 @@ declare module 'stripe' {
         /**
          * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
-        transfer_data?: DefaultSettings.TransferData | null;
+        transfer_data?: Stripe.Emptyable<DefaultSettings.TransferData>;
       }
 
       namespace DefaultSettings {
@@ -848,7 +852,7 @@ declare module 'stripe' {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. Pass an empty string to remove previously-defined thresholds.
          */
-        billing_thresholds?: Phase.BillingThresholds | null;
+        billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
 
         /**
          * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
@@ -868,7 +872,7 @@ declare module 'stripe' {
         /**
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
          */
-        default_tax_rates?: Array<string> | null;
+        default_tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
@@ -936,7 +940,7 @@ declare module 'stripe' {
           /**
            * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
            */
-          tax_rates?: Array<string> | null;
+          tax_rates?: Stripe.Emptyable<Array<string>>;
         }
 
         namespace AddInvoiceItem {
@@ -990,7 +994,7 @@ declare module 'stripe' {
           /**
            * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
            */
-          billing_thresholds?: Item.BillingThresholds | null;
+          billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
 
           /**
            * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
@@ -1015,7 +1019,7 @@ declare module 'stripe' {
           /**
            * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
            */
-          tax_rates?: Array<string> | null;
+          tax_rates?: Stripe.Emptyable<Array<string>>;
         }
 
         namespace Item {

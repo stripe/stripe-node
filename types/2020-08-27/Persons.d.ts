@@ -449,7 +449,7 @@ declare module 'stripe' {
       /**
        * The person's date of birth.
        */
-      dob?: PersonCreateParams.Dob | null;
+      dob?: Stripe.Emptyable<PersonCreateParams.Dob>;
 
       /**
        * The person's email address.
@@ -509,7 +509,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
@@ -611,7 +611,7 @@ declare module 'stripe' {
         /**
          * The percent owned by the person of the account's legal entity.
          */
-        percent_ownership?: number | null;
+        percent_ownership?: Stripe.Emptyable<number>;
 
         /**
          * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.
@@ -689,7 +689,7 @@ declare module 'stripe' {
       /**
        * The person's date of birth.
        */
-      dob?: PersonUpdateParams.Dob | null;
+      dob?: Stripe.Emptyable<PersonUpdateParams.Dob>;
 
       /**
        * The person's email address.
@@ -749,7 +749,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * A [person token](https://stripe.com/docs/connect/account-tokens), used to securely provide details to the person.
@@ -851,7 +851,7 @@ declare module 'stripe' {
         /**
          * The percent owned by the person of the account's legal entity.
          */
-        percent_ownership?: number | null;
+        percent_ownership?: Stripe.Emptyable<number>;
 
         /**
          * Whether the person is authorized as the primary representative of the account. This is the person nominated by the business to provide information about themselves, and general information about the account. There can only be one representative at any given time. At the time the account is created, this person should be set to the person responsible for opening the account.

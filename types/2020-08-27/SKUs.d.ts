@@ -205,12 +205,12 @@ declare module 'stripe' {
         /**
          * Inventory type. Possible values are `finite`, `bucket` (not quantified), and `infinite`.
          */
-        type?: Inventory.Type;
+        type: Inventory.Type;
 
         /**
          * An indicator of the inventory available. Possible values are `in_stock`, `limited`, and `out_of_stock`. Will be present if and only if `type` is `bucket`.
          */
-        value?: Inventory.Value | null;
+        value?: Stripe.Emptyable<Inventory.Value>;
       }
 
       namespace Inventory {
@@ -283,12 +283,12 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * The dimensions of this SKU for shipping purposes.
        */
-      package_dimensions?: SkuUpdateParams.PackageDimensions | null;
+      package_dimensions?: Stripe.Emptyable<SkuUpdateParams.PackageDimensions>;
 
       /**
        * The cost of the item as a positive integer in the smallest currency unit (that is, 100 cents to charge $1.00, or 100 to charge ¥100, Japanese Yen being a zero-decimal currency).
@@ -316,7 +316,7 @@ declare module 'stripe' {
         /**
          * An indicator of the inventory available. Possible values are `in_stock`, `limited`, and `out_of_stock`. Will be present if and only if `type` is `bucket`.
          */
-        value?: Inventory.Value | null;
+        value?: Stripe.Emptyable<Inventory.Value>;
       }
 
       namespace Inventory {

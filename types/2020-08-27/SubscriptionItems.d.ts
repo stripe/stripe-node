@@ -108,7 +108,9 @@ declare module 'stripe' {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: SubscriptionItemCreateParams.BillingThresholds | null;
+      billing_thresholds?: Stripe.Emptyable<
+        SubscriptionItemCreateParams.BillingThresholds
+      >;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -166,7 +168,7 @@ declare module 'stripe' {
       /**
        * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
-      tax_rates?: Array<string> | null;
+      tax_rates?: Stripe.Emptyable<Array<string>>;
     }
 
     namespace SubscriptionItemCreateParams {
@@ -241,7 +243,9 @@ declare module 'stripe' {
       /**
        * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
        */
-      billing_thresholds?: SubscriptionItemUpdateParams.BillingThresholds | null;
+      billing_thresholds?: Stripe.Emptyable<
+        SubscriptionItemUpdateParams.BillingThresholds
+      >;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -251,7 +255,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam | null;
+      metadata?: Stripe.Emptyable<MetadataParam>;
 
       /**
        * Indicates if a customer is on or off-session while an invoice payment is attempted.
@@ -304,7 +308,7 @@ declare module 'stripe' {
       /**
        * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
-      tax_rates?: Array<string> | null;
+      tax_rates?: Stripe.Emptyable<Array<string>>;
     }
 
     namespace SubscriptionItemUpdateParams {
