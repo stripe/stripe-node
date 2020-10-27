@@ -15,6 +15,10 @@ For collecting customer and payment information in the browser, use [Stripe.js][
 
 See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node.js.
 
+## Requirements
+
+Node 8, 10 or higher.
+
 ## Installation
 
 Install the package with:
@@ -167,16 +171,16 @@ const stripe = Stripe('sk_test_...', {
 });
 ```
 
-| Option              | Default            | Description                                                                           |
-| ------------------- | ------------------ | ------------------------------------------------------------------------------------- |
-| `apiVersion`        | `null`             | Stripe API version to be used. If not set the account's default version will be used. |
-| `maxNetworkRetries` | 0                  | The amount of times a request should be [retried](#network-retries).                  |
-| `httpAgent`         | `null`             | [Proxy](#configuring-a-proxy) agent to be used by the library.                        |
-| `timeout`           | 80000              | [Maximum time each request can take in ms.](#configuring-timeout)                     |
-| `host`              | `'api.stripe.com'` | Host that requests are made to.                                                       |
-| `port`              | 443                | Port that requests are made to.                                                       |
-| `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel.
-| `telemetry`         | `true`             | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                 |
+| Option              | Default            | Description                                                                                                                                                                                                                                       |
+| ------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `apiVersion`        | `null`             | Stripe API version to be used. If not set the account's default version will be used.                                                                                                                                                             |
+| `maxNetworkRetries` | 0                  | The amount of times a request should be [retried](#network-retries).                                                                                                                                                                              |
+| `httpAgent`         | `null`             | [Proxy](#configuring-a-proxy) agent to be used by the library.                                                                                                                                                                                    |
+| `timeout`           | 80000              | [Maximum time each request can take in ms.](#configuring-timeout)                                                                                                                                                                                 |
+| `host`              | `'api.stripe.com'` | Host that requests are made to.                                                                                                                                                                                                                   |
+| `port`              | 443                | Port that requests are made to.                                                                                                                                                                                                                   |
+| `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
+| `telemetry`         | `true`             | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                                                                                                                                                                             |
 
 Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
 
