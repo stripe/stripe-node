@@ -398,6 +398,8 @@ declare module 'stripe' {
 
         oxxo?: PaymentMethodOptions.Oxxo;
 
+        p24?: PaymentMethodOptions.P24;
+
         sofort?: PaymentMethodOptions.Sofort;
       }
 
@@ -511,6 +513,8 @@ declare module 'stripe' {
            */
           expires_after_days: number;
         }
+
+        interface P24 {}
 
         interface Sofort {
           /**
@@ -1116,6 +1120,11 @@ declare module 'stripe' {
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
 
         /**
+         * If this is a `p24` PaymentMethod, this sub-hash contains details about the Przelewy24 payment method options.
+         */
+        p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
+
+        /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
@@ -1223,6 +1232,8 @@ declare module 'stripe' {
            */
           expires_after_days?: number;
         }
+
+        interface P24 {}
 
         interface Sofort {
           /**
@@ -1740,6 +1751,11 @@ declare module 'stripe' {
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
 
         /**
+         * If this is a `p24` PaymentMethod, this sub-hash contains details about the Przelewy24 payment method options.
+         */
+        p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
+
+        /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
@@ -1847,6 +1863,8 @@ declare module 'stripe' {
            */
           expires_after_days?: number;
         }
+
+        interface P24 {}
 
         interface Sofort {
           /**
@@ -2478,6 +2496,11 @@ declare module 'stripe' {
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
 
         /**
+         * If this is a `p24` PaymentMethod, this sub-hash contains details about the Przelewy24 payment method options.
+         */
+        p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
+
+        /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
@@ -2585,6 +2608,8 @@ declare module 'stripe' {
            */
           expires_after_days?: number;
         }
+
+        interface P24 {}
 
         interface Sofort {
           /**
