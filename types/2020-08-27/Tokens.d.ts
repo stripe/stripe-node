@@ -182,6 +182,11 @@ declare module 'stripe' {
           phone?: string;
 
           /**
+           * The identification number given to a company when it is registered or incorporated, if distinct from the identification number used for filing taxes. (Examples are the CIN for companies and LLP IN for partnerships in India, and the Company Registration Number in Hong Kong).
+           */
+          registration_number?: string;
+
+          /**
            * The category identifying the legal structure of the company or legal entity. See [Business structure](https://stripe.com/docs/connect/identity-verification#business-structure) for more details.
            */
           structure?: Stripe.Emptyable<Company.Structure>;
