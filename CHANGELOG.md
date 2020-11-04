@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.120.0 - 2020-11-04
+* [#1061](https://github.com/stripe/stripe-node/pull/1061) Add support for `company[registration_number]` on `Account`
+
 ## 8.119.0 - 2020-10-27
 * [#1056](https://github.com/stripe/stripe-node/pull/1056) Add  `payment_method_details[interac_present][preferred_locales]` on `Charge`
 * [#1057](https://github.com/stripe/stripe-node/pull/1057) Standardize on CRULD order for method definitions
