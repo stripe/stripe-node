@@ -1354,10 +1354,10 @@ declare module 'stripe' {
       retrieveUpcoming(
         params?: InvoiceRetrieveUpcomingParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      ): Promise<Stripe.Response<Stripe.UpcomingInvoice>>;
       retrieveUpcoming(
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      ): Promise<Stripe.Response<Stripe.UpcomingInvoice>>;
 
       /**
        * Stripe will automatically send invoices to customers according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email.

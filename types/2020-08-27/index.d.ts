@@ -39,6 +39,7 @@
 ///<reference path='./Files.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
+///<reference path='./InvoiceLineItems.d.ts' />
 ///<reference path='./Invoices.d.ts' />
 ///<reference path='./IssuerFraudRecords.d.ts' />
 ///<reference path='./Issuing/Authorizations.d.ts' />
@@ -91,6 +92,7 @@
 ///<reference path='./Topups.d.ts' />
 ///<reference path='./TransferReversals.d.ts' />
 ///<reference path='./Transfers.d.ts' />
+///<reference path='./UpcomingInvoices.d.ts' />
 ///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./UsageRecords.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
