@@ -76,6 +76,7 @@ declare module 'stripe' {
         | Stripe.Dispute
         | Stripe.FeeRefund
         | Stripe.Issuing.Authorization
+        | Stripe.Issuing.Dispute
         | Stripe.Issuing.Transaction
         | Stripe.Payout
         | Stripe.PlatformTaxFee
