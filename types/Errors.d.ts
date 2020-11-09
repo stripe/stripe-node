@@ -127,6 +127,7 @@ declare module 'stripe' {
       readonly decline_code?: string;
       readonly payment_intent?: PaymentIntent;
       readonly payment_method?: PaymentMethod;
+      readonly payment_method_type?: string;
       readonly setup_intent?: SetupIntent;
       readonly source?: Source;
     }

@@ -190,6 +190,11 @@ declare module 'stripe' {
       invoice_pdf?: string | null;
 
       /**
+       * The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
+       */
+      last_finalization_error?: Invoice.LastFinalizationError | null;
+
+      /**
        * The individual line items that make up the invoice. `lines` is sorted as follows: invoice items in reverse chronological order, followed by the subscription, if any.
        */
       lines: ApiList<Stripe.InvoiceLineItem>;
@@ -412,6 +417,111 @@ declare module 'stripe' {
          * The value of the custom field.
          */
         value: string;
+      }
+
+      interface LastFinalizationError {
+        /**
+         * For card errors, the ID of the failed charge.
+         */
+        charge?: string;
+
+        /**
+         * For some errors that could be handled programmatically, a short string indicating the [error code](https://stripe.com/docs/error-codes) reported.
+         */
+        code?: string;
+
+        /**
+         * For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.
+         */
+        decline_code?: string;
+
+        /**
+         * A URL to more information about the [error code](https://stripe.com/docs/error-codes) reported.
+         */
+        doc_url?: string;
+
+        /**
+         * A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
+         */
+        message?: string;
+
+        /**
+         * If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
+         */
+        param?: string;
+
+        /**
+         * A PaymentIntent guides you through the process of collecting a payment from your customer.
+         * We recommend that you create exactly one PaymentIntent for each order or
+         * customer session in your system. You can reference the PaymentIntent later to
+         * see the history of payment attempts for a particular session.
+         *
+         * A PaymentIntent transitions through
+         * [multiple statuses](https://stripe.com/docs/payments/intents#intent-statuses)
+         * throughout its lifetime as it interfaces with Stripe.js to perform
+         * authentication flows and ultimately creates at most one successful charge.
+         *
+         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents).
+         */
+        payment_intent?: Stripe.PaymentIntent;
+
+        /**
+         * PaymentMethod objects represent your customer's payment instruments.
+         * They can be used with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or saved to
+         * Customer objects to store instrument details for future payments.
+         *
+         * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+         */
+        payment_method?: Stripe.PaymentMethod;
+
+        /**
+         * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
+         */
+        payment_method_type?: string;
+
+        /**
+         * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
+         * For example, you could use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
+         * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
+         *
+         * Create a SetupIntent as soon as you're ready to collect your customer's payment credentials.
+         * Do not maintain long-lived, unconfirmed SetupIntents as they may no longer be valid.
+         * The SetupIntent then transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+         * you through the setup process.
+         *
+         * Successful SetupIntents result in payment credentials that are optimized for future payments.
+         * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) may need to be run through
+         * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) at the time of payment method collection
+         * in order to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+         * If the SetupIntent is used with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer), upon success,
+         * it will automatically attach the resulting payment method to that Customer.
+         * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
+         * PaymentIntents to save payment methods in order to prevent saving invalid or unoptimized payment methods.
+         *
+         * By using SetupIntents, you ensure that your customers experience the minimum set of required friction,
+         * even as regulations change over time.
+         *
+         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents).
+         */
+        setup_intent?: Stripe.SetupIntent;
+
+        source?: CustomerSource;
+
+        /**
+         * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
+         */
+        type: LastFinalizationError.Type;
+      }
+
+      namespace LastFinalizationError {
+        type Type =
+          | 'api_connection_error'
+          | 'api_error'
+          | 'authentication_error'
+          | 'card_error'
+          | 'idempotency_error'
+          | 'invalid_request_error'
+          | 'rate_limit_error';
       }
 
       type Status =
