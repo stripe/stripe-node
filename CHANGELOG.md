@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.121.0 - 2020-11-09
+* [#1064](https://github.com/stripe/stripe-node/pull/1064) Add `invoice.finalization_error` as a `type` on `Event`
+* [#1063](https://github.com/stripe/stripe-node/pull/1063) Multiple API changes
+  * Add support for `last_finalization_error` on `Invoice`
+  * Add support for deserializing Issuing `Dispute` as a `source` on `BalanceTransaction`
+  * Add support for `payment_method_type` on `StripeError` used by other API resources
+
 ## 8.120.0 - 2020-11-04
 * [#1061](https://github.com/stripe/stripe-node/pull/1061) Add support for `company[registration_number]` on `Account`
 
