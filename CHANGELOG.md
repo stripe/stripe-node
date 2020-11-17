@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 7.63.0 - 2020-11-17
+* [#1070](https://github.com/stripe/stripe-node/pull/1070)  
+  * Added support for `sepa_debit` on `SetupIntent.PaymentMethodOptions`
+  * `Invoice.tax_amounts` and `InvoiceLineItem.tax_rates` are no longer nullable
+  * `Invoice.default_tax_rates` and `InvoiceLineItem.tax_amounts` are no longer nullable
+
 ## 8.121.0 - 2020-11-09
 * [#1064](https://github.com/stripe/stripe-node/pull/1064) Add `invoice.finalization_error` as a `type` on `Event`
 * [#1063](https://github.com/stripe/stripe-node/pull/1063) Multiple API changes
