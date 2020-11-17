@@ -36,7 +36,7 @@ declare module 'stripe' {
       application: string | Stripe.Application | null;
 
       /**
-       * The amount of the application fee (if any) requested for the resulting payment. See the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts) for details.
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
       application_fee_amount: number | null;
 
@@ -65,7 +65,7 @@ declare module 'stripe' {
        *
        * The client secret can be used to complete a payment from your frontend. It should not be stored, logged, embedded in URLs, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.
        *
-       * Refer to our docs to [accept a payment](https://stripe.com/docs/payments/accept-a-payment) and learn about how `client_secret` should be handled.
+       * Refer to our docs to [accept a payment](https://stripe.com/docs/payments/accept-a-payment?integration=elements) and learn about how `client_secret` should be handled.
        */
       client_secret: string | null;
 

@@ -647,7 +647,7 @@ declare module 'stripe' {
           country: string | null;
 
           /**
-           * Card description. (For internal use only and not typically available in standard API requests.)
+           * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
            */
           description?: string | null;
 
@@ -684,7 +684,7 @@ declare module 'stripe' {
           installments: Card.Installments | null;
 
           /**
-           * Issuer bank name of the card. (For internal use only and not typically available in standard API requests.)
+           * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
            */
           issuer?: string | null;
 
@@ -909,7 +909,7 @@ declare module 'stripe' {
           country: string | null;
 
           /**
-           * Card description. (For internal use only and not typically available in standard API requests.)
+           * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
            */
           description?: string | null;
 
@@ -949,7 +949,7 @@ declare module 'stripe' {
           iin?: string | null;
 
           /**
-           * Issuer bank name of the card. (For internal use only and not typically available in standard API requests.)
+           * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
            */
           issuer?: string | null;
 
@@ -1190,7 +1190,7 @@ declare module 'stripe' {
           country: string | null;
 
           /**
-           * Card description. (For internal use only and not typically available in standard API requests.)
+           * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
            */
           description?: string | null;
 
@@ -1230,7 +1230,7 @@ declare module 'stripe' {
           iin?: string | null;
 
           /**
-           * Issuer bank name of the card. (For internal use only and not typically available in standard API requests.)
+           * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
            */
           issuer?: string | null;
 

@@ -98,7 +98,7 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
-       * Card description. (For internal use only and not typically available in standard API requests.)
+       * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
        */
       description?: string;
 
@@ -133,7 +133,7 @@ declare module 'stripe' {
       iin?: string;
 
       /**
-       * Issuer bank name of the card. (For internal use only and not typically available in standard API requests.)
+       * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
        */
       issuer?: string;
 
