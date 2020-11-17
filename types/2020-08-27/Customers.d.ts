@@ -552,7 +552,7 @@ declare module 'stripe' {
       created?: RangeQueryParam | number;
 
       /**
-       * A filter on the list based on the customer's `email` field. The value must be a string.
+       * A case-sensitive filter on the list based on the customer's `email` field. The value must be a string.
        */
       email?: string;
 

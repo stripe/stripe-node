@@ -143,7 +143,7 @@ declare module 'stripe' {
       /**
        * The tax rates applied to this invoice, if any.
        */
-      default_tax_rates: Array<Stripe.TaxRate> | null;
+      default_tax_rates: Array<Stripe.TaxRate>;
 
       deleted?: void;
 
@@ -306,7 +306,7 @@ declare module 'stripe' {
       /**
        * The aggregate amounts calculated per tax rate for all line items.
        */
-      total_tax_amounts: Array<Invoice.TotalTaxAmount> | null;
+      total_tax_amounts: Array<Invoice.TotalTaxAmount>;
 
       /**
        * The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.

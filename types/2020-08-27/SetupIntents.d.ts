@@ -260,6 +260,8 @@ declare module 'stripe' {
 
       interface PaymentMethodOptions {
         card?: PaymentMethodOptions.Card;
+
+        sepa_debit?: PaymentMethodOptions.SepaDebit;
       }
 
       namespace PaymentMethodOptions {
@@ -273,6 +275,8 @@ declare module 'stripe' {
         namespace Card {
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
+
+        interface SepaDebit {}
       }
 
       type Status =
@@ -408,6 +412,11 @@ declare module 'stripe' {
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
+
+        /**
+         * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the Sepa Debit payment method options.
+         */
+        sepa_debit?: PaymentMethodOptions.SepaDebit;
       }
 
       namespace PaymentMethodOptions {
@@ -428,6 +437,8 @@ declare module 'stripe' {
         namespace Card {
           type RequestThreeDSecure = 'any' | 'automatic';
         }
+
+        interface SepaDebit {}
       }
 
       interface SingleUse {
@@ -502,6 +513,11 @@ declare module 'stripe' {
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
+
+        /**
+         * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the Sepa Debit payment method options.
+         */
+        sepa_debit?: PaymentMethodOptions.SepaDebit;
       }
 
       namespace PaymentMethodOptions {
@@ -522,6 +538,8 @@ declare module 'stripe' {
         namespace Card {
           type RequestThreeDSecure = 'any' | 'automatic';
         }
+
+        interface SepaDebit {}
       }
     }
 
@@ -687,6 +705,11 @@ declare module 'stripe' {
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
+
+        /**
+         * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the Sepa Debit payment method options.
+         */
+        sepa_debit?: PaymentMethodOptions.SepaDebit;
       }
 
       namespace PaymentMethodOptions {
@@ -707,6 +730,8 @@ declare module 'stripe' {
         namespace Card {
           type RequestThreeDSecure = 'any' | 'automatic';
         }
+
+        interface SepaDebit {}
       }
     }
 
