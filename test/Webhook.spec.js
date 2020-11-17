@@ -127,6 +127,24 @@ describe('Webhooks', () => {
       }).to.throw(expectedMessage);
     });
 
+    it('should raise a SignatureVerificationError when the secret key does not contain whsec_', () => {
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: EVENT_PAYLOAD_STRING,
+        secret: SECRET,
+      });
+
+      const expectedMessage =
+        'Webhook secret key passed in does not start with whsec_. Webhook secrets can be found here: https://dashboard.stripe.com/webhooks.';
+
+      expect(() => {
+        stripe.webhooks.signature.verifyHeader(
+          EVENT_PAYLOAD_STRING,
+          header,
+          'SECRET'
+        );
+      }).to.throw(expectedMessage);
+    });
+
     it('should raise a SignatureVerificationError when there are no signatures with the expected scheme', () => {
       const header = stripe.webhooks.generateTestHeaderString({
         payload: EVENT_PAYLOAD_STRING,
