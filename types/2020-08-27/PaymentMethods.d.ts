@@ -45,6 +45,8 @@ declare module 'stripe' {
 
       giropay?: PaymentMethod.Giropay;
 
+      grabpay?: PaymentMethod.Grabpay;
+
       ideal?: PaymentMethod.Ideal;
 
       interac_present?: PaymentMethod.InteracPresent;
@@ -374,6 +376,8 @@ declare module 'stripe' {
 
       interface Giropay {}
 
+      interface Grabpay {}
+
       interface Ideal {
         /**
          * The customer's bank, if provided. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `sns_bank`, `triodos_bank`, or `van_lanschot`.
@@ -518,6 +522,7 @@ declare module 'stripe' {
         | 'eps'
         | 'fpx'
         | 'giropay'
+        | 'grabpay'
         | 'ideal'
         | 'oxxo'
         | 'p24'
@@ -580,6 +585,11 @@ declare module 'stripe' {
        * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
        */
       giropay?: PaymentMethodCreateParams.Giropay;
+
+      /**
+       * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
+       */
+      grabpay?: PaymentMethodCreateParams.Grabpay;
 
       /**
        * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
@@ -780,6 +790,8 @@ declare module 'stripe' {
 
       interface Giropay {}
 
+      interface Grabpay {}
+
       interface Ideal {
         /**
          * The customer's bank.
@@ -870,6 +882,7 @@ declare module 'stripe' {
         | 'eps'
         | 'fpx'
         | 'giropay'
+        | 'grabpay'
         | 'ideal'
         | 'oxxo'
         | 'p24'
@@ -1018,6 +1031,7 @@ declare module 'stripe' {
         | 'eps'
         | 'fpx'
         | 'giropay'
+        | 'grabpay'
         | 'ideal'
         | 'oxxo'
         | 'p24'

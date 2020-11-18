@@ -976,6 +976,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
           | 'p24'
           | 'sepa_debit'
