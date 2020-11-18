@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.123.0 - 2020-11-18
+* [#1072](https://github.com/stripe/stripe-node/pull/1072) Added support for `grabpay` on `PaymentMethod`
+
 ## 8.122.1 - 2020-11-17
 * Identical to 8.122.0. Published to resolve a release issue.
 
