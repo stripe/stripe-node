@@ -840,6 +840,11 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
+         */
+        grabpay?: PaymentMethodData.Grabpay;
+
+        /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
          */
         ideal?: PaymentMethodData.Ideal;
@@ -1007,6 +1012,8 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Grabpay {}
+
         interface Ideal {
           /**
            * The customer's bank.
@@ -1096,6 +1103,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
           | 'oxxo'
           | 'p24'
@@ -1471,6 +1479,11 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
+         */
+        grabpay?: PaymentMethodData.Grabpay;
+
+        /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
          */
         ideal?: PaymentMethodData.Ideal;
@@ -1638,6 +1651,8 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Grabpay {}
+
         interface Ideal {
           /**
            * The customer's bank.
@@ -1727,6 +1742,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
           | 'oxxo'
           | 'p24'
@@ -2216,6 +2232,11 @@ declare module 'stripe' {
         giropay?: PaymentMethodData.Giropay;
 
         /**
+         * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
+         */
+        grabpay?: PaymentMethodData.Grabpay;
+
+        /**
          * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
          */
         ideal?: PaymentMethodData.Ideal;
@@ -2383,6 +2404,8 @@ declare module 'stripe' {
 
         interface Giropay {}
 
+        interface Grabpay {}
+
         interface Ideal {
           /**
            * The customer's bank.
@@ -2472,6 +2495,7 @@ declare module 'stripe' {
           | 'eps'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
           | 'oxxo'
           | 'p24'
