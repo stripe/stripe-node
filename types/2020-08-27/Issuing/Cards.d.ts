@@ -71,7 +71,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
-        metadata: Metadata;
+        metadata: Stripe.Metadata;
 
         /**
          * The full unredacted card number. For security reasons, this is only available for virtual cards, and will be omitted unless you explicitly request it with [the `expand` parameter](https://stripe.com/docs/api/expanding_objects). Additionally, it's only available via the ["Retrieve a card" endpoint](https://stripe.com/docs/api/issuing/cards/retrieve), not via "List all cards" or any other endpoint.
@@ -117,7 +117,7 @@ declare module 'stripe' {
         type ReplacementReason = 'damaged' | 'expired' | 'lost' | 'stolen';
 
         interface Shipping {
-          address: Address;
+          address: Stripe.Address;
 
           /**
            * The delivery company that shipped a card.
@@ -1126,7 +1126,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam;
+        metadata?: Stripe.MetadataParam;
 
         /**
          * The card this is meant to be a replacement for (if any).
@@ -2159,7 +2159,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
          * Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
@@ -3103,7 +3103,7 @@ declare module 'stripe' {
         /**
          * Only return cards that were issued during the given date interval.
          */
-        created?: RangeQueryParam | number;
+        created?: Stripe.RangeQueryParam | number;
 
         /**
          * Only return cards that have the given expiration month.

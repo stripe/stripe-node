@@ -82,7 +82,7 @@ declare module 'stripe' {
       /**
        * ID of the customer this charge is for if one exists.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      customer: string | Stripe.Customer | DeletedCustomer | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -134,7 +134,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: Metadata;
+      metadata: Stripe.Metadata;
 
       /**
        * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
@@ -209,7 +209,7 @@ declare module 'stripe' {
       /**
        * This is a legacy field that will be removed in the future. It contains the Source, Card, or BankAccount object used for the charge. For details about the payment method used for this charge, refer to `payment_method` or `payment_method_details` instead.
        */
-      source: CustomerSource | null;
+      source: Stripe.CustomerSource | null;
 
       /**
        * The transfer ID which created this charge. Only present if the charge came from another Stripe account. [See the Connect documentation](https://stripe.com/docs/connect/destination-charges) for details.
@@ -264,7 +264,7 @@ declare module 'stripe' {
         /**
          * Billing address.
          */
-        address: Address | null;
+        address: Stripe.Address | null;
 
         /**
          * Email address.
@@ -842,7 +842,7 @@ declare module 'stripe' {
               /**
                * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
                */
-              billing_address: Address | null;
+              billing_address: Stripe.Address | null;
 
               /**
                * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -857,7 +857,7 @@ declare module 'stripe' {
               /**
                * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
                */
-              shipping_address: Address | null;
+              shipping_address: Stripe.Address | null;
             }
 
             interface SamsungPay {}
@@ -874,7 +874,7 @@ declare module 'stripe' {
               /**
                * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
                */
-              billing_address: Address | null;
+              billing_address: Stripe.Address | null;
 
               /**
                * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -889,7 +889,7 @@ declare module 'stripe' {
               /**
                * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
                */
-              shipping_address: Address | null;
+              shipping_address: Stripe.Address | null;
             }
           }
         }
@@ -1479,7 +1479,7 @@ declare module 'stripe' {
       }
 
       interface Shipping {
-        address?: Address;
+        address?: Stripe.Address;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1558,7 +1558,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * The Stripe account ID for which these funds are intended. Automatically set if you use the `destination` parameter. For details, see [Creating Separate Charges and Transfers](https://stripe.com/docs/connect/charges-transfers#on-behalf-of).
@@ -1618,7 +1618,7 @@ declare module 'stripe' {
         /**
          * Shipping address.
          */
-        address: AddressParam;
+        address: Stripe.AddressParam;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1685,7 +1685,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * This is the email address that the receipt for this charge will be sent to. If this field is updated, then a new email receipt will be sent to the updated address.
@@ -1719,7 +1719,7 @@ declare module 'stripe' {
         /**
          * Shipping address.
          */
-        address: AddressParam;
+        address: Stripe.AddressParam;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1744,7 +1744,7 @@ declare module 'stripe' {
     }
 
     interface ChargeListParams extends PaginationParams {
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return charges for the customer specified by this customer ID.

@@ -143,7 +143,7 @@ declare module 'stripe' {
     }
 
     interface ReviewListParams extends PaginationParams {
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Specifies which fields in the response should be expanded.

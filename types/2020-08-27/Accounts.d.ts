@@ -76,7 +76,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata?: Metadata;
+      metadata?: Stripe.Metadata;
 
       /**
        * Whether Stripe can send payouts to this account.
@@ -118,7 +118,7 @@ declare module 'stripe' {
         /**
          * A publicly available mailing address for sending support issues to.
          */
-        support_address: Address | null;
+        support_address: Stripe.Address | null;
 
         /**
          * A publicly available email address for sending support issues to.
@@ -285,7 +285,7 @@ declare module 'stripe' {
       }
 
       interface Company {
-        address?: Address;
+        address?: Stripe.Address;
 
         /**
          * The Kana variation of the company's primary address (Japan only).
@@ -831,7 +831,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * Options for customizing how the account functions within Stripe.
@@ -1173,12 +1173,12 @@ declare module 'stripe' {
         /**
          * The Kana variation of the company's primary address (Japan only).
          */
-        address_kana?: JapanAddressParam;
+        address_kana?: Stripe.JapanAddressParam;
 
         /**
          * The Kanji variation of the company's primary address (Japan only).
          */
-        address_kanji?: JapanAddressParam;
+        address_kanji?: Stripe.JapanAddressParam;
 
         /**
          * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
@@ -1327,12 +1327,12 @@ declare module 'stripe' {
         /**
          * The Kana variation of the the individual's primary address (Japan only).
          */
-        address_kana?: JapanAddressParam;
+        address_kana?: Stripe.JapanAddressParam;
 
         /**
          * The Kanji variation of the the individual's primary address (Japan only).
          */
-        address_kanji?: JapanAddressParam;
+        address_kanji?: Stripe.JapanAddressParam;
 
         /**
          * The individual's date of birth.
@@ -1392,7 +1392,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
          * The individual's phone number.
@@ -1744,7 +1744,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * Options for customizing how the account functions within Stripe.
@@ -2081,12 +2081,12 @@ declare module 'stripe' {
         /**
          * The Kana variation of the company's primary address (Japan only).
          */
-        address_kana?: JapanAddressParam;
+        address_kana?: Stripe.JapanAddressParam;
 
         /**
          * The Kanji variation of the company's primary address (Japan only).
          */
-        address_kanji?: JapanAddressParam;
+        address_kanji?: Stripe.JapanAddressParam;
 
         /**
          * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
@@ -2235,12 +2235,12 @@ declare module 'stripe' {
         /**
          * The Kana variation of the the individual's primary address (Japan only).
          */
-        address_kana?: JapanAddressParam;
+        address_kana?: Stripe.JapanAddressParam;
 
         /**
          * The Kanji variation of the the individual's primary address (Japan only).
          */
-        address_kanji?: JapanAddressParam;
+        address_kanji?: Stripe.JapanAddressParam;
 
         /**
          * The individual's date of birth.
@@ -2300,7 +2300,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
          * The individual's phone number.
@@ -2581,7 +2581,7 @@ declare module 'stripe' {
     }
 
     interface AccountListParams extends PaginationParams {
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Specifies which fields in the response should be expanded.

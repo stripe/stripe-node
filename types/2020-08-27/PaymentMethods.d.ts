@@ -59,7 +59,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: Metadata | null;
+      metadata: Stripe.Metadata | null;
 
       oxxo?: PaymentMethod.Oxxo;
 
@@ -118,7 +118,7 @@ declare module 'stripe' {
         /**
          * Billing address.
          */
-        address: Address | null;
+        address: Stripe.Address | null;
 
         /**
          * Email address.
@@ -280,7 +280,7 @@ declare module 'stripe' {
             /**
              * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            billing_address: Address | null;
+            billing_address: Stripe.Address | null;
 
             /**
              * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -295,7 +295,7 @@ declare module 'stripe' {
             /**
              * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            shipping_address: Address | null;
+            shipping_address: Stripe.Address | null;
           }
 
           interface SamsungPay {}
@@ -312,7 +312,7 @@ declare module 'stripe' {
             /**
              * Owner's verified billing address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            billing_address: Address | null;
+            billing_address: Stripe.Address | null;
 
             /**
              * Owner's verified email. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -327,7 +327,7 @@ declare module 'stripe' {
             /**
              * Owner's verified shipping address. Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement. They cannot be set or mutated.
              */
-            shipping_address: Address | null;
+            shipping_address: Stripe.Address | null;
           }
         }
       }
@@ -604,7 +604,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: Stripe.MetadataParam;
 
       /**
        * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
@@ -921,7 +921,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.

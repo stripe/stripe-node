@@ -61,7 +61,7 @@ declare module 'stripe' {
          * during the session unless an existing customer was provided when
          * the session was created.
          */
-        customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+        customer: string | Stripe.Customer | DeletedCustomer | null;
 
         /**
          * If provided, this value will be used when the Customer object is created.
@@ -90,7 +90,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
-        metadata: Metadata | null;
+        metadata: Stripe.Metadata | null;
 
         /**
          * The mode of the Checkout Session.
@@ -200,7 +200,7 @@ declare module 'stripe' {
         type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
 
         interface Shipping {
-          address?: Address;
+          address?: Stripe.Address;
 
           /**
            * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -625,7 +625,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam;
+        metadata?: Stripe.MetadataParam;
 
         /**
          * The mode of the Checkout Session. Required when using prices or `setup` mode. Pass `subscription` if Checkout session includes at least one recurring item.
@@ -773,7 +773,7 @@ declare module 'stripe' {
               /**
                * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
                */
-              metadata?: MetadataParam;
+              metadata?: Stripe.MetadataParam;
 
               /**
                * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
@@ -862,7 +862,7 @@ declare module 'stripe' {
           /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
-          metadata?: MetadataParam;
+          metadata?: Stripe.MetadataParam;
 
           /**
            * The Stripe account ID for which these funds are intended. For details,
@@ -929,7 +929,7 @@ declare module 'stripe' {
             /**
              * Shipping address.
              */
-            address: AddressParam;
+            address: Stripe.AddressParam;
 
             /**
              * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -991,7 +991,7 @@ declare module 'stripe' {
           /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
-          metadata?: MetadataParam;
+          metadata?: Stripe.MetadataParam;
 
           /**
            * The Stripe account for which the setup is intended.
@@ -1276,7 +1276,7 @@ declare module 'stripe' {
           /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
-          metadata?: MetadataParam;
+          metadata?: Stripe.MetadataParam;
 
           /**
            * Unix timestamp representing the end of the trial period the customer

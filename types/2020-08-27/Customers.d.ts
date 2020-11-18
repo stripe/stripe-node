@@ -18,7 +18,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address: Address | null;
+      address: Stripe.Address | null;
 
       /**
        * Current balance, if any, being stored on the customer. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that will be added to their next invoice. The balance does not refer to any unpaid invoices; it solely takes into account amounts that have yet to be successfully applied to any invoice. This balance is only taken into account as invoices are finalized.
@@ -40,7 +40,7 @@ declare module 'stripe' {
        *
        * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) field instead.
        */
-      default_source: string | CustomerSource | null;
+      default_source: string | Stripe.CustomerSource | null;
 
       deleted?: void;
 
@@ -79,7 +79,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: Metadata;
+      metadata: Stripe.Metadata;
 
       /**
        * The customer's full name or business name.
@@ -109,7 +109,7 @@ declare module 'stripe' {
       /**
        * The customer's payment sources, if any.
        */
-      sources?: ApiList<CustomerSource>;
+      sources?: ApiList<Stripe.CustomerSource>;
 
       /**
        * The customer's current subscriptions, if any.
@@ -160,7 +160,7 @@ declare module 'stripe' {
       }
 
       interface Shipping {
-        address?: Address;
+        address?: Stripe.Address;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -210,7 +210,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: Stripe.Emptyable<AddressParam>;
+      address?: Stripe.Emptyable<Stripe.AddressParam>;
 
       /**
        * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -247,7 +247,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * The customer's full name or business name.
@@ -330,7 +330,7 @@ declare module 'stripe' {
         /**
          * Customer shipping address.
          */
-        address: AddressParam;
+        address: Stripe.AddressParam;
 
         /**
          * Customer name.
@@ -405,7 +405,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: Stripe.Emptyable<AddressParam>;
+      address?: Stripe.Emptyable<Stripe.AddressParam>;
 
       /**
        * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -451,7 +451,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * The customer's full name or business name.
@@ -532,7 +532,7 @@ declare module 'stripe' {
         /**
          * Customer shipping address.
          */
-        address: AddressParam;
+        address: Stripe.AddressParam;
 
         /**
          * Customer name.
@@ -549,7 +549,7 @@ declare module 'stripe' {
     }
 
     interface CustomerListParams extends PaginationParams {
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * A case-sensitive filter on the list based on the customer's `email` field. The value must be a string.

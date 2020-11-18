@@ -30,7 +30,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer associated with this discount.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      customer: string | Stripe.Customer | DeletedCustomer | null;
 
       deleted?: void;
 
@@ -94,7 +94,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer associated with this discount.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      customer: string | Stripe.Customer | DeletedCustomer | null;
 
       /**
        * Always true for a deleted object

@@ -94,7 +94,7 @@ declare module 'stripe' {
          */
         value_list: string;
 
-        created?: RangeQueryParam | number;
+        created?: Stripe.RangeQueryParam | number;
 
         /**
          * Specifies which fields in the response should be expanded.

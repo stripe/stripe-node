@@ -86,7 +86,7 @@ declare module 'stripe' {
         /**
          * The discount that was applied to get this discount amount.
          */
-        discount: string | Stripe.Discount | Stripe.DeletedDiscount;
+        discount: string | Stripe.Discount | DeletedDiscount;
       }
 
       interface TaxAmount {
@@ -150,7 +150,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: Stripe.MetadataParam;
 
       /**
        * The integer amount in %s representing the amount that is credited outside of Stripe.

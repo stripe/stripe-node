@@ -53,7 +53,7 @@ declare module 'stripe' {
       /**
        * The customer used for the order.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      customer: string | Stripe.Customer | DeletedCustomer | null;
 
       /**
        * The email address of the customer placing the order.
@@ -78,7 +78,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: Metadata | null;
+      metadata: Stripe.Metadata | null;
 
       /**
        * A list of returns that have taken place for this order.
@@ -123,7 +123,7 @@ declare module 'stripe' {
 
     namespace Order {
       interface Shipping {
-        address?: Address;
+        address?: Stripe.Address;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -254,7 +254,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: Stripe.MetadataParam;
 
       /**
        * Shipping address for the order. Required if any of the SKUs are for products that have `shippable` set to true.
@@ -291,7 +291,7 @@ declare module 'stripe' {
         /**
          * Customer shipping address.
          */
-        address: AddressParam;
+        address: Stripe.AddressParam;
 
         /**
          * Customer name.
@@ -326,7 +326,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * The shipping method to select for fulfilling this order. If specified, must be one of the `id`s of a shipping method in the `shipping_methods` array. If specified, will overwrite the existing selected shipping method, updating `items` as necessary.
@@ -364,7 +364,7 @@ declare module 'stripe' {
       /**
        * Date this order was created.
        */
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return orders for the given customer.
@@ -402,22 +402,22 @@ declare module 'stripe' {
         /**
          * Date this order was canceled.
          */
-        canceled?: RangeQueryParam | number;
+        canceled?: Stripe.RangeQueryParam | number;
 
         /**
          * Date this order was fulfilled.
          */
-        fulfilled?: RangeQueryParam | number;
+        fulfilled?: Stripe.RangeQueryParam | number;
 
         /**
          * Date this order was paid.
          */
-        paid?: RangeQueryParam | number;
+        paid?: Stripe.RangeQueryParam | number;
 
         /**
          * Date this order was returned.
          */
-        returned?: RangeQueryParam | number;
+        returned?: Stripe.RangeQueryParam | number;
       }
     }
 
@@ -445,7 +445,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: Stripe.MetadataParam;
 
       /**
        * A [Token](https://stripe.com/docs/api#tokens)'s or a [Source](https://stripe.com/docs/api#sources)'s ID, as returned by [Elements](https://stripe.com/docs/elements). If no customer was attached to the order at creation, either `source` or `customer` is required. Otherwise, the specified source will be charged intead of the customer attached to the order.

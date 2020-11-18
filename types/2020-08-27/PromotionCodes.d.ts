@@ -40,7 +40,7 @@ declare module 'stripe' {
       /**
        * The customer that this promotion code can be used by.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      customer: string | Stripe.Customer | DeletedCustomer | null;
 
       /**
        * Date at which the promotion code can no longer be redeemed.
@@ -60,7 +60,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: Metadata | null;
+      metadata: Stripe.Metadata | null;
 
       restrictions: PromotionCode.Restrictions;
 
@@ -128,7 +128,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: Stripe.MetadataParam;
 
       /**
        * Settings that restrict the redemption of the promotion code.
@@ -176,7 +176,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
     }
 
     interface PromotionCodeListParams extends PaginationParams {
@@ -198,7 +198,7 @@ declare module 'stripe' {
       /**
        * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
        */
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return promotion codes that are restricted to this customer.
