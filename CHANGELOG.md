@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.122.1 - 2020-11-17
+* Identical to 8.122.0. Published to resolve a release issue.
+
 ## 8.122.0 - 2020-11-17
 * [#1070](https://github.com/stripe/stripe-node/pull/1070)
   * Added support for `sepa_debit` on `SetupIntent.PaymentMethodOptions`
@@ -591,6 +594,12 @@ Major pull requests included in this release (cf. [#742](https://github.com/stri
 - [#736](https://github.com/stripe/stripe-node/pull/736) Add TypeScript definitions
 - [#744](https://github.com/stripe/stripe-node/pull/744) Remove deprecated resources and methods
 - [#752](https://github.com/stripe/stripe-node/pull/752) Deprecate many library api's, unify others
+
+## 7.63.1 - 2020-11-17
+- Identical to 7.15.0.
+
+## 7.63.0 - 2020-11-17
+- Published in error. Do not use. This is identical to 8.122.0.
 
 ## 7.15.0 - 2019-12-30
 
