@@ -52,6 +52,11 @@ stripe.setHost('host', 'port', 'protocol');
   };
   const customer: Stripe.Customer = await stripe.customers.create(params, opts);
 
+  const address: Stripe.Address | null = customer.address;
+
+  if (!address) return;
+  const city: string | null = address.city;
+
   // Check no opts:
   await stripe.customers.create(params);
 
