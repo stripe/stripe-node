@@ -276,7 +276,13 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
 
-        interface SepaDebit {}
+        interface SepaDebit {
+          mandate_options?: SepaDebit.MandateOptions;
+        }
+
+        namespace SepaDebit {
+          interface MandateOptions {}
+        }
       }
 
       type Status =
@@ -438,7 +444,16 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
-        interface SepaDebit {}
+        interface SepaDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: SepaDebit.MandateOptions;
+        }
+
+        namespace SepaDebit {
+          interface MandateOptions {}
+        }
       }
 
       interface SingleUse {
@@ -539,7 +554,16 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
-        interface SepaDebit {}
+        interface SepaDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: SepaDebit.MandateOptions;
+        }
+
+        namespace SepaDebit {
+          interface MandateOptions {}
+        }
       }
     }
 
@@ -731,7 +755,16 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
-        interface SepaDebit {}
+        interface SepaDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: SepaDebit.MandateOptions;
+        }
+
+        namespace SepaDebit {
+          interface MandateOptions {}
+        }
       }
     }
 
