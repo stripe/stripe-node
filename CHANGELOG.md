@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.124.0 - 2020-11-19
+* [#1074](https://github.com/stripe/stripe-node/pull/1074) Codegen for openapi 3723465
+* [#1073](https://github.com/stripe/stripe-node/pull/1073) More consistent namespacing for shared types
+
 ## 8.123.0 - 2020-11-18
 * [#1072](https://github.com/stripe/stripe-node/pull/1072) Added support for `grabpay` on `PaymentMethod`
 
