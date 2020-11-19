@@ -1,18 +1,20 @@
 # CHANGELOG
 
 ## 8.124.0 - 2020-11-19
-* [#1074](https://github.com/stripe/stripe-node/pull/1074) Codegen for openapi 3723465
+* [#1074](https://github.com/stripe/stripe-node/pull/1074)
+  * Add support for mandate_options on SetupIntent.payment_method_options.sepa_debit.
+  * Add support for card_present and interact_present as values for PaymentMethod.type.
 * [#1073](https://github.com/stripe/stripe-node/pull/1073) More consistent namespacing for shared types
 
 ## 8.123.0 - 2020-11-18
-* [#1072](https://github.com/stripe/stripe-node/pull/1072) Added support for `grabpay` on `PaymentMethod`
+* [#1072](https://github.com/stripe/stripe-node/pull/1072) Add support for `grabpay` on `PaymentMethod`
 
 ## 8.122.1 - 2020-11-17
 * Identical to 8.122.0. Published to resolve a release issue.
 
 ## 8.122.0 - 2020-11-17
 * [#1070](https://github.com/stripe/stripe-node/pull/1070)
-  * Added support for `sepa_debit` on `SetupIntent.PaymentMethodOptions`
+  * Add support for `sepa_debit` on `SetupIntent.PaymentMethodOptions`
   * `Invoice.tax_amounts` and `InvoiceLineItem.tax_rates` are no longer nullable
   * `Invoice.default_tax_rates` and `InvoiceLineItem.tax_amounts` are no longer nullable
 
