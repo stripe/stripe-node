@@ -54,7 +54,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: Metadata;
+      metadata: Stripe.Metadata;
 
       /**
        * The dimensions of this SKU for shipping purposes.
@@ -167,7 +167,7 @@ declare module 'stripe' {
       /**
        * A dictionary of attributes and values for the attributes defined by the product. If, for example, a product's attributes are `["size", "gender"]`, a valid SKU has the following dictionary of attributes: `{"size": "Medium", "gender": "Unisex"}`.
        */
-      attributes?: Metadata;
+      attributes?: Stripe.Metadata;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -187,7 +187,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: Stripe.MetadataParam;
 
       /**
        * The dimensions of this SKU for shipping purposes.
@@ -258,7 +258,7 @@ declare module 'stripe' {
       /**
        * A dictionary of attributes and values for the attributes defined by the product. When specified, `attributes` will partially update the existing attributes dictionary on the product, with the postcondition that a value must be present for each attribute key on the product.
        */
-      attributes?: Metadata;
+      attributes?: Stripe.Metadata;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -283,7 +283,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * The dimensions of this SKU for shipping purposes.
@@ -357,7 +357,7 @@ declare module 'stripe' {
       /**
        * Only return SKUs that have the specified key-value pairs in this partially constructed dictionary. Can be specified only if `product` is also supplied. For instance, if the associated product has attributes `["color", "size"]`, passing in `attributes[color]=red` returns all the SKUs for this product that have `color` set to `red`.
        */
-      attributes?: Metadata;
+      attributes?: Stripe.Metadata;
 
       /**
        * Specifies which fields in the response should be expanded.

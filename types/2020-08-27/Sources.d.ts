@@ -79,7 +79,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: Metadata | null;
+      metadata: Stripe.Metadata | null;
 
       multibanco?: Source.Multibanco;
 
@@ -420,7 +420,7 @@ declare module 'stripe' {
         /**
          * Owner's address.
          */
-        address: Address | null;
+        address: Stripe.Address | null;
 
         /**
          * Owner's email address.
@@ -440,7 +440,7 @@ declare module 'stripe' {
         /**
          * Verified owner's address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
          */
-        verified_address: Address | null;
+        verified_address: Stripe.Address | null;
 
         /**
          * Verified owner's email address. Verified values are verified or provided by the payment method directly (and if supported) at the time of authorization or settlement. They cannot be set or mutated.
@@ -630,7 +630,7 @@ declare module 'stripe' {
         }
 
         interface Shipping {
-          address?: Address;
+          address?: Stripe.Address;
 
           /**
            * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -757,7 +757,7 @@ declare module 'stripe' {
        */
       mandate?: SourceCreateParams.Mandate;
 
-      metadata?: MetadataParam;
+      metadata?: Stripe.MetadataParam;
 
       /**
        * The source to share.
@@ -1025,7 +1025,7 @@ declare module 'stripe' {
           /**
            * Shipping address.
            */
-          address: AddressParam;
+          address: Stripe.AddressParam;
 
           /**
            * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1083,7 +1083,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * Information about the owner of the payment instrument that may be used or required by particular source types.
@@ -1299,7 +1299,7 @@ declare module 'stripe' {
           /**
            * Shipping address.
            */
-          address: AddressParam;
+          address: Stripe.AddressParam;
 
           /**
            * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.

@@ -58,7 +58,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Note that for line items with `type=subscription` this will reflect the metadata of the subscription that caused the line item to be created.
        */
-      metadata: Metadata;
+      metadata: Stripe.Metadata;
 
       period: InvoiceLineItem.Period;
 
@@ -118,7 +118,7 @@ declare module 'stripe' {
         /**
          * The discount that was applied to get this discount amount.
          */
-        discount: string | Stripe.Discount | Stripe.DeletedDiscount;
+        discount: string | Stripe.Discount | DeletedDiscount;
       }
 
       interface Period {
@@ -309,7 +309,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
          * The period associated with this invoice item.
@@ -420,7 +420,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
          * Plan ID for this item, as a string.

@@ -88,7 +88,7 @@ declare module 'stripe' {
        *
        * If present in combination with [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage), this PaymentIntent's payment method will be attached to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      customer: string | Stripe.Customer | DeletedCustomer | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -113,7 +113,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. For more information, see the [documentation](https://stripe.com/docs/payments/payment-intents/creating-payment-intents#storing-information-in-metadata).
        */
-      metadata: Metadata;
+      metadata: Stripe.Metadata;
 
       /**
        * If present, this property tells you what actions you need to take in order for your customer to fulfill a payment using the provided source.
@@ -169,11 +169,11 @@ declare module 'stripe' {
        */
       source:
         | string
-        | CustomerSource
-        | Stripe.DeletedAlipayAccount
-        | Stripe.DeletedBankAccount
-        | Stripe.DeletedBitcoinReceiver
-        | Stripe.DeletedCard
+        | Stripe.CustomerSource
+        | DeletedAlipayAccount
+        | DeletedBankAccount
+        | DeletedBitcoinReceiver
+        | DeletedCard
         | null;
 
       /**
@@ -302,7 +302,7 @@ declare module 'stripe' {
          */
         setup_intent?: Stripe.SetupIntent;
 
-        source?: CustomerSource;
+        source?: Stripe.CustomerSource;
 
         /**
          * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
@@ -543,7 +543,7 @@ declare module 'stripe' {
       type SetupFutureUsage = 'off_session' | 'on_session';
 
       interface Shipping {
-        address?: Address;
+        address?: Stripe.Address;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -655,7 +655,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: MetadataParam;
+      metadata?: Stripe.MetadataParam;
 
       /**
        * Set to `true` to indicate that the customer is not in your checkout flow during this payment attempt, and therefore is unable to authenticate. This parameter is intended for scenarios where you collect card details and [charge them later](https://stripe.com/docs/payments/cards/charging-saved-cards). This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
@@ -857,7 +857,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam;
+        metadata?: Stripe.MetadataParam;
 
         /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
@@ -1273,7 +1273,7 @@ declare module 'stripe' {
         /**
          * Shipping address.
          */
-        address: AddressParam;
+        address: Stripe.AddressParam;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1368,7 +1368,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * ID of the payment method (a PaymentMethod, Card, or [compatible Source](https://stripe.com/docs/payments/payment-methods#compatibility) object) to attach to this PaymentIntent.
@@ -1496,7 +1496,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam;
+        metadata?: Stripe.MetadataParam;
 
         /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
@@ -1912,7 +1912,7 @@ declare module 'stripe' {
         /**
          * Shipping address.
          */
-        address: AddressParam;
+        address: Stripe.AddressParam;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1947,7 +1947,7 @@ declare module 'stripe' {
       /**
        * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
        */
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return PaymentIntents for the customer specified by this customer ID.
@@ -2249,7 +2249,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam;
+        metadata?: Stripe.MetadataParam;
 
         /**
          * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
@@ -2665,7 +2665,7 @@ declare module 'stripe' {
         /**
          * Shipping address.
          */
-        address: AddressParam;
+        address: Stripe.AddressParam;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.

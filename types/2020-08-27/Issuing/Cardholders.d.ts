@@ -46,7 +46,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
-        metadata: Metadata;
+        metadata: Stripe.Metadata;
 
         /**
          * The cardholder's name. This will be printed on cards issued to them.
@@ -78,7 +78,7 @@ declare module 'stripe' {
 
       namespace Cardholder {
         interface Billing {
-          address: Address;
+          address: Stripe.Address;
         }
 
         interface Company {
@@ -1140,7 +1140,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam;
+        metadata?: Stripe.MetadataParam;
 
         /**
          * The cardholder's phone number. This will be transformed to [E.164](https://en.wikipedia.org/wiki/E.164) if it is not provided in that format already.
@@ -2231,7 +2231,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: MetadataParam;
+        metadata?: Stripe.MetadataParam;
 
         /**
          * The cardholder's phone number.
@@ -3288,7 +3288,7 @@ declare module 'stripe' {
         /**
          * Only return cardholders that were created during the given date interval.
          */
-        created?: RangeQueryParam | number;
+        created?: Stripe.RangeQueryParam | number;
 
         /**
          * Only return cardholders that have the given email address.

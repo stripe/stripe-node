@@ -16,7 +16,7 @@ declare module 'stripe' {
          */
         object: 'terminal.location';
 
-        address: Address;
+        address: Stripe.Address;
 
         deleted?: void;
 
@@ -33,7 +33,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
-        metadata: Metadata;
+        metadata: Stripe.Metadata;
       }
 
       /**
@@ -75,7 +75,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
       }
 
       namespace LocationCreateParams {
@@ -138,7 +138,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
       }
 
       namespace LocationUpdateParams {

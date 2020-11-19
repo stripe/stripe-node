@@ -38,7 +38,7 @@ declare module 'stripe' {
       /**
        * ID of the customer who owns the subscription schedule.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
+      customer: string | Stripe.Customer | DeletedCustomer;
 
       default_settings: SubscriptionSchedule.DefaultSettings;
 
@@ -55,7 +55,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: Metadata | null;
+      metadata: Stripe.Metadata | null;
 
       /**
        * Configuration for the subscription schedule's phases.
@@ -196,7 +196,7 @@ declare module 'stripe' {
         /**
          * ID of the coupon to use during this phase of the subscription schedule.
          */
-        coupon: string | Stripe.Coupon | Stripe.DeletedCoupon | null;
+        coupon: string | Stripe.Coupon | DeletedCoupon | null;
 
         /**
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
@@ -249,7 +249,7 @@ declare module 'stripe' {
           /**
            * ID of the price used to generate the invoice item.
            */
-          price: string | Stripe.Price | Stripe.DeletedPrice;
+          price: string | Stripe.Price | DeletedPrice;
 
           /**
            * The quantity of the invoice item.
@@ -294,12 +294,12 @@ declare module 'stripe' {
           /**
            * ID of the plan to which the customer should be subscribed.
            */
-          plan: string | Stripe.Plan | Stripe.DeletedPlan;
+          plan: string | Stripe.Plan | DeletedPlan;
 
           /**
            * ID of the price to which the customer should be subscribed.
            */
-          price: string | Stripe.Price | Stripe.DeletedPrice;
+          price: string | Stripe.Price | DeletedPrice;
 
           /**
            * Quantity of the plan to which the customer should be subscribed.
@@ -376,7 +376,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase.
@@ -746,7 +746,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * List representing phases of the subscription schedule. Each phase can be customized to have different durations, plans, and coupons. If there are multiple phases, the `end_date` of one phase will always equal the `start_date` of the next phase. Note that past phases can be omitted.
@@ -1101,17 +1101,17 @@ declare module 'stripe' {
       /**
        * Only return subscription schedules that were created canceled the given date interval.
        */
-      canceled_at?: RangeQueryParam | number;
+      canceled_at?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return subscription schedules that completed during the given date interval.
        */
-      completed_at?: RangeQueryParam | number;
+      completed_at?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return subscription schedules that were created during the given date interval.
        */
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return subscription schedules for the given customer.
@@ -1126,7 +1126,7 @@ declare module 'stripe' {
       /**
        * Only return subscription schedules that were released during the given date interval.
        */
-      released_at?: RangeQueryParam | number;
+      released_at?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return subscription schedules that have not started yet.

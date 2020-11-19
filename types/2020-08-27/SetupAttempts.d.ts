@@ -28,7 +28,7 @@ declare module 'stripe' {
       /**
        * The value of [customer](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-customer) on the SetupIntent at the time of this confirmation.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      customer: string | Stripe.Customer | DeletedCustomer | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -386,7 +386,7 @@ declare module 'stripe' {
          */
         setup_intent?: Stripe.SetupIntent;
 
-        source?: CustomerSource;
+        source?: Stripe.CustomerSource;
 
         /**
          * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
@@ -418,7 +418,7 @@ declare module 'stripe' {
        * can be a string with an integer Unix timestamp, or it can be a
        * dictionary with a number of different query options.
        */
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Specifies which fields in the response should be expanded.

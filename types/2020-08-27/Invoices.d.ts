@@ -93,12 +93,12 @@ declare module 'stripe' {
       /**
        * The ID of the customer who will be billed.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
+      customer: string | Stripe.Customer | DeletedCustomer;
 
       /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
        */
-      customer_address: Address | null;
+      customer_address: Stripe.Address | null;
 
       /**
        * The customer's email. Until the invoice is finalized, this field will equal `customer.email`. Once the invoice is finalized, this field will no longer be updated.
@@ -138,7 +138,7 @@ declare module 'stripe' {
       /**
        * ID of the default payment source for the invoice. It must belong to the customer associated with the invoice and be in a chargeable state. If not set, defaults to the subscription's default source, if any, or to the customer's default source.
        */
-      default_source: string | CustomerSource | null;
+      default_source: string | Stripe.CustomerSource | null;
 
       /**
        * The tax rates applied to this invoice, if any.
@@ -160,9 +160,7 @@ declare module 'stripe' {
       /**
        * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
        */
-      discounts: Array<
-        string | Stripe.Discount | Stripe.DeletedDiscount
-      > | null;
+      discounts: Array<string | Stripe.Discount | DeletedDiscount> | null;
 
       /**
        * The date on which payment for this invoice is due. This value will be `null` for invoices where `collection_method=charge_automatically`.
@@ -207,7 +205,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
-      metadata: Metadata | null;
+      metadata: Stripe.Metadata | null;
 
       /**
        * The time at which payment will next be attempted. This value will be `null` for invoices where `collection_method=send_invoice`.
@@ -333,7 +331,7 @@ declare module 'stripe' {
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface CustomerShipping {
-        address?: Address;
+        address?: Stripe.Address;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -505,7 +503,7 @@ declare module 'stripe' {
          */
         setup_intent?: Stripe.SetupIntent;
 
-        source?: CustomerSource;
+        source?: Stripe.CustomerSource;
 
         /**
          * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
@@ -589,7 +587,7 @@ declare module 'stripe' {
         /**
          * The discount that was applied to get this discount amount.
          */
-        discount: string | Stripe.Discount | Stripe.DeletedDiscount;
+        discount: string | Stripe.Discount | DeletedDiscount;
       }
 
       interface TotalTaxAmount {
@@ -716,7 +714,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -850,7 +848,7 @@ declare module 'stripe' {
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
-      metadata?: Stripe.Emptyable<MetadataParam>;
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -909,14 +907,14 @@ declare module 'stripe' {
        */
       collection_method?: InvoiceListParams.CollectionMethod;
 
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return invoices for the customer specified by this customer ID.
        */
       customer?: string;
 
-      due_date?: RangeQueryParam | number;
+      due_date?: Stripe.RangeQueryParam | number;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -1144,7 +1142,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
          * The period associated with this invoice item.
@@ -1255,7 +1253,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
          * Plan ID for this item, as a string.

@@ -139,12 +139,12 @@ declare module 'stripe' {
           /**
            * The Kana variation of the company's primary address (Japan only).
            */
-          address_kana?: JapanAddressParam;
+          address_kana?: Stripe.JapanAddressParam;
 
           /**
            * The Kanji variation of the company's primary address (Japan only).
            */
-          address_kanji?: JapanAddressParam;
+          address_kanji?: Stripe.JapanAddressParam;
 
           /**
            * Whether the company's directors have been provided. Set this Boolean to `true` after creating all the company's directors with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.director` requirement. This value is not automatically set to `true` after creating directors, so it needs to be updated to indicate all directors have been provided.
@@ -293,12 +293,12 @@ declare module 'stripe' {
           /**
            * The Kana variation of the the individual's primary address (Japan only).
            */
-          address_kana?: JapanAddressParam;
+          address_kana?: Stripe.JapanAddressParam;
 
           /**
            * The Kanji variation of the the individual's primary address (Japan only).
            */
-          address_kanji?: JapanAddressParam;
+          address_kanji?: Stripe.JapanAddressParam;
 
           /**
            * The individual's date of birth.
@@ -358,7 +358,7 @@ declare module 'stripe' {
           /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
-          metadata?: Stripe.Emptyable<MetadataParam>;
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
           /**
            * The individual's phone number.
@@ -551,12 +551,12 @@ declare module 'stripe' {
         /**
          * The Kana variation of the person's address (Japan only).
          */
-        address_kana?: JapanAddressParam;
+        address_kana?: Stripe.JapanAddressParam;
 
         /**
          * The Kanji variation of the person's address (Japan only).
          */
-        address_kanji?: JapanAddressParam;
+        address_kanji?: Stripe.JapanAddressParam;
 
         /**
          * The person's date of birth.
@@ -616,7 +616,7 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
-        metadata?: Stripe.Emptyable<MetadataParam>;
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
          * The person's phone number.

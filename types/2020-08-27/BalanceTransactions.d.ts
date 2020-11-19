@@ -170,9 +170,9 @@ declare module 'stripe' {
     }
 
     interface BalanceTransactionListParams extends PaginationParams {
-      available_on?: RangeQueryParam | number;
+      available_on?: Stripe.RangeQueryParam | number;
 
-      created?: RangeQueryParam | number;
+      created?: Stripe.RangeQueryParam | number;
 
       /**
        * Only return transactions in a certain currency. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
