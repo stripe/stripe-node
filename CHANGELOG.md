@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.125.0 - 2020-11-20
+* [#1075](https://github.com/stripe/stripe-node/pull/1075) Add support for `capabilities[grabpay_payments]` on `Account`
+
 ## 8.124.0 - 2020-11-19
 * [#1074](https://github.com/stripe/stripe-node/pull/1074)
   * Add support for mandate_options on SetupIntent.payment_method_options.sepa_debit.
