@@ -194,6 +194,11 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The status of the GrabPay payments capability of the account, or whether the account can directly process GrabPay charges.
+         */
+        grabpay_payments?: Capabilities.GrabpayPayments;
+
+        /**
          * The status of the iDEAL payments capability of the account, or whether the account can directly process iDEAL charges.
          */
         ideal_payments?: Capabilities.IdealPayments;
@@ -262,6 +267,8 @@ declare module 'stripe' {
         type FpxPayments = 'active' | 'inactive' | 'pending';
 
         type GiropayPayments = 'active' | 'inactive' | 'pending';
+
+        type GrabpayPayments = 'active' | 'inactive' | 'pending';
 
         type IdealPayments = 'active' | 'inactive' | 'pending';
 
@@ -979,6 +986,11 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The grabpay_payments capability.
+         */
+        grabpay_payments?: Capabilities.GrabpayPayments;
+
+        /**
          * The ideal_payments capability.
          */
         ideal_payments?: Capabilities.IdealPayments;
@@ -1087,6 +1099,13 @@ declare module 'stripe' {
         }
 
         interface GiropayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface GrabpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1887,6 +1906,11 @@ declare module 'stripe' {
         giropay_payments?: Capabilities.GiropayPayments;
 
         /**
+         * The grabpay_payments capability.
+         */
+        grabpay_payments?: Capabilities.GrabpayPayments;
+
+        /**
          * The ideal_payments capability.
          */
         ideal_payments?: Capabilities.IdealPayments;
@@ -1995,6 +2019,13 @@ declare module 'stripe' {
         }
 
         interface GiropayPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface GrabpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
