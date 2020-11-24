@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.126.0 - 2020-11-24
+* [#1079](https://github.com/stripe/stripe-node/pull/1079) Multiple API changes
+  * Add support for `account_tax_ids` on `Invoice`
+  * Add support for `payment_method_options[sepa_debit]` on `PaymentIntent`
+
 ## 8.125.0 - 2020-11-20
 * [#1075](https://github.com/stripe/stripe-node/pull/1075) Add support for `capabilities[grabpay_payments]` on `Account`
 
