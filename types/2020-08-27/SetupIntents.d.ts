@@ -420,7 +420,7 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         /**
-         * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the Sepa Debit payment method options.
+         * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
       }
@@ -530,7 +530,7 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         /**
-         * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the Sepa Debit payment method options.
+         * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
       }
@@ -731,7 +731,7 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         /**
-         * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the Sepa Debit payment method options.
+         * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
       }
