@@ -405,6 +405,8 @@ declare module 'stripe' {
 
         p24?: PaymentMethodOptions.P24;
 
+        sepa_debit?: PaymentMethodOptions.SepaDebit;
+
         sofort?: PaymentMethodOptions.Sofort;
       }
 
@@ -520,6 +522,14 @@ declare module 'stripe' {
         }
 
         interface P24 {}
+
+        interface SepaDebit {
+          mandate_options?: SepaDebit.MandateOptions;
+        }
+
+        namespace SepaDebit {
+          interface MandateOptions {}
+        }
 
         interface Sofort {
           /**
@@ -1138,6 +1148,11 @@ declare module 'stripe' {
         p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
 
         /**
+         * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
+         */
+        sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+        /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
@@ -1247,6 +1262,17 @@ declare module 'stripe' {
         }
 
         interface P24 {}
+
+        interface SepaDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: SepaDebit.MandateOptions;
+        }
+
+        namespace SepaDebit {
+          interface MandateOptions {}
+        }
 
         interface Sofort {
           /**
@@ -1777,6 +1803,11 @@ declare module 'stripe' {
         p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
 
         /**
+         * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
+         */
+        sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+        /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
@@ -1886,6 +1917,17 @@ declare module 'stripe' {
         }
 
         interface P24 {}
+
+        interface SepaDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: SepaDebit.MandateOptions;
+        }
+
+        namespace SepaDebit {
+          interface MandateOptions {}
+        }
 
         interface Sofort {
           /**
@@ -2530,6 +2572,11 @@ declare module 'stripe' {
         p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
 
         /**
+         * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
+         */
+        sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
+
+        /**
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
@@ -2639,6 +2686,17 @@ declare module 'stripe' {
         }
 
         interface P24 {}
+
+        interface SepaDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: SepaDebit.MandateOptions;
+        }
+
+        namespace SepaDebit {
+          interface MandateOptions {}
+        }
 
         interface Sofort {
           /**

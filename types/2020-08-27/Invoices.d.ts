@@ -26,6 +26,11 @@ declare module 'stripe' {
       account_name: string | null;
 
       /**
+       * The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
+       */
+      account_tax_ids?: Array<string | Stripe.TaxId | DeletedTaxId> | null;
+
+      /**
        * Final amount due at this time for this invoice. If the invoice's total is smaller than the minimum charge amount, for example, or if there is account credit that can be applied to the invoice, the `amount_due` may be 0. If there is a positive `starting_balance` for the invoice (the customer owes money), the `amount_due` will also take that into account. The charge that gets generated for the invoice will be for the amount specified in `amount_due`.
        */
       amount_due: number;
@@ -647,6 +652,11 @@ declare module 'stripe' {
       customer: string;
 
       /**
+       * The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
+       */
+      account_tax_ids?: Stripe.Emptyable<Array<string>>;
+
+      /**
        * A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#invoices).
        */
       application_fee_amount?: number;
@@ -780,6 +790,11 @@ declare module 'stripe' {
     }
 
     interface InvoiceUpdateParams {
+      /**
+       * The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
+       */
+      account_tax_ids?: Stripe.Emptyable<Array<string>>;
+
       /**
        * A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#invoices).
        */
