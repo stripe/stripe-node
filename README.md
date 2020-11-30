@@ -128,26 +128,29 @@ callback:
 // Create a new customer and then create an invoice item then invoice it:
 stripe.customers
   .create({
-    email: 'foo-customer@example.com',
+    email: 'customer@example.com',
   })
   .then((customer) => {
-    return stripe.invoiceItems.create({
-    customer: 'cus_GcAjt5gZVAtChu',
-    amount: 2500,
-    currency: 'usd',
-    description: 'One-time setup fee',
-  })
-  .then((invoiceItem) => {
-    return stripe.invoices.create({
-      collection_method: 'send_invoice',
-      customer: invoiceItem.customer,
-    });
-  })
-  .then((invoice) => {
-    // New invoice created on a new customer
-  })
-  .catch((err) => {
-    // Deal with an error
+    // have access to the customer object
+    return stripe.invoiceItems
+      .create({
+        customer: customer.id, // set the customer id
+        amount: 2500, // 25
+        currency: 'usd',
+        description: 'One-time setup fee',
+      })
+      .then((invoiceItem) => {
+        return stripe.invoices.create({
+          collection_method: 'send_invoice',
+          customer: invoiceItem.customer,
+        });
+      })
+      .then((invoice) => {
+        // New invoice created on a new customer
+      })
+      .catch((err) => {
+        // Deal with an error
+      });
   });
 ```
 
