@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.127.0 - 2020-12-03
+* [#1084](https://github.com/stripe/stripe-node/pull/1084) Add support for `documents` on `Account` create and update
+* [#1080](https://github.com/stripe/stripe-node/pull/1080) fixed promises example
+
 ## 8.126.0 - 2020-11-24
 * [#1079](https://github.com/stripe/stripe-node/pull/1079) Multiple API changes
   * Add support for `account_tax_ids` on `Invoice`
