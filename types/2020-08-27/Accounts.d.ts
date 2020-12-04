@@ -814,6 +814,11 @@ declare module 'stripe' {
       default_currency?: string;
 
       /**
+       * Documents that may be submitted to satisfy various informational requests.
+       */
+      documents?: AccountCreateParams.Documents;
+
+      /**
        * The email address of the account holder. This is only to make the account easier to identify to you. Stripe will never directly email Custom accounts.
        */
       email?: string;
@@ -1337,6 +1342,22 @@ declare module 'stripe' {
         }
       }
 
+      interface Documents {
+        /**
+         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a voided check.
+         */
+        bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
+      }
+
+      namespace Documents {
+        interface BankAccountOwnershipVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+      }
+
       interface Individual {
         /**
          * The individual's primary address.
@@ -1737,6 +1758,11 @@ declare module 'stripe' {
        * Three-letter ISO currency code representing the default currency for the account. This must be a currency that [Stripe supports in the account's country](https://stripe.com/docs/payouts).
        */
       default_currency?: string;
+
+      /**
+       * Documents that may be submitted to satisfy various informational requests.
+       */
+      documents?: AccountUpdateParams.Documents;
 
       /**
        * The email address of the account holder. This is only to make the account easier to identify to you. Stripe will never directly email Custom accounts.
@@ -2254,6 +2280,22 @@ declare module 'stripe' {
              */
             front?: string;
           }
+        }
+      }
+
+      interface Documents {
+        /**
+         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a voided check.
+         */
+        bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
+      }
+
+      namespace Documents {
+        interface BankAccountOwnershipVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
         }
       }
 

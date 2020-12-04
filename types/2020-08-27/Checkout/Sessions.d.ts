@@ -45,7 +45,7 @@ declare module 'stripe' {
         /**
          * A unique string to reference the Checkout Session. This can be a
          * customer ID, a cart ID, or similar, and can be used to reconcile the
-         * session with your internal systems.
+         * Session with your internal systems.
          */
         client_reference_id: string | null;
 
@@ -55,11 +55,11 @@ declare module 'stripe' {
         currency: string | null;
 
         /**
-         * The ID of the customer for this session.
+         * The ID of the customer for this Session.
          * For Checkout Sessions in `payment` or `subscription` mode, Checkout
          * will create a new customer object based on information provided
-         * during the session unless an existing customer was provided when
-         * the session was created.
+         * during the payment flow unless an existing customer was provided when
+         * the Session was created.
          */
         customer: string | Stripe.Customer | DeletedCustomer | null;
 
@@ -67,7 +67,7 @@ declare module 'stripe' {
          * If provided, this value will be used when the Customer object is created.
          * If not provided, customers will be asked to enter their email address.
          * Use this parameter to prefill customer data if you already have an email
-         * on file. To access information about the customer once a session is
+         * on file. To access information about the customer once the payment flow is
          * complete, use the `customer` attribute.
          */
         customer_email: string | null;
@@ -542,7 +542,7 @@ declare module 'stripe' {
         cancel_url: string;
 
         /**
-         * A list of the types of payment methods (e.g., `card`) this Checkout session can accept.
+         * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
          *
          * Read more about the supported payment methods and their requirements in our [payment
          * method details guide](https://stripe.com/docs/payments/checkout/payment-methods).
@@ -585,7 +585,7 @@ declare module 'stripe' {
          * object will be updated with the new email.
          * If blank for Checkout Sessions in `payment` or `subscription` mode,
          * Checkout will create a new customer object based on information
-         * provided during the session.
+         * provided during the payment flow.
          */
         customer?: string;
 
@@ -599,7 +599,7 @@ declare module 'stripe' {
         customer_email?: string;
 
         /**
-         * The coupon or promotion code to apply to this session. Currently, only up to one may be specified.
+         * The coupon or promotion code to apply to this Session. Currently, only up to one may be specified.
          */
         discounts?: Array<SessionCreateParams.Discount>;
 
@@ -628,7 +628,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The mode of the Checkout Session. Required when using prices or `setup` mode. Pass `subscription` if Checkout session includes at least one recurring item.
+         * The mode of the Checkout Session. Required when using prices or `setup` mode. Pass `subscription` if the Checkout Session includes at least one recurring item.
          */
         mode?: SessionCreateParams.Mode;
 
@@ -666,12 +666,12 @@ declare module 'stripe' {
 
         interface Discount {
           /**
-           * The ID of the coupon to apply to this session.
+           * The ID of the coupon to apply to this Session.
            */
           coupon?: string;
 
           /**
-           * The ID of a promotion code to apply to this session.
+           * The ID of a promotion code to apply to this Session.
            */
           promotion_code?: string;
         }
