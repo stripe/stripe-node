@@ -63,6 +63,7 @@ declare module 'stripe' {
 
     namespace File {
       type Purpose =
+        | 'account_requirement'
         | 'additional_verification'
         | 'business_icon'
         | 'business_logo'
@@ -98,6 +99,7 @@ declare module 'stripe' {
 
     namespace FileListParams {
       type Purpose =
+        | 'account_requirement'
         | 'additional_verification'
         | 'business_icon'
         | 'business_logo'

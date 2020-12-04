@@ -326,12 +326,12 @@ declare module 'stripe' {
 
       interface AuthorizationListParams extends PaginationParams {
         /**
-         * Only return issuing transactions that belong to the given card.
+         * Only return authorizations that belong to the given card.
          */
         card?: string;
 
         /**
-         * Only return authorizations belonging to the given cardholder.
+         * Only return authorizations that belong to the given cardholder.
          */
         cardholder?: string;
 
