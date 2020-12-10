@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -28,7 +29,7 @@ declare module 'stripe' {
       /**
        * The value of [customer](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-customer) on the SetupIntent at the time of this confirmation.
        */
-      customer: string | Stripe.Customer | DeletedCustomer | null;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

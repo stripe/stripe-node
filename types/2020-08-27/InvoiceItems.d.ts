@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -28,7 +29,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer who will be billed when this invoice item is billed.
        */
-      customer: string | Stripe.Customer | DeletedCustomer;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.

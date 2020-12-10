@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -40,7 +41,7 @@ declare module 'stripe' {
       /**
        * The customer that this promotion code can be used by.
        */
-      customer: string | Stripe.Customer | DeletedCustomer | null;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * Date at which the promotion code can no longer be redeemed.

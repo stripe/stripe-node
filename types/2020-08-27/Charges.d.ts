@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -82,7 +83,7 @@ declare module 'stripe' {
       /**
        * ID of the customer this charge is for if one exists.
        */
-      customer: string | Stripe.Customer | DeletedCustomer | null;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -1038,11 +1039,47 @@ declare module 'stripe' {
 
         interface Eps {
           /**
+           * The customer's bank. Should be one of `arzte_und_apotheker_bank`, `austrian_anadi_bank_ag`, `bank_austria`, `bankhaus_carl_spangler`, `bankhaus_schelhammer_und_schattera_ag`, `bawag_psk_ag`, `bks_bank_ag`, `brull_kallmus_bank_ag`, `btv_vier_lander_bank`, `capital_bank_grawe_gruppe_ag`, `dolomitenbank`, `easybank_ag`, `erste_bank_und_sparkassen`, `hypo_alpeadriabank_international_ag`, `hypo_noe_lb_fur_niederosterreich_u_wien`, `hypo_oberosterreich_salzburg_steiermark`, `hypo_tirol_bank_ag`, `hypo_vorarlberg_bank_ag`, `hypo_bank_burgenland_aktiengesellschaft`, `marchfelder_bank`, `oberbank_ag`, `raiffeisen_bankengruppe_osterreich`, `schoellerbank_ag`, `sparda_bank_wien`, `volksbank_gruppe`, `volkskreditbank_ag`, or `vr_bank_braunau`.
+           */
+          bank?: Eps.Bank | null;
+
+          /**
            * Owner's verified full name. Values are verified or provided by EPS directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            * EPS rarely provides this information so the attribute is usually empty.
            */
           verified_name: string | null;
+        }
+
+        namespace Eps {
+          type Bank =
+            | 'arzte_und_apotheker_bank'
+            | 'austrian_anadi_bank_ag'
+            | 'bank_austria'
+            | 'bankhaus_carl_spangler'
+            | 'bankhaus_schelhammer_und_schattera_ag'
+            | 'bawag_psk_ag'
+            | 'bks_bank_ag'
+            | 'brull_kallmus_bank_ag'
+            | 'btv_vier_lander_bank'
+            | 'capital_bank_grawe_gruppe_ag'
+            | 'dolomitenbank'
+            | 'easybank_ag'
+            | 'erste_bank_und_sparkassen'
+            | 'hypo_alpeadriabank_international_ag'
+            | 'hypo_bank_burgenland_aktiengesellschaft'
+            | 'hypo_noe_lb_fur_niederosterreich_u_wien'
+            | 'hypo_oberosterreich_salzburg_steiermark'
+            | 'hypo_tirol_bank_ag'
+            | 'hypo_vorarlberg_bank_ag'
+            | 'marchfelder_bank'
+            | 'oberbank_ag'
+            | 'raiffeisen_bankengruppe_osterreich'
+            | 'schoellerbank_ag'
+            | 'sparda_bank_wien'
+            | 'volksbank_gruppe'
+            | 'volkskreditbank_ag'
+            | 'vr_bank_braunau';
         }
 
         interface Fpx {
@@ -1352,6 +1389,11 @@ declare module 'stripe' {
 
         interface P24 {
           /**
+           * The customer's bank. Can be one of `ing`, `citi_handlowy`, `tmobile_usbugi_bankowe`, `plus_bank`, `etransfer_pocztowy24`, `banki_spbdzielcze`, `bank_nowy_bfg_sa`, `getin_bank`, `blik`, `noble_pay`, `ideabank`, `envelobank`, `santander_przelew24`, `nest_przelew`, `mbank_mtransfer`, `inteligo`, `pbac_z_ipko`, `bnp_paribas`, `credit_agricole`, `toyota_bank`, `bank_pekao_sa`, `volkswagen_bank`, `bank_millennium`, `alior_bank`, or `boz`.
+           */
+          bank?: P24.Bank | null;
+
+          /**
            * Unique reference for this Przelewy24 payment.
            */
           reference: string | null;
@@ -1362,6 +1404,35 @@ declare module 'stripe' {
            * Przelewy24 rarely provides this information so the attribute is usually empty.
            */
           verified_name: string | null;
+        }
+
+        namespace P24 {
+          type Bank =
+            | 'alior_bank'
+            | 'bank_millennium'
+            | 'bank_nowy_bfg_sa'
+            | 'bank_pekao_sa'
+            | 'banki_spbdzielcze'
+            | 'blik'
+            | 'bnp_paribas'
+            | 'boz'
+            | 'citi_handlowy'
+            | 'credit_agricole'
+            | 'envelobank'
+            | 'etransfer_pocztowy24'
+            | 'getin_bank'
+            | 'ideabank'
+            | 'ing'
+            | 'inteligo'
+            | 'mbank_mtransfer'
+            | 'nest_przelew'
+            | 'noble_pay'
+            | 'pbac_z_ipko'
+            | 'plus_bank'
+            | 'santander_przelew24'
+            | 'tmobile_usbugi_bankowe'
+            | 'toyota_bank'
+            | 'volkswagen_bank';
         }
 
         interface SepaCreditTransfer {

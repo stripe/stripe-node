@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -88,7 +89,7 @@ declare module 'stripe' {
        *
        * If present in combination with [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage), this PaymentIntent's payment method will be attached to the Customer after the PaymentIntent has been confirmed and any required actions from the user are complete.
        */
-      customer: string | Stripe.Customer | DeletedCustomer | null;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -170,10 +171,10 @@ declare module 'stripe' {
       source:
         | string
         | Stripe.CustomerSource
-        | DeletedAlipayAccount
-        | DeletedBankAccount
-        | DeletedBitcoinReceiver
-        | DeletedCard
+        | Stripe.DeletedAlipayAccount
+        | Stripe.DeletedBankAccount
+        | Stripe.DeletedBitcoinReceiver
+        | Stripe.DeletedCard
         | null;
 
       /**
@@ -980,7 +981,43 @@ declare module 'stripe' {
           }
         }
 
-        interface Eps {}
+        interface Eps {
+          /**
+           * The customer's bank.
+           */
+          bank?: Eps.Bank;
+        }
+
+        namespace Eps {
+          type Bank =
+            | 'arzte_und_apotheker_bank'
+            | 'austrian_anadi_bank_ag'
+            | 'bank_austria'
+            | 'bankhaus_carl_spangler'
+            | 'bankhaus_schelhammer_und_schattera_ag'
+            | 'bawag_psk_ag'
+            | 'bks_bank_ag'
+            | 'brull_kallmus_bank_ag'
+            | 'btv_vier_lander_bank'
+            | 'capital_bank_grawe_gruppe_ag'
+            | 'dolomitenbank'
+            | 'easybank_ag'
+            | 'erste_bank_und_sparkassen'
+            | 'hypo_alpeadriabank_international_ag'
+            | 'hypo_bank_burgenland_aktiengesellschaft'
+            | 'hypo_noe_lb_fur_niederosterreich_u_wien'
+            | 'hypo_oberosterreich_salzburg_steiermark'
+            | 'hypo_tirol_bank_ag'
+            | 'hypo_vorarlberg_bank_ag'
+            | 'marchfelder_bank'
+            | 'oberbank_ag'
+            | 'raiffeisen_bankengruppe_osterreich'
+            | 'schoellerbank_ag'
+            | 'sparda_bank_wien'
+            | 'volksbank_gruppe'
+            | 'volkskreditbank_ag'
+            | 'vr_bank_braunau';
+        }
 
         interface Fpx {
           /**
@@ -1261,7 +1298,12 @@ declare module 'stripe' {
           expires_after_days?: number;
         }
 
-        interface P24 {}
+        interface P24 {
+          /**
+           * Confirm that the payer has accepted the P24 terms and conditions.
+           */
+          tos_shown_and_accepted?: boolean;
+        }
 
         interface SepaDebit {
           /**
@@ -1635,7 +1677,43 @@ declare module 'stripe' {
           }
         }
 
-        interface Eps {}
+        interface Eps {
+          /**
+           * The customer's bank.
+           */
+          bank?: Eps.Bank;
+        }
+
+        namespace Eps {
+          type Bank =
+            | 'arzte_und_apotheker_bank'
+            | 'austrian_anadi_bank_ag'
+            | 'bank_austria'
+            | 'bankhaus_carl_spangler'
+            | 'bankhaus_schelhammer_und_schattera_ag'
+            | 'bawag_psk_ag'
+            | 'bks_bank_ag'
+            | 'brull_kallmus_bank_ag'
+            | 'btv_vier_lander_bank'
+            | 'capital_bank_grawe_gruppe_ag'
+            | 'dolomitenbank'
+            | 'easybank_ag'
+            | 'erste_bank_und_sparkassen'
+            | 'hypo_alpeadriabank_international_ag'
+            | 'hypo_bank_burgenland_aktiengesellschaft'
+            | 'hypo_noe_lb_fur_niederosterreich_u_wien'
+            | 'hypo_oberosterreich_salzburg_steiermark'
+            | 'hypo_tirol_bank_ag'
+            | 'hypo_vorarlberg_bank_ag'
+            | 'marchfelder_bank'
+            | 'oberbank_ag'
+            | 'raiffeisen_bankengruppe_osterreich'
+            | 'schoellerbank_ag'
+            | 'sparda_bank_wien'
+            | 'volksbank_gruppe'
+            | 'volkskreditbank_ag'
+            | 'vr_bank_braunau';
+        }
 
         interface Fpx {
           /**
@@ -1916,7 +1994,12 @@ declare module 'stripe' {
           expires_after_days?: number;
         }
 
-        interface P24 {}
+        interface P24 {
+          /**
+           * Confirm that the payer has accepted the P24 terms and conditions.
+           */
+          tos_shown_and_accepted?: boolean;
+        }
 
         interface SepaDebit {
           /**
@@ -2404,7 +2487,43 @@ declare module 'stripe' {
           }
         }
 
-        interface Eps {}
+        interface Eps {
+          /**
+           * The customer's bank.
+           */
+          bank?: Eps.Bank;
+        }
+
+        namespace Eps {
+          type Bank =
+            | 'arzte_und_apotheker_bank'
+            | 'austrian_anadi_bank_ag'
+            | 'bank_austria'
+            | 'bankhaus_carl_spangler'
+            | 'bankhaus_schelhammer_und_schattera_ag'
+            | 'bawag_psk_ag'
+            | 'bks_bank_ag'
+            | 'brull_kallmus_bank_ag'
+            | 'btv_vier_lander_bank'
+            | 'capital_bank_grawe_gruppe_ag'
+            | 'dolomitenbank'
+            | 'easybank_ag'
+            | 'erste_bank_und_sparkassen'
+            | 'hypo_alpeadriabank_international_ag'
+            | 'hypo_bank_burgenland_aktiengesellschaft'
+            | 'hypo_noe_lb_fur_niederosterreich_u_wien'
+            | 'hypo_oberosterreich_salzburg_steiermark'
+            | 'hypo_tirol_bank_ag'
+            | 'hypo_vorarlberg_bank_ag'
+            | 'marchfelder_bank'
+            | 'oberbank_ag'
+            | 'raiffeisen_bankengruppe_osterreich'
+            | 'schoellerbank_ag'
+            | 'sparda_bank_wien'
+            | 'volksbank_gruppe'
+            | 'volkskreditbank_ag'
+            | 'vr_bank_braunau';
+        }
 
         interface Fpx {
           /**
@@ -2685,7 +2804,12 @@ declare module 'stripe' {
           expires_after_days?: number;
         }
 
-        interface P24 {}
+        interface P24 {
+          /**
+           * Confirm that the payer has accepted the P24 terms and conditions.
+           */
+          tos_shown_and_accepted?: boolean;
+        }
 
         interface SepaDebit {
           /**

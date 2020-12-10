@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     namespace Checkout {
@@ -61,7 +62,7 @@ declare module 'stripe' {
          * during the payment flow unless an existing customer was provided when
          * the Session was created.
          */
-        customer: string | Stripe.Customer | DeletedCustomer | null;
+        customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
         /**
          * If provided, this value will be used when the Customer object is created.

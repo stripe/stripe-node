@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -28,7 +29,9 @@ declare module 'stripe' {
       /**
        * The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
        */
-      account_tax_ids?: Array<string | Stripe.TaxId | DeletedTaxId> | null;
+      account_tax_ids?: Array<
+        string | Stripe.TaxId | Stripe.DeletedTaxId
+      > | null;
 
       /**
        * Final amount due at this time for this invoice. If the invoice's total is smaller than the minimum charge amount, for example, or if there is account credit that can be applied to the invoice, the `amount_due` may be 0. If there is a positive `starting_balance` for the invoice (the customer owes money), the `amount_due` will also take that into account. The charge that gets generated for the invoice will be for the amount specified in `amount_due`.
@@ -98,7 +101,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer who will be billed.
        */
-      customer: string | Stripe.Customer | DeletedCustomer;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
@@ -165,7 +168,9 @@ declare module 'stripe' {
       /**
        * The discounts applied to the invoice. Line item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
        */
-      discounts: Array<string | Stripe.Discount | DeletedDiscount> | null;
+      discounts: Array<
+        string | Stripe.Discount | Stripe.DeletedDiscount
+      > | null;
 
       /**
        * The date on which payment for this invoice is due. This value will be `null` for invoices where `collection_method=charge_automatically`.
@@ -592,7 +597,7 @@ declare module 'stripe' {
         /**
          * The discount that was applied to get this discount amount.
          */
-        discount: string | Stripe.Discount | DeletedDiscount;
+        discount: string | Stripe.Discount | Stripe.DeletedDiscount;
       }
 
       interface TotalTaxAmount {
