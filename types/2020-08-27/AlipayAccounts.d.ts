@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -23,7 +24,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer associated with this Alipay Account.
        */
-      customer?: string | Stripe.Customer | DeletedCustomer | null;
+      customer?: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       deleted?: void;
 

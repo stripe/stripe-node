@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -33,7 +34,7 @@ declare module 'stripe' {
       /**
        * ID of the customer.
        */
-      customer: string | Stripe.Customer | DeletedCustomer;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       /**
        * Customer balance transaction related to this credit note.
@@ -144,7 +145,7 @@ declare module 'stripe' {
         /**
          * The discount that was applied to get this discount amount.
          */
-        discount: string | Stripe.Discount | DeletedDiscount;
+        discount: string | Stripe.Discount | Stripe.DeletedDiscount;
       }
 
       type Reason =

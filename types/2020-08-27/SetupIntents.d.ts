@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -42,7 +43,7 @@ declare module 'stripe' {
        *
        * If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
        */
-      customer: string | Stripe.Customer | DeletedCustomer | null;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.

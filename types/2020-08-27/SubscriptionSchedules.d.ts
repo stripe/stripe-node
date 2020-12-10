@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -38,7 +39,7 @@ declare module 'stripe' {
       /**
        * ID of the customer who owns the subscription schedule.
        */
-      customer: string | Stripe.Customer | DeletedCustomer;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
 
       default_settings: SubscriptionSchedule.DefaultSettings;
 
@@ -97,6 +98,11 @@ declare module 'stripe' {
       }
 
       interface DefaultSettings {
+        /**
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account during this phase of the schedule.
+         */
+        application_fee_percent: number | null;
+
         /**
          * Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
          */
@@ -196,7 +202,7 @@ declare module 'stripe' {
         /**
          * ID of the coupon to use during this phase of the subscription schedule.
          */
-        coupon: string | Stripe.Coupon | DeletedCoupon | null;
+        coupon: string | Stripe.Coupon | Stripe.DeletedCoupon | null;
 
         /**
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
@@ -249,7 +255,7 @@ declare module 'stripe' {
           /**
            * ID of the price used to generate the invoice item.
            */
-          price: string | Stripe.Price | DeletedPrice;
+          price: string | Stripe.Price | Stripe.DeletedPrice;
 
           /**
            * The quantity of the invoice item.
@@ -294,12 +300,12 @@ declare module 'stripe' {
           /**
            * ID of the plan to which the customer should be subscribed.
            */
-          plan: string | Stripe.Plan | DeletedPlan;
+          plan: string | Stripe.Plan | Stripe.DeletedPlan;
 
           /**
            * ID of the price to which the customer should be subscribed.
            */
-          price: string | Stripe.Price | DeletedPrice;
+          price: string | Stripe.Price | Stripe.DeletedPrice;
 
           /**
            * Quantity of the plan to which the customer should be subscribed.
@@ -391,6 +397,11 @@ declare module 'stripe' {
 
     namespace SubscriptionScheduleCreateParams {
       interface DefaultSettings {
+        /**
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+         */
+        application_fee_percent?: number;
+
         /**
          * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
          */
@@ -761,6 +772,11 @@ declare module 'stripe' {
 
     namespace SubscriptionScheduleUpdateParams {
       interface DefaultSettings {
+        /**
+         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. The request must be made by a platform account on a connected account in order to set an application fee percentage. For more information, see the application fees [documentation](https://stripe.com/docs/connect/subscriptions#collecting-fees-on-subscriptions).
+         */
+        application_fee_percent?: number;
+
         /**
          * Can be set to `phase_start` to set the anchor to the start of the phase or `automatic` to automatically change it if needed. Cannot be set to `phase_start` if this phase specifies a trial. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
          */

@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -118,7 +119,7 @@ declare module 'stripe' {
         /**
          * The discount that was applied to get this discount amount.
          */
-        discount: string | Stripe.Discount | DeletedDiscount;
+        discount: string | Stripe.Discount | Stripe.DeletedDiscount;
       }
 
       interface Period {

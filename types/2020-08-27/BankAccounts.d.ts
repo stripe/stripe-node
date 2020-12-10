@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -55,7 +56,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer that the bank account is associated with.
        */
-      customer?: string | Stripe.Customer | DeletedCustomer | null;
+      customer?: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * Whether this bank account is the default external account for its currency.

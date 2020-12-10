@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -56,9 +57,9 @@ declare module 'stripe' {
       destination:
         | string
         | Stripe.BankAccount
-        | DeletedBankAccount
+        | Stripe.DeletedBankAccount
         | Stripe.Card
-        | DeletedCard
+        | Stripe.DeletedCard
         | null;
 
       /**

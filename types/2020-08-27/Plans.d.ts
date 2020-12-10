@@ -1,4 +1,5 @@
 // File generated from our OpenAPI spec
+
 declare module 'stripe' {
   namespace Stripe {
     /**
@@ -80,7 +81,7 @@ declare module 'stripe' {
       /**
        * The product whose pricing this plan determines.
        */
-      product: string | Stripe.Product | DeletedProduct | null;
+      product: string | Stripe.Product | Stripe.DeletedProduct | null;
 
       /**
        * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
