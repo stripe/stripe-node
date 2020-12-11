@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.128.0 - 2020-12-10
+* [#1088](https://github.com/stripe/stripe-node/pull/1088) Multiple API changes
+  * Add newlines for consistency.
+  * Prefix deleted references with `Stripe.` for consistency.
+  * Add support for `bank` on `PaymentMethod[eps]`.
+  * Add support for `tos_shown_and_accepted` to `payment_method_options[p24]` on `PaymentMethod`.
+
 ## 8.127.0 - 2020-12-03
 * [#1084](https://github.com/stripe/stripe-node/pull/1084) Add support for `documents` on `Account` create and update
 * [#1080](https://github.com/stripe/stripe-node/pull/1080) fixed promises example
