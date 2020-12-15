@@ -189,7 +189,7 @@ declare module 'stripe' {
           blocked_categories: Array<SpendingControls.BlockedCategory> | null;
 
           /**
-           * Limit spending with amount-based rules.
+           * Limit spending with amount-based rules that apply across any cards this card replaced (i.e., its `replacement_for` card and _that_ card's `replacement_for` card, up the chain).
            */
           spending_limits: Array<SpendingControls.SpendingLimit> | null;
 
@@ -1230,7 +1230,7 @@ declare module 'stripe' {
           blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
           /**
-           * Limit spending with amount-based rules.
+           * Limit spending with amount-based rules that apply across any cards this card replaced (i.e., its `replacement_for` card and _that_ card's `replacement_for` card, up the chain).
            */
           spending_limits?: Array<SpendingControls.SpendingLimit>;
         }
@@ -2188,7 +2188,7 @@ declare module 'stripe' {
           blocked_categories?: Array<SpendingControls.BlockedCategory>;
 
           /**
-           * Limit spending with amount-based rules.
+           * Limit spending with amount-based rules that apply across any cards this card replaced (i.e., its `replacement_for` card and _that_ card's `replacement_for` card, up the chain).
            */
           spending_limits?: Array<SpendingControls.SpendingLimit>;
         }
