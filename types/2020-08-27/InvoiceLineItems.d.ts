@@ -332,6 +332,9 @@ declare module 'stripe' {
          */
         quantity?: number;
 
+        /**
+         * The tax rates that apply to the item. When set, any `default_tax_rates` do not apply to this item.
+         */
         tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
