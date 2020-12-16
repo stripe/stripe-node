@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.129.0 - 2020-12-15
+* [#1093](https://github.com/stripe/stripe-node/pull/1093) API Updates
+  * Added support for card_present on SetupAttempt.payment_method_details
+
 ## 8.128.0 - 2020-12-10
 * [#1088](https://github.com/stripe/stripe-node/pull/1088) Multiple API changes
   * Add newlines for consistency.
