@@ -313,7 +313,7 @@ describe('auto pagination', function() {
           const customerIds = [];
           function handleIter(result) {
             customerIds.push(result.value.id);
-            if (customerIds.length < 7) {
+            if (customerIds.length < LIMIT) {
               return iter.next().then(handleIter);
             }
           }
