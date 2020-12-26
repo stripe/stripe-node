@@ -495,23 +495,27 @@ describe('auto pagination', function() {
             .then(resolve)
             .catch(reject);
         })
-      ).to.eventually.deep.equal(realCustomerIds.slice(0, MID_POINT).reverse()));
+      ).to.eventually.deep.equal(
+        realCustomerIds.slice(0, MID_POINT).reverse()
+      ));
 
     it('autoPagingEach `ending_before (reverse iteration)', () =>
       expect(
-          new Promise((resolve, reject) => {
-            const customerIds = [];
-            return stripe.customers
-              .list({limit: 2, email, ending_before: midPointCustomerId})
-              .autoPagingEach((customer) => {
-                customerIds.push(customer.id);
-              })
-              .catch(reject)
-              .then(() => {
-                resolve(customerIds);
-              });
+        new Promise((resolve, reject) => {
+          const customerIds = [];
+          return stripe.customers
+            .list({limit: 2, email, ending_before: midPointCustomerId})
+            .autoPagingEach((customer) => {
+              customerIds.push(customer.id);
+            })
+            .catch(reject)
+            .then(() => {
+              resolve(customerIds);
+            });
         })
-      ).to.eventually.deep.equal(realCustomerIds.slice(0, MID_POINT).reverse()));
+      ).to.eventually.deep.equal(
+        realCustomerIds.slice(0, MID_POINT).reverse()
+      ));
   });
 
   describe('api compat edge cases', () => {
