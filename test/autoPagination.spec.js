@@ -9,12 +9,19 @@ const expect = require('chai').expect;
 
 const LIMIT = 7;
 const TOTAL_OBJECTS = 8;
+const MID_POINT = Math.floor(TOTAL_OBJECTS / 2);
+
+if (LIMIT > TOTAL_OBJECTS) {
+  throw new Error('LIMIT cannot be larger than TOTAL_OBJECT');
+}
 
 describe('auto pagination', function() {
   this.timeout(20000);
 
   const email = `test.${Date.now()}@example.com`;
   let realCustomerIds;
+  let midPointCustomerId;
+
   before(
     () =>
       new Promise((resolve) => {
@@ -27,6 +34,7 @@ describe('auto pagination', function() {
             // re-fetch to ensure correct order
             stripe.customers.list({email}).then((customers) => {
               realCustomerIds = customers.data.map((customer) => customer.id);
+              midPointCustomerId = customers.data[MID_POINT].id;
             })
           )
           .then(resolve);
@@ -446,6 +454,64 @@ describe('auto pagination', function() {
       ).to.eventually.equal(
         'You cannot specify a limit of more than 10,000 items to fetch in `autoPagingToArray`; use `autoPagingEach` to iterate through longer lists.'
       ));
+  });
+
+  describe('cursor pagination', () => {
+    it('autoPagingToArray `starting_after` (forward iteration)', () =>
+      expect(
+        new Promise((resolve, reject) => {
+          stripe.customers
+            .list({limit: 2, email, starting_after: midPointCustomerId})
+            .autoPagingToArray({limit: TOTAL_OBJECTS})
+            .then((customers) => customers.map((customer) => customer.id))
+            .then(resolve)
+            .catch(reject);
+        })
+      ).to.eventually.deep.equal(realCustomerIds.slice(MID_POINT + 1)));
+
+    it('autoPagingEach `starting_after` (forward iteration)', () =>
+      expect(
+        new Promise((resolve, reject) => {
+          const customerIds = [];
+          return stripe.customers
+            .list({limit: 2, email, starting_after: midPointCustomerId})
+            .autoPagingEach((customer) => {
+              customerIds.push(customer.id);
+            })
+            .catch(reject)
+            .then(() => {
+              resolve(customerIds);
+            });
+        })
+      ).to.eventually.deep.equal(realCustomerIds.slice(MID_POINT + 1)));
+
+    it('autoPagingToArray `ending_before` (reverse iteration)', () =>
+      expect(
+        new Promise((resolve, reject) => {
+          stripe.customers
+            .list({limit: 2, email, ending_before: midPointCustomerId})
+            .autoPagingToArray({limit: TOTAL_OBJECTS})
+            .then((customers) => customers.map((customer) => customer.id))
+            .then(resolve)
+            .catch(reject);
+        })
+      ).to.eventually.deep.equal(realCustomerIds.slice(0, MID_POINT).reverse()));
+
+    it('autoPagingEach `ending_before (reverse iteration)', () =>
+      expect(
+          new Promise((resolve, reject) => {
+            const customerIds = [];
+            return stripe.customers
+              .list({limit: 2, email, ending_before: midPointCustomerId})
+              .autoPagingEach((customer) => {
+                customerIds.push(customer.id);
+              })
+              .catch(reject)
+              .then(() => {
+                resolve(customerIds);
+              });
+        })
+      ).to.eventually.deep.equal(realCustomerIds.slice(0, MID_POINT).reverse()));
   });
 
   describe('api compat edge cases', () => {
