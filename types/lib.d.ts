@@ -103,6 +103,11 @@ declare module 'stripe' {
        * @docs https://stripe.com/docs/building-plugins?lang=node#setappinfo
        */
       appInfo?: AppInfo;
+
+      /**
+       * An account id on whose behalf you wish to make every request.
+       */
+      stripeAccount?: string;
     }
 
     export interface RequestOptions {
