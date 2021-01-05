@@ -185,6 +185,46 @@ describe('StripeResource', () => {
         });
       });
 
+      it('throws an error on connection timeout', (done) => {
+        return utils.getTestServerStripe(
+          {timeout: 10},
+          (req, res) => {
+            // Do nothing. This will trigger a timeout.
+          },
+          (err, stripe) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.charges.create(options.data, (err, result) => {
+              expect(err.detail.message).to.deep.equal('ETIMEDOUT');
+              done();
+            });
+          }
+        );
+      });
+
+      it('retries connection timeout errors', (done) => {
+        let nRequestsReceived = 0;
+        return utils.getTestServerStripe(
+          {timeout: 10, maxNetworkRetries: 2},
+          (req, res) => {
+            nRequestsReceived += 1;
+            // Do nothing. This will trigger a timeout.
+            return {shouldStayOpen: nRequestsReceived < 3};
+          },
+          (err, stripe) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.charges.create(options.data, (err, result) => {
+              expect(err.detail.message).to.deep.equal('ETIMEDOUT');
+              expect(nRequestsReceived).to.equal(3);
+              done();
+            });
+          }
+        );
+      });
+
       it('should retry the request if max retries are set', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
