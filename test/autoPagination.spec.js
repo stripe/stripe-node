@@ -577,6 +577,7 @@ describe('auto pagination', function() {
         }));
     });
   });
+
   describe('pagination logic using a mock paginator', () => {
     const mockPagination = (pages, initialArgs) => {
       let i = 1;
@@ -640,6 +641,7 @@ describe('auto pagination', function() {
         expectedIds: [1, 2, 3, 4],
         expectedParamsLog: ['?starting_after=2'],
       });
+
       testCase({
         pages: [[1, 2], [3, 4], [5]],
         limit: 5,
@@ -669,6 +671,7 @@ describe('auto pagination', function() {
         expectedParamsLog: ['?starting_after=2', '?starting_after=4'],
       });
     });
+
     it('paginates backwards as expected', () => {
       testCase({
         pages: [
@@ -680,6 +683,7 @@ describe('auto pagination', function() {
         expectedParamsLog: ['?ending_before=-2'],
         initialArgs: [{ending_before: '0'}],
       });
+
       testCase({
         pages: [[-2, -1], [-4, -3], [-5]],
         limit: 5,
@@ -687,6 +691,7 @@ describe('auto pagination', function() {
         expectedParamsLog: ['?ending_before=-2', '?ending_before=-4'],
         initialArgs: [{ending_before: '0'}],
       });
+
       testCase({
         pages: [[-2, -1], [-4, -3], [-5]],
         limit: 4,
