@@ -15,6 +15,8 @@ For collecting customer and payment information in the browser, use [Stripe.js][
 
 See the [`stripe-node` API docs](https://stripe.com/docs/api?lang=node) for Node.js.
 
+See [video demonstrations][youtube-playlist] covering how to use the library.
+
 ## Requirements
 
 Node 8, 10 or higher.
@@ -510,6 +512,7 @@ $ yarn fix
 [expanding_objects]: https://stripe.com/docs/api/expanding_objects
 [https-proxy-agent]: https://github.com/TooTallNate/node-https-proxy-agent
 [stripe-js]: https://stripe.com/docs/stripe.js
+[youtube-playlist]: https://www.youtube.com/playlist?list=PLy1nL-pvL2M5xNIuNapwmABwEy2uifAlY
 
 <!--
 # vim: set tw=79:
