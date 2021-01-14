@@ -698,7 +698,7 @@ declare module 'stripe' {
         id: string,
         params: CustomerSourceCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<CustomerSource>>;
+      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
 
       /**
        * Retrieve a specified source for a given customer.
@@ -708,12 +708,12 @@ declare module 'stripe' {
         id: string,
         params?: CustomerSourceRetrieveParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<CustomerSource>>;
+      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
       retrieveSource(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Response<CustomerSource>>;
+      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
 
       /**
        * Update a specified source for a given customer.
@@ -726,13 +726,6 @@ declare module 'stripe' {
       ): Promise<
         Stripe.Response<Stripe.Card | Stripe.BankAccount | Stripe.Source>
       >;
-      updateSource(
-        customerId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<
-        Stripe.Response<Stripe.Card | Stripe.BankAccount | Stripe.Source>
-      >;
 
       /**
        * List sources for a specified customer.
@@ -741,11 +734,11 @@ declare module 'stripe' {
         id: string,
         params?: CustomerSourceListParams,
         options?: RequestOptions
-      ): ApiListPromise<CustomerSource>;
+      ): ApiListPromise<Stripe.CustomerSource>;
       listSources(
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<CustomerSource>;
+      ): ApiListPromise<Stripe.CustomerSource>;
 
       /**
        * Delete a specified source for a given customer.
@@ -757,7 +750,7 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<
         Stripe.Response<
-          | CustomerSource
+          | Stripe.CustomerSource
           | Stripe.DeletedAlipayAccount
           | Stripe.DeletedBankAccount
           | Stripe.DeletedBitcoinReceiver
@@ -770,7 +763,7 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<
         Stripe.Response<
-          | CustomerSource
+          | Stripe.CustomerSource
           | Stripe.DeletedAlipayAccount
           | Stripe.DeletedBankAccount
           | Stripe.DeletedBitcoinReceiver
