@@ -70,6 +70,9 @@ declare module 'stripe' {
       /**
        * This is an object representing a person associated with a Stripe account.
        *
+       * A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
+       * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform pre-filling and account onboarding steps.
+       *
        * Related guide: [Handling Identity Verification with the API](https://stripe.com/docs/connect/identity-verification-api#person-information).
        */
       individual?: Stripe.Person;
@@ -1348,10 +1351,70 @@ declare module 'stripe' {
          * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a voided check.
          */
         bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
+
+        /**
+         * One or more documents that demonstrate proof of a company's license to operate.
+         */
+        company_license?: Documents.CompanyLicense;
+
+        /**
+         * One or more documents showing the company's Memorandum of Association.
+         */
+        company_memorandum_of_association?: Documents.CompanyMemorandumOfAssociation;
+
+        /**
+         * (Certain countries only) One or more documents showing the ministerial decree legalizing the company's establishment.
+         */
+        company_ministerial_decree?: Documents.CompanyMinisterialDecree;
+
+        /**
+         * One or more documents that demonstrate proof of a company's registration with the appropriate local authorities.
+         */
+        company_registration_verification?: Documents.CompanyRegistrationVerification;
+
+        /**
+         * One or more documents that demonstrate proof of a company's tax ID.
+         */
+        company_tax_id_verification?: Documents.CompanyTaxIdVerification;
       }
 
       namespace Documents {
         interface BankAccountOwnershipVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyLicense {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyMemorandumOfAssociation {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyMinisterialDecree {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyRegistrationVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyTaxIdVerification {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */
@@ -2289,10 +2352,70 @@ declare module 'stripe' {
          * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a voided check.
          */
         bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
+
+        /**
+         * One or more documents that demonstrate proof of a company's license to operate.
+         */
+        company_license?: Documents.CompanyLicense;
+
+        /**
+         * One or more documents showing the company's Memorandum of Association.
+         */
+        company_memorandum_of_association?: Documents.CompanyMemorandumOfAssociation;
+
+        /**
+         * (Certain countries only) One or more documents showing the ministerial decree legalizing the company's establishment.
+         */
+        company_ministerial_decree?: Documents.CompanyMinisterialDecree;
+
+        /**
+         * One or more documents that demonstrate proof of a company's registration with the appropriate local authorities.
+         */
+        company_registration_verification?: Documents.CompanyRegistrationVerification;
+
+        /**
+         * One or more documents that demonstrate proof of a company's tax ID.
+         */
+        company_tax_id_verification?: Documents.CompanyTaxIdVerification;
       }
 
       namespace Documents {
         interface BankAccountOwnershipVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyLicense {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyMemorandumOfAssociation {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyMinisterialDecree {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyRegistrationVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface CompanyTaxIdVerification {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */

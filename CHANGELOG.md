@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.130.0 - 2021-01-07
+* [#1105](https://github.com/stripe/stripe-node/pull/1105) API Updates
+  * Added support for `company_registration_verification`, `company_ministerial_decree`, `company_memorandum_of_association`, `company_license` and `company_tax_id_verification` on AccountUpdateParams.documents and AccountCreateParams.documents
+* [#1100](https://github.com/stripe/stripe-node/pull/1100) implement/fix reverse iteration when iterating with ending_before
+* [#1096](https://github.com/stripe/stripe-node/pull/1096) typo receieved -> received
+
 ## 8.129.0 - 2020-12-15
 * [#1093](https://github.com/stripe/stripe-node/pull/1093) API Updates
   * Added support for card_present on SetupAttempt.payment_method_details

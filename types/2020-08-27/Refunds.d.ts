@@ -127,13 +127,6 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface RefundRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface RefundUpdateParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -144,13 +137,6 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
-    }
-
-    interface RefundListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
     }
 
     interface RefundListParams extends PaginationParams {
@@ -186,21 +172,6 @@ declare module 'stripe' {
        * Retrieves the details of an existing refund.
        */
       retrieve(
-        chargeId: string,
-        id: string,
-        params?: RefundRetrieveParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Refund>>;
-      retrieve(
-        chargeId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Refund>>;
-
-      /**
-       * Retrieves the details of an existing refund.
-       */
-      retrieve(
         id: string,
         params?: RefundRetrieveParams,
         options?: RequestOptions
@@ -220,16 +191,6 @@ declare module 'stripe' {
         params?: RefundUpdateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Refund>>;
-
-      /**
-       * You can see a list of the refunds belonging to a specific charge. Note that the 10 most recent refunds are always available by default on the charge object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
-       */
-      list(
-        id: string,
-        params?: RefundListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.Refund>;
-      list(id: string, options?: RequestOptions): ApiListPromise<Stripe.Refund>;
 
       /**
        * Returns a list of all refunds you've previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
