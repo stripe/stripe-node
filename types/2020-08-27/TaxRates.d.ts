@@ -22,6 +22,11 @@ declare module 'stripe' {
       active: boolean;
 
       /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country: string | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -60,6 +65,11 @@ declare module 'stripe' {
        * This represents the tax rate percent out of 100.
        */
       percentage: number;
+
+      /**
+       * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
+       */
+      state: string | null;
     }
 
     interface TaxRateCreateParams {
@@ -84,6 +94,11 @@ declare module 'stripe' {
       active?: boolean;
 
       /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country?: string;
+
+      /**
        * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
        */
       description?: string;
@@ -102,6 +117,11 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
+
+      /**
+       * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
+       */
+      state?: string;
     }
 
     interface TaxRateRetrieveParams {
@@ -116,6 +136,11 @@ declare module 'stripe' {
        * Flag determining whether the tax rate is active or inactive (archived). Inactive tax rates cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
        */
       active?: boolean;
+
+      /**
+       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+       */
+      country?: string;
 
       /**
        * An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.
@@ -141,6 +166,11 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
+       */
+      state?: string;
     }
 
     interface TaxRateListParams extends PaginationParams {

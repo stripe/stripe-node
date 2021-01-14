@@ -220,7 +220,7 @@ declare module 'stripe' {
         end_date: number;
 
         /**
-         * The subscription schedule's default invoice settings.
+         * The invoice settings applicable during this phase.
          */
         invoice_settings: Phase.InvoiceSettings | null;
 
