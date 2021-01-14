@@ -328,6 +328,15 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * Only return transactions that have the given type. One of `capture` or `refund`.
+         */
+        type?: TransactionListParams.Type;
+      }
+
+      namespace TransactionListParams {
+        type Type = 'capture' | 'refund';
       }
 
       class TransactionsResource {

@@ -65,6 +65,11 @@ declare module 'stripe' {
         customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
         /**
+         * The customer details including the customer's tax exempt status and the customer's tax IDs.
+         */
+        customer_details: Session.CustomerDetails | null;
+
+        /**
          * If provided, this value will be used when the Customer object is created.
          * If not provided, customers will be asked to enter their email address.
          * Use this parameter to prefill customer data if you already have an email
@@ -157,6 +162,76 @@ declare module 'stripe' {
 
       namespace Session {
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface CustomerDetails {
+          /**
+           * The customer's email at time of checkout.
+           */
+          email: string | null;
+
+          /**
+           * The customer's tax exempt status at time of checkout.
+           */
+          tax_exempt: CustomerDetails.TaxExempt | null;
+
+          /**
+           * The customer's tax IDs at time of checkout.
+           */
+          tax_ids: Array<CustomerDetails.TaxId> | null;
+        }
+
+        namespace CustomerDetails {
+          type TaxExempt = 'exempt' | 'none' | 'reverse';
+
+          interface TaxId {
+            /**
+             * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `nz_gst`, `au_abn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, or `unknown`
+             */
+            type: TaxId.Type;
+
+            /**
+             * The value of the tax ID.
+             */
+            value: string | null;
+          }
+
+          namespace TaxId {
+            type Type =
+              | 'ae_trn'
+              | 'au_abn'
+              | 'br_cnpj'
+              | 'br_cpf'
+              | 'ca_bn'
+              | 'ca_qst'
+              | 'ch_vat'
+              | 'cl_tin'
+              | 'es_cif'
+              | 'eu_vat'
+              | 'hk_br'
+              | 'id_npwp'
+              | 'in_gst'
+              | 'jp_cn'
+              | 'jp_rn'
+              | 'kr_brn'
+              | 'li_uid'
+              | 'mx_rfc'
+              | 'my_frp'
+              | 'my_itn'
+              | 'my_sst'
+              | 'no_vat'
+              | 'nz_gst'
+              | 'ru_inn'
+              | 'ru_kpp'
+              | 'sa_vat'
+              | 'sg_gst'
+              | 'sg_uen'
+              | 'th_vat'
+              | 'tw_vat'
+              | 'unknown'
+              | 'us_ein'
+              | 'za_vat';
+          }
+        }
 
         type Locale =
           | 'auto'
@@ -696,6 +771,11 @@ declare module 'stripe' {
           description?: string;
 
           /**
+           * The [tax rates](https://stripe.com/docs/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
+           */
+          dynamic_tax_rates?: Array<string>;
+
+          /**
            * A list of image URLs representing this line item. Each image can be up to 5 MB in size. If passing `price` or `price_data`, specify images on the associated product instead.
            */
           images?: Array<string>;
@@ -721,7 +801,7 @@ declare module 'stripe' {
           quantity: number;
 
           /**
-           * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item. This is only allowed in subscription mode.
+           * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
            */
           tax_rates?: Array<string>;
         }
@@ -881,9 +961,16 @@ declare module 'stripe' {
            * Indicates that you intend to make future payments with the payment
            * method collected by this Checkout Session.
            *
+           * When setting this to `on_session`, Checkout will show a notice to the
+           * customer that their payment details will be saved.
+           *
            * When setting this to `off_session`, Checkout will show a notice to the
            * customer that their payment details will be saved and used for future
            * payments.
+           *
+           * For both values, Checkout will attach the payment method to either the
+           * provided Customer for the session, or a new Customer created by Checkout
+           * if one has not been provided.
            *
            * When processing card payments, Checkout also uses `setup_future_usage`
            * to dynamically optimize your payment flow and comply with regional
