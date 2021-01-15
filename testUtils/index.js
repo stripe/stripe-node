@@ -6,9 +6,33 @@ require('mocha');
 // Ensure we are using the 'as promised' libs before any tests are run:
 require('chai').use(require('chai-as-promised'));
 
+const http = require('http');
+
 const ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
 
 const utils = (module.exports = {
+  getTestServerStripe: (clientOptions, handler, callback) => {
+    const server = http.createServer((req, res) => {
+      const {shouldStayOpen} = handler(req, res) || {};
+      if (!shouldStayOpen) {
+        res.on('close', () => server.close());
+      }
+    });
+    server.listen(0, () => {
+      const {port} = server.address();
+      const stripe = require('../lib/stripe')(
+        module.exports.getUserStripeKey(),
+        {
+          host: 'localhost',
+          port,
+          protocol: 'http',
+          ...clientOptions,
+        }
+      );
+      return callback(null, stripe);
+    });
+  },
+
   getUserStripeKey: () => {
     const key =
       process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
