@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.131.1 - 2021-01-15
+* [#1104](https://github.com/stripe/stripe-node/pull/1104) Make request timeout errors eligible for retry
+
 ## 8.131.0 - 2021-01-14
 * [#1108](https://github.com/stripe/stripe-node/pull/1108) Multiple API Changes
   * Added support for `dynamic_tax_rates` on `Checkout.SessionCreateParams.line_items`
