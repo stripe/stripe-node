@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 8.131.0 - 2021-01-14
+* [#1108](https://github.com/stripe/stripe-node/pull/1108) Multiple API Changes
+  * Added support for `dynamic_tax_rates` on `Checkout.SessionCreateParams.line_items`
+  * Added support for `customer_details` on `Checkout.Session`
+  * Added support for `type` on `Issuing.TransactionListParams`
+  * Added support for `country` and `state` on `TaxRateUpdateParams`, `TaxRateCreateParams` and `TaxRate`
+* [#1107](https://github.com/stripe/stripe-node/pull/1107) More consistent type definitions
+
 ## 8.130.0 - 2021-01-07
 * [#1105](https://github.com/stripe/stripe-node/pull/1105) API Updates
   * Added support for `company_registration_verification`, `company_ministerial_decree`, `company_memorandum_of_association`, `company_license` and `company_tax_id_verification` on AccountUpdateParams.documents and AccountCreateParams.documents
