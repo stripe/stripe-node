@@ -60,7 +60,7 @@ declare module 'stripe' {
         /**
          * If you've disputed the transaction, the ID of the dispute.
          */
-        dispute?: string | Stripe.Issuing.Dispute | null;
+        dispute: string | Stripe.Issuing.Dispute | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -286,7 +286,7 @@ declare module 'stripe' {
           }
         }
 
-        type Type = 'capture' | 'dispute' | 'refund';
+        type Type = 'capture' | 'refund';
       }
 
       interface TransactionRetrieveParams {

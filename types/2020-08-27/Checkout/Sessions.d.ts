@@ -796,9 +796,9 @@ declare module 'stripe' {
           price_data?: LineItem.PriceData;
 
           /**
-           * The quantity of the line item being purchased.
+           * The quantity of the line item being purchased. Quantity should not be defined when `recurring.usage_type=metered`.
            */
-          quantity: number;
+          quantity?: number;
 
           /**
            * The [tax rates](https://stripe.com/docs/api/tax_rates) which apply to this line item.
@@ -1393,7 +1393,7 @@ declare module 'stripe' {
             plan: string;
 
             /**
-             * Quantity for this item.
+             * The quantity of the subscription item being purchased. Quantity should not be defined when `recurring.usage_type=metered`.
              */
             quantity?: number;
 
