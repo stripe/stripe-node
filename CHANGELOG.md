@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.132.0 - 2021-01-21
+* [#1112](https://github.com/stripe/stripe-node/pull/1112) API Updates
+  * `Issuing.Transaction.type` dropped enum members: 'dispute'
+  * `LineItem.price` can now be null.
+
 ## 8.131.1 - 2021-01-15
 * [#1104](https://github.com/stripe/stripe-node/pull/1104) Make request timeout errors eligible for retry
 
