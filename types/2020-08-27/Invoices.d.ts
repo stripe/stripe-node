@@ -200,7 +200,7 @@ declare module 'stripe' {
       /**
        * The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
        */
-      last_finalization_error?: Invoice.LastFinalizationError | null;
+      last_finalization_error: Invoice.LastFinalizationError | null;
 
       /**
        * The individual line items that make up the invoice. `lines` is sorted as follows: invoice items in reverse chronological order, followed by the subscription, if any.

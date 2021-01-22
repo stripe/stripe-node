@@ -20,7 +20,7 @@ declare module 'stripe' {
         /**
          * Disputed amount. Usually the amount of the `disputed_transaction`, but can differ (usually because of currency fluctuation).
          */
-        amount?: number;
+        amount: number;
 
         /**
          * List of balance transactions associated with the dispute.
@@ -30,14 +30,14 @@ declare module 'stripe' {
         /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
          */
-        created?: number;
+        created: number;
 
         /**
          * The currency the `disputed_transaction` was made in.
          */
-        currency?: string;
+        currency: string;
 
-        evidence?: Dispute.Evidence;
+        evidence: Dispute.Evidence;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -47,12 +47,12 @@ declare module 'stripe' {
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
-        metadata?: Stripe.Metadata;
+        metadata: Stripe.Metadata;
 
         /**
          * Current status of the dispute.
          */
-        status?: Dispute.Status;
+        status: Dispute.Status;
 
         /**
          * The transaction being disputed.
