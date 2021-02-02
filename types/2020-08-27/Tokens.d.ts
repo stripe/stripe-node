@@ -620,6 +620,11 @@ declare module 'stripe' {
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
+         * The country where the person is a national. Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)), or "XX" if unavailable.
+         */
+        nationality?: string;
+
+        /**
          * The person's phone number.
          */
         phone?: string;

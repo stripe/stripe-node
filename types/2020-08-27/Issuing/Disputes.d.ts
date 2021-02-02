@@ -18,7 +18,7 @@ declare module 'stripe' {
         object: 'issuing.dispute';
 
         /**
-         * Disputed amount. Usually the amount of the `disputed_transaction`, but can differ (usually because of currency fluctuation).
+         * Disputed amount. Usually the amount of the `transaction`, but can differ (usually because of currency fluctuation).
          */
         amount: number;
 
@@ -33,7 +33,7 @@ declare module 'stripe' {
         created: number;
 
         /**
-         * The currency the `disputed_transaction` was made in.
+         * The currency the `transaction` was made in.
          */
         currency: string;
 
