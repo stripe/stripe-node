@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.133.0 - 2021-02-03
+* [#1115](https://github.com/stripe/stripe-node/pull/1115) API Updates
+  * Added support for `nationality` on `Person`, `PersonUpdateParams`, `PersonCreateParams` and `TokenCreateParams.person`
+  * Added `gb_vat` to `TaxId.type` enum.
+
 ## 8.132.0 - 2021-01-21
 * [#1112](https://github.com/stripe/stripe-node/pull/1112) API Updates
   * `Issuing.Transaction.type` dropped enum members: 'dispute'
