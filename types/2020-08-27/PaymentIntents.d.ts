@@ -330,7 +330,7 @@ declare module 'stripe' {
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
-         * Type of the next action to perform, one of `redirect_to_url` or `use_stripe_sdk`.
+         * Type of the next action to perform, one of `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, or `oxxo_display_details`.
          */
         type: string;
 
