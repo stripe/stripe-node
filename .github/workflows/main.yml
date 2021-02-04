@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node: [ '10', '12', '14' ]
