@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.134.0 - 2021-02-05
+* [#1118](https://github.com/stripe/stripe-node/pull/1118) API Updates
+  * `LineItem.amount_subtotal` and `LineItem.amount_total` changed from `nullable(integer)` to `integer`
+  * Improve error message for `EphemeralKeys.create`
+
 ## 8.133.0 - 2021-02-03
 * [#1115](https://github.com/stripe/stripe-node/pull/1115) API Updates
   * Added support for `nationality` on `Person`, `PersonUpdateParams`, `PersonCreateParams` and `TokenCreateParams.person`
