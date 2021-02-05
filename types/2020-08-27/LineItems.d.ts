@@ -19,12 +19,12 @@ declare module 'stripe' {
       /**
        * Total before any discounts or taxes are applied.
        */
-      amount_subtotal: number | null;
+      amount_subtotal: number;
 
       /**
        * Total after discounts and taxes.
        */
-      amount_total: number | null;
+      amount_total: number;
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).

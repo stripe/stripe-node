@@ -6,7 +6,9 @@ const expect = require('chai').expect;
 function errorsOnNoStripeVersion() {
   return expect(
     stripe.ephemeralKeys.create({customer: 'cus_123'})
-  ).to.be.eventually.rejectedWith(/stripe_version must be specified/i);
+  ).to.be.eventually.rejectedWith(
+    /Passing apiVersion in a separate options hash is required/i
+  );
 }
 
 function sendsCorrectStripeVersion() {
