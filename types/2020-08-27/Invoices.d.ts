@@ -237,6 +237,8 @@ declare module 'stripe' {
        */
       payment_intent: string | Stripe.PaymentIntent | null;
 
+      payment_settings: Invoice.PaymentSettings;
+
       /**
        * End of the usage period during which invoice items were added to this invoice.
        */
@@ -533,6 +535,70 @@ declare module 'stripe' {
           | 'rate_limit_error';
       }
 
+      interface PaymentSettings {
+        /**
+         * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
+         */
+        payment_method_options: PaymentSettings.PaymentMethodOptions | null;
+
+        /**
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
+         */
+        payment_method_types: Array<PaymentSettings.PaymentMethodType> | null;
+      }
+
+      namespace PaymentSettings {
+        interface PaymentMethodOptions {
+          /**
+           * If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
+           */
+          bancontact: PaymentMethodOptions.Bancontact | null;
+
+          /**
+           * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
+           */
+          card: PaymentMethodOptions.Card | null;
+        }
+
+        namespace PaymentMethodOptions {
+          interface Bancontact {
+            /**
+             * Preferred language of the Bancontact authorization page that the customer is redirected to.
+             */
+            preferred_language: Bancontact.PreferredLanguage;
+          }
+
+          namespace Bancontact {
+            type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          }
+
+          interface Card {
+            /**
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             */
+            request_three_d_secure: Card.RequestThreeDSecure | null;
+          }
+
+          namespace Card {
+            type RequestThreeDSecure = 'any' | 'automatic';
+          }
+        }
+
+        type PaymentMethodType =
+          | 'ach_credit_transfer'
+          | 'ach_debit'
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'card'
+          | 'fpx'
+          | 'giropay'
+          | 'ideal'
+          | 'sepa_credit_transfer'
+          | 'sepa_debit'
+          | 'sofort';
+      }
+
       type Status =
         | 'deleted'
         | 'draft'
@@ -733,6 +799,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
+       */
+      payment_settings?: InvoiceCreateParams.PaymentSettings;
+
+      /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
        */
       statement_descriptor?: string;
@@ -773,6 +844,72 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+      }
+
+      interface PaymentSettings {
+        /**
+         * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
+         */
+        payment_method_options?: PaymentSettings.PaymentMethodOptions;
+
+        /**
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
+         */
+        payment_method_types?: Stripe.Emptyable<
+          Array<PaymentSettings.PaymentMethodType>
+        >;
+      }
+
+      namespace PaymentSettings {
+        interface PaymentMethodOptions {
+          /**
+           * If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
+           */
+          bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+          /**
+           * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
+           */
+          card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+        }
+
+        namespace PaymentMethodOptions {
+          interface Bancontact {
+            /**
+             * Preferred language of the Bancontact authorization page that the customer is redirected to.
+             */
+            preferred_language?: Bancontact.PreferredLanguage;
+          }
+
+          namespace Bancontact {
+            type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          }
+
+          interface Card {
+            /**
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             */
+            request_three_d_secure?: Card.RequestThreeDSecure;
+          }
+
+          namespace Card {
+            type RequestThreeDSecure = 'any' | 'automatic';
+          }
+        }
+
+        type PaymentMethodType =
+          | 'ach_credit_transfer'
+          | 'ach_debit'
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'card'
+          | 'fpx'
+          | 'giropay'
+          | 'ideal'
+          | 'sepa_credit_transfer'
+          | 'sepa_debit'
+          | 'sofort';
       }
 
       interface TransferData {
@@ -872,6 +1009,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
+       */
+      payment_settings?: InvoiceUpdateParams.PaymentSettings;
+
+      /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
        */
       statement_descriptor?: string;
@@ -907,6 +1049,72 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+      }
+
+      interface PaymentSettings {
+        /**
+         * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
+         */
+        payment_method_options?: PaymentSettings.PaymentMethodOptions;
+
+        /**
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
+         */
+        payment_method_types?: Stripe.Emptyable<
+          Array<PaymentSettings.PaymentMethodType>
+        >;
+      }
+
+      namespace PaymentSettings {
+        interface PaymentMethodOptions {
+          /**
+           * If paying by `bancontact`, this sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
+           */
+          bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+          /**
+           * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
+           */
+          card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+        }
+
+        namespace PaymentMethodOptions {
+          interface Bancontact {
+            /**
+             * Preferred language of the Bancontact authorization page that the customer is redirected to.
+             */
+            preferred_language?: Bancontact.PreferredLanguage;
+          }
+
+          namespace Bancontact {
+            type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          }
+
+          interface Card {
+            /**
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             */
+            request_three_d_secure?: Card.RequestThreeDSecure;
+          }
+
+          namespace Card {
+            type RequestThreeDSecure = 'any' | 'automatic';
+          }
+        }
+
+        type PaymentMethodType =
+          | 'ach_credit_transfer'
+          | 'ach_debit'
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'card'
+          | 'fpx'
+          | 'giropay'
+          | 'ideal'
+          | 'sepa_credit_transfer'
+          | 'sepa_debit'
+          | 'sofort';
       }
 
       interface TransferData {
