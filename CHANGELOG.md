@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.135.0 - 2021-02-08
+* [#1119](https://github.com/stripe/stripe-node/pull/1119) API Updates
+  * Add support for `afterpay_clearpay_payments` on `Account.capabilities`
+  * Add support for `payment_settings` on `Invoice`
+
 ## 8.134.0 - 2021-02-05
 * [#1118](https://github.com/stripe/stripe-node/pull/1118) API Updates
   * `LineItem.amount_subtotal` and `LineItem.amount_total` changed from `nullable(integer)` to `integer`
