@@ -228,6 +228,11 @@ declare module 'stripe' {
       number: string | null;
 
       /**
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       */
+      on_behalf_of: string | Stripe.Account | null;
+
+      /**
        * Whether payment was successfully collected for this invoice. An invoice can be paid (most commonly) with a charge or with credit from the customer's account balance.
        */
       paid: boolean;
@@ -799,6 +804,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       */
+      on_behalf_of?: string;
+
+      /**
        * Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
        */
       payment_settings?: InvoiceCreateParams.PaymentSettings;
@@ -1009,6 +1019,11 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
+       * The account (if any) for which the funds of the invoice payment are intended. If set, the invoice will be presented with the branding and support information of the specified account. See the [Invoices with Connect](https://stripe.com/docs/billing/invoices/connect) documentation for details.
+       */
+      on_behalf_of?: Stripe.Emptyable<string>;
+
+      /**
        * Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
        */
       payment_settings?: InvoiceUpdateParams.PaymentSettings;
@@ -1171,7 +1186,7 @@ declare module 'stripe' {
 
     interface InvoiceFinalizeInvoiceParams {
       /**
-       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
+       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/overview#auto-advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
        */
       auto_advance?: boolean;
 
