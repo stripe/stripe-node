@@ -1086,6 +1086,7 @@ declare module 'stripe' {
             | 'moneyou'
             | 'rabobank'
             | 'regiobank'
+            | 'revolut'
             | 'sns_bank'
             | 'triodos_bank'
             | 'van_lanschot';
@@ -1790,6 +1791,7 @@ declare module 'stripe' {
             | 'moneyou'
             | 'rabobank'
             | 'regiobank'
+            | 'revolut'
             | 'sns_bank'
             | 'triodos_bank'
             | 'van_lanschot';
@@ -2608,6 +2610,7 @@ declare module 'stripe' {
             | 'moneyou'
             | 'rabobank'
             | 'regiobank'
+            | 'revolut'
             | 'sns_bank'
             | 'triodos_bank'
             | 'van_lanschot';
