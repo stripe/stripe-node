@@ -811,6 +811,11 @@ declare module 'stripe' {
 
       interface PaymentMethodData {
         /**
+         * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
+         */
+        afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
+
+        /**
          * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
          */
         alipay?: PaymentMethodData.Alipay;
@@ -897,6 +902,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodData {
+        interface AfterpayClearpay {}
+
         interface Alipay {}
 
         interface AuBecsDebit {
@@ -1143,6 +1150,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -1507,6 +1515,11 @@ declare module 'stripe' {
     namespace PaymentIntentUpdateParams {
       interface PaymentMethodData {
         /**
+         * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
+         */
+        afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
+
+        /**
          * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
          */
         alipay?: PaymentMethodData.Alipay;
@@ -1593,6 +1606,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodData {
+        interface AfterpayClearpay {}
+
         interface Alipay {}
 
         interface AuBecsDebit {
@@ -1839,6 +1854,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
           | 'bacs_debit'
@@ -2317,6 +2333,11 @@ declare module 'stripe' {
 
       interface PaymentMethodData {
         /**
+         * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
+         */
+        afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
+
+        /**
          * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
          */
         alipay?: PaymentMethodData.Alipay;
@@ -2403,6 +2424,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodData {
+        interface AfterpayClearpay {}
+
         interface Alipay {}
 
         interface AuBecsDebit {
@@ -2649,6 +2672,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
           | 'bacs_debit'

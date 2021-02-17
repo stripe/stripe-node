@@ -755,6 +755,11 @@ declare module 'stripe' {
 
         interface LineItem {
           /**
+           * When set, provides configuration for this item's quantity to be adjusted by the customer during Checkout.
+           */
+          adjustable_quantity?: LineItem.AdjustableQuantity;
+
+          /**
            * The amount to be collected per unit of the line item. If specified, must also pass `currency` and `name`.
            */
           amount?: number;
@@ -808,6 +813,23 @@ declare module 'stripe' {
         }
 
         namespace LineItem {
+          interface AdjustableQuantity {
+            /**
+             * Set to true if the quantity can be adjusted to any non-negative integer. By default customers will be able to remove the line item by setting the quantity to 0.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum quantity the customer must purchase for the Checkout Session. By default this value is 0.
+             */
+            minimum?: number;
+          }
+
           interface PriceData {
             /**
              * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -1058,6 +1080,7 @@ declare module 'stripe' {
         }
 
         type PaymentMethodType =
+          | 'afterpay_clearpay'
           | 'alipay'
           | 'bacs_debit'
           | 'bancontact'
