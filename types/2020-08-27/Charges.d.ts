@@ -388,6 +388,8 @@ declare module 'stripe' {
 
         acss_debit?: PaymentMethodDetails.AcssDebit;
 
+        afterpay_clearpay?: PaymentMethodDetails.AfterpayClearpay;
+
         alipay?: PaymentMethodDetails.Alipay;
 
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
@@ -528,6 +530,8 @@ declare module 'stripe' {
            */
           transit_number: string | null;
         }
+
+        interface AfterpayClearpay {}
 
         interface Alipay {
           /**

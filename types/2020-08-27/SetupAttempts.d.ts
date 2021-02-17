@@ -71,6 +71,10 @@ declare module 'stripe' {
 
     namespace SetupAttempt {
       interface PaymentMethodDetails {
+        au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
+
+        bacs_debit?: PaymentMethodDetails.BacsDebit;
+
         bancontact?: PaymentMethodDetails.Bancontact;
 
         card?: PaymentMethodDetails.Card;
@@ -78,6 +82,8 @@ declare module 'stripe' {
         card_present?: PaymentMethodDetails.CardPresent;
 
         ideal?: PaymentMethodDetails.Ideal;
+
+        sepa_debit?: PaymentMethodDetails.SepaDebit;
 
         sofort?: PaymentMethodDetails.Sofort;
 
@@ -88,6 +94,10 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodDetails {
+        interface AuBecsDebit {}
+
+        interface BacsDebit {}
+
         interface Bancontact {
           /**
            * Bank code of bank associated with the bank account.
@@ -260,6 +270,8 @@ declare module 'stripe' {
             | 'SNSBNL2A'
             | 'TRIONL2U';
         }
+
+        interface SepaDebit {}
 
         interface Sofort {
           /**

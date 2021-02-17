@@ -16,6 +16,8 @@ declare module 'stripe' {
        */
       object: 'payment_method';
 
+      afterpay_clearpay?: PaymentMethod.AfterpayClearpay;
+
       alipay?: PaymentMethod.Alipay;
 
       au_becs_debit?: PaymentMethod.AuBecsDebit;
@@ -77,6 +79,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethod {
+      interface AfterpayClearpay {}
+
       interface Alipay {}
 
       interface AuBecsDebit {
@@ -551,6 +555,7 @@ declare module 'stripe' {
       }
 
       type Type =
+        | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
         | 'bacs_debit'
@@ -570,6 +575,11 @@ declare module 'stripe' {
     }
 
     interface PaymentMethodCreateParams {
+      /**
+       * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
+       */
+      afterpay_clearpay?: PaymentMethodCreateParams.AfterpayClearpay;
+
       /**
        * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
        */
@@ -677,6 +687,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodCreateParams {
+      interface AfterpayClearpay {}
+
       interface Alipay {}
 
       interface AuBecsDebit {
@@ -949,6 +961,7 @@ declare module 'stripe' {
       }
 
       type Type =
+        | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
         | 'bacs_debit'
@@ -1104,6 +1117,7 @@ declare module 'stripe' {
 
     namespace PaymentMethodListParams {
       type Type =
+        | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
         | 'bacs_debit'
