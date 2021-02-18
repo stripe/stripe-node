@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.137.0 - 2021-02-17
+* [#1123](https://github.com/stripe/stripe-node/pull/1123) API Updates
+  * Add support for on_behalf_of to Invoice
+  * Add support for enum member revolut on PaymentIntent.payment_method_data.ideal.bank, PaymentMethod.ideal.bank, Charge.payment_method_details.ideal.bank and SetupAttempt.payment_method_details.ideal.bank
+  * Added support for enum member REVOLT21 on PaymentMethod.ideal.bic, Charge.payment_method_details.ideal.bic and SetupAttempt.payment_method_details.ideal.bic
+
 ## 8.136.0 - 2021-02-16
 * [#1122](https://github.com/stripe/stripe-node/pull/1122) API Updates
   * Add support for `afterpay_clearpay` on `PaymentMethod`, `PaymentIntent.payment_method_data`, and `Charge.payment_method_details`.
