@@ -75,7 +75,7 @@ declare module 'stripe' {
         on_behalf_of?: string;
 
         /**
-         * The default URL to redirect customers to when they click on the portal's link to return to your website. This field is required if the configuration's [`default_return_url`](https://stripe.com/docs/api/customer_portal/configuration#portal_configuration_object-default_return_url) is not set.
+         * The default URL to redirect customers to when they click on the portal's link to return to your website.
          */
         return_url?: string;
       }

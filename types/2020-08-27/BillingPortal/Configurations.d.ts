@@ -178,6 +178,11 @@ declare module 'stripe' {
 
             interface Product {
               /**
+               * The list of price IDs which, when subscribed to, a subscription can be updated.
+               */
+              prices: Array<string>;
+
+              /**
                * The product ID.
                */
               product: string;
