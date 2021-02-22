@@ -14,6 +14,7 @@
 ///<reference path='./Balance.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
+///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
 ///<reference path='./BitcoinReceivers.d.ts' />
 ///<reference path='./BitcoinTransactions.d.ts' />
@@ -162,7 +163,10 @@ declare module 'stripe' {
     /**
      * Namespaced Resources
      */
-    billingPortal: {sessions: Stripe.BillingPortal.SessionsResource};
+    billingPortal: {
+      configurations: Stripe.BillingPortal.ConfigurationsResource;
+      sessions: Stripe.BillingPortal.SessionsResource;
+    };
     checkout: {sessions: Stripe.Checkout.SessionsResource};
     issuing: {
       authorizations: Stripe.Issuing.AuthorizationsResource;

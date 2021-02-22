@@ -18,6 +18,11 @@ declare module 'stripe' {
         object: 'billing_portal.session';
 
         /**
+         * The configuration used by this session, describing the features available.
+         */
+        configuration: string | Stripe.BillingPortal.Configuration;
+
+        /**
          * Time at which the object was created. Measured in seconds since the Unix epoch.
          */
         created: number;
@@ -33,12 +38,17 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * The URL to which Stripe should send customers when they click on the link to return to your website.
+         * The account for which the session was created on behalf of. When specified, only subscriptions and invoices with this `on_behalf_of` account appear in the portal. For more information, see the [docs](https://stripe.com/docs/connect/charges-transfers#on-behalf-of). Use the [Accounts API](https://stripe.com/docs/api/accounts/object#account_object-settings-branding) to modify the `on_behalf_of` account's branding settings, which the portal displays.
+         */
+        on_behalf_of: string | null;
+
+        /**
+         * The URL to redirect customers to when they click on the portal's link to return to your website.
          */
         return_url: string;
 
         /**
-         * The short-lived URL of the session giving customers access to the customer portal.
+         * The short-lived URL of the session that gives customers access to the customer portal.
          */
         url: string;
       }
@@ -50,12 +60,22 @@ declare module 'stripe' {
         customer: string;
 
         /**
+         * The [configuration](https://stripe.com/docs/api/customer_portal/configuration) to use for this session, describing its functionality and features. If not specified, the session uses the default configuration.
+         */
+        configuration?: string;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
 
         /**
-         * The URL to which Stripe should send customers when they click on the link to return to your website. This field is required if a default return URL has not been configured for the portal.
+         * The `on_behalf_of` account to use for this session. When specified, only subscriptions and invoices with this `on_behalf_of` account appear in the portal. For more information, see the [docs](https://stripe.com/docs/connect/charges-transfers#on-behalf-of). Use the [Accounts API](https://stripe.com/docs/api/accounts/object#account_object-settings-branding) to modify the `on_behalf_of` account's branding settings, which the portal displays.
+         */
+        on_behalf_of?: string;
+
+        /**
+         * The default URL to redirect customers to when they click on the portal's link to return to your website.
          */
         return_url?: string;
       }
