@@ -37,5 +37,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Run a one-line script
+      - name: Lint, typecheck, and test
         run: yarn && yarn test
