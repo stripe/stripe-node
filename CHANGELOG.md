@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.138.0 - 2021-03-10
+* [#1124](https://github.com/stripe/stripe-node/pull/1124) API Updates
+  * Added support for `BillingPortal.Configuration` API.
+  * `Terminal.LocationUpdateParams.country` is now optional.
+
 ## 8.137.0 - 2021-02-17
 * [#1123](https://github.com/stripe/stripe-node/pull/1123) API Updates
   * Add support for on_behalf_of to Invoice
