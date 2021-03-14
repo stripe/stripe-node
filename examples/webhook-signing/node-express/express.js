@@ -1,29 +1,31 @@
 require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 const app = express();
 
-// Use JSON parser for all non-webhook routes
-app.use((req, res, next) => {
-  if (req.originalUrl === '/webhook') {
-    next();
-  } else {
-    bodyParser.json()(req, res, next);
-  }
-});
+// TODO: Use buffer data for stripe webhook routes
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      const url = req.originalUrl;
+      if (url.startsWith('/webhook')) {
+        req.rawBody = buf.toString();
+      }
+    }
+  })
+);
 
 // Stripe requires the raw body to construct the event
-app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
+app.post('/webhook', (req, res) => {
   const sig = req.headers['stripe-signature'];
 
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+    event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret);
   } catch (err) {
     // On error, log and return the error message
     console.log(`❌ Error message: ${err.message}`);
