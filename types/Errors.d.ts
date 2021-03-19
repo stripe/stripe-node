@@ -24,7 +24,7 @@ declare module 'stripe' {
       | 'authentication_error'
       | 'invalid_grant';
 
-    type StripeRawError = {
+    export type StripeRawError = {
       message?: string;
 
       type: RawErrorType;
