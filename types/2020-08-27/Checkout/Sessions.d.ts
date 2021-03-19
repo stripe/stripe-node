@@ -558,6 +558,11 @@ declare module 'stripe' {
           amount_discount: number;
 
           /**
+           * This is the sum of all the line item shipping amounts.
+           */
+          amount_shipping?: number | null;
+
+          /**
            * This is the sum of all the line item tax amounts.
            */
           amount_tax: number;
@@ -723,6 +728,11 @@ declare module 'stripe' {
          * When set, provides configuration for Checkout to collect a shipping address from a customer.
          */
         shipping_address_collection?: SessionCreateParams.ShippingAddressCollection;
+
+        /**
+         * The shipping rate to apply to this Session. Currently, only up to one may be specified
+         */
+        shipping_rates?: Array<string>;
 
         /**
          * Describes the type of transaction being performed by Checkout in order to customize

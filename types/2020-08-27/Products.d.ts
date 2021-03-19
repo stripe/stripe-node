@@ -69,12 +69,12 @@ declare module 'stripe' {
       name: string;
 
       /**
-       * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. Only applicable to products of `type=good`.
+       * The dimensions of this product for shipping purposes.
        */
       package_dimensions: Product.PackageDimensions | null;
 
       /**
-       * Whether this product is a shipped good. Only applicable to products of `type=good`.
+       * Whether this product is shipped (i.e., physical goods).
        */
       shippable: boolean | null;
 
@@ -99,7 +99,7 @@ declare module 'stripe' {
       updated: number;
 
       /**
-       * A URL of a publicly-accessible webpage for this product. Only applicable to products of `type=good`.
+       * A URL of a publicly-accessible webpage for this product.
        */
       url: string | null;
     }
@@ -202,12 +202,12 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
-       * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if type=`good`.
+       * The dimensions of this product for shipping purposes.
        */
       package_dimensions?: ProductCreateParams.PackageDimensions;
 
       /**
-       * Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if type=`good`.
+       * Whether this product is shipped (i.e., physical goods).
        */
       shippable?: boolean;
 
@@ -230,7 +230,7 @@ declare module 'stripe' {
       unit_label?: string;
 
       /**
-       * A URL of a publicly-accessible webpage for this product. May only be set if type=`good`.
+       * A URL of a publicly-accessible webpage for this product.
        */
       url?: string;
     }
@@ -315,14 +315,14 @@ declare module 'stripe' {
       name?: string;
 
       /**
-       * The dimensions of this product for shipping purposes. A SKU associated with this product can override this value by having its own `package_dimensions`. May only be set if `type=good`.
+       * The dimensions of this product for shipping purposes.
        */
       package_dimensions?: Stripe.Emptyable<
         ProductUpdateParams.PackageDimensions
       >;
 
       /**
-       * Whether this product is shipped (i.e., physical goods). Defaults to `true`. May only be set if `type=good`.
+       * Whether this product is shipped (i.e., physical goods).
        */
       shippable?: boolean;
 
@@ -340,7 +340,7 @@ declare module 'stripe' {
       unit_label?: string;
 
       /**
-       * A URL of a publicly-accessible webpage for this product. May only be set if `type=good`.
+       * A URL of a publicly-accessible webpage for this product.
        */
       url?: string;
     }

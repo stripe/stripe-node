@@ -101,7 +101,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer who will be billed.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer;
+      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
