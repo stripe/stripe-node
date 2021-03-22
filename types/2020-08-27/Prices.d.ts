@@ -54,7 +54,7 @@ declare module 'stripe' {
       metadata: Stripe.Metadata;
 
       /**
-       * A brief description of the plan, hidden from customers.
+       * A brief description of the price, hidden from customers.
        */
       nickname: string | null;
 

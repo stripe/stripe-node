@@ -58,7 +58,7 @@ declare module 'stripe' {
       details_submitted: boolean;
 
       /**
-       * The primary user's email address.
+       * An email address associated with the account. You can treat this as metadata: it is not used for authentication or messaging account holders.
        */
       email: string | null;
 
