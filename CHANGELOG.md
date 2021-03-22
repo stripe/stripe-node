@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.139.0 - 2021-03-22
+* [#1132](https://github.com/stripe/stripe-node/pull/1132) API Updates
+  * Added support for `shipping_rates` on `SessionCreateOptions`
+  * Added support for `amount_shipping` on `Checkout.SessionTotalDetails`
+* [#1131](https://github.com/stripe/stripe-node/pull/1131) types: export StripeRawError type
+
 ## 8.138.0 - 2021-03-10
 * [#1124](https://github.com/stripe/stripe-node/pull/1124) API Updates
   * Added support for `BillingPortal.Configuration` API.
