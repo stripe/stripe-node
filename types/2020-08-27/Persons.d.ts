@@ -341,7 +341,10 @@ declare module 'stripe' {
             | 'verification_failed_name_match'
             | 'verification_failed_other'
             | 'verification_failed_tax_id_match'
-            | 'verification_failed_tax_id_not_issued';
+            | 'verification_failed_tax_id_not_issued'
+            | 'verification_missing_executives'
+            | 'verification_missing_owners'
+            | 'verification_requires_additional_memorandum_of_associations';
         }
       }
 
