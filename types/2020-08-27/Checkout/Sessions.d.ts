@@ -267,6 +267,7 @@ declare module 'stripe' {
           | 'sk'
           | 'sl'
           | 'sv'
+          | 'th'
           | 'tr'
           | 'zh'
           | 'zh-HK'
@@ -560,7 +561,7 @@ declare module 'stripe' {
           /**
            * This is the sum of all the line item shipping amounts.
            */
-          amount_shipping?: number | null;
+          amount_shipping: number | null;
 
           /**
            * This is the sum of all the line item tax amounts.
@@ -946,6 +947,7 @@ declare module 'stripe' {
           | 'sk'
           | 'sl'
           | 'sv'
+          | 'th'
           | 'tr'
           | 'zh'
           | 'zh-HK'
