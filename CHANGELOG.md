@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.140.0 - 2021-03-25
+* [#1133](https://github.com/stripe/stripe-node/pull/1133) API Updates
+  * `Capability.requirements.errors[].code`, `Account.requirements.errors[].code` and `Person.requirements.errors[].code` added new enum members: `verification_missing_owners, verification_missing_executives and verification_requires_additional_memorandum_of_associations`
+  * `SessionCreateParams.locale` and `CheckoutSession.locale` added new enum members: `th`
+
 ## 8.139.0 - 2021-03-22
 * [#1132](https://github.com/stripe/stripe-node/pull/1132) API Updates
   * Added support for `shipping_rates` on `SessionCreateOptions`
