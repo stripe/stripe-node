@@ -607,6 +607,8 @@ declare module 'stripe' {
 
         branding: Settings.Branding;
 
+        card_issuing?: Settings.CardIssuing;
+
         card_payments: Settings.CardPayments;
 
         dashboard: Settings.Dashboard;
@@ -646,6 +648,29 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account
            */
           secondary_color: string | null;
+        }
+
+        interface CardIssuing {
+          tos_acceptance?: CardIssuing.TosAcceptance;
+        }
+
+        namespace CardIssuing {
+          interface TosAcceptance {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date: number | null;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip: string | null;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: string;
+          }
         }
 
         interface CardPayments {
@@ -1639,6 +1664,11 @@ declare module 'stripe' {
         branding?: Settings.Branding;
 
         /**
+         * Settings specific to the account's use of the Card Issuing product.
+         */
+        card_issuing?: Settings.CardIssuing;
+
+        /**
          * Settings specific to card charging on the account.
          */
         card_payments?: Settings.CardPayments;
@@ -1675,6 +1705,32 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account.
            */
           secondary_color?: string;
+        }
+
+        interface CardIssuing {
+          /**
+           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](stripe.com/docs/issuing/connect/tos_acceptance).
+           */
+          tos_acceptance?: CardIssuing.TosAcceptance;
+        }
+
+        namespace CardIssuing {
+          interface TosAcceptance {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: string;
+          }
         }
 
         interface CardPayments {
@@ -2652,6 +2708,11 @@ declare module 'stripe' {
         branding?: Settings.Branding;
 
         /**
+         * Settings specific to the account's use of the Card Issuing product.
+         */
+        card_issuing?: Settings.CardIssuing;
+
+        /**
          * Settings specific to card charging on the account.
          */
         card_payments?: Settings.CardPayments;
@@ -2688,6 +2749,32 @@ declare module 'stripe' {
            * A CSS hex color value representing the secondary branding color for this account.
            */
           secondary_color?: string;
+        }
+
+        interface CardIssuing {
+          /**
+           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](stripe.com/docs/issuing/connect/tos_acceptance).
+           */
+          tos_acceptance?: CardIssuing.TosAcceptance;
+        }
+
+        namespace CardIssuing {
+          interface TosAcceptance {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: string;
+          }
         }
 
         interface CardPayments {
