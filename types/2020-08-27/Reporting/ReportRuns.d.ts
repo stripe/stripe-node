@@ -29,7 +29,7 @@ declare module 'stripe' {
         error: string | null;
 
         /**
-         * Always `true`: reports can only be run on live-mode data.
+         * `true` if the report is run on live mode data and `false` if it is run on test mode data.
          */
         livemode: boolean;
 
@@ -817,7 +817,7 @@ declare module 'stripe' {
 
       class ReportRunsResource {
         /**
-         * Creates a new object and begin running the report. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+         * Creates a new object and begin running the report. (Certain report types require a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
          */
         create(
           params: ReportRunCreateParams,
@@ -825,7 +825,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Reporting.ReportRun>>;
 
         /**
-         * Retrieves the details of an existing Report Run. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+         * Retrieves the details of an existing Report Run.
          */
         retrieve(
           id: string,
@@ -838,7 +838,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Reporting.ReportRun>>;
 
         /**
-         * Returns a list of Report Runs, with the most recent appearing first. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+         * Returns a list of Report Runs, with the most recent appearing first.
          */
         list(
           params?: ReportRunListParams,

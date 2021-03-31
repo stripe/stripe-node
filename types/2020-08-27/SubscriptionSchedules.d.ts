@@ -476,7 +476,7 @@ declare module 'stripe' {
 
       interface Phase {
         /**
-         * A list of prices and quantities that will generate invoice items appended to the next invoice. You may pass up to 10 items.
+         * A list of prices and quantities that will generate invoice items appended to the next invoice. You may pass up to 20 items.
          */
         add_invoice_items?: Array<Phase.AddInvoiceItem>;
 
@@ -851,7 +851,7 @@ declare module 'stripe' {
 
       interface Phase {
         /**
-         * A list of prices and quantities that will generate invoice items appended to the next invoice. You may pass up to 10 items.
+         * A list of prices and quantities that will generate invoice items appended to the next invoice. You may pass up to 20 items.
          */
         add_invoice_items?: Array<Phase.AddInvoiceItem>;
 
