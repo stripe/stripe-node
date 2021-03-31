@@ -693,10 +693,10 @@ declare module 'stripe' {
 
         /**
          * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
-         * One-time Prices in `subscription` mode will be on the initial invoice only.
          *
-         * There is a maximum of 100 line items, however it is recommended to
-         * consolidate line items if there are more than a few dozen.
+         * For `payment` mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen.
+         *
+         * For `subscription` mode, there is a maximum of 20 line items with recurring Prices and 20 line items with one-time Prices. Line items with one-time Prices in will be on the initial invoice only.
          */
         line_items?: Array<SessionCreateParams.LineItem>;
 
@@ -993,7 +993,7 @@ declare module 'stripe' {
           receipt_email?: string;
 
           /**
-           * Indicates that you intend to make future payments with the payment
+           * Indicates that you intend to [make future payments](https://stripe.com/docs/payments/payment-intents#future-usage) with the payment
            * method collected by this Checkout Session.
            *
            * When setting this to `on_session`, Checkout will show a notice to the
@@ -1403,6 +1403,11 @@ declare module 'stripe' {
           metadata?: Stripe.MetadataParam;
 
           /**
+           * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
+           */
+          transfer_data?: SubscriptionData.TransferData;
+
+          /**
            * Unix timestamp representing the end of the trial period the customer
            * will get before being charged for the first time. Has to be at least
            * 48 hours in the future.
@@ -1438,6 +1443,18 @@ declare module 'stripe' {
              * on `subscription_data` do not apply to this item.
              */
             tax_rates?: Array<string>;
+          }
+
+          interface TransferData {
+            /**
+             * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+             */
+            amount_percent?: number;
+
+            /**
+             * ID of an existing, connected Stripe account.
+             */
+            destination: string;
           }
         }
       }

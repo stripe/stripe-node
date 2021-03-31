@@ -64,7 +64,7 @@ declare module 'stripe' {
 
       class ReportTypesResource {
         /**
-         * Retrieves the details of a Report Type. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+         * Retrieves the details of a Report Type. (Certain report types require a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
          */
         retrieve(
           id: string,
@@ -77,7 +77,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Reporting.ReportType>>;
 
         /**
-         * Returns a full list of Report Types. (Requires a [live-mode API key](https://stripe.com/docs/keys#test-live-modes).)
+         * Returns a full list of Report Types.
          */
         list(
           params?: ReportTypeListParams,
