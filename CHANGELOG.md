@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.141.0 - 2021-03-31
+* [#1137](https://github.com/stripe/stripe-node/pull/1137) API Updates
+  * Add support for `transfer_data` on `SessionCreateParams.subscription_data`
+* [#1134](https://github.com/stripe/stripe-node/pull/1134) API Updates
+  * Added support for `card_issuing` on `AccountUpdateParams.settings` and `Account.settings`
+
 ## 8.140.0 - 2021-03-25
 * [#1133](https://github.com/stripe/stripe-node/pull/1133) API Updates
   * `Capability.requirements.errors[].code`, `Account.requirements.errors[].code` and `Person.requirements.errors[].code` added new enum members: `verification_missing_owners, verification_missing_executives and verification_requires_additional_memorandum_of_associations`
