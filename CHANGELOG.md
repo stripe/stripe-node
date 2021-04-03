@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.142.0 - 2021-04-02
+* [#1138](https://github.com/stripe/stripe-node/pull/1138) API Updates
+  * Add support for `subscription_pause` on `BillingPortal.ConfigurationUpdateParams.features`, `BillingPortal.ConfigurationCreateParams.features` and `BillingPortal.Configuration.features`
+
 ## 8.141.0 - 2021-03-31
 * [#1137](https://github.com/stripe/stripe-node/pull/1137) API Updates
   * Add support for `transfer_data` on `SessionCreateParams.subscription_data`
