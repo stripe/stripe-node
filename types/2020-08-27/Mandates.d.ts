@@ -83,6 +83,8 @@ declare module 'stripe' {
       interface MultiUse {}
 
       interface PaymentMethodDetails {
+        acss_debit?: PaymentMethodDetails.AcssDebit;
+
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
 
         bacs_debit?: PaymentMethodDetails.BacsDebit;
@@ -98,6 +100,29 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodDetails {
+        interface AcssDebit {
+          /**
+           * Description of the interval. Only required if 'payment_schedule' parmeter is 'interval' or 'combined'.
+           */
+          interval_description: string | null;
+
+          /**
+           * Payment schedule for the mandate.
+           */
+          payment_schedule: AcssDebit.PaymentSchedule;
+
+          /**
+           * Transaction type of the mandate.
+           */
+          transaction_type: AcssDebit.TransactionType;
+        }
+
+        namespace AcssDebit {
+          type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+          type TransactionType = 'business' | 'personal';
+        }
+
         interface AuBecsDebit {
           /**
            * The URL of the mandate. This URL generally contains sensitive information about the customer and should be shared with them exclusively.

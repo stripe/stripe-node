@@ -29,7 +29,7 @@ declare module 'stripe' {
       /**
        * The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
        */
-      account_tax_ids?: Array<
+      account_tax_ids: Array<
         string | Stripe.TaxId | Stripe.DeletedTaxId
       > | null;
 

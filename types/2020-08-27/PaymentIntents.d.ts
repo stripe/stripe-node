@@ -338,6 +338,8 @@ declare module 'stripe' {
          * When confirming a PaymentIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
          */
         use_stripe_sdk?: NextAction.UseStripeSdk;
+
+        verify_with_microdeposits?: NextAction.VerifyWithMicrodeposits;
       }
 
       namespace NextAction {
@@ -393,9 +395,23 @@ declare module 'stripe' {
         }
 
         interface UseStripeSdk {}
+
+        interface VerifyWithMicrodeposits {
+          /**
+           * The timestamp when the microdeposits are expected to land.
+           */
+          arrival_date: number;
+
+          /**
+           * The URL for the hosted verification page, which allows customers to verify their bank account.
+           */
+          hosted_verification_url: string;
+        }
       }
 
       interface PaymentMethodOptions {
+        acss_debit?: PaymentMethodOptions.AcssDebit;
+
         alipay?: PaymentMethodOptions.Alipay;
 
         bancontact?: PaymentMethodOptions.Bancontact;
@@ -412,6 +428,47 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface AcssDebit {
+          mandate_options?: AcssDebit.MandateOptions;
+
+          /**
+           * Bank account verification method.
+           */
+          verification_method?: AcssDebit.VerificationMethod;
+        }
+
+        namespace AcssDebit {
+          interface MandateOptions {
+            /**
+             * A URL for custom mandate text
+             */
+            custom_mandate_url?: string;
+
+            /**
+             * Description of the interval. Only required if 'payment_schedule' parmeter is 'interval' or 'combined'.
+             */
+            interval_description: string | null;
+
+            /**
+             * Payment schedule for the mandate.
+             */
+            payment_schedule: MandateOptions.PaymentSchedule | null;
+
+            /**
+             * Transaction type of the mandate.
+             */
+            transaction_type: MandateOptions.TransactionType | null;
+          }
+
+          namespace MandateOptions {
+            type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+            type TransactionType = 'business' | 'personal';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
         interface Alipay {}
 
         interface Bancontact {
@@ -811,6 +868,11 @@ declare module 'stripe' {
 
       interface PaymentMethodData {
         /**
+         * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+         */
+        acss_debit?: PaymentMethodData.AcssDebit;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -902,6 +964,23 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodData {
+        interface AcssDebit {
+          /**
+           * Customer's bank account number.
+           */
+          account_number: string;
+
+          /**
+           * Institution number of the customer's bank.
+           */
+          institution_number: string;
+
+          /**
+           * Transit number of the customer's bank.
+           */
+          transit_number: string;
+        }
+
         interface AfterpayClearpay {}
 
         interface Alipay {}
@@ -1151,6 +1230,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'acss_debit'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -1168,6 +1248,11 @@ declare module 'stripe' {
       }
 
       interface PaymentMethodOptions {
+        /**
+         * If this is a `acss_debit` PaymentMethod, this sub-hash contains details about the ACSS Debit payment method options.
+         */
+        acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
+
         /**
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
@@ -1205,6 +1290,52 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface AcssDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: AcssDebit.MandateOptions;
+
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: AcssDebit.VerificationMethod;
+        }
+
+        namespace AcssDebit {
+          interface MandateOptions {
+            /**
+             * A URL for custom mandate text to render during confirmation step.
+             * The URL will be rendered with additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a Payment Intent,
+             * or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
+             */
+            custom_mandate_url?: Stripe.Emptyable<string>;
+
+            /**
+             * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+             */
+            interval_description?: string;
+
+            /**
+             * Payment schedule for the mandate.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Transaction type of the mandate.
+             */
+            transaction_type?: MandateOptions.TransactionType;
+          }
+
+          namespace MandateOptions {
+            type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+            type TransactionType = 'business' | 'personal';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
         interface Alipay {}
 
         interface Bancontact {
@@ -1516,6 +1647,11 @@ declare module 'stripe' {
     namespace PaymentIntentUpdateParams {
       interface PaymentMethodData {
         /**
+         * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+         */
+        acss_debit?: PaymentMethodData.AcssDebit;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -1607,6 +1743,23 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodData {
+        interface AcssDebit {
+          /**
+           * Customer's bank account number.
+           */
+          account_number: string;
+
+          /**
+           * Institution number of the customer's bank.
+           */
+          institution_number: string;
+
+          /**
+           * Transit number of the customer's bank.
+           */
+          transit_number: string;
+        }
+
         interface AfterpayClearpay {}
 
         interface Alipay {}
@@ -1856,6 +2009,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'acss_debit'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -1873,6 +2027,11 @@ declare module 'stripe' {
       }
 
       interface PaymentMethodOptions {
+        /**
+         * If this is a `acss_debit` PaymentMethod, this sub-hash contains details about the ACSS Debit payment method options.
+         */
+        acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
+
         /**
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
@@ -1910,6 +2069,52 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface AcssDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: AcssDebit.MandateOptions;
+
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: AcssDebit.VerificationMethod;
+        }
+
+        namespace AcssDebit {
+          interface MandateOptions {
+            /**
+             * A URL for custom mandate text to render during confirmation step.
+             * The URL will be rendered with additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a Payment Intent,
+             * or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
+             */
+            custom_mandate_url?: Stripe.Emptyable<string>;
+
+            /**
+             * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+             */
+            interval_description?: string;
+
+            /**
+             * Payment schedule for the mandate.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Transaction type of the mandate.
+             */
+            transaction_type?: MandateOptions.TransactionType;
+          }
+
+          namespace MandateOptions {
+            type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+            type TransactionType = 'business' | 'personal';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
         interface Alipay {}
 
         interface Bancontact {
@@ -2335,6 +2540,11 @@ declare module 'stripe' {
 
       interface PaymentMethodData {
         /**
+         * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+         */
+        acss_debit?: PaymentMethodData.AcssDebit;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -2426,6 +2636,23 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodData {
+        interface AcssDebit {
+          /**
+           * Customer's bank account number.
+           */
+          account_number: string;
+
+          /**
+           * Institution number of the customer's bank.
+           */
+          institution_number: string;
+
+          /**
+           * Transit number of the customer's bank.
+           */
+          transit_number: string;
+        }
+
         interface AfterpayClearpay {}
 
         interface Alipay {}
@@ -2675,6 +2902,7 @@ declare module 'stripe' {
         }
 
         type Type =
+          | 'acss_debit'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -2692,6 +2920,11 @@ declare module 'stripe' {
       }
 
       interface PaymentMethodOptions {
+        /**
+         * If this is a `acss_debit` PaymentMethod, this sub-hash contains details about the ACSS Debit payment method options.
+         */
+        acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
+
         /**
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
@@ -2729,6 +2962,52 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface AcssDebit {
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: AcssDebit.MandateOptions;
+
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: AcssDebit.VerificationMethod;
+        }
+
+        namespace AcssDebit {
+          interface MandateOptions {
+            /**
+             * A URL for custom mandate text to render during confirmation step.
+             * The URL will be rendered with additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a Payment Intent,
+             * or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
+             */
+            custom_mandate_url?: Stripe.Emptyable<string>;
+
+            /**
+             * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+             */
+            interval_description?: string;
+
+            /**
+             * Payment schedule for the mandate.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Transaction type of the mandate.
+             */
+            transaction_type?: MandateOptions.TransactionType;
+          }
+
+          namespace MandateOptions {
+            type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+            type TransactionType = 'business' | 'personal';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
         interface Alipay {}
 
         interface Bancontact {

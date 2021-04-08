@@ -109,6 +109,11 @@ declare module 'stripe' {
         payment_intent: string | Stripe.PaymentIntent | null;
 
         /**
+         * Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
+         */
+        payment_method_options: Session.PaymentMethodOptions | null;
+
+        /**
          * A list of the types of payment methods (e.g. card) this Checkout
          * Session is allowed to accept.
          */
@@ -274,6 +279,53 @@ declare module 'stripe' {
           | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
+
+        interface PaymentMethodOptions {
+          acss_debit?: PaymentMethodOptions.AcssDebit;
+        }
+
+        namespace PaymentMethodOptions {
+          interface AcssDebit {
+            mandate_options?: AcssDebit.MandateOptions;
+
+            /**
+             * Bank account verification method.
+             */
+            verification_method?: AcssDebit.VerificationMethod;
+          }
+
+          namespace AcssDebit {
+            interface MandateOptions {
+              /**
+               * A URL for custom mandate text
+               */
+              custom_mandate_url?: string;
+
+              /**
+               * Description of the interval. Only required if 'payment_schedule' parmeter is 'interval' or 'combined'.
+               */
+              interval_description: string | null;
+
+              /**
+               * Payment schedule for the mandate.
+               */
+              payment_schedule: MandateOptions.PaymentSchedule | null;
+
+              /**
+               * Transaction type of the mandate.
+               */
+              transaction_type: MandateOptions.TransactionType | null;
+            }
+
+            namespace MandateOptions {
+              type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+              type TransactionType = 'business' | 'personal';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
+        }
 
         type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
 
@@ -662,13 +714,16 @@ declare module 'stripe' {
         client_reference_id?: string;
 
         /**
-         * ID of an existing customer, if one exists. The email stored on the
-         * customer will be used to prefill the email field on the Checkout page.
-         * If the customer changes their email on the Checkout page, the Customer
-         * object will be updated with the new email.
-         * If blank for Checkout Sessions in `payment` or `subscription` mode,
-         * Checkout will create a new customer object based on information
-         * provided during the payment flow.
+         * ID of an existing Customer, if one exists. In `payment` mode, the customer's most recent card
+         * payment method will be used to prefill the email, name, card details, and billing address
+         * on the Checkout page. In `subscription` mode, the customer's [default payment method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method)
+         * will be used if it's a card, and otherwise the most recent card will be used. A valid billing address is required for Checkout to prefill the customer's card details.
+         *
+         * If the customer changes their email on the Checkout page, the Customer object will be updated with the new email.
+         *
+         * If blank for Checkout Sessions in `payment` or `subscription` mode, Checkout will create a new Customer object based on information provided during the payment flow.
+         *
+         * You can set [`payment_intent_data.setup_future_usage`](https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_intent_data-setup_future_usage) to have Checkout automatically attach the payment method to the Customer you pass in for future reuse.
          */
         customer?: string;
 
@@ -719,6 +774,11 @@ declare module 'stripe' {
          * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
          */
         payment_intent_data?: SessionCreateParams.PaymentIntentData;
+
+        /**
+         * Payment-method-specific configuration.
+         */
+        payment_method_options?: SessionCreateParams.PaymentMethodOptions;
 
         /**
          * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
@@ -1091,7 +1151,70 @@ declare module 'stripe' {
           }
         }
 
+        interface PaymentMethodOptions {
+          /**
+           * contains details about the ACSS Debit payment method options.
+           */
+          acss_debit?: PaymentMethodOptions.AcssDebit;
+        }
+
+        namespace PaymentMethodOptions {
+          interface AcssDebit {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency?: AcssDebit.Currency;
+
+            /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: AcssDebit.MandateOptions;
+
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: AcssDebit.VerificationMethod;
+          }
+
+          namespace AcssDebit {
+            type Currency = 'cad' | 'usd';
+
+            interface MandateOptions {
+              /**
+               * A URL for custom mandate text to render during confirmation step.
+               * The URL will be rendered with additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a Payment Intent,
+               * or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
+               */
+              custom_mandate_url?: Stripe.Emptyable<string>;
+
+              /**
+               * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+               */
+              interval_description?: string;
+
+              /**
+               * Payment schedule for the mandate.
+               */
+              payment_schedule?: MandateOptions.PaymentSchedule;
+
+              /**
+               * Transaction type of the mandate.
+               */
+              transaction_type?: MandateOptions.TransactionType;
+            }
+
+            namespace MandateOptions {
+              type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+              type TransactionType = 'business' | 'personal';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
+        }
+
         type PaymentMethodType =
+          | 'acss_debit'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'bacs_debit'
