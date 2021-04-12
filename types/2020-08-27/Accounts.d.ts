@@ -153,6 +153,11 @@ declare module 'stripe' {
 
       interface Capabilities {
         /**
+         * The status of the ACSS Direct Debits payments capability of the account, or whether the account can directly process ACSS Direct Debits charges.
+         */
+        acss_debit_payments?: Capabilities.AcssDebitPayments;
+
+        /**
          * The status of the Afterpay Clearpay capability of the account, or whether the account can directly process Afterpay Clearpay charges.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
@@ -259,6 +264,8 @@ declare module 'stripe' {
       }
 
       namespace Capabilities {
+        type AcssDebitPayments = 'active' | 'inactive' | 'pending';
+
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
 
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
@@ -985,6 +992,11 @@ declare module 'stripe' {
 
       interface Capabilities {
         /**
+         * The acss_debit_payments capability.
+         */
+        acss_debit_payments?: Capabilities.AcssDebitPayments;
+
+        /**
          * The afterpay_clearpay_payments capability.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
@@ -1091,6 +1103,13 @@ declare module 'stripe' {
       }
 
       namespace Capabilities {
+        interface AcssDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface AfterpayClearpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2029,6 +2048,11 @@ declare module 'stripe' {
 
       interface Capabilities {
         /**
+         * The acss_debit_payments capability.
+         */
+        acss_debit_payments?: Capabilities.AcssDebitPayments;
+
+        /**
          * The afterpay_clearpay_payments capability.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
@@ -2135,6 +2159,13 @@ declare module 'stripe' {
       }
 
       namespace Capabilities {
+        interface AcssDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface AfterpayClearpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.

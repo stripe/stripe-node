@@ -71,6 +71,8 @@ declare module 'stripe' {
 
     namespace SetupAttempt {
       interface PaymentMethodDetails {
+        acss_debit?: PaymentMethodDetails.AcssDebit;
+
         au_becs_debit?: PaymentMethodDetails.AuBecsDebit;
 
         bacs_debit?: PaymentMethodDetails.BacsDebit;
@@ -94,6 +96,8 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodDetails {
+        interface AcssDebit {}
+
         interface AuBecsDebit {}
 
         interface BacsDebit {}

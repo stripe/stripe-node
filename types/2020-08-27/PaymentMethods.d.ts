@@ -16,6 +16,8 @@ declare module 'stripe' {
        */
       object: 'payment_method';
 
+      acss_debit?: PaymentMethod.AcssDebit;
+
       afterpay_clearpay?: PaymentMethod.AfterpayClearpay;
 
       alipay?: PaymentMethod.Alipay;
@@ -79,6 +81,33 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethod {
+      interface AcssDebit {
+        /**
+         * Name of the bank associated with the bank account.
+         */
+        bank_name: string | null;
+
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
+        fingerprint: string | null;
+
+        /**
+         * Institution number of the bank account.
+         */
+        institution_number: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4: string | null;
+
+        /**
+         * Transit number of the bank account.
+         */
+        transit_number: string | null;
+      }
+
       interface AfterpayClearpay {}
 
       interface Alipay {}
@@ -559,6 +588,7 @@ declare module 'stripe' {
       }
 
       type Type =
+        | 'acss_debit'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -579,6 +609,11 @@ declare module 'stripe' {
     }
 
     interface PaymentMethodCreateParams {
+      /**
+       * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+       */
+      acss_debit?: PaymentMethodCreateParams.AcssDebit;
+
       /**
        * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
        */
@@ -691,6 +726,23 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodCreateParams {
+      interface AcssDebit {
+        /**
+         * Customer's bank account number.
+         */
+        account_number: string;
+
+        /**
+         * Institution number of the customer's bank.
+         */
+        institution_number: string;
+
+        /**
+         * Transit number of the customer's bank.
+         */
+        transit_number: string;
+      }
+
       interface AfterpayClearpay {}
 
       interface Alipay {}
@@ -966,6 +1018,7 @@ declare module 'stripe' {
       }
 
       type Type =
+        | 'acss_debit'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -1122,6 +1175,7 @@ declare module 'stripe' {
 
     namespace PaymentMethodListParams {
       type Type =
+        | 'acss_debit'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'

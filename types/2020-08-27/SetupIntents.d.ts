@@ -241,6 +241,8 @@ declare module 'stripe' {
          * When confirming a SetupIntent with Stripe.js, Stripe.js depends on the contents of this dictionary to invoke authentication flows. The shape of the contents is subject to change and is only intended to be used by Stripe.js.
          */
         use_stripe_sdk?: NextAction.UseStripeSdk;
+
+        verify_with_microdeposits?: NextAction.VerifyWithMicrodeposits;
       }
 
       namespace NextAction {
@@ -257,15 +259,77 @@ declare module 'stripe' {
         }
 
         interface UseStripeSdk {}
+
+        interface VerifyWithMicrodeposits {
+          /**
+           * The timestamp when the microdeposits are expected to land.
+           */
+          arrival_date: number;
+
+          /**
+           * The URL for the hosted verification page, which allows customers to verify their bank account.
+           */
+          hosted_verification_url: string;
+        }
       }
 
       interface PaymentMethodOptions {
+        acss_debit?: PaymentMethodOptions.AcssDebit;
+
         card?: PaymentMethodOptions.Card;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
       }
 
       namespace PaymentMethodOptions {
+        interface AcssDebit {
+          /**
+           * Currency supported by the bank account
+           */
+          currency: AcssDebit.Currency | null;
+
+          mandate_options?: AcssDebit.MandateOptions;
+
+          /**
+           * Bank account verification method.
+           */
+          verification_method?: AcssDebit.VerificationMethod;
+        }
+
+        namespace AcssDebit {
+          type Currency = 'cad' | 'usd';
+
+          interface MandateOptions {
+            /**
+             * A URL for custom mandate text
+             */
+            custom_mandate_url?: string;
+
+            /**
+             * Description of the interval. Only required if 'payment_schedule' parmeter is 'interval' or 'combined'.
+             */
+            interval_description: string | null;
+
+            /**
+             * Payment schedule for the mandate.
+             */
+            payment_schedule: MandateOptions.PaymentSchedule | null;
+
+            /**
+             * Transaction type of the mandate.
+             */
+            transaction_type: MandateOptions.TransactionType | null;
+          }
+
+          namespace MandateOptions {
+            type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+            type TransactionType = 'business' | 'personal';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
         interface Card {
           /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
@@ -416,6 +480,11 @@ declare module 'stripe' {
 
       interface PaymentMethodOptions {
         /**
+         * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
+         */
+        acss_debit?: PaymentMethodOptions.AcssDebit;
+
+        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -427,6 +496,59 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface AcssDebit {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency?: AcssDebit.Currency;
+
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: AcssDebit.MandateOptions;
+
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: AcssDebit.VerificationMethod;
+        }
+
+        namespace AcssDebit {
+          type Currency = 'cad' | 'usd';
+
+          interface MandateOptions {
+            /**
+             * A URL for custom mandate text to render during confirmation step.
+             * The URL will be rendered with additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a Payment Intent,
+             * or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
+             */
+            custom_mandate_url?: Stripe.Emptyable<string>;
+
+            /**
+             * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+             */
+            interval_description?: string;
+
+            /**
+             * Payment schedule for the mandate.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Transaction type of the mandate.
+             */
+            transaction_type?: MandateOptions.TransactionType;
+          }
+
+          namespace MandateOptions {
+            type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+            type TransactionType = 'business' | 'personal';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
         interface Card {
           /**
            * When specified, this parameter signals that a card has been collected
@@ -526,6 +648,11 @@ declare module 'stripe' {
     namespace SetupIntentUpdateParams {
       interface PaymentMethodOptions {
         /**
+         * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
+         */
+        acss_debit?: PaymentMethodOptions.AcssDebit;
+
+        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -537,6 +664,59 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface AcssDebit {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency?: AcssDebit.Currency;
+
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: AcssDebit.MandateOptions;
+
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: AcssDebit.VerificationMethod;
+        }
+
+        namespace AcssDebit {
+          type Currency = 'cad' | 'usd';
+
+          interface MandateOptions {
+            /**
+             * A URL for custom mandate text to render during confirmation step.
+             * The URL will be rendered with additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a Payment Intent,
+             * or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
+             */
+            custom_mandate_url?: Stripe.Emptyable<string>;
+
+            /**
+             * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+             */
+            interval_description?: string;
+
+            /**
+             * Payment schedule for the mandate.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Transaction type of the mandate.
+             */
+            transaction_type?: MandateOptions.TransactionType;
+          }
+
+          namespace MandateOptions {
+            type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+            type TransactionType = 'business' | 'personal';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
         interface Card {
           /**
            * When specified, this parameter signals that a card has been collected
@@ -727,6 +907,11 @@ declare module 'stripe' {
 
       interface PaymentMethodOptions {
         /**
+         * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
+         */
+        acss_debit?: PaymentMethodOptions.AcssDebit;
+
+        /**
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
@@ -738,6 +923,59 @@ declare module 'stripe' {
       }
 
       namespace PaymentMethodOptions {
+        interface AcssDebit {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency?: AcssDebit.Currency;
+
+          /**
+           * Additional fields for Mandate creation
+           */
+          mandate_options?: AcssDebit.MandateOptions;
+
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: AcssDebit.VerificationMethod;
+        }
+
+        namespace AcssDebit {
+          type Currency = 'cad' | 'usd';
+
+          interface MandateOptions {
+            /**
+             * A URL for custom mandate text to render during confirmation step.
+             * The URL will be rendered with additional GET parameters `payment_intent` and `payment_intent_client_secret` when confirming a Payment Intent,
+             * or `setup_intent` and `setup_intent_client_secret` when confirming a Setup Intent.
+             */
+            custom_mandate_url?: Stripe.Emptyable<string>;
+
+            /**
+             * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+             */
+            interval_description?: string;
+
+            /**
+             * Payment schedule for the mandate.
+             */
+            payment_schedule?: MandateOptions.PaymentSchedule;
+
+            /**
+             * Transaction type of the mandate.
+             */
+            transaction_type?: MandateOptions.TransactionType;
+          }
+
+          namespace MandateOptions {
+            type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
+
+            type TransactionType = 'business' | 'personal';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
         interface Card {
           /**
            * When specified, this parameter signals that a card has been collected
