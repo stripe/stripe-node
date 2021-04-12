@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 8.143.0 - 2021-04-12
+* [#1139](https://github.com/stripe/stripe-node/pull/1139) API Updates
+  * Add support for `acss_debit_payments` on `Account.capabilities`
+  * Add support for `payment_method_options` on `Checkout.Session`
+  * Add support for `acss_debit` on `SetupIntent.payment_method_options`, `SetupAttempt.payment_method_details`, `PaymentMethod`, `PaymentIntent.payment_method_options`,  `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_data`, `Mandate.payment_method_details` and `SetupIntent.payment_method_options`
+  * Add support for `verify_with_microdeposits` on `PaymentIntent.next_action` and `SetupIntent.next_action`
+  * Add support for `acss_debit` as member of the `type` enum on `PaymentMethod` and `PaymentIntent`, and inside `Checkout.SessionCreateParams.payment_method_types[]`.
+
 ## 8.142.0 - 2021-04-02
 * [#1138](https://github.com/stripe/stripe-node/pull/1138) API Updates
   * Add support for `subscription_pause` on `BillingPortal.ConfigurationUpdateParams.features`, `BillingPortal.ConfigurationCreateParams.features` and `BillingPortal.Configuration.features`
