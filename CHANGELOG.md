@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.144.0 - 2021-04-16
+* [#1140](https://github.com/stripe/stripe-node/pull/1140) API Updates
+  * Add support for `currency` on `Checkout.Session.PaymentMethodOptions.AcssDebit`
+
 ## 8.143.0 - 2021-04-12
 * [#1139](https://github.com/stripe/stripe-node/pull/1139) API Updates
   * Add support for `acss_debit_payments` on `Account.capabilities`
