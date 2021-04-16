@@ -173,7 +173,7 @@ declare module 'stripe' {
       customer?: string;
 
       /**
-       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. Pass an empty string to avoid inheriting any discounts.
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
        */
       discounts?: Stripe.Emptyable<
         Array<InvoiceLineItemListUpcomingParams.Discount>

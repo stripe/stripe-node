@@ -292,6 +292,8 @@ declare module 'stripe' {
              * Bank account verification method.
              */
             verification_method?: AcssDebit.VerificationMethod;
+
+            currency?: string;
           }
 
           namespace AcssDebit {
