@@ -879,7 +879,7 @@ declare module 'stripe' {
        *
        * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
        */
-      external_account?: string;
+      external_account?: string | AccountCreateParams.ExternalAccount;
 
       /**
        * Information about the person represented by the account. This field is null unless `business_type` is set to `individual`.
@@ -1486,6 +1486,43 @@ declare module 'stripe' {
            */
           files?: Array<string>;
         }
+      }
+
+      interface ExternalAccount {
+        /**
+         * The type of external account.
+         */
+        object: string;
+
+        /**
+         * The country in which the bank account is located.
+         */
+        country: string;
+
+        /**
+         * The currency the bank account is in. This must be a country/currency pairing that [Stripe supports](https://stripe.com/docs/payouts).
+         */
+        currency: string;
+
+        /**
+         * The name of the person or business that owns the bank account. This field is required when attaching the bank account to a Customer object.
+         */
+        account_holder_name?: string;
+
+        /**
+         * The type of entity that holds the account. This can be either individual or company. This field is required when attaching the bank account to a Customer object.
+         */
+        account_holder_type?: string;
+
+        /**
+         * The routing number, sort code, or other country-appropriate institution number for the bank account. For US bank accounts, this is required and should be the ACH routing number, not the wire routing number. If you are providing an IBAN for account_number, this field is not required.
+         */
+        routing_number?: string;
+
+        /**
+         * The account number for the bank account, in string form. Must be a checking account.
+         */
+        account_number: string;
       }
 
       interface Individual {
