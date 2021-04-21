@@ -258,6 +258,7 @@ declare module 'stripe' {
             | 'public_company'
             | 'public_corporation'
             | 'public_partnership'
+            | 'single_member_llc'
             | 'sole_proprietorship'
             | 'tax_exempt_government_instrumentality'
             | 'unincorporated_association'
