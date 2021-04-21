@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.145.0 - 2021-04-21
+* [#1143](https://github.com/stripe/stripe-node/pull/1143) API Updates
+  * Add support for `single_member_llc` as an enum member of `Account.company.structure` and `TokenCreateParams.account.company.structure` added new enum members: 
+  * Add support for `dhl` and `royal_mail` as enum members of `Issuing.Card.shipping.carrier`.
+* [#1142](https://github.com/stripe/stripe-node/pull/1142) Improve type definition for for `AccountCreateParams.external_account`
+
 ## 8.144.0 - 2021-04-16
 * [#1140](https://github.com/stripe/stripe-node/pull/1140) API Updates
   * Add support for `currency` on `Checkout.Session.PaymentMethodOptions.AcssDebit`
