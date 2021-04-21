@@ -162,7 +162,7 @@ declare module 'stripe' {
         }
 
         namespace Shipping {
-          type Carrier = 'fedex' | 'usps';
+          type Carrier = 'dhl' | 'fedex' | 'royal_mail' | 'usps';
 
           type Service = 'express' | 'priority' | 'standard';
 
