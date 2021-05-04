@@ -418,6 +418,8 @@ declare module 'stripe' {
 
         card?: PaymentMethodOptions.Card;
 
+        card_present?: PaymentMethodOptions.CardPresent;
+
         oxxo?: PaymentMethodOptions.Oxxo;
 
         p24?: PaymentMethodOptions.P24;
@@ -491,7 +493,7 @@ declare module 'stripe' {
           installments: Card.Installments | null;
 
           /**
-           * Selected network to process this PaymentIntent on. Depends on the available networks of the card attached to the PaymentIntent. Can be only set confirm-time.
+           * Selected network to process this payment intent on. Depends on the available networks of the card attached to the payment intent. Can be only set confirm-time.
            */
           network: Card.Network | null;
 
@@ -571,6 +573,8 @@ declare module 'stripe' {
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
+
+        interface CardPresent {}
 
         interface Oxxo {
           /**
@@ -1269,6 +1273,11 @@ declare module 'stripe' {
         card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
 
         /**
+         * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
+         */
+        card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -1430,6 +1439,8 @@ declare module 'stripe' {
 
           type RequestThreeDSecure = 'any' | 'automatic';
         }
+
+        interface CardPresent {}
 
         interface Oxxo {
           /**
@@ -2048,6 +2059,11 @@ declare module 'stripe' {
         card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
 
         /**
+         * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
+         */
+        card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -2209,6 +2225,8 @@ declare module 'stripe' {
 
           type RequestThreeDSecure = 'any' | 'automatic';
         }
+
+        interface CardPresent {}
 
         interface Oxxo {
           /**
@@ -2941,6 +2959,11 @@ declare module 'stripe' {
         card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
 
         /**
+         * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
+         */
+        card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -3102,6 +3125,8 @@ declare module 'stripe' {
 
           type RequestThreeDSecure = 'any' | 'automatic';
         }
+
+        interface CardPresent {}
 
         interface Oxxo {
           /**

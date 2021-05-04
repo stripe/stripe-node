@@ -286,14 +286,14 @@ declare module 'stripe' {
 
         namespace PaymentMethodOptions {
           interface AcssDebit {
+            currency?: string;
+
             mandate_options?: AcssDebit.MandateOptions;
 
             /**
              * Bank account verification method.
              */
             verification_method?: AcssDebit.VerificationMethod;
-
-            currency?: string;
           }
 
           namespace AcssDebit {
