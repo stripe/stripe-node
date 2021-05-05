@@ -1,7 +1,6 @@
 require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -12,12 +11,12 @@ app.use((req, res, next) => {
   if (req.originalUrl === '/webhook') {
     next();
   } else {
-    bodyParser.json()(req, res, next);
+    express.json()(req, res, next);
   }
 });
 
 // Stripe requires the raw body to construct the event
-app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
+app.post('/webhook', express.raw({type: 'application/json'}), (req, res) => {
   const sig = req.headers['stripe-signature'];
 
   let event;

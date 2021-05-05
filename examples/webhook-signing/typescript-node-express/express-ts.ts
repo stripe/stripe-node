@@ -1,6 +1,5 @@
 import Stripe from 'stripe';
 import express from 'express';
-import bodyParser from 'body-parser';
 import env from 'dotenv';
 
 env.config();
@@ -23,7 +22,7 @@ app.use(
     if (req.originalUrl === '/webhook') {
       next();
     } else {
-      bodyParser.json()(req, res, next);
+      express.json()(req, res, next);
     }
   }
 );
@@ -31,7 +30,7 @@ app.use(
 app.post(
   '/webhook',
   // Stripe requires the raw body to construct the event
-  bodyParser.raw({type: 'application/json'}),
+  express.raw({type: 'application/json'}),
   (req: express.Request, res: express.Response): void => {
     const sig = req.headers['stripe-signature'];
 
