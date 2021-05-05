@@ -1,7 +1,11 @@
 # CHANGELOG
 
+## 8.147.0 - 2021-05-05
+* [#1153](https://github.com/stripe/stripe-node/pull/1153) API Updates
+  * Add support for `payment_intent` on `Radar.EarlyFraudWarning`
+
 ## 8.146.0 - 2021-05-04
-* Added support for `card_present` on `PaymentIntent#confirm.payment_method_options`, `PaymentIntent#update.payment_method_options`, `PaymentIntent#create.payment_method_options` and `PaymentIntent.payment_method_options`
+* Add support for `card_present` on `PaymentIntent#confirm.payment_method_options`, `PaymentIntent#update.payment_method_options`, `PaymentIntent#create.payment_method_options` and `PaymentIntent.payment_method_options`
 * `SubscriptionItem#create.payment_behavior`, `Subscription#update.payment_behavior`, `Subscription#create.payment_behavior` and `SubscriptionItem#update.payment_behavior` added new enum members: `default_incomplete`
 
 ## 8.145.0 - 2021-04-21
