@@ -41,6 +41,11 @@ declare module 'stripe' {
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
+
+        /**
+         * ID of the Payment Intent this early fraud warning is for, optionally expanded.
+         */
+        payment_intent?: string | Stripe.PaymentIntent;
       }
 
       interface EarlyFraudWarningRetrieveParams {
@@ -60,6 +65,11 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * Only return early fraud warnings for charges that were created by the PaymentIntent specified by this PaymentIntent ID.
+         */
+        payment_intent?: string;
       }
 
       class EarlyFraudWarningsResource {

@@ -1767,7 +1767,7 @@ declare module 'stripe' {
 
         interface CardIssuing {
           /**
-           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](stripe.com/docs/issuing/connect/tos_acceptance).
+           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](https://stripe.com/docs/issuing/connect/tos_acceptance).
            */
           tos_acceptance?: CardIssuing.TosAcceptance;
         }
@@ -2824,7 +2824,7 @@ declare module 'stripe' {
 
         interface CardIssuing {
           /**
-           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](stripe.com/docs/issuing/connect/tos_acceptance).
+           * Details on the account's acceptance of the [Stripe Issuing Terms and Disclosures](https://stripe.com/docs/issuing/connect/tos_acceptance).
            */
           tos_acceptance?: CardIssuing.TosAcceptance;
         }
