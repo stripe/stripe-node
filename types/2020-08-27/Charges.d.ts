@@ -531,7 +531,12 @@ declare module 'stripe' {
           transit_number: string | null;
         }
 
-        interface AfterpayClearpay {}
+        interface AfterpayClearpay {
+          /**
+           * Order identifier shown to the customer in Afterpay's online portal.
+           */
+          reference: string | null;
+        }
 
         interface Alipay {
           /**
