@@ -412,6 +412,8 @@ declare module 'stripe' {
       interface PaymentMethodOptions {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
+        afterpay_clearpay?: PaymentMethodOptions.AfterpayClearpay;
+
         alipay?: PaymentMethodOptions.Alipay;
 
         bancontact?: PaymentMethodOptions.Bancontact;
@@ -469,6 +471,14 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface AfterpayClearpay {
+          /**
+           * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
+           * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+           */
+          reference: string | null;
         }
 
         interface Alipay {}
@@ -1258,6 +1268,13 @@ declare module 'stripe' {
         acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
 
         /**
+         * If this is a `afterpay_clearpay` PaymentMethod, this sub-hash contains details about the Afterpay Clearpay payment method options.
+         */
+        afterpay_clearpay?: Stripe.Emptyable<
+          PaymentMethodOptions.AfterpayClearpay
+        >;
+
+        /**
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
@@ -1343,6 +1360,14 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface AfterpayClearpay {
+          /**
+           * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
+           * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+           */
+          reference?: string;
         }
 
         interface Alipay {}
@@ -2044,6 +2069,13 @@ declare module 'stripe' {
         acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
 
         /**
+         * If this is a `afterpay_clearpay` PaymentMethod, this sub-hash contains details about the Afterpay Clearpay payment method options.
+         */
+        afterpay_clearpay?: Stripe.Emptyable<
+          PaymentMethodOptions.AfterpayClearpay
+        >;
+
+        /**
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
@@ -2129,6 +2161,14 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface AfterpayClearpay {
+          /**
+           * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
+           * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+           */
+          reference?: string;
         }
 
         interface Alipay {}
@@ -2944,6 +2984,13 @@ declare module 'stripe' {
         acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
 
         /**
+         * If this is a `afterpay_clearpay` PaymentMethod, this sub-hash contains details about the Afterpay Clearpay payment method options.
+         */
+        afterpay_clearpay?: Stripe.Emptyable<
+          PaymentMethodOptions.AfterpayClearpay
+        >;
+
+        /**
          * If this is a `alipay` PaymentMethod, this sub-hash contains details about the Alipay payment method options.
          */
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
@@ -3029,6 +3076,14 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface AfterpayClearpay {
+          /**
+           * Order identifier shown to the customer in Afterpay's online portal. We recommend using a value that helps you answer any questions a customer might have about
+           * the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.
+           */
+          reference?: string;
         }
 
         interface Alipay {}
