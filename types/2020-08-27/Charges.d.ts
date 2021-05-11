@@ -533,7 +533,7 @@ declare module 'stripe' {
 
         interface AfterpayClearpay {
           /**
-           * Order identifier shown to the customer in Afterpay's online portal.
+           * Order identifier shown to the merchant in Afterpay's online portal.
            */
           reference: string | null;
         }
