@@ -943,7 +943,7 @@ declare module 'stripe' {
         /**
          * A publicly available website for handling support issues.
          */
-        support_url?: string;
+        support_url?: Stripe.Emptyable<string>;
 
         /**
          * The business's publicly available website.
@@ -2037,7 +2037,7 @@ declare module 'stripe' {
         /**
          * A publicly available website for handling support issues.
          */
-        support_url?: string;
+        support_url?: Stripe.Emptyable<string>;
 
         /**
          * The business's publicly available website.
