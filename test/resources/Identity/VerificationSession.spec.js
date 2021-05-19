@@ -9,9 +9,9 @@ describe('Identity', () => {
       it('Sends the correct request', () => {
         stripe.identity.verificationSessions.create({type: 'id_number'});
         expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url: '/v1/identity/verification_sessions/vs_123',
-          data: {},
+          method: 'POST',
+          url: '/v1/identity/verification_sessions',
+          data: {type: 'id_number'},
           headers: {},
           settings: {},
         });
