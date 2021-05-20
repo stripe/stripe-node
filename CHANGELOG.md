@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 8.149.0 - 2021-05-19
+* [#1159](https://github.com/stripe/stripe-node/pull/1159) API Updates
+  * Add support for Identity VerificationSupport and VerificationReport APIs
+  * Update Typescript for `CouponCreateParams.duration` and `CouponCreateParams.products` to be optional.
+* [#1158](https://github.com/stripe/stripe-node/pull/1158) API Updates
+  * `AccountUpdateParams.business_profile.support_url` and `AccountCreatParams.business_profile.support_url` changed from `string` to `Stripe.Emptyable<string>`
+  * `File.purpose` added new enum members: `finance_report_run`, `document_provider_identity_document`, and `sigma_scheduled_query` 
+
 ## 8.148.0 - 2021-05-06
 * [#1154](https://github.com/stripe/stripe-node/pull/1154) API Updates
   * Added support for `reference` on `Charge.payment_method_details.afterpay_clearpay`
