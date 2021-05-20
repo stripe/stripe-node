@@ -260,22 +260,22 @@ declare module 'stripe' {
         currently_due: Array<string>;
 
         /**
-         * The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
+         * Fields that are `currently_due` and need to be collected again because validation or verification failed.
          */
         errors: Array<Requirements.Error>;
 
         /**
-         * Fields that need to be collected assuming all volume thresholds are reached. As fields are needed, they are moved to `currently_due` and the account's `current_deadline` is set.
+         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and the account's `current_deadline` becomes set.
          */
         eventually_due: Array<string>;
 
         /**
-         * Fields that weren't collected by the account's `current_deadline`. These fields need to be collected to enable payouts for the person's account.
+         * Fields that weren't collected by the account's `current_deadline`. These fields need to be collected to enable the person's account.
          */
         past_due: Array<string>;
 
         /**
-         * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
+         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
          */
         pending_verification: Array<string>;
       }

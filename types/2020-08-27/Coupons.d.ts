@@ -119,11 +119,6 @@ declare module 'stripe' {
 
     interface CouponCreateParams {
       /**
-       * Specifies how long the discount will be in effect. Can be `forever`, `once`, or `repeating`.
-       */
-      duration: CouponCreateParams.Duration;
-
-      /**
        * A positive integer representing the amount to subtract from an invoice total (required if `percent_off` is not passed).
        */
       amount_off?: number;
@@ -137,6 +132,11 @@ declare module 'stripe' {
        * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `amount_off` parameter (required if `amount_off` is passed).
        */
       currency?: string;
+
+      /**
+       * Specifies how long the discount will be in effect if used on a subscription. Can be `forever`, `once`, or `repeating`. Defaults to `once`.
+       */
+      duration?: CouponCreateParams.Duration;
 
       /**
        * Required only if `duration` is `repeating`, in which case it must be a positive integer that specifies the number of months the discount will be in effect.
@@ -184,7 +184,7 @@ declare module 'stripe' {
         /**
          * An array of Product IDs that this Coupon will apply to.
          */
-        products: Array<string>;
+        products?: Array<string>;
       }
 
       type Duration = 'forever' | 'once' | 'repeating';
@@ -235,9 +235,10 @@ declare module 'stripe' {
        * A coupon has either a percent_off or an amount_off and currency. If you set an amount_off, that amount will be subtracted from any invoice's subtotal. For example, an invoice with a subtotal of 100 will have a final total of 0 if a coupon with an amount_off of 200 is applied to it and an invoice with a subtotal of 300 will have a final total of 100 if a coupon with an amount_off of 200 is applied to it.
        */
       create(
-        params: CouponCreateParams,
+        params?: CouponCreateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Coupon>>;
+      create(options?: RequestOptions): Promise<Stripe.Response<Stripe.Coupon>>;
 
       /**
        * Retrieves the coupon with the given ID.

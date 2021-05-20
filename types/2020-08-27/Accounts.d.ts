@@ -507,37 +507,37 @@ declare module 'stripe' {
 
       interface Requirements {
         /**
-         * The date the fields in `currently_due` must be collected by to keep payouts enabled for the account. These fields might block payouts sooner if the next threshold is reached before these fields are collected.
+         * Date by which the fields in `currently_due` must be collected to keep the account enabled. These fields may disable the account sooner if the next threshold is reached before they are collected.
          */
         current_deadline: number | null;
 
         /**
-         * The fields that need to be collected to keep the account enabled. If not collected by the `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
+         * Fields that need to be collected to keep the account enabled. If not collected by `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
          */
         currently_due: Array<string> | null;
 
         /**
-         * If the account is disabled, this string describes why the account can't create charges or receive payouts. Can be `requirements.past_due`, `requirements.pending_verification`, `rejected.fraud`, `rejected.terms_of_service`, `rejected.listed`, `rejected.other`, `listed`, `under_review`, or `other`.
+         * If the account is disabled, this string describes why. Can be `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.listed`, `rejected.terms_of_service`, `rejected.other`, `under_review`, or `other`.
          */
         disabled_reason: string | null;
 
         /**
-         * The fields that are `currently_due` and need to be collected again because validation or verification failed for some reason.
+         * Fields that are `currently_due` and need to be collected again because validation or verification failed.
          */
         errors: Array<Requirements.Error> | null;
 
         /**
-         * The fields that need to be collected assuming all volume thresholds are reached. As they become required, these fields appear in `currently_due` as well, and the `current_deadline` is set.
+         * Fields that need to be collected assuming all volume thresholds are reached. As they become required, they appear in `currently_due` as well, and `current_deadline` becomes set.
          */
         eventually_due: Array<string> | null;
 
         /**
-         * The fields that weren't collected by the `current_deadline`. These fields need to be collected to re-enable the account.
+         * Fields that weren't collected by `current_deadline`. These fields need to be collected to enable the account.
          */
         past_due: Array<string> | null;
 
         /**
-         * Fields that may become required depending on the results of verification or review. An empty array unless an asynchronous verification is pending. If verification fails, the fields in this array become required and move to `currently_due` or `past_due`.
+         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
          */
         pending_verification: Array<string> | null;
       }

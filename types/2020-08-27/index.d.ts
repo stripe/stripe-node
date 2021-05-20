@@ -39,6 +39,8 @@
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./FileLinks.d.ts' />
 ///<reference path='./Files.d.ts' />
+///<reference path='./Identity/VerificationReports.d.ts' />
+///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
 ///<reference path='./Invoices.d.ts' />
@@ -168,6 +170,10 @@ declare module 'stripe' {
       sessions: Stripe.BillingPortal.SessionsResource;
     };
     checkout: {sessions: Stripe.Checkout.SessionsResource};
+    identity: {
+      verificationReports: Stripe.Identity.VerificationReportsResource;
+      verificationSessions: Stripe.Identity.VerificationSessionsResource;
+    };
     issuing: {
       authorizations: Stripe.Issuing.AuthorizationsResource;
       cards: Stripe.Issuing.CardsResource;

@@ -60,7 +60,7 @@ declare module 'stripe' {
         customer: string;
 
         /**
-         * The [configuration](https://stripe.com/docs/api/customer_portal/configuration) to use for this session, describing its functionality and features. If not specified, the session uses the default configuration.
+         * The ID of an existing [configuration](https://stripe.com/docs/api/customer_portal/configuration) to use for this session, describing its functionality and features. If not specified, the session uses the default configuration.
          */
         configuration?: string;
 
