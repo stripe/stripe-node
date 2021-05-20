@@ -184,7 +184,7 @@ declare module 'stripe' {
         /**
          * An array of Product IDs that this Coupon will apply to.
          */
-        products: Array<string>;
+        products?: Array<string>;
       }
 
       type Duration = 'forever' | 'once' | 'repeating';

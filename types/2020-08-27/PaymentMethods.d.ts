@@ -1047,6 +1047,11 @@ declare module 'stripe' {
       /**
        * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
        */
+      acss_debit?: PaymentMethodUpdateParams.AcssDebit;
+
+      /**
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
+       */
       au_becs_debit?: PaymentMethodUpdateParams.AuBecsDebit;
 
       /**
@@ -1081,6 +1086,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentMethodUpdateParams {
+      interface AcssDebit {}
+
       interface AuBecsDebit {}
 
       interface BacsDebit {}

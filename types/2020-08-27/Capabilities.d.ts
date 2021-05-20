@@ -78,7 +78,7 @@ declare module 'stripe' {
         past_due: Array<string>;
 
         /**
-         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields become required and move to `currently_due` or `past_due`.
+         * Fields that may become required depending on the results of verification or review. Will be an empty array unless an asynchronous verification is pending. If verification fails, these fields move to `eventually_due`, `currently_due`, or `past_due`.
          */
         pending_verification: Array<string>;
       }
