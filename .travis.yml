@@ -4,7 +4,7 @@ cache:
   directories:
     - node_modules
 node_js:
-  - '8'
   - '10'
+  - '16'
 sudo: false
 after_success: yarn report && yarn coveralls
