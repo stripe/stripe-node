@@ -18,7 +18,7 @@ declare module 'stripe' {
         object: 'identity.verification_session';
 
         /**
-         * This string value can be passed to stripe.js to embed a verification flow directly into your app.
+         * The short-lived client secret used by Stripe.js to [show a verification modal](https://stripe.com/docs/js/identity/modal) inside your app. This client secret expires after 24 hours and can only be used once. Don't store it, log it, embed it in a URL, or expose it to anyone other than the user. Make sure that you have TLS enabled on any page that includes the client secret. Refer to our docs on [passing the client secret to the frontend](https://stripe.com/docs/identity/verification-sessions#client-secret) to learn more.
          */
         client_secret: string | null;
 
@@ -28,12 +28,12 @@ declare module 'stripe' {
         created: number;
 
         /**
-         * Hash of details on the last error encountered in the verification process.
+         * If present, this property tells you the last error encountered when processing the verification.
          */
         last_error: VerificationSession.LastError | null;
 
         /**
-         * Link to the most recent completed VerificationReport for this Session.
+         * ID of the most recent VerificationReport. [Learn more about accessing detailed verification results.](https://stripe.com/docs/identity/verification-checks)
          */
         last_verification_report:
           | string
@@ -58,22 +58,22 @@ declare module 'stripe' {
         redaction: VerificationSession.Redaction | null;
 
         /**
-         * Status of this VerificationSession. Read more about each [VerificationSession status](https://stripe.com/docs/identity/how-sessions-work).
+         * Status of this VerificationSession. [Learn more about the lifecycle of sessions](https://stripe.com/docs/identity/how-sessions-work).
          */
         status: VerificationSession.Status;
 
         /**
-         * Type of report requested.
+         * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed.
          */
         type: VerificationSession.Type;
 
         /**
-         * Link to the Stripe-hosted identity verification portal that you can send a user to for verification.
+         * The short-lived URL that you use to redirect a user to Stripe to submit their identity information. This URL expires after 24 hours and can only be used once. Don't store it, log it, send it in emails or expose it to anyone other than the user. Refer to our docs on [verifying identity documents](https://stripe.com/docs/identity/verify-identity-documents?platform=web&type=redirect) to learn how to redirect users to Stripe.
          */
         url: string | null;
 
         /**
-         * Hash of verified data about this person that results from a successful verification report.
+         * The user's verified data.
          */
         verified_outputs: VerificationSession.VerifiedOutputs | null;
       }
@@ -86,7 +86,7 @@ declare module 'stripe' {
           code: LastError.Code | null;
 
           /**
-           * A human-readable message giving the reason for the failure. These messages can be shown to your users.
+           * A message that explains the reason for verification or user-session failure.
            */
           reason: string | null;
         }
@@ -119,22 +119,22 @@ declare module 'stripe' {
         namespace Options {
           interface Document {
             /**
-             * Restrict the list of allowed document type to these types.
+             * Array of strings of allowed identity document types. If the provided identity document isn't one of the allowed types, the verification check will fail with a document_type_not_allowed error code.
              */
             allowed_types?: Array<Document.AllowedType>;
 
             /**
-             * Require that the user provide an id number which will be verified.
+             * Collect an ID number and perform an [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
              */
             require_id_number?: boolean;
 
             /**
-             * Require that the user capture documents live with their webcam or phone camera.
+             * Disable image uploads, identity document images have to be captured using the device's camera.
              */
             require_live_capture?: boolean;
 
             /**
-             * Require that the user provide a selfie to compare against the document photo.
+             * Capture a face image and perform a [selfie check](https://stripe.com/docs/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://stripe.com/docs/identity/selfie).
              */
             require_matching_selfie?: boolean;
           }
@@ -163,32 +163,32 @@ declare module 'stripe' {
 
         interface VerifiedOutputs {
           /**
-           * Verified address of the user.
+           * The user's verified address.
            */
           address: Stripe.Address | null;
 
           /**
-           * Verified date of birth of the user.
+           * The user's verified date of birth.
            */
           dob: VerifiedOutputs.Dob | null;
 
           /**
-           * Verified first name of the user.
+           * The user's verified first name.
            */
           first_name: string | null;
 
           /**
-           * Verified national id number of the user.
+           * The user's verified id number.
            */
           id_number: string | null;
 
           /**
-           * Country / type of verified national id number.
+           * The user's veriifed id number type.
            */
           id_number_type: VerifiedOutputs.IdNumberType | null;
 
           /**
-           * Verified last name of the user.
+           * The user's verified last name.
            */
           last_name: string | null;
         }
@@ -217,7 +217,7 @@ declare module 'stripe' {
 
       interface VerificationSessionCreateParams {
         /**
-         * The primary type of verification being performed with this Session.
+         * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed.
          */
         type: VerificationSessionCreateParams.Type;
 
@@ -232,12 +232,12 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * An optional hash of configuration options for each verification rule that is requested
+         * A set of options for the session's verification checks.
          */
         options?: VerificationSessionCreateParams.Options;
 
         /**
-         * The URL the user will be redirected to after Stripe collects the required identity information.
+         * The URL that the user will be redirected to upon completing the verification flow.
          */
         return_url?: string;
       }
@@ -245,7 +245,7 @@ declare module 'stripe' {
       namespace VerificationSessionCreateParams {
         interface Options {
           /**
-           * Verification configuration options for the `document` record_type.
+           * Options that apply to the [document check](https://stripe.com/docs/identity/verification-checks?type=document).
            */
           document?: Stripe.Emptyable<Options.Document>;
         }
@@ -253,22 +253,22 @@ declare module 'stripe' {
         namespace Options {
           interface Document {
             /**
-             * Restrict the list of allowed document type to these types.
+             * Array of strings of allowed identity document types. If the provided identity document isn't one of the allowed types, the verification check will fail with a document_type_not_allowed error code.
              */
             allowed_types?: Array<Document.AllowedType>;
 
             /**
-             * Require that the user provide an id number which will be verified.
+             * Collect an ID number and perform an [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
              */
             require_id_number?: boolean;
 
             /**
-             * Require that the user capture documents live with their webcam or phone camera.
+             * Disable image uploads, identity document images have to be captured using the device's camera.
              */
             require_live_capture?: boolean;
 
             /**
-             * Require that the user provide a selfie to compare against the document photo.
+             * Capture a face image and perform a [selfie check](https://stripe.com/docs/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://stripe.com/docs/identity/selfie).
              */
             require_matching_selfie?: boolean;
           }
@@ -300,12 +300,12 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * New configuration options.
+         * A set of options for the session's verification checks.
          */
         options?: VerificationSessionUpdateParams.Options;
 
         /**
-         * New verification type.
+         * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed.
          */
         type?: VerificationSessionUpdateParams.Type;
       }
@@ -313,7 +313,7 @@ declare module 'stripe' {
       namespace VerificationSessionUpdateParams {
         interface Options {
           /**
-           * Verification configuration options for the `document` record_type.
+           * Options that apply to the [document check](https://stripe.com/docs/identity/verification-checks?type=document).
            */
           document?: Stripe.Emptyable<Options.Document>;
         }
@@ -321,22 +321,22 @@ declare module 'stripe' {
         namespace Options {
           interface Document {
             /**
-             * Restrict the list of allowed document type to these types.
+             * Array of strings of allowed identity document types. If the provided identity document isn't one of the allowed types, the verification check will fail with a document_type_not_allowed error code.
              */
             allowed_types?: Array<Document.AllowedType>;
 
             /**
-             * Require that the user provide an id number which will be verified.
+             * Collect an ID number and perform an [ID number check](https://stripe.com/docs/identity/verification-checks?type=id-number) with the document's extracted name and date of birth.
              */
             require_id_number?: boolean;
 
             /**
-             * Require that the user capture documents live with their webcam or phone camera.
+             * Disable image uploads, identity document images have to be captured using the device's camera.
              */
             require_live_capture?: boolean;
 
             /**
-             * Require that the user provide a selfie to compare against the document photo.
+             * Capture a face image and perform a [selfie check](https://stripe.com/docs/identity/verification-checks?type=selfie) comparing a photo ID and a picture of your user's face. [Learn more](https://stripe.com/docs/identity/selfie).
              */
             require_matching_selfie?: boolean;
           }
@@ -358,7 +358,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Only return VerificationSessions with this status.
+         * Only return VerificationSessions with this status. [Learn more about the lifecycle of sessions](https://stripe.com/docs/identity/how-sessions-work).
          */
         status?: VerificationSessionListParams.Status;
       }
@@ -383,7 +383,13 @@ declare module 'stripe' {
 
       class VerificationSessionsResource {
         /**
-         * Create a new VerificationSession to begin the verification process.
+         * Creates a VerificationSession object.
+         *
+         * After the VerificationSession is created, display a verification modal using the session client_secret or send your users to the session's url.
+         *
+         * If your API key is in test mode, verification checks won't actually process, though everything else will occur as if in live mode.
+         *
+         * Related guide: [Verify your users' identity documents](https://stripe.com/docs/identity/verify-identity-documents).
          */
         create(
           params: VerificationSessionCreateParams,
@@ -391,10 +397,10 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Identity.VerificationSession>>;
 
         /**
-         * Retrieves an existing VerificationSession. When the session status is requires_input, this method guarantees
-         * that the redirect url is fresh: if your user has previously visited this session, a new url will be returned.
-         * Before redirecting your user to Stripe, ensure that you have just Created or Retrieved the VerificationSession;
-         * never cache or store the url.
+         * Retrieves the details of a VerificationSession that was previously created.
+         *
+         * When the session status is requires_input, you can use this method to retrieve a valid
+         * client_secret or url to allow re-submission.
          */
         retrieve(
           id: string,
@@ -407,7 +413,10 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Identity.VerificationSession>>;
 
         /**
-         * Update properties on a VerificationSession
+         * Updates a VerificationSession object.
+         *
+         * When the session status is requires_input, you can use this method to update the
+         * verification check and options.
          */
         update(
           id: string,
@@ -416,7 +425,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Identity.VerificationSession>>;
 
         /**
-         * List all verification sessions. Can optionally provide a status to return only VerificationSessions with that status. Can optionally specify a query filter on created timestamp.
+         * Returns a list of VerificationSessions
          */
         list(
           params?: VerificationSessionListParams,
@@ -427,10 +436,9 @@ declare module 'stripe' {
         ): ApiListPromise<Stripe.Identity.VerificationSession>;
 
         /**
-         * Mark a VerificationSession as canceled.
+         * A VerificationSession object can be canceled when it is in requires_input [status](https://stripe.com/docs/identity/how-sessions-work).
          *
-         * If the VerificationSession is in the processing state, you must wait until it
-         * finishes before cancelling it.
+         * Once canceled, future submission attempts are disabled. This cannot be undone. [Learn more](https://stripe.com/docs/identity/verification-sessions#cancel).
          */
         cancel(
           id: string,
@@ -443,24 +451,25 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Identity.VerificationSession>>;
 
         /**
-         * Redact a VerificationSession to delete all collected information from Stripe.
-         * This will redact the VerificationSession and all objects related to it, including
-         * VerificationReports, Events, Files, request logs, etc. This redaction process may
-         * take up to four days. When the redaction process is in progress, the
-         * VerificationSession's redaction.status field will be set to processing; when
-         * the process is finished, it will change to redacted.
+         * Redact a VerificationSession to remove all collected information from Stripe. This will redact
+         * the VerificationSession and all objects related to it, including VerificationReports, Events,
+         * request logs, etc.
          *
-         * Redaction is irreversible. Redacted objects are still accessible in the Stripe API,
-         * but all the fields that contain personal data will be replaced by the string
-         * [redacted] or a similar placeholder. The metadata field will also be erased.
-         * Redacted objects cannot be updated or used for any purpose.
+         * A VerificationSession object can be redacted when it is in requires_input or verified
+         * [status](https://stripe.com/docs/identity/how-sessions-work). Redacting a VerificationSession in requires_action
+         * state will automatically cancel it.
          *
-         * If the VerificationSession is in the processing state, you must wait until it
-         * finishes before redacting it. Redacting a VerificationSession in requires_action
-         * state will automatically [cancel](https://stripe.com/docs/api/verification_sessions/cancel) it.
+         * The redaction process may take up to four days. When the redaction process is in progress, the
+         * VerificationSession's redaction.status field will be set to processing; when the process is
+         * finished, it will change to redacted and an identity.verification_session.redacted event
+         * will be emitted.
          *
-         * An [identity.verification_session.redacted](https://stripe.com/docs/api/events/types#event_types-identity.verification_session.redacted)
-         * webhook will be sent when a VerificationSession is redacted.
+         * Redaction is irreversible. Redacted objects are still accessible in the Stripe API, but all the
+         * fields that contain personal data will be replaced by the string [redacted] or a similar
+         * placeholder. The metadata field will also be erased. Redacted objects cannot be updated or
+         * used for any purpose.
+         *
+         * [Learn more](https://stripe.com/docs/identity/verification-sessions#redact).
          */
         redact(
           id: string,

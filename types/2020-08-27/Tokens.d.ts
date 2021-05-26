@@ -566,6 +566,11 @@ declare module 'stripe' {
         dob?: Stripe.Emptyable<Person.Dob>;
 
         /**
+         * Documents that may be submitted to satisfy various informational requests.
+         */
+        documents?: Person.Documents;
+
+        /**
          * The person's email address.
          */
         email?: string;
@@ -699,6 +704,46 @@ declare module 'stripe' {
            * The four-digit year of birth.
            */
           year: number;
+        }
+
+        interface Documents {
+          /**
+           * One or more documents that demonstrate proof that this person is authorized to represent the company.
+           */
+          company_authorization?: Documents.CompanyAuthorization;
+
+          /**
+           * One or more documents showing the person's passport page with photo and personal data.
+           */
+          passport?: Documents.Passport;
+
+          /**
+           * One or more documents showing the person's visa required for living in the country where they are residing.
+           */
+          visa?: Documents.Visa;
+        }
+
+        namespace Documents {
+          interface CompanyAuthorization {
+            /**
+             * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+             */
+            files?: Array<string>;
+          }
+
+          interface Passport {
+            /**
+             * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+             */
+            files?: Array<string>;
+          }
+
+          interface Visa {
+            /**
+             * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+             */
+            files?: Array<string>;
+          }
         }
 
         interface Relationship {

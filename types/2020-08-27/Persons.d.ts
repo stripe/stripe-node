@@ -461,6 +461,11 @@ declare module 'stripe' {
       dob?: Stripe.Emptyable<PersonCreateParams.Dob>;
 
       /**
+       * Documents that may be submitted to satisfy various informational requests.
+       */
+      documents?: PersonCreateParams.Documents;
+
+      /**
        * The person's email address.
        */
       email?: string;
@@ -606,6 +611,46 @@ declare module 'stripe' {
         year: number;
       }
 
+      interface Documents {
+        /**
+         * One or more documents that demonstrate proof that this person is authorized to represent the company.
+         */
+        company_authorization?: Documents.CompanyAuthorization;
+
+        /**
+         * One or more documents showing the person's passport page with photo and personal data.
+         */
+        passport?: Documents.Passport;
+
+        /**
+         * One or more documents showing the person's visa required for living in the country where they are residing.
+         */
+        visa?: Documents.Visa;
+      }
+
+      namespace Documents {
+        interface CompanyAuthorization {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface Passport {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface Visa {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+      }
+
       interface Relationship {
         /**
          * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
@@ -704,6 +749,11 @@ declare module 'stripe' {
        * The person's date of birth.
        */
       dob?: Stripe.Emptyable<PersonUpdateParams.Dob>;
+
+      /**
+       * Documents that may be submitted to satisfy various informational requests.
+       */
+      documents?: PersonUpdateParams.Documents;
 
       /**
        * The person's email address.
@@ -849,6 +899,46 @@ declare module 'stripe' {
          * The four-digit year of birth.
          */
         year: number;
+      }
+
+      interface Documents {
+        /**
+         * One or more documents that demonstrate proof that this person is authorized to represent the company.
+         */
+        company_authorization?: Documents.CompanyAuthorization;
+
+        /**
+         * One or more documents showing the person's passport page with photo and personal data.
+         */
+        passport?: Documents.Passport;
+
+        /**
+         * One or more documents showing the person's visa required for living in the country where they are residing.
+         */
+        visa?: Documents.Visa;
+      }
+
+      namespace Documents {
+        interface CompanyAuthorization {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface Passport {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface Visa {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
       }
 
       interface Relationship {
