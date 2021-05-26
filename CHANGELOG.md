@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.150.0 - 2021-05-26
+* [#1163](https://github.com/stripe/stripe-node/pull/1163) API Updates
+  * Added support for `documents` on `PersonUpdateParams`, `PersonCreateParams` and `TokenCreateParams.person`
+
 ## 8.149.0 - 2021-05-19
 * [#1159](https://github.com/stripe/stripe-node/pull/1159) API Updates
   * Add support for Identity VerificationSupport and VerificationReport APIs
