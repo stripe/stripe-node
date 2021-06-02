@@ -183,7 +183,7 @@ declare module 'stripe' {
           id_number: string | null;
 
           /**
-           * The user's veriifed id number type.
+           * The user's verified id number type.
            */
           id_number_type: VerifiedOutputs.IdNumberType | null;
 
