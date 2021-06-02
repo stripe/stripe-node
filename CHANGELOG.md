@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.151.0 - 2021-06-02
+* [#1166](https://github.com/stripe/stripe-node/pull/1166) API Updates
+  * Added support for `llc`, `free_zone_llc`, `free_zone_establishment` and `sole_establishment` to the `structure` enum on `Account.company`, `AccountCreateParams.company`, `AccountUpdateParams.company` and `TokenCreateParams.account.company`.
+
 ## 8.150.0 - 2021-05-26
 * [#1163](https://github.com/stripe/stripe-node/pull/1163) API Updates
   * Added support for `documents` on `PersonUpdateParams`, `PersonCreateParams` and `TokenCreateParams.person`
