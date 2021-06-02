@@ -459,10 +459,13 @@ declare module 'stripe' {
         }
 
         type Structure =
+          | 'free_zone_establishment'
+          | 'free_zone_llc'
           | 'government_instrumentality'
           | 'governmental_unit'
           | 'incorporated_non_profit'
           | 'limited_liability_partnership'
+          | 'llc'
           | 'multi_member_llc'
           | 'private_company'
           | 'private_corporation'
@@ -471,6 +474,7 @@ declare module 'stripe' {
           | 'public_corporation'
           | 'public_partnership'
           | 'single_member_llc'
+          | 'sole_establishment'
           | 'sole_proprietorship'
           | 'tax_exempt_government_instrumentality'
           | 'unincorporated_association'
@@ -1375,10 +1379,13 @@ declare module 'stripe' {
         }
 
         type Structure =
+          | 'free_zone_establishment'
+          | 'free_zone_llc'
           | 'government_instrumentality'
           | 'governmental_unit'
           | 'incorporated_non_profit'
           | 'limited_liability_partnership'
+          | 'llc'
           | 'multi_member_llc'
           | 'private_company'
           | 'private_corporation'
@@ -1387,6 +1394,7 @@ declare module 'stripe' {
           | 'public_corporation'
           | 'public_partnership'
           | 'single_member_llc'
+          | 'sole_establishment'
           | 'sole_proprietorship'
           | 'tax_exempt_government_instrumentality'
           | 'unincorporated_association'
@@ -2469,10 +2477,13 @@ declare module 'stripe' {
         }
 
         type Structure =
+          | 'free_zone_establishment'
+          | 'free_zone_llc'
           | 'government_instrumentality'
           | 'governmental_unit'
           | 'incorporated_non_profit'
           | 'limited_liability_partnership'
+          | 'llc'
           | 'multi_member_llc'
           | 'private_company'
           | 'private_corporation'
@@ -2481,6 +2492,7 @@ declare module 'stripe' {
           | 'public_corporation'
           | 'public_partnership'
           | 'single_member_llc'
+          | 'sole_establishment'
           | 'sole_proprietorship'
           | 'tax_exempt_government_instrumentality'
           | 'unincorporated_association'
@@ -3050,9 +3062,9 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Account>;
 
       /**
-       * With [Connect](https://stripe.com/docs/connect), you can delete Custom or Express accounts you manage.
+       * With [Connect](https://stripe.com/docs/connect), you can delete accounts you manage.
        *
-       * Accounts created using test-mode keys can be deleted at any time. Accounts created using live-mode keys can only be deleted once all balances are zero.
+       * Accounts created using test-mode keys can be deleted at any time. Custom or Express accounts created using live-mode keys can only be deleted once all balances are zero.
        *
        * If you want to delete your own account, use the [account information tab in your account settings](https://dashboard.stripe.com/account) instead.
        */
