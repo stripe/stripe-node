@@ -33,6 +33,8 @@ declare module 'stripe' {
          */
         amount_total: number | null;
 
+        automatic_tax?: Session.AutomaticTax;
+
         /**
          * Describes whether Checkout should collect the customer's billing address.
          */
@@ -166,6 +168,22 @@ declare module 'stripe' {
       }
 
       namespace Session {
+        interface AutomaticTax {
+          /**
+           * Indicates whether automatic tax is enabled for the session
+           */
+          enabled: boolean;
+
+          /**
+           * The status of the most recent automated tax calculation for this session.
+           */
+          status: AutomaticTax.Status | null;
+        }
+
+        namespace AutomaticTax {
+          type Status = 'complete' | 'failed' | 'requires_location_inputs';
+        }
+
         type BillingAddressCollection = 'auto' | 'required';
 
         interface CustomerDetails {
@@ -703,6 +721,8 @@ declare module 'stripe' {
          */
         allow_promotion_codes?: boolean;
 
+        automatic_tax?: SessionCreateParams.AutomaticTax;
+
         /**
          * Specify whether Checkout should collect the customer's billing address.
          */
@@ -737,6 +757,11 @@ declare module 'stripe' {
          * complete, use the `customer` field.
          */
         customer_email?: string;
+
+        /**
+         * Controls what fields on Customer can be updated by the Checkout Session. Can only be provided when `customer` is provided.
+         */
+        customer_update?: SessionCreateParams.CustomerUpdate;
 
         /**
          * The coupon or promotion code to apply to this Session. Currently, only up to one may be specified.
@@ -812,7 +837,41 @@ declare module 'stripe' {
       }
 
       namespace SessionCreateParams {
+        interface AutomaticTax {
+          /**
+           * Set to true to enable automatic taxes.
+           */
+          enabled: boolean;
+        }
+
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface CustomerUpdate {
+          /**
+           * Describes whether Checkout saves the billing address onto `customer.address`.
+           * To always collect a full billing address, use `billing_address_collection`. Defaults to `never`.
+           */
+          address?: CustomerUpdate.Address;
+
+          /**
+           * Describes whether Checkout saves the name onto `customer.name`. Defaults to `never`.
+           */
+          name?: CustomerUpdate.Name;
+
+          /**
+           * Describes whether Checkout saves shipping information onto `customer.shipping`.
+           * To collect shipping information, use `shipping_address_collection`. Defaults to `never`.
+           */
+          shipping?: CustomerUpdate.Shipping;
+        }
+
+        namespace CustomerUpdate {
+          type Address = 'auto' | 'never';
+
+          type Name = 'auto' | 'never';
+
+          type Shipping = 'auto' | 'never';
+        }
 
         interface Discount {
           /**
@@ -925,6 +984,11 @@ declare module 'stripe' {
             recurring?: PriceData.Recurring;
 
             /**
+             * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
              * A non-negative integer in %s representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
              */
             unit_amount?: number;
@@ -956,6 +1020,11 @@ declare module 'stripe' {
                * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
                */
               name: string;
+
+              /**
+               * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+               */
+              tax_code?: string;
             }
 
             interface Recurring {
@@ -973,6 +1042,8 @@ declare module 'stripe' {
             namespace Recurring {
               type Interval = 'day' | 'month' | 'week' | 'year';
             }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
           }
         }
 

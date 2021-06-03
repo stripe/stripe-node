@@ -274,6 +274,11 @@ declare module 'stripe' {
         product: string;
 
         /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: PriceData.TaxBehavior;
+
+        /**
          * A positive integer in %s (or 0 for a free price) representing how much to charge.
          */
         unit_amount?: number;
@@ -282,6 +287,10 @@ declare module 'stripe' {
          * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
+      }
+
+      namespace PriceData {
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
     }
 
@@ -396,6 +405,11 @@ declare module 'stripe' {
         product: string;
 
         /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: PriceData.TaxBehavior;
+
+        /**
          * A positive integer in %s (or 0 for a free price) representing how much to charge.
          */
         unit_amount?: number;
@@ -404,6 +418,10 @@ declare module 'stripe' {
          * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
+      }
+
+      namespace PriceData {
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
     }
 

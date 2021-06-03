@@ -68,6 +68,8 @@ declare module 'stripe' {
        */
       auto_advance?: boolean;
 
+      automatic_tax?: Invoice.AutomaticTax;
+
       /**
        * Indicates the reason why the invoice was created. `subscription_cycle` indicates an invoice created by a subscription advancing into a new period. `subscription_create` indicates an invoice created due to creating a subscription. `subscription_update` indicates an invoice created due to updating a subscription. `subscription` is set for all old invoices to indicate either a change to a subscription or a period advancement. `manual` is set for all invoices unrelated to a subscription (for example: created via the invoice editor). The `upcoming` value is reserved for simulated invoices per the upcoming invoice endpoint. `subscription_threshold` indicates an invoice created due to a billing threshold being reached.
        */
@@ -335,6 +337,22 @@ declare module 'stripe' {
     }
 
     namespace Invoice {
+      interface AutomaticTax {
+        /**
+         * Whether Stripe automatically computes tax on this invoice.
+         */
+        enabled: boolean;
+
+        /**
+         * The status of the most recent automated tax calculation for this invoice.
+         */
+        status: AutomaticTax.Status | null;
+      }
+
+      namespace AutomaticTax {
+        type Status = 'complete' | 'failed' | 'requires_location_inputs';
+      }
+
       type BillingReason =
         | 'automatic_pending_invoice_item_invoice'
         | 'manual'
@@ -744,6 +762,11 @@ declare module 'stripe' {
       auto_advance?: boolean;
 
       /**
+       * Settings for automatic tax lookup for this invoice.
+       */
+      automatic_tax?: InvoiceCreateParams.AutomaticTax;
+
+      /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
        */
       collection_method?: InvoiceCreateParams.CollectionMethod;
@@ -830,6 +853,13 @@ declare module 'stripe' {
     }
 
     namespace InvoiceCreateParams {
+      interface AutomaticTax {
+        /**
+         * Controls whether Stripe will automatically compute tax on this invoice.
+         */
+        enabled: boolean;
+      }
+
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface CustomField {
@@ -959,6 +989,11 @@ declare module 'stripe' {
       auto_advance?: boolean;
 
       /**
+       * Settings for automatic tax lookup for this invoice.
+       */
+      automatic_tax?: InvoiceUpdateParams.AutomaticTax;
+
+      /**
        * Either `charge_automatically` or `send_invoice`. This field can be updated only on `draft` invoices.
        */
       collection_method?: InvoiceUpdateParams.CollectionMethod;
@@ -1040,6 +1075,13 @@ declare module 'stripe' {
     }
 
     namespace InvoiceUpdateParams {
+      interface AutomaticTax {
+        /**
+         * Controls whether Stripe will automatically compute tax on this invoice.
+         */
+        enabled: boolean;
+      }
+
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
       interface CustomField {
@@ -1239,6 +1281,11 @@ declare module 'stripe' {
 
     interface InvoiceRetrieveUpcomingParams {
       /**
+       * Settings for automatic tax lookup for this invoice preview.
+       */
+      automatic_tax?: InvoiceRetrieveUpcomingParams.AutomaticTax;
+
+      /**
        * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
        */
       coupon?: string;
@@ -1247,6 +1294,11 @@ declare module 'stripe' {
        * The identifier of the customer whose upcoming invoice you'd like to retrieve.
        */
       customer?: string;
+
+      /**
+       * Details about the customer you want to invoice
+       */
+      customer_details?: InvoiceRetrieveUpcomingParams.CustomerDetails;
 
       /**
        * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
@@ -1340,6 +1392,149 @@ declare module 'stripe' {
     }
 
     namespace InvoiceRetrieveUpcomingParams {
+      interface AutomaticTax {
+        /**
+         * Controls whether Stripe will automatically compute tax on this invoice.
+         */
+        enabled: boolean;
+      }
+
+      interface CustomerDetails {
+        /**
+         * The customer's address.
+         */
+        address?: Stripe.Emptyable<CustomerDetails.Address>;
+
+        /**
+         * The customer's shipping information. Appears on invoices emailed to this customer.
+         */
+        shipping?: Stripe.Emptyable<CustomerDetails.Shipping>;
+
+        /**
+         * Tax details about the customer.
+         */
+        tax?: CustomerDetails.Tax;
+
+        /**
+         * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
+         */
+        tax_exempt?: Stripe.Emptyable<CustomerDetails.TaxExempt>;
+
+        /**
+         * The customer's tax IDs.
+         */
+        tax_ids?: Array<CustomerDetails.TaxId>;
+      }
+
+      namespace CustomerDetails {
+        interface Address {
+          /**
+           * City, district, suburb, town, or village.
+           */
+          city?: string;
+
+          /**
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           */
+          country?: string;
+
+          /**
+           * Address line 1 (e.g., street, PO Box, or company name).
+           */
+          line1?: string;
+
+          /**
+           * Address line 2 (e.g., apartment, suite, unit, or building).
+           */
+          line2?: string;
+
+          /**
+           * ZIP or postal code.
+           */
+          postal_code?: string;
+
+          /**
+           * State, county, province, or region.
+           */
+          state?: string;
+        }
+
+        interface Shipping {
+          /**
+           * Customer shipping address.
+           */
+          address: Stripe.AddressParam;
+
+          /**
+           * Customer name.
+           */
+          name: string;
+
+          /**
+           * Customer phone (including extension).
+           */
+          phone?: string;
+        }
+
+        interface Tax {
+          /**
+           * A recent IP address of the customer used for tax reporting and tax location inference. Stripe recommends updating the IP address when a new PaymentMethod is attached or the address field on the customer is updated. We recommend against updating this field more frequently since it could result in unexpected tax location/reporting outcomes.
+           */
+          ip_address?: Stripe.Emptyable<string>;
+        }
+
+        type TaxExempt = 'exempt' | 'none' | 'reverse';
+
+        interface TaxId {
+          /**
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `hk_br`, `id_npwp`, `in_gst`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `us_ein`, or `za_vat`
+           */
+          type: TaxId.Type;
+
+          /**
+           * Value of the tax ID.
+           */
+          value: string;
+        }
+
+        namespace TaxId {
+          type Type =
+            | 'ae_trn'
+            | 'au_abn'
+            | 'br_cnpj'
+            | 'br_cpf'
+            | 'ca_bn'
+            | 'ca_qst'
+            | 'ch_vat'
+            | 'cl_tin'
+            | 'es_cif'
+            | 'eu_vat'
+            | 'gb_vat'
+            | 'hk_br'
+            | 'id_npwp'
+            | 'in_gst'
+            | 'jp_cn'
+            | 'jp_rn'
+            | 'kr_brn'
+            | 'li_uid'
+            | 'mx_rfc'
+            | 'my_frp'
+            | 'my_itn'
+            | 'my_sst'
+            | 'no_vat'
+            | 'nz_gst'
+            | 'ru_inn'
+            | 'ru_kpp'
+            | 'sa_vat'
+            | 'sg_gst'
+            | 'sg_uen'
+            | 'th_vat'
+            | 'tw_vat'
+            | 'us_ein'
+            | 'za_vat';
+        }
+      }
+
       interface Discount {
         /**
          * ID of the coupon to create a new discount for.
@@ -1461,6 +1656,11 @@ declare module 'stripe' {
           product: string;
 
           /**
+           * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           */
+          tax_behavior?: PriceData.TaxBehavior;
+
+          /**
            * A positive integer in %s (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
@@ -1469,6 +1669,10 @@ declare module 'stripe' {
            * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
+        }
+
+        namespace PriceData {
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
         }
       }
 
@@ -1553,6 +1757,11 @@ declare module 'stripe' {
           recurring: PriceData.Recurring;
 
           /**
+           * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           */
+          tax_behavior?: PriceData.TaxBehavior;
+
+          /**
            * A positive integer in %s (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
@@ -1579,6 +1788,8 @@ declare module 'stripe' {
           namespace Recurring {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
+
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
         }
       }
 
