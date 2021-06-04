@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.153.0 - 2021-06-04
+* [#1168](https://github.com/stripe/stripe-node/pull/1168) API Updates
+  * Add support for `controller` on `Account`.
+
 ## 8.152.0 - 2021-06-04
 * [#1167](https://github.com/stripe/stripe-node/pull/1167) API Updates
   * Add support for new resource `TaxCode`.
