@@ -697,18 +697,6 @@ declare module 'stripe' {
         cancel_url: string;
 
         /**
-         * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
-         *
-         * Read more about the supported payment methods and their requirements in our [payment
-         * method details guide](https://stripe.com/docs/payments/checkout/payment-methods).
-         *
-         * If multiple payment methods are passed, Checkout will dynamically reorder them to
-         * prioritize the most relevant payment methods based on the customer's location and
-         * other characteristics.
-         */
-        payment_method_types: Array<SessionCreateParams.PaymentMethodType>;
-
-        /**
          * The URL to which Stripe should send customers when payment or setup
          * is complete.
          * If you'd like access to the Checkout Session for the successful
@@ -806,6 +794,18 @@ declare module 'stripe' {
          * Payment-method-specific configuration.
          */
         payment_method_options?: SessionCreateParams.PaymentMethodOptions;
+
+        /**
+         * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
+         *
+         * Read more about the supported payment methods and their requirements in our [payment
+         * method details guide](https://stripe.com/docs/payments/checkout/payment-methods).
+         *
+         * If multiple payment methods are passed, Checkout will dynamically reorder them to
+         * prioritize the most relevant payment methods based on the customer's location and
+         * other characteristics.
+         */
+        payment_method_types?: Array<SessionCreateParams.PaymentMethodType>;
 
         /**
          * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
