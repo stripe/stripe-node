@@ -35,6 +35,8 @@ declare module 'stripe' {
 
       company?: Account.Company;
 
+      controller?: Account.Controller;
+
       /**
        * The account's country.
        */
@@ -507,6 +509,22 @@ declare module 'stripe' {
             front: string | Stripe.File | null;
           }
         }
+      }
+
+      interface Controller {
+        /**
+         * `true` if the Connect application retrieving the resource controls the account and can therefore exercise [platform controls](https://stripe.com/docs/connect/platform-controls-for-standard-accounts). Otherwise, this field is null.
+         */
+        is_controller?: boolean;
+
+        /**
+         * The controller type. Can be `application`, if a Connect application controls the account, or `account`, if the account controls itself.
+         */
+        type?: Controller.Type;
+      }
+
+      namespace Controller {
+        type Type = 'account' | 'application';
       }
 
       interface Requirements {
@@ -3042,7 +3060,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Account>>;
 
       /**
-       * Updates a connected [Express or Custom account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are supported by both account types.
+       * Updates a [connected account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are not supported for Standard accounts.
        *
        * To update your own account, use the [Dashboard](https://dashboard.stripe.com/account). Refer to our [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
        */
