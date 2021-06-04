@@ -205,6 +205,11 @@ declare module 'stripe' {
         recurring: PriceData.Recurring;
 
         /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: PriceData.TaxBehavior;
+
+        /**
          * A positive integer in %s (or 0 for a free price) representing how much to charge.
          */
         unit_amount?: number;
@@ -231,6 +236,8 @@ declare module 'stripe' {
         namespace Recurring {
           type Interval = 'day' | 'month' | 'week' | 'year';
         }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
@@ -348,6 +355,11 @@ declare module 'stripe' {
         recurring: PriceData.Recurring;
 
         /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: PriceData.TaxBehavior;
+
+        /**
          * A positive integer in %s (or 0 for a free price) representing how much to charge.
          */
         unit_amount?: number;
@@ -374,6 +386,8 @@ declare module 'stripe' {
         namespace Recurring {
           type Interval = 'day' | 'month' | 'week' | 'year';
         }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';

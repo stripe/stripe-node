@@ -70,6 +70,15 @@ declare module 'stripe' {
        * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
        */
       state: string | null;
+
+      /**
+       * The high-level tax type, such as `vat` or `sales_tax`.
+       */
+      tax_type?: TaxRate.TaxType | null;
+    }
+
+    namespace TaxRate {
+      type TaxType = 'gst' | 'hst' | 'pst' | 'qst' | 'sales_tax' | 'vat';
     }
 
     interface TaxRateCreateParams {
@@ -122,6 +131,15 @@ declare module 'stripe' {
        * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
        */
       state?: string;
+
+      /**
+       * The high-level tax type, such as `vat` or `sales_tax`.
+       */
+      tax_type?: TaxRateCreateParams.TaxType;
+    }
+
+    namespace TaxRateCreateParams {
+      type TaxType = 'gst' | 'hst' | 'pst' | 'qst' | 'sales_tax' | 'vat';
     }
 
     interface TaxRateRetrieveParams {
@@ -171,6 +189,15 @@ declare module 'stripe' {
        * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
        */
       state?: string;
+
+      /**
+       * The high-level tax type, such as `vat` or `sales_tax`.
+       */
+      tax_type?: TaxRateUpdateParams.TaxType;
+    }
+
+    namespace TaxRateUpdateParams {
+      type TaxType = 'gst' | 'hst' | 'pst' | 'qst' | 'sales_tax' | 'vat';
     }
 
     interface TaxRateListParams extends PaginationParams {

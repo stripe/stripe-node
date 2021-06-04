@@ -69,6 +69,11 @@ declare module 'stripe' {
       recurring: Price.Recurring | null;
 
       /**
+       * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+       */
+      tax_behavior?: Price.TaxBehavior | null;
+
+      /**
        * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
        */
       tiers?: Array<Price.Tier>;
@@ -140,6 +145,8 @@ declare module 'stripe' {
 
         type UsageType = 'licensed' | 'metered';
       }
+
+      type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
 
       interface Tier {
         /**
@@ -261,6 +268,11 @@ declare module 'stripe' {
       recurring?: PriceCreateParams.Recurring;
 
       /**
+       * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+       */
+      tax_behavior?: PriceCreateParams.TaxBehavior;
+
+      /**
        * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
        */
       tiers?: Array<PriceCreateParams.Tier>;
@@ -323,6 +335,11 @@ declare module 'stripe' {
         statement_descriptor?: string;
 
         /**
+         * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+         */
+        tax_code?: string;
+
+        /**
          * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
          */
         unit_label?: string;
@@ -366,6 +383,8 @@ declare module 'stripe' {
 
         type UsageType = 'licensed' | 'metered';
       }
+
+      type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
 
       interface Tier {
         /**
@@ -452,6 +471,11 @@ declare module 'stripe' {
       recurring?: Stripe.Emptyable<PriceUpdateParams.Recurring>;
 
       /**
+       * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+       */
+      tax_behavior?: PriceUpdateParams.TaxBehavior;
+
+      /**
        * If set to true, will atomically remove the lookup key from the existing price, and assign it to this price.
        */
       transfer_lookup_key?: boolean;
@@ -464,6 +488,8 @@ declare module 'stripe' {
          */
         trial_period_days?: number;
       }
+
+      type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
     interface PriceListParams extends PaginationParams {

@@ -84,6 +84,11 @@ declare module 'stripe' {
       statement_descriptor: string | null;
 
       /**
+       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+       */
+      tax_code?: string | Stripe.TaxCode | null;
+
+      /**
        * The type of the product. The product is either of type `good`, which is eligible for use with Orders and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
        */
       type: Product.Type;
@@ -220,6 +225,11 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
+       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+       */
+      tax_code?: string;
+
+      /**
        * The type of the product. Defaults to `service` if not explicitly specified, enabling use of this product with Subscriptions and Plans. Set this parameter to `good` to use this product with Orders and SKUs. On API versions before `2018-02-05`, this field defaults to `good` for compatibility reasons.
        */
       type?: ProductCreateParams.Type;
@@ -333,6 +343,11 @@ declare module 'stripe' {
        *  It must contain at least one letter. May only be set if `type=service`.
        */
       statement_descriptor?: string;
+
+      /**
+       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+       */
+      tax_code?: Stripe.Emptyable<string>;
 
       /**
        * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions. May only be set if `type=service`.

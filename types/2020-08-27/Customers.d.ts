@@ -119,6 +119,8 @@ declare module 'stripe' {
        */
       subscriptions?: ApiList<Stripe.Subscription>;
 
+      tax?: Customer.Tax;
+
       /**
        * Describes the customer's tax exemption status. One of `none`, `exempt`, or `reverse`. When set to `reverse`, invoice and receipt PDFs include the text **"Reverse charge"**.
        */
@@ -184,6 +186,56 @@ declare module 'stripe' {
          * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
          */
         tracking_number?: string | null;
+      }
+
+      interface Tax {
+        /**
+         * Surfaces if automatic tax computation is possible given the current customer location information.
+         */
+        automatic_tax: Tax.AutomaticTax;
+
+        /**
+         * A recent IP address of the customer used for tax reporting and tax location inference.
+         */
+        ip_address: string | null;
+
+        /**
+         * The customer's location as identified by Stripe Tax.
+         */
+        location: Tax.Location | null;
+      }
+
+      namespace Tax {
+        type AutomaticTax =
+          | 'failed'
+          | 'not_collecting'
+          | 'supported'
+          | 'unrecognized_location';
+
+        interface Location {
+          /**
+           * The customer's country as identified by Stripe Tax.
+           */
+          country: string;
+
+          /**
+           * The data source used to infer the customer's location.
+           */
+          source: Location.Source;
+
+          /**
+           * The customer's state, county, province, or region as identified by Stripe Tax.
+           */
+          state: string | null;
+        }
+
+        namespace Location {
+          type Source =
+            | 'billing_address'
+            | 'ip_address'
+            | 'payment_method'
+            | 'shipping_destination';
+        }
       }
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';
@@ -287,6 +339,11 @@ declare module 'stripe' {
       source?: string;
 
       /**
+       * Tax details about the customer.
+       */
+      tax?: CustomerCreateParams.Tax;
+
+      /**
        * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
        */
       tax_exempt?: Stripe.Emptyable<CustomerCreateParams.TaxExempt>;
@@ -344,6 +401,13 @@ declare module 'stripe' {
          * Customer phone (including extension).
          */
         phone?: string;
+      }
+
+      interface Tax {
+        /**
+         * A recent IP address of the customer used for tax reporting and tax location inference. Stripe recommends updating the IP address when a new PaymentMethod is attached or the address field on the customer is updated. We recommend against updating this field more frequently since it could result in unexpected tax location/reporting outcomes.
+         */
+        ip_address?: Stripe.Emptyable<string>;
       }
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';
@@ -490,6 +554,11 @@ declare module 'stripe' {
       source?: string;
 
       /**
+       * Tax details about the customer.
+       */
+      tax?: CustomerUpdateParams.Tax;
+
+      /**
        * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
        */
       tax_exempt?: Stripe.Emptyable<CustomerUpdateParams.TaxExempt>;
@@ -547,6 +616,13 @@ declare module 'stripe' {
          * Customer phone (including extension).
          */
         phone?: string;
+      }
+
+      interface Tax {
+        /**
+         * A recent IP address of the customer used for tax reporting and tax location inference. Stripe recommends updating the IP address when a new PaymentMethod is attached or the address field on the customer is updated. We recommend against updating this field more frequently since it could result in unexpected tax location/reporting outcomes.
+         */
+        ip_address?: Stripe.Emptyable<string>;
       }
 
       type TaxExempt = 'exempt' | 'none' | 'reverse';

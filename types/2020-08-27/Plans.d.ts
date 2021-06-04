@@ -309,6 +309,11 @@ declare module 'stripe' {
         statement_descriptor?: string;
 
         /**
+         * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+         */
+        tax_code?: string;
+
+        /**
          * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
          */
         unit_label?: string;
