@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.154.0 - 2021-06-07
+* [#1170](https://github.com/stripe/stripe-node/pull/1170) API Updates
+  * Added support for `tax_id_collection` on Checkout `Session.tax_id_collection` and `SessionCreateParams` 
+  * Update `Terminal.Reader.location` to be expandable (TypeScript breaking change)
+
 ## 8.153.0 - 2021-06-04
 * [#1168](https://github.com/stripe/stripe-node/pull/1168) API Updates
   * Add support for `controller` on `Account`.
