@@ -161,6 +161,8 @@ declare module 'stripe' {
          */
         success_url: string;
 
+        tax_id_collection?: Session.TaxIdCollection;
+
         /**
          * Tax and discount details for the computed total amount.
          */
@@ -624,6 +626,13 @@ declare module 'stripe' {
 
         type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
 
+        interface TaxIdCollection {
+          /**
+           * Indicates whether tax ID collection is enabled for the session
+           */
+          enabled: boolean;
+        }
+
         interface TotalDetails {
           /**
            * This is the sum of all the line item discounts.
@@ -834,6 +843,8 @@ declare module 'stripe' {
          * A subset of parameters to be passed to subscription creation for Checkout Sessions in `subscription` mode.
          */
         subscription_data?: SessionCreateParams.SubscriptionData;
+
+        tax_id_collection?: SessionCreateParams.TaxIdCollection;
       }
 
       namespace SessionCreateParams {
@@ -1652,6 +1663,13 @@ declare module 'stripe' {
              */
             destination: string;
           }
+        }
+
+        interface TaxIdCollection {
+          /**
+           * Set to true to enable Tax ID collection.
+           */
+          enabled: boolean;
         }
       }
 
