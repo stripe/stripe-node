@@ -1105,7 +1105,7 @@ declare module 'stripe' {
 
       interface CardCreateParams {
         /**
-         * The currency for the card. This currently must be `usd`.
+         * The currency for the card.
          */
         currency: string;
 

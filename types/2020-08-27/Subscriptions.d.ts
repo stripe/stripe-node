@@ -21,7 +21,7 @@ declare module 'stripe' {
        */
       application_fee_percent: number | null;
 
-      automatic_tax?: Subscription.AutomaticTax;
+      automatic_tax: Subscription.AutomaticTax;
 
       /**
        * Determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
@@ -344,7 +344,7 @@ declare module 'stripe' {
       collection_method?: SubscriptionCreateParams.CollectionMethod;
 
       /**
-       * The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
+       * The ID of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
        */
       coupon?: string;
 
@@ -702,7 +702,7 @@ declare module 'stripe' {
       collection_method?: SubscriptionUpdateParams.CollectionMethod;
 
       /**
-       * The code of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
+       * The ID of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
        */
       coupon?: string;
 
