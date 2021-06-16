@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.155.0 - 2021-06-16
+* [#1173](https://github.com/stripe/stripe-node/pull/1173) API Updates
+  * Add support for `url` on Checkout `Session`.
+
 ## 8.154.0 - 2021-06-07
 * [#1170](https://github.com/stripe/stripe-node/pull/1170) API Updates
   * Added support for `tax_id_collection` on Checkout `Session.tax_id_collection` and `SessionCreateParams` 
