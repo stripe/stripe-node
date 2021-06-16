@@ -33,7 +33,7 @@ declare module 'stripe' {
          */
         amount_total: number | null;
 
-        automatic_tax?: Session.AutomaticTax;
+        automatic_tax: Session.AutomaticTax;
 
         /**
          * Describes whether Checkout should collect the customer's billing address.
@@ -167,6 +167,11 @@ declare module 'stripe' {
          * Tax and discount details for the computed total amount.
          */
         total_details: Session.TotalDetails | null;
+
+        /**
+         * The URL to the Checkout Session.
+         */
+        url: string | null;
       }
 
       namespace Session {
@@ -844,6 +849,9 @@ declare module 'stripe' {
          */
         subscription_data?: SessionCreateParams.SubscriptionData;
 
+        /**
+         * Controls tax ID collection settings for the session.
+         */
         tax_id_collection?: SessionCreateParams.TaxIdCollection;
       }
 
@@ -1245,7 +1253,7 @@ declare module 'stripe' {
         namespace PaymentMethodOptions {
           interface AcssDebit {
             /**
-             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). This is only accepted for Checkout Sessions in `setup` mode.
              */
             currency?: AcssDebit.Currency;
 
