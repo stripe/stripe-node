@@ -617,6 +617,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'ideal'
+          | 'paper_check'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort';
@@ -947,6 +948,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'ideal'
+          | 'paper_check'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort';
@@ -1169,6 +1171,7 @@ declare module 'stripe' {
           | 'fpx'
           | 'giropay'
           | 'ideal'
+          | 'paper_check'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort';
