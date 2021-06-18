@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.156.0 - 2021-06-18
+* [#1175](https://github.com/stripe/stripe-node/pull/1175) API Updates
+  * Add support for new TaxId types: `ca_pst_mb`, `ca_pst_bc`, `ca_gst_hst`, and `ca_pst_sk`.
+ 
+
 ## 8.155.0 - 2021-06-16
 * [#1173](https://github.com/stripe/stripe-node/pull/1173) API Updates
   * Add support for `url` on Checkout `Session`.
