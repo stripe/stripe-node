@@ -1,9 +1,16 @@
 # CHANGELOG
 
+## 8.157.0 - 2021-06-25
+* [#1177](https://github.com/stripe/stripe-node/pull/1177) API Updates
+  * Added support for `boleto` on `PaymentMethodCreateParams`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `Charge.payment_method_details` and `PaymentMethod`
+  * `PaymentMethodListParams.type`, `PaymentMethodCreateParams.type`, `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `PaymentIntentCreataParams.payment_method_data.type` and `PaymentMethod.type` added new enum members: `boleto`
+  * Added support for `boleto_display_details` on `PaymentIntent.next_action`
+  * `TaxIdCreateParams.type`, `Invoice.customer_tax_ids[].type`, `InvoiceLineItemListUpcomingParams.customer_details.tax_ids[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, `CustomerCreateParams.tax_id_data[].type`, `Checkout.Session.customer_details.tax_ids[].type` and `TaxId.type` added new enum members: `il_vat`.
+* [#1157](https://github.com/stripe/stripe-node/pull/1157) Add support for streaming requests
+
 ## 8.156.0 - 2021-06-18
 * [#1175](https://github.com/stripe/stripe-node/pull/1175) API Updates
   * Add support for new TaxId types: `ca_pst_mb`, `ca_pst_bc`, `ca_gst_hst`, and `ca_pst_sk`.
- 
 
 ## 8.155.0 - 2021-06-16
 * [#1173](https://github.com/stripe/stripe-node/pull/1173) API Updates
