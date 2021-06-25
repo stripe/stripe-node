@@ -398,6 +398,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodDetails.Bancontact;
 
+        boleto?: PaymentMethodDetails.Boleto;
+
         card?: PaymentMethodDetails.Card;
 
         card_present?: PaymentMethodDetails.CardPresent;
@@ -640,6 +642,13 @@ declare module 'stripe' {
 
         namespace Bancontact {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        }
+
+        interface Boleto {
+          /**
+           * Uniquely identifies this customer tax_id (CNPJ or CPF)
+           */
+          tax_id: string;
         }
 
         interface Card {

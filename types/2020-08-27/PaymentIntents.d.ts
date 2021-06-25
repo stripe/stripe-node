@@ -325,6 +325,8 @@ declare module 'stripe' {
       interface NextAction {
         alipay_handle_redirect?: NextAction.AlipayHandleRedirect;
 
+        boleto_display_details?: NextAction.BoletoDisplayDetails;
+
         oxxo_display_details?: NextAction.OxxoDisplayDetails;
 
         redirect_to_url?: NextAction.RedirectToUrl;
@@ -363,6 +365,28 @@ declare module 'stripe' {
            * The URL you must redirect your customer to in order to authenticate the payment.
            */
           url: string | null;
+        }
+
+        interface BoletoDisplayDetails {
+          /**
+           * The timestamp after which the boleto expires.
+           */
+          expires_at: number | null;
+
+          /**
+           * The URL to the hosted boleto voucher page, which allows customers to view the boleto voucher.
+           */
+          hosted_voucher_url: string | null;
+
+          /**
+           * The boleto number.
+           */
+          number: string | null;
+
+          /**
+           * The URL to the downloadable boleto voucher PDF.
+           */
+          pdf: string | null;
         }
 
         interface OxxoDisplayDetails {
@@ -417,6 +441,8 @@ declare module 'stripe' {
         alipay?: PaymentMethodOptions.Alipay;
 
         bancontact?: PaymentMethodOptions.Bancontact;
+
+        boleto?: PaymentMethodOptions.Boleto;
 
         card?: PaymentMethodOptions.Card;
 
@@ -492,6 +518,13 @@ declare module 'stripe' {
 
         namespace Bancontact {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        }
+
+        interface Boleto {
+          /**
+           * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
+           */
+          expires_after_days: number;
         }
 
         interface Card {
@@ -917,6 +950,11 @@ declare module 'stripe' {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
+         * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
+         */
+        boleto?: PaymentMethodData.Boleto;
+
+        /**
          * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
          */
         eps?: PaymentMethodData.Eps;
@@ -1079,6 +1117,13 @@ declare module 'stripe' {
              */
             state?: string;
           }
+        }
+
+        interface Boleto {
+          /**
+           * Uniquely identifies this customer tax_id (CNPJ or CPF)
+           */
+          tax_id: string;
         }
 
         interface Eps {
@@ -1250,6 +1295,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'boleto'
           | 'eps'
           | 'fpx'
           | 'giropay'
@@ -1283,6 +1329,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+        /**
+         * If this is a `boleto` PaymentMethod, this sub-hash contains details about the Boleto payment method options.
+         */
+        boleto?: Stripe.Emptyable<PaymentMethodOptions.Boleto>;
 
         /**
          * Configuration for any card payments attempted on this PaymentIntent.
@@ -1381,6 +1432,13 @@ declare module 'stripe' {
 
         namespace Bancontact {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        }
+
+        interface Boleto {
+          /**
+           * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
+           */
+          expires_after_days?: number;
         }
 
         interface Card {
@@ -1718,6 +1776,11 @@ declare module 'stripe' {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
+         * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
+         */
+        boleto?: PaymentMethodData.Boleto;
+
+        /**
          * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
          */
         eps?: PaymentMethodData.Eps;
@@ -1880,6 +1943,13 @@ declare module 'stripe' {
              */
             state?: string;
           }
+        }
+
+        interface Boleto {
+          /**
+           * Uniquely identifies this customer tax_id (CNPJ or CPF)
+           */
+          tax_id: string;
         }
 
         interface Eps {
@@ -2051,6 +2121,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'boleto'
           | 'eps'
           | 'fpx'
           | 'giropay'
@@ -2084,6 +2155,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+        /**
+         * If this is a `boleto` PaymentMethod, this sub-hash contains details about the Boleto payment method options.
+         */
+        boleto?: Stripe.Emptyable<PaymentMethodOptions.Boleto>;
 
         /**
          * Configuration for any card payments attempted on this PaymentIntent.
@@ -2182,6 +2258,13 @@ declare module 'stripe' {
 
         namespace Bancontact {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        }
+
+        interface Boleto {
+          /**
+           * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
+           */
+          expires_after_days?: number;
         }
 
         interface Card {
@@ -2633,6 +2716,11 @@ declare module 'stripe' {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
+         * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
+         */
+        boleto?: PaymentMethodData.Boleto;
+
+        /**
          * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
          */
         eps?: PaymentMethodData.Eps;
@@ -2795,6 +2883,13 @@ declare module 'stripe' {
              */
             state?: string;
           }
+        }
+
+        interface Boleto {
+          /**
+           * Uniquely identifies this customer tax_id (CNPJ or CPF)
+           */
+          tax_id: string;
         }
 
         interface Eps {
@@ -2966,6 +3061,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'boleto'
           | 'eps'
           | 'fpx'
           | 'giropay'
@@ -2999,6 +3095,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+        /**
+         * If this is a `boleto` PaymentMethod, this sub-hash contains details about the Boleto payment method options.
+         */
+        boleto?: Stripe.Emptyable<PaymentMethodOptions.Boleto>;
 
         /**
          * Configuration for any card payments attempted on this PaymentIntent.
@@ -3097,6 +3198,13 @@ declare module 'stripe' {
 
         namespace Bancontact {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+        }
+
+        interface Boleto {
+          /**
+           * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
+           */
+          expires_after_days?: number;
         }
 
         interface Card {
