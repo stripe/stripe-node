@@ -15,7 +15,9 @@ const utils = (module.exports = {
     const server = http.createServer((req, res) => {
       const {shouldStayOpen} = handler(req, res) || {};
       if (!shouldStayOpen) {
-        res.on('close', () => server.close());
+        res.on('close', () => {
+          server.close();
+        });
       }
     });
     server.listen(0, () => {
@@ -29,7 +31,9 @@ const utils = (module.exports = {
           ...clientOptions,
         }
       );
-      return callback(null, stripe);
+      return callback(null, stripe, () => {
+        server.close();
+      });
     });
   },
 
