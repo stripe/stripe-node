@@ -30,6 +30,8 @@ declare module 'stripe' {
 
       billing_details: PaymentMethod.BillingDetails;
 
+      boleto?: PaymentMethod.Boleto;
+
       card?: PaymentMethod.Card;
 
       card_present?: PaymentMethod.CardPresent;
@@ -168,6 +170,13 @@ declare module 'stripe' {
          * Billing phone number (including extension).
          */
         phone: string | null;
+      }
+
+      interface Boleto {
+        /**
+         * Uniquely identifies the customer tax id (CNPJ or CPF)
+         */
+        tax_id: string;
       }
 
       interface Card {
@@ -594,6 +603,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'boleto'
         | 'card'
         | 'card_present'
         | 'eps'
@@ -643,6 +653,11 @@ declare module 'stripe' {
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
        */
       billing_details?: PaymentMethodCreateParams.BillingDetails;
+
+      /**
+       * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
+       */
+      boleto?: PaymentMethodCreateParams.Boleto;
 
       /**
        * If this is a `card` PaymentMethod, this hash contains the user's card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When providing a card number, you must meet the requirements for [PCI compliance](https://stripe.com/docs/security#validating-pci-compliance). We strongly recommend using Stripe.js instead of interacting with this API directly.
@@ -827,6 +842,13 @@ declare module 'stripe' {
            */
           state?: string;
         }
+      }
+
+      interface Boleto {
+        /**
+         * Uniquely identifies this customer tax_id (CNPJ or CPF)
+         */
+        tax_id: string;
       }
 
       interface Card1 {
@@ -1024,6 +1046,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'boleto'
         | 'card'
         | 'eps'
         | 'fpx'
@@ -1188,6 +1211,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'boleto'
         | 'card'
         | 'card_present'
         | 'eps'
