@@ -455,6 +455,8 @@ declare module 'stripe' {
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         sofort?: PaymentMethodOptions.Sofort;
+
+        wechat_pay?: PaymentMethodOptions.WechatPay;
       }
 
       namespace PaymentMethodOptions {
@@ -652,6 +654,22 @@ declare module 'stripe' {
             | 'it'
             | 'nl'
             | 'pl';
+        }
+
+        interface WechatPay {
+          /**
+           * The app ID registered with WeChat Pay. Only required when client is ios or android.
+           */
+          app_id: string | null;
+
+          /**
+           * The client type that the end customer will pay from
+           */
+          client: WechatPay.Client | null;
+        }
+
+        namespace WechatPay {
+          type Client = 'android' | 'ios' | 'web';
         }
       }
 
@@ -1013,6 +1031,11 @@ declare module 'stripe' {
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
+
+        /**
+         * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
+         */
+        wechat_pay?: PaymentMethodData.WechatPay;
       }
 
       namespace PaymentMethodData {
@@ -1304,7 +1327,10 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
-          | 'sofort';
+          | 'sofort'
+          | 'wechat_pay';
+
+        interface WechatPay {}
       }
 
       interface PaymentMethodOptions {
@@ -1364,6 +1390,11 @@ declare module 'stripe' {
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
+
+        /**
+         * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
+         */
+        wechat_pay?: Stripe.Emptyable<PaymentMethodOptions.WechatPay>;
       }
 
       namespace PaymentMethodOptions {
@@ -1566,6 +1597,22 @@ declare module 'stripe' {
             | 'it'
             | 'nl'
             | 'pl';
+        }
+
+        interface WechatPay {
+          /**
+           * The app ID registered with WeChat Pay. Only required when client is ios or android.
+           */
+          app_id?: string;
+
+          /**
+           * The client type that the end customer will pay from
+           */
+          client: WechatPay.Client;
+        }
+
+        namespace WechatPay {
+          type Client = 'android' | 'ios' | 'web';
         }
       }
 
@@ -1839,6 +1886,11 @@ declare module 'stripe' {
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
+
+        /**
+         * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
+         */
+        wechat_pay?: PaymentMethodData.WechatPay;
       }
 
       namespace PaymentMethodData {
@@ -2130,7 +2182,10 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
-          | 'sofort';
+          | 'sofort'
+          | 'wechat_pay';
+
+        interface WechatPay {}
       }
 
       interface PaymentMethodOptions {
@@ -2190,6 +2245,11 @@ declare module 'stripe' {
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
+
+        /**
+         * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
+         */
+        wechat_pay?: Stripe.Emptyable<PaymentMethodOptions.WechatPay>;
       }
 
       namespace PaymentMethodOptions {
@@ -2392,6 +2452,22 @@ declare module 'stripe' {
             | 'it'
             | 'nl'
             | 'pl';
+        }
+
+        interface WechatPay {
+          /**
+           * The app ID registered with WeChat Pay. Only required when client is ios or android.
+           */
+          app_id?: string;
+
+          /**
+           * The client type that the end customer will pay from
+           */
+          client: WechatPay.Client;
+        }
+
+        namespace WechatPay {
+          type Client = 'android' | 'ios' | 'web';
         }
       }
 
@@ -2779,6 +2855,11 @@ declare module 'stripe' {
          * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
          */
         type: PaymentMethodData.Type;
+
+        /**
+         * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
+         */
+        wechat_pay?: PaymentMethodData.WechatPay;
       }
 
       namespace PaymentMethodData {
@@ -3070,7 +3151,10 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
-          | 'sofort';
+          | 'sofort'
+          | 'wechat_pay';
+
+        interface WechatPay {}
       }
 
       interface PaymentMethodOptions {
@@ -3130,6 +3214,11 @@ declare module 'stripe' {
          * If this is a `sofort` PaymentMethod, this sub-hash contains details about the SOFORT payment method options.
          */
         sofort?: Stripe.Emptyable<PaymentMethodOptions.Sofort>;
+
+        /**
+         * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
+         */
+        wechat_pay?: Stripe.Emptyable<PaymentMethodOptions.WechatPay>;
       }
 
       namespace PaymentMethodOptions {
@@ -3332,6 +3421,22 @@ declare module 'stripe' {
             | 'it'
             | 'nl'
             | 'pl';
+        }
+
+        interface WechatPay {
+          /**
+           * The app ID registered with WeChat Pay. Only required when client is ios or android.
+           */
+          app_id?: string;
+
+          /**
+           * The client type that the end customer will pay from
+           */
+          client: WechatPay.Client;
+        }
+
+        namespace WechatPay {
+          type Client = 'android' | 'ios' | 'web';
         }
       }
 

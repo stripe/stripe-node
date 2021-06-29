@@ -1253,6 +1253,11 @@ declare module 'stripe' {
            * contains details about the ACSS Debit payment method options.
            */
           acss_debit?: PaymentMethodOptions.AcssDebit;
+
+          /**
+           * contains details about the Wechat Pay payment method options.
+           */
+          wechat_pay?: PaymentMethodOptions.WechatPay;
         }
 
         namespace PaymentMethodOptions {
@@ -1308,6 +1313,22 @@ declare module 'stripe' {
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
+
+          interface WechatPay {
+            /**
+             * The app ID registered with WeChat Pay. Only required when client is ios or android.
+             */
+            app_id?: string;
+
+            /**
+             * The client type that the end customer will pay from
+             */
+            client: WechatPay.Client;
+          }
+
+          namespace WechatPay {
+            type Client = 'android' | 'ios' | 'web';
+          }
         }
 
         type PaymentMethodType =
@@ -1324,7 +1345,8 @@ declare module 'stripe' {
           | 'ideal'
           | 'p24'
           | 'sepa_debit'
-          | 'sofort';
+          | 'sofort'
+          | 'wechat_pay';
 
         interface SetupIntentData {
           /**

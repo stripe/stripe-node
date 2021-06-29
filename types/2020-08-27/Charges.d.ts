@@ -440,6 +440,8 @@ declare module 'stripe' {
         type: string;
 
         wechat?: PaymentMethodDetails.Wechat;
+
+        wechat_pay?: PaymentMethodDetails.WechatPay;
       }
 
       namespace PaymentMethodDetails {
@@ -1573,6 +1575,18 @@ declare module 'stripe' {
         interface StripeAccount {}
 
         interface Wechat {}
+
+        interface WechatPay {
+          /**
+           * Uniquely identifies this particular WeChat Pay account. You can use this attribute to check whether two WeChat accounts are the same.
+           */
+          fingerprint: string | null;
+
+          /**
+           * Transaction ID of this particular WeChat Pay transaction.
+           */
+          transaction_id: string | null;
+        }
       }
 
       interface Shipping {
