@@ -180,6 +180,11 @@ declare module 'stripe' {
         bancontact_payments?: Capabilities.BancontactPayments;
 
         /**
+         * The status of the boleto payments capability of the account, or whether the account can directly process boleto charges.
+         */
+        boleto_payments?: Capabilities.BoletoPayments;
+
+        /**
          * The status of the card issuing capability of the account, or whether you can use Issuing to distribute funds on cards
          */
         card_issuing?: Capabilities.CardIssuing;
@@ -275,6 +280,8 @@ declare module 'stripe' {
         type BacsDebitPayments = 'active' | 'inactive' | 'pending';
 
         type BancontactPayments = 'active' | 'inactive' | 'pending';
+
+        type BoletoPayments = 'active' | 'inactive' | 'pending';
 
         type CardIssuing = 'active' | 'inactive' | 'pending';
 
@@ -1040,6 +1047,11 @@ declare module 'stripe' {
         bancontact_payments?: Capabilities.BancontactPayments;
 
         /**
+         * The boleto_payments capability.
+         */
+        boleto_payments?: Capabilities.BoletoPayments;
+
+        /**
          * The card_issuing capability.
          */
         card_issuing?: Capabilities.CardIssuing;
@@ -1155,6 +1167,13 @@ declare module 'stripe' {
         }
 
         interface BancontactPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BoletoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2138,6 +2157,11 @@ declare module 'stripe' {
         bancontact_payments?: Capabilities.BancontactPayments;
 
         /**
+         * The boleto_payments capability.
+         */
+        boleto_payments?: Capabilities.BoletoPayments;
+
+        /**
          * The card_issuing capability.
          */
         card_issuing?: Capabilities.CardIssuing;
@@ -2253,6 +2277,13 @@ declare module 'stripe' {
         }
 
         interface BancontactPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BoletoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
