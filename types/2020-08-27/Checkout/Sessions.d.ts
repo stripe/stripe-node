@@ -312,6 +312,10 @@ declare module 'stripe' {
 
         interface PaymentMethodOptions {
           acss_debit?: PaymentMethodOptions.AcssDebit;
+
+          boleto?: PaymentMethodOptions.Boleto;
+
+          oxxo?: PaymentMethodOptions.Oxxo;
         }
 
         namespace PaymentMethodOptions {
@@ -356,6 +360,20 @@ declare module 'stripe' {
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
+
+          interface Boleto {
+            /**
+             * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
+             */
+            expires_after_days: number;
+          }
+
+          interface Oxxo {
+            /**
+             * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
+             */
+            expires_after_days: number;
           }
         }
 
@@ -1253,6 +1271,16 @@ declare module 'stripe' {
            * contains details about the ACSS Debit payment method options.
            */
           acss_debit?: PaymentMethodOptions.AcssDebit;
+
+          /**
+           * contains details about the Boleto payment method options.
+           */
+          boleto?: PaymentMethodOptions.Boleto;
+
+          /**
+           * contains details about the OXXO payment method options.
+           */
+          oxxo?: PaymentMethodOptions.Oxxo;
         }
 
         namespace PaymentMethodOptions {
@@ -1308,6 +1336,20 @@ declare module 'stripe' {
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
+
+          interface Boleto {
+            /**
+             * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
+             */
+            expires_after_days?: number;
+          }
+
+          interface Oxxo {
+            /**
+             * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
+             */
+            expires_after_days?: number;
+          }
         }
 
         type PaymentMethodType =
@@ -1316,12 +1358,14 @@ declare module 'stripe' {
           | 'alipay'
           | 'bacs_debit'
           | 'bancontact'
+          | 'boleto'
           | 'card'
           | 'eps'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'oxxo'
           | 'p24'
           | 'sepa_debit'
           | 'sofort';
