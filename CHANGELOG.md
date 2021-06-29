@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.158.0 - 2021-06-29
+* [#1179](https://github.com/stripe/stripe-node/pull/1179) API Updates
+  * Added support for `boleto_payments` on `Account.capabilities`
+  * Added support for `boleto` and `oxxo` on `Checkout.SessionCreateParams.payment_method_options` and `Checkout.Session.payment_method_options`
+  * Added support for `boleto` and `oxxo` as members of the `type` enum inside `Checkout.SessionCreateParams.payment_method_types[]`.
+
 ## 8.157.0 - 2021-06-25
 * [#1177](https://github.com/stripe/stripe-node/pull/1177) API Updates
   * Added support for `boleto` on `PaymentMethodCreateParams`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `Charge.payment_method_details` and `PaymentMethod`
