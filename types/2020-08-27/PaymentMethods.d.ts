@@ -80,6 +80,8 @@ declare module 'stripe' {
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
       type: PaymentMethod.Type;
+
+      wechat_pay?: PaymentMethod.WechatPay;
     }
 
     namespace PaymentMethod {
@@ -615,7 +617,10 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'
-        | 'sofort';
+        | 'sofort'
+        | 'wechat_pay';
+
+      interface WechatPay {}
     }
 
     interface PaymentMethodCreateParams {
@@ -738,6 +743,11 @@ declare module 'stripe' {
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
       type?: PaymentMethodCreateParams.Type;
+
+      /**
+       * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
+       */
+      wechat_pay?: PaymentMethodCreateParams.WechatPay;
     }
 
     namespace PaymentMethodCreateParams {
@@ -1056,7 +1066,10 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'
-        | 'sofort';
+        | 'sofort'
+        | 'wechat_pay';
+
+      interface WechatPay {}
     }
 
     interface PaymentMethodRetrieveParams {
@@ -1222,7 +1235,8 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'
-        | 'sofort';
+        | 'sofort'
+        | 'wechat_pay';
     }
 
     interface PaymentMethodAttachParams {

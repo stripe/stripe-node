@@ -1281,6 +1281,11 @@ declare module 'stripe' {
            * contains details about the OXXO payment method options.
            */
           oxxo?: PaymentMethodOptions.Oxxo;
+
+          /**
+           * contains details about the Wechat Pay payment method options.
+           */
+          wechat_pay?: PaymentMethodOptions.WechatPay;
         }
 
         namespace PaymentMethodOptions {
@@ -1350,6 +1355,22 @@ declare module 'stripe' {
              */
             expires_after_days?: number;
           }
+
+          interface WechatPay {
+            /**
+             * The app ID registered with WeChat Pay. Only required when client is ios or android.
+             */
+            app_id?: string;
+
+            /**
+             * The client type that the end customer will pay from
+             */
+            client: WechatPay.Client;
+          }
+
+          namespace WechatPay {
+            type Client = 'android' | 'ios' | 'web';
+          }
         }
 
         type PaymentMethodType =
@@ -1368,7 +1389,8 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
-          | 'sofort';
+          | 'sofort'
+          | 'wechat_pay';
 
         interface SetupIntentData {
           /**
