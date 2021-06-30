@@ -624,7 +624,8 @@ declare module 'stripe' {
           | 'ideal'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
-          | 'sofort';
+          | 'sofort'
+          | 'wechat_pay';
       }
 
       type Status =
@@ -954,7 +955,8 @@ declare module 'stripe' {
           | 'ideal'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
-          | 'sofort';
+          | 'sofort'
+          | 'wechat_pay';
       }
 
       interface TransferData {
@@ -1176,7 +1178,8 @@ declare module 'stripe' {
           | 'ideal'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
-          | 'sofort';
+          | 'sofort'
+          | 'wechat_pay';
       }
 
       interface TransferData {
