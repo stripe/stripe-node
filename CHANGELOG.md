@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.159.0 - 2021-06-30
+* [#1180](https://github.com/stripe/stripe-node/pull/1180) API Updates
+  * Add support for `wechat_pay` on `Charge.payment_method_details`, `CheckoutSessionCreateParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntent.payment_method_options`, `PaymentMethodCreateParams`, and `PaymentMethod`
+  * Add support for new value `wechat_pay` on enums `CheckoutSessionCreateParams.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Invoice.payment_settings.payment_method_types[]`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentMethodCreateParams.type`, `PaymentMethodListParams.type`, and `PaymentMethod.type`
+  * Add support for `wechat_pay_display_qr_code`, `wechat_pay_redirect_to_android_app`, and `wechat_pay_redirect_to_ios_app` on `PaymentIntent.next_action`
+
 ## 8.158.0 - 2021-06-29
 * [#1179](https://github.com/stripe/stripe-node/pull/1179) API Updates
   * Added support for `boleto_payments` on `Account.capabilities`
