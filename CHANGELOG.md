@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.160.0 - 2021-06-30
+* [#1182](https://github.com/stripe/stripe-node/pull/1182) API Updates
+  * Add support for new value `boleto` on enums `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, and `Invoice.payment_settings.payment_method_types[]`.
+
 ## 8.159.0 - 2021-06-30
 * [#1180](https://github.com/stripe/stripe-node/pull/1180) API Updates
   * Add support for `wechat_pay` on `Charge.payment_method_details`, `CheckoutSessionCreateParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntent.payment_method_options`, `PaymentMethodCreateParams`, and `PaymentMethod`
