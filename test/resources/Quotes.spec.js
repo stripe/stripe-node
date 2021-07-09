@@ -1,6 +1,7 @@
 'use strict';
 
 const stripe = require('../../testUtils').getSpyableStripe();
+const testUtils = require('../../testUtils');
 const expect = require('chai').expect;
 
 const QUOTE_TEST_ID = 'qt_123';
@@ -117,16 +118,77 @@ describe('Quotes Resource', () => {
   });
 
   describe('pdf', () => {
-    it('Sends the correct request', () => {
-      stripe.quotes.pdf(QUOTE_TEST_ID);
-      expect(stripe.LAST_REQUEST).to.deep.equal({
-        method: 'GET',
-        host: 'files.stripe.com',
-        url: `/v1/quotes/${QUOTE_TEST_ID}/pdf`,
-        headers: {},
-        data: {},
-        settings: {},
-      });
+    it('success', (callback) => {
+      const handleRequest = (req, res) => {
+        res.write('Stripe binary response');
+        res.end();
+      };
+
+      testUtils.getTestServerStripe(
+        {},
+        handleRequest,
+        (err, stripe, closeServer) => {
+          if (err) {
+            return callback(err);
+          }
+
+          return stripe.quotes.pdf(
+            'foo_123',
+            {host: 'localhost'},
+            (err, res) => {
+              closeServer();
+              if (err) {
+                return callback(err);
+              }
+              const chunks = [];
+              res.on('data', (chunk) => chunks.push(chunk));
+              res.on('error', callback);
+              res.on('end', () => {
+                expect(Buffer.concat(chunks).toString()).to.equal(
+                  'Stripe binary response'
+                );
+                return callback();
+              });
+            }
+          );
+        }
+      );
+    });
+
+    it('failure', (callback) => {
+      const handleRequest = (req, res) => {
+        setTimeout(() => res.writeHead(500));
+        setTimeout(
+          () =>
+            res.write(
+              '{"error": "api_error", "error_description": "this is bad"}'
+            ),
+          10
+        );
+        setTimeout(() => res.end(), 20);
+      };
+
+      testUtils.getTestServerStripe(
+        {},
+        handleRequest,
+        (err, stripe, closeServer) => {
+          if (err) {
+            return callback(err);
+          }
+
+          return stripe.quotes.pdf(
+            'foo_123',
+            {host: 'localhost'},
+            (err, res) => {
+              closeServer();
+              expect(err).to.exist;
+              expect(err.raw.type).to.equal('api_error');
+              expect(err.raw.message).to.equal('this is bad');
+              return callback();
+            }
+          );
+        }
+      );
     });
   });
 });
