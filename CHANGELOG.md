@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 8.161.0 - 2021-07-09
+* [#1188](https://github.com/stripe/stripe-node/pull/1188) API Updates
+  * Add support for new resource `Quote`
+  * Add support for `quote` on `Invoice`
+  * Add support for new value `quote_accept` on enum `Invoice.billing_reason`
+  * Changed type of `Charge.payment_method_details.card.three_d_secure.result`, `SetupAttempt.payment_method_details.card.three_d_secure.result`, `Charge.payment_method_details.card.three_d_secure.version`, and `SetupAttempt.payment_method_details.card.three_d_secure.version` to be nullable.
+
+* [#1187](https://github.com/stripe/stripe-node/pull/1187) Bugfix in binary streaming support
+
 ## 8.160.0 - 2021-06-30
 * [#1182](https://github.com/stripe/stripe-node/pull/1182) API Updates
   * Add support for new value `boleto` on enums `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, and `Invoice.payment_settings.payment_method_types[]`.
