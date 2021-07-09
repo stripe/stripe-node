@@ -107,7 +107,7 @@ declare module 'stripe' {
         verification_data: Authorization.VerificationData;
 
         /**
-         * What, if any, digital wallet was used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
+         * The digital wallet used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
          */
         wallet: string | null;
       }

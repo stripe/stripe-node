@@ -267,6 +267,11 @@ declare module 'stripe' {
       pre_payment_credit_notes_amount: number;
 
       /**
+       * The quote this invoice was generated from.
+       */
+      quote?: string | Stripe.Quote | null;
+
+      /**
        * This is the transaction number that appears on email receipts sent for this invoice.
        */
       receipt_number: string | null;
@@ -356,6 +361,7 @@ declare module 'stripe' {
       type BillingReason =
         | 'automatic_pending_invoice_item_invoice'
         | 'manual'
+        | 'quote_accept'
         | 'subscription'
         | 'subscription_create'
         | 'subscription_cycle'

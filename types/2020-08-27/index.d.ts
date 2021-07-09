@@ -66,6 +66,7 @@
 ///<reference path='./Prices.d.ts' />
 ///<reference path='./Products.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
+///<reference path='./Quotes.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
 ///<reference path='./Radar/ValueLists.d.ts' />
@@ -146,6 +147,7 @@ declare module 'stripe' {
     prices: Stripe.PricesResource;
     products: Stripe.ProductsResource;
     promotionCodes: Stripe.PromotionCodesResource;
+    quotes: Stripe.QuotesResource;
     refunds: Stripe.RefundsResource;
     reviews: Stripe.ReviewsResource;
     setupAttempts: Stripe.SetupAttemptsResource;

@@ -794,7 +794,7 @@ declare module 'stripe' {
             /**
              * Indicates the outcome of 3D Secure authentication.
              */
-            result: ThreeDSecure.Result;
+            result: ThreeDSecure.Result | null;
 
             /**
              * Additional information about why 3D Secure succeeded or failed based
@@ -805,7 +805,7 @@ declare module 'stripe' {
             /**
              * The version of 3D Secure that was used.
              */
-            version: ThreeDSecure.Version;
+            version: ThreeDSecure.Version | null;
           }
 
           namespace ThreeDSecure {
