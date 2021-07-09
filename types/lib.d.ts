@@ -196,6 +196,8 @@ declare module 'stripe' {
       autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
     }
 
+    export type StripeStreamResponse = NodeJS.ReadableStream;
+
     /**
      * The Stripe API uses url-encoding for requests, and stripe-node encodes a
      * `null` param as an empty string, because there is no concept of `null`
