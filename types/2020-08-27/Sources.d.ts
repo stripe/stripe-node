@@ -111,7 +111,7 @@ declare module 'stripe' {
       /**
        * The status of the source, one of `canceled`, `chargeable`, `consumed`, `failed`, or `pending`. Only `chargeable` sources can be used to create a charge.
        */
-      status: string;
+      status: Source.Status;
 
       three_d_secure?: Source.ThreeDSecure;
 
@@ -312,7 +312,11 @@ declare module 'stripe' {
         /**
          * The status of the code verification, either `pending` (awaiting verification, `attempts_remaining` should be greater than 0), `succeeded` (successful verification) or `failed` (failed verification, cannot be verified anymore as `attempts_remaining` should be 0).
          */
-        status: string;
+        status: CodeVerification.Status;
+      }
+
+      namespace CodeVerification {
+        type Status = 'pending' | 'succeeded' | 'failed';
       }
 
       interface Eps {
@@ -499,7 +503,7 @@ declare module 'stripe' {
         /**
          * The failure reason for the redirect, either `user_abort` (the customer aborted or dropped out of the redirect flow), `declined` (the authentication failed or the transaction was declined), or `processing_error` (the redirect failed due to a technical error). Present only if the redirect status is `failed`.
          */
-        failure_reason: string | null;
+        failure_reason: Redirect.FailureReason | null;
 
         /**
          * The URL you provide to redirect the customer to after they authenticated their payment.
@@ -509,12 +513,18 @@ declare module 'stripe' {
         /**
          * The status of the redirect, either `pending` (ready to be used by your customer to authenticate the transaction), `succeeded` (succesful authentication, cannot be reused) or `not_required` (redirect should not be used) or `failed` (failed authentication, cannot be reused).
          */
-        status: string;
+        status: Redirect.Status;
 
         /**
          * The URL provided to you to redirect a customer to as part of a `redirect` authentication flow.
          */
         url: string;
+      }
+
+      namespace Redirect {
+        type FailureReason = 'user_abort' | 'declined' | 'processing_error';
+
+        type Status = 'pending' | 'succeeded' | 'not_required' | 'failed';
       }
 
       interface SepaCreditTransfer {
@@ -654,6 +664,13 @@ declare module 'stripe' {
           tracking_number?: string | null;
         }
       }
+
+      type Status =
+        | 'canceled'
+        | 'chargeable'
+        | 'consumed'
+        | 'failed'
+        | 'pending';
 
       interface ThreeDSecure {
         address_line1_check?: string | null;

@@ -55,7 +55,7 @@ declare module 'stripe' {
       /**
        * The status of the mandate notification. Valid statuses are `pending` or `submitted`.
        */
-      status: string;
+      status: SourceMandateNotification.Status;
 
       /**
        * The type of source this mandate notification is attached to. Should be the source type identifier code for the payment method, such as `three_d_secure`.
@@ -94,6 +94,8 @@ declare module 'stripe' {
          */
         mandate_reference?: string;
       }
+
+      type Status = 'pending' | 'submitted';
     }
   }
 }

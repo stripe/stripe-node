@@ -104,7 +104,7 @@ declare module 'stripe' {
       /**
        * Current order status. One of `created`, `paid`, `canceled`, `fulfilled`, or `returned`. More details in the [Orders Guide](https://stripe.com/docs/orders/guide#understanding-order-statuses).
        */
-      status: string;
+      status: Order.Status;
 
       /**
        * The timestamps at which the order status was updated.
@@ -197,6 +197,8 @@ declare module 'stripe' {
           type: string;
         }
       }
+
+      type Status = 'created' | 'paid' | 'canceled' | 'fulfilled' | 'returned';
 
       interface StatusTransitions {
         /**

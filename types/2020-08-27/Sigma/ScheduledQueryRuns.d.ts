@@ -52,7 +52,7 @@ declare module 'stripe' {
         /**
          * The query's execution status, which will be `completed` for successful runs, and `canceled`, `failed`, or `timed_out` otherwise.
          */
-        status: string;
+        status: ScheduledQueryRun.Status;
 
         /**
          * Title of the query.
@@ -67,6 +67,8 @@ declare module 'stripe' {
            */
           message: string;
         }
+
+        type Status = 'completed' | 'canceled' | 'failed' | 'timed_out';
       }
 
       interface ScheduledQueryRunRetrieveParams {

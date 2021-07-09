@@ -60,7 +60,7 @@ declare module 'stripe' {
          *
          * If you believe that the rejection is in error, please contact support@stripe.com for assistance.
          */
-        disabled_reason: string | null;
+        disabled_reason: Requirements.DisabledReason | null;
 
         /**
          * Fields that are `currently_due` and need to be collected again because validation or verification failed.
@@ -149,6 +149,17 @@ declare module 'stripe' {
             | 'verification_missing_owners'
             | 'verification_requires_additional_memorandum_of_associations';
         }
+
+        type DisabledReason =
+          | 'requirements.past_due'
+          | 'requirements.pending_verification'
+          | 'rejected.fraud'
+          | 'rejected.terms_of_service'
+          | 'rejected.listed'
+          | 'rejected.other'
+          | 'listed'
+          | 'under_review'
+          | 'other';
       }
 
       type Status =
