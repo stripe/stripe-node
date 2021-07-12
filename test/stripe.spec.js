@@ -474,6 +474,29 @@ describe('Stripe Module', function() {
     });
   });
 
+  describe('stripeAccount', () => {
+    describe('when passed in via the config object', () => {
+      it('is respected', () => {
+        const newStripe = testUtils.getSpyableStripe((token) =>
+          Stripe(token, {
+            stripeAccount: 'my_stripe_account',
+          })
+        );
+        expect(newStripe.getApiField('stripeAccount')).to.equal(
+          'my_stripe_account'
+        );
+        newStripe.customers.create();
+        expect(newStripe.LAST_REQUEST).to.deep.equal({
+          data: {},
+          headers: {'stripe-account': 'my_stripe_account'},
+          settings: {},
+          method: 'POST',
+          url: '/v1/customers',
+        });
+      });
+    });
+  });
+
   describe('setMaxNetworkRetries', () => {
     describe('when given an empty or non-number variable', () => {
       it('should error', () => {
