@@ -117,6 +117,19 @@ describe('Quotes Resource', () => {
     });
   });
 
+  describe('listComputedUpfrontLineItems', () => {
+    it('Sends the correct request', () => {
+      stripe.quotes.listComputedUpfrontLineItems(QUOTE_TEST_ID);
+      expect(stripe.LAST_REQUEST).to.deep.equal({
+        method: 'GET',
+        url: `/v1/quotes/${QUOTE_TEST_ID}/computed_upfront_line_items`,
+        headers: {},
+        data: {},
+        settings: {},
+      });
+    });
+  });
+
   describe('pdf', () => {
     it('success', (callback) => {
       const handleRequest = (req, res) => {
