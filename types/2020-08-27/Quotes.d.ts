@@ -1003,13 +1003,6 @@ declare module 'stripe' {
       type Status = 'accepted' | 'canceled' | 'draft' | 'open';
     }
 
-    interface QuoteListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface QuoteAcceptParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -1034,6 +1027,13 @@ declare module 'stripe' {
        * A future timestamp on which the quote will be canceled if in `open` or `draft` status. Measured in seconds since the Unix epoch.
        */
       expires_at?: number;
+    }
+
+    interface QuoteListComputedUpfrontLineItemsParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     interface QuoteListLineItemsParams extends PaginationParams {
@@ -1092,19 +1092,6 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Quote>;
 
       /**
-       * When retrieving a quote, there is an includable upfront.line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of upfront line items.
-       */
-      list(
-        id: string,
-        params?: QuoteListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.LineItem>;
-      list(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.LineItem>;
-
-      /**
        * Accepts the specified quote.
        */
       accept(
@@ -1142,6 +1129,19 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Quote>>;
+
+      /**
+       * When retrieving a quote, there is an includable upfront.line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of upfront line items.
+       */
+      listComputedUpfrontLineItems(
+        id: string,
+        params?: QuoteListComputedUpfrontLineItemsParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.LineItem>;
+      listComputedUpfrontLineItems(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.LineItem>;
 
       /**
        * When retrieving a quote, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
