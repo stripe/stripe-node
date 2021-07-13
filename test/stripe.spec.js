@@ -476,23 +476,55 @@ describe('Stripe Module', function() {
 
   describe('stripeAccount', () => {
     describe('when passed in via the config object', () => {
-      it('is respected', () => {
-        const newStripe = testUtils.getSpyableStripe((token) =>
-          Stripe(token, {
+      let headers;
+      let stripeClient;
+      let closeServer;
+      before((callback) => {
+        testUtils.getTestServerStripe(
+          {
             stripeAccount: 'my_stripe_account',
-          })
+          },
+          (req, res) => {
+            headers = req.headers;
+            res.writeHeader(200);
+            res.write('{}');
+            res.end();
+          },
+          (err, client, close) => {
+            if (err) {
+              return callback(err);
+            }
+            stripeClient = client;
+            closeServer = close;
+            return callback();
+          }
         );
-        expect(newStripe.getApiField('stripeAccount')).to.equal(
-          'my_stripe_account'
-        );
-        newStripe.customers.create();
-        expect(newStripe.LAST_REQUEST).to.deep.equal({
-          data: {},
-          headers: {'stripe-account': 'my_stripe_account'},
-          settings: {},
-          method: 'POST',
-          url: '/v1/customers',
+      });
+      after(() => closeServer());
+      it('is respected', (callback) => {
+        stripeClient.customers.create((err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(headers['stripe-account']).to.equal('my_stripe_account');
+          return callback();
         });
+      });
+      it('can still be overridden per-request', (callback) => {
+        stripeClient.customers.create(
+          {stripeAccount: 'my_other_stripe_account'},
+          (err) => {
+            closeServer();
+            if (err) {
+              return callback(err);
+            }
+            expect(headers['stripe-account']).to.equal(
+              'my_other_stripe_account'
+            );
+            return callback();
+          }
+        );
       });
     });
   });
