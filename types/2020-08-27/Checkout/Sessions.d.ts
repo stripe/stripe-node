@@ -855,7 +855,7 @@ declare module 'stripe' {
         shipping_address_collection?: SessionCreateParams.ShippingAddressCollection;
 
         /**
-         * The shipping rate to apply to this Session. Currently, only up to one may be specified
+         * The shipping rate to apply to this Session. Currently, only up to one may be specified.
          */
         shipping_rates?: Array<string>;
 
