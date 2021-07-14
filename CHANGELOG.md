@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.162.0 - 2021-07-14
+* [#1194](https://github.com/stripe/stripe-node/pull/1194) API Updates
+  * Add support for `quote.accepted`, `quote.canceled`, `quote.created`, and `quote.finalized` events.
+* [#1190](https://github.com/stripe/stripe-node/pull/1190) API Updates
+  * Add support for `list_computed_upfront_line_items` method on resource `Quote`
+* [#1192](https://github.com/stripe/stripe-node/pull/1192) Update links to Stripe.js docs
+
 ## 8.161.0 - 2021-07-09
 * [#1188](https://github.com/stripe/stripe-node/pull/1188) API Updates
   * Add support for new resource `Quote`
