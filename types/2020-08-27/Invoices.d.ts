@@ -269,7 +269,7 @@ declare module 'stripe' {
       /**
        * The quote this invoice was generated from.
        */
-      quote?: string | Stripe.Quote | null;
+      quote: string | Stripe.Quote | null;
 
       /**
        * This is the transaction number that appears on email receipts sent for this invoice.
