@@ -474,6 +474,61 @@ describe('Stripe Module', function() {
     });
   });
 
+  describe('stripeAccount', () => {
+    describe('when passed in via the config object', () => {
+      let headers;
+      let stripeClient;
+      let closeServer;
+      before((callback) => {
+        testUtils.getTestServerStripe(
+          {
+            stripeAccount: 'my_stripe_account',
+          },
+          (req, res) => {
+            headers = req.headers;
+            res.writeHeader(200);
+            res.write('{}');
+            res.end();
+          },
+          (err, client, close) => {
+            if (err) {
+              return callback(err);
+            }
+            stripeClient = client;
+            closeServer = close;
+            return callback();
+          }
+        );
+      });
+      after(() => closeServer());
+      it('is respected', (callback) => {
+        stripeClient.customers.create((err) => {
+          closeServer();
+          if (err) {
+            return callback(err);
+          }
+          expect(headers['stripe-account']).to.equal('my_stripe_account');
+          return callback();
+        });
+      });
+      it('can still be overridden per-request', (callback) => {
+        stripeClient.customers.create(
+          {stripeAccount: 'my_other_stripe_account'},
+          (err) => {
+            closeServer();
+            if (err) {
+              return callback(err);
+            }
+            expect(headers['stripe-account']).to.equal(
+              'my_other_stripe_account'
+            );
+            return callback();
+          }
+        );
+      });
+    });
+  });
+
   describe('setMaxNetworkRetries', () => {
     describe('when given an empty or non-number variable', () => {
       it('should error', () => {
