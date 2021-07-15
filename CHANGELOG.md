@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.163.0 - 2021-07-15
+* [#1102](https://github.com/stripe/stripe-node/pull/1102), [#1191](https://github.com/stripe/stripe-node/pull/1191) Add support for `stripeAccount` when initializing the client
+
 ## 8.162.0 - 2021-07-14
 * [#1194](https://github.com/stripe/stripe-node/pull/1194) API Updates
   * Add support for `quote.accepted`, `quote.canceled`, `quote.created`, and `quote.finalized` events.
