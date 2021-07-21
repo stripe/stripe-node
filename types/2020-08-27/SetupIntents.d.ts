@@ -213,20 +213,17 @@ declare module 'stripe' {
         source?: Stripe.CustomerSource;
 
         /**
-         * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
+         * The type of error returned. One of `api_error`, `card_error`, `idempotency_error`, or `invalid_request_error`
          */
         type: LastSetupError.Type;
       }
 
       namespace LastSetupError {
         type Type =
-          | 'api_connection_error'
           | 'api_error'
-          | 'authentication_error'
           | 'card_error'
           | 'idempotency_error'
-          | 'invalid_request_error'
-          | 'rate_limit_error';
+          | 'invalid_request_error';
       }
 
       interface NextAction {

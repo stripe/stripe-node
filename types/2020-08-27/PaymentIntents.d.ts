@@ -306,20 +306,17 @@ declare module 'stripe' {
         source?: Stripe.CustomerSource;
 
         /**
-         * The type of error returned. One of `api_connection_error`, `api_error`, `authentication_error`, `card_error`, `idempotency_error`, `invalid_request_error`, or `rate_limit_error`
+         * The type of error returned. One of `api_error`, `card_error`, `idempotency_error`, or `invalid_request_error`
          */
         type: LastPaymentError.Type;
       }
 
       namespace LastPaymentError {
         type Type =
-          | 'api_connection_error'
           | 'api_error'
-          | 'authentication_error'
           | 'card_error'
           | 'idempotency_error'
-          | 'invalid_request_error'
-          | 'rate_limit_error';
+          | 'invalid_request_error';
       }
 
       interface NextAction {
@@ -510,6 +507,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodOptions.CardPresent;
 
+        ideal?: PaymentMethodOptions.Ideal;
+
         oxxo?: PaymentMethodOptions.Oxxo;
 
         p24?: PaymentMethodOptions.P24;
@@ -682,6 +681,8 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Ideal {}
 
         interface Oxxo {
           /**
@@ -1434,6 +1435,11 @@ declare module 'stripe' {
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
 
         /**
+         * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
+         */
+        ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -1617,6 +1623,8 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Ideal {}
 
         interface Oxxo {
           /**
@@ -2289,6 +2297,11 @@ declare module 'stripe' {
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
 
         /**
+         * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
+         */
+        ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -2472,6 +2485,8 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Ideal {}
 
         interface Oxxo {
           /**
@@ -3258,6 +3273,11 @@ declare module 'stripe' {
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
 
         /**
+         * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
+         */
+        ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
+
+        /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
          */
         oxxo?: Stripe.Emptyable<PaymentMethodOptions.Oxxo>;
@@ -3441,6 +3461,8 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Ideal {}
 
         interface Oxxo {
           /**
