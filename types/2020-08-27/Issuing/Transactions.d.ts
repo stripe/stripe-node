@@ -93,6 +93,11 @@ declare module 'stripe' {
          * The nature of the transaction.
          */
         type: Transaction.Type;
+
+        /**
+         * The digital wallet used for this transaction. One of `apple_pay`, `google_pay`, or `samsung_pay`.
+         */
+        wallet: Transaction.Wallet | null;
       }
 
       namespace Transaction {
@@ -287,6 +292,8 @@ declare module 'stripe' {
         }
 
         type Type = 'capture' | 'refund';
+
+        type Wallet = 'apple_pay' | 'google_pay' | 'samsung_pay';
       }
 
       interface TransactionRetrieveParams {

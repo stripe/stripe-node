@@ -236,7 +236,7 @@ declare module 'stripe' {
     namespace CreditNoteCreateParams {
       interface Line {
         /**
-         * The line item amount to credit. Only valid when `type` is `invoice_line_item` and the referenced invoice line item does not have a quantity, only an amount.
+         * The line item amount to credit. Only valid when `type` is `invoice_line_item`.
          */
         amount?: number;
 
@@ -388,7 +388,7 @@ declare module 'stripe' {
     namespace CreditNotePreviewParams {
       interface Line {
         /**
-         * The line item amount to credit. Only valid when `type` is `invoice_line_item` and the referenced invoice line item does not have a quantity, only an amount.
+         * The line item amount to credit. Only valid when `type` is `invoice_line_item`.
          */
         amount?: number;
 
