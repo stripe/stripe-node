@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.165.0 - 2021-07-22
+* [#1197](https://github.com/stripe/stripe-node/pull/1197) API Updates
+  * Add support for new values `hr`, `ko`, and `vi` on enums `CheckoutSessionCreateParams.locale` and `Checkout.Session.locale`
+  * Add support for `payment_settings` on `SubscriptionCreateParams`, `SubscriptionUpdateParams`, and `Subscription`
+
 ## 8.164.0 - 2021-07-20
 * [#1196](https://github.com/stripe/stripe-node/pull/1196) API Updates
   * Remove support for values `api_connection_error`, `authentication_error`, and `rate_limit_error` from enums `StripeError.type`, `StripeErrorResponse.error.type`, `Invoice.last_finalization_error.type`, `PaymentIntent.last_payment_error.type`, `SetupAttempt.setup_error.type`, and `SetupIntent.last_setup_error.type`
