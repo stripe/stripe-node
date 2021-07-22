@@ -134,6 +134,11 @@ declare module 'stripe' {
       pause_collection: Subscription.PauseCollection | null;
 
       /**
+       * Payment settings passed on to invoices created by the subscription.
+       */
+      payment_settings: Subscription.PaymentSettings | null;
+
+      /**
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
        */
       pending_invoice_item_interval: Subscription.PendingInvoiceItemInterval | null;
@@ -223,6 +228,72 @@ declare module 'stripe' {
 
       namespace PauseCollection {
         type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+      }
+
+      interface PaymentSettings {
+        /**
+         * Payment-method-specific configuration to provide to invoices created by the subscription.
+         */
+        payment_method_options: PaymentSettings.PaymentMethodOptions | null;
+
+        /**
+         * The list of payment method types to provide to every invoice created by the subscription. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
+         */
+        payment_method_types: Array<PaymentSettings.PaymentMethodType> | null;
+      }
+
+      namespace PaymentSettings {
+        interface PaymentMethodOptions {
+          /**
+           * This sub-hash contains details about the Bancontact payment method options to pass to invoices created by the subscription.
+           */
+          bancontact: PaymentMethodOptions.Bancontact | null;
+
+          /**
+           * This sub-hash contains details about the Card payment method options to pass to invoices created by the subscription.
+           */
+          card: PaymentMethodOptions.Card | null;
+        }
+
+        namespace PaymentMethodOptions {
+          interface Bancontact {
+            /**
+             * Preferred language of the Bancontact authorization page that the customer is redirected to.
+             */
+            preferred_language: Bancontact.PreferredLanguage;
+          }
+
+          namespace Bancontact {
+            type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          }
+
+          interface Card {
+            /**
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             */
+            request_three_d_secure: Card.RequestThreeDSecure | null;
+          }
+
+          namespace Card {
+            type RequestThreeDSecure = 'any' | 'automatic';
+          }
+        }
+
+        type PaymentMethodType =
+          | 'ach_credit_transfer'
+          | 'ach_debit'
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'boleto'
+          | 'card'
+          | 'fpx'
+          | 'giropay'
+          | 'ideal'
+          | 'sepa_credit_transfer'
+          | 'sepa_debit'
+          | 'sofort'
+          | 'wechat_pay';
       }
 
       interface PendingInvoiceItemInterval {
@@ -391,13 +462,18 @@ declare module 'stripe' {
       /**
        * Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
        *
-       * Use `default_incomplete` to create Subscriptions with `status=incomplete` when the first invoice requires payment, otherwise start as active. Subscriptions transition to `status=active` when successfully confirming the payment intent on the first invoice. This allows simpler management of scenarios where additional user actions are needed to pay a subscription's invoice. Such as failed payments, [SCA regulation](https://stripe.com/docs/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method. If the payment intent is not confirmed within 23 hours subscriptions transition to `status=expired_incomplete`, which is a terminal state.
+       * Use `default_incomplete` to create Subscriptions with `status=incomplete` when the first invoice requires payment, otherwise start as active. Subscriptions transition to `status=active` when successfully confirming the payment intent on the first invoice. This allows simpler management of scenarios where additional user actions are needed to pay a subscription's invoice. Such as failed payments, [SCA regulation](https://stripe.com/docs/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method. If the payment intent is not confirmed within 23 hours subscriptions transition to `status=incomplete_expired`, which is a terminal state.
        *
        * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
        *
        * `pending_if_incomplete` is only used with updates and cannot be passed when creating a subscription.
        */
       payment_behavior?: SubscriptionCreateParams.PaymentBehavior;
+
+      /**
+       * Payment settings to pass to invoices created by the subscription.
+       */
+      payment_settings?: SubscriptionCreateParams.PaymentSettings;
 
       /**
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
@@ -620,6 +696,74 @@ declare module 'stripe' {
         | 'error_if_incomplete'
         | 'pending_if_incomplete';
 
+      interface PaymentSettings {
+        /**
+         * Payment-method-specific configuration to provide to invoices created by the subscription.
+         */
+        payment_method_options?: PaymentSettings.PaymentMethodOptions;
+
+        /**
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
+         */
+        payment_method_types?: Stripe.Emptyable<
+          Array<PaymentSettings.PaymentMethodType>
+        >;
+      }
+
+      namespace PaymentSettings {
+        interface PaymentMethodOptions {
+          /**
+           * This sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
+           */
+          bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+          /**
+           * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
+           */
+          card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+        }
+
+        namespace PaymentMethodOptions {
+          interface Bancontact {
+            /**
+             * Preferred language of the Bancontact authorization page that the customer is redirected to.
+             */
+            preferred_language?: Bancontact.PreferredLanguage;
+          }
+
+          namespace Bancontact {
+            type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          }
+
+          interface Card {
+            /**
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             */
+            request_three_d_secure?: Card.RequestThreeDSecure;
+          }
+
+          namespace Card {
+            type RequestThreeDSecure = 'any' | 'automatic';
+          }
+        }
+
+        type PaymentMethodType =
+          | 'ach_credit_transfer'
+          | 'ach_debit'
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'boleto'
+          | 'card'
+          | 'fpx'
+          | 'giropay'
+          | 'ideal'
+          | 'sepa_credit_transfer'
+          | 'sepa_debit'
+          | 'sofort'
+          | 'wechat_pay';
+      }
+
       interface PendingInvoiceItemInterval {
         /**
          * Specifies invoicing frequency. Either `day`, `week`, `month` or `year`.
@@ -763,6 +907,11 @@ declare module 'stripe' {
        * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not update the subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
        */
       payment_behavior?: SubscriptionUpdateParams.PaymentBehavior;
+
+      /**
+       * Payment settings to pass to invoices created by the subscription.
+       */
+      payment_settings?: SubscriptionUpdateParams.PaymentSettings;
 
       /**
        * Specifies an interval for how often to bill for any pending invoice items. It is analogous to calling [Create an invoice](https://stripe.com/docs/api#create_invoice) for the given subscription at the specified interval.
@@ -1019,6 +1168,74 @@ declare module 'stripe' {
         | 'default_incomplete'
         | 'error_if_incomplete'
         | 'pending_if_incomplete';
+
+      interface PaymentSettings {
+        /**
+         * Payment-method-specific configuration to provide to invoices created by the subscription.
+         */
+        payment_method_options?: PaymentSettings.PaymentMethodOptions;
+
+        /**
+         * The list of payment method types (e.g. card) to provide to the invoice's PaymentIntent. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
+         */
+        payment_method_types?: Stripe.Emptyable<
+          Array<PaymentSettings.PaymentMethodType>
+        >;
+      }
+
+      namespace PaymentSettings {
+        interface PaymentMethodOptions {
+          /**
+           * This sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
+           */
+          bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+          /**
+           * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
+           */
+          card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+        }
+
+        namespace PaymentMethodOptions {
+          interface Bancontact {
+            /**
+             * Preferred language of the Bancontact authorization page that the customer is redirected to.
+             */
+            preferred_language?: Bancontact.PreferredLanguage;
+          }
+
+          namespace Bancontact {
+            type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
+          }
+
+          interface Card {
+            /**
+             * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
+             */
+            request_three_d_secure?: Card.RequestThreeDSecure;
+          }
+
+          namespace Card {
+            type RequestThreeDSecure = 'any' | 'automatic';
+          }
+        }
+
+        type PaymentMethodType =
+          | 'ach_credit_transfer'
+          | 'ach_debit'
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'boleto'
+          | 'card'
+          | 'fpx'
+          | 'giropay'
+          | 'ideal'
+          | 'sepa_credit_transfer'
+          | 'sepa_debit'
+          | 'sofort'
+          | 'wechat_pay';
+      }
 
       interface PendingInvoiceItemInterval {
         /**
