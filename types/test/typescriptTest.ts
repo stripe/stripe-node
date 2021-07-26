@@ -175,7 +175,6 @@ const stripeCardError: Stripe.StripeCardError = Stripe.errors.generate({
 });
 
 Stripe.StripeResource.extend({
-  includeBasic: ['retrieve'],
   foo: Stripe.StripeResource.method({
     method: 'create',
     path: 'foo',
