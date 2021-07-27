@@ -18,7 +18,7 @@ declare module 'stripe' {
         method: string;
         path?: string;
         fullPath?: string;
-        methodType?: 'list';
+        methodType?: 'list' | 'search';
       }): (...args: any[]) => object; //eslint-disable-line @typescript-eslint/no-explicit-any
       static BASIC_METHODS: {
         create<T>(
@@ -194,6 +194,43 @@ declare module 'stripe' {
 
     export interface ApiListPromise<T>
       extends Promise<Response<ApiList<T>>>,
+        AsyncIterableIterator<T> {
+      autoPagingEach(
+        handler: (item: T) => boolean | void | Promise<boolean | void>
+      ): Promise<void>;
+
+      autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
+    }
+
+    /**
+     * A container for paginated lists of search results.
+     * The array of objects is on the `.data` property,
+     * and `.has_more` indicates whether there are additional objects beyond the end of this list.
+     * The `.next_page` field can be used to paginate forwards.
+     */
+    export interface ApiSearchResult<T> {
+      object: 'search_result';
+
+      data: Array<T>;
+
+      /**
+       * True if this list has another page of items after this one that can be fetched.
+       */
+      has_more: boolean;
+
+      /**
+       * The URL where this list can be accessed.
+       */
+      url: string;
+
+      /**
+       * The page token to use to get the next page of results. If `has_more` is
+       * true, this will be set.
+       */
+      next_page?: string;
+    }
+    export interface ApiSearchResultPromise<T>
+      extends Promise<Response<ApiSearchResult<T>>>,
         AsyncIterableIterator<T> {
       autoPagingEach(
         handler: (item: T) => boolean | void | Promise<boolean | void>
