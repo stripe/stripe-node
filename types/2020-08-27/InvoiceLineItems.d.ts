@@ -345,7 +345,7 @@ declare module 'stripe' {
           /**
            * Customer shipping address.
            */
-          address: Stripe.AddressParam;
+          address: Shipping.Address;
 
           /**
            * Customer name.
@@ -356,6 +356,40 @@ declare module 'stripe' {
            * Customer phone (including extension).
            */
           phone?: string;
+        }
+
+        namespace Shipping {
+          interface Address {
+            /**
+             * City, district, suburb, town, or village.
+             */
+            city?: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country?: string;
+
+            /**
+             * Address line 1 (e.g., street, PO Box, or company name).
+             */
+            line1?: string;
+
+            /**
+             * Address line 2 (e.g., apartment, suite, unit, or building).
+             */
+            line2?: string;
+
+            /**
+             * ZIP or postal code.
+             */
+            postal_code?: string;
+
+            /**
+             * State, county, province, or region.
+             */
+            state?: string;
+          }
         }
 
         interface Tax {
@@ -599,7 +633,7 @@ declare module 'stripe' {
         plan?: string;
 
         /**
-         * The ID of the price object.
+         * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
          */
         price?: string;
 

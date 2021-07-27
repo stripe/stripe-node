@@ -290,7 +290,7 @@ declare module 'stripe' {
       plan?: string;
 
       /**
-       * The ID of the price object.
+       * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
        */
       price?: string;
 

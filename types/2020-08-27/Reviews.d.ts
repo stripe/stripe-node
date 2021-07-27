@@ -27,7 +27,7 @@ declare module 'stripe' {
       charge: string | Stripe.Charge | null;
 
       /**
-       * The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
+       * The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, `disputed`, or `redacted`.
        */
       closed_reason: Review.ClosedReason | null;
 
@@ -67,7 +67,7 @@ declare module 'stripe' {
       payment_intent?: string | Stripe.PaymentIntent;
 
       /**
-       * The reason the review is currently open or closed. One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, or `disputed`.
+       * The reason the review is currently open or closed. One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, `disputed`, or `redacted`.
        */
       reason: string;
 
@@ -81,6 +81,7 @@ declare module 'stripe' {
       type ClosedReason =
         | 'approved'
         | 'disputed'
+        | 'redacted'
         | 'refunded'
         | 'refunded_as_fraud';
 

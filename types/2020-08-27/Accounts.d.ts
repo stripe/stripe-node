@@ -1966,13 +1966,6 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface AccountRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface AccountUpdateParams {
       /**
        * An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
