@@ -404,6 +404,8 @@ describe('Stripe Module', function() {
                 const headers = customer.lastResponse.headers;
                 expect(headers).to.contain.keys('request-id');
 
+                expect(customer.headers).to.be.undefined;
+
                 resolve('Called!');
               });
             })

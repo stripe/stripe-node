@@ -144,8 +144,8 @@ stripe.setHost('host', 'port', 'protocol');
     const statusCode: number = lr.statusCode;
     const apiVersion: string | undefined = lr.apiVersion;
     const idempotencyKey: string | undefined = lr.idempotencyKey;
-    const headers = custs.headers;
-    const header: string | undefined = custs.headers['request-id'];
+    const headers = lr.headers;
+    const header: string | undefined = headers['request-id'];
   }
 
   {
@@ -155,8 +155,8 @@ stripe.setHost('host', 'port', 'protocol');
     const statusCode: number = lr.statusCode;
     const apiVersion: string | undefined = lr.apiVersion;
     const idempotencyKey: string | undefined = lr.idempotencyKey;
-    const headers = cust.headers;
-    const header: string | undefined = cust.headers['request-id'];
+    const headers = lr.headers;
+    const header: string | undefined = lr.headers['request-id'];
   }
   {
     const acct = await stripe.accounts.createExternalAccount('foo', {
