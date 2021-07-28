@@ -45,6 +45,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
+       */
+      account_type?: ExternalAccountUpdateParams.AccountType;
+
+      /**
        * City/District/Suburb/Town/Village.
        */
       address_city?: string;
@@ -107,6 +112,8 @@ declare module 'stripe' {
 
     namespace ExternalAccountUpdateParams {
       type AccountHolderType = 'company' | 'individual';
+
+      type AccountType = 'checking' | 'futsu' | 'savings' | 'toza';
     }
 
     interface ExternalAccountListParams extends PaginationParams {

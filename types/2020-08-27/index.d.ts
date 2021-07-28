@@ -173,7 +173,9 @@ declare module 'stripe' {
       configurations: Stripe.BillingPortal.ConfigurationsResource;
       sessions: Stripe.BillingPortal.SessionsResource;
     };
-    checkout: {sessions: Stripe.Checkout.SessionsResource};
+    checkout: {
+      sessions: Stripe.Checkout.SessionsResource;
+    };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;
       verificationSessions: Stripe.Identity.VerificationSessionsResource;
@@ -194,13 +196,14 @@ declare module 'stripe' {
       reportRuns: Stripe.Reporting.ReportRunsResource;
       reportTypes: Stripe.Reporting.ReportTypesResource;
     };
-    sigma: {scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource};
+    sigma: {
+      scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
+    };
     terminal: {
       connectionTokens: Stripe.Terminal.ConnectionTokensResource;
       locations: Stripe.Terminal.LocationsResource;
       readers: Stripe.Terminal.ReadersResource;
     };
-
     /**
      * API Errors
      */

@@ -981,36 +981,8 @@ declare module 'stripe' {
       }
 
       namespace BusinessProfile {
-        interface SupportAddress {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country?: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
+        interface SupportAddress extends Omit<Stripe.AddressParam, 'line1'> {
           line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
         }
       }
 
@@ -1383,36 +1355,8 @@ declare module 'stripe' {
       }
 
       namespace Company {
-        interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country?: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
+        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
           line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
         }
 
         type Structure =
@@ -1670,36 +1614,8 @@ declare module 'stripe' {
       }
 
       namespace Individual {
-        interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country?: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
+        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
           line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
         }
 
         interface Dob {
@@ -1966,13 +1882,6 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface AccountRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface AccountUpdateParams {
       /**
        * An [account token](https://stripe.com/docs/api#create_account_token), used to securely provide details to the account.
@@ -2091,36 +2000,8 @@ declare module 'stripe' {
       }
 
       namespace BusinessProfile {
-        interface SupportAddress {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country?: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
+        interface SupportAddress extends Omit<Stripe.AddressParam, 'line1'> {
           line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
         }
       }
 
@@ -2493,36 +2374,8 @@ declare module 'stripe' {
       }
 
       namespace Company {
-        interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country?: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
+        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
           line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
         }
 
         type Structure =
@@ -2743,36 +2596,8 @@ declare module 'stripe' {
       }
 
       namespace Individual {
-        interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country?: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
+        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
           line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
         }
 
         interface Dob {

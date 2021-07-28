@@ -32,6 +32,11 @@ declare module 'stripe' {
       account_holder_type: string | null;
 
       /**
+       * The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
+       */
+      account_type: string | null;
+
+      /**
        * A set of available payout methods for this bank account. Only values from this set should be passed as the `method` when creating a payout.
        */
       available_payout_methods?: Array<

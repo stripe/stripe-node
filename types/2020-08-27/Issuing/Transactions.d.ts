@@ -115,6 +115,11 @@ declare module 'stripe' {
           category: string;
 
           /**
+           * The merchant category code for the seller's business
+           */
+          category_code: string;
+
+          /**
            * City where the seller is located
            */
           city: string | null;
