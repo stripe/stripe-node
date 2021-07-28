@@ -156,8 +156,8 @@ declare module 'stripe' {
     }
 
     export type Response<T> = T & {
-      headers: {[key: string]: string};
       lastResponse: {
+        headers: {[key: string]: string};
         requestId: string;
         statusCode: number;
         apiVersion?: string;
