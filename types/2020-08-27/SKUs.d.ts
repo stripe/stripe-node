@@ -168,7 +168,9 @@ declare module 'stripe' {
       /**
        * A dictionary of attributes and values for the attributes defined by the product. If, for example, a product's attributes are `["size", "gender"]`, a valid SKU has the following dictionary of attributes: `{"size": "Medium", "gender": "Unisex"}`.
        */
-      attributes?: Stripe.Metadata;
+      attributes?: {
+        [key: string]: string;
+      };
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -259,7 +261,9 @@ declare module 'stripe' {
       /**
        * A dictionary of attributes and values for the attributes defined by the product. When specified, `attributes` will partially update the existing attributes dictionary on the product, with the postcondition that a value must be present for each attribute key on the product.
        */
-      attributes?: Stripe.Metadata;
+      attributes?: {
+        [key: string]: string;
+      };
 
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -358,7 +362,9 @@ declare module 'stripe' {
       /**
        * Only return SKUs that have the specified key-value pairs in this partially constructed dictionary. Can be specified only if `product` is also supplied. For instance, if the associated product has attributes `["color", "size"]`, passing in `attributes[color]=red` returns all the SKUs for this product that have `color` set to `red`.
        */
-      attributes?: Stripe.Metadata;
+      attributes?: {
+        [key: string]: string;
+      };
 
       /**
        * Specifies which fields in the response should be expanded.
