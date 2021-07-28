@@ -214,36 +214,8 @@ declare module 'stripe' {
         }
 
         namespace Company {
-          interface Address {
-            /**
-             * City, district, suburb, town, or village.
-             */
-            city?: string;
-
-            /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-             */
-            country?: string;
-
-            /**
-             * Address line 1 (e.g., street, PO Box, or company name).
-             */
+          interface Address extends Omit<Stripe.AddressParam, 'line1'> {
             line1?: string;
-
-            /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
-             */
-            line2?: string;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string;
-
-            /**
-             * State, county, province, or region.
-             */
-            state?: string;
           }
 
           type Structure =
@@ -388,36 +360,8 @@ declare module 'stripe' {
         }
 
         namespace Individual {
-          interface Address {
-            /**
-             * City, district, suburb, town, or village.
-             */
-            city?: string;
-
-            /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-             */
-            country?: string;
-
-            /**
-             * Address line 1 (e.g., street, PO Box, or company name).
-             */
+          interface Address extends Omit<Stripe.AddressParam, 'line1'> {
             line1?: string;
-
-            /**
-             * Address line 2 (e.g., apartment, suite, unit, or building).
-             */
-            line2?: string;
-
-            /**
-             * ZIP or postal code.
-             */
-            postal_code?: string;
-
-            /**
-             * State, county, province, or region.
-             */
-            state?: string;
           }
 
           interface Dob {
@@ -496,6 +440,11 @@ declare module 'stripe' {
         account_number: string;
 
         /**
+         * The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
+         */
+        account_type?: BankAccount.AccountType;
+
+        /**
          * The country in which the bank account is located.
          */
         country: string;
@@ -513,6 +462,8 @@ declare module 'stripe' {
 
       namespace BankAccount {
         type AccountHolderType = 'company' | 'individual';
+
+        type AccountType = 'checking' | 'futsu' | 'savings' | 'toza';
       }
 
       interface Card {
@@ -661,36 +612,8 @@ declare module 'stripe' {
       }
 
       namespace Person {
-        interface Address {
-          /**
-           * City, district, suburb, town, or village.
-           */
-          city?: string;
-
-          /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-           */
-          country?: string;
-
-          /**
-           * Address line 1 (e.g., street, PO Box, or company name).
-           */
+        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
           line1?: string;
-
-          /**
-           * Address line 2 (e.g., apartment, suite, unit, or building).
-           */
-          line2?: string;
-
-          /**
-           * ZIP or postal code.
-           */
-          postal_code?: string;
-
-          /**
-           * State, county, province, or region.
-           */
-          state?: string;
         }
 
         interface Dob {
