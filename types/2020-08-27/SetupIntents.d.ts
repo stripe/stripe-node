@@ -303,7 +303,7 @@ declare module 'stripe' {
             custom_mandate_url?: string;
 
             /**
-             * Description of the interval. Only required if 'payment_schedule' parmeter is 'interval' or 'combined'.
+             * Description of the interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
              */
             interval_description: string | null;
 
