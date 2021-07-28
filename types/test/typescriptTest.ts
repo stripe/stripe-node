@@ -180,6 +180,10 @@ Stripe.StripeResource.extend({
     method: 'create',
     path: 'foo',
   }),
+  fooFullPath: Stripe.StripeResource.method({
+    method: 'create',
+    fullPath: '/v1/full/path',
+  }),
 });
 
 const maxBufferedRequestMetrics: number =

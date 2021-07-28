@@ -642,6 +642,38 @@ describe('StripeResource', () => {
     });
   });
 
+  describe('method with fullPath', () => {
+    it('interpolates in parameters', (callback) => {
+      const handleRequest = (req, res) => {
+        expect(req.url).to.equal('/v1/parent/hello/child/world');
+
+        // Write back JSON to close out the server.
+        res.write('{}');
+        res.end();
+      };
+
+      testUtils.getTestServerStripe(
+        {},
+        handleRequest,
+        (err, stripe, closeServer) => {
+          const resource = new (StripeResource.extend({
+            test: stripeMethod({
+              method: 'GET',
+              fullPath: '/v1/parent/{param1}/child/{param2}',
+            }),
+          }))(stripe);
+
+          return resource.test('hello', 'world', (err, res) => {
+            closeServer();
+            // Spot check that we received a response.
+            expect(res).to.deep.equal({});
+            return callback(err);
+          });
+        }
+      );
+    });
+  });
+
   describe('streaming', () => {
     /**
      * Defines a fake resource with a `pdf` method

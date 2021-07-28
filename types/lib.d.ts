@@ -16,7 +16,8 @@ declare module 'stripe' {
       >(spec: T): StripeResource & T;
       static method(spec: {
         method: string;
-        path: string;
+        path?: string;
+        fullPath?: string;
         methodType?: 'list';
       }): (...args: any[]) => object; //eslint-disable-line @typescript-eslint/no-explicit-any
       static BASIC_METHODS: {
