@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 8.166.0 - 2021-07-28
+* [#1203](https://github.com/stripe/stripe-node/pull/1203) API Updates
+  * Bugfix: add missing autopagination methods to `Quote.listLineItems` and `Quote.listComputedUpfrontLineItems`
+  * Add support for `account_type` on `BankAccount`, `ExternalAccountUpdateParams`, and `TokenCreateParams.bank_account`
+  * Add support for `category_code` on `Issuing.Authorization.merchant_data` and `Issuing.Transaction.merchant_data`
+  * Add support for new value `redacted` on enum `Review.closed_reason`
+  * Remove duplicate type definition for `Account.retrieve`.
+  * Fix some `attributes` fields mistakenly defined as `Stripe.Metadata`
+* [#1097](https://github.com/stripe/stripe-node/pull/1097) fix error arguments
+
 ## 8.165.0 - 2021-07-22
 * [#1197](https://github.com/stripe/stripe-node/pull/1197) API Updates
   * Add support for new values `hr`, `ko`, and `vi` on enums `CheckoutSessionCreateParams.locale` and `Checkout.Session.locale`
