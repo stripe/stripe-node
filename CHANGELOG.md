@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.167.0 - 2021-07-28
+* [#1206](https://github.com/stripe/stripe-node/pull/1206) Fix Typescript definition for `StripeResource.LastResponse.headers`
+* [#1205](https://github.com/stripe/stripe-node/pull/1205) Prevent concurrent initial `uname` invocations
+* [#1199](https://github.com/stripe/stripe-node/pull/1199) Explicitly define basic method specs
+* [#1200](https://github.com/stripe/stripe-node/pull/1200) Add support for `fullPath` on method specs
+
 ## 8.166.0 - 2021-07-28
 * [#1203](https://github.com/stripe/stripe-node/pull/1203) API Updates
   * Bugfix: add missing autopagination methods to `Quote.listLineItems` and `Quote.listComputedUpfrontLineItems`
