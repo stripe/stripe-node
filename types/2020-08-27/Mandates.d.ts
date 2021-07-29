@@ -102,7 +102,7 @@ declare module 'stripe' {
       namespace PaymentMethodDetails {
         interface AcssDebit {
           /**
-           * Description of the interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+           * Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
            */
           interval_description: string | null;
 

@@ -71,7 +71,7 @@ declare module 'stripe' {
       /**
        * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
        */
-      tax_behavior?: Price.TaxBehavior | null;
+      tax_behavior: Price.TaxBehavior | null;
 
       /**
        * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
