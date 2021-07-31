@@ -9,6 +9,7 @@ const expect = require('chai').expect;
 const testUtils = require('../testUtils');
 
 const StripeResource = require('../lib/StripeResource');
+const {HttpClient} = require('../lib/stripe');
 const stripeMethod = StripeResource.method;
 
 describe('StripeResource', () => {
@@ -561,23 +562,39 @@ describe('StripeResource', () => {
 
     describe('_shouldRetry', () => {
       it("should return false if we've reached maximum retries", () => {
-        const res = stripe.invoices._shouldRetry({statusCode: 409}, 1, 1);
+        const res = stripe.invoices._shouldRetry(
+          new HttpClient.Response(409, {}),
+          1,
+          1
+        );
 
         expect(res).to.equal(false);
       });
 
       it('should return true if we have more retries available', () => {
-        const res = stripe.invoices._shouldRetry({statusCode: 409}, 0, 1);
+        const res = stripe.invoices._shouldRetry(
+          new HttpClient.Response(409, {}),
+          0,
+          1
+        );
 
         expect(res).to.equal(true);
       });
 
       it('should return true if the error code is either 409 or 503', () => {
-        let res = stripe.invoices._shouldRetry({statusCode: 409}, 0, 1);
+        let res = stripe.invoices._shouldRetry(
+          new HttpClient.Response(409, {}),
+          0,
+          1
+        );
 
         expect(res).to.equal(true);
 
-        res = stripe.invoices._shouldRetry({statusCode: 503}, 0, 1);
+        res = stripe.invoices._shouldRetry(
+          new HttpClient.Response(503, {}),
+          0,
+          1
+        );
 
         expect(res).to.equal(true);
       });
@@ -585,10 +602,7 @@ describe('StripeResource', () => {
       it('should return false if the status is 200', () => {
         // mocking that we're on our 2nd request
         const res = stripe.invoices._shouldRetry(
-          {
-            statusCode: 200,
-            req: {_requestEvent: {method: 'POST'}},
-          },
+          new HttpClient.Response(200, {}),
           1,
           2
         );
