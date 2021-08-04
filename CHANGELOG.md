@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.168.0 - 2021-08-04
+* [#1211](https://github.com/stripe/stripe-node/pull/1211) API Updates
+  * Change type of `PaymentIntentCreateParams.payment_method_options.sofort.preferred_language`, `PaymentIntentUpdateParams.payment_method_options.sofort.preferred_language`, and `PaymentIntentConfirmParams.payment_method_options.sofort.preferred_language` from `enum` to `emptyStringable(enum)`
+  * Change `Price.tax_behavior`, `Product.tax_code`, `Quote.automatic_tax`, and `TaxRate.tax_type` to be required
+
 ## 8.167.0 - 2021-07-28
 * [#1206](https://github.com/stripe/stripe-node/pull/1206) Fix Typescript definition for `StripeResource.LastResponse.headers`
 * [#1205](https://github.com/stripe/stripe-node/pull/1205) Prevent concurrent initial `uname` invocations
