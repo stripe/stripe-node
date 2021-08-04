@@ -1310,7 +1310,7 @@ declare module 'stripe' {
       customer?: string;
 
       /**
-       * Details about the customer you want to invoice
+       * Details about the customer you want to invoice or overrides for an existing customer.
        */
       customer_details?: InvoiceRetrieveUpcomingParams.CustomerDetails;
 

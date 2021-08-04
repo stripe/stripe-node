@@ -538,7 +538,7 @@ declare module 'stripe' {
             custom_mandate_url?: string;
 
             /**
-             * Description of the interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+             * Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
              */
             interval_description: string | null;
 
@@ -1627,7 +1627,7 @@ declare module 'stripe' {
           /**
            * Language shown to the payer on redirect.
            */
-          preferred_language?: Sofort.PreferredLanguage;
+          preferred_language?: Stripe.Emptyable<Sofort.PreferredLanguage>;
         }
 
         namespace Sofort {
@@ -2467,7 +2467,7 @@ declare module 'stripe' {
           /**
            * Language shown to the payer on redirect.
            */
-          preferred_language?: Sofort.PreferredLanguage;
+          preferred_language?: Stripe.Emptyable<Sofort.PreferredLanguage>;
         }
 
         namespace Sofort {
@@ -3421,7 +3421,7 @@ declare module 'stripe' {
           /**
            * Language shown to the payer on redirect.
            */
-          preferred_language?: Sofort.PreferredLanguage;
+          preferred_language?: Stripe.Emptyable<Sofort.PreferredLanguage>;
         }
 
         namespace Sofort {

@@ -36,7 +36,7 @@ declare module 'stripe' {
        */
       application_fee_percent: number | null;
 
-      automatic_tax?: Quote.AutomaticTax;
+      automatic_tax: Quote.AutomaticTax;
 
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
@@ -1131,7 +1131,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Quote>>;
 
       /**
-       * When retrieving a quote, there is an includable upfront.line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of upfront line items.
+       * When retrieving a quote, there is an includable [computed.upfront.line_items](https://stripe.com/docs/api/quotes/object#quote_object-computed-upfront-line_items) property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of upfront line items.
        */
       listComputedUpfrontLineItems(
         id: string,

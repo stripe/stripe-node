@@ -86,7 +86,7 @@ declare module 'stripe' {
       /**
        * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
        */
-      tax_code?: string | Stripe.TaxCode | null;
+      tax_code: string | Stripe.TaxCode | null;
 
       /**
        * The type of the product. The product is either of type `good`, which is eligible for use with Orders and SKUs, or `service`, which is eligible for use with Subscriptions and Plans.
