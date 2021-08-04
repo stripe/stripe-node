@@ -341,7 +341,7 @@ declare module 'stripe' {
               custom_mandate_url?: string;
 
               /**
-               * Description of the interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
+               * Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
                */
               interval_description: string | null;
 
@@ -749,6 +749,9 @@ declare module 'stripe' {
          */
         allow_promotion_codes?: boolean;
 
+        /**
+         * Settings for automatic tax lookup for this session and resulting payments, invoices, and subscriptions.
+         */
         automatic_tax?: SessionCreateParams.AutomaticTax;
 
         /**

@@ -74,7 +74,7 @@ declare module 'stripe' {
       /**
        * The high-level tax type, such as `vat` or `sales_tax`.
        */
-      tax_type?: TaxRate.TaxType | null;
+      tax_type: TaxRate.TaxType | null;
     }
 
     namespace TaxRate {
