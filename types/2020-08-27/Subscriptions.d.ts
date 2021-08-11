@@ -51,7 +51,7 @@ declare module 'stripe' {
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
        */
-      collection_method: Subscription.CollectionMethod | null;
+      collection_method: Subscription.CollectionMethod;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
