@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.169.0 - 2021-08-11
+* [#1215](https://github.com/stripe/stripe-node/pull/1215) API Updates
+  * Add support for `locale` on `BillingPortalSessionCreateParams` and `BillingPortal.Session`
+  * Change type of `Invoice.collection_method` and `Subscription.collection_method` from `nullable(enum('charge_automatically'|'send_invoice'))` to `enum('charge_automatically'|'send_invoice')`
+
 ## 8.168.0 - 2021-08-04
 * [#1211](https://github.com/stripe/stripe-node/pull/1211) API Updates
   * Change type of `PaymentIntentCreateParams.payment_method_options.sofort.preferred_language`, `PaymentIntentUpdateParams.payment_method_options.sofort.preferred_language`, and `PaymentIntentConfirmParams.payment_method_options.sofort.preferred_language` from `enum` to `emptyStringable(enum)`
