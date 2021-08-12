@@ -45,6 +45,7 @@ declare module 'stripe' {
     }
     export type LatestApiVersion = '2020-08-27';
     export type HttpAgent = Agent;
+    export type HttpProtocol = 'http' | 'https';
 
     export interface StripeConfig {
       /**
@@ -81,6 +82,13 @@ declare module 'stripe' {
       httpAgent?: HttpAgent;
 
       /**
+       * Use a custom http client, rather than relying on Node libraries.
+       * Useful for making requests in contexts other than NodeJS (eg. using
+       * `fetch`).
+       */
+      httpClient?: HttpClient;
+
+      /**
        * Request timeout in milliseconds.
        * The default is 80000
        */
@@ -90,7 +98,7 @@ declare module 'stripe' {
 
       port?: string | number;
 
-      protocol?: 'https' | 'http';
+      protocol?: HttpProtocol;
 
       /**
        * Pass `telemetry: false` to disable headers that provide Stripe
