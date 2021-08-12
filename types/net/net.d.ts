@@ -60,7 +60,7 @@ declare module 'stripe' {
         port: string | number,
         path: string,
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-        headers: {[key: string]: string},
+        headers: object,
         requestData: string | null,
         protocol: Stripe.HttpProtocol,
         timeout: number
