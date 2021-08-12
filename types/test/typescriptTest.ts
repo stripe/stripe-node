@@ -34,7 +34,7 @@ stripe = new Stripe('sk_test_123', {
   host: 'api.example.com',
   port: 123,
   telemetry: true,
-  httpClient: new Stripe.NodeHttpClient(),
+  httpClient: Stripe.createNodeHttpClient(),
 });
 
 stripe.setTimeout(3000);
@@ -193,7 +193,7 @@ const maxBufferedRequestMetrics: number =
 // Test HttpClient request processing.
 import {Agent} from 'http';
 async (): Promise<void> => {
-  const client: Stripe.HttpClient = new Stripe.NodeHttpClient(new Agent());
+  const client: Stripe.HttpClient = Stripe.createNodeHttpClient(new Agent());
 
   const response: Stripe.HttpClient.Response = await client.makeRequest(
     'api.stripe.com',

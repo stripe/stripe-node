@@ -52,19 +52,6 @@ declare module 'stripe' {
       ): Promise<HttpClient.Response>;
     }
 
-    export class NodeHttpClient implements HttpClient {
-      constructor(agent?: Stripe.HttpAgent);
-
-      makeRequest(
-        host: string,
-        port: string | number,
-        path: string,
-        method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-        headers: object,
-        requestData: string | null,
-        protocol: Stripe.HttpProtocol,
-        timeout: number
-      ): Promise<HttpClient.Response>;
-    }
+    export const createNodeHttpClient: (agent?: HttpAgent | null) => HttpClient;
   }
 }

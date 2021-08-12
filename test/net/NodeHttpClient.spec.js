@@ -7,7 +7,7 @@ const nock = require('nock');
 const expect = require('chai').expect;
 // const {fail} = require('chai').assert;
 
-const {NodeHttpClient} = require('../../lib/Stripe');
+const {createNodeHttpClient} = require('../../lib/Stripe');
 const utils = require('../../lib/utils');
 const {fail} = require('assert');
 
@@ -40,7 +40,7 @@ describe('NodeHttpClient', () => {
 
   const sendRequest = (options) => {
     options = options || {};
-    return new NodeHttpClient().makeRequest(
+    return createNodeHttpClient().makeRequest(
       'stripe.com',
       options.port || 80,
       '/test',
