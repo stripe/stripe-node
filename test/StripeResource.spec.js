@@ -17,6 +17,7 @@ const {
   StripePermissionError,
   StripeRateLimitError,
   StripeError,
+  StripeConnectionError,
 } = require('../lib/Error');
 
 describe('StripeResource', () => {
@@ -233,6 +234,27 @@ describe('StripeResource', () => {
                 'Invalid JSON received from the Stripe API'
               );
               closeServer();
+              done();
+            });
+          }
+        );
+      });
+      it('throws an valid headers but connection error', (done) => {
+        return utils.getTestServerStripe(
+          {},
+          (req, res) => {
+            // Send out valid headers and a partial response. We then interrupt
+            // the response with an error.
+            res.writeHead(200);
+            res.write('{"ab');
+            res.destroy(new Error('something happened'));
+          },
+          (err, stripe, closeServer) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.charges.create(options.data, (err, result) => {
+              expect(err).to.be.an.instanceOf(StripeConnectionError);
               done();
             });
           }
