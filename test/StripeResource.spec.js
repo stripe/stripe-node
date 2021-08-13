@@ -717,10 +717,14 @@ describe('StripeResource', () => {
             if (err) {
               return done(err);
             }
-            const result = await stripe.charges.create(options.data);
-            expect(result).to.deep.equal(returnedCharge);
-            closeServer();
-            done();
+            try {
+              const result = await stripe.charges.create(options.data);
+              expect(result).to.deep.equal(returnedCharge);
+              closeServer();
+              done();
+            } catch (err) {
+              done(err);
+            }
           }
         );
       });
