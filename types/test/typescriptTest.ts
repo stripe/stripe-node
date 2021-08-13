@@ -195,7 +195,7 @@ import {Agent} from 'http';
 async (): Promise<void> => {
   const client: Stripe.HttpClient = Stripe.createNodeHttpClient(new Agent());
 
-  const response: Stripe.HttpClient.Response = await client.makeRequest(
+  const response: Stripe.HttpClientResponse = await client.makeRequest(
     'api.stripe.com',
     '443',
     '/test',

@@ -113,7 +113,7 @@ describe('NodeHttpClient', () => {
       await sendRequest({port: 1234});
     });
 
-    describe('Response', () => {
+    describe('NodeHttpClientResponse', () => {
       it('getStatusCode()', async () => {
         setupNock().reply(418, 'hello, world!');
 

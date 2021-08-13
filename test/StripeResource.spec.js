@@ -7,7 +7,7 @@ const stripe = require('../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 const testUtils = require('../testUtils');
 
-const HttpClient = require('../lib/net/HttpClient');
+const {HttpClientResponse} = require('../lib/net/HttpClient');
 const StripeResource = require('../lib/StripeResource');
 const stripeMethod = StripeResource.method;
 
@@ -707,7 +707,7 @@ describe('StripeResource', () => {
     describe('_shouldRetry', () => {
       it("should return false if we've reached maximum retries", () => {
         const res = stripe.invoices._shouldRetry(
-          new HttpClient.Response(409, {}),
+          new HttpClientResponse(409, {}),
           1,
           1
         );
@@ -717,7 +717,7 @@ describe('StripeResource', () => {
 
       it('should return true if we have more retries available', () => {
         const res = stripe.invoices._shouldRetry(
-          new HttpClient.Response(409, {}),
+          new HttpClientResponse(409, {}),
           0,
           1
         );
@@ -727,7 +727,7 @@ describe('StripeResource', () => {
 
       it('should return true if the error code is either 409 or 503', () => {
         let res = stripe.invoices._shouldRetry(
-          new HttpClient.Response(409, {}),
+          new HttpClientResponse(409, {}),
           0,
           1
         );
@@ -735,7 +735,7 @@ describe('StripeResource', () => {
         expect(res).to.equal(true);
 
         res = stripe.invoices._shouldRetry(
-          new HttpClient.Response(503, {}),
+          new HttpClientResponse(503, {}),
           0,
           1
         );
@@ -746,7 +746,7 @@ describe('StripeResource', () => {
       it('should return false if the status is 200', () => {
         // mocking that we're on our 2nd request
         const res = stripe.invoices._shouldRetry(
-          new HttpClient.Response(200, {}),
+          new HttpClientResponse(200, {}),
           1,
           2
         );
