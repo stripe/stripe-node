@@ -23,7 +23,7 @@ class ArrayReadable extends Readable {
   }
 
   _read() {
-    if (this._index == this._values.length) {
+    if (this._index === this._values.length) {
       // Destroy the stream once we've read all values.
       this.push(null);
     } else {
