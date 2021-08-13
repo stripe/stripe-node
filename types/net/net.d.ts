@@ -26,6 +26,7 @@ declare module 'stripe' {
      * Abstract representation of an HTTP response. This is an experimental
      * interface and is not yet stable.
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     interface HttpClientResponse<RawResponseType = any, StreamType = any> {
       /** The numeric HTTP status code for the response. */
       getStatusCode(): number;
