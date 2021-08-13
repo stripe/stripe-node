@@ -484,7 +484,7 @@ describe('Stripe Module', function() {
       let headers;
       let stripeClient;
       let closeServer;
-      before((callback) => {
+      beforeEach((callback) => {
         testUtils.getTestServerStripe(
           {
             stripeAccount: 'my_stripe_account',
@@ -505,7 +505,7 @@ describe('Stripe Module', function() {
           }
         );
       });
-      after(() => closeServer());
+      afterEach(() => closeServer());
       it('is respected', (callback) => {
         stripeClient.customers.create((err) => {
           closeServer();
