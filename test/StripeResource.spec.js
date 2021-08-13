@@ -1,15 +1,24 @@
 'use strict';
 
 const utils = require('../testUtils');
-
 const nock = require('nock');
 
 const stripe = require('../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 const testUtils = require('../testUtils');
 
+const {HttpClientResponse} = require('../lib/net/HttpClient');
 const StripeResource = require('../lib/StripeResource');
 const stripeMethod = StripeResource.method;
+
+const {
+  StripeAuthenticationError,
+  StripeIdempotencyError,
+  StripePermissionError,
+  StripeRateLimitError,
+  StripeError,
+  StripeConnectionError,
+} = require('../lib/Error');
 
 describe('StripeResource', () => {
   describe('createResourcePathWithSymbols', () => {
@@ -206,6 +215,119 @@ describe('StripeResource', () => {
             });
           }
         );
+      });
+
+      it('throws an error on invalid JSON', (done) => {
+        return utils.getTestServerStripe(
+          {},
+          (req, res) => {
+            // Write back JSON to close out the server.
+            res.write('invalidjson{}');
+            res.end();
+          },
+          (err, stripe, closeServer) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.charges.create(options.data, (err, result) => {
+              expect(err.message).to.deep.equal(
+                'Invalid JSON received from the Stripe API'
+              );
+              closeServer();
+              done();
+            });
+          }
+        );
+      });
+      it('throws an valid headers but connection error', (done) => {
+        return utils.getTestServerStripe(
+          {},
+          (req, res) => {
+            // Send out valid headers and a partial response. We then interrupt
+            // the response with an error.
+            res.writeHead(200);
+            res.write('{"ab');
+            res.destroy(new Error('something happened'));
+          },
+          (err, stripe, closeServer) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.charges.create(options.data, (err, result) => {
+              expect(err).to.be.an.instanceOf(StripeConnectionError);
+              done();
+            });
+          }
+        );
+      });
+
+      it('throws a StripeAuthenticationError on 401', (done) => {
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .reply(401, {
+            error: {
+              message: 'message',
+            },
+          });
+
+        realStripe.charges.create(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeAuthenticationError);
+          expect(err.message).to.be.equal('message');
+          done();
+        });
+      });
+
+      it('throws a StripePermissionError on 403', (done) => {
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .reply(403, {
+            error: {
+              message: 'message',
+            },
+          });
+
+        realStripe.charges.create(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripePermissionError);
+          expect(err.message).to.be.equal('message');
+          done();
+        });
+      });
+
+      it('throws a StripeRateLimitError on 429', (done) => {
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .reply(429, {
+            error: {
+              message: 'message',
+            },
+          });
+
+        realStripe.charges.create(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeRateLimitError);
+          expect(err.message).to.be.equal('message');
+          done();
+        });
+      });
+
+      it('throws a StripeError based on the underlying error type', (done) => {
+        const error = {
+          type: 'idempotency_error',
+        };
+
+        expect(StripeError.generate(error)).to.be.an.instanceOf(
+          StripeIdempotencyError
+        );
+
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .reply(400, {
+            error,
+          });
+
+        realStripe.charges.create(options.data, (err) => {
+          expect(err).to.be.an.instanceOf(StripeIdempotencyError);
+          done();
+        });
       });
 
       it('retries connection timeout errors', (done) => {
@@ -557,27 +679,92 @@ describe('StripeResource', () => {
           }
         );
       });
+
+      it('invokes the callback with successful results', (done) => {
+        const returnedCharge = {
+          id: 'ch_123',
+        };
+        return utils.getTestServerStripe(
+          {},
+          (req, res) => {
+            res.write(JSON.stringify(returnedCharge));
+            res.end();
+          },
+          (err, stripe, closeServer) => {
+            if (err) {
+              return done(err);
+            }
+            stripe.charges.create(options.data, (err, result) => {
+              expect(result).to.deep.equal(returnedCharge);
+              closeServer();
+              done();
+            });
+          }
+        );
+      });
+
+      it('returns successful results to await', (done) => {
+        const returnedCharge = {
+          id: 'ch_123',
+        };
+        return utils.getTestServerStripe(
+          {},
+          (req, res) => {
+            res.write(JSON.stringify(returnedCharge));
+            res.end();
+          },
+          async (err, stripe, closeServer) => {
+            if (err) {
+              return done(err);
+            }
+            try {
+              const result = await stripe.charges.create(options.data);
+              expect(result).to.deep.equal(returnedCharge);
+              closeServer();
+              done();
+            } catch (err) {
+              done(err);
+            }
+          }
+        );
+      });
     });
 
     describe('_shouldRetry', () => {
       it("should return false if we've reached maximum retries", () => {
-        const res = stripe.invoices._shouldRetry({statusCode: 409}, 1, 1);
+        const res = stripe.invoices._shouldRetry(
+          new HttpClientResponse(409, {}),
+          1,
+          1
+        );
 
         expect(res).to.equal(false);
       });
 
       it('should return true if we have more retries available', () => {
-        const res = stripe.invoices._shouldRetry({statusCode: 409}, 0, 1);
+        const res = stripe.invoices._shouldRetry(
+          new HttpClientResponse(409, {}),
+          0,
+          1
+        );
 
         expect(res).to.equal(true);
       });
 
       it('should return true if the error code is either 409 or 503', () => {
-        let res = stripe.invoices._shouldRetry({statusCode: 409}, 0, 1);
+        let res = stripe.invoices._shouldRetry(
+          new HttpClientResponse(409, {}),
+          0,
+          1
+        );
 
         expect(res).to.equal(true);
 
-        res = stripe.invoices._shouldRetry({statusCode: 503}, 0, 1);
+        res = stripe.invoices._shouldRetry(
+          new HttpClientResponse(503, {}),
+          0,
+          1
+        );
 
         expect(res).to.equal(true);
       });
@@ -585,10 +772,7 @@ describe('StripeResource', () => {
       it('should return false if the status is 200', () => {
         // mocking that we're on our 2nd request
         const res = stripe.invoices._shouldRetry(
-          {
-            statusCode: 200,
-            req: {_requestEvent: {method: 'POST'}},
-          },
+          new HttpClientResponse(200, {}),
           1,
           2
         );

@@ -10,6 +10,8 @@ const http = require('http');
 
 const ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
 
+const testingHttpAgent = new http.Agent({keepAlive: false});
+
 const utils = (module.exports = {
   getTestServerStripe: (clientOptions, handler, callback) => {
     const server = http.createServer((req, res) => {
@@ -28,6 +30,7 @@ const utils = (module.exports = {
           host: 'localhost',
           port,
           protocol: 'http',
+          httpAgent: testingHttpAgent,
           ...clientOptions,
         }
       );
