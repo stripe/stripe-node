@@ -1,10 +1,15 @@
+/// <reference types="node" />
+
+import {IncomingMessage} from 'http';
 declare module 'stripe' {
   namespace Stripe {
     /**
      * Encapsulates the logic for issuing a request to the Stripe API. This is
      * an experimental interface and is not yet stable.
      */
-    export interface HttpClient {
+    export interface HttpClient<
+      ResponseType extends HttpClientResponse = HttpClientResponse
+    > {
       makeRequest(
         host: string,
         port: string | number,
@@ -14,14 +19,14 @@ declare module 'stripe' {
         requestData: string | null,
         protocol: Stripe.HttpProtocol,
         timeout: number
-      ): Promise<HttpClientResponse>;
+      ): Promise<ResponseType>;
     }
 
     /**
      * Abstract representation of an HTTP response. This is an experimental
      * interface and is not yet stable.
      */
-    interface HttpClientResponse {
+    interface HttpClientResponse<RawResponseType = any, StreamType = any> {
       /** The numeric HTTP status code for the response. */
       getStatusCode(): number;
 
@@ -29,18 +34,16 @@ declare module 'stripe' {
       getHeaders(): {[key: string]: string};
 
       /** This returns the underlying raw response object for the client. */
-      getRawResponse(): any; //eslint-disable-line @typescript-eslint/no-explicit-any
+      getRawResponse(): RawResponseType;
 
       /**
-       * This returns the content as a stream. This is implementation-specific
-       * and so we cannot use a given type as different platforms have
-       * different stream primitives.The expectation is that content
+       * This returns the content as a stream. The expectation is that content
        * will not have been buffered into memory at this point by the client.
        *
        * The streamCompleteCallback should be invoked by the response
        * implementation when the stream has been consumed.
        */
-      toStream(streamCompleteCallback: () => void): any; //eslint-disable-line @typescript-eslint/no-explicit-any
+      toStream(streamCompleteCallback: () => void): StreamType;
 
       /**
        * Converts the response content into a JSON object, failing if JSON
@@ -49,6 +52,10 @@ declare module 'stripe' {
       toJSON(): Promise<object>;
     }
 
-    export const createNodeHttpClient: (agent?: HttpAgent | null) => HttpClient;
+    export const createNodeHttpClient: (
+      agent?: HttpAgent | null
+    ) => HttpClient<
+      HttpClientResponse<IncomingMessage, Stripe.StripeStreamResponse>
+    >;
   }
 }

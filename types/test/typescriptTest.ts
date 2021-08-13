@@ -190,12 +190,12 @@ Stripe.StripeResource.extend({
 const maxBufferedRequestMetrics: number =
   Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;
 
-// Test HttpClient request processing.
+// Test NodeHttpClient request processing.
 import {Agent} from 'http';
 async (): Promise<void> => {
-  const client: Stripe.HttpClient = Stripe.createNodeHttpClient(new Agent());
+  const client = Stripe.createNodeHttpClient(new Agent());
 
-  const response: Stripe.HttpClientResponse = await client.makeRequest(
+  const response = await client.makeRequest(
     'api.stripe.com',
     '443',
     '/test',
@@ -209,5 +209,10 @@ async (): Promise<void> => {
     80000
   );
 
-  const jsonResponse = await response.toJSON();
+  const stream: Stripe.StripeStreamResponse = response.toStream(() => {
+    return;
+  });
+  stream.setEncoding('utf8');
+
+  const jsonResponse: object = await response.toJSON();
 };
