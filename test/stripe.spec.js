@@ -160,6 +160,21 @@ describe('Stripe Module', function() {
         })
       ).to.eventually.have.property('lang', 'node'));
 
+    it('Should return platform and version in the serialized user agent JSON object', async () => {
+      // Check that the testing environment actually has a process global.
+      expect(process.version).to.not.be.empty;
+      expect(process.platform).to.not.be.empty;
+
+      const userAgent = await new Promise((resolve, reject) => {
+        stripe.getClientUserAgent((c) => {
+          resolve(JSON.parse(c));
+        });
+      });
+
+      expect(userAgent).to.have.property('lang_version', process.version);
+      expect(userAgent).to.have.property('platform', process.platform);
+    });
+
     it('Should include whether typescript: true was passed, respecting reinstantiations', () => {
       return new Promise((resolve) => resolve())
         .then(() => {
