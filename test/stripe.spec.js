@@ -225,6 +225,17 @@ describe('Stripe Module', function() {
       ).to.eventually.have.property('lang', '%C3%AF');
     });
 
+    it('Should URI-encode the HTTP client name', () => {
+      const userAgent = {lang: 'ï'};
+      return expect(
+        new Promise((resolve, reject) => {
+          stripe.getClientUserAgentSeeded(userAgent, (c) => {
+            resolve(JSON.parse(c));
+          });
+        })
+      ).to.eventually.have.property('httplib', 'node');
+    });
+
     describe('uname', () => {
       let origExec;
       beforeEach(() => {
