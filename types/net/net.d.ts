@@ -10,6 +10,9 @@ declare module 'stripe' {
     export interface HttpClient<
       ResponseType extends HttpClientResponse = HttpClientResponse
     > {
+      /** The client name to use for diagnostics. */
+      getClientName(): string;
+
       makeRequest(
         host: string,
         port: string | number,
