@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 8.170.0 - 2021-08-19
+* [#1223](https://github.com/stripe/stripe-node/pull/1223) API Updates
+  * Add support for new value `fil` on enums `CheckoutSessionCreateParams.locale` and `Checkout.Session.locale`
+  * Add support for new value `au_arn` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, and `TaxId.type`
+  * Add support for new value `au_arn` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
+* [#1221](https://github.com/stripe/stripe-node/pull/1221) Add client name property to HttpClient.
+* [#1219](https://github.com/stripe/stripe-node/pull/1219) Update user agent computation to handle environments without process.
+* [#1218](https://github.com/stripe/stripe-node/pull/1218) Add an HttpClient interface and NodeHttpClient implementation.
+* [#1217](https://github.com/stripe/stripe-node/pull/1217) Update nock.
+
 ## 8.169.0 - 2021-08-11
 * [#1215](https://github.com/stripe/stripe-node/pull/1215) API Updates
   * Add support for `locale` on `BillingPortalSessionCreateParams` and `BillingPortal.Session`
