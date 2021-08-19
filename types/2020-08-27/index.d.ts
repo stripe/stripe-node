@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec
 
 ///<reference path='../lib.d.ts' />
+///<reference path='../net/net.d.ts' />
 ///<reference path='../shared.d.ts' />
 ///<reference path='../Errors.d.ts' />
 ///<reference path='../OAuth.d.ts' />
