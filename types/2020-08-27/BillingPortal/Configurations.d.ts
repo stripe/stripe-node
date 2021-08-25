@@ -126,6 +126,8 @@ declare module 'stripe' {
           }
 
           interface SubscriptionCancel {
+            cancellation_reason?: SubscriptionCancel.CancellationReason;
+
             /**
              * Whether the feature is enabled.
              */
@@ -143,6 +145,18 @@ declare module 'stripe' {
           }
 
           namespace SubscriptionCancel {
+            interface CancellationReason {
+              /**
+               * Whether the feature is enabled.
+               */
+              enabled: boolean;
+
+              /**
+               * Which cancellation reasons will be given as options to the customer.
+               */
+              options: Array<string>;
+            }
+
             type Mode = 'at_period_end' | 'immediately';
 
             type ProrationBehavior =
@@ -317,6 +331,11 @@ declare module 'stripe' {
 
           interface SubscriptionCancel {
             /**
+             * Whether the cancellation reasons will be collected in the portal and which options are exposed to the customer
+             */
+            cancellation_reason?: SubscriptionCancel.CancellationReason;
+
+            /**
              * Whether the feature is enabled.
              */
             enabled: boolean;
@@ -333,6 +352,18 @@ declare module 'stripe' {
           }
 
           namespace SubscriptionCancel {
+            interface CancellationReason {
+              /**
+               * Whether the feature is enabled.
+               */
+              enabled: boolean;
+
+              /**
+               * Which cancellation reasons will be given as options to the customer.
+               */
+              options: Stripe.Emptyable<Array<string>>;
+            }
+
             type Mode = 'at_period_end' | 'immediately';
 
             type ProrationBehavior =
@@ -519,6 +550,11 @@ declare module 'stripe' {
 
           interface SubscriptionCancel {
             /**
+             * Whether the cancellation reasons will be collected in the portal and which options are exposed to the customer
+             */
+            cancellation_reason?: SubscriptionCancel.CancellationReason;
+
+            /**
              * Whether the feature is enabled.
              */
             enabled?: boolean;
@@ -535,6 +571,18 @@ declare module 'stripe' {
           }
 
           namespace SubscriptionCancel {
+            interface CancellationReason {
+              /**
+               * Whether the feature is enabled.
+               */
+              enabled: boolean;
+
+              /**
+               * Which cancellation reasons will be given as options to the customer.
+               */
+              options?: Stripe.Emptyable<Array<string>>;
+            }
+
             type Mode = 'at_period_end' | 'immediately';
 
             type ProrationBehavior =
