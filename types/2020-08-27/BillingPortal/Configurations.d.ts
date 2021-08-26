@@ -154,7 +154,19 @@ declare module 'stripe' {
               /**
                * Which cancellation reasons will be given as options to the customer.
                */
-              options: Array<string>;
+              options: Array<CancellationReason.Option>;
+            }
+
+            namespace CancellationReason {
+              type Option =
+                | 'customer_service'
+                | 'low_quality'
+                | 'missing_features'
+                | 'other'
+                | 'switched_service'
+                | 'too_complex'
+                | 'too_expensive'
+                | 'unused';
             }
 
             type Mode = 'at_period_end' | 'immediately';
@@ -361,7 +373,19 @@ declare module 'stripe' {
               /**
                * Which cancellation reasons will be given as options to the customer.
                */
-              options: Stripe.Emptyable<Array<string>>;
+              options: Stripe.Emptyable<Array<CancellationReason.Option>>;
+            }
+
+            namespace CancellationReason {
+              type Option =
+                | 'customer_service'
+                | 'low_quality'
+                | 'missing_features'
+                | 'other'
+                | 'switched_service'
+                | 'too_complex'
+                | 'too_expensive'
+                | 'unused';
             }
 
             type Mode = 'at_period_end' | 'immediately';
@@ -580,7 +604,19 @@ declare module 'stripe' {
               /**
                * Which cancellation reasons will be given as options to the customer.
                */
-              options?: Stripe.Emptyable<Array<string>>;
+              options?: Stripe.Emptyable<Array<CancellationReason.Option>>;
+            }
+
+            namespace CancellationReason {
+              type Option =
+                | 'customer_service'
+                | 'low_quality'
+                | 'missing_features'
+                | 'other'
+                | 'switched_service'
+                | 'too_complex'
+                | 'too_expensive'
+                | 'unused';
             }
 
             type Mode = 'at_period_end' | 'immediately';
