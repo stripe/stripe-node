@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.171.0 - 2021-08-27
+* [#1226](https://github.com/stripe/stripe-node/pull/1226) API Updates
+  * Add support for `cancellation_reason` on `BillingPortalConfigurationCreateParams.features.subscription_cancel`, `BillingPortalConfigurationUpdateParams.features.subscription_cancel`, and `BillingPortal.Configuration.features.subscription_cancel`
+
 ## 8.170.0 - 2021-08-19
 * [#1223](https://github.com/stripe/stripe-node/pull/1223) API Updates
   * Add support for new value `fil` on enums `CheckoutSessionCreateParams.locale` and `Checkout.Session.locale`
