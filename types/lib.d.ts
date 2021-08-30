@@ -209,6 +209,9 @@ declare module 'stripe' {
      * The array of objects is on the `.data` property,
      * and `.has_more` indicates whether there are additional objects beyond the end of this list.
      * The `.next_page` field can be used to paginate forwards.
+     *
+     * Please note, ApiSearchResult<T> is beta functionality and is subject to change/removal
+     * at any time.
      */
     export interface ApiSearchResult<T> {
       object: 'search_result';
