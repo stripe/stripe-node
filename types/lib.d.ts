@@ -18,6 +18,8 @@ declare module 'stripe' {
         method: string;
         path?: string;
         fullPath?: string;
+        // Please note, methodType === 'search' is beta functionality and is subject to
+        // change/removal at any time.
         methodType?: 'list' | 'search';
       }): (...args: any[]) => object; //eslint-disable-line @typescript-eslint/no-explicit-any
       static BASIC_METHODS: {
