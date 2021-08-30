@@ -701,4 +701,115 @@ describe('auto pagination', function() {
       });
     });
   });
+
+  describe('pagination logic using a mock search paginator', () => {
+    const mockPagination = (pages, initialArgs) => {
+      let i = 1;
+      const paramsLog = [];
+      const spec = {
+        method: 'GET',
+        methodType: 'search',
+      };
+
+      const addNextPage = (props) => {
+        let nextPageProperties = {};
+        if (props.has_more) {
+          nextPageProperties = {
+            next_page: `${props.data[props.data.length - 1]}-encoded`,
+          };
+        }
+        return {...props, ...nextPageProperties};
+      };
+
+      const paginator = makeAutoPaginationMethods(
+        {
+          createResourcePathWithSymbols: () => {},
+          createFullPath: () => {},
+          _request: (_1, _2, path, _4, _5, _6, callback) => {
+            paramsLog.push(path);
+
+            callback(
+              null,
+              Promise.resolve(
+                addNextPage({
+                  data: pages[i].map((id) => ({id})),
+                  has_more: i < pages.length - 1,
+                })
+              )
+            );
+            i += 1;
+          },
+        },
+        initialArgs || {},
+        spec,
+        Promise.resolve(
+          addNextPage({
+            data: pages[0].map((id) => ({id})),
+            has_more: pages.length > 1,
+          })
+        )
+      );
+      return {paginator, paramsLog};
+    };
+
+    const testCase = ({
+      pages,
+      limit,
+      expectedIds,
+      expectedParamsLog,
+      initialArgs,
+    }) => {
+      const {paginator, paramsLog} = mockPagination(pages, initialArgs);
+      expect(
+        paginator.autoPagingToArray({limit}).then((result) => ({
+          ids: result.map((x) => x.id),
+          paramsLog,
+        }))
+      ).to.eventually.deep.equal({
+        ids: expectedIds,
+        paramsLog: expectedParamsLog,
+      });
+    };
+
+    it('paginates forwards as expected', () => {
+      testCase({
+        pages: [
+          [1, 2],
+          [3, 4],
+        ],
+        limit: 5,
+        expectedIds: [1, 2, 3, 4],
+        expectedParamsLog: ['?next_page=2-encoded'],
+      });
+
+      testCase({
+        pages: [[1, 2], [3, 4], [5]],
+        limit: 5,
+        expectedIds: [1, 2, 3, 4, 5],
+        expectedParamsLog: ['?next_page=2-encoded', '?next_page=4-encoded'],
+      });
+
+      testCase({
+        pages: [
+          [1, 2],
+          [3, 4],
+          [5, 6],
+        ],
+        limit: 5,
+        expectedIds: [1, 2, 3, 4, 5],
+        expectedParamsLog: ['?next_page=2-encoded', '?next_page=4-encoded'],
+      });
+
+      testCase({
+        pages: [
+          [1, 2],
+          [3, 4],
+          [5, 6],
+        ],
+        limit: 6,
+        expectedIds: [1, 2, 3, 4, 5, 6],
+        expectedParamsLog: ['?next_page=2-encoded', '?next_page=4-encoded'],
+      });
+    });
+  });
 });

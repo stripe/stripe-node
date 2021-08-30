@@ -185,6 +185,11 @@ Stripe.StripeResource.extend({
     method: 'create',
     fullPath: '/v1/full/path',
   }),
+  search: Stripe.StripeResource.method({
+    method: 'create',
+    fullPath: 'foo',
+    methodType: 'search',
+  }),
 });
 
 const maxBufferedRequestMetrics: number =
