@@ -35,6 +35,10 @@ stripe = new Stripe('sk_test_123', {
   port: 123,
   telemetry: true,
   httpClient: Stripe.createNodeHttpClient(),
+  requestOptions: {
+    rejectUnauthorized: true,
+    ca: ['SELF-SIGNED_CERT FOR LOCAL TESTING'],
+  },
 });
 
 stripe.setTimeout(3000);

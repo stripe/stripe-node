@@ -1,7 +1,9 @@
 ///<reference lib="esnext.asynciterable" />
 /// <reference types="node" />
 
-import {Agent} from 'http';
+import {Agent, RequestOptions as HttpRequestOptions} from 'http';
+
+import {RequestOptions as HttpsRequestOptions} from 'https';
 
 declare module 'stripe' {
   namespace Stripe {
@@ -119,6 +121,13 @@ declare module 'stripe' {
        * An account id on whose behalf you wish to make every request.
        */
       stripeAccount?: string;
+
+      /**
+       * Override/insert additional options for the low-level
+       * `https.request` call (or `http.request` if using an
+       * insecure context).
+       */
+      requestOptions?: HttpRequestOptions | HttpsRequestOptions;
     }
 
     export interface RequestOptions {
@@ -163,6 +172,14 @@ declare module 'stripe' {
        * Specify a timeout for this request in milliseconds.
        */
       timeout?: number;
+
+      /**
+       * Override/insert additional options for the low-level
+       * `https.request` call (or `http.request` if using an
+       * insecure context).
+       * Will override global options completely if specified.
+       */
+      requestOptions?: HttpRequestOptions | HttpsRequestOptions;
     }
 
     export type Response<T> = T & {

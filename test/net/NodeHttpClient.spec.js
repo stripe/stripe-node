@@ -48,7 +48,8 @@ describe('NodeHttpClient', () => {
       options.headers || {},
       options.requestData,
       'http',
-      options.timeout || 1000
+      options.timeout || 1000,
+      options.requestOptions || {}
     );
   };
 
@@ -111,6 +112,18 @@ describe('NodeHttpClient', () => {
         .get('/test')
         .reply(200);
       await sendRequest({port: 1234});
+    });
+
+    it('custom requestOptions', async () => {
+      nock('http://stripe.com:1234')
+        .post('/test')
+        .reply(200);
+      await sendRequest({
+        requestOptions: {
+          port: 1234,
+          method: 'POST',
+        },
+      });
     });
 
     describe('NodeHttpClientResponse', () => {
