@@ -19,6 +19,11 @@ declare module 'stripe' {
         object: 'checkout.session';
 
         /**
+         * When set, provides configuration for actions to take if this Checkout Session expires.
+         */
+        after_expiration?: Session.AfterExpiration | null;
+
+        /**
          * Enables user redeemable promotion codes.
          */
         allow_promotion_codes: boolean | null;
@@ -53,6 +58,16 @@ declare module 'stripe' {
         client_reference_id: string | null;
 
         /**
+         * Results of `consent_collection` for this session.
+         */
+        consent?: Session.Consent | null;
+
+        /**
+         * When set, provides configuration for the Checkout Session to gather active consent from customers.
+         */
+        consent_collection?: Session.ConsentCollection | null;
+
+        /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         currency: string | null;
@@ -79,6 +94,11 @@ declare module 'stripe' {
          * complete, use the `customer` attribute.
          */
         customer_email: string | null;
+
+        /**
+         * The timestamp at which the Checkout Session will expire.
+         */
+        expires_at?: number;
 
         /**
          * The line items purchased by the customer.
@@ -128,6 +148,11 @@ declare module 'stripe' {
         payment_status: Session.PaymentStatus;
 
         /**
+         * The ID of the original expired Checkout Session that triggered the recovery flow.
+         */
+        recovered_from?: string | null;
+
+        /**
          * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
          */
         setup_intent: string | Stripe.SetupIntent | null;
@@ -175,6 +200,39 @@ declare module 'stripe' {
       }
 
       namespace Session {
+        interface AfterExpiration {
+          /**
+           * When set, configuration used to recover the Checkout Session on expiry.
+           */
+          recovery: AfterExpiration.Recovery | null;
+        }
+
+        namespace AfterExpiration {
+          interface Recovery {
+            /**
+             * Enables user redeemable promotion codes on the recovered Checkout Sessions. Defaults to `false`
+             */
+            allow_promotion_codes: boolean | null;
+
+            /**
+             * If `true`, a recovery url will be generated to recover this Checkout Session if it
+             * expires before a transaction is completed. It will be attached to the
+             * Checkout Session object upon expiration.
+             */
+            enabled: boolean | null;
+
+            /**
+             * The timestamp at which the recovery URL will expire.
+             */
+            expires_at: number | null;
+
+            /**
+             * URL that creates a new Checkout Session when clicked that is a copy of this expired Checkout Session
+             */
+            url: string | null;
+          }
+        }
+
         interface AutomaticTax {
           /**
            * Indicates whether automatic tax is enabled for the session
@@ -192,6 +250,27 @@ declare module 'stripe' {
         }
 
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface Consent {
+          /**
+           * If `opt_in`, the customer consents to receiving promotional communications
+           * from the merchant about this Checkout Session.
+           */
+          promotions: Consent.Promotions | null;
+        }
+
+        namespace Consent {
+          type Promotions = 'opt_in' | 'opt_out';
+        }
+
+        interface ConsentCollection {
+          /**
+           * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
+           * Session will determine whether to display an option to opt into promotional communication
+           * from the merchant depending on the customer's locale. Only available to US merchants.
+           */
+          promotions: 'auto' | null;
+        }
 
         interface CustomerDetails {
           /**
@@ -747,6 +826,11 @@ declare module 'stripe' {
         success_url: string;
 
         /**
+         * Configure actions after a Checkout Session has expired.
+         */
+        after_expiration?: SessionCreateParams.AfterExpiration;
+
+        /**
          * Enables user redeemable promotion codes.
          */
         allow_promotion_codes?: boolean;
@@ -767,6 +851,11 @@ declare module 'stripe' {
          * session with your internal systems.
          */
         client_reference_id?: string;
+
+        /**
+         * Configure fields for the Checkout Session to gather active consent from customers.
+         */
+        consent_collection?: SessionCreateParams.ConsentCollection;
 
         /**
          * ID of an existing Customer, if one exists. In `payment` mode, the customer's most recent card
@@ -805,6 +894,11 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * The Epoch time in seconds at which the Checkout Session will expire. It can be anywhere from 1 to 24 hours after Checkout Session creation. By default, this value is 24 hours from creation.
+         */
+        expires_at?: number;
 
         /**
          * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring [Prices](https://stripe.com/docs/api/prices).
@@ -887,6 +981,29 @@ declare module 'stripe' {
       }
 
       namespace SessionCreateParams {
+        interface AfterExpiration {
+          /**
+           * Configure a Checkout Session that can be used to recover an expired session.
+           */
+          recovery?: AfterExpiration.Recovery;
+        }
+
+        namespace AfterExpiration {
+          interface Recovery {
+            /**
+             * Enables user redeemable promotion codes on the recovered Checkout Sessions. Defaults to `false`
+             */
+            allow_promotion_codes?: boolean;
+
+            /**
+             * If `true`, a recovery url will be generated to recover this Checkout Session if it
+             * expires before a successful transaction is completed. It will be attached to the
+             * Checkout Session object upon expiration.
+             */
+            enabled: boolean;
+          }
+        }
+
         interface AutomaticTax {
           /**
            * Set to true to enable automatic taxes.
@@ -895,6 +1012,15 @@ declare module 'stripe' {
         }
 
         type BillingAddressCollection = 'auto' | 'required';
+
+        interface ConsentCollection {
+          /**
+           * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
+           * Session will determine whether to display an option to opt into promotional communication
+           * from the merchant depending on the customer's locale. Only available to US merchants.
+           */
+          promotions?: 'auto';
+        }
 
         interface CustomerUpdate {
           /**
