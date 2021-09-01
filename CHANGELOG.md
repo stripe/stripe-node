@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 8.172.0 - 2021-08-31
+* [#1198](https://github.com/stripe/stripe-node/pull/1198) Add support for  paginting SearchResult objects.
+
 ## 8.171.0 - 2021-08-27
 * [#1226](https://github.com/stripe/stripe-node/pull/1226) API Updates
   * Add support for `cancellation_reason` on `BillingPortalConfigurationCreateParams.features.subscription_cancel`, `BillingPortalConfigurationUpdateParams.features.subscription_cancel`, and `BillingPortal.Configuration.features.subscription_cancel`
