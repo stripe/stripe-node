@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.173.0 - 2021-09-01
+* [#1230](https://github.com/stripe/stripe-node/pull/1230) [#1228](https://github.com/stripe/stripe-node/pull/1228) API Updates
+  * Add support for `after_expiration`, `consent_collection`, and `expires_at` on `CheckoutSessionCreateParams` and `Checkout.Session`
+  * Add support for `consent` and `recovered_from` on `Checkout.Session`
+
 ## 8.172.0 - 2021-08-31
 * [#1198](https://github.com/stripe/stripe-node/pull/1198) Add support for  paginting SearchResult objects.
 
