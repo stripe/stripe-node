@@ -186,8 +186,9 @@ const stripe = Stripe('sk_test_...', {
 | `port`              | 443                | Port that requests are made to.                                                                                                                                                                                                                   |
 | `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
 | `telemetry`         | `true`             | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                                                                                                                                                                             |
+| `requestOptions`    | `{}`               | Appends additional parameters to the `https.request` command that sends requests to the API server. This includes alternate Root CA certificates for local testing, or forcing specific TLS versions. See [`https.request()`](https://nodejs.org/docs/latest-v16.x/api/https.html#https_https_request_options_callback) for supported options. |
 
-Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
+Note: `maxNetworkRetries`, `timeout`, and `requestOptions` can be overridden on a per-request basis.
 
 ### Configuring Timeout
 
