@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.174.0 - 2021-09-01
+* [#1231](https://github.com/stripe/stripe-node/pull/1231) API Updates
+  * Add support for `future_requirements` on `Account`, `Capability`, and `Person`
+  * Add support for `alternatives` on `Account.requirements`, `Capability.requirements`, and `Person.requirements`
+
 ## 8.173.0 - 2021-09-01
 * [#1230](https://github.com/stripe/stripe-node/pull/1230) [#1228](https://github.com/stripe/stripe-node/pull/1228) API Updates
   * Add support for `after_expiration`, `consent_collection`, and `expires_at` on `CheckoutSessionCreateParams` and `Checkout.Session`
