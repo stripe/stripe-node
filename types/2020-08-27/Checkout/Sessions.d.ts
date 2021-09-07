@@ -21,7 +21,7 @@ declare module 'stripe' {
         /**
          * When set, provides configuration for actions to take if this Checkout Session expires.
          */
-        after_expiration?: Session.AfterExpiration | null;
+        after_expiration: Session.AfterExpiration | null;
 
         /**
          * Enables user redeemable promotion codes.
@@ -60,12 +60,12 @@ declare module 'stripe' {
         /**
          * Results of `consent_collection` for this session.
          */
-        consent?: Session.Consent | null;
+        consent: Session.Consent | null;
 
         /**
          * When set, provides configuration for the Checkout Session to gather active consent from customers.
          */
-        consent_collection?: Session.ConsentCollection | null;
+        consent_collection: Session.ConsentCollection | null;
 
         /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -98,7 +98,7 @@ declare module 'stripe' {
         /**
          * The timestamp at which the Checkout Session will expire.
          */
-        expires_at?: number;
+        expires_at: number;
 
         /**
          * The line items purchased by the customer.
@@ -150,7 +150,7 @@ declare module 'stripe' {
         /**
          * The ID of the original expired Checkout Session that triggered the recovery flow.
          */
-        recovered_from?: string | null;
+        recovered_from: string | null;
 
         /**
          * The ID of the SetupIntent for Checkout Sessions in `setup` mode.
@@ -274,7 +274,8 @@ declare module 'stripe' {
 
         interface CustomerDetails {
           /**
-           * The customer's email at time of checkout.
+           * The email associated with the Customer, if one exists, on the Checkout Session at the time of checkout or at time of session expiry.
+           * Otherwise, if the customer has consented to promotional content, this value is the most recent valid email provided by the customer on the Checkout form.
            */
           email: string | null;
 

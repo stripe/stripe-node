@@ -78,7 +78,14 @@ declare module 'stripe' {
     }
 
     namespace TaxRate {
-      type TaxType = 'gst' | 'hst' | 'pst' | 'qst' | 'sales_tax' | 'vat';
+      type TaxType =
+        | 'gst'
+        | 'hst'
+        | 'pst'
+        | 'qst'
+        | 'rst'
+        | 'sales_tax'
+        | 'vat';
     }
 
     interface TaxRateCreateParams {
@@ -139,7 +146,14 @@ declare module 'stripe' {
     }
 
     namespace TaxRateCreateParams {
-      type TaxType = 'gst' | 'hst' | 'pst' | 'qst' | 'sales_tax' | 'vat';
+      type TaxType =
+        | 'gst'
+        | 'hst'
+        | 'pst'
+        | 'qst'
+        | 'rst'
+        | 'sales_tax'
+        | 'vat';
     }
 
     interface TaxRateRetrieveParams {
@@ -197,7 +211,14 @@ declare module 'stripe' {
     }
 
     namespace TaxRateUpdateParams {
-      type TaxType = 'gst' | 'hst' | 'pst' | 'qst' | 'sales_tax' | 'vat';
+      type TaxType =
+        | 'gst'
+        | 'hst'
+        | 'pst'
+        | 'qst'
+        | 'rst'
+        | 'sales_tax'
+        | 'vat';
     }
 
     interface TaxRateListParams extends PaginationParams {
