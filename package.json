@@ -1,6 +1,6 @@
 {
-  "name": "stripe",
-  "version": "8.174.0",
+  "name": "stripe-search-beta",
+  "version": "0.0.1",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/stripe/stripe-node.git"
+    "url": "git://github.com/stripe/stripe-node.git#search-beta"
   },
   "bugs:": "https://github.com/stripe/stripe-node/issues",
   "engines": {
