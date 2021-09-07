@@ -228,7 +228,7 @@ declare module 'stripe' {
         /**
          * Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
          */
-        alternatives?: Array<FutureRequirements.Alternative>;
+        alternatives: Array<FutureRequirements.Alternative> | null;
 
         /**
          * Fields that need to be collected to keep the person's account enabled. If not collected by the account's `future_requirements[current_deadline]`, these fields will transition to the main `requirements` hash, and may immediately become `past_due`, but the account may also be given a grace period depending on the account's enablement state prior to transition.
@@ -374,7 +374,7 @@ declare module 'stripe' {
         /**
          * Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
          */
-        alternatives?: Array<Requirements.Alternative>;
+        alternatives: Array<Requirements.Alternative> | null;
 
         /**
          * Fields that need to be collected to keep the person's account enabled. If not collected by the account's `current_deadline`, these fields appear in `past_due` as well, and the account is disabled.
