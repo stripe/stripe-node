@@ -1,34 +1,38 @@
 'use strict';
 
-const http = require('http');
 const expect = require('chai').expect;
+const fetch = require('node-fetch');
+const {Readable} = require('stream');
+const {FetchHttpClient} = require('../../lib/net/FetchHttpClient');
 
-const {createNodeHttpClient} = require('../../lib/Stripe');
+const createFetchHttpClient = () => {
+  return new FetchHttpClient(fetch);
+};
 
 const {createHttpClientTestSuite, ArrayReadable} = require('./helpers');
 
 createHttpClientTestSuite(
-  'NodeHttpClient',
-  createNodeHttpClient,
+  'FetchHttpClient',
+  createFetchHttpClient,
   (setupNock, sendRequest) => {
     describe('raw stream', () => {
       it('getRawResponse()', async () => {
         setupNock().reply(200);
-
         const response = await sendRequest();
-
-        expect(response.getRawResponse()).to.be.an.instanceOf(
-          http.IncomingMessage
-        );
+        expect(response.getRawResponse()).to.be.an.instanceOf(fetch.Response);
       });
 
-      it('toStream returns a readable stream', async () => {
+      it('toStream returns the body as a stream', async () => {
         setupNock().reply(200, () => new ArrayReadable(['hello, world!']));
 
         const response = await sendRequest();
 
         return new Promise((resolve) => {
           const stream = response.toStream(() => true);
+
+          // node-fetch returns a Node Readable here. In a Web API context, this
+          // would be a Web ReadableStream.
+          expect(stream).to.be.an.instanceOf(Readable);
 
           let streamedContent = '';
           stream.on('data', (chunk) => {
@@ -47,15 +51,8 @@ createHttpClientTestSuite(
         const response = await sendRequest();
 
         return new Promise((resolve) => {
-          let streamedContent = '';
-
-          const stream = response.toStream(() => {
-            expect(streamedContent).to.equal('hello, world!');
+          response.toStream(() => {
             resolve();
-          });
-
-          stream.on('data', (chunk) => {
-            streamedContent += chunk;
           });
         });
       });
