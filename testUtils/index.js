@@ -8,6 +8,7 @@ require('chai').use(require('chai-as-promised'));
 
 const http = require('http');
 
+const CryptoProvider = require('../lib/crypto/CryptoProvider');
 const ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
@@ -208,6 +209,12 @@ const utils = (module.exports = {
       return true;
     } catch (err) {
       return false;
+    }
+  },
+
+  FakeCryptoProvider: class extends CryptoProvider {
+    computeHMACSignature(payload, secret) {
+      return 'fake signature';
     }
   },
 });
