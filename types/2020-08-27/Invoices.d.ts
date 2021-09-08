@@ -1798,6 +1798,49 @@ declare module 'stripe' {
         | 'none';
     }
 
+    interface InvoiceSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search-api#search-query-language)
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Whether to include `total_count` in the results. Note that counts max out at 10,000 results and searches with greater than 10,000 results will return `total_count: 10000`
+       */
+      include_count?: boolean;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Do not include this parameter on the first call. Use the next_page value returned in a response to request subsequent results.
+       */
+      next_page?: string;
+
+      /**
+       * The trailing window to search over
+       */
+      search_window?: InvoiceSearchParams.SearchWindow;
+
+      /**
+       * The order (ascending or descending) that results are listed in. Default: `desc`
+       */
+      sort_order?: InvoiceSearchParams.SortOrder;
+    }
+
+    namespace InvoiceSearchParams {
+      type SearchWindow = 'all_time' | 'last_year';
+
+      type SortOrder = 'asc' | 'desc';
+    }
+
     interface InvoiceSendInvoiceParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -1923,6 +1966,14 @@ declare module 'stripe' {
       retrieveUpcoming(
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
+       * Search for invoices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search-api#search-query-language)
+       */
+      search(
+        params: InvoiceSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Invoice>;
 
       /**
        * Stripe will automatically send invoices to customers according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email.

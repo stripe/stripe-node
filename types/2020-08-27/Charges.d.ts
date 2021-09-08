@@ -1946,6 +1946,49 @@ declare module 'stripe' {
       }
     }
 
+    interface ChargeSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search-api#search-query-language)
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Whether to include `total_count` in the results. Note that counts max out at 10,000 results and searches with greater than 10,000 results will return `total_count: 10000`
+       */
+      include_count?: boolean;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Do not include this parameter on the first call. Use the next_page value returned in a response to request subsequent results.
+       */
+      next_page?: string;
+
+      /**
+       * The trailing window to search over
+       */
+      search_window?: ChargeSearchParams.SearchWindow;
+
+      /**
+       * The order (ascending or descending) that results are listed in. Default: `desc`
+       */
+      sort_order?: ChargeSearchParams.SortOrder;
+    }
+
+    namespace ChargeSearchParams {
+      type SearchWindow = 'all_time' | 'last_year';
+
+      type SortOrder = 'asc' | 'desc';
+    }
+
     class ChargesResource {
       /**
        * To charge a credit card or other payment source, you create a Charge object. If your API key is in test mode, the supplied payment source (e.g., card) won't actually be charged, although everything else will occur as if in live mode. (Stripe assumes that the charge would have completed successfully).
@@ -2001,6 +2044,14 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Charge>>;
+
+      /**
+       * Search for charges you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search-api#search-query-language)
+       */
+      search(
+        params: ChargeSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Charge>;
     }
   }
 }
