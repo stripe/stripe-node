@@ -7,10 +7,8 @@ const {createNodeHttpClient} = require('../../lib/Stripe');
 
 const {createHttpClientTestSuite, ArrayReadable} = require('./helpers');
 
-createHttpClientTestSuite(
-  'NodeHttpClient',
-  createNodeHttpClient,
-  (setupNock, sendRequest) => {
+describe('NodeHttpClient', () => {
+  createHttpClientTestSuite(createNodeHttpClient, (setupNock, sendRequest) => {
     describe('raw stream', () => {
       it('getRawResponse()', async () => {
         setupNock().reply(200);
@@ -60,5 +58,5 @@ createHttpClientTestSuite(
         });
       });
     });
-  }
-);
+  });
+});

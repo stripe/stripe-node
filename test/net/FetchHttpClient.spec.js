@@ -11,10 +11,8 @@ const createFetchHttpClient = () => {
 
 const {createHttpClientTestSuite, ArrayReadable} = require('./helpers');
 
-createHttpClientTestSuite(
-  'FetchHttpClient',
-  createFetchHttpClient,
-  (setupNock, sendRequest) => {
+describe('FetchHttpClient', () => {
+  createHttpClientTestSuite(createFetchHttpClient, (setupNock, sendRequest) => {
     describe('raw stream', () => {
       it('getRawResponse()', async () => {
         setupNock().reply(200);
@@ -57,5 +55,5 @@ createHttpClientTestSuite(
         });
       });
     });
-  }
-);
+  });
+});

@@ -34,18 +34,13 @@ class ArrayReadable extends Readable {
  * Test runner which runs a common set of tests for a given HTTP client to make
  * sure the client meets the interface expectations.
  *
- * This takes in a client name (for the test description) and function to create
- * a client.
+ * This takes in a function to create the client.
  *
  * This can be configured to run extra tests, providing the nock setup function
  * and request function for those tests.
  */
-const createHttpClientTestSuite = (
-  httpClientName,
-  createHttpClientFn,
-  extraTestsFn
-) => {
-  describe(`${httpClientName}`, () => {
+const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
+  describe('HttpClientTestSuite', () => {
     const setupNock = () => {
       return nock('http://stripe.com').get('/test');
     };
