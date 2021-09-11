@@ -6,7 +6,7 @@ declare module 'stripe' {
       /**
        * Please refer to full [documentation](https://stripe.com/docs/api) instead.
        */
-      external_account: string;
+      external_account: string | ExternalAccount;
 
       /**
        * When set to true, or if this is the first external account added in this currency, this account becomes the default external account for its currency.
