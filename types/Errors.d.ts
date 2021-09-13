@@ -1,4 +1,4 @@
-declare module 'stripe' {
+declare module 'stripe-search-beta' {
   namespace Stripe {
     export type Errors = {
       generate: typeof StripeError.generate;

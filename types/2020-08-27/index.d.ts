@@ -102,7 +102,7 @@
 ///<reference path='./UsageRecords.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
 
-declare module 'stripe' {
+declare module 'stripe-search-beta' {
   // Added to in other modules, referenced above.
   export namespace Stripe {}
 
