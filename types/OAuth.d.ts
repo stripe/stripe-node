@@ -1,4 +1,4 @@
-declare module 'stripe' {
+declare module 'stripe-search-beta' {
   namespace Stripe {
     interface OAuthToken {
       /**

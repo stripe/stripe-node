@@ -1,6 +1,6 @@
 {
   "name": "stripe-search-beta",
-  "version": "0.0.1",
+  "version": "8.174.0",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",

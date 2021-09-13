@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec
 
-declare module 'stripe' {
+declare module 'stripe-search-beta' {
   namespace Stripe {
     namespace Identity {
       /**

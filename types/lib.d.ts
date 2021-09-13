@@ -3,7 +3,7 @@
 
 import {Agent} from 'http';
 
-declare module 'stripe' {
+declare module 'stripe-search-beta' {
   namespace Stripe {
     export class StripeResource {
       static extend<
@@ -45,7 +45,7 @@ declare module 'stripe' {
       };
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
-    export type LatestApiVersion = '2020-08-27';
+    export type LatestApiVersion = '2020-08-27;search_api_beta=v1';
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';
 
