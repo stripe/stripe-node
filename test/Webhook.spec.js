@@ -1,6 +1,7 @@
 'use strict';
 
-const stripe = require('../testUtils').getSpyableStripe();
+const {getSpyableStripe, FakeCryptoProvider} = require('../testUtils');
+const stripe = getSpyableStripe();
 const expect = require('chai').expect;
 
 const EVENT_PAYLOAD = {
@@ -85,6 +86,24 @@ describe('Webhooks', () => {
       }).to.throw(
         'Unexpected: An array was passed as a header, which should not be possible for the stripe-signature header.'
       );
+    });
+
+    it('should invoke a custom CryptoProvider', () => {
+      const header = stripe.webhooks.generateTestHeaderString({
+        payload: EVENT_PAYLOAD_STRING,
+        secret: SECRET,
+        signature: 'fake signature',
+      });
+
+      const event = stripe.webhooks.constructEvent(
+        EVENT_PAYLOAD_STRING,
+        header,
+        SECRET,
+        undefined,
+        new FakeCryptoProvider()
+      );
+
+      expect(event.id).to.equal(EVENT_PAYLOAD.id);
     });
   });
 
@@ -253,6 +272,49 @@ describe('Webhooks', () => {
           10
         )
       ).to.equal(true);
+    });
+
+    describe('custom CryptoProvider', () => {
+      const cryptoProvider = new FakeCryptoProvider();
+
+      it('should use the provider to compute a signature (mismatch)', () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+          signature: 'different fake signature',
+          timestamp: 123,
+        });
+
+        expect(() => {
+          stripe.webhooks.signature.verifyHeader(
+            EVENT_PAYLOAD_STRING,
+            header,
+            SECRET,
+            undefined,
+            cryptoProvider
+          );
+        }).to.throw(
+          /No signatures found matching the expected signature for payload/
+        );
+      });
+      it('should use the provider to compute a signature (success)', () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+          signature: 'fake signature',
+          timestamp: 123,
+        });
+
+        expect(
+          stripe.webhooks.signature.verifyHeader(
+            EVENT_PAYLOAD_STRING,
+            header,
+            SECRET,
+            undefined,
+            cryptoProvider
+          )
+        ).to.equal(true);
+      });
     });
   });
 });
