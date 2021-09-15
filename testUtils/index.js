@@ -41,6 +41,16 @@ const utils = (module.exports = {
     });
   },
 
+  getStripeMockClient: () => {
+    const stripe = require('../lib/stripe');
+
+    return stripe('sk_test_123', {
+      host: process.env.STRIPE_MOCK_HOST || 'localhost',
+      port: process.env.STRIPE_MOCK_PORT || 12111,
+      protocol: 'http',
+    });
+  },
+
   getUserStripeKey: () => {
     const key =
       process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';

@@ -28,7 +28,7 @@ jobs:
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      
+
       - uses: actions/cache@v2
         id: yarn-cache
         with:
@@ -36,6 +36,9 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+
+      - name: Start stripe-mock
+        run: docker run -d -p 12111-12112:12111-12112 stripemock/stripe-mock && sleep 5
 
       - name: Lint, typecheck, and test
         run: yarn && yarn test
