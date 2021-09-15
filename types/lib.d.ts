@@ -13,7 +13,7 @@ declare module 'stripe' {
             'create' | 'retrieve' | 'update' | 'list' | 'del'
           >;
         }
-      >(spec: T): StripeResource & T;
+      >(spec: T): typeof StripeResource & T;
       static method(spec: {
         method: string;
         path?: string;
