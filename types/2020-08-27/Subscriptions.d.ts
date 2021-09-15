@@ -245,6 +245,11 @@ declare module 'stripe' {
       namespace PaymentSettings {
         interface PaymentMethodOptions {
           /**
+           * This sub-hash contains details about the Canadian pre-authorized debit payment method options to pass to invoices created by the subscription.
+           */
+          acss_debit: PaymentMethodOptions.AcssDebit | null;
+
+          /**
            * This sub-hash contains details about the Bancontact payment method options to pass to invoices created by the subscription.
            */
           bancontact: PaymentMethodOptions.Bancontact | null;
@@ -256,6 +261,30 @@ declare module 'stripe' {
         }
 
         namespace PaymentMethodOptions {
+          interface AcssDebit {
+            mandate_options?: AcssDebit.MandateOptions;
+
+            /**
+             * Bank account verification method.
+             */
+            verification_method?: AcssDebit.VerificationMethod;
+          }
+
+          namespace AcssDebit {
+            interface MandateOptions {
+              /**
+               * Transaction type of the mandate.
+               */
+              transaction_type: MandateOptions.TransactionType | null;
+            }
+
+            namespace MandateOptions {
+              type TransactionType = 'business' | 'personal';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
+
           interface Bancontact {
             /**
              * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -282,6 +311,7 @@ declare module 'stripe' {
         type PaymentMethodType =
           | 'ach_credit_transfer'
           | 'ach_debit'
+          | 'acss_debit'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -713,6 +743,11 @@ declare module 'stripe' {
       namespace PaymentSettings {
         interface PaymentMethodOptions {
           /**
+           * This sub-hash contains details about the Canadian pre-authorized debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
+
+          /**
            * This sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
            */
           bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
@@ -724,6 +759,33 @@ declare module 'stripe' {
         }
 
         namespace PaymentMethodOptions {
+          interface AcssDebit {
+            /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: AcssDebit.MandateOptions;
+
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: AcssDebit.VerificationMethod;
+          }
+
+          namespace AcssDebit {
+            interface MandateOptions {
+              /**
+               * Transaction type of the mandate.
+               */
+              transaction_type?: MandateOptions.TransactionType;
+            }
+
+            namespace MandateOptions {
+              type TransactionType = 'business' | 'personal';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
+
           interface Bancontact {
             /**
              * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -750,6 +812,7 @@ declare module 'stripe' {
         type PaymentMethodType =
           | 'ach_credit_transfer'
           | 'ach_debit'
+          | 'acss_debit'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
@@ -1186,6 +1249,11 @@ declare module 'stripe' {
       namespace PaymentSettings {
         interface PaymentMethodOptions {
           /**
+           * This sub-hash contains details about the Canadian pre-authorized debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
+
+          /**
            * This sub-hash contains details about the Bancontact payment method options to pass to the invoice's PaymentIntent.
            */
           bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
@@ -1197,6 +1265,33 @@ declare module 'stripe' {
         }
 
         namespace PaymentMethodOptions {
+          interface AcssDebit {
+            /**
+             * Additional fields for Mandate creation
+             */
+            mandate_options?: AcssDebit.MandateOptions;
+
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: AcssDebit.VerificationMethod;
+          }
+
+          namespace AcssDebit {
+            interface MandateOptions {
+              /**
+               * Transaction type of the mandate.
+               */
+              transaction_type?: MandateOptions.TransactionType;
+            }
+
+            namespace MandateOptions {
+              type TransactionType = 'business' | 'personal';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
+
           interface Bancontact {
             /**
              * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -1223,6 +1318,7 @@ declare module 'stripe' {
         type PaymentMethodType =
           | 'ach_credit_transfer'
           | 'ach_debit'
+          | 'acss_debit'
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'

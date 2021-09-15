@@ -102,6 +102,11 @@ declare module 'stripe' {
       namespace PaymentMethodDetails {
         interface AcssDebit {
           /**
+           * List of Stripe products where this mandate can be selected automatically.
+           */
+          default_for?: Array<AcssDebit.DefaultFor>;
+
+          /**
            * Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
            */
           interval_description: string | null;
@@ -118,6 +123,8 @@ declare module 'stripe' {
         }
 
         namespace AcssDebit {
+          type DefaultFor = 'invoice' | 'subscription';
+
           type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
 
           type TransactionType = 'business' | 'personal';
