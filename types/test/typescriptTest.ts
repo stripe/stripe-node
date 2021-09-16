@@ -175,7 +175,7 @@ const stripeCardError: Stripe.StripeCardError = Stripe.errors.generate({
   charge: 'ch_123',
 });
 
-Stripe.StripeResource.extend({
+const Foo = Stripe.StripeResource.extend({
   includeBasic: ['retrieve'],
   foo: Stripe.StripeResource.method({
     method: 'create',
@@ -191,6 +191,7 @@ Stripe.StripeResource.extend({
     methodType: 'search',
   }),
 });
+new Foo();
 
 const maxBufferedRequestMetrics: number =
   Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;
