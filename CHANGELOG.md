@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.176.0 - 2021-09-16
+* [#1248](https://github.com/stripe/stripe-node/pull/1248) API Updates
+  * Add support for `full_name_aliases` on `AccountUpdateParams.individual`, `AccountCreateParams.individual`, `PersonCreateParams`, `PersonUpdateParams`, `Person`, `TokenCreateParams.account.individual`, and `TokenCreateParams.person`
+* [#1247](https://github.com/stripe/stripe-node/pull/1247) Update README.md
+* [#1245](https://github.com/stripe/stripe-node/pull/1245) Fix StripeResource.extend type
+
 ## 8.175.0 - 2021-09-15
 * [#1242](https://github.com/stripe/stripe-node/pull/1242) API Updates
   * Change `BillingPortal.Configuration.features.subscription_cancel.cancellation_reason` to be required
