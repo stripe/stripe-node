@@ -88,7 +88,7 @@ const createCustomer = async () => {
 createCustomer();
 ```
 
-You can find a full TS server example in [stripe-samples](https://github.com/stripe-samples/accept-a-card-payment/tree/master/using-webhooks/server/node-typescript).
+You can find a full TS server example in [stripe-samples](https://github.com/stripe-samples/accept-a-payment/tree/main/custom-payment-flow/server/node-typescript).
 
 #### Using old API versions with TypeScript
 
