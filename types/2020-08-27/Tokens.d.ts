@@ -304,6 +304,11 @@ declare module 'stripe' {
           first_name_kanji?: string;
 
           /**
+           * A list of alternate names or aliases that the individual is known by.
+           */
+          full_name_aliases?: Array<string>;
+
+          /**
            * The individual's gender (International regulations require either "male" or "female").
            */
           gender?: string;
@@ -544,6 +549,11 @@ declare module 'stripe' {
          * The Kanji variation of the person's first name (Japan only).
          */
         first_name_kanji?: string;
+
+        /**
+         * A list of alternate names or aliases that the person is known by.
+         */
+        full_name_aliases?: Array<string>;
 
         /**
          * The person's gender (International regulations require either "male" or "female").

@@ -1004,7 +1004,7 @@ declare module 'stripe' {
             allow_promotion_codes?: boolean;
 
             /**
-             * If `true`, a recovery url will be generated to recover this Checkout Session if it
+             * If `true`, a recovery URL will be generated to recover this Checkout Session if it
              * expires before a successful transaction is completed. It will be attached to the
              * Checkout Session object upon expiration.
              */
