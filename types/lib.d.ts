@@ -1,14 +1,14 @@
 ///<reference lib="esnext.asynciterable" />
 /// <reference types="node" />
 
-import { Agent } from 'http';
+import {Agent} from 'http';
 
 declare module 'stripe' {
   namespace Stripe {
     export class StripeResource {
       static extend<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        T extends { [prop: string]: any } & {
+        T extends {[prop: string]: any} & {
           includeBasic?: Array<
             'create' | 'retrieve' | 'update' | 'list' | 'del'
           >;
@@ -172,7 +172,7 @@ declare module 'stripe' {
 
     export type Response<T> = T & {
       lastResponse: {
-        headers: { [key: string]: string };
+        headers: {[key: string]: string};
         requestId: string;
         statusCode: number;
         apiVersion?: string;
@@ -209,12 +209,12 @@ declare module 'stripe' {
 
     export interface ApiListPromise<T>
       extends Promise<Response<ApiList<T>>>,
-      AsyncIterableIterator<T> {
+        AsyncIterableIterator<T> {
       autoPagingEach(
         handler: (item: T) => boolean | void | Promise<boolean | void>
       ): Promise<void>;
 
-      autoPagingToArray(opts: { limit: number }): Promise<Array<T>>;
+      autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
     }
 
     /**
@@ -249,12 +249,12 @@ declare module 'stripe' {
     }
     export interface ApiSearchResultPromise<T>
       extends Promise<Response<ApiSearchResult<T>>>,
-      AsyncIterableIterator<T> {
+        AsyncIterableIterator<T> {
       autoPagingEach(
         handler: (item: T) => boolean | void | Promise<boolean | void>
       ): Promise<void>;
 
-      autoPagingToArray(opts: { limit: number }): Promise<Array<T>>;
+      autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
     }
 
     export type StripeStreamResponse = NodeJS.ReadableStream;

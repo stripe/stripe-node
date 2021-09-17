@@ -63,7 +63,7 @@ stripe.setHost('host', 'port', 'protocol');
 
   // Check multiple dispatch:
   let product = await stripe.products.retrieve('prod_123', opts);
-  product = await stripe.products.retrieve('prod_123', { expand: [] }, opts);
+  product = await stripe.products.retrieve('prod_123', {expand: []}, opts);
 
   const charge: Stripe.Charge = await stripe.charges.retrieve('ch_123', {
     expand: ['customer'],
@@ -100,7 +100,7 @@ stripe.setHost('host', 'port', 'protocol');
   }
 
   for await (const customer of stripe.customers.list()) {
-    const { id } = customer as Stripe.Customer;
+    const {id} = customer as Stripe.Customer;
     if (id === 'hi') {
       break;
     }
@@ -110,7 +110,7 @@ stripe.setHost('host', 'port', 'protocol');
 
   const aThousandCustomers: Array<Stripe.Customer> = await stripe.customers
     .list()
-    .autoPagingToArray({ limit: 1000 });
+    .autoPagingToArray({limit: 1000});
 
   const nothing: void = await stripe.customers
     .list()
@@ -128,7 +128,7 @@ stripe.setHost('host', 'port', 'protocol');
     });
 
   try {
-    await stripe.paymentIntents.create({ amount: 100, currency: 'USD' });
+    await stripe.paymentIntents.create({amount: 100, currency: 'USD'});
   } catch (err) {
     if (err instanceof stripe.errors.StripeCardError) {
       const declineCode: string = err.decline_code;
@@ -197,7 +197,7 @@ const maxBufferedRequestMetrics: number =
   Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;
 
 // Test NodeHttpClient request processing.
-import { Agent } from 'http';
+import {Agent} from 'http';
 async (): Promise<void> => {
   const client = Stripe.createNodeHttpClient(new Agent());
 
