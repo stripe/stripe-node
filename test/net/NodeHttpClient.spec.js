@@ -3,9 +3,9 @@
 const http = require('http');
 const expect = require('chai').expect;
 
-const { createNodeHttpClient } = require('../../lib/Stripe');
+const {createNodeHttpClient} = require('../../lib/Stripe');
 
-const { createHttpClientTestSuite, ArrayReadable } = require('./helpers');
+const {createHttpClientTestSuite, ArrayReadable} = require('./helpers');
 
 describe('NodeHttpClient', () => {
   createHttpClientTestSuite(createNodeHttpClient, (setupNock, sendRequest) => {
