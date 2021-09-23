@@ -2,7 +2,7 @@
 
 This is a branch of [stripe-node](https://github.com/stripe/stripe-node) specialized for the use of the [Search API beta](https://stripe.com/docs/search-api).
 
-It is experimental, and support for this package will end on 2022-01-01.
+It is experimental, and support for this package will end on 2022-01-31.
 
 It is branched off of the 8.174.0 release of `stripe-node`, and acts as a complete replacement for the library.
 
