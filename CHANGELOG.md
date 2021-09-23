@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## 8.176.0 - 2021-09-16
+* [#1248](https://github.com/stripe/stripe-node/pull/1248) API Updates
+  * Add support for `full_name_aliases` on `AccountUpdateParams.individual`, `AccountCreateParams.individual`, `PersonCreateParams`, `PersonUpdateParams`, `Person`, `TokenCreateParams.account.individual`, and `TokenCreateParams.person`
+* [#1247](https://github.com/stripe/stripe-node/pull/1247) Update README.md
+* [#1245](https://github.com/stripe/stripe-node/pull/1245) Fix StripeResource.extend type
+
+## 8.175.0 - 2021-09-15
+* [#1242](https://github.com/stripe/stripe-node/pull/1242) API Updates
+  * Change `BillingPortal.Configuration.features.subscription_cancel.cancellation_reason` to be required
+  * Add support for `default_for` on `CheckoutSessionCreateParams.payment_method_options.acss_debit.mandate_options`, `Checkout.Session.payment_method_options.acss_debit.mandate_options`, `Mandate.payment_method_details.acss_debit`, `SetupIntentCreateParams.payment_method_options.acss_debit.mandate_options`, `SetupIntentUpdateParams.payment_method_options.acss_debit.mandate_options`, `SetupIntentConfirmParams.payment_method_options.acss_debit.mandate_options`, and `SetupIntent.payment_method_options.acss_debit.mandate_options`
+  * Add support for `acss_debit` on `InvoiceCreateParams.payment_settings.payment_method_options`, `InvoiceUpdateParams.payment_settings.payment_method_options`, `Invoice.payment_settings.payment_method_options`, `SubscriptionCreateParams.payment_settings.payment_method_options`, `SubscriptionUpdateParams.payment_settings.payment_method_options`, and `Subscription.payment_settings.payment_method_options`
+  * Add support for new value `acss_debit` on enums `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Invoice.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, `SubscriptionUpdateParams.payment_settings.payment_method_types[]`, and `Subscription.payment_settings.payment_method_types[]`
+  * Add support for `livemode` on `Reporting.ReportType`
+* [#1235](https://github.com/stripe/stripe-node/pull/1235) API Updates
+  * Change `Account.future_requirements.alternatives`, `Account.requirements.alternatives`, `Capability.future_requirements.alternatives`, `Capability.requirements.alternatives`, `Checkout.Session.after_expiration`, `Checkout.Session.consent`, `Checkout.Session.consent_collection`, `Checkout.Session.expires_at`, `Checkout.Session.recovered_from`, `Person.future_requirements.alternatives`, and `Person.requirements.alternatives` to be required
+  * Change type of `Capability.future_requirements.alternatives`, `Capability.requirements.alternatives`, `Person.future_requirements.alternatives`, and `Person.requirements.alternatives` from `array(AccountRequirementsAlternative)` to `nullable(array(AccountRequirementsAlternative))`
+  * Add support for new value `rst` on enums `TaxRateCreateParams.tax_type`, `TaxRateUpdateParams.tax_type`, and `TaxRate.tax_type`
+  * Add support for new value `checkout.session.expired` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#1237](https://github.com/stripe/stripe-node/pull/1237) Add a CryptoProvider interface and NodeCryptoProvider implementation.
+* [#1236](https://github.com/stripe/stripe-node/pull/1236) Add an HTTP client which uses fetch.
+
+## 8.174.0 - 2021-09-01
+* [#1231](https://github.com/stripe/stripe-node/pull/1231) API Updates
+  * Add support for `future_requirements` on `Account`, `Capability`, and `Person`
+  * Add support for `alternatives` on `Account.requirements`, `Capability.requirements`, and `Person.requirements`
+
+## 8.173.0 - 2021-09-01
+* [#1230](https://github.com/stripe/stripe-node/pull/1230) [#1228](https://github.com/stripe/stripe-node/pull/1228) API Updates
+  * Add support for `after_expiration`, `consent_collection`, and `expires_at` on `CheckoutSessionCreateParams` and `Checkout.Session`
+  * Add support for `consent` and `recovered_from` on `Checkout.Session`
+
+## 8.172.0 - 2021-08-31
+* [#1198](https://github.com/stripe/stripe-node/pull/1198) Add support for  paginting SearchResult objects.
+
 ## 8.171.0 - 2021-08-27
 * [#1226](https://github.com/stripe/stripe-node/pull/1226) API Updates
   * Add support for `cancellation_reason` on `BillingPortalConfigurationCreateParams.features.subscription_cancel`, `BillingPortalConfigurationUpdateParams.features.subscription_cancel`, and `BillingPortal.Configuration.features.subscription_cancel`

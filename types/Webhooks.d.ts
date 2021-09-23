@@ -35,7 +35,12 @@ declare module 'stripe' {
         /**
          * Seconds of tolerance on timestamps.
          */
-        tolerance?: number
+        tolerance?: number,
+
+        /**
+         * Optional CryptoProvider to use for computing HMAC signatures.
+         */
+        cryptoProvider?: CryptoProvider
       ): Stripe.Event;
 
       /**
@@ -66,6 +71,12 @@ declare module 'stripe' {
          * Computed webhook signature.
          */
         signature?: string;
+
+        /**
+         * Optional CryptoProvider to use for computing HMAC signatures, if no
+         * signature is given.
+         */
+        cryptoProvider?: CryptoProvider;
       }): string;
 
       signature: Signature;
@@ -79,7 +90,8 @@ declare module 'stripe' {
         payload: string,
         header: string,
         secret: string,
-        tolerance?: number
+        tolerance?: number,
+        cryptoProvider?: CryptoProvider
       ): void;
       parseHeader(
         header: string,

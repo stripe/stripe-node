@@ -33,6 +33,11 @@ declare module 'stripe' {
         default_columns: Array<string> | null;
 
         /**
+         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         */
+        livemode: boolean;
+
+        /**
          * Human-readable name of the Report Type
          */
         name: string;

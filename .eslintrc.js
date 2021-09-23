@@ -25,7 +25,7 @@ module.exports = {
       },
     ],
     'capitalized-comments': 'off',
-    'class-methods-use-this': 'error',
+    'class-methods-use-this': 'off',
     'comma-dangle': 'off',
     'comma-spacing': 'off',
     'comma-style': ['error', 'last'],

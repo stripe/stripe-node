@@ -88,7 +88,7 @@ const createCustomer = async () => {
 createCustomer();
 ```
 
-You can find a full TS server example in [stripe-samples](https://github.com/stripe-samples/accept-a-card-payment/tree/master/using-webhooks/server/node-typescript).
+You can find a full TS server example in [stripe-samples](https://github.com/stripe-samples/accept-a-payment/tree/main/custom-payment-flow/server/node-typescript).
 
 #### Using old API versions with TypeScript
 
@@ -478,6 +478,15 @@ $ yarn test
 
 If you do not have `yarn` installed, you can get it with `npm install --global yarn`.
 
+The tests also depends on [stripe-mock][stripe-mock], so make sure to fetch and
+run it from a background terminal ([stripe-mock's README][stripe-mock-usage]
+also contains instructions for installing via Homebrew and other methods):
+
+```bash
+go get -u github.com/stripe/stripe-mock
+stripe-mock
+```
+
 Run a single test suite without a coverage report:
 
 ```bash
@@ -513,6 +522,8 @@ $ yarn fix
 [expanding_objects]: https://stripe.com/docs/api/expanding_objects
 [https-proxy-agent]: https://github.com/TooTallNate/node-https-proxy-agent
 [stripe-js]: https://stripe.com/docs/js
+[stripe-mock]: https://github.com/stripe/stripe-mock
+[stripe-mock-usage]: https://github.com/stripe/stripe-mock#usage
 [youtube-playlist]: https://www.youtube.com/playlist?list=PLy1nL-pvL2M5xNIuNapwmABwEy2uifAlY
 
 <!--

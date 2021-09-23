@@ -303,6 +303,11 @@ declare module 'stripe' {
             custom_mandate_url?: string;
 
             /**
+             * List of Stripe products where this mandate can be selected automatically.
+             */
+            default_for?: Array<MandateOptions.DefaultFor>;
+
+            /**
              * Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
              */
             interval_description: string | null;
@@ -319,6 +324,8 @@ declare module 'stripe' {
           }
 
           namespace MandateOptions {
+            type DefaultFor = 'invoice' | 'subscription';
+
             type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
 
             type TransactionType = 'business' | 'personal';
@@ -522,6 +529,11 @@ declare module 'stripe' {
             custom_mandate_url?: Stripe.Emptyable<string>;
 
             /**
+             * List of Stripe products where this mandate can be selected automatically.
+             */
+            default_for?: Array<MandateOptions.DefaultFor>;
+
+            /**
              * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
              */
             interval_description?: string;
@@ -538,6 +550,8 @@ declare module 'stripe' {
           }
 
           namespace MandateOptions {
+            type DefaultFor = 'invoice' | 'subscription';
+
             type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
 
             type TransactionType = 'business' | 'personal';
@@ -690,6 +704,11 @@ declare module 'stripe' {
             custom_mandate_url?: Stripe.Emptyable<string>;
 
             /**
+             * List of Stripe products where this mandate can be selected automatically.
+             */
+            default_for?: Array<MandateOptions.DefaultFor>;
+
+            /**
              * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
              */
             interval_description?: string;
@@ -706,6 +725,8 @@ declare module 'stripe' {
           }
 
           namespace MandateOptions {
+            type DefaultFor = 'invoice' | 'subscription';
+
             type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
 
             type TransactionType = 'business' | 'personal';
@@ -949,6 +970,11 @@ declare module 'stripe' {
             custom_mandate_url?: Stripe.Emptyable<string>;
 
             /**
+             * List of Stripe products where this mandate can be selected automatically.
+             */
+            default_for?: Array<MandateOptions.DefaultFor>;
+
+            /**
              * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
              */
             interval_description?: string;
@@ -965,6 +991,8 @@ declare module 'stripe' {
           }
 
           namespace MandateOptions {
+            type DefaultFor = 'invoice' | 'subscription';
+
             type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
 
             type TransactionType = 'business' | 'personal';
