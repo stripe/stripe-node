@@ -44,6 +44,9 @@
     "prettier": "^1.16.4",
     "typescript": "^3.7.2"
   },
+  "resolutions": {
+    "ansi-regex": "5.0.1"
+  },
   "dependencies": {
     "@types/node": ">=8.1.0",
     "qs": "^6.6.0"
