@@ -919,6 +919,11 @@ declare module 'stripe' {
 
         interface CardPresent {
           /**
+           * The authorized amount
+           */
+          amount_authorized: number | null;
+
+          /**
            * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
@@ -989,6 +994,11 @@ declare module 'stripe' {
            * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
+
+          /**
+           * Defines whether the authorized amount can be over-captured or not
+           */
+          overcapture_supported: boolean | null;
 
           /**
            * How card details were read in this transaction.
