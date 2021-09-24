@@ -768,8 +768,8 @@ describe('TaxId', function() {
 
   it('retrieveTaxId method', async function() {
     const taxId = await stripe.customers.retrieveTaxId(
-      'txi_xxxxxxxxxxxxx',
-      'cus_xxxxxxxxxxxxx'
+      'cus_xxxxxxxxxxxxx',
+      'txi_xxxxxxxxxxxxx'
     );
     expect(taxId).not.to.be.null;
   });
