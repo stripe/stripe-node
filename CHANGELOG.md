@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.177.0 - 2021-09-28
+* [#1257](https://github.com/stripe/stripe-node/pull/1257) API Updates
+  * Add support for `amount_authorized` and `overcapture_supported` on `Charge.payment_method_details.card_present`
+* [#1256](https://github.com/stripe/stripe-node/pull/1256) Bump up ansi-regex version to 5.0.1.
+* [#1253](https://github.com/stripe/stripe-node/pull/1253) Update FetchHttpClient to make fetch function optional.
+
 ## 8.176.0 - 2021-09-16
 * [#1248](https://github.com/stripe/stripe-node/pull/1248) API Updates
   * Add support for `full_name_aliases` on `AccountUpdateParams.individual`, `AccountCreateParams.individual`, `PersonCreateParams`, `PersonUpdateParams`, `Person`, `TokenCreateParams.account.individual`, and `TokenCreateParams.person`
