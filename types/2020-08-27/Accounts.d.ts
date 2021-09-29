@@ -232,6 +232,11 @@ declare module 'stripe' {
         jcb_payments?: Capabilities.JcbPayments;
 
         /**
+         * The status of the Klarna payments capability of the account, or whether the account can directly process Klarna charges.
+         */
+        klarna_payments?: Capabilities.KlarnaPayments;
+
+        /**
          * The status of the legacy payments capability of the account.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -302,6 +307,8 @@ declare module 'stripe' {
         type IdealPayments = 'active' | 'inactive' | 'pending';
 
         type JcbPayments = 'active' | 'inactive' | 'pending';
+
+        type KlarnaPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
@@ -905,7 +912,7 @@ declare module 'stripe' {
 
         interface Payouts {
           /**
-           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See our [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances) documentation for details. Default value is `true` for Express accounts and `false` for Custom accounts.
+           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See our [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances) documentation for details. Default value is `false` for Custom accounts, otherwise `true`.
            */
           debit_negative_balances: boolean;
 
@@ -1210,6 +1217,11 @@ declare module 'stripe' {
         jcb_payments?: Capabilities.JcbPayments;
 
         /**
+         * The klarna_payments capability.
+         */
+        klarna_payments?: Capabilities.KlarnaPayments;
+
+        /**
          * The legacy_payments capability.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -1350,6 +1362,13 @@ declare module 'stripe' {
         }
 
         interface JcbPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface KlarnaPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2234,6 +2253,11 @@ declare module 'stripe' {
         jcb_payments?: Capabilities.JcbPayments;
 
         /**
+         * The klarna_payments capability.
+         */
+        klarna_payments?: Capabilities.KlarnaPayments;
+
+        /**
          * The legacy_payments capability.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -2374,6 +2398,13 @@ declare module 'stripe' {
         }
 
         interface JcbPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface KlarnaPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
