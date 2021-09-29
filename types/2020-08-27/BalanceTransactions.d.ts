@@ -171,6 +171,9 @@ declare module 'stripe' {
     }
 
     interface BalanceTransactionListParams extends PaginationParams {
+      /**
+       * This parameter is deprecated and we recommend listing by created and filtering in memory instead.
+       */
       available_on?: Stripe.RangeQueryParam | number;
 
       created?: Stripe.RangeQueryParam | number;
