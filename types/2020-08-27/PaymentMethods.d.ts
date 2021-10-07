@@ -1145,14 +1145,14 @@ declare module 'stripe' {
 
     interface PaymentMethodListParams extends PaginationParams {
       /**
-       * The ID of the customer whose PaymentMethods will be retrieved.
-       */
-      customer: string;
-
-      /**
        * A required filter on the list, based on the object `type` field.
        */
       type: PaymentMethodListParams.Type;
+
+      /**
+       * The ID of the customer whose PaymentMethods will be retrieved.
+       */
+      customer?: string;
 
       /**
        * Specifies which fields in the response should be expanded.

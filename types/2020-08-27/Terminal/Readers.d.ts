@@ -25,7 +25,7 @@ declare module 'stripe' {
         device_sw_version: string | null;
 
         /**
-         * Type of reader, one of `bbpos_chipper2x` or `verifone_P400`.
+         * Type of reader, one of `bbpos_chipper2x`, `bbpos_wisepos_e`, or `verifone_P400`.
          */
         device_type: Reader.DeviceType;
 
@@ -66,7 +66,10 @@ declare module 'stripe' {
       }
 
       namespace Reader {
-        type DeviceType = 'bbpos_chipper2x' | 'verifone_P400';
+        type DeviceType =
+          | 'bbpos_chipper2x'
+          | 'bbpos_wisepos_e'
+          | 'verifone_P400';
       }
 
       /**
@@ -163,7 +166,10 @@ declare module 'stripe' {
       }
 
       namespace ReaderListParams {
-        type DeviceType = 'bbpos_chipper2x' | 'verifone_P400';
+        type DeviceType =
+          | 'bbpos_chipper2x'
+          | 'bbpos_wisepos_e'
+          | 'verifone_P400';
 
         type Status = 'offline' | 'online';
       }
