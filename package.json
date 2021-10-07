@@ -20,7 +20,7 @@
     "type": "git",
     "url": "git://github.com/stripe/stripe-node.git"
   },
-  "bugs:": "https://github.com/stripe/stripe-node/issues",
+  "bugs": "https://github.com/stripe/stripe-node/issues",
   "engines": {
     "node": "^8.1 || >=10.*"
   },
