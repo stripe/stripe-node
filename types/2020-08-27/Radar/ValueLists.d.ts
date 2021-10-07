@@ -35,7 +35,7 @@ declare module 'stripe' {
         deleted?: void;
 
         /**
-         * The type of items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`.
+         * The type of items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, or `customer_id`.
          */
         item_type: ValueList.ItemType;
 
@@ -66,6 +66,7 @@ declare module 'stripe' {
           | 'card_fingerprint'
           | 'case_sensitive_string'
           | 'country'
+          | 'customer_id'
           | 'email'
           | 'ip_address'
           | 'string';
@@ -108,7 +109,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, or `case_sensitive_string`. Use `string` if the item type is unknown or mixed.
+         * Type of the items in the value list. One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, or `customer_id`. Use `string` if the item type is unknown or mixed.
          */
         item_type?: ValueListCreateParams.ItemType;
 
@@ -124,6 +125,7 @@ declare module 'stripe' {
           | 'card_fingerprint'
           | 'case_sensitive_string'
           | 'country'
+          | 'customer_id'
           | 'email'
           | 'ip_address'
           | 'string';

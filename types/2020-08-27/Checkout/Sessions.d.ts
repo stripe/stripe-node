@@ -147,6 +147,8 @@ declare module 'stripe' {
          */
         payment_status: Session.PaymentStatus;
 
+        phone_number_collection?: Session.PhoneNumberCollection;
+
         /**
          * The ID of the original expired Checkout Session that triggered the recovery flow.
          */
@@ -278,6 +280,11 @@ declare module 'stripe' {
            * Otherwise, if the customer has consented to promotional content, this value is the most recent valid email provided by the customer on the Checkout form.
            */
           email: string | null;
+
+          /**
+           * The customer's phone number at the time of checkout
+           */
+          phone?: string | null;
 
           /**
            * The customer's tax exempt status at time of checkout.
@@ -470,6 +477,13 @@ declare module 'stripe' {
         }
 
         type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
+
+        interface PhoneNumberCollection {
+          /**
+           * Indicates whether phone number collection is enabled for the session
+           */
+          enabled: boolean;
+        }
 
         interface Shipping {
           address?: Stripe.Address;
@@ -953,6 +967,14 @@ declare module 'stripe' {
          * other characteristics.
          */
         payment_method_types?: Array<SessionCreateParams.PaymentMethodType>;
+
+        /**
+         * Controls phone number collection settings for the session.
+         *
+         * We recommend that you review your privacy policy and check with your legal contacts
+         * before using this feature. Learn more about [collecting phone numbers with Checkout](https://stripe.com/docs/payments/checkout/phone-numbers).
+         */
+        phone_number_collection?: SessionCreateParams.PhoneNumberCollection;
 
         /**
          * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
@@ -1544,6 +1566,13 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'wechat_pay';
+
+        interface PhoneNumberCollection {
+          /**
+           * Set to `true` to enable phone number collection.
+           */
+          enabled: boolean;
+        }
 
         interface SetupIntentData {
           /**
