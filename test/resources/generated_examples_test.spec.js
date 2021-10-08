@@ -39,6 +39,11 @@ describe('Customer', function() {
     const customers = await stripe.customers.list({limit: 3});
     expect(customers).not.to.be.null;
   });
+
+  it('listPaymentMethods method', async function() {
+    const paymentMethods = await stripe.customers.listPaymentMethods('cus_xyz');
+    expect(paymentMethods).not.to.be.null;
+  });
 });
 
 describe('BalanceTransaction', function() {

@@ -664,6 +664,41 @@ declare module 'stripe' {
 
     interface CustomerDeleteDiscountParams {}
 
+    interface CustomerListPaymentMethodsParams extends PaginationParams {
+      /**
+       * A required filter on the list, based on the object `type` field.
+       */
+      type: CustomerListPaymentMethodsParams.Type;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    namespace CustomerListPaymentMethodsParams {
+      type Type =
+        | 'acss_debit'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'boleto'
+        | 'card'
+        | 'card_present'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'oxxo'
+        | 'p24'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'wechat_pay';
+    }
+
     class CustomersResource {
       /**
        * Creates a new customer object.
@@ -734,6 +769,15 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
+
+      /**
+       * Returns a list of PaymentMethods for a given Customer
+       */
+      listPaymentMethods(
+        id: string,
+        params: CustomerListPaymentMethodsParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.PaymentMethod>;
 
       /**
        * Creates an immutable transaction that updates the customer's credit [balance](https://stripe.com/docs/billing/customer/balance).
