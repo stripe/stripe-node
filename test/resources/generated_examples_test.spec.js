@@ -41,7 +41,10 @@ describe('Customer', function() {
   });
 
   it('listPaymentMethods method', async function() {
-    const paymentMethods = await stripe.customers.listPaymentMethods('cus_xyz');
+    const paymentMethods = await stripe.customers.listPaymentMethods(
+      'cus_xyz',
+      {type: 'card'}
+    );
     expect(paymentMethods).not.to.be.null;
   });
 });

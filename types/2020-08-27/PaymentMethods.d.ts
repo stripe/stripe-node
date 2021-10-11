@@ -58,6 +58,8 @@ declare module 'stripe' {
 
       interac_present?: PaymentMethod.InteracPresent;
 
+      klarna?: PaymentMethod.Klarna;
+
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
@@ -507,6 +509,32 @@ declare module 'stripe' {
 
       interface InteracPresent {}
 
+      interface Klarna {
+        /**
+         * The customer's date of birth, if provided.
+         */
+        dob?: Klarna.Dob | null;
+      }
+
+      namespace Klarna {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number | null;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number | null;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number | null;
+        }
+      }
+
       interface Oxxo {}
 
       interface P24 {
@@ -614,6 +642,7 @@ declare module 'stripe' {
         | 'grabpay'
         | 'ideal'
         | 'interac_present'
+        | 'klarna'
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'
@@ -708,6 +737,11 @@ declare module 'stripe' {
        * If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present payment method.
        */
       interac_present?: PaymentMethodCreateParams.InteracPresent;
+
+      /**
+       * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
+       */
+      klarna?: PaymentMethodCreateParams.Klarna;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -965,6 +999,32 @@ declare module 'stripe' {
 
       interface InteracPresent {}
 
+      interface Klarna {
+        /**
+         * Customer's date of birth
+         */
+        dob?: Klarna.Dob;
+      }
+
+      namespace Klarna {
+        interface Dob {
+          /**
+           * The day of birth, between 1 and 31.
+           */
+          day: number;
+
+          /**
+           * The month of birth, between 1 and 12.
+           */
+          month: number;
+
+          /**
+           * The four-digit year of birth.
+           */
+          year: number;
+        }
+      }
+
       interface Oxxo {}
 
       interface P24 {
@@ -1035,6 +1095,7 @@ declare module 'stripe' {
         | 'giropay'
         | 'grabpay'
         | 'ideal'
+        | 'klarna'
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'
@@ -1176,6 +1237,7 @@ declare module 'stripe' {
         | 'giropay'
         | 'grabpay'
         | 'ideal'
+        | 'klarna'
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'

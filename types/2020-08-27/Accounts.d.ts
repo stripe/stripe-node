@@ -1043,7 +1043,7 @@ declare module 'stripe' {
       documents?: AccountCreateParams.Documents;
 
       /**
-       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe will never directly email Custom accounts.
+       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe only emails Custom accounts with your consent.
        */
       email?: string;
 
@@ -2084,7 +2084,7 @@ declare module 'stripe' {
       documents?: AccountUpdateParams.Documents;
 
       /**
-       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe will never directly email Custom accounts.
+       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe only emails Custom accounts with your consent.
        */
       email?: string;
 
