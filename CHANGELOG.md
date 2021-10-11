@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.180.0 - 2021-10-11
+* [#1266](https://github.com/stripe/stripe-node/pull/1266) API Updates
+  * Add support for `list_payment_methods` method on resource `Customer`
+
 ## 8.179.0 - 2021-10-07
 * [#1265](https://github.com/stripe/stripe-node/pull/1265) API Updates
   * Add support for `phone_number_collection` on `CheckoutSessionCreateParams` and `Checkout.Session`
