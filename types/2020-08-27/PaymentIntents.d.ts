@@ -509,6 +509,8 @@ declare module 'stripe' {
 
         ideal?: PaymentMethodOptions.Ideal;
 
+        klarna?: PaymentMethodOptions.Klarna;
+
         oxxo?: PaymentMethodOptions.Oxxo;
 
         p24?: PaymentMethodOptions.P24;
@@ -683,6 +685,13 @@ declare module 'stripe' {
         interface CardPresent {}
 
         interface Ideal {}
+
+        interface Klarna {
+          /**
+           * Preferred locale of the Klarna checkout page that the customer is redirected to.
+           */
+          preferred_locale: string | null;
+        }
 
         interface Oxxo {
           /**
@@ -1066,6 +1075,11 @@ declare module 'stripe' {
         interac_present?: PaymentMethodData.InteracPresent;
 
         /**
+         * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
+         */
+        klarna?: PaymentMethodData.Klarna;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -1290,6 +1304,32 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface Klarna {
+          /**
+           * Customer's date of birth
+           */
+          dob?: Klarna.Dob;
+        }
+
+        namespace Klarna {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
         interface Oxxo {}
 
         interface P24 {
@@ -1359,6 +1399,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'klarna'
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
@@ -1410,6 +1451,11 @@ declare module 'stripe' {
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
          */
         ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
+
+        /**
+         * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
+         */
+        klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -1597,6 +1643,38 @@ declare module 'stripe' {
         interface CardPresent {}
 
         interface Ideal {}
+
+        interface Klarna {
+          /**
+           * Preferred language of the Klarna authorization page that the customer is redirected to
+           */
+          preferred_locale?: Klarna.PreferredLocale;
+        }
+
+        namespace Klarna {
+          type PreferredLocale =
+            | 'da-DK'
+            | 'de-AT'
+            | 'de-DE'
+            | 'en-AT'
+            | 'en-DE'
+            | 'en-DK'
+            | 'en-FI'
+            | 'en-GB'
+            | 'en-NL'
+            | 'en-NO'
+            | 'en-SE'
+            | 'en-US'
+            | 'es-ES'
+            | 'fi-FI'
+            | 'fr-BE'
+            | 'it-IT'
+            | 'nb-NO'
+            | 'nl-BE'
+            | 'nl-NL'
+            | 'sv-FI'
+            | 'sv-SE';
+        }
 
         interface Oxxo {
           /**
@@ -1906,6 +1984,11 @@ declare module 'stripe' {
         interac_present?: PaymentMethodData.InteracPresent;
 
         /**
+         * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
+         */
+        klarna?: PaymentMethodData.Klarna;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -2130,6 +2213,32 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface Klarna {
+          /**
+           * Customer's date of birth
+           */
+          dob?: Klarna.Dob;
+        }
+
+        namespace Klarna {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
         interface Oxxo {}
 
         interface P24 {
@@ -2199,6 +2308,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'klarna'
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
@@ -2250,6 +2360,11 @@ declare module 'stripe' {
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
          */
         ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
+
+        /**
+         * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
+         */
+        klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -2437,6 +2552,38 @@ declare module 'stripe' {
         interface CardPresent {}
 
         interface Ideal {}
+
+        interface Klarna {
+          /**
+           * Preferred language of the Klarna authorization page that the customer is redirected to
+           */
+          preferred_locale?: Klarna.PreferredLocale;
+        }
+
+        namespace Klarna {
+          type PreferredLocale =
+            | 'da-DK'
+            | 'de-AT'
+            | 'de-DE'
+            | 'en-AT'
+            | 'en-DE'
+            | 'en-DK'
+            | 'en-FI'
+            | 'en-GB'
+            | 'en-NL'
+            | 'en-NO'
+            | 'en-SE'
+            | 'en-US'
+            | 'es-ES'
+            | 'fi-FI'
+            | 'fr-BE'
+            | 'it-IT'
+            | 'nb-NO'
+            | 'nl-BE'
+            | 'nl-NL'
+            | 'sv-FI'
+            | 'sv-SE';
+        }
 
         interface Oxxo {
           /**
@@ -2860,6 +3007,11 @@ declare module 'stripe' {
         interac_present?: PaymentMethodData.InteracPresent;
 
         /**
+         * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
+         */
+        klarna?: PaymentMethodData.Klarna;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -3084,6 +3236,32 @@ declare module 'stripe' {
 
         interface InteracPresent {}
 
+        interface Klarna {
+          /**
+           * Customer's date of birth
+           */
+          dob?: Klarna.Dob;
+        }
+
+        namespace Klarna {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
         interface Oxxo {}
 
         interface P24 {
@@ -3153,6 +3331,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'klarna'
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
@@ -3204,6 +3383,11 @@ declare module 'stripe' {
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
          */
         ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
+
+        /**
+         * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
+         */
+        klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -3391,6 +3575,38 @@ declare module 'stripe' {
         interface CardPresent {}
 
         interface Ideal {}
+
+        interface Klarna {
+          /**
+           * Preferred language of the Klarna authorization page that the customer is redirected to
+           */
+          preferred_locale?: Klarna.PreferredLocale;
+        }
+
+        namespace Klarna {
+          type PreferredLocale =
+            | 'da-DK'
+            | 'de-AT'
+            | 'de-DE'
+            | 'en-AT'
+            | 'en-DE'
+            | 'en-DK'
+            | 'en-FI'
+            | 'en-GB'
+            | 'en-NL'
+            | 'en-NO'
+            | 'en-SE'
+            | 'en-US'
+            | 'es-ES'
+            | 'fi-FI'
+            | 'fr-BE'
+            | 'it-IT'
+            | 'nb-NO'
+            | 'nl-BE'
+            | 'nl-NL'
+            | 'sv-FI'
+            | 'sv-SE';
+        }
 
         interface Oxxo {
           /**

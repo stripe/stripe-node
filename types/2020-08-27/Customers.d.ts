@@ -692,6 +692,7 @@ declare module 'stripe' {
         | 'giropay'
         | 'grabpay'
         | 'ideal'
+        | 'klarna'
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'

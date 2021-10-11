@@ -1404,7 +1404,19 @@ declare module 'stripe' {
           }
         }
 
-        interface Klarna {}
+        interface Klarna {
+          /**
+           * The Klarna payment method used for this transaction.
+           * Can be one of `pay_later`, `pay_now`, `pay_with_financing`, or `pay_in_installments`
+           */
+          payment_method_category?: string | null;
+
+          /**
+           * Preferred language of the Klarna authorization page that the customer is redirected to.
+           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `it-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `fr-FR`, or `en-FR`
+           */
+          preferred_locale?: string | null;
+        }
 
         interface Multibanco {
           /**
