@@ -284,7 +284,7 @@ declare module 'stripe' {
           /**
            * The customer's phone number at the time of checkout
            */
-          phone?: string | null;
+          phone: string | null;
 
           /**
            * The customer's tax exempt status at time of checkout.
@@ -1561,6 +1561,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'klarna'
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'

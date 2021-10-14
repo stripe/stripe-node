@@ -524,6 +524,17 @@ describe('PaymentMethod', function() {
   });
 });
 
+describe('CustomerSource', function() {
+  it('verifySource method', async function() {
+    const bankAccount = await stripe.customers.verifySource(
+      'cus_xxxxxxxxxxxxx',
+      'ba_xxxxxxxxxxxxx',
+      {amounts: [32, 45]}
+    );
+    expect(bankAccount).not.to.be.null;
+  });
+});
+
 describe('Source', function() {
   it('retrieve method', async function() {
     const source = await stripe.sources.retrieve('src_xxxxxxxxxxxxx');
