@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.182.0 - 2021-10-14
+* [#1271](https://github.com/stripe/stripe-node/pull/1271) API Updates
+  * Change `Charge.payment_method_details.klarna.payment_method_category`, `Charge.payment_method_details.klarna.preferred_locale`, `Checkout.Session.customer_details.phone`, and `PaymentMethod.klarna.dob` to be required
+  * Add support for new value `klarna` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+
 ## 8.181.0 - 2021-10-11
 * [#1269](https://github.com/stripe/stripe-node/pull/1269) API Updates
   * Add support for `payment_method_category` and `preferred_locale` on `Charge.payment_method_details.klarna`
