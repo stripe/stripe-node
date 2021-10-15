@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.183.0 - 2021-10-15
+* [#1272](https://github.com/stripe/stripe-node/pull/1272) API Updates
+  * Change type of `UsageRecordCreateParams.timestamp` from `integer` to `literal('now') | integer`
+  * Change `UsageRecordCreateParams.timestamp` to be optional
+
 ## 8.182.0 - 2021-10-14
 * [#1271](https://github.com/stripe/stripe-node/pull/1271) API Updates
   * Change `Charge.payment_method_details.klarna.payment_method_category`, `Charge.payment_method_details.klarna.preferred_locale`, `Checkout.Session.customer_details.phone`, and `PaymentMethod.klarna.dob` to be required
