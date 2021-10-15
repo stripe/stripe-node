@@ -1,4 +1,5 @@
 /// <reference types="node" />
+/// <reference lib="dom" />
 
 import {IncomingMessage} from 'http';
 declare module 'stripe' {
@@ -60,6 +61,15 @@ declare module 'stripe' {
       agent?: HttpAgent | null
     ) => HttpClient<
       HttpClientResponse<IncomingMessage, Stripe.StripeStreamResponse>
+    >;
+
+    export const createFetchHttpClient: (
+      fetchFn?: WindowOrWorkerGlobalScope['fetch']
+    ) => HttpClient<
+      HttpClientResponse<
+        ReturnType<WindowOrWorkerGlobalScope['fetch']>,
+        ReadableStream<Uint8Array>
+      >
     >;
   }
 }
