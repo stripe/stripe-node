@@ -1,4 +1,5 @@
 /// <reference types="node" />
+/// <reference lib="dom" />
 
 import {IncomingMessage} from 'http';
 declare module 'stripe' {
@@ -60,6 +61,22 @@ declare module 'stripe' {
       agent?: HttpAgent | null
     ) => HttpClient<
       HttpClientResponse<IncomingMessage, Stripe.StripeStreamResponse>
+    >;
+
+    /**
+     * Creates an HTTP client for issuing Stripe API requests which uses the Web
+     * Fetch API.
+     *
+     * A fetch function can optionally be passed in as a parameter. If none is
+     * passed, will default to the default `fetch` function in the global scope.
+     */
+    export const createFetchHttpClient: (
+      fetchFn?: WindowOrWorkerGlobalScope['fetch']
+    ) => HttpClient<
+      HttpClientResponse<
+        ReturnType<WindowOrWorkerGlobalScope['fetch']>,
+        ReadableStream<Uint8Array>
+      >
     >;
   }
 }
