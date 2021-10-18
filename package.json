@@ -27,6 +27,7 @@
   "main": "lib/stripe.js",
   "types": "types/2020-08-27/index.d.ts",
   "devDependencies": {
+    "@types/node": ">=8.1.0",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
     "chai": "~4.2.0",
@@ -48,7 +49,6 @@
     "ansi-regex": "5.0.1"
   },
   "dependencies": {
-    "@types/node": ">=8.1.0",
     "qs": "^6.6.0"
   },
   "license": "MIT",
