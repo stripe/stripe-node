@@ -546,6 +546,11 @@ declare module 'stripe' {
           /**
            * Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
            */
+          buyer_id?: string;
+
+          /**
+           * Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
+           */
           fingerprint: string | null;
 
           /**
