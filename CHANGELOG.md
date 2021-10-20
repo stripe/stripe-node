@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.184.0 - 2021-10-20
+* [#1276](https://github.com/stripe/stripe-node/pull/1276) API Updates
+  * Change `Account.controller.type` to be required
+  * Add support for `buyer_id` on `Charge.payment_method_details.alipay`
+* [#1273](https://github.com/stripe/stripe-node/pull/1273) Add typed createFetchHttpClient function.
+
 ## 8.183.0 - 2021-10-15
 * [#1272](https://github.com/stripe/stripe-node/pull/1272) API Updates
   * Change type of `UsageRecordCreateParams.timestamp` from `integer` to `literal('now') | integer`
