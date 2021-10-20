@@ -536,7 +536,7 @@ declare module 'stripe' {
         /**
          * The controller type. Can be `application`, if a Connect application controls the account, or `account`, if the account controls itself.
          */
-        type?: Controller.Type;
+        type: Controller.Type;
       }
 
       namespace Controller {
