@@ -232,6 +232,11 @@ declare module 'stripe-search-beta' {
         jcb_payments?: Capabilities.JcbPayments;
 
         /**
+         * The status of the Klarna payments capability of the account, or whether the account can directly process Klarna charges.
+         */
+        klarna_payments?: Capabilities.KlarnaPayments;
+
+        /**
          * The status of the legacy payments capability of the account.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -302,6 +307,8 @@ declare module 'stripe-search-beta' {
         type IdealPayments = 'active' | 'inactive' | 'pending';
 
         type JcbPayments = 'active' | 'inactive' | 'pending';
+
+        type KlarnaPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
@@ -529,7 +536,7 @@ declare module 'stripe-search-beta' {
         /**
          * The controller type. Can be `application`, if a Connect application controls the account, or `account`, if the account controls itself.
          */
-        type?: Controller.Type;
+        type: Controller.Type;
       }
 
       namespace Controller {
@@ -905,7 +912,7 @@ declare module 'stripe-search-beta' {
 
         interface Payouts {
           /**
-           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See our [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances) documentation for details. Default value is `true` for Express accounts and `false` for Custom accounts.
+           * A Boolean indicating if Stripe should try to reclaim negative balances from an attached bank account. See our [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances) documentation for details. Default value is `false` for Custom accounts, otherwise `true`.
            */
           debit_negative_balances: boolean;
 
@@ -1036,7 +1043,7 @@ declare module 'stripe-search-beta' {
       documents?: AccountCreateParams.Documents;
 
       /**
-       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe will never directly email Custom accounts.
+       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe only emails Custom accounts with your consent.
        */
       email?: string;
 
@@ -1210,6 +1217,11 @@ declare module 'stripe-search-beta' {
         jcb_payments?: Capabilities.JcbPayments;
 
         /**
+         * The klarna_payments capability.
+         */
+        klarna_payments?: Capabilities.KlarnaPayments;
+
+        /**
          * The legacy_payments capability.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -1350,6 +1362,13 @@ declare module 'stripe-search-beta' {
         }
 
         interface JcbPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface KlarnaPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1697,6 +1716,11 @@ declare module 'stripe-search-beta' {
          * The Kanji variation of the individual's first name (Japan only).
          */
         first_name_kanji?: string;
+
+        /**
+         * A list of alternate names or aliases that the individual is known by.
+         */
+        full_name_aliases?: Array<string>;
 
         /**
          * The individual's gender (International regulations require either "male" or "female").
@@ -2060,7 +2084,7 @@ declare module 'stripe-search-beta' {
       documents?: AccountUpdateParams.Documents;
 
       /**
-       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe will never directly email Custom accounts.
+       * The email address of the account holder. This is only to make the account easier to identify to you. Stripe only emails Custom accounts with your consent.
        */
       email?: string;
 
@@ -2229,6 +2253,11 @@ declare module 'stripe-search-beta' {
         jcb_payments?: Capabilities.JcbPayments;
 
         /**
+         * The klarna_payments capability.
+         */
+        klarna_payments?: Capabilities.KlarnaPayments;
+
+        /**
          * The legacy_payments capability.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -2369,6 +2398,13 @@ declare module 'stripe-search-beta' {
         }
 
         interface JcbPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface KlarnaPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2679,6 +2715,11 @@ declare module 'stripe-search-beta' {
          * The Kanji variation of the individual's first name (Japan only).
          */
         first_name_kanji?: string;
+
+        /**
+         * A list of alternate names or aliases that the individual is known by.
+         */
+        full_name_aliases?: Array<string>;
 
         /**
          * The individual's gender (International regulations require either "male" or "female").

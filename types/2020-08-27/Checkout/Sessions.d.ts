@@ -147,6 +147,8 @@ declare module 'stripe-search-beta' {
          */
         payment_status: Session.PaymentStatus;
 
+        phone_number_collection?: Session.PhoneNumberCollection;
+
         /**
          * The ID of the original expired Checkout Session that triggered the recovery flow.
          */
@@ -278,6 +280,11 @@ declare module 'stripe-search-beta' {
            * Otherwise, if the customer has consented to promotional content, this value is the most recent valid email provided by the customer on the Checkout form.
            */
           email: string | null;
+
+          /**
+           * The customer's phone number at the time of checkout
+           */
+          phone: string | null;
 
           /**
            * The customer's tax exempt status at time of checkout.
@@ -423,6 +430,11 @@ declare module 'stripe-search-beta' {
               custom_mandate_url?: string;
 
               /**
+               * List of Stripe products where this mandate can be selected automatically. Returned when the Session is in `setup` mode.
+               */
+              default_for?: Array<MandateOptions.DefaultFor>;
+
+              /**
                * Description of the interval. Only required if the 'payment_schedule' parameter is 'interval' or 'combined'.
                */
               interval_description: string | null;
@@ -439,6 +451,8 @@ declare module 'stripe-search-beta' {
             }
 
             namespace MandateOptions {
+              type DefaultFor = 'invoice' | 'subscription';
+
               type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
 
               type TransactionType = 'business' | 'personal';
@@ -463,6 +477,13 @@ declare module 'stripe-search-beta' {
         }
 
         type PaymentStatus = 'no_payment_required' | 'paid' | 'unpaid';
+
+        interface PhoneNumberCollection {
+          /**
+           * Indicates whether phone number collection is enabled for the session
+           */
+          enabled: boolean;
+        }
 
         interface Shipping {
           address?: Stripe.Address;
@@ -821,8 +842,8 @@ declare module 'stripe-search-beta' {
         /**
          * The URL to which Stripe should send customers when payment or setup
          * is complete.
-         * If you'd like access to the Checkout Session for the successful
-         * payment, read more about it in the guide on [fulfilling orders](https://stripe.com/docs/payments/checkout/fulfill-orders).
+         * If you'd like to use information from the successful Checkout Session on your page,
+         * read the guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
          */
         success_url: string;
 
@@ -948,6 +969,14 @@ declare module 'stripe-search-beta' {
         payment_method_types?: Array<SessionCreateParams.PaymentMethodType>;
 
         /**
+         * Controls phone number collection settings for the session.
+         *
+         * We recommend that you review your privacy policy and check with your legal contacts
+         * before using this feature. Learn more about [collecting phone numbers with Checkout](https://stripe.com/docs/payments/checkout/phone-numbers).
+         */
+        phone_number_collection?: SessionCreateParams.PhoneNumberCollection;
+
+        /**
          * A subset of parameters to be passed to SetupIntent creation for Checkout Sessions in `setup` mode.
          */
         setup_intent_data?: SessionCreateParams.SetupIntentData;
@@ -997,7 +1026,7 @@ declare module 'stripe-search-beta' {
             allow_promotion_codes?: boolean;
 
             /**
-             * If `true`, a recovery url will be generated to recover this Checkout Session if it
+             * If `true`, a recovery URL will be generated to recover this Checkout Session if it
              * expires before a successful transaction is completed. It will be attached to the
              * Checkout Session object upon expiration.
              */
@@ -1129,7 +1158,7 @@ declare module 'stripe-search-beta' {
             enabled: boolean;
 
             /**
-             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99.
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999.
              */
             maximum?: number;
 
@@ -1457,6 +1486,11 @@ declare module 'stripe-search-beta' {
               custom_mandate_url?: Stripe.Emptyable<string>;
 
               /**
+               * List of Stripe products where this mandate can be selected automatically. Only usable in `setup` mode.
+               */
+              default_for?: Array<MandateOptions.DefaultFor>;
+
+              /**
                * Description of the mandate interval. Only required if 'payment_schedule' parameter is 'interval' or 'combined'.
                */
               interval_description?: string;
@@ -1473,6 +1507,8 @@ declare module 'stripe-search-beta' {
             }
 
             namespace MandateOptions {
+              type DefaultFor = 'invoice' | 'subscription';
+
               type PaymentSchedule = 'combined' | 'interval' | 'sporadic';
 
               type TransactionType = 'business' | 'personal';
@@ -1525,11 +1561,19 @@ declare module 'stripe-search-beta' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'klarna'
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
           | 'sofort'
           | 'wechat_pay';
+
+        interface PhoneNumberCollection {
+          /**
+           * Set to `true` to enable phone number collection.
+           */
+          enabled: boolean;
+        }
 
         interface SetupIntentData {
           /**

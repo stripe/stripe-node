@@ -126,7 +126,7 @@ declare module 'stripe-search-beta' {
           }
 
           interface SubscriptionCancel {
-            cancellation_reason?: SubscriptionCancel.CancellationReason;
+            cancellation_reason: SubscriptionCancel.CancellationReason;
 
             /**
              * Whether the feature is enabled.

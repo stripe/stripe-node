@@ -664,6 +664,42 @@ declare module 'stripe-search-beta' {
 
     interface CustomerDeleteDiscountParams {}
 
+    interface CustomerListPaymentMethodsParams extends PaginationParams {
+      /**
+       * A required filter on the list, based on the object `type` field.
+       */
+      type: CustomerListPaymentMethodsParams.Type;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    namespace CustomerListPaymentMethodsParams {
+      type Type =
+        | 'acss_debit'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'boleto'
+        | 'card'
+        | 'card_present'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'klarna'
+        | 'oxxo'
+        | 'p24'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'wechat_pay';
+    }
+
     interface CustomerSearchParams {
       /**
        * The search query string. See [search query language](https://stripe.com/docs/search-api#search-query-language)
@@ -777,6 +813,15 @@ declare module 'stripe-search-beta' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
+
+      /**
+       * Returns a list of PaymentMethods for a given Customer
+       */
+      listPaymentMethods(
+        id: string,
+        params: CustomerListPaymentMethodsParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.PaymentMethod>;
 
       /**
        * Search for customers you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search-api#search-query-language)

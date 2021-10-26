@@ -556,6 +556,49 @@ declare module 'stripe-search-beta' {
       type Type = 'one_time' | 'recurring';
     }
 
+    interface PriceSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search-api#search-query-language)
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Whether to include `total_count` in the results. Note that counts max out at 10,000 results and searches with greater than 10,000 results will return `total_count: 10000`
+       */
+      include_count?: boolean;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Do not include this parameter on the first call. Use the next_page value returned in a response to request subsequent results.
+       */
+      next_page?: string;
+
+      /**
+       * The trailing window to search over
+       */
+      search_window?: PriceSearchParams.SearchWindow;
+
+      /**
+       * The order (ascending or descending) that results are listed in. Default: `desc`
+       */
+      sort_order?: PriceSearchParams.SortOrder;
+    }
+
+    namespace PriceSearchParams {
+      type SearchWindow = 'all_time' | 'last_year';
+
+      type SortOrder = 'asc' | 'desc';
+    }
+
     class PricesResource {
       /**
        * Creates a new price for an existing product. The price can be recurring or one-time.
@@ -595,6 +638,14 @@ declare module 'stripe-search-beta' {
         options?: RequestOptions
       ): ApiListPromise<Stripe.Price>;
       list(options?: RequestOptions): ApiListPromise<Stripe.Price>;
+
+      /**
+       * Search for prices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search-api#search-query-language)
+       */
+      search(
+        params: PriceSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Price>;
     }
   }
 }
