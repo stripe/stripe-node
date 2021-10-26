@@ -546,6 +546,11 @@ declare module 'stripe-search-beta' {
           /**
            * Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
            */
+          buyer_id?: string;
+
+          /**
+           * Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.
+           */
           fingerprint: string | null;
 
           /**
@@ -648,7 +653,7 @@ declare module 'stripe-search-beta' {
 
         interface Boleto {
           /**
-           * Uniquely identifies this customer tax_id (CNPJ or CPF)
+           * The tax ID of the customer (CPF for individuals consumers or CNPJ for businesses consumers)
            */
           tax_id: string;
         }
@@ -919,12 +924,17 @@ declare module 'stripe-search-beta' {
 
         interface CardPresent {
           /**
+           * The authorized amount
+           */
+          amount_authorized: number | null;
+
+          /**
            * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
 
           /**
-           * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`).
+           * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`). In some cases, the cardholder name may not be available depending on how the issuer has configured the card. Cardholder name is typically not available on swipe or contactless payments, such as those made with Apple Pay and Google Pay.
            */
           cardholder_name: string | null;
 
@@ -989,6 +999,11 @@ declare module 'stripe-search-beta' {
            * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
+
+          /**
+           * Defines whether the authorized amount can be over-captured or not
+           */
+          overcapture_supported: boolean | null;
 
           /**
            * How card details were read in this transaction.
@@ -1252,7 +1267,7 @@ declare module 'stripe-search-beta' {
           brand: string | null;
 
           /**
-           * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`).
+           * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`). In some cases, the cardholder name may not be available depending on how the issuer has configured the card. Cardholder name is typically not available on swipe or contactless payments, such as those made with Apple Pay and Google Pay.
            */
           cardholder_name: string | null;
 
@@ -1394,7 +1409,19 @@ declare module 'stripe-search-beta' {
           }
         }
 
-        interface Klarna {}
+        interface Klarna {
+          /**
+           * The Klarna payment method used for this transaction.
+           * Can be one of `pay_later`, `pay_now`, `pay_with_financing`, or `pay_in_installments`
+           */
+          payment_method_category: string | null;
+
+          /**
+           * Preferred language of the Klarna authorization page that the customer is redirected to.
+           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `it-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `fr-FR`, or `en-FR`
+           */
+          preferred_locale: string | null;
+        }
 
         interface Multibanco {
           /**
