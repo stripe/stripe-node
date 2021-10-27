@@ -1,4 +1,15 @@
-# CHANGELOG
+# CHANGELOG - `stripe-search-beta`
+
+## 8.184.0 - 2021-10-26
+* [#1278](https://github.com/stripe/stripe-node/pull/1278) API Updates
+  * Add support for `search` method on `Product`
+  * Add support for `search` method on `Price`
+
+## 8.174.0 - 2021-09-13
+
+Initial branch off of `stripe`
+
+# CHANGELOG `stripe`
 
 ## 8.184.0 - 2021-10-20
 * [#1276](https://github.com/stripe/stripe-node/pull/1276) API Updates
