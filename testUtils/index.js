@@ -8,6 +8,7 @@ require('chai').use(require('chai-as-promised'));
 
 const http = require('http');
 
+const CryptoProvider = require('../lib/crypto/CryptoProvider');
 const ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
@@ -37,6 +38,16 @@ const utils = (module.exports = {
       return callback(null, stripe, () => {
         server.close();
       });
+    });
+  },
+
+  getStripeMockClient: () => {
+    const stripe = require('../lib/stripe');
+
+    return stripe('sk_test_123', {
+      host: process.env.STRIPE_MOCK_HOST || 'localhost',
+      port: process.env.STRIPE_MOCK_PORT || 12111,
+      protocol: 'http',
     });
   },
 
@@ -208,6 +219,12 @@ const utils = (module.exports = {
       return true;
     } catch (err) {
       return false;
+    }
+  },
+
+  FakeCryptoProvider: class extends CryptoProvider {
+    computeHMACSignature(payload, secret) {
+      return 'fake signature';
     }
   },
 });

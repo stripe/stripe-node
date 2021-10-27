@@ -49,8 +49,6 @@ await stripe.charges
   });
 ```
 
-## More
-
 For more detailed usage instructions, see the [README.md](https://github.com/stripe/stripe-node/blob/master/README.md) from the [master branch of stripe-node](https://github.com/stripe/stripe-node).
 
 <!--

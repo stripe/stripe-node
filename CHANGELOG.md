@@ -1,5 +1,73 @@
 # CHANGELOG
 
+## 8.184.0 - 2021-10-20
+* [#1276](https://github.com/stripe/stripe-node/pull/1276) API Updates
+  * Change `Account.controller.type` to be required
+  * Add support for `buyer_id` on `Charge.payment_method_details.alipay`
+* [#1273](https://github.com/stripe/stripe-node/pull/1273) Add typed createFetchHttpClient function.
+
+## 8.183.0 - 2021-10-15
+* [#1272](https://github.com/stripe/stripe-node/pull/1272) API Updates
+  * Change type of `UsageRecordCreateParams.timestamp` from `integer` to `literal('now') | integer`
+  * Change `UsageRecordCreateParams.timestamp` to be optional
+
+## 8.182.0 - 2021-10-14
+* [#1271](https://github.com/stripe/stripe-node/pull/1271) API Updates
+  * Change `Charge.payment_method_details.klarna.payment_method_category`, `Charge.payment_method_details.klarna.preferred_locale`, `Checkout.Session.customer_details.phone`, and `PaymentMethod.klarna.dob` to be required
+  * Add support for new value `klarna` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+
+## 8.181.0 - 2021-10-11
+* [#1269](https://github.com/stripe/stripe-node/pull/1269) API Updates
+  * Add support for `payment_method_category` and `preferred_locale` on `Charge.payment_method_details.klarna`
+  * Add support for new value `klarna` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
+  * Add support for `klarna` on `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntent.payment_method_options`, `PaymentMethodCreateParams`, and `PaymentMethod`
+  * Add support for new value `klarna` on enums `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, and `PaymentIntentConfirmParams.payment_method_data.type`
+  * Add support for new value `klarna` on enum `PaymentMethodCreateParams.type`
+  * Add support for new value `klarna` on enum `PaymentMethod.type`
+
+## 8.180.0 - 2021-10-11
+* [#1266](https://github.com/stripe/stripe-node/pull/1266) API Updates
+  * Add support for `list_payment_methods` method on resource `Customer`
+
+## 8.179.0 - 2021-10-07
+* [#1265](https://github.com/stripe/stripe-node/pull/1265) API Updates
+  * Add support for `phone_number_collection` on `CheckoutSessionCreateParams` and `Checkout.Session`
+  * Add support for `phone` on `Checkout.Session.customer_details`
+  * Change `PaymentMethodListParams.customer` to be optional
+  * Add support for new value `customer_id` on enums `RadarValueListCreateParams.item_type` and `Radar.ValueList.item_type`
+  * Add support for new value `bbpos_wisepos_e` on enums `TerminalReaderListParams.device_type` and `Terminal.Reader.device_type`
+
+## 8.178.0 - 2021-09-29
+* [#1261](https://github.com/stripe/stripe-node/pull/1261) API Updates
+  * Add support for `klarna_payments` on `AccountUpdateParams.capabilities`, `AccountCreateParams.capabilities`, and `Account.capabilities`
+
+## 8.177.0 - 2021-09-28
+* [#1257](https://github.com/stripe/stripe-node/pull/1257) API Updates
+  * Add support for `amount_authorized` and `overcapture_supported` on `Charge.payment_method_details.card_present`
+* [#1256](https://github.com/stripe/stripe-node/pull/1256) Bump up ansi-regex version to 5.0.1.
+* [#1253](https://github.com/stripe/stripe-node/pull/1253) Update FetchHttpClient to make fetch function optional.
+
+## 8.176.0 - 2021-09-16
+* [#1248](https://github.com/stripe/stripe-node/pull/1248) API Updates
+  * Add support for `full_name_aliases` on `AccountUpdateParams.individual`, `AccountCreateParams.individual`, `PersonCreateParams`, `PersonUpdateParams`, `Person`, `TokenCreateParams.account.individual`, and `TokenCreateParams.person`
+* [#1247](https://github.com/stripe/stripe-node/pull/1247) Update README.md
+* [#1245](https://github.com/stripe/stripe-node/pull/1245) Fix StripeResource.extend type
+
+## 8.175.0 - 2021-09-15
+* [#1242](https://github.com/stripe/stripe-node/pull/1242) API Updates
+  * Change `BillingPortal.Configuration.features.subscription_cancel.cancellation_reason` to be required
+  * Add support for `default_for` on `CheckoutSessionCreateParams.payment_method_options.acss_debit.mandate_options`, `Checkout.Session.payment_method_options.acss_debit.mandate_options`, `Mandate.payment_method_details.acss_debit`, `SetupIntentCreateParams.payment_method_options.acss_debit.mandate_options`, `SetupIntentUpdateParams.payment_method_options.acss_debit.mandate_options`, `SetupIntentConfirmParams.payment_method_options.acss_debit.mandate_options`, and `SetupIntent.payment_method_options.acss_debit.mandate_options`
+  * Add support for `acss_debit` on `InvoiceCreateParams.payment_settings.payment_method_options`, `InvoiceUpdateParams.payment_settings.payment_method_options`, `Invoice.payment_settings.payment_method_options`, `SubscriptionCreateParams.payment_settings.payment_method_options`, `SubscriptionUpdateParams.payment_settings.payment_method_options`, and `Subscription.payment_settings.payment_method_options`
+  * Add support for new value `acss_debit` on enums `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Invoice.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, `SubscriptionUpdateParams.payment_settings.payment_method_types[]`, and `Subscription.payment_settings.payment_method_types[]`
+  * Add support for `livemode` on `Reporting.ReportType`
+* [#1235](https://github.com/stripe/stripe-node/pull/1235) API Updates
+  * Change `Account.future_requirements.alternatives`, `Account.requirements.alternatives`, `Capability.future_requirements.alternatives`, `Capability.requirements.alternatives`, `Checkout.Session.after_expiration`, `Checkout.Session.consent`, `Checkout.Session.consent_collection`, `Checkout.Session.expires_at`, `Checkout.Session.recovered_from`, `Person.future_requirements.alternatives`, and `Person.requirements.alternatives` to be required
+  * Change type of `Capability.future_requirements.alternatives`, `Capability.requirements.alternatives`, `Person.future_requirements.alternatives`, and `Person.requirements.alternatives` from `array(AccountRequirementsAlternative)` to `nullable(array(AccountRequirementsAlternative))`
+  * Add support for new value `rst` on enums `TaxRateCreateParams.tax_type`, `TaxRateUpdateParams.tax_type`, and `TaxRate.tax_type`
+  * Add support for new value `checkout.session.expired` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#1237](https://github.com/stripe/stripe-node/pull/1237) Add a CryptoProvider interface and NodeCryptoProvider implementation.
+* [#1236](https://github.com/stripe/stripe-node/pull/1236) Add an HTTP client which uses fetch.
+
 ## 8.174.0 - 2021-09-01
 * [#1231](https://github.com/stripe/stripe-node/pull/1231) API Updates
   * Add support for `future_requirements` on `Account`, `Capability`, and `Person`

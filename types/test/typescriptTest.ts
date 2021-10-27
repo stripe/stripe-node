@@ -175,7 +175,7 @@ const stripeCardError: Stripe.StripeCardError = Stripe.errors.generate({
   charge: 'ch_123',
 });
 
-Stripe.StripeResource.extend({
+const Foo = Stripe.StripeResource.extend({
   includeBasic: ['retrieve'],
   foo: Stripe.StripeResource.method({
     method: 'create',
@@ -191,6 +191,7 @@ Stripe.StripeResource.extend({
     methodType: 'search',
   }),
 });
+new Foo();
 
 const maxBufferedRequestMetrics: number =
   Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;
@@ -218,6 +219,33 @@ async (): Promise<void> => {
     return;
   });
   stream.setEncoding('utf8');
+
+  const jsonResponse: object = await response.toJSON();
+};
+
+// Test FetchHttpClient request processing.
+async (): Promise<void> => {
+  const client = Stripe.createFetchHttpClient(window.fetch);
+
+  const response = await client.makeRequest(
+    'api.stripe.com',
+    '443',
+    '/test',
+    'POST',
+    {
+      'Stripe-Account': 'account',
+      'Content-Length': 123,
+    },
+    'requestdata',
+    'https',
+    80000
+  );
+
+  const stream: ReadableStream = response.toStream(() => {
+    return;
+  });
+
+  const results = await stream.getReader().read();
 
   const jsonResponse: object = await response.toJSON();
 };
