@@ -112,7 +112,9 @@ describe('Stripe Module', function() {
 
       cases.forEach((item) => {
         const stripe = Stripe(testUtils.getUserStripeKey(), item);
-        expect(stripe.getApiField('version')).to.equal(null);
+        expect(stripe.getApiField('version')).to.equal(
+          '2020-08-27;search_api_beta=v1'
+        );
       });
     });
 

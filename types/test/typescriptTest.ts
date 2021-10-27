@@ -6,10 +6,10 @@
  */
 
 ///<reference types="../2020-08-27" />
-import Stripe from 'stripe';
+import Stripe from 'stripe-search-beta';
 
 let stripe = new Stripe('sk_test_123', {
-  apiVersion: '2020-08-27',
+  apiVersion: '2020-08-27;search_api_beta=v1',
 });
 
 // @ts-ignore lazily ignore apiVersion requirement.
@@ -27,7 +27,7 @@ stripe = new Stripe('sk_test_123', {
 
 // Check config object.
 stripe = new Stripe('sk_test_123', {
-  apiVersion: '2020-08-27',
+  apiVersion: '2020-08-27;search_api_beta=v1',
   typescript: true,
   maxNetworkRetries: 1,
   timeout: 1000,
