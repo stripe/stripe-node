@@ -371,6 +371,11 @@ declare module 'stripe' {
         owners_provided?: boolean;
 
         /**
+         * This hash is used to attest that the beneficial owner information provided to Stripe is both current and correct.
+         */
+        ownership_declaration?: Company.OwnershipDeclaration | null;
+
+        /**
          * The company's phone number (used for verification).
          */
         phone?: string | null;
@@ -474,6 +479,23 @@ declare module 'stripe' {
            * Town/cho-me.
            */
           town: string | null;
+        }
+
+        interface OwnershipDeclaration {
+          /**
+           * The Unix timestamp marking when the beneficial owner attestation was made.
+           */
+          date: number | null;
+
+          /**
+           * The IP address from which the beneficial owner attestation was made.
+           */
+          ip: string | null;
+
+          /**
+           * The user-agent string from the browser where the beneficial owner attestation was made.
+           */
+          user_agent: string | null;
         }
 
         type Structure =
@@ -1479,6 +1501,11 @@ declare module 'stripe' {
         owners_provided?: boolean;
 
         /**
+         * This hash is used to attest that the beneficial owner information provided to Stripe is both current and correct.
+         */
+        ownership_declaration?: Company.OwnershipDeclaration;
+
+        /**
          * The company's phone number (used for verification).
          */
         phone?: string;
@@ -1517,6 +1544,23 @@ declare module 'stripe' {
       namespace Company {
         interface Address extends Omit<Stripe.AddressParam, 'line1'> {
           line1?: string;
+        }
+
+        interface OwnershipDeclaration {
+          /**
+           * The Unix timestamp marking when the beneficial owner attestation was made.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the beneficial owner attestation was made.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the beneficial owner attestation was made.
+           */
+          user_agent?: string;
         }
 
         type Structure =
@@ -1593,6 +1637,11 @@ declare module 'stripe' {
          * One or more documents that demonstrate proof of a company's tax ID.
          */
         company_tax_id_verification?: Documents.CompanyTaxIdVerification;
+
+        /**
+         * One or more documents showing the company's proof of registration with the national business registry.
+         */
+        proof_of_registration?: Documents.ProofOfRegistration;
       }
 
       namespace Documents {
@@ -1632,6 +1681,13 @@ declare module 'stripe' {
         }
 
         interface CompanyTaxIdVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface ProofOfRegistration {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */
@@ -2515,6 +2571,11 @@ declare module 'stripe' {
         owners_provided?: boolean;
 
         /**
+         * This hash is used to attest that the beneficial owner information provided to Stripe is both current and correct.
+         */
+        ownership_declaration?: Company.OwnershipDeclaration;
+
+        /**
          * The company's phone number (used for verification).
          */
         phone?: string;
@@ -2553,6 +2614,23 @@ declare module 'stripe' {
       namespace Company {
         interface Address extends Omit<Stripe.AddressParam, 'line1'> {
           line1?: string;
+        }
+
+        interface OwnershipDeclaration {
+          /**
+           * The Unix timestamp marking when the beneficial owner attestation was made.
+           */
+          date?: number;
+
+          /**
+           * The IP address from which the beneficial owner attestation was made.
+           */
+          ip?: string;
+
+          /**
+           * The user agent of the browser from which the beneficial owner attestation was made.
+           */
+          user_agent?: string;
         }
 
         type Structure =
@@ -2629,6 +2707,11 @@ declare module 'stripe' {
          * One or more documents that demonstrate proof of a company's tax ID.
          */
         company_tax_id_verification?: Documents.CompanyTaxIdVerification;
+
+        /**
+         * One or more documents showing the company's proof of registration with the national business registry.
+         */
+        proof_of_registration?: Documents.ProofOfRegistration;
       }
 
       namespace Documents {
@@ -2668,6 +2751,13 @@ declare module 'stripe' {
         }
 
         interface CompanyTaxIdVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+
+        interface ProofOfRegistration {
           /**
            * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
            */
