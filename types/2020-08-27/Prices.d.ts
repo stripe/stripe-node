@@ -44,7 +44,7 @@ declare module 'stripe' {
       livemode: boolean;
 
       /**
-       * A lookup key used to retrieve prices dynamically from a static string.
+       * A lookup key used to retrieve prices dynamically from a static string. This may be up to 200 characters.
        */
       lookup_key: string | null;
 
@@ -238,7 +238,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A lookup key used to retrieve prices dynamically from a static string.
+       * A lookup key used to retrieve prices dynamically from a static string. This may be up to 200 characters.
        */
       lookup_key?: string;
 
@@ -451,7 +451,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * A lookup key used to retrieve prices dynamically from a static string.
+       * A lookup key used to retrieve prices dynamically from a static string. This may be up to 200 characters.
        */
       lookup_key?: string;
 

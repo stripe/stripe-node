@@ -653,7 +653,7 @@ declare module 'stripe' {
 
         interface Boleto {
           /**
-           * Uniquely identifies this customer tax_id (CNPJ or CPF)
+           * The tax ID of the customer (CPF for individuals consumers or CNPJ for businesses consumers)
            */
           tax_id: string;
         }
@@ -1418,7 +1418,7 @@ declare module 'stripe' {
 
           /**
            * Preferred language of the Klarna authorization page that the customer is redirected to.
-           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `it-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `fr-FR`, or `en-FR`
+           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `fr-FR`, or `en-FR`
            */
           preferred_locale: string | null;
         }
