@@ -842,8 +842,8 @@ declare module 'stripe' {
         /**
          * The URL to which Stripe should send customers when payment or setup
          * is complete.
-         * If you'd like access to the Checkout Session for the successful
-         * payment, read more about it in the guide on [fulfilling orders](https://stripe.com/docs/payments/checkout/fulfill-orders).
+         * If you'd like to use information from the successful Checkout Session on your page,
+         * read the guide on [customizing your success page](https://stripe.com/docs/payments/checkout/custom-success-page).
          */
         success_url: string;
 
@@ -1158,7 +1158,7 @@ declare module 'stripe' {
             enabled: boolean;
 
             /**
-             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99.
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999.
              */
             maximum?: number;
 

@@ -1193,7 +1193,7 @@ declare module 'stripe' {
 
         interface Boleto {
           /**
-           * Uniquely identifies this customer tax_id (CNPJ or CPF)
+           * The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
            */
           tax_id: string;
         }
@@ -1657,10 +1657,13 @@ declare module 'stripe' {
             | 'de-AT'
             | 'de-DE'
             | 'en-AT'
+            | 'en-BE'
             | 'en-DE'
             | 'en-DK'
+            | 'en-ES'
             | 'en-FI'
             | 'en-GB'
+            | 'en-IT'
             | 'en-NL'
             | 'en-NO'
             | 'en-SE'
@@ -2102,7 +2105,7 @@ declare module 'stripe' {
 
         interface Boleto {
           /**
-           * Uniquely identifies this customer tax_id (CNPJ or CPF)
+           * The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
            */
           tax_id: string;
         }
@@ -2566,10 +2569,13 @@ declare module 'stripe' {
             | 'de-AT'
             | 'de-DE'
             | 'en-AT'
+            | 'en-BE'
             | 'en-DE'
             | 'en-DK'
+            | 'en-ES'
             | 'en-FI'
             | 'en-GB'
+            | 'en-IT'
             | 'en-NL'
             | 'en-NO'
             | 'en-SE'
@@ -3125,7 +3131,7 @@ declare module 'stripe' {
 
         interface Boleto {
           /**
-           * Uniquely identifies this customer tax_id (CNPJ or CPF)
+           * The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
            */
           tax_id: string;
         }
@@ -3589,10 +3595,13 @@ declare module 'stripe' {
             | 'de-AT'
             | 'de-DE'
             | 'en-AT'
+            | 'en-BE'
             | 'en-DE'
             | 'en-DK'
+            | 'en-ES'
             | 'en-FI'
             | 'en-GB'
+            | 'en-IT'
             | 'en-NL'
             | 'en-NO'
             | 'en-SE'

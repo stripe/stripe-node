@@ -632,7 +632,7 @@ declare module 'stripe' {
       /**
        * A list of alternate names or aliases that the person is known by.
        */
-      full_name_aliases?: Array<string>;
+      full_name_aliases?: Stripe.Emptyable<Array<string>>;
 
       /**
        * The person's gender (International regulations require either "male" or "female").
@@ -899,7 +899,7 @@ declare module 'stripe' {
       /**
        * A list of alternate names or aliases that the person is known by.
        */
-      full_name_aliases?: Array<string>;
+      full_name_aliases?: Stripe.Emptyable<Array<string>>;
 
       /**
        * The person's gender (International regulations require either "male" or "female").
