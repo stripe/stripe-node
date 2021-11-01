@@ -119,6 +119,11 @@ declare module 'stripe' {
         individual?: Account.Individual;
 
         /**
+         * Whether the user described by the data in the token has been shown the Ownership Declaration and indicated that it is correct.
+         */
+        ownership_declaration_shown_and_signed?: boolean;
+
+        /**
          * Whether the user described by the data in the token has been shown [the Stripe Connected Account Agreement](https://stripe.com/docs/connect/account-tokens#stripe-connected-account-agreement). When creating an account token to create a new Connect account, this value must be `true`.
          */
         tos_shown_and_accepted?: boolean;
@@ -178,6 +183,11 @@ declare module 'stripe' {
           owners_provided?: boolean;
 
           /**
+           * This hash is used to attest that the beneficial owner information provided to Stripe is both current and correct.
+           */
+          ownership_declaration?: Company.OwnershipDeclaration;
+
+          /**
            * The company's phone number (used for verification).
            */
           phone?: string;
@@ -216,6 +226,23 @@ declare module 'stripe' {
         namespace Company {
           interface Address extends Omit<Stripe.AddressParam, 'line1'> {
             line1?: string;
+          }
+
+          interface OwnershipDeclaration {
+            /**
+             * The Unix timestamp marking when the beneficial owner attestation was made.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the beneficial owner attestation was made.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the beneficial owner attestation was made.
+             */
+            user_agent?: string;
           }
 
           type Structure =
