@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.186.0 - 2021-11-01
+* [#1283](https://github.com/stripe/stripe-node/pull/1283) API Updates
+  * Add support for `ownership_declaration` on `AccountUpdateParams.company`, `AccountCreateParams.company`, `Account.company`, and `TokenCreateParams.account.company`
+  * Add support for `proof_of_registration` on `AccountUpdateParams.documents` and `AccountCreateParams.documents`
+  * Add support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account`
+
 ## 8.185.0 - 2021-11-01
 * [#1282](https://github.com/stripe/stripe-node/pull/1282) API Updates
   * Change type of `AccountUpdateParams.individual.full_name_aliases`, `AccountCreateParams.individual.full_name_aliases`, `PersonCreateParams.full_name_aliases`, `PersonUpdateParams.full_name_aliases`, `TokenCreateParams.account.individual.full_name_aliases`, and `TokenCreateParams.person.full_name_aliases` from `array(string)` to `emptyStringable(array(string))`
