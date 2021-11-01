@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.185.0 - 2021-11-01
+* [#1282](https://github.com/stripe/stripe-node/pull/1282) API Updates
+  * Change type of `AccountUpdateParams.individual.full_name_aliases`, `AccountCreateParams.individual.full_name_aliases`, `PersonCreateParams.full_name_aliases`, `PersonUpdateParams.full_name_aliases`, `TokenCreateParams.account.individual.full_name_aliases`, and `TokenCreateParams.person.full_name_aliases` from `array(string)` to `emptyStringable(array(string))`
+  * Add support for new values `en-BE`, `en-ES`, and `en-IT` on enums `PaymentIntentCreateParams.payment_method_options.klarna.preferred_locale`, `PaymentIntentUpdateParams.payment_method_options.klarna.preferred_locale`, and `PaymentIntentConfirmParams.payment_method_options.klarna.preferred_locale`
+
 ## 8.184.0 - 2021-10-20
 * [#1276](https://github.com/stripe/stripe-node/pull/1276) API Updates
   * Change `Account.controller.type` to be required
