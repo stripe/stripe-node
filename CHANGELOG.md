@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.186.1 - 2021-11-04
+* [#1284](https://github.com/stripe/stripe-node/pull/1284) API Updates
+  * Remove support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account`. This API was unused.
+  * Add support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account.company`
+  
+
 ## 8.186.0 - 2021-11-01
 * [#1283](https://github.com/stripe/stripe-node/pull/1283) API Updates
   * Add support for `ownership_declaration` on `AccountUpdateParams.company`, `AccountCreateParams.company`, `Account.company`, and `TokenCreateParams.account.company`
