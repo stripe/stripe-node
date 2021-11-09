@@ -38,7 +38,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Start stripe-mock
-        run: docker run -d -p 12111-12112:12111-12112 stripemock/stripe-mock && sleep 5
+        run: docker run -d -p 12111-12112:12111-12112 stripe/stripe-mock && sleep 5
 
       - name: Lint, typecheck, and test
         run: yarn && yarn test
