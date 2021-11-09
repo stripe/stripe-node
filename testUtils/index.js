@@ -213,15 +213,6 @@ const utils = (module.exports = {
     return typeof Symbol !== 'undefined' && Symbol.asyncIterator;
   },
 
-  envSupportsAwait: () => {
-    try {
-      eval('(async function() {})'); // eslint-disable-line no-eval
-      return true;
-    } catch (err) {
-      return false;
-    }
-  },
-
   FakeCryptoProvider: class extends CryptoProvider {
     computeHMACSignature(payload, secret) {
       return 'fake signature';
