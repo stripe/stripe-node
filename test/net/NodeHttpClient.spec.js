@@ -3,7 +3,7 @@
 const http = require('http');
 const expect = require('chai').expect;
 
-const {createNodeHttpClient} = require('../../lib/Stripe');
+const {createNodeHttpClient} = require('../../lib/stripe');
 
 const {createHttpClientTestSuite, ArrayReadable} = require('./helpers');
 

@@ -54,8 +54,8 @@
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage",
-    "mocha": "nyc mocha",
-    "mocha-only": "mocha",
+    "mocha": "nyc mocha --config=test/.mocharc.js",
+    "mocha-only": "mocha --config=test/.mocharc.js",
     "test": "yarn lint && yarn test-typescript && yarn mocha",
     "test-typescript": "tsc --build types/test",
     "lint": "eslint --ext .js,.jsx,.ts .",
