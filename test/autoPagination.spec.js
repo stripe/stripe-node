@@ -282,21 +282,17 @@ describe('auto pagination', function() {
           ).to.eventually.deep.equal(realCustomerIds));
       }
 
-      if (testUtils.envSupportsAwait()) {
-        // Similarly, `await` throws a syntax error below Node 7.6.
-        const awaitUntil = require('../testUtils/await.node7').awaitUntil;
-
-        it('works with `await` and a while loop when await exists', () =>
-          expect(
-            new Promise((resolve, reject) => {
-              awaitUntil(stripe.customers.list({limit: 3, email}), LIMIT)
-                .then((customers) => {
-                  resolve(customers.map((customer) => customer.id));
-                })
-                .catch(reject);
-            })
-          ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT)));
-      }
+      const awaitUntil = require('../testUtils/await.node7').awaitUntil;
+      it('works with `await` and a while loop when await exists', () =>
+        expect(
+          new Promise((resolve, reject) => {
+            awaitUntil(stripe.customers.list({limit: 3, email}), LIMIT)
+              .then((customers) => {
+                resolve(customers.map((customer) => customer.id));
+              })
+              .catch(reject);
+          })
+        ).to.eventually.deep.equal(realCustomerIds.slice(0, LIMIT)));
 
       it('returns an empty object from .return() so that `break;` works in for-await', () =>
         expect(
