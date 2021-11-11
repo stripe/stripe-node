@@ -5,6 +5,13 @@ import {Agent} from 'http';
 
 declare module 'stripe' {
   namespace Stripe {
+    type StripeResourceClass = typeof StripeResource;
+
+    interface StripeResourceExtension<T extends object>
+      extends StripeResourceClass {
+      new (stripe: Stripe): StripeResource & T;
+    }
+
     export class StripeResource {
       static extend<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -13,15 +20,15 @@ declare module 'stripe' {
             'create' | 'retrieve' | 'update' | 'list' | 'del'
           >;
         }
-      >(spec: T): typeof StripeResource & T;
-      static method(spec: {
+      >(spec: T): StripeResourceExtension<T>;
+      static method<ResponseObject = object>(spec: {
         method: string;
         path?: string;
         fullPath?: string;
         // Please note, methodType === 'search' is beta functionality and is subject to
         // change/removal at any time.
         methodType?: 'list' | 'search';
-      }): (...args: any[]) => object; //eslint-disable-line @typescript-eslint/no-explicit-any
+      }): (...args: any[]) => Response<ResponseObject>; //eslint-disable-line @typescript-eslint/no-explicit-any
       static BASIC_METHODS: {
         create<T>(
           params: CouponCreateParams,
