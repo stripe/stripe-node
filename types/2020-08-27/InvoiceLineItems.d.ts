@@ -268,7 +268,7 @@ declare module 'stripe' {
       subscription_trial_end?: 'now' | number;
 
       /**
-       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed.
+       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed. See [Using trial periods on subscriptions](docs/billing/subscriptions/trials) to learn more.
        */
       subscription_trial_from_plan?: boolean;
     }

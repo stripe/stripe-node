@@ -170,6 +170,11 @@ declare module 'stripe' {
         shipping_address_collection: Session.ShippingAddressCollection | null;
 
         /**
+         * The status of the Checkout Session, one of `open`, `complete`, or `expired`.
+         */
+        status: Session.Status | null;
+
+        /**
          * Describes the type of transaction being performed by Checkout in order to customize
          * relevant text on the page, such as the submit button. `submit_type` can only be
          * specified on Checkout Sessions in `payment` mode, but not Checkout Sessions
@@ -758,6 +763,8 @@ declare module 'stripe' {
             | 'ZZ';
         }
 
+        type Status = 'complete' | 'expired' | 'open';
+
         type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
 
         interface TaxIdCollection {
@@ -885,7 +892,8 @@ declare module 'stripe' {
          * on the Checkout page. In `subscription` mode, the customer's [default payment method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method)
          * will be used if it's a card, and otherwise the most recent card will be used. A valid billing address is required for Checkout to prefill the customer's card details.
          *
-         * If the customer changes their email on the Checkout page, the Customer object will be updated with the new email.
+         * If the Customer already has a valid [email](https://stripe.com/docs/api/customers/object#customer_object-email) set, the email will be prefilled and not editable in Checkout.
+         * If the Customer does not have a valid `email`, Checkout will set the email entered during the session on the Customer.
          *
          * If blank for Checkout Sessions in `payment` or `subscription` mode, Checkout will create a new Customer object based on information provided during the payment flow.
          *
@@ -1959,6 +1967,13 @@ declare module 'stripe' {
         subscription?: string;
       }
 
+      interface SessionExpireParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       class SessionsResource {
         /**
          * Creates a Session object.
@@ -1989,6 +2004,21 @@ declare module 'stripe' {
           options?: RequestOptions
         ): ApiListPromise<Stripe.Checkout.Session>;
         list(options?: RequestOptions): ApiListPromise<Stripe.Checkout.Session>;
+
+        /**
+         * A Session can be expired when it is in one of these statuses: open
+         *
+         * After it expires, a customer can't complete a Session and customers loading the Session see a message saying the Session is expired.
+         */
+        expire(
+          id: string,
+          params?: SessionExpireParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
+        expire(
+          id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Checkout.Session>>;
 
         /**
          * When retrieving a Checkout Session, there is an includable line_items property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
