@@ -217,5 +217,9 @@ const utils = (module.exports = {
     computeHMACSignature(payload, secret) {
       return 'fake signature';
     }
+
+    computeHMACSignatureAsync(payload, secret) {
+      return Promise.resolve('fake signature');
+    }
   },
 });

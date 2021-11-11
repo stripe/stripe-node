@@ -252,3 +252,18 @@ async (): Promise<void> => {
 
   const jsonResponse: object = await response.toJSON();
 };
+
+// Tests asynchronous webhook processing.
+async (): Promise<void> => {
+  const cryptoProvider = Stripe.createSubtleCryptoProvider();
+
+  const event = await stripe.webhooks.constructEventAsync(
+    'body',
+    'signature',
+    'secret',
+    undefined,
+    cryptoProvider
+  );
+
+  const event2 = await stripe.events.retrieve(event.id);
+};
