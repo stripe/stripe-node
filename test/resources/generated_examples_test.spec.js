@@ -572,6 +572,11 @@ describe('Checkout.Session', function() {
     const sessions = await stripe.checkout.sessions.list({limit: 3});
     expect(sessions).not.to.be.null;
   });
+
+  it('expire method', async function() {
+    const session = await stripe.checkout.sessions.expire('sess_xyz');
+    expect(session).not.to.be.null;
+  });
 });
 
 describe('Coupon', function() {
