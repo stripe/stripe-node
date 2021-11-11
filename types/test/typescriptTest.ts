@@ -190,8 +190,11 @@ const Foo = Stripe.StripeResource.extend({
     fullPath: 'foo',
     methodType: 'search',
   }),
+  customer: Stripe.StripeResource.method<Stripe.Customer>({method: 'POST'}),
 });
-new Foo();
+const fooClient = new Foo(stripe);
+const searchResponse: Stripe.Response<object> = fooClient.search();
+const customerResponse: Stripe.Response<Stripe.Customer> = fooClient.customer();
 
 const maxBufferedRequestMetrics: number =
   Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS;
