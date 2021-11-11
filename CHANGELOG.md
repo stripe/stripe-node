@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.187.0 - 2021-11-11
+* [#1292](https://github.com/stripe/stripe-node/pull/1292) API Updates
+  * Add support for `expire` method on resource `Checkout.Session`
+  * Add support for `status` on `Checkout.Session`
+* [#1288](https://github.com/stripe/stripe-node/pull/1288) Add SubtleCryptoProvider and update Webhooks to allow async crypto.
+* [#1291](https://github.com/stripe/stripe-node/pull/1291) Better types in `lib.d.ts`
+
 ## 8.186.1 - 2021-11-04
 * [#1284](https://github.com/stripe/stripe-node/pull/1284) API Updates
   * Remove support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account`. This API was unused.
