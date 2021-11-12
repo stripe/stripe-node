@@ -1253,6 +1253,7 @@ declare module 'stripe' {
 
           type Bank =
             | 'affin_bank'
+            | 'agrobank'
             | 'alliance_bank'
             | 'ambank'
             | 'bank_islam'
@@ -2165,6 +2166,7 @@ declare module 'stripe' {
 
           type Bank =
             | 'affin_bank'
+            | 'agrobank'
             | 'alliance_bank'
             | 'ambank'
             | 'bank_islam'
@@ -3191,6 +3193,7 @@ declare module 'stripe' {
 
           type Bank =
             | 'affin_bank'
+            | 'agrobank'
             | 'alliance_bank'
             | 'ambank'
             | 'bank_islam'
