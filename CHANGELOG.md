@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.188.0 - 2021-11-12
+* [#1293](https://github.com/stripe/stripe-node/pull/1293) API Updates
+  * Add support for new value `agrobank` on enums `Charge.payment_method_details.fpx.bank`, `PaymentIntentCreateParams.payment_method_data.fpx.bank`, `PaymentIntentUpdateParams.payment_method_data.fpx.bank`, `PaymentIntentConfirmParams.payment_method_data.fpx.bank`, `PaymentMethodCreateParams.fpx.bank`, and `PaymentMethod.fpx.bank`
+
 ## 8.187.0 - 2021-11-11
 * [#1292](https://github.com/stripe/stripe-node/pull/1292) API Updates
   * Add support for `expire` method on resource `Checkout.Session`
