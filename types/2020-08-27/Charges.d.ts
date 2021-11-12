@@ -1128,7 +1128,7 @@ declare module 'stripe' {
           account_holder_type: Fpx.AccountHolderType | null;
 
           /**
-           * The customer's bank. Can be one of `affin_bank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, or `pb_enterprise`.
+           * The customer's bank. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, or `pb_enterprise`.
            */
           bank: Fpx.Bank;
 
@@ -1143,6 +1143,7 @@ declare module 'stripe' {
 
           type Bank =
             | 'affin_bank'
+            | 'agrobank'
             | 'alliance_bank'
             | 'ambank'
             | 'bank_islam'
