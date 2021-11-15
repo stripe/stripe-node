@@ -1022,7 +1022,7 @@ declare module 'stripe' {
         shipping_options?: Array<SessionCreateParams.ShippingOption>;
 
         /**
-         * [To be deprecated] The shipping rate to apply to this Session. Only up to one may be specified.
+         * [Deprecated] The shipping rate to apply to this Session. Only up to one may be specified.
          */
         shipping_rates?: Array<string>;
 
