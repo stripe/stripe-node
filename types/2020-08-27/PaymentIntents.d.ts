@@ -3793,7 +3793,7 @@ declare module 'stripe' {
       /**
        * Capture the funds of an existing uncaptured PaymentIntent when its status is requires_capture.
        *
-       * Uncaptured PaymentIntents will be canceled exactly seven days after they are created.
+       * Uncaptured PaymentIntents will be canceled a set number of days after they are created (7 by default).
        *
        * Learn more about [separate authorization and capture](https://stripe.com/docs/payments/capture-later).
        */

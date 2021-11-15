@@ -81,6 +81,7 @@
 ///<reference path='./SKUs.d.ts' />
 ///<reference path='./SetupAttempts.d.ts' />
 ///<reference path='./SetupIntents.d.ts' />
+///<reference path='./ShippingRates.d.ts' />
 ///<reference path='./Sigma/ScheduledQueryRuns.d.ts' />
 ///<reference path='./SourceMandateNotifications.d.ts' />
 ///<reference path='./SourceTransactions.d.ts' />
@@ -154,6 +155,7 @@ declare module 'stripe' {
     reviews: Stripe.ReviewsResource;
     setupAttempts: Stripe.SetupAttemptsResource;
     setupIntents: Stripe.SetupIntentsResource;
+    shippingRates: Stripe.ShippingRatesResource;
     skus: Stripe.SkusResource;
     sources: Stripe.SourcesResource;
     subscriptions: Stripe.SubscriptionsResource;
