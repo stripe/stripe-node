@@ -577,6 +577,27 @@ describe('Checkout.Session', function() {
     const session = await stripe.checkout.sessions.expire('sess_xyz');
     expect(session).not.to.be.null;
   });
+
+  it('create method', async function() {
+    const session = await stripe.checkout.sessions.create({
+      success_url: 'https://example.com/success',
+      cancel_url: 'https://example.com/cancel',
+      mode: 'payment',
+      shipping_options: [
+        {shipping_rate: 'shr_standard'},
+        {
+          shipping_rate_data: {
+            display_name: 'Standard',
+            delivery_estimate: {
+              minimum: {unit: 'day', value: 5},
+              maximum: {unit: 'day', value: 7},
+            },
+          },
+        },
+      ],
+    });
+    expect(session).not.to.be.null;
+  });
 });
 
 describe('Coupon', function() {
@@ -1962,5 +1983,21 @@ describe('WebhookEndpoint', function() {
   it('del method', async function() {
     const deleted = await stripe.webhookEndpoints.del('we_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
+  });
+});
+
+describe('ShippingRate', function() {
+  it('create method', async function() {
+    const shippingRate = await stripe.shippingRates.create({
+      display_name: 'Sample Shipper',
+      fixed_amount: {currency: 'usd', amount: 400},
+      type: 'fixed_amount',
+    });
+    expect(shippingRate).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const shippingRates = await stripe.shippingRates.list();
+    expect(shippingRates).not.to.be.null;
   });
 });
