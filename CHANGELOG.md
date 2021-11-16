@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.189.0 - 2021-11-16
+* [#1295](https://github.com/stripe/stripe-node/pull/1295) API Updates
+  * Add support for new resource `ShippingRate`
+  * Add support for `shipping_options` on `CheckoutSessionCreateParams` and `Checkout.Session`
+  * Add support for `shipping_rate` on `Checkout.Session`
+
 ## 8.188.0 - 2021-11-12
 * [#1293](https://github.com/stripe/stripe-node/pull/1293) API Updates
   * Add support for new value `agrobank` on enums `Charge.payment_method_details.fpx.bank`, `PaymentIntentCreateParams.payment_method_data.fpx.bank`, `PaymentIntentUpdateParams.payment_method_data.fpx.bank`, `PaymentIntentConfirmParams.payment_method_data.fpx.bank`, `PaymentMethodCreateParams.fpx.bank`, and `PaymentMethod.fpx.bank`
