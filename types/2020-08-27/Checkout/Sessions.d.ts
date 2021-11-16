@@ -170,6 +170,16 @@ declare module 'stripe' {
         shipping_address_collection: Session.ShippingAddressCollection | null;
 
         /**
+         * The shipping rate options applied to this Session.
+         */
+        shipping_options: Array<Session.ShippingOption>;
+
+        /**
+         * The ID of the ShippingRate for Checkout Sessions in `payment` mode.
+         */
+        shipping_rate: string | Stripe.ShippingRate | null;
+
+        /**
          * The status of the Checkout Session, one of `open`, `complete`, or `expired`.
          */
         status: Session.Status | null;
@@ -763,6 +773,18 @@ declare module 'stripe' {
             | 'ZZ';
         }
 
+        interface ShippingOption {
+          /**
+           * A non-negative integer in cents representing how much to charge.
+           */
+          shipping_amount: number;
+
+          /**
+           * The shipping rate.
+           */
+          shipping_rate: string | Stripe.ShippingRate;
+        }
+
         type Status = 'complete' | 'expired' | 'open';
 
         type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
@@ -995,7 +1017,12 @@ declare module 'stripe' {
         shipping_address_collection?: SessionCreateParams.ShippingAddressCollection;
 
         /**
-         * The shipping rate to apply to this Session. Currently, only up to one may be specified.
+         * The shipping rate options to apply to this Session.
+         */
+        shipping_options?: Array<SessionCreateParams.ShippingOption>;
+
+        /**
+         * [Deprecated] The shipping rate to apply to this Session. Only up to one may be specified.
          */
         shipping_rates?: Array<string>;
 
@@ -1847,6 +1874,119 @@ declare module 'stripe' {
             | 'ZM'
             | 'ZW'
             | 'ZZ';
+        }
+
+        interface ShippingOption {
+          /**
+           * The ID of the Shipping Rate to use for this shipping option.
+           */
+          shipping_rate?: string;
+
+          /**
+           * Parameters to be passed to Shipping Rate creation for this shipping option
+           */
+          shipping_rate_data?: ShippingOption.ShippingRateData;
+        }
+
+        namespace ShippingOption {
+          interface ShippingRateData {
+            /**
+             * The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
+             */
+            delivery_estimate?: ShippingRateData.DeliveryEstimate;
+
+            /**
+             * The name of the shipping rate, meant to be displayable to the customer. This will appear on CheckoutSessions.
+             */
+            display_name: string;
+
+            /**
+             * Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
+             */
+            fixed_amount?: ShippingRateData.FixedAmount;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
+            metadata?: Stripe.MetadataParam;
+
+            /**
+             * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+             */
+            tax_behavior?: ShippingRateData.TaxBehavior;
+
+            /**
+             * A [tax code](https://stripe.com/docs/tax/tax-codes) ID. The Shipping tax code is `txcd_92010001`.
+             */
+            tax_code?: string;
+
+            /**
+             * The type of calculation to use on the shipping rate. Can only be `fixed_amount` for now.
+             */
+            type?: 'fixed_amount';
+          }
+
+          namespace ShippingRateData {
+            interface DeliveryEstimate {
+              /**
+               * The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
+               */
+              maximum?: DeliveryEstimate.Maximum;
+
+              /**
+               * The lower bound of the estimated range. If empty, represents no lower bound.
+               */
+              minimum?: DeliveryEstimate.Minimum;
+            }
+
+            namespace DeliveryEstimate {
+              interface Maximum {
+                /**
+                 * A unit of time.
+                 */
+                unit: Maximum.Unit;
+
+                /**
+                 * Must be greater than 0.
+                 */
+                value: number;
+              }
+
+              namespace Maximum {
+                type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+              }
+
+              interface Minimum {
+                /**
+                 * A unit of time.
+                 */
+                unit: Minimum.Unit;
+
+                /**
+                 * Must be greater than 0.
+                 */
+                value: number;
+              }
+
+              namespace Minimum {
+                type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+              }
+            }
+
+            interface FixedAmount {
+              /**
+               * A non-negative integer in cents representing how much to charge.
+               */
+              amount: number;
+
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
         }
 
         type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
