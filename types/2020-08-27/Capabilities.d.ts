@@ -181,7 +181,7 @@ declare module 'stripe' {
         currently_due: Array<string>;
 
         /**
-         * If the capability is disabled, this string describes why. Can be `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.listed`, `rejected.terms_of_service`, `rejected.other`, `under_review`, or `other`.
+         * If the capability is disabled, this string describes why. Can be `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.listed`, `rejected.terms_of_service`, `rejected.card_casher`, `rejected.auto_fraud_shutdown`, `rejected.fraud`, `rejected.dishonest_merchant`, `rejected.identity_fraud`, `rejected.platform_fraud`, `rejected.platform_terms_of_service`, `rejected.other`, `under_review`, or `other`.
          *
          * `rejected.unsupported_business` means that the account's business is not supported by the capability. For example, payment methods may restrict the businesses they support in their terms of service:
          *
