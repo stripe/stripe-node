@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.190.0 - 2021-11-17
+* [#1297](https://github.com/stripe/stripe-node/pull/1297) API Updates
+  * Add support for `automatic_payment_methods` on `PaymentIntentCreateParams` and `PaymentIntent`
+  
+
 ## 8.189.0 - 2021-11-16
 * [#1295](https://github.com/stripe/stripe-node/pull/1295) API Updates
   * Add support for new resource `ShippingRate`
