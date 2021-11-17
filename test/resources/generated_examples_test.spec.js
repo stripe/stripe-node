@@ -231,6 +231,15 @@ describe('PaymentIntent', function() {
     const paymentIntents = await stripe.paymentIntents.list({limit: 3});
     expect(paymentIntents).not.to.be.null;
   });
+
+  it('create method', async function() {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: 1099,
+      currency: 'eur',
+      automatic_payment_methods: {enabled: true},
+    });
+    expect(paymentIntent).not.to.be.null;
+  });
 });
 
 describe('SetupIntent', function() {

@@ -704,7 +704,7 @@ declare module 'stripe' {
         currently_due: Array<string> | null;
 
         /**
-         * If the account is disabled, this string describes why. Can be `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.listed`, `rejected.terms_of_service`, `rejected.other`, `under_review`, or `other`.
+         * If the account is disabled, this string describes why. Can be `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.listed`, `rejected.terms_of_service`, `rejected.card_casher`, `rejected.auto_fraud_shutdown`, `rejected.fraud`, `rejected.dishonest_merchant`, `rejected.identity_fraud`, `rejected.platform_fraud`, `rejected.platform_terms_of_service`, `rejected.other`, `under_review`, or `other`.
          */
         disabled_reason: string | null;
 

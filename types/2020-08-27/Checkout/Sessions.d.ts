@@ -1133,12 +1133,12 @@ declare module 'stripe' {
           adjustable_quantity?: LineItem.AdjustableQuantity;
 
           /**
-           * The amount to be collected per unit of the line item. If specified, must also pass `currency` and `name`.
+           * [Deprecated] The amount to be collected per unit of the line item. If specified, must also pass `currency` and `name`.
            */
           amount?: number;
 
           /**
-           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Required if `amount` is passed.
+           * [Deprecated] Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Required if `amount` is passed.
            */
           currency?: string;
 
@@ -1155,22 +1155,22 @@ declare module 'stripe' {
           dynamic_tax_rates?: Array<string>;
 
           /**
-           * A list of image URLs representing this line item. Each image can be up to 5 MB in size. If passing `price` or `price_data`, specify images on the associated product instead.
+           * [Deprecated] A list of image URLs representing this line item. Each image can be up to 5 MB in size. If passing `price` or `price_data`, specify images on the associated product instead.
            */
           images?: Array<string>;
 
           /**
-           * The name for the item to be displayed on the Checkout page. Required if `amount` is passed.
+           * [Deprecated] The name for the item to be displayed on the Checkout page. Required if `amount` is passed.
            */
           name?: string;
 
           /**
-           * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price`, `price_data` or `amount` is required.
+           * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
            */
           price?: string;
 
           /**
-           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price`, `price_data` or `amount` is required.
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
            */
           price_data?: LineItem.PriceData;
 
