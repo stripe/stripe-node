@@ -42,6 +42,11 @@ declare module 'stripe' {
       application_fee_amount: number | null;
 
       /**
+       * Settings to configure compatible payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods)
+       */
+      automatic_payment_methods: PaymentIntent.AutomaticPaymentMethods | null;
+
+      /**
        * Populated when `status` is `canceled`, this is the time at which the PaymentIntent was canceled. Measured in seconds since the Unix epoch.
        */
       canceled_at: number | null;
@@ -204,6 +209,13 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntent {
+      interface AutomaticPaymentMethods {
+        /**
+         * Automatically calculates compatible payment methods
+         */
+        enabled: boolean;
+      }
+
       type CancellationReason =
         | 'abandoned'
         | 'automatic'
@@ -329,7 +341,7 @@ declare module 'stripe' {
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
-         * Type of the next action to perform, one of `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, or `oxxo_display_details`.
+         * Type of the next action to perform, one of `redirect_to_url`, `use_stripe_sdk`, `alipay_handle_redirect`, `oxxo_display_details`, or `verify_with_microdeposits`.
          */
         type: string;
 
@@ -812,6 +824,11 @@ declare module 'stripe' {
       application_fee_amount?: number;
 
       /**
+       * When enabled, this PaymentIntent will accept payment methods that you have enabled in the Dashboard and are compatible with this PaymentIntent's other parameters.
+       */
+      automatic_payment_methods?: PaymentIntentCreateParams.AutomaticPaymentMethods;
+
+      /**
        * Controls when the funds will be captured from the customer's account.
        */
       capture_method?: PaymentIntentCreateParams.CaptureMethod;
@@ -948,6 +965,13 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentCreateParams {
+      interface AutomaticPaymentMethods {
+        /**
+         * Whether this feature is enabled.
+         */
+        enabled: boolean;
+      }
+
       type CaptureMethod = 'automatic' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
