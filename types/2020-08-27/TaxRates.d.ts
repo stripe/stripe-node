@@ -81,6 +81,7 @@ declare module 'stripe' {
       type TaxType =
         | 'gst'
         | 'hst'
+        | 'jct'
         | 'pst'
         | 'qst'
         | 'rst'
@@ -149,6 +150,7 @@ declare module 'stripe' {
       type TaxType =
         | 'gst'
         | 'hst'
+        | 'jct'
         | 'pst'
         | 'qst'
         | 'rst'
@@ -214,6 +216,7 @@ declare module 'stripe' {
       type TaxType =
         | 'gst'
         | 'hst'
+        | 'jct'
         | 'pst'
         | 'qst'
         | 'rst'
