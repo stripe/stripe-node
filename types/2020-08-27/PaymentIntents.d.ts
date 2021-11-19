@@ -521,6 +521,8 @@ declare module 'stripe' {
 
         ideal?: PaymentMethodOptions.Ideal;
 
+        interac_present?: PaymentMethodOptions.InteracPresent;
+
         klarna?: PaymentMethodOptions.Klarna;
 
         oxxo?: PaymentMethodOptions.Oxxo;
@@ -697,6 +699,8 @@ declare module 'stripe' {
         interface CardPresent {}
 
         interface Ideal {}
+
+        interface InteracPresent {}
 
         interface Klarna {
           /**
@@ -1478,6 +1482,11 @@ declare module 'stripe' {
         ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
 
         /**
+         * If this is a `interac_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
+         */
+        interac_present?: Stripe.Emptyable<PaymentMethodOptions.InteracPresent>;
+
+        /**
          * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
          */
         klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
@@ -1668,6 +1677,8 @@ declare module 'stripe' {
         interface CardPresent {}
 
         interface Ideal {}
+
+        interface InteracPresent {}
 
         interface Klarna {
           /**
@@ -2391,6 +2402,11 @@ declare module 'stripe' {
         ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
 
         /**
+         * If this is a `interac_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
+         */
+        interac_present?: Stripe.Emptyable<PaymentMethodOptions.InteracPresent>;
+
+        /**
          * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
          */
         klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
@@ -2581,6 +2597,8 @@ declare module 'stripe' {
         interface CardPresent {}
 
         interface Ideal {}
+
+        interface InteracPresent {}
 
         interface Klarna {
           /**
@@ -3418,6 +3436,11 @@ declare module 'stripe' {
         ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
 
         /**
+         * If this is a `interac_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
+         */
+        interac_present?: Stripe.Emptyable<PaymentMethodOptions.InteracPresent>;
+
+        /**
          * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
          */
         klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
@@ -3608,6 +3631,8 @@ declare module 'stripe' {
         interface CardPresent {}
 
         interface Ideal {}
+
+        interface InteracPresent {}
 
         interface Klarna {
           /**
@@ -3800,7 +3825,7 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.PaymentIntent>;
 
       /**
-       * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, or requires_action.
+       * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action, or processing.
        *
        * Once canceled, no additional charges will be made by the PaymentIntent and any operations on the PaymentIntent will fail with an error. For PaymentIntents with status='requires_capture', the remaining amount_capturable will automatically be refunded.
        */
