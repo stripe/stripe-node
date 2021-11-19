@@ -110,6 +110,11 @@ declare module 'stripe' {
          * The type of the card.
          */
         type: Card.Type;
+
+        /**
+         * Information relating to digital wallets (like Apple Pay and Google Pay).
+         */
+        wallets: Card.Wallets | null;
       }
 
       namespace Card {
@@ -1101,6 +1106,57 @@ declare module 'stripe' {
         type Status = 'active' | 'canceled' | 'inactive';
 
         type Type = 'physical' | 'virtual';
+
+        interface Wallets {
+          apple_pay: Wallets.ApplePay;
+
+          google_pay: Wallets.GooglePay;
+
+          /**
+           * Unique identifier for a card used with digital wallets
+           */
+          primary_account_identifier: string | null;
+        }
+
+        namespace Wallets {
+          interface ApplePay {
+            /**
+             * Apple Pay Eligibility
+             */
+            eligible: boolean;
+
+            /**
+             * Reason the card is ineligible for Apple Pay
+             */
+            ineligible_reason: ApplePay.IneligibleReason | null;
+          }
+
+          namespace ApplePay {
+            type IneligibleReason =
+              | 'missing_agreement'
+              | 'missing_cardholder_contact'
+              | 'unsupported_region';
+          }
+
+          interface GooglePay {
+            /**
+             * Google Pay Eligibility
+             */
+            eligible: boolean;
+
+            /**
+             * Reason the card is ineligible for Google Pay
+             */
+            ineligible_reason: GooglePay.IneligibleReason | null;
+          }
+
+          namespace GooglePay {
+            type IneligibleReason =
+              | 'missing_agreement'
+              | 'missing_cardholder_contact'
+              | 'unsupported_region';
+          }
+        }
       }
 
       interface CardCreateParams {
