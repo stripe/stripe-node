@@ -138,7 +138,7 @@ declare module 'stripe' {
       api_key?: string;
 
       /**
-       * See the [idempotency key docs](https://stripe.com/docs/api/idempotency).
+       * See the [idempotency key docs](https://stripe.com/docs/api/idempotent_requests).
        */
       idempotencyKey?: string;
       /** @deprecated Please use idempotencyKey instead. */
