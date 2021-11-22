@@ -2,7 +2,6 @@
 
 [![Version](https://img.shields.io/npm/v/stripe.svg)](https://www.npmjs.org/package/stripe)
 [![Build Status](https://travis-ci.org/stripe/stripe-node.svg?branch=master)](https://travis-ci.org/stripe/stripe-node)
-[![Coverage Status](https://coveralls.io/repos/github/stripe/stripe-node/badge.svg)](https://coveralls.io/github/stripe/stripe-node)
 [![Downloads](https://img.shields.io/npm/dm/stripe.svg)](https://www.npmjs.com/package/stripe)
 [![Try on RunKit](https://badge.runkitcdn.com/stripe.svg)](https://runkit.com/npm/stripe)
 
