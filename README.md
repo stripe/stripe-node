@@ -51,7 +51,9 @@ Or using ES modules and `async`/`await`:
 
 ```js
 import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_...');
+const stripe = new Stripe('sk_test_...', {
+  apiVersion: '2020-08-27',
+});
 
 (async () => {
   const customer = await stripe.customers.create({
