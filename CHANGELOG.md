@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.193.0 - 2021-12-09
+* [#1308](https://github.com/stripe/stripe-node/pull/1308) API Updates
+  * Add support for `metadata` on `BillingPortalConfigurationCreateParams`, `BillingPortalConfigurationUpdateParams`, and `BillingPortal.Configuration`
+
 ## 8.192.0 - 2021-12-09
 * [#1307](https://github.com/stripe/stripe-node/pull/1307) API Updates
   * Add support for new values `ge_vat` and `ua_vat` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, and `TaxId.type`
