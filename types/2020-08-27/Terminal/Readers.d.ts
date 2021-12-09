@@ -109,7 +109,7 @@ declare module 'stripe' {
         label?: string;
 
         /**
-         * The location to assign the reader to. If no location is specified, the reader will be assigned to the account's default location.
+         * The location to assign the reader to.
          */
         location?: string;
 

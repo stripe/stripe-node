@@ -268,7 +268,7 @@ declare module 'stripe' {
       subscription_trial_end?: 'now' | number;
 
       /**
-       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed. See [Using trial periods on subscriptions](docs/billing/subscriptions/trials) to learn more.
+       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
        */
       subscription_trial_from_plan?: boolean;
     }
@@ -347,7 +347,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `hk_br`, `id_npwp`, `il_vat`, `in_gst`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `id_npwp`, `il_vat`, `in_gst`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -375,6 +375,7 @@ declare module 'stripe' {
             | 'es_cif'
             | 'eu_vat'
             | 'gb_vat'
+            | 'ge_vat'
             | 'hk_br'
             | 'id_npwp'
             | 'il_vat'
@@ -396,6 +397,7 @@ declare module 'stripe' {
             | 'sg_uen'
             | 'th_vat'
             | 'tw_vat'
+            | 'ua_vat'
             | 'us_ein'
             | 'za_vat';
         }

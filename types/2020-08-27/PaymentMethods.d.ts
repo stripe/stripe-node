@@ -842,7 +842,7 @@ declare module 'stripe' {
         /**
          * Email address.
          */
-        email?: string;
+        email?: Stripe.Emptyable<string>;
 
         /**
          * Full name.
@@ -1172,7 +1172,7 @@ declare module 'stripe' {
         /**
          * Email address.
          */
-        email?: string;
+        email?: Stripe.Emptyable<string>;
 
         /**
          * Full name.
