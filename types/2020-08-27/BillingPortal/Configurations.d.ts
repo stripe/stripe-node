@@ -52,6 +52,11 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+         */
+        metadata: Stripe.Metadata | null;
+
+        /**
          * Time at which the object was last updated. Measured in seconds since the Unix epoch.
          */
         updated: number;
@@ -251,6 +256,11 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
       }
 
       namespace ConfigurationCreateParams {
@@ -482,6 +492,11 @@ declare module 'stripe' {
          * Information about the features available in the portal.
          */
         features?: ConfigurationUpdateParams.Features;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
       }
 
       namespace ConfigurationUpdateParams {
