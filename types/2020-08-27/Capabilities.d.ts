@@ -187,7 +187,7 @@ declare module 'stripe' {
          *
          * - [Afterpay Clearpay's terms of service](https://stripe.com/afterpay-clearpay/legal#restricted-businesses)
          *
-         * If you believe that the rejection is in error, please contact support@stripe.com for assistance.
+         * If you believe that the rejection is in error, please contact support at https://support.stripe.com/contact/ for assistance.
          */
         disabled_reason: string | null;
 

@@ -519,6 +519,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodOptions.CardPresent;
 
+        giropay?: PaymentMethodOptions.Giropay;
+
         ideal?: PaymentMethodOptions.Ideal;
 
         interac_present?: PaymentMethodOptions.InteracPresent;
@@ -697,6 +699,8 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Giropay {}
 
         interface Ideal {}
 
@@ -1200,7 +1204,7 @@ declare module 'stripe' {
           /**
            * Email address.
            */
-          email?: string;
+          email?: Stripe.Emptyable<string>;
 
           /**
            * Full name.
@@ -1477,6 +1481,11 @@ declare module 'stripe' {
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
 
         /**
+         * If this is a `giropay` PaymentMethod, this sub-hash contains details about the Giropay payment method options.
+         */
+        giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
+
+        /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
          */
         ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
@@ -1676,6 +1685,8 @@ declare module 'stripe' {
 
         interface CardPresent {}
 
+        interface Giropay {}
+
         interface Ideal {}
 
         interface InteracPresent {}
@@ -1699,6 +1710,7 @@ declare module 'stripe' {
             | 'en-ES'
             | 'en-FI'
             | 'en-GB'
+            | 'en-IE'
             | 'en-IT'
             | 'en-NL'
             | 'en-NO'
@@ -2120,7 +2132,7 @@ declare module 'stripe' {
           /**
            * Email address.
            */
-          email?: string;
+          email?: Stripe.Emptyable<string>;
 
           /**
            * Full name.
@@ -2397,6 +2409,11 @@ declare module 'stripe' {
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
 
         /**
+         * If this is a `giropay` PaymentMethod, this sub-hash contains details about the Giropay payment method options.
+         */
+        giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
+
+        /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
          */
         ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
@@ -2596,6 +2613,8 @@ declare module 'stripe' {
 
         interface CardPresent {}
 
+        interface Giropay {}
+
         interface Ideal {}
 
         interface InteracPresent {}
@@ -2619,6 +2638,7 @@ declare module 'stripe' {
             | 'en-ES'
             | 'en-FI'
             | 'en-GB'
+            | 'en-IE'
             | 'en-IT'
             | 'en-NL'
             | 'en-NO'
@@ -3154,7 +3174,7 @@ declare module 'stripe' {
           /**
            * Email address.
            */
-          email?: string;
+          email?: Stripe.Emptyable<string>;
 
           /**
            * Full name.
@@ -3431,6 +3451,11 @@ declare module 'stripe' {
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
 
         /**
+         * If this is a `giropay` PaymentMethod, this sub-hash contains details about the Giropay payment method options.
+         */
+        giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
+
+        /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
          */
         ideal?: Stripe.Emptyable<PaymentMethodOptions.Ideal>;
@@ -3630,6 +3655,8 @@ declare module 'stripe' {
 
         interface CardPresent {}
 
+        interface Giropay {}
+
         interface Ideal {}
 
         interface InteracPresent {}
@@ -3653,6 +3680,7 @@ declare module 'stripe' {
             | 'en-ES'
             | 'en-FI'
             | 'en-GB'
+            | 'en-IE'
             | 'en-IT'
             | 'en-NL'
             | 'en-NO'
