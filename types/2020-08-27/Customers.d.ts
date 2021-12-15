@@ -715,7 +715,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Customer>>;
 
       /**
-       * Retrieves the details of an existing customer. You need only supply the unique customer identifier that was returned upon customer creation.
+       * Retrieves a Customer object.
        */
       retrieve(
         id: string,

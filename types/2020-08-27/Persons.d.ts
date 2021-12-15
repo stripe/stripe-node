@@ -345,7 +345,7 @@ declare module 'stripe' {
 
       interface Relationship {
         /**
-         * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+         * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
         director: boolean | null;
 
@@ -769,7 +769,7 @@ declare module 'stripe' {
 
       interface Relationship {
         /**
-         * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+         * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
         director?: boolean;
 
@@ -1036,7 +1036,7 @@ declare module 'stripe' {
 
       interface Relationship {
         /**
-         * Whether the person is a director of the account's legal entity. Currently only required for accounts in the EU. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
+         * Whether the person is a director of the account's legal entity. Directors are typically members of the governing board of the company, or responsible for ensuring the company meets its regulatory obligations.
          */
         director?: boolean;
 
