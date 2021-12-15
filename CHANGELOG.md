@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.194.0 - 2021-12-15
+* [#1309](https://github.com/stripe/stripe-node/pull/1309) API Updates
+  * Add support for new resource `PaymentIntentTypeSpecificPaymentMethodOptionsClient`
+  * Add support for `setup_future_usage` on `PaymentIntentCreateParams.payment_method_options.card`, `PaymentIntentUpdateParams.payment_method_options.card`, `PaymentIntentConfirmParams.payment_method_options.card`, and `PaymentIntent.payment_method_options.card`
+
 ## 8.193.0 - 2021-12-09
 * [#1308](https://github.com/stripe/stripe-node/pull/1308) API Updates
   * Add support for `metadata` on `BillingPortalConfigurationCreateParams`, `BillingPortalConfigurationUpdateParams`, and `BillingPortal.Configuration`
