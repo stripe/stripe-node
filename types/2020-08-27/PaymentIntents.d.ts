@@ -147,6 +147,11 @@ declare module 'stripe' {
       payment_method_types: Array<string>;
 
       /**
+       * If present, this property tells you about the processing state of the payment.
+       */
+      processing: PaymentIntent.Processing | null;
+
+      /**
        * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
       receipt_email: string | null;
@@ -774,6 +779,19 @@ declare module 'stripe' {
         namespace WechatPay {
           type Client = 'android' | 'ios' | 'web';
         }
+      }
+
+      interface Processing {
+        card?: Processing.Card;
+
+        /**
+         * Type of the next action to perform, one of `card`.
+         */
+        type: string;
+      }
+
+      namespace Processing {
+        interface Card {}
       }
 
       type SetupFutureUsage = 'off_session' | 'on_session';
