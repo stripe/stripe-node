@@ -1109,7 +1109,7 @@ declare module 'stripe' {
         billing: CardholderCreateParams.Billing;
 
         /**
-         * The cardholder's name. This will be printed on cards issued to them.
+         * The cardholder's name. This will be printed on cards issued to them. The maximum length of this field is 24 characters.
          */
         name: string;
 

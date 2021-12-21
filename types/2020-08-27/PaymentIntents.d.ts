@@ -785,7 +785,7 @@ declare module 'stripe' {
         card?: Processing.Card;
 
         /**
-         * Type of the next action to perform, one of `card`.
+         * Type of the payment method for which payment is in `processing` state, one of `card`.
          */
         type: string;
       }
@@ -1751,6 +1751,7 @@ declare module 'stripe' {
             | 'en-DK'
             | 'en-ES'
             | 'en-FI'
+            | 'en-FR'
             | 'en-GB'
             | 'en-IE'
             | 'en-IT'
@@ -1759,8 +1760,10 @@ declare module 'stripe' {
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
+            | 'es-US'
             | 'fi-FI'
             | 'fr-BE'
+            | 'fr-FR'
             | 'it-IT'
             | 'nb-NO'
             | 'nl-BE'
@@ -2692,6 +2695,7 @@ declare module 'stripe' {
             | 'en-DK'
             | 'en-ES'
             | 'en-FI'
+            | 'en-FR'
             | 'en-GB'
             | 'en-IE'
             | 'en-IT'
@@ -2700,8 +2704,10 @@ declare module 'stripe' {
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
+            | 'es-US'
             | 'fi-FI'
             | 'fr-BE'
+            | 'fr-FR'
             | 'it-IT'
             | 'nb-NO'
             | 'nl-BE'
@@ -3747,6 +3753,7 @@ declare module 'stripe' {
             | 'en-DK'
             | 'en-ES'
             | 'en-FI'
+            | 'en-FR'
             | 'en-GB'
             | 'en-IE'
             | 'en-IT'
@@ -3755,8 +3762,10 @@ declare module 'stripe' {
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
+            | 'es-US'
             | 'fi-FI'
             | 'fr-BE'
+            | 'fr-FR'
             | 'it-IT'
             | 'nb-NO'
             | 'nl-BE'
