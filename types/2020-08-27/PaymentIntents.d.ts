@@ -516,6 +516,8 @@ declare module 'stripe' {
 
         alipay?: PaymentMethodOptions.Alipay;
 
+        au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
+
         bancontact?: PaymentMethodOptions.Bancontact;
 
         boleto?: PaymentMethodOptions.Boleto;
@@ -594,6 +596,8 @@ declare module 'stripe' {
         }
 
         interface Alipay {}
+
+        interface AuBecsDebit {}
 
         interface Bancontact {
           /**
@@ -787,7 +791,7 @@ declare module 'stripe' {
         /**
          * Type of the payment method for which payment is in `processing` state, one of `card`.
          */
-        type: string;
+        type: 'card';
       }
 
       namespace Processing {
@@ -1490,6 +1494,11 @@ declare module 'stripe' {
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
 
         /**
+         * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
+         */
+        au_becs_debit?: Stripe.Emptyable<PaymentMethodOptions.AuBecsDebit>;
+
+        /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
@@ -1611,6 +1620,8 @@ declare module 'stripe' {
         }
 
         interface Alipay {}
+
+        interface AuBecsDebit {}
 
         interface Bancontact {
           /**
@@ -2434,6 +2445,11 @@ declare module 'stripe' {
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
 
         /**
+         * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
+         */
+        au_becs_debit?: Stripe.Emptyable<PaymentMethodOptions.AuBecsDebit>;
+
+        /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
@@ -2555,6 +2571,8 @@ declare module 'stripe' {
         }
 
         interface Alipay {}
+
+        interface AuBecsDebit {}
 
         interface Bancontact {
           /**
@@ -3492,6 +3510,11 @@ declare module 'stripe' {
         alipay?: Stripe.Emptyable<PaymentMethodOptions.Alipay>;
 
         /**
+         * If this is a `au_becs_debit` PaymentMethod, this sub-hash contains details about the AU BECS Direct Debit payment method options.
+         */
+        au_becs_debit?: Stripe.Emptyable<PaymentMethodOptions.AuBecsDebit>;
+
+        /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
@@ -3613,6 +3636,8 @@ declare module 'stripe' {
         }
 
         interface Alipay {}
+
+        interface AuBecsDebit {}
 
         interface Bancontact {
           /**
