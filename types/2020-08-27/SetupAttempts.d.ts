@@ -79,6 +79,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodDetails.Bancontact;
 
+        boleto?: PaymentMethodDetails.Boleto;
+
         card?: PaymentMethodDetails.Card;
 
         card_present?: PaymentMethodDetails.CardPresent;
@@ -149,6 +151,8 @@ declare module 'stripe' {
         namespace Bancontact {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
+
+        interface Boleto {}
 
         interface Card {
           /**

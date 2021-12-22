@@ -1341,7 +1341,7 @@ declare module 'stripe' {
 
     interface InvoiceFinalizeInvoiceParams {
       /**
-       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/overview#auto-advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
+       * Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/invoicing/automatic-charging) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
        */
       auto_advance?: boolean;
 
