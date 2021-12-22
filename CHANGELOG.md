@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 8.195.0 - 2021-12-22
+* [#1314](https://github.com/stripe/stripe-node/pull/1314) API Updates
+  * Add support for `au_becs_debit` on `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, and `PaymentIntent.payment_method_options`
+  * Change type of `PaymentIntent.processing.type` from `string` to `literal('card')`. This is not considered a breaking change as the field was added in the same release.
+* [#1313](https://github.com/stripe/stripe-node/pull/1313) API Updates
+  * Add support for new values `en-FR`, `es-US`, and `fr-FR` on enums `PaymentIntentCreateParams.payment_method_options.klarna.preferred_locale`, `PaymentIntentUpdateParams.payment_method_options.klarna.preferred_locale`, and `PaymentIntentConfirmParams.payment_method_options.klarna.preferred_locale`
+  * Add support for `boleto` on `SetupAttempt.payment_method_details`
+  
+* [#1312](https://github.com/stripe/stripe-node/pull/1312) API Updates
+  * Add support for `processing` on `PaymentIntent`
+
 ## 8.194.0 - 2021-12-15
 * [#1309](https://github.com/stripe/stripe-node/pull/1309) API Updates
   * Add support for new resource `PaymentIntentTypeSpecificPaymentMethodOptionsClient`
