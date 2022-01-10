@@ -19,6 +19,11 @@ declare module 'stripe' {
         port: string | number,
         path: string,
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+        // object is used here as this is implementation-specific. This is
+        // generally {[key: string]: string}, but various underlying clients
+        // support other types as well. As examples:
+        // - Node supports {[key: string]: string | number | string[]}.
+        // - Fetch supports a Headers object.
         headers: object,
         requestData: string | null,
         protocol: Stripe.HttpProtocol,
