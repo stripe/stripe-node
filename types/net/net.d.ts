@@ -1,5 +1,4 @@
 /// <reference types="node" />
-/// <reference lib="dom" />
 
 import {IncomingMessage} from 'http';
 declare module 'stripe' {
@@ -76,11 +75,24 @@ declare module 'stripe' {
      * passed, will default to the default `fetch` function in the global scope.
      */
     export const createFetchHttpClient: (
-      fetchFn?: WindowOrWorkerGlobalScope['fetch']
+      /** When specified, interface should match the Web Fetch API function. */
+      fetchFn?: Function
     ) => HttpClient<
       HttpClientResponse<
-        ReturnType<WindowOrWorkerGlobalScope['fetch']>,
-        ReadableStream<Uint8Array>
+        /**
+         * The response type cannot be specified without pulling in DOM types.
+         * This corresponds to ReturnType<WindowOrWorkerGlobalScope['fetch']>
+         * for applications which pull in DOM types.
+         */
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        any,
+        /**
+         * The stream type cannot be specified without pulling in DOM types.
+         * This corresponds to ReadableStream<Uint8Array> for applications which
+         * pull in DOM types.
+         */
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        any
       >
     >;
   }
