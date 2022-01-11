@@ -47,7 +47,13 @@ declare module 'stripe' {
      * defaults to the `crypto.subtle` object in the global scope.
      */
     export const createSubtleCryptoProvider: (
-      subtleCrypto?: WindowOrWorkerGlobalScope['crypto']['subtle']
+      /**
+       * The SubtleCrypto type cannot be specified without pulling in DOM types.
+       * This corresponds to WindowOrWorkerGlobalScope['crypto']['subtle'] for
+       * applications which pull in DOM types.
+       */
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      subtleCrypto?: any
     ) => CryptoProvider;
   }
 }

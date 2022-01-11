@@ -228,7 +228,7 @@ async (): Promise<void> => {
 
 // Test FetchHttpClient request processing.
 async (): Promise<void> => {
-  const client = Stripe.createFetchHttpClient(window.fetch);
+  const client = Stripe.createFetchHttpClient();
 
   const response = await client.makeRequest(
     'api.stripe.com',
@@ -244,7 +244,7 @@ async (): Promise<void> => {
     80000
   );
 
-  const stream: ReadableStream = response.toStream(() => {
+  const stream = response.toStream(() => {
     return;
   });
 
