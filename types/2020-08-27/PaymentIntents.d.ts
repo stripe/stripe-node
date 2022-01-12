@@ -526,7 +526,11 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodOptions.CardPresent;
 
+        fpx?: PaymentMethodOptions.Fpx;
+
         giropay?: PaymentMethodOptions.Giropay;
+
+        grabpay?: PaymentMethodOptions.Grabpay;
 
         ideal?: PaymentMethodOptions.Ideal;
 
@@ -720,7 +724,11 @@ declare module 'stripe' {
 
         interface CardPresent {}
 
+        interface Fpx {}
+
         interface Giropay {}
+
+        interface Grabpay {}
 
         interface Ideal {}
 
@@ -1519,9 +1527,19 @@ declare module 'stripe' {
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
 
         /**
+         * If this is a `fpx` PaymentMethod, this sub-hash contains details about the FPX payment method options.
+         */
+        fpx?: Stripe.Emptyable<PaymentMethodOptions.Fpx>;
+
+        /**
          * If this is a `giropay` PaymentMethod, this sub-hash contains details about the Giropay payment method options.
          */
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
+
+        /**
+         * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
+         */
+        grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
 
         /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -1738,7 +1756,11 @@ declare module 'stripe' {
 
         interface CardPresent {}
 
+        interface Fpx {}
+
         interface Giropay {}
+
+        interface Grabpay {}
 
         interface Ideal {}
 
@@ -2470,9 +2492,19 @@ declare module 'stripe' {
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
 
         /**
+         * If this is a `fpx` PaymentMethod, this sub-hash contains details about the FPX payment method options.
+         */
+        fpx?: Stripe.Emptyable<PaymentMethodOptions.Fpx>;
+
+        /**
          * If this is a `giropay` PaymentMethod, this sub-hash contains details about the Giropay payment method options.
          */
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
+
+        /**
+         * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
+         */
+        grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
 
         /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -2689,7 +2721,11 @@ declare module 'stripe' {
 
         interface CardPresent {}
 
+        interface Fpx {}
+
         interface Giropay {}
+
+        interface Grabpay {}
 
         interface Ideal {}
 
@@ -3535,9 +3571,19 @@ declare module 'stripe' {
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
 
         /**
+         * If this is a `fpx` PaymentMethod, this sub-hash contains details about the FPX payment method options.
+         */
+        fpx?: Stripe.Emptyable<PaymentMethodOptions.Fpx>;
+
+        /**
          * If this is a `giropay` PaymentMethod, this sub-hash contains details about the Giropay payment method options.
          */
         giropay?: Stripe.Emptyable<PaymentMethodOptions.Giropay>;
+
+        /**
+         * If this is a `grabpay` PaymentMethod, this sub-hash contains details about the Grabpay payment method options.
+         */
+        grabpay?: Stripe.Emptyable<PaymentMethodOptions.Grabpay>;
 
         /**
          * If this is a `ideal` PaymentMethod, this sub-hash contains details about the Ideal payment method options.
@@ -3754,7 +3800,11 @@ declare module 'stripe' {
 
         interface CardPresent {}
 
+        interface Fpx {}
+
         interface Giropay {}
+
+        interface Grabpay {}
 
         interface Ideal {}
 
