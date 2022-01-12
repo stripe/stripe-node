@@ -1213,7 +1213,7 @@ declare module 'stripe' {
       type: PaymentMethodListParams.Type;
 
       /**
-       * The ID of the customer whose PaymentMethods will be retrieved.
+       * The ID of the customer whose PaymentMethods will be retrieved. If not provided, the response list will be empty.
        */
       customer?: string;
 
