@@ -442,7 +442,7 @@ declare module 'stripe' {
 
             interface Product {
               /**
-               * The list of prices IDs that a subscription can be updated to.
+               * The list of price IDs for the product that a subscription can be updated to.
                */
               prices: Array<string>;
 
@@ -678,7 +678,7 @@ declare module 'stripe' {
 
             interface Product {
               /**
-               * The list of prices IDs that a subscription can be updated to.
+               * The list of price IDs for the product that a subscription can be updated to.
                */
               prices: Array<string>;
 
