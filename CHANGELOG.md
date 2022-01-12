@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 8.196.0 - 2022-01-12
+* [#1328](https://github.com/stripe/stripe-node/pull/1328) API Updates
+  * Add support for `customer_creation` on `CheckoutSessionCreateParams` and `Checkout.Session`
+  * Add support for `fpx` and `grabpay` on `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, and `PaymentIntent.payment_method_options`
+* [#1315](https://github.com/stripe/stripe-node/pull/1315) API Updates
+  * Add support for `mandate_options` on `SubscriptionCreateParams.payment_settings.payment_method_options.card`, `SubscriptionUpdateParams.payment_settings.payment_method_options.card`, and `Subscription.payment_settings.payment_method_options.card`
+* [#1327](https://github.com/stripe/stripe-node/pull/1327) Remove DOM type references.
+* [#1325](https://github.com/stripe/stripe-node/pull/1325) Add comment documenting makeRequest#headers type.
+
 ## 8.195.0 - 2021-12-22
 * [#1314](https://github.com/stripe/stripe-node/pull/1314) API Updates
   * Add support for `au_becs_debit` on `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, and `PaymentIntent.payment_method_options`
