@@ -297,6 +297,8 @@ declare module 'stripe' {
           }
 
           interface Card {
+            mandate_options?: Card.MandateOptions;
+
             /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
@@ -304,6 +306,27 @@ declare module 'stripe' {
           }
 
           namespace Card {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount: number | null;
+
+              /**
+               * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+               */
+              amount_type: MandateOptions.AmountType | null;
+
+              /**
+               * A description of the mandate or subscription that is meant to be displayed to the customer.
+               */
+              description: string | null;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+            }
+
             type RequestThreeDSecure = 'any' | 'automatic';
           }
         }
@@ -799,12 +822,38 @@ declare module 'stripe' {
 
           interface Card {
             /**
+             * Configuration options for setting up an eMandate for cards issued in India.
+             */
+            mandate_options?: Card.MandateOptions;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
 
           namespace Card {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount?: number;
+
+              /**
+               * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * A description of the mandate or subscription that is meant to be displayed to the customer.
+               */
+              description?: string;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+            }
+
             type RequestThreeDSecure = 'any' | 'automatic';
           }
         }
@@ -1305,12 +1354,38 @@ declare module 'stripe' {
 
           interface Card {
             /**
+             * Configuration options for setting up an eMandate for cards issued in India.
+             */
+            mandate_options?: Card.MandateOptions;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
 
           namespace Card {
+            interface MandateOptions {
+              /**
+               * Amount to be charged for future payments.
+               */
+              amount?: number;
+
+              /**
+               * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+               */
+              amount_type?: MandateOptions.AmountType;
+
+              /**
+               * A description of the mandate or subscription that is meant to be displayed to the customer.
+               */
+              description?: string;
+            }
+
+            namespace MandateOptions {
+              type AmountType = 'fixed' | 'maximum';
+            }
+
             type RequestThreeDSecure = 'any' | 'automatic';
           }
         }
