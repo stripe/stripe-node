@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.197.0 - 2022-01-13
+* [#1329](https://github.com/stripe/stripe-node/pull/1329) API Updates
+  * Add support for `paid_out_of_band` on `Invoice`
+
 ## 8.196.0 - 2022-01-12
 * [#1328](https://github.com/stripe/stripe-node/pull/1328) API Updates
   * Add support for `customer_creation` on `CheckoutSessionCreateParams` and `Checkout.Session`
