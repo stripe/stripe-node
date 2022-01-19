@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.198.0 - 2022-01-19
+* [#1331](https://github.com/stripe/stripe-node/pull/1331) API Updates
+  * Change type of `Charge.status` from `string` to `enum('failed'|'pending'|'succeeded')`
+  * Add support for `bacs_debit` and `eps` on `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, and `PaymentIntent.payment_method_options`
+  * Add support for `image_url_png` and `image_url_svg` on `PaymentIntent.next_action.wechat_pay_display_qr_code`
+
 ## 8.197.0 - 2022-01-13
 * [#1329](https://github.com/stripe/stripe-node/pull/1329) API Updates
   * Add support for `paid_out_of_band` on `Invoice`
