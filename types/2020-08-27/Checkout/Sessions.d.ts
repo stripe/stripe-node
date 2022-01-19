@@ -136,6 +136,11 @@ declare module 'stripe' {
         payment_intent: string | Stripe.PaymentIntent | null;
 
         /**
+         * The ID of the Payment Link that created this Session.
+         */
+        payment_link?: string | Stripe.PaymentLink | null;
+
+        /**
          * Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
          */
         payment_method_options: Session.PaymentMethodOptions | null;

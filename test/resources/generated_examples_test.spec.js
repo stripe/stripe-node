@@ -2010,3 +2010,12 @@ describe('ShippingRate', function() {
     expect(shippingRates).not.to.be.null;
   });
 });
+
+describe('PaymentLink', function() {
+  it('create method', async function() {
+    const paymentLink = await stripe.paymentLinks.create({
+      line_items: [{price: 'price_xxxxxxxxxxxxx', quantity: 1}],
+    });
+    expect(paymentLink).not.to.be.null;
+  });
+});
