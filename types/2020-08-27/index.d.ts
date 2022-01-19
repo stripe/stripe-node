@@ -60,6 +60,7 @@
 ///<reference path='./OrderReturns.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
+///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
 ///<reference path='./Payouts.d.ts' />
 ///<reference path='./Persons.d.ts' />
@@ -144,6 +145,7 @@ declare module 'stripe' {
     orders: Stripe.OrdersResource;
     orderReturns: Stripe.OrderReturnsResource;
     paymentIntents: Stripe.PaymentIntentsResource;
+    paymentLinks: Stripe.PaymentLinksResource;
     paymentMethods: Stripe.PaymentMethodsResource;
     payouts: Stripe.PayoutsResource;
     plans: Stripe.PlansResource;
