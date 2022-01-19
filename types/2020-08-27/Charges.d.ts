@@ -230,7 +230,7 @@ declare module 'stripe' {
       /**
        * The status of the payment is either `succeeded`, `pending`, or `failed`.
        */
-      status: string;
+      status: Charge.Status;
 
       /**
        * ID of the transfer to the `destination` account (only applicable if the charge was created using the `destination` parameter).
@@ -1640,6 +1640,8 @@ declare module 'stripe' {
          */
         tracking_number?: string | null;
       }
+
+      type Status = 'failed' | 'pending' | 'succeeded';
 
       interface TransferData {
         /**

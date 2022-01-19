@@ -462,6 +462,16 @@ declare module 'stripe' {
            * The base64 image data for a pre-generated QR code
            */
           image_data_url: string;
+
+          /**
+           * The image_url_png string used to render QR code, can be used as <img src="…" />
+           */
+          image_url_png: string;
+
+          /**
+           * The image_url_svg string used to render QR code, can be used as <img src="…" />
+           */
+          image_url_svg: string;
         }
 
         interface WechatPayRedirectToAndroidApp {
@@ -518,6 +528,8 @@ declare module 'stripe' {
 
         au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
 
+        bacs_debit?: PaymentMethodOptions.BacsDebit;
+
         bancontact?: PaymentMethodOptions.Bancontact;
 
         boleto?: PaymentMethodOptions.Boleto;
@@ -525,6 +537,8 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         card_present?: PaymentMethodOptions.CardPresent;
+
+        eps?: PaymentMethodOptions.Eps;
 
         fpx?: PaymentMethodOptions.Fpx;
 
@@ -602,6 +616,8 @@ declare module 'stripe' {
         interface Alipay {}
 
         interface AuBecsDebit {}
+
+        interface BacsDebit {}
 
         interface Bancontact {
           /**
@@ -723,6 +739,8 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Eps {}
 
         interface Fpx {}
 
@@ -1507,6 +1525,11 @@ declare module 'stripe' {
         au_becs_debit?: Stripe.Emptyable<PaymentMethodOptions.AuBecsDebit>;
 
         /**
+         * If this is a `bacs_debit` PaymentMethod, this sub-hash contains details about the BACS Debit payment method options.
+         */
+        bacs_debit?: Stripe.Emptyable<PaymentMethodOptions.BacsDebit>;
+
+        /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
@@ -1525,6 +1548,11 @@ declare module 'stripe' {
          * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
          */
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
+         * If this is a `eps` PaymentMethod, this sub-hash contains details about the EPS payment method options.
+         */
+        eps?: Stripe.Emptyable<PaymentMethodOptions.Eps>;
 
         /**
          * If this is a `fpx` PaymentMethod, this sub-hash contains details about the FPX payment method options.
@@ -1641,6 +1669,8 @@ declare module 'stripe' {
 
         interface AuBecsDebit {}
 
+        interface BacsDebit {}
+
         interface Bancontact {
           /**
            * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -1755,6 +1785,8 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Eps {}
 
         interface Fpx {}
 
@@ -2472,6 +2504,11 @@ declare module 'stripe' {
         au_becs_debit?: Stripe.Emptyable<PaymentMethodOptions.AuBecsDebit>;
 
         /**
+         * If this is a `bacs_debit` PaymentMethod, this sub-hash contains details about the BACS Debit payment method options.
+         */
+        bacs_debit?: Stripe.Emptyable<PaymentMethodOptions.BacsDebit>;
+
+        /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
@@ -2490,6 +2527,11 @@ declare module 'stripe' {
          * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
          */
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
+         * If this is a `eps` PaymentMethod, this sub-hash contains details about the EPS payment method options.
+         */
+        eps?: Stripe.Emptyable<PaymentMethodOptions.Eps>;
 
         /**
          * If this is a `fpx` PaymentMethod, this sub-hash contains details about the FPX payment method options.
@@ -2606,6 +2648,8 @@ declare module 'stripe' {
 
         interface AuBecsDebit {}
 
+        interface BacsDebit {}
+
         interface Bancontact {
           /**
            * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -2720,6 +2764,8 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Eps {}
 
         interface Fpx {}
 
@@ -3551,6 +3597,11 @@ declare module 'stripe' {
         au_becs_debit?: Stripe.Emptyable<PaymentMethodOptions.AuBecsDebit>;
 
         /**
+         * If this is a `bacs_debit` PaymentMethod, this sub-hash contains details about the BACS Debit payment method options.
+         */
+        bacs_debit?: Stripe.Emptyable<PaymentMethodOptions.BacsDebit>;
+
+        /**
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
@@ -3569,6 +3620,11 @@ declare module 'stripe' {
          * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
          */
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
+         * If this is a `eps` PaymentMethod, this sub-hash contains details about the EPS payment method options.
+         */
+        eps?: Stripe.Emptyable<PaymentMethodOptions.Eps>;
 
         /**
          * If this is a `fpx` PaymentMethod, this sub-hash contains details about the FPX payment method options.
@@ -3685,6 +3741,8 @@ declare module 'stripe' {
 
         interface AuBecsDebit {}
 
+        interface BacsDebit {}
+
         interface Bancontact {
           /**
            * Preferred language of the Bancontact authorization page that the customer is redirected to.
@@ -3799,6 +3857,8 @@ declare module 'stripe' {
         }
 
         interface CardPresent {}
+
+        interface Eps {}
 
         interface Fpx {}
 
