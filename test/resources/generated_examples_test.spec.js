@@ -2018,4 +2018,14 @@ describe('PaymentLink', function() {
     });
     expect(paymentLink).not.to.be.null;
   });
+
+  it('listLineItems method', async function() {
+    const lineItems = await stripe.paymentLinks.listLineItems('pl_xyz');
+    expect(lineItems).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const paymentLink = await stripe.paymentLinks.retrieve('pl_xyz');
+    expect(paymentLink).not.to.be.null;
+  });
 });
