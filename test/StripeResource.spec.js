@@ -210,6 +210,9 @@ describe('StripeResource', () => {
             }
             stripe.charges.create(options.data, (err, result) => {
               expect(err.detail.message).to.deep.equal('ETIMEDOUT');
+              expect(err.message).to.deep.equal(
+                'Request aborted due to timeout being reached (10ms)'
+              );
               closeServer();
               done();
             });
