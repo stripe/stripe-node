@@ -138,7 +138,7 @@ declare module 'stripe' {
         /**
          * The ID of the Payment Link that created this Session.
          */
-        payment_link?: string | Stripe.PaymentLink | null;
+        payment_link: string | Stripe.PaymentLink | null;
 
         /**
          * Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
@@ -329,7 +329,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, or `unknown`
+             * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -362,6 +362,7 @@ declare module 'stripe' {
               | 'id_npwp'
               | 'il_vat'
               | 'in_gst'
+              | 'is_vat'
               | 'jp_cn'
               | 'jp_rn'
               | 'kr_brn'

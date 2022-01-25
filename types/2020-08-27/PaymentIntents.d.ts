@@ -464,12 +464,12 @@ declare module 'stripe' {
           image_data_url: string;
 
           /**
-           * The image_url_png string used to render QR code, can be used as <img src="…" />
+           * The image_url_png string used to render QR code
            */
           image_url_png: string;
 
           /**
-           * The image_url_svg string used to render QR code, can be used as <img src="…" />
+           * The image_url_svg string used to render QR code
            */
           image_url_svg: string;
         }
