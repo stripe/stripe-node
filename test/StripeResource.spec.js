@@ -376,9 +376,9 @@ describe('StripeResource', () => {
       it('throws on multiple closed connection errors', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)
-          .replyWithError({ code: 'ECONNRESET' })
+          .replyWithError({code: 'ECONNRESET'})
           .post(options.path, options.params)
-          .replyWithError({ code: 'ECONNRESET' });
+          .replyWithError({code: 'ECONNRESET'});
 
         realStripe.charges.create(options.data, (err) => {
           expect(err.detail.code).to.deep.equal('ECONNRESET');
