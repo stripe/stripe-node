@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.201.0 - 2022-01-28
+* [#1342](https://github.com/stripe/stripe-node/pull/1342) Bump nanoid from 3.1.20 to 3.2.0.
+* [#1335](https://github.com/stripe/stripe-node/pull/1335) Fix StripeResource to successfully import TIMEOUT_ERROR_CODE.
+* [#1339](https://github.com/stripe/stripe-node/pull/1339) Bump node-fetch from 2.6.2 to 2.6.7
+
 ## 8.200.0 - 2022-01-25
 * [#1338](https://github.com/stripe/stripe-node/pull/1338) API Updates
   * Change `Checkout.Session.payment_link` to be required
