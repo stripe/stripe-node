@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.202.0 - 2022-02-03
+* [#1344](https://github.com/stripe/stripe-node/pull/1344) API Updates
+  * Add support for new value `au_becs_debit` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Change type of `Refund.reason` from `string` to `enum('duplicate'|'expired_uncaptured_charge'|'fraudulent'|'requested_by_customer')`
+
 ## 8.201.0 - 2022-01-28
 * [#1342](https://github.com/stripe/stripe-node/pull/1342) Bump nanoid from 3.1.20 to 3.2.0.
 * [#1335](https://github.com/stripe/stripe-node/pull/1335) Fix StripeResource to successfully import TIMEOUT_ERROR_CODE.
