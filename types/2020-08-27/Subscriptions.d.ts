@@ -1272,7 +1272,7 @@ declare module 'stripe' {
       }
 
       namespace PauseCollection {
-        type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void' | '';
       }
 
       type PaymentBehavior =
