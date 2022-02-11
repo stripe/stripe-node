@@ -192,11 +192,19 @@ declare module 'stripe' {
           id: string,
           params?: ReaderRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Reader | Stripe.Terminal.DeletedReader
+          >
+        >;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Reader | Stripe.Terminal.DeletedReader
+          >
+        >;
 
         /**
          * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -205,7 +213,11 @@ declare module 'stripe' {
           id: string,
           params?: ReaderUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Reader | Stripe.Terminal.DeletedReader
+          >
+        >;
 
         /**
          * Returns a list of Reader objects.
