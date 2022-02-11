@@ -4005,6 +4005,18 @@ declare module 'stripe' {
       }
     }
 
+    interface PaymentIntentVerifyMicrodepositsParams {
+      /**
+       * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
+       */
+      amounts?: Array<number>;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     class PaymentIntentsResource {
       /**
        * Creates a PaymentIntent object.
@@ -4129,6 +4141,19 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
       confirm(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
+
+      /**
+       * Verifies microdeposits on a PaymentIntent object.
+       */
+      verifyMicrodeposits(
+        id: string,
+        params?: PaymentIntentVerifyMicrodepositsParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
+      verifyMicrodeposits(
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
