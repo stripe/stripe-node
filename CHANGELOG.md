@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.203.0 - 2022-02-15
+* [#1350](https://github.com/stripe/stripe-node/pull/1350) API Updates
+  * Add support for `verify_microdeposits` method on resources `PaymentIntent` and `SetupIntent`
+  * Add support for new value `grabpay` on enums `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Invoice.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, `SubscriptionUpdateParams.payment_settings.payment_method_types[]`, and `Subscription.payment_settings.payment_method_types[]`
+* [#1348](https://github.com/stripe/stripe-node/pull/1348) API Updates
+  * Add support for `pin` on `IssuingCardUpdateParams`
+
 ## 8.202.0 - 2022-02-03
 * [#1344](https://github.com/stripe/stripe-node/pull/1344) API Updates
   * Add support for new value `au_becs_debit` on enum `CheckoutSessionCreateParams.payment_method_types[]`
