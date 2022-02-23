@@ -1172,9 +1172,7 @@ declare module 'stripe' {
           currency?: string;
 
           /**
-           * The description for the line item, to be displayed on the Checkout page.
-           *
-           * If using `price` or `price_data`, will default to the name of the associated product.
+           * [Deprecated] The description for the line item, to be displayed on the Checkout page.
            */
           description?: string;
 
@@ -1514,7 +1512,7 @@ declare module 'stripe' {
           oxxo?: PaymentMethodOptions.Oxxo;
 
           /**
-           * contains details about the Wechat Pay payment method options.
+           * contains details about the WeChat Pay payment method options.
            */
           wechat_pay?: PaymentMethodOptions.WechatPay;
         }
