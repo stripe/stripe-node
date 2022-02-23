@@ -240,6 +240,13 @@ describe('PaymentIntent', function() {
     });
     expect(paymentIntent).not.to.be.null;
   });
+
+  it('verifyMicrodeposits method', async function() {
+    const paymentIntent = await stripe.paymentIntents.verifyMicrodeposits(
+      'pi_xxxxxxxxxxxxx'
+    );
+    expect(paymentIntent).not.to.be.null;
+  });
 });
 
 describe('SetupIntent', function() {
@@ -280,6 +287,13 @@ describe('SetupIntent', function() {
   it('list method', async function() {
     const setupIntents = await stripe.setupIntents.list({limit: 3});
     expect(setupIntents).not.to.be.null;
+  });
+
+  it('verifyMicrodeposits method', async function() {
+    const setupIntent = await stripe.setupIntents.verifyMicrodeposits(
+      'seti_xxxxxxxxxxxxx'
+    );
+    expect(setupIntent).not.to.be.null;
   });
 });
 
