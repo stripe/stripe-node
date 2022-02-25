@@ -269,6 +269,7 @@ declare module 'stripe' {
             | 'insufficient_funds'
             | 'not_allowed'
             | 'spending_controls'
+            | 'authorization_controls'
             | 'suspected_fraud'
             | 'verification_failed'
             | 'webhook_approved'
