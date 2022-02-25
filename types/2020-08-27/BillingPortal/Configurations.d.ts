@@ -72,12 +72,12 @@ declare module 'stripe' {
           /**
            * A link to the business's publicly available privacy policy.
            */
-          privacy_policy_url: string;
+          privacy_policy_url: string | null;
 
           /**
            * A link to the business's publicly available terms of service.
            */
-          terms_of_service_url: string;
+          terms_of_service_url: string | null;
         }
 
         interface Features {
@@ -273,12 +273,12 @@ declare module 'stripe' {
           /**
            * A link to the business's publicly available privacy policy.
            */
-          privacy_policy_url: string;
+          privacy_policy_url?: string;
 
           /**
            * A link to the business's publicly available terms of service.
            */
-          terms_of_service_url: string;
+          terms_of_service_url?: string;
         }
 
         interface Features {
@@ -509,12 +509,12 @@ declare module 'stripe' {
           /**
            * A link to the business's publicly available privacy policy.
            */
-          privacy_policy_url?: string;
+          privacy_policy_url?: Stripe.Emptyable<string>;
 
           /**
            * A link to the business's publicly available terms of service.
            */
-          terms_of_service_url?: string;
+          terms_of_service_url?: Stripe.Emptyable<string>;
         }
 
         interface Features {

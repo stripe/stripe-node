@@ -60,6 +60,8 @@ declare module 'stripe' {
 
       klarna?: PaymentMethod.Klarna;
 
+      konbini?: PaymentMethod.Konbini;
+
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
@@ -536,6 +538,8 @@ declare module 'stripe' {
         }
       }
 
+      interface Konbini {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -644,6 +648,7 @@ declare module 'stripe' {
         | 'ideal'
         | 'interac_present'
         | 'klarna'
+        | 'konbini'
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'
@@ -743,6 +748,11 @@ declare module 'stripe' {
        * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
        */
       klarna?: PaymentMethodCreateParams.Klarna;
+
+      /**
+       * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
+       */
+      konbini?: PaymentMethodCreateParams.Konbini;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1027,6 +1037,8 @@ declare module 'stripe' {
         }
       }
 
+      interface Konbini {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -1098,6 +1110,7 @@ declare module 'stripe' {
         | 'grabpay'
         | 'ideal'
         | 'klarna'
+        | 'konbini'
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'
@@ -1240,6 +1253,7 @@ declare module 'stripe' {
         | 'grabpay'
         | 'ideal'
         | 'klarna'
+        | 'konbini'
         | 'oxxo'
         | 'p24'
         | 'sepa_debit'

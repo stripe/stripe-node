@@ -437,6 +437,8 @@ declare module 'stripe' {
 
           boleto?: PaymentMethodOptions.Boleto;
 
+          konbini?: PaymentMethodOptions.Konbini;
+
           oxxo?: PaymentMethodOptions.Oxxo;
         }
 
@@ -496,6 +498,13 @@ declare module 'stripe' {
              * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
              */
             expires_after_days: number;
+          }
+
+          interface Konbini {
+            /**
+             * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST.
+             */
+            expires_after_days: number | null;
           }
 
           interface Oxxo {
@@ -1507,6 +1516,11 @@ declare module 'stripe' {
           boleto?: PaymentMethodOptions.Boleto;
 
           /**
+           * contains details about the Konbini payment method options.
+           */
+          konbini?: PaymentMethodOptions.Konbini;
+
+          /**
            * contains details about the OXXO payment method options.
            */
           oxxo?: PaymentMethodOptions.Oxxo;
@@ -1585,6 +1599,13 @@ declare module 'stripe' {
             expires_after_days?: number;
           }
 
+          interface Konbini {
+            /**
+             * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
+             */
+            expires_after_days?: Stripe.Emptyable<number>;
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1624,6 +1645,7 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'klarna'
+          | 'konbini'
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'

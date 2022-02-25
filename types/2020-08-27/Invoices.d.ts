@@ -603,6 +603,11 @@ declare module 'stripe' {
            * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
            */
           card: PaymentMethodOptions.Card | null;
+
+          /**
+           * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
+           */
+          konbini: PaymentMethodOptions.Konbini | null;
         }
 
         namespace PaymentMethodOptions {
@@ -651,6 +656,8 @@ declare module 'stripe' {
           namespace Card {
             type RequestThreeDSecure = 'any' | 'automatic';
           }
+
+          interface Konbini {}
         }
 
         type PaymentMethodType =
@@ -666,6 +673,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'konbini'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
@@ -966,6 +974,11 @@ declare module 'stripe' {
            * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
            */
           card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+
+          /**
+           * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
+           */
+          konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
         }
 
         namespace PaymentMethodOptions {
@@ -1017,6 +1030,8 @@ declare module 'stripe' {
           namespace Card {
             type RequestThreeDSecure = 'any' | 'automatic';
           }
+
+          interface Konbini {}
         }
 
         type PaymentMethodType =
@@ -1032,6 +1047,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'konbini'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
@@ -1224,6 +1240,11 @@ declare module 'stripe' {
            * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
            */
           card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+
+          /**
+           * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
+           */
+          konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
         }
 
         namespace PaymentMethodOptions {
@@ -1275,6 +1296,8 @@ declare module 'stripe' {
           namespace Card {
             type RequestThreeDSecure = 'any' | 'automatic';
           }
+
+          interface Konbini {}
         }
 
         type PaymentMethodType =
@@ -1290,6 +1313,7 @@ declare module 'stripe' {
           | 'giropay'
           | 'grabpay'
           | 'ideal'
+          | 'konbini'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'

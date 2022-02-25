@@ -418,6 +418,8 @@ declare module 'stripe' {
 
         klarna?: PaymentMethodDetails.Klarna;
 
+        konbini?: PaymentMethodDetails.Konbini;
+
         multibanco?: PaymentMethodDetails.Multibanco;
 
         oxxo?: PaymentMethodDetails.Oxxo;
@@ -1422,6 +1424,26 @@ declare module 'stripe' {
            * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, or `en-FR`
            */
           preferred_locale: string | null;
+        }
+
+        interface Konbini {
+          /**
+           * If the payment succeeded, this contains the details of the convenience store where the payment was completed.
+           */
+          store: Konbini.Store | null;
+        }
+
+        namespace Konbini {
+          interface Store {
+            /**
+             * The name of the convenience store chain where the payment was completed.
+             */
+            chain: Store.Chain | null;
+          }
+
+          namespace Store {
+            type Chain = 'familymart' | 'lawson' | 'ministop' | 'seicomart';
+          }
         }
 
         interface Multibanco {
