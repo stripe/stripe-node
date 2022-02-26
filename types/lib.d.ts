@@ -213,10 +213,14 @@ declare module 'stripe' {
       extends Promise<Response<ApiList<T>>>,
         AsyncIterableIterator<T> {
       autoPagingEach(
-        handler: (item: T) => boolean | void | Promise<boolean | void>
+        handler: (item: T) => boolean | void | Promise<boolean | void>,
+        onDone?: (err: any) => void
       ): Promise<void>;
 
-      autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
+      autoPagingToArray(
+        opts: {limit: number},
+        onDone?: (err: any) => void
+      ): Promise<Array<T>>;
     }
 
     /**
