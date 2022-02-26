@@ -367,13 +367,27 @@ expect(event.id).to.equal(payload.id);
 
 ### Writing a Plugin
 
-If you're writing a plugin that uses the library, we'd appreciate it if you identified using `stripe.setAppInfo()`:
+If you're writing a plugin that uses the library, we'd appreciate it if you instantiated your stripe client with `appInfo`, eg;
 
 ```js
-stripe.setAppInfo({
-  name: 'MyAwesomePlugin',
-  version: '1.2.34', // Optional
-  url: 'https://myawesomeplugin.info', // Optional
+const stripe = require('stripe')('sk_test_...', {
+  appInfo: {
+    name: 'MyAwesomePlugin',
+    version: '1.2.34', // Optional
+    url: 'https://myawesomeplugin.info', // Optional
+  }
+});
+```
+
+Or using ES modules or TypeScript:
+
+```js
+const stripe = new Stripe(apiKey, {
+  appInfo: {
+    name: 'MyAwesomePlugin',
+    version: '1.2.34', // Optional
+    url: 'https://myawesomeplugin.info', // Optional
+  }
 });
 ```
 
