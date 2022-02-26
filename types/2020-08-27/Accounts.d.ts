@@ -237,6 +237,11 @@ declare module 'stripe' {
         klarna_payments?: Capabilities.KlarnaPayments;
 
         /**
+         * The status of the konbini payments capability of the account, or whether the account can directly process konbini charges.
+         */
+        konbini_payments?: Capabilities.KonbiniPayments;
+
+        /**
          * The status of the legacy payments capability of the account.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -309,6 +314,8 @@ declare module 'stripe' {
         type JcbPayments = 'active' | 'inactive' | 'pending';
 
         type KlarnaPayments = 'active' | 'inactive' | 'pending';
+
+        type KonbiniPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
@@ -1244,6 +1251,11 @@ declare module 'stripe' {
         klarna_payments?: Capabilities.KlarnaPayments;
 
         /**
+         * The konbini_payments capability.
+         */
+        konbini_payments?: Capabilities.KonbiniPayments;
+
+        /**
          * The legacy_payments capability.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -1391,6 +1403,13 @@ declare module 'stripe' {
         }
 
         interface KlarnaPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface KonbiniPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2314,6 +2333,11 @@ declare module 'stripe' {
         klarna_payments?: Capabilities.KlarnaPayments;
 
         /**
+         * The konbini_payments capability.
+         */
+        konbini_payments?: Capabilities.KonbiniPayments;
+
+        /**
          * The legacy_payments capability.
          */
         legacy_payments?: Capabilities.LegacyPayments;
@@ -2461,6 +2485,13 @@ declare module 'stripe' {
         }
 
         interface KlarnaPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface KonbiniPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

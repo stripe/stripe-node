@@ -341,6 +341,8 @@ declare module 'stripe' {
 
         boleto_display_details?: NextAction.BoletoDisplayDetails;
 
+        konbini_display_details?: NextAction.KonbiniDisplayDetails;
+
         oxxo_display_details?: NextAction.OxxoDisplayDetails;
 
         redirect_to_url?: NextAction.RedirectToUrl;
@@ -407,6 +409,94 @@ declare module 'stripe' {
            * The URL to the downloadable boleto voucher PDF.
            */
           pdf: string | null;
+        }
+
+        interface KonbiniDisplayDetails {
+          /**
+           * The timestamp at which the pending Konbini payment expires.
+           */
+          expires_at: number;
+
+          /**
+           * The URL for the Konbini payment instructions page, which allows customers to view and print a Konbini voucher.
+           */
+          hosted_voucher_url: string | null;
+
+          stores: KonbiniDisplayDetails.Stores;
+        }
+
+        namespace KonbiniDisplayDetails {
+          interface Stores {
+            /**
+             * FamilyMart instruction details.
+             */
+            familymart: Stores.Familymart | null;
+
+            /**
+             * Lawson instruction details.
+             */
+            lawson: Stores.Lawson | null;
+
+            /**
+             * Ministop instruction details.
+             */
+            ministop: Stores.Ministop | null;
+
+            /**
+             * Seicomart instruction details.
+             */
+            seicomart: Stores.Seicomart | null;
+          }
+
+          namespace Stores {
+            interface Familymart {
+              /**
+               * The confirmation number.
+               */
+              confirmation_number?: string;
+
+              /**
+               * The payment code.
+               */
+              payment_code: string;
+            }
+
+            interface Lawson {
+              /**
+               * The confirmation number.
+               */
+              confirmation_number?: string;
+
+              /**
+               * The payment code.
+               */
+              payment_code: string;
+            }
+
+            interface Ministop {
+              /**
+               * The confirmation number.
+               */
+              confirmation_number?: string;
+
+              /**
+               * The payment code.
+               */
+              payment_code: string;
+            }
+
+            interface Seicomart {
+              /**
+               * The confirmation number.
+               */
+              confirmation_number?: string;
+
+              /**
+               * The payment code.
+               */
+              payment_code: string;
+            }
+          }
         }
 
         interface OxxoDisplayDetails {
@@ -551,6 +641,8 @@ declare module 'stripe' {
         interac_present?: PaymentMethodOptions.InteracPresent;
 
         klarna?: PaymentMethodOptions.Klarna;
+
+        konbini?: PaymentMethodOptions.Konbini;
 
         oxxo?: PaymentMethodOptions.Oxxo;
 
@@ -889,6 +981,37 @@ declare module 'stripe' {
            * Preferred locale of the Klarna checkout page that the customer is redirected to.
            */
           preferred_locale: string | null;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Konbini {
+          /**
+           * An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable convenience stores.
+           */
+          confirmation_number: string | null;
+
+          /**
+           * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST.
+           */
+          expires_after_days: number | null;
+
+          /**
+           * The timestamp at which the Konbini payment instructions will expire. Only one of `expires_after_days` or `expires_at` may be set.
+           */
+          expires_at: number | null;
+
+          /**
+           * A product descriptor of up to 22 characters, which will appear to customers at the convenience store.
+           */
+          product_description: string | null;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -1361,6 +1484,11 @@ declare module 'stripe' {
         klarna?: PaymentMethodData.Klarna;
 
         /**
+         * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
+         */
+        konbini?: PaymentMethodData.Konbini;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -1612,6 +1740,8 @@ declare module 'stripe' {
           }
         }
 
+        interface Konbini {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -1682,6 +1812,7 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'klarna'
+          | 'konbini'
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
@@ -1773,6 +1904,11 @@ declare module 'stripe' {
          * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
          */
         klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
+
+        /**
+         * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
+         */
+        konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -2192,6 +2328,39 @@ declare module 'stripe' {
             | 'nl-NL'
             | 'sv-FI'
             | 'sv-SE';
+        }
+
+        interface Konbini {
+          /**
+           * An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable convenience stores. Must not consist of only zeroes and could be rejected in case of insufficient uniqueness. We recommend to use the customer's phone number.
+           */
+          confirmation_number?: string;
+
+          /**
+           * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
+           */
+          expires_after_days?: Stripe.Emptyable<number>;
+
+          /**
+           * The timestamp at which the Konbini payment instructions will expire. Only one of `expires_after_days` or `expires_at` may be set.
+           */
+          expires_at?: Stripe.Emptyable<number>;
+
+          /**
+           * A product descriptor of up to 22 characters, which will appear to customers at the convenience store.
+           */
+          product_description?: string;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Oxxo {
@@ -2566,6 +2735,11 @@ declare module 'stripe' {
         klarna?: PaymentMethodData.Klarna;
 
         /**
+         * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
+         */
+        konbini?: PaymentMethodData.Konbini;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -2817,6 +2991,8 @@ declare module 'stripe' {
           }
         }
 
+        interface Konbini {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -2887,6 +3063,7 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'klarna'
+          | 'konbini'
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
@@ -2978,6 +3155,11 @@ declare module 'stripe' {
          * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
          */
         klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
+
+        /**
+         * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
+         */
+        konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -3397,6 +3579,39 @@ declare module 'stripe' {
             | 'nl-NL'
             | 'sv-FI'
             | 'sv-SE';
+        }
+
+        interface Konbini {
+          /**
+           * An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable convenience stores. Must not consist of only zeroes and could be rejected in case of insufficient uniqueness. We recommend to use the customer's phone number.
+           */
+          confirmation_number?: string;
+
+          /**
+           * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
+           */
+          expires_after_days?: Stripe.Emptyable<number>;
+
+          /**
+           * The timestamp at which the Konbini payment instructions will expire. Only one of `expires_after_days` or `expires_at` may be set.
+           */
+          expires_at?: Stripe.Emptyable<number>;
+
+          /**
+           * A product descriptor of up to 22 characters, which will appear to customers at the convenience store.
+           */
+          product_description?: string;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Oxxo {
@@ -3885,6 +4100,11 @@ declare module 'stripe' {
         klarna?: PaymentMethodData.Klarna;
 
         /**
+         * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
+         */
+        konbini?: PaymentMethodData.Konbini;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -4136,6 +4356,8 @@ declare module 'stripe' {
           }
         }
 
+        interface Konbini {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -4206,6 +4428,7 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'klarna'
+          | 'konbini'
           | 'oxxo'
           | 'p24'
           | 'sepa_debit'
@@ -4297,6 +4520,11 @@ declare module 'stripe' {
          * If this is a `klarna` PaymentMethod, this sub-hash contains details about the Klarna payment method options.
          */
         klarna?: Stripe.Emptyable<PaymentMethodOptions.Klarna>;
+
+        /**
+         * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
+         */
+        konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -4716,6 +4944,39 @@ declare module 'stripe' {
             | 'nl-NL'
             | 'sv-FI'
             | 'sv-SE';
+        }
+
+        interface Konbini {
+          /**
+           * An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable convenience stores. Must not consist of only zeroes and could be rejected in case of insufficient uniqueness. We recommend to use the customer's phone number.
+           */
+          confirmation_number?: string;
+
+          /**
+           * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
+           */
+          expires_after_days?: Stripe.Emptyable<number>;
+
+          /**
+           * The timestamp at which the Konbini payment instructions will expire. Only one of `expires_after_days` or `expires_at` may be set.
+           */
+          expires_at?: Stripe.Emptyable<number>;
+
+          /**
+           * A product descriptor of up to 22 characters, which will appear to customers at the convenience store.
+           */
+          product_description?: string;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Oxxo {
