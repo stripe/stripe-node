@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 8.206.0 - 2022-03-01
+* [#1361](https://github.com/stripe/stripe-node/pull/1361) [#1362](https://github.com/stripe/stripe-node/pull/1362) API Updates
+  * Add support for new resource `TestHelpers.TestClock`
+  * Add support for `test_clock` on `CustomerCreateParams`, `Customer`, `Invoice`, `InvoiceItem`, `QuoteCreateParams`, `Quote`, `Subscription`, and `SubscriptionSchedule`
+  * Add support for `pending_invoice_items_behavior` on `InvoiceCreateParams`
+  * Change type of `ProductUpdateParams.url` from `string` to `emptyStringable(string)`
+  * Add support for `next_action` on `Refund`
+
 ## 8.205.0 - 2022-02-25
 * [#1098](https://github.com/stripe/stripe-node/pull/1098) Typescript: add declaration for `onDone` on `autoPagingEach`
 * [#1357](https://github.com/stripe/stripe-node/pull/1357) Properly handle API errors with unknown error types
