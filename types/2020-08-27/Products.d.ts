@@ -357,7 +357,7 @@ declare module 'stripe' {
       /**
        * A URL of a publicly-accessible webpage for this product.
        */
-      url?: string;
+      url?: Stripe.Emptyable<string>;
     }
 
     namespace ProductUpdateParams {

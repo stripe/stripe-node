@@ -318,6 +318,11 @@ declare module 'stripe' {
        */
       tax: number | null;
 
+      /**
+       * ID of the test clock this invoice belongs to.
+       */
+      test_clock?: string | Stripe.TestHelpers.TestClock | null;
+
       threshold_reason?: Invoice.ThresholdReason;
 
       /**
@@ -895,6 +900,11 @@ declare module 'stripe' {
       payment_settings?: InvoiceCreateParams.PaymentSettings;
 
       /**
+       * How to handle pending invoice items on invoice creation. One of `include`, `include_and_require`, or `exclude`. `include` will include any pending invoice items, and will create an empty draft invoice if no pending invoice items exist. `include_and_require` will include any pending invoice items, if no pending invoice items exist then the request will fail. `exclude` will always create an empty invoice draft regardless if there are pending invoice items or not. Defaults to `include_and_require` if the parameter is omitted.
+       */
+      pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
+
+      /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
        */
       statement_descriptor?: string;
@@ -1053,6 +1063,11 @@ declare module 'stripe' {
           | 'sofort'
           | 'wechat_pay';
       }
+
+      type PendingInvoiceItemsBehavior =
+        | 'exclude'
+        | 'include'
+        | 'include_and_require';
 
       interface TransferData {
         /**

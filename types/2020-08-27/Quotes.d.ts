@@ -149,6 +149,11 @@ declare module 'stripe' {
        */
       subscription_schedule: string | Stripe.SubscriptionSchedule | null;
 
+      /**
+       * ID of the test clock this quote belongs to.
+       */
+      test_clock?: string | Stripe.TestHelpers.TestClock | null;
+
       total_details: Quote.TotalDetails;
 
       /**
@@ -589,6 +594,11 @@ declare module 'stripe' {
        * When creating a subscription or subscription schedule, the specified configuration data will be used. There must be at least one line item with a recurring price for a subscription or subscription schedule to be created. A subscription schedule is created if `subscription_data[effective_date]` is present and in the future, otherwise a subscription is created.
        */
       subscription_data?: QuoteCreateParams.SubscriptionData;
+
+      /**
+       * ID of the test clock to attach to the quote.
+       */
+      test_clock?: string;
 
       /**
        * The data with which to automatically create a Transfer for each of the invoices.

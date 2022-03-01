@@ -82,6 +82,11 @@ declare module 'stripe' {
        * ID of the subscription managed by the subscription schedule.
        */
       subscription: string | Stripe.Subscription | null;
+
+      /**
+       * ID of the test clock this subscription schedule belongs to.
+       */
+      test_clock?: string | Stripe.TestHelpers.TestClock | null;
     }
 
     namespace SubscriptionSchedule {

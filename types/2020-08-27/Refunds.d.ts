@@ -61,6 +61,8 @@ declare module 'stripe' {
        */
       metadata: Stripe.Metadata | null;
 
+      next_action?: Refund.NextAction;
+
       /**
        * ID of the PaymentIntent that was refunded.
        */
@@ -93,6 +95,43 @@ declare module 'stripe' {
     }
 
     namespace Refund {
+      interface NextAction {
+        /**
+         * Contains the refund details.
+         */
+        display_details: NextAction.DisplayDetails | null;
+
+        /**
+         * Type of the next action to perform.
+         */
+        type: string;
+      }
+
+      namespace NextAction {
+        interface DisplayDetails {
+          email_sent: DisplayDetails.EmailSent;
+
+          /**
+           * The expiry timestamp.
+           */
+          expires_at: number;
+        }
+
+        namespace DisplayDetails {
+          interface EmailSent {
+            /**
+             * The timestamp when the email was sent.
+             */
+            email_sent_at: number;
+
+            /**
+             * The recipient's email address.
+             */
+            email_sent_to: string;
+          }
+        }
+      }
+
       type Reason =
         | 'duplicate'
         | 'expired_uncaptured_charge'

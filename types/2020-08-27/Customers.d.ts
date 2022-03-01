@@ -130,6 +130,11 @@ declare module 'stripe' {
        * The customer's tax IDs.
        */
       tax_ids?: ApiList<Stripe.TaxId>;
+
+      /**
+       * ID of the test clock this customer belongs to.
+       */
+      test_clock?: string | Stripe.TestHelpers.TestClock | null;
     }
 
     namespace Customer {
@@ -352,6 +357,11 @@ declare module 'stripe' {
        * The customer's tax IDs.
        */
       tax_id_data?: Array<CustomerCreateParams.TaxIdDatum>;
+
+      /**
+       * ID of the test clock to attach to the customer.
+       */
+      test_clock?: string;
     }
 
     namespace CustomerCreateParams {

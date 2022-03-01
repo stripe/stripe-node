@@ -2043,3 +2043,35 @@ describe('PaymentLink', function() {
     expect(paymentLink).not.to.be.null;
   });
 });
+
+describe('TestHelpers.TestClock', function() {
+  it('create method', async function() {
+    const testClock = await stripe.testHelpers.testClocks.create({
+      frozen_time: 123,
+      name: 'cogsworth',
+    });
+    expect(testClock).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const testClock = await stripe.testHelpers.testClocks.retrieve('clock_xyz');
+    expect(testClock).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const testClocks = await stripe.testHelpers.testClocks.list();
+    expect(testClocks).not.to.be.null;
+  });
+
+  it('del method', async function() {
+    const deleted = await stripe.testHelpers.testClocks.del('clock_xyz');
+    expect(deleted).not.to.be.null;
+  });
+
+  it('advance method', async function() {
+    const testClock = await stripe.testHelpers.testClocks.advance('clock_xyz', {
+      frozen_time: 142,
+    });
+    expect(testClock).not.to.be.null;
+  });
+});
