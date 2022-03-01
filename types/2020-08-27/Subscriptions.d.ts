@@ -177,6 +177,11 @@ declare module 'stripe' {
       status: Subscription.Status;
 
       /**
+       * ID of the test clock this subscription belongs to.
+       */
+      test_clock?: string | Stripe.TestHelpers.TestClock | null;
+
+      /**
        * The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
        */
       transfer_data: Subscription.TransferData | null;

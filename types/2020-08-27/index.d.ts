@@ -97,6 +97,7 @@
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
 ///<reference path='./Terminal/Readers.d.ts' />
+///<reference path='./TestHelpers/TestClocks.d.ts' />
 ///<reference path='./Tokens.d.ts' />
 ///<reference path='./Topups.d.ts' />
 ///<reference path='./TransferReversals.d.ts' />
@@ -209,6 +210,9 @@ declare module 'stripe' {
       connectionTokens: Stripe.Terminal.ConnectionTokensResource;
       locations: Stripe.Terminal.LocationsResource;
       readers: Stripe.Terminal.ReadersResource;
+    };
+    testHelpers: {
+      testClocks: Stripe.TestHelpers.TestClocksResource;
     };
     /**
      * API Errors
