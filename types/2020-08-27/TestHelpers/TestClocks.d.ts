@@ -25,6 +25,11 @@ declare module 'stripe' {
         deleted?: void;
 
         /**
+         * Time at which this clock is scheduled to auto delete.
+         */
+        deletes_after: number;
+
+        /**
          * Time at which all objects belonging to this clock are frozen.
          */
         frozen_time: number;
