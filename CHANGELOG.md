@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.207.0 - 2022-03-02
+* [#1363](https://github.com/stripe/stripe-node/pull/1363) API Updates
+  * Add support for new resources `CreditedItems` and `ProrationDetails`
+  * Add support for `proration_details` on `InvoiceLineItem`
+
 ## 8.206.0 - 2022-03-01
 * [#1361](https://github.com/stripe/stripe-node/pull/1361) [#1362](https://github.com/stripe/stripe-node/pull/1362) API Updates
   * Add support for new resource `TestHelpers.TestClock`
