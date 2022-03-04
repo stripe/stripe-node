@@ -708,12 +708,11 @@ describe('auto pagination', function() {
       };
 
       const addNextPage = (props) => {
-        let nextPageProperties = {};
-        if (props.has_more) {
-          nextPageProperties = {
-            next_page: `${props.data[props.data.length - 1]}-encoded`,
-          };
-        }
+        const nextPageProperties = {
+          next_page: props.has_more
+            ? `${props.data[props.data.length - 1]}-encoded`
+            : nul,
+        };
         return {...props, ...nextPageProperties};
       };
 
@@ -775,14 +774,14 @@ describe('auto pagination', function() {
         ],
         limit: 5,
         expectedIds: [1, 2, 3, 4],
-        expectedParamsLog: ['?next_page=2-encoded'],
+        expectedParamsLog: ['?page=2-encoded'],
       });
 
       testCase({
         pages: [[1, 2], [3, 4], [5]],
         limit: 5,
         expectedIds: [1, 2, 3, 4, 5],
-        expectedParamsLog: ['?next_page=2-encoded', '?next_page=4-encoded'],
+        expectedParamsLog: ['?page=2-encoded', '?page=4-encoded'],
       });
 
       testCase({
@@ -793,7 +792,7 @@ describe('auto pagination', function() {
         ],
         limit: 5,
         expectedIds: [1, 2, 3, 4, 5],
-        expectedParamsLog: ['?next_page=2-encoded', '?next_page=4-encoded'],
+        expectedParamsLog: ['?page=2-encoded', '?page=4-encoded'],
       });
 
       testCase({
@@ -804,7 +803,7 @@ describe('auto pagination', function() {
         ],
         limit: 6,
         expectedIds: [1, 2, 3, 4, 5, 6],
-        expectedParamsLog: ['?next_page=2-encoded', '?next_page=4-encoded'],
+        expectedParamsLog: ['?page=2-encoded', '?page=4-encoded'],
       });
     });
   });
