@@ -711,7 +711,7 @@ describe('auto pagination', function() {
         const nextPageProperties = {
           next_page: props.has_more
             ? `${props.data[props.data.length - 1]}-encoded`
-            : nul,
+            : null,
         };
         return {...props, ...nextPageProperties};
       };
