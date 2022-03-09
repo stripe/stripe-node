@@ -200,7 +200,7 @@ declare module 'stripe' {
         product: string;
 
         /**
-         * The recurring components of a price such as `interval` and `usage_type`.
+         * The recurring components of a price such as `interval` and `interval_count`.
          */
         recurring: PriceData.Recurring;
 
@@ -350,7 +350,7 @@ declare module 'stripe' {
         product: string;
 
         /**
-         * The recurring components of a price such as `interval` and `usage_type`.
+         * The recurring components of a price such as `interval` and `interval_count`.
          */
         recurring: PriceData.Recurring;
 

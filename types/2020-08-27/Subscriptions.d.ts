@@ -179,7 +179,7 @@ declare module 'stripe' {
       /**
        * ID of the test clock this subscription belongs to.
        */
-      test_clock?: string | Stripe.TestHelpers.TestClock | null;
+      test_clock: string | Stripe.TestHelpers.TestClock | null;
 
       /**
        * The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
@@ -716,7 +716,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * The recurring components of a price such as `interval` and `usage_type`.
+           * The recurring components of a price such as `interval` and `interval_count`.
            */
           recurring: PriceData.Recurring;
 
@@ -1241,7 +1241,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * The recurring components of a price such as `interval` and `usage_type`.
+           * The recurring components of a price such as `interval` and `interval_count`.
            */
           recurring: PriceData.Recurring;
 

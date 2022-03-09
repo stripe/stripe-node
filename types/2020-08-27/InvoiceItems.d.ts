@@ -108,7 +108,7 @@ declare module 'stripe' {
       /**
        * ID of the test clock this invoice item belongs to.
        */
-      test_clock?: string | Stripe.TestHelpers.TestClock | null;
+      test_clock: string | Stripe.TestHelpers.TestClock | null;
 
       /**
        * Unit amount (in the `currency` specified) of the invoice item.
