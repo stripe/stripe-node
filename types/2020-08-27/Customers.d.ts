@@ -673,7 +673,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Provides a list of customers that are associated with the specified test clock. If no list is provided, the response won't include customers with test clocks.
+       * Provides a list of customers that are associated with the specified test clock. The response will not include customers with test clocks if this parameter is not set.
        */
       test_clock?: string;
     }
