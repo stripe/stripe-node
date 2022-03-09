@@ -671,6 +671,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Provides a list of customers that are associated with the specified test clock. The response will not include customers with test clocks if this parameter is not set.
+       */
+      test_clock?: string;
     }
 
     interface CustomerDeleteParams {}
