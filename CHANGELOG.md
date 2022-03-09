@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.208.0 - 2022-03-09
+* [#1366](https://github.com/stripe/stripe-node/pull/1366) API Updates
+  * Add support for `test_clock` on `CustomerListParams`
+  * Change `Invoice.test_clock`, `InvoiceItem.test_clock`, `Quote.test_clock`, `Subscription.test_clock`, and `SubscriptionSchedule.test_clock` to be required
+
 ## 8.207.0 - 2022-03-02
 * [#1363](https://github.com/stripe/stripe-node/pull/1363) API Updates
   * Add support for new resources `CreditedItems` and `ProrationDetails`
