@@ -409,6 +409,11 @@ declare module 'stripe' {
 
     interface PaymentLinkCreateParams {
       /**
+       * The line items representing what is being sold. Each line item represents an item being sold. Up to 20 line items are supported.
+       */
+      line_items: Array<PaymentLinkCreateParams.LineItem>;
+
+      /**
        * Behavior after the purchase is complete.
        */
       after_completion?: PaymentLinkCreateParams.AfterCompletion;
@@ -442,11 +447,6 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * The line items representing what is being sold. Each line item represents an item being sold. Up to 20 line items are supported.
-       */
-      line_items?: Array<PaymentLinkCreateParams.LineItem>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link.
@@ -1262,10 +1262,7 @@ declare module 'stripe' {
        * Creates a payment link.
        */
       create(
-        params?: PaymentLinkCreateParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.PaymentLink>>;
-      create(
+        params: PaymentLinkCreateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentLink>>;
 
