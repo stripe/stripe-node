@@ -574,6 +574,25 @@ describe('auto pagination', function() {
     });
   });
 
+  const testCase = (
+    mockPaginationFn,
+    {pages, limit, expectedIds, expectedParamsLog, initialArgs}
+  ) => {
+    const {paginator, paramsLog} = mockPaginationFn(pages, initialArgs);
+
+    return expect(
+      paginator.autoPagingToArray({limit}).then((result) => {
+        return {
+          ids: result.map((x) => x.id),
+          paramsLog,
+        };
+      })
+    ).to.eventually.deep.equal({
+      ids: expectedIds,
+      paramsLog: expectedParamsLog,
+    });
+  };
+
   describe('pagination logic using a mock paginator', () => {
     const mockPagination = (pages, initialArgs) => {
       let i = 1;
@@ -608,92 +627,98 @@ describe('auto pagination', function() {
       return {paginator, paramsLog};
     };
 
-    const testCase = ({
-      pages,
-      limit,
-      expectedIds,
-      expectedParamsLog,
-      initialArgs,
-    }) => {
-      const {paginator, paramsLog} = mockPagination(pages, initialArgs);
-      expect(
-        paginator.autoPagingToArray({limit}).then((result) => ({
-          ids: result.map((x) => x.id),
-          paramsLog,
-        }))
-      ).to.eventually.deep.equal({
-        ids: expectedIds,
-        paramsLog: expectedParamsLog,
-      });
-    };
-
-    it('paginates forwards as expected', () => {
-      testCase({
-        pages: [
-          [1, 2],
-          [3, 4],
-        ],
-        limit: 5,
-        expectedIds: [1, 2, 3, 4],
-        expectedParamsLog: ['?starting_after=2'],
+    describe('foward pagination', () => {
+      it('paginates forwards through a page', () => {
+        return testCase(mockPagination, {
+          pages: [
+            [1, 2],
+            [3, 4],
+          ],
+          limit: 10,
+          expectedIds: [1, 2, 3, 4],
+          expectedParamsLog: ['?starting_after=2'],
+        });
       });
 
-      testCase({
-        pages: [[1, 2], [3, 4], [5]],
-        limit: 5,
-        expectedIds: [1, 2, 3, 4, 5],
-        expectedParamsLog: ['?starting_after=2', '?starting_after=4'],
+      it('paginates forwards through un-even sized pages', () => {
+        return testCase(mockPagination, {
+          pages: [[1, 2], [3, 4], [5]],
+          limit: 10,
+          expectedIds: [1, 2, 3, 4, 5],
+          expectedParamsLog: ['?starting_after=2', '?starting_after=4'],
+        });
       });
 
-      testCase({
-        pages: [
-          [1, 2],
-          [3, 4],
-          [5, 6],
-        ],
-        limit: 5,
-        expectedIds: [1, 2, 3, 4, 5],
-        expectedParamsLog: ['?starting_after=2', '?starting_after=4'],
+      it('respects limit even when paginating', () => {
+        return testCase(mockPagination, {
+          pages: [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+          ],
+          limit: 5,
+          expectedIds: [1, 2, 3, 4, 5],
+          expectedParamsLog: ['?starting_after=2', '?starting_after=4'],
+        });
       });
 
-      testCase({
-        pages: [
-          [1, 2],
-          [3, 4],
-          [5, 6],
-        ],
-        limit: 6,
-        expectedIds: [1, 2, 3, 4, 5, 6],
-        expectedParamsLog: ['?starting_after=2', '?starting_after=4'],
+      it('paginates through multiple full pages', () => {
+        return testCase(mockPagination, {
+          pages: [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+            [7, 8],
+            [9, 10],
+          ],
+          limit: 10,
+          expectedIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+          expectedParamsLog: [
+            '?starting_after=2',
+            '?starting_after=4',
+            '?starting_after=6',
+            '?starting_after=8',
+          ],
+        });
       });
     });
 
-    it('paginates backwards as expected', () => {
-      testCase({
-        pages: [
-          [-2, -1],
-          [-4, -3],
-        ],
-        limit: 5,
-        expectedIds: [-1, -2, -3, -4],
-        expectedParamsLog: ['?ending_before=-2'],
-        initialArgs: [{ending_before: '0'}],
+    describe('backwards pagination', () => {
+      it('paginates forwards through a page', () => {
+        return testCase(mockPagination, {
+          pages: [
+            [-2, -1],
+            [-4, -3],
+          ],
+          limit: 5,
+          expectedIds: [-1, -2, -3, -4],
+          expectedParamsLog: ['?ending_before=-2'],
+          initialArgs: [{ending_before: '0'}],
+        });
       });
 
-      testCase({
-        pages: [[-2, -1], [-4, -3], [-5]],
-        limit: 5,
-        expectedIds: [-1, -2, -3, -4, -5],
-        expectedParamsLog: ['?ending_before=-2', '?ending_before=-4'],
-        initialArgs: [{ending_before: '0'}],
+      it('paginates backwards through un-even sized pages ', () => {
+        return testCase(mockPagination, {
+          pages: [[-2, -1], [-4, -3], [-5]],
+          limit: 5,
+          expectedIds: [-1, -2, -3, -4, -5],
+          expectedParamsLog: ['?ending_before=-2', '?ending_before=-4'],
+          initialArgs: [{ending_before: '0'}],
+        });
       });
 
-      testCase({
-        pages: [[-2, -1], [-4, -3], [-5]],
-        limit: 4,
-        expectedIds: [-1, -2, -3, -4],
-        expectedParamsLog: ['?ending_before=-2'],
-        initialArgs: [{ending_before: '0'}],
+      it('respects limit', () => {
+        return testCase(mockPagination, {
+          pages: [
+            [-2, -1],
+            [-4, -3],
+            [-6, -5],
+          ],
+          limit: 5,
+          expectedIds: [-1, -2, -3, -4, -5],
+          expectedParamsLog: ['?ending_before=-2', '?ending_before=-4'],
+          initialArgs: [{ending_before: '0'}],
+        });
       });
     });
   });
@@ -708,12 +733,11 @@ describe('auto pagination', function() {
       };
 
       const addNextPage = (props) => {
-        let nextPageProperties = {};
-        if (props.has_more) {
-          nextPageProperties = {
-            next_page: `${props.data[props.data.length - 1]}-encoded`,
-          };
-        }
+        const nextPageProperties = {
+          next_page: props.has_more
+            ? `${props.data[props.data.length - 1].id}-encoded`
+            : null,
+        };
         return {...props, ...nextPageProperties};
       };
 
@@ -748,44 +772,29 @@ describe('auto pagination', function() {
       return {paginator, paramsLog};
     };
 
-    const testCase = ({
-      pages,
-      limit,
-      expectedIds,
-      expectedParamsLog,
-      initialArgs,
-    }) => {
-      const {paginator, paramsLog} = mockPagination(pages, initialArgs);
-      expect(
-        paginator.autoPagingToArray({limit}).then((result) => ({
-          ids: result.map((x) => x.id),
-          paramsLog,
-        }))
-      ).to.eventually.deep.equal({
-        ids: expectedIds,
-        paramsLog: expectedParamsLog,
-      });
-    };
-
-    it('paginates forwards as expected', () => {
-      testCase({
+    it('paginates forwards through a page', () => {
+      return testCase(mockPagination, {
         pages: [
           [1, 2],
           [3, 4],
         ],
-        limit: 5,
+        limit: 10,
         expectedIds: [1, 2, 3, 4],
-        expectedParamsLog: ['?next_page=2-encoded'],
+        expectedParamsLog: ['?page=2-encoded'],
       });
+    });
 
-      testCase({
+    it('paginates forwards through uneven-sized pages', () => {
+      return testCase(mockPagination, {
         pages: [[1, 2], [3, 4], [5]],
-        limit: 5,
+        limit: 10,
         expectedIds: [1, 2, 3, 4, 5],
-        expectedParamsLog: ['?next_page=2-encoded', '?next_page=4-encoded'],
+        expectedParamsLog: ['?page=2-encoded', '?page=4-encoded'],
       });
+    });
 
-      testCase({
+    it('respects limit even when paginating', () => {
+      return testCase(mockPagination, {
         pages: [
           [1, 2],
           [3, 4],
@@ -793,18 +802,27 @@ describe('auto pagination', function() {
         ],
         limit: 5,
         expectedIds: [1, 2, 3, 4, 5],
-        expectedParamsLog: ['?next_page=2-encoded', '?next_page=4-encoded'],
+        expectedParamsLog: ['?page=2-encoded', '?page=4-encoded'],
       });
+    });
 
-      testCase({
+    it('paginates through multiple full pages', () => {
+      return testCase(mockPagination, {
         pages: [
           [1, 2],
           [3, 4],
           [5, 6],
+          [7, 8],
+          [9, 10],
         ],
-        limit: 6,
-        expectedIds: [1, 2, 3, 4, 5, 6],
-        expectedParamsLog: ['?next_page=2-encoded', '?next_page=4-encoded'],
+        limit: 10,
+        expectedIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        expectedParamsLog: [
+          '?page=2-encoded',
+          '?page=4-encoded',
+          '?page=6-encoded',
+          '?page=8-encoded',
+        ],
       });
     });
   });

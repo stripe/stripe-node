@@ -249,9 +249,9 @@ declare module 'stripe' {
 
       /**
        * The page token to use to get the next page of results. If `has_more` is
-       * true, this will be set.
+       * true, this will be set to a concrete string value.
        */
-      next_page?: string;
+      next_page: string | null;
     }
     export interface ApiSearchResultPromise<T>
       extends Promise<Response<ApiSearchResult<T>>>,
