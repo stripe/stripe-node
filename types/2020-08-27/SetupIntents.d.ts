@@ -336,12 +336,75 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * Configuration options for setting up an eMandate for cards issued in India.
+           */
+          mandate_options: Card.MandateOptions | null;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
         }
 
         namespace Card {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description: string | null;
+
+            /**
+             * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date: number | null;
+
+            /**
+             * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+             */
+            interval: MandateOptions.Interval;
+
+            /**
+             * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+             */
+            interval_count: number | null;
+
+            /**
+             * Unique identifier for the mandate or subscription.
+             */
+            reference: string;
+
+            /**
+             * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+             */
+            start_date: number;
+
+            /**
+             * Specifies the type of mandates supported. Possible values are `india`.
+             */
+            supported_types: Array<'india'> | null;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+          }
+
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
 
@@ -562,6 +625,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * Configuration options for setting up an eMandate for cards issued in India.
+           */
+          mandate_options?: Card.MandateOptions;
+
+          /**
            * When specified, this parameter signals that a card has been collected
            * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
            * parameter can only be provided during confirmation.
@@ -575,6 +643,64 @@ declare module 'stripe' {
         }
 
         namespace Card {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type: MandateOptions.AmountType;
+
+            /**
+             * Currency in which future payments will be charged. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: number;
+
+            /**
+             * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+             */
+            interval: MandateOptions.Interval;
+
+            /**
+             * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+             */
+            interval_count?: number;
+
+            /**
+             * Unique identifier for the mandate or subscription.
+             */
+            reference: string;
+
+            /**
+             * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+             */
+            start_date: number;
+
+            /**
+             * Specifies the type of mandates supported. Possible values are `india`.
+             */
+            supported_types?: Array<'india'>;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+          }
+
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
@@ -737,6 +863,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * Configuration options for setting up an eMandate for cards issued in India.
+           */
+          mandate_options?: Card.MandateOptions;
+
+          /**
            * When specified, this parameter signals that a card has been collected
            * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
            * parameter can only be provided during confirmation.
@@ -750,6 +881,64 @@ declare module 'stripe' {
         }
 
         namespace Card {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type: MandateOptions.AmountType;
+
+            /**
+             * Currency in which future payments will be charged. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: number;
+
+            /**
+             * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+             */
+            interval: MandateOptions.Interval;
+
+            /**
+             * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+             */
+            interval_count?: number;
+
+            /**
+             * Unique identifier for the mandate or subscription.
+             */
+            reference: string;
+
+            /**
+             * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+             */
+            start_date: number;
+
+            /**
+             * Specifies the type of mandates supported. Possible values are `india`.
+             */
+            supported_types?: Array<'india'>;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+          }
+
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
@@ -1003,6 +1192,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * Configuration options for setting up an eMandate for cards issued in India.
+           */
+          mandate_options?: Card.MandateOptions;
+
+          /**
            * When specified, this parameter signals that a card has been collected
            * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
            * parameter can only be provided during confirmation.
@@ -1016,6 +1210,64 @@ declare module 'stripe' {
         }
 
         namespace Card {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type: MandateOptions.AmountType;
+
+            /**
+             * Currency in which future payments will be charged. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: number;
+
+            /**
+             * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+             */
+            interval: MandateOptions.Interval;
+
+            /**
+             * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+             */
+            interval_count?: number;
+
+            /**
+             * Unique identifier for the mandate or subscription.
+             */
+            reference: string;
+
+            /**
+             * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+             */
+            start_date: number;
+
+            /**
+             * Specifies the type of mandates supported. Possible values are `india`.
+             */
+            supported_types?: Array<'india'>;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+          }
+
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 

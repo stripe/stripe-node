@@ -726,6 +726,11 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
+           * ID of the mandate used to make this payment or created by it.
+           */
+          mandate: string | null;
+
+          /**
            * True if this payment was marked as MOTO and out of scope for SCA.
            */
           moto?: boolean | null;
