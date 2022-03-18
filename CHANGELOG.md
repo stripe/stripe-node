@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 8.210.0 - 2022-03-18
+* [#1372](https://github.com/stripe/stripe-node/pull/1372) API Updates
+  * Add support for `status` on `Card`
+
 ## 8.209.0 - 2022-03-11
 * [#1368](https://github.com/stripe/stripe-node/pull/1368) API Updates
   * Add support for `mandate` on `Charge.payment_method_details.card`
