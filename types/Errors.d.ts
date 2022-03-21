@@ -228,5 +228,5 @@ declare module 'stripe' {
         readonly rawType: 'invalid_grant';
       }
     }
-    }
+  }
 }
