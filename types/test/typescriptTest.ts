@@ -169,7 +169,7 @@ stripe.setHost('host', 'port', 'protocol');
   }
 })();
 
-const stripeCardError: Stripe.errors.StripeCardError = Stripe.errors.generate({
+const stripeCardError: Stripe.StripeCardError = Stripe.errors.generate({
   type: 'card_error',
   code: 'card_declined',
   charge: 'ch_123',
