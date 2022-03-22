@@ -1,52 +1,117 @@
 declare module 'stripe' {
   namespace Stripe {
     export type Errors = {
-      generate: typeof errors.StripeError.generate;
-      StripeError: typeof errors.StripeError;
-      StripeCardError: typeof errors.StripeCardError;
-      StripeInvalidRequestError: typeof errors.StripeInvalidRequestError;
-      StripeAPIError: typeof errors.StripeAPIError;
-      StripeAuthenticationError: typeof errors.StripeAuthenticationError;
-      StripePermissionError: typeof errors.StripePermissionError;
-      StripeRateLimitError: typeof errors.StripeRateLimitError;
-      StripeConnectionError: typeof errors.StripeConnectionError;
-      StripeSignatureVerificationError: typeof errors.StripeSignatureVerificationError;
-      StripeIdempotencyError: typeof errors.StripeIdempotencyError;
-      StripeInvalidGrantError: typeof errors.StripeInvalidGrantError;
+      generate: typeof Stripe.errors.StripeError.generate;
+      StripeError: typeof Stripe.errors.StripeError;
+      StripeCardError: typeof Stripe.errors.StripeCardError;
+      StripeInvalidRequestError: typeof Stripe.errors.StripeInvalidRequestError;
+      StripeAPIError: typeof Stripe.errors.StripeAPIError;
+      StripeAuthenticationError: typeof Stripe.errors.StripeAuthenticationError;
+      StripePermissionError: typeof Stripe.errors.StripePermissionError;
+      StripeRateLimitError: typeof Stripe.errors.StripeRateLimitError;
+      StripeConnectionError: typeof Stripe.errors.StripeConnectionError;
+      StripeSignatureVerificationError: typeof Stripe.errors.StripeSignatureVerificationError;
+      StripeIdempotencyError: typeof Stripe.errors.StripeIdempotencyError;
+      StripeInvalidGrantError: typeof Stripe.errors.StripeInvalidGrantError;
     };
 
-    export type RawErrorType =
-      | 'card_error'
-      | 'invalid_request_error'
-      | 'api_error'
-      | 'idempotency_error'
-      | 'rate_limit_error'
-      | 'authentication_error'
-      | 'invalid_grant';
+    /**
+     * @deprecated The {@link Stripe.RawErrorType} type is deprecated, please use {@link Stripe.errors.RawErrorType}.
+     */
+    export type RawErrorType = errors.RawErrorType;
 
-    export type StripeRawError = {
-      message?: string;
+    /**
+     * @deprecated The {@link Stripe.StripeRawError} type is deprecated, please use {@link Stripe.errors.StripeRawError}.
+     */
+    type StripeRawError = errors.StripeRawError;
 
-      type: RawErrorType;
+    /**
+     * @deprecated The {@link Stripe.StripeError} type is deprecated, please use {@link Stripe.errors.StripeError}.
+     */
+    type StripeError = errors.StripeError;
 
-      headers?: {[header: string]: string};
-      statusCode?: number;
-      requestId?: string;
+    /**
+     * @deprecated The {@link Stripe.StripeCardError} type is deprecated, please use {@link Stripe.errors.StripeCardError}.
+     */
+    type StripeCardError = errors.StripeCardError;
 
-      code?: string;
-      doc_code?: string;
-      decline_code?: string;
-      param?: string;
-      detail?: string;
+    /**
+     * @deprecated The {@link Stripe.StripeInvalidRequestError} type is deprecated, please use {@link Stripe.errors.StripeInvalidRequestError}.
+     */
+    type StripeInvalidRequestError = errors.StripeInvalidRequestError;
 
-      charge?: string;
-      payment_intent?: Stripe.PaymentIntent;
-      payment_method?: Stripe.PaymentMethod;
-      setup_intent?: Stripe.SetupIntent;
-      source?: Stripe.Source;
-    };
+    /**
+     * @deprecated The {@link Stripe.StripeAPIError} type is deprecated, please use {@link Stripe.errors.StripeAPIError}.
+     */
+    type StripeAPIError = errors.StripeAPIError;
+
+    /**
+     * @deprecated The {@link Stripe.StripeAuthenticationError} type is deprecated, please use {@link Stripe.errors.StripeAuthenticationError}.
+     */
+    type StripeAuthenticationError = errors.StripeAuthenticationError;
+
+    /**
+     * @deprecated The {@link Stripe.StripePermissionError} type is deprecated, please use {@link Stripe.errors.StripePermissionError}.
+     */
+    type StripePermissionError = errors.StripePermissionError;
+
+    /**
+     * @deprecated The {@link Stripe.StripeRateLimitError} type is deprecated, please use {@link Stripe.errors.StripeRateLimitError}.
+     */
+    type StripeRateLimitError = errors.StripeRateLimitError;
+
+    /**
+     * @deprecated The {@link Stripe.StripeConnectionError} type is deprecated, please use {@link Stripe.errors.StripeConnectionError}.
+     */
+    type StripeConnectionError = errors.StripeConnectionError;
+
+    /**
+     * @deprecated The {@link Stripe.StripeSignatureVerificationError} type is deprecated, please use {@link Stripe.errors.StripeSignatureVerificationError}.
+     */
+    type StripeSignatureVerificationError = errors.StripeSignatureVerificationError;
+
+    /**
+     * @deprecated The {@link Stripe.StripeIdempotencyError} type is deprecated, please use {@link Stripe.errors.StripeIdempotencyError}.
+     */
+    type StripeIdempotencyError = errors.StripeIdempotencyError;
+
+    /**
+     * @deprecated The {@link Stripe.StripeInvalidGrantError} type is deprecated, please use {@link Stripe.errors.StripeInvalidGrantError}.
+     */
+    type StripeInvalidGrantError = errors.StripeInvalidGrantError;
 
     namespace errors {
+      export type RawErrorType =
+        | 'card_error'
+        | 'invalid_request_error'
+        | 'api_error'
+        | 'idempotency_error'
+        | 'rate_limit_error'
+        | 'authentication_error'
+        | 'invalid_grant';
+
+      export type StripeRawError = {
+        message?: string;
+
+        type: RawErrorType;
+
+        headers?: {[header: string]: string};
+        statusCode?: number;
+        requestId?: string;
+
+        code?: string;
+        doc_code?: string;
+        decline_code?: string;
+        param?: string;
+        detail?: string;
+
+        charge?: string;
+        payment_intent?: Stripe.PaymentIntent;
+        payment_method?: Stripe.PaymentMethod;
+        setup_intent?: Stripe.SetupIntent;
+        source?: Stripe.Source;
+      };
+
       class StripeError extends Error {
         constructor(rawError: StripeRawError);
 

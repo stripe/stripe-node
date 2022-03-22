@@ -271,3 +271,7 @@ async (): Promise<void> => {
 // Can reference error types
 let errors: Stripe.Errors;
 let rawError: Stripe.StripeRawError;
+let newRawError: Stripe.errors.StripeRawError;
+
+let oldError: Stripe.StripeError;
+let newError: Stripe.errors.StripeError;
