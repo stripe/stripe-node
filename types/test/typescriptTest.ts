@@ -267,3 +267,7 @@ async (): Promise<void> => {
 
   const event2 = await stripe.events.retrieve(event.id);
 };
+
+// Can reference error types
+let errors: Stripe.Errors;
+let rawError: Stripe.StripeRawError;

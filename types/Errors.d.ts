@@ -1,52 +1,52 @@
 declare module 'stripe' {
   namespace Stripe {
+    export type Errors = {
+      generate: typeof errors.StripeError.generate;
+      StripeError: typeof errors.StripeError;
+      StripeCardError: typeof errors.StripeCardError;
+      StripeInvalidRequestError: typeof errors.StripeInvalidRequestError;
+      StripeAPIError: typeof errors.StripeAPIError;
+      StripeAuthenticationError: typeof errors.StripeAuthenticationError;
+      StripePermissionError: typeof errors.StripePermissionError;
+      StripeRateLimitError: typeof errors.StripeRateLimitError;
+      StripeConnectionError: typeof errors.StripeConnectionError;
+      StripeSignatureVerificationError: typeof errors.StripeSignatureVerificationError;
+      StripeIdempotencyError: typeof errors.StripeIdempotencyError;
+      StripeInvalidGrantError: typeof errors.StripeInvalidGrantError;
+    };
+
+    export type RawErrorType =
+      | 'card_error'
+      | 'invalid_request_error'
+      | 'api_error'
+      | 'idempotency_error'
+      | 'rate_limit_error'
+      | 'authentication_error'
+      | 'invalid_grant';
+
+    export type StripeRawError = {
+      message?: string;
+
+      type: RawErrorType;
+
+      headers?: {[header: string]: string};
+      statusCode?: number;
+      requestId?: string;
+
+      code?: string;
+      doc_code?: string;
+      decline_code?: string;
+      param?: string;
+      detail?: string;
+
+      charge?: string;
+      payment_intent?: Stripe.PaymentIntent;
+      payment_method?: Stripe.PaymentMethod;
+      setup_intent?: Stripe.SetupIntent;
+      source?: Stripe.Source;
+    };
+
     namespace errors {
-      export type Errors = {
-        generate: typeof StripeError.generate;
-        StripeError: typeof StripeError;
-        StripeCardError: typeof StripeCardError;
-        StripeInvalidRequestError: typeof StripeInvalidRequestError;
-        StripeAPIError: typeof StripeAPIError;
-        StripeAuthenticationError: typeof StripeAuthenticationError;
-        StripePermissionError: typeof StripePermissionError;
-        StripeRateLimitError: typeof StripeRateLimitError;
-        StripeConnectionError: typeof StripeConnectionError;
-        StripeSignatureVerificationError: typeof StripeSignatureVerificationError;
-        StripeIdempotencyError: typeof StripeIdempotencyError;
-        StripeInvalidGrantError: typeof StripeInvalidGrantError;
-      };
-
-      export type RawErrorType =
-        | 'card_error'
-        | 'invalid_request_error'
-        | 'api_error'
-        | 'idempotency_error'
-        | 'rate_limit_error'
-        | 'authentication_error'
-        | 'invalid_grant';
-
-      export type StripeRawError = {
-        message?: string;
-
-        type: RawErrorType;
-
-        headers?: {[header: string]: string};
-        statusCode?: number;
-        requestId?: string;
-
-        code?: string;
-        doc_code?: string;
-        decline_code?: string;
-        param?: string;
-        detail?: string;
-
-        charge?: string;
-        payment_intent?: Stripe.PaymentIntent;
-        payment_method?: Stripe.PaymentMethod;
-        setup_intent?: Stripe.SetupIntent;
-        source?: Stripe.Source;
-      };
-
       class StripeError extends Error {
         constructor(rawError: StripeRawError);
 
