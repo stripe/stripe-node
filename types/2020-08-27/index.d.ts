@@ -217,6 +217,7 @@ declare module 'stripe' {
     /**
      * API Errors
      */
+    static errors: Stripe.Errors;
     errors: Stripe.Errors;
 
     on(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;

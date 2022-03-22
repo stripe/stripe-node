@@ -275,3 +275,6 @@ let newRawError: Stripe.errors.StripeRawError;
 
 let oldError: Stripe.StripeError;
 let newError: Stripe.errors.StripeError;
+
+const instanceofCheck1 = {} instanceof Stripe.errors.StripeError;
+const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;

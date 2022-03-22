@@ -1,19 +1,6 @@
 declare module 'stripe' {
   namespace Stripe {
-    export type Errors = {
-      generate: typeof Stripe.errors.StripeError.generate;
-      StripeError: typeof Stripe.errors.StripeError;
-      StripeCardError: typeof Stripe.errors.StripeCardError;
-      StripeInvalidRequestError: typeof Stripe.errors.StripeInvalidRequestError;
-      StripeAPIError: typeof Stripe.errors.StripeAPIError;
-      StripeAuthenticationError: typeof Stripe.errors.StripeAuthenticationError;
-      StripePermissionError: typeof Stripe.errors.StripePermissionError;
-      StripeRateLimitError: typeof Stripe.errors.StripeRateLimitError;
-      StripeConnectionError: typeof Stripe.errors.StripeConnectionError;
-      StripeSignatureVerificationError: typeof Stripe.errors.StripeSignatureVerificationError;
-      StripeIdempotencyError: typeof Stripe.errors.StripeIdempotencyError;
-      StripeInvalidGrantError: typeof Stripe.errors.StripeInvalidGrantError;
-    };
+    export type Errors = errors.Errors;
 
     /**
      * @deprecated The {@link Stripe.RawErrorType} type is deprecated, please use {@link Stripe.errors.RawErrorType}.
@@ -81,6 +68,21 @@ declare module 'stripe' {
     type StripeInvalidGrantError = errors.StripeInvalidGrantError;
 
     namespace errors {
+      type Errors = {
+        generate: typeof StripeError.generate;
+        StripeError: typeof StripeError;
+        StripeCardError: typeof StripeCardError;
+        StripeInvalidRequestError: typeof StripeInvalidRequestError;
+        StripeAPIError: typeof StripeAPIError;
+        StripeAuthenticationError: typeof StripeAuthenticationError;
+        StripePermissionError: typeof StripePermissionError;
+        StripeRateLimitError: typeof StripeRateLimitError;
+        StripeConnectionError: typeof StripeConnectionError;
+        StripeSignatureVerificationError: typeof StripeSignatureVerificationError;
+        StripeIdempotencyError: typeof StripeIdempotencyError;
+        StripeInvalidGrantError: typeof StripeInvalidGrantError;
+      };
+
       export type RawErrorType =
         | 'card_error'
         | 'invalid_request_error'
