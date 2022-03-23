@@ -11,9 +11,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [ '10', '12', '14', '16' ]
 
     steps:
       - uses: actions/checkout@v2
@@ -33,10 +30,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+  test:
+    needs: [build]
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - "ubuntu-latest"
+          - "windows-latest"
+        node:
+          - "16"
+          - "14"
+          - "12"
+          - "10"
+    name: Node.js ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    steps:
       - name: Start stripe-mock
         run: docker run -d -p 12111-12112:12111-12112 stripe/stripe-mock && sleep 5
-
       - name: Lint, typecheck, and test
         run: yarn && yarn test
-        with:
-          node-version: ${{ matrix.node }}
