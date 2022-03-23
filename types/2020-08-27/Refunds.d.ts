@@ -205,6 +205,13 @@ declare module 'stripe' {
       payment_intent?: string;
     }
 
+    interface RefundCancelParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     class RefundsResource {
       /**
        * Create a refund.
@@ -247,6 +254,21 @@ declare module 'stripe' {
         options?: RequestOptions
       ): ApiListPromise<Stripe.Refund>;
       list(options?: RequestOptions): ApiListPromise<Stripe.Refund>;
+
+      /**
+       * Cancels a refund with a status of requires_action.
+       *
+       * Refunds in other states cannot be canceled, and only refunds for payment methods that require customer action will enter the requires_action state.
+       */
+      cancel(
+        id: string,
+        params?: RefundCancelParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Refund>>;
+      cancel(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Refund>>;
     }
   }
 }
