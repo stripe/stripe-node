@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
 on:
@@ -22,8 +20,6 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -42,3 +38,5 @@ jobs:
 
       - name: Lint, typecheck, and test
         run: yarn && yarn test
+        with:
+          node-version: ${{ matrix.node }}
