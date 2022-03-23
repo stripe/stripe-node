@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /**
  * This file does not exist to be executed, just compiled,
  * so that we can ensure that the definition files

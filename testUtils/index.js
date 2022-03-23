@@ -84,7 +84,15 @@ const utils = (module.exports = {
     }
 
     function patchRequest(stripeInstance, instance) {
-      instance._request = function(method, host, url, data, auth, options, cb) {
+      instance._request = function (
+        method,
+        host,
+        url,
+        data,
+        auth,
+        options,
+        cb
+      ) {
         const req = (stripeInstance.LAST_REQUEST = {
           method,
           url,
@@ -135,7 +143,7 @@ const utils = (module.exports = {
         utils.getUserStripeKey(),
         'latest'
       );
-      afterEach(function(done) {
+      afterEach(function (done) {
         this.timeout(timeout || CleanupUtility.DEFAULT_TIMEOUT);
         return self.doCleanup(done);
       });
@@ -176,22 +184,22 @@ const utils = (module.exports = {
         this._cleanupFns.push(fn);
       },
       deleteCustomer(custId) {
-        this.add(function() {
+        this.add(function () {
           return this._stripe.customers.del(custId);
         });
       },
       deletePlan(pId) {
-        this.add(function() {
+        this.add(function () {
           return this._stripe.plans.del(pId);
         });
       },
       deleteCoupon(cId) {
-        this.add(function() {
+        this.add(function () {
           return this._stripe.coupons.del(cId);
         });
       },
       deleteInvoiceItem(iiId) {
-        this.add(function() {
+        this.add(function () {
           return this._stripe.invoiceItems.del(iiId);
         });
       },
@@ -204,9 +212,7 @@ const utils = (module.exports = {
    * Get a random string for test Object creation
    */
   getRandomString: () => {
-    return Math.random()
-      .toString(36)
-      .slice(2);
+    return Math.random().toString(36).slice(2);
   },
 
   envSupportsForAwait: () => {

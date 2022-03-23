@@ -104,8 +104,7 @@ describe('Invoices Resource', () => {
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url:
-          '/v1/invoices/upcoming?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
+        url: '/v1/invoices/upcoming?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga',
         headers: {},
         data: {},
         settings: {},
@@ -123,8 +122,7 @@ describe('Invoices Resource', () => {
 
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
-        url:
-          '/v1/invoices/upcoming/lines?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga&limit=5',
+        url: '/v1/invoices/upcoming/lines?customer=cus_abc&subscription_items[0][plan]=potato&subscription_items[1][plan]=rutabaga&limit=5',
         headers: {},
         data: {},
         settings: {},

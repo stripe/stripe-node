@@ -120,7 +120,7 @@ describe('utils', () => {
       function A() {}
       A.extend = utils.protoExtend;
       const B = A.extend({
-        constructor: function() {
+        constructor: function () {
           this.called = true;
         },
       });
