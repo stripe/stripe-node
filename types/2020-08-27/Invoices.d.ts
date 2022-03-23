@@ -409,7 +409,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, or `unknown`
+         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, or `unknown`
          */
         type: CustomerTaxId.Type;
 
@@ -424,6 +424,7 @@ declare module 'stripe' {
           | 'ae_trn'
           | 'au_abn'
           | 'au_arn'
+          | 'bg_uic'
           | 'br_cnpj'
           | 'br_cpf'
           | 'ca_bn'
@@ -439,6 +440,7 @@ declare module 'stripe' {
           | 'gb_vat'
           | 'ge_vat'
           | 'hk_br'
+          | 'hu_tin'
           | 'id_npwp'
           | 'il_vat'
           | 'in_gst'
@@ -458,6 +460,7 @@ declare module 'stripe' {
           | 'sa_vat'
           | 'sg_gst'
           | 'sg_uen'
+          | 'si_tin'
           | 'th_vat'
           | 'tw_vat'
           | 'ua_vat'
@@ -805,11 +808,6 @@ declare module 'stripe' {
 
     interface InvoiceCreateParams {
       /**
-       * The ID of the customer who will be billed.
-       */
-      customer: string;
-
-      /**
        * The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
        */
       account_tax_ids?: Stripe.Emptyable<Array<string>>;
@@ -838,6 +836,11 @@ declare module 'stripe' {
        * A list of up to 4 custom fields to be displayed on the invoice.
        */
       custom_fields?: Stripe.Emptyable<Array<InvoiceCreateParams.CustomField>>;
+
+      /**
+       * The ID of the customer who will be billed.
+       */
+      customer?: string;
 
       /**
        * The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
@@ -1626,7 +1629,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -1641,6 +1644,7 @@ declare module 'stripe' {
             | 'ae_trn'
             | 'au_abn'
             | 'au_arn'
+            | 'bg_uic'
             | 'br_cnpj'
             | 'br_cpf'
             | 'ca_bn'
@@ -1656,6 +1660,7 @@ declare module 'stripe' {
             | 'gb_vat'
             | 'ge_vat'
             | 'hk_br'
+            | 'hu_tin'
             | 'id_npwp'
             | 'il_vat'
             | 'in_gst'
@@ -1675,6 +1680,7 @@ declare module 'stripe' {
             | 'sa_vat'
             | 'sg_gst'
             | 'sg_uen'
+            | 'si_tin'
             | 'th_vat'
             | 'tw_vat'
             | 'ua_vat'
@@ -1966,7 +1972,10 @@ declare module 'stripe' {
        * This endpoint creates a draft invoice for a given customer. The draft invoice created pulls in all pending invoice items on that customer, including prorations. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](#pay_invoice) or <a href="#send_invoice">send](https://stripe.com/docs/api#finalize_invoice) the invoice to your customers.
        */
       create(
-        params: InvoiceCreateParams,
+        params?: InvoiceCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      create(
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 

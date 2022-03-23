@@ -1007,6 +1007,11 @@ declare module 'stripe' {
        * The status of the quote.
        */
       status?: QuoteListParams.Status;
+
+      /**
+       * Provides a list of quotes that are associated with the specified test clock. The response will not include quotes with test clocks if this and the customer parameter is not set.
+       */
+      test_clock?: string;
     }
 
     namespace QuoteListParams {
