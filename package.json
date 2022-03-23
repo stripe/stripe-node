@@ -44,7 +44,7 @@
     "typescript": "^3.7.2"
   },
   "resolutions": {
-    "minimist": "1.2.6",
+    "minimist": "1.2.6"
   },
   "dependencies": {
     "@types/node": ">=8.1.0",
