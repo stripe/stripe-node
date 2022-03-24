@@ -271,10 +271,11 @@ async (): Promise<void> => {
 // Can reference error types
 let errors: Stripe.Errors;
 let rawError: Stripe.StripeRawError;
-let newRawError: Stripe.errors.StripeRawError;
 
 let oldError: Stripe.StripeError;
 let newError: Stripe.errors.StripeError;
 
 const instanceofCheck1 = {} instanceof Stripe.errors.StripeError;
 const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
+const instanceofCheck3 = {} instanceof Stripe.StripeError;
+const instanceofCheck4 = {} instanceof Stripe.StripeAPIError;

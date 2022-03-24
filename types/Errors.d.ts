@@ -125,10 +125,10 @@ declare module 'stripe' {
       readonly param?: string;
 
       /** @deprecated */
-      readonly detail?charge charge;
+      readonly detail?: unknown;
 
       readonly charge?: string;
-      readonly decline_code?: stringcharge
+      readonly decline_code?: string;
       readonly payment_intent?: PaymentIntent;
       readonly payment_method?: PaymentMethod;
       readonly payment_method_type?: string;
