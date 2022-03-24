@@ -1,7 +1,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * @deprecated The {@link Stripe.Errors} type is deprecated, please use {@link Stripe.errors} namespace directly.}
+     * @deprecated The {@link Stripe.Errors} type is deprecated, please use the {@link Stripe.errors} namespace directly.
      */
     export type Errors = {
       generate: typeof StripeError.generate;
@@ -50,7 +50,7 @@ declare module 'stripe' {
     };
 
     /**
-     * @deprecated The {@link Stripe.StripeError} type is deprecated, please use {@link Stripe.errors.StripeError}.}
+     * @deprecated The {@link Stripe.StripeError} type is deprecated, please use {@link Stripe.errors.StripeError}.
      * The runtime StripeError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeError extends Error {
@@ -143,7 +143,7 @@ declare module 'stripe' {
      * Card errors are the most common type of error you should expect to handle.
      * They result when the user enters a card that can't be charged for some reason.
      *
-     * @deprecated The {@link Stripe.StripeCardError} type is deprecated, please use {@link Stripe.errors.StripeCardError}.}
+     * @deprecated The {@link Stripe.StripeCardError} type is deprecated, please use {@link Stripe.errors.StripeCardError}.
      * The runtime StripeCardError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeCardError extends StripeError {
@@ -159,7 +159,7 @@ declare module 'stripe' {
     /**
      * Invalid request errors arise when your request has invalid parameters.
      *
-     * @deprecated The {@link Stripe.StripeInvalidRequestError} type is deprecated, please use {@link Stripe.errors.StripeInvalidRequestError}.}
+     * @deprecated The {@link Stripe.StripeInvalidRequestError} type is deprecated, please use {@link Stripe.errors.StripeInvalidRequestError}.
      * The runtime StripeInvalidRequestError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeInvalidRequestError extends StripeError {
@@ -174,7 +174,7 @@ declare module 'stripe' {
      * It could also be raised in the case that a new error has been introduced in the API,
      * but this version of the library doesn't know how to handle it.
      *
-     * @deprecated The {@link Stripe.StripeAPIError} type is deprecated, please use {@link Stripe.errors.StripeAPIError}.}
+     * @deprecated The {@link Stripe.StripeAPIError} type is deprecated, please use {@link Stripe.errors.StripeAPIError}.
      * The runtime StripeAPIError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeAPIError extends StripeError {
@@ -185,7 +185,7 @@ declare module 'stripe' {
     /**
      * Failure to properly authenticate yourself in the request.
      *
-     * @deprecated The {@link Stripe.StripeAuthenticationError} type is deprecated, please use {@link Stripe.errors.StripeAuthenticationError}.}
+     * @deprecated The {@link Stripe.StripeAuthenticationError} type is deprecated, please use {@link Stripe.errors.StripeAuthenticationError}.
      * The runtime StripeAuthenticationError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeAuthenticationError extends StripeError {
@@ -196,7 +196,7 @@ declare module 'stripe' {
     /**
      * Access was attempted on a resource that wasn't allowed.
      *
-     * @deprecated The {@link Stripe.StripePermissionError} type is deprecated, please use {@link Stripe.errors.StripePermissionError}.}
+     * @deprecated The {@link Stripe.StripePermissionError} type is deprecated, please use {@link Stripe.errors.StripePermissionError}.
      * The runtime StripePermissionError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripePermissionError extends StripeError {
@@ -207,7 +207,7 @@ declare module 'stripe' {
      * Too many requests hit the API too quickly.
      * @docs https://stripe.com/docs/rate-limits
      *
-     * @deprecated The {@link Stripe.StripeRateLimitError} type is deprecated, please use {@link Stripe.errors.StripeRateLimitError}.}
+     * @deprecated The {@link Stripe.StripeRateLimitError} type is deprecated, please use {@link Stripe.errors.StripeRateLimitError}.
      * The runtime StripeRateLimitError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeRateLimitError extends StripeError {
@@ -220,7 +220,7 @@ declare module 'stripe' {
      * This can happen for a variety of reasons,
      * such as loss of network connectivity or a bad TLS certificate.
      *
-     * @deprecated The {@link Stripe.StripeConnectionError} type is deprecated, please use {@link Stripe.errors.StripeConnectionError}.}
+     * @deprecated The {@link Stripe.StripeConnectionError} type is deprecated, please use {@link Stripe.errors.StripeConnectionError}.
      * The runtime StripeConnectionError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeConnectionError extends StripeError {
@@ -231,7 +231,7 @@ declare module 'stripe' {
      * The signature verification for a webhook failed.
      * @docs https://stripe.com/docs/webhooks/signatures
      *
-     * @deprecated The {@link Stripe.StripeSignatureVerificationError} type is deprecated, please use {@link Stripe.errors.StripeSignatureVerificationError}.}
+     * @deprecated The {@link Stripe.StripeSignatureVerificationError} type is deprecated, please use {@link Stripe.errors.StripeSignatureVerificationError}.
      * The runtime StripeSignatureVerificationError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeSignatureVerificationError extends StripeError {
@@ -242,7 +242,7 @@ declare module 'stripe' {
      * Idempotency errors occur when an `Idempotency-Key` is re-used on a request that does not match the first request's API endpoint and parameters.
      * @docs https://stripe.com/docs/api/idempotent_requests?lang=node
      *
-     * @deprecated The {@link Stripe.StripeIdempotencyError} type is deprecated, please use {@link Stripe.errors.StripeIdempotencyError}.}
+     * @deprecated The {@link Stripe.StripeIdempotencyError} type is deprecated, please use {@link Stripe.errors.StripeIdempotencyError}.
      * The runtime StripeIdempotencyError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeIdempotencyError extends StripeError {
@@ -256,7 +256,7 @@ declare module 'stripe' {
      * exist, or doesn't belong to you; or if an API key's mode (live or test)
      * doesn't match the mode of a code or refresh token.
      *
-     * @deprecated The {@link Stripe.StripeInvalidGrantError} type is deprecated, please use {@link Stripe.errors.StripeInvalidGrantError}.}
+     * @deprecated The {@link Stripe.StripeInvalidGrantError} type is deprecated, please use {@link Stripe.errors.StripeInvalidGrantError}.
      * The runtime StripeInvalidGrantError type is located in the {@link errors} namespace. This definition was added by mistake but kept for backwards compatibility.
      */
     class StripeInvalidGrantError extends StripeError {
