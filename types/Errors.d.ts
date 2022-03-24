@@ -1,18 +1,21 @@
 declare module 'stripe' {
   namespace Stripe {
+    /**
+     * @deprecated The {@link Stripe.Errors} type is deprecated, please use {@link Stripe.errors} namespace directly.}
+     */
     export type Errors = {
-      generate: typeof errors.StripeError.generate;
+      generate: typeof StripeError.generate;
       StripeError: typeof StripeError;
-      StripeCardError: typeof errors.StripeCardError;
-      StripeInvalidRequestError: typeof errors.StripeInvalidRequestError;
-      StripeAPIError: typeof errors.StripeAPIError;
-      StripeAuthenticationError: typeof errors.StripeAuthenticationError;
-      StripePermissionError: typeof errors.StripePermissionError;
-      StripeRateLimitError: typeof errors.StripeRateLimitError;
-      StripeConnectionError: typeof errors.StripeConnectionError;
-      StripeSignatureVerificationError: typeof errors.StripeSignatureVerificationError;
-      StripeIdempotencyError: typeof errors.StripeIdempotencyError;
-      StripeInvalidGrantError: typeof errors.StripeInvalidGrantError;
+      StripeCardError: typeof StripeCardError;
+      StripeInvalidRequestError: typeof StripeInvalidRequestError;
+      StripeAPIError: typeof StripeAPIError;
+      StripeAuthenticationError: typeof StripeAuthenticationError;
+      StripePermissionError: typeof StripePermissionError;
+      StripeRateLimitError: typeof StripeRateLimitError;
+      StripeConnectionError: typeof StripeConnectionError;
+      StripeSignatureVerificationError: typeof StripeSignatureVerificationError;
+      StripeIdempotencyError: typeof StripeIdempotencyError;
+      StripeInvalidGrantError: typeof StripeInvalidGrantError;
     };
 
     export type RawErrorType =
@@ -262,6 +265,31 @@ declare module 'stripe' {
     }
 
     namespace errors {
+      function generate(
+        rawError: StripeRawError & {type: 'card_error'}
+      ): StripeCardError;
+      function generate(
+        rawError: StripeRawError & {type: 'invalid_request_error'}
+      ): StripeInvalidRequestError;
+      function generate(
+        rawError: StripeRawError & {type: 'api_error'}
+      ): StripeAPIError;
+      function generate(
+        rawError: StripeRawError & {type: 'authentication_error'}
+      ): StripeAuthenticationError;
+      function generate(
+        rawError: StripeRawError & {type: 'rate_limit_error'}
+      ): StripeRateLimitError;
+      function generate(
+        rawError: StripeRawError & {type: 'idempotency_error'}
+      ): StripeIdempotencyError;
+      function generate(
+        rawError: StripeRawError & {type: 'invalid_grant'}
+      ): StripeInvalidGrantError;
+      function generate(
+        rawError: StripeRawError & {type: RawErrorType}
+      ): StripeError;
+
       class StripeError extends Error {
         constructor(rawError: StripeRawError);
 
