@@ -95,6 +95,8 @@ declare module 'stripe' {
          * The type of the payment method used in the SetupIntent (e.g., `card`). An additional hash is included on `payment_method_details` with a name matching this value. It contains confirmation-specific information for the payment method.
          */
         type: string;
+
+        us_bank_account?: PaymentMethodDetails.UsBankAccount;
       }
 
       namespace PaymentMethodDetails {
@@ -330,6 +332,8 @@ declare module 'stripe' {
         namespace Sofort {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
+
+        interface UsBankAccount {}
       }
 
       interface SetupError {

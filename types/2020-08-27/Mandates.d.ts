@@ -97,6 +97,8 @@ declare module 'stripe' {
          * The type of the payment method associated with this mandate. An additional hash is included on `payment_method_details` with a name matching this value. It contains mandate information specific to the payment method.
          */
         type: string;
+
+        us_bank_account?: PaymentMethodDetails.UsBankAccount;
       }
 
       namespace PaymentMethodDetails {
@@ -171,6 +173,8 @@ declare module 'stripe' {
            */
           url: string;
         }
+
+        interface UsBankAccount {}
       }
 
       interface SingleUse {

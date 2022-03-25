@@ -717,8 +717,10 @@ declare module 'stripe' {
         | 'konbini'
         | 'oxxo'
         | 'p24'
+        | 'paynow'
         | 'sepa_debit'
         | 'sofort'
+        | 'us_bank_account'
         | 'wechat_pay';
     }
 
