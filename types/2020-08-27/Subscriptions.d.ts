@@ -268,6 +268,11 @@ declare module 'stripe' {
            * This sub-hash contains details about the Konbini payment method options to pass to invoices created by the subscription.
            */
           konbini: PaymentMethodOptions.Konbini | null;
+
+          /**
+           * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
+           */
+          us_bank_account?: PaymentMethodOptions.UsBankAccount | null;
         }
 
         namespace PaymentMethodOptions {
@@ -341,6 +346,17 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Bank account verification method.
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -357,9 +373,11 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -798,6 +816,13 @@ declare module 'stripe' {
            * This sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account?: Stripe.Emptyable<
+            PaymentMethodOptions.UsBankAccount
+          >;
         }
 
         namespace PaymentMethodOptions {
@@ -877,6 +902,17 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -893,9 +929,11 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -1339,6 +1377,13 @@ declare module 'stripe' {
            * This sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account?: Stripe.Emptyable<
+            PaymentMethodOptions.UsBankAccount
+          >;
         }
 
         namespace PaymentMethodOptions {
@@ -1418,6 +1463,17 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -1434,9 +1490,11 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -1507,6 +1565,11 @@ declare module 'stripe' {
        * The status of the subscriptions to retrieve. Passing in a value of `canceled` will return all canceled subscriptions, including those belonging to deleted customers. Pass `ended` to find subscriptions that are canceled and subscriptions that are expired due to [incomplete payment](https://stripe.com/docs/billing/subscriptions/overview#subscription-statuses). Passing in a value of `all` will return subscriptions of all statuses. If no value is supplied, all subscriptions that have not been canceled are returned.
        */
       status?: SubscriptionListParams.Status;
+
+      /**
+       * Filter for subscriptions that are associated with the specified test clock. The response will not include subscriptions with test clocks if this and the customer parameter is not set.
+       */
+      test_clock?: string;
     }
 
     namespace SubscriptionListParams {

@@ -76,6 +76,8 @@ declare module 'stripe' {
 
       p24?: PaymentMethod.P24;
 
+      paynow?: PaymentMethod.Paynow;
+
       sepa_debit?: PaymentMethod.SepaDebit;
 
       sofort?: PaymentMethod.Sofort;
@@ -84,6 +86,8 @@ declare module 'stripe' {
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
       type: PaymentMethod.Type;
+
+      us_bank_account?: PaymentMethod.UsBankAccount;
 
       wechat_pay?: PaymentMethod.WechatPay;
     }
@@ -578,6 +582,8 @@ declare module 'stripe' {
           | 'volkswagen_bank';
       }
 
+      interface Paynow {}
+
       interface SepaDebit {
         /**
          * Bank code of bank associated with the bank account.
@@ -651,9 +657,49 @@ declare module 'stripe' {
         | 'konbini'
         | 'oxxo'
         | 'p24'
+        | 'paynow'
         | 'sepa_debit'
         | 'sofort'
+        | 'us_bank_account'
         | 'wechat_pay';
+
+      interface UsBankAccount {
+        /**
+         * Account holder type: individual or company.
+         */
+        account_holder_type: UsBankAccount.AccountHolderType | null;
+
+        /**
+         * Account type: checkings or savings. Defaults to checking if omitted.
+         */
+        account_type: UsBankAccount.AccountType | null;
+
+        /**
+         * The name of the bank.
+         */
+        bank_name: string | null;
+
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
+        fingerprint: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4: string | null;
+
+        /**
+         * Routing number of the bank account.
+         */
+        routing_number: string | null;
+      }
+
+      namespace UsBankAccount {
+        type AccountHolderType = 'company' | 'individual';
+
+        type AccountType = 'checking' | 'savings';
+      }
 
       interface WechatPay {}
     }
@@ -775,6 +821,11 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
+       */
+      paynow?: PaymentMethodCreateParams.Paynow;
+
+      /**
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
        */
       sepa_debit?: PaymentMethodCreateParams.SepaDebit;
@@ -788,6 +839,11 @@ declare module 'stripe' {
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
       type?: PaymentMethodCreateParams.Type;
+
+      /**
+       * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
+       */
+      us_bank_account?: PaymentMethodCreateParams.UsBankAccount;
 
       /**
        * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
@@ -1077,6 +1133,8 @@ declare module 'stripe' {
           | 'volkswagen_bank';
       }
 
+      interface Paynow {}
+
       interface SepaDebit {
         /**
          * IBAN of the bank account.
@@ -1113,9 +1171,39 @@ declare module 'stripe' {
         | 'konbini'
         | 'oxxo'
         | 'p24'
+        | 'paynow'
         | 'sepa_debit'
         | 'sofort'
+        | 'us_bank_account'
         | 'wechat_pay';
+
+      interface UsBankAccount {
+        /**
+         * Account holder type: individual or company.
+         */
+        account_holder_type?: UsBankAccount.AccountHolderType;
+
+        /**
+         * Account number of the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Account type: checkings or savings. Defaults to checking if omitted.
+         */
+        account_type?: UsBankAccount.AccountType;
+
+        /**
+         * Routing number of the bank account.
+         */
+        routing_number?: string;
+      }
+
+      namespace UsBankAccount {
+        type AccountHolderType = 'company' | 'individual';
+
+        type AccountType = 'checking' | 'savings';
+      }
 
       interface WechatPay {}
     }
@@ -1167,6 +1255,11 @@ declare module 'stripe' {
        * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
        */
       sepa_debit?: PaymentMethodUpdateParams.SepaDebit;
+
+      /**
+       * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
+       */
+      us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
     }
 
     namespace PaymentMethodUpdateParams {
@@ -1217,6 +1310,17 @@ declare module 'stripe' {
       }
 
       interface SepaDebit {}
+
+      interface UsBankAccount {
+        /**
+         * Bank account type.
+         */
+        account_holder_type?: UsBankAccount.AccountHolderType;
+      }
+
+      namespace UsBankAccount {
+        type AccountHolderType = 'company' | 'individual';
+      }
     }
 
     interface PaymentMethodListParams extends PaginationParams {
@@ -1256,8 +1360,10 @@ declare module 'stripe' {
         | 'konbini'
         | 'oxxo'
         | 'p24'
+        | 'paynow'
         | 'sepa_debit'
         | 'sofort'
+        | 'us_bank_account'
         | 'wechat_pay';
     }
 

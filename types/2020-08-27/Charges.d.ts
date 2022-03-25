@@ -106,6 +106,11 @@ declare module 'stripe' {
       disputed: boolean;
 
       /**
+       * ID of the balance transaction that describes the reversal of the balance on your account due to payment failure.
+       */
+      failure_balance_transaction?: string | Stripe.BalanceTransaction | null;
+
+      /**
        * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/api#errors) for a list of codes).
        */
       failure_code: string | null;
@@ -426,6 +431,8 @@ declare module 'stripe' {
 
         p24?: PaymentMethodDetails.P24;
 
+        paynow?: PaymentMethodDetails.Paynow;
+
         sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
         sepa_debit?: PaymentMethodDetails.SepaDebit;
@@ -440,6 +447,8 @@ declare module 'stripe' {
          * It contains information specific to the payment method.
          */
         type: string;
+
+        us_bank_account?: PaymentMethodDetails.UsBankAccount;
 
         wechat?: PaymentMethodDetails.Wechat;
 
@@ -1518,6 +1527,13 @@ declare module 'stripe' {
             | 'volkswagen_bank';
         }
 
+        interface Paynow {
+          /**
+           * Reference number associated with this PayNow payment
+           */
+          reference: string | null;
+        }
+
         interface SepaCreditTransfer {
           /**
            * Name of the bank associated with the bank account.
@@ -1628,6 +1644,44 @@ declare module 'stripe' {
         }
 
         interface StripeAccount {}
+
+        interface UsBankAccount {
+          /**
+           * Account holder type: individual or company.
+           */
+          account_holder_type: UsBankAccount.AccountHolderType | null;
+
+          /**
+           * Account type: checkings or savings. Defaults to checking if omitted.
+           */
+          account_type: UsBankAccount.AccountType | null;
+
+          /**
+           * Name of the bank associated with the bank account.
+           */
+          bank_name: string | null;
+
+          /**
+           * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+           */
+          fingerprint: string | null;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string | null;
+
+          /**
+           * Routing number of the bank account.
+           */
+          routing_number: string | null;
+        }
+
+        namespace UsBankAccount {
+          type AccountHolderType = 'company' | 'individual';
+
+          type AccountType = 'checking' | 'savings';
+        }
 
         interface Wechat {}
 

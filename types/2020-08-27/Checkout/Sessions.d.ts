@@ -443,6 +443,8 @@ declare module 'stripe' {
           konbini?: PaymentMethodOptions.Konbini;
 
           oxxo?: PaymentMethodOptions.Oxxo;
+
+          us_bank_account?: PaymentMethodOptions.UsBankAccount;
         }
 
         namespace PaymentMethodOptions {
@@ -515,6 +517,17 @@ declare module 'stripe' {
              * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
              */
             expires_after_days: number;
+          }
+
+          interface UsBankAccount {
+            /**
+             * Bank account verification method.
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            type VerificationMethod = 'automatic' | 'instant';
           }
         }
 
@@ -1529,6 +1542,11 @@ declare module 'stripe' {
           oxxo?: PaymentMethodOptions.Oxxo;
 
           /**
+           * contains details about the Us Bank Account payment method options.
+           */
+          us_bank_account?: PaymentMethodOptions.UsBankAccount;
+
+          /**
            * contains details about the WeChat Pay payment method options.
            */
           wechat_pay?: PaymentMethodOptions.WechatPay;
@@ -1616,6 +1634,17 @@ declare module 'stripe' {
             expires_after_days?: number;
           }
 
+          interface UsBankAccount {
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            type VerificationMethod = 'automatic' | 'instant';
+          }
+
           interface WechatPay {
             /**
              * The app ID registered with WeChat Pay. Only required when client is ios or android.
@@ -1651,8 +1680,10 @@ declare module 'stripe' {
           | 'konbini'
           | 'oxxo'
           | 'p24'
+          | 'paynow'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
 
         interface PhoneNumberCollection {

@@ -267,6 +267,15 @@ declare module 'stripe' {
            * The URL for the hosted verification page, which allows customers to verify their bank account.
            */
           hosted_verification_url: string;
+
+          /**
+           * The type of the microdeposit sent to the customer. Used to distinguish between different verification methods.
+           */
+          microdeposit_type?: VerifyWithMicrodeposits.MicrodepositType | null;
+        }
+
+        namespace VerifyWithMicrodeposits {
+          type MicrodepositType = 'amounts' | 'descriptor_code';
         }
       }
 
@@ -276,6 +285,8 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+        us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
       namespace PaymentMethodOptions {
@@ -414,6 +425,17 @@ declare module 'stripe' {
 
         namespace SepaDebit {
           interface MandateOptions {}
+        }
+
+        interface UsBankAccount {
+          /**
+           * Bank account verification method.
+           */
+          verification_method?: UsBankAccount.VerificationMethod;
+        }
+
+        namespace UsBankAccount {
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
 
@@ -560,6 +582,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+        /**
+         * If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account payment method options.
+         */
+        us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
       namespace PaymentMethodOptions {
@@ -713,6 +740,17 @@ declare module 'stripe' {
 
         namespace SepaDebit {
           interface MandateOptions {}
+        }
+
+        interface UsBankAccount {
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: UsBankAccount.VerificationMethod;
+        }
+
+        namespace UsBankAccount {
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
 
@@ -798,6 +836,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+        /**
+         * If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account payment method options.
+         */
+        us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
       namespace PaymentMethodOptions {
@@ -951,6 +994,17 @@ declare module 'stripe' {
 
         namespace SepaDebit {
           interface MandateOptions {}
+        }
+
+        interface UsBankAccount {
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: UsBankAccount.VerificationMethod;
+        }
+
+        namespace UsBankAccount {
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
     }
@@ -1127,6 +1181,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+        /**
+         * If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account payment method options.
+         */
+        us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
       namespace PaymentMethodOptions {
@@ -1281,6 +1340,17 @@ declare module 'stripe' {
         namespace SepaDebit {
           interface MandateOptions {}
         }
+
+        interface UsBankAccount {
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: UsBankAccount.VerificationMethod;
+        }
+
+        namespace UsBankAccount {
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
       }
     }
 
@@ -1289,6 +1359,11 @@ declare module 'stripe' {
        * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
        */
       amounts?: Array<number>;
+
+      /**
+       * A six-character code starting with SM present in the microdeposit sent to the bank account.
+       */
+      descriptor_code?: string;
 
       /**
        * Specifies which fields in the response should be expanded.

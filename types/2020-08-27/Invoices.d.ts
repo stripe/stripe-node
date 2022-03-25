@@ -616,6 +616,11 @@ declare module 'stripe' {
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini: PaymentMethodOptions.Konbini | null;
+
+          /**
+           * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account?: PaymentMethodOptions.UsBankAccount | null;
         }
 
         namespace PaymentMethodOptions {
@@ -666,6 +671,17 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Bank account verification method.
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -682,9 +698,11 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -992,6 +1010,13 @@ declare module 'stripe' {
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account?: Stripe.Emptyable<
+            PaymentMethodOptions.UsBankAccount
+          >;
         }
 
         namespace PaymentMethodOptions {
@@ -1045,6 +1070,17 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -1061,9 +1097,11 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -1263,6 +1301,13 @@ declare module 'stripe' {
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account?: Stripe.Emptyable<
+            PaymentMethodOptions.UsBankAccount
+          >;
         }
 
         namespace PaymentMethodOptions {
@@ -1316,6 +1361,17 @@ declare module 'stripe' {
           }
 
           interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -1332,9 +1388,11 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
