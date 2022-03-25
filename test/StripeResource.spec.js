@@ -116,7 +116,9 @@ describe('StripeResource', () => {
         };
         const host = stripe.getConstant('DEFAULT_HOST');
 
-        const scope = nock(`https://${host}`).delete(/.*/).reply(200, '{}');
+        const scope = nock(`https://${host}`)
+          .delete(/.*/)
+          .reply(200, '{}');
 
         realStripe.invoiceItems.del('invoiceItemId1', data, (err, response) => {
           done(err);
@@ -135,7 +137,8 @@ describe('StripeResource', () => {
               {id: 'si_123', deleted: true},
             ],
           },
-          body: 'customer=cus_123&items[0][plan]=foo&items[0][quantity]=2&items[1][id]=si_123&items[1][deleted]=true',
+          body:
+            'customer=cus_123&items[0][plan]=foo&items[0][quantity]=2&items[1][id]=si_123&items[1][deleted]=true',
         };
 
         const scope = nock(`https://${options.host}`)
@@ -363,8 +366,9 @@ describe('StripeResource', () => {
         realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err) => {
-          const errorMessage =
-            realStripe.invoices._generateConnectionErrorMessage(1);
+          const errorMessage = realStripe.invoices._generateConnectionErrorMessage(
+            1
+          );
           expect(err.message).to.equal(errorMessage);
           expect(err.detail.message).to.deep.equal('worse stuff');
           done();
@@ -475,11 +479,13 @@ describe('StripeResource', () => {
       });
 
       it('should handle OAuth errors gracefully', (done) => {
-        nock('https://connect.stripe.com').post('/oauth/token').reply(400, {
-          error: 'invalid_grant',
-          error_description:
-            'This authorization code has already been used. All tokens issued with this code have been revoked.',
-        });
+        nock('https://connect.stripe.com')
+          .post('/oauth/token')
+          .reply(400, {
+            error: 'invalid_grant',
+            error_description:
+              'This authorization code has already been used. All tokens issued with this code have been revoked.',
+          });
 
         realStripe._setApiNumberField('maxNetworkRetries', 1);
 
@@ -543,7 +549,7 @@ describe('StripeResource', () => {
           .post(options.path, options.params)
           .replyWithError('bad stuff')
           .post(options.path, options.params)
-          .reply(function (uri, requestBody, cb) {
+          .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
 
             return cb(null, [
@@ -571,7 +577,7 @@ describe('StripeResource', () => {
           .get(`${options.path}/ch_123`)
           .replyWithError('bad stuff')
           .get(`${options.path}/ch_123`)
-          .reply(function (uri, requestBody, cb) {
+          .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
 
             return cb(null, [
@@ -600,7 +606,7 @@ describe('StripeResource', () => {
           .post(options.path, options.params)
           .replyWithError('bad stuff')
           .post(options.path, options.params)
-          .reply(function (uri, requestBody, cb) {
+          .reply(function(uri, requestBody, cb) {
             headers = this.req.headers;
 
             return cb(null, [

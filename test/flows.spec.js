@@ -15,7 +15,7 @@ const CUSTOMER_DETAILS = {
 
 let CURRENCY = '_DEFAULT_CURRENCY_NOT_YET_GOTTEN_';
 
-describe('Flows', function () {
+describe('Flows', function() {
   // Note: These tests must be run as one so we can retrieve the
   // default_currency (required in subsequent tests);
 
@@ -321,7 +321,9 @@ describe('Flows', function () {
 
     it('should emit a `request` event to listeners on request', (done) => {
       const apiVersion = '2017-06-05';
-      const idempotencyKey = Math.random().toString(36).slice(2);
+      const idempotencyKey = Math.random()
+        .toString(36)
+        .slice(2);
       const lowerBoundStartTime = Date.now();
 
       function onRequest(request) {
@@ -359,7 +361,9 @@ describe('Flows', function () {
 
     it('should emit a `response` event to listeners on response', (done) => {
       const apiVersion = '2017-06-05';
-      const idempotencyKey = Math.random().toString(36).slice(2);
+      const idempotencyKey = Math.random()
+        .toString(36)
+        .slice(2);
 
       function onResponse(response) {
         // On the off chance we're picking up a response from a differentrequest

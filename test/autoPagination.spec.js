@@ -5,8 +5,8 @@
 const testUtils = require('../testUtils');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 
-const makeAutoPaginationMethods =
-  require('../lib/autoPagination').makeAutoPaginationMethods;
+const makeAutoPaginationMethods = require('../lib/autoPagination')
+  .makeAutoPaginationMethods;
 
 const expect = require('chai').expect;
 
@@ -18,8 +18,8 @@ if (LIMIT > TOTAL_OBJECTS) {
   throw new Error('LIMIT cannot be larger than TOTAL_OBJECT');
 }
 
-describe('auto pagination', function () {
-  describe('using stripe.customers.list', function () {
+describe('auto pagination', function() {
+  describe('using stripe.customers.list', function() {
     this.timeout(20000);
 
     const email = `test.${Date.now()}@example.com`;
@@ -253,8 +253,8 @@ describe('auto pagination', function () {
       if (testUtils.envSupportsForAwait()) {
         // `for await` throws a syntax error everywhere but node 10,
         // so we must conditionally require it.
-        const forAwaitUntil =
-          require('../testUtils/forAwait.node10').forAwaitUntil;
+        const forAwaitUntil = require('../testUtils/forAwait.node10')
+          .forAwaitUntil;
 
         it('works with `for await` when that feature exists (user break)', () =>
           expect(

@@ -124,8 +124,7 @@ describe('Webhooks', () => {
       it('should raise a SignatureVerificationError when the header does not have the expected format', async () => {
         const header = "I'm not even a real signature header";
 
-        const expectedMessage =
-          /Unable to extract timestamp and signatures from header/;
+        const expectedMessage = /Unable to extract timestamp and signatures from header/;
 
         await expect(
           verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET)

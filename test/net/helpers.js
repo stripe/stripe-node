@@ -65,7 +65,9 @@ const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
 
     describe('makeRequest', () => {
       it('rejects with a timeout error', async () => {
-        setupNock().delayConnection(31).reply(200, 'hello, world!');
+        setupNock()
+          .delayConnection(31)
+          .reply(200, 'hello, world!');
 
         try {
           await sendRequest({timeout: 30});
@@ -112,7 +114,9 @@ const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
       });
 
       it('custom port', async () => {
-        nock('http://stripe.com:1234').get('/test').reply(200);
+        nock('http://stripe.com:1234')
+          .get('/test')
+          .reply(200);
         await sendRequest({port: 1234});
       });
 

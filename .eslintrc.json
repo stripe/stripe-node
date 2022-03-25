@@ -204,6 +204,7 @@
     "prefer-rest-params": "off",
     "prefer-spread": "off",
     "prefer-template": "off",
+    "prettier/prettier": ["error"],
     "quote-props": "off",
     "quotes": [
       "error",
@@ -248,5 +249,5 @@
     "ecmaVersion": 2018
   },
   "plugins": ["prettier"],
-  "extends": ["plugin:prettier/recommended"]
+  "extends": ["prettier", "plugin:prettier/recommended"]
 }

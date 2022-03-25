@@ -213,7 +213,8 @@ describe('Account Resource', () => {
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
           settings: {},
@@ -228,7 +229,8 @@ describe('Account Resource', () => {
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'GET',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
@@ -285,7 +287,8 @@ describe('Account Resource', () => {
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'POST',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {default_for_currency: true},
           settings: {},
@@ -301,7 +304,8 @@ describe('Account Resource', () => {
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
           settings: {},
@@ -316,7 +320,8 @@ describe('Account Resource', () => {
         );
         expect(stripe.LAST_REQUEST).to.deep.equal({
           method: 'DELETE',
-          url: '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
+          url:
+            '/v1/accounts/accountIdFoo321/external_accounts/externalAccountIdFoo456',
           headers: {},
           data: {},
           auth: TEST_AUTH_KEY,
