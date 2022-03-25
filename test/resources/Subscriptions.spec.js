@@ -126,7 +126,7 @@ describe('subscriptions Resource', () => {
     it('Sends the correct request', () => {
       stripe.subscriptions.update('test_sub', {
         items: {
-          0: {
+          '0': {
             plan: 'foo',
             quantity: 2,
           },
@@ -138,7 +138,7 @@ describe('subscriptions Resource', () => {
         headers: {},
         data: {
           items: {
-            0: {
+            '0': {
               plan: 'foo',
               quantity: 2,
             },
@@ -153,7 +153,7 @@ describe('subscriptions Resource', () => {
     it('Sends the correct request', () => {
       stripe.subscriptions.create({
         items: {
-          0: {
+          '0': {
             plan: 'foo',
             quantity: 2,
           },
@@ -166,7 +166,7 @@ describe('subscriptions Resource', () => {
         headers: {},
         data: {
           items: {
-            0: {
+            '0': {
               plan: 'foo',
               quantity: 2,
             },
