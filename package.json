@@ -38,10 +38,10 @@
     "mocha": "^9.2.2",
     "mocha-junit-reporter": "^2.0.2",
     "nock": "^13.2.4",
-    "node-fetch": "^3.2.3",
+    "node-fetch": "^2.6.7",
     "nyc": "^15.1.0",
-    "prettier": "^1.16.4",
-    "typescript": "^3.7.2"
+    "prettier": "^1.19.1",
+    "typescript": "^4.6.3"
   },
   "resolutions": {
     "minimist": "1.2.6"
