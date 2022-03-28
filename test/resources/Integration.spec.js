@@ -24,15 +24,19 @@ describe('Charges Resource', () => {
       expect(result.data[0]).to.not.be.null;
     });
     it('Retrieves all as array', async () => {
-      const result = await stripe.charges.search({query: 'currency:USD'}).autoPagingToArray({limit: 1000});
+      const result = await stripe.charges
+        .search({query: 'currency:USD'})
+        .autoPagingToArray({limit: 1000});
       expect(result.length).to.equal(1);
       expect(result[0]).to.not.be.null;
     });
     it('Retrieves all foreach', async () => {
       let cnt = 0;
-      await stripe.charges.search({query: 'currency:USD'}).autoPagingEach((item) => {
+      await stripe.charges
+        .search({query: 'currency:USD'})
+        .autoPagingEach((item) => {
           expect(item).to.not.be.null;
-          cnt = cnt + 1;
+          cnt += 1;
         });
       expect(cnt).to.equal(1);
     });
