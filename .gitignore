@@ -3,3 +3,4 @@ node_modules
 tags
 .nyc_output
 coverage
+.idea
