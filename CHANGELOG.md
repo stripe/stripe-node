@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.213.0 - 2022-03-28
+* [#1383](https://github.com/stripe/stripe-node/pull/1383) API Updates
+  * Add support for Search API
+    * Add support for `search` method on resources `Charge`, `Customer`, `Invoice`, `PaymentIntent`, `Price`, `Product`, and `Subscription`
+* [#1384](https://github.com/stripe/stripe-node/pull/1384) Bump qs package to latest.
+
 ## 8.212.0 - 2022-03-25
 * [#1381](https://github.com/stripe/stripe-node/pull/1381) API Updates
   * Add support for PayNow and US Bank Accounts Debits payments
@@ -8,7 +14,7 @@
       * **Customer** ([API ref](https://stripe.com/docs/api/payment_methods/customer_list#list_customer_payment_methods-type))
           * Add support for new values `paynow` and `us_bank_account` on enum `CustomerListPaymentMethodsParams.type`
       * **Payment Intent** ([API ref](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method_options))
-          * Add support for `paynow` and `us_bank_account` on `payment_method_options` on `PaymentIntent`, `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, and `PaymentIntentConfirmParams` 
+          * Add support for `paynow` and `us_bank_account` on `payment_method_options` on `PaymentIntent`, `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, and `PaymentIntentConfirmParams`
           * Add support for `paynow` and `us_bank_account` on `payment_method_data` on `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, and `PaymentIntentConfirmParams`
           * Add support for `paynow_display_qr_code` on `PaymentIntent.next_action`
           * Add support for new values `paynow` and `us_bank_account` on enums `payment_method_data.type` on `PaymentIntentCreateParams`, and `PaymentIntentUpdateParams`, and `PaymentIntentConfirmParams`
@@ -61,7 +67,7 @@
   * Add support for `card_await_notification` on `PaymentIntent.next_action`
   * Add support for `customer_notification` on `PaymentIntent.processing.card`
   * Change `PaymentLinkCreateParams.line_items` to be required, and change `PaymentLink.create` to require `PaymentLinkCreateParams`
-  
+
 * [#1364](https://github.com/stripe/stripe-node/pull/1364) Update search pagination to use page param instead of next_page.
 
 ## 8.208.0 - 2022-03-09
@@ -89,12 +95,12 @@
   * Change `BillingPortalConfiguration` `.business_profile.privacy_policy_url` and `.business_profile.terms_of_service_url` to be optional on requests and responses
 
   * Add support for `konbini_payments` on `AccountUpdateParams.capabilities`, `AccountCreateParams.capabilities`, and `Account.capabilities`
-  * Add support for `konbini` on `Charge.payment_method_details`, 
+  * Add support for `konbini` on `Charge.payment_method_details`,
   * Add support for `.payment_method_options.konbini` and `.payment_method_data.konbini` on the `PaymentIntent` API.
   * Add support for `.payment_settings.payment_method_options.konbini` on the `Invoice` API.
   * Add support for `.payment_method_options.konbini` on the `Subscription` API
   * Add support for `.payment_method_options.konbini` on the `CheckoutSession` API
-  * Add support for `konbini` on the `PaymentMethod` API. 
+  * Add support for `konbini` on the `PaymentMethod` API.
   * Add support for `konbini_display_details` on `PaymentIntent.next_action`
 * [#1311](https://github.com/stripe/stripe-node/pull/1311) update documentation to use appInfo
 
@@ -128,7 +134,7 @@
   * Add support for new values `payment_link.created` and `payment_link.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
   * Add support for new value `is_vat` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, and `TaxId.type`
   * Add support for new value `is_vat` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
-  
+
 * [#1333](https://github.com/stripe/stripe-node/pull/1333) Customer tax_ids is not included by default
 
 ## 8.199.0 - 2022-01-20
@@ -162,7 +168,7 @@
 * [#1313](https://github.com/stripe/stripe-node/pull/1313) API Updates
   * Add support for new values `en-FR`, `es-US`, and `fr-FR` on enums `PaymentIntentCreateParams.payment_method_options.klarna.preferred_locale`, `PaymentIntentUpdateParams.payment_method_options.klarna.preferred_locale`, and `PaymentIntentConfirmParams.payment_method_options.klarna.preferred_locale`
   * Add support for `boleto` on `SetupAttempt.payment_method_details`
-  
+
 * [#1312](https://github.com/stripe/stripe-node/pull/1312) API Updates
   * Add support for `processing` on `PaymentIntent`
 
@@ -188,7 +194,7 @@
 ## 8.191.0 - 2021-11-19
 * [#1299](https://github.com/stripe/stripe-node/pull/1299) API Updates
   * Add support for `wallets` on `Issuing.Card`
-  
+
 * [#1298](https://github.com/stripe/stripe-node/pull/1298) API Updates
   * Add support for `interac_present` on `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, and `PaymentIntent.payment_method_options`
   * Add support for new value `jct` on enums `TaxRateCreateParams.tax_type`, `TaxRateUpdateParams.tax_type`, and `TaxRate.tax_type`
@@ -196,7 +202,7 @@
 ## 8.190.0 - 2021-11-17
 * [#1297](https://github.com/stripe/stripe-node/pull/1297) API Updates
   * Add support for `automatic_payment_methods` on `PaymentIntentCreateParams` and `PaymentIntent`
-  
+
 
 ## 8.189.0 - 2021-11-16
 * [#1295](https://github.com/stripe/stripe-node/pull/1295) API Updates
@@ -219,7 +225,7 @@
 * [#1284](https://github.com/stripe/stripe-node/pull/1284) API Updates
   * Remove support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account`. This API was unused.
   * Add support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account.company`
-  
+
 
 ## 8.186.0 - 2021-11-01
 * [#1283](https://github.com/stripe/stripe-node/pull/1283) API Updates
@@ -418,7 +424,7 @@
 
 ## 8.154.0 - 2021-06-07
 * [#1170](https://github.com/stripe/stripe-node/pull/1170) API Updates
-  * Added support for `tax_id_collection` on Checkout `Session.tax_id_collection` and `SessionCreateParams` 
+  * Added support for `tax_id_collection` on Checkout `Session.tax_id_collection` and `SessionCreateParams`
   * Update `Terminal.Reader.location` to be expandable (TypeScript breaking change)
 
 ## 8.153.0 - 2021-06-04
@@ -457,7 +463,7 @@
   * Update Typescript for `CouponCreateParams.duration` and `CouponCreateParams.products` to be optional.
 * [#1158](https://github.com/stripe/stripe-node/pull/1158) API Updates
   * `AccountUpdateParams.business_profile.support_url` and `AccountCreatParams.business_profile.support_url` changed from `string` to `Stripe.Emptyable<string>`
-  * `File.purpose` added new enum members: `finance_report_run`, `document_provider_identity_document`, and `sigma_scheduled_query` 
+  * `File.purpose` added new enum members: `finance_report_run`, `document_provider_identity_document`, and `sigma_scheduled_query`
 
 ## 8.148.0 - 2021-05-06
 * [#1154](https://github.com/stripe/stripe-node/pull/1154) API Updates
@@ -474,7 +480,7 @@
 
 ## 8.145.0 - 2021-04-21
 * [#1143](https://github.com/stripe/stripe-node/pull/1143) API Updates
-  * Add support for `single_member_llc` as an enum member of `Account.company.structure` and `TokenCreateParams.account.company.structure` added new enum members: 
+  * Add support for `single_member_llc` as an enum member of `Account.company.structure` and `TokenCreateParams.account.company.structure` added new enum members:
   * Add support for `dhl` and `royal_mail` as enum members of `Issuing.Card.shipping.carrier`.
 * [#1142](https://github.com/stripe/stripe-node/pull/1142) Improve type definition for for `AccountCreateParams.external_account`
 
@@ -656,7 +662,7 @@
 * [#1035](https://github.com/stripe/stripe-node/pull/1035) Add support for `setup_intent.requires_action` on Event
 
 ## 8.109.0 - 2020-10-09
-* [#1033](https://github.com/stripe/stripe-node/pull/1033) Add support for internal-only `description`, `iin`, and `issuer` for `card_present` and `interac_present` on `Charge.payment_method_details` 
+* [#1033](https://github.com/stripe/stripe-node/pull/1033) Add support for internal-only `description`, `iin`, and `issuer` for `card_present` and `interac_present` on `Charge.payment_method_details`
 
 ## 8.108.0 - 2020-10-08
 * [#1028](https://github.com/stripe/stripe-node/pull/1028) Add support for `Bancontact/iDEAL/Sofort -> SEPA`
