@@ -1606,6 +1606,28 @@ declare module 'stripe' {
 
     interface SubscriptionDeleteDiscountParams {}
 
+    interface SubscriptionSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for subscriptions](https://stripe.com/docs/search#query-fields-for-subscriptions).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Do not include this parameter on the first call. Use the next_page value returned in a response to request subsequent results.
+       */
+      page?: string;
+    }
+
     class SubscriptionsResource {
       /**
        * Creates a new subscription on an existing customer. Each customer can have up to 500 active or scheduled subscriptions.
@@ -1681,6 +1703,14 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
+
+      /**
+       * Search for subscriptions you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language)
+       */
+      search(
+        params: SubscriptionSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Subscription>;
     }
   }
 }

@@ -2057,6 +2057,28 @@ declare module 'stripe' {
       }
     }
 
+    interface ChargeSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for charges](https://stripe.com/docs/search#query-fields-for-charges).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Do not include this parameter on the first call. Use the next_page value returned in a response to request subsequent results.
+       */
+      page?: string;
+    }
+
     class ChargesResource {
       /**
        * To charge a credit card or other payment source, you create a Charge object. If your API key is in test mode, the supplied payment source (e.g., card) won't actually be charged, although everything else will occur as if in live mode. (Stripe assumes that the charge would have completed successfully).
@@ -2112,6 +2134,14 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Charge>>;
+
+      /**
+       * Search for charges you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language)
+       */
+      search(
+        params: ChargeSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Charge>;
     }
   }
 }
