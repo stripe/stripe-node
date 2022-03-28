@@ -556,6 +556,28 @@ declare module 'stripe' {
       type Type = 'one_time' | 'recurring';
     }
 
+    interface PriceSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for prices](https://stripe.com/docs/search#query-fields-for-prices).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Do not include this parameter on the first call. Use the next_page value returned in a response to request subsequent results.
+       */
+      page?: string;
+    }
+
     class PricesResource {
       /**
        * Creates a new price for an existing product. The price can be recurring or one-time.
@@ -595,6 +617,14 @@ declare module 'stripe' {
         options?: RequestOptions
       ): ApiListPromise<Stripe.Price>;
       list(options?: RequestOptions): ApiListPromise<Stripe.Price>;
+
+      /**
+       * Search for prices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language)
+       */
+      search(
+        params: PriceSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Price>;
     }
   }
 }

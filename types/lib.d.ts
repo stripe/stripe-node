@@ -252,6 +252,12 @@ declare module 'stripe' {
        * true, this will be set to a concrete string value.
        */
       next_page: string | null;
+
+      /**
+       * The total number of search results. Only present when `expand` request
+       * parameter contains `total_count`.
+       */
+      total_count?: number;
     }
     export interface ApiSearchResultPromise<T>
       extends Promise<Response<ApiSearchResult<T>>>,

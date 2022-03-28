@@ -427,6 +427,28 @@ declare module 'stripe' {
 
     interface ProductDeleteParams {}
 
+    interface ProductSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for products](https://stripe.com/docs/search#query-fields-for-products).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Do not include this parameter on the first call. Use the next_page value returned in a response to request subsequent results.
+       */
+      page?: string;
+    }
+
     class ProductsResource {
       /**
        * Creates a new product object.
@@ -479,6 +501,14 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedProduct>>;
+
+      /**
+       * Search for products you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language)
+       */
+      search(
+        params: ProductSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Product>;
     }
   }
 }
