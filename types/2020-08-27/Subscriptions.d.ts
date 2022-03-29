@@ -272,7 +272,7 @@ declare module 'stripe' {
           /**
            * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
            */
-          us_bank_account?: PaymentMethodOptions.UsBankAccount | null;
+          us_bank_account: PaymentMethodOptions.UsBankAccount | null;
         }
 
         namespace PaymentMethodOptions {
@@ -1705,7 +1705,10 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
 
       /**
-       * Search for subscriptions you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language)
+       * Search for subscriptions you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
        */
       search(
         params: SubscriptionSearchParams,

@@ -271,7 +271,7 @@ declare module 'stripe' {
           /**
            * The type of the microdeposit sent to the customer. Used to distinguish between different verification methods.
            */
-          microdeposit_type?: VerifyWithMicrodeposits.MicrodepositType | null;
+          microdeposit_type: VerifyWithMicrodeposits.MicrodepositType | null;
         }
 
         namespace VerifyWithMicrodeposits {
