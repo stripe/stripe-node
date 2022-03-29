@@ -44,7 +44,7 @@ describe('Charges Resource', () => {
 });
 
 describe('Reader Resource', () => {
-  describe('retrieve', () => {
+  describe('presentPaymentMethod', () => {
     it('Sends the correct request', async () => {
       const reader = await stripe.testHelpers.terminal.readers.presentPaymentMethod(
         'rdr_123'
