@@ -323,7 +323,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+         * The product's name, meant to be displayable to the customer.
          */
         name: string;
 
@@ -619,7 +619,10 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.Price>;
 
       /**
-       * Search for prices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language)
+       * Search for prices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
        */
       search(
         params: PriceSearchParams,

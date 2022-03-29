@@ -577,7 +577,7 @@ declare module 'stripe' {
           /**
            * The type of the microdeposit sent to the customer. Used to distinguish between different verification methods.
            */
-          microdeposit_type?: VerifyWithMicrodeposits.MicrodepositType | null;
+          microdeposit_type: VerifyWithMicrodeposits.MicrodepositType | null;
         }
 
         namespace VerifyWithMicrodeposits {
@@ -5994,7 +5994,10 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
-       * Search for PaymentIntents you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language)
+       * Search for PaymentIntents you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
        */
       search(
         params: PaymentIntentSearchParams,

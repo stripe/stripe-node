@@ -108,7 +108,7 @@ declare module 'stripe' {
       /**
        * ID of the balance transaction that describes the reversal of the balance on your account due to payment failure.
        */
-      failure_balance_transaction?: string | Stripe.BalanceTransaction | null;
+      failure_balance_transaction: string | Stripe.BalanceTransaction | null;
 
       /**
        * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/api#errors) for a list of codes).
@@ -2136,7 +2136,10 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Charge>>;
 
       /**
-       * Search for charges you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language)
+       * Search for charges you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
        */
       search(
         params: ChargeSearchParams,
