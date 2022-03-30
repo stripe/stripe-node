@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.214.0 - 2022-03-30
+* [#1386](https://github.com/stripe/stripe-node/pull/1386) API Updates
+  * Add support for `cancel_action`, `process_payment_intent`, `process_setup_intent`, and `set_reader_display` methods on resource `Terminal.Reader`
+  * Change `Charge.failure_balance_transaction`, `Invoice.payment_settings.payment_method_options.us_bank_account`, `PaymentIntent.next_action.verify_with_microdeposits.microdeposit_type`, `SetupIntent.next_action.verify_with_microdeposits.microdeposit_type`, and `Subscription.payment_settings.payment_method_options.us_bank_account` to be required
+  * Add support for `action` on `Terminal.Reader`
+
 ## 8.213.0 - 2022-03-28
 * [#1383](https://github.com/stripe/stripe-node/pull/1383) API Updates
   * Add support for Search API
