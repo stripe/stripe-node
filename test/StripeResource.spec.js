@@ -75,7 +75,13 @@ describe('StripeResource', () => {
           data,
         };
 
-        const scope = nock(`https://${options.host}`)
+        const scope = nock(
+          `https://${options.host}`,
+          // No Content-Length should be present for GET requests.
+          {
+            badheaders: ['Content-Length'],
+          }
+        )
           .get(
             `${options.path}?customer=cus_123&subscription_items[0][plan]=foo&subscription_items[0][quantity]=2&subscription_items[1][id]=si_123&subscription_items[1][deleted]=true`,
             ''
@@ -116,7 +122,13 @@ describe('StripeResource', () => {
         };
         const host = stripe.getConstant('DEFAULT_HOST');
 
-        const scope = nock(`https://${host}`)
+        const scope = nock(
+          `https://${host}`,
+          // No Content-Length should be present for DELETE requests.
+          {
+            badheaders: ['Content-Length'],
+          }
+        )
           .delete(/.*/)
           .reply(200, '{}');
 
@@ -141,7 +153,42 @@ describe('StripeResource', () => {
             'customer=cus_123&items[0][plan]=foo&items[0][quantity]=2&items[1][id]=si_123&items[1][deleted]=true',
         };
 
-        const scope = nock(`https://${options.host}`)
+        const scope = nock(
+          `https://${options.host}`,
+          // Content-Length should be present for POST.
+          {
+            reqheaders: {'Content-Length': options.body.length},
+          }
+        )
+          .post(options.path, options.body)
+          .reply(200, '{}');
+
+        realStripe.subscriptions.update(
+          'sub_123',
+          options.data,
+          (err, response) => {
+            done(err);
+            scope.done();
+          }
+        );
+      });
+
+      it('always includes Content-Length in POST requests even when empty', (done) => {
+        const options = {
+          host: stripe.getConstant('DEFAULT_HOST'),
+          path: '/v1/subscriptions/sub_123',
+          data: {},
+          body: '',
+        };
+
+        const scope = nock(
+          `https://${options.host}`,
+          // Content-Length should be present for POST even when the body is
+          // empty.
+          {
+            reqheaders: {'Content-Length': 0},
+          }
+        )
           .post(options.path, options.body)
           .reply(200, '{}');
 
