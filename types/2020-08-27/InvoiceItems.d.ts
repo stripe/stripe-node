@@ -124,12 +124,12 @@ declare module 'stripe' {
     namespace InvoiceItem {
       interface Period {
         /**
-         * End of the line item's billing period
+         * The end of the period, which must be greater than or equal to the start.
          */
         end: number;
 
         /**
-         * Start of the line item's billing period
+         * The start of the period.
          */
         start: number;
       }
@@ -202,7 +202,7 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * The period associated with this invoice item.
+       * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice.
        */
       period?: InvoiceItemCreateParams.Period;
 
@@ -338,7 +338,7 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * The period associated with this invoice item.
+       * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice.
        */
       period?: InvoiceItemUpdateParams.Period;
 

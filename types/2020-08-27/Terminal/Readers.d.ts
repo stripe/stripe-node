@@ -478,7 +478,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.DeletedReader>>;
 
         /**
-         * Cancels the current reader action
+         * Cancels the current reader action.
          */
         cancelAction(
           id: string,
@@ -491,7 +491,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Initiates a payment flow on a Reader
+         * Initiates a payment flow on a Reader.
          */
         processPaymentIntent(
           id: string,
@@ -500,7 +500,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Initiates a setup intent flow on a Reader
+         * Initiates a setup intent flow on a Reader.
          */
         processSetupIntent(
           id: string,
@@ -509,7 +509,7 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
         /**
-         * Sets reader display
+         * Sets reader display to show cart details.
          */
         setReaderDisplay(
           id: string,

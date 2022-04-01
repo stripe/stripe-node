@@ -1027,7 +1027,12 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
-        interface CardPresent {}
+        interface CardPresent {
+          /**
+           * Request ability to capture this payment beyond the standard [authorization validity window](https://stripe.com/docs/terminal/features/extended-authorizations#authorization-validity)
+           */
+          request_extended_authorization: boolean | null;
+        }
 
         interface Eps {
           /**
@@ -2503,7 +2508,12 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
-        interface CardPresent {}
+        interface CardPresent {
+          /**
+           * Request ability to capture this payment beyond the standard [authorization validity window](https://stripe.com/docs/terminal/features/extended-authorizations#authorization-validity)
+           */
+          request_extended_authorization?: boolean;
+        }
 
         interface Eps {
           /**
@@ -3928,7 +3938,12 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
-        interface CardPresent {}
+        interface CardPresent {
+          /**
+           * Request ability to capture this payment beyond the standard [authorization validity window](https://stripe.com/docs/terminal/features/extended-authorizations#authorization-validity)
+           */
+          request_extended_authorization?: boolean;
+        }
 
         interface Eps {
           /**
@@ -5467,7 +5482,12 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
-        interface CardPresent {}
+        interface CardPresent {
+          /**
+           * Request ability to capture this payment beyond the standard [authorization validity window](https://stripe.com/docs/terminal/features/extended-authorizations#authorization-validity)
+           */
+          request_extended_authorization?: boolean;
+        }
 
         interface Eps {
           /**
@@ -5841,7 +5861,7 @@ declare module 'stripe' {
       limit?: number;
 
       /**
-       * A cursor for pagination across multiple pages of results. Do not include this parameter on the first call. Use the next_page value returned in a response to request subsequent results.
+       * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
        */
       page?: string;
     }
