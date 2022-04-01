@@ -34,7 +34,7 @@ declare module 'stripe' {
       namespace Terminal {
         class ReadersResource {
           /**
-           * Presents a payment method on a simulated reader. Can be used to simulate accepting a payment, saving a card or refunding a transaction
+           * Presents a payment method on a simulated reader. Can be used to simulate accepting a payment, saving a card or refunding a transaction.
            */
           presentPaymentMethod(
             id: string,

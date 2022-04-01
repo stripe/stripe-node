@@ -303,10 +303,20 @@ declare module 'stripe' {
 
         interface CustomerDetails {
           /**
+           * The customer's address at the time of checkout. Note: This property is populated only for sessions on or after March 30, 2022.
+           */
+          address: Stripe.Address | null;
+
+          /**
            * The email associated with the Customer, if one exists, on the Checkout Session at the time of checkout or at time of session expiry.
            * Otherwise, if the customer has consented to promotional content, this value is the most recent valid email provided by the customer on the Checkout form.
            */
           email: string | null;
+
+          /**
+           * The customer's name at the time of checkout. Note: This property is populated only for sessions on or after March 30, 2022.
+           */
+          name: string | null;
 
           /**
            * The customer's phone number at the time of checkout

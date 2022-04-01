@@ -182,6 +182,11 @@ declare module 'stripe' {
         bancontact_payments?: Capabilities.BancontactPayments;
 
         /**
+         * The status of the customer_balance payments capability of the account, or whether the account can directly process customer_balance charges.
+         */
+        bank_transfer_payments?: Capabilities.BankTransferPayments;
+
+        /**
          * The status of the boleto payments capability of the account, or whether the account can directly process boleto charges.
          */
         boleto_payments?: Capabilities.BoletoPayments;
@@ -302,6 +307,8 @@ declare module 'stripe' {
         type BacsDebitPayments = 'active' | 'inactive' | 'pending';
 
         type BancontactPayments = 'active' | 'inactive' | 'pending';
+
+        type BankTransferPayments = 'active' | 'inactive' | 'pending';
 
         type BoletoPayments = 'active' | 'inactive' | 'pending';
 
@@ -1210,6 +1217,11 @@ declare module 'stripe' {
         bancontact_payments?: Capabilities.BancontactPayments;
 
         /**
+         * The bank_transfer_payments capability.
+         */
+        bank_transfer_payments?: Capabilities.BankTransferPayments;
+
+        /**
          * The boleto_payments capability.
          */
         boleto_payments?: Capabilities.BoletoPayments;
@@ -1350,6 +1362,13 @@ declare module 'stripe' {
         }
 
         interface BancontactPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2316,6 +2335,11 @@ declare module 'stripe' {
         bancontact_payments?: Capabilities.BancontactPayments;
 
         /**
+         * The bank_transfer_payments capability.
+         */
+        bank_transfer_payments?: Capabilities.BankTransferPayments;
+
+        /**
          * The boleto_payments capability.
          */
         boleto_payments?: Capabilities.BoletoPayments;
@@ -2456,6 +2480,13 @@ declare module 'stripe' {
         }
 
         interface BancontactPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BankTransferPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

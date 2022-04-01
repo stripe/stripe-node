@@ -613,6 +613,11 @@ declare module 'stripe' {
           card: PaymentMethodOptions.Card | null;
 
           /**
+           * If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          customer_balance: PaymentMethodOptions.CustomerBalance | null;
+
+          /**
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini: PaymentMethodOptions.Konbini | null;
@@ -670,6 +675,24 @@ declare module 'stripe' {
             type RequestThreeDSecure = 'any' | 'automatic';
           }
 
+          interface CustomerBalance {
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type: 'bank_transfer' | null;
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type: string | null;
+            }
+          }
+
           interface Konbini {}
 
           interface UsBankAccount {
@@ -693,6 +716,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
@@ -1007,6 +1031,13 @@ declare module 'stripe' {
           card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
 
           /**
+           * If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          customer_balance?: Stripe.Emptyable<
+            PaymentMethodOptions.CustomerBalance
+          >;
+
+          /**
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
@@ -1069,6 +1100,27 @@ declare module 'stripe' {
             type RequestThreeDSecure = 'any' | 'automatic';
           }
 
+          interface CustomerBalance {
+            /**
+             * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+             */
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type?: string;
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type?: string;
+            }
+          }
+
           interface Konbini {}
 
           interface UsBankAccount {
@@ -1092,6 +1144,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
@@ -1298,6 +1351,13 @@ declare module 'stripe' {
           card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
 
           /**
+           * If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          customer_balance?: Stripe.Emptyable<
+            PaymentMethodOptions.CustomerBalance
+          >;
+
+          /**
            * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
            */
           konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
@@ -1360,6 +1420,27 @@ declare module 'stripe' {
             type RequestThreeDSecure = 'any' | 'automatic';
           }
 
+          interface CustomerBalance {
+            /**
+             * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+             */
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type?: string;
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type?: string;
+            }
+          }
+
           interface Konbini {}
 
           interface UsBankAccount {
@@ -1383,6 +1464,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'fpx'
           | 'giropay'
           | 'grabpay'
@@ -1796,7 +1878,7 @@ declare module 'stripe' {
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
-         * The period associated with this invoice item.
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice.
          */
         period?: InvoiceItem.Period;
 
@@ -2028,7 +2110,7 @@ declare module 'stripe' {
       limit?: number;
 
       /**
-       * A cursor for pagination across multiple pages of results. Do not include this parameter on the first call. Use the next_page value returned in a response to request subsequent results.
+       * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
        */
       page?: string;
     }
