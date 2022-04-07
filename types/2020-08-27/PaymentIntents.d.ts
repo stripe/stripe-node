@@ -4324,6 +4324,29 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface PaymentIntentApplyCustomerBalanceParams {
+      /**
+       * Amount intended to be applied to this PaymentIntent from the customer's cash balance.
+       *
+       * A positive integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal) (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
+       *
+       * The maximum amount is the amount of the PaymentIntent.
+       *
+       * When omitted, the amount defaults to the remaining amount requested on the PaymentIntent.
+       */
+      amount?: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface PaymentIntentCancelParams {
       /**
        * Reason for canceling this PaymentIntent. Possible values are `duplicate`, `fraudulent`, `requested_by_customer`, or `abandoned`
@@ -5941,6 +5964,21 @@ declare module 'stripe' {
         options?: RequestOptions
       ): ApiListPromise<Stripe.PaymentIntent>;
       list(options?: RequestOptions): ApiListPromise<Stripe.PaymentIntent>;
+
+      /**
+       * Manually reconcile the remaining amount for a customer_balance PaymentIntent.
+       *
+       * This can be used when the cash balance for [a customer in manual reconciliation mode](docs/payments/customer-balance/reconciliation#cash-manual-reconciliation) received funds.
+       */
+      applyCustomerBalance(
+        id: string,
+        params?: PaymentIntentApplyCustomerBalanceParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
+      applyCustomerBalance(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentIntent>>;
 
       /**
        * A PaymentIntent object can be canceled when it is in one of these statuses: requires_payment_method, requires_capture, requires_confirmation, requires_action, or processing.
