@@ -221,7 +221,7 @@ declare module 'stripe' {
         total_details: Session.TotalDetails | null;
 
         /**
-         * The URL to the Checkout Session.
+         * The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
          */
         url: string | null;
       }
@@ -848,17 +848,17 @@ declare module 'stripe' {
 
         interface TotalDetails {
           /**
-           * This is the sum of all the line item discounts.
+           * This is the sum of all the discounts.
            */
           amount_discount: number;
 
           /**
-           * This is the sum of all the line item shipping amounts.
+           * This is the sum of all the shipping amounts.
            */
           amount_shipping: number | null;
 
           /**
-           * This is the sum of all the line item tax amounts.
+           * This is the sum of all the tax amounts.
            */
           amount_tax: number;
 
@@ -868,12 +868,12 @@ declare module 'stripe' {
         namespace TotalDetails {
           interface Breakdown {
             /**
-             * The aggregated line item discounts.
+             * The aggregated discounts.
              */
             discounts: Array<Breakdown.Discount>;
 
             /**
-             * The aggregated line item tax amounts by rate.
+             * The aggregated tax amounts by rate.
              */
             taxes: Array<Breakdown.Tax>;
           }
