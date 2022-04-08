@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 8.216.0 - 2022-04-08
+* [#1391](https://github.com/stripe/stripe-node/pull/1391) API Updates
+  * Add support for `apply_customer_balance` method on resource `PaymentIntent`
+  * Add support for new value `cash_balance.funds_available` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 8.215.0 - 2022-04-01
 * [#1389](https://github.com/stripe/stripe-node/pull/1389) API Updates
   * Add support for `bank_transfer_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
