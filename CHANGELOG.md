@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.217.0 - 2022-04-13
+* [#1395](https://github.com/stripe/stripe-node/pull/1395) API Updates
+  * Add support for `increment_authorization` method on resource `PaymentIntent`
+  * Add support for `incremental_authorization_supported` on `Charge.payment_method_details.card_present`
+  * Add support for `request_incremental_authorization_support` on `PaymentIntent.payment_method_options.card_present`, `PaymentIntentConfirmParams.payment_method_options.card_present`, `PaymentIntentCreateParams.payment_method_options.card_present`, and `PaymentIntentUpdateParams.payment_method_options.card_present`
+
 ## 8.216.0 - 2022-04-08
 * [#1391](https://github.com/stripe/stripe-node/pull/1391) API Updates
   * Add support for `apply_customer_balance` method on resource `PaymentIntent`
