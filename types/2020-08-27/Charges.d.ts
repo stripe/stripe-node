@@ -1007,6 +1007,11 @@ declare module 'stripe' {
           iin?: string | null;
 
           /**
+           * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support] /docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support.
+           */
+          incremental_authorization_supported: boolean | null;
+
+          /**
            * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
            */
           issuer?: string | null;
