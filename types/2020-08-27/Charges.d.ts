@@ -409,6 +409,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodDetails.CardPresent;
 
+        customer_balance?: PaymentMethodDetails.CustomerBalance;
+
         eps?: PaymentMethodDetails.Eps;
 
         fpx?: PaymentMethodDetails.Fpx;
@@ -1007,7 +1009,7 @@ declare module 'stripe' {
           iin?: string | null;
 
           /**
-           * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support] /docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support.
+           * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
            */
           incremental_authorization_supported: boolean | null;
 
@@ -1101,6 +1103,8 @@ declare module 'stripe' {
             type AccountType = 'checking' | 'credit' | 'prepaid' | 'unknown';
           }
         }
+
+        interface CustomerBalance {}
 
         interface Eps {
           /**

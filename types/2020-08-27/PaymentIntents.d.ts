@@ -26,6 +26,8 @@ declare module 'stripe' {
        */
       amount_capturable: number;
 
+      amount_details?: PaymentIntent.AmountDetails;
+
       /**
        * Amount that was collected by this PaymentIntent.
        */
@@ -214,6 +216,19 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntent {
+      interface AmountDetails {
+        tip?: AmountDetails.Tip;
+      }
+
+      namespace AmountDetails {
+        interface Tip {
+          /**
+           * Portion of the amount that corresponds to a tip.
+           */
+          amount: number | null;
+        }
+      }
+
       interface AutomaticPaymentMethods {
         /**
          * Automatically calculates compatible payment methods
@@ -343,6 +358,8 @@ declare module 'stripe' {
 
         card_await_notification?: NextAction.CardAwaitNotification;
 
+        display_bank_transfer_instructions?: NextAction.DisplayBankTransferInstructions;
+
         konbini_display_details?: NextAction.KonbiniDisplayDetails;
 
         oxxo_display_details?: NextAction.OxxoDisplayDetails;
@@ -425,6 +442,62 @@ declare module 'stripe' {
            * For payments greater than INR 5000, the customer must provide explicit approval of the payment with their bank. For payments of lower amount, no customer action is required.
            */
           customer_approval_required: boolean | null;
+        }
+
+        interface DisplayBankTransferInstructions {
+          /**
+           * The remaining amount that needs to be transferred to complete the payment.
+           */
+          amount_remaining: number | null;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string | null;
+
+          /**
+           * A list of financial addresses that can be used to fund the customer balance
+           */
+          financial_addresses?: Array<
+            DisplayBankTransferInstructions.FinancialAddress
+          >;
+
+          /**
+           * A string identifying this payment. Instruct your customer to include this code in the reference or memo field of their bank transfer.
+           */
+          reference: string | null;
+
+          /**
+           * Type of bank transfer
+           */
+          type: 'jp_bank_transfer';
+        }
+
+        namespace DisplayBankTransferInstructions {
+          interface FinancialAddress {
+            /**
+             * The payment networks supported by this FinancialAddress
+             */
+            supported_networks?: Array<FinancialAddress.SupportedNetwork>;
+
+            /**
+             * The type of financial address
+             */
+            type: FinancialAddress.Type;
+
+            /**
+             * Zengin Records contain Japan bank account details per the Zengin format.
+             */
+            zengin?: FinancialAddress.Zengin;
+          }
+
+          namespace FinancialAddress {
+            type SupportedNetwork = 'sepa' | 'zengin';
+
+            type Type = 'iban' | 'zengin';
+
+            interface Zengin {}
+          }
         }
 
         interface KonbiniDisplayDetails {
@@ -669,6 +742,8 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         card_present?: PaymentMethodOptions.CardPresent;
+
+        customer_balance?: PaymentMethodOptions.CustomerBalance;
 
         eps?: PaymentMethodOptions.Eps;
 
@@ -1034,9 +1109,59 @@ declare module 'stripe' {
           request_extended_authorization: boolean | null;
 
           /**
-           * Request ability to [increment](docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
+           * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support: boolean | null;
+        }
+
+        interface CustomerBalance {
+          bank_transfer?: CustomerBalance.BankTransfer;
+
+          /**
+           * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+           */
+          funding_type: 'bank_transfer' | null;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
+        }
+
+        namespace CustomerBalance {
+          interface BankTransfer {
+            /**
+             * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+             *
+             * Permitted values include: `zengin`.
+             */
+            requested_address_types?: Array<'zengin'>;
+
+            /**
+             * The bank transfer type that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             */
+            type: BankTransfer.Type | null;
+          }
+
+          namespace BankTransfer {
+            type Type =
+              | 'eu_bank_account'
+              | 'eu_bank_transfer'
+              | 'gb_bank_account'
+              | 'gb_bank_transfer'
+              | 'id_bank_account'
+              | 'id_bank_transfer'
+              | 'jp_bank_account'
+              | 'jp_bank_transfer'
+              | 'mx_bank_account'
+              | 'mx_bank_transfer'
+              | 'us_bank_account'
+              | 'us_bank_transfer';
+          }
         }
 
         interface Eps {
@@ -1627,6 +1752,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
+         */
+        customer_balance?: PaymentMethodData.CustomerBalance;
+
+        /**
          * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
          */
         eps?: PaymentMethodData.Eps;
@@ -1794,6 +1924,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface CustomerBalance {}
 
         interface Eps {
           /**
@@ -1996,6 +2128,7 @@ declare module 'stripe' {
           | 'bacs_debit'
           | 'bancontact'
           | 'boleto'
+          | 'customer_balance'
           | 'eps'
           | 'fpx'
           | 'giropay'
@@ -2089,6 +2222,13 @@ declare module 'stripe' {
          * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
          */
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
+         * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
+         */
+        customer_balance?: Stripe.Emptyable<
+          PaymentMethodOptions.CustomerBalance
+        >;
 
         /**
          * If this is a `eps` PaymentMethod, this sub-hash contains details about the EPS payment method options.
@@ -2520,9 +2660,48 @@ declare module 'stripe' {
           request_extended_authorization?: boolean;
 
           /**
-           * Request ability to [increment](docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
+           * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+        }
+
+        interface CustomerBalance {
+          /**
+           * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+           */
+          bank_transfer?: CustomerBalance.BankTransfer;
+
+          /**
+           * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+           */
+          funding_type?: 'bank_transfer';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        namespace CustomerBalance {
+          interface BankTransfer {
+            /**
+             * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+             *
+             * Permitted values include: `zengin`.
+             */
+            requested_address_types?: Array<'zengin'>;
+
+            /**
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             */
+            type: 'jp_bank_transfer';
+          }
         }
 
         interface Eps {
@@ -3062,6 +3241,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
+         */
+        customer_balance?: PaymentMethodData.CustomerBalance;
+
+        /**
          * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
          */
         eps?: PaymentMethodData.Eps;
@@ -3229,6 +3413,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface CustomerBalance {}
 
         interface Eps {
           /**
@@ -3431,6 +3617,7 @@ declare module 'stripe' {
           | 'bacs_debit'
           | 'bancontact'
           | 'boleto'
+          | 'customer_balance'
           | 'eps'
           | 'fpx'
           | 'giropay'
@@ -3524,6 +3711,13 @@ declare module 'stripe' {
          * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
          */
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
+         * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
+         */
+        customer_balance?: Stripe.Emptyable<
+          PaymentMethodOptions.CustomerBalance
+        >;
 
         /**
          * If this is a `eps` PaymentMethod, this sub-hash contains details about the EPS payment method options.
@@ -3955,9 +4149,48 @@ declare module 'stripe' {
           request_extended_authorization?: boolean;
 
           /**
-           * Request ability to [increment](docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
+           * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+        }
+
+        interface CustomerBalance {
+          /**
+           * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+           */
+          bank_transfer?: CustomerBalance.BankTransfer;
+
+          /**
+           * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+           */
+          funding_type?: 'bank_transfer';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        namespace CustomerBalance {
+          interface BankTransfer {
+            /**
+             * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+             *
+             * Permitted values include: `zengin`.
+             */
+            requested_address_types?: Array<'zengin'>;
+
+            /**
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             */
+            type: 'jp_bank_transfer';
+          }
         }
 
         interface Eps {
@@ -4634,6 +4867,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
+         */
+        customer_balance?: PaymentMethodData.CustomerBalance;
+
+        /**
          * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
          */
         eps?: PaymentMethodData.Eps;
@@ -4801,6 +5039,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface CustomerBalance {}
 
         interface Eps {
           /**
@@ -5003,6 +5243,7 @@ declare module 'stripe' {
           | 'bacs_debit'
           | 'bancontact'
           | 'boleto'
+          | 'customer_balance'
           | 'eps'
           | 'fpx'
           | 'giropay'
@@ -5096,6 +5337,13 @@ declare module 'stripe' {
          * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
          */
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
+         * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
+         */
+        customer_balance?: Stripe.Emptyable<
+          PaymentMethodOptions.CustomerBalance
+        >;
 
         /**
          * If this is a `eps` PaymentMethod, this sub-hash contains details about the EPS payment method options.
@@ -5527,9 +5775,48 @@ declare module 'stripe' {
           request_extended_authorization?: boolean;
 
           /**
-           * Request ability to [increment](docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
+           * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+        }
+
+        interface CustomerBalance {
+          /**
+           * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+           */
+          bank_transfer?: CustomerBalance.BankTransfer;
+
+          /**
+           * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+           */
+          funding_type?: 'bank_transfer';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        namespace CustomerBalance {
+          interface BankTransfer {
+            /**
+             * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+             *
+             * Permitted values include: `zengin`.
+             */
+            requested_address_types?: Array<'zengin'>;
+
+            /**
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             */
+            type: 'jp_bank_transfer';
+          }
         }
 
         interface Eps {

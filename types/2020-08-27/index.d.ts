@@ -41,6 +41,7 @@
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./FileLinks.d.ts' />
 ///<reference path='./Files.d.ts' />
+///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
@@ -94,6 +95,7 @@
 ///<reference path='./TaxDeductedAtSources.d.ts' />
 ///<reference path='./TaxIds.d.ts' />
 ///<reference path='./TaxRates.d.ts' />
+///<reference path='./Terminal/Configurations.d.ts' />
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
 ///<reference path='./Terminal/Readers.d.ts' />
@@ -208,6 +210,7 @@ declare module 'stripe' {
       scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
     };
     terminal: {
+      configurations: Stripe.Terminal.ConfigurationsResource;
       connectionTokens: Stripe.Terminal.ConnectionTokensResource;
       locations: Stripe.Terminal.LocationsResource;
       readers: Stripe.Terminal.ReadersResource;

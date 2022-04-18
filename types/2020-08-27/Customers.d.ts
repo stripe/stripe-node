@@ -277,6 +277,11 @@ declare module 'stripe' {
        */
       balance?: number;
 
+      /**
+       * Balance information and default balance settings for this customer.
+       */
+      cash_balance?: CustomerCreateParams.CashBalance;
+
       coupon?: string;
 
       /**
@@ -365,6 +370,34 @@ declare module 'stripe' {
     }
 
     namespace CustomerCreateParams {
+      interface CashBalance {
+        /**
+         * Settings controlling the behavior of the customer's cash balance,
+         * such as reconciliation of funds received.
+         */
+        settings?: CashBalance.Settings;
+      }
+
+      namespace CashBalance {
+        interface Settings {
+          /**
+           * Method for using the customer balance to pay outstanding
+           * `customer_balance` PaymentIntents. If set to `automatic`, all available
+           * funds will automatically be used to pay any outstanding PaymentIntent.
+           * If set to `manual`, only customer balance funds from bank transfers
+           * with a reference code matching
+           * `payment_intent.next_action.display_bank_transfer_intructions.reference_code` will
+           * automatically be used to pay the corresponding outstanding
+           * PaymentIntent.
+           */
+          reconciliation_mode?: Settings.ReconciliationMode;
+        }
+
+        namespace Settings {
+          type ReconciliationMode = 'automatic' | 'manual';
+        }
+      }
+
       interface InvoiceSettings {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
@@ -508,6 +541,11 @@ declare module 'stripe' {
        */
       balance?: number;
 
+      /**
+       * Balance information and default balance settings for this customer.
+       */
+      cash_balance?: CustomerUpdateParams.CashBalance;
+
       coupon?: string;
 
       /**
@@ -598,6 +636,34 @@ declare module 'stripe' {
     }
 
     namespace CustomerUpdateParams {
+      interface CashBalance {
+        /**
+         * Settings controlling the behavior of the customer's cash balance,
+         * such as reconciliation of funds received.
+         */
+        settings?: CashBalance.Settings;
+      }
+
+      namespace CashBalance {
+        interface Settings {
+          /**
+           * Method for using the customer balance to pay outstanding
+           * `customer_balance` PaymentIntents. If set to `automatic`, all available
+           * funds will automatically be used to pay any outstanding PaymentIntent.
+           * If set to `manual`, only customer balance funds from bank transfers
+           * with a reference code matching
+           * `payment_intent.next_action.display_bank_transfer_intructions.reference_code` will
+           * automatically be used to pay the corresponding outstanding
+           * PaymentIntent.
+           */
+          reconciliation_mode?: Settings.ReconciliationMode;
+        }
+
+        namespace Settings {
+          type ReconciliationMode = 'automatic' | 'manual';
+        }
+      }
+
       interface InvoiceSettings {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
@@ -683,6 +749,44 @@ declare module 'stripe' {
 
     interface CustomerDeleteParams {}
 
+    interface CustomerCreateFundingInstructionsParams {
+      /**
+       * Additional parameters for `bank_transfer` funding types
+       */
+      bank_transfer: CustomerCreateFundingInstructionsParams.BankTransfer;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * The `funding_type` to get the instructions for.
+       */
+      funding_type: 'bank_transfer';
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    namespace CustomerCreateFundingInstructionsParams {
+      interface BankTransfer {
+        /**
+         * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+         *
+         * Permitted values include: `zengin`.
+         */
+        requested_address_types?: Array<'zengin'>;
+
+        /**
+         * The type of the `bank_transfer`
+         */
+        type: 'jp_bank_transfer';
+      }
+    }
+
     interface CustomerDeleteDiscountParams {}
 
     interface CustomerListPaymentMethodsParams extends PaginationParams {
@@ -708,6 +812,7 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'card_present'
+        | 'customer_balance'
         | 'eps'
         | 'fpx'
         | 'giropay'
@@ -803,6 +908,17 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedCustomer>>;
+
+      /**
+       * Retrieve funding instructions for a customer cash balance. If funding instructions do not yet exist for the customer, new
+       * funding instructions will be created. If funding instructions have already been created for a given customer, the same
+       * funding instructions will be retrieved. In other words, we will return the same funding instructions each time.
+       */
+      createFundingInstructions(
+        id: string,
+        params: CustomerCreateFundingInstructionsParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.FundingInstructions>>;
 
       /**
        * Removes the currently applied discount on a customer.

@@ -47,6 +47,21 @@ describe('Customer', function() {
     );
     expect(paymentMethods).not.to.be.null;
   });
+
+  it('createFundingInstructions method', async function() {
+    const fundingInstructions = await stripe.customers.createFundingInstructions(
+      'cus_123',
+      {
+        bank_transfer: {
+          requested_address_types: ['zengin'],
+          type: 'jp_bank_transfer',
+        },
+        currency: 'usd',
+        funding_type: 'bank_transfer',
+      }
+    );
+    expect(fundingInstructions).not.to.be.null;
+  });
 });
 
 describe('BalanceTransaction', function() {
@@ -2073,5 +2088,37 @@ describe('TestHelpers.TestClock', function() {
       frozen_time: 142,
     });
     expect(testClock).not.to.be.null;
+  });
+});
+
+describe('Terminal.Configuration', function() {
+  it('list method', async function() {
+    const configurations = await stripe.terminal.configurations.list();
+    expect(configurations).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const configuration = await stripe.terminal.configurations.retrieve(
+      'uc_123'
+    );
+    expect(configuration).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const configuration = await stripe.terminal.configurations.create();
+    expect(configuration).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const configuration = await stripe.terminal.configurations.update(
+      'uc_123',
+      {tipping: {usd: {fixed_amounts: [10]}}}
+    );
+    expect(configuration).not.to.be.null;
+  });
+
+  it('del method', async function() {
+    const deleted = await stripe.terminal.configurations.del('uc_123');
+    expect(deleted).not.to.be.null;
   });
 });
