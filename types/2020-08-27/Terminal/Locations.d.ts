@@ -19,6 +19,11 @@ declare module 'stripe' {
 
         address: Stripe.Address;
 
+        /**
+         * The ID of a configuration that will be used to customize all readers in this location.
+         */
+        configuration_overrides?: string;
+
         deleted?: void;
 
         /**
@@ -67,6 +72,11 @@ declare module 'stripe' {
          * A name for the location.
          */
         display_name: string;
+
+        /**
+         * The ID of a configuration that will be used to customize all readers in this location.
+         */
+        configuration_overrides?: string;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -125,6 +135,11 @@ declare module 'stripe' {
          * The full address of the location.
          */
         address?: LocationUpdateParams.Address;
+
+        /**
+         * The ID of a configuration that will be used to customize all readers in this location.
+         */
+        configuration_overrides?: string;
 
         /**
          * A name for the location.
