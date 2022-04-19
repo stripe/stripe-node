@@ -1,0 +1,78 @@
+name: Bug report
+description: Create a report to help us improve
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: repro-steps
+    attributes:
+      label: To Reproduce
+      description: Steps to reproduce the behavior
+      placeholder: |
+        1. Fetch a '...'
+        2. Update the '....'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: code-snippets
+    attributes:
+      label: Code snippets
+      description: If applicable, add code snippets to help explain your problem.
+      render: JavaScript
+    validations:
+      required: false
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: macOS
+    validations:
+      required: true
+  - type: input
+    id: language-version
+    attributes:
+      label: Node version
+      placeholder: Node v16.14.2
+    validations:
+      required: true
+  - type: input
+    id: lib-version
+    attributes:
+      label: Library version
+      placeholder: stripe-node v8.218.0
+    validations:
+      required: true
+  - type: input
+    id: api-version
+    attributes:
+      label: API version
+      description: See [Versioning](https://stripe.com/docs/api/versioning) in the API Reference to find which version you're using
+      placeholder: "2020-08-27"
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
+    validations:
+      required: false
