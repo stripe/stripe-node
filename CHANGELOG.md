@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 8.219.0 - 2022-04-21
+* [#1398](https://github.com/stripe/stripe-node/pull/1398) API Updates
+  * Add support for `expire` test helper method on resource `Refund`
+  * Change type of `BillingPortal.Configuration.application` from `string` to `expandable($Application)`
+  * Change `IssuingDisputeCreateParams.transaction` to be optional
+
 ## 8.218.0 - 2022-04-18
 * [#1396](https://github.com/stripe/stripe-node/pull/1396) API Updates
   * Add support for new resources `FundingInstructions` and `Terminal.Configuration`
