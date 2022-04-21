@@ -84,7 +84,7 @@ declare module 'stripe' {
       statement_descriptor: string | null;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
        */
       tax_code: string | Stripe.TaxCode | null;
 
@@ -225,7 +225,7 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
        */
       tax_code?: string;
 
@@ -345,7 +345,7 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
        */
       tax_code?: Stripe.Emptyable<string>;
 

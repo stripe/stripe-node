@@ -56,7 +56,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.TaxCode>>;
 
       /**
-       * A list of [all tax codes available](https://stripe.com/docs/tax/tax-codes) to add to Products in order to allow specific tax calculations.
+       * A list of [all tax codes available](https://stripe.com/docs/tax/tax-categories) to add to Products in order to allow specific tax calculations.
        */
       list(
         params?: TaxCodeListParams,
