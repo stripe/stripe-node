@@ -441,6 +441,11 @@ describe('Refund', function() {
     const refunds = await stripe.refunds.list({limit: 3});
     expect(refunds).not.to.be.null;
   });
+
+  it('expire method', async function() {
+    const refund = await stripe.testHelpers.refunds.expire('re_123');
+    expect(refund).not.to.be.null;
+  });
 });
 
 describe('Token', function() {
