@@ -54,7 +54,7 @@ declare module 'stripe' {
       tax_behavior: ShippingRate.TaxBehavior | null;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID. The Shipping tax code is `txcd_92010001`.
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
        */
       tax_code: string | Stripe.TaxCode | null;
 
@@ -158,7 +158,7 @@ declare module 'stripe' {
       tax_behavior?: ShippingRateCreateParams.TaxBehavior;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID. The Shipping tax code is `txcd_92010001`.
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
        */
       tax_code?: string;
 

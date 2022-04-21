@@ -309,7 +309,7 @@ declare module 'stripe' {
         statement_descriptor?: string;
 
         /**
-         * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
          */
         tax_code?: string;
 
