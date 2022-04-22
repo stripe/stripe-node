@@ -58,7 +58,7 @@ jobs:
           echo "Preparing .npmrc"
           echo '//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN' > .npmrc
           echo 'registry=https://registry.npmjs.org' >> .npmrc
-          npm publish --otp=$(oathtool -b --totp $NPM_OTP)
+          npm publish --otp="$(oathtool -b --totp $NPM_OTP)"
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           NPM_OTP: ${{ secrets.NPM_OTP }}
