@@ -71,5 +71,5 @@ jobs:
       - name: Start stripe-mock
         run: docker run -d -p 12111-12112:12111-12112 stripe/stripe-mock && sleep 5
 
-      - name: Lint, typecheck, and test
+      - name: Test
         run: yarn && yarn test
