@@ -43,11 +43,11 @@ jobs:
         os:
           - "ubuntu-latest"
         node:
+          - "18"
           - "16"
           - "14"
           - "12"
           - "10"
-          - "8"
     name: Node.js ${{ matrix.node }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
@@ -76,13 +76,5 @@ jobs:
       - name: Start stripe-mock
         run: docker run -d -p 12111-12112:12111-12112 stripe/stripe-mock && sleep 5
 
-      - name: Install dependencies (Node.js 8)
-        if: ${{ matrix.node == '8' }}
-        run: yarn install --ignore-engines
-
-      - name: Install dependencies
-        if: ${{ matrix.node != '8' }}
-        run: yarn install
-
       - name: Test
-        run: yarn test
+        run: yarn && yarn test
