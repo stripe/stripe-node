@@ -77,11 +77,11 @@ jobs:
         run: docker run -d -p 12111-12112:12111-12112 stripe/stripe-mock && sleep 5
 
       - name: Install dependencies (8)
-        if: ${{ matrix.node_version == 8 }}
+        if: ${{ matrix.node_version == "8" }}
         run: yarn install --ignore-engines
 
       - name: Install dependencies
-        if: ${{ matrix.node_version != 8 }}
+        if: ${{ matrix.node_version != "8" }}
         run: yarn install
 
       - name: Test
