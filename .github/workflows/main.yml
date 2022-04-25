@@ -55,6 +55,8 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
 
       - name: Print Node.js version
         run: node -v
