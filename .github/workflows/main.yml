@@ -77,4 +77,4 @@ jobs:
         run: docker run -d -p 12111-12112:12111-12112 stripe/stripe-mock && sleep 5
 
       - name: Test
-        run: yarn && yarn test
+        run: yarn install --production --ignore-engines && yarn test
