@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 ///<reference lib="esnext.asynciterable" />
 /// <reference types="node" />
 

@@ -76,7 +76,7 @@ declare module 'stripe' {
      */
     export const createFetchHttpClient: (
       /** When specified, interface should match the Web Fetch API function. */
-      fetchFn?: Function
+      fetchFn?: () => HttpClient
     ) => HttpClient<
       HttpClientResponse<
         /**

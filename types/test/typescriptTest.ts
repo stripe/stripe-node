@@ -12,17 +12,17 @@ let stripe = new Stripe('sk_test_123', {
   apiVersion: '2020-08-27',
 });
 
-// @ts-ignore lazily ignore apiVersion requirement.
-stripe = new Stripe('sk_test_123');
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+stripe = new Stripe('sk_test_123', undefined as any);
 
 stripe = new Stripe('sk_test_123', {
-  // @ts-ignore ignore specific apiVersion.
-  apiVersion: '2019-11-05',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  apiVersion: '2019-11-05' as any,
 });
 
 stripe = new Stripe('sk_test_123', {
-  // @ts-ignore ignore default apiVersion.
-  apiVersion: null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  apiVersion: null as any,
 });
 
 // Check config object.
