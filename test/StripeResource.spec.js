@@ -908,6 +908,83 @@ describe('StripeResource', () => {
     });
   });
 
+  describe('custom host on method', () => {
+    const makeResource = (stripe) => {
+      return new (StripeResource.extend({
+        path: 'resourceWithHost',
+
+        testMethod: stripeMethod({
+          method: 'GET',
+          host: 'some.host.stripe.com',
+        }),
+      }))(stripe);
+    };
+
+    it('is not impacted by the global host', (done) => {
+      const stripe = require('../lib/stripe')('sk_test', {
+        host: 'bad.host.stripe.com',
+      });
+
+      const scope = nock('https://some.host.stripe.com')
+        .get('/v1/resourceWithHost')
+        .reply(200, '{}');
+
+      makeResource(stripe).testMethod({}, (err, response) => {
+        done(err);
+        scope.done();
+      });
+    });
+
+    it('still lets users override the host on a per-request basis', (done) => {
+      const stripe = require('../lib/stripe')('sk_test');
+
+      const scope = nock('https://some.other.host.stripe.com')
+        .get('/v1/resourceWithHost')
+        .reply(200, '{}');
+
+      makeResource(stripe).testMethod(
+        {},
+        {host: 'some.other.host.stripe.com'},
+        (err, response) => {
+          done(err);
+          scope.done();
+        }
+      );
+    });
+  });
+
+  describe('method with fullPath', () => {
+    it('interpolates in parameters', (callback) => {
+      const handleRequest = (req, res) => {
+        expect(req.url).to.equal('/v1/parent/hello/child/world');
+
+        // Write back JSON to close out the server.
+        res.write('{}');
+        res.end();
+      };
+
+      testUtils.getTestServerStripe(
+        {},
+        handleRequest,
+        (err, stripe, closeServer) => {
+          const resource = new (StripeResource.extend({
+            test: stripeMethod({
+              method: 'GET',
+              fullPath: '/v1/parent/{param1}/child/{param2}',
+            }),
+          }))(stripe);
+
+          return resource.test('hello', 'world', (err, res) => {
+            closeServer();
+            // Spot check that we received a response.
+            expect(res).to.deep.equal({});
+            return callback(err);
+          });
+        }
+      );
+    });
+  });
+
   describe('streaming', () => {
     /**
      * Defines a fake resource with a `pdf` method
