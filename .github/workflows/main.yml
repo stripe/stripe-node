@@ -1,15 +1,18 @@
 name: CI
 
 on:
+  workflow_dispatch: {}
   push:
     branches: [ master ]
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
     branches: [ master ]
 
-  workflow_dispatch:
 
 jobs:
   build:
+    name: Build and test
     runs-on: ubuntu-latest
 
     steps:
@@ -78,3 +81,22 @@ jobs:
 
       - name: Test
         run: yarn && yarn test
+
+  publish:
+    name: Publish
+    if: (((github.event_name == 'workflow_dispatch')) && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/v')) && endsWith(github.actor, '-stripe'))
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get install -y oathtool
+      - name: Publish to NPM
+        run: |
+          set +x
+          echo "Preparing .npmrc"
+          echo '//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN' > .npmrc
+          echo 'registry=https://registry.npmjs.org' >> .npmrc
+          npm publish --otp="$(oathtool -b --totp $NPM_OTP)"
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_OTP: ${{ secrets.NPM_OTP }}
