@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: Build and test
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -40,6 +40,7 @@ jobs:
         run: yarn && yarn lint
 
   test:
+    name: Test (${{ matrix.node }})
     needs: [build]
     strategy:
       matrix:
@@ -51,7 +52,6 @@ jobs:
           - "14"
           - "12"
           - "10"
-    name: Node.js ${{ matrix.node }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
