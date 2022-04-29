@@ -97,7 +97,7 @@ jobs:
         run: |
           set +ex
           npm config set //registry.npmjs.org/:_authToken $NPM_AUTH_TOKEN
-          # validate the NPM user name
+          # print the NPM user name for validation
           npm whoami
           npm publish --otp="$(oathtool -b --totp $NPM_OTP)"
         env:
