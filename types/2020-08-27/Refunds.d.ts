@@ -54,7 +54,7 @@ declare module 'stripe' {
       /**
        * If the refund failed, the reason for refund failure if known. Possible values are `lost_or_stolen_card`, `expired_or_canceled_card`, or `unknown`.
        */
-      failure_reason?: string;
+      failure_reason?: Refund.FailureReason;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
@@ -86,7 +86,7 @@ declare module 'stripe' {
       /**
        * Status of the refund. For credit card refunds, this can be `pending`, `succeeded`, or `failed`. For other types of refunds, it can be `pending`, `succeeded`, `failed`, or `canceled`. Refer to our [refunds](https://stripe.com/docs/refunds#failed-refunds) documentation for more details.
        */
-      status: string | null;
+      status: Refund.Status | null;
 
       /**
        * If the accompanying transfer was reversed, the transfer reversal object. Only applicable if the charge was created using the destination parameter.
@@ -95,6 +95,11 @@ declare module 'stripe' {
     }
 
     namespace Refund {
+      type FailureReason =
+        | 'expired_or_canceled_card'
+        | 'lost_or_stolen_card'
+        | 'unknown';
+
       interface NextAction {
         /**
          * Contains the refund details.
@@ -137,6 +142,8 @@ declare module 'stripe' {
         | 'expired_uncaptured_charge'
         | 'fraudulent'
         | 'requested_by_customer';
+
+      type Status = 'succeeded' | 'failed' | 'canceled';
     }
 
     interface RefundCreateParams {
