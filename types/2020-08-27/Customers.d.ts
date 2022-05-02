@@ -27,6 +27,11 @@ declare module 'stripe' {
       balance: number;
 
       /**
+       * The current funds being held by Stripe on behalf of the customer. These funds can be applied towards payment intents with source "cash_balance".The settings[reconciliation_mode] field describes whether these funds are applied to such payment intents manually or automatically.
+       */
+      cash_balance?: Stripe.CashBalance | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -463,7 +468,7 @@ declare module 'stripe' {
 
       interface TaxIdDatum {
         /**
-         * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+         * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
          */
         type: TaxIdDatum.Type;
 
@@ -490,6 +495,7 @@ declare module 'stripe' {
           | 'ch_vat'
           | 'cl_tin'
           | 'es_cif'
+          | 'eu_oss_vat'
           | 'eu_vat'
           | 'gb_vat'
           | 'ge_vat'
@@ -952,6 +958,28 @@ declare module 'stripe' {
         params: CustomerSearchParams,
         options?: RequestOptions
       ): ApiSearchResultPromise<Stripe.Customer>;
+
+      /**
+       * Retrieves a customer's cash balance.
+       */
+      retrieveCashBalance(
+        id: string,
+        params?: CashBalanceRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
+      retrieveCashBalance(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
+
+      /**
+       * Updates a customer's cash balance.
+       */
+      updateCashBalance(
+        id: string,
+        params?: CashBalanceUpdateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
 
       /**
        * Creates an immutable transaction that updates the customer's credit [balance](https://stripe.com/docs/billing/customer/balance).

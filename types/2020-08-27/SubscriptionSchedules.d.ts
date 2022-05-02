@@ -17,6 +17,15 @@ declare module 'stripe' {
       object: 'subscription_schedule';
 
       /**
+       * ID of the Connect Application that created the schedule.
+       */
+      application:
+        | string
+        | Stripe.Application
+        | Stripe.DeletedApplication
+        | null;
+
+      /**
        * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
        */
       canceled_at: number | null;
