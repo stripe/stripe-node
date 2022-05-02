@@ -143,7 +143,11 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'requested_by_customer';
 
-      type Status = 'succeeded' | 'failed' | 'canceled';
+      type Status =
+        | 'pending'
+        | 'succeeded'
+        | 'failed'
+        | 'canceled';
     }
 
     interface RefundCreateParams {
