@@ -68,7 +68,9 @@ describe('auto pagination', function() {
       ['cus_4', 'cus_5', 'cus_6'],
       ['cus_7', 'cus_8'],
     ];
-    const OBJECT_IDS = ID_PAGES.flat();
+
+    // We can't use .flat() since this isn't supported in Node 10.
+    const OBJECT_IDS = [].concat(...ID_PAGES);
     const TOTAL_OBJECTS = OBJECT_IDS.length;
     const LIMIT = TOTAL_OBJECTS - 1;
 
