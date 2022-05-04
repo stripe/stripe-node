@@ -58,8 +58,6 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
-///<reference path='./OrderItems.d.ts' />
-///<reference path='./OrderReturns.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
@@ -149,7 +147,6 @@ declare module 'stripe' {
     issuerFraudRecords: Stripe.IssuerFraudRecordsResource;
     mandates: Stripe.MandatesResource;
     orders: Stripe.OrdersResource;
-    orderReturns: Stripe.OrderReturnsResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethods: Stripe.PaymentMethodsResource;

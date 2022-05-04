@@ -185,7 +185,7 @@ declare module 'stripe' {
         /**
          * Recipient name.
          */
-        name?: string | null;
+        name?: string;
 
         /**
          * Recipient phone (including extension).

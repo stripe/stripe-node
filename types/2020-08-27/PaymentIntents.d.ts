@@ -225,7 +225,7 @@ declare module 'stripe' {
           /**
            * Portion of the amount that corresponds to a tip.
            */
-          amount: number | null;
+          amount?: number;
         }
       }
 
@@ -1453,7 +1453,7 @@ declare module 'stripe' {
         /**
          * Recipient name.
          */
-        name?: string | null;
+        name?: string;
 
         /**
          * Recipient phone (including extension).

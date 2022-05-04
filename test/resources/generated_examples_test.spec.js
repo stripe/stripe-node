@@ -1848,65 +1848,6 @@ describe('Terminal.Reader', function() {
   });
 });
 
-describe('Order', function() {
-  it('create method', async function() {
-    const order = await stripe.orders.create({
-      currency: 'usd',
-      email: 'jenny.rosen@example.com',
-      items: [{type: 'sku', parent: 'sku_xxxxxxxxxxxxx'}],
-      shipping: {
-        name: 'Jenny Rosen',
-        address: {
-          line1: '1234 Main Street',
-          city: 'San Francisco',
-          state: 'CA',
-          country: 'US',
-          postal_code: '94111',
-        },
-      },
-    });
-    expect(order).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const order = await stripe.orders.retrieve('or_xxxxxxxxxxxxx');
-    expect(order).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const order = await stripe.orders.update('or_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
-    });
-    expect(order).not.to.be.null;
-  });
-
-  it('pay method', async function() {
-    const order = await stripe.orders.pay('or_xxxxxxxxxxxxx', {
-      source: 'tok_xxxx',
-    });
-    expect(order).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const orders = await stripe.orders.list({limit: 3});
-    expect(orders).not.to.be.null;
-  });
-});
-
-describe('OrderReturn', function() {
-  it('retrieve method', async function() {
-    const orderReturn = await stripe.orderReturns.retrieve(
-      'orret_xxxxxxxxxxxxx'
-    );
-    expect(orderReturn).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const orderReturns = await stripe.orderReturns.list({limit: 3});
-    expect(orderReturns).not.to.be.null;
-  });
-});
-
 describe('Sku', function() {
   it('create method', async function() {
     const sku = await stripe.skus.create({
