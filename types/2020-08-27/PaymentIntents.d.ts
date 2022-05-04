@@ -225,7 +225,7 @@ declare module 'stripe' {
           /**
            * Portion of the amount that corresponds to a tip.
            */
-          amount: number | null;
+          amount?: number;
         }
       }
 
