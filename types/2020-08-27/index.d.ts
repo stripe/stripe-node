@@ -42,6 +42,8 @@
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./FileLinks.d.ts' />
 ///<reference path='./Files.d.ts' />
+///<reference path='./FinancialConnections/AccountOwners.d.ts' />
+///<reference path='./FinancialConnections/AccountOwnerships.d.ts' />
 ///<reference path='./FinancialConnections/Accounts.d.ts' />
 ///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />

@@ -65,7 +65,7 @@ declare module 'stripe' {
         /**
          * The most recent information about the account's owners.
          */
-        ownership: string | Stripe.Ownership | null;
+        ownership: string | Stripe.FinancialConnections.AccountOwnership | null;
 
         /**
          * The state of the most recent attempt to refresh the account owners.
