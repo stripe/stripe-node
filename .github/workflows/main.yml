@@ -3,11 +3,11 @@ name: CI
 on:
   workflow_dispatch: {}
   push:
-    branches: [ master ]
+    branches: [ master, beta ]
     tags:
       - v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
-    branches: [ master ]
+    branches: [ master, beta ]
 
 
 jobs:
