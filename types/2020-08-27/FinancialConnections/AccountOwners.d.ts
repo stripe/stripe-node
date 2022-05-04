@@ -7,8 +7,14 @@ declare module 'stripe' {
        * The AccountOwner object.
        */
       interface AccountOwner {
+        /**
+         * Unique identifier for the object.
+         */
         id: string;
 
+        /**
+         * String representing the object's type. Objects of the same type share the same value.
+         */
         object: 'financial_connections.account_owner';
 
         /**
