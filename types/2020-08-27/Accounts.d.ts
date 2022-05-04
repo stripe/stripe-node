@@ -1900,6 +1900,11 @@ declare module 'stripe' {
         political_exposure?: Individual.PoliticalExposure;
 
         /**
+         * The individual's registered address.
+         */
+        registered_address?: Individual.RegisteredAddress;
+
+        /**
          * The last four digits of the individual's Social Security Number (U.S. only).
          */
         ssn_last_4?: string;
@@ -1933,6 +1938,10 @@ declare module 'stripe' {
         }
 
         type PoliticalExposure = 'existing' | 'none';
+
+        interface RegisteredAddress extends Omit<Stripe.AddressParam, 'line1'> {
+          line1?: string;
+        }
 
         interface Verification {
           /**
@@ -2981,6 +2990,11 @@ declare module 'stripe' {
         political_exposure?: Individual.PoliticalExposure;
 
         /**
+         * The individual's registered address.
+         */
+        registered_address?: Individual.RegisteredAddress;
+
+        /**
          * The last four digits of the individual's Social Security Number (U.S. only).
          */
         ssn_last_4?: string;
@@ -3014,6 +3028,10 @@ declare module 'stripe' {
         }
 
         type PoliticalExposure = 'existing' | 'none';
+
+        interface RegisteredAddress extends Omit<Stripe.AddressParam, 'line1'> {
+          line1?: string;
+        }
 
         interface Verification {
           /**
