@@ -685,6 +685,11 @@ declare module 'stripe' {
         bank_name: string | null;
 
         /**
+         * The ID of the Financial Connections Account used to create the payment method.
+         */
+        financial_connections_account?: string | null;
+
+        /**
          * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
          */
         fingerprint: string | null;
@@ -1205,6 +1210,11 @@ declare module 'stripe' {
          * Account type: checkings or savings. Defaults to checking if omitted.
          */
         account_type?: UsBankAccount.AccountType;
+
+        /**
+         * The ID of a Financial Connections Account to use as a payment method.
+         */
+        financial_connections_account?: string;
 
         /**
          * Routing number of the bank account.

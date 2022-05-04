@@ -42,6 +42,8 @@
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./FileLinks.d.ts' />
 ///<reference path='./Files.d.ts' />
+///<reference path='./FinancialConnections/Accounts.d.ts' />
+///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
@@ -187,6 +189,10 @@ declare module 'stripe' {
     };
     checkout: {
       sessions: Stripe.Checkout.SessionsResource;
+    };
+    financialConnections: {
+      accounts: Stripe.FinancialConnections.AccountsResource;
+      sessions: Stripe.FinancialConnections.SessionsResource;
     };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;
