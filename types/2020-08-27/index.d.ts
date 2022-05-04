@@ -22,6 +22,7 @@
 ///<reference path='./BitcoinTransactions.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
 ///<reference path='./Cards.d.ts' />
+///<reference path='./CashBalances.d.ts' />
 ///<reference path='./Charges.d.ts' />
 ///<reference path='./Checkout/Sessions.d.ts' />
 ///<reference path='./ConnectCollectionTransfers.d.ts' />

@@ -27,6 +27,15 @@ declare module 'stripe' {
       amount_total: number;
 
       /**
+       * ID of the Connect Application that created the quote.
+       */
+      application:
+        | string
+        | Stripe.Application
+        | Stripe.DeletedApplication
+        | null;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. Only applicable if there are no line items with recurring prices on the quote.
        */
       application_fee_amount: number | null;

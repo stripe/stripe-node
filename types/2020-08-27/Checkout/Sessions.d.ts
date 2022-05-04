@@ -339,7 +339,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, or `unknown`
+             * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -366,6 +366,7 @@ declare module 'stripe' {
               | 'ch_vat'
               | 'cl_tin'
               | 'es_cif'
+              | 'eu_oss_vat'
               | 'eu_vat'
               | 'gb_vat'
               | 'ge_vat'
@@ -448,6 +449,8 @@ declare module 'stripe' {
         interface PaymentMethodOptions {
           acss_debit?: PaymentMethodOptions.AcssDebit;
 
+          alipay?: PaymentMethodOptions.Alipay;
+
           boleto?: PaymentMethodOptions.Boleto;
 
           konbini?: PaymentMethodOptions.Konbini;
@@ -507,6 +510,8 @@ declare module 'stripe' {
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
+
+          interface Alipay {}
 
           interface Boleto {
             /**
@@ -1538,6 +1543,11 @@ declare module 'stripe' {
           acss_debit?: PaymentMethodOptions.AcssDebit;
 
           /**
+           * contains details about the Alipay payment method options.
+           */
+          alipay?: PaymentMethodOptions.Alipay;
+
+          /**
            * contains details about the Boleto payment method options.
            */
           boleto?: PaymentMethodOptions.Boleto;
@@ -1624,6 +1634,8 @@ declare module 'stripe' {
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
 
+          interface Alipay {}
+
           interface Boleto {
             /**
              * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
@@ -1635,7 +1647,7 @@ declare module 'stripe' {
             /**
              * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
              */
-            expires_after_days?: Stripe.Emptyable<number>;
+            expires_after_days?: number;
           }
 
           interface Oxxo {

@@ -25,7 +25,11 @@ declare module 'stripe' {
         /**
          * ID of the Connect Application that created the configuration.
          */
-        application: string | Stripe.Application | null;
+        application:
+          | string
+          | Stripe.Application
+          | Stripe.DeletedApplication
+          | null;
 
         business_profile: Configuration.BusinessProfile;
 
