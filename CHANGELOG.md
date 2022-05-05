@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 8.221.0 - 2022-05-05
+* [#1413](https://github.com/stripe/stripe-node/pull/1413) API Updates
+  * Add support for new resources `FinancialConnections.AccountOwner`, `FinancialConnections.AccountOwnership`, `FinancialConnections.Account`, and `FinancialConnections.Session`
+  * Add support for `financial_connections` on `Checkout.Session.payment_method_options.us_bank_account`, `CheckoutSessionCreateParams.payment_method_options.us_bank_account`, `Invoice.payment_settings.payment_method_options.us_bank_account`, `InvoiceCreateParams.payment_settings.payment_method_options.us_bank_account`, `InvoiceUpdateParams.payment_settings.payment_method_options.us_bank_account`, `PaymentIntent.payment_method_options.us_bank_account`, `PaymentIntentConfirmParams.payment_method_options.us_bank_account`, `PaymentIntentCreateParams.payment_method_options.us_bank_account`, `PaymentIntentUpdateParams.payment_method_options.us_bank_account`, `SetupIntent.payment_method_options.us_bank_account`, `SetupIntentConfirmParams.payment_method_options.us_bank_account`, `SetupIntentCreateParams.payment_method_options.us_bank_account`, `SetupIntentUpdateParams.payment_method_options.us_bank_account`, `Subscription.payment_settings.payment_method_options.us_bank_account`, `SubscriptionCreateParams.payment_settings.payment_method_options.us_bank_account`, and `SubscriptionUpdateParams.payment_settings.payment_method_options.us_bank_account`
+  * Add support for `financial_connections_account` on `PaymentIntentConfirmParams.payment_method_data.us_bank_account`, `PaymentIntentCreateParams.payment_method_data.us_bank_account`, `PaymentIntentUpdateParams.payment_method_data.us_bank_account`, `PaymentMethod.us_bank_account`, `PaymentMethodCreateParams.us_bank_account`, `SetupIntentConfirmParams.payment_method_data.us_bank_account`, `SetupIntentCreateParams.payment_method_data.us_bank_account`, and `SetupIntentUpdateParams.payment_method_data.us_bank_account`
+  
+* [#1410](https://github.com/stripe/stripe-node/pull/1410) API Updates
+  * Add support for `registered_address` on `AccountCreateParams.individual`, `AccountUpdateParams.individual`, `PersonCreateParams`, `PersonUpdateParams`, `Person`, `TokenCreateParams.account.individual`, and `TokenCreateParams.person`
+  * Change type of `PaymentIntent.amount_details.tip.amount` from `nullable(integer)` to `integer`
+  * Change `PaymentIntent.amount_details.tip.amount` to be optional
+  * Add support for `payment_method_data` on `SetupIntentConfirmParams`, `SetupIntentCreateParams`, and `SetupIntentUpdateParams`
+* [#1409](https://github.com/stripe/stripe-node/pull/1409) Update autoPagination tests to be hermetic.
+* [#1411](https://github.com/stripe/stripe-node/pull/1411) Enable CI on beta branch
+
 ## 8.220.0 - 2022-05-03
 * [#1407](https://github.com/stripe/stripe-node/pull/1407) API Updates
   * Add support for new resource `CashBalance`
