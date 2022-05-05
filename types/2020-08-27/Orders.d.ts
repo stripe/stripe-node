@@ -2840,6 +2840,18 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface OrderSubmitParams {
+      /**
+       * `expected_total` should always be set to the order's `amount_total` field. If they don't match, submitting the order will fail. This helps detect race conditions where something else concurrently modifies the order.
+       */
+      expected_total: number;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     class OrdersResource {
       /**
        * Creates a new open order object.
@@ -2916,6 +2928,15 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Order>>;
       reopen(
         id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Order>>;
+
+      /**
+       * Submitting an Order transitions the status to processing and creates a PaymentIntent object so the order can be paid. If the Order has an amount_total of 0, no PaymentIntent object will be created. Once the order is submitted, its contents cannot be changed, unless the [reopen](https://stripe.com/docs/api#reopen_order) method is called.
+       */
+      submit(
+        id: string,
+        params: OrderSubmitParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Order>>;
     }

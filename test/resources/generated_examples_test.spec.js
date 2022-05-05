@@ -2068,3 +2068,46 @@ describe('Terminal.Configuration', function() {
     expect(deleted).not.to.be.null;
   });
 });
+
+describe('Order', function() {
+  it('create method', async function() {
+    const order = await stripe.orders.create({
+      description: 'description',
+      currency: 'usd',
+      line_items: [{description: 'my line item'}],
+    });
+    expect(order).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const order = await stripe.orders.update('order_xyz');
+    expect(order).not.to.be.null;
+  });
+
+  it('listLineItems method', async function() {
+    const lineItems = await stripe.orders.listLineItems('order_xyz');
+    expect(lineItems).not.to.be.null;
+  });
+
+  it('cancel method', async function() {
+    const order = await stripe.orders.cancel('order_xyz');
+    expect(order).not.to.be.null;
+  });
+
+  it('reopen method', async function() {
+    const order = await stripe.orders.reopen('order_xyz');
+    expect(order).not.to.be.null;
+  });
+
+  it('submit method', async function() {
+    const order = await stripe.orders.submit('order_xyz', {
+      expected_total: 100,
+    });
+    expect(order).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const order = await stripe.orders.update('order_xyz');
+    expect(order).not.to.be.null;
+  });
+});
