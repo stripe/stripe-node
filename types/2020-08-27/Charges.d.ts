@@ -148,11 +148,6 @@ declare module 'stripe' {
       on_behalf_of: string | Stripe.Account | null;
 
       /**
-       * ID of the order this charge is for if one exists.
-       */
-      order: string | Stripe.Order | null;
-
-      /**
        * Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
        */
       outcome: Charge.Outcome | null;
@@ -1723,7 +1718,7 @@ declare module 'stripe' {
         /**
          * Recipient name.
          */
-        name?: string | null;
+        name?: string;
 
         /**
          * Recipient phone (including extension).
