@@ -535,6 +535,8 @@ declare module 'stripe' {
           }
 
           interface UsBankAccount {
+            financial_connections?: UsBankAccount.FinancialConnections;
+
             /**
              * Bank account verification method.
              */
@@ -542,6 +544,26 @@ declare module 'stripe' {
           }
 
           namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. The `payment_method` permission must be included.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+               */
+              return_url?: string;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
             type VerificationMethod = 'automatic' | 'instant';
           }
         }
@@ -1659,12 +1681,32 @@ declare module 'stripe' {
 
           interface UsBankAccount {
             /**
+             * Additional fields for Financial Connections Session creation
+             */
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
              * Verification method for the intent
              */
             verification_method?: UsBankAccount.VerificationMethod;
           }
 
           namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
             type VerificationMethod = 'automatic' | 'instant';
           }
 
