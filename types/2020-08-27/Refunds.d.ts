@@ -57,6 +57,11 @@ declare module 'stripe' {
       failure_reason?: string;
 
       /**
+       * Email to which refund instructions, if required, are sent to.
+       */
+      instructions_email?: string;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata | null;
@@ -148,6 +153,8 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      instructions_email?: string;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
