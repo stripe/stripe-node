@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 8.222.0 - 2022-05-05
+* [#1414](https://github.com/stripe/stripe-node/pull/1414) API Updates
+  * Add support for `default_price_data` on `ProductCreateParams`
+  * Add support for `default_price` on `ProductUpdateParams` and `Product`
+  * Add support for `instructions_email` on `RefundCreateParams` and `Refund`
+  
+
 ## 8.221.0 - 2022-05-05
 * [#1413](https://github.com/stripe/stripe-node/pull/1413) API Updates
   * Add support for new resources `FinancialConnections.AccountOwner`, `FinancialConnections.AccountOwnership`, `FinancialConnections.Account`, and `FinancialConnections.Session`
