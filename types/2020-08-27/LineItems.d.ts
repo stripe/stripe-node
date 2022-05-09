@@ -17,9 +17,19 @@ declare module 'stripe' {
       object: 'item';
 
       /**
+       * Total discount amount applied. If no discounts were applied, defaults to 0.
+       */
+      amount_discount?: number;
+
+      /**
        * Total before any discounts or taxes are applied.
        */
       amount_subtotal: number;
+
+      /**
+       * Total tax amount applied. If no tax was applied, defaults to 0.
+       */
+      amount_tax?: number;
 
       /**
        * Total after discounts and taxes.
@@ -45,6 +55,13 @@ declare module 'stripe' {
        * The price used to generate the line item.
        */
       price: Stripe.Price | null;
+
+      /**
+       * The ID of the product for this line item.
+       *
+       * This will always be the same as `price.product`.
+       */
+      product?: string | Stripe.Product | Stripe.DeletedProduct;
 
       /**
        * The quantity of products being purchased.

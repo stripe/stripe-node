@@ -1848,65 +1848,6 @@ describe('Terminal.Reader', function() {
   });
 });
 
-describe('Order', function() {
-  it('create method', async function() {
-    const order = await stripe.orders.create({
-      currency: 'usd',
-      email: 'jenny.rosen@example.com',
-      items: [{type: 'sku', parent: 'sku_xxxxxxxxxxxxx'}],
-      shipping: {
-        name: 'Jenny Rosen',
-        address: {
-          line1: '1234 Main Street',
-          city: 'San Francisco',
-          state: 'CA',
-          country: 'US',
-          postal_code: '94111',
-        },
-      },
-    });
-    expect(order).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const order = await stripe.orders.retrieve('or_xxxxxxxxxxxxx');
-    expect(order).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const order = await stripe.orders.update('or_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
-    });
-    expect(order).not.to.be.null;
-  });
-
-  it('pay method', async function() {
-    const order = await stripe.orders.pay('or_xxxxxxxxxxxxx', {
-      source: 'tok_xxxx',
-    });
-    expect(order).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const orders = await stripe.orders.list({limit: 3});
-    expect(orders).not.to.be.null;
-  });
-});
-
-describe('OrderReturn', function() {
-  it('retrieve method', async function() {
-    const orderReturn = await stripe.orderReturns.retrieve(
-      'orret_xxxxxxxxxxxxx'
-    );
-    expect(orderReturn).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const orderReturns = await stripe.orderReturns.list({limit: 3});
-    expect(orderReturns).not.to.be.null;
-  });
-});
-
 describe('Sku', function() {
   it('create method', async function() {
     const sku = await stripe.skus.create({
@@ -2125,5 +2066,89 @@ describe('Terminal.Configuration', function() {
   it('del method', async function() {
     const deleted = await stripe.terminal.configurations.del('uc_123');
     expect(deleted).not.to.be.null;
+  });
+});
+
+describe('Order', function() {
+  it('create method', async function() {
+    const order = await stripe.orders.create({
+      description: 'description',
+      currency: 'usd',
+      line_items: [{description: 'my line item'}],
+    });
+    expect(order).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const order = await stripe.orders.update('order_xyz');
+    expect(order).not.to.be.null;
+  });
+
+  it('listLineItems method', async function() {
+    const lineItems = await stripe.orders.listLineItems('order_xyz');
+    expect(lineItems).not.to.be.null;
+  });
+
+  it('cancel method', async function() {
+    const order = await stripe.orders.cancel('order_xyz');
+    expect(order).not.to.be.null;
+  });
+
+  it('reopen method', async function() {
+    const order = await stripe.orders.reopen('order_xyz');
+    expect(order).not.to.be.null;
+  });
+
+  it('submit method', async function() {
+    const order = await stripe.orders.submit('order_xyz', {
+      expected_total: 100,
+    });
+    expect(order).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const order = await stripe.orders.update('order_xyz');
+    expect(order).not.to.be.null;
+  });
+});
+
+describe('FinancialConnections.Account', function() {
+  it('retrieve method', async function() {
+    const account = await stripe.financialConnections.accounts.retrieve(
+      'fca_xyz'
+    );
+    expect(account).not.to.be.null;
+  });
+
+  it('refresh method', async function() {
+    const account = await stripe.financialConnections.accounts.refresh(
+      'fca_xyz',
+      {features: ['balance']}
+    );
+    expect(account).not.to.be.null;
+  });
+
+  it('disconnect method', async function() {
+    const account = await stripe.financialConnections.accounts.disconnect(
+      'fca_xyz'
+    );
+    expect(account).not.to.be.null;
+  });
+});
+
+describe('FinancialConnections.Session', function() {
+  it('create method', async function() {
+    const session = await stripe.financialConnections.sessions.create({
+      account_holder: {type: 'customer', customer: 'cus_123'},
+      permissions: ['balances'],
+    });
+    expect(session).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const session = await stripe.financialConnections.sessions.retrieve(
+      'fcsess_xyz'
+    );
+    expect(session).not.to.be.null;
   });
 });
