@@ -1,22 +1,58 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CI
 
 on:
+  workflow_dispatch: {}
   push:
-    branches: [ master ]
+    branches: [ master, beta ]
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
-    branches: [ master ]
+    branches: [ master, beta ]
 
-  workflow_dispatch:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Node check
+        run: find . -name "*.js" -type f -not -path "./node_modules/*" -not -path "./\.*" -exec node --check {} \;
+
+      - name: Lint
+        run: yarn && yarn lint
+
+  test:
+    name: Test (${{ matrix.node }})
+    needs: [build]
     strategy:
       matrix:
-        node: [ '10', '12', '14', '16' ]
-
+        os:
+          - "ubuntu-latest"
+        node:
+          - "18"
+          - "16"
+          - "14"
+          - "12"
+          - "10"
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
 
@@ -24,6 +60,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
+
+      - name: Print Node.js version
+        run: node -v
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -40,5 +79,27 @@ jobs:
       - name: Start stripe-mock
         run: docker run -d -p 12111-12112:12111-12112 stripe/stripe-mock && sleep 5
 
-      - name: Lint, typecheck, and test
+      - name: Test
         run: yarn && yarn test
+
+  publish:
+    name: Publish
+    if: >-
+      (github.event_name == 'workflow_dispatch' || github.event_name == 'push') &&
+      startsWith(github.ref, 'refs/tags/v') &&
+      endsWith(github.actor, '-stripe')
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: sudo apt-get install -y oathtool
+      - name: Publish to NPM
+        run: |
+          set +ex
+          npm config set //registry.npmjs.org/:_authToken $NPM_AUTH_TOKEN
+          # print the NPM user name for validation
+          npm whoami
+          npm publish --otp="$(oathtool -b --totp $NPM_OTP)"
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_OTP: ${{ secrets.NPM_OTP }}

@@ -41,7 +41,7 @@ declare module 'stripe' {
        *
        * For example, you might have a single "gold" product that has plans for $10/month, $100/year, €9/month, and €90/year.
        *
-       * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and prices](https://stripe.com/docs/billing/prices-guide).
+       * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and prices](https://stripe.com/docs/products-prices/overview).
        */
       plan: Stripe.Plan;
 
@@ -51,7 +51,7 @@ declare module 'stripe' {
        *
        * For example, you might have a single "gold" product that has prices for $10/month, $100/year, and €9 once.
        *
-       * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription), [create an invoice](https://stripe.com/docs/billing/invoices/create), and more about [products and prices](https://stripe.com/docs/billing/prices-guide).
+       * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription), [create an invoice](https://stripe.com/docs/billing/invoices/create), and more about [products and prices](https://stripe.com/docs/products-prices/overview).
        */
       price: Stripe.Price;
 
@@ -200,7 +200,7 @@ declare module 'stripe' {
         product: string;
 
         /**
-         * The recurring components of a price such as `interval` and `usage_type`.
+         * The recurring components of a price such as `interval` and `interval_count`.
          */
         recurring: PriceData.Recurring;
 
@@ -350,7 +350,7 @@ declare module 'stripe' {
         product: string;
 
         /**
-         * The recurring components of a price such as `interval` and `usage_type`.
+         * The recurring components of a price such as `interval` and `interval_count`.
          */
         recurring: PriceData.Recurring;
 

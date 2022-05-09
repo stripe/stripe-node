@@ -1,5 +1,222 @@
 # CHANGELOG
 
+## 8.222.0 - 2022-05-05
+* [#1414](https://github.com/stripe/stripe-node/pull/1414) API Updates
+  * Add support for `default_price_data` on `ProductCreateParams`
+  * Add support for `default_price` on `ProductUpdateParams` and `Product`
+  * Add support for `instructions_email` on `RefundCreateParams` and `Refund`
+  
+
+## 8.221.0 - 2022-05-05
+* [#1413](https://github.com/stripe/stripe-node/pull/1413) API Updates
+  * Add support for new resources `FinancialConnections.AccountOwner`, `FinancialConnections.AccountOwnership`, `FinancialConnections.Account`, and `FinancialConnections.Session`
+  * Add support for `financial_connections` on `Checkout.Session.payment_method_options.us_bank_account`, `CheckoutSessionCreateParams.payment_method_options.us_bank_account`, `Invoice.payment_settings.payment_method_options.us_bank_account`, `InvoiceCreateParams.payment_settings.payment_method_options.us_bank_account`, `InvoiceUpdateParams.payment_settings.payment_method_options.us_bank_account`, `PaymentIntent.payment_method_options.us_bank_account`, `PaymentIntentConfirmParams.payment_method_options.us_bank_account`, `PaymentIntentCreateParams.payment_method_options.us_bank_account`, `PaymentIntentUpdateParams.payment_method_options.us_bank_account`, `SetupIntent.payment_method_options.us_bank_account`, `SetupIntentConfirmParams.payment_method_options.us_bank_account`, `SetupIntentCreateParams.payment_method_options.us_bank_account`, `SetupIntentUpdateParams.payment_method_options.us_bank_account`, `Subscription.payment_settings.payment_method_options.us_bank_account`, `SubscriptionCreateParams.payment_settings.payment_method_options.us_bank_account`, and `SubscriptionUpdateParams.payment_settings.payment_method_options.us_bank_account`
+  * Add support for `financial_connections_account` on `PaymentIntentConfirmParams.payment_method_data.us_bank_account`, `PaymentIntentCreateParams.payment_method_data.us_bank_account`, `PaymentIntentUpdateParams.payment_method_data.us_bank_account`, `PaymentMethod.us_bank_account`, `PaymentMethodCreateParams.us_bank_account`, `SetupIntentConfirmParams.payment_method_data.us_bank_account`, `SetupIntentCreateParams.payment_method_data.us_bank_account`, and `SetupIntentUpdateParams.payment_method_data.us_bank_account`
+  
+* [#1410](https://github.com/stripe/stripe-node/pull/1410) API Updates
+  * Add support for `registered_address` on `AccountCreateParams.individual`, `AccountUpdateParams.individual`, `PersonCreateParams`, `PersonUpdateParams`, `Person`, `TokenCreateParams.account.individual`, and `TokenCreateParams.person`
+  * Change type of `PaymentIntent.amount_details.tip.amount` from `nullable(integer)` to `integer`
+  * Change `PaymentIntent.amount_details.tip.amount` to be optional
+  * Add support for `payment_method_data` on `SetupIntentConfirmParams`, `SetupIntentCreateParams`, and `SetupIntentUpdateParams`
+* [#1409](https://github.com/stripe/stripe-node/pull/1409) Update autoPagination tests to be hermetic.
+* [#1411](https://github.com/stripe/stripe-node/pull/1411) Enable CI on beta branch
+
+## 8.220.0 - 2022-05-03
+* [#1407](https://github.com/stripe/stripe-node/pull/1407) API Updates
+  * Add support for new resource `CashBalance`
+  * Change type of `BillingPortal.Configuration.application` from `$Application` to `deletable($Application)`
+  * Add support for `alipay` on `Checkout.Session.payment_method_options` and `CheckoutSessionCreateParams.payment_method_options`
+  * Change type of `CheckoutSessionCreateParams.payment_method_options.konbini.expires_after_days` from `emptyStringable(integer)` to `integer`
+  * Add support for new value `eu_oss_vat` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, and `TaxId.type`
+  * Add support for new value `eu_oss_vat` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
+  * Add support for `cash_balance` on `Customer`
+  * Add support for `application` on `Invoice`, `Quote`, `SubscriptionSchedule`, and `Subscription`
+* [#1403](https://github.com/stripe/stripe-node/pull/1403) Add tests for specifying a custom host on StripeMethod.
+
+## 8.219.0 - 2022-04-21
+* [#1398](https://github.com/stripe/stripe-node/pull/1398) API Updates
+  * Add support for `expire` test helper method on resource `Refund`
+  * Change type of `BillingPortal.Configuration.application` from `string` to `expandable($Application)`
+  * Change `IssuingDisputeCreateParams.transaction` to be optional
+
+## 8.218.0 - 2022-04-18
+* [#1396](https://github.com/stripe/stripe-node/pull/1396) API Updates
+  * Add support for new resources `FundingInstructions` and `Terminal.Configuration`
+  * Add support for `create_funding_instructions` method on resource `Customer`
+  * Add support for new value `customer_balance` as a payment method `type`.
+  * Add support for `customer_balance` on `Charge.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, and `PaymentMethod`
+  * Add support for `cash_balance` on `CustomerCreateParams` and `CustomerUpdateParams`
+  * Add support for `amount_details` on `PaymentIntent`
+  * Add support for `display_bank_transfer_instructions` on `PaymentIntent.next_action`
+  * Add support for `configuration_overrides` on `Terminal.Location`, `TerminalLocationCreateParams`, and `TerminalLocationUpdateParams`
+
+## 8.217.0 - 2022-04-13
+* [#1395](https://github.com/stripe/stripe-node/pull/1395) API Updates
+  * Add support for `increment_authorization` method on resource `PaymentIntent`
+  * Add support for `incremental_authorization_supported` on `Charge.payment_method_details.card_present`
+  * Add support for `request_incremental_authorization_support` on `PaymentIntent.payment_method_options.card_present`, `PaymentIntentConfirmParams.payment_method_options.card_present`, `PaymentIntentCreateParams.payment_method_options.card_present`, and `PaymentIntentUpdateParams.payment_method_options.card_present`
+
+## 8.216.0 - 2022-04-08
+* [#1391](https://github.com/stripe/stripe-node/pull/1391) API Updates
+  * Add support for `apply_customer_balance` method on resource `PaymentIntent`
+  * Add support for new value `cash_balance.funds_available` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
+## 8.215.0 - 2022-04-01
+* [#1389](https://github.com/stripe/stripe-node/pull/1389) API Updates
+  * Add support for `bank_transfer_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for `capture_before` on `Charge.payment_method_details.card_present`
+  * Add support for `address` and `name` on `Checkout.Session.customer_details`
+  * Add support for `customer_balance` on `Invoice.payment_settings.payment_method_options`, `InvoiceCreateParams.payment_settings.payment_method_options`, `InvoiceUpdateParams.payment_settings.payment_method_options`, `Subscription.payment_settings.payment_method_options`, `SubscriptionCreateParams.payment_settings.payment_method_options`, and `SubscriptionUpdateParams.payment_settings.payment_method_options`
+  * Add support for new value `customer_balance` on enums `Invoice.payment_settings.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Subscription.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_types[]`
+  * Add support for `request_extended_authorization` on `PaymentIntent.payment_method_options.card_present`, `PaymentIntentConfirmParams.payment_method_options.card_present`, `PaymentIntentCreateParams.payment_method_options.card_present`, and `PaymentIntentUpdateParams.payment_method_options.card_present`
+  * Add support for new values `payment_intent.partially_funded`, `terminal.reader.action_failed`, and `terminal.reader.action_succeeded` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+  
+* [#1388](https://github.com/stripe/stripe-node/pull/1388) Stop sending Content-Length header for verbs which don't have bodies.
+  * Fixes https://github.com/stripe/stripe-node/issues/1360.
+
+## 8.214.0 - 2022-03-30
+* [#1386](https://github.com/stripe/stripe-node/pull/1386) API Updates
+  * Add support for `cancel_action`, `process_payment_intent`, `process_setup_intent`, and `set_reader_display` methods on resource `Terminal.Reader`
+  * Change `Charge.failure_balance_transaction`, `Invoice.payment_settings.payment_method_options.us_bank_account`, `PaymentIntent.next_action.verify_with_microdeposits.microdeposit_type`, `SetupIntent.next_action.verify_with_microdeposits.microdeposit_type`, and `Subscription.payment_settings.payment_method_options.us_bank_account` to be required
+  * Add support for `action` on `Terminal.Reader`
+
+## 8.213.0 - 2022-03-28
+* [#1383](https://github.com/stripe/stripe-node/pull/1383) API Updates
+  * Add support for Search API
+    * Add support for `search` method on resources `Charge`, `Customer`, `Invoice`, `PaymentIntent`, `Price`, `Product`, and `Subscription`
+* [#1384](https://github.com/stripe/stripe-node/pull/1384) Bump qs package to latest.
+
+## 8.212.0 - 2022-03-25
+* [#1381](https://github.com/stripe/stripe-node/pull/1381) API Updates
+  * Add support for PayNow and US Bank Accounts Debits payments
+      * **Charge** ([API ref](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details))
+          * Add support for `paynow` and `us_bank_account` on `Charge.payment_method_details`
+      * **Customer** ([API ref](https://stripe.com/docs/api/payment_methods/customer_list#list_customer_payment_methods-type))
+          * Add support for new values `paynow` and `us_bank_account` on enum `CustomerListPaymentMethodsParams.type`
+      * **Payment Intent** ([API ref](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method_options))
+          * Add support for `paynow` and `us_bank_account` on `payment_method_options` on `PaymentIntent`, `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, and `PaymentIntentConfirmParams`
+          * Add support for `paynow` and `us_bank_account` on `payment_method_data` on `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, and `PaymentIntentConfirmParams`
+          * Add support for `paynow_display_qr_code` on `PaymentIntent.next_action`
+          * Add support for new values `paynow` and `us_bank_account` on enums `payment_method_data.type` on `PaymentIntentCreateParams`, and `PaymentIntentUpdateParams`, and `PaymentIntentConfirmParams`
+      * **Setup Intent** ([API ref](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method_options))
+          * Add support for `us_bank_account` on `payment_method_options` on `SetupIntent`, `SetupIntentCreateParams`, `SetupIntentUpdateParams`, and `SetupIntentConfirmParams`
+      * **Setup Attempt** ([API ref](https://stripe.com/docs/api/setup_attempts/object#setup_attempt_object-payment_method_details))
+          * Add support for `us_bank_account` on `SetupAttempt.payment_method_details`
+      * **Payment Method** ([API ref](https://stripe.com/docs/api/payment_methods/object#payment_method_object-paynow))
+          * Add support for `paynow` and `us_bank_account` on `PaymentMethod` and `PaymentMethodCreateParams`
+          * Add support for `us_bank_account` on `PaymentMethodUpdateParams`
+          * Add support for new values `paynow` and `us_bank_account` on enums `PaymentMethod.type`, `PaymentMethodCreateParams.type`. and `PaymentMethodListParams.type`
+      * **Checkout Session** ([API ref](https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types))
+          * Add support for `us_bank_account` on `payment_method_options` on `Checkout.Session` and `CheckoutSessionCreateParams`
+          * Add support for new values `paynow` and `us_bank_account` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+      * **Invoice** ([API ref](https://stripe.com/docs/api/invoices/object#invoice_object-payment_settings-payment_method_types))
+          * Add support for `us_bank_account` on `payment_settings.payment_method_options` on `Invoice`, `InvoiceCreateParams`, and `InvoiceUpdateParams`
+          * Add support for new values `paynow` and `us_bank_account` on enums `payment_settings.payment_method_types[]` on `Invoice`, `InvoiceCreateParams`, and `InvoiceUpdateParams`
+      * **Subscription** ([API ref](https://stripe.com/docs/api/subscriptions/object#subscription_object-payment_settings-payment_method_types))
+          * Add support for `us_bank_account` on `Subscription.payment_settings.payment_method_options`, `SubscriptionCreateParams.payment_settings.payment_method_options`, and `SubscriptionUpdateParams.payment_settings.payment_method_options`
+          * Add support for new values `paynow` and `us_bank_account` on enums `payment_settings.payment_method_types[]` on `Subscription`, `SubscriptionCreateParams`, and `SubscriptionUpdateParams`
+      * **Account capabilities** ([API ref](https://stripe.com/docs/api/accounts/object#account_object-capabilities))
+          * Add support for `paynow_payments` on `capabilities` on `Account`, `AccountCreateParams`, and `AccountUpdateParams`
+  * Add support for `failure_balance_transaction` on `Charge`
+  * Add support for `capture_method` on `afterpay_clearpay`, `card`, and `klarna` on `payment_method_options` on
+  `PaymentIntent`, `PaymentIntentCreateParams`, `PaymentIntentUpdateParams`, and `PaymentIntentConfirmParams` ([API ref](https://stripe.com/docs/api/payment_intents/object#payment_intent_object-payment_method_options-afterpay_clearpay-capture_method))
+  * Add additional support for verify microdeposits on Payment Intent and Setup Intent ([API ref](https://stripe.com/docs/api/payment_intents/verify_microdeposits))
+      * Add support for `microdeposit_type` on `next_action.verify_with_microdeposits` on `PaymentIntent` and `SetupIntent`
+      * Add support for `descriptor_code` on `PaymentIntentVerifyMicrodepositsParams` and `SetupIntentVerifyMicrodepositsParams`
+  * Add support for `test_clock` on `SubscriptionListParams` ([API ref](https://stripe.com/docs/api/subscriptions/list#list_subscriptions-test_clock))
+* [#1375](https://github.com/stripe/stripe-node/pull/1375) Update error types to be namespaced under Stripe.error
+* [#1380](https://github.com/stripe/stripe-node/pull/1380) Force update minimist dependency
+
+## 8.211.0 - 2022-03-23
+* [#1377](https://github.com/stripe/stripe-node/pull/1377) API Updates
+  * Add support for `cancel` method on resource `Refund`
+  * Add support for new values `bg_uic`, `hu_tin`, and `si_tin` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, and `TaxId.type`
+  * Add support for new values `bg_uic`, `hu_tin`, and `si_tin` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
+  * Change `InvoiceCreateParams.customer` to be optional
+  * Add support for `test_clock` on `QuoteListParams`
+  * Add support for new values `test_helpers.test_clock.advancing`, `test_helpers.test_clock.created`, `test_helpers.test_clock.deleted`, `test_helpers.test_clock.internal_failure`, and `test_helpers.test_clock.ready` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
+## 8.210.0 - 2022-03-18
+* [#1372](https://github.com/stripe/stripe-node/pull/1372) API Updates
+  * Add support for `status` on `Card`
+
+## 8.209.0 - 2022-03-11
+* [#1368](https://github.com/stripe/stripe-node/pull/1368) API Updates
+  * Add support for `mandate` on `Charge.payment_method_details.card`
+  * Add support for `mandate_options` on `PaymentIntentCreateParams.payment_method_options.card`, `PaymentIntentUpdateParams.payment_method_options.card`, `PaymentIntentConfirmParams.payment_method_options.card`, `PaymentIntent.payment_method_options.card`, `SetupIntentCreateParams.payment_method_options.card`, `SetupIntentUpdateParams.payment_method_options.card`, `SetupIntentConfirmParams.payment_method_options.card`, and `SetupIntent.payment_method_options.card`
+  * Add support for `card_await_notification` on `PaymentIntent.next_action`
+  * Add support for `customer_notification` on `PaymentIntent.processing.card`
+  * Change `PaymentLinkCreateParams.line_items` to be required, and change `PaymentLink.create` to require `PaymentLinkCreateParams`
+
+* [#1364](https://github.com/stripe/stripe-node/pull/1364) Update search pagination to use page param instead of next_page.
+
+## 8.208.0 - 2022-03-09
+* [#1366](https://github.com/stripe/stripe-node/pull/1366) API Updates
+  * Add support for `test_clock` on `CustomerListParams`
+  * Change `Invoice.test_clock`, `InvoiceItem.test_clock`, `Quote.test_clock`, `Subscription.test_clock`, and `SubscriptionSchedule.test_clock` to be required
+
+## 8.207.0 - 2022-03-02
+* [#1363](https://github.com/stripe/stripe-node/pull/1363) API Updates
+  * Add support for new resources `CreditedItems` and `ProrationDetails`
+  * Add support for `proration_details` on `InvoiceLineItem`
+
+## 8.206.0 - 2022-03-01
+* [#1361](https://github.com/stripe/stripe-node/pull/1361) [#1362](https://github.com/stripe/stripe-node/pull/1362) API Updates
+  * Add support for new resource `TestHelpers.TestClock`
+  * Add support for `test_clock` on `CustomerCreateParams`, `Customer`, `Invoice`, `InvoiceItem`, `QuoteCreateParams`, `Quote`, `Subscription`, and `SubscriptionSchedule`
+  * Add support for `pending_invoice_items_behavior` on `InvoiceCreateParams`
+  * Change type of `ProductUpdateParams.url` from `string` to `emptyStringable(string)`
+  * Add support for `next_action` on `Refund`
+
+## 8.205.0 - 2022-02-25
+* [#1098](https://github.com/stripe/stripe-node/pull/1098) Typescript: add declaration for `onDone` on `autoPagingEach`
+* [#1357](https://github.com/stripe/stripe-node/pull/1357) Properly handle API errors with unknown error types
+* [#1359](https://github.com/stripe/stripe-node/pull/1359) API Updates
+  * Change `BillingPortalConfiguration` `.business_profile.privacy_policy_url` and `.business_profile.terms_of_service_url` to be optional on requests and responses
+
+  * Add support for `konbini_payments` on `AccountUpdateParams.capabilities`, `AccountCreateParams.capabilities`, and `Account.capabilities`
+  * Add support for `konbini` on `Charge.payment_method_details`,
+  * Add support for `.payment_method_options.konbini` and `.payment_method_data.konbini` on the `PaymentIntent` API.
+  * Add support for `.payment_settings.payment_method_options.konbini` on the `Invoice` API.
+  * Add support for `.payment_method_options.konbini` on the `Subscription` API
+  * Add support for `.payment_method_options.konbini` on the `CheckoutSession` API
+  * Add support for `konbini` on the `PaymentMethod` API.
+  * Add support for `konbini_display_details` on `PaymentIntent.next_action`
+* [#1311](https://github.com/stripe/stripe-node/pull/1311) update documentation to use appInfo
+
+## 8.204.0 - 2022-02-23
+* [#1354](https://github.com/stripe/stripe-node/pull/1354) API Updates
+  * Add support for `setup_future_usage` on `PaymentIntentCreateParams.payment_method_options.*`
+  * Add support for new values `bbpos_wisepad3` and `stripe_m2` on enums `TerminalReaderListParams.device_type` and `Terminal.Reader.device_type`
+  * Add support for `object` on `ExternalAccountListParams` (fixes #1351)
+
+## 8.203.0 - 2022-02-15
+* [#1350](https://github.com/stripe/stripe-node/pull/1350) API Updates
+  * Add support for `verify_microdeposits` method on resources `PaymentIntent` and `SetupIntent`
+  * Add support for new value `grabpay` on enums `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Invoice.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, `SubscriptionUpdateParams.payment_settings.payment_method_types[]`, and `Subscription.payment_settings.payment_method_types[]`
+* [#1348](https://github.com/stripe/stripe-node/pull/1348) API Updates
+  * Add support for `pin` on `IssuingCardUpdateParams`
+
+## 8.202.0 - 2022-02-03
+* [#1344](https://github.com/stripe/stripe-node/pull/1344) API Updates
+  * Add support for new value `au_becs_debit` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Change type of `Refund.reason` from `string` to `enum('duplicate'|'expired_uncaptured_charge'|'fraudulent'|'requested_by_customer')`
+
+## 8.201.0 - 2022-01-28
+* [#1342](https://github.com/stripe/stripe-node/pull/1342) Bump nanoid from 3.1.20 to 3.2.0.
+* [#1335](https://github.com/stripe/stripe-node/pull/1335) Fix StripeResource to successfully import TIMEOUT_ERROR_CODE.
+* [#1339](https://github.com/stripe/stripe-node/pull/1339) Bump node-fetch from 2.6.2 to 2.6.7
+
+## 8.200.0 - 2022-01-25
+* [#1338](https://github.com/stripe/stripe-node/pull/1338) API Updates
+  * Change `Checkout.Session.payment_link` to be required
+  * Add support for `phone_number_collection` on `PaymentLinkCreateParams` and `PaymentLink`
+  * Add support for new values `payment_link.created` and `payment_link.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+  * Add support for new value `is_vat` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, and `TaxId.type`
+  * Add support for new value `is_vat` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, and `TaxIdCreateParams.type`
+
+* [#1333](https://github.com/stripe/stripe-node/pull/1333) Customer tax_ids is not included by default
+
 ## 8.199.0 - 2022-01-20
 * [#1332](https://github.com/stripe/stripe-node/pull/1332) API Updates
   * Add support for new resource `PaymentLink`
@@ -31,7 +248,7 @@
 * [#1313](https://github.com/stripe/stripe-node/pull/1313) API Updates
   * Add support for new values `en-FR`, `es-US`, and `fr-FR` on enums `PaymentIntentCreateParams.payment_method_options.klarna.preferred_locale`, `PaymentIntentUpdateParams.payment_method_options.klarna.preferred_locale`, and `PaymentIntentConfirmParams.payment_method_options.klarna.preferred_locale`
   * Add support for `boleto` on `SetupAttempt.payment_method_details`
-  
+
 * [#1312](https://github.com/stripe/stripe-node/pull/1312) API Updates
   * Add support for `processing` on `PaymentIntent`
 
@@ -57,7 +274,7 @@
 ## 8.191.0 - 2021-11-19
 * [#1299](https://github.com/stripe/stripe-node/pull/1299) API Updates
   * Add support for `wallets` on `Issuing.Card`
-  
+
 * [#1298](https://github.com/stripe/stripe-node/pull/1298) API Updates
   * Add support for `interac_present` on `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, and `PaymentIntent.payment_method_options`
   * Add support for new value `jct` on enums `TaxRateCreateParams.tax_type`, `TaxRateUpdateParams.tax_type`, and `TaxRate.tax_type`
@@ -65,7 +282,7 @@
 ## 8.190.0 - 2021-11-17
 * [#1297](https://github.com/stripe/stripe-node/pull/1297) API Updates
   * Add support for `automatic_payment_methods` on `PaymentIntentCreateParams` and `PaymentIntent`
-  
+
 
 ## 8.189.0 - 2021-11-16
 * [#1295](https://github.com/stripe/stripe-node/pull/1295) API Updates
@@ -88,7 +305,7 @@
 * [#1284](https://github.com/stripe/stripe-node/pull/1284) API Updates
   * Remove support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account`. This API was unused.
   * Add support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account.company`
-  
+
 
 ## 8.186.0 - 2021-11-01
 * [#1283](https://github.com/stripe/stripe-node/pull/1283) API Updates
@@ -287,7 +504,7 @@
 
 ## 8.154.0 - 2021-06-07
 * [#1170](https://github.com/stripe/stripe-node/pull/1170) API Updates
-  * Added support for `tax_id_collection` on Checkout `Session.tax_id_collection` and `SessionCreateParams` 
+  * Added support for `tax_id_collection` on Checkout `Session.tax_id_collection` and `SessionCreateParams`
   * Update `Terminal.Reader.location` to be expandable (TypeScript breaking change)
 
 ## 8.153.0 - 2021-06-04
@@ -326,7 +543,7 @@
   * Update Typescript for `CouponCreateParams.duration` and `CouponCreateParams.products` to be optional.
 * [#1158](https://github.com/stripe/stripe-node/pull/1158) API Updates
   * `AccountUpdateParams.business_profile.support_url` and `AccountCreatParams.business_profile.support_url` changed from `string` to `Stripe.Emptyable<string>`
-  * `File.purpose` added new enum members: `finance_report_run`, `document_provider_identity_document`, and `sigma_scheduled_query` 
+  * `File.purpose` added new enum members: `finance_report_run`, `document_provider_identity_document`, and `sigma_scheduled_query`
 
 ## 8.148.0 - 2021-05-06
 * [#1154](https://github.com/stripe/stripe-node/pull/1154) API Updates
@@ -343,7 +560,7 @@
 
 ## 8.145.0 - 2021-04-21
 * [#1143](https://github.com/stripe/stripe-node/pull/1143) API Updates
-  * Add support for `single_member_llc` as an enum member of `Account.company.structure` and `TokenCreateParams.account.company.structure` added new enum members: 
+  * Add support for `single_member_llc` as an enum member of `Account.company.structure` and `TokenCreateParams.account.company.structure` added new enum members:
   * Add support for `dhl` and `royal_mail` as enum members of `Issuing.Card.shipping.carrier`.
 * [#1142](https://github.com/stripe/stripe-node/pull/1142) Improve type definition for for `AccountCreateParams.external_account`
 
@@ -525,7 +742,7 @@
 * [#1035](https://github.com/stripe/stripe-node/pull/1035) Add support for `setup_intent.requires_action` on Event
 
 ## 8.109.0 - 2020-10-09
-* [#1033](https://github.com/stripe/stripe-node/pull/1033) Add support for internal-only `description`, `iin`, and `issuer` for `card_present` and `interac_present` on `Charge.payment_method_details` 
+* [#1033](https://github.com/stripe/stripe-node/pull/1033) Add support for internal-only `description`, `iin`, and `issuer` for `card_present` and `interac_present` on `Charge.payment_method_details`
 
 ## 8.108.0 - 2020-10-08
 * [#1028](https://github.com/stripe/stripe-node/pull/1028) Add support for `Bancontact/iDEAL/Sofort -> SEPA`

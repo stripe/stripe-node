@@ -49,6 +49,15 @@ declare module 'stripe' {
       amount_remaining: number;
 
       /**
+       * ID of the Connect Application that created the invoice.
+       */
+      application:
+        | string
+        | Stripe.Application
+        | Stripe.DeletedApplication
+        | null;
+
+      /**
        * The fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account when the invoice is paid.
        */
       application_fee_amount: number | null;
@@ -318,6 +327,11 @@ declare module 'stripe' {
        */
       tax: number | null;
 
+      /**
+       * ID of the test clock this invoice belongs to.
+       */
+      test_clock: string | Stripe.TestHelpers.TestClock | null;
+
       threshold_reason?: Invoice.ThresholdReason;
 
       /**
@@ -387,7 +401,7 @@ declare module 'stripe' {
         /**
          * Recipient name.
          */
-        name?: string | null;
+        name?: string;
 
         /**
          * Recipient phone (including extension).
@@ -404,7 +418,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, or `unknown`
+         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, or `unknown`
          */
         type: CustomerTaxId.Type;
 
@@ -419,6 +433,7 @@ declare module 'stripe' {
           | 'ae_trn'
           | 'au_abn'
           | 'au_arn'
+          | 'bg_uic'
           | 'br_cnpj'
           | 'br_cpf'
           | 'ca_bn'
@@ -430,13 +445,16 @@ declare module 'stripe' {
           | 'ch_vat'
           | 'cl_tin'
           | 'es_cif'
+          | 'eu_oss_vat'
           | 'eu_vat'
           | 'gb_vat'
           | 'ge_vat'
           | 'hk_br'
+          | 'hu_tin'
           | 'id_npwp'
           | 'il_vat'
           | 'in_gst'
+          | 'is_vat'
           | 'jp_cn'
           | 'jp_rn'
           | 'kr_brn'
@@ -452,6 +470,7 @@ declare module 'stripe' {
           | 'sa_vat'
           | 'sg_gst'
           | 'sg_uen'
+          | 'si_tin'
           | 'th_vat'
           | 'tw_vat'
           | 'ua_vat'
@@ -520,7 +539,7 @@ declare module 'stripe' {
 
         /**
          * PaymentMethod objects represent your customer's payment instruments.
-         * They can be used with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or saved to
+         * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
          * Customer objects to store instrument details for future payments.
          *
          * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
@@ -602,6 +621,21 @@ declare module 'stripe' {
            * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
            */
           card: PaymentMethodOptions.Card | null;
+
+          /**
+           * If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          customer_balance: PaymentMethodOptions.CustomerBalance | null;
+
+          /**
+           * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
+           */
+          konbini: PaymentMethodOptions.Konbini | null;
+
+          /**
+           * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account: PaymentMethodOptions.UsBankAccount | null;
         }
 
         namespace PaymentMethodOptions {
@@ -650,6 +684,50 @@ declare module 'stripe' {
           namespace Card {
             type RequestThreeDSecure = 'any' | 'automatic';
           }
+
+          interface CustomerBalance {
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type: 'bank_transfer' | null;
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type: string | null;
+            }
+          }
+
+          interface Konbini {}
+
+          interface UsBankAccount {
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Bank account verification method.
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. The `payment_method` permission must be included.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission = 'balances' | 'payment_method' | 'transactions';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -661,12 +739,17 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
+          | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -790,11 +873,6 @@ declare module 'stripe' {
 
     interface InvoiceCreateParams {
       /**
-       * The ID of the customer who will be billed.
-       */
-      customer: string;
-
-      /**
        * The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
        */
       account_tax_ids?: Stripe.Emptyable<Array<string>>;
@@ -823,6 +901,11 @@ declare module 'stripe' {
        * A list of up to 4 custom fields to be displayed on the invoice.
        */
       custom_fields?: Stripe.Emptyable<Array<InvoiceCreateParams.CustomField>>;
+
+      /**
+       * The ID of the customer who will be billed.
+       */
+      customer?: string;
 
       /**
        * The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
@@ -883,6 +966,11 @@ declare module 'stripe' {
        * Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
        */
       payment_settings?: InvoiceCreateParams.PaymentSettings;
+
+      /**
+       * How to handle pending invoice items on invoice creation. One of `include`, `exclude`, or `include_and_require`. `include` will include any pending invoice items, and will create an empty draft invoice if no pending invoice items exist. `include_and_require` will include any pending invoice items, if no pending invoice items exist then the request will fail. `exclude` will always create an empty invoice draft regardless if there are pending invoice items or not. Defaults to `include_and_require` if the parameter is omitted.
+       */
+      pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
 
       /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -964,6 +1052,25 @@ declare module 'stripe' {
            * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
            */
           card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+
+          /**
+           * If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          customer_balance?: Stripe.Emptyable<
+            PaymentMethodOptions.CustomerBalance
+          >;
+
+          /**
+           * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
+           */
+          konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account?: Stripe.Emptyable<
+            PaymentMethodOptions.UsBankAccount
+          >;
         }
 
         namespace PaymentMethodOptions {
@@ -1015,6 +1122,60 @@ declare module 'stripe' {
           namespace Card {
             type RequestThreeDSecure = 'any' | 'automatic';
           }
+
+          interface CustomerBalance {
+            /**
+             * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+             */
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type?: string;
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type?: string;
+            }
+          }
+
+          interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Additional fields for Financial Connections Session creation
+             */
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -1026,14 +1187,24 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
+          | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
+
+      type PendingInvoiceItemsBehavior =
+        | 'exclude'
+        | 'include'
+        | 'include_and_require';
 
       interface TransferData {
         /**
@@ -1221,6 +1392,25 @@ declare module 'stripe' {
            * If paying by `card`, this sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
            */
           card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+
+          /**
+           * If paying by `customer_balance`, this sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          customer_balance?: Stripe.Emptyable<
+            PaymentMethodOptions.CustomerBalance
+          >;
+
+          /**
+           * If paying by `konbini`, this sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
+           */
+          konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * If paying by `us_bank_account`, this sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account?: Stripe.Emptyable<
+            PaymentMethodOptions.UsBankAccount
+          >;
         }
 
         namespace PaymentMethodOptions {
@@ -1272,6 +1462,60 @@ declare module 'stripe' {
           namespace Card {
             type RequestThreeDSecure = 'any' | 'automatic';
           }
+
+          interface CustomerBalance {
+            /**
+             * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+             */
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type?: string;
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type?: string;
+            }
+          }
+
+          interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Additional fields for Financial Connections Session creation
+             */
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -1283,12 +1527,17 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
+          | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -1583,7 +1832,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `id_npwp`, `il_vat`, `in_gst`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -1598,6 +1847,7 @@ declare module 'stripe' {
             | 'ae_trn'
             | 'au_abn'
             | 'au_arn'
+            | 'bg_uic'
             | 'br_cnpj'
             | 'br_cpf'
             | 'ca_bn'
@@ -1609,13 +1859,16 @@ declare module 'stripe' {
             | 'ch_vat'
             | 'cl_tin'
             | 'es_cif'
+            | 'eu_oss_vat'
             | 'eu_vat'
             | 'gb_vat'
             | 'ge_vat'
             | 'hk_br'
+            | 'hu_tin'
             | 'id_npwp'
             | 'il_vat'
             | 'in_gst'
+            | 'is_vat'
             | 'jp_cn'
             | 'jp_rn'
             | 'kr_brn'
@@ -1631,6 +1884,7 @@ declare module 'stripe' {
             | 'sa_vat'
             | 'sg_gst'
             | 'sg_uen'
+            | 'si_tin'
             | 'th_vat'
             | 'tw_vat'
             | 'ua_vat'
@@ -1688,7 +1942,7 @@ declare module 'stripe' {
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
-         * The period associated with this invoice item.
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice.
          */
         period?: InvoiceItem.Period;
 
@@ -1856,7 +2110,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * The recurring components of a price such as `interval` and `usage_type`.
+           * The recurring components of a price such as `interval` and `interval_count`.
            */
           recurring: PriceData.Recurring;
 
@@ -1903,6 +2157,28 @@ declare module 'stripe' {
         | 'none';
     }
 
+    interface InvoiceSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for invoices](https://stripe.com/docs/search#query-fields-for-invoices).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
+       */
+      page?: string;
+    }
+
     interface InvoiceSendInvoiceParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -1922,7 +2198,10 @@ declare module 'stripe' {
        * This endpoint creates a draft invoice for a given customer. The draft invoice created pulls in all pending invoice items on that customer, including prorations. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](#pay_invoice) or <a href="#send_invoice">send](https://stripe.com/docs/api#finalize_invoice) the invoice to your customers.
        */
       create(
-        params: InvoiceCreateParams,
+        params?: InvoiceCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      create(
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 
@@ -2028,6 +2307,17 @@ declare module 'stripe' {
       retrieveUpcoming(
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
+       * Search for invoices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
+       */
+      search(
+        params: InvoiceSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Invoice>;
 
       /**
        * Stripe will automatically send invoices to customers according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email.

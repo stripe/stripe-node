@@ -297,7 +297,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+         * The product's name, meant to be displayable to the customer.
          */
         name: string;
 
@@ -309,7 +309,7 @@ declare module 'stripe' {
         statement_descriptor?: string;
 
         /**
-         * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
          */
         tax_code?: string;
 

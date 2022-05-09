@@ -19,6 +19,11 @@ declare module 'stripe' {
 
         address: Stripe.Address;
 
+        /**
+         * The ID of a configuration that will be used to customize all readers in this location.
+         */
+        configuration_overrides?: string;
+
         deleted?: void;
 
         /**
@@ -67,6 +72,11 @@ declare module 'stripe' {
          * A name for the location.
          */
         display_name: string;
+
+        /**
+         * The ID of a configuration that will be used to customize all readers in this location.
+         */
+        configuration_overrides?: string;
 
         /**
          * Specifies which fields in the response should be expanded.
@@ -127,6 +137,11 @@ declare module 'stripe' {
         address?: LocationUpdateParams.Address;
 
         /**
+         * The ID of a configuration that will be used to customize all readers in this location.
+         */
+        configuration_overrides?: string;
+
+        /**
          * A name for the location.
          */
         display_name?: string;
@@ -174,11 +189,19 @@ declare module 'stripe' {
           id: string,
           params?: LocationRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Location>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Location | Stripe.Terminal.DeletedLocation
+          >
+        >;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Location>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Location | Stripe.Terminal.DeletedLocation
+          >
+        >;
 
         /**
          * Updates a Location object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -187,7 +210,11 @@ declare module 'stripe' {
           id: string,
           params?: LocationUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Location>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Location | Stripe.Terminal.DeletedLocation
+          >
+        >;
 
         /**
          * Returns a list of Location objects.

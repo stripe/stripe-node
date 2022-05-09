@@ -17,6 +17,11 @@ declare module 'stripe' {
          */
         object: 'terminal.reader';
 
+        /**
+         * The most recent action performed by the reader.
+         */
+        action?: Reader.Action | null;
+
         deleted?: void;
 
         /**
@@ -25,7 +30,7 @@ declare module 'stripe' {
         device_sw_version: string | null;
 
         /**
-         * Type of reader, one of `bbpos_chipper2x`, `bbpos_wisepos_e`, or `verifone_P400`.
+         * Type of reader, one of `bbpos_wisepad3`, `stripe_m2`, `bbpos_chipper2x`, `bbpos_wisepos_e`, or `verifone_P400`.
          */
         device_type: Reader.DeviceType;
 
@@ -66,9 +71,128 @@ declare module 'stripe' {
       }
 
       namespace Reader {
+        interface Action {
+          /**
+           * Failure code, only set if status is `failed`.
+           */
+          failure_code: string | null;
+
+          /**
+           * Detailed failure message, only set if status is `failed`.
+           */
+          failure_message: string | null;
+
+          /**
+           * Represents a reader action to process a payment intent
+           */
+          process_payment_intent?: Action.ProcessPaymentIntent;
+
+          /**
+           * Represents a reader action to process a setup intent
+           */
+          process_setup_intent?: Action.ProcessSetupIntent;
+
+          /**
+           * Represents a reader action to set the reader display
+           */
+          set_reader_display?: Action.SetReaderDisplay;
+
+          /**
+           * Status of the action performed by the reader.
+           */
+          status: Action.Status;
+
+          /**
+           * Type of action performed by the reader.
+           */
+          type: Action.Type;
+        }
+
+        namespace Action {
+          interface ProcessPaymentIntent {
+            /**
+             * Most recent PaymentIntent processed by the reader.
+             */
+            payment_intent: string | Stripe.PaymentIntent;
+          }
+
+          interface ProcessSetupIntent {
+            generated_card?: string;
+
+            /**
+             * Most recent SetupIntent processed by the reader.
+             */
+            setup_intent: string | Stripe.SetupIntent;
+          }
+
+          interface SetReaderDisplay {
+            /**
+             * Cart object to be displayed by the reader.
+             */
+            cart: SetReaderDisplay.Cart | null;
+
+            /**
+             * Type of information to be displayed by the reader.
+             */
+            type: 'cart';
+          }
+
+          namespace SetReaderDisplay {
+            interface Cart {
+              /**
+               * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency: string;
+
+              /**
+               * List of line items in the cart.
+               */
+              line_items: Array<Cart.LineItem>;
+
+              /**
+               * Tax amount for the entire cart. A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+               */
+              tax: number | null;
+
+              /**
+               * Total amount for the entire cart, including tax. A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+               */
+              total: number;
+            }
+
+            namespace Cart {
+              interface LineItem {
+                /**
+                 * The amount of the line item. A positive integer in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+                 */
+                amount: number;
+
+                /**
+                 * Description of the line item.
+                 */
+                description: string;
+
+                /**
+                 * The quantity of the line item.
+                 */
+                quantity: number;
+              }
+            }
+          }
+
+          type Status = 'failed' | 'in_progress' | 'succeeded';
+
+          type Type =
+            | 'process_payment_intent'
+            | 'process_setup_intent'
+            | 'set_reader_display';
+        }
+
         type DeviceType =
           | 'bbpos_chipper2x'
+          | 'bbpos_wisepad3'
           | 'bbpos_wisepos_e'
+          | 'stripe_m2'
           | 'verifone_P400';
       }
 
@@ -168,13 +292,125 @@ declare module 'stripe' {
       namespace ReaderListParams {
         type DeviceType =
           | 'bbpos_chipper2x'
+          | 'bbpos_wisepad3'
           | 'bbpos_wisepos_e'
+          | 'stripe_m2'
           | 'verifone_P400';
 
         type Status = 'offline' | 'online';
       }
 
       interface ReaderDeleteParams {}
+
+      interface ReaderCancelActionParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      interface ReaderProcessPaymentIntentParams {
+        /**
+         * PaymentIntent ID
+         */
+        payment_intent: string;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Configuration overrides
+         */
+        process_config?: ReaderProcessPaymentIntentParams.ProcessConfig;
+      }
+
+      namespace ReaderProcessPaymentIntentParams {
+        interface ProcessConfig {
+          /**
+           * Override showing a tipping selection screen on this transaction.
+           */
+          skip_tipping?: boolean;
+        }
+      }
+
+      interface ReaderProcessSetupIntentParams {
+        /**
+         * Customer Consent Collected
+         */
+        customer_consent_collected: boolean;
+
+        /**
+         * SetupIntent ID
+         */
+        setup_intent: string;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      interface ReaderSetReaderDisplayParams {
+        /**
+         * Type
+         */
+        type: 'cart';
+
+        /**
+         * Cart
+         */
+        cart?: ReaderSetReaderDisplayParams.Cart;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      namespace ReaderSetReaderDisplayParams {
+        interface Cart {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * Array of line items that were purchased.
+           */
+          line_items: Array<Cart.LineItem>;
+
+          /**
+           * The amount of tax in cents.
+           */
+          tax?: number;
+
+          /**
+           * Total balance of cart due in cents.
+           */
+          total: number;
+        }
+
+        namespace Cart {
+          interface LineItem {
+            /**
+             * The price of the item in cents.
+             */
+            amount: number;
+
+            /**
+             * The description or name of the item.
+             */
+            description: string;
+
+            /**
+             * The quantity of the line item being purchased.
+             */
+            quantity: number;
+          }
+        }
+      }
 
       class ReadersResource {
         /**
@@ -192,11 +428,19 @@ declare module 'stripe' {
           id: string,
           params?: ReaderRetrieveParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Reader | Stripe.Terminal.DeletedReader
+          >
+        >;
         retrieve(
           id: string,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Reader | Stripe.Terminal.DeletedReader
+          >
+        >;
 
         /**
          * Updates a Reader object by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
@@ -205,7 +449,11 @@ declare module 'stripe' {
           id: string,
           params?: ReaderUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Reader | Stripe.Terminal.DeletedReader
+          >
+        >;
 
         /**
          * Returns a list of Reader objects.
@@ -228,6 +476,46 @@ declare module 'stripe' {
           id: string,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Terminal.DeletedReader>>;
+
+        /**
+         * Cancels the current reader action.
+         */
+        cancelAction(
+          id: string,
+          params?: ReaderCancelActionParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+        cancelAction(
+          id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+
+        /**
+         * Initiates a payment flow on a Reader.
+         */
+        processPaymentIntent(
+          id: string,
+          params: ReaderProcessPaymentIntentParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+
+        /**
+         * Initiates a setup intent flow on a Reader.
+         */
+        processSetupIntent(
+          id: string,
+          params: ReaderProcessSetupIntentParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+
+        /**
+         * Sets reader display to show cart details.
+         */
+        setReaderDisplay(
+          id: string,
+          params: ReaderSetReaderDisplayParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
       }
     }
   }

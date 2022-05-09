@@ -320,11 +320,6 @@ declare module 'stripe' {
 
       interface DisputeCreateParams {
         /**
-         * The ID of the issuing transaction to create a dispute for.
-         */
-        transaction: string;
-
-        /**
          * Evidence provided for the dispute.
          */
         evidence?: DisputeCreateParams.Evidence;
@@ -338,6 +333,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * The ID of the issuing transaction to create a dispute for. For transaction on Treasury FinancialAccounts, use `treasury.received_debit`.
+         */
+        transaction?: string;
       }
 
       namespace DisputeCreateParams {
@@ -973,7 +973,10 @@ declare module 'stripe' {
          * Creates an Issuing Dispute object. Individual pieces of evidence within the evidence object are optional at this point. Stripe only validates that required evidence is present during submission. Refer to [Dispute reasons and evidence](https://stripe.com/docs/issuing/purchases/disputes#dispute-reasons-and-evidence) for more details about evidence requirements.
          */
         create(
-          params: DisputeCreateParams,
+          params?: DisputeCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Issuing.Dispute>>;
+        create(
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Issuing.Dispute>>;
 

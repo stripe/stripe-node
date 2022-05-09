@@ -213,10 +213,14 @@ declare module 'stripe' {
       extends Promise<Response<ApiList<T>>>,
         AsyncIterableIterator<T> {
       autoPagingEach(
-        handler: (item: T) => boolean | void | Promise<boolean | void>
+        handler: (item: T) => boolean | void | Promise<boolean | void>,
+        onDone?: (err: any) => void
       ): Promise<void>;
 
-      autoPagingToArray(opts: {limit: number}): Promise<Array<T>>;
+      autoPagingToArray(
+        opts: {limit: number},
+        onDone?: (err: any) => void
+      ): Promise<Array<T>>;
     }
 
     /**
@@ -245,9 +249,15 @@ declare module 'stripe' {
 
       /**
        * The page token to use to get the next page of results. If `has_more` is
-       * true, this will be set.
+       * true, this will be set to a concrete string value.
        */
-      next_page?: string;
+      next_page: string | null;
+
+      /**
+       * The total number of search results. Only present when `expand` request
+       * parameter contains `total_count`.
+       */
+      total_count?: number;
     }
     export interface ApiSearchResultPromise<T>
       extends Promise<Response<ApiSearchResult<T>>>,

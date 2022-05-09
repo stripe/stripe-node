@@ -27,6 +27,11 @@ declare module 'stripe' {
       balance: number;
 
       /**
+       * The current funds being held by Stripe on behalf of the customer. These funds can be applied towards payment intents with source "cash_balance".The settings[reconciliation_mode] field describes whether these funds are applied to such payment intents manually or automatically.
+       */
+      cash_balance?: Stripe.CashBalance | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -130,6 +135,11 @@ declare module 'stripe' {
        * The customer's tax IDs.
        */
       tax_ids?: ApiList<Stripe.TaxId>;
+
+      /**
+       * ID of the test clock this customer belongs to.
+       */
+      test_clock?: string | Stripe.TestHelpers.TestClock | null;
     }
 
     namespace Customer {
@@ -175,7 +185,7 @@ declare module 'stripe' {
         /**
          * Recipient name.
          */
-        name?: string | null;
+        name?: string;
 
         /**
          * Recipient phone (including extension).
@@ -272,6 +282,11 @@ declare module 'stripe' {
        */
       balance?: number;
 
+      /**
+       * Balance information and default balance settings for this customer.
+       */
+      cash_balance?: CustomerCreateParams.CashBalance;
+
       coupon?: string;
 
       /**
@@ -352,9 +367,42 @@ declare module 'stripe' {
        * The customer's tax IDs.
        */
       tax_id_data?: Array<CustomerCreateParams.TaxIdDatum>;
+
+      /**
+       * ID of the test clock to attach to the customer.
+       */
+      test_clock?: string;
     }
 
     namespace CustomerCreateParams {
+      interface CashBalance {
+        /**
+         * Settings controlling the behavior of the customer's cash balance,
+         * such as reconciliation of funds received.
+         */
+        settings?: CashBalance.Settings;
+      }
+
+      namespace CashBalance {
+        interface Settings {
+          /**
+           * Method for using the customer balance to pay outstanding
+           * `customer_balance` PaymentIntents. If set to `automatic`, all available
+           * funds will automatically be used to pay any outstanding PaymentIntent.
+           * If set to `manual`, only customer balance funds from bank transfers
+           * with a reference code matching
+           * `payment_intent.next_action.display_bank_transfer_intructions.reference_code` will
+           * automatically be used to pay the corresponding outstanding
+           * PaymentIntent.
+           */
+          reconciliation_mode?: Settings.ReconciliationMode;
+        }
+
+        namespace Settings {
+          type ReconciliationMode = 'automatic' | 'manual';
+        }
+      }
+
       interface InvoiceSettings {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
@@ -420,7 +468,7 @@ declare module 'stripe' {
 
       interface TaxIdDatum {
         /**
-         * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `id_npwp`, `il_vat`, `in_gst`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+         * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
          */
         type: TaxIdDatum.Type;
 
@@ -435,6 +483,7 @@ declare module 'stripe' {
           | 'ae_trn'
           | 'au_abn'
           | 'au_arn'
+          | 'bg_uic'
           | 'br_cnpj'
           | 'br_cpf'
           | 'ca_bn'
@@ -446,13 +495,16 @@ declare module 'stripe' {
           | 'ch_vat'
           | 'cl_tin'
           | 'es_cif'
+          | 'eu_oss_vat'
           | 'eu_vat'
           | 'gb_vat'
           | 'ge_vat'
           | 'hk_br'
+          | 'hu_tin'
           | 'id_npwp'
           | 'il_vat'
           | 'in_gst'
+          | 'is_vat'
           | 'jp_cn'
           | 'jp_rn'
           | 'kr_brn'
@@ -468,6 +520,7 @@ declare module 'stripe' {
           | 'sa_vat'
           | 'sg_gst'
           | 'sg_uen'
+          | 'si_tin'
           | 'th_vat'
           | 'tw_vat'
           | 'ua_vat'
@@ -493,6 +546,11 @@ declare module 'stripe' {
        * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
        */
       balance?: number;
+
+      /**
+       * Balance information and default balance settings for this customer.
+       */
+      cash_balance?: CustomerUpdateParams.CashBalance;
 
       coupon?: string;
 
@@ -584,6 +642,34 @@ declare module 'stripe' {
     }
 
     namespace CustomerUpdateParams {
+      interface CashBalance {
+        /**
+         * Settings controlling the behavior of the customer's cash balance,
+         * such as reconciliation of funds received.
+         */
+        settings?: CashBalance.Settings;
+      }
+
+      namespace CashBalance {
+        interface Settings {
+          /**
+           * Method for using the customer balance to pay outstanding
+           * `customer_balance` PaymentIntents. If set to `automatic`, all available
+           * funds will automatically be used to pay any outstanding PaymentIntent.
+           * If set to `manual`, only customer balance funds from bank transfers
+           * with a reference code matching
+           * `payment_intent.next_action.display_bank_transfer_intructions.reference_code` will
+           * automatically be used to pay the corresponding outstanding
+           * PaymentIntent.
+           */
+          reconciliation_mode?: Settings.ReconciliationMode;
+        }
+
+        namespace Settings {
+          type ReconciliationMode = 'automatic' | 'manual';
+        }
+      }
+
       interface InvoiceSettings {
         /**
          * Default custom fields to be displayed on invoices for this customer. When updating, pass an empty string to remove previously-defined fields.
@@ -660,9 +746,52 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Provides a list of customers that are associated with the specified test clock. The response will not include customers with test clocks if this parameter is not set.
+       */
+      test_clock?: string;
     }
 
     interface CustomerDeleteParams {}
+
+    interface CustomerCreateFundingInstructionsParams {
+      /**
+       * Additional parameters for `bank_transfer` funding types
+       */
+      bank_transfer: CustomerCreateFundingInstructionsParams.BankTransfer;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
+
+      /**
+       * The `funding_type` to get the instructions for.
+       */
+      funding_type: 'bank_transfer';
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    namespace CustomerCreateFundingInstructionsParams {
+      interface BankTransfer {
+        /**
+         * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+         *
+         * Permitted values include: `zengin`.
+         */
+        requested_address_types?: Array<'zengin'>;
+
+        /**
+         * The type of the `bank_transfer`
+         */
+        type: 'jp_bank_transfer';
+      }
+    }
 
     interface CustomerDeleteDiscountParams {}
 
@@ -689,17 +818,43 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'card_present'
+        | 'customer_balance'
         | 'eps'
         | 'fpx'
         | 'giropay'
         | 'grabpay'
         | 'ideal'
         | 'klarna'
+        | 'konbini'
         | 'oxxo'
         | 'p24'
+        | 'paynow'
         | 'sepa_debit'
         | 'sofort'
+        | 'us_bank_account'
         | 'wechat_pay';
+    }
+
+    interface CustomerSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for customers](https://stripe.com/docs/search#query-fields-for-customers).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
+       */
+      page?: string;
     }
 
     class CustomersResource {
@@ -761,6 +916,17 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.DeletedCustomer>>;
 
       /**
+       * Retrieve funding instructions for a customer cash balance. If funding instructions do not yet exist for the customer, new
+       * funding instructions will be created. If funding instructions have already been created for a given customer, the same
+       * funding instructions will be retrieved. In other words, we will return the same funding instructions each time.
+       */
+      createFundingInstructions(
+        id: string,
+        params: CustomerCreateFundingInstructionsParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.FundingInstructions>>;
+
+      /**
        * Removes the currently applied discount on a customer.
        */
       deleteDiscount(
@@ -781,6 +947,39 @@ declare module 'stripe' {
         params: CustomerListPaymentMethodsParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.PaymentMethod>;
+
+      /**
+       * Search for customers you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
+       */
+      search(
+        params: CustomerSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Customer>;
+
+      /**
+       * Retrieves a customer's cash balance.
+       */
+      retrieveCashBalance(
+        id: string,
+        params?: CashBalanceRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
+      retrieveCashBalance(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
+
+      /**
+       * Updates a customer's cash balance.
+       */
+      updateCashBalance(
+        id: string,
+        params?: CashBalanceUpdateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
 
       /**
        * Creates an immutable transaction that updates the customer's credit [balance](https://stripe.com/docs/billing/customer/balance).

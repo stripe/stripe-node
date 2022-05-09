@@ -17,6 +17,15 @@ declare module 'stripe' {
       object: 'subscription_schedule';
 
       /**
+       * ID of the Connect Application that created the schedule.
+       */
+      application:
+        | string
+        | Stripe.Application
+        | Stripe.DeletedApplication
+        | null;
+
+      /**
        * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
        */
       canceled_at: number | null;
@@ -82,6 +91,11 @@ declare module 'stripe' {
        * ID of the subscription managed by the subscription schedule.
        */
       subscription: string | Stripe.Subscription | null;
+
+      /**
+       * ID of the test clock this subscription schedule belongs to.
+       */
+      test_clock: string | Stripe.TestHelpers.TestClock | null;
     }
 
     namespace SubscriptionSchedule {
@@ -729,7 +743,7 @@ declare module 'stripe' {
             product: string;
 
             /**
-             * The recurring components of a price such as `interval` and `usage_type`.
+             * The recurring components of a price such as `interval` and `interval_count`.
              */
             recurring: PriceData.Recurring;
 
@@ -1149,7 +1163,7 @@ declare module 'stripe' {
             product: string;
 
             /**
-             * The recurring components of a price such as `interval` and `usage_type`.
+             * The recurring components of a price such as `interval` and `interval_count`.
              */
             recurring: PriceData.Recurring;
 

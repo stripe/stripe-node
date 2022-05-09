@@ -323,7 +323,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+         * The product's name, meant to be displayable to the customer.
          */
         name: string;
 
@@ -335,7 +335,7 @@ declare module 'stripe' {
         statement_descriptor?: string;
 
         /**
-         * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
          */
         tax_code?: string;
 
@@ -556,6 +556,28 @@ declare module 'stripe' {
       type Type = 'one_time' | 'recurring';
     }
 
+    interface PriceSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for prices](https://stripe.com/docs/search#query-fields-for-prices).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
+       */
+      page?: string;
+    }
+
     class PricesResource {
       /**
        * Creates a new price for an existing product. The price can be recurring or one-time.
@@ -595,6 +617,17 @@ declare module 'stripe' {
         options?: RequestOptions
       ): ApiListPromise<Stripe.Price>;
       list(options?: RequestOptions): ApiListPromise<Stripe.Price>;
+
+      /**
+       * Search for prices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
+       */
+      search(
+        params: PriceSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Price>;
     }
   }
 }

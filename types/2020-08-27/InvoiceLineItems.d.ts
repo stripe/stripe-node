@@ -79,6 +79,11 @@ declare module 'stripe' {
       proration: boolean;
 
       /**
+       * Additional details for proration line items
+       */
+      proration_details: InvoiceLineItem.ProrationDetails | null;
+
+      /**
        * The quantity of the subscription, if the line item is a subscription or a proration.
        */
       quantity: number | null;
@@ -124,14 +129,35 @@ declare module 'stripe' {
 
       interface Period {
         /**
-         * End of the line item's billing period
+         * The end of the period, which must be greater than or equal to the start.
          */
         end: number;
 
         /**
-         * Start of the line item's billing period
+         * The start of the period.
          */
         start: number;
+      }
+
+      interface ProrationDetails {
+        /**
+         * For a credit proration `line_item`, the original debit line_items to which the credit proration applies.
+         */
+        credited_items: ProrationDetails.CreditedItems | null;
+      }
+
+      namespace ProrationDetails {
+        interface CreditedItems {
+          /**
+           * Invoice containing the credited invoice line items
+           */
+          invoice: string;
+
+          /**
+           * Credited invoice line items
+           */
+          invoice_line_items: Array<string>;
+        }
       }
 
       interface TaxAmount {
@@ -347,7 +373,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `id_npwp`, `il_vat`, `in_gst`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -362,6 +388,7 @@ declare module 'stripe' {
             | 'ae_trn'
             | 'au_abn'
             | 'au_arn'
+            | 'bg_uic'
             | 'br_cnpj'
             | 'br_cpf'
             | 'ca_bn'
@@ -373,13 +400,16 @@ declare module 'stripe' {
             | 'ch_vat'
             | 'cl_tin'
             | 'es_cif'
+            | 'eu_oss_vat'
             | 'eu_vat'
             | 'gb_vat'
             | 'ge_vat'
             | 'hk_br'
+            | 'hu_tin'
             | 'id_npwp'
             | 'il_vat'
             | 'in_gst'
+            | 'is_vat'
             | 'jp_cn'
             | 'jp_rn'
             | 'kr_brn'
@@ -395,6 +425,7 @@ declare module 'stripe' {
             | 'sa_vat'
             | 'sg_gst'
             | 'sg_uen'
+            | 'si_tin'
             | 'th_vat'
             | 'tw_vat'
             | 'ua_vat'
@@ -452,7 +483,7 @@ declare module 'stripe' {
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
-         * The period associated with this invoice item.
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice.
          */
         period?: InvoiceItem.Period;
 
@@ -620,7 +651,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * The recurring components of a price such as `interval` and `usage_type`.
+           * The recurring components of a price such as `interval` and `interval_count`.
            */
           recurring: PriceData.Recurring;
 

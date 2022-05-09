@@ -20,6 +20,9 @@ describe('Error', () => {
       expect(
         Error.StripeError.generate({type: 'idempotency_error'})
       ).to.be.instanceOf(Error.StripeIdempotencyError);
+      expect(
+        Error.StripeError.generate({type: 'weird_error'})
+      ).to.be.instanceOf(Error.StripeUnknownError);
     });
 
     it('copies whitelisted properties', () => {

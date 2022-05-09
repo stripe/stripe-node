@@ -46,6 +46,8 @@ declare module 'stripe' {
        */
       customer: string | Stripe.Customer | null;
 
+      customer_balance?: PaymentMethod.CustomerBalance;
+
       eps?: PaymentMethod.Eps;
 
       fpx?: PaymentMethod.Fpx;
@@ -59,6 +61,8 @@ declare module 'stripe' {
       interac_present?: PaymentMethod.InteracPresent;
 
       klarna?: PaymentMethod.Klarna;
+
+      konbini?: PaymentMethod.Konbini;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -74,6 +78,8 @@ declare module 'stripe' {
 
       p24?: PaymentMethod.P24;
 
+      paynow?: PaymentMethod.Paynow;
+
       sepa_debit?: PaymentMethod.SepaDebit;
 
       sofort?: PaymentMethod.Sofort;
@@ -82,6 +88,8 @@ declare module 'stripe' {
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
       type: PaymentMethod.Type;
+
+      us_bank_account?: PaymentMethod.UsBankAccount;
 
       wechat_pay?: PaymentMethod.WechatPay;
     }
@@ -383,6 +391,8 @@ declare module 'stripe' {
 
       interface CardPresent {}
 
+      interface CustomerBalance {}
+
       interface Eps {
         /**
          * The customer's bank. Should be one of `arzte_und_apotheker_bank`, `austrian_anadi_bank_ag`, `bank_austria`, `bankhaus_carl_spangler`, `bankhaus_schelhammer_und_schattera_ag`, `bawag_psk_ag`, `bks_bank_ag`, `brull_kallmus_bank_ag`, `btv_vier_lander_bank`, `capital_bank_grawe_gruppe_ag`, `dolomitenbank`, `easybank_ag`, `erste_bank_und_sparkassen`, `hypo_alpeadriabank_international_ag`, `hypo_noe_lb_fur_niederosterreich_u_wien`, `hypo_oberosterreich_salzburg_steiermark`, `hypo_tirol_bank_ag`, `hypo_vorarlberg_bank_ag`, `hypo_bank_burgenland_aktiengesellschaft`, `marchfelder_bank`, `oberbank_ag`, `raiffeisen_bankengruppe_osterreich`, `schoellerbank_ag`, `sparda_bank_wien`, `volksbank_gruppe`, `volkskreditbank_ag`, or `vr_bank_braunau`.
@@ -536,6 +546,8 @@ declare module 'stripe' {
         }
       }
 
+      interface Konbini {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -573,6 +585,8 @@ declare module 'stripe' {
           | 'toyota_bank'
           | 'volkswagen_bank';
       }
+
+      interface Paynow {}
 
       interface SepaDebit {
         /**
@@ -637,6 +651,7 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'card_present'
+        | 'customer_balance'
         | 'eps'
         | 'fpx'
         | 'giropay'
@@ -644,11 +659,57 @@ declare module 'stripe' {
         | 'ideal'
         | 'interac_present'
         | 'klarna'
+        | 'konbini'
         | 'oxxo'
         | 'p24'
+        | 'paynow'
         | 'sepa_debit'
         | 'sofort'
+        | 'us_bank_account'
         | 'wechat_pay';
+
+      interface UsBankAccount {
+        /**
+         * Account holder type: individual or company.
+         */
+        account_holder_type: UsBankAccount.AccountHolderType | null;
+
+        /**
+         * Account type: checkings or savings. Defaults to checking if omitted.
+         */
+        account_type: UsBankAccount.AccountType | null;
+
+        /**
+         * The name of the bank.
+         */
+        bank_name: string | null;
+
+        /**
+         * The ID of the Financial Connections Account used to create the payment method.
+         */
+        financial_connections_account?: string | null;
+
+        /**
+         * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+         */
+        fingerprint: string | null;
+
+        /**
+         * Last four digits of the bank account number.
+         */
+        last4: string | null;
+
+        /**
+         * Routing number of the bank account.
+         */
+        routing_number: string | null;
+      }
+
+      namespace UsBankAccount {
+        type AccountHolderType = 'company' | 'individual';
+
+        type AccountType = 'checking' | 'savings';
+      }
 
       interface WechatPay {}
     }
@@ -705,6 +766,11 @@ declare module 'stripe' {
       customer?: string;
 
       /**
+       * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
+       */
+      customer_balance?: PaymentMethodCreateParams.CustomerBalance;
+
+      /**
        * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
        */
       eps?: PaymentMethodCreateParams.Eps;
@@ -745,6 +811,11 @@ declare module 'stripe' {
       klarna?: PaymentMethodCreateParams.Klarna;
 
       /**
+       * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
+       */
+      konbini?: PaymentMethodCreateParams.Konbini;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
@@ -765,6 +836,11 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
+       */
+      paynow?: PaymentMethodCreateParams.Paynow;
+
+      /**
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
        */
       sepa_debit?: PaymentMethodCreateParams.SepaDebit;
@@ -778,6 +854,11 @@ declare module 'stripe' {
        * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
        */
       type?: PaymentMethodCreateParams.Type;
+
+      /**
+       * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
+       */
+      us_bank_account?: PaymentMethodCreateParams.UsBankAccount;
 
       /**
        * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
@@ -893,6 +974,8 @@ declare module 'stripe' {
       interface Card2 {
         token: string;
       }
+
+      interface CustomerBalance {}
 
       interface Eps {
         /**
@@ -1027,6 +1110,8 @@ declare module 'stripe' {
         }
       }
 
+      interface Konbini {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -1065,6 +1150,8 @@ declare module 'stripe' {
           | 'volkswagen_bank';
       }
 
+      interface Paynow {}
+
       interface SepaDebit {
         /**
          * IBAN of the bank account.
@@ -1092,17 +1179,54 @@ declare module 'stripe' {
         | 'bancontact'
         | 'boleto'
         | 'card'
+        | 'customer_balance'
         | 'eps'
         | 'fpx'
         | 'giropay'
         | 'grabpay'
         | 'ideal'
         | 'klarna'
+        | 'konbini'
         | 'oxxo'
         | 'p24'
+        | 'paynow'
         | 'sepa_debit'
         | 'sofort'
+        | 'us_bank_account'
         | 'wechat_pay';
+
+      interface UsBankAccount {
+        /**
+         * Account holder type: individual or company.
+         */
+        account_holder_type?: UsBankAccount.AccountHolderType;
+
+        /**
+         * Account number of the bank account.
+         */
+        account_number?: string;
+
+        /**
+         * Account type: checkings or savings. Defaults to checking if omitted.
+         */
+        account_type?: UsBankAccount.AccountType;
+
+        /**
+         * The ID of a Financial Connections Account to use as a payment method.
+         */
+        financial_connections_account?: string;
+
+        /**
+         * Routing number of the bank account.
+         */
+        routing_number?: string;
+      }
+
+      namespace UsBankAccount {
+        type AccountHolderType = 'company' | 'individual';
+
+        type AccountType = 'checking' | 'savings';
+      }
 
       interface WechatPay {}
     }
@@ -1154,6 +1278,11 @@ declare module 'stripe' {
        * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
        */
       sepa_debit?: PaymentMethodUpdateParams.SepaDebit;
+
+      /**
+       * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
+       */
+      us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
     }
 
     namespace PaymentMethodUpdateParams {
@@ -1204,6 +1333,17 @@ declare module 'stripe' {
       }
 
       interface SepaDebit {}
+
+      interface UsBankAccount {
+        /**
+         * Bank account type.
+         */
+        account_holder_type?: UsBankAccount.AccountHolderType;
+      }
+
+      namespace UsBankAccount {
+        type AccountHolderType = 'company' | 'individual';
+      }
     }
 
     interface PaymentMethodListParams extends PaginationParams {
@@ -1234,16 +1374,20 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'card_present'
+        | 'customer_balance'
         | 'eps'
         | 'fpx'
         | 'giropay'
         | 'grabpay'
         | 'ideal'
         | 'klarna'
+        | 'konbini'
         | 'oxxo'
         | 'p24'
+        | 'paynow'
         | 'sepa_debit'
         | 'sofort'
+        | 'us_bank_account'
         | 'wechat_pay';
     }
 
@@ -1330,7 +1474,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
-       * Detaches a PaymentMethod object from a Customer.
+       * Detaches a PaymentMethod object from a Customer. After a PaymentMethod is detached, it can no longer be used for a payment or re-attached to a Customer.
        */
       detach(
         id: string,

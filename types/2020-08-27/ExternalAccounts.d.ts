@@ -121,6 +121,12 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      object?: ExternalAccountListParams.Object;
+    }
+
+    namespace ExternalAccountListParams {
+      type Object = 'bank_account' | 'card';
     }
 
     interface ExternalAccountDeleteParams {}

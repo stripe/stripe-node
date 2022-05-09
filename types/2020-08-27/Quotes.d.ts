@@ -27,6 +27,15 @@ declare module 'stripe' {
       amount_total: number;
 
       /**
+       * ID of the Connect Application that created the quote.
+       */
+      application:
+        | string
+        | Stripe.Application
+        | Stripe.DeletedApplication
+        | null;
+
+      /**
        * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. Only applicable if there are no line items with recurring prices on the quote.
        */
       application_fee_amount: number | null;
@@ -149,6 +158,11 @@ declare module 'stripe' {
        */
       subscription_schedule: string | Stripe.SubscriptionSchedule | null;
 
+      /**
+       * ID of the test clock this quote belongs to.
+       */
+      test_clock: string | Stripe.TestHelpers.TestClock | null;
+
       total_details: Quote.TotalDetails;
 
       /**
@@ -215,17 +229,17 @@ declare module 'stripe' {
 
           interface TotalDetails {
             /**
-             * This is the sum of all the line item discounts.
+             * This is the sum of all the discounts.
              */
             amount_discount: number;
 
             /**
-             * This is the sum of all the line item shipping amounts.
+             * This is the sum of all the shipping amounts.
              */
             amount_shipping: number | null;
 
             /**
-             * This is the sum of all the line item tax amounts.
+             * This is the sum of all the tax amounts.
              */
             amount_tax: number;
 
@@ -235,12 +249,12 @@ declare module 'stripe' {
           namespace TotalDetails {
             interface Breakdown {
               /**
-               * The aggregated line item discounts.
+               * The aggregated discounts.
                */
               discounts: Array<Breakdown.Discount>;
 
               /**
-               * The aggregated line item tax amounts by rate.
+               * The aggregated tax amounts by rate.
                */
               taxes: Array<Breakdown.Tax>;
             }
@@ -301,17 +315,17 @@ declare module 'stripe' {
         namespace Upfront {
           interface TotalDetails {
             /**
-             * This is the sum of all the line item discounts.
+             * This is the sum of all the discounts.
              */
             amount_discount: number;
 
             /**
-             * This is the sum of all the line item shipping amounts.
+             * This is the sum of all the shipping amounts.
              */
             amount_shipping: number | null;
 
             /**
-             * This is the sum of all the line item tax amounts.
+             * This is the sum of all the tax amounts.
              */
             amount_tax: number;
 
@@ -321,12 +335,12 @@ declare module 'stripe' {
           namespace TotalDetails {
             interface Breakdown {
               /**
-               * The aggregated line item discounts.
+               * The aggregated discounts.
                */
               discounts: Array<Breakdown.Discount>;
 
               /**
-               * The aggregated line item tax amounts by rate.
+               * The aggregated tax amounts by rate.
                */
               taxes: Array<Breakdown.Tax>;
             }
@@ -418,17 +432,17 @@ declare module 'stripe' {
 
       interface TotalDetails {
         /**
-         * This is the sum of all the line item discounts.
+         * This is the sum of all the discounts.
          */
         amount_discount: number;
 
         /**
-         * This is the sum of all the line item shipping amounts.
+         * This is the sum of all the shipping amounts.
          */
         amount_shipping: number | null;
 
         /**
-         * This is the sum of all the line item tax amounts.
+         * This is the sum of all the tax amounts.
          */
         amount_tax: number;
 
@@ -438,12 +452,12 @@ declare module 'stripe' {
       namespace TotalDetails {
         interface Breakdown {
           /**
-           * The aggregated line item discounts.
+           * The aggregated discounts.
            */
           discounts: Array<Breakdown.Discount>;
 
           /**
-           * The aggregated line item tax amounts by rate.
+           * The aggregated tax amounts by rate.
            */
           taxes: Array<Breakdown.Tax>;
         }
@@ -591,6 +605,11 @@ declare module 'stripe' {
       subscription_data?: QuoteCreateParams.SubscriptionData;
 
       /**
+       * ID of the test clock to attach to the quote.
+       */
+      test_clock?: string;
+
+      /**
        * The data with which to automatically create a Transfer for each of the invoices.
        */
       transfer_data?: Stripe.Emptyable<QuoteCreateParams.TransferData>;
@@ -672,7 +691,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * The recurring components of a price such as `interval` and `usage_type`.
+           * The recurring components of a price such as `interval` and `interval_count`.
            */
           recurring?: PriceData.Recurring;
 
@@ -911,7 +930,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * The recurring components of a price such as `interval` and `usage_type`.
+           * The recurring components of a price such as `interval` and `interval_count`.
            */
           recurring?: PriceData.Recurring;
 
@@ -997,6 +1016,11 @@ declare module 'stripe' {
        * The status of the quote.
        */
       status?: QuoteListParams.Status;
+
+      /**
+       * Provides a list of quotes that are associated with the specified test clock. The response will not include quotes with test clocks if this and the customer parameter is not set.
+       */
+      test_clock?: string;
     }
 
     namespace QuoteListParams {

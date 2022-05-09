@@ -267,3 +267,30 @@ async (): Promise<void> => {
 
   const event2 = await stripe.events.retrieve(event.id);
 };
+
+// Can reference error types
+let errors: Stripe.Errors;
+let rawError: Stripe.StripeRawError;
+
+let oldError: Stripe.StripeError;
+let newError: Stripe.errors.StripeError;
+
+const instanceofCheck1 = {} instanceof Stripe.errors.StripeError;
+const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
+const instanceofCheck3 = {} instanceof Stripe.StripeError;
+const instanceofCheck4 = {} instanceof Stripe.StripeAPIError;
+const instanceofCheck5 = {} instanceof stripe.errors.StripeError;
+const instanceofCheck6 = {} instanceof stripe.errors.StripeAPIError;
+
+Stripe.errors.generate({
+  type: 'card_error',
+});
+stripe.errors.generate({
+  type: 'card_error',
+});
+Stripe.StripeError.generate({
+  type: 'card_error',
+});
+Stripe.errors.StripeError.generate({
+  type: 'card_error',
+});

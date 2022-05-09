@@ -787,7 +787,7 @@ declare module 'stripe' {
 
           interface SpendingLimit {
             /**
-             * Maximum amount allowed to spend per interval.
+             * Maximum amount allowed to spend per interval. This amount is in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
              */
             amount: number;
 
@@ -2219,6 +2219,11 @@ declare module 'stripe' {
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
         /**
+         * The desired new PIN for this card.
+         */
+        pin?: CardUpdateParams.Pin;
+
+        /**
          * Rules that control spending for this card. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
          */
         spending_controls?: CardUpdateParams.SpendingControls;
@@ -2231,6 +2236,13 @@ declare module 'stripe' {
 
       namespace CardUpdateParams {
         type CancellationReason = 'lost' | 'stolen';
+
+        interface Pin {
+          /**
+           * The card's desired new PIN, encrypted under Stripe's public key.
+           */
+          encrypted_number?: string;
+        }
 
         interface SpendingControls {
           /**

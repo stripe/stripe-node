@@ -22,6 +22,7 @@
 ///<reference path='./BitcoinTransactions.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
 ///<reference path='./Cards.d.ts' />
+///<reference path='./CashBalances.d.ts' />
 ///<reference path='./Charges.d.ts' />
 ///<reference path='./Checkout/Sessions.d.ts' />
 ///<reference path='./ConnectCollectionTransfers.d.ts' />
@@ -41,6 +42,11 @@
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./FileLinks.d.ts' />
 ///<reference path='./Files.d.ts' />
+///<reference path='./FinancialConnections/AccountOwners.d.ts' />
+///<reference path='./FinancialConnections/AccountOwnerships.d.ts' />
+///<reference path='./FinancialConnections/Accounts.d.ts' />
+///<reference path='./FinancialConnections/Sessions.d.ts' />
+///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
@@ -56,8 +62,6 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
-///<reference path='./OrderItems.d.ts' />
-///<reference path='./OrderReturns.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
@@ -94,9 +98,13 @@
 ///<reference path='./TaxDeductedAtSources.d.ts' />
 ///<reference path='./TaxIds.d.ts' />
 ///<reference path='./TaxRates.d.ts' />
+///<reference path='./Terminal/Configurations.d.ts' />
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
 ///<reference path='./Terminal/Readers.d.ts' />
+///<reference path='./TestHelpers/Refunds.d.ts' />
+///<reference path='./TestHelpers/Terminal/Readers.d.ts' />
+///<reference path='./TestHelpers/TestClocks.d.ts' />
 ///<reference path='./Tokens.d.ts' />
 ///<reference path='./Topups.d.ts' />
 ///<reference path='./TransferReversals.d.ts' />
@@ -143,7 +151,6 @@ declare module 'stripe' {
     issuerFraudRecords: Stripe.IssuerFraudRecordsResource;
     mandates: Stripe.MandatesResource;
     orders: Stripe.OrdersResource;
-    orderReturns: Stripe.OrderReturnsResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethods: Stripe.PaymentMethodsResource;
@@ -182,6 +189,10 @@ declare module 'stripe' {
     checkout: {
       sessions: Stripe.Checkout.SessionsResource;
     };
+    financialConnections: {
+      accounts: Stripe.FinancialConnections.AccountsResource;
+      sessions: Stripe.FinancialConnections.SessionsResource;
+    };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;
       verificationSessions: Stripe.Identity.VerificationSessionsResource;
@@ -206,15 +217,22 @@ declare module 'stripe' {
       scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
     };
     terminal: {
+      configurations: Stripe.Terminal.ConfigurationsResource;
       connectionTokens: Stripe.Terminal.ConnectionTokensResource;
       locations: Stripe.Terminal.LocationsResource;
       readers: Stripe.Terminal.ReadersResource;
     };
+    testHelpers: {
+      testClocks: Stripe.TestHelpers.TestClocksResource;
+      refunds: Stripe.TestHelpers.RefundsResource;
+      terminal: {
+        readers: Stripe.TestHelpers.Terminal.ReadersResource;
+      };
+    };
     /**
      * API Errors
      */
-    static errors: Stripe.Errors;
-    errors: Stripe.Errors;
+    errors: typeof Stripe.errors;
 
     on(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
     on(event: 'response', handler: (event: Stripe.ResponseEvent) => void): void;

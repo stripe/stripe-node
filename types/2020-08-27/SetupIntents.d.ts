@@ -29,7 +29,7 @@ declare module 'stripe' {
       /**
        * The client secret of this SetupIntent. Used for client-side retrieval using a publishable key.
        *
-       * The client secret can be used to complete payment setup from your frontend. It should not be stored, logged, embedded in URLs, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.
+       * The client secret can be used to complete payment setup from your frontend. It should not be stored, logged, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.
        */
       client_secret: string | null;
 
@@ -172,7 +172,7 @@ declare module 'stripe' {
 
         /**
          * PaymentMethod objects represent your customer's payment instruments.
-         * They can be used with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or saved to
+         * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
          * Customer objects to store instrument details for future payments.
          *
          * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
@@ -267,6 +267,15 @@ declare module 'stripe' {
            * The URL for the hosted verification page, which allows customers to verify their bank account.
            */
           hosted_verification_url: string;
+
+          /**
+           * The type of the microdeposit sent to the customer. Used to distinguish between different verification methods.
+           */
+          microdeposit_type: VerifyWithMicrodeposits.MicrodepositType | null;
+        }
+
+        namespace VerifyWithMicrodeposits {
+          type MicrodepositType = 'amounts' | 'descriptor_code';
         }
       }
 
@@ -276,6 +285,8 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+        us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
       namespace PaymentMethodOptions {
@@ -336,12 +347,75 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * Configuration options for setting up an eMandate for cards issued in India.
+           */
+          mandate_options: Card.MandateOptions | null;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
         }
 
         namespace Card {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type: MandateOptions.AmountType;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description: string | null;
+
+            /**
+             * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date: number | null;
+
+            /**
+             * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+             */
+            interval: MandateOptions.Interval;
+
+            /**
+             * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+             */
+            interval_count: number | null;
+
+            /**
+             * Unique identifier for the mandate or subscription.
+             */
+            reference: string;
+
+            /**
+             * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+             */
+            start_date: number;
+
+            /**
+             * Specifies the type of mandates supported. Possible values are `india`.
+             */
+            supported_types: Array<'india'> | null;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+          }
+
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
 
@@ -351,6 +425,39 @@ declare module 'stripe' {
 
         namespace SepaDebit {
           interface MandateOptions {}
+        }
+
+        interface UsBankAccount {
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Bank account verification method.
+           */
+          verification_method?: UsBankAccount.VerificationMethod;
+        }
+
+        namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. The `payment_method` permission must be included.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
 
@@ -405,6 +512,12 @@ declare module 'stripe' {
        * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
        */
       payment_method?: string;
+
+      /**
+       * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
+       * value in the SetupIntent.
+       */
+      payment_method_data?: SetupIntentCreateParams.PaymentMethodData;
 
       /**
        * Payment-method-specific configuration for this SetupIntent.
@@ -482,6 +595,476 @@ declare module 'stripe' {
         }
       }
 
+      interface PaymentMethodData {
+        /**
+         * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+         */
+        acss_debit?: PaymentMethodData.AcssDebit;
+
+        /**
+         * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
+         */
+        afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
+
+        /**
+         * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
+         */
+        alipay?: PaymentMethodData.Alipay;
+
+        /**
+         * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+         */
+        au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+        /**
+         * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
+         */
+        bacs_debit?: PaymentMethodData.BacsDebit;
+
+        /**
+         * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
+         */
+        bancontact?: PaymentMethodData.Bancontact;
+
+        /**
+         * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+         */
+        billing_details?: PaymentMethodData.BillingDetails;
+
+        /**
+         * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
+         */
+        boleto?: PaymentMethodData.Boleto;
+
+        /**
+         * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
+         */
+        customer_balance?: PaymentMethodData.CustomerBalance;
+
+        /**
+         * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
+         */
+        eps?: PaymentMethodData.Eps;
+
+        /**
+         * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
+         */
+        fpx?: PaymentMethodData.Fpx;
+
+        /**
+         * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
+         */
+        giropay?: PaymentMethodData.Giropay;
+
+        /**
+         * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
+         */
+        grabpay?: PaymentMethodData.Grabpay;
+
+        /**
+         * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
+         */
+        ideal?: PaymentMethodData.Ideal;
+
+        /**
+         * If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present payment method.
+         */
+        interac_present?: PaymentMethodData.InteracPresent;
+
+        /**
+         * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
+         */
+        klarna?: PaymentMethodData.Klarna;
+
+        /**
+         * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
+         */
+        konbini?: PaymentMethodData.Konbini;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
+         */
+        oxxo?: PaymentMethodData.Oxxo;
+
+        /**
+         * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
+         */
+        p24?: PaymentMethodData.P24;
+
+        /**
+         * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
+         */
+        paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+         */
+        sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
+         */
+        sofort?: PaymentMethodData.Sofort;
+
+        /**
+         * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+         */
+        type: PaymentMethodData.Type;
+
+        /**
+         * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
+         */
+        us_bank_account?: PaymentMethodData.UsBankAccount;
+
+        /**
+         * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
+         */
+        wechat_pay?: PaymentMethodData.WechatPay;
+      }
+
+      namespace PaymentMethodData {
+        interface AcssDebit {
+          /**
+           * Customer's bank account number.
+           */
+          account_number: string;
+
+          /**
+           * Institution number of the customer's bank.
+           */
+          institution_number: string;
+
+          /**
+           * Transit number of the customer's bank.
+           */
+          transit_number: string;
+        }
+
+        interface AfterpayClearpay {}
+
+        interface Alipay {}
+
+        interface AuBecsDebit {
+          /**
+           * The account number for the bank account.
+           */
+          account_number: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number: string;
+        }
+
+        interface BacsDebit {
+          /**
+           * Account number of the bank account that the funds will be debited from.
+           */
+          account_number?: string;
+
+          /**
+           * Sort code of the bank account. (e.g., `10-20-30`)
+           */
+          sort_code?: string;
+        }
+
+        interface Bancontact {}
+
+        interface BillingDetails {
+          /**
+           * Billing address.
+           */
+          address?: Stripe.Emptyable<BillingDetails.Address>;
+
+          /**
+           * Email address.
+           */
+          email?: Stripe.Emptyable<string>;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Billing phone number (including extension).
+           */
+          phone?: string;
+        }
+
+        namespace BillingDetails {
+          interface Address extends Omit<Stripe.AddressParam, 'line1'> {
+            line1?: string;
+          }
+        }
+
+        interface Boleto {
+          /**
+           * The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
+           */
+          tax_id: string;
+        }
+
+        interface CustomerBalance {}
+
+        interface Eps {
+          /**
+           * The customer's bank.
+           */
+          bank?: Eps.Bank;
+        }
+
+        namespace Eps {
+          type Bank =
+            | 'arzte_und_apotheker_bank'
+            | 'austrian_anadi_bank_ag'
+            | 'bank_austria'
+            | 'bankhaus_carl_spangler'
+            | 'bankhaus_schelhammer_und_schattera_ag'
+            | 'bawag_psk_ag'
+            | 'bks_bank_ag'
+            | 'brull_kallmus_bank_ag'
+            | 'btv_vier_lander_bank'
+            | 'capital_bank_grawe_gruppe_ag'
+            | 'dolomitenbank'
+            | 'easybank_ag'
+            | 'erste_bank_und_sparkassen'
+            | 'hypo_alpeadriabank_international_ag'
+            | 'hypo_bank_burgenland_aktiengesellschaft'
+            | 'hypo_noe_lb_fur_niederosterreich_u_wien'
+            | 'hypo_oberosterreich_salzburg_steiermark'
+            | 'hypo_tirol_bank_ag'
+            | 'hypo_vorarlberg_bank_ag'
+            | 'marchfelder_bank'
+            | 'oberbank_ag'
+            | 'raiffeisen_bankengruppe_osterreich'
+            | 'schoellerbank_ag'
+            | 'sparda_bank_wien'
+            | 'volksbank_gruppe'
+            | 'volkskreditbank_ag'
+            | 'vr_bank_braunau';
+        }
+
+        interface Fpx {
+          /**
+           * Account holder type for FPX transaction
+           */
+          account_holder_type?: Fpx.AccountHolderType;
+
+          /**
+           * The customer's bank.
+           */
+          bank: Fpx.Bank;
+        }
+
+        namespace Fpx {
+          type AccountHolderType = 'company' | 'individual';
+
+          type Bank =
+            | 'affin_bank'
+            | 'agrobank'
+            | 'alliance_bank'
+            | 'ambank'
+            | 'bank_islam'
+            | 'bank_muamalat'
+            | 'bank_rakyat'
+            | 'bsn'
+            | 'cimb'
+            | 'deutsche_bank'
+            | 'hong_leong_bank'
+            | 'hsbc'
+            | 'kfh'
+            | 'maybank2e'
+            | 'maybank2u'
+            | 'ocbc'
+            | 'pb_enterprise'
+            | 'public_bank'
+            | 'rhb'
+            | 'standard_chartered'
+            | 'uob';
+        }
+
+        interface Giropay {}
+
+        interface Grabpay {}
+
+        interface Ideal {
+          /**
+           * The customer's bank.
+           */
+          bank?: Ideal.Bank;
+        }
+
+        namespace Ideal {
+          type Bank =
+            | 'abn_amro'
+            | 'asn_bank'
+            | 'bunq'
+            | 'handelsbanken'
+            | 'ing'
+            | 'knab'
+            | 'moneyou'
+            | 'rabobank'
+            | 'regiobank'
+            | 'revolut'
+            | 'sns_bank'
+            | 'triodos_bank'
+            | 'van_lanschot';
+        }
+
+        interface InteracPresent {}
+
+        interface Klarna {
+          /**
+           * Customer's date of birth
+           */
+          dob?: Klarna.Dob;
+        }
+
+        namespace Klarna {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        interface Konbini {}
+
+        interface Oxxo {}
+
+        interface P24 {
+          /**
+           * The customer's bank.
+           */
+          bank?: P24.Bank;
+        }
+
+        namespace P24 {
+          type Bank =
+            | 'alior_bank'
+            | 'bank_millennium'
+            | 'bank_nowy_bfg_sa'
+            | 'bank_pekao_sa'
+            | 'banki_spbdzielcze'
+            | 'blik'
+            | 'bnp_paribas'
+            | 'boz'
+            | 'citi_handlowy'
+            | 'credit_agricole'
+            | 'envelobank'
+            | 'etransfer_pocztowy24'
+            | 'getin_bank'
+            | 'ideabank'
+            | 'ing'
+            | 'inteligo'
+            | 'mbank_mtransfer'
+            | 'nest_przelew'
+            | 'noble_pay'
+            | 'pbac_z_ipko'
+            | 'plus_bank'
+            | 'santander_przelew24'
+            | 'tmobile_usbugi_bankowe'
+            | 'toyota_bank'
+            | 'volkswagen_bank';
+        }
+
+        interface Paynow {}
+
+        interface SepaDebit {
+          /**
+           * IBAN of the bank account.
+           */
+          iban: string;
+        }
+
+        interface Sofort {
+          /**
+           * Two-letter ISO code representing the country the bank account is located in.
+           */
+          country: Sofort.Country;
+        }
+
+        namespace Sofort {
+          type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        }
+
+        type Type =
+          | 'acss_debit'
+          | 'afterpay_clearpay'
+          | 'alipay'
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'boleto'
+          | 'customer_balance'
+          | 'eps'
+          | 'fpx'
+          | 'giropay'
+          | 'grabpay'
+          | 'ideal'
+          | 'klarna'
+          | 'konbini'
+          | 'oxxo'
+          | 'p24'
+          | 'paynow'
+          | 'sepa_debit'
+          | 'sofort'
+          | 'us_bank_account'
+          | 'wechat_pay';
+
+        interface UsBankAccount {
+          /**
+           * Account holder type: individual or company.
+           */
+          account_holder_type?: UsBankAccount.AccountHolderType;
+
+          /**
+           * Account number of the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Account type: checkings or savings. Defaults to checking if omitted.
+           */
+          account_type?: UsBankAccount.AccountType;
+
+          /**
+           * The ID of a Financial Connections Account to use as a payment method.
+           */
+          financial_connections_account?: string;
+
+          /**
+           * Routing number of the bank account.
+           */
+          routing_number?: string;
+        }
+
+        namespace UsBankAccount {
+          type AccountHolderType = 'company' | 'individual';
+
+          type AccountType = 'checking' | 'savings';
+        }
+
+        interface WechatPay {}
+      }
+
       interface PaymentMethodOptions {
         /**
          * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
@@ -497,6 +1080,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+        /**
+         * If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account payment method options.
+         */
+        us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
       namespace PaymentMethodOptions {
@@ -562,6 +1150,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * Configuration options for setting up an eMandate for cards issued in India.
+           */
+          mandate_options?: Card.MandateOptions;
+
+          /**
            * When specified, this parameter signals that a card has been collected
            * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
            * parameter can only be provided during confirmation.
@@ -575,6 +1168,64 @@ declare module 'stripe' {
         }
 
         namespace Card {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type: MandateOptions.AmountType;
+
+            /**
+             * Currency in which future payments will be charged. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: number;
+
+            /**
+             * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+             */
+            interval: MandateOptions.Interval;
+
+            /**
+             * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+             */
+            interval_count?: number;
+
+            /**
+             * Unique identifier for the mandate or subscription.
+             */
+            reference: string;
+
+            /**
+             * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+             */
+            start_date: number;
+
+            /**
+             * Specifies the type of mandates supported. Possible values are `india`.
+             */
+            supported_types?: Array<'india'>;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+          }
+
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
@@ -587,6 +1238,42 @@ declare module 'stripe' {
 
         namespace SepaDebit {
           interface MandateOptions {}
+        }
+
+        interface UsBankAccount {
+          /**
+           * Additional fields for Financial Connections Session creation
+           */
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: UsBankAccount.VerificationMethod;
+        }
+
+        namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
 
@@ -646,6 +1333,12 @@ declare module 'stripe' {
       payment_method?: string;
 
       /**
+       * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
+       * value in the SetupIntent.
+       */
+      payment_method_data?: SetupIntentUpdateParams.PaymentMethodData;
+
+      /**
        * Payment-method-specific configuration for this SetupIntent.
        */
       payment_method_options?: SetupIntentUpdateParams.PaymentMethodOptions;
@@ -657,6 +1350,476 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentUpdateParams {
+      interface PaymentMethodData {
+        /**
+         * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+         */
+        acss_debit?: PaymentMethodData.AcssDebit;
+
+        /**
+         * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
+         */
+        afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
+
+        /**
+         * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
+         */
+        alipay?: PaymentMethodData.Alipay;
+
+        /**
+         * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+         */
+        au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+        /**
+         * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
+         */
+        bacs_debit?: PaymentMethodData.BacsDebit;
+
+        /**
+         * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
+         */
+        bancontact?: PaymentMethodData.Bancontact;
+
+        /**
+         * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+         */
+        billing_details?: PaymentMethodData.BillingDetails;
+
+        /**
+         * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
+         */
+        boleto?: PaymentMethodData.Boleto;
+
+        /**
+         * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
+         */
+        customer_balance?: PaymentMethodData.CustomerBalance;
+
+        /**
+         * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
+         */
+        eps?: PaymentMethodData.Eps;
+
+        /**
+         * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
+         */
+        fpx?: PaymentMethodData.Fpx;
+
+        /**
+         * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
+         */
+        giropay?: PaymentMethodData.Giropay;
+
+        /**
+         * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
+         */
+        grabpay?: PaymentMethodData.Grabpay;
+
+        /**
+         * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
+         */
+        ideal?: PaymentMethodData.Ideal;
+
+        /**
+         * If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present payment method.
+         */
+        interac_present?: PaymentMethodData.InteracPresent;
+
+        /**
+         * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
+         */
+        klarna?: PaymentMethodData.Klarna;
+
+        /**
+         * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
+         */
+        konbini?: PaymentMethodData.Konbini;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
+         */
+        oxxo?: PaymentMethodData.Oxxo;
+
+        /**
+         * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
+         */
+        p24?: PaymentMethodData.P24;
+
+        /**
+         * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
+         */
+        paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+         */
+        sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
+         */
+        sofort?: PaymentMethodData.Sofort;
+
+        /**
+         * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+         */
+        type: PaymentMethodData.Type;
+
+        /**
+         * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
+         */
+        us_bank_account?: PaymentMethodData.UsBankAccount;
+
+        /**
+         * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
+         */
+        wechat_pay?: PaymentMethodData.WechatPay;
+      }
+
+      namespace PaymentMethodData {
+        interface AcssDebit {
+          /**
+           * Customer's bank account number.
+           */
+          account_number: string;
+
+          /**
+           * Institution number of the customer's bank.
+           */
+          institution_number: string;
+
+          /**
+           * Transit number of the customer's bank.
+           */
+          transit_number: string;
+        }
+
+        interface AfterpayClearpay {}
+
+        interface Alipay {}
+
+        interface AuBecsDebit {
+          /**
+           * The account number for the bank account.
+           */
+          account_number: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number: string;
+        }
+
+        interface BacsDebit {
+          /**
+           * Account number of the bank account that the funds will be debited from.
+           */
+          account_number?: string;
+
+          /**
+           * Sort code of the bank account. (e.g., `10-20-30`)
+           */
+          sort_code?: string;
+        }
+
+        interface Bancontact {}
+
+        interface BillingDetails {
+          /**
+           * Billing address.
+           */
+          address?: Stripe.Emptyable<BillingDetails.Address>;
+
+          /**
+           * Email address.
+           */
+          email?: Stripe.Emptyable<string>;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Billing phone number (including extension).
+           */
+          phone?: string;
+        }
+
+        namespace BillingDetails {
+          interface Address extends Omit<Stripe.AddressParam, 'line1'> {
+            line1?: string;
+          }
+        }
+
+        interface Boleto {
+          /**
+           * The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
+           */
+          tax_id: string;
+        }
+
+        interface CustomerBalance {}
+
+        interface Eps {
+          /**
+           * The customer's bank.
+           */
+          bank?: Eps.Bank;
+        }
+
+        namespace Eps {
+          type Bank =
+            | 'arzte_und_apotheker_bank'
+            | 'austrian_anadi_bank_ag'
+            | 'bank_austria'
+            | 'bankhaus_carl_spangler'
+            | 'bankhaus_schelhammer_und_schattera_ag'
+            | 'bawag_psk_ag'
+            | 'bks_bank_ag'
+            | 'brull_kallmus_bank_ag'
+            | 'btv_vier_lander_bank'
+            | 'capital_bank_grawe_gruppe_ag'
+            | 'dolomitenbank'
+            | 'easybank_ag'
+            | 'erste_bank_und_sparkassen'
+            | 'hypo_alpeadriabank_international_ag'
+            | 'hypo_bank_burgenland_aktiengesellschaft'
+            | 'hypo_noe_lb_fur_niederosterreich_u_wien'
+            | 'hypo_oberosterreich_salzburg_steiermark'
+            | 'hypo_tirol_bank_ag'
+            | 'hypo_vorarlberg_bank_ag'
+            | 'marchfelder_bank'
+            | 'oberbank_ag'
+            | 'raiffeisen_bankengruppe_osterreich'
+            | 'schoellerbank_ag'
+            | 'sparda_bank_wien'
+            | 'volksbank_gruppe'
+            | 'volkskreditbank_ag'
+            | 'vr_bank_braunau';
+        }
+
+        interface Fpx {
+          /**
+           * Account holder type for FPX transaction
+           */
+          account_holder_type?: Fpx.AccountHolderType;
+
+          /**
+           * The customer's bank.
+           */
+          bank: Fpx.Bank;
+        }
+
+        namespace Fpx {
+          type AccountHolderType = 'company' | 'individual';
+
+          type Bank =
+            | 'affin_bank'
+            | 'agrobank'
+            | 'alliance_bank'
+            | 'ambank'
+            | 'bank_islam'
+            | 'bank_muamalat'
+            | 'bank_rakyat'
+            | 'bsn'
+            | 'cimb'
+            | 'deutsche_bank'
+            | 'hong_leong_bank'
+            | 'hsbc'
+            | 'kfh'
+            | 'maybank2e'
+            | 'maybank2u'
+            | 'ocbc'
+            | 'pb_enterprise'
+            | 'public_bank'
+            | 'rhb'
+            | 'standard_chartered'
+            | 'uob';
+        }
+
+        interface Giropay {}
+
+        interface Grabpay {}
+
+        interface Ideal {
+          /**
+           * The customer's bank.
+           */
+          bank?: Ideal.Bank;
+        }
+
+        namespace Ideal {
+          type Bank =
+            | 'abn_amro'
+            | 'asn_bank'
+            | 'bunq'
+            | 'handelsbanken'
+            | 'ing'
+            | 'knab'
+            | 'moneyou'
+            | 'rabobank'
+            | 'regiobank'
+            | 'revolut'
+            | 'sns_bank'
+            | 'triodos_bank'
+            | 'van_lanschot';
+        }
+
+        interface InteracPresent {}
+
+        interface Klarna {
+          /**
+           * Customer's date of birth
+           */
+          dob?: Klarna.Dob;
+        }
+
+        namespace Klarna {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        interface Konbini {}
+
+        interface Oxxo {}
+
+        interface P24 {
+          /**
+           * The customer's bank.
+           */
+          bank?: P24.Bank;
+        }
+
+        namespace P24 {
+          type Bank =
+            | 'alior_bank'
+            | 'bank_millennium'
+            | 'bank_nowy_bfg_sa'
+            | 'bank_pekao_sa'
+            | 'banki_spbdzielcze'
+            | 'blik'
+            | 'bnp_paribas'
+            | 'boz'
+            | 'citi_handlowy'
+            | 'credit_agricole'
+            | 'envelobank'
+            | 'etransfer_pocztowy24'
+            | 'getin_bank'
+            | 'ideabank'
+            | 'ing'
+            | 'inteligo'
+            | 'mbank_mtransfer'
+            | 'nest_przelew'
+            | 'noble_pay'
+            | 'pbac_z_ipko'
+            | 'plus_bank'
+            | 'santander_przelew24'
+            | 'tmobile_usbugi_bankowe'
+            | 'toyota_bank'
+            | 'volkswagen_bank';
+        }
+
+        interface Paynow {}
+
+        interface SepaDebit {
+          /**
+           * IBAN of the bank account.
+           */
+          iban: string;
+        }
+
+        interface Sofort {
+          /**
+           * Two-letter ISO code representing the country the bank account is located in.
+           */
+          country: Sofort.Country;
+        }
+
+        namespace Sofort {
+          type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        }
+
+        type Type =
+          | 'acss_debit'
+          | 'afterpay_clearpay'
+          | 'alipay'
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'boleto'
+          | 'customer_balance'
+          | 'eps'
+          | 'fpx'
+          | 'giropay'
+          | 'grabpay'
+          | 'ideal'
+          | 'klarna'
+          | 'konbini'
+          | 'oxxo'
+          | 'p24'
+          | 'paynow'
+          | 'sepa_debit'
+          | 'sofort'
+          | 'us_bank_account'
+          | 'wechat_pay';
+
+        interface UsBankAccount {
+          /**
+           * Account holder type: individual or company.
+           */
+          account_holder_type?: UsBankAccount.AccountHolderType;
+
+          /**
+           * Account number of the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Account type: checkings or savings. Defaults to checking if omitted.
+           */
+          account_type?: UsBankAccount.AccountType;
+
+          /**
+           * The ID of a Financial Connections Account to use as a payment method.
+           */
+          financial_connections_account?: string;
+
+          /**
+           * Routing number of the bank account.
+           */
+          routing_number?: string;
+        }
+
+        namespace UsBankAccount {
+          type AccountHolderType = 'company' | 'individual';
+
+          type AccountType = 'checking' | 'savings';
+        }
+
+        interface WechatPay {}
+      }
+
       interface PaymentMethodOptions {
         /**
          * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
@@ -672,6 +1835,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+        /**
+         * If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account payment method options.
+         */
+        us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
       namespace PaymentMethodOptions {
@@ -737,6 +1905,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * Configuration options for setting up an eMandate for cards issued in India.
+           */
+          mandate_options?: Card.MandateOptions;
+
+          /**
            * When specified, this parameter signals that a card has been collected
            * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
            * parameter can only be provided during confirmation.
@@ -750,6 +1923,64 @@ declare module 'stripe' {
         }
 
         namespace Card {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type: MandateOptions.AmountType;
+
+            /**
+             * Currency in which future payments will be charged. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: number;
+
+            /**
+             * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+             */
+            interval: MandateOptions.Interval;
+
+            /**
+             * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+             */
+            interval_count?: number;
+
+            /**
+             * Unique identifier for the mandate or subscription.
+             */
+            reference: string;
+
+            /**
+             * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+             */
+            start_date: number;
+
+            /**
+             * Specifies the type of mandates supported. Possible values are `india`.
+             */
+            supported_types?: Array<'india'>;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+          }
+
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
@@ -762,6 +1993,42 @@ declare module 'stripe' {
 
         namespace SepaDebit {
           interface MandateOptions {}
+        }
+
+        interface UsBankAccount {
+          /**
+           * Additional fields for Financial Connections Session creation
+           */
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: UsBankAccount.VerificationMethod;
+        }
+
+        namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
     }
@@ -824,6 +2091,12 @@ declare module 'stripe' {
        * ID of the payment method (a PaymentMethod, Card, or saved Source object) to attach to this SetupIntent.
        */
       payment_method?: string;
+
+      /**
+       * When included, this hash creates a PaymentMethod that is set as the [`payment_method`](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-payment_method)
+       * value in the SetupIntent.
+       */
+      payment_method_data?: SetupIntentConfirmParams.PaymentMethodData;
 
       /**
        * Payment-method-specific configuration for this SetupIntent.
@@ -923,6 +2196,476 @@ declare module 'stripe' {
         }
       }
 
+      interface PaymentMethodData {
+        /**
+         * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
+         */
+        acss_debit?: PaymentMethodData.AcssDebit;
+
+        /**
+         * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
+         */
+        afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
+
+        /**
+         * If this is an `Alipay` PaymentMethod, this hash contains details about the Alipay payment method.
+         */
+        alipay?: PaymentMethodData.Alipay;
+
+        /**
+         * If this is an `au_becs_debit` PaymentMethod, this hash contains details about the bank account.
+         */
+        au_becs_debit?: PaymentMethodData.AuBecsDebit;
+
+        /**
+         * If this is a `bacs_debit` PaymentMethod, this hash contains details about the Bacs Direct Debit bank account.
+         */
+        bacs_debit?: PaymentMethodData.BacsDebit;
+
+        /**
+         * If this is a `bancontact` PaymentMethod, this hash contains details about the Bancontact payment method.
+         */
+        bancontact?: PaymentMethodData.Bancontact;
+
+        /**
+         * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
+         */
+        billing_details?: PaymentMethodData.BillingDetails;
+
+        /**
+         * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
+         */
+        boleto?: PaymentMethodData.Boleto;
+
+        /**
+         * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
+         */
+        customer_balance?: PaymentMethodData.CustomerBalance;
+
+        /**
+         * If this is an `eps` PaymentMethod, this hash contains details about the EPS payment method.
+         */
+        eps?: PaymentMethodData.Eps;
+
+        /**
+         * If this is an `fpx` PaymentMethod, this hash contains details about the FPX payment method.
+         */
+        fpx?: PaymentMethodData.Fpx;
+
+        /**
+         * If this is a `giropay` PaymentMethod, this hash contains details about the Giropay payment method.
+         */
+        giropay?: PaymentMethodData.Giropay;
+
+        /**
+         * If this is a `grabpay` PaymentMethod, this hash contains details about the GrabPay payment method.
+         */
+        grabpay?: PaymentMethodData.Grabpay;
+
+        /**
+         * If this is an `ideal` PaymentMethod, this hash contains details about the iDEAL payment method.
+         */
+        ideal?: PaymentMethodData.Ideal;
+
+        /**
+         * If this is an `interac_present` PaymentMethod, this hash contains details about the Interac Present payment method.
+         */
+        interac_present?: PaymentMethodData.InteracPresent;
+
+        /**
+         * If this is a `klarna` PaymentMethod, this hash contains details about the Klarna payment method.
+         */
+        klarna?: PaymentMethodData.Klarna;
+
+        /**
+         * If this is a `konbini` PaymentMethod, this hash contains details about the Konbini payment method.
+         */
+        konbini?: PaymentMethodData.Konbini;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * If this is an `oxxo` PaymentMethod, this hash contains details about the OXXO payment method.
+         */
+        oxxo?: PaymentMethodData.Oxxo;
+
+        /**
+         * If this is a `p24` PaymentMethod, this hash contains details about the P24 payment method.
+         */
+        p24?: PaymentMethodData.P24;
+
+        /**
+         * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
+         */
+        paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
+         */
+        sepa_debit?: PaymentMethodData.SepaDebit;
+
+        /**
+         * If this is a `sofort` PaymentMethod, this hash contains details about the SOFORT payment method.
+         */
+        sofort?: PaymentMethodData.Sofort;
+
+        /**
+         * The type of the PaymentMethod. An additional hash is included on the PaymentMethod with a name matching this value. It contains additional information specific to the PaymentMethod type.
+         */
+        type: PaymentMethodData.Type;
+
+        /**
+         * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
+         */
+        us_bank_account?: PaymentMethodData.UsBankAccount;
+
+        /**
+         * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
+         */
+        wechat_pay?: PaymentMethodData.WechatPay;
+      }
+
+      namespace PaymentMethodData {
+        interface AcssDebit {
+          /**
+           * Customer's bank account number.
+           */
+          account_number: string;
+
+          /**
+           * Institution number of the customer's bank.
+           */
+          institution_number: string;
+
+          /**
+           * Transit number of the customer's bank.
+           */
+          transit_number: string;
+        }
+
+        interface AfterpayClearpay {}
+
+        interface Alipay {}
+
+        interface AuBecsDebit {
+          /**
+           * The account number for the bank account.
+           */
+          account_number: string;
+
+          /**
+           * Bank-State-Branch number of the bank account.
+           */
+          bsb_number: string;
+        }
+
+        interface BacsDebit {
+          /**
+           * Account number of the bank account that the funds will be debited from.
+           */
+          account_number?: string;
+
+          /**
+           * Sort code of the bank account. (e.g., `10-20-30`)
+           */
+          sort_code?: string;
+        }
+
+        interface Bancontact {}
+
+        interface BillingDetails {
+          /**
+           * Billing address.
+           */
+          address?: Stripe.Emptyable<BillingDetails.Address>;
+
+          /**
+           * Email address.
+           */
+          email?: Stripe.Emptyable<string>;
+
+          /**
+           * Full name.
+           */
+          name?: string;
+
+          /**
+           * Billing phone number (including extension).
+           */
+          phone?: string;
+        }
+
+        namespace BillingDetails {
+          interface Address extends Omit<Stripe.AddressParam, 'line1'> {
+            line1?: string;
+          }
+        }
+
+        interface Boleto {
+          /**
+           * The tax ID of the customer (CPF for individual consumers or CNPJ for businesses consumers)
+           */
+          tax_id: string;
+        }
+
+        interface CustomerBalance {}
+
+        interface Eps {
+          /**
+           * The customer's bank.
+           */
+          bank?: Eps.Bank;
+        }
+
+        namespace Eps {
+          type Bank =
+            | 'arzte_und_apotheker_bank'
+            | 'austrian_anadi_bank_ag'
+            | 'bank_austria'
+            | 'bankhaus_carl_spangler'
+            | 'bankhaus_schelhammer_und_schattera_ag'
+            | 'bawag_psk_ag'
+            | 'bks_bank_ag'
+            | 'brull_kallmus_bank_ag'
+            | 'btv_vier_lander_bank'
+            | 'capital_bank_grawe_gruppe_ag'
+            | 'dolomitenbank'
+            | 'easybank_ag'
+            | 'erste_bank_und_sparkassen'
+            | 'hypo_alpeadriabank_international_ag'
+            | 'hypo_bank_burgenland_aktiengesellschaft'
+            | 'hypo_noe_lb_fur_niederosterreich_u_wien'
+            | 'hypo_oberosterreich_salzburg_steiermark'
+            | 'hypo_tirol_bank_ag'
+            | 'hypo_vorarlberg_bank_ag'
+            | 'marchfelder_bank'
+            | 'oberbank_ag'
+            | 'raiffeisen_bankengruppe_osterreich'
+            | 'schoellerbank_ag'
+            | 'sparda_bank_wien'
+            | 'volksbank_gruppe'
+            | 'volkskreditbank_ag'
+            | 'vr_bank_braunau';
+        }
+
+        interface Fpx {
+          /**
+           * Account holder type for FPX transaction
+           */
+          account_holder_type?: Fpx.AccountHolderType;
+
+          /**
+           * The customer's bank.
+           */
+          bank: Fpx.Bank;
+        }
+
+        namespace Fpx {
+          type AccountHolderType = 'company' | 'individual';
+
+          type Bank =
+            | 'affin_bank'
+            | 'agrobank'
+            | 'alliance_bank'
+            | 'ambank'
+            | 'bank_islam'
+            | 'bank_muamalat'
+            | 'bank_rakyat'
+            | 'bsn'
+            | 'cimb'
+            | 'deutsche_bank'
+            | 'hong_leong_bank'
+            | 'hsbc'
+            | 'kfh'
+            | 'maybank2e'
+            | 'maybank2u'
+            | 'ocbc'
+            | 'pb_enterprise'
+            | 'public_bank'
+            | 'rhb'
+            | 'standard_chartered'
+            | 'uob';
+        }
+
+        interface Giropay {}
+
+        interface Grabpay {}
+
+        interface Ideal {
+          /**
+           * The customer's bank.
+           */
+          bank?: Ideal.Bank;
+        }
+
+        namespace Ideal {
+          type Bank =
+            | 'abn_amro'
+            | 'asn_bank'
+            | 'bunq'
+            | 'handelsbanken'
+            | 'ing'
+            | 'knab'
+            | 'moneyou'
+            | 'rabobank'
+            | 'regiobank'
+            | 'revolut'
+            | 'sns_bank'
+            | 'triodos_bank'
+            | 'van_lanschot';
+        }
+
+        interface InteracPresent {}
+
+        interface Klarna {
+          /**
+           * Customer's date of birth
+           */
+          dob?: Klarna.Dob;
+        }
+
+        namespace Klarna {
+          interface Dob {
+            /**
+             * The day of birth, between 1 and 31.
+             */
+            day: number;
+
+            /**
+             * The month of birth, between 1 and 12.
+             */
+            month: number;
+
+            /**
+             * The four-digit year of birth.
+             */
+            year: number;
+          }
+        }
+
+        interface Konbini {}
+
+        interface Oxxo {}
+
+        interface P24 {
+          /**
+           * The customer's bank.
+           */
+          bank?: P24.Bank;
+        }
+
+        namespace P24 {
+          type Bank =
+            | 'alior_bank'
+            | 'bank_millennium'
+            | 'bank_nowy_bfg_sa'
+            | 'bank_pekao_sa'
+            | 'banki_spbdzielcze'
+            | 'blik'
+            | 'bnp_paribas'
+            | 'boz'
+            | 'citi_handlowy'
+            | 'credit_agricole'
+            | 'envelobank'
+            | 'etransfer_pocztowy24'
+            | 'getin_bank'
+            | 'ideabank'
+            | 'ing'
+            | 'inteligo'
+            | 'mbank_mtransfer'
+            | 'nest_przelew'
+            | 'noble_pay'
+            | 'pbac_z_ipko'
+            | 'plus_bank'
+            | 'santander_przelew24'
+            | 'tmobile_usbugi_bankowe'
+            | 'toyota_bank'
+            | 'volkswagen_bank';
+        }
+
+        interface Paynow {}
+
+        interface SepaDebit {
+          /**
+           * IBAN of the bank account.
+           */
+          iban: string;
+        }
+
+        interface Sofort {
+          /**
+           * Two-letter ISO code representing the country the bank account is located in.
+           */
+          country: Sofort.Country;
+        }
+
+        namespace Sofort {
+          type Country = 'AT' | 'BE' | 'DE' | 'ES' | 'IT' | 'NL';
+        }
+
+        type Type =
+          | 'acss_debit'
+          | 'afterpay_clearpay'
+          | 'alipay'
+          | 'au_becs_debit'
+          | 'bacs_debit'
+          | 'bancontact'
+          | 'boleto'
+          | 'customer_balance'
+          | 'eps'
+          | 'fpx'
+          | 'giropay'
+          | 'grabpay'
+          | 'ideal'
+          | 'klarna'
+          | 'konbini'
+          | 'oxxo'
+          | 'p24'
+          | 'paynow'
+          | 'sepa_debit'
+          | 'sofort'
+          | 'us_bank_account'
+          | 'wechat_pay';
+
+        interface UsBankAccount {
+          /**
+           * Account holder type: individual or company.
+           */
+          account_holder_type?: UsBankAccount.AccountHolderType;
+
+          /**
+           * Account number of the bank account.
+           */
+          account_number?: string;
+
+          /**
+           * Account type: checkings or savings. Defaults to checking if omitted.
+           */
+          account_type?: UsBankAccount.AccountType;
+
+          /**
+           * The ID of a Financial Connections Account to use as a payment method.
+           */
+          financial_connections_account?: string;
+
+          /**
+           * Routing number of the bank account.
+           */
+          routing_number?: string;
+        }
+
+        namespace UsBankAccount {
+          type AccountHolderType = 'company' | 'individual';
+
+          type AccountType = 'checking' | 'savings';
+        }
+
+        interface WechatPay {}
+      }
+
       interface PaymentMethodOptions {
         /**
          * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
@@ -938,6 +2681,11 @@ declare module 'stripe' {
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+        /**
+         * If this is a `us_bank_account` SetupIntent, this sub-hash contains details about the US bank account payment method options.
+         */
+        us_bank_account?: PaymentMethodOptions.UsBankAccount;
       }
 
       namespace PaymentMethodOptions {
@@ -1003,6 +2751,11 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * Configuration options for setting up an eMandate for cards issued in India.
+           */
+          mandate_options?: Card.MandateOptions;
+
+          /**
            * When specified, this parameter signals that a card has been collected
            * as MOTO (Mail Order Telephone Order) and thus out of scope for SCA. This
            * parameter can only be provided during confirmation.
@@ -1016,6 +2769,64 @@ declare module 'stripe' {
         }
 
         namespace Card {
+          interface MandateOptions {
+            /**
+             * Amount to be charged for future payments.
+             */
+            amount: number;
+
+            /**
+             * One of `fixed` or `maximum`. If `fixed`, the `amount` param refers to the exact amount to be charged in future payments. If `maximum`, the amount charged can be up to the value passed for the `amount` param.
+             */
+            amount_type: MandateOptions.AmountType;
+
+            /**
+             * Currency in which future payments will be charged. Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * A description of the mandate or subscription that is meant to be displayed to the customer.
+             */
+            description?: string;
+
+            /**
+             * End date of the mandate or subscription. If not provided, the mandate will be active until canceled. If provided, end date should be after start date.
+             */
+            end_date?: number;
+
+            /**
+             * Specifies payment frequency. One of `day`, `week`, `month`, `year`, or `sporadic`.
+             */
+            interval: MandateOptions.Interval;
+
+            /**
+             * The number of intervals between payments. For example, `interval=month` and `interval_count=3` indicates one payment every three months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks). This parameter is optional when `interval=sporadic`.
+             */
+            interval_count?: number;
+
+            /**
+             * Unique identifier for the mandate or subscription.
+             */
+            reference: string;
+
+            /**
+             * Start date of the mandate or subscription. Start date should not be lesser than yesterday.
+             */
+            start_date: number;
+
+            /**
+             * Specifies the type of mandates supported. Possible values are `india`.
+             */
+            supported_types?: Array<'india'>;
+          }
+
+          namespace MandateOptions {
+            type AmountType = 'fixed' | 'maximum';
+
+            type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
+          }
+
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
@@ -1029,7 +2840,60 @@ declare module 'stripe' {
         namespace SepaDebit {
           interface MandateOptions {}
         }
+
+        interface UsBankAccount {
+          /**
+           * Additional fields for Financial Connections Session creation
+           */
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Verification method for the intent
+           */
+          verification_method?: UsBankAccount.VerificationMethod;
+        }
+
+        namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
       }
+    }
+
+    interface SetupIntentVerifyMicrodepositsParams {
+      /**
+       * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
+       */
+      amounts?: Array<number>;
+
+      /**
+       * A six-character code starting with SM present in the microdeposit sent to the bank account.
+       */
+      descriptor_code?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     class SetupIntentsResource {
@@ -1118,6 +2982,19 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.SetupIntent>>;
       confirm(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
+
+      /**
+       * Verifies microdeposits on a SetupIntent object.
+       */
+      verifyMicrodeposits(
+        id: string,
+        params?: SetupIntentVerifyMicrodepositsParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.SetupIntent>>;
+      verifyMicrodeposits(
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.SetupIntent>>;

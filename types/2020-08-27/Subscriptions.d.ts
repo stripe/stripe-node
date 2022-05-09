@@ -17,6 +17,15 @@ declare module 'stripe' {
       object: 'subscription';
 
       /**
+       * ID of the Connect Application that created the subscription.
+       */
+      application:
+        | string
+        | Stripe.Application
+        | Stripe.DeletedApplication
+        | null;
+
+      /**
        * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account.
        */
       application_fee_percent: number | null;
@@ -177,6 +186,11 @@ declare module 'stripe' {
       status: Subscription.Status;
 
       /**
+       * ID of the test clock this subscription belongs to.
+       */
+      test_clock: string | Stripe.TestHelpers.TestClock | null;
+
+      /**
        * The account (if any) the subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
        */
       transfer_data: Subscription.TransferData | null;
@@ -258,6 +272,21 @@ declare module 'stripe' {
            * This sub-hash contains details about the Card payment method options to pass to invoices created by the subscription.
            */
           card: PaymentMethodOptions.Card | null;
+
+          /**
+           * This sub-hash contains details about the Bank transfer payment method options to pass to invoices created by the subscription.
+           */
+          customer_balance: PaymentMethodOptions.CustomerBalance | null;
+
+          /**
+           * This sub-hash contains details about the Konbini payment method options to pass to invoices created by the subscription.
+           */
+          konbini: PaymentMethodOptions.Konbini | null;
+
+          /**
+           * This sub-hash contains details about the ACH direct debit payment method options to pass to invoices created by the subscription.
+           */
+          us_bank_account: PaymentMethodOptions.UsBankAccount | null;
         }
 
         namespace PaymentMethodOptions {
@@ -329,6 +358,50 @@ declare module 'stripe' {
 
             type RequestThreeDSecure = 'any' | 'automatic';
           }
+
+          interface CustomerBalance {
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type: 'bank_transfer' | null;
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type: string | null;
+            }
+          }
+
+          interface Konbini {}
+
+          interface UsBankAccount {
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Bank account verification method.
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. The `payment_method` permission must be included.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission = 'balances' | 'payment_method' | 'transactions';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -340,12 +413,17 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
+          | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -702,7 +780,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * The recurring components of a price such as `interval` and `usage_type`.
+           * The recurring components of a price such as `interval` and `interval_count`.
            */
           recurring: PriceData.Recurring;
 
@@ -779,6 +857,25 @@ declare module 'stripe' {
            * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
            */
           card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+
+          /**
+           * This sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          customer_balance?: Stripe.Emptyable<
+            PaymentMethodOptions.CustomerBalance
+          >;
+
+          /**
+           * This sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
+           */
+          konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account?: Stripe.Emptyable<
+            PaymentMethodOptions.UsBankAccount
+          >;
         }
 
         namespace PaymentMethodOptions {
@@ -856,6 +953,60 @@ declare module 'stripe' {
 
             type RequestThreeDSecure = 'any' | 'automatic';
           }
+
+          interface CustomerBalance {
+            /**
+             * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+             */
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type?: string;
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type?: string;
+            }
+          }
+
+          interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Additional fields for Financial Connections Session creation
+             */
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -867,12 +1018,17 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
+          | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -1218,7 +1374,7 @@ declare module 'stripe' {
           product: string;
 
           /**
-           * The recurring components of a price such as `interval` and `usage_type`.
+           * The recurring components of a price such as `interval` and `interval_count`.
            */
           recurring: PriceData.Recurring;
 
@@ -1311,6 +1467,25 @@ declare module 'stripe' {
            * This sub-hash contains details about the Card payment method options to pass to the invoice's PaymentIntent.
            */
           card?: Stripe.Emptyable<PaymentMethodOptions.Card>;
+
+          /**
+           * This sub-hash contains details about the Bank transfer payment method options to pass to the invoice's PaymentIntent.
+           */
+          customer_balance?: Stripe.Emptyable<
+            PaymentMethodOptions.CustomerBalance
+          >;
+
+          /**
+           * This sub-hash contains details about the Konbini payment method options to pass to the invoice's PaymentIntent.
+           */
+          konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+          /**
+           * This sub-hash contains details about the ACH direct debit payment method options to pass to the invoice's PaymentIntent.
+           */
+          us_bank_account?: Stripe.Emptyable<
+            PaymentMethodOptions.UsBankAccount
+          >;
         }
 
         namespace PaymentMethodOptions {
@@ -1388,6 +1563,60 @@ declare module 'stripe' {
 
             type RequestThreeDSecure = 'any' | 'automatic';
           }
+
+          interface CustomerBalance {
+            /**
+             * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+             */
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type?: string;
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type?: string;
+            }
+          }
+
+          interface Konbini {}
+
+          interface UsBankAccount {
+            /**
+             * Additional fields for Financial Connections Session creation
+             */
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+          }
         }
 
         type PaymentMethodType =
@@ -1399,12 +1628,17 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'fpx'
           | 'giropay'
+          | 'grabpay'
           | 'ideal'
+          | 'konbini'
+          | 'paynow'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
       }
 
@@ -1475,6 +1709,11 @@ declare module 'stripe' {
        * The status of the subscriptions to retrieve. Passing in a value of `canceled` will return all canceled subscriptions, including those belonging to deleted customers. Pass `ended` to find subscriptions that are canceled and subscriptions that are expired due to [incomplete payment](https://stripe.com/docs/billing/subscriptions/overview#subscription-statuses). Passing in a value of `all` will return subscriptions of all statuses. If no value is supplied, all subscriptions that have not been canceled are returned.
        */
       status?: SubscriptionListParams.Status;
+
+      /**
+       * Filter for subscriptions that are associated with the specified test clock. The response will not include subscriptions with test clocks if this and the customer parameter is not set.
+       */
+      test_clock?: string;
     }
 
     namespace SubscriptionListParams {
@@ -1511,9 +1750,37 @@ declare module 'stripe' {
 
     interface SubscriptionDeleteDiscountParams {}
 
+    interface SubscriptionSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for subscriptions](https://stripe.com/docs/search#query-fields-for-subscriptions).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
+       */
+      page?: string;
+    }
+
     class SubscriptionsResource {
       /**
        * Creates a new subscription on an existing customer. Each customer can have up to 500 active or scheduled subscriptions.
+       *
+       * When you create a subscription with collection_method=charge_automatically, the first invoice is finalized as part of the request.
+       * The payment_behavior parameter determines the exact behavior of the initial payment.
+       *
+       * To start subscriptions where the first invoice always begins in a draft status, use [subscription schedules](https://stripe.com/docs/billing/subscriptions/subscription-schedules#managing) instead.
+       * Schedules provide the flexibility to model more complex billing configurations that change over time.
        */
       create(
         params: SubscriptionCreateParams,
@@ -1580,6 +1847,17 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
+
+      /**
+       * Search for subscriptions you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
+       */
+      search(
+        params: SubscriptionSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Subscription>;
     }
   }
 }

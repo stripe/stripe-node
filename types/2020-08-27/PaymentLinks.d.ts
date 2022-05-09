@@ -17,7 +17,7 @@ declare module 'stripe' {
       object: 'payment_link';
 
       /**
-       * Whether the payment link's `url` is active. If `false`, customers visiting the url will be redirected.
+       * Whether the payment link's `url` is active. If `false`, customers visiting the URL will be shown a page saying that the link has been deactivated.
        */
       active: boolean;
 
@@ -66,9 +66,11 @@ declare module 'stripe' {
       on_behalf_of: string | Stripe.Account | null;
 
       /**
-       * The list of payment method types that customers can use. When `null`, your [payment methods settings](https://dashboard.stripe.com/settings/payment_methods) will be used.
+       * The list of payment method types that customers can use. When `null`, Stripe will dynamically show relevant payment methods you've enabled in your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types: Array<'card'> | null;
+
+      phone_number_collection: PaymentLink.PhoneNumberCollection;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -86,7 +88,7 @@ declare module 'stripe' {
       transfer_data: PaymentLink.TransferData | null;
 
       /**
-       * The public url that can be shared with customers.
+       * The public URL that can be shared with customers.
        */
       url: string;
     }
@@ -113,7 +115,7 @@ declare module 'stripe' {
 
         interface Redirect {
           /**
-           * The `url` the customer will be redirected to after the purchase is complete.
+           * The URL the customer will be redirected to after the purchase is complete.
            */
           url: string;
         }
@@ -129,6 +131,13 @@ declare module 'stripe' {
       }
 
       type BillingAddressCollection = 'auto' | 'required';
+
+      interface PhoneNumberCollection {
+        /**
+         * If `true`, a phone number will be collected during checkout.
+         */
+        enabled: boolean;
+      }
 
       interface ShippingAddressCollection {
         /**
@@ -380,7 +389,7 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
-         * When creating a subscription, the specified configuration data will be used. There must be at least one line item with a recurring price to use `subscription_data`.
+         * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
       }
@@ -399,6 +408,11 @@ declare module 'stripe' {
     }
 
     interface PaymentLinkCreateParams {
+      /**
+       * The line items representing what is being sold. Each line item represents an item being sold. Up to 20 line items are supported.
+       */
+      line_items: Array<PaymentLinkCreateParams.LineItem>;
+
       /**
        * Behavior after the purchase is complete.
        */
@@ -435,12 +449,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * The line items representing what is being sold. Each line item represents an item being sold. Up to 20 line items are supported.
-       */
-      line_items?: Array<PaymentLinkCreateParams.LineItem>;
-
-      /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to Checkout Sessions created by this Payment Link.
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link.
        */
       metadata?: Stripe.MetadataParam;
 
@@ -450,9 +459,16 @@ declare module 'stripe' {
       on_behalf_of?: string;
 
       /**
-       * The list of payment method types (e.g., card) that customers can use. Only `card` is supported. If no value is passed, your [payment methods settings](https://dashboard.stripe.com/settings/payment_methods) will be used.
+       * The list of payment method types that customers can use. Only `card` is supported. If no value is passed, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods [supported](https://stripe.com/docs/payments/payment-methods/integration-options#payment-method-product-support)).
        */
       payment_method_types?: Array<'card'>;
+
+      /**
+       * Controls phone number collection settings during checkout.
+       *
+       * We recommend that you review your privacy policy and check with your legal contacts.
+       */
+      phone_number_collection?: PaymentLinkCreateParams.PhoneNumberCollection;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -527,7 +543,7 @@ declare module 'stripe' {
         price: string;
 
         /**
-         * The quantity of the line item being purchased. Only `1` is supported.
+         * The quantity of the line item being purchased.
          */
         quantity: number;
       }
@@ -545,10 +561,17 @@ declare module 'stripe' {
           maximum?: number;
 
           /**
-           * The minimum quantity the customer can purchase. By default this value is 0. You can specify a value up to 98.
+           * The minimum quantity the customer can purchase. By default this value is 0. You can specify a value up to 98. If there is only one item in the cart then that item's quantity cannot go down to 0.
            */
           minimum?: number;
         }
+      }
+
+      interface PhoneNumberCollection {
+        /**
+         * Set to `true` to enable phone number collection.
+         */
+        enabled: boolean;
       }
 
       interface ShippingAddressCollection {
@@ -832,7 +855,7 @@ declare module 'stripe' {
 
     interface PaymentLinkUpdateParams {
       /**
-       * Whether the payment link's `url` is active. If `false`, customers visiting the url will be redirected.
+       * Whether the payment link's `url` is active. If `false`, customers visiting the URL will be shown a page saying that the link has been deactivated.
        */
       active?: boolean;
 
@@ -867,12 +890,12 @@ declare module 'stripe' {
       line_items?: Array<PaymentLinkUpdateParams.LineItem>;
 
       /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to Checkout Sessions created by this Payment Link.
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link.
        */
       metadata?: Stripe.MetadataParam;
 
       /**
-       * The list of payment method types (e.g., card) that customers can use. Only `card` is supported. Pass an empty string to enable automatic payment methods that use your [payment methods settings](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types that customers can use. Only `card` is supported. Pass an empty string to enable automatic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Stripe.Emptyable<Array<'card'>>;
 
@@ -941,7 +964,7 @@ declare module 'stripe' {
         id: string;
 
         /**
-         * The quantity of the line item being purchased. Only `1` is supported.
+         * The quantity of the line item being purchased.
          */
         quantity?: number;
       }
@@ -959,7 +982,7 @@ declare module 'stripe' {
           maximum?: number;
 
           /**
-           * The minimum quantity the customer can purchase. By default this value is 0. You can specify a value up to 98.
+           * The minimum quantity the customer can purchase. By default this value is 0. You can specify a value up to 98. If there is only one item in the cart then that item's quantity cannot go down to 0.
            */
           minimum?: number;
         }
@@ -1239,10 +1262,7 @@ declare module 'stripe' {
        * Creates a payment link.
        */
       create(
-        params?: PaymentLinkCreateParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.PaymentLink>>;
-      create(
+        params: PaymentLinkCreateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.PaymentLink>>;
 

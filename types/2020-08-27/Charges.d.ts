@@ -106,6 +106,11 @@ declare module 'stripe' {
       disputed: boolean;
 
       /**
+       * ID of the balance transaction that describes the reversal of the balance on your account due to payment failure.
+       */
+      failure_balance_transaction: string | Stripe.BalanceTransaction | null;
+
+      /**
        * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/api#errors) for a list of codes).
        */
       failure_code: string | null;
@@ -141,11 +146,6 @@ declare module 'stripe' {
        * The account (if any) the charge was made on behalf of without triggering an automatic transfer. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers) for details.
        */
       on_behalf_of: string | Stripe.Account | null;
-
-      /**
-       * ID of the order this charge is for if one exists.
-       */
-      order: string | Stripe.Order | null;
 
       /**
        * Details about whether the payment was accepted, and why. See [understanding declines](https://stripe.com/docs/declines) for details.
@@ -404,6 +404,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodDetails.CardPresent;
 
+        customer_balance?: PaymentMethodDetails.CustomerBalance;
+
         eps?: PaymentMethodDetails.Eps;
 
         fpx?: PaymentMethodDetails.Fpx;
@@ -418,11 +420,15 @@ declare module 'stripe' {
 
         klarna?: PaymentMethodDetails.Klarna;
 
+        konbini?: PaymentMethodDetails.Konbini;
+
         multibanco?: PaymentMethodDetails.Multibanco;
 
         oxxo?: PaymentMethodDetails.Oxxo;
 
         p24?: PaymentMethodDetails.P24;
+
+        paynow?: PaymentMethodDetails.Paynow;
 
         sepa_credit_transfer?: PaymentMethodDetails.SepaCreditTransfer;
 
@@ -438,6 +444,8 @@ declare module 'stripe' {
          * It contains information specific to the payment method.
          */
         type: string;
+
+        us_bank_account?: PaymentMethodDetails.UsBankAccount;
 
         wechat?: PaymentMethodDetails.Wechat;
 
@@ -724,6 +732,11 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
+           * ID of the mandate used to make this payment or created by it.
+           */
+          mandate: string | null;
+
+          /**
            * True if this payment was marked as MOTO and out of scope for SCA.
            */
           moto?: boolean | null;
@@ -934,6 +947,11 @@ declare module 'stripe' {
           brand: string | null;
 
           /**
+           * When using manual capture, a future timestamp after which the charge will be automatically refunded if uncaptured.
+           */
+          capture_before?: number;
+
+          /**
            * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`). In some cases, the cardholder name may not be available depending on how the issuer has configured the card. Cardholder name is typically not available on swipe or contactless payments, such as those made with Apple Pay and Google Pay.
            */
           cardholder_name: string | null;
@@ -984,6 +1002,11 @@ declare module 'stripe' {
            * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
            */
           iin?: string | null;
+
+          /**
+           * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
+           */
+          incremental_authorization_supported: boolean | null;
 
           /**
            * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
@@ -1075,6 +1098,8 @@ declare module 'stripe' {
             type AccountType = 'checking' | 'credit' | 'prepaid' | 'unknown';
           }
         }
+
+        interface CustomerBalance {}
 
         interface Eps {
           /**
@@ -1424,6 +1449,26 @@ declare module 'stripe' {
           preferred_locale: string | null;
         }
 
+        interface Konbini {
+          /**
+           * If the payment succeeded, this contains the details of the convenience store where the payment was completed.
+           */
+          store: Konbini.Store | null;
+        }
+
+        namespace Konbini {
+          interface Store {
+            /**
+             * The name of the convenience store chain where the payment was completed.
+             */
+            chain: Store.Chain | null;
+          }
+
+          namespace Store {
+            type Chain = 'familymart' | 'lawson' | 'ministop' | 'seicomart';
+          }
+        }
+
         interface Multibanco {
           /**
            * Entity number associated with this Multibanco payment.
@@ -1489,6 +1534,13 @@ declare module 'stripe' {
             | 'tmobile_usbugi_bankowe'
             | 'toyota_bank'
             | 'volkswagen_bank';
+        }
+
+        interface Paynow {
+          /**
+           * Reference number associated with this PayNow payment
+           */
+          reference: string | null;
         }
 
         interface SepaCreditTransfer {
@@ -1602,6 +1654,44 @@ declare module 'stripe' {
 
         interface StripeAccount {}
 
+        interface UsBankAccount {
+          /**
+           * Account holder type: individual or company.
+           */
+          account_holder_type: UsBankAccount.AccountHolderType | null;
+
+          /**
+           * Account type: checkings or savings. Defaults to checking if omitted.
+           */
+          account_type: UsBankAccount.AccountType | null;
+
+          /**
+           * Name of the bank associated with the bank account.
+           */
+          bank_name: string | null;
+
+          /**
+           * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
+           */
+          fingerprint: string | null;
+
+          /**
+           * Last four digits of the bank account number.
+           */
+          last4: string | null;
+
+          /**
+           * Routing number of the bank account.
+           */
+          routing_number: string | null;
+        }
+
+        namespace UsBankAccount {
+          type AccountHolderType = 'company' | 'individual';
+
+          type AccountType = 'checking' | 'savings';
+        }
+
         interface Wechat {}
 
         interface WechatPay {
@@ -1628,7 +1718,7 @@ declare module 'stripe' {
         /**
          * Recipient name.
          */
-        name?: string | null;
+        name?: string;
 
         /**
          * Recipient phone (including extension).
@@ -1976,6 +2066,28 @@ declare module 'stripe' {
       }
     }
 
+    interface ChargeSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for charges](https://stripe.com/docs/search#query-fields-for-charges).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
+       */
+      page?: string;
+    }
+
     class ChargesResource {
       /**
        * To charge a credit card or other payment source, you create a Charge object. If your API key is in test mode, the supplied payment source (e.g., card) won't actually be charged, although everything else will occur as if in live mode. (Stripe assumes that the charge would have completed successfully).
@@ -2031,6 +2143,17 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Charge>>;
+
+      /**
+       * Search for charges you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
+       */
+      search(
+        params: ChargeSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Charge>;
     }
   }
 }

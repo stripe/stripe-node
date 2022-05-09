@@ -41,6 +41,11 @@ declare module 'stripe' {
        */
       deactivate_on?: Array<string>;
 
+      /**
+       * The ID of the [Price](https://stripe.com/docs/api/prices) object that is the default price for this product.
+       */
+      default_price?: string | Stripe.Price | null;
+
       deleted?: void;
 
       /**
@@ -64,7 +69,7 @@ declare module 'stripe' {
       metadata: Stripe.Metadata;
 
       /**
-       * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+       * The product's name, meant to be displayable to the customer.
        */
       name: string;
 
@@ -84,7 +89,7 @@ declare module 'stripe' {
       statement_descriptor: string | null;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
        */
       tax_code: string | Stripe.TaxCode | null;
 
@@ -157,7 +162,7 @@ declare module 'stripe' {
 
     interface ProductCreateParams {
       /**
-       * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+       * The product's name, meant to be displayable to the customer.
        */
       name: string;
 
@@ -180,6 +185,11 @@ declare module 'stripe' {
        * An array of Connect application names or identifiers that should not be able to order the SKUs for this product. May only be set if type=`good`.
        */
       deactivate_on?: Array<string>;
+
+      /**
+       * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object. This Price will be set as the default price for this product.
+       */
+      default_price_data?: ProductCreateParams.DefaultPriceData;
 
       /**
        * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
@@ -225,7 +235,7 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
        */
       tax_code?: string;
 
@@ -246,6 +256,53 @@ declare module 'stripe' {
     }
 
     namespace ProductCreateParams {
+      interface DefaultPriceData {
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency: string;
+
+        /**
+         * The recurring components of a price such as `interval` and `interval_count`.
+         */
+        recurring?: DefaultPriceData.Recurring;
+
+        /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: DefaultPriceData.TaxBehavior;
+
+        /**
+         * A positive integer in %s (or 0 for a free price) representing how much to charge. One of `unit_amount` or `unit_amount_decimal` is required.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace DefaultPriceData {
+        interface Recurring {
+          /**
+           * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+           */
+          interval: Recurring.Interval;
+
+          /**
+           * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+           */
+          interval_count?: number;
+        }
+
+        namespace Recurring {
+          type Interval = 'day' | 'month' | 'week' | 'year';
+        }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+      }
+
       interface PackageDimensions {
         /**
          * Height, in inches. Maximum precision is 2 decimal places.
@@ -300,6 +357,11 @@ declare module 'stripe' {
       deactivate_on?: Array<string>;
 
       /**
+       * The ID of the [Price](https://stripe.com/docs/api/prices) object that is the default price for this product.
+       */
+      default_price?: string;
+
+      /**
        * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
        */
       description?: string;
@@ -320,7 +382,7 @@ declare module 'stripe' {
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
 
       /**
-       * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+       * The product's name, meant to be displayable to the customer.
        */
       name?: string;
 
@@ -345,7 +407,7 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
        */
       tax_code?: Stripe.Emptyable<string>;
 
@@ -357,7 +419,7 @@ declare module 'stripe' {
       /**
        * A URL of a publicly-accessible webpage for this product.
        */
-      url?: string;
+      url?: Stripe.Emptyable<string>;
     }
 
     namespace ProductUpdateParams {
@@ -427,6 +489,28 @@ declare module 'stripe' {
 
     interface ProductDeleteParams {}
 
+    interface ProductSearchParams {
+      /**
+       * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for products](https://stripe.com/docs/search#query-fields-for-products).
+       */
+      query: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 10.
+       */
+      limit?: number;
+
+      /**
+       * A cursor for pagination across multiple pages of results. Don't include this parameter on the first call. Use the next_page value returned in a previous response to request subsequent results.
+       */
+      page?: string;
+    }
+
     class ProductsResource {
       /**
        * Creates a new product object.
@@ -479,6 +563,17 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedProduct>>;
+
+      /**
+       * Search for products you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
+       */
+      search(
+        params: ProductSearchParams,
+        options?: RequestOptions
+      ): ApiSearchResultPromise<Stripe.Product>;
     }
   }
 }

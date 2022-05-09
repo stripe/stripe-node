@@ -138,7 +138,7 @@ declare module 'stripe' {
         /**
          * The ID of the Payment Link that created this Session.
          */
-        payment_link?: string | Stripe.PaymentLink | null;
+        payment_link: string | Stripe.PaymentLink | null;
 
         /**
          * Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
@@ -221,7 +221,7 @@ declare module 'stripe' {
         total_details: Session.TotalDetails | null;
 
         /**
-         * The URL to the Checkout Session.
+         * The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
          */
         url: string | null;
       }
@@ -303,10 +303,20 @@ declare module 'stripe' {
 
         interface CustomerDetails {
           /**
+           * The customer's address at the time of checkout. Note: This property is populated only for sessions on or after March 30, 2022.
+           */
+          address: Stripe.Address | null;
+
+          /**
            * The email associated with the Customer, if one exists, on the Checkout Session at the time of checkout or at time of session expiry.
            * Otherwise, if the customer has consented to promotional content, this value is the most recent valid email provided by the customer on the Checkout form.
            */
           email: string | null;
+
+          /**
+           * The customer's name at the time of checkout. Note: This property is populated only for sessions on or after March 30, 2022.
+           */
+          name: string | null;
 
           /**
            * The customer's phone number at the time of checkout
@@ -329,7 +339,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, or `unknown`
+             * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -344,6 +354,7 @@ declare module 'stripe' {
               | 'ae_trn'
               | 'au_abn'
               | 'au_arn'
+              | 'bg_uic'
               | 'br_cnpj'
               | 'br_cpf'
               | 'ca_bn'
@@ -355,13 +366,16 @@ declare module 'stripe' {
               | 'ch_vat'
               | 'cl_tin'
               | 'es_cif'
+              | 'eu_oss_vat'
               | 'eu_vat'
               | 'gb_vat'
               | 'ge_vat'
               | 'hk_br'
+              | 'hu_tin'
               | 'id_npwp'
               | 'il_vat'
               | 'in_gst'
+              | 'is_vat'
               | 'jp_cn'
               | 'jp_rn'
               | 'kr_brn'
@@ -377,6 +391,7 @@ declare module 'stripe' {
               | 'sa_vat'
               | 'sg_gst'
               | 'sg_uen'
+              | 'si_tin'
               | 'th_vat'
               | 'tw_vat'
               | 'ua_vat'
@@ -434,9 +449,15 @@ declare module 'stripe' {
         interface PaymentMethodOptions {
           acss_debit?: PaymentMethodOptions.AcssDebit;
 
+          alipay?: PaymentMethodOptions.Alipay;
+
           boleto?: PaymentMethodOptions.Boleto;
 
+          konbini?: PaymentMethodOptions.Konbini;
+
           oxxo?: PaymentMethodOptions.Oxxo;
+
+          us_bank_account?: PaymentMethodOptions.UsBankAccount;
         }
 
         namespace PaymentMethodOptions {
@@ -490,6 +511,8 @@ declare module 'stripe' {
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
 
+          interface Alipay {}
+
           interface Boleto {
             /**
              * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
@@ -497,11 +520,51 @@ declare module 'stripe' {
             expires_after_days: number;
           }
 
+          interface Konbini {
+            /**
+             * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST.
+             */
+            expires_after_days: number | null;
+          }
+
           interface Oxxo {
             /**
              * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
              */
             expires_after_days: number;
+          }
+
+          interface UsBankAccount {
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Bank account verification method.
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. The `payment_method` permission must be included.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+               */
+              return_url?: string;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant';
           }
         }
 
@@ -525,7 +588,7 @@ declare module 'stripe' {
           /**
            * Recipient name.
            */
-          name?: string | null;
+          name?: string;
 
           /**
            * Recipient phone (including extension).
@@ -812,17 +875,17 @@ declare module 'stripe' {
 
         interface TotalDetails {
           /**
-           * This is the sum of all the line item discounts.
+           * This is the sum of all the discounts.
            */
           amount_discount: number;
 
           /**
-           * This is the sum of all the line item shipping amounts.
+           * This is the sum of all the shipping amounts.
            */
           amount_shipping: number | null;
 
           /**
-           * This is the sum of all the line item tax amounts.
+           * This is the sum of all the tax amounts.
            */
           amount_tax: number;
 
@@ -832,12 +895,12 @@ declare module 'stripe' {
         namespace TotalDetails {
           interface Breakdown {
             /**
-             * The aggregated line item discounts.
+             * The aggregated discounts.
              */
             discounts: Array<Breakdown.Discount>;
 
             /**
-             * The aggregated line item tax amounts by rate.
+             * The aggregated tax amounts by rate.
              */
             taxes: Array<Breakdown.Tax>;
           }
@@ -943,7 +1006,8 @@ declare module 'stripe' {
          * When a Customer is not created, you can still retrieve email, address, and other customer data entered in Checkout
          * with [customer_details](https://stripe.com/docs/api/checkout/sessions/object#checkout_session_object-customer_details).
          *
-         * Sessions that do not create Customers will instead create [Guest Customers](https://support.stripe.com/questions/guest-customer-faq) in the Dashboard.
+         * Sessions that don't create Customers instead create [Guest Customers](https://support.stripe.com/questions/guest-customer-faq)
+         * in the Dashboard. Promotion codes limited to first time customers will return invalid for these Sessions.
          *
          * Can only be set in `payment` and `setup` mode.
          */
@@ -1171,9 +1235,7 @@ declare module 'stripe' {
           currency?: string;
 
           /**
-           * The description for the line item, to be displayed on the Checkout page.
-           *
-           * If using `price` or `price_data`, will default to the name of the associated product.
+           * [Deprecated] The description for the line item, to be displayed on the Checkout page.
            */
           description?: string;
 
@@ -1248,7 +1310,7 @@ declare module 'stripe' {
             product_data?: PriceData.ProductData;
 
             /**
-             * The recurring components of a price such as `interval` and `usage_type`.
+             * The recurring components of a price such as `interval` and `interval_count`.
              */
             recurring?: PriceData.Recurring;
 
@@ -1286,12 +1348,12 @@ declare module 'stripe' {
               metadata?: Stripe.MetadataParam;
 
               /**
-               * The product's name, meant to be displayable to the customer. Whenever this product is sold via a subscription, name will show up on associated invoice line item descriptions.
+               * The product's name, meant to be displayable to the customer.
                */
               name: string;
 
               /**
-               * A [tax code](https://stripe.com/docs/tax/tax-codes) ID.
+               * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
                */
               tax_code?: string;
             }
@@ -1363,11 +1425,7 @@ declare module 'stripe' {
 
         interface PaymentIntentData {
           /**
-           * The amount of the application fee (if any) that will be requested to be applied to the payment and
-           * transferred to the application owner's Stripe account. The amount of the application fee collected
-           * will be capped at the total payment amount. To use an application fee, the request must be made on
-           * behalf of another account, using the `Stripe-Account` header or an OAuth key. For more information,
-           * see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+           * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
            */
           application_fee_amount?: number;
 
@@ -1507,9 +1565,19 @@ declare module 'stripe' {
           acss_debit?: PaymentMethodOptions.AcssDebit;
 
           /**
+           * contains details about the Alipay payment method options.
+           */
+          alipay?: PaymentMethodOptions.Alipay;
+
+          /**
            * contains details about the Boleto payment method options.
            */
           boleto?: PaymentMethodOptions.Boleto;
+
+          /**
+           * contains details about the Konbini payment method options.
+           */
+          konbini?: PaymentMethodOptions.Konbini;
 
           /**
            * contains details about the OXXO payment method options.
@@ -1517,7 +1585,12 @@ declare module 'stripe' {
           oxxo?: PaymentMethodOptions.Oxxo;
 
           /**
-           * contains details about the Wechat Pay payment method options.
+           * contains details about the Us Bank Account payment method options.
+           */
+          us_bank_account?: PaymentMethodOptions.UsBankAccount;
+
+          /**
+           * contains details about the WeChat Pay payment method options.
            */
           wechat_pay?: PaymentMethodOptions.WechatPay;
         }
@@ -1583,9 +1656,18 @@ declare module 'stripe' {
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
 
+          interface Alipay {}
+
           interface Boleto {
             /**
              * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
+             */
+            expires_after_days?: number;
+          }
+
+          interface Konbini {
+            /**
+             * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
              */
             expires_after_days?: number;
           }
@@ -1595,6 +1677,37 @@ declare module 'stripe' {
              * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
              */
             expires_after_days?: number;
+          }
+
+          interface UsBankAccount {
+            /**
+             * Additional fields for Financial Connections Session creation
+             */
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Verification method for the intent
+             */
+            verification_method?: UsBankAccount.VerificationMethod;
+          }
+
+          namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
+            type VerificationMethod = 'automatic' | 'instant';
           }
 
           interface WechatPay {
@@ -1618,6 +1731,7 @@ declare module 'stripe' {
           | 'acss_debit'
           | 'afterpay_clearpay'
           | 'alipay'
+          | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
           | 'boleto'
@@ -1628,10 +1742,13 @@ declare module 'stripe' {
           | 'grabpay'
           | 'ideal'
           | 'klarna'
+          | 'konbini'
           | 'oxxo'
           | 'p24'
+          | 'paynow'
           | 'sepa_debit'
           | 'sofort'
+          | 'us_bank_account'
           | 'wechat_pay';
 
         interface PhoneNumberCollection {
@@ -1947,7 +2064,7 @@ declare module 'stripe' {
             tax_behavior?: ShippingRateData.TaxBehavior;
 
             /**
-             * A [tax code](https://stripe.com/docs/tax/tax-codes) ID. The Shipping tax code is `txcd_92010001`.
+             * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
              */
             tax_code?: string;
 
