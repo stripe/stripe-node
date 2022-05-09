@@ -2111,3 +2111,44 @@ describe('Order', function() {
     expect(order).not.to.be.null;
   });
 });
+
+describe('FinancialConnections.Account', function() {
+  it('retrieve method', async function() {
+    const account = await stripe.financialConnections.accounts.retrieve(
+      'fca_xyz'
+    );
+    expect(account).not.to.be.null;
+  });
+
+  it('refresh method', async function() {
+    const account = await stripe.financialConnections.accounts.refresh(
+      'fca_xyz',
+      {features: ['balance']}
+    );
+    expect(account).not.to.be.null;
+  });
+
+  it('disconnect method', async function() {
+    const account = await stripe.financialConnections.accounts.disconnect(
+      'fca_xyz'
+    );
+    expect(account).not.to.be.null;
+  });
+});
+
+describe('FinancialConnections.Session', function() {
+  it('create method', async function() {
+    const session = await stripe.financialConnections.sessions.create({
+      account_holder: {type: 'customer', customer: 'cus_123'},
+      permissions: ['balances'],
+    });
+    expect(session).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const session = await stripe.financialConnections.sessions.retrieve(
+      'fcsess_xyz'
+    );
+    expect(session).not.to.be.null;
+  });
+});
