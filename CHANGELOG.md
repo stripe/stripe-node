@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 9.0.0 - 2022-05-09
+Major version release - The [migration guide](https://github.com/stripe/stripe-node/wiki/Migration-Guide-for-v9) contains a detailed list of backwards-incompatible changes with upgrade instructions.
+(⚠️ = breaking changes):
+* ⚠️[#1336](https://github.com/stripe/stripe-node/pull/1336) feat(http-client): retry closed connection errors
+* [#1415](https://github.com/stripe/stripe-node/pull/1415) [#1417](https://github.com/stripe/stripe-node/pull/1417) API Updates
+  * ⚠️ Replace the legacy `Order` API with the new `Order` API. 
+    * Resource modified: `Order`.
+    * New methods: `cancel`, `list_line_items`, `reopen`, and `submit`
+    * Removed methods: `pay` and `return_order`
+    * Removed resources: `OrderItem` and `OrderReturn`
+    * Removed references from other resources: `Charge.order`
+  * Add support for `amount_discount`, `amount_tax`, and `product` on `LineItem`
+  * Change type of `Charge.shipping.name`, `Checkout.Session.shipping.name`, `Customer.shipping.name`, `Invoice.customer_shipping.name`, `PaymentIntent.shipping.name`, `ShippingDetails.name`, and `Source.source_order.shipping.name` from `nullable(string)` to `string`
+
 ## 8.222.0 - 2022-05-05
 * [#1414](https://github.com/stripe/stripe-node/pull/1414) API Updates
   * Add support for `default_price_data` on `ProductCreateParams`
