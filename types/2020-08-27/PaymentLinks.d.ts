@@ -46,6 +46,16 @@ declare module 'stripe' {
       billing_address_collection: PaymentLink.BillingAddressCollection;
 
       /**
+       * When set, provides configuration to gather active consent from customers.
+       */
+      consent_collection: PaymentLink.ConsentCollection | null;
+
+      /**
+       * Configuration for Customer creation during checkout.
+       */
+      customer_creation: PaymentLink.CustomerCreation;
+
+      /**
        * The line items representing what is being sold.
        */
       line_items?: ApiList<Stripe.LineItem>;
@@ -66,6 +76,11 @@ declare module 'stripe' {
       on_behalf_of: string | Stripe.Account | null;
 
       /**
+       * Indicates the parameters to be passed to PaymentIntent creation during checkout.
+       */
+      payment_intent_data: PaymentLink.PaymentIntentData | null;
+
+      /**
        * The list of payment method types that customers can use. When `null`, Stripe will dynamically show relevant payment methods you've enabled in your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types: Array<'card'> | null;
@@ -78,9 +93,21 @@ declare module 'stripe' {
       shipping_address_collection: PaymentLink.ShippingAddressCollection | null;
 
       /**
+       * The shipping rate options applied to the session.
+       */
+      shipping_options: Array<PaymentLink.ShippingOption>;
+
+      /**
+       * Indicates the type of transaction being performed which customizes relevant text on the page, such as the submit button.
+       */
+      submit_type: PaymentLink.SubmitType;
+
+      /**
        * When creating a subscription, the specified configuration data will be used. There must be at least one line item with a recurring price to use `subscription_data`.
        */
       subscription_data: PaymentLink.SubscriptionData | null;
+
+      tax_id_collection: PaymentLink.TaxIdCollection;
 
       /**
        * The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to.
@@ -131,6 +158,33 @@ declare module 'stripe' {
       }
 
       type BillingAddressCollection = 'auto' | 'required';
+
+      interface ConsentCollection {
+        /**
+         * If set to `auto`, enables the collection of customer consent for promotional communications.
+         */
+        promotions: 'auto' | null;
+      }
+
+      type CustomerCreation = 'always' | 'if_required';
+
+      interface PaymentIntentData {
+        /**
+         * Indicates when the funds will be captured from the customer's account.
+         */
+        capture_method: PaymentIntentData.CaptureMethod | null;
+
+        /**
+         * Indicates that you intend to make future payments with the payment method collected during checkout.
+         */
+        setup_future_usage: PaymentIntentData.SetupFutureUsage | null;
+      }
+
+      namespace PaymentIntentData {
+        type CaptureMethod = 'automatic' | 'manual';
+
+        type SetupFutureUsage = 'off_session' | 'on_session';
+      }
 
       interface PhoneNumberCollection {
         /**
@@ -387,11 +441,32 @@ declare module 'stripe' {
           | 'ZZ';
       }
 
+      interface ShippingOption {
+        /**
+         * A non-negative integer in cents representing how much to charge.
+         */
+        shipping_amount: number;
+
+        /**
+         * The ID of the Shipping Rate to use for this shipping option.
+         */
+        shipping_rate: string | Stripe.ShippingRate;
+      }
+
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+
       interface SubscriptionData {
         /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
+      }
+
+      interface TaxIdCollection {
+        /**
+         * Indicates whether tax ID collection is enabled for the session.
+         */
+        enabled: boolean;
       }
 
       interface TransferData {
@@ -444,6 +519,16 @@ declare module 'stripe' {
       billing_address_collection?: PaymentLinkCreateParams.BillingAddressCollection;
 
       /**
+       * Configure fields to gather active consent from customers.
+       */
+      consent_collection?: PaymentLinkCreateParams.ConsentCollection;
+
+      /**
+       * Configures whether [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link create a [Customer](https://stripe.com/docs/api/customers).
+       */
+      customer_creation?: PaymentLinkCreateParams.CustomerCreation;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -457,6 +542,11 @@ declare module 'stripe' {
        * The account on behalf of which to charge.
        */
       on_behalf_of?: string;
+
+      /**
+       * A subset of parameters to be passed to PaymentIntent creation for Checkout Sessions in `payment` mode.
+       */
+      payment_intent_data?: PaymentLinkCreateParams.PaymentIntentData;
 
       /**
        * The list of payment method types that customers can use. Only `card` is supported. If no value is passed, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods [supported](https://stripe.com/docs/payments/payment-methods/integration-options#payment-method-product-support)).
@@ -476,9 +566,24 @@ declare module 'stripe' {
       shipping_address_collection?: PaymentLinkCreateParams.ShippingAddressCollection;
 
       /**
+       * The shipping rate options to apply to [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link.
+       */
+      shipping_options?: Array<PaymentLinkCreateParams.ShippingOption>;
+
+      /**
+       * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button.
+       */
+      submit_type?: PaymentLinkCreateParams.SubmitType;
+
+      /**
        * When creating a subscription, the specified configuration data will be used. There must be at least one line item with a recurring price to use `subscription_data`.
        */
       subscription_data?: PaymentLinkCreateParams.SubscriptionData;
+
+      /**
+       * Controls tax ID collection during checkout.
+       */
+      tax_id_collection?: PaymentLinkCreateParams.TaxIdCollection;
 
       /**
        * The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to.
@@ -531,6 +636,17 @@ declare module 'stripe' {
 
       type BillingAddressCollection = 'auto' | 'required';
 
+      interface ConsentCollection {
+        /**
+         * If set to `auto`, enables the collection of customer consent for promotional communications. The Checkout
+         * Session will determine whether to display an option to opt into promotional communication
+         * from the merchant depending on the customer's locale. Only available to US merchants.
+         */
+        promotions?: 'auto';
+      }
+
+      type CustomerCreation = 'always' | 'if_required';
+
       interface LineItem {
         /**
          * When set, provides configuration for this item's quantity to be adjusted by the customer during checkout.
@@ -565,6 +681,34 @@ declare module 'stripe' {
            */
           minimum?: number;
         }
+      }
+
+      interface PaymentIntentData {
+        /**
+         * Controls when the funds will be captured from the customer's account.
+         */
+        capture_method?: PaymentIntentData.CaptureMethod;
+
+        /**
+         * Indicates that you intend to [make future payments](https://stripe.com/docs/payments/payment-intents#future-usage) with the payment method collected by this Checkout Session.
+         *
+         * When setting this to `on_session`, Checkout will show a notice to the customer that their payment details will be saved.
+         *
+         * When setting this to `off_session`, Checkout will show a notice to the customer that their payment details will be saved and used for future payments.
+         *
+         * If a Customer has been provided or Checkout creates a new Customer,Checkout will attach the payment method to the Customer.
+         *
+         * If Checkout does not create a Customer, the payment method is not attached to a Customer. To reuse the payment method, you can retrieve it from the Checkout Session's PaymentIntent.
+         *
+         * When processing card payments, Checkout also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as SCA.
+         */
+        setup_future_usage?: PaymentIntentData.SetupFutureUsage;
+      }
+
+      namespace PaymentIntentData {
+        type CaptureMethod = 'automatic' | 'manual';
+
+        type SetupFutureUsage = 'off_session' | 'on_session';
       }
 
       interface PhoneNumberCollection {
@@ -823,11 +967,27 @@ declare module 'stripe' {
           | 'ZZ';
       }
 
+      interface ShippingOption {
+        /**
+         * The ID of the Shipping Rate to use for this shipping option.
+         */
+        shipping_rate?: string;
+      }
+
+      type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
+
       interface SubscriptionData {
         /**
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
+      }
+
+      interface TaxIdCollection {
+        /**
+         * Set to `true` to enable tax ID collection.
+         */
+        enabled: boolean;
       }
 
       interface TransferData {
@@ -878,6 +1038,11 @@ declare module 'stripe' {
        * Configuration for collecting the customer's billing address.
        */
       billing_address_collection?: PaymentLinkUpdateParams.BillingAddressCollection;
+
+      /**
+       * Configures whether [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link create a [Customer](https://stripe.com/docs/api/customers).
+       */
+      customer_creation?: PaymentLinkUpdateParams.CustomerCreation;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -951,6 +1116,8 @@ declare module 'stripe' {
       }
 
       type BillingAddressCollection = 'auto' | 'required';
+
+      type CustomerCreation = 'always' | 'if_required';
 
       interface LineItem {
         /**
