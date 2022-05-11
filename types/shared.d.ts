@@ -123,7 +123,7 @@ declare module 'stripe' {
       /**
        * Address line 1 (e.g., street, PO Box, or company name).
        */
-      line1: string;
+      line1?: string;
     }
 
     interface JapanAddressParam {
