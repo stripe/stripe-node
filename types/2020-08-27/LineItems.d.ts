@@ -82,9 +82,8 @@ declare module 'stripe' {
         amount: number;
 
         /**
-         * A discount represents the actual application of a coupon to a particular
-         * customer. It contains information about when the discount began and when it
-         * will end.
+         * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+         * It contains information about when the discount began, when it will end, and what it is applied to.
          *
          * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
          */
