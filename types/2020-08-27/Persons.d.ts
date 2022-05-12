@@ -122,6 +122,8 @@ declare module 'stripe' {
        */
       political_exposure?: Person.PoliticalExposure;
 
+      registered_address?: Stripe.Address;
+
       relationship?: Person.Relationship;
 
       /**
@@ -690,6 +692,11 @@ declare module 'stripe' {
       political_exposure?: string;
 
       /**
+       * The person's registered address.
+       */
+      registered_address?: PersonCreateParams.RegisteredAddress;
+
+      /**
        * The relationship that this person has with the account's legal entity.
        */
       relationship?: PersonCreateParams.Relationship;
@@ -765,6 +772,10 @@ declare module 'stripe' {
            */
           files?: Array<string>;
         }
+      }
+
+      interface RegisteredAddress extends Omit<Stripe.AddressParam, 'line1'> {
+        line1?: string;
       }
 
       interface Relationship {
@@ -957,6 +968,11 @@ declare module 'stripe' {
       political_exposure?: string;
 
       /**
+       * The person's registered address.
+       */
+      registered_address?: PersonUpdateParams.RegisteredAddress;
+
+      /**
        * The relationship that this person has with the account's legal entity.
        */
       relationship?: PersonUpdateParams.Relationship;
@@ -1032,6 +1048,10 @@ declare module 'stripe' {
            */
           files?: Array<string>;
         }
+      }
+
+      interface RegisteredAddress extends Omit<Stripe.AddressParam, 'line1'> {
+        line1?: string;
       }
 
       interface Relationship {

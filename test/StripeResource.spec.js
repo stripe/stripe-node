@@ -403,6 +403,39 @@ describe('StripeResource', () => {
         );
       });
 
+      it('retries closed connection errors once', (done) => {
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .replyWithError({
+            code: 'ECONNRESET',
+            errno: 'ECONNRESET',
+          })
+          .post(options.path, options.params)
+          .reply(200, {
+            id: 'ch_123',
+            object: 'charge',
+            amount: 1000,
+          });
+
+        realStripe.charges.create(options.data, (err, charge) => {
+          expect(charge.id).to.equal('ch_123');
+          done(err);
+        });
+      });
+
+      it('throws on multiple closed connection errors', (done) => {
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .replyWithError({code: 'ECONNRESET'})
+          .post(options.path, options.params)
+          .replyWithError({code: 'ECONNRESET'});
+
+        realStripe.charges.create(options.data, (err) => {
+          expect(err.detail.code).to.deep.equal('ECONNRESET');
+          done();
+        });
+      });
+
       it('should retry the request if max retries are set', (done) => {
         nock(`https://${options.host}`)
           .post(options.path, options.params)

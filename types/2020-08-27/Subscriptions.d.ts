@@ -17,6 +17,15 @@ declare module 'stripe' {
       object: 'subscription';
 
       /**
+       * ID of the Connect Application that created the subscription.
+       */
+      application:
+        | string
+        | Stripe.Application
+        | Stripe.DeletedApplication
+        | null;
+
+      /**
        * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account.
        */
       application_fee_percent: number | null;
@@ -92,6 +101,11 @@ declare module 'stripe' {
        * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
        */
       default_tax_rates?: Array<Stripe.TaxRate> | null;
+
+      /**
+       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
+       */
+      description: string | null;
 
       /**
        * Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis.
@@ -371,6 +385,8 @@ declare module 'stripe' {
           interface Konbini {}
 
           interface UsBankAccount {
+            financial_connections?: UsBankAccount.FinancialConnections;
+
             /**
              * Bank account verification method.
              */
@@ -378,6 +394,17 @@ declare module 'stripe' {
           }
 
           namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. The `payment_method` permission must be included.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission = 'balances' | 'payment_method' | 'transactions';
+            }
+
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
         }
@@ -547,6 +574,11 @@ declare module 'stripe' {
        * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
        */
       default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+      /**
+       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
+       */
+      description?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -957,12 +989,32 @@ declare module 'stripe' {
 
           interface UsBankAccount {
             /**
+             * Additional fields for Financial Connections Session creation
+             */
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
              * Verification method for the intent
              */
             verification_method?: UsBankAccount.VerificationMethod;
           }
 
           namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
         }
@@ -1095,6 +1147,11 @@ declare module 'stripe' {
        * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription. Pass an empty string to remove previously-defined tax rates.
        */
       default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+      /**
+       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
+       */
+      description?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -1547,12 +1604,32 @@ declare module 'stripe' {
 
           interface UsBankAccount {
             /**
+             * Additional fields for Financial Connections Session creation
+             */
+            financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
              * Verification method for the intent
              */
             verification_method?: UsBankAccount.VerificationMethod;
           }
 
           namespace UsBankAccount {
+            interface FinancialConnections {
+              /**
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               */
+              permissions?: Array<FinancialConnections.Permission>;
+            }
+
+            namespace FinancialConnections {
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+            }
+
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
         }

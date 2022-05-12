@@ -22,6 +22,7 @@
 ///<reference path='./BitcoinTransactions.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
 ///<reference path='./Cards.d.ts' />
+///<reference path='./CashBalances.d.ts' />
 ///<reference path='./Charges.d.ts' />
 ///<reference path='./Checkout/Sessions.d.ts' />
 ///<reference path='./ConnectCollectionTransfers.d.ts' />
@@ -41,6 +42,10 @@
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./FileLinks.d.ts' />
 ///<reference path='./Files.d.ts' />
+///<reference path='./FinancialConnections/AccountOwners.d.ts' />
+///<reference path='./FinancialConnections/AccountOwnerships.d.ts' />
+///<reference path='./FinancialConnections/Accounts.d.ts' />
+///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
@@ -57,8 +62,6 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
-///<reference path='./OrderItems.d.ts' />
-///<reference path='./OrderReturns.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
@@ -148,7 +151,6 @@ declare module 'stripe' {
     issuerFraudRecords: Stripe.IssuerFraudRecordsResource;
     mandates: Stripe.MandatesResource;
     orders: Stripe.OrdersResource;
-    orderReturns: Stripe.OrderReturnsResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethods: Stripe.PaymentMethodsResource;
@@ -186,6 +188,10 @@ declare module 'stripe' {
     };
     checkout: {
       sessions: Stripe.Checkout.SessionsResource;
+    };
+    financialConnections: {
+      accounts: Stripe.FinancialConnections.AccountsResource;
+      sessions: Stripe.FinancialConnections.SessionsResource;
     };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;
