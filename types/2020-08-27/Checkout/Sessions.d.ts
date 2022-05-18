@@ -913,9 +913,8 @@ declare module 'stripe' {
               amount: number;
 
               /**
-               * A discount represents the actual application of a coupon to a particular
-               * customer. It contains information about when the discount began and when it
-               * will end.
+               * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+               * It contains information about when the discount began, when it will end, and what it is applied to.
                *
                * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
                */
@@ -2156,6 +2155,13 @@ declare module 'stripe' {
            * from the subscription.
            */
           default_tax_rates?: Array<string>;
+
+          /**
+           * The subscription's description, meant to be displayable to the customer.
+           * Use this field to optionally store an explanation of the subscription
+           * for rendering in Stripe hosted surfaces.
+           */
+          description?: string;
 
           /**
            * A list of items, each with an attached plan, that the customer is subscribing to. Prefer using `line_items`.

@@ -103,6 +103,11 @@ declare module 'stripe' {
       default_tax_rates?: Array<Stripe.TaxRate> | null;
 
       /**
+       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
+       */
+      description: string | null;
+
+      /**
        * Describes the current discount applied to this subscription, if there is one. When billing, a discount applied to a subscription overrides a discount applied on a customer-wide basis.
        */
       discount: Stripe.Discount | null;
@@ -569,6 +574,11 @@ declare module 'stripe' {
        * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription.
        */
       default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+      /**
+       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
+       */
+      description?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -1137,6 +1147,11 @@ declare module 'stripe' {
        * The tax rates that will apply to any subscription item that does not have `tax_rates` set. Invoices created will have their `default_tax_rates` populated from the subscription. Pass an empty string to remove previously-defined tax rates.
        */
       default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+      /**
+       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.
+       */
+      description?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
