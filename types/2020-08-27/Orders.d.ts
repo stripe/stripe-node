@@ -39,6 +39,15 @@ declare module 'stripe' {
       billing_details: Order.BillingDetails | null;
 
       /**
+       * The client secret of this Order. Used for client-side retrieval using a publishable key.
+       *
+       * The client secret can be used to complete a payment for an Order from your frontend. It should not be stored, logged, embedded in URLs, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.
+       *
+       * Refer to our docs for [creating and processing an order](https://stripe.com/docs/orders-beta/create-and-process) to learn about how client_secret should be handled.
+       */
+      client_secret: string | null;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;

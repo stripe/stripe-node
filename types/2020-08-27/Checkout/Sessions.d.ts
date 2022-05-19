@@ -449,13 +449,33 @@ declare module 'stripe' {
         interface PaymentMethodOptions {
           acss_debit?: PaymentMethodOptions.AcssDebit;
 
+          afterpay_clearpay?: PaymentMethodOptions.AfterpayClearpay;
+
           alipay?: PaymentMethodOptions.Alipay;
 
+          au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
+
+          bacs_debit?: PaymentMethodOptions.BacsDebit;
+
           boleto?: PaymentMethodOptions.Boleto;
+
+          eps?: PaymentMethodOptions.Eps;
+
+          fpx?: PaymentMethodOptions.Fpx;
+
+          giropay?: PaymentMethodOptions.Giropay;
+
+          grabpay?: PaymentMethodOptions.Grabpay;
+
+          klarna?: PaymentMethodOptions.Klarna;
 
           konbini?: PaymentMethodOptions.Konbini;
 
           oxxo?: PaymentMethodOptions.Oxxo;
+
+          paynow?: PaymentMethodOptions.Paynow;
+
+          sepa_debit?: PaymentMethodOptions.SepaDebit;
 
           us_bank_account?: PaymentMethodOptions.UsBankAccount;
         }
@@ -511,7 +531,13 @@ declare module 'stripe' {
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
 
+          interface AfterpayClearpay {}
+
           interface Alipay {}
+
+          interface AuBecsDebit {}
+
+          interface BacsDebit {}
 
           interface Boleto {
             /**
@@ -519,6 +545,16 @@ declare module 'stripe' {
              */
             expires_after_days: number;
           }
+
+          interface Eps {}
+
+          interface Fpx {}
+
+          interface Giropay {}
+
+          interface Grabpay {}
+
+          interface Klarna {}
 
           interface Konbini {
             /**
@@ -533,6 +569,10 @@ declare module 'stripe' {
              */
             expires_after_days: number;
           }
+
+          interface Paynow {}
+
+          interface SepaDebit {}
 
           interface UsBankAccount {
             financial_connections?: UsBankAccount.FinancialConnections;
@@ -1077,6 +1117,8 @@ declare module 'stripe' {
 
         /**
          * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
+         *
+         * Do not include this attribute if you prefer to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
          *
          * Read more about the supported payment methods and their requirements in our [payment
          * method details guide](https://stripe.com/docs/payments/checkout/payment-methods).

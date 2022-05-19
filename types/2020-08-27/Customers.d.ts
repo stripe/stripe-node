@@ -835,6 +835,13 @@ declare module 'stripe' {
         | 'wechat_pay';
     }
 
+    interface CustomerRetrievePaymentMethodParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface CustomerSearchParams {
       /**
        * The search query string. See [search query language](https://stripe.com/docs/search#search-query-language) and the list of supported [query fields for customers](https://stripe.com/docs/search#query-fields-for-customers).
@@ -947,6 +954,21 @@ declare module 'stripe' {
         params: CustomerListPaymentMethodsParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.PaymentMethod>;
+
+      /**
+       * Retrieves a PaymentMethod object.
+       */
+      retrievePaymentMethod(
+        customerId: string,
+        id: string,
+        params?: CustomerRetrievePaymentMethodParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
+      retrievePaymentMethod(
+        customerId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
        * Search for customers you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).

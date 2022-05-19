@@ -105,10 +105,26 @@
 ///<reference path='./TestHelpers/Refunds.d.ts' />
 ///<reference path='./TestHelpers/Terminal/Readers.d.ts' />
 ///<reference path='./TestHelpers/TestClocks.d.ts' />
+///<reference path='./TestHelpers/Treasury/InboundTransfers.d.ts' />
+///<reference path='./TestHelpers/Treasury/OutboundPayments.d.ts' />
+///<reference path='./TestHelpers/Treasury/OutboundTransfers.d.ts' />
+///<reference path='./TestHelpers/Treasury/ReceivedCredits.d.ts' />
+///<reference path='./TestHelpers/Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Tokens.d.ts' />
 ///<reference path='./Topups.d.ts' />
 ///<reference path='./TransferReversals.d.ts' />
 ///<reference path='./Transfers.d.ts' />
+///<reference path='./Treasury/CreditReversals.d.ts' />
+///<reference path='./Treasury/DebitReversals.d.ts' />
+///<reference path='./Treasury/FinancialAccountFeatures.d.ts' />
+///<reference path='./Treasury/FinancialAccounts.d.ts' />
+///<reference path='./Treasury/InboundTransfers.d.ts' />
+///<reference path='./Treasury/OutboundPayments.d.ts' />
+///<reference path='./Treasury/OutboundTransfers.d.ts' />
+///<reference path='./Treasury/ReceivedCredits.d.ts' />
+///<reference path='./Treasury/ReceivedDebits.d.ts' />
+///<reference path='./Treasury/TransactionEntries.d.ts' />
+///<reference path='./Treasury/Transactions.d.ts' />
 ///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./UsageRecords.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
@@ -228,6 +244,25 @@ declare module 'stripe' {
       terminal: {
         readers: Stripe.TestHelpers.Terminal.ReadersResource;
       };
+      treasury: {
+        inboundTransfers: Stripe.TestHelpers.Treasury.InboundTransfersResource;
+        outboundPayments: Stripe.TestHelpers.Treasury.OutboundPaymentsResource;
+        outboundTransfers: Stripe.TestHelpers.Treasury.OutboundTransfersResource;
+        receivedCredits: Stripe.TestHelpers.Treasury.ReceivedCreditsResource;
+        receivedDebits: Stripe.TestHelpers.Treasury.ReceivedDebitsResource;
+      };
+    };
+    treasury: {
+      creditReversals: Stripe.Treasury.CreditReversalsResource;
+      debitReversals: Stripe.Treasury.DebitReversalsResource;
+      financialAccounts: Stripe.Treasury.FinancialAccountsResource;
+      inboundTransfers: Stripe.Treasury.InboundTransfersResource;
+      outboundPayments: Stripe.Treasury.OutboundPaymentsResource;
+      outboundTransfers: Stripe.Treasury.OutboundTransfersResource;
+      receivedCredits: Stripe.Treasury.ReceivedCreditsResource;
+      receivedDebits: Stripe.Treasury.ReceivedDebitsResource;
+      transactions: Stripe.Treasury.TransactionsResource;
+      transactionEntries: Stripe.Treasury.TransactionEntriesResource;
     };
     /**
      * API Errors
