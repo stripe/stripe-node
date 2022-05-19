@@ -1614,7 +1614,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. If this is not provided, defaults to ["card"].
+       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. If this is not provided, defaults to ["card"]. Use automatic_payment_methods to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Array<string>;
 
@@ -3005,6 +3005,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for network related functions
+           */
+          networks?: UsBankAccount.Networks;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -3040,6 +3045,17 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+          }
+
+          interface Networks {
+            /**
+             * Triggers validations to run across the selected networks
+             */
+            requested?: Array<Networks.Requested>;
+          }
+
+          namespace Networks {
+            type Requested = 'ach' | 'us_domestic_wire';
           }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -3202,7 +3218,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentUpdateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
+       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. Use automatic_payment_methods to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Array<string>;
 
@@ -4524,6 +4540,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for network related functions
+           */
+          networks?: UsBankAccount.Networks;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -4559,6 +4580,17 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+          }
+
+          interface Networks {
+            /**
+             * Triggers validations to run across the selected networks
+             */
+            requested?: Array<Networks.Requested>;
+          }
+
+          namespace Networks {
+            type Requested = 'ach' | 'us_domestic_wire';
           }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
@@ -6180,6 +6212,11 @@ declare module 'stripe' {
           financial_connections?: UsBankAccount.FinancialConnections;
 
           /**
+           * Additional fields for network related functions
+           */
+          networks?: UsBankAccount.Networks;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -6215,6 +6252,17 @@ declare module 'stripe' {
               | 'ownership'
               | 'payment_method'
               | 'transactions';
+          }
+
+          interface Networks {
+            /**
+             * Triggers validations to run across the selected networks
+             */
+            requested?: Array<Networks.Requested>;
+          }
+
+          namespace Networks {
+            type Requested = 'ach' | 'us_domestic_wire';
           }
 
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';

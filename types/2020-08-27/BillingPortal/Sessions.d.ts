@@ -50,7 +50,7 @@ declare module 'stripe' {
         /**
          * The URL to redirect customers to when they click on the portal's link to return to your website.
          */
-        return_url: string;
+        return_url: string | null;
 
         /**
          * The short-lived URL of the session that gives customers access to the customer portal.

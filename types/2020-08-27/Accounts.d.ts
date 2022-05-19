@@ -1078,7 +1078,7 @@ declare module 'stripe' {
       company?: AccountCreateParams.Company;
 
       /**
-       * The country in which the account holder resides, or in which the business is legally established. This should be an ISO 3166-1 alpha-2 country code. For example, if you are in the United States and the business for which you're creating an account is legally represented in Canada, you would use `CA` as the country for the account being created.
+       * The country in which the account holder resides, or in which the business is legally established. This should be an ISO 3166-1 alpha-2 country code. For example, if you are in the United States and the business for which you're creating an account is legally represented in Canada, you would use `CA` as the country for the account being created. Available countries include [Stripe's global markets](https://stripe.com/global) as well as countries where [cross-border payouts](https://stripe.com/docs/connect/cross-border-payouts) are supported.
        */
       country?: string;
 
@@ -1870,12 +1870,12 @@ declare module 'stripe' {
         last_name?: string;
 
         /**
-         * The Kana varation of the individual's last name (Japan only).
+         * The Kana variation of the individual's last name (Japan only).
          */
         last_name_kana?: string;
 
         /**
-         * The Kanji varation of the individual's last name (Japan only).
+         * The Kanji variation of the individual's last name (Japan only).
          */
         last_name_kanji?: string;
 
@@ -2960,12 +2960,12 @@ declare module 'stripe' {
         last_name?: string;
 
         /**
-         * The Kana varation of the individual's last name (Japan only).
+         * The Kana variation of the individual's last name (Japan only).
          */
         last_name_kana?: string;
 
         /**
-         * The Kanji varation of the individual's last name (Japan only).
+         * The Kanji variation of the individual's last name (Japan only).
          */
         last_name_kanji?: string;
 
