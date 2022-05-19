@@ -60,6 +60,11 @@ declare module 'stripe' {
         exp_year: number;
 
         /**
+         * The financial account this card is attached to.
+         */
+        financial_account?: string | null;
+
+        /**
          * The last 4 digits of the card number.
          */
         last4: string;

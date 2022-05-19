@@ -261,7 +261,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The complete description that appears on your customers' statements. Must contain at least one letter, maximum 10 characters.
+         * The complete description that appears on your customers' statements. Maximum 10 characters.
          */
         statement_descriptor?: string;
       }
