@@ -678,6 +678,178 @@ describe('FinancialConnections.Session', function() {
   });
 });
 
+describe('Treasury.InboundTransfer', function() {
+  it('fail method', async function() {
+    const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.fail(
+      'ibt_123',
+      {failure_details: {code: 'account_closed'}}
+    );
+    expect(inboundTransfer).not.to.be.null;
+  });
+
+  it('returnInboundTransfer method', async function() {
+    const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.returnInboundTransfer(
+      'ibt_123'
+    );
+    expect(inboundTransfer).not.to.be.null;
+  });
+
+  it('succeed method', async function() {
+    const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.succeed(
+      'ibt_123'
+    );
+    expect(inboundTransfer).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const inboundTransfer = await stripe.treasury.inboundTransfers.create({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      amount: 10000,
+      currency: 'usd',
+      origin_payment_method: 'pm_xxxxxxxxxxxxx',
+      description: 'InboundTransfer from my bank account',
+    });
+    expect(inboundTransfer).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const inboundTransfer = await stripe.treasury.inboundTransfers.retrieve(
+      'ibt_xxxxxxxxxxxxx'
+    );
+    expect(inboundTransfer).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const inboundTransfers = await stripe.treasury.inboundTransfers.list({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      limit: 3,
+    });
+    expect(inboundTransfers).not.to.be.null;
+  });
+
+  it('cancel method', async function() {
+    const inboundTransfer = await stripe.treasury.inboundTransfers.cancel(
+      'ibt_xxxxxxxxxxxxx'
+    );
+    expect(inboundTransfer).not.to.be.null;
+  });
+});
+
+describe('Treasury.OutboundTransfer', function() {
+  it('post method', async function() {
+    const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.post(
+      'obt_123'
+    );
+    expect(outboundTransfer).not.to.be.null;
+  });
+
+  it('fail method', async function() {
+    const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.fail(
+      'obt_123'
+    );
+    expect(outboundTransfer).not.to.be.null;
+  });
+
+  it('returnOutboundTransfer method', async function() {
+    const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.returnOutboundTransfer(
+      'obt_123',
+      {returned_details: {code: 'account_closed'}}
+    );
+    expect(outboundTransfer).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const outboundTransfer = await stripe.treasury.outboundTransfers.create({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      destination_payment_method: 'pm_xxxxxxxxxxxxx',
+      amount: 500,
+      currency: 'usd',
+      description: 'OutboundTransfer to my external bank account',
+    });
+    expect(outboundTransfer).not.to.be.null;
+  });
+
+  it('cancel method', async function() {
+    const outboundTransfer = await stripe.treasury.outboundTransfers.cancel(
+      'obt_xxxxxxxxxxxxx'
+    );
+    expect(outboundTransfer).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const outboundTransfer = await stripe.treasury.outboundTransfers.retrieve(
+      'obt_xxxxxxxxxxxxx'
+    );
+    expect(outboundTransfer).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const outboundTransfers = await stripe.treasury.outboundTransfers.list({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      limit: 3,
+    });
+    expect(outboundTransfers).not.to.be.null;
+  });
+});
+
+describe('Treasury.ReceivedCredit', function() {
+  it('create method', async function() {
+    const receivedCredit = await stripe.testHelpers.treasury.receivedCredits.create(
+      {
+        financial_account: 'fa_123',
+        network: 'ach',
+        amount: 1234,
+        currency: 'usd',
+      }
+    );
+    expect(receivedCredit).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const receivedCredit = await stripe.treasury.receivedCredits.retrieve(
+      'rc_xxxxxxxxxxxxx'
+    );
+    expect(receivedCredit).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const receivedCredits = await stripe.treasury.receivedCredits.list({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      limit: 3,
+    });
+    expect(receivedCredits).not.to.be.null;
+  });
+});
+
+describe('Treasury.ReceivedDebit', function() {
+  it('create method', async function() {
+    const receivedDebit = await stripe.testHelpers.treasury.receivedDebits.create(
+      {
+        financial_account: 'fa_123',
+        network: 'ach',
+        amount: 1234,
+        currency: 'usd',
+      }
+    );
+    expect(receivedDebit).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const receivedDebit = await stripe.treasury.receivedDebits.retrieve(
+      'rd_xxxxxxxxxxxxx'
+    );
+    expect(receivedDebit).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const receivedDebits = await stripe.treasury.receivedDebits.list({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      limit: 3,
+    });
+    expect(receivedDebits).not.to.be.null;
+  });
+});
+
 describe('Charge', function() {
   it('create method', async function() {
     const charge = await stripe.charges.create({
@@ -2413,41 +2585,6 @@ describe('Treasury.TransactionEntry', function() {
   });
 });
 
-describe('Treasury.OutboundTransfer', function() {
-  it('create method', async function() {
-    const outboundTransfer = await stripe.treasury.outboundTransfers.create({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      destination_payment_method: 'pm_xxxxxxxxxxxxx',
-      amount: 500,
-      currency: 'usd',
-      description: 'OutboundTransfer to my external bank account',
-    });
-    expect(outboundTransfer).not.to.be.null;
-  });
-
-  it('cancel method', async function() {
-    const outboundTransfer = await stripe.treasury.outboundTransfers.cancel(
-      'obt_xxxxxxxxxxxxx'
-    );
-    expect(outboundTransfer).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const outboundTransfer = await stripe.treasury.outboundTransfers.retrieve(
-      'obt_xxxxxxxxxxxxx'
-    );
-    expect(outboundTransfer).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const outboundTransfers = await stripe.treasury.outboundTransfers.list({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      limit: 3,
-    });
-    expect(outboundTransfers).not.to.be.null;
-  });
-});
-
 describe('Treasury.OutboundPayment', function() {
   it('create method', async function() {
     const outboundPayment = await stripe.treasury.outboundPayments.create({
@@ -2481,75 +2618,6 @@ describe('Treasury.OutboundPayment', function() {
       limit: 3,
     });
     expect(outboundPayments).not.to.be.null;
-  });
-});
-
-describe('Treasury.InboundTransfer', function() {
-  it('create method', async function() {
-    const inboundTransfer = await stripe.treasury.inboundTransfers.create({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      amount: 10000,
-      currency: 'usd',
-      origin_payment_method: 'pm_xxxxxxxxxxxxx',
-      description: 'InboundTransfer from my bank account',
-    });
-    expect(inboundTransfer).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const inboundTransfer = await stripe.treasury.inboundTransfers.retrieve(
-      'ibt_xxxxxxxxxxxxx'
-    );
-    expect(inboundTransfer).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const inboundTransfers = await stripe.treasury.inboundTransfers.list({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      limit: 3,
-    });
-    expect(inboundTransfers).not.to.be.null;
-  });
-
-  it('cancel method', async function() {
-    const inboundTransfer = await stripe.treasury.inboundTransfers.cancel(
-      'ibt_xxxxxxxxxxxxx'
-    );
-    expect(inboundTransfer).not.to.be.null;
-  });
-});
-
-describe('Treasury.ReceivedCredit', function() {
-  it('retrieve method', async function() {
-    const receivedCredit = await stripe.treasury.receivedCredits.retrieve(
-      'rc_xxxxxxxxxxxxx'
-    );
-    expect(receivedCredit).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const receivedCredits = await stripe.treasury.receivedCredits.list({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      limit: 3,
-    });
-    expect(receivedCredits).not.to.be.null;
-  });
-});
-
-describe('Treasury.ReceivedDebit', function() {
-  it('retrieve method', async function() {
-    const receivedDebit = await stripe.treasury.receivedDebits.retrieve(
-      'rd_xxxxxxxxxxxxx'
-    );
-    expect(receivedDebit).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const receivedDebits = await stripe.treasury.receivedDebits.list({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      limit: 3,
-    });
-    expect(receivedDebits).not.to.be.null;
   });
 });
 
