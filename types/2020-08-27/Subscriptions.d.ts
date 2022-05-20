@@ -259,6 +259,11 @@ declare module 'stripe' {
          * The list of payment method types to provide to every invoice created by the subscription. If not set, Stripe attempts to automatically determine the types to use by looking at the invoice's default payment method, the subscription's default payment method, the customer's default payment method, and your [invoice template settings](https://dashboard.stripe.com/settings/billing/invoice).
          */
         payment_method_types: Array<PaymentSettings.PaymentMethodType> | null;
+
+        /**
+         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         */
+        save_default_payment_method: PaymentSettings.SaveDefaultPaymentMethod | null;
       }
 
       namespace PaymentSettings {
@@ -430,6 +435,8 @@ declare module 'stripe' {
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+
+        type SaveDefaultPaymentMethod = 'off' | 'on_subscription';
       }
 
       interface PendingInvoiceItemInterval {
@@ -514,7 +521,7 @@ declare module 'stripe' {
       application_fee_percent?: number;
 
       /**
-       * Automatic tax settings for this subscription.
+       * Automatic tax settings for this subscription. We recommend you only include this parameter when the existing value is being changed.
        */
       automatic_tax?: SubscriptionCreateParams.AutomaticTax;
 
@@ -849,6 +856,11 @@ declare module 'stripe' {
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
         >;
+
+        /**
+         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         */
+        save_default_payment_method?: PaymentSettings.SaveDefaultPaymentMethod;
       }
 
       namespace PaymentSettings {
@@ -1040,6 +1052,8 @@ declare module 'stripe' {
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+
+        type SaveDefaultPaymentMethod = 'off' | 'on_subscription';
       }
 
       interface PendingInvoiceItemInterval {
@@ -1092,7 +1106,7 @@ declare module 'stripe' {
       application_fee_percent?: number;
 
       /**
-       * Automatic tax settings for this subscription.
+       * Automatic tax settings for this subscription. We recommend you only include this parameter when the existing value is being changed.
        */
       automatic_tax?: SubscriptionUpdateParams.AutomaticTax;
 
@@ -1464,6 +1478,11 @@ declare module 'stripe' {
         payment_method_types?: Stripe.Emptyable<
           Array<PaymentSettings.PaymentMethodType>
         >;
+
+        /**
+         * Either `off`, or `on_subscription`. With `on_subscription` Stripe updates `subscription.default_payment_method` when a subscription payment succeeds.
+         */
+        save_default_payment_method?: PaymentSettings.SaveDefaultPaymentMethod;
       }
 
       namespace PaymentSettings {
@@ -1655,6 +1674,8 @@ declare module 'stripe' {
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+
+        type SaveDefaultPaymentMethod = 'off' | 'on_subscription';
       }
 
       interface PendingInvoiceItemInterval {
