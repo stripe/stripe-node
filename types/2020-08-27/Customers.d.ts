@@ -810,6 +810,7 @@ declare module 'stripe' {
     namespace CustomerListPaymentMethodsParams {
       type Type =
         | 'acss_debit'
+        | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -826,6 +827,7 @@ declare module 'stripe' {
         | 'ideal'
         | 'klarna'
         | 'konbini'
+        | 'link'
         | 'oxxo'
         | 'p24'
         | 'paynow'

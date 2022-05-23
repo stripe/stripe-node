@@ -300,6 +300,8 @@ declare module 'stripe' {
 
         card?: PaymentMethodOptions.Card;
 
+        link?: PaymentMethodOptions.Link;
+
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
@@ -433,6 +435,13 @@ declare module 'stripe' {
           }
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
+        }
+
+        interface Link {
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token: string | null;
         }
 
         interface SepaDebit {
@@ -618,6 +627,11 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodData.AcssDebit;
 
         /**
+         * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+         */
+        affirm?: PaymentMethodData.Affirm;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -698,6 +712,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+         */
+        link?: PaymentMethodData.Link;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -760,6 +779,8 @@ declare module 'stripe' {
            */
           transit_number: string;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {}
 
@@ -963,6 +984,8 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface Link {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -1023,6 +1046,7 @@ declare module 'stripe' {
 
         type Type =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -1037,6 +1061,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -1091,6 +1116,11 @@ declare module 'stripe' {
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
+
+        /**
+         * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+         */
+        link?: PaymentMethodOptions.Link;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -1243,6 +1273,13 @@ declare module 'stripe' {
           }
 
           type RequestThreeDSecure = 'any' | 'automatic';
+        }
+
+        interface Link {
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token?: string;
         }
 
         interface SepaDebit {
@@ -1389,6 +1426,11 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodData.AcssDebit;
 
         /**
+         * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+         */
+        affirm?: PaymentMethodData.Affirm;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -1469,6 +1511,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+         */
+        link?: PaymentMethodData.Link;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -1531,6 +1578,8 @@ declare module 'stripe' {
            */
           transit_number: string;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {}
 
@@ -1734,6 +1783,8 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface Link {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -1794,6 +1845,7 @@ declare module 'stripe' {
 
         type Type =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -1808,6 +1860,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -1862,6 +1915,11 @@ declare module 'stripe' {
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
+
+        /**
+         * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+         */
+        link?: PaymentMethodOptions.Link;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -2014,6 +2072,13 @@ declare module 'stripe' {
           }
 
           type RequestThreeDSecure = 'any' | 'automatic';
+        }
+
+        interface Link {
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token?: string;
         }
 
         interface SepaDebit {
@@ -2251,6 +2316,11 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodData.AcssDebit;
 
         /**
+         * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+         */
+        affirm?: PaymentMethodData.Affirm;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -2331,6 +2401,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+         */
+        link?: PaymentMethodData.Link;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -2393,6 +2468,8 @@ declare module 'stripe' {
            */
           transit_number: string;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {}
 
@@ -2596,6 +2673,8 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface Link {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -2656,6 +2735,7 @@ declare module 'stripe' {
 
         type Type =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -2670,6 +2750,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -2724,6 +2805,11 @@ declare module 'stripe' {
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
+
+        /**
+         * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+         */
+        link?: PaymentMethodOptions.Link;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -2876,6 +2962,13 @@ declare module 'stripe' {
           }
 
           type RequestThreeDSecure = 'any' | 'automatic';
+        }
+
+        interface Link {
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token?: string;
         }
 
         interface SepaDebit {
