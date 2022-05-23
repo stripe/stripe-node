@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 9.4.0 - 2022-05-23
+* [#1431](https://github.com/stripe/stripe-node/pull/1431) API Updates
+  * Add support for `treasury` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+
 ## 9.3.0 - 2022-05-23
 * [#1430](https://github.com/stripe/stripe-node/pull/1430) API Updates
   * Add support for new resource `Apps.Secret`
