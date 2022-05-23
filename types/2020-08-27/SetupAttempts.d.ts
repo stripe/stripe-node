@@ -87,6 +87,8 @@ declare module 'stripe' {
 
         ideal?: PaymentMethodDetails.Ideal;
 
+        link?: PaymentMethodDetails.Link;
+
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
         sofort?: PaymentMethodDetails.Sofort;
@@ -282,6 +284,8 @@ declare module 'stripe' {
             | 'SNSBNL2A'
             | 'TRIONL2U';
         }
+
+        interface Link {}
 
         interface SepaDebit {}
 

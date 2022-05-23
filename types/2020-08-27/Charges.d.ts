@@ -388,6 +388,8 @@ declare module 'stripe' {
 
         acss_debit?: PaymentMethodDetails.AcssDebit;
 
+        affirm?: PaymentMethodDetails.Affirm;
+
         afterpay_clearpay?: PaymentMethodDetails.AfterpayClearpay;
 
         alipay?: PaymentMethodDetails.Alipay;
@@ -421,6 +423,8 @@ declare module 'stripe' {
         klarna?: PaymentMethodDetails.Klarna;
 
         konbini?: PaymentMethodDetails.Konbini;
+
+        link?: PaymentMethodDetails.Link;
 
         multibanco?: PaymentMethodDetails.Multibanco;
 
@@ -542,6 +546,8 @@ declare module 'stripe' {
            */
           transit_number: string | null;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {
           /**
@@ -1468,6 +1474,8 @@ declare module 'stripe' {
             type Chain = 'familymart' | 'lawson' | 'ministop' | 'seicomart';
           }
         }
+
+        interface Link {}
 
         interface Multibanco {
           /**

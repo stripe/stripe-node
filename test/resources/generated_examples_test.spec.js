@@ -850,6 +850,33 @@ describe('Treasury.ReceivedDebit', function() {
   });
 });
 
+describe('Apps.Secret', function() {
+  it('create method', async function() {
+    const secret = await stripe.apps.secrets.create({
+      name: 'sec_123',
+      payload: 'very secret string',
+      scope: {type: 'account'},
+    });
+    expect(secret).not.to.be.null;
+  });
+
+  it('find method', async function() {
+    const secret = await stripe.apps.secrets.find({
+      name: 'sec_123',
+      scope: {type: 'account'},
+    });
+    expect(secret).not.to.be.null;
+  });
+
+  it('deleteWhere method', async function() {
+    const secret = await stripe.apps.secrets.deleteWhere({
+      name: 'sec_123',
+      scope: {type: 'account'},
+    });
+    expect(secret).not.to.be.null;
+  });
+});
+
 describe('Charge', function() {
   it('create method', async function() {
     const charge = await stripe.charges.create({

@@ -13,6 +13,7 @@
 ///<reference path='./ApplePayDomains.d.ts' />
 ///<reference path='./ApplicationFees.d.ts' />
 ///<reference path='./Applications.d.ts' />
+///<reference path='./Apps/Secrets.d.ts' />
 ///<reference path='./Balance.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
@@ -198,6 +199,9 @@ declare module 'stripe' {
     /**
      * Namespaced Resources
      */
+    apps: {
+      secrets: Stripe.Apps.SecretsResource;
+    };
     billingPortal: {
       configurations: Stripe.BillingPortal.ConfigurationsResource;
       sessions: Stripe.BillingPortal.SessionsResource;

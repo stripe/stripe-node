@@ -18,6 +18,8 @@ declare module 'stripe' {
 
       acss_debit?: PaymentMethod.AcssDebit;
 
+      affirm?: PaymentMethod.Affirm;
+
       afterpay_clearpay?: PaymentMethod.AfterpayClearpay;
 
       alipay?: PaymentMethod.Alipay;
@@ -63,6 +65,8 @@ declare module 'stripe' {
       klarna?: PaymentMethod.Klarna;
 
       konbini?: PaymentMethod.Konbini;
+
+      link?: PaymentMethod.Link;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -121,6 +125,8 @@ declare module 'stripe' {
          */
         transit_number: string | null;
       }
+
+      interface Affirm {}
 
       interface AfterpayClearpay {}
 
@@ -548,6 +554,18 @@ declare module 'stripe' {
 
       interface Konbini {}
 
+      interface Link {
+        /**
+         * Account owner's email address.
+         */
+        email: string | null;
+
+        /**
+         * Token used for persistent Link logins.
+         */
+        persistent_token?: string;
+      }
+
       interface Oxxo {}
 
       interface P24 {
@@ -643,6 +661,7 @@ declare module 'stripe' {
 
       type Type =
         | 'acss_debit'
+        | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -660,6 +679,7 @@ declare module 'stripe' {
         | 'interac_present'
         | 'klarna'
         | 'konbini'
+        | 'link'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -740,6 +760,11 @@ declare module 'stripe' {
        * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
        */
       acss_debit?: PaymentMethodCreateParams.AcssDebit;
+
+      /**
+       * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+       */
+      affirm?: PaymentMethodCreateParams.Affirm;
 
       /**
        * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
@@ -837,6 +862,11 @@ declare module 'stripe' {
       konbini?: PaymentMethodCreateParams.Konbini;
 
       /**
+       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+       */
+      link?: PaymentMethodCreateParams.Link;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
@@ -904,6 +934,8 @@ declare module 'stripe' {
          */
         transit_number: string;
       }
+
+      interface Affirm {}
 
       interface AfterpayClearpay {}
 
@@ -1133,6 +1165,8 @@ declare module 'stripe' {
 
       interface Konbini {}
 
+      interface Link {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -1193,6 +1227,7 @@ declare module 'stripe' {
 
       type Type =
         | 'acss_debit'
+        | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -1208,6 +1243,7 @@ declare module 'stripe' {
         | 'ideal'
         | 'klarna'
         | 'konbini'
+        | 'link'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -1268,6 +1304,11 @@ declare module 'stripe' {
       /**
        * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
        */
+      affirm?: PaymentMethodUpdateParams.Affirm;
+
+      /**
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
+       */
       au_becs_debit?: PaymentMethodUpdateParams.AuBecsDebit;
 
       /**
@@ -1291,6 +1332,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+       */
+      link?: PaymentMethodUpdateParams.Link;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -1308,6 +1354,8 @@ declare module 'stripe' {
 
     namespace PaymentMethodUpdateParams {
       interface AcssDebit {}
+
+      interface Affirm {}
 
       interface AuBecsDebit {}
 
@@ -1353,6 +1401,8 @@ declare module 'stripe' {
         exp_year?: number;
       }
 
+      interface Link {}
+
       interface SepaDebit {}
 
       interface UsBankAccount {
@@ -1387,6 +1437,7 @@ declare module 'stripe' {
     namespace PaymentMethodListParams {
       type Type =
         | 'acss_debit'
+        | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -1403,6 +1454,7 @@ declare module 'stripe' {
         | 'ideal'
         | 'klarna'
         | 'konbini'
+        | 'link'
         | 'oxxo'
         | 'p24'
         | 'paynow'
