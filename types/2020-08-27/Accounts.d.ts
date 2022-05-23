@@ -292,6 +292,11 @@ declare module 'stripe' {
         transfers?: Capabilities.Transfers;
 
         /**
+         * The status of the banking capability, or whether the account can have bank accounts.
+         */
+        treasury?: Capabilities.Treasury;
+
+        /**
          * The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -351,6 +356,8 @@ declare module 'stripe' {
         type TaxReportingUs1099Misc = 'active' | 'inactive' | 'pending';
 
         type Transfers = 'active' | 'inactive' | 'pending';
+
+        type Treasury = 'active' | 'inactive' | 'pending';
 
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
       }
@@ -1327,6 +1334,11 @@ declare module 'stripe' {
         transfers?: Capabilities.Transfers;
 
         /**
+         * The treasury capability.
+         */
+        treasury?: Capabilities.Treasury;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -1516,6 +1528,13 @@ declare module 'stripe' {
         }
 
         interface Transfers {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface Treasury {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2454,6 +2473,11 @@ declare module 'stripe' {
         transfers?: Capabilities.Transfers;
 
         /**
+         * The treasury capability.
+         */
+        treasury?: Capabilities.Treasury;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -2643,6 +2667,13 @@ declare module 'stripe' {
         }
 
         interface Transfers {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface Treasury {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
