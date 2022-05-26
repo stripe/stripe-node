@@ -265,6 +265,11 @@ declare module 'stripe' {
       namespace FinancialAccountCreateParams {
         interface Features {
           /**
+           * Encodes the FinancialAccount's ability to be used with the Issuing product, including attaching cards to and drawing funds from the FinancialAccount.
+           */
+          card_issuing?: Features.CardIssuing;
+
+          /**
            * Represents whether this FinancialAccount is eligible for deposit insurance. Various factors determine the insurance amount.
            */
           deposit_insurance?: Features.DepositInsurance;
@@ -296,6 +301,13 @@ declare module 'stripe' {
         }
 
         namespace Features {
+          interface CardIssuing {
+            /**
+             * Whether the FinancialAccount should have the Feature.
+             */
+            requested: boolean;
+          }
+
           interface DepositInsurance {
             /**
              * Whether the FinancialAccount should have the Feature.
@@ -450,6 +462,11 @@ declare module 'stripe' {
       namespace FinancialAccountUpdateParams {
         interface Features {
           /**
+           * Encodes the FinancialAccount's ability to be used with the Issuing product, including attaching cards to and drawing funds from the FinancialAccount.
+           */
+          card_issuing?: Features.CardIssuing;
+
+          /**
            * Represents whether this FinancialAccount is eligible for deposit insurance. Various factors determine the insurance amount.
            */
           deposit_insurance?: Features.DepositInsurance;
@@ -481,6 +498,13 @@ declare module 'stripe' {
         }
 
         namespace Features {
+          interface CardIssuing {
+            /**
+             * Whether the FinancialAccount should have the Feature.
+             */
+            requested: boolean;
+          }
+
           interface DepositInsurance {
             /**
              * Whether the FinancialAccount should have the Feature.
@@ -621,6 +645,11 @@ declare module 'stripe' {
 
       interface FinancialAccountUpdateFeaturesParams {
         /**
+         * Encodes the FinancialAccount's ability to be used with the Issuing product, including attaching cards to and drawing funds from the FinancialAccount.
+         */
+        card_issuing?: FinancialAccountUpdateFeaturesParams.CardIssuing;
+
+        /**
          * Represents whether this FinancialAccount is eligible for deposit insurance. Various factors determine the insurance amount.
          */
         deposit_insurance?: FinancialAccountUpdateFeaturesParams.DepositInsurance;
@@ -657,6 +686,13 @@ declare module 'stripe' {
       }
 
       namespace FinancialAccountUpdateFeaturesParams {
+        interface CardIssuing {
+          /**
+           * Whether the FinancialAccount should have the Feature.
+           */
+          requested: boolean;
+        }
+
         interface DepositInsurance {
           /**
            * Whether the FinancialAccount should have the Feature.

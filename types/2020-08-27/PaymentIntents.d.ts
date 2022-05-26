@@ -463,6 +463,11 @@ declare module 'stripe' {
           >;
 
           /**
+           * A link to a hosted page that guides your customer through completing the transfer.
+           */
+          hosted_instructions_url?: string | null;
+
+          /**
            * A string identifying this payment. Instruct your customer to include this code in the reference or memo field of their bank transfer.
            */
           reference: string | null;

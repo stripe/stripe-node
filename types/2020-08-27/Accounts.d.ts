@@ -162,6 +162,11 @@ declare module 'stripe' {
         acss_debit_payments?: Capabilities.AcssDebitPayments;
 
         /**
+         * The status of the Affirm capability of the account, or whether the account can directly process Affirm charges.
+         */
+        affirm_payments?: Capabilities.AffirmPayments;
+
+        /**
          * The status of the Afterpay Clearpay capability of the account, or whether the account can directly process Afterpay Clearpay charges.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
@@ -252,6 +257,11 @@ declare module 'stripe' {
         legacy_payments?: Capabilities.LegacyPayments;
 
         /**
+         * The status of the link_payments capability of the account, or whether the account can directly process Link charges.
+         */
+        link_payments?: Capabilities.LinkPayments;
+
+        /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -305,6 +315,8 @@ declare module 'stripe' {
       namespace Capabilities {
         type AcssDebitPayments = 'active' | 'inactive' | 'pending';
 
+        type AffirmPayments = 'active' | 'inactive' | 'pending';
+
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
 
         type AuBecsDebitPayments = 'active' | 'inactive' | 'pending';
@@ -340,6 +352,8 @@ declare module 'stripe' {
         type KonbiniPayments = 'active' | 'inactive' | 'pending';
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
+
+        type LinkPayments = 'active' | 'inactive' | 'pending';
 
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
@@ -1204,6 +1218,11 @@ declare module 'stripe' {
         acss_debit_payments?: Capabilities.AcssDebitPayments;
 
         /**
+         * The affirm_payments capability.
+         */
+        affirm_payments?: Capabilities.AffirmPayments;
+
+        /**
          * The afterpay_clearpay_payments capability.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
@@ -1294,6 +1313,11 @@ declare module 'stripe' {
         legacy_payments?: Capabilities.LegacyPayments;
 
         /**
+         * The link_payments capability.
+         */
+        link_payments?: Capabilities.LinkPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -1346,6 +1370,13 @@ declare module 'stripe' {
 
       namespace Capabilities {
         interface AcssDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AffirmPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1472,6 +1503,13 @@ declare module 'stripe' {
         }
 
         interface LegacyPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface LinkPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1882,6 +1920,11 @@ declare module 'stripe' {
          * The government-issued ID number of the individual, as appropriate for the representative's country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
          */
         id_number?: string;
+
+        /**
+         * The government-issued secondary ID number of the individual, as appropriate for the representative's country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
+         */
+        id_number_secondary?: string;
 
         /**
          * The individual's last name.
@@ -2343,6 +2386,11 @@ declare module 'stripe' {
         acss_debit_payments?: Capabilities.AcssDebitPayments;
 
         /**
+         * The affirm_payments capability.
+         */
+        affirm_payments?: Capabilities.AffirmPayments;
+
+        /**
          * The afterpay_clearpay_payments capability.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
@@ -2433,6 +2481,11 @@ declare module 'stripe' {
         legacy_payments?: Capabilities.LegacyPayments;
 
         /**
+         * The link_payments capability.
+         */
+        link_payments?: Capabilities.LinkPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -2485,6 +2538,13 @@ declare module 'stripe' {
 
       namespace Capabilities {
         interface AcssDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AffirmPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2611,6 +2671,13 @@ declare module 'stripe' {
         }
 
         interface LegacyPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface LinkPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2984,6 +3051,11 @@ declare module 'stripe' {
          * The government-issued ID number of the individual, as appropriate for the representative's country. (Examples are a Social Security Number in the U.S., or a Social Insurance Number in Canada). Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
          */
         id_number?: string;
+
+        /**
+         * The government-issued secondary ID number of the individual, as appropriate for the representative's country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
+         */
+        id_number_secondary?: string;
 
         /**
          * The individual's last name.
