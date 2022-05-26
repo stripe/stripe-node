@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 9.5.0 - 2022-05-26
+* [#1434](https://github.com/stripe/stripe-node/pull/1434) API Updates
+  * Add support for `affirm_payments` and `link_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for `id_number_secondary` on `AccountCreateParams.individual`, `AccountUpdateParams.individual`, `PersonCreateParams`, `PersonUpdateParams`, `TokenCreateParams.account.individual`, and `TokenCreateParams.person`
+  * Add support for new value `affirm` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for `hosted_instructions_url` on `PaymentIntent.next_action.display_bank_transfer_instructions`
+  * Add support for `id_number_secondary_provided` on `Person`
+  * Add support for `card_issuing` on `TreasuryFinancialAccountCreateParams.features`, `TreasuryFinancialAccountUpdateFeaturesParams`, and `TreasuryFinancialAccountUpdateParams.features`
+  
+* [#1432](https://github.com/stripe/stripe-node/pull/1432) docs: Update HttpClient documentation to remove experimental status.
+
 ## 9.4.0 - 2022-05-23
 * [#1431](https://github.com/stripe/stripe-node/pull/1431) API Updates
   * Add support for `treasury` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
