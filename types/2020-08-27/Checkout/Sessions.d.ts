@@ -1770,6 +1770,7 @@ declare module 'stripe' {
 
         type PaymentMethodType =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'

@@ -1107,7 +1107,11 @@ declare module 'stripe' {
           id: string,
           params?: ConfigurationUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Configuration>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Configuration | Stripe.Terminal.DeletedConfiguration
+          >
+        >;
 
         /**
          * Returns a list of Configuration objects.
