@@ -697,7 +697,7 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
                */
               type: string | null;
             }
@@ -879,7 +879,7 @@ declare module 'stripe' {
       account_tax_ids?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
+       * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
        */
       application_fee_amount?: number;
 
@@ -1139,7 +1139,7 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
                */
               type?: string;
             }
@@ -1235,7 +1235,7 @@ declare module 'stripe' {
       account_tax_ids?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * A fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
+       * A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
        */
       application_fee_amount?: number;
 
@@ -1480,7 +1480,7 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
                */
               type?: string;
             }
@@ -1910,7 +1910,7 @@ declare module 'stripe' {
 
       interface InvoiceItem {
         /**
-         * The integer amount in %s of previewed invoice item.
+         * The integer amount in cents (or local equivalent) of previewed invoice item.
          */
         amount?: number;
 
@@ -1970,12 +1970,12 @@ declare module 'stripe' {
         tax_rates?: Stripe.Emptyable<Array<string>>;
 
         /**
-         * The integer unit amount in %s of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
+         * The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
          */
         unit_amount?: number;
 
         /**
-         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
       }
@@ -2022,12 +2022,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -2123,12 +2123,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }

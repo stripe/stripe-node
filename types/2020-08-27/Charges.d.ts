@@ -173,6 +173,11 @@ declare module 'stripe' {
       payment_method_details: Charge.PaymentMethodDetails | null;
 
       /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: Charge.RadarOptions;
+
+      /**
        * This is the email address that the receipt for this charge was sent to.
        */
       receipt_email: string | null;
@@ -1450,7 +1455,7 @@ declare module 'stripe' {
 
           /**
            * Preferred language of the Klarna authorization page that the customer is redirected to.
-           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, or `en-FR`
+           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, `en-FR`, `en-AU`, or `en-NZ`
            */
           preferred_locale: string | null;
         }
@@ -1715,6 +1720,13 @@ declare module 'stripe' {
         }
       }
 
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
+      }
+
       interface Shipping {
         address?: Stripe.Address;
 
@@ -1763,7 +1775,7 @@ declare module 'stripe' {
       application_fee?: number;
 
       /**
-       * A fee in %s that will be applied to the charge and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the `Stripe-Account` header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees).
+       * A fee in cents (or local equivalent) that will be applied to the charge and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the `Stripe-Account` header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/connect/direct-charges#collecting-fees).
        */
       application_fee_amount?: number;
 
@@ -1803,6 +1815,11 @@ declare module 'stripe' {
        * The Stripe account ID for which these funds are intended. Automatically set if you use the `destination` parameter. For details, see [Creating Separate Charges and Transfers](https://stripe.com/docs/connect/charges-transfers#on-behalf-of).
        */
       on_behalf_of?: string;
+
+      /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: ChargeCreateParams.RadarOptions;
 
       /**
        * The email address to which this charge's [receipt](https://stripe.com/docs/dashboard/receipts) will be sent. The receipt will not be sent until the charge is paid, and no receipts will be sent for test mode charges. If this charge is for a [Customer](https://stripe.com/docs/api/customers/object), the email address specified here will override the customer's email address. If `receipt_email` is specified for a charge in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
@@ -1851,6 +1868,13 @@ declare module 'stripe' {
          * The amount to transfer to the destination account without creating an `Application Fee` object. Cannot be combined with the `application_fee` parameter. Must be less than or equal to the charge amount.
          */
         amount?: number;
+      }
+
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
       }
 
       interface Shipping {

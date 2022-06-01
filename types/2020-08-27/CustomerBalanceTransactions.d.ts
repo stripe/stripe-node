@@ -87,7 +87,7 @@ declare module 'stripe' {
 
     interface CustomerBalanceTransactionCreateParams {
       /**
-       * The integer amount in **%s** to apply to the customer's credit balance.
+       * The integer amount in **cents (or local equivalent)** to apply to the customer's credit balance.
        */
       amount: number;
 

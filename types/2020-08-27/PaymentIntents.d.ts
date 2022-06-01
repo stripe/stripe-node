@@ -465,7 +465,7 @@ declare module 'stripe' {
           /**
            * A link to a hosted page that guides your customer through completing the transfer.
            */
-          hosted_instructions_url?: string | null;
+          hosted_instructions_url: string | null;
 
           /**
            * A string identifying this payment. Instruct your customer to include this code in the reference or memo field of their bank transfer.
@@ -501,7 +501,42 @@ declare module 'stripe' {
 
             type Type = 'iban' | 'zengin';
 
-            interface Zengin {}
+            interface Zengin {
+              /**
+               * The account holder name
+               */
+              account_holder_name: string | null;
+
+              /**
+               * The account number
+               */
+              account_number: string | null;
+
+              /**
+               * The bank account type. In Japan, this can only be `futsu` or `toza`.
+               */
+              account_type: string | null;
+
+              /**
+               * The bank code of the account
+               */
+              bank_code: string | null;
+
+              /**
+               * The bank name of the account
+               */
+              bank_name: string | null;
+
+              /**
+               * The branch code of the account
+               */
+              branch_code: string | null;
+
+              /**
+               * The branch name of the account
+               */
+              branch_name: string | null;
+            }
           }
         }
 
@@ -1167,25 +1202,9 @@ declare module 'stripe' {
             requested_address_types?: Array<'zengin'>;
 
             /**
-             * The bank transfer type that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
              */
-            type: BankTransfer.Type | null;
-          }
-
-          namespace BankTransfer {
-            type Type =
-              | 'eu_bank_account'
-              | 'eu_bank_transfer'
-              | 'gb_bank_account'
-              | 'gb_bank_transfer'
-              | 'id_bank_account'
-              | 'id_bank_transfer'
-              | 'jp_bank_account'
-              | 'jp_bank_transfer'
-              | 'mx_bank_account'
-              | 'mx_bank_transfer'
-              | 'us_bank_account'
-              | 'us_bank_transfer';
+            type: 'jp_bank_transfer' | null;
           }
         }
 
@@ -1669,6 +1688,11 @@ declare module 'stripe' {
       payment_method_types?: Array<string>;
 
       /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: PaymentIntentCreateParams.RadarOptions;
+
+      /**
        * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
       receipt_email?: string;
@@ -1897,6 +1921,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -2187,6 +2216,13 @@ declare module 'stripe' {
         }
 
         interface Paynow {}
+
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
 
         interface SepaDebit {
           /**
@@ -2823,7 +2859,7 @@ declare module 'stripe' {
             requested_address_types?: Array<'zengin'>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
              */
             type: 'jp_bank_transfer';
           }
@@ -2933,6 +2969,7 @@ declare module 'stripe' {
             | 'de-AT'
             | 'de-DE'
             | 'en-AT'
+            | 'en-AU'
             | 'en-BE'
             | 'en-DE'
             | 'en-DK'
@@ -2944,6 +2981,7 @@ declare module 'stripe' {
             | 'en-IT'
             | 'en-NL'
             | 'en-NO'
+            | 'en-NZ'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -3218,6 +3256,13 @@ declare module 'stripe' {
         namespace WechatPay {
           type Client = 'android' | 'ios' | 'web';
         }
+      }
+
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
       }
 
       type SetupFutureUsage = 'off_session' | 'on_session';
@@ -3513,6 +3558,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -3801,6 +3851,13 @@ declare module 'stripe' {
         }
 
         interface Paynow {}
+
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
 
         interface SepaDebit {
           /**
@@ -4437,7 +4494,7 @@ declare module 'stripe' {
             requested_address_types?: Array<'zengin'>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
              */
             type: 'jp_bank_transfer';
           }
@@ -4547,6 +4604,7 @@ declare module 'stripe' {
             | 'de-AT'
             | 'de-DE'
             | 'en-AT'
+            | 'en-AU'
             | 'en-BE'
             | 'en-DE'
             | 'en-DK'
@@ -4558,6 +4616,7 @@ declare module 'stripe' {
             | 'en-IT'
             | 'en-NL'
             | 'en-NO'
+            | 'en-NZ'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -5025,6 +5084,11 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
       /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: PaymentIntentConfirmParams.RadarOptions;
+
+      /**
        * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
       receipt_email?: Stripe.Emptyable<string>;
@@ -5262,6 +5326,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -5552,6 +5621,13 @@ declare module 'stripe' {
         }
 
         interface Paynow {}
+
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
 
         interface SepaDebit {
           /**
@@ -6188,7 +6264,7 @@ declare module 'stripe' {
             requested_address_types?: Array<'zengin'>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
              */
             type: 'jp_bank_transfer';
           }
@@ -6298,6 +6374,7 @@ declare module 'stripe' {
             | 'de-AT'
             | 'de-DE'
             | 'en-AT'
+            | 'en-AU'
             | 'en-BE'
             | 'en-DE'
             | 'en-DK'
@@ -6309,6 +6386,7 @@ declare module 'stripe' {
             | 'en-IT'
             | 'en-NL'
             | 'en-NO'
+            | 'en-NZ'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -6583,6 +6661,13 @@ declare module 'stripe' {
         namespace WechatPay {
           type Client = 'android' | 'ios' | 'web';
         }
+      }
+
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
       }
 
       type SetupFutureUsage = 'off_session' | 'on_session';
