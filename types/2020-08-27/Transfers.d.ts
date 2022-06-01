@@ -104,7 +104,7 @@ declare module 'stripe' {
       destination: string;
 
       /**
-       * A positive integer in %s representing how much to transfer.
+       * A positive integer in cents (or local equivalent) representing how much to transfer.
        */
       amount?: number;
 

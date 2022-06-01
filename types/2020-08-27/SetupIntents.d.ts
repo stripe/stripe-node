@@ -370,6 +370,11 @@ declare module 'stripe' {
           mandate_options: Card.MandateOptions | null;
 
           /**
+           * Selected network to process this SetupIntent on. Depends on the available networks of the card attached to the setup intent. Can be only set confirm-time.
+           */
+          network: Card.Network | null;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
@@ -433,6 +438,18 @@ declare module 'stripe' {
 
             type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
           }
+
+          type Network =
+            | 'amex'
+            | 'cartes_bancaires'
+            | 'diners'
+            | 'discover'
+            | 'interac'
+            | 'jcb'
+            | 'mastercard'
+            | 'unionpay'
+            | 'unknown'
+            | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
@@ -737,6 +754,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -1025,6 +1047,13 @@ declare module 'stripe' {
         }
 
         interface Paynow {}
+
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
 
         interface SepaDebit {
           /**
@@ -1536,6 +1565,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -1824,6 +1858,13 @@ declare module 'stripe' {
         }
 
         interface Paynow {}
+
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
 
         interface SepaDebit {
           /**
@@ -2426,6 +2467,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -2714,6 +2760,13 @@ declare module 'stripe' {
         }
 
         interface Paynow {}
+
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
 
         interface SepaDebit {
           /**

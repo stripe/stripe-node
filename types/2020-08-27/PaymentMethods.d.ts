@@ -84,6 +84,11 @@ declare module 'stripe' {
 
       paynow?: PaymentMethod.Paynow;
 
+      /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: PaymentMethod.RadarOptions;
+
       sepa_debit?: PaymentMethod.SepaDebit;
 
       sofort?: PaymentMethod.Sofort;
@@ -606,6 +611,13 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
+      }
+
       interface SepaDebit {
         /**
          * Bank code of bank associated with the bank account.
@@ -890,6 +902,11 @@ declare module 'stripe' {
        * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
        */
       paynow?: PaymentMethodCreateParams.Paynow;
+
+      /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: PaymentMethodCreateParams.RadarOptions;
 
       /**
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -1206,6 +1223,13 @@ declare module 'stripe' {
       }
 
       interface Paynow {}
+
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
+      }
 
       interface SepaDebit {
         /**

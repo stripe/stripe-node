@@ -49,7 +49,7 @@ declare module 'stripe' {
 
     interface FeeRefundCreateParams {
       /**
-       * A positive integer, in _%s_, representing how much of this fee to refund. Can refund only up to the remaining unrefunded amount of the fee.
+       * A positive integer, in _cents (or local equivalent)_, representing how much of this fee to refund. Can refund only up to the remaining unrefunded amount of the fee.
        */
       amount?: number;
 

@@ -381,7 +381,7 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
                */
               type: string | null;
             }
@@ -705,12 +705,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -808,12 +808,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -992,7 +992,7 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
                */
               type?: string;
             }
@@ -1295,12 +1295,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -1415,12 +1415,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -1615,7 +1615,7 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
                */
               type?: string;
             }
