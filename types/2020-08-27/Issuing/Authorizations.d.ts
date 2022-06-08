@@ -104,6 +104,11 @@ declare module 'stripe' {
          */
         transactions: Array<Stripe.Issuing.Transaction>;
 
+        /**
+         * [Treasury](https://stripe.com/docs/api/treasury) details related to this authorization if it was created on a [FinancialAccount](https://stripe.com/docs/api/treasury/financial_accounts).
+         */
+        treasury?: Authorization.Treasury | null;
+
         verification_data: Authorization.VerificationData;
 
         /**
@@ -277,6 +282,23 @@ declare module 'stripe' {
         }
 
         type Status = 'closed' | 'pending' | 'reversed';
+
+        interface Treasury {
+          /**
+           * The array of [ReceivedCredits](https://stripe.com/docs/api/treasury/received_credits) associated with this authorization
+           */
+          received_credits: Array<string>;
+
+          /**
+           * The array of [ReceivedDebits](https://stripe.com/docs/api/treasury/received_debits) associated with this authorization
+           */
+          received_debits: Array<string>;
+
+          /**
+           * The Treasury [Transaction](https://stripe.com/docs/api/treasury/transactions) associated with this authorization
+           */
+          transaction: string | null;
+        }
 
         interface VerificationData {
           /**

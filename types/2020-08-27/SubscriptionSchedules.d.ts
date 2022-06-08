@@ -255,6 +255,11 @@ declare module 'stripe' {
         items: Array<Phase.Item>;
 
         /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered. Updating the underlying subscription's `metadata` directly will not affect the current phase's `metadata`.
+         */
+        metadata: Stripe.Metadata | null;
+
+        /**
          * If the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
          */
         proration_behavior: Phase.ProrationBehavior;
@@ -585,7 +590,12 @@ declare module 'stripe' {
         iterations?: number;
 
         /**
-         * If a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`.
          */
         proration_behavior?: Phase.ProrationBehavior;
 
@@ -646,12 +656,12 @@ declare module 'stripe' {
             tax_behavior?: PriceData.TaxBehavior;
 
             /**
-             * A positive integer in %s (or 0 for a free price) representing how much to charge.
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
              */
             unit_amount?: number;
 
             /**
-             * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
             unit_amount_decimal?: string;
           }
@@ -753,12 +763,12 @@ declare module 'stripe' {
             tax_behavior?: PriceData.TaxBehavior;
 
             /**
-             * A positive integer in %s (or 0 for a free price) representing how much to charge.
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
              */
             unit_amount?: number;
 
             /**
-             * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
             unit_amount_decimal?: string;
           }
@@ -837,7 +847,7 @@ declare module 'stripe' {
       phases?: Array<SubscriptionScheduleUpdateParams.Phase>;
 
       /**
-       * If the update changes the current phase, indicates if the changes should be prorated. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`.
+       * If the update changes the current phase, indicates whether the changes should be prorated. The default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionScheduleUpdateParams.ProrationBehavior;
     }
@@ -1000,7 +1010,12 @@ declare module 'stripe' {
         iterations?: number;
 
         /**
-         * If a subscription schedule will create prorations when transitioning to this phase. Possible values are `create_prorations` or `none`, and the default value is `create_prorations`. See [Prorations](https://stripe.com/docs/billing/subscriptions/prorations).
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`.
          */
         proration_behavior?: Phase.ProrationBehavior;
 
@@ -1066,12 +1081,12 @@ declare module 'stripe' {
             tax_behavior?: PriceData.TaxBehavior;
 
             /**
-             * A positive integer in %s (or 0 for a free price) representing how much to charge.
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
              */
             unit_amount?: number;
 
             /**
-             * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
             unit_amount_decimal?: string;
           }
@@ -1173,12 +1188,12 @@ declare module 'stripe' {
             tax_behavior?: PriceData.TaxBehavior;
 
             /**
-             * A positive integer in %s (or 0 for a free price) representing how much to charge.
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
              */
             unit_amount?: number;
 
             /**
-             * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
              */
             unit_amount_decimal?: string;
           }

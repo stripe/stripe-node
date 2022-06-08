@@ -346,17 +346,22 @@ declare module 'stripe' {
           id_number?: string;
 
           /**
+           * The government-issued secondary ID number of the individual, as appropriate for the representative's country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
+           */
+          id_number_secondary?: string;
+
+          /**
            * The individual's last name.
            */
           last_name?: string;
 
           /**
-           * The Kana varation of the individual's last name (Japan only).
+           * The Kana variation of the individual's last name (Japan only).
            */
           last_name_kana?: string;
 
           /**
-           * The Kanji varation of the individual's last name (Japan only).
+           * The Kanji variation of the individual's last name (Japan only).
            */
           last_name_kanji?: string;
 
@@ -601,6 +606,11 @@ declare module 'stripe' {
          * The person's ID number, as appropriate for their country. For example, a social security number in the U.S., social insurance number in Canada, etc. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
          */
         id_number?: string;
+
+        /**
+         * The person's secondary ID number, as appropriate for their country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token provided by Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
+         */
+        id_number_secondary?: string;
 
         /**
          * The person's last name.

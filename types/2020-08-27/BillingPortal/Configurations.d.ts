@@ -322,7 +322,7 @@ declare module 'stripe' {
             /**
              * The types of customer updates that are supported. When empty, customers are not updateable.
              */
-            allowed_updates: Stripe.Emptyable<
+            allowed_updates?: Stripe.Emptyable<
               Array<CustomerUpdate.AllowedUpdate>
             >;
 

@@ -18,6 +18,8 @@ declare module 'stripe' {
 
       acss_debit?: PaymentMethod.AcssDebit;
 
+      affirm?: PaymentMethod.Affirm;
+
       afterpay_clearpay?: PaymentMethod.AfterpayClearpay;
 
       alipay?: PaymentMethod.Alipay;
@@ -64,6 +66,8 @@ declare module 'stripe' {
 
       konbini?: PaymentMethod.Konbini;
 
+      link?: PaymentMethod.Link;
+
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
@@ -79,6 +83,11 @@ declare module 'stripe' {
       p24?: PaymentMethod.P24;
 
       paynow?: PaymentMethod.Paynow;
+
+      /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: PaymentMethod.RadarOptions;
 
       sepa_debit?: PaymentMethod.SepaDebit;
 
@@ -121,6 +130,8 @@ declare module 'stripe' {
          */
         transit_number: string | null;
       }
+
+      interface Affirm {}
 
       interface AfterpayClearpay {}
 
@@ -548,6 +559,18 @@ declare module 'stripe' {
 
       interface Konbini {}
 
+      interface Link {
+        /**
+         * Account owner's email address.
+         */
+        email: string | null;
+
+        /**
+         * Token used for persistent Link logins.
+         */
+        persistent_token?: string;
+      }
+
       interface Oxxo {}
 
       interface P24 {
@@ -587,6 +610,13 @@ declare module 'stripe' {
       }
 
       interface Paynow {}
+
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
+      }
 
       interface SepaDebit {
         /**
@@ -643,6 +673,7 @@ declare module 'stripe' {
 
       type Type =
         | 'acss_debit'
+        | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -660,6 +691,7 @@ declare module 'stripe' {
         | 'interac_present'
         | 'klarna'
         | 'konbini'
+        | 'link'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -685,6 +717,11 @@ declare module 'stripe' {
         bank_name: string | null;
 
         /**
+         * The ID of the Financial Connections Account used to create the payment method.
+         */
+        financial_connections_account?: string | null;
+
+        /**
          * Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
          */
         fingerprint: string | null;
@@ -693,6 +730,11 @@ declare module 'stripe' {
          * Last four digits of the bank account number.
          */
         last4: string | null;
+
+        /**
+         * Contains information about US bank account networks that can be used.
+         */
+        networks: UsBankAccount.Networks | null;
 
         /**
          * Routing number of the bank account.
@@ -704,6 +746,22 @@ declare module 'stripe' {
         type AccountHolderType = 'company' | 'individual';
 
         type AccountType = 'checking' | 'savings';
+
+        interface Networks {
+          /**
+           * The preferred network.
+           */
+          preferred: string | null;
+
+          /**
+           * All supported networks.
+           */
+          supported: Array<Networks.Supported>;
+        }
+
+        namespace Networks {
+          type Supported = 'ach' | 'us_domestic_wire';
+        }
       }
 
       interface WechatPay {}
@@ -714,6 +772,11 @@ declare module 'stripe' {
        * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
        */
       acss_debit?: PaymentMethodCreateParams.AcssDebit;
+
+      /**
+       * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+       */
+      affirm?: PaymentMethodCreateParams.Affirm;
 
       /**
        * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
@@ -811,6 +874,11 @@ declare module 'stripe' {
       konbini?: PaymentMethodCreateParams.Konbini;
 
       /**
+       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+       */
+      link?: PaymentMethodCreateParams.Link;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
@@ -834,6 +902,11 @@ declare module 'stripe' {
        * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
        */
       paynow?: PaymentMethodCreateParams.Paynow;
+
+      /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: PaymentMethodCreateParams.RadarOptions;
 
       /**
        * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -878,6 +951,8 @@ declare module 'stripe' {
          */
         transit_number: string;
       }
+
+      interface Affirm {}
 
       interface AfterpayClearpay {}
 
@@ -1107,6 +1182,8 @@ declare module 'stripe' {
 
       interface Konbini {}
 
+      interface Link {}
+
       interface Oxxo {}
 
       interface P24 {
@@ -1147,6 +1224,13 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
+      }
+
       interface SepaDebit {
         /**
          * IBAN of the bank account.
@@ -1167,6 +1251,7 @@ declare module 'stripe' {
 
       type Type =
         | 'acss_debit'
+        | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -1182,6 +1267,7 @@ declare module 'stripe' {
         | 'ideal'
         | 'klarna'
         | 'konbini'
+        | 'link'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -1205,6 +1291,11 @@ declare module 'stripe' {
          * Account type: checkings or savings. Defaults to checking if omitted.
          */
         account_type?: UsBankAccount.AccountType;
+
+        /**
+         * The ID of a Financial Connections Account to use as a payment method.
+         */
+        financial_connections_account?: string;
 
         /**
          * Routing number of the bank account.
@@ -1237,6 +1328,11 @@ declare module 'stripe' {
       /**
        * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
        */
+      affirm?: PaymentMethodUpdateParams.Affirm;
+
+      /**
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
+       */
       au_becs_debit?: PaymentMethodUpdateParams.AuBecsDebit;
 
       /**
@@ -1260,6 +1356,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+       */
+      link?: PaymentMethodUpdateParams.Link;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -1277,6 +1378,8 @@ declare module 'stripe' {
 
     namespace PaymentMethodUpdateParams {
       interface AcssDebit {}
+
+      interface Affirm {}
 
       interface AuBecsDebit {}
 
@@ -1322,6 +1425,8 @@ declare module 'stripe' {
         exp_year?: number;
       }
 
+      interface Link {}
+
       interface SepaDebit {}
 
       interface UsBankAccount {
@@ -1356,6 +1461,7 @@ declare module 'stripe' {
     namespace PaymentMethodListParams {
       type Type =
         | 'acss_debit'
+        | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -1372,6 +1478,7 @@ declare module 'stripe' {
         | 'ideal'
         | 'klarna'
         | 'konbini'
+        | 'link'
         | 'oxxo'
         | 'p24'
         | 'paynow'

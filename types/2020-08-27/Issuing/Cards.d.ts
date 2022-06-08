@@ -60,6 +60,11 @@ declare module 'stripe' {
         exp_year: number;
 
         /**
+         * The financial account this card is attached to.
+         */
+        financial_account?: string | null;
+
+        /**
          * The last 4 digits of the card number.
          */
         last4: string;
@@ -1179,6 +1184,8 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        financial_account?: string;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.

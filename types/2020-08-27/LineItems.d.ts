@@ -17,9 +17,19 @@ declare module 'stripe' {
       object: 'item';
 
       /**
+       * Total discount amount applied. If no discounts were applied, defaults to 0.
+       */
+      amount_discount?: number;
+
+      /**
        * Total before any discounts or taxes are applied.
        */
       amount_subtotal: number;
+
+      /**
+       * Total tax amount applied. If no tax was applied, defaults to 0.
+       */
+      amount_tax?: number;
 
       /**
        * Total after discounts and taxes.
@@ -47,6 +57,13 @@ declare module 'stripe' {
       price: Stripe.Price | null;
 
       /**
+       * The ID of the product for this line item.
+       *
+       * This will always be the same as `price.product`.
+       */
+      product?: string | Stripe.Product | Stripe.DeletedProduct;
+
+      /**
        * The quantity of products being purchased.
        */
       quantity: number | null;
@@ -65,9 +82,8 @@ declare module 'stripe' {
         amount: number;
 
         /**
-         * A discount represents the actual application of a coupon to a particular
-         * customer. It contains information about when the discount began and when it
-         * will end.
+         * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+         * It contains information about when the discount began, when it will end, and what it is applied to.
          *
          * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
          */

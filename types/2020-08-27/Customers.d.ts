@@ -185,7 +185,7 @@ declare module 'stripe' {
         /**
          * Recipient name.
          */
-        name?: string | null;
+        name?: string;
 
         /**
          * Recipient phone (including extension).
@@ -278,7 +278,7 @@ declare module 'stripe' {
       address?: Stripe.Emptyable<Stripe.AddressParam>;
 
       /**
-       * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
+       * An integer amount in cents (or local equivalent) that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
        */
       balance?: number;
 
@@ -543,7 +543,7 @@ declare module 'stripe' {
       address?: Stripe.Emptyable<Stripe.AddressParam>;
 
       /**
-       * An integer amount in %s that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
+       * An integer amount in cents (or local equivalent) that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
        */
       balance?: number;
 
@@ -810,6 +810,7 @@ declare module 'stripe' {
     namespace CustomerListPaymentMethodsParams {
       type Type =
         | 'acss_debit'
+        | 'affirm'
         | 'afterpay_clearpay'
         | 'alipay'
         | 'au_becs_debit'
@@ -826,6 +827,7 @@ declare module 'stripe' {
         | 'ideal'
         | 'klarna'
         | 'konbini'
+        | 'link'
         | 'oxxo'
         | 'p24'
         | 'paynow'
@@ -833,6 +835,13 @@ declare module 'stripe' {
         | 'sofort'
         | 'us_bank_account'
         | 'wechat_pay';
+    }
+
+    interface CustomerRetrievePaymentMethodParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     interface CustomerSearchParams {
@@ -947,6 +956,21 @@ declare module 'stripe' {
         params: CustomerListPaymentMethodsParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.PaymentMethod>;
+
+      /**
+       * Retrieves a PaymentMethod object.
+       */
+      retrievePaymentMethod(
+        customerId: string,
+        id: string,
+        params?: CustomerRetrievePaymentMethodParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
+      retrievePaymentMethod(
+        customerId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
        * Search for customers you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).

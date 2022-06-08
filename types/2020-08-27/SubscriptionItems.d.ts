@@ -150,11 +150,7 @@ declare module 'stripe' {
       price_data?: SubscriptionItemCreateParams.PriceData;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
-       *
-       * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
-       *
-       * Prorations can be disabled by passing `none`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
        */
       proration_behavior?: SubscriptionItemCreateParams.ProrationBehavior;
 
@@ -210,12 +206,12 @@ declare module 'stripe' {
         tax_behavior?: PriceData.TaxBehavior;
 
         /**
-         * A positive integer in %s (or 0 for a free price) representing how much to charge.
+         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
          */
         unit_amount?: number;
 
         /**
-         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
       }
@@ -300,11 +296,7 @@ declare module 'stripe' {
       price_data?: SubscriptionItemUpdateParams.PriceData;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
-       *
-       * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
-       *
-       * Prorations can be disabled by passing `none`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
        */
       proration_behavior?: SubscriptionItemUpdateParams.ProrationBehavior;
 
@@ -360,12 +352,12 @@ declare module 'stripe' {
         tax_behavior?: PriceData.TaxBehavior;
 
         /**
-         * A positive integer in %s (or 0 for a free price) representing how much to charge.
+         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
          */
         unit_amount?: number;
 
         /**
-         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
       }
@@ -412,11 +404,7 @@ declare module 'stripe' {
       clear_usage?: boolean;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
-       *
-       * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
-       *
-       * Prorations can be disabled by passing `none`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
        */
       proration_behavior?: SubscriptionItemDeleteParams.ProrationBehavior;
 
