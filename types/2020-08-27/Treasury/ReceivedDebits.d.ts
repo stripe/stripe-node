@@ -161,7 +161,7 @@ declare module 'stripe' {
           inbound_transfer: string | null;
 
           /**
-           * Set if the ReceivedCredit was created due to an [Issuing Authorization](https://stripe.com/docs/api#issuing_authorizations) object.
+           * Set if the ReceivedDebit was created due to an [Issuing Authorization](https://stripe.com/docs/api#issuing_authorizations) object.
            */
           issuing_authorization: string | null;
 

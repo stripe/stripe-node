@@ -33,7 +33,7 @@ declare module 'stripe' {
       automatic_tax: Subscription.AutomaticTax;
 
       /**
-       * Determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
+       * Determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. The timestamp is in UTC format.
        */
       billing_cycle_anchor: number;
 
@@ -381,7 +381,7 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
                */
               type: string | null;
             }
@@ -458,7 +458,7 @@ declare module 'stripe' {
 
       interface PendingUpdate {
         /**
-         * If the update is applied, determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
+         * If the update is applied, determines the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. The timestamp is in UTC format.
          */
         billing_cycle_anchor: number | null;
 
@@ -532,7 +532,7 @@ declare module 'stripe' {
       backdate_start_date?: number;
 
       /**
-       * A future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices.
+       * A future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. The timestamp is in UTC format.
        */
       billing_cycle_anchor?: number;
 
@@ -637,9 +637,7 @@ declare module 'stripe' {
       promotion_code?: string;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) resulting from the `billing_cycle_anchor`. Valid values are `create_prorations` or `none`.
-       *
-       * Passing `create_prorations` will cause proration invoice items to be created when applicable. Prorations can be disabled by passing `none`. If no value is passed, the default is `create_prorations`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
        */
       proration_behavior?: SubscriptionCreateParams.ProrationBehavior;
 
@@ -705,12 +703,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -808,12 +806,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -992,7 +990,7 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
                */
               type?: string;
             }
@@ -1015,7 +1013,7 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
-               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
             }
@@ -1113,7 +1111,7 @@ declare module 'stripe' {
       automatic_tax?: SubscriptionUpdateParams.AutomaticTax;
 
       /**
-       * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+       * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
        */
       billing_cycle_anchor?: SubscriptionUpdateParams.BillingCycleAnchor;
 
@@ -1225,11 +1223,7 @@ declare module 'stripe' {
       promotion_code?: string;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
-       *
-       * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
-       *
-       * Prorations can be disabled by passing `none`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
        */
       proration_behavior?: SubscriptionUpdateParams.ProrationBehavior;
 
@@ -1295,12 +1289,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -1415,12 +1409,12 @@ declare module 'stripe' {
           tax_behavior?: PriceData.TaxBehavior;
 
           /**
-           * A positive integer in %s (or 0 for a free price) representing how much to charge.
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
            */
           unit_amount?: number;
 
           /**
-           * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
            */
           unit_amount_decimal?: string;
         }
@@ -1615,7 +1609,7 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
                */
               type?: string;
             }
@@ -1638,7 +1632,7 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
-               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
             }

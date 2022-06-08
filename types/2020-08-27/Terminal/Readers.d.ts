@@ -30,7 +30,7 @@ declare module 'stripe' {
         device_sw_version: string | null;
 
         /**
-         * Type of reader, one of `bbpos_wisepad3`, `stripe_m2`, `bbpos_chipper2x`, `bbpos_wisepos_e`, or `verifone_P400`.
+         * Type of reader, one of `bbpos_wisepad3`, `stripe_m2`, `bbpos_chipper2x`, `bbpos_wisepos_e`, `verifone_P400`, or `simulated_wisepos_e`.
          */
         device_type: Reader.DeviceType;
 
@@ -192,6 +192,7 @@ declare module 'stripe' {
           | 'bbpos_chipper2x'
           | 'bbpos_wisepad3'
           | 'bbpos_wisepos_e'
+          | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'verifone_P400';
       }
@@ -294,6 +295,7 @@ declare module 'stripe' {
           | 'bbpos_chipper2x'
           | 'bbpos_wisepad3'
           | 'bbpos_wisepos_e'
+          | 'simulated_wisepos_e'
           | 'stripe_m2'
           | 'verifone_P400';
 

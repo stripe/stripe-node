@@ -62,7 +62,7 @@ declare module 'stripe' {
        *
        * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
        */
-      flow_directions?: Array<SetupIntent.FlowDirection> | null;
+      flow_directions: Array<SetupIntent.FlowDirection> | null;
 
       /**
        * The error encountered in the previous SetupIntent confirmation.
@@ -370,6 +370,11 @@ declare module 'stripe' {
           mandate_options: Card.MandateOptions | null;
 
           /**
+           * Selected network to process this SetupIntent on. Depends on the available networks of the card attached to the setup intent. Can be only set confirm-time.
+           */
+          network: Card.Network | null;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
@@ -434,6 +439,18 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
           }
 
+          type Network =
+            | 'amex'
+            | 'cartes_bancaires'
+            | 'diners'
+            | 'discover'
+            | 'interac'
+            | 'jcb'
+            | 'mastercard'
+            | 'unionpay'
+            | 'unknown'
+            | 'visa';
+
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
         }
 
@@ -497,6 +514,13 @@ declare module 'stripe' {
 
     interface SetupIntentCreateParams {
       /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
+      /**
        * Set to `true` to attempt to confirm this SetupIntent immediately. This parameter defaults to `false`. If the payment method attached is a card, a return_url may be provided in case additional authentication is required.
        */
       confirm?: boolean;
@@ -517,6 +541,13 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Indicates the directions of money movement for which this payment method is intended to be used.
+       *
+       * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
+       */
+      flow_directions?: Array<SetupIntentCreateParams.FlowDirection>;
 
       /**
        * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
@@ -571,6 +602,8 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentCreateParams {
+      type FlowDirection = 'inbound' | 'outbound';
+
       interface MandateData {
         /**
          * This hash contains details about the customer acceptance of the Mandate.
@@ -737,6 +770,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -1026,6 +1064,13 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -1313,7 +1358,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
 
@@ -1375,6 +1420,13 @@ declare module 'stripe' {
 
     interface SetupIntentUpdateParams {
       /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
+      /**
        * ID of the Customer this SetupIntent belongs to, if one exists.
        *
        * If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
@@ -1390,6 +1442,13 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Indicates the directions of money movement for which this payment method is intended to be used.
+       *
+       * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
+       */
+      flow_directions?: Array<SetupIntentUpdateParams.FlowDirection>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1419,6 +1478,8 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentUpdateParams {
+      type FlowDirection = 'inbound' | 'outbound';
+
       interface PaymentMethodData {
         /**
          * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
@@ -1536,6 +1597,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -1825,6 +1891,13 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -2112,7 +2185,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
 
@@ -2147,6 +2220,13 @@ declare module 'stripe' {
     }
 
     interface SetupIntentListParams extends PaginationParams {
+      /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
       /**
        * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
        */
@@ -2426,6 +2506,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
+
+        /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
          */
         sepa_debit?: PaymentMethodData.SepaDebit;
@@ -2715,6 +2800,13 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -3002,7 +3094,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
 

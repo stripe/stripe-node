@@ -206,7 +206,7 @@ declare module 'stripe' {
       aggregate_usage?: PlanCreateParams.AggregateUsage;
 
       /**
-       * A positive integer in %s (or 0 for a free plan) representing how much to charge on a recurring basis.
+       * A positive integer in cents (or local equivalent) (or 0 for a free plan) representing how much to charge on a recurring basis.
        */
       amount?: number;
 
@@ -336,7 +336,7 @@ declare module 'stripe' {
         unit_amount?: number;
 
         /**
-         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
 
