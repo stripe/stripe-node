@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 9.8.0-beta.1 - 2022-06-08
+* [#1442](https://github.com/stripe/stripe-node/pull/1442) API Updates
+  * Add support for `network_details` method on resource `ReceivedCredits`/`ReceivedDebits`
+
 ## 9.7.0 - 2022-06-08
 * [#1441](https://github.com/stripe/stripe-node/pull/1441) API Updates
   * Add support for `affirm`, `bancontact`, `card`, `ideal`, `p24`, and `sofort` on `Checkout.Session.payment_method_options` and `CheckoutSessionCreateParams.payment_method_options`
