@@ -51,6 +51,8 @@ declare module 'stripe' {
 
           chf?: Tipping.Chf;
 
+          czk?: Tipping.Czk;
+
           dkk?: Tipping.Dkk;
 
           eur?: Tipping.Eur;
@@ -108,6 +110,23 @@ declare module 'stripe' {
           }
 
           interface Chf {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts: Array<number> | null;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages: Array<number> | null;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Czk {
             /**
              * Fixed amounts displayed when collecting a tip
              */
@@ -370,6 +389,11 @@ declare module 'stripe' {
           chf?: Tipping.Chf;
 
           /**
+           * Tipping configuration for CZK
+           */
+          czk?: Tipping.Czk;
+
+          /**
            * Tipping configuration for DKK
            */
           dkk?: Tipping.Dkk;
@@ -456,6 +480,23 @@ declare module 'stripe' {
           }
 
           interface Chf {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number>;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number>;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Czk {
             /**
              * Fixed amounts displayed when collecting a tip
              */
@@ -709,6 +750,11 @@ declare module 'stripe' {
           chf?: Tipping.Chf;
 
           /**
+           * Tipping configuration for CZK
+           */
+          czk?: Tipping.Czk;
+
+          /**
            * Tipping configuration for DKK
            */
           dkk?: Tipping.Dkk;
@@ -795,6 +841,23 @@ declare module 'stripe' {
           }
 
           interface Chf {
+            /**
+             * Fixed amounts displayed when collecting a tip
+             */
+            fixed_amounts?: Array<number>;
+
+            /**
+             * Percentages displayed when collecting a tip
+             */
+            percentages?: Array<number>;
+
+            /**
+             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+             */
+            smart_tip_threshold?: number;
+          }
+
+          interface Czk {
             /**
              * Fixed amounts displayed when collecting a tip
              */
@@ -1044,7 +1107,11 @@ declare module 'stripe' {
           id: string,
           params?: ConfigurationUpdateParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Configuration>>;
+        ): Promise<
+          Stripe.Response<
+            Stripe.Terminal.Configuration | Stripe.Terminal.DeletedConfiguration
+          >
+        >;
 
         /**
          * Returns a list of Configuration objects.

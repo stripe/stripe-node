@@ -162,7 +162,7 @@ declare module 'stripe' {
       customer: string;
 
       /**
-       * The integer amount in %s of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
+       * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. Passing in a negative `amount` will reduce the `amount_due` on the invoice.
        */
       amount?: number;
 
@@ -232,12 +232,12 @@ declare module 'stripe' {
       tax_rates?: Array<string>;
 
       /**
-       * The integer unit amount in %s of the charge to be applied to the upcoming invoice. This `unit_amount` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount` will reduce the `amount_due` on the invoice.
+       * The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This `unit_amount` will be multiplied by the quantity to get the full amount. Passing in a negative `unit_amount` will reduce the `amount_due` on the invoice.
        */
       unit_amount?: number;
 
       /**
-       * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+       * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
        */
       unit_amount_decimal?: string;
     }
@@ -284,12 +284,12 @@ declare module 'stripe' {
         tax_behavior?: PriceData.TaxBehavior;
 
         /**
-         * A positive integer in %s (or 0 for a free price) representing how much to charge.
+         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
          */
         unit_amount?: number;
 
         /**
-         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
       }
@@ -308,7 +308,7 @@ declare module 'stripe' {
 
     interface InvoiceItemUpdateParams {
       /**
-       * The integer amount in %s of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
+       * The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. If you want to apply a credit to the customer's account, pass a negative amount.
        */
       amount?: number;
 
@@ -363,12 +363,12 @@ declare module 'stripe' {
       tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * The integer unit amount in %s of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
+       * The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
        */
       unit_amount?: number;
 
       /**
-       * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+       * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
        */
       unit_amount_decimal?: string;
     }
@@ -415,12 +415,12 @@ declare module 'stripe' {
         tax_behavior?: PriceData.TaxBehavior;
 
         /**
-         * A positive integer in %s (or 0 for a free price) representing how much to charge.
+         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
          */
         unit_amount?: number;
 
         /**
-         * Same as `unit_amount`, but accepts a decimal value in %s with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
          */
         unit_amount_decimal?: string;
       }

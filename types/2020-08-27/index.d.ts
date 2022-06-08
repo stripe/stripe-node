@@ -13,6 +13,7 @@
 ///<reference path='./ApplePayDomains.d.ts' />
 ///<reference path='./ApplicationFees.d.ts' />
 ///<reference path='./Applications.d.ts' />
+///<reference path='./Apps/Secrets.d.ts' />
 ///<reference path='./Balance.d.ts' />
 ///<reference path='./BalanceTransactions.d.ts' />
 ///<reference path='./BankAccounts.d.ts' />
@@ -42,6 +43,10 @@
 ///<reference path='./FeeRefunds.d.ts' />
 ///<reference path='./FileLinks.d.ts' />
 ///<reference path='./Files.d.ts' />
+///<reference path='./FinancialConnections/AccountOwners.d.ts' />
+///<reference path='./FinancialConnections/AccountOwnerships.d.ts' />
+///<reference path='./FinancialConnections/Accounts.d.ts' />
+///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
@@ -58,8 +63,6 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
-///<reference path='./OrderItems.d.ts' />
-///<reference path='./OrderReturns.d.ts' />
 ///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
@@ -103,10 +106,26 @@
 ///<reference path='./TestHelpers/Refunds.d.ts' />
 ///<reference path='./TestHelpers/Terminal/Readers.d.ts' />
 ///<reference path='./TestHelpers/TestClocks.d.ts' />
+///<reference path='./TestHelpers/Treasury/InboundTransfers.d.ts' />
+///<reference path='./TestHelpers/Treasury/OutboundPayments.d.ts' />
+///<reference path='./TestHelpers/Treasury/OutboundTransfers.d.ts' />
+///<reference path='./TestHelpers/Treasury/ReceivedCredits.d.ts' />
+///<reference path='./TestHelpers/Treasury/ReceivedDebits.d.ts' />
 ///<reference path='./Tokens.d.ts' />
 ///<reference path='./Topups.d.ts' />
 ///<reference path='./TransferReversals.d.ts' />
 ///<reference path='./Transfers.d.ts' />
+///<reference path='./Treasury/CreditReversals.d.ts' />
+///<reference path='./Treasury/DebitReversals.d.ts' />
+///<reference path='./Treasury/FinancialAccountFeatures.d.ts' />
+///<reference path='./Treasury/FinancialAccounts.d.ts' />
+///<reference path='./Treasury/InboundTransfers.d.ts' />
+///<reference path='./Treasury/OutboundPayments.d.ts' />
+///<reference path='./Treasury/OutboundTransfers.d.ts' />
+///<reference path='./Treasury/ReceivedCredits.d.ts' />
+///<reference path='./Treasury/ReceivedDebits.d.ts' />
+///<reference path='./Treasury/TransactionEntries.d.ts' />
+///<reference path='./Treasury/Transactions.d.ts' />
 ///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./UsageRecords.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
@@ -149,7 +168,6 @@ declare module 'stripe' {
     issuerFraudRecords: Stripe.IssuerFraudRecordsResource;
     mandates: Stripe.MandatesResource;
     orders: Stripe.OrdersResource;
-    orderReturns: Stripe.OrderReturnsResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethods: Stripe.PaymentMethodsResource;
@@ -181,12 +199,19 @@ declare module 'stripe' {
     /**
      * Namespaced Resources
      */
+    apps: {
+      secrets: Stripe.Apps.SecretsResource;
+    };
     billingPortal: {
       configurations: Stripe.BillingPortal.ConfigurationsResource;
       sessions: Stripe.BillingPortal.SessionsResource;
     };
     checkout: {
       sessions: Stripe.Checkout.SessionsResource;
+    };
+    financialConnections: {
+      accounts: Stripe.FinancialConnections.AccountsResource;
+      sessions: Stripe.FinancialConnections.SessionsResource;
     };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;
@@ -223,6 +248,25 @@ declare module 'stripe' {
       terminal: {
         readers: Stripe.TestHelpers.Terminal.ReadersResource;
       };
+      treasury: {
+        inboundTransfers: Stripe.TestHelpers.Treasury.InboundTransfersResource;
+        outboundPayments: Stripe.TestHelpers.Treasury.OutboundPaymentsResource;
+        outboundTransfers: Stripe.TestHelpers.Treasury.OutboundTransfersResource;
+        receivedCredits: Stripe.TestHelpers.Treasury.ReceivedCreditsResource;
+        receivedDebits: Stripe.TestHelpers.Treasury.ReceivedDebitsResource;
+      };
+    };
+    treasury: {
+      creditReversals: Stripe.Treasury.CreditReversalsResource;
+      debitReversals: Stripe.Treasury.DebitReversalsResource;
+      financialAccounts: Stripe.Treasury.FinancialAccountsResource;
+      inboundTransfers: Stripe.Treasury.InboundTransfersResource;
+      outboundPayments: Stripe.Treasury.OutboundPaymentsResource;
+      outboundTransfers: Stripe.Treasury.OutboundTransfersResource;
+      receivedCredits: Stripe.Treasury.ReceivedCreditsResource;
+      receivedDebits: Stripe.Treasury.ReceivedDebitsResource;
+      transactions: Stripe.Treasury.TransactionsResource;
+      transactionEntries: Stripe.Treasury.TransactionEntriesResource;
     };
     /**
      * API Errors

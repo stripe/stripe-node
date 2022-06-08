@@ -162,6 +162,11 @@ declare module 'stripe' {
         acss_debit_payments?: Capabilities.AcssDebitPayments;
 
         /**
+         * The status of the Affirm capability of the account, or whether the account can directly process Affirm charges.
+         */
+        affirm_payments?: Capabilities.AffirmPayments;
+
+        /**
          * The status of the Afterpay Clearpay capability of the account, or whether the account can directly process Afterpay Clearpay charges.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
@@ -252,6 +257,11 @@ declare module 'stripe' {
         legacy_payments?: Capabilities.LegacyPayments;
 
         /**
+         * The status of the link_payments capability of the account, or whether the account can directly process Link charges.
+         */
+        link_payments?: Capabilities.LinkPayments;
+
+        /**
          * The status of the OXXO payments capability of the account, or whether the account can directly process OXXO charges.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -292,6 +302,11 @@ declare module 'stripe' {
         transfers?: Capabilities.Transfers;
 
         /**
+         * The status of the banking capability, or whether the account can have bank accounts.
+         */
+        treasury?: Capabilities.Treasury;
+
+        /**
          * The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -299,6 +314,8 @@ declare module 'stripe' {
 
       namespace Capabilities {
         type AcssDebitPayments = 'active' | 'inactive' | 'pending';
+
+        type AffirmPayments = 'active' | 'inactive' | 'pending';
 
         type AfterpayClearpayPayments = 'active' | 'inactive' | 'pending';
 
@@ -336,6 +353,8 @@ declare module 'stripe' {
 
         type LegacyPayments = 'active' | 'inactive' | 'pending';
 
+        type LinkPayments = 'active' | 'inactive' | 'pending';
+
         type OxxoPayments = 'active' | 'inactive' | 'pending';
 
         type P24Payments = 'active' | 'inactive' | 'pending';
@@ -351,6 +370,8 @@ declare module 'stripe' {
         type TaxReportingUs1099Misc = 'active' | 'inactive' | 'pending';
 
         type Transfers = 'active' | 'inactive' | 'pending';
+
+        type Treasury = 'active' | 'inactive' | 'pending';
 
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
       }
@@ -1078,7 +1099,7 @@ declare module 'stripe' {
       company?: AccountCreateParams.Company;
 
       /**
-       * The country in which the account holder resides, or in which the business is legally established. This should be an ISO 3166-1 alpha-2 country code. For example, if you are in the United States and the business for which you're creating an account is legally represented in Canada, you would use `CA` as the country for the account being created.
+       * The country in which the account holder resides, or in which the business is legally established. This should be an ISO 3166-1 alpha-2 country code. For example, if you are in the United States and the business for which you're creating an account is legally represented in Canada, you would use `CA` as the country for the account being created. Available countries include [Stripe's global markets](https://stripe.com/global) as well as countries where [cross-border payouts](https://stripe.com/docs/connect/cross-border-payouts) are supported.
        */
       country?: string;
 
@@ -1197,6 +1218,11 @@ declare module 'stripe' {
         acss_debit_payments?: Capabilities.AcssDebitPayments;
 
         /**
+         * The affirm_payments capability.
+         */
+        affirm_payments?: Capabilities.AffirmPayments;
+
+        /**
          * The afterpay_clearpay_payments capability.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
@@ -1287,6 +1313,11 @@ declare module 'stripe' {
         legacy_payments?: Capabilities.LegacyPayments;
 
         /**
+         * The link_payments capability.
+         */
+        link_payments?: Capabilities.LinkPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -1327,6 +1358,11 @@ declare module 'stripe' {
         transfers?: Capabilities.Transfers;
 
         /**
+         * The treasury capability.
+         */
+        treasury?: Capabilities.Treasury;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -1334,6 +1370,13 @@ declare module 'stripe' {
 
       namespace Capabilities {
         interface AcssDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AffirmPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1466,6 +1509,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface LinkPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface OxxoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -1516,6 +1566,13 @@ declare module 'stripe' {
         }
 
         interface Transfers {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface Treasury {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1865,17 +1922,22 @@ declare module 'stripe' {
         id_number?: string;
 
         /**
+         * The government-issued secondary ID number of the individual, as appropriate for the representative's country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
+         */
+        id_number_secondary?: string;
+
+        /**
          * The individual's last name.
          */
         last_name?: string;
 
         /**
-         * The Kana varation of the individual's last name (Japan only).
+         * The Kana variation of the individual's last name (Japan only).
          */
         last_name_kana?: string;
 
         /**
-         * The Kanji varation of the individual's last name (Japan only).
+         * The Kanji variation of the individual's last name (Japan only).
          */
         last_name_kanji?: string;
 
@@ -2324,6 +2386,11 @@ declare module 'stripe' {
         acss_debit_payments?: Capabilities.AcssDebitPayments;
 
         /**
+         * The affirm_payments capability.
+         */
+        affirm_payments?: Capabilities.AffirmPayments;
+
+        /**
          * The afterpay_clearpay_payments capability.
          */
         afterpay_clearpay_payments?: Capabilities.AfterpayClearpayPayments;
@@ -2414,6 +2481,11 @@ declare module 'stripe' {
         legacy_payments?: Capabilities.LegacyPayments;
 
         /**
+         * The link_payments capability.
+         */
+        link_payments?: Capabilities.LinkPayments;
+
+        /**
          * The oxxo_payments capability.
          */
         oxxo_payments?: Capabilities.OxxoPayments;
@@ -2454,6 +2526,11 @@ declare module 'stripe' {
         transfers?: Capabilities.Transfers;
 
         /**
+         * The treasury capability.
+         */
+        treasury?: Capabilities.Treasury;
+
+        /**
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
@@ -2461,6 +2538,13 @@ declare module 'stripe' {
 
       namespace Capabilities {
         interface AcssDebitPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface AffirmPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2593,6 +2677,13 @@ declare module 'stripe' {
           requested?: boolean;
         }
 
+        interface LinkPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
         interface OxxoPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
@@ -2643,6 +2734,13 @@ declare module 'stripe' {
         }
 
         interface Transfers {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface Treasury {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2955,17 +3053,22 @@ declare module 'stripe' {
         id_number?: string;
 
         /**
+         * The government-issued secondary ID number of the individual, as appropriate for the representative's country, will be used for enhanced verification checks. In Thailand, this would be the laser code found on the back of an ID card. Instead of the number itself, you can also provide a [PII token created with Stripe.js](https://stripe.com/docs/js/tokens_sources/create_token?type=pii).
+         */
+        id_number_secondary?: string;
+
+        /**
          * The individual's last name.
          */
         last_name?: string;
 
         /**
-         * The Kana varation of the individual's last name (Japan only).
+         * The Kana variation of the individual's last name (Japan only).
          */
         last_name_kana?: string;
 
         /**
-         * The Kanji varation of the individual's last name (Japan only).
+         * The Kanji variation of the individual's last name (Japan only).
          */
         last_name_kanji?: string;
 

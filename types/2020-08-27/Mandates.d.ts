@@ -91,6 +91,8 @@ declare module 'stripe' {
 
         card?: PaymentMethodDetails.Card;
 
+        link?: PaymentMethodDetails.Link;
+
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
         /**
@@ -161,6 +163,8 @@ declare module 'stripe' {
         }
 
         interface Card {}
+
+        interface Link {}
 
         interface SepaDebit {
           /**

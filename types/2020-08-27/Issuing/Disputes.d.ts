@@ -58,6 +58,11 @@ declare module 'stripe' {
          * The transaction being disputed.
          */
         transaction: string | Stripe.Issuing.Transaction;
+
+        /**
+         * [Treasury](https://stripe.com/docs/api/treasury) details related to this dispute if it was created on a [FinancialAccount](/docs/api/treasury/financial_accounts
+         */
+        treasury?: Dispute.Treasury | null;
       }
 
       namespace Dispute {
@@ -316,6 +321,18 @@ declare module 'stripe' {
         }
 
         type Status = 'expired' | 'lost' | 'submitted' | 'unsubmitted' | 'won';
+
+        interface Treasury {
+          /**
+           * The Treasury [DebitReversal](https://stripe.com/docs/api/treasury/debit_reversals) representing this Issuing dispute
+           */
+          debit_reversal: string | null;
+
+          /**
+           * The Treasury [ReceivedDebit](https://stripe.com/docs/api/treasury/received_debits) that is being disputed.
+           */
+          received_debit: string;
+        }
       }
 
       interface DisputeCreateParams {
@@ -338,6 +355,11 @@ declare module 'stripe' {
          * The ID of the issuing transaction to create a dispute for. For transaction on Treasury FinancialAccounts, use `treasury.received_debit`.
          */
         transaction?: string;
+
+        /**
+         * Params for disputes related to Treasury FinancialAccounts
+         */
+        treasury?: DisputeCreateParams.Treasury;
       }
 
       namespace DisputeCreateParams {
@@ -620,6 +642,13 @@ declare module 'stripe' {
              */
             received_at?: Stripe.Emptyable<number>;
           }
+        }
+
+        interface Treasury {
+          /**
+           * The ID of the ReceivedDebit to initiate an Issuings dispute for.
+           */
+          received_debit: string;
         }
       }
 

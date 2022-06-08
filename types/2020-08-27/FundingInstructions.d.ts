@@ -70,7 +70,42 @@ declare module 'stripe' {
 
           type Type = 'iban' | 'zengin';
 
-          interface Zengin {}
+          interface Zengin {
+            /**
+             * The account holder name
+             */
+            account_holder_name: string | null;
+
+            /**
+             * The account number
+             */
+            account_number: string | null;
+
+            /**
+             * The bank account type. In Japan, this can only be `futsu` or `toza`.
+             */
+            account_type: string | null;
+
+            /**
+             * The bank code of the account
+             */
+            bank_code: string | null;
+
+            /**
+             * The bank name of the account
+             */
+            bank_name: string | null;
+
+            /**
+             * The branch code of the account
+             */
+            branch_code: string | null;
+
+            /**
+             * The branch name of the account
+             */
+            branch_name: string | null;
+          }
         }
 
         type Type = 'eu_bank_transfer' | 'jp_bank_transfer';

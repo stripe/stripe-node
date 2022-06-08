@@ -22,6 +22,13 @@ declare module 'stripe' {
       application: string | Stripe.Application | null;
 
       /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
+      /**
        * Reason for cancellation of this SetupIntent, one of `abandoned`, `requested_by_customer`, or `duplicate`.
        */
       cancellation_reason: SetupIntent.CancellationReason | null;
@@ -49,6 +56,13 @@ declare module 'stripe' {
        * An arbitrary string attached to the object. Often useful for displaying to users.
        */
       description: string | null;
+
+      /**
+       * Indicates the directions of money movement for which this payment method is intended to be used.
+       *
+       * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
+       */
+      flow_directions: Array<SetupIntent.FlowDirection> | null;
 
       /**
        * The error encountered in the previous SetupIntent confirmation.
@@ -123,6 +137,8 @@ declare module 'stripe' {
         | 'abandoned'
         | 'duplicate'
         | 'requested_by_customer';
+
+      type FlowDirection = 'inbound' | 'outbound';
 
       interface LastSetupError {
         /**
@@ -284,6 +300,8 @@ declare module 'stripe' {
 
         card?: PaymentMethodOptions.Card;
 
+        link?: PaymentMethodOptions.Link;
+
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
         us_bank_account?: PaymentMethodOptions.UsBankAccount;
@@ -352,6 +370,11 @@ declare module 'stripe' {
           mandate_options: Card.MandateOptions | null;
 
           /**
+           * Selected network to process this SetupIntent on. Depends on the available networks of the card attached to the setup intent. Can be only set confirm-time.
+           */
+          network: Card.Network | null;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure: Card.RequestThreeDSecure | null;
@@ -416,7 +439,26 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
           }
 
+          type Network =
+            | 'amex'
+            | 'cartes_bancaires'
+            | 'diners'
+            | 'discover'
+            | 'interac'
+            | 'jcb'
+            | 'mastercard'
+            | 'unionpay'
+            | 'unknown'
+            | 'visa';
+
           type RequestThreeDSecure = 'any' | 'automatic' | 'challenge_only';
+        }
+
+        interface Link {
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token: string | null;
         }
 
         interface SepaDebit {
@@ -428,6 +470,8 @@ declare module 'stripe' {
         }
 
         interface UsBankAccount {
+          financial_connections?: UsBankAccount.FinancialConnections;
+
           /**
            * Bank account verification method.
            */
@@ -435,6 +479,26 @@ declare module 'stripe' {
         }
 
         namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. The `payment_method` permission must be included.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
@@ -449,6 +513,13 @@ declare module 'stripe' {
     }
 
     interface SetupIntentCreateParams {
+      /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
       /**
        * Set to `true` to attempt to confirm this SetupIntent immediately. This parameter defaults to `false`. If the payment method attached is a card, a return_url may be provided in case additional authentication is required.
        */
@@ -470,6 +541,13 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Indicates the directions of money movement for which this payment method is intended to be used.
+       *
+       * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
+       */
+      flow_directions?: Array<SetupIntentCreateParams.FlowDirection>;
 
       /**
        * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
@@ -524,6 +602,8 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentCreateParams {
+      type FlowDirection = 'inbound' | 'outbound';
+
       interface MandateData {
         /**
          * This hash contains details about the customer acceptance of the Mandate.
@@ -580,6 +660,11 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodData.AcssDebit;
 
         /**
+         * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+         */
+        affirm?: PaymentMethodData.Affirm;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -660,6 +745,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+         */
+        link?: PaymentMethodData.Link;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -678,6 +768,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -722,6 +817,8 @@ declare module 'stripe' {
            */
           transit_number: string;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {}
 
@@ -925,6 +1022,8 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface Link {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -965,6 +1064,13 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -985,6 +1091,7 @@ declare module 'stripe' {
 
         type Type =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -999,6 +1106,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -1022,6 +1130,11 @@ declare module 'stripe' {
            * Account type: checkings or savings. Defaults to checking if omitted.
            */
           account_type?: UsBankAccount.AccountType;
+
+          /**
+           * The ID of a Financial Connections Account to use as a payment method.
+           */
+          financial_connections_account?: string;
 
           /**
            * Routing number of the bank account.
@@ -1048,6 +1161,11 @@ declare module 'stripe' {
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
+
+        /**
+         * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+         */
+        link?: PaymentMethodOptions.Link;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -1202,6 +1320,13 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
+        interface Link {
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token?: string;
+        }
+
         interface SepaDebit {
           /**
            * Additional fields for Mandate creation
@@ -1215,12 +1340,53 @@ declare module 'stripe' {
 
         interface UsBankAccount {
           /**
+           * Additional fields for Financial Connections Session creation
+           */
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Additional fields for network related functions
+           */
+          networks?: UsBankAccount.Networks;
+
+          /**
            * Verification method for the intent
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
 
         namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          interface Networks {
+            /**
+             * Triggers validations to run across the selected networks
+             */
+            requested?: Array<Networks.Requested>;
+          }
+
+          namespace Networks {
+            type Requested = 'ach' | 'us_domestic_wire';
+          }
+
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
@@ -1254,6 +1420,13 @@ declare module 'stripe' {
 
     interface SetupIntentUpdateParams {
       /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
+      /**
        * ID of the Customer this SetupIntent belongs to, if one exists.
        *
        * If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
@@ -1269,6 +1442,13 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Indicates the directions of money movement for which this payment method is intended to be used.
+       *
+       * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
+       */
+      flow_directions?: Array<SetupIntentUpdateParams.FlowDirection>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1298,11 +1478,18 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentUpdateParams {
+      type FlowDirection = 'inbound' | 'outbound';
+
       interface PaymentMethodData {
         /**
          * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
          */
         acss_debit?: PaymentMethodData.AcssDebit;
+
+        /**
+         * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+         */
+        affirm?: PaymentMethodData.Affirm;
 
         /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
@@ -1385,6 +1572,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+         */
+        link?: PaymentMethodData.Link;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -1403,6 +1595,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -1447,6 +1644,8 @@ declare module 'stripe' {
            */
           transit_number: string;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {}
 
@@ -1650,6 +1849,8 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface Link {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -1690,6 +1891,13 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -1710,6 +1918,7 @@ declare module 'stripe' {
 
         type Type =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -1724,6 +1933,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -1747,6 +1957,11 @@ declare module 'stripe' {
            * Account type: checkings or savings. Defaults to checking if omitted.
            */
           account_type?: UsBankAccount.AccountType;
+
+          /**
+           * The ID of a Financial Connections Account to use as a payment method.
+           */
+          financial_connections_account?: string;
 
           /**
            * Routing number of the bank account.
@@ -1773,6 +1988,11 @@ declare module 'stripe' {
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
+
+        /**
+         * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+         */
+        link?: PaymentMethodOptions.Link;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -1927,6 +2147,13 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
+        interface Link {
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token?: string;
+        }
+
         interface SepaDebit {
           /**
            * Additional fields for Mandate creation
@@ -1940,18 +2167,66 @@ declare module 'stripe' {
 
         interface UsBankAccount {
           /**
+           * Additional fields for Financial Connections Session creation
+           */
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Additional fields for network related functions
+           */
+          networks?: UsBankAccount.Networks;
+
+          /**
            * Verification method for the intent
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
 
         namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          interface Networks {
+            /**
+             * Triggers validations to run across the selected networks
+             */
+            requested?: Array<Networks.Requested>;
+          }
+
+          namespace Networks {
+            type Requested = 'ach' | 'us_domestic_wire';
+          }
+
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }
     }
 
     interface SetupIntentListParams extends PaginationParams {
+      /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
       /**
        * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
        */
@@ -2121,6 +2396,11 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodData.AcssDebit;
 
         /**
+         * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+         */
+        affirm?: PaymentMethodData.Affirm;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -2201,6 +2481,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+         */
+        link?: PaymentMethodData.Link;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -2219,6 +2504,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -2263,6 +2553,8 @@ declare module 'stripe' {
            */
           transit_number: string;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {}
 
@@ -2466,6 +2758,8 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface Link {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -2506,6 +2800,13 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -2526,6 +2827,7 @@ declare module 'stripe' {
 
         type Type =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -2540,6 +2842,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -2563,6 +2866,11 @@ declare module 'stripe' {
            * Account type: checkings or savings. Defaults to checking if omitted.
            */
           account_type?: UsBankAccount.AccountType;
+
+          /**
+           * The ID of a Financial Connections Account to use as a payment method.
+           */
+          financial_connections_account?: string;
 
           /**
            * Routing number of the bank account.
@@ -2589,6 +2897,11 @@ declare module 'stripe' {
          * Configuration for any card setup attempted on this SetupIntent.
          */
         card?: PaymentMethodOptions.Card;
+
+        /**
+         * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+         */
+        link?: PaymentMethodOptions.Link;
 
         /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -2743,6 +3056,13 @@ declare module 'stripe' {
           type RequestThreeDSecure = 'any' | 'automatic';
         }
 
+        interface Link {
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token?: string;
+        }
+
         interface SepaDebit {
           /**
            * Additional fields for Mandate creation
@@ -2756,12 +3076,53 @@ declare module 'stripe' {
 
         interface UsBankAccount {
           /**
+           * Additional fields for Financial Connections Session creation
+           */
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Additional fields for network related functions
+           */
+          networks?: UsBankAccount.Networks;
+
+          /**
            * Verification method for the intent
            */
           verification_method?: UsBankAccount.VerificationMethod;
         }
 
         namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          interface Networks {
+            /**
+             * Triggers validations to run across the selected networks
+             */
+            requested?: Array<Networks.Requested>;
+          }
+
+          namespace Networks {
+            type Requested = 'ach' | 'us_domestic_wire';
+          }
+
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
         }
       }

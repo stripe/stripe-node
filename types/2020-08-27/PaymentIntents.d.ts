@@ -463,6 +463,11 @@ declare module 'stripe' {
           >;
 
           /**
+           * A link to a hosted page that guides your customer through completing the transfer.
+           */
+          hosted_instructions_url: string | null;
+
+          /**
            * A string identifying this payment. Instruct your customer to include this code in the reference or memo field of their bank transfer.
            */
           reference: string | null;
@@ -496,7 +501,42 @@ declare module 'stripe' {
 
             type Type = 'iban' | 'zengin';
 
-            interface Zengin {}
+            interface Zengin {
+              /**
+               * The account holder name
+               */
+              account_holder_name: string | null;
+
+              /**
+               * The account number
+               */
+              account_number: string | null;
+
+              /**
+               * The bank account type. In Japan, this can only be `futsu` or `toza`.
+               */
+              account_type: string | null;
+
+              /**
+               * The bank code of the account
+               */
+              bank_code: string | null;
+
+              /**
+               * The bank name of the account
+               */
+              bank_name: string | null;
+
+              /**
+               * The branch code of the account
+               */
+              branch_code: string | null;
+
+              /**
+               * The branch name of the account
+               */
+              branch_name: string | null;
+            }
           }
         }
 
@@ -727,6 +767,8 @@ declare module 'stripe' {
       interface PaymentMethodOptions {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
+        affirm?: PaymentMethodOptions.Affirm;
+
         afterpay_clearpay?: PaymentMethodOptions.AfterpayClearpay;
 
         alipay?: PaymentMethodOptions.Alipay;
@@ -760,6 +802,8 @@ declare module 'stripe' {
         klarna?: PaymentMethodOptions.Klarna;
 
         konbini?: PaymentMethodOptions.Konbini;
+
+        link?: PaymentMethodOptions.Link;
 
         oxxo?: PaymentMethodOptions.Oxxo;
 
@@ -827,6 +871,22 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface Affirm {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
         }
 
         interface AfterpayClearpay {
@@ -1142,25 +1202,9 @@ declare module 'stripe' {
             requested_address_types?: Array<'zengin'>;
 
             /**
-             * The bank transfer type that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
              */
-            type: BankTransfer.Type | null;
-          }
-
-          namespace BankTransfer {
-            type Type =
-              | 'eu_bank_account'
-              | 'eu_bank_transfer'
-              | 'gb_bank_account'
-              | 'gb_bank_transfer'
-              | 'id_bank_account'
-              | 'id_bank_transfer'
-              | 'jp_bank_account'
-              | 'jp_bank_transfer'
-              | 'mx_bank_account'
-              | 'mx_bank_transfer'
-              | 'us_bank_account'
-              | 'us_bank_transfer';
+            type: 'jp_bank_transfer' | null;
           }
         }
 
@@ -1277,6 +1321,31 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Link {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token: string | null;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Link.SetupFutureUsage;
+        }
+
+        namespace Link {
+          type SetupFutureUsage = 'none' | 'off_session';
+        }
+
         interface Oxxo {
           /**
            * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
@@ -1364,6 +1433,8 @@ declare module 'stripe' {
         }
 
         interface UsBankAccount {
+          financial_connections?: UsBankAccount.FinancialConnections;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -1380,6 +1451,26 @@ declare module 'stripe' {
         }
 
         namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. The `payment_method` permission must be included.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -1453,7 +1544,7 @@ declare module 'stripe' {
         /**
          * Recipient name.
          */
-        name?: string | null;
+        name?: string;
 
         /**
          * Recipient phone (including extension).
@@ -1592,9 +1683,14 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentCreateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. If this is not provided, defaults to ["card"].
+       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. If this is not provided, defaults to ["card"]. Use automatic_payment_methods to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Array<string>;
+
+      /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: PaymentIntentCreateParams.RadarOptions;
 
       /**
        * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
@@ -1717,6 +1813,11 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodData.AcssDebit;
 
         /**
+         * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+         */
+        affirm?: PaymentMethodData.Affirm;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -1797,6 +1898,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+         */
+        link?: PaymentMethodData.Link;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -1815,6 +1921,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -1859,6 +1970,8 @@ declare module 'stripe' {
            */
           transit_number: string;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {}
 
@@ -2062,6 +2175,8 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface Link {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -2102,6 +2217,13 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -2122,6 +2244,7 @@ declare module 'stripe' {
 
         type Type =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -2136,6 +2259,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -2161,6 +2285,11 @@ declare module 'stripe' {
           account_type?: UsBankAccount.AccountType;
 
           /**
+           * The ID of a Financial Connections Account to use as a payment method.
+           */
+          financial_connections_account?: string;
+
+          /**
            * Routing number of the bank account.
            */
           routing_number?: string;
@@ -2180,6 +2309,11 @@ declare module 'stripe' {
          * If this is a `acss_debit` PaymentMethod, this sub-hash contains details about the ACSS Debit payment method options.
          */
         acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
+
+        /**
+         * If this is an `affirm` PaymentMethod, this sub-hash contains details about the Affirm payment method options.
+         */
+        affirm?: Stripe.Emptyable<PaymentMethodOptions.Affirm>;
 
         /**
          * If this is a `afterpay_clearpay` PaymentMethod, this sub-hash contains details about the Afterpay Clearpay payment method options.
@@ -2269,6 +2403,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
          */
         konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+        /**
+         * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+         */
+        link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -2364,6 +2503,28 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface Affirm {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface AfterpayClearpay {
@@ -2698,7 +2859,7 @@ declare module 'stripe' {
             requested_address_types?: Array<'zengin'>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
              */
             type: 'jp_bank_transfer';
           }
@@ -2808,6 +2969,7 @@ declare module 'stripe' {
             | 'de-AT'
             | 'de-DE'
             | 'en-AT'
+            | 'en-AU'
             | 'en-BE'
             | 'en-DE'
             | 'en-DK'
@@ -2819,6 +2981,7 @@ declare module 'stripe' {
             | 'en-IT'
             | 'en-NL'
             | 'en-NO'
+            | 'en-NZ'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -2865,6 +3028,37 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Link {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token?: string;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Link.SetupFutureUsage>;
+        }
+
+        namespace Link {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Oxxo {
@@ -2973,6 +3167,16 @@ declare module 'stripe' {
 
         interface UsBankAccount {
           /**
+           * Additional fields for Financial Connections Session creation
+           */
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Additional fields for network related functions
+           */
+          networks?: UsBankAccount.Networks;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -2990,6 +3194,37 @@ declare module 'stripe' {
         }
 
         namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          interface Networks {
+            /**
+             * Triggers validations to run across the selected networks
+             */
+            requested?: Array<Networks.Requested>;
+          }
+
+          namespace Networks {
+            type Requested = 'ach' | 'us_domestic_wire';
+          }
+
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -3021,6 +3256,13 @@ declare module 'stripe' {
         namespace WechatPay {
           type Client = 'android' | 'ios' | 'web';
         }
+      }
+
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
       }
 
       type SetupFutureUsage = 'off_session' | 'on_session';
@@ -3150,7 +3392,7 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentUpdateParams.PaymentMethodOptions;
 
       /**
-       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use.
+       * The list of payment method types (e.g. card) that this PaymentIntent is allowed to use. Use automatic_payment_methods to manage payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Array<string>;
 
@@ -3204,6 +3446,11 @@ declare module 'stripe' {
          * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
          */
         acss_debit?: PaymentMethodData.AcssDebit;
+
+        /**
+         * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+         */
+        affirm?: PaymentMethodData.Affirm;
 
         /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
@@ -3286,6 +3533,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+         */
+        link?: PaymentMethodData.Link;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -3304,6 +3556,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -3348,6 +3605,8 @@ declare module 'stripe' {
            */
           transit_number: string;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {}
 
@@ -3551,6 +3810,8 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface Link {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -3591,6 +3852,13 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -3611,6 +3879,7 @@ declare module 'stripe' {
 
         type Type =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -3625,6 +3894,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -3650,6 +3920,11 @@ declare module 'stripe' {
           account_type?: UsBankAccount.AccountType;
 
           /**
+           * The ID of a Financial Connections Account to use as a payment method.
+           */
+          financial_connections_account?: string;
+
+          /**
            * Routing number of the bank account.
            */
           routing_number?: string;
@@ -3669,6 +3944,11 @@ declare module 'stripe' {
          * If this is a `acss_debit` PaymentMethod, this sub-hash contains details about the ACSS Debit payment method options.
          */
         acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
+
+        /**
+         * If this is an `affirm` PaymentMethod, this sub-hash contains details about the Affirm payment method options.
+         */
+        affirm?: Stripe.Emptyable<PaymentMethodOptions.Affirm>;
 
         /**
          * If this is a `afterpay_clearpay` PaymentMethod, this sub-hash contains details about the Afterpay Clearpay payment method options.
@@ -3758,6 +4038,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
          */
         konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+        /**
+         * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+         */
+        link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -3853,6 +4138,28 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface Affirm {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface AfterpayClearpay {
@@ -4187,7 +4494,7 @@ declare module 'stripe' {
             requested_address_types?: Array<'zengin'>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
              */
             type: 'jp_bank_transfer';
           }
@@ -4297,6 +4604,7 @@ declare module 'stripe' {
             | 'de-AT'
             | 'de-DE'
             | 'en-AT'
+            | 'en-AU'
             | 'en-BE'
             | 'en-DE'
             | 'en-DK'
@@ -4308,6 +4616,7 @@ declare module 'stripe' {
             | 'en-IT'
             | 'en-NL'
             | 'en-NO'
+            | 'en-NZ'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -4354,6 +4663,37 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Link {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token?: string;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Link.SetupFutureUsage>;
+        }
+
+        namespace Link {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Oxxo {
@@ -4462,6 +4802,16 @@ declare module 'stripe' {
 
         interface UsBankAccount {
           /**
+           * Additional fields for Financial Connections Session creation
+           */
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Additional fields for network related functions
+           */
+          networks?: UsBankAccount.Networks;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -4479,6 +4829,37 @@ declare module 'stripe' {
         }
 
         namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          interface Networks {
+            /**
+             * Triggers validations to run across the selected networks
+             */
+            requested?: Array<Networks.Requested>;
+          }
+
+          namespace Networks {
+            type Requested = 'ach' | 'us_domestic_wire';
+          }
+
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -4703,6 +5084,11 @@ declare module 'stripe' {
       payment_method_options?: PaymentIntentConfirmParams.PaymentMethodOptions;
 
       /**
+       * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+       */
+      radar_options?: PaymentIntentConfirmParams.RadarOptions;
+
+      /**
        * Email address that the receipt for the resulting payment will be sent to. If `receipt_email` is specified for a payment in live mode, a receipt will be sent regardless of your [email settings](https://dashboard.stripe.com/account/emails).
        */
       receipt_email?: Stripe.Emptyable<string>;
@@ -4832,6 +5218,11 @@ declare module 'stripe' {
         acss_debit?: PaymentMethodData.AcssDebit;
 
         /**
+         * If this is an `affirm` PaymentMethod, this hash contains details about the Affirm payment method.
+         */
+        affirm?: PaymentMethodData.Affirm;
+
+        /**
          * If this is an `AfterpayClearpay` PaymentMethod, this hash contains details about the AfterpayClearpay payment method.
          */
         afterpay_clearpay?: PaymentMethodData.AfterpayClearpay;
@@ -4912,6 +5303,11 @@ declare module 'stripe' {
         konbini?: PaymentMethodData.Konbini;
 
         /**
+         * If this is an `Link` PaymentMethod, this hash contains details about the Link payment method.
+         */
+        link?: PaymentMethodData.Link;
+
+        /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
@@ -4930,6 +5326,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
+         */
+        radar_options?: PaymentMethodData.RadarOptions;
 
         /**
          * If this is a `sepa_debit` PaymentMethod, this hash contains details about the SEPA debit bank account.
@@ -4974,6 +5375,8 @@ declare module 'stripe' {
            */
           transit_number: string;
         }
+
+        interface Affirm {}
 
         interface AfterpayClearpay {}
 
@@ -5177,6 +5580,8 @@ declare module 'stripe' {
 
         interface Konbini {}
 
+        interface Link {}
+
         interface Oxxo {}
 
         interface P24 {
@@ -5217,6 +5622,13 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface RadarOptions {
+          /**
+           * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+           */
+          session?: string;
+        }
+
         interface SepaDebit {
           /**
            * IBAN of the bank account.
@@ -5237,6 +5649,7 @@ declare module 'stripe' {
 
         type Type =
           | 'acss_debit'
+          | 'affirm'
           | 'afterpay_clearpay'
           | 'alipay'
           | 'au_becs_debit'
@@ -5251,6 +5664,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
@@ -5276,6 +5690,11 @@ declare module 'stripe' {
           account_type?: UsBankAccount.AccountType;
 
           /**
+           * The ID of a Financial Connections Account to use as a payment method.
+           */
+          financial_connections_account?: string;
+
+          /**
            * Routing number of the bank account.
            */
           routing_number?: string;
@@ -5295,6 +5714,11 @@ declare module 'stripe' {
          * If this is a `acss_debit` PaymentMethod, this sub-hash contains details about the ACSS Debit payment method options.
          */
         acss_debit?: Stripe.Emptyable<PaymentMethodOptions.AcssDebit>;
+
+        /**
+         * If this is an `affirm` PaymentMethod, this sub-hash contains details about the Affirm payment method options.
+         */
+        affirm?: Stripe.Emptyable<PaymentMethodOptions.Affirm>;
 
         /**
          * If this is a `afterpay_clearpay` PaymentMethod, this sub-hash contains details about the Afterpay Clearpay payment method options.
@@ -5384,6 +5808,11 @@ declare module 'stripe' {
          * If this is a `konbini` PaymentMethod, this sub-hash contains details about the Konbini payment method options.
          */
         konbini?: Stripe.Emptyable<PaymentMethodOptions.Konbini>;
+
+        /**
+         * If this is a `link` PaymentMethod, this sub-hash contains details about the Link payment method options.
+         */
+        link?: Stripe.Emptyable<PaymentMethodOptions.Link>;
 
         /**
          * If this is a `oxxo` PaymentMethod, this sub-hash contains details about the OXXO payment method options.
@@ -5479,6 +5908,28 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface Affirm {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface AfterpayClearpay {
@@ -5813,7 +6264,7 @@ declare module 'stripe' {
             requested_address_types?: Array<'zengin'>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
              */
             type: 'jp_bank_transfer';
           }
@@ -5923,6 +6374,7 @@ declare module 'stripe' {
             | 'de-AT'
             | 'de-DE'
             | 'en-AT'
+            | 'en-AU'
             | 'en-BE'
             | 'en-DE'
             | 'en-DK'
@@ -5934,6 +6386,7 @@ declare module 'stripe' {
             | 'en-IT'
             | 'en-NL'
             | 'en-NO'
+            | 'en-NZ'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -5980,6 +6433,37 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Link {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Token used for persistent Link logins.
+           */
+          persistent_token?: string;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Link.SetupFutureUsage>;
+        }
+
+        namespace Link {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Oxxo {
@@ -6088,6 +6572,16 @@ declare module 'stripe' {
 
         interface UsBankAccount {
           /**
+           * Additional fields for Financial Connections Session creation
+           */
+          financial_connections?: UsBankAccount.FinancialConnections;
+
+          /**
+           * Additional fields for network related functions
+           */
+          networks?: UsBankAccount.Networks;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -6105,6 +6599,37 @@ declare module 'stripe' {
         }
 
         namespace UsBankAccount {
+          interface FinancialConnections {
+            /**
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
+             */
+            permissions?: Array<FinancialConnections.Permission>;
+
+            /**
+             * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+             */
+            return_url?: string;
+          }
+
+          namespace FinancialConnections {
+            type Permission =
+              | 'balances'
+              | 'ownership'
+              | 'payment_method'
+              | 'transactions';
+          }
+
+          interface Networks {
+            /**
+             * Triggers validations to run across the selected networks
+             */
+            requested?: Array<Networks.Requested>;
+          }
+
+          namespace Networks {
+            type Requested = 'ach' | 'us_domestic_wire';
+          }
+
           type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
@@ -6136,6 +6661,13 @@ declare module 'stripe' {
         namespace WechatPay {
           type Client = 'android' | 'ios' | 'web';
         }
+      }
+
+      interface RadarOptions {
+        /**
+         * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
+         */
+        session?: string;
       }
 
       type SetupFutureUsage = 'off_session' | 'on_session';

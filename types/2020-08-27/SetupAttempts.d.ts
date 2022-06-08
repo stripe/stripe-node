@@ -22,6 +22,13 @@ declare module 'stripe' {
       application: string | Stripe.Application | null;
 
       /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -30,6 +37,13 @@ declare module 'stripe' {
        * The value of [customer](https://stripe.com/docs/api/setup_intents/object#setup_intent_object-customer) on the SetupIntent at the time of this confirmation.
        */
       customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+
+      /**
+       * Indicates the directions of money movement for which this payment method is intended to be used.
+       *
+       * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
+       */
+      flow_directions: Array<SetupAttempt.FlowDirection> | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -70,6 +84,8 @@ declare module 'stripe' {
     }
 
     namespace SetupAttempt {
+      type FlowDirection = 'inbound' | 'outbound';
+
       interface PaymentMethodDetails {
         acss_debit?: PaymentMethodDetails.AcssDebit;
 
@@ -86,6 +102,8 @@ declare module 'stripe' {
         card_present?: PaymentMethodDetails.CardPresent;
 
         ideal?: PaymentMethodDetails.Ideal;
+
+        link?: PaymentMethodDetails.Link;
 
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
@@ -282,6 +300,8 @@ declare module 'stripe' {
             | 'SNSBNL2A'
             | 'TRIONL2U';
         }
+
+        interface Link {}
 
         interface SepaDebit {}
 
