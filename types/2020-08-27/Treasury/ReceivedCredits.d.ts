@@ -62,6 +62,11 @@ declare module 'stripe' {
         network: ReceivedCredit.Network;
 
         /**
+         * Details specific to the money movement rails.
+         */
+        network_details?: ReceivedCredit.NetworkDetails | null;
+
+        /**
          * Status of the ReceivedCredit. ReceivedCredits are created either `succeeded` (approved) or `failed` (declined). If a ReceivedCredit is declined, the failure reason can be found in the `failure_code` field.
          */
         status: ReceivedCredit.Status;
@@ -224,6 +229,27 @@ declare module 'stripe' {
         }
 
         type Network = 'ach' | 'card' | 'stripe' | 'us_domestic_wire';
+
+        interface NetworkDetails {
+          /**
+           * Details about an ACH transaction.
+           */
+          ach?: NetworkDetails.Ach | null;
+
+          /**
+           * The type of flow that originated the ReceivedCredit.
+           */
+          type: 'ach';
+        }
+
+        namespace NetworkDetails {
+          interface Ach {
+            /**
+             * ACH Addenda record
+             */
+            addenda: string | null;
+          }
+        }
 
         type Status = 'failed' | 'succeeded';
       }
