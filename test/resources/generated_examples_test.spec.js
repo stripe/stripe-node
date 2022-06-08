@@ -877,6 +877,20 @@ describe('Apps.Secret', function() {
   });
 });
 
+describe('CashBalance', function() {
+  it('retrieveCashBalance method', async function() {
+    const cashBalance = await stripe.customers.retrieveCashBalance('cus_123');
+    expect(cashBalance).not.to.be.null;
+  });
+
+  it('updateCashBalance method', async function() {
+    const cashBalance = await stripe.customers.updateCashBalance('cus_123', {
+      settings: {reconciliation_mode: 'manual'},
+    });
+    expect(cashBalance).not.to.be.null;
+  });
+});
+
 describe('Charge', function() {
   it('create method', async function() {
     const charge = await stripe.charges.create({

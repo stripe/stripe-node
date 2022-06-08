@@ -449,6 +449,8 @@ declare module 'stripe' {
         interface PaymentMethodOptions {
           acss_debit?: PaymentMethodOptions.AcssDebit;
 
+          affirm?: PaymentMethodOptions.Affirm;
+
           afterpay_clearpay?: PaymentMethodOptions.AfterpayClearpay;
 
           alipay?: PaymentMethodOptions.Alipay;
@@ -457,7 +459,11 @@ declare module 'stripe' {
 
           bacs_debit?: PaymentMethodOptions.BacsDebit;
 
+          bancontact?: PaymentMethodOptions.Bancontact;
+
           boleto?: PaymentMethodOptions.Boleto;
+
+          card?: PaymentMethodOptions.Card;
 
           eps?: PaymentMethodOptions.Eps;
 
@@ -467,15 +473,21 @@ declare module 'stripe' {
 
           grabpay?: PaymentMethodOptions.Grabpay;
 
+          ideal?: PaymentMethodOptions.Ideal;
+
           klarna?: PaymentMethodOptions.Klarna;
 
           konbini?: PaymentMethodOptions.Konbini;
 
           oxxo?: PaymentMethodOptions.Oxxo;
 
+          p24?: PaymentMethodOptions.P24;
+
           paynow?: PaymentMethodOptions.Paynow;
 
           sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+          sofort?: PaymentMethodOptions.Sofort;
 
           us_bank_account?: PaymentMethodOptions.UsBankAccount;
         }
@@ -485,6 +497,15 @@ declare module 'stripe' {
             currency?: string;
 
             mandate_options?: AcssDebit.MandateOptions;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: AcssDebit.SetupFutureUsage;
 
             /**
              * Bank account verification method.
@@ -528,39 +549,200 @@ declare module 'stripe' {
               type TransactionType = 'business' | 'personal';
             }
 
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
 
-          interface AfterpayClearpay {}
+          interface Affirm {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
 
-          interface Alipay {}
+          interface AfterpayClearpay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
 
-          interface AuBecsDebit {}
+          interface Alipay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
 
-          interface BacsDebit {}
+          interface AuBecsDebit {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface BacsDebit {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: BacsDebit.SetupFutureUsage;
+          }
+
+          namespace BacsDebit {
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
+          interface Bancontact {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
 
           interface Boleto {
             /**
              * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.
              */
             expires_after_days: number;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: Boleto.SetupFutureUsage;
           }
 
-          interface Eps {}
+          namespace Boleto {
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
 
-          interface Fpx {}
+          interface Card {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: Card.SetupFutureUsage;
+          }
 
-          interface Giropay {}
+          namespace Card {
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
 
-          interface Grabpay {}
+          interface Eps {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
 
-          interface Klarna {}
+          interface Fpx {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Giropay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Grabpay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Ideal {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Klarna {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: Klarna.SetupFutureUsage;
+          }
+
+          namespace Klarna {
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
 
           interface Konbini {
             /**
              * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST.
              */
             expires_after_days: number | null;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
           }
 
           interface Oxxo {
@@ -568,14 +750,76 @@ declare module 'stripe' {
              * The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
              */
             expires_after_days: number;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
           }
 
-          interface Paynow {}
+          interface P24 {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
 
-          interface SepaDebit {}
+          interface Paynow {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface SepaDebit {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: SepaDebit.SetupFutureUsage;
+          }
+
+          namespace SepaDebit {
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
+          interface Sofort {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
 
           interface UsBankAccount {
             financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: UsBankAccount.SetupFutureUsage;
 
             /**
              * Bank account verification method.
@@ -603,6 +847,8 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
             }
+
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
             type VerificationMethod = 'automatic' | 'instant';
           }
@@ -1606,14 +1852,74 @@ declare module 'stripe' {
           acss_debit?: PaymentMethodOptions.AcssDebit;
 
           /**
+           * contains details about the Affirm payment method options.
+           */
+          affirm?: PaymentMethodOptions.Affirm;
+
+          /**
+           * contains details about the Afterpay Clearpay payment method options.
+           */
+          afterpay_clearpay?: PaymentMethodOptions.AfterpayClearpay;
+
+          /**
            * contains details about the Alipay payment method options.
            */
           alipay?: PaymentMethodOptions.Alipay;
 
           /**
+           * contains details about the AU Becs Debit payment method options.
+           */
+          au_becs_debit?: PaymentMethodOptions.AuBecsDebit;
+
+          /**
+           * contains details about the Bacs Debit payment method options.
+           */
+          bacs_debit?: PaymentMethodOptions.BacsDebit;
+
+          /**
+           * contains details about the Bancontact payment method options.
+           */
+          bancontact?: PaymentMethodOptions.Bancontact;
+
+          /**
            * contains details about the Boleto payment method options.
            */
           boleto?: PaymentMethodOptions.Boleto;
+
+          /**
+           * contains details about the Card payment method options.
+           */
+          card?: PaymentMethodOptions.Card;
+
+          /**
+           * contains details about the EPS payment method options.
+           */
+          eps?: PaymentMethodOptions.Eps;
+
+          /**
+           * contains details about the EPS payment method options.
+           */
+          fpx?: PaymentMethodOptions.Fpx;
+
+          /**
+           * contains details about the Giropay payment method options.
+           */
+          giropay?: PaymentMethodOptions.Giropay;
+
+          /**
+           * contains details about the Grabpay payment method options.
+           */
+          grabpay?: PaymentMethodOptions.Grabpay;
+
+          /**
+           * contains details about the Ideal payment method options.
+           */
+          ideal?: PaymentMethodOptions.Ideal;
+
+          /**
+           * contains details about the Klarna payment method options.
+           */
+          klarna?: PaymentMethodOptions.Klarna;
 
           /**
            * contains details about the Konbini payment method options.
@@ -1624,6 +1930,26 @@ declare module 'stripe' {
            * contains details about the OXXO payment method options.
            */
           oxxo?: PaymentMethodOptions.Oxxo;
+
+          /**
+           * contains details about the P24 payment method options.
+           */
+          p24?: PaymentMethodOptions.P24;
+
+          /**
+           * contains details about the PayNow payment method options.
+           */
+          paynow?: PaymentMethodOptions.Paynow;
+
+          /**
+           * contains details about the Sepa Debit payment method options.
+           */
+          sepa_debit?: PaymentMethodOptions.SepaDebit;
+
+          /**
+           * contains details about the Sofort payment method options.
+           */
+          sofort?: PaymentMethodOptions.Sofort;
 
           /**
            * contains details about the Us Bank Account payment method options.
@@ -1647,6 +1973,15 @@ declare module 'stripe' {
              * Additional fields for Mandate creation
              */
             mandate_options?: AcssDebit.MandateOptions;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: AcssDebit.SetupFutureUsage;
 
             /**
              * Verification method for the intent
@@ -1694,16 +2029,180 @@ declare module 'stripe' {
               type TransactionType = 'business' | 'personal';
             }
 
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
           }
 
-          interface Alipay {}
+          interface Affirm {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface AfterpayClearpay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Alipay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface AuBecsDebit {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface BacsDebit {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: BacsDebit.SetupFutureUsage;
+          }
+
+          namespace BacsDebit {
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
+          interface Bancontact {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
 
           interface Boleto {
             /**
              * The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto invoice will expire on Wednesday at 23:59 America/Sao_Paulo time.
              */
             expires_after_days?: number;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: Boleto.SetupFutureUsage;
+          }
+
+          namespace Boleto {
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
+          interface Card {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: Card.SetupFutureUsage;
+          }
+
+          namespace Card {
+            type SetupFutureUsage = 'off_session' | 'on_session';
+          }
+
+          interface Eps {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Fpx {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Giropay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Grabpay {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Ideal {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface Klarna {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
           }
 
           interface Konbini {
@@ -1711,6 +2210,15 @@ declare module 'stripe' {
              * The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST. Defaults to 3 days.
              */
             expires_after_days?: number;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
           }
 
           interface Oxxo {
@@ -1718,6 +2226,73 @@ declare module 'stripe' {
              * The number of calendar days before an OXXO voucher expires. For example, if you create an OXXO voucher on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.
              */
             expires_after_days?: number;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          interface P24 {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+
+            /**
+             * Confirm that the payer has accepted the P24 terms and conditions.
+             */
+            tos_shown_and_accepted?: boolean;
+          }
+
+          interface Paynow {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+
+            /**
+             * Confirm that the payer has accepted the P24 terms and conditions.
+             */
+            tos_shown_and_accepted?: boolean;
+          }
+
+          interface SepaDebit {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: SepaDebit.SetupFutureUsage;
+          }
+
+          namespace SepaDebit {
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
+          interface Sofort {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
           }
 
           interface UsBankAccount {
@@ -1725,6 +2300,15 @@ declare module 'stripe' {
              * Additional fields for Financial Connections Session creation
              */
             financial_connections?: UsBankAccount.FinancialConnections;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: UsBankAccount.SetupFutureUsage;
 
             /**
              * Verification method for the intent
@@ -1735,7 +2319,7 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
-               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
             }
@@ -1747,6 +2331,8 @@ declare module 'stripe' {
                 | 'payment_method'
                 | 'transactions';
             }
+
+            type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
 
             type VerificationMethod = 'automatic' | 'instant';
           }
@@ -1761,6 +2347,15 @@ declare module 'stripe' {
              * The client type that the end customer will pay from
              */
             client: WechatPay.Client;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
           }
 
           namespace WechatPay {

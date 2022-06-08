@@ -62,7 +62,7 @@ declare module 'stripe' {
        *
        * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
        */
-      flow_directions?: Array<SetupIntent.FlowDirection> | null;
+      flow_directions: Array<SetupIntent.FlowDirection> | null;
 
       /**
        * The error encountered in the previous SetupIntent confirmation.
@@ -514,6 +514,13 @@ declare module 'stripe' {
 
     interface SetupIntentCreateParams {
       /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
+      /**
        * Set to `true` to attempt to confirm this SetupIntent immediately. This parameter defaults to `false`. If the payment method attached is a card, a return_url may be provided in case additional authentication is required.
        */
       confirm?: boolean;
@@ -534,6 +541,13 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Indicates the directions of money movement for which this payment method is intended to be used.
+       *
+       * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
+       */
+      flow_directions?: Array<SetupIntentCreateParams.FlowDirection>;
 
       /**
        * This hash contains details about the Mandate to create. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/setup_intents/create#create_setup_intent-confirm).
@@ -588,6 +602,8 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentCreateParams {
+      type FlowDirection = 'inbound' | 'outbound';
+
       interface MandateData {
         /**
          * This hash contains details about the customer acceptance of the Mandate.
@@ -1342,7 +1358,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
 
@@ -1404,6 +1420,13 @@ declare module 'stripe' {
 
     interface SetupIntentUpdateParams {
       /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
+      /**
        * ID of the Customer this SetupIntent belongs to, if one exists.
        *
        * If present, the SetupIntent's payment method will be attached to the Customer on successful setup. Payment methods attached to other Customers cannot be used with this SetupIntent.
@@ -1419,6 +1442,13 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Indicates the directions of money movement for which this payment method is intended to be used.
+       *
+       * Include `inbound` if you intend to use the payment method as the origin to pull funds from. Include `outbound` if you intend to use the payment method as the destination to send funds to. You can include both if you intend to use the payment method for both purposes.
+       */
+      flow_directions?: Array<SetupIntentUpdateParams.FlowDirection>;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -1448,6 +1478,8 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentUpdateParams {
+      type FlowDirection = 'inbound' | 'outbound';
+
       interface PaymentMethodData {
         /**
          * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
@@ -2153,7 +2185,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
 
@@ -2188,6 +2220,13 @@ declare module 'stripe' {
     }
 
     interface SetupIntentListParams extends PaginationParams {
+      /**
+       * If present, the SetupIntent's payment method will be attached to the in-context Stripe Account.
+       *
+       * It can only be used for this Stripe Account's own money movement flows like InboundTransfer and OutboundTransfers. It cannot be set to true when setting up a PaymentMethod for a Customer, and defaults to false when attaching a PaymentMethod to a Customer.
+       */
+      attach_to_self?: boolean;
+
       /**
        * A filter on the list, based on the object `created` field. The value can be a string with an integer Unix timestamp, or it can be a dictionary with a number of different query options.
        */
@@ -3055,7 +3094,7 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
-             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+             * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
 
