@@ -734,7 +734,7 @@ declare module 'stripe' {
         /**
          * Contains information about US bank account networks that can be used.
          */
-        networks?: UsBankAccount.Networks | null;
+        networks: UsBankAccount.Networks | null;
 
         /**
          * Routing number of the bank account.
