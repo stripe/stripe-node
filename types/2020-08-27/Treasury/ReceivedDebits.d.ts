@@ -62,6 +62,11 @@ declare module 'stripe' {
         network: ReceivedDebit.Network;
 
         /**
+         * Details specific to the money movement rails.
+         */
+        network_details?: ReceivedDebit.NetworkDetails | null;
+
+        /**
          * Status of the ReceivedDebit. ReceivedDebits are created with a status of either `succeeded` (approved) or `failed` (declined). The failure reason can be found under the `failure_code`.
          */
         status: ReceivedDebit.Status;
@@ -169,9 +174,35 @@ declare module 'stripe' {
            * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://stripe.com/docs/api#issuing_disputes) object.
            */
           issuing_transaction: string | null;
+
+          /**
+           * The ReceivedCredit that Capital withheld from
+           */
+          received_credit_capital_withholding?: string | null;
         }
 
         type Network = 'ach' | 'card' | 'stripe';
+
+        interface NetworkDetails {
+          /**
+           * Details about an ACH transaction.
+           */
+          ach?: NetworkDetails.Ach | null;
+
+          /**
+           * The type of flow that originated the ReceivedDebit.
+           */
+          type: 'ach';
+        }
+
+        namespace NetworkDetails {
+          interface Ach {
+            /**
+             * ACH Addenda record
+             */
+            addenda: string | null;
+          }
+        }
 
         type Status = 'failed' | 'succeeded';
       }
