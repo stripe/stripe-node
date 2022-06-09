@@ -475,11 +475,26 @@ declare module 'stripe' {
           /**
            * Type of bank transfer
            */
-          type: 'jp_bank_transfer';
+          type: DisplayBankTransferInstructions.Type;
         }
 
         namespace DisplayBankTransferInstructions {
           interface FinancialAddress {
+            /**
+             * Iban Records contain E.U. bank account details per the SEPA format.
+             */
+            iban?: FinancialAddress.Iban;
+
+            /**
+             * Sort Code Records contain U.K. bank account details per the sort code format.
+             */
+            sort_code?: FinancialAddress.SortCode;
+
+            /**
+             * SPEI Records contain Mexico bank account details per the SPEI format.
+             */
+            spei?: FinancialAddress.Spei;
+
             /**
              * The payment networks supported by this FinancialAddress
              */
@@ -497,9 +512,65 @@ declare module 'stripe' {
           }
 
           namespace FinancialAddress {
-            type SupportedNetwork = 'sepa' | 'zengin';
+            interface Iban {
+              /**
+               * The name of the person or business that owns the bank account
+               */
+              account_holder_name: string;
 
-            type Type = 'iban' | 'zengin';
+              /**
+               * The BIC/SWIFT code of the account.
+               */
+              bic: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * The IBAN of the account.
+               */
+              iban: string;
+            }
+
+            interface SortCode {
+              /**
+               * The name of the person or business that owns the bank account
+               */
+              account_holder_name: string;
+
+              /**
+               * The account number
+               */
+              account_number: string;
+
+              /**
+               * The six-digit sort code
+               */
+              sort_code: string;
+            }
+
+            interface Spei {
+              /**
+               * The three-digit bank code
+               */
+              bank_code: string;
+
+              /**
+               * The short banking institution name
+               */
+              bank_name: string;
+
+              /**
+               * The CLABE number
+               */
+              clabe: string;
+            }
+
+            type SupportedNetwork = 'bacs' | 'fps' | 'sepa' | 'spei' | 'zengin';
+
+            type Type = 'iban' | 'sort_code' | 'spei' | 'zengin';
 
             interface Zengin {
               /**
@@ -538,6 +609,12 @@ declare module 'stripe' {
               branch_name: string | null;
             }
           }
+
+          type Type =
+            | 'eu_bank_transfer'
+            | 'gb_bank_transfer'
+            | 'jp_bank_transfer'
+            | 'mx_bank_transfer';
         }
 
         interface KonbiniDisplayDetails {
@@ -1194,17 +1271,45 @@ declare module 'stripe' {
 
         namespace CustomerBalance {
           interface BankTransfer {
+            eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
             /**
              * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
              *
-             * Permitted values include: `zengin`.
+             * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
              */
-            requested_address_types?: Array<'zengin'>;
+            requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+             * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
              */
-            type: 'jp_bank_transfer' | null;
+            type: BankTransfer.Type | null;
+          }
+
+          namespace BankTransfer {
+            interface EuBankTransfer {
+              /**
+               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               */
+              country: EuBankTransfer.Country;
+            }
+
+            namespace EuBankTransfer {
+              type Country = 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+            }
+
+            type RequestedAddressType =
+              | 'iban'
+              | 'sepa'
+              | 'sort_code'
+              | 'spei'
+              | 'zengin';
+
+            type Type =
+              | 'eu_bank_transfer'
+              | 'gb_bank_transfer'
+              | 'jp_bank_transfer'
+              | 'mx_bank_transfer';
           }
         }
 
@@ -2851,17 +2956,41 @@ declare module 'stripe' {
 
         namespace CustomerBalance {
           interface BankTransfer {
+            eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
             /**
              * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
              *
-             * Permitted values include: `zengin`.
+             * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
              */
-            requested_address_types?: Array<'zengin'>;
+            requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
              */
-            type: 'jp_bank_transfer';
+            type: BankTransfer.Type;
+          }
+
+          namespace BankTransfer {
+            interface EuBankTransfer {
+              /**
+               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               */
+              country: string;
+            }
+
+            type RequestedAddressType =
+              | 'iban'
+              | 'sepa'
+              | 'sort_code'
+              | 'spei'
+              | 'zengin';
+
+            type Type =
+              | 'eu_bank_transfer'
+              | 'gb_bank_transfer'
+              | 'jp_bank_transfer'
+              | 'mx_bank_transfer';
           }
         }
 
@@ -4486,17 +4615,41 @@ declare module 'stripe' {
 
         namespace CustomerBalance {
           interface BankTransfer {
+            eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
             /**
              * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
              *
-             * Permitted values include: `zengin`.
+             * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
              */
-            requested_address_types?: Array<'zengin'>;
+            requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
              */
-            type: 'jp_bank_transfer';
+            type: BankTransfer.Type;
+          }
+
+          namespace BankTransfer {
+            interface EuBankTransfer {
+              /**
+               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               */
+              country: string;
+            }
+
+            type RequestedAddressType =
+              | 'iban'
+              | 'sepa'
+              | 'sort_code'
+              | 'spei'
+              | 'zengin';
+
+            type Type =
+              | 'eu_bank_transfer'
+              | 'gb_bank_transfer'
+              | 'jp_bank_transfer'
+              | 'mx_bank_transfer';
           }
         }
 
@@ -6256,17 +6409,41 @@ declare module 'stripe' {
 
         namespace CustomerBalance {
           interface BankTransfer {
+            eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
             /**
              * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
              *
-             * Permitted values include: `zengin`.
+             * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
              */
-            requested_address_types?: Array<'zengin'>;
+            requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
              */
-            type: 'jp_bank_transfer';
+            type: BankTransfer.Type;
+          }
+
+          namespace BankTransfer {
+            interface EuBankTransfer {
+              /**
+               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               */
+              country: string;
+            }
+
+            type RequestedAddressType =
+              | 'iban'
+              | 'sepa'
+              | 'sort_code'
+              | 'spei'
+              | 'zengin';
+
+            type Type =
+              | 'eu_bank_transfer'
+              | 'gb_bank_transfer'
+              | 'jp_bank_transfer'
+              | 'mx_bank_transfer';
           }
         }
 

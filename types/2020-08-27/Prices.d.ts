@@ -36,6 +36,11 @@ declare module 'stripe' {
        */
       currency: string;
 
+      /**
+       * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
+       */
+      custom_unit_amount?: Price.CustomUnitAmount | null;
+
       deleted?: void;
 
       /**
@@ -106,6 +111,23 @@ declare module 'stripe' {
 
     namespace Price {
       type BillingScheme = 'per_unit' | 'tiered';
+
+      interface CustomUnitAmount {
+        /**
+         * The maximum unit amount the customer can specify for this item.
+         */
+        maximum: number | null;
+
+        /**
+         * The minimum unit amount the customer can specify for this item. Must be at least the minimum charge amount.
+         */
+        minimum: number | null;
+
+        /**
+         * The starting unit amount which can be updated by the customer.
+         */
+        preset: number | null;
+      }
 
       interface Recurring {
         /**
@@ -233,6 +255,11 @@ declare module 'stripe' {
       billing_scheme?: PriceCreateParams.BillingScheme;
 
       /**
+       * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
+       */
+      custom_unit_amount?: PriceCreateParams.CustomUnitAmount;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -305,6 +332,28 @@ declare module 'stripe' {
 
     namespace PriceCreateParams {
       type BillingScheme = 'per_unit' | 'tiered';
+
+      interface CustomUnitAmount {
+        /**
+         * Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
+         */
+        enabled: boolean;
+
+        /**
+         * The maximum unit amount the customer can specify for this item.
+         */
+        maximum?: number;
+
+        /**
+         * The minimum unit amount the customer can specify for this item. Must be at least the minimum charge amount.
+         */
+        minimum?: number;
+
+        /**
+         * The starting unit amount which can be updated by the customer.
+         */
+        preset?: number;
+      }
 
       interface ProductData {
         /**
