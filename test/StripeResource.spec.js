@@ -201,6 +201,24 @@ describe('StripeResource', () => {
           }
         );
       });
+
+      it('allows overriding host', (done) => {
+        const scope = nock('https://myhost')
+          .get('/v1/accounts/acct_123')
+          .reply(200, '{}');
+
+        realStripe.accounts.retrieve(
+          'acct_123',
+          {},
+          {
+            host: 'myhost',
+          },
+          (err, response) => {
+            done(err);
+            scope.done();
+          }
+        );
+      });
     });
   });
 
