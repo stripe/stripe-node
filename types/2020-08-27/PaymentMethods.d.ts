@@ -1448,7 +1448,7 @@ declare module 'stripe' {
       type: PaymentMethodListParams.Type;
 
       /**
-       * The ID of the customer whose PaymentMethods will be retrieved. If not provided, the response list will be empty.
+       * The ID of the customer whose PaymentMethods will be retrieved.
        */
       customer?: string;
 
@@ -1522,7 +1522,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
-       * Retrieves a PaymentMethod object.
+       * Retrieves a PaymentMethod object attached to the StripeAccount. To retrieve a payment method attached to a Customer, you should use [Retrieve a Customer's PaymentMethods](https://stripe.com/docs/api/payment_methods/customer)
        */
       retrieve(
         id: string,
@@ -1544,7 +1544,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
-       * Returns a list of PaymentMethods. For listing a customer's payment methods, you should use [List a Customer's PaymentMethods](https://stripe.com/docs/api/payment_methods/customer_list)
+       * Returns a list of PaymentMethods attached to the StripeAccount. For listing a customer's payment methods, you should use [List a Customer's PaymentMethods](https://stripe.com/docs/api/payment_methods/customer_list)
        */
       list(
         params: PaymentMethodListParams,

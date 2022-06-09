@@ -874,6 +874,8 @@ declare module 'stripe' {
         payouts?: Settings.Payouts;
 
         sepa_debit_payments?: Settings.SepaDebitPayments;
+
+        treasury?: Settings.Treasury;
       }
 
       namespace Settings {
@@ -1024,6 +1026,29 @@ declare module 'stripe' {
            * SEPA creditor identifier that identifies the company making the payment.
            */
           creditor_id?: string;
+        }
+
+        interface Treasury {
+          tos_acceptance?: Treasury.TosAcceptance;
+        }
+
+        namespace Treasury {
+          interface TosAcceptance {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date: number | null;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip: string | null;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: string;
+          }
         }
       }
 
@@ -2069,6 +2094,11 @@ declare module 'stripe' {
          * Settings specific to the account's payouts.
          */
         payouts?: Settings.Payouts;
+
+        /**
+         * Settings specific to the account's Treasury FinancialAccounts.
+         */
+        treasury?: Settings.Treasury;
       }
 
       namespace Settings {
@@ -2214,6 +2244,32 @@ declare module 'stripe' {
               | 'thursday'
               | 'tuesday'
               | 'wednesday';
+          }
+        }
+
+        interface Treasury {
+          /**
+           * Details on the account's acceptance of the Stripe Treasury Services Agreement.
+           */
+          tos_acceptance?: Treasury.TosAcceptance;
+        }
+
+        namespace Treasury {
+          interface TosAcceptance {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: string;
           }
         }
       }
@@ -3200,6 +3256,11 @@ declare module 'stripe' {
          * Settings specific to the account's payouts.
          */
         payouts?: Settings.Payouts;
+
+        /**
+         * Settings specific to the account's Treasury FinancialAccounts.
+         */
+        treasury?: Settings.Treasury;
       }
 
       namespace Settings {
@@ -3345,6 +3406,32 @@ declare module 'stripe' {
               | 'thursday'
               | 'tuesday'
               | 'wednesday';
+          }
+        }
+
+        interface Treasury {
+          /**
+           * Details on the account's acceptance of the Stripe Treasury Services Agreement.
+           */
+          tos_acceptance?: Treasury.TosAcceptance;
+        }
+
+        namespace Treasury {
+          interface TosAcceptance {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: string;
           }
         }
       }

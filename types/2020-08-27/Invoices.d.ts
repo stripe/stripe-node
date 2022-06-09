@@ -696,10 +696,25 @@ declare module 'stripe' {
 
           namespace CustomerBalance {
             interface BankTransfer {
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                */
               type: string | null;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: EuBankTransfer.Country;
+              }
+
+              namespace EuBankTransfer {
+                type Country = 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+              }
             }
           }
 
@@ -1139,9 +1154,23 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
+               * Configuration for eu_bank_transfer funding type.
+               */
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                */
               type?: string;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: string;
+              }
             }
           }
 
@@ -1480,9 +1509,23 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
+               * Configuration for eu_bank_transfer funding type.
+               */
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                */
               type?: string;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: string;
+              }
             }
           }
 

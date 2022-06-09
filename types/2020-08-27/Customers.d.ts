@@ -418,6 +418,11 @@ declare module 'stripe' {
          * Default footer to be displayed on invoices for this customer.
          */
         footer?: string;
+
+        /**
+         * Default options for invoice PDF rendering for this customer.
+         */
+        rendering_options?: InvoiceSettings.RenderingOptions;
       }
 
       namespace InvoiceSettings {
@@ -431,6 +436,19 @@ declare module 'stripe' {
            * The value of the custom field. This may be up to 30 characters.
            */
           value: string;
+        }
+
+        interface RenderingOptions {
+          /**
+           * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+           */
+          amount_tax_display?: Stripe.Emptyable<
+            RenderingOptions.AmountTaxDisplay
+          >;
+        }
+
+        namespace RenderingOptions {
+          type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
         }
       }
 
@@ -685,6 +703,11 @@ declare module 'stripe' {
          * Default footer to be displayed on invoices for this customer.
          */
         footer?: string;
+
+        /**
+         * Default options for invoice PDF rendering for this customer.
+         */
+        rendering_options?: InvoiceSettings.RenderingOptions;
       }
 
       namespace InvoiceSettings {
@@ -698,6 +721,19 @@ declare module 'stripe' {
            * The value of the custom field. This may be up to 30 characters.
            */
           value: string;
+        }
+
+        interface RenderingOptions {
+          /**
+           * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+           */
+          amount_tax_display?: Stripe.Emptyable<
+            RenderingOptions.AmountTaxDisplay
+          >;
+        }
+
+        namespace RenderingOptions {
+          type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
         }
       }
 
@@ -780,16 +816,38 @@ declare module 'stripe' {
     namespace CustomerCreateFundingInstructionsParams {
       interface BankTransfer {
         /**
+         * Configuration for eu_bank_transfer funding type.
+         */
+        eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+        /**
          * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
          *
-         * Permitted values include: `zengin`.
+         * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
          */
-        requested_address_types?: Array<'zengin'>;
+        requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
         /**
          * The type of the `bank_transfer`
          */
-        type: 'jp_bank_transfer';
+        type: BankTransfer.Type;
+      }
+
+      namespace BankTransfer {
+        interface EuBankTransfer {
+          /**
+           * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+           */
+          country: string;
+        }
+
+        type RequestedAddressType = 'iban' | 'sort_code' | 'spei' | 'zengin';
+
+        type Type =
+          | 'eu_bank_transfer'
+          | 'gb_bank_transfer'
+          | 'jp_bank_transfer'
+          | 'mx_bank_transfer';
       }
     }
 
@@ -958,7 +1016,7 @@ declare module 'stripe' {
       ): ApiListPromise<Stripe.PaymentMethod>;
 
       /**
-       * Retrieves a PaymentMethod object.
+       * Retrieves a PaymentMethod object for a given Customer.
        */
       retrievePaymentMethod(
         customerId: string,
