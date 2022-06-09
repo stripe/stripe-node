@@ -294,3 +294,7 @@ Stripe.StripeError.generate({
 Stripe.errors.StripeError.generate({
   type: 'card_error',
 });
+
+stripe.accounts.retrieve('123', {
+  host: 'my_host',
+});

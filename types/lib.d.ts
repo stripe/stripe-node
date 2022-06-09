@@ -184,16 +184,6 @@ declare module 'stripe' {
        * Specify the host for this request.
        */
       host?: string;
-
-      /**
-       * Specify the port for this request.
-       */
-      port?: string | number;
-
-      /**
-       * Specify the HTTP protool for this request.
-       */
-      protocol?: HttpProtocol;
     }
 
     export type Response<T> = T & {
