@@ -99,7 +99,15 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken $NPM_AUTH_TOKEN
           # print the NPM user name for validation
           npm whoami
-          npm publish --otp="$(oathtool -b --totp $NPM_OTP)"
+          VERSION=$(npm -s run env echo '$npm_package_version')
+          # Only publish stable versions to the latest tag
+          if [[ "$VERSION" =~ ^[^-]+$ ]]; then
+            NPM_TAG="latest"
+          else
+            NPM_TAG="beta"
+          fi
+          echo "Publishing $VERSION with $NPM_TAG tag."
+          npm publish --otp="$(oathtool -b --totp $NPM_OTP)" --tag $NPM_TAG
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           NPM_OTP: ${{ secrets.NPM_OTP }}
