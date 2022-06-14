@@ -1,4 +1,4 @@
-# CHANGELOG
+# Changelog
 
 ## 9.8.0 - 2022-06-09
 * [#1448](https://github.com/stripe/stripe-node/pull/1448) Add types for extra request options
@@ -1527,7 +1527,7 @@ Pull requests included in this release (cf. [#606](https://github.com/stripe/str
 
 - [#619](https://github.com/stripe/stripe-node/pull/619) Move `generateTestHeaderString` to stripe.webhooks (fixes a bug in 6.33.0)
 
-## 6.33.0 - 2019-05-08 - UNRELEASED
+## 6.33.0 - 2019-05-08
 
 **Important**: This version is non-functional and has been yanked in favor of 6.32.0.
 
@@ -2082,7 +2082,7 @@ Pull requests included in this release (cf. [#606](https://github.com/stripe/str
 
 - [BUGFIX] Fix incorrect deleteDiscount method & related spec(s)
 
-### 2.2.1
+### 2.2.1 - 2013-12-01
 
 - [BUGFIX] Fix user-agent header issue (see issue #75)
 
