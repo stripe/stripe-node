@@ -35,6 +35,27 @@ describe('StripeResource', () => {
     });
   });
 
+  describe('_joinUrlParts', () => {
+    it('handles trailing empty values correctly', () => {
+      const path = stripe.invoices._joinUrlParts(['a', '']);
+      expect(path).to.equal('a');
+    });
+
+    it('joins parts', () => {
+      const path = stripe.invoices._joinUrlParts(['a', 'b', 'c']);
+      expect(path).to.equal('a/b/c');
+    });
+
+    it('handles redundant slashes', () => {
+      const path = stripe.invoices._joinUrlParts([
+        '/v1/',
+        '/customers/',
+        '/{id}',
+      ]);
+      expect(path).to.equal('/v1/customers/{id}');
+    });
+  });
+
   describe('_makeHeaders', () => {
     it('sets the Authorization header with Bearer auth using the global API key', () => {
       const headers = stripe.invoices._makeHeaders(null, 0, null);
