@@ -29,6 +29,14 @@ describe('Customer', function() {
     expect(fundingInstructions).not.to.be.null;
   });
 
+  it('fundCashBalance method', async function() {
+    const customerBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
+      'cus_123',
+      {amount: 30, currency: 'eur'}
+    );
+    expect(customerBalanceTransaction).not.to.be.null;
+  });
+
   it('list method', async function() {
     const customers = await stripe.customers.list({limit: 3});
     expect(customers).not.to.be.null;

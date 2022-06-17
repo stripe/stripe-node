@@ -291,6 +291,11 @@ declare module 'stripe' {
       receipt_number: string | null;
 
       /**
+       * Options for invoice PDF rendering.
+       */
+      rendering_options: Invoice.RenderingOptions | null;
+
+      /**
        * Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance.
        */
       starting_balance: number;
@@ -318,7 +323,7 @@ declare module 'stripe' {
       subscription_proration_date?: number;
 
       /**
-       * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
+       * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or exclusive tax is applied. Item discounts are already incorporated
        */
       subtotal: number;
 
@@ -767,6 +772,13 @@ declare module 'stripe' {
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+      }
+
+      interface RenderingOptions {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+         */
+        amount_tax_display: string | null;
       }
 
       type Status =
