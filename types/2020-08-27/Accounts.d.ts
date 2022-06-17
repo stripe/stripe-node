@@ -938,6 +938,16 @@ declare module 'stripe' {
            * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
            */
           statement_descriptor_prefix: string | null;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kana: string | null;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kanji: string | null;
         }
 
         namespace CardPayments {
@@ -981,6 +991,16 @@ declare module 'stripe' {
            * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only)
            */
           statement_descriptor_kanji: string | null;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kana: string | null;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kanji: string | null;
         }
 
         interface Payouts {
@@ -2160,6 +2180,16 @@ declare module 'stripe' {
            * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
            */
           statement_descriptor_prefix?: string;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kana?: Stripe.Emptyable<string>;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kanji?: Stripe.Emptyable<string>;
         }
 
         namespace CardPayments {
@@ -3322,6 +3352,16 @@ declare module 'stripe' {
            * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
            */
           statement_descriptor_prefix?: string;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kana?: Stripe.Emptyable<string>;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kanji?: Stripe.Emptyable<string>;
         }
 
         namespace CardPayments {
