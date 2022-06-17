@@ -103,10 +103,19 @@ declare module 'stripe' {
        */
       timeout?: number;
 
+      /**
+       * Specify the host to use for API Requests.
+       */
       host?: string;
 
+      /**
+       * Specify the port to use for API Requests.
+       */
       port?: string | number;
 
+      /**
+       * Specify the HTTP protool to use for API Requests.
+       */
       protocol?: HttpProtocol;
 
       /**
@@ -170,6 +179,11 @@ declare module 'stripe' {
        * Specify a timeout for this request in milliseconds.
        */
       timeout?: number;
+
+      /**
+       * Specify the host for this request.
+       */
+      host?: string;
     }
 
     export type Response<T> = T & {

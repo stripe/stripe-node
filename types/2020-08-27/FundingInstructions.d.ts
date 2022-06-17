@@ -50,6 +50,21 @@ declare module 'stripe' {
       namespace BankTransfer {
         interface FinancialAddress {
           /**
+           * Iban Records contain E.U. bank account details per the SEPA format.
+           */
+          iban?: FinancialAddress.Iban;
+
+          /**
+           * Sort Code Records contain U.K. bank account details per the sort code format.
+           */
+          sort_code?: FinancialAddress.SortCode;
+
+          /**
+           * SPEI Records contain Mexico bank account details per the SPEI format.
+           */
+          spei?: FinancialAddress.Spei;
+
+          /**
            * The payment networks supported by this FinancialAddress
            */
           supported_networks?: Array<FinancialAddress.SupportedNetwork>;
@@ -66,9 +81,65 @@ declare module 'stripe' {
         }
 
         namespace FinancialAddress {
-          type SupportedNetwork = 'sepa' | 'zengin';
+          interface Iban {
+            /**
+             * The name of the person or business that owns the bank account
+             */
+            account_holder_name: string;
 
-          type Type = 'iban' | 'zengin';
+            /**
+             * The BIC/SWIFT code of the account.
+             */
+            bic: string;
+
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country: string;
+
+            /**
+             * The IBAN of the account.
+             */
+            iban: string;
+          }
+
+          interface SortCode {
+            /**
+             * The name of the person or business that owns the bank account
+             */
+            account_holder_name: string;
+
+            /**
+             * The account number
+             */
+            account_number: string;
+
+            /**
+             * The six-digit sort code
+             */
+            sort_code: string;
+          }
+
+          interface Spei {
+            /**
+             * The three-digit bank code
+             */
+            bank_code: string;
+
+            /**
+             * The short banking institution name
+             */
+            bank_name: string;
+
+            /**
+             * The CLABE number
+             */
+            clabe: string;
+          }
+
+          type SupportedNetwork = 'bacs' | 'fps' | 'sepa' | 'spei' | 'zengin';
+
+          type Type = 'iban' | 'sort_code' | 'spei' | 'zengin';
 
           interface Zengin {
             /**

@@ -29,6 +29,14 @@ describe('Customer', function() {
     expect(fundingInstructions).not.to.be.null;
   });
 
+  it('fundCashBalance method', async function() {
+    const customerBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
+      'cus_123',
+      {amount: 30, currency: 'eur'}
+    );
+    expect(customerBalanceTransaction).not.to.be.null;
+  });
+
   it('list method', async function() {
     const customers = await stripe.customers.list({limit: 3});
     expect(customers).not.to.be.null;
@@ -874,6 +882,20 @@ describe('Apps.Secret', function() {
       scope: {type: 'account'},
     });
     expect(secret).not.to.be.null;
+  });
+});
+
+describe('CashBalance', function() {
+  it('retrieveCashBalance method', async function() {
+    const cashBalance = await stripe.customers.retrieveCashBalance('cus_123');
+    expect(cashBalance).not.to.be.null;
+  });
+
+  it('updateCashBalance method', async function() {
+    const cashBalance = await stripe.customers.updateCashBalance('cus_123', {
+      settings: {reconciliation_mode: 'manual'},
+    });
+    expect(cashBalance).not.to.be.null;
   });
 });
 

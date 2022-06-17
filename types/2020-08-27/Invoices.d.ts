@@ -44,7 +44,7 @@ declare module 'stripe' {
       amount_paid: number;
 
       /**
-       * The amount remaining, in %s, that is due.
+       * The difference between amount_due and amount_paid, in %s.
        */
       amount_remaining: number;
 
@@ -291,6 +291,11 @@ declare module 'stripe' {
       receipt_number: string | null;
 
       /**
+       * Options for invoice PDF rendering.
+       */
+      rendering_options: Invoice.RenderingOptions | null;
+
+      /**
        * Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance.
        */
       starting_balance: number;
@@ -318,7 +323,7 @@ declare module 'stripe' {
       subscription_proration_date?: number;
 
       /**
-       * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
+       * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or exclusive tax is applied. Item discounts are already incorporated
        */
       subtotal: number;
 
@@ -696,10 +701,25 @@ declare module 'stripe' {
 
           namespace CustomerBalance {
             interface BankTransfer {
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                */
               type: string | null;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: EuBankTransfer.Country;
+              }
+
+              namespace EuBankTransfer {
+                type Country = 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+              }
             }
           }
 
@@ -752,6 +772,13 @@ declare module 'stripe' {
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+      }
+
+      interface RenderingOptions {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+         */
+        amount_tax_display: string | null;
       }
 
       type Status =
@@ -1139,9 +1166,23 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
+               * Configuration for eu_bank_transfer funding type.
+               */
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                */
               type?: string;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: string;
+              }
             }
           }
 
@@ -1162,7 +1203,7 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
-               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
             }
@@ -1480,9 +1521,23 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
+               * Configuration for eu_bank_transfer funding type.
+               */
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                */
               type?: string;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: string;
+              }
             }
           }
 
@@ -1503,7 +1558,7 @@ declare module 'stripe' {
           namespace UsBankAccount {
             interface FinancialConnections {
               /**
-               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `payment_method`, and `transactions`.
+               * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
             }
@@ -1732,11 +1787,7 @@ declare module 'stripe' {
       >;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. Valid values are `create_prorations`, `none`, or `always_invoice`.
-       *
-       * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
-       *
-       * Prorations can be disabled by passing `none`.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
        */
       subscription_proration_behavior?: InvoiceRetrieveUpcomingParams.SubscriptionProrationBehavior;
 
