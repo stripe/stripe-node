@@ -27,6 +27,12 @@ describe('StripeResource', () => {
       const path = stripe.invoices.createResourcePathWithSymbols('{id}');
       expect(path).to.equal('/invoices/{id}');
     });
+
+    it('Handles accidental double slashes', () => {
+      stripe.invoices.create({});
+      const path = stripe.invoices.createResourcePathWithSymbols('/{id}');
+      expect(path).to.equal('/invoices/{id}');
+    });
   });
 
   describe('_makeHeaders', () => {
@@ -89,6 +95,17 @@ describe('StripeResource', () => {
           .reply(200, '{}');
 
         realStripe.invoices.retrieveUpcoming(options.data, (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('handles . as a query param', (done) => {
+        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
+          .get('/v1/customers/.', '')
+          .reply(200, '{}');
+
+        realStripe.customers.retrieve('.', (err, response) => {
           done(err);
           scope.done();
         });
