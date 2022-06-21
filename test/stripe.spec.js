@@ -101,7 +101,7 @@ describe('Stripe Module', function() {
       }).not.to.throw();
     });
 
-    it('should perform a no-op if null, undefined or empty values are passed', () => {
+    it('should return a default version when null, undefined or empty values are passed', () => {
       const cases = [null, undefined, '', {}];
 
       cases.forEach((item) => {
@@ -112,7 +112,7 @@ describe('Stripe Module', function() {
 
       cases.forEach((item) => {
         const stripe = Stripe(testUtils.getUserStripeKey(), item);
-        expect(stripe.getApiField('version')).to.equal(null);
+        expect(stripe.getApiField('version')).to.not.equal(null);
       });
     });
 
