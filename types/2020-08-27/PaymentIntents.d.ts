@@ -366,6 +366,8 @@ declare module 'stripe' {
 
         paynow_display_qr_code?: NextAction.PaynowDisplayQrCode;
 
+        promptpay_display_qr_code?: NextAction.PromptpayDisplayQrCode;
+
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
@@ -739,6 +741,28 @@ declare module 'stripe' {
           image_url_svg: string;
         }
 
+        interface PromptpayDisplayQrCode {
+          /**
+           * The raw data string used to generate QR code, it should be used together with QR code library.
+           */
+          data: string;
+
+          /**
+           * The URL to the hosted PromptPay instructions page, which allows customers to view the PromptPay QR code.
+           */
+          hosted_instructions_url: string;
+
+          /**
+           * The image_url_png string used to render QR code, can be used as <img src="…" />
+           */
+          image_url_png: string;
+
+          /**
+           * The image_url_svg string used to render QR code, can be used as <img src="…" />
+           */
+          image_url_svg: string;
+        }
+
         interface RedirectToUrl {
           /**
            * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
@@ -887,6 +911,8 @@ declare module 'stripe' {
         p24?: PaymentMethodOptions.P24;
 
         paynow?: PaymentMethodOptions.Paynow;
+
+        promptpay?: PaymentMethodOptions.Promptpay;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -1499,6 +1525,17 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Promptpay {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface SepaDebit {
           mandate_options?: SepaDebit.MandateOptions;
 
@@ -2038,6 +2075,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
+         */
+        promptpay?: PaymentMethodData.Promptpay;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
@@ -2332,6 +2374,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Promptpay {}
+
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -2378,6 +2422,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
@@ -2538,6 +2583,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
+         */
+        promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -3247,6 +3297,19 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Promptpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -3707,6 +3770,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
+         */
+        promptpay?: PaymentMethodData.Promptpay;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
@@ -4001,6 +4069,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Promptpay {}
+
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -4047,6 +4117,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
@@ -4207,6 +4278,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
+         */
+        promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -4916,6 +4992,19 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Promptpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -5511,6 +5600,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
+         */
+        promptpay?: PaymentMethodData.Promptpay;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
@@ -5805,6 +5899,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Promptpay {}
+
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -5851,6 +5947,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
@@ -6011,6 +6108,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
+         */
+        promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -6720,6 +6822,19 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Promptpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
