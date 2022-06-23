@@ -3558,6 +3558,11 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: PaymentIntentUpdateParams.CaptureMethod;
+
+      /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency?: string;
@@ -3653,6 +3658,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
+      type CaptureMethod = 'automatic' | 'manual';
+
       interface PaymentMethodData {
         /**
          * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
@@ -5312,6 +5319,11 @@ declare module 'stripe' {
 
     interface PaymentIntentConfirmParams {
       /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: PaymentIntentConfirmParams.CaptureMethod;
+
+      /**
        * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions, like [saving cards without authentication](https://stripe.com/docs/payments/save-card-without-authentication).
        */
       error_on_requires_action?: boolean;
@@ -5397,6 +5409,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentConfirmParams {
+      type CaptureMethod = 'automatic' | 'manual';
+
       interface MandateData1 {
         /**
          * This hash contains details about the customer acceptance of the Mandate.
