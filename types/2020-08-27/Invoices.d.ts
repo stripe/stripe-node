@@ -328,6 +328,11 @@ declare module 'stripe' {
       subtotal: number;
 
       /**
+       * The integer amount in %s representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
+       */
+      subtotal_excluding_tax: number | null;
+
+      /**
        * The amount of tax on this invoice. This is the sum of all the tax amounts on this invoice.
        */
       tax: number | null;
@@ -348,6 +353,11 @@ declare module 'stripe' {
        * The aggregate amounts calculated per discount across all line items.
        */
       total_discount_amounts: Array<Invoice.TotalDiscountAmount> | null;
+
+      /**
+       * The integer amount in %s representing the total amount of the invoice including all discounts but excluding all tax.
+       */
+      total_excluding_tax: number | null;
 
       /**
        * The aggregate amounts calculated per tax rate for all line items.
@@ -767,6 +777,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
@@ -999,6 +1010,13 @@ declare module 'stripe' {
        * How to handle pending invoice items on invoice creation. One of `include`, `exclude`, or `include_and_require`. `include` will include any pending invoice items, and will create an empty draft invoice if no pending invoice items exist. `include_and_require` will include any pending invoice items, if no pending invoice items exist then the request will fail. `exclude` will always create an empty invoice draft regardless if there are pending invoice items or not. Defaults to `include_and_require` if the parameter is omitted.
        */
       pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
+
+      /**
+       * Options for invoice PDF rendering.
+       */
+      rendering_options?: Stripe.Emptyable<
+        InvoiceCreateParams.RenderingOptions
+      >;
 
       /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -1237,6 +1255,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
@@ -1248,6 +1267,19 @@ declare module 'stripe' {
         | 'exclude'
         | 'include'
         | 'include_and_require';
+
+      interface RenderingOptions {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+         */
+        amount_tax_display?: Stripe.Emptyable<
+          RenderingOptions.AmountTaxDisplay
+        >;
+      }
+
+      namespace RenderingOptions {
+        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+      }
 
       interface TransferData {
         /**
@@ -1359,6 +1391,13 @@ declare module 'stripe' {
        * Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
        */
       payment_settings?: InvoiceUpdateParams.PaymentSettings;
+
+      /**
+       * Options for invoice PDF rendering.
+       */
+      rendering_options?: Stripe.Emptyable<
+        InvoiceUpdateParams.RenderingOptions
+      >;
 
       /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -1592,11 +1631,25 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+      }
+
+      interface RenderingOptions {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+         */
+        amount_tax_display?: Stripe.Emptyable<
+          RenderingOptions.AmountTaxDisplay
+        >;
+      }
+
+      namespace RenderingOptions {
+        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
       }
 
       interface TransferData {

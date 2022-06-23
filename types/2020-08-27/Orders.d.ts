@@ -178,12 +178,17 @@ declare module 'stripe' {
           application_fee_amount: number | null;
 
           /**
+           * Indicates whether order has been opted into using [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods) to manage payment method types.
+           */
+          automatic_payment_methods: Settings.AutomaticPaymentMethods | null;
+
+          /**
            * PaymentMethod-specific configuration to provide to the order's PaymentIntent.
            */
           payment_method_options: Settings.PaymentMethodOptions | null;
 
           /**
-           * The list of payment method types (e.g., card) to provide to the order's PaymentIntent.
+           * The list of [payment method types](https://stripe.com/docs/payments/payment-methods/overview) to provide to the order's PaymentIntent. Do not include this attribute if you prefer to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
            */
           payment_method_types: Array<Settings.PaymentMethodType> | null;
 
@@ -209,6 +214,13 @@ declare module 'stripe' {
         }
 
         namespace Settings {
+          interface AutomaticPaymentMethods {
+            /**
+             * Whether this Order has been opted into managing payment method types via the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+             */
+            enabled: boolean;
+          }
+
           interface PaymentMethodOptions {
             acss_debit?: PaymentMethodOptions.AcssDebit;
 
@@ -1108,7 +1120,7 @@ declare module 'stripe' {
           payment_method_options?: Settings.PaymentMethodOptions;
 
           /**
-           * The list of payment method types (e.g., card) to provide to the order's PaymentIntent.
+           * The list of [payment method types](https://stripe.com/docs/payments/payment-methods/overview) to provide to the order's PaymentIntent. Do not include this attribute if you prefer to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
            */
           payment_method_types?: Array<Settings.PaymentMethodType>;
 
@@ -2152,7 +2164,7 @@ declare module 'stripe' {
           payment_method_options?: Settings.PaymentMethodOptions;
 
           /**
-           * The list of payment method types (e.g., card) to provide to the order's PaymentIntent.
+           * The list of [payment method types](https://stripe.com/docs/payments/payment-methods/overview) to provide to the order's PaymentIntent. Do not include this attribute if you prefer to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
            */
           payment_method_types?: Array<Settings.PaymentMethodType>;
 

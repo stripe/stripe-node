@@ -84,6 +84,8 @@ declare module 'stripe' {
 
       paynow?: PaymentMethod.Paynow;
 
+      promptpay?: PaymentMethod.Promptpay;
+
       /**
        * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
        */
@@ -611,6 +613,8 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface Promptpay {}
+
       interface RadarOptions {
         /**
          * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -695,6 +699,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
@@ -902,6 +907,11 @@ declare module 'stripe' {
        * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
        */
       paynow?: PaymentMethodCreateParams.Paynow;
+
+      /**
+       * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
+       */
+      promptpay?: PaymentMethodCreateParams.Promptpay;
 
       /**
        * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
@@ -1224,6 +1234,8 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface Promptpay {}
+
       interface RadarOptions {
         /**
          * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -1271,6 +1283,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
@@ -1482,6 +1495,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'

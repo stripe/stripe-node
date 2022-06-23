@@ -39,7 +39,7 @@ declare module 'stripe' {
       /**
        * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
        */
-      custom_unit_amount?: Price.CustomUnitAmount | null;
+      custom_unit_amount: Price.CustomUnitAmount | null;
 
       deleted?: void;
 

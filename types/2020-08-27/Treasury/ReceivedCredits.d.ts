@@ -62,6 +62,11 @@ declare module 'stripe' {
         network: ReceivedCredit.Network;
 
         /**
+         * Details describing when a ReceivedCredit may be reversed.
+         */
+        reversal_details: ReceivedCredit.ReversalDetails | null;
+
+        /**
          * Status of the ReceivedCredit. ReceivedCredits are created either `succeeded` (approved) or `failed` (declined). If a ReceivedCredit is declined, the failure reason can be found in the `failure_code` field.
          */
         status: ReceivedCredit.Status;
@@ -224,6 +229,27 @@ declare module 'stripe' {
         }
 
         type Network = 'ach' | 'card' | 'stripe' | 'us_domestic_wire';
+
+        interface ReversalDetails {
+          /**
+           * Time before which a ReceivedCredit can be reversed.
+           */
+          deadline: number | null;
+
+          /**
+           * Set if a ReceivedCredit cannot be reversed.
+           */
+          restricted_reason: ReversalDetails.RestrictedReason | null;
+        }
+
+        namespace ReversalDetails {
+          type RestrictedReason =
+            | 'already_reversed'
+            | 'deadline_passed'
+            | 'network_restricted'
+            | 'other'
+            | 'source_flow_restricted';
+        }
 
         type Status = 'failed' | 'succeeded';
       }

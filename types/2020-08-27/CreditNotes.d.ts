@@ -115,6 +115,11 @@ declare module 'stripe' {
       subtotal: number;
 
       /**
+       * The integer amount in %s representing the amount of the credit note, excluding all tax and invoice level discounts.
+       */
+      subtotal_excluding_tax: number | null;
+
+      /**
        * The aggregate amounts calculated per tax rate for all line items.
        */
       tax_amounts: Array<CreditNote.TaxAmount>;

@@ -22,6 +22,11 @@ declare module 'stripe' {
       amount: number;
 
       /**
+       * The integer amount in %s representing the amount being credited for this line item, excluding all tax and discounts.
+       */
+      amount_excluding_tax: number | null;
+
+      /**
        * Description of the item being credited.
        */
       description: string | null;
@@ -75,6 +80,11 @@ declare module 'stripe' {
        * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
        */
       unit_amount_decimal: string | null;
+
+      /**
+       * The amount in %s representing the unit amount being credited for this line item, excluding all tax and discounts.
+       */
+      unit_amount_excluding_tax: string | null;
     }
 
     namespace CreditNoteLineItem {
