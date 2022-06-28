@@ -277,6 +277,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The status of the promptpay payments capability of the account, or whether the account can directly process promptpay charges.
+         */
+        promptpay_payments?: Capabilities.PromptpayPayments;
+
+        /**
          * The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
@@ -360,6 +365,8 @@ declare module 'stripe' {
         type P24Payments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
+
+        type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
 
@@ -1378,6 +1385,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The promptpay_payments capability.
+         */
+        promptpay_payments?: Capabilities.PromptpayPayments;
+
+        /**
          * The sepa_debit_payments capability.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
@@ -1576,6 +1588,13 @@ declare module 'stripe' {
         }
 
         interface PaynowPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PromptpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2587,6 +2606,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The promptpay_payments capability.
+         */
+        promptpay_payments?: Capabilities.PromptpayPayments;
+
+        /**
          * The sepa_debit_payments capability.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
@@ -2785,6 +2809,13 @@ declare module 'stripe' {
         }
 
         interface PaynowPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PromptpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

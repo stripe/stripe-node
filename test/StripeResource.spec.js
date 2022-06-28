@@ -27,6 +27,33 @@ describe('StripeResource', () => {
       const path = stripe.invoices.createResourcePathWithSymbols('{id}');
       expect(path).to.equal('/invoices/{id}');
     });
+
+    it('Handles accidental double slashes', () => {
+      stripe.invoices.create({});
+      const path = stripe.invoices.createResourcePathWithSymbols('/{id}');
+      expect(path).to.equal('/invoices/{id}');
+    });
+  });
+
+  describe('_joinUrlParts', () => {
+    it('handles trailing empty values correctly', () => {
+      const path = stripe.invoices._joinUrlParts(['a', '']);
+      expect(path).to.equal('a');
+    });
+
+    it('joins parts', () => {
+      const path = stripe.invoices._joinUrlParts(['a', 'b', 'c']);
+      expect(path).to.equal('a/b/c');
+    });
+
+    it('handles redundant slashes', () => {
+      const path = stripe.invoices._joinUrlParts([
+        '/v1/',
+        '/customers/',
+        '/{id}',
+      ]);
+      expect(path).to.equal('/v1/customers/{id}');
+    });
   });
 
   describe('_makeHeaders', () => {
@@ -89,6 +116,17 @@ describe('StripeResource', () => {
           .reply(200, '{}');
 
         realStripe.invoices.retrieveUpcoming(options.data, (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('handles . as a query param', (done) => {
+        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
+          .get('/v1/customers/.', '')
+          .reply(200, '{}');
+
+        realStripe.customers.retrieve('.', (err, response) => {
           done(err);
           scope.done();
         });

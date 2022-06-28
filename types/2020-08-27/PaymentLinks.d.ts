@@ -549,7 +549,7 @@ declare module 'stripe' {
       payment_intent_data?: PaymentLinkCreateParams.PaymentIntentData;
 
       /**
-       * The list of payment method types that customers can use. Only `card` is supported. If no value is passed, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods [supported](https://stripe.com/docs/payments/payment-methods/integration-options#payment-method-product-support)).
+       * The list of payment method types that customers can use. If no value is passed, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods [supported](https://stripe.com/docs/payments/payment-methods/integration-options#payment-method-product-support)).
        */
       payment_method_types?: Array<'card'>;
 
@@ -1060,7 +1060,7 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
-       * The list of payment method types that customers can use. Only `card` is supported. Pass an empty string to enable automatic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
+       * The list of payment method types that customers can use. Pass an empty string to enable automatic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Stripe.Emptyable<Array<'card'>>;
 

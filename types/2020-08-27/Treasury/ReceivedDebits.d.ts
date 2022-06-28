@@ -62,6 +62,11 @@ declare module 'stripe' {
         network: ReceivedDebit.Network;
 
         /**
+         * Details describing when a ReceivedDebit might be reversed.
+         */
+        reversal_details: ReceivedDebit.ReversalDetails | null;
+
+        /**
          * Status of the ReceivedDebit. ReceivedDebits are created with a status of either `succeeded` (approved) or `failed` (declined). The failure reason can be found under the `failure_code`.
          */
         status: ReceivedDebit.Status;
@@ -156,6 +161,11 @@ declare module 'stripe' {
 
         interface LinkedFlows {
           /**
+           * The DebitReversal created as a result of this ReceivedDebit being reversed.
+           */
+          debit_reversal: string | null;
+
+          /**
            * Set if the ReceivedDebit is associated with an InboundTransfer's return of funds.
            */
           inbound_transfer: string | null;
@@ -172,6 +182,27 @@ declare module 'stripe' {
         }
 
         type Network = 'ach' | 'card' | 'stripe';
+
+        interface ReversalDetails {
+          /**
+           * Time before which a ReceivedDebit can be reversed.
+           */
+          deadline: number | null;
+
+          /**
+           * Set if a ReceivedDebit can't be reversed.
+           */
+          restricted_reason: ReversalDetails.RestrictedReason | null;
+        }
+
+        namespace ReversalDetails {
+          type RestrictedReason =
+            | 'already_reversed'
+            | 'deadline_passed'
+            | 'network_restricted'
+            | 'other'
+            | 'source_flow_restricted';
+        }
 
         type Status = 'failed' | 'succeeded';
       }
