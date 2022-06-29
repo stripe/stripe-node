@@ -987,6 +987,64 @@ describe('Token', function() {
   });
 });
 
+describe('SetupAttempt', function() {
+  it('list method', async function() {
+    const setupAttempts = await stripe.setupAttempts.list({
+      limit: 3,
+      setup_intent: 'si_xyz',
+    });
+    expect(setupAttempts).not.to.be.null;
+  });
+});
+
+describe('Issuing.Card', function() {
+  it('deliverCard method', async function() {
+    const card = await stripe.testHelpers.issuing.cards.deliverCard('card_123');
+    expect(card).not.to.be.null;
+  });
+
+  it('failCard method', async function() {
+    const card = await stripe.testHelpers.issuing.cards.failCard('card_123');
+    expect(card).not.to.be.null;
+  });
+
+  it('returnCard method', async function() {
+    const card = await stripe.testHelpers.issuing.cards.returnCard('card_123');
+    expect(card).not.to.be.null;
+  });
+
+  it('shipCard method', async function() {
+    const card = await stripe.testHelpers.issuing.cards.shipCard('card_123');
+    expect(card).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const cards = await stripe.issuing.cards.list({limit: 3});
+    expect(cards).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const card = await stripe.issuing.cards.create({
+      cardholder: 'ich_xxxxxxxxxxxxx',
+      currency: 'usd',
+      type: 'virtual',
+    });
+    expect(card).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const card = await stripe.issuing.cards.retrieve('ic_xxxxxxxxxxxxx');
+    expect(card).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const card = await stripe.issuing.cards.update('ic_xxxxxxxxxxxxx', {
+      metadata: {order_id: '6735'},
+    });
+    expect(card).not.to.be.null;
+  });
+});
+
 describe('AccountLink', function() {
   it('create method', async function() {
     const accountLink = await stripe.accountLinks.create({
@@ -1766,34 +1824,6 @@ describe('Issuing.Cardholder', function() {
   });
 });
 
-describe('Issuing.Card', function() {
-  it('list method', async function() {
-    const cards = await stripe.issuing.cards.list({limit: 3});
-    expect(cards).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const card = await stripe.issuing.cards.create({
-      cardholder: 'ich_xxxxxxxxxxxxx',
-      currency: 'usd',
-      type: 'virtual',
-    });
-    expect(card).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const card = await stripe.issuing.cards.retrieve('ic_xxxxxxxxxxxxx');
-    expect(card).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const card = await stripe.issuing.cards.update('ic_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
-    });
-    expect(card).not.to.be.null;
-  });
-});
-
 describe('Issuing.Dispute', function() {
   it('list method', async function() {
     const disputes = await stripe.issuing.disputes.list({limit: 3});
@@ -2250,13 +2280,6 @@ describe('Review', function() {
   it('approve method', async function() {
     const review = await stripe.reviews.approve('prv_xxxxxxxxxxxxx');
     expect(review).not.to.be.null;
-  });
-});
-
-describe('SetupAttempt', function() {
-  it('list method', async function() {
-    const setupAttempts = await stripe.setupAttempts.list({limit: 3});
-    expect(setupAttempts).not.to.be.null;
   });
 });
 
