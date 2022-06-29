@@ -87,7 +87,7 @@ declare module 'stripe' {
         customer_creation: Session.CustomerCreation | null;
 
         /**
-         * The customer details including the customer's tax exempt status and the customer's tax IDs. Only present on Sessions in `payment` or `subscription` mode.
+         * The customer details including the customer's tax exempt status and the customer's tax IDs. Only the customer's email is present on Sessions in `setup` mode.
          */
         customer_details: Session.CustomerDetails | null;
 
@@ -494,6 +494,9 @@ declare module 'stripe' {
 
         namespace PaymentMethodOptions {
           interface AcssDebit {
+            /**
+             * Currency supported by the bank account. Returned when the Session is in `setup` mode.
+             */
             currency?: string;
 
             mandate_options?: AcssDebit.MandateOptions;

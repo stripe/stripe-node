@@ -47,6 +47,11 @@ declare module 'stripe' {
          */
         financial_account: string | null;
 
+        /**
+         * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+         */
+        hosted_regulatory_receipt_url: string | null;
+
         initiating_payment_method_details: ReceivedCredit.InitiatingPaymentMethodDetails;
 
         linked_flows: ReceivedCredit.LinkedFlows;
@@ -172,7 +177,7 @@ declare module 'stripe' {
           issuing_transaction: string | null;
 
           /**
-           * ID of the source flow. Set if `network` is `stripe` and the source flow is visible to the merchant. Examples of source flows include OutboundPayments, payouts, or CreditReversals.
+           * ID of the source flow. Set if `network` is `stripe` and the source flow is visible to the user. Examples of source flows include OutboundPayments, payouts, or CreditReversals.
            */
           source_flow: string | null;
 
