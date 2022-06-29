@@ -83,7 +83,7 @@ declare module 'stripe' {
       /**
        * The list of payment method types that customers can use. When `null`, Stripe will dynamically show relevant payment methods you've enabled in your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
-      payment_method_types: Array<'card'> | null;
+      payment_method_types: Array<PaymentLink.PaymentMethodType> | null;
 
       phone_number_collection: PaymentLink.PhoneNumberCollection;
 
@@ -185,6 +185,31 @@ declare module 'stripe' {
 
         type SetupFutureUsage = 'off_session' | 'on_session';
       }
+
+      type PaymentMethodType =
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'boleto'
+        | 'card'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'klarna'
+        | 'konbini'
+        | 'oxxo'
+        | 'p24'
+        | 'paynow'
+        | 'promptpay'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'us_bank_account'
+        | 'wechat_pay';
 
       interface PhoneNumberCollection {
         /**
@@ -551,7 +576,7 @@ declare module 'stripe' {
       /**
        * The list of payment method types that customers can use. If no value is passed, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods [supported](https://stripe.com/docs/payments/payment-methods/integration-options#payment-method-product-support)).
        */
-      payment_method_types?: Array<'card'>;
+      payment_method_types?: Array<PaymentLinkCreateParams.PaymentMethodType>;
 
       /**
        * Controls phone number collection settings during checkout.
@@ -710,6 +735,31 @@ declare module 'stripe' {
 
         type SetupFutureUsage = 'off_session' | 'on_session';
       }
+
+      type PaymentMethodType =
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'boleto'
+        | 'card'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'klarna'
+        | 'konbini'
+        | 'oxxo'
+        | 'p24'
+        | 'paynow'
+        | 'promptpay'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'us_bank_account'
+        | 'wechat_pay';
 
       interface PhoneNumberCollection {
         /**
@@ -1062,7 +1112,9 @@ declare module 'stripe' {
       /**
        * The list of payment method types that customers can use. Pass an empty string to enable automatic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
-      payment_method_types?: Stripe.Emptyable<Array<'card'>>;
+      payment_method_types?: Stripe.Emptyable<
+        Array<PaymentLinkUpdateParams.PaymentMethodType>
+      >;
 
       /**
        * Configuration for collecting the customer's shipping address.
@@ -1154,6 +1206,31 @@ declare module 'stripe' {
           minimum?: number;
         }
       }
+
+      type PaymentMethodType =
+        | 'affirm'
+        | 'afterpay_clearpay'
+        | 'alipay'
+        | 'au_becs_debit'
+        | 'bacs_debit'
+        | 'bancontact'
+        | 'boleto'
+        | 'card'
+        | 'eps'
+        | 'fpx'
+        | 'giropay'
+        | 'grabpay'
+        | 'ideal'
+        | 'klarna'
+        | 'konbini'
+        | 'oxxo'
+        | 'p24'
+        | 'paynow'
+        | 'promptpay'
+        | 'sepa_debit'
+        | 'sofort'
+        | 'us_bank_account'
+        | 'wechat_pay';
 
       interface ShippingAddressCollection {
         /**
