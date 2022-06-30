@@ -291,6 +291,11 @@ declare module 'stripe' {
       receipt_number: string | null;
 
       /**
+       * Options for invoice PDF rendering.
+       */
+      rendering_options: Invoice.RenderingOptions | null;
+
+      /**
        * Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance.
        */
       starting_balance: number;
@@ -318,9 +323,14 @@ declare module 'stripe' {
       subscription_proration_date?: number;
 
       /**
-       * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
+       * Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or exclusive tax is applied. Item discounts are already incorporated
        */
       subtotal: number;
+
+      /**
+       * The integer amount in %s representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
+       */
+      subtotal_excluding_tax: number | null;
 
       /**
        * The amount of tax on this invoice. This is the sum of all the tax amounts on this invoice.
@@ -343,6 +353,11 @@ declare module 'stripe' {
        * The aggregate amounts calculated per discount across all line items.
        */
       total_discount_amounts: Array<Invoice.TotalDiscountAmount> | null;
+
+      /**
+       * The integer amount in %s representing the total amount of the invoice including all discounts but excluding all tax.
+       */
+      total_excluding_tax: number | null;
 
       /**
        * The aggregate amounts calculated per tax rate for all line items.
@@ -696,10 +711,25 @@ declare module 'stripe' {
 
           namespace CustomerBalance {
             interface BankTransfer {
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                */
               type: string | null;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: EuBankTransfer.Country;
+              }
+
+              namespace EuBankTransfer {
+                type Country = 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+              }
             }
           }
 
@@ -747,11 +777,19 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+      }
+
+      interface RenderingOptions {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+         */
+        amount_tax_display: string | null;
       }
 
       type Status =
@@ -974,6 +1012,13 @@ declare module 'stripe' {
       pending_invoice_items_behavior?: InvoiceCreateParams.PendingInvoiceItemsBehavior;
 
       /**
+       * Options for invoice PDF rendering.
+       */
+      rendering_options?: Stripe.Emptyable<
+        InvoiceCreateParams.RenderingOptions
+      >;
+
+      /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
        */
       statement_descriptor?: string;
@@ -1139,9 +1184,23 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
+               * Configuration for eu_bank_transfer funding type.
+               */
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                */
               type?: string;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: string;
+              }
             }
           }
 
@@ -1196,6 +1255,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
@@ -1207,6 +1267,19 @@ declare module 'stripe' {
         | 'exclude'
         | 'include'
         | 'include_and_require';
+
+      interface RenderingOptions {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+         */
+        amount_tax_display?: Stripe.Emptyable<
+          RenderingOptions.AmountTaxDisplay
+        >;
+      }
+
+      namespace RenderingOptions {
+        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+      }
 
       interface TransferData {
         /**
@@ -1318,6 +1391,13 @@ declare module 'stripe' {
        * Configuration settings for the PaymentIntent that is generated when the invoice is finalized.
        */
       payment_settings?: InvoiceUpdateParams.PaymentSettings;
+
+      /**
+       * Options for invoice PDF rendering.
+       */
+      rendering_options?: Stripe.Emptyable<
+        InvoiceUpdateParams.RenderingOptions
+      >;
 
       /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -1480,9 +1560,23 @@ declare module 'stripe' {
           namespace CustomerBalance {
             interface BankTransfer {
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `jp_bank_transfer`.
+               * Configuration for eu_bank_transfer funding type.
+               */
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                */
               type?: string;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: string;
+              }
             }
           }
 
@@ -1537,11 +1631,25 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
           | 'wechat_pay';
+      }
+
+      interface RenderingOptions {
+        /**
+         * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+         */
+        amount_tax_display?: Stripe.Emptyable<
+          RenderingOptions.AmountTaxDisplay
+        >;
+      }
+
+      namespace RenderingOptions {
+        type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
       }
 
       interface TransferData {

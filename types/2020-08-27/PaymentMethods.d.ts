@@ -84,6 +84,8 @@ declare module 'stripe' {
 
       paynow?: PaymentMethod.Paynow;
 
+      promptpay?: PaymentMethod.Promptpay;
+
       /**
        * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
        */
@@ -611,6 +613,8 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface Promptpay {}
+
       interface RadarOptions {
         /**
          * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -695,6 +699,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
@@ -902,6 +907,11 @@ declare module 'stripe' {
        * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
        */
       paynow?: PaymentMethodCreateParams.Paynow;
+
+      /**
+       * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
+       */
+      promptpay?: PaymentMethodCreateParams.Promptpay;
 
       /**
        * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
@@ -1224,6 +1234,8 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface Promptpay {}
+
       interface RadarOptions {
         /**
          * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -1271,6 +1283,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
@@ -1448,7 +1461,7 @@ declare module 'stripe' {
       type: PaymentMethodListParams.Type;
 
       /**
-       * The ID of the customer whose PaymentMethods will be retrieved. If not provided, the response list will be empty.
+       * The ID of the customer whose PaymentMethods will be retrieved.
        */
       customer?: string;
 
@@ -1482,6 +1495,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
@@ -1522,7 +1536,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
-       * Retrieves a PaymentMethod object.
+       * Retrieves a PaymentMethod object attached to the StripeAccount. To retrieve a payment method attached to a Customer, you should use [Retrieve a Customer's PaymentMethods](https://stripe.com/docs/api/payment_methods/customer)
        */
       retrieve(
         id: string,
@@ -1544,7 +1558,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
 
       /**
-       * Returns a list of PaymentMethods. For listing a customer's payment methods, you should use [List a Customer's PaymentMethods](https://stripe.com/docs/api/payment_methods/customer_list)
+       * Returns a list of PaymentMethods attached to the StripeAccount. For listing a customer's payment methods, you should use [List a Customer's PaymentMethods](https://stripe.com/docs/api/payment_methods/customer_list)
        */
       list(
         params: PaymentMethodListParams,

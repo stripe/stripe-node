@@ -277,6 +277,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The status of the promptpay payments capability of the account, or whether the account can directly process promptpay charges.
+         */
+        promptpay_payments?: Capabilities.PromptpayPayments;
+
+        /**
          * The status of the SEPA Direct Debits payments capability of the account, or whether the account can directly process SEPA Direct Debits charges.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
@@ -360,6 +365,8 @@ declare module 'stripe' {
         type P24Payments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
+
+        type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
         type SepaDebitPayments = 'active' | 'inactive' | 'pending';
 
@@ -874,6 +881,8 @@ declare module 'stripe' {
         payouts?: Settings.Payouts;
 
         sepa_debit_payments?: Settings.SepaDebitPayments;
+
+        treasury?: Settings.Treasury;
       }
 
       namespace Settings {
@@ -936,6 +945,16 @@ declare module 'stripe' {
            * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
            */
           statement_descriptor_prefix: string | null;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kana: string | null;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kanji: string | null;
         }
 
         namespace CardPayments {
@@ -979,6 +998,16 @@ declare module 'stripe' {
            * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only)
            */
           statement_descriptor_kanji: string | null;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kana: string | null;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kanji: string | null;
         }
 
         interface Payouts {
@@ -1024,6 +1053,29 @@ declare module 'stripe' {
            * SEPA creditor identifier that identifies the company making the payment.
            */
           creditor_id?: string;
+        }
+
+        interface Treasury {
+          tos_acceptance?: Treasury.TosAcceptance;
+        }
+
+        namespace Treasury {
+          interface TosAcceptance {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date: number | null;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip: string | null;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: string;
+          }
         }
       }
 
@@ -1333,6 +1385,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The promptpay_payments capability.
+         */
+        promptpay_payments?: Capabilities.PromptpayPayments;
+
+        /**
          * The sepa_debit_payments capability.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
@@ -1531,6 +1588,13 @@ declare module 'stripe' {
         }
 
         interface PaynowPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PromptpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2069,6 +2133,11 @@ declare module 'stripe' {
          * Settings specific to the account's payouts.
          */
         payouts?: Settings.Payouts;
+
+        /**
+         * Settings specific to the account's Treasury FinancialAccounts.
+         */
+        treasury?: Settings.Treasury;
       }
 
       namespace Settings {
@@ -2130,6 +2199,16 @@ declare module 'stripe' {
            * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
            */
           statement_descriptor_prefix?: string;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kana?: Stripe.Emptyable<string>;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kanji?: Stripe.Emptyable<string>;
         }
 
         namespace CardPayments {
@@ -2214,6 +2293,32 @@ declare module 'stripe' {
               | 'thursday'
               | 'tuesday'
               | 'wednesday';
+          }
+        }
+
+        interface Treasury {
+          /**
+           * Details on the account's acceptance of the Stripe Treasury Services Agreement.
+           */
+          tos_acceptance?: Treasury.TosAcceptance;
+        }
+
+        namespace Treasury {
+          interface TosAcceptance {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: string;
           }
         }
       }
@@ -2501,6 +2606,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The promptpay_payments capability.
+         */
+        promptpay_payments?: Capabilities.PromptpayPayments;
+
+        /**
          * The sepa_debit_payments capability.
          */
         sepa_debit_payments?: Capabilities.SepaDebitPayments;
@@ -2699,6 +2809,13 @@ declare module 'stripe' {
         }
 
         interface PaynowPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface PromptpayPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -3200,6 +3317,11 @@ declare module 'stripe' {
          * Settings specific to the account's payouts.
          */
         payouts?: Settings.Payouts;
+
+        /**
+         * Settings specific to the account's Treasury FinancialAccounts.
+         */
+        treasury?: Settings.Treasury;
       }
 
       namespace Settings {
@@ -3261,6 +3383,16 @@ declare module 'stripe' {
            * The default text that appears on credit card statements when a charge is made. This field prefixes any dynamic `statement_descriptor` specified on the charge. `statement_descriptor_prefix` is useful for maximizing descriptor space for the dynamic portion.
            */
           statement_descriptor_prefix?: string;
+
+          /**
+           * The Kana variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kana` specified on the charge. `statement_descriptor_prefix_kana` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kana?: Stripe.Emptyable<string>;
+
+          /**
+           * The Kanji variation of the default text that appears on credit card statements when a charge is made (Japan only). This field prefixes any dynamic `statement_descriptor_suffix_kanji` specified on the charge. `statement_descriptor_prefix_kanji` is useful for maximizing descriptor space for the dynamic portion.
+           */
+          statement_descriptor_prefix_kanji?: Stripe.Emptyable<string>;
         }
 
         namespace CardPayments {
@@ -3345,6 +3477,32 @@ declare module 'stripe' {
               | 'thursday'
               | 'tuesday'
               | 'wednesday';
+          }
+        }
+
+        interface Treasury {
+          /**
+           * Details on the account's acceptance of the Stripe Treasury Services Agreement.
+           */
+          tos_acceptance?: Treasury.TosAcceptance;
+        }
+
+        namespace Treasury {
+          interface TosAcceptance {
+            /**
+             * The Unix timestamp marking when the account representative accepted the service agreement.
+             */
+            date?: number;
+
+            /**
+             * The IP address from which the account representative accepted the service agreement.
+             */
+            ip?: string;
+
+            /**
+             * The user agent of the browser from which the account representative accepted the service agreement.
+             */
+            user_agent?: string;
           }
         }
       }

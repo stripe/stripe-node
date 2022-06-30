@@ -62,9 +62,9 @@ declare module 'stripe' {
         network: ReceivedDebit.Network;
 
         /**
-         * Details specific to the money movement rails.
+         * Details describing when a ReceivedDebit might be reversed.
          */
-        network_details?: ReceivedDebit.NetworkDetails | null;
+        reversal_details: ReceivedDebit.ReversalDetails | null;
 
         /**
          * Status of the ReceivedDebit. ReceivedDebits are created with a status of either `succeeded` (approved) or `failed` (declined). The failure reason can be found under the `failure_code`.
@@ -161,6 +161,11 @@ declare module 'stripe' {
 
         interface LinkedFlows {
           /**
+           * The DebitReversal created as a result of this ReceivedDebit being reversed.
+           */
+          debit_reversal: string | null;
+
+          /**
            * Set if the ReceivedDebit is associated with an InboundTransfer's return of funds.
            */
           inbound_transfer: string | null;
@@ -174,34 +179,29 @@ declare module 'stripe' {
            * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://stripe.com/docs/api#issuing_disputes) object.
            */
           issuing_transaction: string | null;
-
-          /**
-           * The ReceivedCredit that Capital withheld from
-           */
-          received_credit_capital_withholding?: string | null;
         }
 
         type Network = 'ach' | 'card' | 'stripe';
 
-        interface NetworkDetails {
+        interface ReversalDetails {
           /**
-           * Details about an ACH transaction.
+           * Time before which a ReceivedDebit can be reversed.
            */
-          ach?: NetworkDetails.Ach | null;
+          deadline: number | null;
 
           /**
-           * The type of flow that originated the ReceivedDebit.
+           * Set if a ReceivedDebit can't be reversed.
            */
-          type: 'ach';
+          restricted_reason: ReversalDetails.RestrictedReason | null;
         }
 
-        namespace NetworkDetails {
-          interface Ach {
-            /**
-             * ACH Addenda record
-             */
-            addenda: string | null;
-          }
+        namespace ReversalDetails {
+          type RestrictedReason =
+            | 'already_reversed'
+            | 'deadline_passed'
+            | 'network_restricted'
+            | 'other'
+            | 'source_flow_restricted';
         }
 
         type Status = 'failed' | 'succeeded';
