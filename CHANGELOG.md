@@ -1,4 +1,55 @@
-# CHANGELOG
+# Changelog
+
+## 9.11.0 - 2022-06-29
+* [#1462](https://github.com/stripe/stripe-node/pull/1462) API Updates
+  * Add support for `deliver_card`, `fail_card`, `return_card`, and `ship_card` test helper methods on resource `Issuing.Card`
+  * Change type of `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]` from `literal('card')` to `enum`
+  * Add support for `hosted_regulatory_receipt_url` on `Treasury.ReceivedCredit` and `Treasury.ReceivedDebit`
+
+## 9.10.0 - 2022-06-23
+* [#1459](https://github.com/stripe/stripe-node/pull/1459) API Updates
+  * Add support for `capture_method` on `PaymentIntentConfirmParams` and `PaymentIntentUpdateParams`
+* [#1458](https://github.com/stripe/stripe-node/pull/1458) API Updates
+  * Add support for `promptpay_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for `promptpay` on `Charge.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for new value `promptpay` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for `subtotal_excluding_tax` on `CreditNote` and `Invoice`
+  * Add support for `amount_excluding_tax` and `unit_amount_excluding_tax` on `CreditNoteLineItem` and `InvoiceLineItem`
+  * Add support for new value `promptpay` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
+  * Add support for `rendering_options` on `InvoiceCreateParams` and `InvoiceUpdateParams`
+  * Add support for new value `promptpay` on enums `Invoice.payment_settings.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Subscription.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_types[]`
+  * Add support for `total_excluding_tax` on `Invoice`
+  * Add support for `automatic_payment_methods` on `Order.payment.settings`
+  * Add support for new value `promptpay` on enums `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
+  * Add support for `promptpay_display_qr_code` on `PaymentIntent.next_action`
+  * Add support for new value `promptpay` on enum `PaymentMethodCreateParams.type`
+  * Add support for new value `promptpay` on enum `PaymentMethod.type`
+* [#1455](https://github.com/stripe/stripe-node/pull/1455) fix: Stop using path.join to create URLs.
+
+## 9.9.0 - 2022-06-17
+* [#1453](https://github.com/stripe/stripe-node/pull/1453) API Updates
+  * Add support for `fund_cash_balance` test helper method on resource `Customer`
+  * Add support for `statement_descriptor_prefix_kana` and `statement_descriptor_prefix_kanji` on `Account.settings.card_payments`, `Account.settings.payments`, `AccountCreateParams.settings.card_payments`, and `AccountUpdateParams.settings.card_payments`
+  * Add support for `statement_descriptor_suffix_kana` and `statement_descriptor_suffix_kanji` on `Checkout.Session.payment_method_options.card`, `CheckoutSessionCreateParams.payment_method_options.card`, `PaymentIntent.payment_method_options.card`, `PaymentIntentConfirmParams.payment_method_options.card`, `PaymentIntentCreateParams.payment_method_options.card`, and `PaymentIntentUpdateParams.payment_method_options.card`
+  * Add support for `total_excluding_tax` on `CreditNote`
+  * Change type of `CustomerCreateParams.invoice_settings.rendering_options` and `CustomerUpdateParams.invoice_settings.rendering_options` from `rendering_options_param` to `emptyStringable(rendering_options_param)`
+  * Add support for `rendering_options` on `Customer.invoice_settings` and `Invoice`
+* [#1452](https://github.com/stripe/stripe-node/pull/1452) Fix non-conforming changelog entries and port the Makefile fix
+* [#1450](https://github.com/stripe/stripe-node/pull/1450) Only publish stable version to the latest tag
+
+## 9.8.0 - 2022-06-09
+* [#1448](https://github.com/stripe/stripe-node/pull/1448) Add types for extra request options
+* [#1446](https://github.com/stripe/stripe-node/pull/1446) API Updates
+  * Add support for `treasury` on `Account.settings`, `AccountCreateParams.settings`, and `AccountUpdateParams.settings`
+  * Add support for `rendering_options` on `CustomerCreateParams.invoice_settings` and `CustomerUpdateParams.invoice_settings`
+  * Add support for `eu_bank_transfer` on `CustomerCreateFundingInstructionsParams.bank_transfer`, `Invoice.payment_settings.payment_method_options.customer_balance.bank_transfer`, `InvoiceCreateParams.payment_settings.payment_method_options.customer_balance.bank_transfer`, `InvoiceUpdateParams.payment_settings.payment_method_options.customer_balance.bank_transfer`, `Order.payment.settings.payment_method_options.customer_balance.bank_transfer`, `OrderCreateParams.payment.settings.payment_method_options.customer_balance.bank_transfer`, `OrderUpdateParams.payment.settings.payment_method_options.customer_balance.bank_transfer`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer`, `PaymentIntentConfirmParams.payment_method_options.customer_balance.bank_transfer`, `PaymentIntentCreateParams.payment_method_options.customer_balance.bank_transfer`, `PaymentIntentUpdateParams.payment_method_options.customer_balance.bank_transfer`, `Subscription.payment_settings.payment_method_options.customer_balance.bank_transfer`, `SubscriptionCreateParams.payment_settings.payment_method_options.customer_balance.bank_transfer`, and `SubscriptionUpdateParams.payment_settings.payment_method_options.customer_balance.bank_transfer`
+  * Change type of `CustomerCreateFundingInstructionsParams.bank_transfer.requested_address_types[]` from `literal('zengin')` to `enum('iban'|'sort_code'|'spei'|'zengin')`
+  * Change type of `CustomerCreateFundingInstructionsParams.bank_transfer.type`, `Order.payment.settings.payment_method_options.customer_balance.bank_transfer.type`, `OrderCreateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.type`, `OrderUpdateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.type`, `PaymentIntent.next_action.display_bank_transfer_instructions.type`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.type`, `PaymentIntentConfirmParams.payment_method_options.customer_balance.bank_transfer.type`, `PaymentIntentCreateParams.payment_method_options.customer_balance.bank_transfer.type`, and `PaymentIntentUpdateParams.payment_method_options.customer_balance.bank_transfer.type` from `literal('jp_bank_transfer')` to `enum('eu_bank_transfer'|'gb_bank_transfer'|'jp_bank_transfer'|'mx_bank_transfer')`
+  * Add support for `iban`, `sort_code`, and `spei` on `FundingInstructions.bank_transfer.financial_addresses[]` and `PaymentIntent.next_action.display_bank_transfer_instructions.financial_addresses[]`
+  * Add support for new values `bacs`, `fps`, and `spei` on enums `FundingInstructions.bank_transfer.financial_addresses[].supported_networks[]` and `PaymentIntent.next_action.display_bank_transfer_instructions.financial_addresses[].supported_networks[]`
+  * Add support for new values `sort_code` and `spei` on enums `FundingInstructions.bank_transfer.financial_addresses[].type` and `PaymentIntent.next_action.display_bank_transfer_instructions.financial_addresses[].type`
+  * Change type of `Order.payment.settings.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `OrderCreateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `OrderUpdateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntentConfirmParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `PaymentIntentCreateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, and `PaymentIntentUpdateParams.payment_method_options.customer_balance.bank_transfer.requested_address_types[]` from `literal('zengin')` to `enum`
+  * Add support for `custom_unit_amount` on `PriceCreateParams` and `Price`
 
 ## 9.8.0-beta.1 - 2022-06-08
 * [#1442](https://github.com/stripe/stripe-node/pull/1442) API Updates
@@ -23,7 +74,6 @@
   * Change `PaymentIntent.next_action.display_bank_transfer_instructions.hosted_instructions_url` to be required
   * Add support for `network` on `SetupIntent.payment_method_options.card`
   * Add support for new value `simulated_wisepos_e` on enums `Terminal.Reader.device_type` and `TerminalReaderListParams.device_type`
-
 
 ## 9.5.0 - 2022-05-26
 * [#1434](https://github.com/stripe/stripe-node/pull/1434) API Updates
@@ -94,7 +144,6 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
   * Add support for `default_price_data` on `ProductCreateParams`
   * Add support for `default_price` on `ProductUpdateParams` and `Product`
   * Add support for `instructions_email` on `RefundCreateParams` and `Refund`
-
 
 ## 8.221.0 - 2022-05-05
 * [#1413](https://github.com/stripe/stripe-node/pull/1413) API Updates
@@ -372,7 +421,6 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 * [#1297](https://github.com/stripe/stripe-node/pull/1297) API Updates
   * Add support for `automatic_payment_methods` on `PaymentIntentCreateParams` and `PaymentIntent`
 
-
 ## 8.189.0 - 2021-11-16
 * [#1295](https://github.com/stripe/stripe-node/pull/1295) API Updates
   * Add support for new resource `ShippingRate`
@@ -394,7 +442,6 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
 * [#1284](https://github.com/stripe/stripe-node/pull/1284) API Updates
   * Remove support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account`. This API was unused.
   * Add support for `ownership_declaration_shown_and_signed` on `TokenCreateParams.account.company`
-
 
 ## 8.186.0 - 2021-11-01
 * [#1283](https://github.com/stripe/stripe-node/pull/1283) API Updates
@@ -538,7 +585,6 @@ Major version release - The [migration guide](https://github.com/stripe/stripe-n
   * Remove support for values `api_connection_error`, `authentication_error`, and `rate_limit_error` from enums `StripeError.type`, `StripeErrorResponse.error.type`, `Invoice.last_finalization_error.type`, `PaymentIntent.last_payment_error.type`, `SetupAttempt.setup_error.type`, and `SetupIntent.last_setup_error.type`
   * Add support for `wallet` on `Issuing.Transaction`
   * Add support for `ideal` on `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, and `PaymentIntent.payment_method_options`
-
 
 ## 8.163.0 - 2021-07-15
 * [#1102](https://github.com/stripe/stripe-node/pull/1102), [#1191](https://github.com/stripe/stripe-node/pull/1191) Add support for `stripeAccount` when initializing the client
@@ -1517,7 +1563,7 @@ Pull requests included in this release (cf. [#606](https://github.com/stripe/str
 
 - [#619](https://github.com/stripe/stripe-node/pull/619) Move `generateTestHeaderString` to stripe.webhooks (fixes a bug in 6.33.0)
 
-## 6.33.0 - 2019-05-08 - UNRELEASED
+## 6.33.0 - 2019-05-08
 
 **Important**: This version is non-functional and has been yanked in favor of 6.32.0.
 
@@ -2072,7 +2118,7 @@ Pull requests included in this release (cf. [#606](https://github.com/stripe/str
 
 - [BUGFIX] Fix incorrect deleteDiscount method & related spec(s)
 
-### 2.2.1
+## 2.2.1 - 2013-12-01
 
 - [BUGFIX] Fix user-agent header issue (see issue #75)
 
@@ -2135,3 +2181,4 @@ Pull requests included in this release (cf. [#606](https://github.com/stripe/str
 ## 0.0.2 - 2011-09-28
 
 - Initial release with customers and tokens APIs
+

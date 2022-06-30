@@ -47,6 +47,11 @@ declare module 'stripe' {
          */
         financial_account: string | null;
 
+        /**
+         * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+         */
+        hosted_regulatory_receipt_url: string | null;
+
         initiating_payment_method_details: ReceivedCredit.InitiatingPaymentMethodDetails;
 
         linked_flows: ReceivedCredit.LinkedFlows;
@@ -65,6 +70,11 @@ declare module 'stripe' {
          * Details specific to the money movement rails.
          */
         network_details?: ReceivedCredit.NetworkDetails | null;
+
+        /**
+         * Details describing when a ReceivedCredit may be reversed.
+         */
+        reversal_details: ReceivedCredit.ReversalDetails | null;
 
         /**
          * Status of the ReceivedCredit. ReceivedCredits are created either `succeeded` (approved) or `failed` (declined). If a ReceivedCredit is declined, the failure reason can be found in the `failure_code` field.
@@ -172,7 +182,7 @@ declare module 'stripe' {
           issuing_transaction: string | null;
 
           /**
-           * ID of the source flow. Set if `network` is `stripe` and the source flow is visible to the merchant. Examples of source flows include OutboundPayments, payouts, or CreditReversals.
+           * ID of the source flow. Set if `network` is `stripe` and the source flow is visible to the user. Examples of source flows include OutboundPayments, payouts, or CreditReversals.
            */
           source_flow: string | null;
 
@@ -249,6 +259,27 @@ declare module 'stripe' {
              */
             addenda: string | null;
           }
+        }
+
+        interface ReversalDetails {
+          /**
+           * Time before which a ReceivedCredit can be reversed.
+           */
+          deadline: number | null;
+
+          /**
+           * Set if a ReceivedCredit cannot be reversed.
+           */
+          restricted_reason: ReversalDetails.RestrictedReason | null;
+        }
+
+        namespace ReversalDetails {
+          type RestrictedReason =
+            | 'already_reversed'
+            | 'deadline_passed'
+            | 'network_restricted'
+            | 'other'
+            | 'source_flow_restricted';
         }
 
         type Status = 'failed' | 'succeeded';

@@ -47,6 +47,11 @@ declare module 'stripe' {
          */
         financial_account: string | null;
 
+        /**
+         * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+         */
+        hosted_regulatory_receipt_url: string | null;
+
         initiating_payment_method_details?: ReceivedDebit.InitiatingPaymentMethodDetails;
 
         linked_flows: ReceivedDebit.LinkedFlows;
@@ -65,6 +70,11 @@ declare module 'stripe' {
          * Details specific to the money movement rails.
          */
         network_details?: ReceivedDebit.NetworkDetails | null;
+
+        /**
+         * Details describing when a ReceivedDebit might be reversed.
+         */
+        reversal_details: ReceivedDebit.ReversalDetails | null;
 
         /**
          * Status of the ReceivedDebit. ReceivedDebits are created with a status of either `succeeded` (approved) or `failed` (declined). The failure reason can be found under the `failure_code`.
@@ -161,6 +171,11 @@ declare module 'stripe' {
 
         interface LinkedFlows {
           /**
+           * The DebitReversal created as a result of this ReceivedDebit being reversed.
+           */
+          debit_reversal: string | null;
+
+          /**
            * Set if the ReceivedDebit is associated with an InboundTransfer's return of funds.
            */
           inbound_transfer: string | null;
@@ -202,6 +217,27 @@ declare module 'stripe' {
              */
             addenda: string | null;
           }
+        }
+
+        interface ReversalDetails {
+          /**
+           * Time before which a ReceivedDebit can be reversed.
+           */
+          deadline: number | null;
+
+          /**
+           * Set if a ReceivedDebit can't be reversed.
+           */
+          restricted_reason: ReversalDetails.RestrictedReason | null;
+        }
+
+        namespace ReversalDetails {
+          type RestrictedReason =
+            | 'already_reversed'
+            | 'deadline_passed'
+            | 'network_restricted'
+            | 'other'
+            | 'source_flow_restricted';
         }
 
         type Status = 'failed' | 'succeeded';

@@ -87,7 +87,7 @@ declare module 'stripe' {
         customer_creation: Session.CustomerCreation | null;
 
         /**
-         * The customer details including the customer's tax exempt status and the customer's tax IDs. Only present on Sessions in `payment` or `subscription` mode.
+         * The customer details including the customer's tax exempt status and the customer's tax IDs. Only the customer's email is present on Sessions in `setup` mode.
          */
         customer_details: Session.CustomerDetails | null;
 
@@ -494,6 +494,9 @@ declare module 'stripe' {
 
         namespace PaymentMethodOptions {
           interface AcssDebit {
+            /**
+             * Currency supported by the bank account. Returned when the Session is in `setup` mode.
+             */
             currency?: string;
 
             mandate_options?: AcssDebit.MandateOptions;
@@ -653,6 +656,16 @@ declare module 'stripe' {
              * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
              */
             setup_future_usage?: Card.SetupFutureUsage;
+
+            /**
+             * Provides information about a card payment that customers see on their statements. Concatenated with the Kana prefix (shortened Kana descriptor) or Kana statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 22 characters.
+             */
+            statement_descriptor_suffix_kana?: string;
+
+            /**
+             * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
+             */
+            statement_descriptor_suffix_kanji?: string;
           }
 
           namespace Card {
@@ -2133,6 +2146,16 @@ declare module 'stripe' {
              * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
              */
             setup_future_usage?: Card.SetupFutureUsage;
+
+            /**
+             * Provides information about a card payment that customers see on their statements. Concatenated with the Kana prefix (shortened Kana descriptor) or Kana statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 22 characters.
+             */
+            statement_descriptor_suffix_kana?: string;
+
+            /**
+             * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
+             */
+            statement_descriptor_suffix_kanji?: string;
           }
 
           namespace Card {
@@ -2383,6 +2406,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'

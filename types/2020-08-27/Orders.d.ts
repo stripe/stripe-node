@@ -178,12 +178,17 @@ declare module 'stripe' {
           application_fee_amount: number | null;
 
           /**
+           * Indicates whether order has been opted into using [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods) to manage payment method types.
+           */
+          automatic_payment_methods: Settings.AutomaticPaymentMethods | null;
+
+          /**
            * PaymentMethod-specific configuration to provide to the order's PaymentIntent.
            */
           payment_method_options: Settings.PaymentMethodOptions | null;
 
           /**
-           * The list of payment method types (e.g., card) to provide to the order's PaymentIntent.
+           * The list of [payment method types](https://stripe.com/docs/payments/payment-methods/overview) to provide to the order's PaymentIntent. Do not include this attribute if you prefer to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
            */
           payment_method_types: Array<Settings.PaymentMethodType> | null;
 
@@ -209,6 +214,13 @@ declare module 'stripe' {
         }
 
         namespace Settings {
+          interface AutomaticPaymentMethods {
+            /**
+             * Whether this Order has been opted into managing payment method types via the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+             */
+            enabled: boolean;
+          }
+
           interface PaymentMethodOptions {
             acss_debit?: PaymentMethodOptions.AcssDebit;
 
@@ -405,17 +417,47 @@ declare module 'stripe' {
 
             namespace CustomerBalance {
               interface BankTransfer {
+                eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
                 /**
                  * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
                  *
-                 * Permitted values include: `zengin`.
+                 * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
                  */
-                requested_address_types?: Array<'zengin'>;
+                requested_address_types?: Array<
+                  BankTransfer.RequestedAddressType
+                >;
 
                 /**
-                 * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+                 * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                  */
-                type: 'jp_bank_transfer' | null;
+                type: BankTransfer.Type | null;
+              }
+
+              namespace BankTransfer {
+                interface EuBankTransfer {
+                  /**
+                   * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                   */
+                  country: EuBankTransfer.Country;
+                }
+
+                namespace EuBankTransfer {
+                  type Country = 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+                }
+
+                type RequestedAddressType =
+                  | 'iban'
+                  | 'sepa'
+                  | 'sort_code'
+                  | 'spei'
+                  | 'zengin';
+
+                type Type =
+                  | 'eu_bank_transfer'
+                  | 'gb_bank_transfer'
+                  | 'jp_bank_transfer'
+                  | 'mx_bank_transfer';
               }
             }
 
@@ -1078,7 +1120,7 @@ declare module 'stripe' {
           payment_method_options?: Settings.PaymentMethodOptions;
 
           /**
-           * The list of payment method types (e.g., card) to provide to the order's PaymentIntent.
+           * The list of [payment method types](https://stripe.com/docs/payments/payment-methods/overview) to provide to the order's PaymentIntent. Do not include this attribute if you prefer to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
            */
           payment_method_types?: Array<Settings.PaymentMethodType>;
 
@@ -1363,17 +1405,43 @@ declare module 'stripe' {
 
             namespace CustomerBalance {
               interface BankTransfer {
+                eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
                 /**
                  * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
                  *
-                 * Permitted values include: `zengin`.
+                 * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
                  */
-                requested_address_types?: Array<'zengin'>;
+                requested_address_types?: Array<
+                  BankTransfer.RequestedAddressType
+                >;
 
                 /**
-                 * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+                 * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                  */
-                type: 'jp_bank_transfer';
+                type: BankTransfer.Type;
+              }
+
+              namespace BankTransfer {
+                interface EuBankTransfer {
+                  /**
+                   * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                   */
+                  country: string;
+                }
+
+                type RequestedAddressType =
+                  | 'iban'
+                  | 'sepa'
+                  | 'sort_code'
+                  | 'spei'
+                  | 'zengin';
+
+                type Type =
+                  | 'eu_bank_transfer'
+                  | 'gb_bank_transfer'
+                  | 'jp_bank_transfer'
+                  | 'mx_bank_transfer';
               }
             }
 
@@ -2096,7 +2164,7 @@ declare module 'stripe' {
           payment_method_options?: Settings.PaymentMethodOptions;
 
           /**
-           * The list of payment method types (e.g., card) to provide to the order's PaymentIntent.
+           * The list of [payment method types](https://stripe.com/docs/payments/payment-methods/overview) to provide to the order's PaymentIntent. Do not include this attribute if you prefer to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
            */
           payment_method_types?: Array<Settings.PaymentMethodType>;
 
@@ -2385,17 +2453,43 @@ declare module 'stripe' {
 
             namespace CustomerBalance {
               interface BankTransfer {
+                eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
                 /**
                  * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
                  *
-                 * Permitted values include: `zengin`.
+                 * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
                  */
-                requested_address_types?: Array<'zengin'>;
+                requested_address_types?: Array<
+                  BankTransfer.RequestedAddressType
+                >;
 
                 /**
-                 * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+                 * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
                  */
-                type: 'jp_bank_transfer';
+                type: BankTransfer.Type;
+              }
+
+              namespace BankTransfer {
+                interface EuBankTransfer {
+                  /**
+                   * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                   */
+                  country: string;
+                }
+
+                type RequestedAddressType =
+                  | 'iban'
+                  | 'sepa'
+                  | 'sort_code'
+                  | 'spei'
+                  | 'zengin';
+
+                type Type =
+                  | 'eu_bank_transfer'
+                  | 'gb_bank_transfer'
+                  | 'jp_bank_transfer'
+                  | 'mx_bank_transfer';
               }
             }
 

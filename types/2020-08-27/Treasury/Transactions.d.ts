@@ -110,7 +110,7 @@ declare module 'stripe' {
           debit_reversal?: Stripe.Treasury.DebitReversal;
 
           /**
-           * Use InboundTransfers to add funds to your [FinancialAccount](https://stripe.com/docs/api#financial_accounts) via a PaymentMethod that is owned by you. The funds will be transferred via an ACH debit.
+           * Use [InboundTransfers](https://stripe.com/docs/treasury/moving-money/financial-accounts/into/inbound-transfers) to add funds to your [FinancialAccount](https://stripe.com/docs/api#financial_accounts) via a PaymentMethod that is owned by you. The funds will be transferred via an ACH debit.
            */
           inbound_transfer?: Stripe.Treasury.InboundTransfer;
 

@@ -366,6 +366,8 @@ declare module 'stripe' {
 
         paynow_display_qr_code?: NextAction.PaynowDisplayQrCode;
 
+        promptpay_display_qr_code?: NextAction.PromptpayDisplayQrCode;
+
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
@@ -475,11 +477,26 @@ declare module 'stripe' {
           /**
            * Type of bank transfer
            */
-          type: 'jp_bank_transfer';
+          type: DisplayBankTransferInstructions.Type;
         }
 
         namespace DisplayBankTransferInstructions {
           interface FinancialAddress {
+            /**
+             * Iban Records contain E.U. bank account details per the SEPA format.
+             */
+            iban?: FinancialAddress.Iban;
+
+            /**
+             * Sort Code Records contain U.K. bank account details per the sort code format.
+             */
+            sort_code?: FinancialAddress.SortCode;
+
+            /**
+             * SPEI Records contain Mexico bank account details per the SPEI format.
+             */
+            spei?: FinancialAddress.Spei;
+
             /**
              * The payment networks supported by this FinancialAddress
              */
@@ -497,9 +514,65 @@ declare module 'stripe' {
           }
 
           namespace FinancialAddress {
-            type SupportedNetwork = 'sepa' | 'zengin';
+            interface Iban {
+              /**
+               * The name of the person or business that owns the bank account
+               */
+              account_holder_name: string;
 
-            type Type = 'iban' | 'zengin';
+              /**
+               * The BIC/SWIFT code of the account.
+               */
+              bic: string;
+
+              /**
+               * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+               */
+              country: string;
+
+              /**
+               * The IBAN of the account.
+               */
+              iban: string;
+            }
+
+            interface SortCode {
+              /**
+               * The name of the person or business that owns the bank account
+               */
+              account_holder_name: string;
+
+              /**
+               * The account number
+               */
+              account_number: string;
+
+              /**
+               * The six-digit sort code
+               */
+              sort_code: string;
+            }
+
+            interface Spei {
+              /**
+               * The three-digit bank code
+               */
+              bank_code: string;
+
+              /**
+               * The short banking institution name
+               */
+              bank_name: string;
+
+              /**
+               * The CLABE number
+               */
+              clabe: string;
+            }
+
+            type SupportedNetwork = 'bacs' | 'fps' | 'sepa' | 'spei' | 'zengin';
+
+            type Type = 'iban' | 'sort_code' | 'spei' | 'zengin';
 
             interface Zengin {
               /**
@@ -538,6 +611,12 @@ declare module 'stripe' {
               branch_name: string | null;
             }
           }
+
+          type Type =
+            | 'eu_bank_transfer'
+            | 'gb_bank_transfer'
+            | 'jp_bank_transfer'
+            | 'mx_bank_transfer';
         }
 
         interface KonbiniDisplayDetails {
@@ -658,6 +737,28 @@ declare module 'stripe' {
 
           /**
            * The image_url_svg string used to render QR code
+           */
+          image_url_svg: string;
+        }
+
+        interface PromptpayDisplayQrCode {
+          /**
+           * The raw data string used to generate QR code, it should be used together with QR code library.
+           */
+          data: string;
+
+          /**
+           * The URL to the hosted PromptPay instructions page, which allows customers to view the PromptPay QR code.
+           */
+          hosted_instructions_url: string;
+
+          /**
+           * The image_url_png string used to render QR code, can be used as <img src="…" />
+           */
+          image_url_png: string;
+
+          /**
+           * The image_url_svg string used to render QR code, can be used as <img src="…" />
            */
           image_url_svg: string;
         }
@@ -810,6 +911,8 @@ declare module 'stripe' {
         p24?: PaymentMethodOptions.P24;
 
         paynow?: PaymentMethodOptions.Paynow;
+
+        promptpay?: PaymentMethodOptions.Promptpay;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -1034,6 +1137,16 @@ declare module 'stripe' {
            * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
            */
           setup_future_usage?: Card.SetupFutureUsage;
+
+          /**
+           * Provides information about a card payment that customers see on their statements. Concatenated with the Kana prefix (shortened Kana descriptor) or Kana statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 22 characters.
+           */
+          statement_descriptor_suffix_kana?: string;
+
+          /**
+           * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
+           */
+          statement_descriptor_suffix_kanji?: string;
         }
 
         namespace Card {
@@ -1194,17 +1307,45 @@ declare module 'stripe' {
 
         namespace CustomerBalance {
           interface BankTransfer {
+            eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
             /**
              * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
              *
-             * Permitted values include: `zengin`.
+             * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
              */
-            requested_address_types?: Array<'zengin'>;
+            requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+             * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
              */
-            type: 'jp_bank_transfer' | null;
+            type: BankTransfer.Type | null;
+          }
+
+          namespace BankTransfer {
+            interface EuBankTransfer {
+              /**
+               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               */
+              country: EuBankTransfer.Country;
+            }
+
+            namespace EuBankTransfer {
+              type Country = 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+            }
+
+            type RequestedAddressType =
+              | 'iban'
+              | 'sepa'
+              | 'sort_code'
+              | 'spei'
+              | 'zengin';
+
+            type Type =
+              | 'eu_bank_transfer'
+              | 'gb_bank_transfer'
+              | 'jp_bank_transfer'
+              | 'mx_bank_transfer';
           }
         }
 
@@ -1374,6 +1515,17 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Promptpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -1923,6 +2075,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
+         */
+        promptpay?: PaymentMethodData.Promptpay;
+
+        /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
          */
         radar_options?: PaymentMethodData.RadarOptions;
@@ -2217,6 +2374,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Promptpay {}
+
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -2263,6 +2422,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
@@ -2423,6 +2583,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
+         */
+        promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -2706,6 +2871,16 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<Card.SetupFutureUsage>;
+
+          /**
+           * Provides information about a card payment that customers see on their statements. Concatenated with the Kana prefix (shortened Kana descriptor) or Kana statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 22 characters.
+           */
+          statement_descriptor_suffix_kana?: Stripe.Emptyable<string>;
+
+          /**
+           * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
+           */
+          statement_descriptor_suffix_kanji?: Stripe.Emptyable<string>;
         }
 
         namespace Card {
@@ -2851,17 +3026,41 @@ declare module 'stripe' {
 
         namespace CustomerBalance {
           interface BankTransfer {
+            eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
             /**
              * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
              *
-             * Permitted values include: `zengin`.
+             * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
              */
-            requested_address_types?: Array<'zengin'>;
+            requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
              */
-            type: 'jp_bank_transfer';
+            type: BankTransfer.Type;
+          }
+
+          namespace BankTransfer {
+            interface EuBankTransfer {
+              /**
+               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               */
+              country: string;
+            }
+
+            type RequestedAddressType =
+              | 'iban'
+              | 'sepa'
+              | 'sort_code'
+              | 'spei'
+              | 'zengin';
+
+            type Type =
+              | 'eu_bank_transfer'
+              | 'gb_bank_transfer'
+              | 'jp_bank_transfer'
+              | 'mx_bank_transfer';
           }
         }
 
@@ -3098,6 +3297,19 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Promptpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -3346,6 +3558,11 @@ declare module 'stripe' {
       application_fee_amount?: Stripe.Emptyable<number>;
 
       /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: PaymentIntentUpdateParams.CaptureMethod;
+
+      /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
       currency?: string;
@@ -3441,6 +3658,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
+      type CaptureMethod = 'automatic' | 'manual';
+
       interface PaymentMethodData {
         /**
          * If this is an `acss_debit` PaymentMethod, this hash contains details about the ACSS Debit payment method.
@@ -3556,6 +3775,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
+         */
+        promptpay?: PaymentMethodData.Promptpay;
 
         /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
@@ -3852,6 +4076,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Promptpay {}
+
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -3898,6 +4124,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
@@ -4058,6 +4285,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
+         */
+        promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -4341,6 +4573,16 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<Card.SetupFutureUsage>;
+
+          /**
+           * Provides information about a card payment that customers see on their statements. Concatenated with the Kana prefix (shortened Kana descriptor) or Kana statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 22 characters.
+           */
+          statement_descriptor_suffix_kana?: Stripe.Emptyable<string>;
+
+          /**
+           * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
+           */
+          statement_descriptor_suffix_kanji?: Stripe.Emptyable<string>;
         }
 
         namespace Card {
@@ -4486,17 +4728,41 @@ declare module 'stripe' {
 
         namespace CustomerBalance {
           interface BankTransfer {
+            eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
             /**
              * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
              *
-             * Permitted values include: `zengin`.
+             * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
              */
-            requested_address_types?: Array<'zengin'>;
+            requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
              */
-            type: 'jp_bank_transfer';
+            type: BankTransfer.Type;
+          }
+
+          namespace BankTransfer {
+            interface EuBankTransfer {
+              /**
+               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               */
+              country: string;
+            }
+
+            type RequestedAddressType =
+              | 'iban'
+              | 'sepa'
+              | 'sort_code'
+              | 'spei'
+              | 'zengin';
+
+            type Type =
+              | 'eu_bank_transfer'
+              | 'gb_bank_transfer'
+              | 'jp_bank_transfer'
+              | 'mx_bank_transfer';
           }
         }
 
@@ -4733,6 +4999,19 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Promptpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -5040,6 +5319,11 @@ declare module 'stripe' {
 
     interface PaymentIntentConfirmParams {
       /**
+       * Controls when the funds will be captured from the customer's account.
+       */
+      capture_method?: PaymentIntentConfirmParams.CaptureMethod;
+
+      /**
        * Set to `true` to fail the payment attempt if the PaymentIntent transitions into `requires_action`. This parameter is intended for simpler integrations that do not handle customer actions, like [saving cards without authentication](https://stripe.com/docs/payments/save-card-without-authentication).
        */
       error_on_requires_action?: boolean;
@@ -5125,6 +5409,8 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentConfirmParams {
+      type CaptureMethod = 'automatic' | 'manual';
+
       interface MandateData1 {
         /**
          * This hash contains details about the customer acceptance of the Mandate.
@@ -5326,6 +5612,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this hash contains details about the PayNow payment method.
          */
         paynow?: PaymentMethodData.Paynow;
+
+        /**
+         * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
+         */
+        promptpay?: PaymentMethodData.Promptpay;
 
         /**
          * Options to configure Radar. See [Radar Session](https://stripe.com/docs/radar/radar-session) for more information.
@@ -5622,6 +5913,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Promptpay {}
+
         interface RadarOptions {
           /**
            * A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.
@@ -5668,6 +5961,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
@@ -5828,6 +6122,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
+         */
+        promptpay?: Stripe.Emptyable<PaymentMethodOptions.Promptpay>;
 
         /**
          * If this is a `sepa_debit` PaymentIntent, this sub-hash contains details about the SEPA Debit payment method options.
@@ -6111,6 +6410,16 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: Stripe.Emptyable<Card.SetupFutureUsage>;
+
+          /**
+           * Provides information about a card payment that customers see on their statements. Concatenated with the Kana prefix (shortened Kana descriptor) or Kana statement descriptor that's set on the account to form the complete statement descriptor. Maximum 22 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 22 characters.
+           */
+          statement_descriptor_suffix_kana?: Stripe.Emptyable<string>;
+
+          /**
+           * Provides information about a card payment that customers see on their statements. Concatenated with the Kanji prefix (shortened Kanji descriptor) or Kanji statement descriptor that's set on the account to form the complete statement descriptor. Maximum 17 characters. On card statements, the *concatenation* of both prefix and suffix (including separators) will appear truncated to 17 characters.
+           */
+          statement_descriptor_suffix_kanji?: Stripe.Emptyable<string>;
         }
 
         namespace Card {
@@ -6256,17 +6565,41 @@ declare module 'stripe' {
 
         namespace CustomerBalance {
           interface BankTransfer {
+            eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
             /**
              * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
              *
-             * Permitted values include: `zengin`.
+             * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
              */
-            requested_address_types?: Array<'zengin'>;
+            requested_address_types?: Array<BankTransfer.RequestedAddressType>;
 
             /**
-             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `jp_bank_transfer`.
+             * The list of bank transfer types that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
              */
-            type: 'jp_bank_transfer';
+            type: BankTransfer.Type;
+          }
+
+          namespace BankTransfer {
+            interface EuBankTransfer {
+              /**
+               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               */
+              country: string;
+            }
+
+            type RequestedAddressType =
+              | 'iban'
+              | 'sepa'
+              | 'sort_code'
+              | 'spei'
+              | 'zengin';
+
+            type Type =
+              | 'eu_bank_transfer'
+              | 'gb_bank_transfer'
+              | 'jp_bank_transfer'
+              | 'mx_bank_transfer';
           }
         }
 
@@ -6503,6 +6836,19 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Promptpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *

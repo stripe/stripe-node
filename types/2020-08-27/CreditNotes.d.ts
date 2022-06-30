@@ -110,9 +110,14 @@ declare module 'stripe' {
       status: CreditNote.Status;
 
       /**
-       * The integer amount in %s representing the amount of the credit note, excluding tax and invoice level discounts.
+       * The integer amount in %s representing the amount of the credit note, excluding exclusive tax and invoice level discounts.
        */
       subtotal: number;
+
+      /**
+       * The integer amount in %s representing the amount of the credit note, excluding all tax and invoice level discounts.
+       */
+      subtotal_excluding_tax: number | null;
 
       /**
        * The aggregate amounts calculated per tax rate for all line items.
@@ -123,6 +128,11 @@ declare module 'stripe' {
        * The integer amount in %s representing the total amount of the credit note, including tax and all discount.
        */
       total: number;
+
+      /**
+       * The integer amount in %s representing the total amount of the credit note, excluding tax, but including discounts.
+       */
+      total_excluding_tax: number | null;
 
       /**
        * Type of this credit note, one of `pre_payment` or `post_payment`. A `pre_payment` credit note means it was issued when the invoice was open. A `post_payment` credit note means it was issued when the invoice was paid.
