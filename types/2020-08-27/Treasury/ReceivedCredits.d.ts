@@ -47,6 +47,11 @@ declare module 'stripe' {
          */
         financial_account: string | null;
 
+        /**
+         * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+         */
+        hosted_regulatory_receipt_url: string | null;
+
         initiating_payment_method_details: ReceivedCredit.InitiatingPaymentMethodDetails;
 
         linked_flows: ReceivedCredit.LinkedFlows;
@@ -60,6 +65,11 @@ declare module 'stripe' {
          * The rails used to send the funds.
          */
         network: ReceivedCredit.Network;
+
+        /**
+         * Details specific to the money movement rails.
+         */
+        network_details?: ReceivedCredit.NetworkDetails | null;
 
         /**
          * Details describing when a ReceivedCredit may be reversed.
@@ -172,7 +182,7 @@ declare module 'stripe' {
           issuing_transaction: string | null;
 
           /**
-           * ID of the source flow. Set if `network` is `stripe` and the source flow is visible to the merchant. Examples of source flows include OutboundPayments, payouts, or CreditReversals.
+           * ID of the source flow. Set if `network` is `stripe` and the source flow is visible to the user. Examples of source flows include OutboundPayments, payouts, or CreditReversals.
            */
           source_flow: string | null;
 
@@ -229,6 +239,27 @@ declare module 'stripe' {
         }
 
         type Network = 'ach' | 'card' | 'stripe' | 'us_domestic_wire';
+
+        interface NetworkDetails {
+          /**
+           * Details about an ACH transaction.
+           */
+          ach?: NetworkDetails.Ach | null;
+
+          /**
+           * The type of flow that originated the ReceivedCredit.
+           */
+          type: 'ach';
+        }
+
+        namespace NetworkDetails {
+          interface Ach {
+            /**
+             * ACH Addenda record
+             */
+            addenda: string | null;
+          }
+        }
 
         interface ReversalDetails {
           /**

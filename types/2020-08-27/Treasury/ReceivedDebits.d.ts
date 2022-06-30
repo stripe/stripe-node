@@ -47,6 +47,11 @@ declare module 'stripe' {
          */
         financial_account: string | null;
 
+        /**
+         * A [hosted transaction receipt](https://stripe.com/docs/treasury/moving-money/regulatory-receipts) URL that is provided when money movement is considered regulated under Stripe's money transmission licenses.
+         */
+        hosted_regulatory_receipt_url: string | null;
+
         initiating_payment_method_details?: ReceivedDebit.InitiatingPaymentMethodDetails;
 
         linked_flows: ReceivedDebit.LinkedFlows;
@@ -60,6 +65,11 @@ declare module 'stripe' {
          * The network used for the ReceivedDebit.
          */
         network: ReceivedDebit.Network;
+
+        /**
+         * Details specific to the money movement rails.
+         */
+        network_details?: ReceivedDebit.NetworkDetails | null;
 
         /**
          * Details describing when a ReceivedDebit might be reversed.
@@ -179,9 +189,35 @@ declare module 'stripe' {
            * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://stripe.com/docs/api#issuing_disputes) object.
            */
           issuing_transaction: string | null;
+
+          /**
+           * The ReceivedCredit that Capital withheld from
+           */
+          received_credit_capital_withholding?: string | null;
         }
 
         type Network = 'ach' | 'card' | 'stripe';
+
+        interface NetworkDetails {
+          /**
+           * Details about an ACH transaction.
+           */
+          ach?: NetworkDetails.Ach | null;
+
+          /**
+           * The type of flow that originated the ReceivedDebit.
+           */
+          type: 'ach';
+        }
+
+        namespace NetworkDetails {
+          interface Ach {
+            /**
+             * ACH Addenda record
+             */
+            addenda: string | null;
+          }
+        }
 
         interface ReversalDetails {
           /**
