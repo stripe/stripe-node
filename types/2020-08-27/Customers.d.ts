@@ -1130,11 +1130,11 @@ declare module 'stripe' {
        * However, if the owner already has a default, then it will not change.
        * To change the default, you should [update the customer](https://stripe.com/docs/api#update_customer) to have a new default_source.
        */
-      createSource(
+      createSource<T = Stripe.CustomerSource>(
         id: string,
         params: CustomerSourceCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
+      ): Promise<Stripe.Response<T>>;
 
       /**
        * Retrieve a specified source for a given customer.
