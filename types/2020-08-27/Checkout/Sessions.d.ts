@@ -2908,6 +2908,11 @@ declare module 'stripe' {
 
       interface SessionListParams extends PaginationParams {
         /**
+         * Only return the Checkout Sessions for the Customer specified.
+         */
+        customer?: string;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;

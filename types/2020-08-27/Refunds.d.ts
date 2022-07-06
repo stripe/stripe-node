@@ -145,21 +145,42 @@ declare module 'stripe' {
     }
 
     interface RefundCreateParams {
+      /**
+       * A positive integer representing how much to refund.
+       */
       amount?: number;
 
       charge?: string;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency?: string;
+
+      /**
+       * Customer whose customer balance to refund from.
+       */
+      customer?: string;
 
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
 
+      /**
+       * Address to send refund email, use customer email if not specified
+       */
       instructions_email?: string;
 
       /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * Origin of the refund
+       */
+      origin?: 'customer_balance';
 
       payment_intent?: string;
 
