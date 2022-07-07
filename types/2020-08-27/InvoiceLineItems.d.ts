@@ -209,6 +209,11 @@ declare module 'stripe' {
       coupon?: string;
 
       /**
+       * The currency to preview this invoice in. Defaults to that of `customer` if not specified.
+       */
+      currency?: string;
+
+      /**
        * The identifier of the customer whose upcoming invoice you'd like to retrieve.
        */
       customer?: string;

@@ -121,6 +121,31 @@ declare module 'stripe' {
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         currency: string;
+
+        /**
+         * Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency_options?: {
+          [key: string]: FixedAmount.CurrencyOptions;
+        };
+      }
+
+      namespace FixedAmount {
+        interface CurrencyOptions {
+          /**
+           * A non-negative integer in cents representing how much to charge.
+           */
+          amount: number;
+
+          /**
+           * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+           */
+          tax_behavior: CurrencyOptions.TaxBehavior;
+        }
+
+        namespace CurrencyOptions {
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
       }
 
       type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -225,6 +250,31 @@ declare module 'stripe' {
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         currency: string;
+
+        /**
+         * Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency_options?: {
+          [key: string]: FixedAmount.CurrencyOptions;
+        };
+      }
+
+      namespace FixedAmount {
+        interface CurrencyOptions {
+          /**
+           * A non-negative integer in cents representing how much to charge.
+           */
+          amount: number;
+
+          /**
+           * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+           */
+          tax_behavior?: CurrencyOptions.TaxBehavior;
+        }
+
+        namespace CurrencyOptions {
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
       }
 
       type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
@@ -249,9 +299,50 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
+       */
+      fixed_amount?: ShippingRateUpdateParams.FixedAmount;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+       */
+      tax_behavior?: ShippingRateUpdateParams.TaxBehavior;
+    }
+
+    namespace ShippingRateUpdateParams {
+      interface FixedAmount {
+        /**
+         * Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency_options?: {
+          [key: string]: FixedAmount.CurrencyOptions;
+        };
+      }
+
+      namespace FixedAmount {
+        interface CurrencyOptions {
+          /**
+           * A non-negative integer in cents representing how much to charge.
+           */
+          amount?: number;
+
+          /**
+           * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+           */
+          tax_behavior?: CurrencyOptions.TaxBehavior;
+        }
+
+        namespace CurrencyOptions {
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+      }
+
+      type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
     interface ShippingRateListParams extends PaginationParams {
