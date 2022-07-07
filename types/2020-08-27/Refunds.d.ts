@@ -167,8 +167,6 @@ declare module 'stripe' {
        */
       expand?: Array<string>;
 
-      instructions_email?: string;
-
       /**
        * Address to send refund email, use customer email if not specified
        */
