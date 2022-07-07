@@ -230,6 +230,11 @@ declare module 'stripe' {
         coupon: string | Stripe.Coupon | Stripe.DeletedCoupon | null;
 
         /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency?: string;
+
+        /**
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
          */
         default_payment_method: string | Stripe.PaymentMethod | null;
@@ -558,6 +563,11 @@ declare module 'stripe' {
          * The identifier of the coupon to apply to this phase of the subscription schedule.
          */
         coupon?: string;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency?: string;
 
         /**
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
@@ -978,6 +988,11 @@ declare module 'stripe' {
          * The identifier of the coupon to apply to this phase of the subscription schedule.
          */
         coupon?: string;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency?: string;
 
         /**
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.

@@ -1,5 +1,16 @@
 # Changelog
 
+## 9.12.0 - 2022-07-07
+* [#1468](https://github.com/stripe/stripe-node/pull/1468) API Updates
+  * Add support for `currency` on `CheckoutSessionCreateParams`, `InvoiceUpcomingLinesParams`, `InvoiceUpcomingParams`, `PaymentLinkCreateParams`, `SubscriptionCreateParams`, `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.phases[]`, `SubscriptionScheduleUpdateParams.phases[]`, and `Subscription`
+  * Add support for `currency_options` on `CheckoutSessionCreateParams.shipping_options[].shipping_rate_data.fixed_amount`, `CouponCreateParams`, `CouponUpdateParams`, `Coupon`, `OrderCreateParams.shipping_cost.shipping_rate_data.fixed_amount`, `OrderUpdateParams.shipping_cost.shipping_rate_data.fixed_amount`, `PriceCreateParams`, `PriceUpdateParams`, `Price`, `ProductCreateParams.default_price_data`, `PromotionCode.restrictions`, `PromotionCodeCreateParams.restrictions`, `ShippingRate.fixed_amount`, and `ShippingRateCreateParams.fixed_amount`
+  * Add support for `restrictions` on `PromotionCodeUpdateParams`
+  * Add support for `fixed_amount` and `tax_behavior` on `ShippingRateUpdateParams`
+* [#1467](https://github.com/stripe/stripe-node/pull/1467) API Updates
+  * Add support for `customer` on `CheckoutSessionListParams` and `RefundCreateParams`
+  * Add support for `currency` and `origin` on `RefundCreateParams`
+  * Add support for new values `financial_connections.account.created`, `financial_connections.account.deactivated`, `financial_connections.account.disconnected`, `financial_connections.account.reactivated`, and `financial_connections.account.refreshed_balance` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 9.11.0 - 2022-06-29
 * [#1462](https://github.com/stripe/stripe-node/pull/1462) API Updates
   * Add support for `deliver_card`, `fail_card`, `return_card`, and `ship_card` test helper methods on resource `Issuing.Card`

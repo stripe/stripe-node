@@ -74,6 +74,13 @@ declare module 'stripe' {
     namespace PromotionCode {
       interface Restrictions {
         /**
+         * Promotion code restrictions defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency_options?: {
+          [key: string]: Restrictions.CurrencyOptions;
+        };
+
+        /**
          * A Boolean indicating if the Promotion Code should only be redeemed for Customers without any successful payments or invoices
          */
         first_time_transaction: boolean;
@@ -87,6 +94,15 @@ declare module 'stripe' {
          * Three-letter [ISO code](https://stripe.com/docs/currencies) for minimum_amount
          */
         minimum_amount_currency: string | null;
+      }
+
+      namespace Restrictions {
+        interface CurrencyOptions {
+          /**
+           * Minimum amount required to redeem this Promotion Code into a Coupon (e.g., a purchase must be $100 or more to work).
+           */
+          minimum_amount: number;
+        }
       }
     }
 
@@ -140,6 +156,13 @@ declare module 'stripe' {
     namespace PromotionCodeCreateParams {
       interface Restrictions {
         /**
+         * Promotion codes defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency_options?: {
+          [key: string]: Restrictions.CurrencyOptions;
+        };
+
+        /**
          * A Boolean indicating if the Promotion Code should only be redeemed for Customers without any successful payments or invoices
          */
         first_time_transaction?: boolean;
@@ -153,6 +176,15 @@ declare module 'stripe' {
          * Three-letter [ISO code](https://stripe.com/docs/currencies) for minimum_amount
          */
         minimum_amount_currency?: string;
+      }
+
+      namespace Restrictions {
+        interface CurrencyOptions {
+          /**
+           * Minimum amount required to redeem this Promotion Code into a Coupon (e.g., a purchase must be $100 or more to work).
+           */
+          minimum_amount?: number;
+        }
       }
     }
 
@@ -178,6 +210,31 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * Settings that restrict the redemption of the promotion code.
+       */
+      restrictions?: PromotionCodeUpdateParams.Restrictions;
+    }
+
+    namespace PromotionCodeUpdateParams {
+      interface Restrictions {
+        /**
+         * Promotion codes defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency_options?: {
+          [key: string]: Restrictions.CurrencyOptions;
+        };
+      }
+
+      namespace Restrictions {
+        interface CurrencyOptions {
+          /**
+           * Minimum amount required to redeem this Promotion Code into a Coupon (e.g., a purchase must be $100 or more to work).
+           */
+          minimum_amount?: number;
+        }
+      }
     }
 
     interface PromotionCodeListParams extends PaginationParams {

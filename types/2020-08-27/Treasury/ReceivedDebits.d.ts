@@ -67,11 +67,6 @@ declare module 'stripe' {
         network: ReceivedDebit.Network;
 
         /**
-         * Details specific to the money movement rails.
-         */
-        network_details?: ReceivedDebit.NetworkDetails | null;
-
-        /**
          * Details describing when a ReceivedDebit might be reversed.
          */
         reversal_details: ReceivedDebit.ReversalDetails | null;
@@ -189,35 +184,9 @@ declare module 'stripe' {
            * Set if the ReceivedDebit is also viewable as an [Issuing Dispute](https://stripe.com/docs/api#issuing_disputes) object.
            */
           issuing_transaction: string | null;
-
-          /**
-           * The ReceivedCredit that Capital withheld from
-           */
-          received_credit_capital_withholding?: string | null;
         }
 
         type Network = 'ach' | 'card' | 'stripe';
-
-        interface NetworkDetails {
-          /**
-           * Details about an ACH transaction.
-           */
-          ach?: NetworkDetails.Ach | null;
-
-          /**
-           * The type of flow that originated the ReceivedDebit.
-           */
-          type: 'ach';
-        }
-
-        namespace NetworkDetails {
-          interface Ach {
-            /**
-             * ACH Addenda record
-             */
-            addenda: string | null;
-          }
-        }
 
         interface ReversalDetails {
           /**

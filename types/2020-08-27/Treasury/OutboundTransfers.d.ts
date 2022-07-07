@@ -75,11 +75,6 @@ declare module 'stripe' {
         metadata: Stripe.Metadata;
 
         /**
-         * Details about the network used for the OutboundTransfer.
-         */
-        network_details?: OutboundTransfer.NetworkDetails | null;
-
-        /**
          * Details about a returned OutboundTransfer. Only set when the status is `returned`.
          */
         returned_details: OutboundTransfer.ReturnedDetails | null;
@@ -172,27 +167,6 @@ declare module 'stripe' {
             type AccountType = 'checking' | 'savings';
 
             type Network = 'ach' | 'us_domestic_wire';
-          }
-        }
-
-        interface NetworkDetails {
-          /**
-           * Details about an ACH transaction.
-           */
-          ach?: NetworkDetails.Ach | null;
-
-          /**
-           * The type of flow that originated the OutboundTransfer.
-           */
-          type: 'ach';
-        }
-
-        namespace NetworkDetails {
-          interface Ach {
-            /**
-             * ACH Addenda record
-             */
-            addenda: string | null;
           }
         }
 
@@ -294,11 +268,6 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * Details about the network used for the OutboundTransfer.
-         */
-        network_details?: OutboundTransferCreateParams.NetworkDetails;
-
-        /**
          * Statement descriptor to be shown on the receiving end of an OutboundTransfer. Maximum 10 characters for `ach` transfers or 140 characters for `wire` transfers. The default value is `transfer`.
          */
         statement_descriptor?: string;
@@ -324,27 +293,6 @@ declare module 'stripe' {
 
           namespace UsBankAccount {
             type Network = 'ach' | 'us_domestic_wire';
-          }
-        }
-
-        interface NetworkDetails {
-          /**
-           * Optional fields for `ach`.
-           */
-          ach?: NetworkDetails.Ach;
-
-          /**
-           * The type of flow that originated the OutboundTransfer.
-           */
-          type: 'ach';
-        }
-
-        namespace NetworkDetails {
-          interface Ach {
-            /**
-             * Addenda record data associated with this OutboundTransfer.
-             */
-            addenda?: string;
           }
         }
       }

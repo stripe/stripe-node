@@ -39,11 +39,6 @@ declare module 'stripe' {
            * Initiating payment method details for the object.
            */
           initiating_payment_method_details?: ReceivedDebitCreateParams.InitiatingPaymentMethodDetails;
-
-          /**
-           * Details about the network used for the ReceivedDebit.
-           */
-          network_details?: ReceivedDebitCreateParams.NetworkDetails;
         }
 
         namespace ReceivedDebitCreateParams {
@@ -75,27 +70,6 @@ declare module 'stripe' {
                * The bank account's routing number.
                */
               routing_number?: string;
-            }
-          }
-
-          interface NetworkDetails {
-            /**
-             * Optional fields for `ach`.
-             */
-            ach?: NetworkDetails.Ach;
-
-            /**
-             * The type of flow that originated the ReceivedDebit.
-             */
-            type: 'ach';
-          }
-
-          namespace NetworkDetails {
-            interface Ach {
-              /**
-               * Addenda record data associated with this ReceivedDebit.
-               */
-              addenda?: string;
             }
           }
         }

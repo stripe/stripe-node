@@ -549,6 +549,11 @@ declare module 'stripe' {
       consent_collection?: PaymentLinkCreateParams.ConsentCollection;
 
       /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies) and supported by each line item's price.
+       */
+      currency?: string;
+
+      /**
        * Configures whether [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link create a [Customer](https://stripe.com/docs/api/customers).
        */
       customer_creation?: PaymentLinkCreateParams.CustomerCreation;
@@ -596,7 +601,7 @@ declare module 'stripe' {
       shipping_options?: Array<PaymentLinkCreateParams.ShippingOption>;
 
       /**
-       * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button.
+       * Describes the type of transaction being performed in order to customize relevant text on the page, such as the submit button. Changing this value will also affect the hostname in the [url](https://stripe.com/docs/api/payment_links/payment_links/object#url) property (example: `donate.stripe.com`).
        */
       submit_type?: PaymentLinkCreateParams.SubmitType;
 

@@ -486,6 +486,56 @@ describe('PaymentLink', function() {
   });
 });
 
+describe('Price', function() {
+  it('create method', async function() {
+    const price = await stripe.prices.create({
+      unit_amount: 2000,
+      currency: 'usd',
+      currency_options: {
+        uah: {unit_amount: 5000},
+        eur: {unit_amount: 1800},
+      },
+      recurring: {interval: 'month'},
+      product: 'prod_xxxxxxxxxxxxx',
+    });
+    expect(price).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const prices = await stripe.prices.list({limit: 3});
+    expect(prices).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const price = await stripe.prices.create({
+      unit_amount: 2000,
+      currency: 'usd',
+      recurring: {interval: 'month'},
+      product: 'prod_xxxxxxxxxxxxx',
+    });
+    expect(price).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const price = await stripe.prices.retrieve('price_xxxxxxxxxxxxx');
+    expect(price).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const price = await stripe.prices.update('price_xxxxxxxxxxxxx', {
+      metadata: {order_id: '6735'},
+    });
+    expect(price).not.to.be.null;
+  });
+
+  it('search method', async function() {
+    const prices = await stripe.prices.search({
+      query: "active:'true' AND metadata['order_id']:'6735'",
+    });
+    expect(prices).not.to.be.null;
+  });
+});
+
 describe('SetupAttempt', function() {
   it('list method', async function() {
     const setupAttempts = await stripe.setupAttempts.list({
@@ -2002,42 +2052,6 @@ describe('Plan', function() {
       metadata: {order_id: '6735'},
     });
     expect(plan).not.to.be.null;
-  });
-});
-
-describe('Price', function() {
-  it('list method', async function() {
-    const prices = await stripe.prices.list({limit: 3});
-    expect(prices).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const price = await stripe.prices.create({
-      unit_amount: 2000,
-      currency: 'usd',
-      recurring: {interval: 'month'},
-      product: 'prod_xxxxxxxxxxxxx',
-    });
-    expect(price).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const price = await stripe.prices.retrieve('price_xxxxxxxxxxxxx');
-    expect(price).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const price = await stripe.prices.update('price_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
-    });
-    expect(price).not.to.be.null;
-  });
-
-  it('search method', async function() {
-    const prices = await stripe.prices.search({
-      query: "active:'true' AND metadata['order_id']:'6735'",
-    });
-    expect(prices).not.to.be.null;
   });
 });
 
