@@ -398,14 +398,7 @@ declare module 'stripe' {
       namespace CashBalance {
         interface Settings {
           /**
-           * Method for using the customer balance to pay outstanding
-           * `customer_balance` PaymentIntents. If set to `automatic`, all available
-           * funds will automatically be used to pay any outstanding PaymentIntent.
-           * If set to `manual`, only customer balance funds from bank transfers
-           * with a reference code matching
-           * `payment_intent.next_action.display_bank_transfer_intructions.reference_code` will
-           * automatically be used to pay the corresponding outstanding
-           * PaymentIntent.
+           * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic` or `manual`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
            */
           reconciliation_mode?: Settings.ReconciliationMode;
         }
@@ -683,14 +676,7 @@ declare module 'stripe' {
       namespace CashBalance {
         interface Settings {
           /**
-           * Method for using the customer balance to pay outstanding
-           * `customer_balance` PaymentIntents. If set to `automatic`, all available
-           * funds will automatically be used to pay any outstanding PaymentIntent.
-           * If set to `manual`, only customer balance funds from bank transfers
-           * with a reference code matching
-           * `payment_intent.next_action.display_bank_transfer_intructions.reference_code` will
-           * automatically be used to pay the corresponding outstanding
-           * PaymentIntent.
+           * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic` or `manual`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
            */
           reconciliation_mode?: Settings.ReconciliationMode;
         }
@@ -1068,7 +1054,7 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.CashBalance>>;
 
       /**
-       * Updates a customer's cash balance.
+       * Changes the settings on a customer's cash balance.
        */
       updateCashBalance(
         id: string,

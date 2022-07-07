@@ -37,6 +37,13 @@ declare module 'stripe' {
       currency: string;
 
       /**
+       * Prices defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency_options?: {
+        [key: string]: Price.CurrencyOptions;
+      };
+
+      /**
        * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
        */
       custom_unit_amount: Price.CustomUnitAmount | null;
@@ -111,6 +118,81 @@ declare module 'stripe' {
 
     namespace Price {
       type BillingScheme = 'per_unit' | 'tiered';
+
+      interface CurrencyOptions {
+        /**
+         * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
+         */
+        custom_unit_amount: CurrencyOptions.CustomUnitAmount | null;
+
+        /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior: CurrencyOptions.TaxBehavior | null;
+
+        /**
+         * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
+         */
+        tiers?: Array<CurrencyOptions.Tier>;
+
+        /**
+         * The unit amount in %s to be charged, represented as a whole integer if possible. Only set if `billing_scheme=per_unit`.
+         */
+        unit_amount: number | null;
+
+        /**
+         * The unit amount in %s to be charged, represented as a decimal string with at most 12 decimal places. Only set if `billing_scheme=per_unit`.
+         */
+        unit_amount_decimal: string | null;
+      }
+
+      namespace CurrencyOptions {
+        interface CustomUnitAmount {
+          /**
+           * The maximum unit amount the customer can specify for this item.
+           */
+          maximum: number | null;
+
+          /**
+           * The minimum unit amount the customer can specify for this item. Must be at least the minimum charge amount.
+           */
+          minimum: number | null;
+
+          /**
+           * The starting unit amount which can be updated by the customer.
+           */
+          preset: number | null;
+        }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+        interface Tier {
+          /**
+           * Price for the entire tier.
+           */
+          flat_amount: number | null;
+
+          /**
+           * Same as `flat_amount`, but contains a decimal value with at most 12 decimal places.
+           */
+          flat_amount_decimal: string | null;
+
+          /**
+           * Per unit price for units relevant to the tier.
+           */
+          unit_amount: number | null;
+
+          /**
+           * Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
+           */
+          unit_amount_decimal: string | null;
+
+          /**
+           * Up to and including to this quantity will be contained in the tier.
+           */
+          up_to: number | null;
+        }
+      }
 
       interface CustomUnitAmount {
         /**
@@ -255,6 +337,13 @@ declare module 'stripe' {
       billing_scheme?: PriceCreateParams.BillingScheme;
 
       /**
+       * Prices defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency_options?: {
+        [key: string]: PriceCreateParams.CurrencyOptions;
+      };
+
+      /**
        * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
        */
       custom_unit_amount?: PriceCreateParams.CustomUnitAmount;
@@ -332,6 +421,86 @@ declare module 'stripe' {
 
     namespace PriceCreateParams {
       type BillingScheme = 'per_unit' | 'tiered';
+
+      interface CurrencyOptions {
+        /**
+         * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
+         */
+        custom_unit_amount?: CurrencyOptions.CustomUnitAmount;
+
+        /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: CurrencyOptions.TaxBehavior;
+
+        /**
+         * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
+         */
+        tiers?: Array<CurrencyOptions.Tier>;
+
+        /**
+         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace CurrencyOptions {
+        interface CustomUnitAmount {
+          /**
+           * Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
+           */
+          enabled: boolean;
+
+          /**
+           * The maximum unit amount the customer can specify for this item.
+           */
+          maximum?: number;
+
+          /**
+           * The minimum unit amount the customer can specify for this item. Must be at least the minimum charge amount.
+           */
+          minimum?: number;
+
+          /**
+           * The starting unit amount which can be updated by the customer.
+           */
+          preset?: number;
+        }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+        interface Tier {
+          /**
+           * The flat billing amount for an entire tier, regardless of the number of units in the tier.
+           */
+          flat_amount?: number;
+
+          /**
+           * Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
+           */
+          flat_amount_decimal?: string;
+
+          /**
+           * The per unit billing amount for each individual unit for which this tier applies.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+
+          /**
+           * Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous tier adding one. Use `inf` to define a fallback tier.
+           */
+          up_to: 'inf' | number;
+        }
+      }
 
       interface CustomUnitAmount {
         /**
@@ -495,6 +664,13 @@ declare module 'stripe' {
       active?: boolean;
 
       /**
+       * Prices defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency_options?: Stripe.Emptyable<{
+        [key: string]: PriceUpdateParams.CurrencyOptions;
+      }>;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -531,6 +707,86 @@ declare module 'stripe' {
     }
 
     namespace PriceUpdateParams {
+      interface CurrencyOptions {
+        /**
+         * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
+         */
+        custom_unit_amount?: CurrencyOptions.CustomUnitAmount;
+
+        /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: CurrencyOptions.TaxBehavior;
+
+        /**
+         * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
+         */
+        tiers?: Array<CurrencyOptions.Tier>;
+
+        /**
+         * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace CurrencyOptions {
+        interface CustomUnitAmount {
+          /**
+           * Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
+           */
+          enabled: boolean;
+
+          /**
+           * The maximum unit amount the customer can specify for this item.
+           */
+          maximum?: number;
+
+          /**
+           * The minimum unit amount the customer can specify for this item. Must be at least the minimum charge amount.
+           */
+          minimum?: number;
+
+          /**
+           * The starting unit amount which can be updated by the customer.
+           */
+          preset?: number;
+        }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+        interface Tier {
+          /**
+           * The flat billing amount for an entire tier, regardless of the number of units in the tier.
+           */
+          flat_amount?: number;
+
+          /**
+           * Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
+           */
+          flat_amount_decimal?: string;
+
+          /**
+           * The per unit billing amount for each individual unit for which this tier applies.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+
+          /**
+           * Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous tier adding one. Use `inf` to define a fallback tier.
+           */
+          up_to: 'inf' | number;
+        }
+      }
+
       interface Recurring {
         /**
          * Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).

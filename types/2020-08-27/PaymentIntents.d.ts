@@ -164,6 +164,11 @@ declare module 'stripe' {
       review: string | Stripe.Review | null;
 
       /**
+       * Indicates whether confirmation for this PaymentIntent using a secret key is `required` or `optional`.
+       */
+      secret_key_confirmation?: PaymentIntent.SecretKeyConfirmation;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -1683,6 +1688,8 @@ declare module 'stripe' {
         }
       }
 
+      type SecretKeyConfirmation = 'optional' | 'required';
+
       type SetupFutureUsage = 'off_session' | 'on_session';
 
       interface Shipping {
@@ -1853,6 +1860,11 @@ declare module 'stripe' {
        * The URL to redirect your customer back to after they authenticate or cancel their payment on the payment method's app or site. If you'd prefer to redirect to a mobile application, you can alternatively supply an application URI scheme. This parameter can only be used with [`confirm=true`](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-confirm).
        */
       return_url?: string;
+
+      /**
+       * Indicates whether confirmation for this PaymentIntent using a secret key is `required` or `optional`.
+       */
+      secret_key_confirmation?: PaymentIntentCreateParams.SecretKeyConfirmation;
 
       /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -3477,6 +3489,8 @@ declare module 'stripe' {
         session?: string;
       }
 
+      type SecretKeyConfirmation = 'optional' | 'required';
+
       type SetupFutureUsage = 'off_session' | 'on_session';
 
       interface Shipping {
@@ -3587,6 +3601,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * This hash contains details about the Mandate to create.
+       */
+      mandate_data?: PaymentIntentUpdateParams.MandateData;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -3659,6 +3678,41 @@ declare module 'stripe' {
 
     namespace PaymentIntentUpdateParams {
       type CaptureMethod = 'automatic' | 'manual';
+
+      interface MandateData {
+        /**
+         * This hash contains details about the customer acceptance of the Mandate.
+         */
+        customer_acceptance: MandateData.CustomerAcceptance;
+      }
+
+      namespace MandateData {
+        interface CustomerAcceptance {
+          /**
+           * If this is a Mandate accepted online, this hash contains details about the online acceptance.
+           */
+          online: CustomerAcceptance.Online;
+
+          /**
+           * The type of customer acceptance information included with the Mandate.
+           */
+          type: 'online';
+        }
+
+        namespace CustomerAcceptance {
+          interface Online {
+            /**
+             * The IP address from which the Mandate was accepted by the customer.
+             */
+            ip_address?: string;
+
+            /**
+             * The user agent of the browser from which the Mandate was accepted by the customer.
+             */
+            user_agent?: string;
+          }
+        }
+      }
 
       interface PaymentMethodData {
         /**
@@ -5318,6 +5372,11 @@ declare module 'stripe' {
     }
 
     interface PaymentIntentConfirmParams {
+      /**
+       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. The amount of the application fee collected will be capped at the total payment amount. For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
+       */
+      application_fee_amount?: Stripe.Emptyable<number>;
+
       /**
        * Controls when the funds will be captured from the customer's account.
        */
