@@ -549,6 +549,11 @@ declare module 'stripe' {
       consent_collection?: PaymentLinkCreateParams.ConsentCollection;
 
       /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies) and supported by each line item's price.
+       */
+      currency?: string;
+
+      /**
        * Configures whether [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link create a [Customer](https://stripe.com/docs/api/customers).
        */
       customer_creation?: PaymentLinkCreateParams.CustomerCreation;

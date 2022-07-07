@@ -33,6 +33,13 @@ declare module 'stripe' {
        */
       currency: string | null;
 
+      /**
+       * Coupons defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency_options?: {
+        [key: string]: Coupon.CurrencyOptions;
+      };
+
       deleted?: void;
 
       /**
@@ -94,6 +101,13 @@ declare module 'stripe' {
         products: Array<string>;
       }
 
+      interface CurrencyOptions {
+        /**
+         * Amount (in the `currency` specified) that will be taken off the subtotal of any invoices for this customer.
+         */
+        amount_off: number;
+      }
+
       type Duration = 'forever' | 'once' | 'repeating';
     }
 
@@ -132,6 +146,13 @@ declare module 'stripe' {
        * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) of the `amount_off` parameter (required if `amount_off` is passed).
        */
       currency?: string;
+
+      /**
+       * Coupons defined in each available currency option (only supported if `amount_off` is passed). Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency_options?: {
+        [key: string]: CouponCreateParams.CurrencyOptions;
+      };
 
       /**
        * Specifies how long the discount will be in effect if used on a subscription. Can be `forever`, `once`, or `repeating`. Defaults to `once`.
@@ -187,6 +208,13 @@ declare module 'stripe' {
         products?: Array<string>;
       }
 
+      interface CurrencyOptions {
+        /**
+         * A positive integer representing the amount to subtract from an invoice total.
+         */
+        amount_off: number;
+      }
+
       type Duration = 'forever' | 'once' | 'repeating';
     }
 
@@ -198,6 +226,13 @@ declare module 'stripe' {
     }
 
     interface CouponUpdateParams {
+      /**
+       * Coupons defined in each available currency option (only supported if the coupon is amount-based). Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency_options?: {
+        [key: string]: CouponUpdateParams.CurrencyOptions;
+      };
+
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -212,6 +247,15 @@ declare module 'stripe' {
        * Name of the coupon displayed to customers on, for instance invoices, or receipts. By default the `id` is shown if `name` is not set.
        */
       name?: string;
+    }
+
+    namespace CouponUpdateParams {
+      interface CurrencyOptions {
+        /**
+         * A positive integer representing the amount to subtract from an invoice total.
+         */
+        amount_off: number;
+      }
     }
 
     interface CouponListParams extends PaginationParams {

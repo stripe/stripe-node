@@ -263,6 +263,13 @@ declare module 'stripe' {
         currency: string;
 
         /**
+         * Prices defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency_options?: {
+          [key: string]: DefaultPriceData.CurrencyOptions;
+        };
+
+        /**
          * The recurring components of a price such as `interval` and `interval_count`.
          */
         recurring?: DefaultPriceData.Recurring;
@@ -284,6 +291,86 @@ declare module 'stripe' {
       }
 
       namespace DefaultPriceData {
+        interface CurrencyOptions {
+          /**
+           * When set, provides configuration for the amount to be adjusted by the customer during Checkout Sessions and Payment Links.
+           */
+          custom_unit_amount?: CurrencyOptions.CustomUnitAmount;
+
+          /**
+           * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           */
+          tax_behavior?: CurrencyOptions.TaxBehavior;
+
+          /**
+           * Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
+           */
+          tiers?: Array<CurrencyOptions.Tier>;
+
+          /**
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+
+        namespace CurrencyOptions {
+          interface CustomUnitAmount {
+            /**
+             * Pass in `true` to enable `custom_unit_amount`, otherwise omit `custom_unit_amount`.
+             */
+            enabled: boolean;
+
+            /**
+             * The maximum unit amount the customer can specify for this item.
+             */
+            maximum?: number;
+
+            /**
+             * The minimum unit amount the customer can specify for this item. Must be at least the minimum charge amount.
+             */
+            minimum?: number;
+
+            /**
+             * The starting unit amount which can be updated by the customer.
+             */
+            preset?: number;
+          }
+
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+
+          interface Tier {
+            /**
+             * The flat billing amount for an entire tier, regardless of the number of units in the tier.
+             */
+            flat_amount?: number;
+
+            /**
+             * Same as `flat_amount`, but accepts a decimal value representing an integer in the minor units of the currency. Only one of `flat_amount` and `flat_amount_decimal` can be set.
+             */
+            flat_amount_decimal?: string;
+
+            /**
+             * The per unit billing amount for each individual unit for which this tier applies.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+
+            /**
+             * Specifies the upper bound of this tier. The lower bound of a tier is the upper bound of the previous tier adding one. Use `inf` to define a fallback tier.
+             */
+            up_to: 'inf' | number;
+          }
+        }
+
         interface Recurring {
           /**
            * Specifies billing frequency. Either `day`, `week`, `month` or `year`.

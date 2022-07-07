@@ -303,33 +303,33 @@ declare module 'stripe' {
 
         interface CustomerDetails {
           /**
-           * The customer's address at the time of checkout. Note: This property is populated only for sessions on or after March 30, 2022.
+           * The customer's address after a completed Checkout Session. Note: This property is populated only for sessions on or after March 30, 2022.
            */
           address: Stripe.Address | null;
 
           /**
-           * The email associated with the Customer, if one exists, on the Checkout Session at the time of checkout or at time of session expiry.
+           * The email associated with the Customer, if one exists, on the Checkout Session after a completed Checkout Session or at time of session expiry.
            * Otherwise, if the customer has consented to promotional content, this value is the most recent valid email provided by the customer on the Checkout form.
            */
           email: string | null;
 
           /**
-           * The customer's name at the time of checkout. Note: This property is populated only for sessions on or after March 30, 2022.
+           * The customer's name after a completed Checkout Session. Note: This property is populated only for sessions on or after March 30, 2022.
            */
           name: string | null;
 
           /**
-           * The customer's phone number at the time of checkout
+           * The customer's phone number after a completed Checkout Session.
            */
           phone: string | null;
 
           /**
-           * The customer's tax exempt status at time of checkout.
+           * The customer's tax exempt status after a completed Checkout Session.
            */
           tax_exempt: CustomerDetails.TaxExempt | null;
 
           /**
-           * The customer's tax IDs at time of checkout.
+           * The customer's tax IDs after a completed Checkout Session.
            */
           tax_ids: Array<CustomerDetails.TaxId> | null;
         }
@@ -1282,6 +1282,11 @@ declare module 'stripe' {
          * Configure fields for the Checkout Session to gather active consent from customers.
          */
         consent_collection?: SessionCreateParams.ConsentCollection;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+         */
+        currency?: string;
 
         /**
          * ID of an existing Customer, if one exists. In `payment` mode, the customer's most recent card
@@ -2792,6 +2797,31 @@ declare module 'stripe' {
                * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
                */
               currency: string;
+
+              /**
+               * Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+               */
+              currency_options?: {
+                [key: string]: FixedAmount.CurrencyOptions;
+              };
+            }
+
+            namespace FixedAmount {
+              interface CurrencyOptions {
+                /**
+                 * A non-negative integer in cents representing how much to charge.
+                 */
+                amount: number;
+
+                /**
+                 * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+                 */
+                tax_behavior?: CurrencyOptions.TaxBehavior;
+              }
+
+              namespace CurrencyOptions {
+                type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+              }
             }
 
             type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
