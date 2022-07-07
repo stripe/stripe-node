@@ -1,5 +1,17 @@
 # Changelog
 
+## 9.13.0-beta.1 - 2022-07-07
+* [#1469](https://github.com/stripe/stripe-node/pull/1469) API Updates for beta branch
+  - Include `server_side_confirmation_beta=v1` beta
+  - Add `secretKeyConfirmation` to `PaymentIntent`
+* [#1451](https://github.com/stripe/stripe-node/pull/1451) API Updates
+  - Updated stable APIs to the latest version
+* [#1457](https://github.com/stripe/stripe-node/pull/1457) Use the generated API version
+* [#1445](https://github.com/stripe/stripe-node/pull/1445) Support updating pre-release versions
+* [#1442](https://github.com/stripe/stripe-node/pull/1442) API Updates
+  * Add support for `network_details` method on resource `ReceivedCredits`/`ReceivedDebits`
+* [#1444](https://github.com/stripe/stripe-node/pull/1444) Merge master branch into beta branch
+
 ## 9.12.0 - 2022-07-07
 * [#1468](https://github.com/stripe/stripe-node/pull/1468) API Updates
   * Add support for `currency` on `CheckoutSessionCreateParams`, `InvoiceUpcomingLinesParams`, `InvoiceUpcomingParams`, `PaymentLinkCreateParams`, `SubscriptionCreateParams`, `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.phases[]`, `SubscriptionScheduleUpdateParams.phases[]`, and `Subscription`
