@@ -2943,6 +2943,11 @@ declare module 'stripe' {
         customer?: string;
 
         /**
+         * Only return the Checkout Sessions for the Customer details specified.
+         */
+        customer_details?: SessionListParams.CustomerDetails;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -2956,6 +2961,15 @@ declare module 'stripe' {
          * Only return the Checkout Session for the subscription specified.
          */
         subscription?: string;
+      }
+
+      namespace SessionListParams {
+        interface CustomerDetails {
+          /**
+           * Customer's email address.
+           */
+          email: string;
+        }
       }
 
       interface SessionExpireParams {

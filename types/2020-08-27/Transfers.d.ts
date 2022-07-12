@@ -84,7 +84,7 @@ declare module 'stripe' {
       /**
        * The source balance this transfer came from. One of `card`, `fpx`, or `bank_account`.
        */
-      source_type: string | null;
+      source_type?: string;
 
       /**
        * A string that identifies this transaction as part of a group. See the [Connect documentation](https://stripe.com/docs/connect/charges-transfers#transfer-options) for details.
