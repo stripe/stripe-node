@@ -38,7 +38,7 @@ The beta versions can be installed in one of two ways
 - To install the latest beta version, run the command `npm install stripe@beta --save`  
 - To install a specific beta version, replace the term "beta" in the above command with the version number like `npm install stripe@1.2.3-beta.1 --save` 
 
-> Note: There can be breaking changes between beta packages. Therefore we recommend pinning the beta version to a specific version in your package.json file so that you can install the same version each time without breaking changes unless you are intentionally looking for the latest beta package. 
+> Note: There can be breaking changes between beta versions. Therefore we recommend pinning the package version to a specific beta version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest beta version. 
 
 We highly recommend keeping an eye on when the beta feature you are interested in goes from beta to stable so that you can move from using a beta version of the SDK to the stable version.  
 
