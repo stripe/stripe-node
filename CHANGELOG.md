@@ -1,5 +1,12 @@
 # Changelog
 
+## 9.13.0 - 2022-07-12
+* [#1473](https://github.com/stripe/stripe-node/pull/1473) API Updates
+  * Add support for `customer_details` on `CheckoutSessionListParams`
+  * Change `LineItem.amount_discount` and `LineItem.amount_tax` to be required
+  * Change `Transfer.source_type` to be optional and not nullable
+* [#1471](https://github.com/stripe/stripe-node/pull/1471) Update readme to include a note on beta packages
+
 ## 9.12.0 - 2022-07-07
 * [#1468](https://github.com/stripe/stripe-node/pull/1468) API Updates
   * Add support for `currency` on `CheckoutSessionCreateParams`, `InvoiceUpcomingLinesParams`, `InvoiceUpcomingParams`, `PaymentLinkCreateParams`, `SubscriptionCreateParams`, `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.phases[]`, `SubscriptionScheduleUpdateParams.phases[]`, and `Subscription`
