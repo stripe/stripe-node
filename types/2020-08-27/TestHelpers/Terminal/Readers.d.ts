@@ -6,7 +6,7 @@ declare module 'stripe' {
       namespace Terminal {
         interface ReaderPresentPaymentMethodParams {
           /**
-           * Simulated card present data
+           * Simulated data for the card_present payment method
            */
           card_present?: ReaderPresentPaymentMethodParams.CardPresent;
 

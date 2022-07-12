@@ -19,7 +19,7 @@ declare module 'stripe' {
       /**
        * Total discount amount applied. If no discounts were applied, defaults to 0.
        */
-      amount_discount?: number;
+      amount_discount: number;
 
       /**
        * Total before any discounts or taxes are applied.
@@ -29,7 +29,7 @@ declare module 'stripe' {
       /**
        * Total tax amount applied. If no tax was applied, defaults to 0.
        */
-      amount_tax?: number;
+      amount_tax: number;
 
       /**
        * Total after discounts and taxes.
