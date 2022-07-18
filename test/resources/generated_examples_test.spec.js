@@ -2492,8 +2492,8 @@ describe('Subscription', function() {
     expect(subscription).not.to.be.null;
   });
 
-  it('del method', async function() {
-    const subscription = await stripe.subscriptions.del('sub_xxxxxxxxxxxxx');
+  it('cancel method', async function() {
+    const subscription = await stripe.subscriptions.cancel('sub_xxxxxxxxxxxxx');
     expect(subscription).not.to.be.null;
   });
 

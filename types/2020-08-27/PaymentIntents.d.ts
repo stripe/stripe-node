@@ -441,7 +441,7 @@ declare module 'stripe' {
           charge_attempt_at: number | null;
 
           /**
-           * For payments greater than INR 5000, the customer must provide explicit approval of the payment with their bank. For payments of lower amount, no customer action is required.
+           * For payments greater than INR 15000, the customer must provide explicit approval of the payment with their bank. For payments of lower amount, no customer action is required.
            */
           customer_approval_required: boolean | null;
         }
@@ -880,6 +880,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodOptions.Bancontact;
 
+        blik?: PaymentMethodOptions.Blik;
+
         boleto?: PaymentMethodOptions.Boleto;
 
         card?: PaymentMethodOptions.Card;
@@ -1080,6 +1082,8 @@ declare module 'stripe' {
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
+
+        interface Blik {}
 
         interface Boleto {
           /**
@@ -1671,7 +1675,7 @@ declare module 'stripe' {
         namespace Card {
           interface CustomerNotification {
             /**
-             * Whether customer approval has been requested for this payment. For payments greater than INR 5000 or mandate amount, the customer must provide explicit approval of the payment with their bank.
+             * Whether customer approval has been requested for this payment. For payments greater than INR 15000 or mandate amount, the customer must provide explicit approval of the payment with their bank.
              */
             approval_requested: boolean | null;
 
@@ -2000,6 +2004,11 @@ declare module 'stripe' {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
+         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+         */
+        blik?: PaymentMethodData.Blik;
+
+        /**
          * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
          */
         boleto?: PaymentMethodData.Boleto;
@@ -2187,6 +2196,8 @@ declare module 'stripe' {
             line1?: string;
           }
         }
+
+        interface Blik {}
 
         interface Boleto {
           /**
@@ -2409,6 +2420,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'blik'
           | 'boleto'
           | 'customer_balance'
           | 'eps'
@@ -2501,6 +2513,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+        /**
+         * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
+         */
+        blik?: Stripe.Emptyable<PaymentMethodOptions.Blik>;
 
         /**
          * If this is a `boleto` PaymentMethod, this sub-hash contains details about the Boleto payment method options.
@@ -2793,6 +2810,13 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Blik {
+          /**
+           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
+           */
+          code?: string;
         }
 
         interface Boleto {
@@ -3702,6 +3726,11 @@ declare module 'stripe' {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
+         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+         */
+        blik?: PaymentMethodData.Blik;
+
+        /**
          * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
          */
         boleto?: PaymentMethodData.Boleto;
@@ -3889,6 +3918,8 @@ declare module 'stripe' {
             line1?: string;
           }
         }
+
+        interface Blik {}
 
         interface Boleto {
           /**
@@ -4111,6 +4142,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'blik'
           | 'boleto'
           | 'customer_balance'
           | 'eps'
@@ -4203,6 +4235,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+        /**
+         * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
+         */
+        blik?: Stripe.Emptyable<PaymentMethodOptions.Blik>;
 
         /**
          * If this is a `boleto` PaymentMethod, this sub-hash contains details about the Boleto payment method options.
@@ -4495,6 +4532,13 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Blik {
+          /**
+           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
+           */
+          code?: string;
         }
 
         interface Boleto {
@@ -5539,6 +5583,11 @@ declare module 'stripe' {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
+         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+         */
+        blik?: PaymentMethodData.Blik;
+
+        /**
          * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
          */
         boleto?: PaymentMethodData.Boleto;
@@ -5726,6 +5775,8 @@ declare module 'stripe' {
             line1?: string;
           }
         }
+
+        interface Blik {}
 
         interface Boleto {
           /**
@@ -5948,6 +5999,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'blik'
           | 'boleto'
           | 'customer_balance'
           | 'eps'
@@ -6040,6 +6092,11 @@ declare module 'stripe' {
          * If this is a `bancontact` PaymentMethod, this sub-hash contains details about the Bancontact payment method options.
          */
         bancontact?: Stripe.Emptyable<PaymentMethodOptions.Bancontact>;
+
+        /**
+         * If this is a `blik` PaymentMethod, this sub-hash contains details about the BLIK payment method options.
+         */
+        blik?: Stripe.Emptyable<PaymentMethodOptions.Blik>;
 
         /**
          * If this is a `boleto` PaymentMethod, this sub-hash contains details about the Boleto payment method options.
@@ -6332,6 +6389,13 @@ declare module 'stripe' {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
 
           type SetupFutureUsage = 'none' | 'off_session';
+        }
+
+        interface Blik {
+          /**
+           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
+           */
+          code?: string;
         }
 
         interface Boleto {

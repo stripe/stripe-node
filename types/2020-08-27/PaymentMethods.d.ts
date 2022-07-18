@@ -32,6 +32,8 @@ declare module 'stripe' {
 
       billing_details: PaymentMethod.BillingDetails;
 
+      blik?: PaymentMethod.Blik;
+
       boleto?: PaymentMethod.Boleto;
 
       card?: PaymentMethod.Card;
@@ -196,6 +198,8 @@ declare module 'stripe' {
          */
         phone: string | null;
       }
+
+      interface Blik {}
 
       interface Boleto {
         /**
@@ -683,6 +687,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'blik'
         | 'boleto'
         | 'card'
         | 'card_present'
@@ -812,6 +817,11 @@ declare module 'stripe' {
        * Billing information associated with the PaymentMethod that may be used or required by particular types of payment methods.
        */
       billing_details?: PaymentMethodCreateParams.BillingDetails;
+
+      /**
+       * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+       */
+      blik?: PaymentMethodCreateParams.Blik;
 
       /**
        * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
@@ -1021,6 +1031,8 @@ declare module 'stripe' {
           line1?: string;
         }
       }
+
+      interface Blik {}
 
       interface Boleto {
         /**
@@ -1269,6 +1281,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'blik'
         | 'boleto'
         | 'card'
         | 'customer_balance'
@@ -1359,6 +1372,11 @@ declare module 'stripe' {
       billing_details?: PaymentMethodUpdateParams.BillingDetails;
 
       /**
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
+       */
+      blik?: PaymentMethodUpdateParams.Blik;
+
+      /**
        * If this is a `card` PaymentMethod, this hash contains the user's card details.
        */
       card?: PaymentMethodUpdateParams.Card;
@@ -1426,6 +1444,8 @@ declare module 'stripe' {
         }
       }
 
+      interface Blik {}
+
       interface Card {
         /**
          * Two-digit number representing the card's expiration month.
@@ -1480,6 +1500,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'blik'
         | 'boleto'
         | 'card'
         | 'card_present'

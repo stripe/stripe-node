@@ -89,6 +89,8 @@ declare module 'stripe' {
 
         bacs_debit?: PaymentMethodDetails.BacsDebit;
 
+        blik?: PaymentMethodDetails.Blik;
+
         card?: PaymentMethodDetails.Card;
 
         link?: PaymentMethodDetails.Link;
@@ -160,6 +162,50 @@ declare module 'stripe' {
 
         namespace BacsDebit {
           type NetworkStatus = 'accepted' | 'pending' | 'refused' | 'revoked';
+        }
+
+        interface Blik {
+          /**
+           * Date at which the mandate expires.
+           */
+          expires_after: number | null;
+
+          off_session?: Blik.OffSession;
+
+          /**
+           * Type of the mandate.
+           */
+          type: Blik.Type | null;
+        }
+
+        namespace Blik {
+          interface OffSession {
+            /**
+             * Amount of each recurring payment.
+             */
+            amount: number | null;
+
+            /**
+             * Currency of each recurring payment.
+             */
+            currency: string | null;
+
+            /**
+             * Frequency interval of each recurring payment.
+             */
+            interval: OffSession.Interval | null;
+
+            /**
+             * Frequency indicator of each recurring payment.
+             */
+            interval_count: number | null;
+          }
+
+          namespace OffSession {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'off_session' | 'on_session';
         }
 
         interface Card {}
