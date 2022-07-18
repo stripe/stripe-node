@@ -298,6 +298,8 @@ declare module 'stripe' {
       interface PaymentMethodOptions {
         acss_debit?: PaymentMethodOptions.AcssDebit;
 
+        blik?: PaymentMethodOptions.Blik;
+
         card?: PaymentMethodOptions.Card;
 
         link?: PaymentMethodOptions.Link;
@@ -361,6 +363,56 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface Blik {
+          mandate_options?: Blik.MandateOptions;
+        }
+
+        namespace Blik {
+          interface MandateOptions {
+            /**
+             * Date at which the mandate expires.
+             */
+            expires_after: number | null;
+
+            off_session?: MandateOptions.OffSession;
+
+            /**
+             * Type of the mandate.
+             */
+            type: MandateOptions.Type | null;
+          }
+
+          namespace MandateOptions {
+            interface OffSession {
+              /**
+               * Amount of each recurring payment.
+               */
+              amount: number | null;
+
+              /**
+               * Currency of each recurring payment.
+               */
+              currency: string | null;
+
+              /**
+               * Frequency interval of each recurring payment.
+               */
+              interval: OffSession.Interval | null;
+
+              /**
+               * Frequency indicator of each recurring payment.
+               */
+              interval_count: number | null;
+            }
+
+            namespace OffSession {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type Type = 'off_session' | 'on_session';
+          }
         }
 
         interface Card {
@@ -695,6 +747,11 @@ declare module 'stripe' {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
+         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+         */
+        blik?: PaymentMethodData.Blik;
+
+        /**
          * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
          */
         boleto?: PaymentMethodData.Boleto;
@@ -882,6 +939,8 @@ declare module 'stripe' {
             line1?: string;
           }
         }
+
+        interface Blik {}
 
         interface Boleto {
           /**
@@ -1104,6 +1163,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'blik'
           | 'boleto'
           | 'customer_balance'
           | 'eps'
@@ -1164,6 +1224,11 @@ declare module 'stripe' {
          * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
          */
         acss_debit?: PaymentMethodOptions.AcssDebit;
+
+        /**
+         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+         */
+        blik?: PaymentMethodOptions.Blik;
 
         /**
          * Configuration for any card setup attempted on this SetupIntent.
@@ -1245,6 +1310,13 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface Blik {
+          /**
+           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
+           */
+          code?: string;
         }
 
         interface Card {
@@ -1530,6 +1602,11 @@ declare module 'stripe' {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
+         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+         */
+        blik?: PaymentMethodData.Blik;
+
+        /**
          * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
          */
         boleto?: PaymentMethodData.Boleto;
@@ -1717,6 +1794,8 @@ declare module 'stripe' {
             line1?: string;
           }
         }
+
+        interface Blik {}
 
         interface Boleto {
           /**
@@ -1939,6 +2018,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'blik'
           | 'boleto'
           | 'customer_balance'
           | 'eps'
@@ -1999,6 +2079,11 @@ declare module 'stripe' {
          * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
          */
         acss_debit?: PaymentMethodOptions.AcssDebit;
+
+        /**
+         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+         */
+        blik?: PaymentMethodOptions.Blik;
 
         /**
          * Configuration for any card setup attempted on this SetupIntent.
@@ -2080,6 +2165,13 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface Blik {
+          /**
+           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
+           */
+          code?: string;
         }
 
         interface Card {
@@ -2447,6 +2539,11 @@ declare module 'stripe' {
         billing_details?: PaymentMethodData.BillingDetails;
 
         /**
+         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+         */
+        blik?: PaymentMethodData.Blik;
+
+        /**
          * If this is a `boleto` PaymentMethod, this hash contains details about the Boleto payment method.
          */
         boleto?: PaymentMethodData.Boleto;
@@ -2634,6 +2731,8 @@ declare module 'stripe' {
             line1?: string;
           }
         }
+
+        interface Blik {}
 
         interface Boleto {
           /**
@@ -2856,6 +2955,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'blik'
           | 'boleto'
           | 'customer_balance'
           | 'eps'
@@ -2916,6 +3016,11 @@ declare module 'stripe' {
          * If this is a `acss_debit` SetupIntent, this sub-hash contains details about the ACSS Debit payment method options.
          */
         acss_debit?: PaymentMethodOptions.AcssDebit;
+
+        /**
+         * If this is a `blik` PaymentMethod, this hash contains details about the BLIK payment method.
+         */
+        blik?: PaymentMethodOptions.Blik;
 
         /**
          * Configuration for any card setup attempted on this SetupIntent.
@@ -2997,6 +3102,13 @@ declare module 'stripe' {
           }
 
           type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';
+        }
+
+        interface Blik {
+          /**
+           * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
+           */
+          code?: string;
         }
 
         interface Card {

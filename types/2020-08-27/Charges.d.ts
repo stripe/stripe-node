@@ -405,6 +405,8 @@ declare module 'stripe' {
 
         bancontact?: PaymentMethodDetails.Bancontact;
 
+        blik?: PaymentMethodDetails.Blik;
+
         boleto?: PaymentMethodDetails.Boleto;
 
         card?: PaymentMethodDetails.Card;
@@ -671,6 +673,8 @@ declare module 'stripe' {
         namespace Bancontact {
           type PreferredLanguage = 'de' | 'en' | 'fr' | 'nl';
         }
+
+        interface Blik {}
 
         interface Boleto {
           /**
