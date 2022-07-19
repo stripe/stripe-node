@@ -872,6 +872,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'blik'
         | 'boleto'
         | 'card'
         | 'card_present'

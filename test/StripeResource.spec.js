@@ -22,10 +22,17 @@ const {
 
 describe('StripeResource', () => {
   describe('createResourcePathWithSymbols', () => {
-    it('Generates a path', () => {
+    it('Generates a path when there is a symbol', () => {
       stripe.invoices.create({});
       const path = stripe.invoices.createResourcePathWithSymbols('{id}');
       expect(path).to.equal('/invoices/{id}');
+    });
+
+    it('Generates a path when there is nothing beyond the resource path', () => {
+      stripe.invoices.create({});
+      const path = stripe.invoices.createResourcePathWithSymbols('');
+      // This explicitly shouldn't have a trailing slash.
+      expect(path).to.equal('/invoices');
     });
 
     it('Handles accidental double slashes', () => {
@@ -36,9 +43,9 @@ describe('StripeResource', () => {
   });
 
   describe('_joinUrlParts', () => {
-    it('handles trailing empty values correctly', () => {
+    it('includes trailing empty values', () => {
       const path = stripe.invoices._joinUrlParts(['a', '']);
-      expect(path).to.equal('a');
+      expect(path).to.equal('a/');
     });
 
     it('joins parts', () => {
@@ -127,6 +134,72 @@ describe('StripeResource', () => {
           .reply(200, '{}');
 
         realStripe.customers.retrieve('.', (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('handles .. as a query param', (done) => {
+        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
+          .get('/v1/customers/..', '')
+          .reply(200, '{}');
+
+        realStripe.customers.retrieve('..', (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('handles empty string as a query param', (done) => {
+        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
+          // Note this should always have a trailing space to avoid calling the
+          // top level list endpoint (/v1/customers) and returning all customers.
+          .get('/v1/customers/', '')
+          .reply(200, '{}');
+
+        realStripe.customers.retrieve('', (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('handles empty string as a query param for namespaced resources', (done) => {
+        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
+          // Note this should always have a trailing space to avoid calling the
+          // top level list endpoint (/v1/customers) and returning all customers.
+          .get('/v1/checkout/sessions/', '')
+          .reply(200, '{}');
+
+        realStripe.checkout.sessions.retrieve('', (err, response) => {
+          done(err);
+          scope.done();
+        });
+      });
+
+      it('handles empty string as a query param for nested resources', (done) => {
+        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
+          // Note this should always have a trailing space to avoid calling the
+          // top level list endpoint (/v1/customers) and returning all customers.
+          .get('/v1/customers/cus_123/balance_transactions/', '')
+          .reply(200, '{}');
+
+        realStripe.customers.retrieveBalanceTransaction(
+          'cus_123',
+          '',
+          (err, response) => {
+            done(err);
+            scope.done();
+          }
+        );
+      });
+
+      it('does not include trailing slash for endpoints without query parameters', (done) => {
+        const scope = nock(`https://${stripe.getConstant('DEFAULT_HOST')}`)
+          // Note that no trailing slash is present.
+          .get('/v1/customers', '')
+          .reply(200, '{}');
+
+        realStripe.customers.list((err, response) => {
           done(err);
           scope.done();
         });
