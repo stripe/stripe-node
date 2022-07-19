@@ -53,7 +53,6 @@
 ///<reference path='./InvoiceItems.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
 ///<reference path='./Invoices.d.ts' />
-///<reference path='./IssuerFraudRecords.d.ts' />
 ///<reference path='./Issuing/Authorizations.d.ts' />
 ///<reference path='./Issuing/CardDetails.d.ts' />
 ///<reference path='./Issuing/Cardholders.d.ts' />
@@ -167,7 +166,6 @@ declare module 'stripe' {
     fileLinks: Stripe.FileLinksResource;
     invoices: Stripe.InvoicesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
-    issuerFraudRecords: Stripe.IssuerFraudRecordsResource;
     mandates: Stripe.MandatesResource;
     orders: Stripe.OrdersResource;
     paymentIntents: Stripe.PaymentIntentsResource;
