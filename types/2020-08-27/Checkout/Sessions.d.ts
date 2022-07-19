@@ -1345,7 +1345,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The Epoch time in seconds at which the Checkout Session will expire. It can be anywhere from 1 to 24 hours after Checkout Session creation. By default, this value is 24 hours from creation.
+         * The Epoch time in seconds at which the Checkout Session will expire. It can be anywhere from 30 minutes to 24 hours after Checkout Session creation. By default, this value is 24 hours from creation.
          */
         expires_at?: number;
 

@@ -29,6 +29,11 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
+       * The discounts applied to the subscription item. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
+       */
+      discounts?: Array<string | Stripe.Discount> | null;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata;
@@ -114,6 +119,13 @@ declare module 'stripe' {
       >;
 
       /**
+       * The coupons to redeem into discounts for the subscription item.
+       */
+      discounts?: Stripe.Emptyable<
+        Array<SubscriptionItemCreateParams.Discount>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -176,6 +188,18 @@ declare module 'stripe' {
          * Usage threshold that triggers the subscription to advance to a new billing period
          */
         usage_gte: number;
+      }
+
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
       }
 
       type PaymentBehavior =
@@ -255,6 +279,13 @@ declare module 'stripe' {
       >;
 
       /**
+       * The coupons to redeem into discounts for the subscription item.
+       */
+      discounts?: Stripe.Emptyable<
+        Array<SubscriptionItemUpdateParams.Discount>
+      >;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -322,6 +353,18 @@ declare module 'stripe' {
          * Usage threshold that triggers the subscription to advance to a new billing period
          */
         usage_gte: number;
+      }
+
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
       }
 
       type PaymentBehavior =

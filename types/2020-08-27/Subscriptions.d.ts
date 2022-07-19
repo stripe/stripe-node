@@ -118,6 +118,11 @@ declare module 'stripe' {
       discount: Stripe.Discount | null;
 
       /**
+       * The discounts applied to the subscription. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
+       */
+      discounts?: Array<string | Stripe.Discount> | null;
+
+      /**
        * If the subscription has ended, the date the subscription ended.
        */
       ended_at: number | null;
@@ -171,6 +176,11 @@ declare module 'stripe' {
        * If specified, [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates) that will be applied to the subscription once the `latest_invoice` has been paid.
        */
       pending_update: Subscription.PendingUpdate | null;
+
+      /**
+       * Time period and invoice for a Subscription billed in advance.
+       */
+      prebilling?: Subscription.Prebilling | null;
 
       /**
        * The schedule attached to the subscription
@@ -489,6 +499,11 @@ declare module 'stripe' {
         expires_at: number;
 
         /**
+         * The number of iterations of prebilling to apply.
+         */
+        prebilling_iterations?: number | null;
+
+        /**
          * List of subscription items, each with an attached plan, that will be set if the update is applied.
          */
         subscription_items: Array<Stripe.SubscriptionItem> | null;
@@ -502,6 +517,23 @@ declare module 'stripe' {
          * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
          */
         trial_from_plan: boolean | null;
+      }
+
+      interface Prebilling {
+        /**
+         * ID of the prebilling invoice.
+         */
+        invoice: string | Stripe.Invoice;
+
+        /**
+         * The end of the last period for which the invoice pre-bills.
+         */
+        period_end: number;
+
+        /**
+         * The start of the first period for which the invoice pre-bills.
+         */
+        period_start: number;
       }
 
       type Status =
@@ -533,7 +565,7 @@ declare module 'stripe' {
       customer: string;
 
       /**
-       * A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 20 items.
+       * A list of prices and quantities that will generate invoice items appended to the next invoice for this subscription. You may pass up to 20 items.
        */
       add_invoice_items?: Array<SubscriptionCreateParams.AddInvoiceItem>;
 
@@ -615,6 +647,11 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * The coupons to redeem into discounts for the subscription. If not specified or empty, inherits the discount from the subscription's customer.
+       */
+      discounts?: Stripe.Emptyable<Array<SubscriptionCreateParams.Discount>>;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -658,6 +695,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * If specified, the invoicing for the given billing cycle iterations will be processed now.
+       */
+      prebilling?: SubscriptionCreateParams.Prebilling;
+
+      /**
        * The API ID of a promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
        */
       promotion_code?: string;
@@ -691,6 +733,11 @@ declare module 'stripe' {
     namespace SubscriptionCreateParams {
       interface AddInvoiceItem {
         /**
+         * The coupons to redeem into discounts for the item.
+         */
+        discounts?: Array<AddInvoiceItem.Discount>;
+
+        /**
          * The ID of the price object.
          */
         price?: string;
@@ -712,6 +759,18 @@ declare module 'stripe' {
       }
 
       namespace AddInvoiceItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+        }
+
         interface PriceData {
           /**
            * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -765,11 +824,28 @@ declare module 'stripe' {
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+      }
+
       interface Item {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
          */
         billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+        /**
+         * The coupons to redeem into discounts for the subscription item.
+         */
+        discounts?: Stripe.Emptyable<Array<Item.Discount>>;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -808,6 +884,18 @@ declare module 'stripe' {
            * Usage threshold that triggers the subscription to advance to a new billing period
            */
           usage_gte: number;
+        }
+
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
         }
 
         interface PriceData {
@@ -1113,6 +1201,13 @@ declare module 'stripe' {
         type Interval = 'day' | 'month' | 'week' | 'year';
       }
 
+      interface Prebilling {
+        /**
+         * This is used to determine the number of billing cycles to prebill.
+         */
+        iterations: number;
+      }
+
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
 
       interface TransferData {
@@ -1137,7 +1232,7 @@ declare module 'stripe' {
 
     interface SubscriptionUpdateParams {
       /**
-       * A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 20 items.
+       * A list of prices and quantities that will generate invoice items appended to the next invoice for this subscription. You may pass up to 20 items.
        */
       add_invoice_items?: Array<SubscriptionUpdateParams.AddInvoiceItem>;
 
@@ -1209,6 +1304,11 @@ declare module 'stripe' {
       description?: string;
 
       /**
+       * The coupons to redeem into discounts for the subscription. If not specified or empty, inherits the discount from the subscription's customer.
+       */
+      discounts?: Stripe.Emptyable<Array<SubscriptionUpdateParams.Discount>>;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -1259,6 +1359,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * If specified, the invoicing for the given billing cycle iterations will be processed now.
+       */
+      prebilling?: SubscriptionUpdateParams.Prebilling;
+
+      /**
        * The promotion code to apply to this subscription. A promotion code applied to a subscription will only affect invoices created for that particular subscription.
        */
       promotion_code?: string;
@@ -1292,6 +1397,11 @@ declare module 'stripe' {
     namespace SubscriptionUpdateParams {
       interface AddInvoiceItem {
         /**
+         * The coupons to redeem into discounts for the item.
+         */
+        discounts?: Array<AddInvoiceItem.Discount>;
+
+        /**
          * The ID of the price object.
          */
         price?: string;
@@ -1313,6 +1423,18 @@ declare module 'stripe' {
       }
 
       namespace AddInvoiceItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+        }
+
         interface PriceData {
           /**
            * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -1368,6 +1490,18 @@ declare module 'stripe' {
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+      }
+
       interface Item {
         /**
          * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
@@ -1383,6 +1517,11 @@ declare module 'stripe' {
          * A flag that, if set to `true`, will delete the specified item.
          */
         deleted?: boolean;
+
+        /**
+         * The coupons to redeem into discounts for the subscription item.
+         */
+        discounts?: Stripe.Emptyable<Array<Item.Discount>>;
 
         /**
          * Subscription item to update.
@@ -1426,6 +1565,18 @@ declare module 'stripe' {
            * Usage threshold that triggers the subscription to advance to a new billing period
            */
           usage_gte: number;
+        }
+
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
         }
 
         interface PriceData {
@@ -1745,6 +1896,13 @@ declare module 'stripe' {
 
       namespace PendingInvoiceItemInterval {
         type Interval = 'day' | 'month' | 'week' | 'year';
+      }
+
+      interface Prebilling {
+        /**
+         * This is used to determine the number of billing cycles to prebill.
+         */
+        iterations: number;
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
