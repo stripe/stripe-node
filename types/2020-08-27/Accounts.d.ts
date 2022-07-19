@@ -192,6 +192,11 @@ declare module 'stripe' {
         bank_transfer_payments?: Capabilities.BankTransferPayments;
 
         /**
+         * The status of the blik payments capability of the account, or whether the account can directly process blik charges.
+         */
+        blik_payments?: Capabilities.BlikPayments;
+
+        /**
          * The status of the boleto payments capability of the account, or whether the account can directly process boleto charges.
          */
         boleto_payments?: Capabilities.BoletoPayments;
@@ -331,6 +336,8 @@ declare module 'stripe' {
         type BancontactPayments = 'active' | 'inactive' | 'pending';
 
         type BankTransferPayments = 'active' | 'inactive' | 'pending';
+
+        type BlikPayments = 'active' | 'inactive' | 'pending';
 
         type BoletoPayments = 'active' | 'inactive' | 'pending';
 
@@ -1300,6 +1307,11 @@ declare module 'stripe' {
         bank_transfer_payments?: Capabilities.BankTransferPayments;
 
         /**
+         * The blik_payments capability.
+         */
+        blik_payments?: Capabilities.BlikPayments;
+
+        /**
          * The boleto_payments capability.
          */
         boleto_payments?: Capabilities.BoletoPayments;
@@ -1469,6 +1481,13 @@ declare module 'stripe' {
         }
 
         interface BankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BlikPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1894,7 +1913,7 @@ declare module 'stripe' {
 
       interface ExternalAccount {
         /**
-         * The type of external account.
+         * The type of external account. Should be bank_account.
          */
         object: string;
 
@@ -2521,6 +2540,11 @@ declare module 'stripe' {
         bank_transfer_payments?: Capabilities.BankTransferPayments;
 
         /**
+         * The blik_payments capability.
+         */
+        blik_payments?: Capabilities.BlikPayments;
+
+        /**
          * The boleto_payments capability.
          */
         boleto_payments?: Capabilities.BoletoPayments;
@@ -2690,6 +2714,13 @@ declare module 'stripe' {
         }
 
         interface BankTransferPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface BlikPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

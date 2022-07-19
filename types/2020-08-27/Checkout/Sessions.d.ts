@@ -296,7 +296,11 @@ declare module 'stripe' {
            * Session will determine whether to display an option to opt into promotional communication
            * from the merchant depending on the customer's locale. Only available to US merchants.
            */
-          promotions: 'auto' | null;
+          promotions: ConsentCollection.Promotions | null;
+        }
+
+        namespace ConsentCollection {
+          type Promotions = 'auto' | 'none';
         }
 
         type CustomerCreation = 'always' | 'if_required';
@@ -1341,7 +1345,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The Epoch time in seconds at which the Checkout Session will expire. It can be anywhere from 1 to 24 hours after Checkout Session creation. By default, this value is 24 hours from creation.
+         * The Epoch time in seconds at which the Checkout Session will expire. It can be anywhere from 30 minutes to 24 hours after Checkout Session creation. By default, this value is 24 hours from creation.
          */
         expires_at?: number;
 
@@ -1479,7 +1483,11 @@ declare module 'stripe' {
            * Session will determine whether to display an option to opt into promotional communication
            * from the merchant depending on the customer's locale. Only available to US merchants.
            */
-          promotions?: 'auto';
+          promotions?: ConsentCollection.Promotions;
+        }
+
+        namespace ConsentCollection {
+          type Promotions = 'auto' | 'none';
         }
 
         type CustomerCreation = 'always' | 'if_required';
@@ -2399,6 +2407,7 @@ declare module 'stripe' {
           | 'au_becs_debit'
           | 'bacs_debit'
           | 'bancontact'
+          | 'blik'
           | 'boleto'
           | 'card'
           | 'eps'
@@ -2943,6 +2952,11 @@ declare module 'stripe' {
         customer?: string;
 
         /**
+         * Only return the Checkout Sessions for the Customer details specified.
+         */
+        customer_details?: SessionListParams.CustomerDetails;
+
+        /**
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
@@ -2956,6 +2970,15 @@ declare module 'stripe' {
          * Only return the Checkout Session for the subscription specified.
          */
         subscription?: string;
+      }
+
+      namespace SessionListParams {
+        interface CustomerDetails {
+          /**
+           * Customer's email address.
+           */
+          email: string;
+        }
       }
 
       interface SessionExpireParams {

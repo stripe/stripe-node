@@ -418,14 +418,64 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+         */
+        billing_behavior?: SubscriptionData.BillingBehavior;
+
+        /**
+         * Whether the subscription will always start a new billing period when the quote is accepted.
+         */
+        billing_cycle_anchor?: 'reset' | null;
+
+        /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. This date is ignored if it is in the past when the quote is accepted. Measured in seconds since the Unix epoch.
          */
         effective_date: number | null;
 
         /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` and `cancel`.
+         */
+        end_behavior?: SubscriptionData.EndBehavior | null;
+
+        /**
+         * The id of the subscription schedule that will be updated when the quote is accepted.
+         */
+        from_schedule?: string | Stripe.SubscriptionSchedule | null;
+
+        /**
+         * The id of the subscription that will be updated when the quote is accepted.
+         */
+        from_subscription?: string | Stripe.Subscription | null;
+
+        /**
+         * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
+         */
+        prebilling?: SubscriptionData.Prebilling | null;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the quote is accepted.
+         */
+        proration_behavior?: SubscriptionData.ProrationBehavior;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
+      }
+
+      namespace SubscriptionData {
+        type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type EndBehavior = 'cancel' | 'release';
+
+        interface Prebilling {
+          iterations: number;
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
 
       interface TotalDetails {
@@ -597,6 +647,11 @@ declare module 'stripe' {
       on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
+       * List representing phases of the Quote. Each phase can be customized to have different durations, prices, and coupons.
+       */
+      phases?: Array<QuoteCreateParams.Phase>;
+
+      /**
        * When creating a subscription or subscription schedule, the specified configuration data will be used. There must be at least one line item with a recurring price for a subscription or subscription schedule to be created. A subscription schedule is created if `subscription_data[effective_date]` is present and in the future, otherwise a subscription is created.
        */
       subscription_data?: QuoteCreateParams.SubscriptionData;
@@ -655,6 +710,11 @@ declare module 'stripe' {
 
       interface LineItem {
         /**
+         * The discounts applied to this line item.
+         */
+        discounts?: Stripe.Emptyable<Array<LineItem.Discount>>;
+
+        /**
          * The ID of the price object. One of `price` or `price_data` is required.
          */
         price?: string;
@@ -676,6 +736,18 @@ declare module 'stripe' {
       }
 
       namespace LineItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+        }
+
         interface PriceData {
           /**
            * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -729,16 +801,253 @@ declare module 'stripe' {
         }
       }
 
+      interface Phase {
+        /**
+         * When specified as `reset`, the subscription will always start a new billing period when the quote is accepted.
+         */
+        billing_cycle_anchor?: 'reset';
+
+        /**
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         */
+        collection_method?: Phase.CollectionMethod;
+
+        /**
+         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
+         */
+        default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
+         */
+        discounts?: Stripe.Emptyable<Array<Phase.Discount>>;
+
+        /**
+         * The date at which this phase of the quote ends. If set, `iterations` must not be set.
+         */
+        end_date?: number;
+
+        /**
+         * All invoices will be billed using the specified settings.
+         */
+        invoice_settings?: Phase.InvoiceSettings;
+
+        /**
+         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+         */
+        iterations?: number;
+
+        /**
+         * A list of line items the customer is being quoted for within this phase. Each line item includes information about the product, the quantity, and the resulting cost.
+         */
+        line_items: Array<Phase.LineItem>;
+
+        /**
+         * If the update changes the current phase, indicates whether the changes should be prorated. The default value is `create_prorations`.
+         */
+        proration_behavior?: Phase.ProrationBehavior;
+
+        /**
+         * If set to true the entire phase is counted as a trial and the customer will not be charged for any fees.
+         */
+        trial?: boolean;
+
+        /**
+         * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`.
+         */
+        trial_end?: number;
+      }
+
+      namespace Phase {
+        type CollectionMethod = 'charge_automatically' | 'send_invoice';
+
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+        }
+
+        interface InvoiceSettings {
+          /**
+           * Number of days within which a customer must pay invoices generated by this subscription schedule. This value will be `null` for subscription schedules where `billing=charge_automatically`.
+           */
+          days_until_due?: number;
+        }
+
+        interface LineItem {
+          /**
+           * The discounts applied to this line item.
+           */
+          discounts?: Stripe.Emptyable<Array<LineItem.Discount>>;
+
+          /**
+           * The ID of the price object. One of `price` or `price_data` is required.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+           */
+          price_data?: LineItem.PriceData;
+
+          /**
+           * The quantity of the line item.
+           */
+          quantity?: number;
+
+          /**
+           * The tax rates which apply to the line item. When set, the `default_tax_rates` on the quote do not apply to this line item.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace LineItem {
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+          }
+
+          interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the product that this price will belong to.
+             */
+            product: string;
+
+            /**
+             * The recurring components of a price such as `interval` and `interval_count`.
+             */
+            recurring?: PriceData.Recurring;
+
+            /**
+             * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+          }
+
+          namespace PriceData {
+            interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+               */
+              interval_count?: number;
+            }
+
+            namespace Recurring {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
+
       interface SubscriptionData {
+        /**
+         * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+         */
+        billing_behavior?: SubscriptionData.BillingBehavior;
+
+        /**
+         * When specified as `reset`, the subscription will always start a new billing period when the quote is accepted.
+         */
+        billing_cycle_anchor?: Stripe.Emptyable<'reset'>;
+
         /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
          */
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
 
         /**
+         * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         */
+        end_behavior?: SubscriptionData.EndBehavior;
+
+        /**
+         * The id of a subscription schedule the quote will update. The quote will inherit the state of the subscription schedule, such as `phases`. Cannot be combined with other parameters.
+         */
+        from_schedule?: string;
+
+        /**
+         * The id of a subscription that the quote will update. By default, the quote will contain the state of the subscription (such as line items, collection method and billing thresholds) unless overridden.
+         */
+        from_subscription?: string;
+
+        /**
+         * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
+         */
+        prebilling?: Stripe.Emptyable<SubscriptionData.Prebilling>;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations). When creating a subscription, valid values are `create_prorations` or `none`.
+         *
+         * When updating a subscription, valid values are `create_prorations`, `none`, or `always_invoice`.
+         *
+         * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
+         *
+         * Prorations can be disabled by passing `none`.
+         */
+        proration_behavior?: SubscriptionData.ProrationBehavior;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days?: Stripe.Emptyable<number>;
+      }
+
+      namespace SubscriptionData {
+        type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type EndBehavior = 'cancel' | 'release';
+
+        interface Prebilling {
+          /**
+           * This is used to determine the number of billing cycles to prebill.
+           */
+          iterations: number;
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
 
       interface TransferData {
@@ -848,6 +1157,11 @@ declare module 'stripe' {
       on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
+       * List representing phases of the Quote. Each phase can be customized to have different durations, prices, and coupons.
+       */
+      phases?: Array<QuoteUpdateParams.Phase>;
+
+      /**
        * When creating a subscription or subscription schedule, the specified configuration data will be used. There must be at least one line item with a recurring price for a subscription or subscription schedule to be created. A subscription schedule is created if `subscription_data[effective_date]` is present and in the future, otherwise a subscription is created.
        */
       subscription_data?: QuoteUpdateParams.SubscriptionData;
@@ -889,6 +1203,11 @@ declare module 'stripe' {
 
       interface LineItem {
         /**
+         * The discounts applied to this line item.
+         */
+        discounts?: Stripe.Emptyable<Array<LineItem.Discount>>;
+
+        /**
          * The ID of an existing line item on the quote.
          */
         id?: string;
@@ -915,6 +1234,18 @@ declare module 'stripe' {
       }
 
       namespace LineItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+        }
+
         interface PriceData {
           /**
            * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -968,16 +1299,243 @@ declare module 'stripe' {
         }
       }
 
+      interface Phase {
+        /**
+         * When specified as `reset`, the subscription will always start a new billing period when the quote is accepted.
+         */
+        billing_cycle_anchor?: 'reset';
+
+        /**
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         */
+        collection_method?: Phase.CollectionMethod;
+
+        /**
+         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
+         */
+        default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
+         */
+        discounts?: Stripe.Emptyable<Array<Phase.Discount>>;
+
+        /**
+         * The date at which this phase of the quote ends. If set, `iterations` must not be set.
+         */
+        end_date?: number;
+
+        /**
+         * All invoices will be billed using the specified settings.
+         */
+        invoice_settings?: Phase.InvoiceSettings;
+
+        /**
+         * Integer representing the multiplier applied to the price interval. For example, `iterations=2` applied to a price with `interval=month` and `interval_count=3` results in a phase of duration `2 * 3 months = 6 months`. If set, `end_date` must not be set.
+         */
+        iterations?: number;
+
+        /**
+         * A list of line items the customer is being quoted for within this phase. Each line item includes information about the product, the quantity, and the resulting cost.
+         */
+        line_items: Array<Phase.LineItem>;
+
+        /**
+         * If the update changes the current phase, indicates whether the changes should be prorated. The default value is `create_prorations`.
+         */
+        proration_behavior?: Phase.ProrationBehavior;
+
+        /**
+         * If set to true the entire phase is counted as a trial and the customer will not be charged for any fees.
+         */
+        trial?: boolean;
+
+        /**
+         * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`.
+         */
+        trial_end?: number;
+      }
+
+      namespace Phase {
+        type CollectionMethod = 'charge_automatically' | 'send_invoice';
+
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+        }
+
+        interface InvoiceSettings {
+          /**
+           * Number of days within which a customer must pay invoices generated by this subscription schedule. This value will be `null` for subscription schedules where `billing=charge_automatically`.
+           */
+          days_until_due?: number;
+        }
+
+        interface LineItem {
+          /**
+           * The discounts applied to this line item.
+           */
+          discounts?: Stripe.Emptyable<Array<LineItem.Discount>>;
+
+          /**
+           * The ID of the price object. One of `price` or `price_data` is required.
+           */
+          price?: string;
+
+          /**
+           * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `price` or `price_data` is required.
+           */
+          price_data?: LineItem.PriceData;
+
+          /**
+           * The quantity of the line item.
+           */
+          quantity?: number;
+
+          /**
+           * The tax rates which apply to the line item. When set, the `default_tax_rates` on the quote do not apply to this line item.
+           */
+          tax_rates?: Stripe.Emptyable<Array<string>>;
+        }
+
+        namespace LineItem {
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon?: string;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount?: string;
+          }
+
+          interface PriceData {
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * The ID of the product that this price will belong to.
+             */
+            product: string;
+
+            /**
+             * The recurring components of a price such as `interval` and `interval_count`.
+             */
+            recurring?: PriceData.Recurring;
+
+            /**
+             * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+             */
+            tax_behavior?: PriceData.TaxBehavior;
+
+            /**
+             * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+             */
+            unit_amount?: number;
+
+            /**
+             * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+             */
+            unit_amount_decimal?: string;
+          }
+
+          namespace PriceData {
+            interface Recurring {
+              /**
+               * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Recurring.Interval;
+
+              /**
+               * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+               */
+              interval_count?: number;
+            }
+
+            namespace Recurring {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+          }
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
+
       interface SubscriptionData {
+        /**
+         * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+         */
+        billing_behavior?: SubscriptionData.BillingBehavior;
+
+        /**
+         * When specified as `reset`, the subscription will always start a new billing period when the quote is accepted.
+         */
+        billing_cycle_anchor?: Stripe.Emptyable<'reset'>;
+
         /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
          */
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
 
         /**
+         * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         */
+        end_behavior?: SubscriptionData.EndBehavior;
+
+        /**
+         * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
+         */
+        prebilling?: Stripe.Emptyable<SubscriptionData.Prebilling>;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations). When creating a subscription, valid values are `create_prorations` or `none`.
+         *
+         * When updating a subscription, valid values are `create_prorations`, `none`, or `always_invoice`.
+         *
+         * Passing `create_prorations` will cause proration invoice items to be created when applicable. These proration items will only be invoiced immediately under [certain conditions](https://stripe.com/docs/subscriptions/upgrading-downgrading#immediate-payment). In order to always invoice immediately for prorations, pass `always_invoice`.
+         *
+         * Prorations can be disabled by passing `none`.
+         */
+        proration_behavior?: SubscriptionData.ProrationBehavior;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days?: Stripe.Emptyable<number>;
+      }
+
+      namespace SubscriptionData {
+        type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type EndBehavior = 'cancel' | 'release';
+
+        interface Prebilling {
+          /**
+           * This is used to determine the number of billing cycles to prebill.
+           */
+          iterations: number;
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
 
       interface TransferData {
@@ -1008,6 +1566,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * The subscription which the quote updates.
+       */
+      from_subscription?: string;
 
       /**
        * The status of the quote.

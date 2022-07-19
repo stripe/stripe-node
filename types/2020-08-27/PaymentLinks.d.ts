@@ -163,7 +163,11 @@ declare module 'stripe' {
         /**
          * If set to `auto`, enables the collection of customer consent for promotional communications.
          */
-        promotions: 'auto' | null;
+        promotions: ConsentCollection.Promotions | null;
+      }
+
+      namespace ConsentCollection {
+        type Promotions = 'auto' | 'none';
       }
 
       type CustomerCreation = 'always' | 'if_required';
@@ -193,6 +197,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'blik'
         | 'boleto'
         | 'card'
         | 'eps'
@@ -672,7 +677,11 @@ declare module 'stripe' {
          * Session will determine whether to display an option to opt into promotional communication
          * from the merchant depending on the customer's locale. Only available to US merchants.
          */
-        promotions?: 'auto';
+        promotions?: ConsentCollection.Promotions;
+      }
+
+      namespace ConsentCollection {
+        type Promotions = 'auto' | 'none';
       }
 
       type CustomerCreation = 'always' | 'if_required';
@@ -748,6 +757,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'blik'
         | 'boleto'
         | 'card'
         | 'eps'
@@ -1219,6 +1229,7 @@ declare module 'stripe' {
         | 'au_becs_debit'
         | 'bacs_debit'
         | 'bancontact'
+        | 'blik'
         | 'boleto'
         | 'card'
         | 'eps'

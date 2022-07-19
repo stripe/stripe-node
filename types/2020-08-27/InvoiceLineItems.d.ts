@@ -285,6 +285,11 @@ declare module 'stripe' {
       >;
 
       /**
+       * The pre-billing to apply to the subscription as a preview.
+       */
+      subscription_prebilling?: InvoiceLineItemListUpcomingParams.SubscriptionPrebilling;
+
+      /**
        * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
        */
       subscription_proration_behavior?: InvoiceLineItemListUpcomingParams.SubscriptionProrationBehavior;
@@ -607,6 +612,11 @@ declare module 'stripe' {
         deleted?: boolean;
 
         /**
+         * The coupons to redeem into discounts for the subscription item.
+         */
+        discounts?: Stripe.Emptyable<Array<SubscriptionItem.Discount>>;
+
+        /**
          * Subscription item to update.
          */
         id?: string;
@@ -648,6 +658,18 @@ declare module 'stripe' {
            * Usage threshold that triggers the subscription to advance to a new billing period
            */
           usage_gte: number;
+        }
+
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
         }
 
         interface PriceData {
@@ -701,6 +723,13 @@ declare module 'stripe' {
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
         }
+      }
+
+      interface SubscriptionPrebilling {
+        /**
+         * This is used to determine the number of billing cycles to prebill.
+         */
+        iterations: number;
       }
 
       type SubscriptionProrationBehavior =
