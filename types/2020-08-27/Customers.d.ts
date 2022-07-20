@@ -42,6 +42,11 @@ declare module 'stripe' {
       currency: string | null;
 
       /**
+       * The default three-letter [ISO code for the currency](https://stripe.com/docs/currencies) that the customer will be charged in for billing purposes.
+       */
+      default_currency?: string | null;
+
+      /**
        * ID of the default payment source for the customer.
        *
        * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) field instead.
@@ -71,6 +76,13 @@ declare module 'stripe' {
        * The customer's email address.
        */
       email: string | null;
+
+      /**
+       * The current multi-currency balances, if any, being stored on the customer.If positive in a currency, the customer has a credit to apply to their next invoice denominated in that currency.If negative, the customer has an amount owed that will be added to their next invoice denominated in that currency. These balances do not refer to any unpaid invoices.They solely track amounts that have yet to be successfully applied to any invoice. A balance in a particular currency is only applied to any invoice as an invoice in that currency is finalized.
+       */
+      invoice_credit_balance?: {
+        [key: string]: number;
+      };
 
       /**
        * The prefix for the customer used to generate unique invoice numbers.

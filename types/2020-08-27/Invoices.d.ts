@@ -937,6 +937,11 @@ declare module 'stripe' {
       collection_method?: InvoiceCreateParams.CollectionMethod;
 
       /**
+       * The currency to create this invoice in. Defaults to that of `customer` if not specified.
+       */
+      currency?: string;
+
+      /**
        * A list of up to 4 custom fields to be displayed on the invoice.
        */
       custom_fields?: Stripe.Emptyable<Array<InvoiceCreateParams.CustomField>>;
