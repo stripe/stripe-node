@@ -1699,8 +1699,6 @@ declare module 'stripe' {
           interface Add {
             discounts?: Array<Add.Discount>;
 
-            metadata?: Stripe.MetadataParam;
-
             price: string;
 
             quantity?: number;
@@ -1728,26 +1726,13 @@ declare module 'stripe' {
 
               none?: Trial.None;
 
-              /**
-               * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-               */
-              paid?: Trial.Paid;
-
-              type: Trial.Type;
+              type: 'free';
             }
 
             namespace Trial {
               interface Free {}
 
               interface None {}
-
-              interface Paid {
-                price?: string;
-
-                quantity?: number;
-              }
-
-              type Type = 'free' | 'none' | 'paid';
             }
           }
 
@@ -1757,8 +1742,6 @@ declare module 'stripe' {
 
           interface Set {
             discounts?: Array<Set.Discount>;
-
-            metadata?: Stripe.MetadataParam;
 
             price: string;
 
@@ -1787,26 +1770,13 @@ declare module 'stripe' {
 
               none?: Trial.None;
 
-              /**
-               * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-               */
-              paid?: Trial.Paid;
-
-              type: Trial.Type;
+              type: 'free';
             }
 
             namespace Trial {
               interface Free {}
 
               interface None {}
-
-              interface Paid {
-                price?: string;
-
-                quantity?: number;
-              }
-
-              type Type = 'free' | 'none' | 'paid';
             }
           }
 
