@@ -610,6 +610,11 @@ declare module 'stripe' {
 
       interface PaymentSettings {
         /**
+         * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
+         */
+        default_mandate: string | null;
+
+        /**
          * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
          */
         payment_method_options: PaymentSettings.PaymentMethodOptions | null;
@@ -937,6 +942,11 @@ declare module 'stripe' {
       collection_method?: InvoiceCreateParams.CollectionMethod;
 
       /**
+       * The currency to create this invoice in. Defaults to that of `customer` if not specified.
+       */
+      currency?: string;
+
+      /**
        * A list of up to 4 custom fields to be displayed on the invoice.
        */
       custom_fields?: Stripe.Emptyable<Array<InvoiceCreateParams.CustomField>>;
@@ -1069,6 +1079,11 @@ declare module 'stripe' {
       }
 
       interface PaymentSettings {
+        /**
+         * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
+         */
+        default_mandate?: string;
+
         /**
          * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
          */
@@ -1446,6 +1461,11 @@ declare module 'stripe' {
 
       interface PaymentSettings {
         /**
+         * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
+         */
+        default_mandate?: string;
+
+        /**
          * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
          */
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
@@ -1735,6 +1755,11 @@ declare module 'stripe' {
        * Passing `forgive=false` will fail the charge if the source hasn't been pre-funded with the right amount. An example for this case is with ACH Credit Transfers and wires: if the amount wired is less than the amount due by a small amount, you might want to forgive the difference. Defaults to `false`.
        */
       forgive?: boolean;
+
+      /**
+       * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the payment_method param or the invoice's default_payment_method or default_source, if set.
+       */
+      mandate?: string;
 
       /**
        * Indicates if a customer is on or off-session while an invoice payment is attempted. Defaults to `true` (off-session).

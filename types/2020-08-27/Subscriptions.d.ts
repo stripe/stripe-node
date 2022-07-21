@@ -876,6 +876,11 @@ declare module 'stripe' {
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * Define options to configure the trial on the subscription item.
+         */
+        trial?: Item.Trial;
       }
 
       namespace Item {
@@ -948,6 +953,33 @@ declare module 'stripe' {
           }
 
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+
+        interface Trial {
+          free?: Trial.Free;
+
+          none?: Trial.None;
+
+          /**
+           * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
+           */
+          paid?: Trial.Paid;
+
+          type: Trial.Type;
+        }
+
+        namespace Trial {
+          interface Free {}
+
+          interface None {}
+
+          interface Paid {
+            price: string;
+
+            quantity?: number;
+          }
+
+          type Type = 'free' | 'paid';
         }
       }
 
