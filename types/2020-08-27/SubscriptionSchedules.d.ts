@@ -297,6 +297,11 @@ declare module 'stripe' {
         transfer_data: Phase.TransferData | null;
 
         /**
+         * Specify behavior of the trial when crossing schedule phase boundaries
+         */
+        trial_continuation?: Phase.TrialContinuation | null;
+
+        /**
          * When the trial ends within the phase.
          */
         trial_end: number | null;
@@ -393,6 +398,11 @@ declare module 'stripe' {
           discounts?: Array<Item.Discount> | null;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
+           */
+          metadata?: Stripe.Metadata | null;
+
+          /**
            * ID of the plan to which the customer should be subscribed.
            */
           plan: string | Stripe.Plan | Stripe.DeletedPlan;
@@ -411,6 +421,11 @@ declare module 'stripe' {
            * The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.
            */
           tax_rates?: Array<Stripe.TaxRate> | null;
+
+          /**
+           * Current trial configuration on this item.
+           */
+          trial?: Item.Trial | null;
         }
 
         namespace Item {
@@ -432,6 +447,35 @@ declare module 'stripe' {
              */
             discount: string | Stripe.Discount | null;
           }
+
+          interface Trial {
+            /**
+             * Unique identifier for the object.
+             */
+            id: string;
+
+            /**
+             * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
+             */
+            paid: Trial.Paid | null;
+
+            type: Trial.Type;
+          }
+
+          namespace Trial {
+            interface Paid {
+              id: string;
+
+              /**
+               * The ID of the price object.
+               */
+              price: string;
+
+              quantity: number | null;
+            }
+
+            type Type = 'free' | 'paid';
+          }
         }
 
         type ProrationBehavior =
@@ -450,6 +494,8 @@ declare module 'stripe' {
            */
           destination: string | Stripe.Account;
         }
+
+        type TrialContinuation = 'continue' | 'none';
       }
 
       interface Prebilling {
@@ -719,6 +765,11 @@ declare module 'stripe' {
         trial?: boolean;
 
         /**
+         * Specify trial behavior when crossing phase boundaries
+         */
+        trial_continuation?: Phase.TrialContinuation;
+
+        /**
          * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
          */
         trial_end?: number;
@@ -851,6 +902,11 @@ declare module 'stripe' {
           discounts?: Stripe.Emptyable<Array<Item.Discount>>;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
            * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
            */
           plan?: string;
@@ -874,6 +930,11 @@ declare module 'stripe' {
            * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
            */
           tax_rates?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Settings for trials
+           */
+          trial?: Item.Trial;
         }
 
         namespace Item {
@@ -947,6 +1008,33 @@ declare module 'stripe' {
 
             type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
           }
+
+          interface Trial {
+            free?: Trial.Free;
+
+            none?: Trial.None;
+
+            /**
+             * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
+             */
+            paid?: Trial.Paid;
+
+            type: Trial.Type;
+          }
+
+          namespace Trial {
+            interface Free {}
+
+            interface None {}
+
+            interface Paid {
+              price: string;
+
+              quantity?: number;
+            }
+
+            type Type = 'free' | 'paid';
+          }
         }
 
         type ProrationBehavior =
@@ -965,6 +1053,8 @@ declare module 'stripe' {
            */
           destination: string;
         }
+
+        type TrialContinuation = 'continue' | 'none';
       }
 
       interface Prebilling {
@@ -1219,6 +1309,11 @@ declare module 'stripe' {
         trial?: boolean;
 
         /**
+         * Specify trial behavior when crossing phase boundaries
+         */
+        trial_continuation?: Phase.TrialContinuation;
+
+        /**
          * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
          */
         trial_end?: number | 'now';
@@ -1351,6 +1446,11 @@ declare module 'stripe' {
           discounts?: Stripe.Emptyable<Array<Item.Discount>>;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
            * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
            */
           plan?: string;
@@ -1374,6 +1474,11 @@ declare module 'stripe' {
            * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
            */
           tax_rates?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Settings for trials
+           */
+          trial?: Item.Trial;
         }
 
         namespace Item {
@@ -1447,6 +1552,33 @@ declare module 'stripe' {
 
             type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
           }
+
+          interface Trial {
+            free?: Trial.Free;
+
+            none?: Trial.None;
+
+            /**
+             * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
+             */
+            paid?: Trial.Paid;
+
+            type: Trial.Type;
+          }
+
+          namespace Trial {
+            interface Free {}
+
+            interface None {}
+
+            interface Paid {
+              price: string;
+
+              quantity?: number;
+            }
+
+            type Type = 'free' | 'paid';
+          }
         }
 
         type ProrationBehavior =
@@ -1465,6 +1597,8 @@ declare module 'stripe' {
            */
           destination: string;
         }
+
+        type TrialContinuation = 'continue' | 'none';
       }
 
       interface Prebilling {
@@ -1747,7 +1881,7 @@ declare module 'stripe' {
                 quantity?: number;
               }
 
-              type Type = 'free' | 'none' | 'paid';
+              type Type = 'free' | 'paid';
             }
           }
 
@@ -1806,7 +1940,7 @@ declare module 'stripe' {
                 quantity?: number;
               }
 
-              type Type = 'free' | 'none' | 'paid';
+              type Type = 'free' | 'paid';
             }
           }
 

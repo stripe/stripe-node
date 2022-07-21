@@ -74,6 +74,11 @@ declare module 'stripe' {
        * The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
        */
       tax_rates: Array<Stripe.TaxRate> | null;
+
+      /**
+       * Current trial configuration on this item.
+       */
+      trial?: SubscriptionItem.Trial | null;
     }
 
     namespace SubscriptionItem {
@@ -82,6 +87,35 @@ declare module 'stripe' {
          * Usage threshold that triggers the subscription to create an invoice
          */
         usage_gte: number | null;
+      }
+
+      interface Trial {
+        /**
+         * Unique identifier for the object.
+         */
+        id: string;
+
+        /**
+         * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
+         */
+        paid: Trial.Paid | null;
+
+        type: Trial.Type;
+      }
+
+      namespace Trial {
+        interface Paid {
+          id: string;
+
+          /**
+           * The ID of the price object.
+           */
+          price: string;
+
+          quantity: number | null;
+        }
+
+        type Type = 'free' | 'paid';
       }
     }
 
@@ -180,6 +214,11 @@ declare module 'stripe' {
        * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
        */
       tax_rates?: Stripe.Emptyable<Array<string>>;
+
+      /**
+       * Define options to configure the trial on the subscription.
+       */
+      trial?: SubscriptionItemCreateParams.Trial;
     }
 
     namespace SubscriptionItemCreateParams {
@@ -261,6 +300,33 @@ declare module 'stripe' {
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
+
+      interface Trial {
+        free?: Trial.Free;
+
+        none?: Trial.None;
+
+        /**
+         * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
+         */
+        paid?: Trial.Paid;
+
+        type: Trial.Type;
+      }
+
+      namespace Trial {
+        interface Free {}
+
+        interface None {}
+
+        interface Paid {
+          price: string;
+
+          quantity?: number;
+        }
+
+        type Type = 'free' | 'paid';
+      }
     }
 
     interface SubscriptionItemRetrieveParams {
