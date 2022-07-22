@@ -695,6 +695,8 @@ declare module 'stripe' {
           }
 
           interface Card {
+            installments?: Card.Installments;
+
             /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
@@ -702,6 +704,13 @@ declare module 'stripe' {
           }
 
           namespace Card {
+            interface Installments {
+              /**
+               * Whether Installments are enabled for this Invoice.
+               */
+              enabled: boolean | null;
+            }
+
             type RequestThreeDSecure = 'any' | 'automatic';
           }
 
@@ -1175,12 +1184,52 @@ declare module 'stripe' {
 
           interface Card {
             /**
+             * Installment configuration for payments attempted on this invoice (Mexico Only).
+             *
+             * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+             */
+            installments?: Card.Installments;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
 
           namespace Card {
+            interface Installments {
+              /**
+               * Setting to true enables installments for this invoice.
+               * Setting to false will prevent any selected plan from applying to a payment.
+               */
+              enabled?: boolean;
+
+              /**
+               * The selected installment plan to use for this invoice.
+               */
+              plan?: Stripe.Emptyable<Installments.Plan>;
+            }
+
+            namespace Installments {
+              interface Plan {
+                /**
+                 * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+                 */
+                count: number;
+
+                /**
+                 * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+                 * One of `month`.
+                 */
+                interval: 'month';
+
+                /**
+                 * Type of installment plan, one of `fixed_count`.
+                 */
+                type: 'fixed_count';
+              }
+            }
+
             type RequestThreeDSecure = 'any' | 'automatic';
           }
 
@@ -1556,12 +1605,52 @@ declare module 'stripe' {
 
           interface Card {
             /**
+             * Installment configuration for payments attempted on this invoice (Mexico Only).
+             *
+             * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+             */
+            installments?: Card.Installments;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
 
           namespace Card {
+            interface Installments {
+              /**
+               * Setting to true enables installments for this invoice.
+               * Setting to false will prevent any selected plan from applying to a payment.
+               */
+              enabled?: boolean;
+
+              /**
+               * The selected installment plan to use for this invoice.
+               */
+              plan?: Stripe.Emptyable<Installments.Plan>;
+            }
+
+            namespace Installments {
+              interface Plan {
+                /**
+                 * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+                 */
+                count: number;
+
+                /**
+                 * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+                 * One of `month`.
+                 */
+                interval: 'month';
+
+                /**
+                 * Type of installment plan, one of `fixed_count`.
+                 */
+                type: 'fixed_count';
+              }
+            }
+
             type RequestThreeDSecure = 'any' | 'automatic';
           }
 
