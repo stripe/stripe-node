@@ -1,5 +1,20 @@
 # Changelog
 
+## 9.15.0-beta.1 - 2022-07-22
+* [#1485](https://github.com/stripe/stripe-node/pull/1485) API Updates for beta branch
+  - Updated stable APIs to the latest version
+* [#1483](https://github.com/stripe/stripe-node/pull/1483) API Updates for beta branch
+  - Updated stable APIs to the latest version
+  - Add `QuotePhase` resource
+* [#1479](https://github.com/stripe/stripe-node/pull/1479) API Updates for beta branch
+  - Updated stable APIs to the latest version
+  - Add `Price.migrate_to` property
+  - Add `SubscriptionSchedule.amend` method.
+  - Add `Discount.subscription_item` property.
+  - Add `Quote.subscription_data.billing_behavior`, `billing_cycle_anchor`, `end_behavior`, `from_schedule`, `from_subscription`, `prebilling`, `proration_behavior` properties.
+  - Add `phases` parameter to `Quote.create`
+  - Add `Subscription.discounts`, `prebilling` properties.
+
 ## 9.14.0 - 2022-07-18
 * [#1477](https://github.com/stripe/stripe-node/pull/1477) API Updates
   * Add support for `blik_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
