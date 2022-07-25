@@ -533,7 +533,7 @@ declare module 'stripe' {
       customer: string;
 
       /**
-       * A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 20 items.
+       * A list of prices and quantities that will generate invoice items appended to the next invoice for this subscription. You may pass up to 20 items.
        */
       add_invoice_items?: Array<SubscriptionCreateParams.AddInvoiceItem>;
 
@@ -1137,7 +1137,7 @@ declare module 'stripe' {
 
     interface SubscriptionUpdateParams {
       /**
-       * A list of prices and quantities that will generate invoice items appended to the first invoice for this subscription. You may pass up to 20 items.
+       * A list of prices and quantities that will generate invoice items appended to the next invoice for this subscription. You may pass up to 20 items.
        */
       add_invoice_items?: Array<SubscriptionUpdateParams.AddInvoiceItem>;
 

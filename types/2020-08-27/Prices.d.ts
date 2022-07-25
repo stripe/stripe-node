@@ -409,7 +409,7 @@ declare module 'stripe' {
       transform_quantity?: PriceCreateParams.TransformQuantity;
 
       /**
-       * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+       * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge. One of `unit_amount` or `custom_unit_amount` is required, unless `billing_scheme=tiered`.
        */
       unit_amount?: number;
 
