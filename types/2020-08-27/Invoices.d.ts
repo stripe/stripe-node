@@ -610,6 +610,11 @@ declare module 'stripe' {
 
       interface PaymentSettings {
         /**
+         * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
+         */
+        default_mandate: string | null;
+
+        /**
          * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
          */
         payment_method_options: PaymentSettings.PaymentMethodOptions | null;
@@ -690,6 +695,8 @@ declare module 'stripe' {
           }
 
           interface Card {
+            installments?: Card.Installments;
+
             /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
@@ -697,6 +704,13 @@ declare module 'stripe' {
           }
 
           namespace Card {
+            interface Installments {
+              /**
+               * Whether Installments are enabled for this Invoice.
+               */
+              enabled: boolean | null;
+            }
+
             type RequestThreeDSecure = 'any' | 'automatic';
           }
 
@@ -937,6 +951,11 @@ declare module 'stripe' {
       collection_method?: InvoiceCreateParams.CollectionMethod;
 
       /**
+       * The currency to create this invoice in. Defaults to that of `customer` if not specified.
+       */
+      currency?: string;
+
+      /**
        * A list of up to 4 custom fields to be displayed on the invoice.
        */
       custom_fields?: Stripe.Emptyable<Array<InvoiceCreateParams.CustomField>>;
@@ -1070,6 +1089,11 @@ declare module 'stripe' {
 
       interface PaymentSettings {
         /**
+         * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
+         */
+        default_mandate?: string;
+
+        /**
          * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
          */
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
@@ -1160,12 +1184,52 @@ declare module 'stripe' {
 
           interface Card {
             /**
+             * Installment configuration for payments attempted on this invoice (Mexico Only).
+             *
+             * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+             */
+            installments?: Card.Installments;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
 
           namespace Card {
+            interface Installments {
+              /**
+               * Setting to true enables installments for this invoice.
+               * Setting to false will prevent any selected plan from applying to a payment.
+               */
+              enabled?: boolean;
+
+              /**
+               * The selected installment plan to use for this invoice.
+               */
+              plan?: Stripe.Emptyable<Installments.Plan>;
+            }
+
+            namespace Installments {
+              interface Plan {
+                /**
+                 * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+                 */
+                count: number;
+
+                /**
+                 * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+                 * One of `month`.
+                 */
+                interval: 'month';
+
+                /**
+                 * Type of installment plan, one of `fixed_count`.
+                 */
+                type: 'fixed_count';
+              }
+            }
+
             type RequestThreeDSecure = 'any' | 'automatic';
           }
 
@@ -1446,6 +1510,11 @@ declare module 'stripe' {
 
       interface PaymentSettings {
         /**
+         * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
+         */
+        default_mandate?: string;
+
+        /**
          * Payment-method-specific configuration to provide to the invoice's PaymentIntent.
          */
         payment_method_options?: PaymentSettings.PaymentMethodOptions;
@@ -1536,12 +1605,52 @@ declare module 'stripe' {
 
           interface Card {
             /**
+             * Installment configuration for payments attempted on this invoice (Mexico Only).
+             *
+             * For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
+             */
+            installments?: Card.Installments;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
           }
 
           namespace Card {
+            interface Installments {
+              /**
+               * Setting to true enables installments for this invoice.
+               * Setting to false will prevent any selected plan from applying to a payment.
+               */
+              enabled?: boolean;
+
+              /**
+               * The selected installment plan to use for this invoice.
+               */
+              plan?: Stripe.Emptyable<Installments.Plan>;
+            }
+
+            namespace Installments {
+              interface Plan {
+                /**
+                 * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+                 */
+                count: number;
+
+                /**
+                 * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+                 * One of `month`.
+                 */
+                interval: 'month';
+
+                /**
+                 * Type of installment plan, one of `fixed_count`.
+                 */
+                type: 'fixed_count';
+              }
+            }
+
             type RequestThreeDSecure = 'any' | 'automatic';
           }
 
@@ -1735,6 +1844,11 @@ declare module 'stripe' {
        * Passing `forgive=false` will fail the charge if the source hasn't been pre-funded with the right amount. An example for this case is with ACH Credit Transfers and wires: if the amount wired is less than the amount due by a small amount, you might want to forgive the difference. Defaults to `false`.
        */
       forgive?: boolean;
+
+      /**
+       * ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the payment_method param or the invoice's default_payment_method or default_source, if set.
+       */
+      mandate?: string;
 
       /**
        * Indicates if a customer is on or off-session while an invoice payment is attempted. Defaults to `true` (off-session).

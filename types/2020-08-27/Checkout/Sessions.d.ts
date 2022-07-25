@@ -652,6 +652,8 @@ declare module 'stripe' {
           }
 
           interface Card {
+            installments?: Card.Installments;
+
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
@@ -673,6 +675,13 @@ declare module 'stripe' {
           }
 
           namespace Card {
+            interface Installments {
+              /**
+               * Indicates if installments are enabled
+               */
+              enabled?: boolean;
+            }
+
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
           }
 
@@ -1345,7 +1354,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The Epoch time in seconds at which the Checkout Session will expire. It can be anywhere from 1 to 24 hours after Checkout Session creation. By default, this value is 24 hours from creation.
+         * The Epoch time in seconds at which the Checkout Session will expire. It can be anywhere from 30 minutes to 24 hours after Checkout Session creation. By default, this value is 24 hours from creation.
          */
         expires_at?: number;
 
@@ -2152,6 +2161,11 @@ declare module 'stripe' {
 
           interface Card {
             /**
+             * Installment options for card payments
+             */
+            installments?: Card.Installments;
+
+            /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
              *
              * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -2172,6 +2186,41 @@ declare module 'stripe' {
           }
 
           namespace Card {
+            interface Installments {
+              /**
+               * Setting to true enables installments for this PaymentIntent.
+               * This will cause the response to contain a list of available installment plans.
+               * Setting to false will prevent any selected plan from applying to a charge.
+               */
+              enabled?: boolean;
+
+              /**
+               * The selected installment plan to use for this payment attempt.
+               * This parameter can only be provided during confirmation.
+               */
+              plan?: Stripe.Emptyable<Installments.Plan>;
+            }
+
+            namespace Installments {
+              interface Plan {
+                /**
+                 * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
+                 */
+                count: number;
+
+                /**
+                 * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
+                 * One of `month`.
+                 */
+                interval: 'month';
+
+                /**
+                 * Type of installment plan, one of `fixed_count`.
+                 */
+                type: 'fixed_count';
+              }
+            }
+
             type SetupFutureUsage = 'off_session' | 'on_session';
           }
 
