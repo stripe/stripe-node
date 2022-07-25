@@ -91,7 +91,18 @@ declare module 'stripe' {
          */
         readonly message: string;
 
-        readonly type: keyof Errors;
+        readonly type:
+          | 'StripeError'
+          | 'StripeCardError'
+          | 'StripeInvalidRequestError'
+          | 'StripeAPIError'
+          | 'StripeAuthenticationError'
+          | 'StripePermissionError'
+          | 'StripeRateLimitError'
+          | 'StripeConnectionError'
+          | 'StripeSignatureVerificationError'
+          | 'StripeIdempotencyError'
+          | 'StripeInvalidGrantError';
 
         /**
          * See the "error types" section at https://stripe.com/docs/api/errors
