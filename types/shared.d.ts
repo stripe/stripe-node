@@ -171,13 +171,7 @@ declare module 'stripe' {
       object: 'account';
     };
 
-    type CustomerSource =
-      | AccountDebitSource
-      | AlipayAccount
-      | BankAccount
-      | BitcoinReceiver
-      | Card
-      | Source;
+    type CustomerSource = AccountDebitSource | BankAccount | Card | Source;
 
     interface RangeQueryParam {
       /**
