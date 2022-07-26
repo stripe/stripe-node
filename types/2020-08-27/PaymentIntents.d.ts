@@ -7258,8 +7258,6 @@ declare module 'stripe' {
 
       /**
        * Manually reconcile the remaining amount for a customer_balance PaymentIntent.
-       *
-       * This can be used when the cash balance for [a customer in manual reconciliation mode](docs/payments/customer-balance/reconciliation#cash-manual-reconciliation) received funds.
        */
       applyCustomerBalance(
         id: string,

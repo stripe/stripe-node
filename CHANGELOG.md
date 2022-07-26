@@ -1,5 +1,15 @@
 # Changelog
 
+## 9.15.0 - 2022-07-25
+* [#1486](https://github.com/stripe/stripe-node/pull/1486) API Updates
+  * Add support for `installments` on `Checkout.Session.payment_method_options.card`, `CheckoutSessionCreateParams.payment_method_options.card`, `Invoice.payment_settings.payment_method_options.card`, `InvoiceCreateParams.payment_settings.payment_method_options.card`, and `InvoiceUpdateParams.payment_settings.payment_method_options.card` 
+  * Add support for `default_currency` and `invoice_credit_balance` on `Customer`
+  * Add support for `currency` on `InvoiceCreateParams`
+  * Add support for `default_mandate` on `Invoice.payment_settings`, `InvoiceCreateParams.payment_settings`, and `InvoiceUpdateParams.payment_settings`
+  * Add support for `mandate` on `InvoicePayParams`
+  * Add support for `product_data` on `OrderCreateParams.line_items[]` and `OrderUpdateParams.line_items[]`
+  
+
 ## 9.14.0 - 2022-07-18
 * [#1477](https://github.com/stripe/stripe-node/pull/1477) API Updates
   * Add support for `blik_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`

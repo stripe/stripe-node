@@ -1030,19 +1030,36 @@ declare module 'stripe' {
         discounts?: Stripe.Emptyable<Array<LineItem.Discount>>;
 
         /**
-         * The ID of the price object. One of `product` (with default price) or `price` or `price_data` is required.
+         * The ID of a [Price](https://stripe.com/docs/api/prices) to add to the Order.
+         *
+         * The `price` parameter is an alternative to using the `product` parameter. If each of your products are sold at a single price, you can set `Product.default_price` and then pass the `product` parameter when creating a line item. If your products are sold at several possible prices, use the `price` parameter to explicitly specify which one to use.
          */
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `product` (with default price) or `price` or `price_data` is required.
+         * Data used to generate a new Price object inline.
+         *
+         * The `price_data` parameter is an alternative to using the `product` or `price` parameters. If you create products upfront and configure a `Product.default_price`, pass the `product` parameter when creating a line item. If you prefer not to define products upfront, or if you charge variable prices, pass the `price_data` parameter to describe the price for this line item.
+         *
+         * Each time you pass `price_data` we create a Price for the product. This Price is hidden in both the Dashboard and API lists and cannot be reused.
          */
         price_data?: LineItem.PriceData;
 
         /**
-         * The product of the line item. The product must have a default price specified. One of `product` (with default price) or `price` or `price_data` is required.
+         * The ID of a [Product](https://stripe.com/docs/api/products) to add to the Order.
+         *
+         * The product must have a `default_price` specified. Otherwise, specify the price by passing the `price` or `price_data` parameter.
          */
         product?: string;
+
+        /**
+         * Defines a Product inline and adds it to the Order.
+         *
+         * `product_data` is an alternative to the `product` parameter. If you created a Product upfront, use the `product` parameter to refer to the existing Product. But if you prefer not to create Products upfront, pass the `product_data` parameter to define a Product inline as part of configuring the Order.
+         *
+         * `product_data` automatically creates a Product, just as if you had manually created the Product. If a Product with the same ID already exists, then `product_data` re-uses it to avoid duplicates.
+         */
+        product_data?: LineItem.ProductData;
 
         /**
          * The quantity of the line item.
@@ -1075,7 +1092,9 @@ declare module 'stripe' {
           currency?: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * ID of the product this price belongs to.
+           *
+           * Use this to implement a variable-pricing model in your integration. This is required if `product_data` is not specifed.
            */
           product?: string;
 
@@ -1097,6 +1116,79 @@ declare module 'stripe' {
 
         namespace PriceData {
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+
+        interface ProductData {
+          /**
+           * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+           */
+          description?: string;
+
+          /**
+           * A unique identifier for this product.
+           *
+           * `product_data` automatically creates a Product with this ID. If a Product with the same ID already exists, then `product_data` re-uses it to avoid duplicates. If any of the fields in the existing Product are different from the values in `product_data`, `product_data` updates the existing Product with the new information. So set `product_data[id]` to the same string every time you sell the same product, but don't re-use the same string for different products.
+           */
+          id: string;
+
+          /**
+           * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+           */
+          images?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * The product's name, meant to be displayable to the customer.
+           */
+          name: string;
+
+          /**
+           * The dimensions of this product for shipping purposes.
+           */
+          package_dimensions?: Stripe.Emptyable<ProductData.PackageDimensions>;
+
+          /**
+           * Whether this product is shipped (i.e., physical goods).
+           */
+          shippable?: boolean;
+
+          /**
+           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+           */
+          tax_code?: string;
+
+          /**
+           * A URL of a publicly-accessible webpage for this product.
+           */
+          url?: Stripe.Emptyable<string>;
+        }
+
+        namespace ProductData {
+          interface PackageDimensions {
+            /**
+             * Height, in inches. Maximum precision is 2 decimal places.
+             */
+            height: number;
+
+            /**
+             * Length, in inches. Maximum precision is 2 decimal places.
+             */
+            length: number;
+
+            /**
+             * Weight, in ounces. Maximum precision is 2 decimal places.
+             */
+            weight: number;
+
+            /**
+             * Width, in inches. Maximum precision is 2 decimal places.
+             */
+            width: number;
+          }
         }
       }
 
@@ -2099,19 +2191,36 @@ declare module 'stripe' {
         id?: string;
 
         /**
-         * The ID of the price object. One of `product` (with default price) or `price` or `price_data` is required.
+         * The ID of a [Price](https://stripe.com/docs/api/prices) to add to the Order.
+         *
+         * The `price` parameter is an alternative to using the `product` parameter. If each of your products are sold at a single price, you can set `Product.default_price` and then pass the `product` parameter when creating a line item. If your products are sold at several possible prices, use the `price` parameter to explicitly specify which one to use.
          */
         price?: string;
 
         /**
-         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline. One of `product` (with default price) or `price` or `price_data` is required.
+         * Data used to generate a new Price object inline.
+         *
+         * The `price_data` parameter is an alternative to using the `product` or `price` parameters. If you create products upfront and configure a `Product.default_price`, pass the `product` parameter when creating a line item. If you prefer not to define products upfront, or if you charge variable prices, pass the `price_data` parameter to describe the price for this line item.
+         *
+         * Each time you pass `price_data` we create a Price for the product. This Price is hidden in both the Dashboard and API lists and cannot be reused.
          */
         price_data?: LineItem.PriceData;
 
         /**
-         * The product of the line item. The product must have a default price specified. One of `product` (with default price) or `price` or `price_data` is required.
+         * The ID of a [Product](https://stripe.com/docs/api/products) to add to the Order.
+         *
+         * The product must have a `default_price` specified. Otherwise, specify the price by passing the `price` or `price_data` parameter.
          */
         product?: string;
+
+        /**
+         * Defines a Product inline and adds it to the Order.
+         *
+         * `product_data` is an alternative to the `product` parameter. If you created a Product upfront, use the `product` parameter to refer to the existing Product. But if you prefer not to create Products upfront, pass the `product_data` parameter to define a Product inline as part of configuring the Order.
+         *
+         * `product_data` automatically creates a Product, just as if you had manually created the Product. If a Product with the same ID already exists, then `product_data` re-uses it to avoid duplicates.
+         */
+        product_data?: LineItem.ProductData;
 
         /**
          * The quantity of the line item.
@@ -2144,7 +2253,9 @@ declare module 'stripe' {
           currency?: string;
 
           /**
-           * The ID of the product that this price will belong to.
+           * ID of the product this price belongs to.
+           *
+           * Use this to implement a variable-pricing model in your integration. This is required if `product_data` is not specifed.
            */
           product?: string;
 
@@ -2166,6 +2277,79 @@ declare module 'stripe' {
 
         namespace PriceData {
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+
+        interface ProductData {
+          /**
+           * The product's description, meant to be displayable to the customer. Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
+           */
+          description?: string;
+
+          /**
+           * A unique identifier for this product.
+           *
+           * `product_data` automatically creates a Product with this ID. If a Product with the same ID already exists, then `product_data` re-uses it to avoid duplicates. If any of the fields in the existing Product are different from the values in `product_data`, `product_data` updates the existing Product with the new information. So set `product_data[id]` to the same string every time you sell the same product, but don't re-use the same string for different products.
+           */
+          id: string;
+
+          /**
+           * A list of up to 8 URLs of images for this product, meant to be displayable to the customer.
+           */
+          images?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * The product's name, meant to be displayable to the customer.
+           */
+          name: string;
+
+          /**
+           * The dimensions of this product for shipping purposes.
+           */
+          package_dimensions?: Stripe.Emptyable<ProductData.PackageDimensions>;
+
+          /**
+           * Whether this product is shipped (i.e., physical goods).
+           */
+          shippable?: boolean;
+
+          /**
+           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+           */
+          tax_code?: string;
+
+          /**
+           * A URL of a publicly-accessible webpage for this product.
+           */
+          url?: Stripe.Emptyable<string>;
+        }
+
+        namespace ProductData {
+          interface PackageDimensions {
+            /**
+             * Height, in inches. Maximum precision is 2 decimal places.
+             */
+            height: number;
+
+            /**
+             * Length, in inches. Maximum precision is 2 decimal places.
+             */
+            length: number;
+
+            /**
+             * Weight, in ounces. Maximum precision is 2 decimal places.
+             */
+            weight: number;
+
+            /**
+             * Width, in inches. Maximum precision is 2 decimal places.
+             */
+            width: number;
+          }
         }
       }
 
