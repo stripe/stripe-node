@@ -216,6 +216,7 @@ declare module 'stripe' {
             type Result =
               | 'attempt_acknowledged'
               | 'authenticated'
+              | 'exempted'
               | 'failed'
               | 'not_supported'
               | 'processing_error';
