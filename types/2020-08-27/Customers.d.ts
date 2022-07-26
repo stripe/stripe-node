@@ -1185,11 +1185,7 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<
         Stripe.Response<
-          | Stripe.CustomerSource
-          | Stripe.DeletedAlipayAccount
-          | Stripe.DeletedBankAccount
-          | Stripe.DeletedBitcoinReceiver
-          | Stripe.DeletedCard
+          Stripe.CustomerSource | Stripe.DeletedBankAccount | Stripe.DeletedCard
         >
       >;
       deleteSource(
@@ -1198,11 +1194,7 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<
         Stripe.Response<
-          | Stripe.CustomerSource
-          | Stripe.DeletedAlipayAccount
-          | Stripe.DeletedBankAccount
-          | Stripe.DeletedBitcoinReceiver
-          | Stripe.DeletedCard
+          Stripe.CustomerSource | Stripe.DeletedBankAccount | Stripe.DeletedCard
         >
       >;
 

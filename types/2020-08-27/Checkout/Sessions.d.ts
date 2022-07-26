@@ -3037,6 +3037,13 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface SessionListLineItemsParams extends PaginationParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       class SessionsResource {
         /**
          * Creates a Session object.
@@ -3088,7 +3095,7 @@ declare module 'stripe' {
          */
         listLineItems(
           id: string,
-          params?: LineItemListParams,
+          params?: SessionListLineItemsParams,
           options?: RequestOptions
         ): ApiListPromise<Stripe.LineItem>;
         listLineItems(
