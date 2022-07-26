@@ -18,7 +18,7 @@ declare module 'stripe' {
         object: 'issuing.dispute';
 
         /**
-         * Disputed amount. Usually the amount of the `transaction`, but can differ (usually because of currency fluctuation).
+         * Disputed amount in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). Usually the amount of the `transaction`, but can differ (usually because of currency fluctuation).
          */
         amount: number;
 
