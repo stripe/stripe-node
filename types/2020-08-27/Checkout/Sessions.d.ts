@@ -503,7 +503,7 @@ declare module 'stripe' {
             /**
              * Currency supported by the bank account. Returned when the Session is in `setup` mode.
              */
-            currency?: string;
+            currency?: AcssDebit.Currency;
 
             mandate_options?: AcssDebit.MandateOptions;
 
@@ -523,6 +523,8 @@ declare module 'stripe' {
           }
 
           namespace AcssDebit {
+            type Currency = 'cad' | 'usd';
+
             interface MandateOptions {
               /**
                * A URL for custom mandate text

@@ -51,7 +51,6 @@
 ///<reference path='./InvoiceLineItems.d.ts' />
 ///<reference path='./Invoices.d.ts' />
 ///<reference path='./Issuing/Authorizations.d.ts' />
-///<reference path='./Issuing/CardDetails.d.ts' />
 ///<reference path='./Issuing/Cardholders.d.ts' />
 ///<reference path='./Issuing/Cards.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />

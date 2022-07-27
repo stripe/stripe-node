@@ -19,12 +19,12 @@ declare module 'stripe' {
       /**
        * Business information about the account.
        */
-      business_profile: Account.BusinessProfile | null;
+      business_profile?: Account.BusinessProfile | null;
 
       /**
        * The business type.
        */
-      business_type: Account.BusinessType | null;
+      business_type?: Account.BusinessType | null;
 
       capabilities?: Account.Capabilities;
 
@@ -40,7 +40,7 @@ declare module 'stripe' {
       /**
        * The account's country.
        */
-      country: string;
+      country?: string;
 
       /**
        * Time at which the account was connected. Measured in seconds since the Unix epoch.
@@ -50,7 +50,7 @@ declare module 'stripe' {
       /**
        * Three-letter ISO currency code representing the default currency for the account. This must be a currency that [Stripe supports in the account's country](https://stripe.com/docs/payouts).
        */
-      default_currency: string;
+      default_currency?: string;
 
       deleted?: void;
 
@@ -96,7 +96,7 @@ declare module 'stripe' {
       /**
        * Options for customizing how the account functions within Stripe.
        */
-      settings: Account.Settings | null;
+      settings?: Account.Settings | null;
 
       tos_acceptance?: Account.TosAcceptance;
 
