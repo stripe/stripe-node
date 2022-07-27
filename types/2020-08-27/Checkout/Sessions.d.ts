@@ -469,6 +469,8 @@ declare module 'stripe' {
 
           card?: PaymentMethodOptions.Card;
 
+          customer_balance?: PaymentMethodOptions.CustomerBalance;
+
           eps?: PaymentMethodOptions.Eps;
 
           fpx?: PaymentMethodOptions.Fpx;
@@ -683,6 +685,70 @@ declare module 'stripe' {
             }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
+          interface CustomerBalance {
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type: 'bank_transfer' | null;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+               *
+               * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
+               */
+              requested_address_types?: Array<
+                BankTransfer.RequestedAddressType
+              >;
+
+              /**
+               * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+               */
+              type: BankTransfer.Type | null;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: EuBankTransfer.Country;
+              }
+
+              namespace EuBankTransfer {
+                type Country = 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+              }
+
+              type RequestedAddressType =
+                | 'iban'
+                | 'sepa'
+                | 'sort_code'
+                | 'spei'
+                | 'zengin';
+
+              type Type =
+                | 'eu_bank_transfer'
+                | 'gb_bank_transfer'
+                | 'jp_bank_transfer'
+                | 'mx_bank_transfer';
+            }
           }
 
           interface Eps {
@@ -1927,6 +1993,11 @@ declare module 'stripe' {
           card?: PaymentMethodOptions.Card;
 
           /**
+           * contains details about the Customer Balance payment method options.
+           */
+          customer_balance?: PaymentMethodOptions.CustomerBalance;
+
+          /**
            * contains details about the EPS payment method options.
            */
           eps?: PaymentMethodOptions.Eps;
@@ -2224,6 +2295,69 @@ declare module 'stripe' {
             type SetupFutureUsage = 'off_session' | 'on_session';
           }
 
+          interface CustomerBalance {
+            /**
+             * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+             */
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type?: 'bank_transfer';
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+               *
+               * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
+               */
+              requested_address_types?: Array<
+                BankTransfer.RequestedAddressType
+              >;
+
+              /**
+               * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type: BankTransfer.Type;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: string;
+              }
+
+              type RequestedAddressType =
+                | 'iban'
+                | 'sepa'
+                | 'sort_code'
+                | 'spei'
+                | 'zengin';
+
+              type Type =
+                | 'eu_bank_transfer'
+                | 'gb_bank_transfer'
+                | 'jp_bank_transfer'
+                | 'mx_bank_transfer';
+            }
+          }
+
           interface Eps {
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2459,6 +2593,7 @@ declare module 'stripe' {
           | 'blik'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'eps'
           | 'fpx'
           | 'giropay'
