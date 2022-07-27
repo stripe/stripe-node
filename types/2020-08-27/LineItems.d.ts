@@ -104,12 +104,5 @@ declare module 'stripe' {
         rate: Stripe.TaxRate;
       }
     }
-
-    interface LineItemListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
   }
 }

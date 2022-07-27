@@ -19,7 +19,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address: Stripe.Address | null;
+      address?: Stripe.Address | null;
 
       /**
        * Current balance, if any, being stored on the customer. If negative, the customer has credit to apply to their next invoice. If positive, the customer has an amount owed that will be added to their next invoice. The balance does not refer to any unpaid invoices; it solely takes into account amounts that have yet to be successfully applied to any invoice. This balance is only taken into account as invoices are finalized.
@@ -39,7 +39,7 @@ declare module 'stripe' {
       /**
        * Three-letter [ISO code for the currency](https://stripe.com/docs/currencies) the customer can be charged in for recurring billing purposes.
        */
-      currency: string | null;
+      currency?: string | null;
 
       /**
        * The default three-letter [ISO code for the currency](https://stripe.com/docs/currencies) that the customer will be charged in for billing purposes.
@@ -60,7 +60,7 @@ declare module 'stripe' {
        *
        * If an invoice is marked uncollectible by [dunning](https://stripe.com/docs/billing/automatic-collection), `delinquent` doesn't get reset to `false`.
        */
-      delinquent: boolean | null;
+      delinquent?: boolean | null;
 
       /**
        * An arbitrary string attached to the object. Often useful for displaying to users.
@@ -70,7 +70,7 @@ declare module 'stripe' {
       /**
        * Describes the current discount active on the customer, if there is one.
        */
-      discount: Stripe.Discount | null;
+      discount?: Stripe.Discount | null;
 
       /**
        * The customer's email address.
@@ -87,7 +87,7 @@ declare module 'stripe' {
       /**
        * The prefix for the customer used to generate unique invoice numbers.
        */
-      invoice_prefix: string | null;
+      invoice_prefix?: string | null;
 
       invoice_settings: Customer.InvoiceSettings;
 
@@ -104,7 +104,7 @@ declare module 'stripe' {
       /**
        * The customer's full name or business name.
        */
-      name: string | null;
+      name?: string | null;
 
       /**
        * The suffix of the customer's next invoice number, e.g., 0001.
@@ -114,12 +114,12 @@ declare module 'stripe' {
       /**
        * The customer's phone number.
        */
-      phone: string | null;
+      phone?: string | null;
 
       /**
        * The customer's preferred locales (languages), ordered by preference.
        */
-      preferred_locales: Array<string> | null;
+      preferred_locales?: Array<string> | null;
 
       /**
        * Mailing and shipping address for the customer. Appears on invoices emailed to this customer.
@@ -396,6 +396,8 @@ declare module 'stripe' {
        * ID of the test clock to attach to the customer.
        */
       test_clock?: string;
+
+      validate?: boolean;
     }
 
     namespace CustomerCreateParams {
@@ -670,10 +672,7 @@ declare module 'stripe' {
        */
       tax_exempt?: Stripe.Emptyable<CustomerUpdateParams.TaxExempt>;
 
-      /**
-       * Unix timestamp representing the end of the trial period the customer will get before being charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. If set, trial_end will override the default trial period of the plan the customer is being subscribed to. The special value `now` can be provided to end the customer's trial immediately. Can be at most two years from `billing_cycle_anchor`.
-       */
-      trial_end?: 'now' | number;
+      validate?: boolean;
     }
 
     namespace CustomerUpdateParams {
@@ -1185,11 +1184,7 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<
         Stripe.Response<
-          | Stripe.CustomerSource
-          | Stripe.DeletedAlipayAccount
-          | Stripe.DeletedBankAccount
-          | Stripe.DeletedBitcoinReceiver
-          | Stripe.DeletedCard
+          Stripe.CustomerSource | Stripe.DeletedBankAccount | Stripe.DeletedCard
         >
       >;
       deleteSource(
@@ -1198,11 +1193,7 @@ declare module 'stripe' {
         options?: RequestOptions
       ): Promise<
         Stripe.Response<
-          | Stripe.CustomerSource
-          | Stripe.DeletedAlipayAccount
-          | Stripe.DeletedBankAccount
-          | Stripe.DeletedBitcoinReceiver
-          | Stripe.DeletedCard
+          Stripe.CustomerSource | Stripe.DeletedBankAccount | Stripe.DeletedCard
         >
       >;
 

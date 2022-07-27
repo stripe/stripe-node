@@ -27,11 +27,6 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
-
-      /**
-       * Where to redirect the user after they log out of their dashboard.
-       */
-      redirect_url?: string;
     }
   }
 }

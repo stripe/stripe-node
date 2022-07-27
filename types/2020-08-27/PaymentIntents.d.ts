@@ -183,9 +183,7 @@ declare module 'stripe' {
       source:
         | string
         | Stripe.CustomerSource
-        | Stripe.DeletedAlipayAccount
         | Stripe.DeletedBankAccount
-        | Stripe.DeletedBitcoinReceiver
         | Stripe.DeletedCard
         | null;
 
