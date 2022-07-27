@@ -550,7 +550,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Only return products with the given IDs.
+       * Only return products with the given IDs. Cannot be used with [starting_after](https://stripe.com/docs/api#list_products-starting_after) or [ending_before](https://stripe.com/docs/api#list_products-ending_before).
        */
       ids?: Array<string>;
 
