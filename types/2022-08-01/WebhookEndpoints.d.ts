@@ -223,7 +223,8 @@ declare module 'stripe' {
         | '2019-11-05'
         | '2019-12-03'
         | '2020-03-02'
-        | '2020-08-27';
+        | '2020-08-27'
+        | '2022-08-01';
 
       type EnabledEvent =
         | '*'
@@ -328,7 +329,6 @@ declare module 'stripe' {
         | 'issuing_transaction.updated'
         | 'mandate.updated'
         | 'order.created'
-        | 'order.payment_failed'
         | 'payment_intent.amount_capturable_updated'
         | 'payment_intent.canceled'
         | 'payment_intent.created'
@@ -414,8 +414,6 @@ declare module 'stripe' {
         | 'topup.reversed'
         | 'topup.succeeded'
         | 'transfer.created'
-        | 'transfer.failed'
-        | 'transfer.paid'
         | 'transfer.reversed'
         | 'transfer.updated'
         | 'treasury.credit_reversal.created'
@@ -444,7 +442,6 @@ declare module 'stripe' {
         | 'treasury.outbound_transfer.returned'
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
-        | 'treasury.received_credit.reversed'
         | 'treasury.received_credit.succeeded'
         | 'treasury.received_debit.created';
     }
@@ -592,7 +589,6 @@ declare module 'stripe' {
         | 'issuing_transaction.updated'
         | 'mandate.updated'
         | 'order.created'
-        | 'order.payment_failed'
         | 'payment_intent.amount_capturable_updated'
         | 'payment_intent.canceled'
         | 'payment_intent.created'
@@ -678,8 +674,6 @@ declare module 'stripe' {
         | 'topup.reversed'
         | 'topup.succeeded'
         | 'transfer.created'
-        | 'transfer.failed'
-        | 'transfer.paid'
         | 'transfer.reversed'
         | 'transfer.updated'
         | 'treasury.credit_reversal.created'
@@ -708,7 +702,6 @@ declare module 'stripe' {
         | 'treasury.outbound_transfer.returned'
         | 'treasury.received_credit.created'
         | 'treasury.received_credit.failed'
-        | 'treasury.received_credit.reversed'
         | 'treasury.received_credit.succeeded'
         | 'treasury.received_debit.created';
     }

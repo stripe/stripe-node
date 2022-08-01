@@ -156,11 +156,6 @@ declare module 'stripe' {
       name: string | null;
 
       /**
-       * The recipient that this card belongs to. This attribute will not be in the card object if the card belongs to a customer or account instead.
-       */
-      recipient?: string | Stripe.Recipient | null;
-
-      /**
        * For external accounts, possible values are `new` and `errored`. If a transfer fails, the status is set to `errored` and transfers are stopped until account details are updated.
        */
       status?: string | null;
