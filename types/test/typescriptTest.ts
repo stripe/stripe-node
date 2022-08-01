@@ -5,7 +5,7 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-///<reference types="../2020-08-27" />
+///<reference types="../2022-08-01" />
 import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
