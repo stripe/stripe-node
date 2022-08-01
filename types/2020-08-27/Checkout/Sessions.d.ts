@@ -503,7 +503,7 @@ declare module 'stripe' {
             /**
              * Currency supported by the bank account. Returned when the Session is in `setup` mode.
              */
-            currency?: string;
+            currency?: AcssDebit.Currency;
 
             mandate_options?: AcssDebit.MandateOptions;
 
@@ -523,6 +523,8 @@ declare module 'stripe' {
           }
 
           namespace AcssDebit {
+            type Currency = 'cad' | 'usd';
+
             interface MandateOptions {
               /**
                * A URL for custom mandate text
@@ -3172,6 +3174,13 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface SessionListLineItemsParams extends PaginationParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       class SessionsResource {
         /**
          * Creates a Session object.
@@ -3223,7 +3232,7 @@ declare module 'stripe' {
          */
         listLineItems(
           id: string,
-          params?: LineItemListParams,
+          params?: SessionListLineItemsParams,
           options?: RequestOptions
         ): ApiListPromise<Stripe.LineItem>;
         listLineItems(

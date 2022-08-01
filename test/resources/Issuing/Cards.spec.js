@@ -75,20 +75,4 @@ describe('Issuing', () => {
       });
     });
   });
-
-  describe('Virtual Cards Resource', () => {
-    describe('retrieve', () => {
-      it('Sends the correct request', () => {
-        stripe.issuing.cards.retrieveDetails('ic_123');
-
-        expect(stripe.LAST_REQUEST).to.deep.equal({
-          method: 'GET',
-          url: '/v1/issuing/cards/ic_123/details',
-          headers: {},
-          data: {},
-          settings: {},
-        });
-      });
-    });
-  });
 });

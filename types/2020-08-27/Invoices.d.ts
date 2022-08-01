@@ -9,7 +9,7 @@ declare module 'stripe' {
       /**
        * Unique identifier for the object.
        */
-      id: string;
+      id?: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
@@ -1825,6 +1825,518 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface InvoiceListUpcomingLinesParams extends PaginationParams {
+      /**
+       * Settings for automatic tax lookup for this invoice preview.
+       */
+      automatic_tax?: InvoiceListUpcomingLinesParams.AutomaticTax;
+
+      /**
+       * The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+       */
+      coupon?: string;
+
+      /**
+       * The currency to preview this invoice in. Defaults to that of `customer` if not specified.
+       */
+      currency?: string;
+
+      /**
+       * The identifier of the customer whose upcoming invoice you'd like to retrieve.
+       */
+      customer?: string;
+
+      /**
+       * Details about the customer you want to invoice or overrides for an existing customer.
+       */
+      customer_details?: InvoiceListUpcomingLinesParams.CustomerDetails;
+
+      /**
+       * The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
+       */
+      discounts?: Stripe.Emptyable<
+        Array<InvoiceListUpcomingLinesParams.Discount>
+      >;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * List of invoice items to add or update in the upcoming invoice preview.
+       */
+      invoice_items?: Array<InvoiceListUpcomingLinesParams.InvoiceItem>;
+
+      /**
+       * The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+       */
+      schedule?: string;
+
+      /**
+       * The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
+       */
+      subscription?: string;
+
+      /**
+       * For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+       */
+      subscription_billing_cycle_anchor?:
+        | InvoiceListUpcomingLinesParams.SubscriptionBillingCycleAnchor
+        | number;
+
+      /**
+       * Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.
+       */
+      subscription_cancel_at?: Stripe.Emptyable<number>;
+
+      /**
+       * Boolean indicating whether this subscription should cancel at the end of the current period.
+       */
+      subscription_cancel_at_period_end?: boolean;
+
+      /**
+       * This simulates the subscription being canceled or expired immediately.
+       */
+      subscription_cancel_now?: boolean;
+
+      /**
+       * If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+       */
+      subscription_default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+      /**
+       * A list of up to 20 subscription items, each with an attached price.
+       */
+      subscription_items?: Array<
+        InvoiceListUpcomingLinesParams.SubscriptionItem
+      >;
+
+      /**
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
+       */
+      subscription_proration_behavior?: InvoiceListUpcomingLinesParams.SubscriptionProrationBehavior;
+
+      /**
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+       */
+      subscription_proration_date?: number;
+
+      /**
+       * Date a subscription is intended to start (can be future or past)
+       */
+      subscription_start_date?: number;
+
+      /**
+       * If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
+       */
+      subscription_trial_end?: 'now' | number;
+
+      /**
+       * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
+       */
+      subscription_trial_from_plan?: boolean;
+    }
+
+    namespace InvoiceListUpcomingLinesParams {
+      interface AutomaticTax {
+        /**
+         * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
+         */
+        enabled: boolean;
+      }
+
+      interface CustomerDetails {
+        /**
+         * The customer's address.
+         */
+        address?: Stripe.Emptyable<CustomerDetails.Address>;
+
+        /**
+         * The customer's shipping information. Appears on invoices emailed to this customer.
+         */
+        shipping?: Stripe.Emptyable<CustomerDetails.Shipping>;
+
+        /**
+         * Tax details about the customer.
+         */
+        tax?: CustomerDetails.Tax;
+
+        /**
+         * The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
+         */
+        tax_exempt?: Stripe.Emptyable<CustomerDetails.TaxExempt>;
+
+        /**
+         * The customer's tax IDs.
+         */
+        tax_ids?: Array<CustomerDetails.TaxId>;
+      }
+
+      namespace CustomerDetails {
+        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
+          line1?: string;
+        }
+
+        interface Shipping {
+          /**
+           * Customer shipping address.
+           */
+          address: Shipping.Address;
+
+          /**
+           * Customer name.
+           */
+          name: string;
+
+          /**
+           * Customer phone (including extension).
+           */
+          phone?: string;
+        }
+
+        namespace Shipping {
+          interface Address extends Omit<Stripe.AddressParam, 'line1'> {
+            line1?: string;
+          }
+        }
+
+        interface Tax {
+          /**
+           * A recent IP address of the customer used for tax reporting and tax location inference. Stripe recommends updating the IP address when a new PaymentMethod is attached or the address field on the customer is updated. We recommend against updating this field more frequently since it could result in unexpected tax location/reporting outcomes.
+           */
+          ip_address?: Stripe.Emptyable<string>;
+        }
+
+        type TaxExempt = 'exempt' | 'none' | 'reverse';
+
+        interface TaxId {
+          /**
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           */
+          type: TaxId.Type;
+
+          /**
+           * Value of the tax ID.
+           */
+          value: string;
+        }
+
+        namespace TaxId {
+          type Type =
+            | 'ae_trn'
+            | 'au_abn'
+            | 'au_arn'
+            | 'bg_uic'
+            | 'br_cnpj'
+            | 'br_cpf'
+            | 'ca_bn'
+            | 'ca_gst_hst'
+            | 'ca_pst_bc'
+            | 'ca_pst_mb'
+            | 'ca_pst_sk'
+            | 'ca_qst'
+            | 'ch_vat'
+            | 'cl_tin'
+            | 'es_cif'
+            | 'eu_oss_vat'
+            | 'eu_vat'
+            | 'gb_vat'
+            | 'ge_vat'
+            | 'hk_br'
+            | 'hu_tin'
+            | 'id_npwp'
+            | 'il_vat'
+            | 'in_gst'
+            | 'is_vat'
+            | 'jp_cn'
+            | 'jp_rn'
+            | 'kr_brn'
+            | 'li_uid'
+            | 'mx_rfc'
+            | 'my_frp'
+            | 'my_itn'
+            | 'my_sst'
+            | 'no_vat'
+            | 'nz_gst'
+            | 'ru_inn'
+            | 'ru_kpp'
+            | 'sa_vat'
+            | 'sg_gst'
+            | 'sg_uen'
+            | 'si_tin'
+            | 'th_vat'
+            | 'tw_vat'
+            | 'ua_vat'
+            | 'us_ein'
+            | 'za_vat';
+        }
+      }
+
+      interface Discount {
+        /**
+         * ID of the coupon to create a new discount for.
+         */
+        coupon?: string;
+
+        /**
+         * ID of an existing discount on the object (or one of its ancestors) to reuse.
+         */
+        discount?: string;
+      }
+
+      interface InvoiceItem {
+        /**
+         * The integer amount in cents (or local equivalent) of previewed invoice item.
+         */
+        amount?: number;
+
+        /**
+         * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Only applicable to new invoice items.
+         */
+        currency?: string;
+
+        /**
+         * An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+         */
+        description?: string;
+
+        /**
+         * Explicitly controls whether discounts apply to this invoice item. Defaults to true, except for negative invoice items.
+         */
+        discountable?: boolean;
+
+        /**
+         * The coupons to redeem into discounts for the invoice item in the preview.
+         */
+        discounts?: Stripe.Emptyable<Array<InvoiceItem.Discount>>;
+
+        /**
+         * The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
+         */
+        invoiceitem?: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * The period associated with this invoice item. When set to different values, the period will be rendered on the invoice.
+         */
+        period?: InvoiceItem.Period;
+
+        /**
+         * The ID of the price object.
+         */
+        price?: string;
+
+        /**
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         */
+        price_data?: InvoiceItem.PriceData;
+
+        /**
+         * Non-negative integer. The quantity of units for the invoice item.
+         */
+        quantity?: number;
+
+        /**
+         * The tax rates that apply to the item. When set, any `default_tax_rates` do not apply to this item.
+         */
+        tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
+         */
+        unit_amount?: number;
+
+        /**
+         * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+         */
+        unit_amount_decimal?: string;
+      }
+
+      namespace InvoiceItem {
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon?: string;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount?: string;
+        }
+
+        interface Period {
+          /**
+           * The end of the period, which must be greater than or equal to the start.
+           */
+          end: number;
+
+          /**
+           * The start of the period.
+           */
+          start: number;
+        }
+
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the product that this price will belong to.
+           */
+          product: string;
+
+          /**
+           * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           */
+          tax_behavior?: PriceData.TaxBehavior;
+
+          /**
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+
+        namespace PriceData {
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+      }
+
+      type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
+
+      interface SubscriptionItem {
+        /**
+         * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
+         */
+        billing_thresholds?: Stripe.Emptyable<
+          SubscriptionItem.BillingThresholds
+        >;
+
+        /**
+         * Delete all usage for a given subscription item. Allowed only when `deleted` is set to `true` and the current plan's `usage_type` is `metered`.
+         */
+        clear_usage?: boolean;
+
+        /**
+         * A flag that, if set to `true`, will delete the specified item.
+         */
+        deleted?: boolean;
+
+        /**
+         * Subscription item to update.
+         */
+        id?: string;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+        /**
+         * Plan ID for this item, as a string.
+         */
+        plan?: string;
+
+        /**
+         * The ID of the price object. When changing a subscription item's price, `quantity` is set to 1 unless a `quantity` parameter is provided.
+         */
+        price?: string;
+
+        /**
+         * Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+         */
+        price_data?: SubscriptionItem.PriceData;
+
+        /**
+         * Quantity for this item.
+         */
+        quantity?: number;
+
+        /**
+         * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will override the [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates) on the Subscription. When updating, pass an empty string to remove previously-defined tax rates.
+         */
+        tax_rates?: Stripe.Emptyable<Array<string>>;
+      }
+
+      namespace SubscriptionItem {
+        interface BillingThresholds {
+          /**
+           * Usage threshold that triggers the subscription to advance to a new billing period
+           */
+          usage_gte: number;
+        }
+
+        interface PriceData {
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string;
+
+          /**
+           * The ID of the product that this price will belong to.
+           */
+          product: string;
+
+          /**
+           * The recurring components of a price such as `interval` and `interval_count`.
+           */
+          recurring: PriceData.Recurring;
+
+          /**
+           * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+           */
+          tax_behavior?: PriceData.TaxBehavior;
+
+          /**
+           * A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
+           */
+          unit_amount?: number;
+
+          /**
+           * Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+           */
+          unit_amount_decimal?: string;
+        }
+
+        namespace PriceData {
+          interface Recurring {
+            /**
+             * Specifies billing frequency. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Recurring.Interval;
+
+            /**
+             * The number of intervals between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months. Maximum of one year interval allowed (1 year, 12 months, or 52 weeks).
+             */
+            interval_count?: number;
+          }
+
+          namespace Recurring {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+      }
+
+      type SubscriptionProrationBehavior =
+        | 'always_invoice'
+        | 'create_prorations'
+        | 'none';
+    }
+
     interface InvoiceMarkUncollectibleParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -2494,6 +3006,17 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Invoice>>;
 
       /**
+       * When retrieving an upcoming invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+       */
+      listUpcomingLines(
+        params?: InvoiceListUpcomingLinesParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.InvoiceLineItem>;
+      listUpcomingLines(
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.InvoiceLineItem>;
+
+      /**
        * Marking an invoice as uncollectible is useful for keeping track of bad debts that can be written off for accounting purposes.
        */
       markUncollectible(
@@ -2583,17 +3106,6 @@ declare module 'stripe' {
       ): ApiListPromise<Stripe.InvoiceLineItem>;
       listLineItems(
         id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.InvoiceLineItem>;
-
-      /**
-       * When retrieving an upcoming invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-       */
-      listUpcomingLineItems(
-        params?: InvoiceLineItemListUpcomingParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.InvoiceLineItem>;
-      listUpcomingLineItems(
         options?: RequestOptions
       ): ApiListPromise<Stripe.InvoiceLineItem>;
     }

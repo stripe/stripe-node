@@ -3218,13 +3218,6 @@ declare module 'stripe' {
         type Type = 'physical' | 'virtual';
       }
 
-      interface CardRetrieveDetailsParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
-      }
-
       class CardsResource {
         /**
          * Creates an Issuing Card object.
@@ -3264,19 +3257,6 @@ declare module 'stripe' {
           options?: RequestOptions
         ): ApiListPromise<Stripe.Issuing.Card>;
         list(options?: RequestOptions): ApiListPromise<Stripe.Issuing.Card>;
-
-        /**
-         * For virtual cards only. Retrieves an Issuing card_details object that contains [the sensitive details](https://stripe.com/docs/issuing/cards/virtual#virtual-card-info) of a virtual card.
-         */
-        retrieveDetails(
-          id: string,
-          params?: CardRetrieveDetailsParams,
-          options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Issuing.CardDetails>>;
-        retrieveDetails(
-          id: string,
-          options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Issuing.CardDetails>>;
       }
     }
   }

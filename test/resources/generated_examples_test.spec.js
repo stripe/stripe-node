@@ -76,6 +76,11 @@ describe('Checkout.Session', function() {
     expect(session).not.to.be.null;
   });
 
+  it('listLineItems method', async function() {
+    const lineItems = await stripe.checkout.sessions.listLineItems('sess_xyz');
+    expect(lineItems).not.to.be.null;
+  });
+
   it('list method', async function() {
     const sessions = await stripe.checkout.sessions.list({limit: 3});
     expect(sessions).not.to.be.null;
@@ -311,13 +316,16 @@ describe('Order', function() {
     expect(order).not.to.be.null;
   });
 
-  it('update method', async function() {
-    const order = await stripe.orders.update('order_xyz');
+  it('retrieve method', async function() {
+    const order = await stripe.orders.retrieve('order_xyz');
     expect(order).not.to.be.null;
   });
 
   it('update method', async function() {
-    const order = await stripe.orders.update('order_xyz');
+    const order = await stripe.orders.update('order_xyz', {
+      metadata: {reference_number: '123'},
+      ip_address: '0.0.0.0',
+    });
     expect(order).not.to.be.null;
   });
 
