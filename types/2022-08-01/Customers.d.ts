@@ -42,11 +42,6 @@ declare module 'stripe' {
       currency?: string | null;
 
       /**
-       * The default three-letter [ISO code for the currency](https://stripe.com/docs/currencies) that the customer will be charged in for billing purposes.
-       */
-      default_currency?: string | null;
-
-      /**
        * ID of the default payment source for the customer.
        *
        * If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/object#customer_object-invoice_settings-default_payment_method) field instead.

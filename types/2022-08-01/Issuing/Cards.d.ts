@@ -123,7 +123,7 @@ declare module 'stripe' {
       }
 
       namespace Card {
-        type CancellationReason = 'lost' | 'stolen';
+        type CancellationReason = 'design_rejected' | 'lost' | 'stolen';
 
         type ReplacementReason = 'damaged' | 'expired' | 'lost' | 'stolen';
 

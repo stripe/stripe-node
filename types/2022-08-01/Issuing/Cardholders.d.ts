@@ -1109,7 +1109,7 @@ declare module 'stripe' {
         billing: CardholderCreateParams.Billing;
 
         /**
-         * The cardholder's name. This will be printed on cards issued to them. The maximum length of this field is 24 characters.
+         * The cardholder's name. This will be printed on cards issued to them. The maximum length of this field is 24 characters. This field cannot contain any special characters or numbers.
          */
         name: string;
 
@@ -1215,12 +1215,12 @@ declare module 'stripe' {
           dob?: Individual.Dob;
 
           /**
-           * The first name of this cardholder.
+           * The first name of this cardholder. This field cannot contain any special characters or numbers.
            */
           first_name: string;
 
           /**
-           * The last name of this cardholder.
+           * The last name of this cardholder. This field cannot contain any special characters or numbers.
            */
           last_name: string;
 
@@ -2306,12 +2306,12 @@ declare module 'stripe' {
           dob?: Individual.Dob;
 
           /**
-           * The first name of this cardholder.
+           * The first name of this cardholder. This field cannot contain any special characters or numbers.
            */
           first_name: string;
 
           /**
-           * The last name of this cardholder.
+           * The last name of this cardholder. This field cannot contain any special characters or numbers.
            */
           last_name: string;
 

@@ -170,24 +170,24 @@ declare module 'stripe' {
         setup_intent: string | Stripe.SetupIntent | null;
 
         /**
-         * Shipping information for this Checkout Session.
-         */
-        shipping: Session.Shipping | null;
-
-        /**
          * When set, provides configuration for Checkout to collect a shipping address from a customer.
          */
         shipping_address_collection: Session.ShippingAddressCollection | null;
 
         /**
+         * The details of the customer cost of shipping, including the customer chosen ShippingRate.
+         */
+        shipping_cost: Session.ShippingCost | null;
+
+        /**
+         * Shipping information for this Checkout Session.
+         */
+        shipping_details: Session.ShippingDetails | null;
+
+        /**
          * The shipping rate options applied to this Session.
          */
         shipping_options: Array<Session.ShippingOption>;
-
-        /**
-         * The ID of the ShippingRate for Checkout Sessions in `payment` mode.
-         */
-        shipping_rate: string | Stripe.ShippingRate | null;
 
         /**
          * The status of the Checkout Session, one of `open`, `complete`, or `expired`.
@@ -957,30 +957,6 @@ declare module 'stripe' {
           enabled: boolean;
         }
 
-        interface Shipping {
-          address?: Stripe.Address;
-
-          /**
-           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-           */
-          carrier?: string | null;
-
-          /**
-           * Recipient name.
-           */
-          name?: string;
-
-          /**
-           * Recipient phone (including extension).
-           */
-          phone?: string | null;
-
-          /**
-           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-           */
-          tracking_number?: string | null;
-        }
-
         interface ShippingAddressCollection {
           /**
            * An array of two-letter ISO country codes representing which countries Checkout should provide as options for
@@ -1228,6 +1204,73 @@ declare module 'stripe' {
             | 'ZM'
             | 'ZW'
             | 'ZZ';
+        }
+
+        interface ShippingCost {
+          /**
+           * Total shipping cost before any discounts or taxes are applied.
+           */
+          amount_subtotal: number;
+
+          /**
+           * Total tax amount applied due to shipping costs. If no tax was applied, defaults to 0.
+           */
+          amount_tax: number;
+
+          /**
+           * Total shipping cost after discounts and taxes are applied.
+           */
+          amount_total: number;
+
+          /**
+           * The ID of the ShippingRate for this order.
+           */
+          shipping_rate: string | Stripe.ShippingRate | null;
+
+          /**
+           * The taxes applied to the shipping rate.
+           */
+          taxes?: Array<ShippingCost.Tax>;
+        }
+
+        namespace ShippingCost {
+          interface Tax {
+            /**
+             * Amount of tax applied for this rate.
+             */
+            amount: number;
+
+            /**
+             * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+             *
+             * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+             */
+            rate: Stripe.TaxRate;
+          }
+        }
+
+        interface ShippingDetails {
+          address?: Stripe.Address;
+
+          /**
+           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+           */
+          carrier?: string | null;
+
+          /**
+           * Recipient name.
+           */
+          name?: string;
+
+          /**
+           * Recipient phone (including extension).
+           */
+          phone?: string | null;
+
+          /**
+           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+           */
+          tracking_number?: string | null;
         }
 
         interface ShippingOption {
@@ -2320,6 +2363,9 @@ declare module 'stripe' {
 
           namespace CustomerBalance {
             interface BankTransfer {
+              /**
+               * Configuration for eu_bank_transfer funding type.
+               */
               eu_bank_transfer?: BankTransfer.EuBankTransfer;
 
               /**
