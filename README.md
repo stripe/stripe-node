@@ -86,7 +86,7 @@ and instantiate it as `new Stripe()` with the latest API version.
 ```ts
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...', {
-  apiVersion: '2020-08-27',
+  apiVersion: '2022-08-01',
 });
 
 const createCustomer = async () => {

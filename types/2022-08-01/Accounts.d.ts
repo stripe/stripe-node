@@ -704,6 +704,7 @@ declare module 'stripe' {
           type Code =
             | 'invalid_address_city_state_postal_code'
             | 'invalid_street_address'
+            | 'invalid_tos_acceptance'
             | 'invalid_value_other'
             | 'verification_document_address_mismatch'
             | 'verification_document_address_missing'
@@ -826,6 +827,7 @@ declare module 'stripe' {
           type Code =
             | 'invalid_address_city_state_postal_code'
             | 'invalid_street_address'
+            | 'invalid_tos_acceptance'
             | 'invalid_value_other'
             | 'verification_document_address_mismatch'
             | 'verification_document_address_missing'
