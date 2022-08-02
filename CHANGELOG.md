@@ -2,9 +2,10 @@
 
 ## 10.0.0 - 2022-08-02
 
-Major version release for API version 2022-08-01. Default API version changed to "2022-08-01".
+This release includes breaking changes resulting from:
 
-Breaking changes that arose during code generation of the library that we postponed for the next major version. For changes to the SDK, read more detailed description at https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v10. For changes to the Stripe products, read more at https://stripe.com/docs/upgrades#2022-08-01.
+* Moving to use the new API version "2022-08-01". To learn more about these changes to Stripe products, see https://stripe.com/docs/upgrades#2022-08-01
+* Cleaning up the SDK to remove deprecated/unused APIs and rename classes/methods/properties to sync with product APIs. Read more detailed description at https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v10.
 
 "⚠️" symbol highlights breaking changes.
 
