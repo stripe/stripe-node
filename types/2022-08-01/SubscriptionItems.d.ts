@@ -90,31 +90,10 @@ declare module 'stripe' {
       }
 
       interface Trial {
-        /**
-         * Unique identifier for the object.
-         */
-        id: string;
-
-        /**
-         * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-         */
-        paid: Trial.Paid | null;
-
         type: Trial.Type;
       }
 
       namespace Trial {
-        interface Paid {
-          id: string;
-
-          /**
-           * The ID of the price object.
-           */
-          price: string;
-
-          quantity: number | null;
-        }
-
         type Type = 'free' | 'paid';
       }
     }
@@ -302,29 +281,10 @@ declare module 'stripe' {
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
 
       interface Trial {
-        free?: Trial.Free;
-
-        none?: Trial.None;
-
-        /**
-         * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-         */
-        paid?: Trial.Paid;
-
         type: Trial.Type;
       }
 
       namespace Trial {
-        interface Free {}
-
-        interface None {}
-
-        interface Paid {
-          price: string;
-
-          quantity?: number;
-        }
-
         type Type = 'free' | 'paid';
       }
     }

@@ -449,31 +449,10 @@ declare module 'stripe' {
           }
 
           interface Trial {
-            /**
-             * Unique identifier for the object.
-             */
-            id: string;
-
-            /**
-             * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-             */
-            paid: Trial.Paid | null;
-
             type: Trial.Type;
           }
 
           namespace Trial {
-            interface Paid {
-              id: string;
-
-              /**
-               * The ID of the price object.
-               */
-              price: string;
-
-              quantity: number | null;
-            }
-
             type Type = 'free' | 'paid';
           }
         }
@@ -1010,29 +989,10 @@ declare module 'stripe' {
           }
 
           interface Trial {
-            free?: Trial.Free;
-
-            none?: Trial.None;
-
-            /**
-             * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-             */
-            paid?: Trial.Paid;
-
             type: Trial.Type;
           }
 
           namespace Trial {
-            interface Free {}
-
-            interface None {}
-
-            interface Paid {
-              price: string;
-
-              quantity?: number;
-            }
-
             type Type = 'free' | 'paid';
           }
         }
@@ -1554,29 +1514,10 @@ declare module 'stripe' {
           }
 
           interface Trial {
-            free?: Trial.Free;
-
-            none?: Trial.None;
-
-            /**
-             * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-             */
-            paid?: Trial.Paid;
-
             type: Trial.Type;
           }
 
           namespace Trial {
-            interface Free {}
-
-            interface None {}
-
-            interface Paid {
-              price: string;
-
-              quantity?: number;
-            }
-
             type Type = 'free' | 'paid';
           }
         }
@@ -1683,7 +1624,7 @@ declare module 'stripe' {
         item_actions?: Array<Amendment.ItemAction>;
 
         /**
-         * Changes to how Stripe handles prorations during the amendment time span. Also supported as a point-in-time operation when `amendment_end` is `null`.
+         * Changes to how Stripe handles prorations during the amendment time span. Affects if and how prorations are created when a future phase starts. In cases where the amendment changes the currently active phase, it is used to determine whether or how to prorate now, at the time of the request. Also supported as a point-in-time operation when `amendment_end` is `null`.
          */
         proration_behavior?: Amendment.ProrationBehavior;
       }
@@ -1713,8 +1654,14 @@ declare module 'stripe' {
 
         namespace AmendmentEnd {
           interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
             interval: Duration.Interval;
 
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
             interval_count: number;
           }
 
@@ -1725,6 +1672,9 @@ declare module 'stripe' {
           interface ScheduleEnd {}
 
           interface Timestamp {
+            /**
+             * A precise numeric timestamp, provided as an integer number of seconds since the Unix epoch.
+             */
             value: number;
           }
 
@@ -1755,12 +1705,18 @@ declare module 'stripe' {
 
         namespace AmendmentStart {
           interface AmendmentEnd {
+            /**
+             * The position of the previous amendment in the `amendments` array after which this amendment should begin. Indexes start from 0 and must be less than the index of the current amendment in the array.
+             */
             index: number;
           }
 
           interface Now {}
 
           interface Timestamp {
+            /**
+             * A precise numeric timestamp, provided as an integer number of seconds since the Unix epoch.
+             */
             value: number;
           }
 
@@ -1788,22 +1744,43 @@ declare module 'stripe' {
 
         namespace DiscountAction {
           interface Add {
+            /**
+             * The coupon code to redeem.
+             */
             coupon?: string;
 
+            /**
+             * An ID of an existing discount for a coupon that was already redeemed.
+             */
             discount?: string;
 
+            /**
+             * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
+             */
             index?: number;
           }
 
           interface Remove {
+            /**
+             * The coupon code to remove from the `discounts` array.
+             */
             coupon?: string;
 
+            /**
+             * The ID of a discount to remove from the `discounts` array.
+             */
             discount?: string;
           }
 
           interface Set {
+            /**
+             * The coupon code to replace the `discounts` array with.
+             */
             coupon?: string;
 
+            /**
+             * An ID of an existing discount to replace the `discounts` array with.
+             */
             discount?: string;
           }
 
@@ -1812,7 +1789,7 @@ declare module 'stripe' {
 
         interface ItemAction {
           /**
-           * Details of the subscription item to add.
+           * Details of the subscription item to add. The `price` must be unique across all items.
            */
           add?: ItemAction.Add;
 
@@ -1822,7 +1799,7 @@ declare module 'stripe' {
           remove?: ItemAction.Remove;
 
           /**
-           * Details of the subscription item to replace the existing items with.
+           * Details of the subscription item to replace the existing items with. If an item with the `set[price]` already exists, the `items` array is not cleared. Instead, all of the other `set` properties that are passed in this request will replace the existing values for the configuration item.
            */
           set?: ItemAction.Set;
 
@@ -1831,16 +1808,34 @@ declare module 'stripe' {
 
         namespace ItemAction {
           interface Add {
+            /**
+             * The discounts applied to the item. Subscription item discounts are applied before subscription discounts.
+             */
             discounts?: Array<Add.Discount>;
 
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+             */
             metadata?: Stripe.MetadataParam;
 
+            /**
+             * The ID of the price object.
+             */
             price: string;
 
+            /**
+             * Quantity for this item.
+             */
             quantity?: number;
 
+            /**
+             * The tax rates that apply to this subscription item. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
+             */
             tax_rates?: Array<string>;
 
+            /**
+             * Current trial configuration on this item.
+             */
             trial?: Add.Trial;
           }
 
@@ -1858,48 +1853,50 @@ declare module 'stripe' {
             }
 
             interface Trial {
-              free?: Trial.Free;
-
-              none?: Trial.None;
-
-              /**
-               * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-               */
-              paid?: Trial.Paid;
-
               type: Trial.Type;
             }
 
             namespace Trial {
-              interface Free {}
-
-              interface None {}
-
-              interface Paid {
-                price?: string;
-
-                quantity?: number;
-              }
-
               type Type = 'free' | 'paid';
             }
           }
 
           interface Remove {
+            /**
+             * ID of a price to remove.
+             */
             price: string;
           }
 
           interface Set {
+            /**
+             * If the an item with the `price` already exists, passing this will override the `discounts` array on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `discounts`.
+             */
             discounts?: Array<Set.Discount>;
 
+            /**
+             * If the an item with the `price` already exists, passing this will override the `metadata` on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `metadata`.
+             */
             metadata?: Stripe.MetadataParam;
 
+            /**
+             * The ID of the price object.
+             */
             price: string;
 
+            /**
+             * If the an item with the `price` already exists, passing this will override the quantity on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `quantity`.
+             */
             quantity?: number;
 
+            /**
+             * If the an item with the `price` already exists, passing this will override the `tax_rates` array on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `tax_rates`.
+             */
             tax_rates?: Array<string>;
 
+            /**
+             * If the an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
+             */
             trial?: Set.Trial;
           }
 
@@ -1917,29 +1914,10 @@ declare module 'stripe' {
             }
 
             interface Trial {
-              free?: Trial.Free;
-
-              none?: Trial.None;
-
-              /**
-               * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-               */
-              paid?: Trial.Paid;
-
               type: Trial.Type;
             }
 
             namespace Trial {
-              interface Free {}
-
-              interface None {}
-
-              interface Paid {
-                price?: string;
-
-                quantity?: number;
-              }
-
               type Type = 'free' | 'paid';
             }
           }

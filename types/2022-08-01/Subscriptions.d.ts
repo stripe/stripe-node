@@ -956,29 +956,10 @@ declare module 'stripe' {
         }
 
         interface Trial {
-          free?: Trial.Free;
-
-          none?: Trial.None;
-
-          /**
-           * Details of a different price, quantity, or both, to bill your customer for during a paid trial.
-           */
-          paid?: Trial.Paid;
-
           type: Trial.Type;
         }
 
         namespace Trial {
-          interface Free {}
-
-          interface None {}
-
-          interface Paid {
-            price: string;
-
-            quantity?: number;
-          }
-
           type Type = 'free' | 'paid';
         }
       }
