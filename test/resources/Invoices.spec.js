@@ -82,9 +82,9 @@ describe('Invoices Resource', () => {
     });
   });
 
-  describe('listUpcomingLineItems', () => {
+  describe('listUpcomingLines', () => {
     it('Sends the correct request', () => {
-      stripe.invoices.listUpcomingLineItems();
+      stripe.invoices.listUpcomingLines();
       expect(stripe.LAST_REQUEST).to.deep.equal({
         method: 'GET',
         url: '/v1/invoices/upcoming/lines',
@@ -115,7 +115,7 @@ describe('Invoices Resource', () => {
 
   describe('listUpcomingLineItems', () => {
     it('Sends the correct request', () => {
-      stripe.invoices.listUpcomingLineItems({
+      stripe.invoices.listUpcomingLines({
         customer: 'cus_abc',
         subscription_items: [{plan: 'potato'}, {plan: 'rutabaga'}],
         limit: 5,

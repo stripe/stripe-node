@@ -9,7 +9,6 @@
 ///<reference path='../Webhooks.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./Accounts.d.ts' />
-///<reference path='./AlipayAccounts.d.ts' />
 ///<reference path='./ApplePayDomains.d.ts' />
 ///<reference path='./ApplicationFees.d.ts' />
 ///<reference path='./Applications.d.ts' />
@@ -19,8 +18,6 @@
 ///<reference path='./BankAccounts.d.ts' />
 ///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
-///<reference path='./BitcoinReceivers.d.ts' />
-///<reference path='./BitcoinTransactions.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
 ///<reference path='./Cards.d.ts' />
 ///<reference path='./CashBalances.d.ts' />
@@ -53,9 +50,7 @@
 ///<reference path='./InvoiceItems.d.ts' />
 ///<reference path='./InvoiceLineItems.d.ts' />
 ///<reference path='./Invoices.d.ts' />
-///<reference path='./IssuerFraudRecords.d.ts' />
 ///<reference path='./Issuing/Authorizations.d.ts' />
-///<reference path='./Issuing/CardDetails.d.ts' />
 ///<reference path='./Issuing/Cardholders.d.ts' />
 ///<reference path='./Issuing/Cards.d.ts' />
 ///<reference path='./Issuing/Disputes.d.ts' />
@@ -78,7 +73,6 @@
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
 ///<reference path='./Radar/ValueListItems.d.ts' />
 ///<reference path='./Radar/ValueLists.d.ts' />
-///<reference path='./Recipients.d.ts' />
 ///<reference path='./Refunds.d.ts' />
 ///<reference path='./Reporting/ReportRuns.d.ts' />
 ///<reference path='./Reporting/ReportTypes.d.ts' />
@@ -167,7 +161,6 @@ declare module 'stripe' {
     fileLinks: Stripe.FileLinksResource;
     invoices: Stripe.InvoicesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
-    issuerFraudRecords: Stripe.IssuerFraudRecordsResource;
     mandates: Stripe.MandatesResource;
     orders: Stripe.OrdersResource;
     paymentIntents: Stripe.PaymentIntentsResource;

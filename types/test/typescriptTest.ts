@@ -5,11 +5,11 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-///<reference types="../2020-08-27" />
+///<reference types="../2022-08-01" />
 import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
-  apiVersion: '2020-08-27',
+  apiVersion: '2022-08-01',
 });
 
 // @ts-ignore lazily ignore apiVersion requirement.
@@ -27,7 +27,7 @@ stripe = new Stripe('sk_test_123', {
 
 // Check config object.
 stripe = new Stripe('sk_test_123', {
-  apiVersion: '2020-08-27',
+  apiVersion: '2022-08-01',
   typescript: true,
   maxNetworkRetries: 1,
   timeout: 1000,
@@ -49,11 +49,11 @@ stripe.setHost('host', 'port', 'protocol');
     description: 'test',
   };
   const opts: Stripe.RequestOptions = {
-    apiVersion: '2020-08-27',
+    apiVersion: '2022-08-01',
   };
   const customer: Stripe.Customer = await stripe.customers.create(params, opts);
 
-  const address: Stripe.Address | null = customer.address;
+  const address: Stripe.Address | null | undefined = customer.address;
 
   if (!address) return;
   const city: string | null = address.city;
@@ -169,12 +169,6 @@ stripe.setHost('host', 'port', 'protocol');
   }
 })();
 
-const stripeCardError: Stripe.StripeCardError = Stripe.errors.generate({
-  type: 'card_error',
-  code: 'card_declined',
-  charge: 'ch_123',
-});
-
 const Foo = Stripe.StripeResource.extend({
   includeBasic: ['retrieve'],
   foo: Stripe.StripeResource.method({
@@ -269,16 +263,12 @@ async (): Promise<void> => {
 };
 
 // Can reference error types
-let errors: Stripe.Errors;
 let rawError: Stripe.StripeRawError;
 
-let oldError: Stripe.StripeError;
 let newError: Stripe.errors.StripeError;
 
 const instanceofCheck1 = {} instanceof Stripe.errors.StripeError;
 const instanceofCheck2 = {} instanceof Stripe.errors.StripeAPIError;
-const instanceofCheck3 = {} instanceof Stripe.StripeError;
-const instanceofCheck4 = {} instanceof Stripe.StripeAPIError;
 const instanceofCheck5 = {} instanceof stripe.errors.StripeError;
 const instanceofCheck6 = {} instanceof stripe.errors.StripeAPIError;
 
@@ -286,9 +276,6 @@ Stripe.errors.generate({
   type: 'card_error',
 });
 stripe.errors.generate({
-  type: 'card_error',
-});
-Stripe.StripeError.generate({
   type: 'card_error',
 });
 Stripe.errors.StripeError.generate({

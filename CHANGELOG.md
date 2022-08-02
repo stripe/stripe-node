@@ -1,5 +1,32 @@
 # Changelog
 
+## 10.0.0 - 2022-08-02
+
+Major version release for API version 2022-08-01. Default API version changed to "2022-08-01".
+
+Breaking changes that arose during code generation of the library that we postponed for the next major version. For changes to the SDK, read more detailed description at https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v10. For changes to the Stripe products, read more at https://stripe.com/docs/upgrades#2022-08-01.
+
+"⚠️" symbol highlights breaking changes.
+
+* [#1497](https://github.com/stripe/stripe-node/pull/1497) API Updates
+* [#1493](https://github.com/stripe/stripe-node/pull/1493) Next major release changes
+
+## 9.16.0 - 2022-07-26
+* [#1492](https://github.com/stripe/stripe-node/pull/1492) API Updates
+  * Add support for new value `exempted` on enums `Charge.payment_method_details.card.three_d_secure.result` and `SetupAttempt.payment_method_details.card.three_d_secure.result`
+  * Add support for `customer_balance` on `Checkout.Session.payment_method_options` and `CheckoutSessionCreateParams.payment_method_options`
+  * Add support for new value `customer_balance` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for new values `en-CA` and `fr-CA` on enums `OrderCreateParams.payment.settings.payment_method_options.klarna.preferred_locale`, `OrderUpdateParams.payment.settings.payment_method_options.klarna.preferred_locale`, `PaymentIntentConfirmParams.payment_method_options.klarna.preferred_locale`, `PaymentIntentCreateParams.payment_method_options.klarna.preferred_locale`, and `PaymentIntentUpdateParams.payment_method_options.klarna.preferred_locale`
+
+## 9.15.0 - 2022-07-25
+* [#1486](https://github.com/stripe/stripe-node/pull/1486) API Updates
+  * Add support for `installments` on `Checkout.Session.payment_method_options.card`, `CheckoutSessionCreateParams.payment_method_options.card`, `Invoice.payment_settings.payment_method_options.card`, `InvoiceCreateParams.payment_settings.payment_method_options.card`, and `InvoiceUpdateParams.payment_settings.payment_method_options.card`
+  * Add support for `default_currency` and `invoice_credit_balance` on `Customer`
+  * Add support for `currency` on `InvoiceCreateParams`
+  * Add support for `default_mandate` on `Invoice.payment_settings`, `InvoiceCreateParams.payment_settings`, and `InvoiceUpdateParams.payment_settings`
+  * Add support for `mandate` on `InvoicePayParams`
+  * Add support for `product_data` on `OrderCreateParams.line_items[]` and `OrderUpdateParams.line_items[]`
+
 ## 9.15.0-beta.1 - 2022-07-22
 * [#1485](https://github.com/stripe/stripe-node/pull/1485) API Updates for beta branch
   - Updated stable APIs to the latest version

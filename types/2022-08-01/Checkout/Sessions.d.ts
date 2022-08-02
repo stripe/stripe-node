@@ -170,24 +170,24 @@ declare module 'stripe' {
         setup_intent: string | Stripe.SetupIntent | null;
 
         /**
-         * Shipping information for this Checkout Session.
-         */
-        shipping: Session.Shipping | null;
-
-        /**
          * When set, provides configuration for Checkout to collect a shipping address from a customer.
          */
         shipping_address_collection: Session.ShippingAddressCollection | null;
 
         /**
+         * The details of the customer cost of shipping, including the customer chosen ShippingRate.
+         */
+        shipping_cost: Session.ShippingCost | null;
+
+        /**
+         * Shipping information for this Checkout Session.
+         */
+        shipping_details: Session.ShippingDetails | null;
+
+        /**
          * The shipping rate options applied to this Session.
          */
         shipping_options: Array<Session.ShippingOption>;
-
-        /**
-         * The ID of the ShippingRate for Checkout Sessions in `payment` mode.
-         */
-        shipping_rate: string | Stripe.ShippingRate | null;
 
         /**
          * The status of the Checkout Session, one of `open`, `complete`, or `expired`.
@@ -469,6 +469,8 @@ declare module 'stripe' {
 
           card?: PaymentMethodOptions.Card;
 
+          customer_balance?: PaymentMethodOptions.CustomerBalance;
+
           eps?: PaymentMethodOptions.Eps;
 
           fpx?: PaymentMethodOptions.Fpx;
@@ -501,7 +503,7 @@ declare module 'stripe' {
             /**
              * Currency supported by the bank account. Returned when the Session is in `setup` mode.
              */
-            currency?: string;
+            currency?: AcssDebit.Currency;
 
             mandate_options?: AcssDebit.MandateOptions;
 
@@ -521,6 +523,8 @@ declare module 'stripe' {
           }
 
           namespace AcssDebit {
+            type Currency = 'cad' | 'usd';
+
             interface MandateOptions {
               /**
                * A URL for custom mandate text
@@ -683,6 +687,70 @@ declare module 'stripe' {
             }
 
             type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+          }
+
+          interface CustomerBalance {
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type: 'bank_transfer' | null;
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+               *
+               * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
+               */
+              requested_address_types?: Array<
+                BankTransfer.RequestedAddressType
+              >;
+
+              /**
+               * The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+               */
+              type: BankTransfer.Type | null;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: EuBankTransfer.Country;
+              }
+
+              namespace EuBankTransfer {
+                type Country = 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+              }
+
+              type RequestedAddressType =
+                | 'iban'
+                | 'sepa'
+                | 'sort_code'
+                | 'spei'
+                | 'zengin';
+
+              type Type =
+                | 'eu_bank_transfer'
+                | 'gb_bank_transfer'
+                | 'jp_bank_transfer'
+                | 'mx_bank_transfer';
+            }
           }
 
           interface Eps {
@@ -887,30 +955,6 @@ declare module 'stripe' {
            * Indicates whether phone number collection is enabled for the session
            */
           enabled: boolean;
-        }
-
-        interface Shipping {
-          address?: Stripe.Address;
-
-          /**
-           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
-           */
-          carrier?: string | null;
-
-          /**
-           * Recipient name.
-           */
-          name?: string;
-
-          /**
-           * Recipient phone (including extension).
-           */
-          phone?: string | null;
-
-          /**
-           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
-           */
-          tracking_number?: string | null;
         }
 
         interface ShippingAddressCollection {
@@ -1160,6 +1204,73 @@ declare module 'stripe' {
             | 'ZM'
             | 'ZW'
             | 'ZZ';
+        }
+
+        interface ShippingCost {
+          /**
+           * Total shipping cost before any discounts or taxes are applied.
+           */
+          amount_subtotal: number;
+
+          /**
+           * Total tax amount applied due to shipping costs. If no tax was applied, defaults to 0.
+           */
+          amount_tax: number;
+
+          /**
+           * Total shipping cost after discounts and taxes are applied.
+           */
+          amount_total: number;
+
+          /**
+           * The ID of the ShippingRate for this order.
+           */
+          shipping_rate: string | Stripe.ShippingRate | null;
+
+          /**
+           * The taxes applied to the shipping rate.
+           */
+          taxes?: Array<ShippingCost.Tax>;
+        }
+
+        namespace ShippingCost {
+          interface Tax {
+            /**
+             * Amount of tax applied for this rate.
+             */
+            amount: number;
+
+            /**
+             * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+             *
+             * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+             */
+            rate: Stripe.TaxRate;
+          }
+        }
+
+        interface ShippingDetails {
+          address?: Stripe.Address;
+
+          /**
+           * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+           */
+          carrier?: string | null;
+
+          /**
+           * Recipient name.
+           */
+          name?: string;
+
+          /**
+           * Recipient phone (including extension).
+           */
+          phone?: string | null;
+
+          /**
+           * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+           */
+          tracking_number?: string | null;
         }
 
         interface ShippingOption {
@@ -1927,6 +2038,11 @@ declare module 'stripe' {
           card?: PaymentMethodOptions.Card;
 
           /**
+           * contains details about the Customer Balance payment method options.
+           */
+          customer_balance?: PaymentMethodOptions.CustomerBalance;
+
+          /**
            * contains details about the EPS payment method options.
            */
           eps?: PaymentMethodOptions.Eps;
@@ -2224,6 +2340,72 @@ declare module 'stripe' {
             type SetupFutureUsage = 'off_session' | 'on_session';
           }
 
+          interface CustomerBalance {
+            /**
+             * Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
+             */
+            bank_transfer?: CustomerBalance.BankTransfer;
+
+            /**
+             * The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
+             */
+            funding_type?: 'bank_transfer';
+
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: 'none';
+          }
+
+          namespace CustomerBalance {
+            interface BankTransfer {
+              /**
+               * Configuration for eu_bank_transfer funding type.
+               */
+              eu_bank_transfer?: BankTransfer.EuBankTransfer;
+
+              /**
+               * List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.
+               *
+               * Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
+               */
+              requested_address_types?: Array<
+                BankTransfer.RequestedAddressType
+              >;
+
+              /**
+               * The list of bank transfer types that this PaymentIntent is allowed to use for funding. Permitted values include: `us_bank_account`, `eu_bank_account`, `id_bank_account`, `gb_bank_account`, `jp_bank_account`, `mx_bank_account`, `eu_bank_transfer`, `gb_bank_transfer`, `id_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
+               */
+              type: BankTransfer.Type;
+            }
+
+            namespace BankTransfer {
+              interface EuBankTransfer {
+                /**
+                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 */
+                country: string;
+              }
+
+              type RequestedAddressType =
+                | 'iban'
+                | 'sepa'
+                | 'sort_code'
+                | 'spei'
+                | 'zengin';
+
+              type Type =
+                | 'eu_bank_transfer'
+                | 'gb_bank_transfer'
+                | 'jp_bank_transfer'
+                | 'mx_bank_transfer';
+            }
+          }
+
           interface Eps {
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2459,6 +2641,7 @@ declare module 'stripe' {
           | 'blik'
           | 'boleto'
           | 'card'
+          | 'customer_balance'
           | 'eps'
           | 'fpx'
           | 'giropay'
@@ -3037,6 +3220,13 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface SessionListLineItemsParams extends PaginationParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       class SessionsResource {
         /**
          * Creates a Session object.
@@ -3088,7 +3278,7 @@ declare module 'stripe' {
          */
         listLineItems(
           id: string,
-          params?: LineItemListParams,
+          params?: SessionListLineItemsParams,
           options?: RequestOptions
         ): ApiListPromise<Stripe.LineItem>;
         listLineItems(

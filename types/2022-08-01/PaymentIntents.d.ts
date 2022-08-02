@@ -188,9 +188,7 @@ declare module 'stripe' {
       source:
         | string
         | Stripe.CustomerSource
-        | Stripe.DeletedAlipayAccount
         | Stripe.DeletedBankAccount
-        | Stripe.DeletedBitcoinReceiver
         | Stripe.DeletedCard
         | null;
 
@@ -3206,6 +3204,7 @@ declare module 'stripe' {
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
+            | 'en-CA'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
@@ -3223,6 +3222,7 @@ declare module 'stripe' {
             | 'es-US'
             | 'fi-FI'
             | 'fr-BE'
+            | 'fr-CA'
             | 'fr-FR'
             | 'it-IT'
             | 'nb-NO'
@@ -4970,6 +4970,7 @@ declare module 'stripe' {
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
+            | 'en-CA'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
@@ -4987,6 +4988,7 @@ declare module 'stripe' {
             | 'es-US'
             | 'fi-FI'
             | 'fr-BE'
+            | 'fr-CA'
             | 'fr-FR'
             | 'it-IT'
             | 'nb-NO'
@@ -6832,6 +6834,7 @@ declare module 'stripe' {
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
+            | 'en-CA'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
@@ -6849,6 +6852,7 @@ declare module 'stripe' {
             | 'es-US'
             | 'fi-FI'
             | 'fr-BE'
+            | 'fr-CA'
             | 'fr-FR'
             | 'it-IT'
             | 'nb-NO'
