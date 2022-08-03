@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.1.0-beta.1 - 2022-08-03
+* [#1498](https://github.com/stripe/stripe-node/pull/1498) API Updates for beta branch
+  - Updated stable APIs to the latest version
+  - Added the `Order` resource support
+
 ## 10.0.0 - 2022-08-02
 
 Major version release for API version 2022-08-01. Default API version changed to "2022-08-01".
