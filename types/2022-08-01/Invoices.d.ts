@@ -9,7 +9,7 @@ declare module 'stripe' {
       /**
        * Unique identifier for the object.
        */
-      id?: string;
+      id: string;
 
       /**
        * String representing the object's type. Objects of the same type share the same value.
@@ -373,6 +373,13 @@ declare module 'stripe' {
        * Invoices are automatically paid or sent 1 hour after webhooks are delivered, or until all webhook delivery attempts have [been exhausted](https://stripe.com/docs/billing/webhooks#understand). This field tracks the time when webhooks for this invoice were successfully delivered. If the invoice had no webhooks to deliver, this will be set while the invoice is being created.
        */
       webhooks_delivered_at: number | null;
+    }
+
+    interface UpcomingInvoice extends Omit<Invoice, 'id'> {
+      /**
+       * Unique identifier for the object.
+       */
+      id?: string;
     }
 
     namespace Invoice {
@@ -3052,10 +3059,10 @@ declare module 'stripe' {
       retrieveUpcoming(
         params?: InvoiceRetrieveUpcomingParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      ): Promise<Stripe.Response<Stripe.UpcomingInvoice>>;
       retrieveUpcoming(
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      ): Promise<Stripe.Response<Stripe.UpcomingInvoice>>;
 
       /**
        * Search for invoices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
