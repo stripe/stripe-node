@@ -28,6 +28,11 @@ declare module 'stripe' {
         deleted?: boolean;
 
         /**
+         * The Unix timestamp for the expiry time of the secret, after which the secret deletes.
+         */
+        expires_at: number | null;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -83,6 +88,11 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * The Unix timestamp for the expiry time of the secret, after which the secret deletes.
+         */
+        expires_at?: number;
       }
 
       namespace SecretCreateParams {
