@@ -87,7 +87,7 @@ declare module 'stripe' {
       town: string | null;
     }
 
-    interface AccountAddressParam {
+    interface AddressParam {
       /**
        * City, district, suburb, town, or village.
        */
@@ -119,7 +119,7 @@ declare module 'stripe' {
       state?: string;
     }
 
-    interface AddressParam extends AccountAddressParam {
+    interface ShippingAddressParam extends AddressParam {
       /**
        * Address line 1 (e.g., street, PO Box, or company name).
        */

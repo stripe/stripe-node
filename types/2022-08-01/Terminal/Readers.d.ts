@@ -114,6 +114,20 @@ declare module 'stripe' {
              * Most recent PaymentIntent processed by the reader.
              */
             payment_intent: string | Stripe.PaymentIntent;
+
+            /**
+             * Represents a per-transaction override of a reader configuration
+             */
+            process_config?: ProcessPaymentIntent.ProcessConfig;
+          }
+
+          namespace ProcessPaymentIntent {
+            interface ProcessConfig {
+              /**
+               * Override showing a tipping selection screen on this transaction.
+               */
+              skip_tipping?: boolean;
+            }
           }
 
           interface ProcessSetupIntent {

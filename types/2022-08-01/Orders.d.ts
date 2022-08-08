@@ -977,7 +977,7 @@ declare module 'stripe' {
         /**
          * The billing address provided by the customer.
          */
-        address?: BillingDetails.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * The billing email provided by the customer.
@@ -993,12 +993,6 @@ declare module 'stripe' {
          * The billing phone number provided by the customer.
          */
         phone?: string;
-      }
-
-      namespace BillingDetails {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface Discount {
@@ -1946,7 +1940,7 @@ declare module 'stripe' {
         /**
          * The shipping address for the order.
          */
-        address: ShippingDetails.Address;
+        address: Stripe.AddressParam;
 
         /**
          * The name of the recipient of the order.
@@ -1957,12 +1951,6 @@ declare module 'stripe' {
          * The phone number (including extension) for the recipient of the order.
          */
         phone?: string;
-      }
-
-      namespace ShippingDetails {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface TaxDetails {
@@ -2135,7 +2123,7 @@ declare module 'stripe' {
         /**
          * The billing address provided by the customer.
          */
-        address?: BillingDetails.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * The billing email provided by the customer.
@@ -2151,12 +2139,6 @@ declare module 'stripe' {
          * The billing phone number provided by the customer.
          */
         phone?: string;
-      }
-
-      namespace BillingDetails {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface Discount {
@@ -3113,7 +3095,7 @@ declare module 'stripe' {
         /**
          * The shipping address for the order.
          */
-        address: ShippingDetails.Address;
+        address: Stripe.AddressParam;
 
         /**
          * The name of the recipient of the order.
@@ -3124,12 +3106,6 @@ declare module 'stripe' {
          * The phone number (including extension) for the recipient of the order.
          */
         phone?: string;
-      }
-
-      namespace ShippingDetails {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface TaxDetails {

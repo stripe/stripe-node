@@ -1008,7 +1008,7 @@ declare module 'stripe' {
         /**
          * Billing address.
          */
-        address?: Stripe.Emptyable<BillingDetails.Address>;
+        address?: Stripe.Emptyable<Stripe.AddressParam>;
 
         /**
          * Email address.
@@ -1024,12 +1024,6 @@ declare module 'stripe' {
          * Billing phone number (including extension).
          */
         phone?: string;
-      }
-
-      namespace BillingDetails {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface Blik {}
@@ -1420,7 +1414,7 @@ declare module 'stripe' {
         /**
          * Billing address.
          */
-        address?: Stripe.Emptyable<BillingDetails.Address>;
+        address?: Stripe.Emptyable<Stripe.AddressParam>;
 
         /**
          * Email address.
@@ -1436,12 +1430,6 @@ declare module 'stripe' {
          * Billing phone number (including extension).
          */
         phone?: string;
-      }
-
-      namespace BillingDetails {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface Blik {}

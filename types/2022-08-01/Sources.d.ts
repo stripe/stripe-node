@@ -915,7 +915,7 @@ declare module 'stripe' {
         /**
          * Owner's address.
          */
-        address?: Owner.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * Owner's email address.
@@ -931,12 +931,6 @@ declare module 'stripe' {
          * Owner's phone number.
          */
         phone?: string;
-      }
-
-      namespace Owner {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface Receiver {
@@ -998,7 +992,7 @@ declare module 'stripe' {
           /**
            * Shipping address.
            */
-          address: Stripe.AddressParam;
+          address: Stripe.ShippingAddressParam;
 
           /**
            * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1179,7 +1173,7 @@ declare module 'stripe' {
         /**
          * Owner's address.
          */
-        address?: Owner.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * Owner's email address.
@@ -1195,12 +1189,6 @@ declare module 'stripe' {
          * Owner's phone number.
          */
         phone?: string;
-      }
-
-      namespace Owner {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface SourceOrder {
@@ -1244,7 +1232,7 @@ declare module 'stripe' {
           /**
            * Shipping address.
            */
-          address: Stripe.AddressParam;
+          address: Stripe.ShippingAddressParam;
 
           /**
            * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.

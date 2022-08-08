@@ -294,7 +294,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: Stripe.Emptyable<Stripe.AddressParam>;
+      address?: Stripe.Emptyable<Stripe.ShippingAddressParam>;
 
       /**
        * An integer amount in cents (or local equivalent) that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -470,7 +470,7 @@ declare module 'stripe' {
         /**
          * Customer shipping address.
          */
-        address: Shipping.Address;
+        address: Stripe.AddressParam;
 
         /**
          * Customer name.
@@ -481,12 +481,6 @@ declare module 'stripe' {
          * Customer phone (including extension).
          */
         phone?: string;
-      }
-
-      namespace Shipping {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface Tax {
@@ -572,7 +566,7 @@ declare module 'stripe' {
       /**
        * The customer's address.
        */
-      address?: Stripe.Emptyable<Stripe.AddressParam>;
+      address?: Stripe.Emptyable<Stripe.ShippingAddressParam>;
 
       /**
        * An integer amount in cents (or local equivalent) that represents the customer's current balance, which affect the customer's future invoices. A negative amount represents a credit that decreases the amount due on an invoice; a positive amount increases the amount due on an invoice.
@@ -745,7 +739,7 @@ declare module 'stripe' {
         /**
          * Customer shipping address.
          */
-        address: Shipping.Address;
+        address: Stripe.AddressParam;
 
         /**
          * Customer name.
@@ -756,12 +750,6 @@ declare module 'stripe' {
          * Customer phone (including extension).
          */
         phone?: string;
-      }
-
-      namespace Shipping {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface Tax {

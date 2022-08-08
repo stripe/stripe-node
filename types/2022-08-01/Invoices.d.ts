@@ -1950,7 +1950,7 @@ declare module 'stripe' {
         /**
          * The customer's address.
          */
-        address?: Stripe.Emptyable<CustomerDetails.Address>;
+        address?: Stripe.Emptyable<Stripe.AddressParam>;
 
         /**
          * The customer's shipping information. Appears on invoices emailed to this customer.
@@ -1974,15 +1974,11 @@ declare module 'stripe' {
       }
 
       namespace CustomerDetails {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
-
         interface Shipping {
           /**
            * Customer shipping address.
            */
-          address: Shipping.Address;
+          address: Stripe.AddressParam;
 
           /**
            * Customer name.
@@ -1993,12 +1989,6 @@ declare module 'stripe' {
            * Customer phone (including extension).
            */
           phone?: string;
-        }
-
-        namespace Shipping {
-          interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-            line1?: string;
-          }
         }
 
         interface Tax {
@@ -2508,7 +2498,7 @@ declare module 'stripe' {
         /**
          * The customer's address.
          */
-        address?: Stripe.Emptyable<CustomerDetails.Address>;
+        address?: Stripe.Emptyable<Stripe.AddressParam>;
 
         /**
          * The customer's shipping information. Appears on invoices emailed to this customer.
@@ -2532,15 +2522,11 @@ declare module 'stripe' {
       }
 
       namespace CustomerDetails {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
-
         interface Shipping {
           /**
            * Customer shipping address.
            */
-          address: Shipping.Address;
+          address: Stripe.AddressParam;
 
           /**
            * Customer name.
@@ -2551,12 +2537,6 @@ declare module 'stripe' {
            * Customer phone (including extension).
            */
           phone?: string;
-        }
-
-        namespace Shipping {
-          interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-            line1?: string;
-          }
         }
 
         interface Tax {
