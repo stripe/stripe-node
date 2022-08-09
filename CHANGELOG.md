@@ -1,5 +1,14 @@
 # Changelog
 
+## 10.1.0 - 2022-08-09
+* [#1506](https://github.com/stripe/stripe-node/pull/1506) API Updates
+  * Add support for `process_config` on `Terminal.Reader.action.process_payment_intent`
+* [#1505](https://github.com/stripe/stripe-node/pull/1505) Simplify AddressParam definitions
+  - Rename `AddressParam` to `ShippingAddressParam`, and change type of `Source.source_order.shipping.address`, `SourceUpdateParams.SourceOrder.Shipping.address`, and `SessionCreateParams.PaymentIntentData.Shipping.address` to `ShippingAddressParam`
+  - Rename `AccountAddressParam` go `AddressParam`, and change type of `AccountCreateParams.BusinessProfile.support_address`, `AccountCreateParams.Company.address`, `AccountCreateParams.Individual.address `, `AccountCreateParams.Individual.registered_address`, `AccountUpdateParams.BusinessProfile.support_address`, `AccountUpdateParams.Company.address`, `AccountUpdateParams.Individual.address`, `AccountUpdateParams.Individual.registered_address`, `ChargeCreateParams.Shipping.address`, `ChargeUpdateParams.Shipping.address`, `CustomerCreateParams.Shipping.address`, `CustomerUpdateParams.Shipping.address`, `CustomerSourceUpdateParams.Owner.address`, `InvoiceListUpcomingLinesParams.CustomerDetails.Shipping.address`, `InvoiceRetrieveUpcomingParams.CustomerDetails.Shipping.address`, `OrderCreateParams.BillingDetails.address`, `OrderCreateParams.ShippingDetails.address`, `OrderUpdateParams.BillingDetails.address`, `OrderUpdateParams.ShippingDetails.address`, `PaymentIntentCreateParams.Shipping.address`, `PaymentIntentUpdateParams.Shipping.address`, `PaymentIntentConfirmParams.Shipping.address`, `PersonCreateParams.address`, `PersonCreateParams.registered_address`, `PersonUpdateParams.address`, `PersonUpdateParams.registered_address`, `SourceCreateParams.Owner.address`, `SourceUpdateParams.Owner.address`, `TokenCreateParams.Account.Company.address`, `TokenCreateParams.Account.Individual.address`, `TokenCreateParams.Account.Individual.registered_address`, `TokenCreateParams.Person.address`, `TokenCreateParams.Person.registered_address`, and `Terminal.LocationUpdateParams.address` to `AddressParam`
+* [#1503](https://github.com/stripe/stripe-node/pull/1503) API Updates
+  * Add support for `expires_at` on `Apps.Secret` and `AppsSecretCreateParams`
+
 ## 10.0.0 - 2022-08-02
 
 This release includes breaking changes resulting from:
