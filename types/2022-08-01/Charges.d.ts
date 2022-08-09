@@ -1895,7 +1895,7 @@ declare module 'stripe' {
         /**
          * Shipping address.
          */
-        address: Shipping.Address;
+        address: Stripe.AddressParam;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -1916,12 +1916,6 @@ declare module 'stripe' {
          * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
          */
         tracking_number?: string;
-      }
-
-      namespace Shipping {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface TransferData {
@@ -2002,7 +1996,7 @@ declare module 'stripe' {
         /**
          * Shipping address.
          */
-        address: Shipping.Address;
+        address: Stripe.AddressParam;
 
         /**
          * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
@@ -2023,12 +2017,6 @@ declare module 'stripe' {
          * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
          */
         tracking_number?: string;
-      }
-
-      namespace Shipping {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
     }
 

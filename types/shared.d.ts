@@ -87,9 +87,9 @@ declare module 'stripe' {
       town: string | null;
     }
 
-    interface AccountAddressParam {
+    interface AddressParam {
       /**
-       * City, district, suburb, town, or village.
+       * City, district, suburb, town, village, or ward.
        */
       city?: string;
 
@@ -99,7 +99,7 @@ declare module 'stripe' {
       country?: string;
 
       /**
-       * Address line 1 (e.g., street, PO Box, or company name).
+       * Address line 1 (e.g., street, block, PO Box, or company name).
        */
       line1?: string;
 
@@ -114,49 +114,19 @@ declare module 'stripe' {
       postal_code?: string;
 
       /**
-       * State, county, province, or region.
+       * State, county, province, prefecture, or region.
        */
       state?: string;
     }
 
-    interface AddressParam extends AccountAddressParam {
+    interface ShippingAddressParam extends AddressParam {
       /**
        * Address line 1 (e.g., street, PO Box, or company name).
        */
       line1: string;
     }
 
-    interface JapanAddressParam {
-      /**
-       * City or ward.
-       */
-      city?: string;
-
-      /**
-       * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-       */
-      country?: string;
-
-      /**
-       * Block or building number.
-       */
-      line1?: string;
-
-      /**
-       * Building details.
-       */
-      line2?: string;
-
-      /**
-       * Postal code.
-       */
-      postal_code?: string;
-
-      /**
-       * Prefecture.
-       */
-      state?: string;
-
+    interface JapanAddressParam extends AddressParam {
       /**
        * Town or cho-me.
        */

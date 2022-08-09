@@ -1952,7 +1952,7 @@ declare module 'stripe' {
             /**
              * Shipping address.
              */
-            address: Stripe.AddressParam;
+            address: Stripe.ShippingAddressParam;
 
             /**
              * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.

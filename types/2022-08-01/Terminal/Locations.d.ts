@@ -134,7 +134,7 @@ declare module 'stripe' {
         /**
          * The full address of the location.
          */
-        address?: LocationUpdateParams.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * The ID of a configuration that will be used to customize all readers in this location.
@@ -155,12 +155,6 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
-      }
-
-      namespace LocationUpdateParams {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface LocationListParams extends PaginationParams {
