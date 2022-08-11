@@ -956,6 +956,9 @@ declare module 'stripe' {
         }
 
         interface Trial {
+          /**
+           * Determines the type of trial for this item.
+           */
           type: Trial.Type;
         }
 

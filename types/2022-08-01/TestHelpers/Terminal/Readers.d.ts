@@ -16,9 +16,14 @@ declare module 'stripe' {
           expand?: Array<string>;
 
           /**
+           * Simulated data for the interac_present payment method
+           */
+          interac_present?: ReaderPresentPaymentMethodParams.InteracPresent;
+
+          /**
            * Simulated payment type
            */
-          type?: 'card_present';
+          type?: ReaderPresentPaymentMethodParams.Type;
         }
 
         namespace ReaderPresentPaymentMethodParams {
@@ -28,6 +33,15 @@ declare module 'stripe' {
              */
             number?: string;
           }
+
+          interface InteracPresent {
+            /**
+             * Card Number
+             */
+            number?: string;
+          }
+
+          type Type = 'card_present' | 'interac_present';
         }
       }
 
