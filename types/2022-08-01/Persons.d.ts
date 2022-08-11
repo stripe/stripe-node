@@ -591,7 +591,7 @@ declare module 'stripe' {
       /**
        * The person's address.
        */
-      address?: PersonCreateParams.Address;
+      address?: Stripe.AddressParam;
 
       /**
        * The Kana variation of the person's address (Japan only).
@@ -706,7 +706,7 @@ declare module 'stripe' {
       /**
        * The person's registered address.
        */
-      registered_address?: PersonCreateParams.RegisteredAddress;
+      registered_address?: Stripe.AddressParam;
 
       /**
        * The relationship that this person has with the account's legal entity.
@@ -725,10 +725,6 @@ declare module 'stripe' {
     }
 
     namespace PersonCreateParams {
-      interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-        line1?: string;
-      }
-
       interface Dob {
         /**
          * The day of birth, between 1 and 31.
@@ -784,10 +780,6 @@ declare module 'stripe' {
            */
           files?: Array<string>;
         }
-      }
-
-      interface RegisteredAddress extends Omit<Stripe.AddressParam, 'line1'> {
-        line1?: string;
       }
 
       interface Relationship {
@@ -872,7 +864,7 @@ declare module 'stripe' {
       /**
        * The person's address.
        */
-      address?: PersonUpdateParams.Address;
+      address?: Stripe.AddressParam;
 
       /**
        * The Kana variation of the person's address (Japan only).
@@ -987,7 +979,7 @@ declare module 'stripe' {
       /**
        * The person's registered address.
        */
-      registered_address?: PersonUpdateParams.RegisteredAddress;
+      registered_address?: Stripe.AddressParam;
 
       /**
        * The relationship that this person has with the account's legal entity.
@@ -1006,10 +998,6 @@ declare module 'stripe' {
     }
 
     namespace PersonUpdateParams {
-      interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-        line1?: string;
-      }
-
       interface Dob {
         /**
          * The day of birth, between 1 and 31.
@@ -1065,10 +1053,6 @@ declare module 'stripe' {
            */
           files?: Array<string>;
         }
-      }
-
-      interface RegisteredAddress extends Omit<Stripe.AddressParam, 'line1'> {
-        line1?: string;
       }
 
       interface Relationship {

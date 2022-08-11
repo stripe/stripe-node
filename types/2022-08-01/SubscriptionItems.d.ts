@@ -76,7 +76,7 @@ declare module 'stripe' {
       tax_rates: Array<Stripe.TaxRate> | null;
 
       /**
-       * Current trial configuration on this item.
+       * Options that configure the trial on the subscription item.
        */
       trial?: SubscriptionItem.Trial | null;
     }
@@ -195,7 +195,7 @@ declare module 'stripe' {
       tax_rates?: Stripe.Emptyable<Array<string>>;
 
       /**
-       * Define options to configure the trial on the subscription.
+       * Options that configure the trial on the subscription item.
        */
       trial?: SubscriptionItemCreateParams.Trial;
     }
@@ -281,6 +281,9 @@ declare module 'stripe' {
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
 
       interface Trial {
+        /**
+         * Determines the type of trial for this item.
+         */
         type: Trial.Type;
       }
 

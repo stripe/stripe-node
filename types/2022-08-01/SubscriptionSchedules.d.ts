@@ -423,7 +423,7 @@ declare module 'stripe' {
           tax_rates?: Array<Stripe.TaxRate> | null;
 
           /**
-           * Current trial configuration on this item.
+           * Options that configure the trial on the subscription item.
            */
           trial?: Item.Trial | null;
         }
@@ -911,7 +911,7 @@ declare module 'stripe' {
           tax_rates?: Stripe.Emptyable<Array<string>>;
 
           /**
-           * Settings for trials
+           * Options that configure the trial on the subscription item.
            */
           trial?: Item.Trial;
         }
@@ -989,6 +989,9 @@ declare module 'stripe' {
           }
 
           interface Trial {
+            /**
+             * Determines the type of trial for this item.
+             */
             type: Trial.Type;
           }
 
@@ -1436,7 +1439,7 @@ declare module 'stripe' {
           tax_rates?: Stripe.Emptyable<Array<string>>;
 
           /**
-           * Settings for trials
+           * Options that configure the trial on the subscription item.
            */
           trial?: Item.Trial;
         }
@@ -1514,6 +1517,9 @@ declare module 'stripe' {
           }
 
           interface Trial {
+            /**
+             * Determines the type of trial for this item.
+             */
             type: Trial.Type;
           }
 
@@ -1739,6 +1745,9 @@ declare module 'stripe' {
            */
           set?: DiscountAction.Set;
 
+          /**
+           * Determines the type of discount action.
+           */
           type: DiscountAction.Type;
         }
 
@@ -1803,6 +1812,9 @@ declare module 'stripe' {
            */
           set?: ItemAction.Set;
 
+          /**
+           * Determines the type of item action.
+           */
           type: ItemAction.Type;
         }
 
@@ -1834,7 +1846,7 @@ declare module 'stripe' {
             tax_rates?: Array<string>;
 
             /**
-             * Current trial configuration on this item.
+             * Options that configure the trial on the subscription item.
              */
             trial?: Add.Trial;
           }
@@ -1853,6 +1865,9 @@ declare module 'stripe' {
             }
 
             interface Trial {
+              /**
+               * Determines the type of trial for this item.
+               */
               type: Trial.Type;
             }
 
@@ -1914,6 +1929,9 @@ declare module 'stripe' {
             }
 
             interface Trial {
+              /**
+               * Determines the type of trial for this item.
+               */
               type: Trial.Type;
             }
 

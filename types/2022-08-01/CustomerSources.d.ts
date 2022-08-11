@@ -104,7 +104,7 @@ declare module 'stripe' {
         /**
          * Owner's address.
          */
-        address?: Owner.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * Owner's email address.
@@ -120,12 +120,6 @@ declare module 'stripe' {
          * Owner's phone number.
          */
         phone?: string;
-      }
-
-      namespace Owner {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
     }
 
