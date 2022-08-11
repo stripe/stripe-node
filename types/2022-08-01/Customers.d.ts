@@ -470,7 +470,7 @@ declare module 'stripe' {
         /**
          * Customer shipping address.
          */
-        address: Shipping.Address;
+        address: Stripe.AddressParam;
 
         /**
          * Customer name.
@@ -481,12 +481,6 @@ declare module 'stripe' {
          * Customer phone (including extension).
          */
         phone?: string;
-      }
-
-      namespace Shipping {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface Tax {
@@ -745,7 +739,7 @@ declare module 'stripe' {
         /**
          * Customer shipping address.
          */
-        address: Shipping.Address;
+        address: Stripe.AddressParam;
 
         /**
          * Customer name.
@@ -756,12 +750,6 @@ declare module 'stripe' {
          * Customer phone (including extension).
          */
         phone?: string;
-      }
-
-      namespace Shipping {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       interface Tax {

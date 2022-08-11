@@ -306,57 +306,6 @@ describe('FinancialConnections.Session', function() {
   });
 });
 
-describe('Order', function() {
-  it('create method', async function() {
-    const order = await stripe.orders.create({
-      description: 'description',
-      currency: 'usd',
-      line_items: [{description: 'my line item'}],
-    });
-    expect(order).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const order = await stripe.orders.retrieve('order_xyz');
-    expect(order).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const order = await stripe.orders.update('order_xyz', {
-      metadata: {reference_number: '123'},
-      ip_address: '0.0.0.0',
-    });
-    expect(order).not.to.be.null;
-  });
-
-  it('cancel method', async function() {
-    const order = await stripe.orders.cancel('order_xyz');
-    expect(order).not.to.be.null;
-  });
-
-  it('listLineItems method', async function() {
-    const lineItems = await stripe.orders.listLineItems('order_xyz');
-    expect(lineItems).not.to.be.null;
-  });
-
-  it('reopen method', async function() {
-    const order = await stripe.orders.reopen('order_xyz');
-    expect(order).not.to.be.null;
-  });
-
-  it('submit method', async function() {
-    const order = await stripe.orders.submit('order_xyz', {
-      expected_total: 100,
-    });
-    expect(order).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const orders = await stripe.orders.list({limit: 3});
-    expect(orders).not.to.be.null;
-  });
-});
-
 describe('PaymentIntent', function() {
   it('create method', async function() {
     const paymentIntent = await stripe.paymentIntents.create({

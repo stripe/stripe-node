@@ -1237,7 +1237,7 @@ declare module 'stripe' {
         /**
          * A publicly available mailing address for sending support issues to.
          */
-        support_address?: BusinessProfile.SupportAddress;
+        support_address?: Stripe.AddressParam;
 
         /**
          * A publicly available email address for sending support issues to.
@@ -1258,12 +1258,6 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url?: string;
-      }
-
-      namespace BusinessProfile {
-        interface SupportAddress extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       type BusinessType =
@@ -1676,7 +1670,7 @@ declare module 'stripe' {
         /**
          * The company's primary address.
          */
-        address?: Company.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * The Kana variation of the company's primary address (Japan only).
@@ -1760,10 +1754,6 @@ declare module 'stripe' {
       }
 
       namespace Company {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
-
         interface OwnershipDeclaration {
           /**
            * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -1954,7 +1944,7 @@ declare module 'stripe' {
         /**
          * The individual's primary address.
          */
-        address?: Individual.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * The Kana variation of the the individual's primary address (Japan only).
@@ -2049,7 +2039,7 @@ declare module 'stripe' {
         /**
          * The individual's registered address.
          */
-        registered_address?: Individual.RegisteredAddress;
+        registered_address?: Stripe.AddressParam;
 
         /**
          * The last four digits of the individual's Social Security Number (U.S. only).
@@ -2063,10 +2053,6 @@ declare module 'stripe' {
       }
 
       namespace Individual {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
-
         interface Dob {
           /**
            * The day of birth, between 1 and 31.
@@ -2085,10 +2071,6 @@ declare module 'stripe' {
         }
 
         type PoliticalExposure = 'existing' | 'none';
-
-        interface RegisteredAddress extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
 
         interface Verification {
           /**
@@ -2470,7 +2452,7 @@ declare module 'stripe' {
         /**
          * A publicly available mailing address for sending support issues to.
          */
-        support_address?: BusinessProfile.SupportAddress;
+        support_address?: Stripe.AddressParam;
 
         /**
          * A publicly available email address for sending support issues to.
@@ -2491,12 +2473,6 @@ declare module 'stripe' {
          * The business's publicly available website.
          */
         url?: string;
-      }
-
-      namespace BusinessProfile {
-        interface SupportAddress extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
       }
 
       type BusinessType =
@@ -2909,7 +2885,7 @@ declare module 'stripe' {
         /**
          * The company's primary address.
          */
-        address?: Company.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * The Kana variation of the company's primary address (Japan only).
@@ -2993,10 +2969,6 @@ declare module 'stripe' {
       }
 
       namespace Company {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
-
         interface OwnershipDeclaration {
           /**
            * The Unix timestamp marking when the beneficial owner attestation was made.
@@ -3150,7 +3122,7 @@ declare module 'stripe' {
         /**
          * The individual's primary address.
          */
-        address?: Individual.Address;
+        address?: Stripe.AddressParam;
 
         /**
          * The Kana variation of the the individual's primary address (Japan only).
@@ -3245,7 +3217,7 @@ declare module 'stripe' {
         /**
          * The individual's registered address.
          */
-        registered_address?: Individual.RegisteredAddress;
+        registered_address?: Stripe.AddressParam;
 
         /**
          * The last four digits of the individual's Social Security Number (U.S. only).
@@ -3259,10 +3231,6 @@ declare module 'stripe' {
       }
 
       namespace Individual {
-        interface Address extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
-
         interface Dob {
           /**
            * The day of birth, between 1 and 31.
@@ -3281,10 +3249,6 @@ declare module 'stripe' {
         }
 
         type PoliticalExposure = 'existing' | 'none';
-
-        interface RegisteredAddress extends Omit<Stripe.AddressParam, 'line1'> {
-          line1?: string;
-        }
 
         interface Verification {
           /**
