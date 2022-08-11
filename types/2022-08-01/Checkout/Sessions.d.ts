@@ -141,6 +141,11 @@ declare module 'stripe' {
         payment_link: string | Stripe.PaymentLink | null;
 
         /**
+         * Configure whether a Checkout Session should collect a payment method.
+         */
+        payment_method_collection: Session.PaymentMethodCollection | null;
+
+        /**
          * Payment-method-specific configuration for the PaymentIntent or SetupIntent of this CheckoutSession.
          */
         payment_method_options: Session.PaymentMethodOptions | null;
@@ -449,6 +454,8 @@ declare module 'stripe' {
           | 'zh-TW';
 
         type Mode = 'payment' | 'setup' | 'subscription';
+
+        type PaymentMethodCollection = 'always' | 'if_required';
 
         interface PaymentMethodOptions {
           acss_debit?: PaymentMethodOptions.AcssDebit;
@@ -1499,6 +1506,16 @@ declare module 'stripe' {
         payment_intent_data?: SessionCreateParams.PaymentIntentData;
 
         /**
+         * Specify whether Checkout should collect a payment method. When set to `if_required`, Checkout will not collect a payment method when the total due for the session is 0.
+         * This may occur if the Checkout Session includes a free trial or a discount.
+         *
+         * Can only be set in `subscription` mode.
+         *
+         * If you'd like information on how to collect a payment method outside of Checkout, read the guide on configuring [subscriptions with a free trial](https://stripe.com/docs/payments/checkout/free-trials).
+         */
+        payment_method_collection?: SessionCreateParams.PaymentMethodCollection;
+
+        /**
          * Payment-method-specific configuration.
          */
         payment_method_options?: SessionCreateParams.PaymentMethodOptions;
@@ -1990,6 +2007,8 @@ declare module 'stripe' {
             destination: string;
           }
         }
+
+        type PaymentMethodCollection = 'always' | 'if_required';
 
         interface PaymentMethodOptions {
           /**

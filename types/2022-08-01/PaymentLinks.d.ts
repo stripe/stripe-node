@@ -81,6 +81,11 @@ declare module 'stripe' {
       payment_intent_data: PaymentLink.PaymentIntentData | null;
 
       /**
+       * Configuration for collecting a payment method during checkout.
+       */
+      payment_method_collection: PaymentLink.PaymentMethodCollection;
+
+      /**
        * The list of payment method types that customers can use. When `null`, Stripe will dynamically show relevant payment methods you've enabled in your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types: Array<PaymentLink.PaymentMethodType> | null;
@@ -189,6 +194,8 @@ declare module 'stripe' {
 
         type SetupFutureUsage = 'off_session' | 'on_session';
       }
+
+      type PaymentMethodCollection = 'always' | 'if_required';
 
       type PaymentMethodType =
         | 'affirm'
@@ -584,6 +591,15 @@ declare module 'stripe' {
       payment_intent_data?: PaymentLinkCreateParams.PaymentIntentData;
 
       /**
+       * Specify whether Checkout should collect a payment method. When set to `if_required`, Checkout will not collect a payment method when the total due for the session is 0.This may occur if the Checkout Session includes a free trial or a discount.
+       *
+       * Can only be set in `subscription` mode.
+       *
+       * If you'd like information on how to collect a payment method outside of Checkout, read the guide on [configuring subscriptions with a free trial](https://stripe.com/docs/payments/checkout/free-trials).
+       */
+      payment_method_collection?: PaymentLinkCreateParams.PaymentMethodCollection;
+
+      /**
        * The list of payment method types that customers can use. If no value is passed, Stripe will dynamically show relevant payment methods from your [payment method settings](https://dashboard.stripe.com/settings/payment_methods) (20+ payment methods [supported](https://stripe.com/docs/payments/payment-methods/integration-options#payment-method-product-support)).
        */
       payment_method_types?: Array<PaymentLinkCreateParams.PaymentMethodType>;
@@ -749,6 +765,8 @@ declare module 'stripe' {
 
         type SetupFutureUsage = 'off_session' | 'on_session';
       }
+
+      type PaymentMethodCollection = 'always' | 'if_required';
 
       type PaymentMethodType =
         | 'affirm'
@@ -1125,6 +1143,15 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * Specify whether Checkout should collect a payment method. When set to `if_required`, Checkout will not collect a payment method when the total due for the session is 0.This may occur if the Checkout Session includes a free trial or a discount.
+       *
+       * Can only be set in `subscription` mode.
+       *
+       * If you'd like information on how to collect a payment method outside of Checkout, read the guide on [configuring subscriptions with a free trial](https://stripe.com/docs/payments/checkout/free-trials).
+       */
+      payment_method_collection?: PaymentLinkUpdateParams.PaymentMethodCollection;
+
+      /**
        * The list of payment method types that customers can use. Pass an empty string to enable automatic payment methods that use your [payment method settings](https://dashboard.stripe.com/settings/payment_methods).
        */
       payment_method_types?: Stripe.Emptyable<
@@ -1221,6 +1248,8 @@ declare module 'stripe' {
           minimum?: number;
         }
       }
+
+      type PaymentMethodCollection = 'always' | 'if_required';
 
       type PaymentMethodType =
         | 'affirm'
