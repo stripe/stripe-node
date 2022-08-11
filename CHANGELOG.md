@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.2.0 - 2022-08-11
+* [#1510](https://github.com/stripe/stripe-node/pull/1510) API Updates
+  * Add support for `payment_method_collection` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  
+
 ## 10.1.0 - 2022-08-09
 * [#1506](https://github.com/stripe/stripe-node/pull/1506) API Updates
   * Add support for `process_config` on `Terminal.Reader.action.process_payment_intent`
