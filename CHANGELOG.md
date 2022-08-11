@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.3.0-beta.1 - 2022-08-11
+* [#1511](https://github.com/stripe/stripe-node/pull/1511) API Updates for beta branch
+  - Updated stable APIs to the latest version
+  - Add refund_payment method to Terminal resource
+
 ## 10.2.0 - 2022-08-11
 * [#1510](https://github.com/stripe/stripe-node/pull/1510) API Updates
   * Add support for `payment_method_collection` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
