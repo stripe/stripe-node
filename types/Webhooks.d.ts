@@ -2,13 +2,8 @@
 
 declare module 'stripe' {
   namespace Stripe {
-    export class Webhooks {
-      /**
-       * Constructs and verifies the signature of an Event from the provided details.
-       *
-       * @throws Stripe.errors.StripeSignatureVerificationError
-       */
-      constructEvent(
+    declare module webhooks {
+      function constructEvent(
         /**
          * Raw text body payload received from Stripe.
          */
@@ -41,7 +36,7 @@ declare module 'stripe' {
          * Optional CryptoProvider to use for computing HMAC signatures.
          */
         cryptoProvider?: CryptoProvider
-      ): Stripe.Event;
+      ): Stripe.Event
 
       /**
        * Asynchronously constructs and verifies the signature of an Event from
@@ -49,7 +44,7 @@ declare module 'stripe' {
        *
        * @throws Stripe.errors.StripeSignatureVerificationError
        */
-      constructEventAsync(
+      function constructEventAsync(
         /**
          * Raw text body payload received from Stripe.
          */
@@ -82,45 +77,45 @@ declare module 'stripe' {
          * Optional CryptoProvider to use for computing HMAC signatures.
          */
         cryptoProvider?: CryptoProvider
-      ): Promise<Stripe.Event>;
+      ): Promise<Stripe.Event>
 
       /**
        * Generates a header to be used for webhook mocking
        */
-      generateTestHeaderString(opts: {
+      function generateTestHeaderString(opts: {
         /**
          * JSON stringified payload object, containing the 'id' and 'object' parameters.
          */
-        payload: string;
+        payload: string
 
         /**
          * Timestamp of the header. Defaults to Date.now().
          */
-        timestamp?: number;
+        timestamp?: number
 
         /**
          * Stripe webhook secret, e.g., 'whsec_...'.
          */
-        secret: string;
+        secret: string
 
         /**
          * Version of API to hit. Defaults to 'v1'.
          */
-        scheme?: string;
+        scheme?: string
 
         /**
          * Computed webhook signature.
          */
-        signature?: string;
+        signature?: string
 
         /**
          * Optional CryptoProvider to use for computing HMAC signatures, if no
          * signature is given.
          */
-        cryptoProvider?: CryptoProvider;
-      }): string;
+        cryptoProvider?: CryptoProvider
+      }): string
 
-      signature: Signature;
+      signature: Signature
     }
 
     export class Signature {
