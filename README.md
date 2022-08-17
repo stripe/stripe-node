@@ -20,6 +20,10 @@ See [video demonstrations][youtube-playlist] covering how to use the library.
 
 Node 8, 10 or higher.
 
+## Support
+
+New features and bug fixes are released on the latest major version of the stripe-node package. If you are on an older major version, we recommend that you upgrade to the latest in order to use the new features and bug fixes including those for security vulnerabilities. Older major versions of the package will continue to be available for use, but will not be receiving any updates.
+
 ## Installation
 
 Install the package with:
