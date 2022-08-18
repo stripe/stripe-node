@@ -4,7 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Radar {
       /**
-       * The ValueListItem object.
+       * Value list items allow you to add specific values to a given Radar value list, which can then be used in rules.
+       *
+       * Related guide: [Managing List Items](https://stripe.com/docs/radar/lists#managing-list-items).
        */
       interface ValueListItem {
         /**

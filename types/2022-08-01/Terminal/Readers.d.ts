@@ -4,7 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Terminal {
       /**
-       * The Reader object.
+       * A Reader represents a physical device for accepting payment details.
+       *
+       * Related guide: [Connecting to a Reader](https://stripe.com/docs/terminal/payments/connect-reader).
        */
       interface Reader {
         /**

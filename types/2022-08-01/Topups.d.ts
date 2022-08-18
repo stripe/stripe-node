@@ -3,7 +3,11 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Topup object.
+     * To top up your Stripe balance, you create a top-up object. You can retrieve
+     * individual top-ups, as well as list all top-ups. Top-ups are identified by a
+     * unique, random ID.
+     *
+     * Related guide: [Topping Up your Platform Account](https://stripe.com/docs/connect/top-ups).
      */
     interface Topup {
       /**
@@ -67,14 +71,9 @@ declare module 'stripe' {
       metadata: Stripe.Metadata;
 
       /**
-       * `Source` objects allow you to accept a variety of payment methods. They
-       * represent a customer's payment instrument, and can be used with the Stripe API
-       * just like a `Card` object: once chargeable, they can be charged, or can be
-       * attached to customers.
-       *
-       * Related guides: [Sources API](https://stripe.com/docs/sources) and [Sources & Customers](https://stripe.com/docs/sources/customers).
+       * For most Stripe users, the source of every top-up is a bank account. This hash is then the [source object](https://stripe.com/docs/api#source_object) describing that bank account.
        */
-      source: Stripe.Source;
+      source: Stripe.Source | null;
 
       /**
        * Extra information about a top-up. This will appear on your source's bank statement. It must contain at least one letter.

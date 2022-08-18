@@ -4,7 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Issuing {
       /**
-       * The Dispute object.
+       * As a [card issuer](https://stripe.com/docs/issuing), you can dispute transactions that the cardholder does not recognize, suspects to be fraudulent, or has other issues with.
+       *
+       * Related guide: [Disputing Transactions](https://stripe.com/docs/issuing/purchases/disputes)
        */
       interface Dispute {
         /**

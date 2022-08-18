@@ -3,7 +3,11 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Order object.
+     * An Order describes a purchase being made by a customer, including the
+     * products & quantities being purchased, the order status, the payment information,
+     * and the billing/shipping details.
+     *
+     * Related guide: [Orders overview](https://stripe.com/docs/orders)
      */
     interface Order {
       /**
@@ -653,7 +657,6 @@ declare module 'stripe' {
             | 'link'
             | 'oxxo'
             | 'p24'
-            | 'paypal'
             | 'sepa_debit'
             | 'sofort'
             | 'wechat_pay';
@@ -1779,7 +1782,6 @@ declare module 'stripe' {
             | 'link'
             | 'oxxo'
             | 'p24'
-            | 'paypal'
             | 'sepa_debit'
             | 'sofort'
             | 'wechat_pay';
@@ -2934,7 +2936,6 @@ declare module 'stripe' {
             | 'link'
             | 'oxxo'
             | 'p24'
-            | 'paypal'
             | 'sepa_debit'
             | 'sofort'
             | 'wechat_pay';
