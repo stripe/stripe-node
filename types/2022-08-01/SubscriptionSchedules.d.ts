@@ -3,7 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The SubscriptionSchedule object.
+     * A subscription schedule allows you to create and manage the lifecycle of a subscription by predefining expected changes.
+     *
+     * Related guide: [Subscription Schedules](https://stripe.com/docs/billing/subscriptions/subscription-schedules).
      */
     interface SubscriptionSchedule {
       /**

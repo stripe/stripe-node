@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace BillingPortal {
       /**
-       * The Configuration object.
+       * A portal configuration describes the functionality and behavior of a portal session.
        */
       interface Configuration {
         /**

@@ -3,7 +3,8 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The SubscriptionItem object.
+     * Subscription items allow you to create customer subscriptions with more than
+     * one plan, making it easy to represent complex billing relationships.
      */
     interface SubscriptionItem {
       /**

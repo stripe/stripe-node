@@ -3,7 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Subscription object.
+     * Subscriptions allow you to charge a customer on a recurring basis.
+     *
+     * Related guide: [Creating Subscriptions](https://stripe.com/docs/billing/subscriptions/creating).
      */
     interface Subscription {
       /**
@@ -70,7 +72,7 @@ declare module 'stripe' {
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      currency?: string;
+      currency: string;
 
       /**
        * End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.
@@ -344,6 +346,11 @@ declare module 'stripe' {
             mandate_options?: Card.MandateOptions;
 
             /**
+             * Selected network to process this Subscription on. Depends on the available networks of the card attached to the Subscription. Can be only set confirm-time.
+             */
+            network: Card.Network | null;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure: Card.RequestThreeDSecure | null;
@@ -370,6 +377,18 @@ declare module 'stripe' {
             namespace MandateOptions {
               type AmountType = 'fixed' | 'maximum';
             }
+
+            type Network =
+              | 'amex'
+              | 'cartes_bancaires'
+              | 'diners'
+              | 'discover'
+              | 'interac'
+              | 'jcb'
+              | 'mastercard'
+              | 'unionpay'
+              | 'unknown'
+              | 'visa';
 
             type RequestThreeDSecure = 'any' | 'automatic';
           }
@@ -971,6 +990,11 @@ declare module 'stripe' {
             mandate_options?: Card.MandateOptions;
 
             /**
+             * Selected network to process this Subscription on. Depends on the available networks of the card attached to the Subscription. Can be only set confirm-time.
+             */
+            network?: Card.Network;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
@@ -997,6 +1021,18 @@ declare module 'stripe' {
             namespace MandateOptions {
               type AmountType = 'fixed' | 'maximum';
             }
+
+            type Network =
+              | 'amex'
+              | 'cartes_bancaires'
+              | 'diners'
+              | 'discover'
+              | 'interac'
+              | 'jcb'
+              | 'mastercard'
+              | 'unionpay'
+              | 'unknown'
+              | 'visa';
 
             type RequestThreeDSecure = 'any' | 'automatic';
           }
@@ -1605,6 +1641,11 @@ declare module 'stripe' {
             mandate_options?: Card.MandateOptions;
 
             /**
+             * Selected network to process this Subscription on. Depends on the available networks of the card attached to the Subscription. Can be only set confirm-time.
+             */
+            network?: Card.Network;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
@@ -1631,6 +1672,18 @@ declare module 'stripe' {
             namespace MandateOptions {
               type AmountType = 'fixed' | 'maximum';
             }
+
+            type Network =
+              | 'amex'
+              | 'cartes_bancaires'
+              | 'diners'
+              | 'discover'
+              | 'interac'
+              | 'jcb'
+              | 'mastercard'
+              | 'unionpay'
+              | 'unknown'
+              | 'visa';
 
             type RequestThreeDSecure = 'any' | 'automatic';
           }

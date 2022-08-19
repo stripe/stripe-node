@@ -3,7 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The ShippingRate object.
+     * Shipping rates describe the price of shipping presented to your customers and can be
+     * applied to [Checkout Sessions](https://stripe.com/docs/payments/checkout/shipping)
+     * and [Orders](https://stripe.com/docs/orders/shipping) to collect shipping costs.
      */
     interface ShippingRate {
       /**

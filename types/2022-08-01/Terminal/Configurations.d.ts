@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Terminal {
       /**
-       * The Configuration object.
+       * A Configurations object represents how features should be configured for terminal readers.
        */
       interface Configuration {
         /**

@@ -3,7 +3,11 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The PaymentLink object.
+     * A payment link is a shareable URL that will take your customers to a hosted payment page. A payment link can be shared and used multiple times.
+     *
+     * When a customer opens a payment link it will open a new [checkout session](https://stripe.com/docs/api/checkout/sessions) to render the payment page. You can use [checkout session events](https://stripe.com/docs/api/events/types#event_types-checkout.session.completed) to track payments through payment links.
+     *
+     * Related guide: [Payment Links API](https://stripe.com/docs/payments/payment-links/api)
      */
     interface PaymentLink {
       /**
@@ -49,6 +53,11 @@ declare module 'stripe' {
        * When set, provides configuration to gather active consent from customers.
        */
       consent_collection: PaymentLink.ConsentCollection | null;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
 
       /**
        * Configuration for Customer creation during checkout.

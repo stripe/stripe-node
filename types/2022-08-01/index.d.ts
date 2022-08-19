@@ -29,6 +29,7 @@
 ///<reference path='./CreditNoteLineItems.d.ts' />
 ///<reference path='./CreditNotes.d.ts' />
 ///<reference path='./CustomerBalanceTransactions.d.ts' />
+///<reference path='./CustomerCashBalanceTransactions.d.ts' />
 ///<reference path='./CustomerSources.d.ts' />
 ///<reference path='./Customers.d.ts' />
 ///<reference path='./Discounts.d.ts' />

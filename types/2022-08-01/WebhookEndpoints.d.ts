@@ -3,7 +3,13 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The WebhookEndpoint object.
+     * You can configure [webhook endpoints](https://stripe.com/docs/webhooks/) via the API to be
+     * notified about events that happen in your Stripe account or connected
+     * accounts.
+     *
+     * Most users configure webhooks from [the dashboard](https://dashboard.stripe.com/webhooks), which provides a user interface for registering and testing your webhook endpoints.
+     *
+     * Related guide: [Setting up Webhooks](https://stripe.com/docs/webhooks/configure).
      */
     interface WebhookEndpoint {
       /**
@@ -285,6 +291,7 @@ declare module 'stripe' {
         | 'customer.tax_id.deleted'
         | 'customer.tax_id.updated'
         | 'customer.updated'
+        | 'customer_cash_balance_transaction.created'
         | 'file.created'
         | 'financial_connections.account.created'
         | 'financial_connections.account.deactivated'
@@ -545,6 +552,7 @@ declare module 'stripe' {
         | 'customer.tax_id.deleted'
         | 'customer.tax_id.updated'
         | 'customer.updated'
+        | 'customer_cash_balance_transaction.created'
         | 'file.created'
         | 'financial_connections.account.created'
         | 'financial_connections.account.deactivated'

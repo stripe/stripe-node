@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace FinancialConnections {
       /**
-       * The Session object.
+       * A Financial Connections Session is the secure way to programmatically launch the client-side Stripe.js modal that lets your users link their accounts.
        */
       interface Session {
         /**
