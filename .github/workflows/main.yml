@@ -96,6 +96,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.github_token }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
           COVERALLS_PARALLEL: true
+          COVERALLS_FLAG_NAME: node-${{ matrix.node }}
           COVERALLS_SERVICE_NUMBER: ${{ github.run_id }}
 
   finish:
