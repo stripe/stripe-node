@@ -8,6 +8,7 @@
 ///<reference path='../OAuth.d.ts' />
 ///<reference path='../Webhooks.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
+///<reference path='./AccountSessions.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./ApplePayDomains.d.ts' />
 ///<reference path='./ApplicationFees.d.ts' />
@@ -146,6 +147,7 @@ declare module 'stripe' {
      */
     accounts: Stripe.AccountsResource;
     accountLinks: Stripe.AccountLinksResource;
+    accountSessions: Stripe.AccountSessionsResource;
     applePayDomains: Stripe.ApplePayDomainsResource;
     applicationFees: Stripe.ApplicationFeesResource;
     balance: Stripe.BalanceResource;

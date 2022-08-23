@@ -3,7 +3,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The QuotePhase object.
+     * A quote phase describes the line items, coupons, and trialing status of a subscription for a predefined time period.
      */
     interface QuotePhase {
       /**
