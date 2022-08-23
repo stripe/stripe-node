@@ -57,9 +57,9 @@ jobs:
         node:
           - "18"
           - "16"
-          - "14"
-          - "12"
-          - "10"
+          # - "14"
+          # - "12"
+          # - "10"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -93,9 +93,17 @@ jobs:
       - name: Coveralls
         run: yarn report && yarn coveralls
         env:
-          NODE_COVERALLS_DEBUG: 1
+          GITHUB_TOKEN: ${{ secrets.github_token }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-          github-token: ${{ secrets.github_token }}
+          NODE_COVERALLS_DEBUG: 1
+          COVERALLS_PARALLEL: true
+
+  # finish:
+  #   needs: test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Coveralls Finished
+  #     run: curl "https://coveralls.io/webhook?repo_token=${{ secrets.GITHUB_TOKEN }}&repo_name=${{ github.repository }}" -d "payload[build_num]=${{ github.run_id }}&payload[status]=done"
 
   publish:
     name: Publish
