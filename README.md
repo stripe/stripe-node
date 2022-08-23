@@ -2,6 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/stripe.svg)](https://www.npmjs.org/package/stripe)
 [![Build Status](https://github.com/stripe/stripe-node/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/stripe/stripe-node/actions?query=branch%3Amaster)
+[![Coverage Status](https://coveralls.io/repos/github/stripe/stripe-dotnet/badge.svg?branch=master)](https://coveralls.io/github/stripe/stripe-dotnet?branch=master)
 [![Downloads](https://img.shields.io/npm/dm/stripe.svg)](https://www.npmjs.com/package/stripe)
 [![Try on RunKit](https://badge.runkitcdn.com/stripe.svg)](https://runkit.com/npm/stripe)
 
@@ -375,7 +376,7 @@ const stripe = require('stripe')('sk_test_...', {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
     url: 'https://myawesomeplugin.info', // Optional
-  }
+  },
 });
 ```
 
@@ -387,7 +388,7 @@ const stripe = new Stripe(apiKey, {
     name: 'MyAwesomePlugin',
     version: '1.2.34', // Optional
     url: 'https://myawesomeplugin.info', // Optional
-  }
+  },
 });
 ```
 
@@ -477,6 +478,7 @@ const stripe = new Stripe('sk_test_...', {
 Stripe has features in the beta phase that can be accessed via the beta version of this package.
 We would love for you to try these and share feedback with us before these features reach the stable phase.
 The beta versions can be installed in one of two ways
+
 - To install the latest beta version, run the command `npm install stripe@beta --save`
 - To install a specific beta version, replace the term "beta" in the above command with the version number like `npm install stripe@1.2.3-beta.1 --save`
 

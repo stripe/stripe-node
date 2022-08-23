@@ -90,6 +90,21 @@ jobs:
       - name: Test
         run: yarn && yarn test
 
+      - name: Collect coverage
+        run: dotnet test --no-build -c Debug -f netcoreapp3.1 src/StripeTests/StripeTests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:ExcludeByAttribute=CompilerGenerated
+
+      - name: Send code coverage report to coveralls.io
+        run: |
+          # Secure env vars are not available on all branches, so make sure the
+          # token is available before invoking Coveralls.
+          if [ ! -z "${COVERALLS_REPO_TOKEN}" ];
+          then
+            dotnet tool run csmacnz.Coveralls --opencover -i src/StripeTests/coverage.netcoreapp3.1.opencover.xml --useRelativePaths
+          fi
+        env:
+          CI_NAME: github-actions
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
   publish:
     name: Publish
     if: >-
