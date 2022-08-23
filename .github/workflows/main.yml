@@ -90,6 +90,21 @@ jobs:
       - name: Test
         run: yarn && yarn test
 
+      - name: Coveralls
+        run: yarn report && yarn coveralls
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          COVERALLS_PARALLEL: true
+          COVERALLS_SERVICE_NUMBER: ${{ github.run_id }}
+
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      run: curl "https://coveralls.io/webhook?repo_token=${{ secrets.GITHUB_TOKEN }}&repo_name=${{ github.repository }}" -d "payload[build_num]=${{ github.run_id }}&payload[status]=done"
+
   publish:
     name: Publish
     if: >-
