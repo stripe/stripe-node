@@ -4,7 +4,20 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Checkout {
       /**
-       * The Session object.
+       * A Checkout Session represents your customer's session as they pay for
+       * one-time purchases or subscriptions through [Checkout](https://stripe.com/docs/payments/checkout)
+       * or [Payment Links](https://stripe.com/docs/payments/payment-links). We recommend creating a
+       * new Session each time your customer attempts to pay.
+       *
+       * Once payment is successful, the Checkout Session will contain a reference
+       * to the [Customer](https://stripe.com/docs/api/customers), and either the successful
+       * [PaymentIntent](https://stripe.com/docs/api/payment_intents) or an active
+       * [Subscription](https://stripe.com/docs/api/subscriptions).
+       *
+       * You can create a Checkout Session on your server and pass its ID to the
+       * client to begin Checkout.
+       *
+       * Related guide: [Checkout Quickstart](https://stripe.com/docs/checkout/quickstart).
        */
       interface Session {
         /**

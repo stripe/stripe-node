@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Treasury {
       /**
-       * The ReceivedDebit object.
+       * ReceivedDebits represent funds pulled from a [FinancialAccount](https://stripe.com/docs/api#financial_accounts). These are not initiated from the FinancialAccount.
        */
       interface ReceivedDebit {
         /**

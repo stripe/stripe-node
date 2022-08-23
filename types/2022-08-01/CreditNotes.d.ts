@@ -3,7 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The CreditNote object.
+     * Issue a credit note to adjust an invoice's amount after the invoice is finalized.
+     *
+     * Related guide: [Credit Notes](https://stripe.com/docs/billing/invoices/credit-notes).
      */
     interface CreditNote {
       /**

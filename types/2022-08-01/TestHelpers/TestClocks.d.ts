@@ -4,7 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace TestHelpers {
       /**
-       * The TestClock object.
+       * A test clock enables deterministic control over objects in testmode. With a test clock, you can create
+       * objects at a frozen time in the past or future, and advance to a specific future time to observe webhooks and state changes. After the clock advances,
+       * you can either validate the current state of your scenario (and test your assumptions), change the current state of your scenario (and test more complex scenarios), or keep advancing forward in time.
        */
       interface TestClock {
         /**

@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace FinancialConnections {
       /**
-       * The Account object.
+       * A Financial Connections Account represents an account that exists outside of Stripe, to which you have been granted some degree of access.
        */
       interface Account {
         /**

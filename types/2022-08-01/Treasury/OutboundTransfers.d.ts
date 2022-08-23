@@ -4,7 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Treasury {
       /**
-       * The OutboundTransfer object.
+       * Use OutboundTransfers to transfer funds from a [FinancialAccount](https://stripe.com/docs/api#financial_accounts) to a PaymentMethod belonging to the same entity. To send funds to a different party, use [OutboundPayments](https://stripe.com/docs/api#outbound_payments) instead. You can send funds over ACH rails or through a domestic wire transfer to a user's own external bank account.
+       *
+       * Simulate OutboundTransfer state changes with the `/v1/test_helpers/treasury/outbound_transfers` endpoints. These methods can only be called on test mode objects.
        */
       interface OutboundTransfer {
         /**

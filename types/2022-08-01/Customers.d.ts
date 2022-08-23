@@ -3,7 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Customer object.
+     * This object represents a customer of your business. It lets you create recurring charges and track payments that belong to the same customer.
+     *
+     * Related guide: [Save a card during payment](https://stripe.com/docs/payments/save-during-payment).
      */
     interface Customer {
       /**
@@ -1103,6 +1105,34 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): ApiListPromise<Stripe.CustomerBalanceTransaction>;
+
+      /**
+       * Retrieves a specific cash balance transaction, which updated the customer's [cash balance](https://stripe.com/docs/payments/customer-balance).
+       */
+      retrieveCashBalanceTransaction(
+        customerId: string,
+        id: string,
+        params?: CustomerCashBalanceTransactionRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerCashBalanceTransaction>>;
+      retrieveCashBalanceTransaction(
+        customerId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerCashBalanceTransaction>>;
+
+      /**
+       * Returns a list of transactions that modified the customer's [cash balance](https://stripe.com/docs/payments/customer-balance).
+       */
+      listCashBalanceTransactions(
+        id: string,
+        params?: CustomerCashBalanceTransactionListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerCashBalanceTransaction>;
+      listCashBalanceTransactions(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerCashBalanceTransaction>;
 
       /**
        * When you create a new credit card, you must specify a customer or recipient on which to create it.

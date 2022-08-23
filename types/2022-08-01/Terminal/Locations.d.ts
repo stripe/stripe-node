@@ -4,7 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Terminal {
       /**
-       * The Location object.
+       * A Location represents a grouping of readers.
+       *
+       * Related guide: [Fleet Management](https://stripe.com/docs/terminal/fleet/locations).
        */
       interface Location {
         /**

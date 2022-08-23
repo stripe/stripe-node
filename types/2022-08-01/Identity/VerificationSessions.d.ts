@@ -4,7 +4,17 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Identity {
       /**
-       * The VerificationSession object.
+       * A VerificationSession guides you through the process of collecting and verifying the identities
+       * of your users. It contains details about the type of verification, such as what [verification
+       * check](https://stripe.com/docs/identity/verification-checks) to perform. Only create one VerificationSession for
+       * each verification in your system.
+       *
+       * A VerificationSession transitions through [multiple
+       * statuses](https://stripe.com/docs/identity/how-sessions-work) throughout its lifetime as it progresses through
+       * the verification flow. The VerificationSession contains the user's verified data after
+       * verification checks are complete.
+       *
+       * Related guide: [The Verification Sessions API](https://stripe.com/docs/identity/verification-sessions)
        */
       interface VerificationSession {
         /**
