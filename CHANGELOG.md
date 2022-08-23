@@ -1,5 +1,15 @@
 # Changelog
 
+## 10.4.0 - 2022-08-23
+* [#1520](https://github.com/stripe/stripe-node/pull/1520) Add beta readme.md section
+* [#1524](https://github.com/stripe/stripe-node/pull/1524) API Updates
+  * Change `Terminal.Reader.action` to be required
+  * Change `TreasuryOutboundTransferCreateParams.destination_payment_method` to be optional
+  * Change type of `Treasury.OutboundTransfer.destination_payment_method` from `string` to `string | null`
+  * Change the return type of `Customer.fundCashBalance` test helper from `CustomerBalanceTransaction` to `CustomerCashBalanceTransaction`.
+    * This would generally be considered a breaking change, but we've worked with all existing users to migrate and are comfortable releasing this as a minor as it is solely a test helper method. This was essentially broken prior to this change. 
+  
+
 ## 10.3.0 - 2022-08-19
 * [#1516](https://github.com/stripe/stripe-node/pull/1516) API Updates
   * Add support for new resource `CustomerCashBalanceTransaction`
