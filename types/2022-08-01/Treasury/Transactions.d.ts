@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Treasury {
       /**
-       * The Transaction object.
+       * Transactions represent changes to a [FinancialAccount's](https://stripe.com/docs/api#financial_accounts) balance.
        */
       interface Transaction {
         /**

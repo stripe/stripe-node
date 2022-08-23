@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Treasury {
       /**
-       * The ReceivedCredit object.
+       * ReceivedCredits represent funds sent to a [FinancialAccount](https://stripe.com/docs/api#financial_accounts) (for example, via ACH or wire). These money movements are not initiated from the FinancialAccount.
        */
       interface ReceivedCredit {
         /**

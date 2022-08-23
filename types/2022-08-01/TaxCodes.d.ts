@@ -3,7 +3,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The TaxCode object.
+     * [Tax codes](https://stripe.com/docs/tax/tax-categories) classify goods and services for tax purposes.
      */
     interface TaxCode {
       /**

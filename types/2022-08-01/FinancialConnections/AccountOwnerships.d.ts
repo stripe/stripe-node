@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace FinancialConnections {
       /**
-       * The AccountOwnership object.
+       * Describes a snapshot of the owners of an account at a particular point in time.
        */
       interface AccountOwnership {
         /**

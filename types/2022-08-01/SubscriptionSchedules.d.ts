@@ -3,7 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The SubscriptionSchedule object.
+     * A subscription schedule allows you to create and manage the lifecycle of a subscription by predefining expected changes.
+     *
+     * Related guide: [Subscription Schedules](https://stripe.com/docs/billing/subscriptions/subscription-schedules).
      */
     interface SubscriptionSchedule {
       /**
@@ -1625,7 +1627,7 @@ declare module 'stripe' {
         discount_actions?: Array<Amendment.DiscountAction>;
 
         /**
-         * Changes to the items being billed or provisioned to your customer during the amendment time span.
+         * Changes to the subscription items during the amendment time span.
          */
         item_actions?: Array<Amendment.ItemAction>;
 
@@ -1641,11 +1643,6 @@ declare module 'stripe' {
            * Time span for the amendment starting from the `amendment_start`.
            */
           duration?: AmendmentEnd.Duration;
-
-          /**
-           * Cover all remaining phases of the subscription schedule with the amendment.
-           */
-          schedule_end?: AmendmentEnd.ScheduleEnd;
 
           /**
            * A precise Unix timestamp for the amendment to end. Must be after the `amendment_start`.
@@ -1675,8 +1672,6 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          interface ScheduleEnd {}
-
           interface Timestamp {
             /**
              * A precise numeric timestamp, provided as an integer number of seconds since the Unix epoch.
@@ -1692,11 +1687,6 @@ declare module 'stripe' {
            * Details of another amendment in the same array, immediately after which this amendment should begin.
            */
           amendment_end?: AmendmentStart.AmendmentEnd;
-
-          /**
-           * Specify that this amendment should start at the current time as determined by Stripe servers. In the case of Test Clocks, `now` uses the frozen time on the testmode clock.
-           */
-          now?: AmendmentStart.Now;
 
           /**
            * A precise Unix timestamp for the amendment to start.
@@ -1716,8 +1706,6 @@ declare module 'stripe' {
              */
             index: number;
           }
-
-          interface Now {}
 
           interface Timestamp {
             /**

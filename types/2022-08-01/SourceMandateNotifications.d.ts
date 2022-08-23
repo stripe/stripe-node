@@ -3,7 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The SourceMandateNotification object.
+     * Source mandate notifications should be created when a notification related to
+     * a source mandate must be sent to the payer. They will trigger a webhook or
+     * deliver an email to the customer.
      */
     interface SourceMandateNotification {
       /**

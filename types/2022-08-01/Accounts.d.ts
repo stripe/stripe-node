@@ -3,7 +3,12 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Account object.
+     * This is an object representing a Stripe account. You can retrieve it to see
+     * properties on the account like its current e-mail address or if the account is
+     * enabled yet to make live charges.
+     *
+     * Some properties, marked below, are available only to platforms that want to
+     * [create and manage Express or Custom accounts](https://stripe.com/docs/connect/accounts).
      */
     interface Account {
       /**
@@ -1187,7 +1192,7 @@ declare module 'stripe' {
       /**
        * A card or bank account to attach to the account for receiving [payouts](https://stripe.com/docs/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation.
        *
-       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
+       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs.
        */
       external_account?: string | AccountCreateParams.ExternalAccount;
 
@@ -2407,7 +2412,7 @@ declare module 'stripe' {
       /**
        * A card or bank account to attach to the account for receiving [payouts](https://stripe.com/docs/connect/bank-debit-card-payouts) (you won't be able to use it for top-ups). You can provide either a token, like the ones returned by [Stripe.js](https://stripe.com/docs/js), or a dictionary, as documented in the `external_account` parameter for [bank account](https://stripe.com/docs/api#account_create_bank_account) creation.
        *
-       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the bank account or card creation API.
+       * By default, providing an external account sets it as the new default external account for its currency, and deletes the old default if one exists. To add additional external accounts without replacing the existing default for the currency, use the [bank account](https://stripe.com/docs/api#account_create_bank_account) or [card creation](https://stripe.com/docs/api#account_create_card) APIs.
        */
       external_account?: string;
 

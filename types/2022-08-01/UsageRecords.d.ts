@@ -3,7 +3,10 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The UsageRecord object.
+     * Usage records allow you to report customer usage and metrics to Stripe for
+     * metered billing of subscription prices.
+     *
+     * Related guide: [Metered Billing](https://stripe.com/docs/billing/subscriptions/metered-billing).
      */
     interface UsageRecord {
       /**
