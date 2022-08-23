@@ -98,11 +98,10 @@ jobs:
     - name: Coveralls
       run: yarn report && yarn coveralls
       env:
+        node-version: "18"
         NODE_COVERALLS_DEBUG: 1
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      with:
         github-token: ${{ secrets.github_token }}
-        node-version: "18"
 
   publish:
     name: Publish
