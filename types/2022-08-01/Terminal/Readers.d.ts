@@ -22,7 +22,7 @@ declare module 'stripe' {
         /**
          * The most recent action performed by the reader.
          */
-        action?: Reader.Action | null;
+        action: Reader.Action | null;
 
         deleted?: void;
 
@@ -133,6 +133,9 @@ declare module 'stripe' {
           }
 
           interface ProcessSetupIntent {
+            /**
+             * ID of a card PaymentMethod generated from the card_present PaymentMethod that may be attached to a Customer for future transactions. Only present if it was possible to generate a card PaymentMethod.
+             */
             generated_card?: string;
 
             /**

@@ -150,11 +150,11 @@ describe('Customer', function() {
   });
 
   it('fundCashBalance method', async function() {
-    const customerBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
+    const customerCashBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
       'cus_123',
       {amount: 30, currency: 'eur'}
     );
-    expect(customerBalanceTransaction).not.to.be.null;
+    expect(customerCashBalanceTransaction).not.to.be.null;
   });
 
   it('list method', async function() {
