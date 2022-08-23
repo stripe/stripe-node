@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.4.0-beta.1 - 2022-08-23
+* [#1523](https://github.com/stripe/stripe-node/pull/1523) API Updates for beta branch
+  - Updated stable APIs to the latest version
+  - `Stripe-Version` beta headers are not pinned by-default and need to be manually specified, please refer to [beta SDKs README section](https://github.com/stripe/stripe-node/blob/master/README.md#beta-sdks) 
+* [#1521](https://github.com/stripe/stripe-node/pull/1521) fix: Update FetchHttpClient to send empty string for empty POST/PUT/PATCH requests.
+
 ## 10.3.0 - 2022-08-19
 * [#1516](https://github.com/stripe/stripe-node/pull/1516) API Updates
   * Add support for new resource `CustomerCashBalanceTransaction`
