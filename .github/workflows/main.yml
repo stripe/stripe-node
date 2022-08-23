@@ -90,18 +90,12 @@ jobs:
       - name: Test
         run: yarn && yarn test
 
-
-  coveralls:
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Coveralls
-      run: yarn report && yarn coveralls
-      env:
-        node-version: "18"
-        NODE_COVERALLS_DEBUG: 1
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        github-token: ${{ secrets.github_token }}
+      - name: Coveralls
+        run: yarn report && yarn coveralls
+        env:
+          NODE_COVERALLS_DEBUG: 1
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+          github-token: ${{ secrets.github_token }}
 
   publish:
     name: Publish
