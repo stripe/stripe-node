@@ -98,6 +98,7 @@ jobs:
           NODE_COVERALLS_DEBUG: 1
           COVERALLS_FLAG_NAME: run-${{ matrix.node }}
           COVERALLS_PARALLEL: true
+          COVERALLS_SERVICE_NUMBER: ${{ github.run_id }}
 
   finish:
     needs: test
