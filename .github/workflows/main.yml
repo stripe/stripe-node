@@ -90,23 +90,19 @@ jobs:
       - name: Test
         run: yarn && yarn test
 
-      - name: Coveralls Parallel
-        uses: coverallsapp/github-action@master
-        env:
-          NODE_COVERALLS_DEBUG: 1
-        with:
-          github-token: ${{ secrets.github_token }}
-          parallel: true
 
-  finish:
-    needs: test
+  coveralls:
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
-    - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
+    - name: Coveralls
+      run: yarn report && yarn coveralls
+      env:
+        NODE_COVERALLS_DEBUG: 1
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       with:
         github-token: ${{ secrets.github_token }}
-        parallel-finished: true
+        node-version: "18"
 
   publish:
     name: Publish
