@@ -474,7 +474,7 @@ const stripe = new Stripe('sk_test_...', {
 });
 ```
 
-### Beta version
+### Beta SDKs
 
 Stripe has features in the beta phase that can be accessed via the beta version of this package.
 We would love for you to try these and share feedback with us before these features reach the stable phase.
