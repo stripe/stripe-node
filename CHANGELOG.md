@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.5.0 - 2022-08-24
+* [#1527](https://github.com/stripe/stripe-node/pull/1527) fix: Update FetchHttpClient to send empty string for empty POST/PUT/PATCH requests.
+* [#1528](https://github.com/stripe/stripe-node/pull/1528) Update README.md to use a new NOTE notation
+* [#1526](https://github.com/stripe/stripe-node/pull/1526) Add test coverage using Coveralls
+
 ## 10.4.0 - 2022-08-23
 * [#1520](https://github.com/stripe/stripe-node/pull/1520) Add beta readme.md section
 * [#1524](https://github.com/stripe/stripe-node/pull/1524) API Updates
