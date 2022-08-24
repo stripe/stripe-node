@@ -187,7 +187,8 @@ const stripe = Stripe('sk_test_...', {
 | `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
 | `telemetry`         | `true`             | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                                                                                                                                                                             |
 
-Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
+> **Note**
+> Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
 
 ### Configuring Timeout
 
@@ -473,7 +474,7 @@ const stripe = new Stripe('sk_test_...', {
 });
 ```
 
-### Beta version
+### Beta SDKs
 
 Stripe has features in the beta phase that can be accessed via the beta version of this package.
 We would love for you to try these and share feedback with us before these features reach the stable phase.
@@ -481,7 +482,8 @@ The beta versions can be installed in one of two ways
 - To install the latest beta version, run the command `npm install stripe@beta --save`
 - To install a specific beta version, replace the term "beta" in the above command with the version number like `npm install stripe@1.2.3-beta.1 --save`
 
-> Note: There can be breaking changes between beta versions. Therefore we recommend pinning the package version to a specific beta version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest beta version.
+> **Note**
+> There can be breaking changes between beta versions. Therefore we recommend pinning the package version to a specific beta version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest beta version.
 
 We highly recommend keeping an eye on when the beta feature you are interested in goes from beta to stable so that you can move from using a beta version of the SDK to the stable version.
 
