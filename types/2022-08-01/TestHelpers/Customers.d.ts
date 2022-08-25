@@ -30,7 +30,7 @@ declare module 'stripe' {
           id: string,
           params: CustomerFundCashBalanceParams,
           options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
+        ): Promise<Stripe.Response<Stripe.CustomerCashBalanceTransaction>>;
       }
     }
   }

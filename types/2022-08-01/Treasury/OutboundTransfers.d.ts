@@ -47,7 +47,7 @@ declare module 'stripe' {
         /**
          * The PaymentMethod used as the payment instrument for an OutboundTransfer.
          */
-        destination_payment_method: string;
+        destination_payment_method: string | null;
 
         destination_payment_method_details: OutboundTransfer.DestinationPaymentMethodDetails;
 
@@ -266,11 +266,6 @@ declare module 'stripe' {
         currency: string;
 
         /**
-         * The PaymentMethod to use as the payment instrument for the OutboundTransfer.
-         */
-        destination_payment_method: string;
-
-        /**
          * The FinancialAccount to pull funds from.
          */
         financial_account: string;
@@ -279,6 +274,11 @@ declare module 'stripe' {
          * An arbitrary string attached to the object. Often useful for displaying to users.
          */
         description?: string;
+
+        /**
+         * The PaymentMethod to use as the payment instrument for the OutboundTransfer.
+         */
+        destination_payment_method?: string;
 
         /**
          * Hash describing payment method configuration details.
