@@ -2,6 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/stripe.svg)](https://www.npmjs.org/package/stripe)
 [![Build Status](https://github.com/stripe/stripe-node/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/stripe/stripe-node/actions?query=branch%3Amaster)
+[![Coverage Status](https://coveralls.io/repos/github/stripe/stripe-node/badge.svg?branch=master)](https://coveralls.io/github/stripe/stripe-node?branch=master)
 [![Downloads](https://img.shields.io/npm/dm/stripe.svg)](https://www.npmjs.com/package/stripe)
 [![Try on RunKit](https://badge.runkitcdn.com/stripe.svg)](https://runkit.com/npm/stripe)
 
@@ -9,10 +10,6 @@ The Stripe Node library provides convenient access to the Stripe API from
 applications written in server-side JavaScript.
 
 For collecting customer and payment information in the browser, use [Stripe.js][stripe-js].
-
-## Support
-
-New features and bug fixes are released on the latest major version of the `stripe` package. If you are on an older major version, we recommend that you upgrade to the latest in order to use the new features and bug fixes including those for security vulnerabilities. Older major versions of the package will continue to be available for use, but will not be receiving any updates.
 
 ## Documentation
 
@@ -33,20 +30,6 @@ npm install stripe --save
 # or
 yarn add stripe
 ```
-
-### Beta version
-
-Stripe has features in the beta phase that can be accessed via the beta version of this package.
-We would love for you to try these and share feedback with us before these features reach the stable phase.
-The beta versions can be installed in one of two ways 
-- To install the latest beta version, run the command `npm install stripe@beta --save`  
-- To install a specific beta version, replace the term "beta" in the above command with the version number like `npm install stripe@1.2.3-beta.1 --save` 
-
-> Note: There can be breaking changes between beta versions. Therefore we recommend pinning the package version to a specific beta version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest beta version. 
-
-We highly recommend keeping an eye on when the beta feature you are interested in goes from beta to stable so that you can move from using a beta version of the SDK to the stable version.  
-
-The versions tab on the [stripe page on npm](https://www.npmjs.com/package/stripe) lists the current tags in use. The `beta` tag here corresponds to the the latest beta version of the package.
 
 ## Usage
 
@@ -204,7 +187,8 @@ const stripe = Stripe('sk_test_...', {
 | `protocol`          | `'https'`          | `'https'` or `'http'`. `http` is never appropriate for sending requests to Stripe servers, and we strongly discourage `http`, even in local testing scenarios, as this can result in your credentials being transmitted over an insecure channel. |
 | `telemetry`         | `true`             | Allow Stripe to send latency [telemetry](#request-latency-telemetry).                                                                                                                                                                             |
 
-Note: Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
+> **Note**
+> Both `maxNetworkRetries` and `timeout` can be overridden on a per-request basis.
 
 ### Configuring Timeout
 
@@ -489,6 +473,33 @@ const stripe = new Stripe('sk_test_...', {
   telemetry: false,
 });
 ```
+
+### Beta SDKs
+
+Stripe has features in the beta phase that can be accessed via the beta version of this package.
+We would love for you to try these and share feedback with us before these features reach the stable phase.
+The beta versions can be installed in one of two ways
+- To install the latest beta version, run the command `npm install stripe@beta --save`
+- To install a specific beta version, replace the term "beta" in the above command with the version number like `npm install stripe@1.2.3-beta.1 --save`
+
+> **Note**
+> There can be breaking changes between beta versions. Therefore we recommend pinning the package version to a specific beta version in your package.json file. This way you can install the same version each time without breaking changes unless you are intentionally looking for the latest beta version.
+
+We highly recommend keeping an eye on when the beta feature you are interested in goes from beta to stable so that you can move from using a beta version of the SDK to the stable version.
+
+The versions tab on the [stripe page on npm](https://www.npmjs.com/package/stripe) lists the current tags in use. The `beta` tag here corresponds to the the latest beta version of the package.
+
+If your beta feature requires a `Stripe-Version` header to be sent, use the `apiVersion` property of `config` object to set it:
+
+```js
+const stripe = new Stripe('sk_test_...', {
+  apiVersion: '2022-08-01; feature_beta=v3',
+});
+```
+
+## Support
+
+New features and bug fixes are released on the latest major version of the `stripe` package. If you are on an older major version, we recommend that you upgrade to the latest in order to use the new features and bug fixes including those for security vulnerabilities. Older major versions of the package will continue to be available for use, but will not be receiving any updates.
 
 ## More Information
 

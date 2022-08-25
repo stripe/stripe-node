@@ -136,6 +136,11 @@ declare module 'stripe' {
           carrier: Shipping.Carrier | null;
 
           /**
+           * Additional information that may be required for clearing customs.
+           */
+          customs: Shipping.Customs | null;
+
+          /**
            * A unix timestamp representing a best estimate of when the card will be delivered.
            */
           eta: number | null;
@@ -144,6 +149,11 @@ declare module 'stripe' {
            * Recipient name.
            */
           name: string;
+
+          /**
+           * The phone number of the receiver of the bulk shipment. This phone number will be provided to the shipping company, who might use it to contact the receiver in case of delivery issues.
+           */
+          phone_number: string | null;
 
           /**
            * Shipment service, such as `standard` or `express`.
@@ -173,6 +183,13 @@ declare module 'stripe' {
 
         namespace Shipping {
           type Carrier = 'dhl' | 'fedex' | 'royal_mail' | 'usps';
+
+          interface Customs {
+            /**
+             * A registration number used for customs in Europe. See https://www.gov.uk/eori and https://ec.europa.eu/taxation_customs/business/customs-procedures-import-and-export/customs-procedures/economic-operators-registration-and-identification-number-eori_en.
+             */
+            eori_number: string | null;
+          }
 
           type Service = 'express' | 'priority' | 'standard';
 
@@ -1228,9 +1245,19 @@ declare module 'stripe' {
           address: Shipping.Address;
 
           /**
+           * Customs information for the shipment.
+           */
+          customs?: Shipping.Customs;
+
+          /**
            * The name printed on the shipping label when shipping the card.
            */
           name: string;
+
+          /**
+           * Phone number of the recipient of the shipment.
+           */
+          phone_number?: string;
 
           /**
            * Shipment service.
@@ -1274,6 +1301,13 @@ declare module 'stripe' {
              * State, county, province, or region.
              */
             state?: string;
+          }
+
+          interface Customs {
+            /**
+             * The Economic Operators Registration and Identification (EORI) number to use for Customs. Required for bulk shipments to Europe.
+             */
+            eori_number?: string;
           }
 
           type Service = 'express' | 'priority' | 'standard';

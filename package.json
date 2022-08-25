@@ -31,6 +31,7 @@
     "@typescript-eslint/parser": "^2.13.0",
     "chai": "~4.2.0",
     "chai-as-promised": "~7.1.1",
+    "coveralls": "^3.1.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-chai-friendly": "^0.4.0",
