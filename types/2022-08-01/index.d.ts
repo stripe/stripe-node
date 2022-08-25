@@ -47,6 +47,8 @@
 ///<reference path='./FinancialConnections/Accounts.d.ts' />
 ///<reference path='./FinancialConnections/Sessions.d.ts' />
 ///<reference path='./FundingInstructions.d.ts' />
+///<reference path='./GiftCards/Cards.d.ts' />
+///<reference path='./GiftCards/Transactions.d.ts' />
 ///<reference path='./Identity/VerificationReports.d.ts' />
 ///<reference path='./Identity/VerificationSessions.d.ts' />
 ///<reference path='./InvoiceItems.d.ts' />
@@ -212,6 +214,10 @@ declare module 'stripe' {
     financialConnections: {
       accounts: Stripe.FinancialConnections.AccountsResource;
       sessions: Stripe.FinancialConnections.SessionsResource;
+    };
+    giftCards: {
+      cards: Stripe.GiftCards.CardsResource;
+      transactions: Stripe.GiftCards.TransactionsResource;
     };
     identity: {
       verificationReports: Stripe.Identity.VerificationReportsResource;
