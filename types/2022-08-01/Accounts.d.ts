@@ -421,7 +421,7 @@ declare module 'stripe' {
         /**
          * The company's legal name.
          */
-        name: string | null;
+        name?: string | null;
 
         /**
          * The Kana variation of the company's legal name (Japan only).

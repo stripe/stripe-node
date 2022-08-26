@@ -21,7 +21,7 @@ declare module 'stripe' {
         /**
          * The array of paths to active Features in the Features hash.
          */
-        active_features: Array<FinancialAccount.ActiveFeature>;
+        active_features?: Array<FinancialAccount.ActiveFeature>;
 
         /**
          * Balance information for the FinancialAccount
@@ -62,17 +62,17 @@ declare module 'stripe' {
         /**
          * The array of paths to pending Features in the Features hash.
          */
-        pending_features: Array<FinancialAccount.PendingFeature>;
+        pending_features?: Array<FinancialAccount.PendingFeature>;
 
         /**
          * The set of functionalities that the platform can restrict on the FinancialAccount.
          */
-        platform_restrictions: FinancialAccount.PlatformRestrictions | null;
+        platform_restrictions?: FinancialAccount.PlatformRestrictions | null;
 
         /**
          * The array of paths to restricted Features in the Features hash.
          */
-        restricted_features: Array<FinancialAccount.RestrictedFeature>;
+        restricted_features?: Array<FinancialAccount.RestrictedFeature>;
 
         /**
          * The enum specifying what state the account is in.
