@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.6.0-beta.1 - 2022-08-26
+* [#1529](https://github.com/stripe/stripe-node/pull/1529) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add support for the beta [Gift Card API](https://stripe.com/docs/gift-cards).
+
 ## 10.5.0 - 2022-08-24
 * [#1527](https://github.com/stripe/stripe-node/pull/1527) fix: Update FetchHttpClient to send empty string for empty POST/PUT/PATCH requests.
 * [#1528](https://github.com/stripe/stripe-node/pull/1528) Update README.md to use a new NOTE notation
