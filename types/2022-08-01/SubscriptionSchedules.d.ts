@@ -142,6 +142,11 @@ declare module 'stripe' {
         default_payment_method: string | Stripe.PaymentMethod | null;
 
         /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
+
+        /**
          * The subscription schedule's default invoice settings.
          */
         invoice_settings: DefaultSettings.InvoiceSettings | null;
@@ -245,6 +250,11 @@ declare module 'stripe' {
          * The default tax rates to apply to the subscription during this phase of the subscription schedule.
          */
         default_tax_rates?: Array<Stripe.TaxRate> | null;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
 
         /**
          * The end of this phase of the subscription schedule.
@@ -474,6 +484,11 @@ declare module 'stripe' {
         default_payment_method?: string;
 
         /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
+        /**
          * All invoices will be billed using the specified settings.
          */
         invoice_settings?: DefaultSettings.InvoiceSettings;
@@ -580,6 +595,11 @@ declare module 'stripe' {
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
          */
         default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
@@ -899,6 +919,11 @@ declare module 'stripe' {
         default_payment_method?: string;
 
         /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
+        /**
          * All invoices will be billed using the specified settings.
          */
         invoice_settings?: DefaultSettings.InvoiceSettings;
@@ -1005,6 +1030,11 @@ declare module 'stripe' {
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
          */
         default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
