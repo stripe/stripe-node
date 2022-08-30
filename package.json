@@ -24,7 +24,7 @@
   "engines": {
     "node": "^8.1 || >=10.*"
   },
-  "main": "lib/stripe.js",
+  "main": "src/stripe.js",
   "types": "types/2022-08-01/index.d.ts",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.13.0",
@@ -55,7 +55,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage",
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./build",
     "mocha": "nyc mocha --config=test/.mocharc.js",
     "mocha-only": "mocha --config=test/.mocharc.js",
     "test": "yarn test-typescript && yarn mocha",
