@@ -55,6 +55,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage",
     "mocha": "nyc mocha --config=test/.mocharc.js",
     "mocha-only": "mocha --config=test/.mocharc.js",
