@@ -1,6 +1,6 @@
 'use strict';
 
-const {StripeSignatureVerificationError} = require('../lib/Error');
+const {StripeSignatureVerificationError} = require('../build/Error');
 const {getSpyableStripe, FakeCryptoProvider} = require('../testUtils');
 const stripe = getSpyableStripe();
 const expect = require('chai').expect;

@@ -3,9 +3,9 @@
 'use strict';
 
 const testUtils = require('../testUtils');
-const utils = require('../lib/utils');
-const Stripe = require('../lib/stripe');
-const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
+const utils = require('../build/utils');
+const Stripe = require('../build/stripe');
+const stripe = require('../build/stripe')(testUtils.getUserStripeKey(), 'latest');
 const crypto = require('crypto');
 
 const expect = require('chai').expect;
@@ -496,7 +496,7 @@ describe('Stripe Module', function() {
 
   describe('errors', () => {
     it('Exports errors as types', () => {
-      const Stripe = require('../lib/stripe');
+      const Stripe = require('../build/stripe');
       expect(
         new Stripe.errors.StripeInvalidRequestError({
           message: 'error',

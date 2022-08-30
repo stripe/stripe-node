@@ -7,8 +7,8 @@ const stripe = require('../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 const testUtils = require('../testUtils');
 
-const {HttpClientResponse} = require('../lib/net/HttpClient');
-const StripeResource = require('../lib/StripeResource');
+const {HttpClientResponse} = require('../build/net/HttpClient');
+const StripeResource = require('../build/StripeResource');
 const stripeMethod = StripeResource.method;
 
 const {
@@ -18,7 +18,7 @@ const {
   StripeRateLimitError,
   StripeError,
   StripeConnectionError,
-} = require('../lib/Error');
+} = require('../build/Error');
 
 describe('StripeResource', () => {
   describe('createResourcePathWithSymbols', () => {
@@ -88,7 +88,7 @@ describe('StripeResource', () => {
 
   describe('Parameter encoding', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../lib/stripe')(utils.getUserStripeKey());
+    const realStripe = require('../build/stripe')(utils.getUserStripeKey());
 
     after(() => {
       nock.cleanAll();
@@ -335,7 +335,7 @@ describe('StripeResource', () => {
 
   describe('Retry Network Requests', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../lib/stripe')(utils.getUserStripeKey());
+    const realStripe = require('../build/stripe')(utils.getUserStripeKey());
 
     // Override the sleep timer to speed up tests
     realStripe.charges._getSleepTimeInMS = () => 0;
@@ -1083,7 +1083,7 @@ describe('StripeResource', () => {
     };
 
     it('is not impacted by the global host', (done) => {
-      const stripe = require('../lib/stripe')('sk_test', {
+      const stripe = require('../build/stripe')('sk_test', {
         host: 'bad.host.stripe.com',
       });
 
@@ -1098,7 +1098,7 @@ describe('StripeResource', () => {
     });
 
     it('still lets users override the host on a per-request basis', (done) => {
-      const stripe = require('../lib/stripe')('sk_test');
+      const stripe = require('../build/stripe')('sk_test');
 
       const scope = nock('https://some.other.host.stripe.com')
         .get('/v1/resourceWithHost')

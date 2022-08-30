@@ -9,5 +9,5 @@
 !/README.md
 !/VERSION
 !/package.json
-!/lib/**/*
+!/src/**/*
 !/types/**/*
