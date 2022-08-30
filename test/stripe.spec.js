@@ -5,7 +5,10 @@
 const testUtils = require('../testUtils');
 const utils = require('../build/utils');
 const Stripe = require('../build/stripe');
-const stripe = require('../build/stripe')(testUtils.getUserStripeKey(), 'latest');
+const stripe = require('../build/stripe')(
+  testUtils.getUserStripeKey(),
+  'latest'
+);
 const crypto = require('crypto');
 
 const expect = require('chai').expect;

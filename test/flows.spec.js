@@ -2,7 +2,10 @@
 
 const testUtils = require('../testUtils');
 const chai = require('chai');
-const stripe = require('../build/stripe')(testUtils.getUserStripeKey(), 'latest');
+const stripe = require('../build/stripe')(
+  testUtils.getUserStripeKey(),
+  'latest'
+);
 const fs = require('fs');
 const path = require('path');
 const stream = require('stream');
