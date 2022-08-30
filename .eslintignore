@@ -1,2 +1,3 @@
 *.node*.js
 node_modules
+build
