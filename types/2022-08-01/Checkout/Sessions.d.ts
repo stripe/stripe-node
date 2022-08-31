@@ -1494,7 +1494,7 @@ declare module 'stripe' {
          *
          * For `payment` mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen.
          *
-         * For `subscription` mode, there is a maximum of 20 line items with recurring Prices and 20 line items with one-time Prices. Line items with one-time Prices in will be on the initial invoice only.
+         * For `subscription` mode, there is a maximum of 20 line items with recurring Prices and 20 line items with one-time Prices. Line items with one-time Prices will be on the initial invoice only.
          */
         line_items?: Array<SessionCreateParams.LineItem>;
 
@@ -2080,7 +2080,7 @@ declare module 'stripe' {
           eps?: PaymentMethodOptions.Eps;
 
           /**
-           * contains details about the EPS payment method options.
+           * contains details about the FPX payment method options.
            */
           fpx?: PaymentMethodOptions.Fpx;
 
