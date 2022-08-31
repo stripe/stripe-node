@@ -5,5 +5,5 @@
     "target": "es6",
     "checkJs": false,
   },
-  "include": ["./src/**/*.ts"]
+  "include": ["./src/**/*"]
 }
