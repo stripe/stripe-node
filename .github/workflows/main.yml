@@ -109,6 +109,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt-get install -y oathtool
+      - name: Build Typescript
+        run: yarn && yarn build
       - name: Publish to NPM
         run: |
           set +ex
