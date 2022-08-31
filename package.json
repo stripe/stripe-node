@@ -24,7 +24,7 @@
   "engines": {
     "node": "^8.1 || >=10.*"
   },
-  "main": "src/stripe.js",
+  "main": "lib/stripe.js",
   "types": "types/2022-08-01/index.d.ts",
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
