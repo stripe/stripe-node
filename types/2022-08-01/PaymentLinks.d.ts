@@ -503,6 +503,11 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
@@ -1069,6 +1074,11 @@ declare module 'stripe' {
       type SubmitType = 'auto' | 'book' | 'donate' | 'pay';
 
       interface SubscriptionData {
+        /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
         /**
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
