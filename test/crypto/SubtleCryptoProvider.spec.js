@@ -1,6 +1,6 @@
 'use strict';
 
-const SubtleCryptoProvider = require('../../build/crypto/SubtleCryptoProvider');
+const SubtleCryptoProvider = require('../../lib/crypto/SubtleCryptoProvider');
 const webcrypto = require('crypto').webcrypto;
 const expect = require('chai').expect;
 

@@ -5,7 +5,7 @@ const {Readable} = require('stream');
 const nock = require('nock');
 const expect = require('chai').expect;
 
-const utils = require('../../build/utils');
+const utils = require('../../lib/utils');
 const {fail} = require('assert');
 
 /**

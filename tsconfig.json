@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./build",
+    "outDir": "./lib",
     "allowJs": true,
     "target": "es6",
     "checkJs": false,

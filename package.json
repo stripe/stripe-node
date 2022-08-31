@@ -57,7 +57,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./build",
+    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./lib",
+    "prepack": "yarn build",
     "mocha": "nyc mocha --config=test/.mocharc.js",
     "mocha-only": "mocha --config=test/.mocharc.js",
     "test": "yarn build && yarn test-typescript && yarn mocha",

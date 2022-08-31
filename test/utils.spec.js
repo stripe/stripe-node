@@ -2,7 +2,7 @@
 
 require('../testUtils');
 
-const utils = require('../build/utils');
+const utils = require('../lib/utils');
 const expect = require('chai').expect;
 
 describe('utils', () => {

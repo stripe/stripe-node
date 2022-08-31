@@ -2,7 +2,7 @@
 
 require('../testUtils');
 
-const Error = require('../build/Error');
+const Error = require('../lib/Error');
 const expect = require('chai').expect;
 
 describe('Error', () => {

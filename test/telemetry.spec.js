@@ -57,7 +57,7 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../build/stripe')(
+        const stripe = require('../lib/stripe')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
         stripe.setTelemetryEnabled(false);
@@ -103,7 +103,7 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../build/stripe')(
+        const stripe = require('../lib/stripe')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
         stripe.setTelemetryEnabled(true);
@@ -151,7 +151,7 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../build/stripe')(
+        const stripe = require('../lib/stripe')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
         );
         stripe.setTelemetryEnabled(true);

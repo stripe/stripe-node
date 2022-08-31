@@ -4,7 +4,7 @@
 
 const testUtils = require('../testUtils');
 
-const makeAutoPaginationMethods = require('../build/autoPagination')
+const makeAutoPaginationMethods = require('../lib/autoPagination')
   .makeAutoPaginationMethods;
 
 const expect = require('chai').expect;
