@@ -366,11 +366,7 @@ StripeResource.prototype = {
     sleepSeconds = Math.max(initialNetworkRetryDelay, sleepSeconds);
 
     // And never sleep less than the time the API asks us to wait, assuming it's a reasonable ask.
-    if (
-      retryAfter &&
-      Number.isInteger(retryAfter) &&
-      retryAfter <= MAX_RETRY_AFTER_WAIT
-    ) {
+    if (Number.isInteger(retryAfter) && retryAfter <= MAX_RETRY_AFTER_WAIT) {
       sleepSeconds = Math.max(sleepSeconds, retryAfter);
     }
 
