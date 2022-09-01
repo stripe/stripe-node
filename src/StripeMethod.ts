@@ -1,6 +1,6 @@
 'use strict';
 
-const utils = require('./utils');
+import * as utils from './utils';
 const makeRequest = require('./makeRequest');
 const makeAutoPaginationMethods = require('./autoPagination')
   .makeAutoPaginationMethods;
