@@ -12,6 +12,16 @@ const {
 
 const {HttpClient} = require('./net/HttpClient');
 
+type Settings = {
+  timeout?: number;
+};
+
+type Options = {
+  settings?: Settings;
+  streaming?: boolean;
+  headers?: Record<string, string>;
+};
+
 // Provide extension mechanism for Stripe Resource Sub-Classes
 StripeResource.extend = utils.protoExtend;
 
@@ -113,7 +123,7 @@ StripeResource.prototype = {
   _timeoutHandler(timeout, req, callback) {
     return () => {
       const timeoutErr = new TypeError('ETIMEDOUT');
-      timeoutErr.code = 'ETIMEDOUT';
+      (timeoutErr as any).code = 'ETIMEDOUT';
 
       req.destroy(timeoutErr);
     };
@@ -283,7 +293,7 @@ StripeResource.prototype = {
         this,
         new StripeConnectionError({
           message: this._generateConnectionErrorMessage(requestRetries),
-          detail: error,
+          detail,
         }),
         null
       );
@@ -364,7 +374,7 @@ StripeResource.prototype = {
   },
 
   // Max retries can be set on a per request basis. Favor those over the global setting
-  _getMaxNetworkRetries(settings = {}) {
+  _getMaxNetworkRetries(settings: {maxNetworkRetries?: number} = {}) {
     return settings.maxNetworkRetries &&
       Number.isInteger(settings.maxNetworkRetries)
       ? settings.maxNetworkRetries
@@ -480,7 +490,7 @@ StripeResource.prototype = {
     }
   },
 
-  _request(method, host, path, data, auth, options = {}, callback) {
+  _request(method, host, path, data, auth, options: Options = {}, callback) {
     let requestData;
 
     const retryRequest = (
@@ -503,6 +513,7 @@ StripeResource.prototype = {
       // timeout can be set on a per-request basis. Favor that over the global setting
       const timeout =
         options.settings &&
+        options.settings.timeout &&
         Number.isInteger(options.settings.timeout) &&
         options.settings.timeout >= 0
           ? options.settings.timeout
@@ -599,7 +610,7 @@ StripeResource.prototype = {
           options.settings
         );
 
-        makeRequest(apiVersion, headers);
+        makeRequest(apiVersion, headers, 0);
       });
     };
 
