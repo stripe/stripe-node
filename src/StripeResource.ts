@@ -627,4 +627,4 @@ StripeResource.prototype = {
   },
 };
 
-export = StripeResource;
+module.exports = StripeResource;

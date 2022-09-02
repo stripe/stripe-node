@@ -1,6 +1,6 @@
 'use strict';
 
-import * as utils from './utils';
+import utils = require('./utils');
 import makeRequest = require('./makeRequest');
 
 export function makeAutoPaginationMethods(
