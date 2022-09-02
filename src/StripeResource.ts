@@ -1,16 +1,16 @@
 'use strict';
 
-import * as utils from './utils';
-const {
-  StripeConnectionError,
+import utils = require('./utils');
+import {
+  StripeAPIError,
   StripeAuthenticationError,
+  StripeConnectionError,
+  StripeError,
   StripePermissionError,
   StripeRateLimitError,
-  StripeError,
-  StripeAPIError,
-} = require('./Error');
+} from './Error';
 
-const {HttpClient} = require('./net/HttpClient');
+import {HttpClient} from './net/HttpClient';
 
 type Settings = {
   timeout?: number;
@@ -627,4 +627,4 @@ StripeResource.prototype = {
   },
 };
 
-module.exports = StripeResource;
+export = StripeResource;
