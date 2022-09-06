@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.8.0 - 2022-09-06
+* [#1544](https://github.com/stripe/stripe-node/pull/1544) API Updates
+  * Add support for new value `terminal_reader_splashscreen` on enums `File.purpose` and `FileListParams.purpose`
+* [#1543](https://github.com/stripe/stripe-node/pull/1543) Migrate Stripe infrastructure to Typescript
+* [#1539](https://github.com/stripe/stripe-node/pull/1539) Build Typescript and migrate StripeResource
+
 ## 10.7.0 - 2022-08-31
 * [#1540](https://github.com/stripe/stripe-node/pull/1540) API Updates
   * Add support for new values `de-CH`, `en-CH`, `en-PL`, `en-PT`, `fr-CH`, `it-CH`, `pl-PL`, and `pt-PT` on enums `OrderCreateParams.payment.settings.payment_method_options.klarna.preferred_locale`, `OrderUpdateParams.payment.settings.payment_method_options.klarna.preferred_locale`, `PaymentIntentConfirmParams.payment_method_options.klarna.preferred_locale`, `PaymentIntentCreateParams.payment_method_options.klarna.preferred_locale`, and `PaymentIntentUpdateParams.payment_method_options.klarna.preferred_locale`
