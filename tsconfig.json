@@ -3,6 +3,7 @@
     "outDir": "./lib",
     "allowJs": true,
     "target": "es6",
+    "module": "commonjs",
     "checkJs": false,
   },
   "include": ["./src/**/*"]

@@ -1,9 +1,14 @@
 'use strict';
 
-const makeRequest = require('./makeRequest');
-const utils = require('./utils');
+import utils = require('./utils');
+import makeRequest = require('./makeRequest');
 
-function makeAutoPaginationMethods(self, requestArgs, spec, firstPagePromise) {
+export function makeAutoPaginationMethods(
+  self,
+  requestArgs,
+  spec,
+  firstPagePromise
+) {
   const promiseCache = {currentPromise: null};
   const reverseIteration = isReverseIteration(requestArgs);
   let pagePromise = firstPagePromise;
@@ -93,8 +98,6 @@ function makeAutoPaginationMethods(self, requestArgs, spec, firstPagePromise) {
   };
   return autoPaginationMethods;
 }
-
-module.exports.makeAutoPaginationMethods = makeAutoPaginationMethods;
 
 /**
  * ----------------
@@ -242,7 +245,7 @@ function makeAutoPagingToArray(autoPagingEach) {
 }
 
 function wrapAsyncIteratorWithCallback(asyncIteratorNext, onItem) {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     function handleIteration(iterResult) {
       if (iterResult.done) {
         resolve();

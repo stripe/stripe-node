@@ -1,16 +1,16 @@
 'use strict';
 
-const utils = require('./utils');
-const {
-  StripeConnectionError,
+import utils = require('./utils');
+import {
+  StripeAPIError,
   StripeAuthenticationError,
+  StripeConnectionError,
+  StripeError,
   StripePermissionError,
   StripeRateLimitError,
-  StripeError,
-  StripeAPIError,
-} = require('./Error');
+} from './Error';
 
-const {HttpClient} = require('./net/HttpClient');
+import {HttpClient} from './net/HttpClient';
 
 type Settings = {
   timeout?: number;

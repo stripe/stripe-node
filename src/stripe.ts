@@ -1,6 +1,15 @@
 'use strict';
 
-const resources = require('./resources');
+import resources = require('./resources');
+import utils = require('./utils');
+
+import {HttpClient, HttpClientResponse} from './net/HttpClient';
+import {FetchHttpClient} from './net/FetchHttpClient';
+import {NodeHttpClient} from './net/NodeHttpClient';
+
+import CryptoProvider = require('./crypto/CryptoProvider');
+import NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
+import SubtleCryptoProvider = require('./crypto/SubtleCryptoProvider');
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -11,7 +20,6 @@ const DEFAULT_TIMEOUT = 80000;
 
 Stripe.PACKAGE_VERSION = require('../package.json').version;
 
-const utils = require('./utils');
 const {determineProcessUserAgentProperties, emitWarning} = utils;
 
 Stripe.USER_AGENT = {
@@ -50,16 +58,14 @@ const EventEmitter = require('events').EventEmitter;
 Stripe.StripeResource = require('./StripeResource');
 Stripe.resources = resources;
 
-const {HttpClient, HttpClientResponse} = require('./net/HttpClient');
 Stripe.HttpClient = HttpClient;
 Stripe.HttpClientResponse = HttpClientResponse;
 
-const CryptoProvider = require('./crypto/CryptoProvider');
 Stripe.CryptoProvider = CryptoProvider;
 
 function Stripe(key, config = {}) {
   if (!(this instanceof Stripe)) {
-    return new Stripe(key, config);
+    return new (Stripe as any)(key, config);
   }
 
   const props = this._getPropsFromConfig(config);
@@ -138,7 +144,6 @@ Stripe.errors = require('./Error');
 Stripe.webhooks = require('./Webhooks');
 
 Stripe.createNodeHttpClient = (agent) => {
-  const {NodeHttpClient} = require('./net/NodeHttpClient');
   return new NodeHttpClient(agent);
 };
 
@@ -150,7 +155,6 @@ Stripe.createNodeHttpClient = (agent) => {
  * passed, will default to the default `fetch` function in the global scope.
  */
 Stripe.createFetchHttpClient = (fetchFn) => {
-  const {FetchHttpClient} = require('./net/FetchHttpClient');
   return new FetchHttpClient(fetchFn);
 };
 
@@ -159,7 +163,6 @@ Stripe.createFetchHttpClient = (fetchFn) => {
  * its crypto operations.
  */
 Stripe.createNodeCryptoProvider = () => {
-  const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
   return new NodeCryptoProvider();
 };
 
@@ -172,7 +175,6 @@ Stripe.createNodeCryptoProvider = () => {
  * scope.
  */
 Stripe.createSubtleCryptoProvider = (subtleCrypto) => {
-  const SubtleCryptoProvider = require('./crypto/SubtleCryptoProvider');
   return new SubtleCryptoProvider(subtleCrypto);
 };
 
@@ -326,15 +328,18 @@ Stripe.prototype = {
 
     info = info || {};
 
-    const appInfo = APP_INFO_PROPERTIES.reduce((accum, prop) => {
-      if (typeof info[prop] == 'string') {
-        accum = accum || {};
+    const appInfo = APP_INFO_PROPERTIES.reduce(
+      (accum: Record<string, any>, prop) => {
+        if (typeof info[prop] == 'string') {
+          accum = accum || {};
 
-        accum[prop] = info[prop];
-      }
+          accum[prop] = info[prop];
+        }
 
-      return accum;
-    }, undefined);
+        return accum;
+      },
+      undefined
+    );
 
     this._appInfo = appInfo;
   },
@@ -483,7 +488,7 @@ Stripe.prototype = {
    */
   getClientUserAgentSeeded(seed, cb) {
     this.getUname((uname) => {
-      const userAgent = {};
+      const userAgent: any = {};
       for (const field in seed) {
         userAgent[field] = encodeURIComponent(seed[field]);
       }

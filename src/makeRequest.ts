@@ -1,6 +1,6 @@
 'use strict';
 
-const utils = require('./utils');
+import utils = require('./utils');
 
 function getRequestOpts(self, requestArgs, spec, overrideData) {
   // Extract spec values with defaults.
@@ -119,4 +119,4 @@ function makeRequest(self, requestArgs, spec, overrideData) {
   });
 }
 
-module.exports = makeRequest;
+export = makeRequest;
