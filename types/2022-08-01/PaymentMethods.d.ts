@@ -52,7 +52,7 @@ declare module 'stripe' {
       /**
        * The ID of the Customer to which this PaymentMethod is saved. This will not be set when the PaymentMethod has not been saved to a Customer.
        */
-      customer: string | Stripe.Customer | null;
+      customer: string | null;
 
       customer_balance?: PaymentMethod.CustomerBalance;
 
