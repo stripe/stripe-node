@@ -41,11 +41,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Build Typescript
-        run: yarn && yarn build
+      - name: Node check
+        run: find . -name "*.js" -type f -not -path "./node_modules/*" -not -path "./\.*" -exec node --check {} \;
 
       - name: Lint
-        run: yarn lint
+        run: yarn && yarn lint
 
   test:
     name: Test (${{ matrix.node }})
