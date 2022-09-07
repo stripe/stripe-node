@@ -1746,7 +1746,7 @@ declare module 'stripe' {
             enabled: boolean;
 
             /**
-             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999999.
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999.
              */
             maximum?: number;
 
