@@ -156,6 +156,11 @@ declare module 'stripe' {
           phone_number: string | null;
 
           /**
+           * Whether a signature is required for card delivery. This feature is only supported for US users. Standard shipping service does not support signature on delivery. The default value for standard shipping service is false and for express and priority services is true.
+           */
+          require_signature: boolean | null;
+
+          /**
            * Shipment service, such as `standard` or `express`.
            */
           service: Shipping.Service;
@@ -1258,6 +1263,11 @@ declare module 'stripe' {
            * Phone number of the recipient of the shipment.
            */
           phone_number?: string;
+
+          /**
+           * Whether a signature is required for card delivery.
+           */
+          require_signature?: boolean;
 
           /**
            * Shipment service.

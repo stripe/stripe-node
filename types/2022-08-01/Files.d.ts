@@ -83,7 +83,8 @@ declare module 'stripe' {
         | 'pci_document'
         | 'selfie'
         | 'sigma_scheduled_query'
-        | 'tax_document_user_upload';
+        | 'tax_document_user_upload'
+        | 'terminal_reader_splashscreen';
     }
 
     interface FileCreateParams {}
@@ -124,7 +125,8 @@ declare module 'stripe' {
         | 'pci_document'
         | 'selfie'
         | 'sigma_scheduled_query'
-        | 'tax_document_user_upload';
+        | 'tax_document_user_upload'
+        | 'terminal_reader_splashscreen';
     }
 
     class FilesResource {
