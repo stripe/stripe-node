@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.9.0 - 2022-09-09
+* [#1549](https://github.com/stripe/stripe-node/pull/1549) API Updates
+  * Add support for new value `terminal_reader_splashscreen` on enums `File.purpose` and `FileListParams.purpose`
+  * Add support for `require_signature` on `Issuing.Card.shipping` and `IssuingCardCreateParams.shipping`
+
 ## 10.8.0 - 2022-09-07
 * [#1544](https://github.com/stripe/stripe-node/pull/1544) API Updates
   * Add support for new value `terminal_reader_splashscreen` on enums `File.purpose` and `FileListParams.purpose`
