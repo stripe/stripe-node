@@ -35,7 +35,7 @@ type StripeRawError = {
  * StripeError is the base error from which all other more specific Stripe errors derive.
  * Specifically for errors returned from Stripe's REST API.
  */
-export class StripeError extends Error {
+class StripeError extends Error {
   readonly message: string;
   readonly type: string;
   readonly raw: unknown;
@@ -112,13 +112,13 @@ export class StripeError extends Error {
  * CardError is raised when a user enters a card that can't be charged for
  * some reason.
  */
-export class StripeCardError extends StripeError {}
+class StripeCardError extends StripeError {}
 
 /**
  * InvalidRequestError is raised when a request is initiated with invalid
  * parameters.
  */
-export class StripeInvalidRequestError extends StripeError {}
+class StripeInvalidRequestError extends StripeError {}
 
 /**
  * APIError is a generic error that may be raised in cases where none of the
@@ -126,45 +126,45 @@ export class StripeInvalidRequestError extends StripeError {}
  * that a new error has been introduced in the API, but this version of the
  * Node.JS SDK doesn't know how to handle it.
  */
-export class StripeAPIError extends StripeError {}
+class StripeAPIError extends StripeError {}
 
 /**
  * AuthenticationError is raised when invalid credentials are used to connect
  * to Stripe's servers.
  */
-export class StripeAuthenticationError extends StripeError {}
+class StripeAuthenticationError extends StripeError {}
 
 /**
  * PermissionError is raised in cases where access was attempted on a resource
  * that wasn't allowed.
  */
-export class StripePermissionError extends StripeError {}
+class StripePermissionError extends StripeError {}
 
 /**
  * RateLimitError is raised in cases where an account is putting too much load
  * on Stripe's API servers (usually by performing too many requests). Please
  * back off on request rate.
  */
-export class StripeRateLimitError extends StripeError {}
+class StripeRateLimitError extends StripeError {}
 
 /**
  * StripeConnectionError is raised in the event that the SDK can't connect to
  * Stripe's servers. That can be for a variety of different reasons from a
  * downed network to a bad TLS certificate.
  */
-export class StripeConnectionError extends StripeError {}
+class StripeConnectionError extends StripeError {}
 
 /**
  * SignatureVerificationError is raised when the signature verification for a
  * webhook fails
  */
-export class StripeSignatureVerificationError extends StripeError {}
+class StripeSignatureVerificationError extends StripeError {}
 
 /**
  * IdempotencyError is raised in cases where an idempotency key was used
  * improperly.
  */
-export class StripeIdempotencyError extends StripeError {}
+class StripeIdempotencyError extends StripeError {}
 
 /**
  * InvalidGrantError is raised when a specified code doesn't exist, is
@@ -172,9 +172,23 @@ export class StripeIdempotencyError extends StripeError {}
  * exist, or doesn't belong to you; or if an API key's mode (live or test)
  * doesn't match the mode of a code or refresh token.
  */
-export class StripeInvalidGrantError extends StripeError {}
+class StripeInvalidGrantError extends StripeError {}
 
 /**
  * Any other error from Stripe not specifically captured above
  */
-export class StripeUnknownError extends StripeError {}
+class StripeUnknownError extends StripeError {}
+
+module.exports.generate = StripeError.generate;
+module.exports.StripeError = StripeError;
+module.exports.StripeCardError = StripeCardError;
+module.exports.StripeInvalidRequestError = StripeInvalidRequestError;
+module.exports.StripeAPIError = StripeAPIError;
+module.exports.StripeAuthenticationError = StripeAuthenticationError;
+module.exports.StripePermissionError = StripePermissionError;
+module.exports.StripeRateLimitError = StripeRateLimitError;
+module.exports.StripeConnectionError = StripeConnectionError;
+module.exports.StripeSignatureVerificationError = StripeSignatureVerificationError;
+module.exports.StripeIdempotencyError = StripeIdempotencyError;
+module.exports.StripeInvalidGrantError = StripeInvalidGrantError;
+module.exports.StripeUnknownError = StripeUnknownError;

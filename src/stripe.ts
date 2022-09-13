@@ -1,15 +1,6 @@
 'use strict';
 
-import resources = require('./resources');
-import utils = require('./utils');
-
-import {HttpClient, HttpClientResponse} from './net/HttpClient';
-import {FetchHttpClient} from './net/FetchHttpClient';
-import {NodeHttpClient} from './net/NodeHttpClient';
-
-import CryptoProvider = require('./crypto/CryptoProvider');
-import NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
-import SubtleCryptoProvider = require('./crypto/SubtleCryptoProvider');
+const resources = require('./resources');
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -20,6 +11,7 @@ const DEFAULT_TIMEOUT = 80000;
 
 Stripe.PACKAGE_VERSION = require('../package.json').version;
 
+const utils = require('./utils');
 const {determineProcessUserAgentProperties, emitWarning} = utils;
 
 Stripe.USER_AGENT = {
@@ -58,9 +50,11 @@ const EventEmitter = require('events').EventEmitter;
 Stripe.StripeResource = require('./StripeResource');
 Stripe.resources = resources;
 
+const {HttpClient, HttpClientResponse} = require('./net/HttpClient');
 Stripe.HttpClient = HttpClient;
 Stripe.HttpClientResponse = HttpClientResponse;
 
+const CryptoProvider = require('./crypto/CryptoProvider');
 Stripe.CryptoProvider = CryptoProvider;
 
 function Stripe(key, config = {}) {
@@ -144,6 +138,7 @@ Stripe.errors = require('./Error');
 Stripe.webhooks = require('./Webhooks');
 
 Stripe.createNodeHttpClient = (agent) => {
+  const {NodeHttpClient} = require('./net/NodeHttpClient');
   return new NodeHttpClient(agent);
 };
 
@@ -155,6 +150,7 @@ Stripe.createNodeHttpClient = (agent) => {
  * passed, will default to the default `fetch` function in the global scope.
  */
 Stripe.createFetchHttpClient = (fetchFn) => {
+  const {FetchHttpClient} = require('./net/FetchHttpClient');
   return new FetchHttpClient(fetchFn);
 };
 
@@ -163,6 +159,7 @@ Stripe.createFetchHttpClient = (fetchFn) => {
  * its crypto operations.
  */
 Stripe.createNodeCryptoProvider = () => {
+  const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
   return new NodeCryptoProvider();
 };
 
@@ -175,6 +172,7 @@ Stripe.createNodeCryptoProvider = () => {
  * scope.
  */
 Stripe.createSubtleCryptoProvider = (subtleCrypto) => {
+  const SubtleCryptoProvider = require('./crypto/SubtleCryptoProvider');
   return new SubtleCryptoProvider(subtleCrypto);
 };
 

@@ -1,14 +1,9 @@
 'use strict';
 
-import utils = require('./utils');
-import makeRequest = require('./makeRequest');
+const makeRequest = require('./makeRequest');
+const utils_1 = require('./utils');
 
-export function makeAutoPaginationMethods(
-  self,
-  requestArgs,
-  spec,
-  firstPagePromise
-) {
+function makeAutoPaginationMethods(self, requestArgs, spec, firstPagePromise) {
   const promiseCache = {currentPromise: null};
   const reverseIteration = isReverseIteration(requestArgs);
   let pagePromise = firstPagePromise;
@@ -98,6 +93,8 @@ export function makeAutoPaginationMethods(
   };
   return autoPaginationMethods;
 }
+
+module.exports.makeAutoPaginationMethods = makeAutoPaginationMethods;
 
 /**
  * ----------------
@@ -210,7 +207,7 @@ function makeAutoPagingEach(asyncIteratorNext) {
       asyncIteratorNext,
       onItem
     );
-    return utils.callbackifyPromiseWithTimeout(autoPagePromise, onDone);
+    return utils_1.callbackifyPromiseWithTimeout(autoPagePromise, onDone);
   };
 }
 
@@ -240,7 +237,7 @@ function makeAutoPagingToArray(autoPagingEach) {
         })
         .catch(reject);
     });
-    return utils.callbackifyPromiseWithTimeout(promise, onDone);
+    return utils_1.callbackifyPromiseWithTimeout(promise, onDone);
   };
 }
 
@@ -275,7 +272,7 @@ function wrapAsyncIteratorWithCallback(asyncIteratorNext, onItem) {
 
 function isReverseIteration(requestArgs) {
   const args = [].slice.call(requestArgs);
-  const dataFromArgs = utils.getDataFromArgs(args);
+  const dataFromArgs = utils_1.getDataFromArgs(args);
 
   return !!dataFromArgs.ending_before;
 }
