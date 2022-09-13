@@ -1,9 +1,8 @@
 'use strict';
 
-const utils = require('./utils');
-const makeRequest = require('./makeRequest');
-const makeAutoPaginationMethods = require('./autoPagination')
-  .makeAutoPaginationMethods;
+import utils = require('./utils');
+import makeRequest = require('./makeRequest');
+import {makeAutoPaginationMethods} from './autoPagination';
 
 /**
  * Create an API method from the declared spec.
@@ -55,4 +54,4 @@ function stripeMethod(spec) {
   };
 }
 
-module.exports = stripeMethod;
+export = stripeMethod;
