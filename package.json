@@ -27,6 +27,7 @@
   "main": "lib/stripe.js",
   "types": "types/2022-08-01/index.d.ts",
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
     "chai": "~4.2.0",
@@ -55,10 +56,12 @@
   },
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage",
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./lib",
+    "prepack": "yarn install && yarn build",
     "mocha": "nyc mocha --config=test/.mocharc.js",
     "mocha-only": "mocha --config=test/.mocharc.js",
-    "test": "yarn test-typescript && yarn mocha",
+    "test": "yarn build && yarn test-typescript && yarn mocha",
     "test-typescript": "tsc --build types/test",
     "lint": "eslint --ext .js,.jsx,.ts .",
     "fix": "yarn lint --fix && ./scripts/updateAPIVersion.js",
