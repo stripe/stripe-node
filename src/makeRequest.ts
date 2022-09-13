@@ -1,6 +1,4 @@
-'use strict';
-
-import utils = require('./utils');
+import * as utils from './utils';
 
 function getRequestOpts(self, requestArgs, spec, overrideData) {
   // Extract spec values with defaults.

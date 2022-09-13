@@ -1,8 +1,7 @@
-'use strict';
-
-import utils = require('./utils');
+import * as utils from './utils';
 import makeRequest = require('./makeRequest');
-import {makeAutoPaginationMethods} from './autoPagination';
+const makeAutoPaginationMethods = require('./autoPagination')
+  .makeAutoPaginationMethods;
 
 /**
  * Create an API method from the declared spec.
