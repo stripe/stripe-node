@@ -1,4 +1,4 @@
-'use strict';
+import _Error = require('./Error');
 
 const resources = require('./resources');
 
@@ -47,7 +47,8 @@ const ALLOWED_CONFIG_PROPERTIES = [
 
 const EventEmitter = require('events').EventEmitter;
 
-Stripe.StripeResource = require('./StripeResource');
+import StripeResource = require('./StripeResource');
+Stripe.StripeResource = StripeResource;
 Stripe.resources = resources;
 
 const {HttpClient, HttpClientResponse} = require('./net/HttpClient');
@@ -124,7 +125,7 @@ function Stripe(key, config = {}) {
   this._prepResources();
   this._setApiKey(key);
 
-  this.errors = require('./Error');
+  this.errors = _Error;
   this.webhooks = require('./Webhooks');
 
   this._prevRequestMetrics = [];
@@ -134,7 +135,7 @@ function Stripe(key, config = {}) {
   this.StripeResource = Stripe.StripeResource;
 }
 
-Stripe.errors = require('./Error');
+Stripe.errors = _Error;
 Stripe.webhooks = require('./Webhooks');
 
 Stripe.createNodeHttpClient = (agent) => {
@@ -603,11 +604,11 @@ Stripe.prototype = {
   },
 };
 
-module.exports = Stripe;
-
 // expose constructor as a named property to enable mocking with Sinon.JS
-module.exports.Stripe = Stripe;
+Stripe.Stripe = Stripe;
 
 // Allow use with the TypeScript compiler without `esModuleInterop`.
 // We may also want to add `Object.defineProperty(exports, "__esModule", {value: true});` in the future, so that Babel users will use the `default` version.
-module.exports.default = Stripe;
+Stripe.default = Stripe;
+
+export = Stripe;

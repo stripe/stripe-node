@@ -1,4 +1,6 @@
 import * as utils from './utils';
+
+import _Error = require('./Error');
 const {
   StripeAPIError,
   StripeAuthenticationError,
@@ -6,7 +8,7 @@ const {
   StripeError,
   StripePermissionError,
   StripeRateLimitError,
-} = require('./Error');
+} = _Error;
 
 const {HttpClient} = require('./net/HttpClient');
 

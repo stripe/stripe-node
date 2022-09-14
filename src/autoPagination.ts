@@ -1,7 +1,5 @@
-'use strict';
-
-const makeRequest = require('./makeRequest');
-const utils_1 = require('./utils');
+import makeRequest = require('./makeRequest');
+const utils = require('./utils');
 
 function makeAutoPaginationMethods(self, requestArgs, spec, firstPagePromise) {
   const promiseCache = {currentPromise: null};
@@ -94,7 +92,9 @@ function makeAutoPaginationMethods(self, requestArgs, spec, firstPagePromise) {
   return autoPaginationMethods;
 }
 
-module.exports.makeAutoPaginationMethods = makeAutoPaginationMethods;
+export = {
+  makeAutoPaginationMethods: makeAutoPaginationMethods,
+};
 
 /**
  * ----------------
@@ -207,7 +207,7 @@ function makeAutoPagingEach(asyncIteratorNext) {
       asyncIteratorNext,
       onItem
     );
-    return utils_1.callbackifyPromiseWithTimeout(autoPagePromise, onDone);
+    return utils.callbackifyPromiseWithTimeout(autoPagePromise, onDone);
   };
 }
 
@@ -237,7 +237,7 @@ function makeAutoPagingToArray(autoPagingEach) {
         })
         .catch(reject);
     });
-    return utils_1.callbackifyPromiseWithTimeout(promise, onDone);
+    return utils.callbackifyPromiseWithTimeout(promise, onDone);
   };
 }
 
@@ -272,7 +272,7 @@ function wrapAsyncIteratorWithCallback(asyncIteratorNext, onItem) {
 
 function isReverseIteration(requestArgs) {
   const args = [].slice.call(requestArgs);
-  const dataFromArgs = utils_1.getDataFromArgs(args);
+  const dataFromArgs = utils.getDataFromArgs(args);
 
   return !!dataFromArgs.ending_before;
 }

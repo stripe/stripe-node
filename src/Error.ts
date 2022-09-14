@@ -1,5 +1,3 @@
-'use strict';
-
 type RawErrorType =
   | 'card_error'
   | 'invalid_request_error'
@@ -179,16 +177,18 @@ class StripeInvalidGrantError extends StripeError {}
  */
 class StripeUnknownError extends StripeError {}
 
-module.exports.generate = StripeError.generate;
-module.exports.StripeError = StripeError;
-module.exports.StripeCardError = StripeCardError;
-module.exports.StripeInvalidRequestError = StripeInvalidRequestError;
-module.exports.StripeAPIError = StripeAPIError;
-module.exports.StripeAuthenticationError = StripeAuthenticationError;
-module.exports.StripePermissionError = StripePermissionError;
-module.exports.StripeRateLimitError = StripeRateLimitError;
-module.exports.StripeConnectionError = StripeConnectionError;
-module.exports.StripeSignatureVerificationError = StripeSignatureVerificationError;
-module.exports.StripeIdempotencyError = StripeIdempotencyError;
-module.exports.StripeInvalidGrantError = StripeInvalidGrantError;
-module.exports.StripeUnknownError = StripeUnknownError;
+export = {
+  generate: StripeError.generate,
+  StripeError: StripeError,
+  StripeCardError: StripeCardError,
+  StripeInvalidRequestError: StripeInvalidRequestError,
+  StripeAPIError: StripeAPIError,
+  StripeAuthenticationError: StripeAuthenticationError,
+  StripePermissionError: StripePermissionError,
+  StripeRateLimitError: StripeRateLimitError,
+  StripeConnectionError: StripeConnectionError,
+  StripeSignatureVerificationError: StripeSignatureVerificationError,
+  StripeIdempotencyError: StripeIdempotencyError,
+  StripeInvalidGrantError: StripeInvalidGrantError,
+  StripeUnknownError: StripeUnknownError,
+};
