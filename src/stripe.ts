@@ -486,7 +486,7 @@ Stripe.prototype = {
    */
   getClientUserAgentSeeded(seed, cb) {
     this.getUname((uname) => {
-      const userAgent: any = {};
+      const userAgent: Record<string, string> = {};
       for (const field in seed) {
         userAgent[field] = encodeURIComponent(seed[field]);
       }
