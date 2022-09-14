@@ -44,6 +44,16 @@ jobs:
       - name: Build Typescript
         run: yarn && yarn build
 
+      - name: Check for changes
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            git diff
+            >&2 echo "Changes detected after compiling TypeScript. Please run yarn build and check in all compiled files in lib/."
+            exit 1
+          else
+            exit 0
+          fi
+
       - name: Lint
         run: yarn lint
 

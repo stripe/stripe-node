@@ -4,6 +4,5 @@ tags
 .nyc_output
 coverage
 .idea
-lib
 testProjects/**/node_modules
 testProjects/**/package-lock.json
