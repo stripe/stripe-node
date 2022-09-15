@@ -23,6 +23,11 @@ declare module 'stripe' {
         amount: number;
 
         /**
+         * Time at which the object was created. Measured in seconds since the Unix epoch.
+         */
+        created: number;
+
+        /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         currency: string;
