@@ -240,6 +240,7 @@ declare module 'stripe' {
 
         /**
          * The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
+         * This value is only present when the session is active.
          */
         url: string | null;
       }
@@ -510,6 +511,8 @@ declare module 'stripe' {
           p24?: PaymentMethodOptions.P24;
 
           paynow?: PaymentMethodOptions.Paynow;
+
+          pix?: PaymentMethodOptions.Pix;
 
           sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -895,6 +898,13 @@ declare module 'stripe' {
              * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface Pix {
+            /**
+             * The number of seconds after which Pix payment will expire.
+             */
+            expires_after_seconds: number | null;
           }
 
           interface SepaDebit {
@@ -1536,7 +1546,8 @@ declare module 'stripe' {
         /**
          * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
          *
-         * Do not include this attribute if you prefer to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+         * In `payment` and `subscription` mode, you can omit this attribute to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+         * It is required in `setup` mode.
          *
          * Read more about the supported payment methods and their requirements in our [payment
          * method details guide](https://stripe.com/docs/payments/checkout/payment-methods).
@@ -2125,6 +2136,11 @@ declare module 'stripe' {
           paynow?: PaymentMethodOptions.Paynow;
 
           /**
+           * contains details about the Pix payment method options.
+           */
+          pix?: PaymentMethodOptions.Pix;
+
+          /**
            * contains details about the Sepa Debit payment method options.
            */
           sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -2568,6 +2584,13 @@ declare module 'stripe' {
             tos_shown_and_accepted?: boolean;
           }
 
+          interface Pix {
+            /**
+             * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+             */
+            expires_after_seconds?: number;
+          }
+
           interface SepaDebit {
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2684,6 +2707,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
