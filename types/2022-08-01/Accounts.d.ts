@@ -53,12 +53,12 @@ declare module 'stripe' {
       created?: number;
 
       /**
-       * Time at which the account was connected. Measured in seconds since the Unix epoch.
+       * The account dashboard status.
        */
       dashboard_account_status?: string;
 
       /**
-       * Time at which the account was connected. Measured in seconds since the Unix epoch.
+       * The account dashboard type.
        */
       dashboard_type?: string;
 
