@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./lib",
     "allowJs": true,
-    "target": "es6",
+    "target": "es2017",
     "module": "commonjs",
     "checkJs": false,
   },

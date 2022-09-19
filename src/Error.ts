@@ -55,7 +55,7 @@ class StripeError extends Error {
   readonly setup_intent?: any;
   readonly source?: any;
 
-  constructor(raw: StripeRawError) {
+  constructor(raw: StripeRawError = {}) {
     super(raw.message);
     this.type = this.constructor.name;
 
