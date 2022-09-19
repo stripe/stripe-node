@@ -55,7 +55,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json; sed -i.bak '/Object.defineProperty(exports, \"__esModule\", { value: true });/d' ./lib/stripe.js; rm ./lib/stripe.js.bak",
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./lib",
     "prepack": "yarn install && yarn build",
     "mocha": "nyc mocha --config=test/.mocharc.js",

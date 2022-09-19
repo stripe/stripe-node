@@ -1,6 +1,8 @@
-import Stripe from 'stripe';
+import {Stripe} from 'stripe';
+import DefaultStripe from 'stripe';
 
 const stripe = new Stripe(process.argv[2]);
+const defaultStripe = new DefaultStripe(process.argv[2]);
 
 try {
   throw new stripe.errors.StripeError({
