@@ -3551,7 +3551,7 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface AccountDeleteParams { }
+    interface AccountDeleteParams {}
 
     interface AccountRejectParams {
       /**
