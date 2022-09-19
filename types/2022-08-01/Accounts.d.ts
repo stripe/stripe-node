@@ -53,6 +53,16 @@ declare module 'stripe' {
       created?: number;
 
       /**
+       * Time at which the account was connected. Measured in seconds since the Unix epoch.
+       */
+      dashboard_account_status?: string;
+
+      /**
+       * Time at which the account was connected. Measured in seconds since the Unix epoch.
+       */
+      dashboard_type?: string;
+
+      /**
        * Three-letter ISO currency code representing the default currency for the account. This must be a currency that [Stripe supports in the account's country](https://stripe.com/docs/payouts).
        */
       default_currency?: string;
@@ -3541,7 +3551,7 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface AccountDeleteParams {}
+    interface AccountDeleteParams { }
 
     interface AccountRejectParams {
       /**
