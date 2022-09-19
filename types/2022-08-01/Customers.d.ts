@@ -884,6 +884,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'

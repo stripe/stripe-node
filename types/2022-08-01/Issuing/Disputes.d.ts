@@ -339,6 +339,11 @@ declare module 'stripe' {
 
       interface DisputeCreateParams {
         /**
+         * The dispute amount in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). If not set, defaults to the full transaction amount.
+         */
+        amount?: number;
+
+        /**
          * Evidence provided for the dispute.
          */
         evidence?: DisputeCreateParams.Evidence;
@@ -662,6 +667,11 @@ declare module 'stripe' {
       }
 
       interface DisputeUpdateParams {
+        /**
+         * The dispute amount in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         */
+        amount?: number;
+
         /**
          * Evidence provided for the dispute.
          */
