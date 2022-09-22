@@ -178,10 +178,17 @@ declare module 'stripe' {
          * If set to `auto`, enables the collection of customer consent for promotional communications.
          */
         promotions: ConsentCollection.Promotions | null;
+
+        /**
+         * If set to `required`, it requires cutomers to accept the terms of service before being able to pay. If set to `none`, customers won't be shown a checkbox to accept the terms of service.
+         */
+        terms_of_service: ConsentCollection.TermsOfService | null;
       }
 
       namespace ConsentCollection {
         type Promotions = 'auto' | 'none';
+
+        type TermsOfService = 'none' | 'required';
       }
 
       type CustomerCreation = 'always' | 'if_required';
@@ -709,10 +716,18 @@ declare module 'stripe' {
          * from the merchant depending on the customer's locale. Only available to US merchants.
          */
         promotions?: ConsentCollection.Promotions;
+
+        /**
+         * If set to `required`, it requires customers to check a terms of service checkbox before being able to pay.
+         * There must be a valid terms of service URL set in your [Dashboard settings](https://dashboard.stripe.com/settings/public).
+         */
+        terms_of_service?: ConsentCollection.TermsOfService;
       }
 
       namespace ConsentCollection {
         type Promotions = 'auto' | 'none';
+
+        type TermsOfService = 'none' | 'required';
       }
 
       type CustomerCreation = 'always' | 'if_required';
