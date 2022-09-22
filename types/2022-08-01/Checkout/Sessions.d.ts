@@ -303,6 +303,11 @@ declare module 'stripe' {
            * from the merchant about this Checkout Session.
            */
           promotions: Consent.Promotions | null;
+
+          /**
+           * If `accepted`, the customer in this Checkout Session has agreed to the merchant's terms of service.
+           */
+          terms_of_service: 'accepted' | null;
         }
 
         namespace Consent {
@@ -316,10 +321,17 @@ declare module 'stripe' {
            * from the merchant depending on the customer's locale. Only available to US merchants.
            */
           promotions: ConsentCollection.Promotions | null;
+
+          /**
+           * If set to `required`, it requires customers to accept the terms of service before being able to pay.
+           */
+          terms_of_service: ConsentCollection.TermsOfService | null;
         }
 
         namespace ConsentCollection {
           type Promotions = 'auto' | 'none';
+
+          type TermsOfService = 'none' | 'required';
         }
 
         type CustomerCreation = 'always' | 'if_required';
@@ -1645,10 +1657,18 @@ declare module 'stripe' {
            * from the merchant depending on the customer's locale. Only available to US merchants.
            */
           promotions?: ConsentCollection.Promotions;
+
+          /**
+           * If set to `required`, it requires customers to check a terms of service checkbox before being able to pay.
+           * There must be a valid terms of service URL set in your [Dashboard settings](https://dashboard.stripe.com/settings/public).
+           */
+          terms_of_service?: ConsentCollection.TermsOfService;
         }
 
         namespace ConsentCollection {
           type Promotions = 'auto' | 'none';
+
+          type TermsOfService = 'none' | 'required';
         }
 
         type CustomerCreation = 'always' | 'if_required';
@@ -2352,37 +2372,10 @@ declare module 'stripe' {
           namespace Card {
             interface Installments {
               /**
-               * Setting to true enables installments for this PaymentIntent.
-               * This will cause the response to contain a list of available installment plans.
-               * Setting to false will prevent any selected plan from applying to a charge.
+               * Setting to true enables installments for this Checkout Session.
+               * Setting to false will prevent any installment plan from applying to a payment.
                */
               enabled?: boolean;
-
-              /**
-               * The selected installment plan to use for this payment attempt.
-               * This parameter can only be provided during confirmation.
-               */
-              plan?: Stripe.Emptyable<Installments.Plan>;
-            }
-
-            namespace Installments {
-              interface Plan {
-                /**
-                 * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
-                 */
-                count: number;
-
-                /**
-                 * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
-                 * One of `month`.
-                 */
-                interval: 'month';
-
-                /**
-                 * Type of installment plan, one of `fixed_count`.
-                 */
-                type: 'fixed_count';
-              }
             }
 
             type SetupFutureUsage = 'off_session' | 'on_session';

@@ -7266,6 +7266,11 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
+       */
+      statement_descriptor?: string;
+
+      /**
        * The parameters used to automatically create a Transfer when the payment is captured.
        * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
