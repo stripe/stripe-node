@@ -37,7 +37,20 @@ const DEPRECATED_OPTIONS = {
 };
 const DEPRECATED_OPTIONS_KEYS = Object.keys(DEPRECATED_OPTIONS);
 
-const utils = (module.exports = {
+type Settings = {
+  timeout?: number;
+  maxNetworkRetries?: number;
+};
+
+type Options = {
+  auth?: any;
+  host?: any;
+  settings?: Settings;
+  streaming?: boolean;
+  headers?: {[header: string]: string};
+};
+
+const utils = {
   isOptionsHash(o) {
     return (
       o &&
@@ -140,7 +153,7 @@ const utils = (module.exports = {
    * Return the options hash from a list of arguments
    */
   getOptionsFromArgs: (args) => {
-    const opts = {
+    const opts: Options = {
       auth: null,
       headers: {},
       settings: {},
@@ -388,7 +401,7 @@ const utils = (module.exports = {
         const newKey = prevKey ? `${prevKey}[${key}]` : key;
 
         if (utils.isObject(value)) {
-          if (!Buffer.isBuffer(value) && !value.hasOwnProperty('data')) {
+          if (!Buffer.isBuffer(value) && !hasOwn(value, 'data')) {
             // Non-buffer non-file Objects are recursively flattened
             return step(value, newKey);
           } else {
@@ -402,7 +415,7 @@ const utils = (module.exports = {
       });
     };
 
-    step(data);
+    step(data, null);
 
     return result;
   },
@@ -438,7 +451,7 @@ const utils = (module.exports = {
           platform: process.platform,
         };
   },
-});
+};
 
 function emitWarning(warning) {
   if (typeof process.emitWarning !== 'function') {
@@ -449,3 +462,5 @@ function emitWarning(warning) {
 
   return process.emitWarning(warning, 'Stripe');
 }
+
+export = utils;

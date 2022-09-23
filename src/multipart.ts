@@ -1,7 +1,8 @@
 'use strict';
 
-const utils = require('./utils');
-const {StripeError} = require('./Error');
+import utils = require('./utils');
+import _Error = require('./Error');
+const {StripeError} = _Error;
 
 class StreamProcessingError extends StripeError {}
 
@@ -33,7 +34,7 @@ const multipartDataGenerator = (method, data, headers) => {
   for (const k in flattenedData) {
     const v = flattenedData[k];
     push(`--${segno}`);
-    if (v.hasOwnProperty('data')) {
+    if (Object.prototype.hasOwnProperty.call(v, 'data')) {
       push(
         `Content-Disposition: form-data; name=${q(k)}; filename=${q(
           v.name || 'blob'
@@ -93,4 +94,6 @@ const multipartRequestDataProcessor = (method, data, headers, callback) => {
   return callback(null, buffer);
 };
 
-module.exports.multipartRequestDataProcessor = multipartRequestDataProcessor;
+export = {
+  multipartRequestDataProcessor: multipartRequestDataProcessor,
+};

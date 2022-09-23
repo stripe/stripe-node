@@ -1,6 +1,6 @@
 'use strict';
 
-const CryptoProvider = require('./CryptoProvider');
+import CryptoProvider = require('./CryptoProvider');
 
 /**
  * `CryptoProvider which uses the SubtleCrypto interface of the Web Crypto API.
@@ -8,6 +8,8 @@ const CryptoProvider = require('./CryptoProvider');
  * This only supports asynchronous operations.
  */
 class SubtleCryptoProvider extends CryptoProvider {
+  subtleCrypto: any;
+
   constructor(subtleCrypto) {
     super();
 
@@ -18,7 +20,7 @@ class SubtleCryptoProvider extends CryptoProvider {
   }
 
   /** @override */
-  computeHMACSignature(payload, secret) {
+  computeHMACSignature(payload: string, secret: string): string {
     throw new Error(
       'SubtleCryptoProvider cannot be used in a synchronous context.'
     );
@@ -26,7 +28,7 @@ class SubtleCryptoProvider extends CryptoProvider {
 
   /** @override */
   async computeHMACSignatureAsync(payload, secret) {
-    const encoder = new TextEncoder('utf-8');
+    const encoder = new TextEncoder();
 
     const key = await this.subtleCrypto.importKey(
       'raw',
@@ -66,4 +68,4 @@ for (let i = 0; i < byteHexMapping.length; i++) {
   byteHexMapping[i] = i.toString(16).padStart(2, '0');
 }
 
-module.exports = SubtleCryptoProvider;
+export = SubtleCryptoProvider;

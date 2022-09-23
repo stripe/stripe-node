@@ -3,7 +3,8 @@
 const http = require('http');
 const https = require('https');
 
-const {HttpClient, HttpClientResponse} = require('./HttpClient');
+import _HttpClient = require('./HttpClient');
+const {HttpClient, HttpClientResponse} = _HttpClient;
 
 const defaultHttpAgent = new http.Agent({keepAlive: true});
 const defaultHttpsAgent = new https.Agent({keepAlive: true});
@@ -13,6 +14,8 @@ const defaultHttpsAgent = new https.Agent({keepAlive: true});
  * requests.`
  */
 class NodeHttpClient extends HttpClient {
+  _agent: any;
+
   constructor(agent) {
     super();
     this._agent = agent;
@@ -86,6 +89,8 @@ class NodeHttpClient extends HttpClient {
 }
 
 class NodeHttpClientResponse extends HttpClientResponse {
+  _res: any;
+
   constructor(res) {
     super(res.statusCode, res.headers || {});
     this._res = res;
@@ -122,4 +127,4 @@ class NodeHttpClientResponse extends HttpClientResponse {
   }
 }
 
-module.exports = {NodeHttpClient, NodeHttpClientResponse};
+export = {NodeHttpClient, NodeHttpClientResponse};

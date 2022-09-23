@@ -1,5 +1,7 @@
 'use strict';
 
+type TimeoutError = TypeError & {code?: string};
+
 /**
  * Encapsulates the logic for issuing a request to the Stripe API.
  *
@@ -10,6 +12,9 @@
  *    returning their own response class when making requests.
  */
 class HttpClient {
+  static CONNECTION_CLOSED_ERROR_CODES: string[];
+  static TIMEOUT_ERROR_CODE: string;
+
   /** The client name used for diagnostics. */
   getClientName() {
     throw new Error('getClientName not implemented.');
@@ -30,7 +35,9 @@ class HttpClient {
 
   /** Helper to make a consistent timeout error across implementations. */
   static makeTimeoutError() {
-    const timeoutErr = new TypeError(HttpClient.TIMEOUT_ERROR_CODE);
+    const timeoutErr: TimeoutError = new TypeError(
+      HttpClient.TIMEOUT_ERROR_CODE
+    );
     timeoutErr.code = HttpClient.TIMEOUT_ERROR_CODE;
     return timeoutErr;
   }
@@ -40,6 +47,9 @@ HttpClient.CONNECTION_CLOSED_ERROR_CODES = ['ECONNRESET', 'EPIPE'];
 HttpClient.TIMEOUT_ERROR_CODE = 'ETIMEDOUT';
 
 class HttpClientResponse {
+  _statusCode: number;
+  _headers: object;
+
   constructor(statusCode, headers) {
     this._statusCode = statusCode;
     this._headers = headers;
@@ -66,4 +76,4 @@ class HttpClientResponse {
   }
 }
 
-module.exports = {HttpClient, HttpClientResponse};
+export = {HttpClient, HttpClientResponse};

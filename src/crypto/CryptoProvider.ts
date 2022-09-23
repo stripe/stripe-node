@@ -13,7 +13,7 @@ class CryptoProvider {
    * - computeHMACSignature('', 'test_secret') => 'f7f9bd47fb987337b5796fdc1fdb9ba221d0d5396814bfcaf9521f43fd8927fd'
    * - computeHMACSignature('\ud83d\ude00', 'test_secret') => '837da296d05c4fe31f61d5d7ead035099d9585a5bcde87de952012a78f0b0c43
    */
-  computeHMACSignature(payload, secret) {
+  computeHMACSignature(payload: string, secret: string): string {
     throw new Error('computeHMACSignature not implemented.');
   }
 
@@ -28,9 +28,9 @@ class CryptoProvider {
    * - computeHMACSignature('', 'test_secret') => 'f7f9bd47fb987337b5796fdc1fdb9ba221d0d5396814bfcaf9521f43fd8927fd'
    * - computeHMACSignature('\ud83d\ude00', 'test_secret') => '837da296d05c4fe31f61d5d7ead035099d9585a5bcde87de952012a78f0b0c43
    */
-  computeHMACSignatureAsync(payload, secret) {
+  computeHMACSignatureAsync(payload: string, secret: string): Promise<string> {
     throw new Error('computeHMACSignatureAsync not implemented.');
   }
 }
 
-module.exports = CryptoProvider;
+export = CryptoProvider;

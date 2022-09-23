@@ -1,10 +1,12 @@
 'use strict';
 
-const utils = require('./utils');
-const {StripeError, StripeSignatureVerificationError} = require('./Error');
+import utils = require('./utils');
+import _Error = require('./Error');
+const {StripeError, StripeSignatureVerificationError} = _Error;
 
 const Webhook = {
   DEFAULT_TOLERANCE: 300, // 5 minutes
+  signature: null,
 
   constructEvent(payload, header, secret, tolerance, cryptoProvider) {
     this.signature.verifyHeader(
@@ -242,7 +244,7 @@ function parseHeader(header, scheme) {
       const kv = item.split('=');
 
       if (kv[0] === 't') {
-        accum.timestamp = kv[1];
+        accum.timestamp = parseInt(kv[1], 10);
       }
 
       if (kv[0] === scheme) {
@@ -274,4 +276,4 @@ function getNodeCryptoProvider() {
 
 Webhook.signature = signature;
 
-module.exports = Webhook;
+export = Webhook;

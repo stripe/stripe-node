@@ -18,7 +18,7 @@ type StripeRawError = {
   doc_url?: string;
   decline_code?: string;
   param?: string;
-  detail?: string;
+  detail?: any;
   charge?: string;
   payment_method_type?: string;
 
@@ -44,7 +44,7 @@ class StripeError extends Error {
   readonly code?: string;
   readonly doc_url?: string;
   readonly param?: string;
-  readonly detail?: string;
+  readonly detail?: any;
   readonly statusCode?: number;
   readonly charge?: string;
   readonly decline_code?: string;

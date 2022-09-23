@@ -1,6 +1,7 @@
 'use strict';
 
-const {HttpClient, HttpClientResponse} = require('./HttpClient');
+import _HttpClient = require('./HttpClient');
+const {HttpClient, HttpClientResponse} = _HttpClient;
 
 /**
  * HTTP client which uses a `fetch` function to issue requests.
@@ -11,6 +12,9 @@ const {HttpClient, HttpClientResponse} = require('./HttpClient');
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
 class FetchHttpClient extends HttpClient {
+  _fetchFn: any;
+  _res: any;
+
   constructor(fetchFn) {
     super();
     this._fetchFn = fetchFn;
@@ -88,6 +92,8 @@ class FetchHttpClient extends HttpClient {
 }
 
 class FetchHttpClientResponse extends HttpClientResponse {
+  _res: any;
+
   constructor(res) {
     super(
       res.status,
@@ -135,4 +141,4 @@ class FetchHttpClientResponse extends HttpClientResponse {
   }
 }
 
-module.exports = {FetchHttpClient, FetchHttpClientResponse};
+export = {FetchHttpClient, FetchHttpClientResponse};
