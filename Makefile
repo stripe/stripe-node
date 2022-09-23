@@ -4,4 +4,4 @@ update-version:
 	@perl -pi -e 's|"version": "[.\-\d\w]+"|"version": "$(VERSION)"|' package.json
 
 codegen-format:
-	yarn && yarn fix
+	yarn && yarn fix && yarn build
