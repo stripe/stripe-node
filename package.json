@@ -42,7 +42,7 @@
     "node-fetch": "^2.6.2",
     "nyc": "^15.1.0",
     "prettier": "^1.16.4",
-    "typescript": "^3.7.2"
+    "typescript": "^3.9.0"
   },
   "resolutions": {
     "ansi-regex": "5.0.1",

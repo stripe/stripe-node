@@ -223,6 +223,7 @@ const utils = {
    * Provide simple "Class" extension mechanism
    */
   protoExtend(sub) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const Super = this;
     const Constructor = hasOwn(sub, 'constructor')
       ? sub.constructor
