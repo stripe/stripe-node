@@ -1,28 +1,26 @@
 // File generated from our OpenAPI spec
+
 'use strict';
+
 const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
+
 module.exports = StripeResource.extend({
-  path: 'gift_cards/cards',
-  create: stripeMethod({
-    method: 'POST',
-    path: '',
-  }),
+  path: 'capital/financing_offers',
+
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{id}',
+    path: '/{financingOffer}',
   }),
-  update: stripeMethod({
-    method: 'POST',
-    path: '/{id}',
-  }),
+
   list: stripeMethod({
     method: 'GET',
     path: '',
     methodType: 'list',
   }),
-  validate: stripeMethod({
+
+  markDelivered: stripeMethod({
     method: 'POST',
-    path: '/validate',
+    path: '/{financingOffer}/mark_delivered',
   }),
 });

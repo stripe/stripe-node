@@ -214,7 +214,7 @@ declare module 'stripe' {
         /**
          * The pin associated with the gift card. Not all gift cards have pins.
          */
-        pin?: string;
+        giftcard_pin?: string;
       }
 
       class CardsResource {

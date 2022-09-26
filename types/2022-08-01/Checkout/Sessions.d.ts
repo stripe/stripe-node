@@ -2156,6 +2156,11 @@ declare module 'stripe' {
           paynow?: PaymentMethodOptions.Paynow;
 
           /**
+           * contains details about the PayPal payment method options.
+           */
+          paypal?: PaymentMethodOptions.Paypal;
+
+          /**
            * contains details about the Pix payment method options.
            */
           pix?: PaymentMethodOptions.Pix;
@@ -2577,6 +2582,10 @@ declare module 'stripe' {
             tos_shown_and_accepted?: boolean;
           }
 
+          interface Paypal {
+            currency: string;
+          }
+
           interface Pix {
             /**
              * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
@@ -2700,6 +2709,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'sepa_debit'

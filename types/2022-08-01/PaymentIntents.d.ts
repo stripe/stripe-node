@@ -956,6 +956,8 @@ declare module 'stripe' {
 
         paynow?: PaymentMethodOptions.Paynow;
 
+        paypal?: PaymentMethodOptions.Paypal;
+
         pix?: PaymentMethodOptions.Pix;
 
         promptpay?: PaymentMethodOptions.Promptpay;
@@ -1573,6 +1575,18 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Paypal {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Preferred locale of the PayPal checkout page that the customer is redirected to.
+           */
+          preferred_locale: string | null;
+        }
+
         interface Pix {
           /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire.
@@ -2147,6 +2161,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `paypal` PaymentMethod, this hash contains details about the PayPal payment method.
+         */
+        paypal?: PaymentMethodData.Paypal;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -2448,6 +2467,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Paypal {}
+
         interface Pix {}
 
         interface Promptpay {}
@@ -2499,6 +2520,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'sepa_debit'
@@ -2666,6 +2688,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
+         */
+        paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
 
         /**
          * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
@@ -3412,6 +3439,37 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Paypal {
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          preferred_locale?: Paypal.PreferredLocale;
+        }
+
+        namespace Paypal {
+          type PreferredLocale =
+            | 'cs_CZ'
+            | 'da_DK'
+            | 'de_AT'
+            | 'de_DE'
+            | 'de_LU'
+            | 'el_GR'
+            | 'en_GB'
+            | 'en_US'
+            | 'es_ES'
+            | 'fi_FI'
+            | 'fr_BE'
+            | 'fr_FR'
+            | 'fr_LU'
+            | 'hu_HU'
+            | 'it_IT'
+            | 'nl_BE'
+            | 'nl_NL'
+            | 'pl_PL'
+            | 'pt_PT'
+            | 'sk_SK'
+            | 'sv_SE';
         }
 
         interface Pix {
@@ -3935,6 +3993,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `paypal` PaymentMethod, this hash contains details about the PayPal payment method.
+         */
+        paypal?: PaymentMethodData.Paypal;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -4236,6 +4299,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Paypal {}
+
         interface Pix {}
 
         interface Promptpay {}
@@ -4287,6 +4352,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'sepa_debit'
@@ -4454,6 +4520,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
+         */
+        paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
 
         /**
          * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
@@ -5200,6 +5271,37 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Paypal {
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          preferred_locale?: Paypal.PreferredLocale;
+        }
+
+        namespace Paypal {
+          type PreferredLocale =
+            | 'cs_CZ'
+            | 'da_DK'
+            | 'de_AT'
+            | 'de_DE'
+            | 'de_LU'
+            | 'el_GR'
+            | 'en_GB'
+            | 'en_US'
+            | 'es_ES'
+            | 'fi_FI'
+            | 'fr_BE'
+            | 'fr_FR'
+            | 'fr_LU'
+            | 'hu_HU'
+            | 'it_IT'
+            | 'nl_BE'
+            | 'nl_NL'
+            | 'pl_PL'
+            | 'pt_PT'
+            | 'sk_SK'
+            | 'sv_SE';
         }
 
         interface Pix {
@@ -5821,6 +5923,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `paypal` PaymentMethod, this hash contains details about the PayPal payment method.
+         */
+        paypal?: PaymentMethodData.Paypal;
+
+        /**
          * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
          */
         pix?: PaymentMethodData.Pix;
@@ -6122,6 +6229,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Paypal {}
+
         interface Pix {}
 
         interface Promptpay {}
@@ -6173,6 +6282,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'paypal'
           | 'pix'
           | 'promptpay'
           | 'sepa_debit'
@@ -6340,6 +6450,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
+         */
+        paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
 
         /**
          * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
@@ -7086,6 +7201,37 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Paypal {
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          preferred_locale?: Paypal.PreferredLocale;
+        }
+
+        namespace Paypal {
+          type PreferredLocale =
+            | 'cs_CZ'
+            | 'da_DK'
+            | 'de_AT'
+            | 'de_DE'
+            | 'de_LU'
+            | 'el_GR'
+            | 'en_GB'
+            | 'en_US'
+            | 'es_ES'
+            | 'fi_FI'
+            | 'fr_BE'
+            | 'fr_FR'
+            | 'fr_LU'
+            | 'hu_HU'
+            | 'it_IT'
+            | 'nl_BE'
+            | 'nl_NL'
+            | 'pl_PL'
+            | 'pt_PT'
+            | 'sk_SK'
+            | 'sv_SE';
         }
 
         interface Pix {

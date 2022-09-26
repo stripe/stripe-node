@@ -9,6 +9,7 @@ module.exports = {
   // Support Accounts for consistency, Account for backwards compatibility
   Account: require('./resources/Accounts'),
   AccountLinks: require('./resources/AccountLinks'),
+  AccountSessions: require('./resources/AccountSessions'),
   ApplePayDomains: require('./resources/ApplePayDomains'),
   ApplicationFees: require('./resources/ApplicationFees'),
   Balance: require('./resources/Balance'),
@@ -38,6 +39,7 @@ module.exports = {
   Products: require('./resources/Products'),
   PromotionCodes: require('./resources/PromotionCodes'),
   Quotes: require('./resources/Quotes'),
+  QuotePhases: require('./resources/QuotePhases'),
   Refunds: require('./resources/Refunds'),
   Reviews: require('./resources/Reviews'),
   SetupAttempts: require('./resources/SetupAttempts'),
@@ -61,12 +63,21 @@ module.exports = {
     Configurations: require('./resources/BillingPortal/Configurations'),
     Sessions: require('./resources/BillingPortal/Sessions'),
   }),
+  Capital: resourceNamespace('capital', {
+    FinancingOffers: require('./resources/Capital/FinancingOffers'),
+    FinancingSummary: require('./resources/Capital/FinancingSummary'),
+    FinancingTransactions: require('./resources/Capital/FinancingTransactions'),
+  }),
   Checkout: resourceNamespace('checkout', {
     Sessions: require('./resources/Checkout/Sessions'),
   }),
   FinancialConnections: resourceNamespace('financialConnections', {
     Accounts: require('./resources/FinancialConnections/Accounts'),
     Sessions: require('./resources/FinancialConnections/Sessions'),
+  }),
+  GiftCards: resourceNamespace('giftCards', {
+    Cards: require('./resources/GiftCards/Cards'),
+    Transactions: require('./resources/GiftCards/Transactions'),
   }),
   Identity: resourceNamespace('identity', {
     VerificationReports: require('./resources/Identity/VerificationReports'),

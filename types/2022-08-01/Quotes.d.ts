@@ -429,6 +429,11 @@ declare module 'stripe' {
         billing_cycle_anchor?: 'reset' | null;
 
         /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
+
+        /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. This date is ignored if it is in the past when the quote is accepted. Measured in seconds since the Unix epoch.
          */
         effective_date: number | null;
@@ -992,6 +997,11 @@ declare module 'stripe' {
         billing_cycle_anchor?: Stripe.Emptyable<'reset'>;
 
         /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
+        /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
          */
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
@@ -1488,6 +1498,11 @@ declare module 'stripe' {
          * When specified as `reset`, the subscription will always start a new billing period when the quote is accepted.
          */
         billing_cycle_anchor?: Stripe.Emptyable<'reset'>;
+
+        /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
 
         /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
