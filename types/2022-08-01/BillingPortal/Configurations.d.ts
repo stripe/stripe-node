@@ -55,6 +55,8 @@ declare module 'stripe' {
          */
         livemode: boolean;
 
+        login_page: Configuration.LoginPage;
+
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
          */
@@ -238,6 +240,20 @@ declare module 'stripe' {
               | 'none';
           }
         }
+
+        interface LoginPage {
+          /**
+           * If `true`, a shareable `url` will be generated that will take your customers to a hosted login page for the customer portal.
+           *
+           * If `false`, the previously generated `url`, if any, will be deactivated.
+           */
+          enabled: boolean;
+
+          /**
+           * A shareable URL to the hosted portal login page. Your customers will be able to log in with their [email](https://stripe.com/docs/api/customers/object#customer_object-email) and receive a link to their customer portal.
+           */
+          url: string | null;
+        }
       }
 
       interface ConfigurationCreateParams {
@@ -260,6 +276,11 @@ declare module 'stripe' {
          * Specifies which fields in the response should be expanded.
          */
         expand?: Array<string>;
+
+        /**
+         * The hosted login page for this configuration. Learn more about the portal login page in our [integration docs](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal#share).
+         */
+        login_page?: ConfigurationCreateParams.LoginPage;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -462,6 +483,13 @@ declare module 'stripe' {
               | 'none';
           }
         }
+
+        interface LoginPage {
+          /**
+           * Set to `true` to generate a shareable URL [`login_page.url`](https://stripe.com/docs/api/customer_portal/configuration#portal_configuration_object-login_page-url) that will take your customers to a hosted login page for the customer portal.
+           */
+          enabled: boolean;
+        }
       }
 
       interface ConfigurationRetrieveParams {
@@ -496,6 +524,11 @@ declare module 'stripe' {
          * Information about the features available in the portal.
          */
         features?: ConfigurationUpdateParams.Features;
+
+        /**
+         * The hosted login page for this configuration. Learn more about the portal login page in our [integration docs](https://stripe.com/docs/billing/subscriptions/integrating-customer-portal#share).
+         */
+        login_page?: ConfigurationUpdateParams.LoginPage;
 
         /**
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
@@ -697,6 +730,15 @@ declare module 'stripe' {
               | 'create_prorations'
               | 'none';
           }
+        }
+
+        interface LoginPage {
+          /**
+           * Set to `true` to generate a shareable URL [`login_page.url`](https://stripe.com/docs/api/customer_portal/configuration#portal_configuration_object-login_page-url) that will take your customers to a hosted login page for the customer portal.
+           *
+           * Set to `false` to deactivate the `login_page.url`.
+           */
+          enabled: boolean;
         }
       }
 

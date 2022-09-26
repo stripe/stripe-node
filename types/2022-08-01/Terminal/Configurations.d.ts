@@ -79,12 +79,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -96,12 +96,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -113,12 +113,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -130,12 +130,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -147,12 +147,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -164,12 +164,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -181,12 +181,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -198,12 +198,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -215,12 +215,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -232,12 +232,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -249,12 +249,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -266,12 +266,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -283,12 +283,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
@@ -300,12 +300,12 @@ declare module 'stripe' {
             /**
              * Fixed amounts displayed when collecting a tip
              */
-            fixed_amounts: Array<number> | null;
+            fixed_amounts?: Array<number> | null;
 
             /**
              * Percentages displayed when collecting a tip
              */
-            percentages: Array<number> | null;
+            percentages?: Array<number> | null;
 
             /**
              * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed

@@ -178,10 +178,17 @@ declare module 'stripe' {
          * If set to `auto`, enables the collection of customer consent for promotional communications.
          */
         promotions: ConsentCollection.Promotions | null;
+
+        /**
+         * If set to `required`, it requires cutomers to accept the terms of service before being able to pay. If set to `none`, customers won't be shown a checkbox to accept the terms of service.
+         */
+        terms_of_service: ConsentCollection.TermsOfService | null;
       }
 
       namespace ConsentCollection {
         type Promotions = 'auto' | 'none';
+
+        type TermsOfService = 'none' | 'required';
       }
 
       type CustomerCreation = 'always' | 'if_required';
@@ -226,6 +233,8 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'paypal'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
@@ -503,6 +512,11 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
@@ -703,10 +717,18 @@ declare module 'stripe' {
          * from the merchant depending on the customer's locale. Only available to US merchants.
          */
         promotions?: ConsentCollection.Promotions;
+
+        /**
+         * If set to `required`, it requires customers to check a terms of service checkbox before being able to pay.
+         * There must be a valid terms of service URL set in your [Dashboard settings](https://dashboard.stripe.com/settings/public).
+         */
+        terms_of_service?: ConsentCollection.TermsOfService;
       }
 
       namespace ConsentCollection {
         type Promotions = 'auto' | 'none';
+
+        type TermsOfService = 'none' | 'required';
       }
 
       type CustomerCreation = 'always' | 'if_required';
@@ -797,6 +819,8 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'paypal'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
@@ -1070,6 +1094,11 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
@@ -1280,6 +1309,8 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'paypal'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'

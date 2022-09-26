@@ -154,6 +154,11 @@ declare module 'stripe' {
         default_payment_method: string | Stripe.PaymentMethod | null;
 
         /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
+
+        /**
          * The subscription schedule's default invoice settings.
          */
         invoice_settings: DefaultSettings.InvoiceSettings | null;
@@ -246,7 +251,7 @@ declare module 'stripe' {
         /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
-        currency?: string;
+        currency: string;
 
         /**
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
@@ -257,6 +262,11 @@ declare module 'stripe' {
          * The default tax rates to apply to the subscription during this phase of the subscription schedule.
          */
         default_tax_rates?: Array<Stripe.TaxRate> | null;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
 
         /**
          * The stackable discounts that will be applied to the subscription on this phase. Subscription item discounts are applied before subscription discounts.
@@ -593,6 +603,11 @@ declare module 'stripe' {
         default_payment_method?: string;
 
         /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
+        /**
          * All invoices will be billed using the specified settings.
          */
         invoice_settings?: DefaultSettings.InvoiceSettings;
@@ -699,6 +714,11 @@ declare module 'stripe' {
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
          */
         default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
 
         /**
          * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
@@ -1116,6 +1136,11 @@ declare module 'stripe' {
         default_payment_method?: string;
 
         /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
+        /**
          * All invoices will be billed using the specified settings.
          */
         invoice_settings?: DefaultSettings.InvoiceSettings;
@@ -1222,6 +1247,11 @@ declare module 'stripe' {
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
          */
         default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
 
         /**
          * The coupons to redeem into discounts for the schedule phase. If not specified, inherits the discount from the subscription's customer. Pass an empty string to avoid inheriting any discounts.
@@ -1786,7 +1816,7 @@ declare module 'stripe' {
 
         interface ItemAction {
           /**
-           * Details of the subscription item to add. The `price` must be unique across all items.
+           * Details of the subscription item to add. If an item with the same `price` exists, it will be replaced by this new item. Otherwise, it adds the new item.
            */
           add?: ItemAction.Add;
 

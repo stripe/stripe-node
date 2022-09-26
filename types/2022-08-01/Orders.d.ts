@@ -695,6 +695,7 @@ declare module 'stripe' {
             | 'link'
             | 'oxxo'
             | 'p24'
+            | 'paypal'
             | 'sepa_debit'
             | 'sofort'
             | 'wechat_pay';
@@ -1349,6 +1350,11 @@ declare module 'stripe' {
             p24?: PaymentMethodOptions.P24;
 
             /**
+             * If paying by `paypal`, this sub-hash contains details about the PayPal payment method options to pass to the order's PaymentIntent.
+             */
+            paypal?: PaymentMethodOptions.Paypal;
+
+            /**
              * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Debit payment method options to pass to the order's PaymentIntent.
              */
             sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -1639,11 +1645,13 @@ declare module 'stripe' {
               type PreferredLocale =
                 | 'da-DK'
                 | 'de-AT'
+                | 'de-CH'
                 | 'de-DE'
                 | 'en-AT'
                 | 'en-AU'
                 | 'en-BE'
                 | 'en-CA'
+                | 'en-CH'
                 | 'en-DE'
                 | 'en-DK'
                 | 'en-ES'
@@ -1655,6 +1663,8 @@ declare module 'stripe' {
                 | 'en-NL'
                 | 'en-NO'
                 | 'en-NZ'
+                | 'en-PL'
+                | 'en-PT'
                 | 'en-SE'
                 | 'en-US'
                 | 'es-ES'
@@ -1662,11 +1672,15 @@ declare module 'stripe' {
                 | 'fi-FI'
                 | 'fr-BE'
                 | 'fr-CA'
+                | 'fr-CH'
                 | 'fr-FR'
+                | 'it-CH'
                 | 'it-IT'
                 | 'nb-NO'
                 | 'nl-BE'
                 | 'nl-NL'
+                | 'pl-PL'
+                | 'pt-PT'
                 | 'sv-FI'
                 | 'sv-SE';
             }
@@ -1736,6 +1750,37 @@ declare module 'stripe' {
                * Confirm that the payer has accepted the P24 terms and conditions.
                */
               tos_shown_and_accepted?: boolean;
+            }
+
+            interface Paypal {
+              capture_method?: Stripe.Emptyable<'manual'>;
+
+              preferred_locale?: Paypal.PreferredLocale;
+            }
+
+            namespace Paypal {
+              type PreferredLocale =
+                | 'cs_CZ'
+                | 'da_DK'
+                | 'de_AT'
+                | 'de_DE'
+                | 'de_LU'
+                | 'el_GR'
+                | 'en_GB'
+                | 'en_US'
+                | 'es_ES'
+                | 'fi_FI'
+                | 'fr_BE'
+                | 'fr_FR'
+                | 'fr_LU'
+                | 'hu_HU'
+                | 'it_IT'
+                | 'nl_BE'
+                | 'nl_NL'
+                | 'pl_PL'
+                | 'pt_PT'
+                | 'sk_SK'
+                | 'sv_SE';
             }
 
             interface SepaDebit {
@@ -1839,6 +1884,7 @@ declare module 'stripe' {
             | 'link'
             | 'oxxo'
             | 'p24'
+            | 'paypal'
             | 'sepa_debit'
             | 'sofort'
             | 'wechat_pay';
@@ -2520,6 +2566,11 @@ declare module 'stripe' {
             p24?: Stripe.Emptyable<PaymentMethodOptions.P24>;
 
             /**
+             * If paying by `paypal`, this sub-hash contains details about the PayPal payment method options to pass to the order's PaymentIntent.
+             */
+            paypal?: Stripe.Emptyable<PaymentMethodOptions.Paypal>;
+
+            /**
              * If paying by `sepa_debit`, this sub-hash contains details about the SEPA Debit payment method options to pass to the order's PaymentIntent.
              */
             sepa_debit?: Stripe.Emptyable<PaymentMethodOptions.SepaDebit>;
@@ -2810,11 +2861,13 @@ declare module 'stripe' {
               type PreferredLocale =
                 | 'da-DK'
                 | 'de-AT'
+                | 'de-CH'
                 | 'de-DE'
                 | 'en-AT'
                 | 'en-AU'
                 | 'en-BE'
                 | 'en-CA'
+                | 'en-CH'
                 | 'en-DE'
                 | 'en-DK'
                 | 'en-ES'
@@ -2826,6 +2879,8 @@ declare module 'stripe' {
                 | 'en-NL'
                 | 'en-NO'
                 | 'en-NZ'
+                | 'en-PL'
+                | 'en-PT'
                 | 'en-SE'
                 | 'en-US'
                 | 'es-ES'
@@ -2833,11 +2888,15 @@ declare module 'stripe' {
                 | 'fi-FI'
                 | 'fr-BE'
                 | 'fr-CA'
+                | 'fr-CH'
                 | 'fr-FR'
+                | 'it-CH'
                 | 'it-IT'
                 | 'nb-NO'
                 | 'nl-BE'
                 | 'nl-NL'
+                | 'pl-PL'
+                | 'pt-PT'
                 | 'sv-FI'
                 | 'sv-SE';
             }
@@ -2907,6 +2966,37 @@ declare module 'stripe' {
                * Confirm that the payer has accepted the P24 terms and conditions.
                */
               tos_shown_and_accepted?: boolean;
+            }
+
+            interface Paypal {
+              capture_method?: Stripe.Emptyable<'manual'>;
+
+              preferred_locale?: Paypal.PreferredLocale;
+            }
+
+            namespace Paypal {
+              type PreferredLocale =
+                | 'cs_CZ'
+                | 'da_DK'
+                | 'de_AT'
+                | 'de_DE'
+                | 'de_LU'
+                | 'el_GR'
+                | 'en_GB'
+                | 'en_US'
+                | 'es_ES'
+                | 'fi_FI'
+                | 'fr_BE'
+                | 'fr_FR'
+                | 'fr_LU'
+                | 'hu_HU'
+                | 'it_IT'
+                | 'nl_BE'
+                | 'nl_NL'
+                | 'pl_PL'
+                | 'pt_PT'
+                | 'sk_SK'
+                | 'sv_SE';
             }
 
             interface SepaDebit {
@@ -3010,6 +3100,7 @@ declare module 'stripe' {
             | 'link'
             | 'oxxo'
             | 'p24'
+            | 'paypal'
             | 'sepa_debit'
             | 'sofort'
             | 'wechat_pay';

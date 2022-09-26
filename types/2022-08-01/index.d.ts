@@ -20,6 +20,9 @@
 ///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
+///<reference path='./Capital/FinancingOffers.d.ts' />
+///<reference path='./Capital/FinancingSummary.d.ts' />
+///<reference path='./Capital/FinancingTransactions.d.ts' />
 ///<reference path='./Cards.d.ts' />
 ///<reference path='./CashBalances.d.ts' />
 ///<reference path='./Charges.d.ts' />
@@ -207,6 +210,11 @@ declare module 'stripe' {
     billingPortal: {
       configurations: Stripe.BillingPortal.ConfigurationsResource;
       sessions: Stripe.BillingPortal.SessionsResource;
+    };
+    capital: {
+      financingOffers: Stripe.Capital.FinancingOffersResource;
+      financingSummary: Stripe.Capital.FinancingSummaryResource;
+      financingTransactions: Stripe.Capital.FinancingTransactionsResource;
     };
     checkout: {
       sessions: Stripe.Checkout.SessionsResource;
