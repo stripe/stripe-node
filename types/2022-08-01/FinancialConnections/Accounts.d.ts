@@ -299,7 +299,7 @@ declare module 'stripe' {
 
       interface AccountRefreshParams {
         /**
-         * The list of account features that you would like to refresh. Either: `balance` or `ownership`.
+         * The list of account features that you would like to refresh.
          */
         features: Array<AccountRefreshParams.Feature>;
 

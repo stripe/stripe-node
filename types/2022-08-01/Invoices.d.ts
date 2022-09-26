@@ -230,6 +230,11 @@ declare module 'stripe' {
       footer: string | null;
 
       /**
+       * Details of the invoice that was cloned. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
+       */
+      from_invoice: Invoice.FromInvoice | null;
+
+      /**
        * The URL for the hosted invoice page, which allows customers to view and pay an invoice. If the invoice has not been finalized yet, this will be null.
        */
       hosted_invoice_url?: string | null;
@@ -243,6 +248,11 @@ declare module 'stripe' {
        * The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
        */
       last_finalization_error: Invoice.LastFinalizationError | null;
+
+      /**
+       * The ID of the most recent non-draft revision of this invoice
+       */
+      latest_revision: string | Stripe.Invoice | null;
 
       /**
        * The individual line items that make up the invoice. `lines` is sorted as follows: invoice items in reverse chronological order, followed by the subscription, if any.
@@ -535,6 +545,18 @@ declare module 'stripe' {
          * The value of the custom field.
          */
         value: string;
+      }
+
+      interface FromInvoice {
+        /**
+         * The relation between this invoice and the cloned invoice
+         */
+        action: string;
+
+        /**
+         * The invoice that was cloned.
+         */
+        invoice: string | Stripe.Invoice;
       }
 
       interface LastFinalizationError {
@@ -1042,6 +1064,11 @@ declare module 'stripe' {
       footer?: string;
 
       /**
+       * Revise an existing invoice. The new invoice will be created in `status=draft`. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
+       */
+      from_invoice?: InvoiceCreateParams.FromInvoice;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -1116,6 +1143,18 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+      }
+
+      interface FromInvoice {
+        /**
+         * The relation between the new invoice and the original invoice. Currently, only 'revision' is permitted
+         */
+        action: 'revision';
+
+        /**
+         * The `id` of the invoice that will be cloned.
+         */
+        invoice: string;
       }
 
       interface PaymentSettings {

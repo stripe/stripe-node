@@ -191,7 +191,7 @@ declare module 'stripe' {
       /**
        * Three-letter [ISO code for the currency](https://stripe.com/docs/payouts) paid out to the bank account.
        */
-      currency: string | null;
+      currency?: string | null;
 
       /**
        * Always true for a deleted object

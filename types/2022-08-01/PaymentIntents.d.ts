@@ -76,7 +76,7 @@ declare module 'stripe' {
       /**
        * Charges that were created by this PaymentIntent, if any.
        */
-      charges: ApiList<Stripe.Charge>;
+      charges?: ApiList<Stripe.Charge>;
 
       /**
        * The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key.
@@ -378,6 +378,8 @@ declare module 'stripe' {
         oxxo_display_details?: NextAction.OxxoDisplayDetails;
 
         paynow_display_qr_code?: NextAction.PaynowDisplayQrCode;
+
+        pix_display_qr_code?: NextAction.PixDisplayQrCode;
 
         promptpay_display_qr_code?: NextAction.PromptpayDisplayQrCode;
 
@@ -754,6 +756,33 @@ declare module 'stripe' {
           image_url_svg: string;
         }
 
+        interface PixDisplayQrCode {
+          /**
+           * The raw data string used to generate QR code, it should be used together with QR code library.
+           */
+          data?: string;
+
+          /**
+           * The date (unix timestamp) when the PIX expires.
+           */
+          expires_at?: number;
+
+          /**
+           * The URL to the hosted pix instructions page, which allows customers to view the pix QR code.
+           */
+          hosted_instructions_url?: string;
+
+          /**
+           * The image_url_png string used to render png QR code
+           */
+          image_url_png?: string;
+
+          /**
+           * The image_url_svg string used to render svg QR code
+           */
+          image_url_svg?: string;
+        }
+
         interface PromptpayDisplayQrCode {
           /**
            * The raw data string used to generate QR code, it should be used together with QR code library.
@@ -926,6 +955,8 @@ declare module 'stripe' {
         p24?: PaymentMethodOptions.P24;
 
         paynow?: PaymentMethodOptions.Paynow;
+
+        pix?: PaymentMethodOptions.Pix;
 
         promptpay?: PaymentMethodOptions.Promptpay;
 
@@ -1542,6 +1573,18 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Pix {
+          /**
+           * The number of seconds (between 10 and 1209600) after which Pix payment will expire.
+           */
+          expires_after_seconds: number | null;
+
+          /**
+           * The timestamp at which the Pix expires.
+           */
+          expires_at: number | null;
+        }
+
         interface Promptpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2104,6 +2147,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -2241,6 +2289,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -2399,6 +2448,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -2448,6 +2499,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -2614,6 +2666,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
+         */
+        pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
         /**
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
@@ -3204,11 +3261,13 @@ declare module 'stripe' {
           type PreferredLocale =
             | 'da-DK'
             | 'de-AT'
+            | 'de-CH'
             | 'de-DE'
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
             | 'en-CA'
+            | 'en-CH'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
@@ -3220,6 +3279,8 @@ declare module 'stripe' {
             | 'en-NL'
             | 'en-NO'
             | 'en-NZ'
+            | 'en-PL'
+            | 'en-PT'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -3227,11 +3288,15 @@ declare module 'stripe' {
             | 'fi-FI'
             | 'fr-BE'
             | 'fr-CA'
+            | 'fr-CH'
             | 'fr-FR'
+            | 'it-CH'
             | 'it-IT'
             | 'nb-NO'
             | 'nl-BE'
             | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
             | 'sv-FI'
             | 'sv-SE';
         }
@@ -3347,6 +3412,18 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Pix {
+          /**
+           * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+           */
+          expires_after_seconds?: number;
+
+          /**
+           * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+           */
+          expires_at?: number;
         }
 
         interface Promptpay {
@@ -3858,6 +3935,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -3995,6 +4077,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -4153,6 +4236,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -4202,6 +4287,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -4368,6 +4454,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
+         */
+        pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
         /**
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
@@ -4958,11 +5049,13 @@ declare module 'stripe' {
           type PreferredLocale =
             | 'da-DK'
             | 'de-AT'
+            | 'de-CH'
             | 'de-DE'
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
             | 'en-CA'
+            | 'en-CH'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
@@ -4974,6 +5067,8 @@ declare module 'stripe' {
             | 'en-NL'
             | 'en-NO'
             | 'en-NZ'
+            | 'en-PL'
+            | 'en-PT'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -4981,11 +5076,15 @@ declare module 'stripe' {
             | 'fi-FI'
             | 'fr-BE'
             | 'fr-CA'
+            | 'fr-CH'
             | 'fr-FR'
+            | 'it-CH'
             | 'it-IT'
             | 'nb-NO'
             | 'nl-BE'
             | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
             | 'sv-FI'
             | 'sv-SE';
         }
@@ -5101,6 +5200,18 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Pix {
+          /**
+           * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+           */
+          expires_after_seconds?: number;
+
+          /**
+           * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+           */
+          expires_at?: number;
         }
 
         interface Promptpay {
@@ -5710,6 +5821,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -5847,6 +5963,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -6005,6 +6122,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -6054,6 +6173,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -6220,6 +6340,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
+         */
+        pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
         /**
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
@@ -6810,11 +6935,13 @@ declare module 'stripe' {
           type PreferredLocale =
             | 'da-DK'
             | 'de-AT'
+            | 'de-CH'
             | 'de-DE'
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
             | 'en-CA'
+            | 'en-CH'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
@@ -6826,6 +6953,8 @@ declare module 'stripe' {
             | 'en-NL'
             | 'en-NO'
             | 'en-NZ'
+            | 'en-PL'
+            | 'en-PT'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -6833,11 +6962,15 @@ declare module 'stripe' {
             | 'fi-FI'
             | 'fr-BE'
             | 'fr-CA'
+            | 'fr-CH'
             | 'fr-FR'
+            | 'it-CH'
             | 'it-IT'
             | 'nb-NO'
             | 'nl-BE'
             | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
             | 'sv-FI'
             | 'sv-SE';
         }
@@ -6953,6 +7086,18 @@ declare module 'stripe' {
            * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
            */
           setup_future_usage?: 'none';
+        }
+
+        interface Pix {
+          /**
+           * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+           */
+          expires_after_seconds?: number;
+
+          /**
+           * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+           */
+          expires_at?: number;
         }
 
         interface Promptpay {
@@ -7178,6 +7323,11 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.MetadataParam;
+
+      /**
+       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
+       */
+      statement_descriptor?: string;
 
       /**
        * The parameters used to automatically create a Transfer when the payment is captured.

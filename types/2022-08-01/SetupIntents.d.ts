@@ -848,6 +848,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -985,6 +990,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -1143,6 +1149,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -1192,6 +1200,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -1714,6 +1723,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -1851,6 +1865,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -2009,6 +2024,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -2058,6 +2075,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -2662,6 +2680,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -2799,6 +2822,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -2957,6 +2981,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -3006,6 +3032,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'

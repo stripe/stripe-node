@@ -613,4 +613,28 @@ describe('Stripe Module', function() {
       expect(newStripe.VERSION).to.equal(Stripe.PACKAGE_VERSION);
     });
   });
+
+  describe('imports', function() {
+    const runTestProject = (projectName) => {
+      const script = `
+      cd testProjects/${projectName}
+      npm install
+      node index.js ${testUtils.getUserStripeKey()}
+    `;
+      require('child_process').execSync(script);
+    };
+
+    it('should work with CommonJS imports', () => {
+      expect(runTestProject.bind(null, 'cjs')).to.not.throw();
+    });
+
+    it('should work with ESModule imports', function() {
+      // Node supports ES Modules starting at v12
+      if (parseInt(process.versions.node.split('.')[0], 10) <= 12) {
+        this.skip();
+      }
+
+      expect(runTestProject.bind(null, 'mjs')).to.not.throw();
+    });
+  });
 });
