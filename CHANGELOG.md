@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.12.0-beta.1 - 2022-09-26
+* [#1561](https://github.com/stripe/stripe-node/pull/1561) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add `FinancingOffer`, `FinancingSummary` and `FinancingTransaction` resources.
+
 ## 10.11.0 - 2022-09-22
 * [#1560](https://github.com/stripe/stripe-node/pull/1560) API Updates
   * Add support for `terms_of_service` on `Checkout.Session.consent_collection`, `Checkout.Session.consent`, `CheckoutSessionCreateParams.consent_collection`, `PaymentLink.consent_collection`, and `PaymentLinkCreateParams.consent_collection`
@@ -71,7 +76,7 @@
 ## 10.4.0-beta.1 - 2022-08-23
 * [#1523](https://github.com/stripe/stripe-node/pull/1523) API Updates for beta branch
   - Updated stable APIs to the latest version
-  - `Stripe-Version` beta headers are not pinned by-default and need to be manually specified, please refer to [beta SDKs README section](https://github.com/stripe/stripe-node/blob/master/README.md#beta-sdks) 
+  - `Stripe-Version` beta headers are not pinned by-default and need to be manually specified, please refer to [beta SDKs README section](https://github.com/stripe/stripe-node/blob/master/README.md#beta-sdks)
 * [#1521](https://github.com/stripe/stripe-node/pull/1521) fix: Update FetchHttpClient to send empty string for empty POST/PUT/PATCH requests.
 
 ## 10.3.0 - 2022-08-19
