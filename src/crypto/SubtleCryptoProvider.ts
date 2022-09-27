@@ -25,7 +25,7 @@ class SubtleCryptoProvider extends CryptoProvider {
   }
 
   /** @override */
-  async computeHMACSignatureAsync(payload, secret) {
+  async computeHMACSignatureAsync(payload, secret): Promise<string> {
     const encoder = new TextEncoder();
 
     const key = await this.subtleCrypto.importKey(
