@@ -6,7 +6,7 @@ import CryptoProvider = require('./CryptoProvider');
  * This only supports asynchronous operations.
  */
 class SubtleCryptoProvider extends CryptoProvider {
-  subtleCrypto: any;
+  subtleCrypto: Crypto;
 
   constructor(subtleCrypto) {
     super();
