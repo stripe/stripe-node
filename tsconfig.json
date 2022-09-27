@@ -5,6 +5,7 @@
     "target": "es2017",
     "module": "commonjs",
     "checkJs": false,
+    "alwaysStrict": true,
   },
   "include": ["./src/**/*"]
 }
