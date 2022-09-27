@@ -87,7 +87,7 @@ class NodeHttpClient extends HttpClient {
 }
 
 class NodeHttpClientResponse extends HttpClientResponse {
-  _res: any;
+  _res: Response;
 
   constructor(res) {
     super(res.statusCode, res.headers || {});
