@@ -1,5 +1,3 @@
-'use strict';
-
 import utils = require('./utils');
 import _Error = require('./Error');
 const {StripeError} = _Error;

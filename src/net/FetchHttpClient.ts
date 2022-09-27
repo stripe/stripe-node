@@ -1,5 +1,3 @@
-'use strict';
-
 import _HttpClient = require('./HttpClient');
 const {HttpClient, HttpClientResponse} = _HttpClient;
 

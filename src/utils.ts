@@ -1,5 +1,3 @@
-'use strict';
-
 const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
 const crypto = require('crypto');

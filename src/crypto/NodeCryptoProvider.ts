@@ -1,5 +1,3 @@
-'use strict';
-
 import crypto = require('crypto');
 
 import CryptoProvider = require('./CryptoProvider');

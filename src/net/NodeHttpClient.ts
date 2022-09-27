@@ -1,5 +1,3 @@
-'use strict';
-
 import http = require('http');
 import https = require('https');
 
