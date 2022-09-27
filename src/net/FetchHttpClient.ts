@@ -93,7 +93,7 @@ class FetchHttpClient extends HttpClient {
 }
 
 class FetchHttpClientResponse extends HttpClientResponse {
-  _res: any;
+  _res: Response;
 
   constructor(res) {
     super(
