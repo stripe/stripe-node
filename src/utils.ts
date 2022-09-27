@@ -43,11 +43,11 @@ type Settings = {
 };
 
 type Options = {
-  auth?: any;
-  host?: any;
+  auth?: string;
+  host?: string;
   settings?: Settings;
   streaming?: boolean;
-  headers?: {[header: string]: string};
+  headers?: Record<string, string>;
 };
 
 const utils = {

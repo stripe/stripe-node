@@ -12,8 +12,11 @@ const {HttpClient, HttpClientResponse} = _HttpClient;
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
 class FetchHttpClient extends HttpClient {
-  _fetchFn: any;
-  _res: any;
+  _fetchFn: (
+    input: RequestInfo | URL,
+    init?: RequestInit | undefined
+  ) => Promise<Response>;
+  _res: Response;
 
   constructor(fetchFn) {
     super();

@@ -1,7 +1,7 @@
 'use strict';
 
-const http = require('http');
-const https = require('https');
+import http = require('http');
+import https = require('https');
 
 import _HttpClient = require('./HttpClient');
 const {HttpClient, HttpClientResponse} = _HttpClient;
@@ -14,7 +14,7 @@ const defaultHttpsAgent = new https.Agent({keepAlive: true});
  * requests.`
  */
 class NodeHttpClient extends HttpClient {
-  _agent: any;
+  _agent: http.Agent | https.Agent;
 
   constructor(agent) {
     super();

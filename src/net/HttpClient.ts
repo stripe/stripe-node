@@ -48,7 +48,7 @@ HttpClient.TIMEOUT_ERROR_CODE = 'ETIMEDOUT';
 
 class HttpClientResponse {
   _statusCode: number;
-  _headers: object;
+  _headers: Record<string, string>;
 
   constructor(statusCode, headers) {
     this._statusCode = statusCode;
