@@ -1030,7 +1030,7 @@ declare module 'stripe' {
           /**
            * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
            */
-          incremental_authorization_supported: boolean | null;
+          incremental_authorization_supported: boolean;
 
           /**
            * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
@@ -1050,7 +1050,7 @@ declare module 'stripe' {
           /**
            * Defines whether the authorized amount can be over-captured or not
            */
-          overcapture_supported: boolean | null;
+          overcapture_supported: boolean;
 
           /**
            * How card details were read in this transaction.
