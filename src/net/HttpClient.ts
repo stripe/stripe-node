@@ -53,11 +53,11 @@ class HttpClientResponse {
     this._headers = headers;
   }
 
-  getStatusCode() {
+  getStatusCode(): number {
     return this._statusCode;
   }
 
-  getHeaders() {
+  getHeaders(): Record<string, string> {
     return this._headers;
   }
 
@@ -69,7 +69,7 @@ class HttpClientResponse {
     throw new Error('toStream not implemented.');
   }
 
-  toJSON() {
+  toJSON(): any {
     throw new Error('toJSON not implemented.');
   }
 }

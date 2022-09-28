@@ -87,9 +87,9 @@ class NodeHttpClient extends HttpClient {
 }
 
 class NodeHttpClientResponse extends HttpClientResponse {
-  _res: any;
+  _res: http.IncomingMessage;
 
-  constructor(res) {
+  constructor(res: http.IncomingMessage) {
     super(res.statusCode, res.headers || {});
     this._res = res;
   }
@@ -106,7 +106,7 @@ class NodeHttpClientResponse extends HttpClientResponse {
     return this._res;
   }
 
-  toJSON() {
+  toJSON(): any {
     return new Promise((resolve, reject) => {
       let response = '';
 

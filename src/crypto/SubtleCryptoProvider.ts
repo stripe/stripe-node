@@ -6,9 +6,9 @@ import CryptoProvider = require('./CryptoProvider');
  * This only supports asynchronous operations.
  */
 class SubtleCryptoProvider extends CryptoProvider {
-  subtleCrypto: any;
+  subtleCrypto: SubtleCrypto;
 
-  constructor(subtleCrypto) {
+  constructor(subtleCrypto: SubtleCrypto) {
     super();
 
     // If no subtle crypto is interface, default to the global namespace. This
@@ -25,7 +25,10 @@ class SubtleCryptoProvider extends CryptoProvider {
   }
 
   /** @override */
-  async computeHMACSignatureAsync(payload, secret): Promise<string> {
+  async computeHMACSignatureAsync(
+    payload: string,
+    secret: string
+  ): Promise<string> {
     const encoder = new TextEncoder();
 
     const key = await this.subtleCrypto.importKey(
