@@ -26,28 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Print package version old way
-        run: |
-          VERSION=$(npm -s run env echo '$npm_package_version')
-          echo $VERSION
-
-      - name: Print package version new way
-        run: |
-          VERSION=$(node -p "require('./package.json').version" )
-          echo $VERSION
-
       - name: Setup node
         uses: actions/setup-node@v2
-
-      - name: Print package version old way
-        run: |
-          VERSION=$(npm -s run env echo '$npm_package_version')
-          echo $VERSION
-
-      - name: Print package version new way
-        run: |
-          VERSION=$(node -p "require('./package.json').version" )
-          echo $VERSION
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -145,7 +125,7 @@ jobs:
           npm config set //registry.npmjs.org/:_authToken $NPM_AUTH_TOKEN
           # print the NPM user name for validation
           npm whoami
-          VERSION=$(npm -s run env echo '$npm_package_version')
+          VERSION=$(node -p "require('./package.json').version" )
           # Only publish stable versions to the latest tag
           if [[ "$VERSION" =~ ^[^-]+$ ]]; then
             NPM_TAG="latest"
