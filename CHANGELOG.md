@@ -1,5 +1,15 @@
 # Changelog
 
+## 10.12.0 - 2022-09-29
+* [#1564](https://github.com/stripe/stripe-node/pull/1564) API Updates
+  * Change type of `Charge.payment_method_details.card_present.incremental_authorization_supported` and `Charge.payment_method_details.card_present.overcapture_supported` from `boolean | null` to `boolean`
+  * Add support for `created` on `Checkout.Session`
+  * Add support for `setup_future_usage` on `PaymentIntent.payment_method_options.pix`, `PaymentIntentConfirmParams.payment_method_options.pix`, `PaymentIntentCreateParams.payment_method_options.pix`, and `PaymentIntentUpdateParams.payment_method_options.pix`
+  * Deprecate `CheckoutSessionCreateParams.subscription_data.items` (use the `line_items` param instead). This will be removed in the next major version.
+* [#1563](https://github.com/stripe/stripe-node/pull/1563) Migrate other Stripe infrastructure to TS
+* [#1562](https://github.com/stripe/stripe-node/pull/1562) Restore lib after generating
+* [#1551](https://github.com/stripe/stripe-node/pull/1551) Re-introduce Typescript changes
+
 ## 10.11.0 - 2022-09-22
 * [#1560](https://github.com/stripe/stripe-node/pull/1560) API Updates
   * Add support for `terms_of_service` on `Checkout.Session.consent_collection`, `Checkout.Session.consent`, `CheckoutSessionCreateParams.consent_collection`, `PaymentLink.consent_collection`, and `PaymentLinkCreateParams.consent_collection`

@@ -81,6 +81,11 @@ declare module 'stripe' {
         consent_collection: Session.ConsentCollection | null;
 
         /**
+         * Time at which the object was created. Measured in seconds since the Unix epoch.
+         */
+        created: number;
+
+        /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         currency: string | null;
@@ -3146,7 +3151,7 @@ declare module 'stripe' {
           description?: string;
 
           /**
-           * A list of items, each with an attached plan, that the customer is subscribing to. Prefer using `line_items`.
+           * This parameter is deprecated. Use the line_items parameter on the Session instead.
            */
           items?: Array<SubscriptionData.Item>;
 
