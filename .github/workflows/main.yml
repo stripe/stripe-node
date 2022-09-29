@@ -27,12 +27,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Print package version old way
-        run:
+        run: |
           VERSION=$(npm -s run env echo '$npm_package_version')
           echo $VERSION
 
       - name: Print package version new way
-        run:
+        run: |
           VERSION=$(node -p "require('./package.json').version" )
           echo $VERSION
 
@@ -40,12 +40,12 @@ jobs:
         uses: actions/setup-node@v2
 
       - name: Print package version old way
-        run:
+        run: |
           VERSION=$(npm -s run env echo '$npm_package_version')
           echo $VERSION
 
       - name: Print package version new way
-        run:
+        run: |
           VERSION=$(node -p "require('./package.json').version" )
           echo $VERSION
 
