@@ -50,7 +50,7 @@
     "nanoid": "3.2.0"
   },
   "dependencies": {
-    "@types/node": ">=8.1.0",
+    "@types/node": "^18.7.23",
     "qs": "^6.10.3"
   },
   "license": "MIT",
@@ -68,5 +68,5 @@
     "report": "nyc -r text -r lcov report",
     "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prettier-format": "prettier --config .prettierrc 'lib/**/*.js' --write"
-}
+  }
 }
