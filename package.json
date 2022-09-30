@@ -27,7 +27,7 @@
   "main": "lib/stripe.js",
   "types": "types/2022-08-01/index.d.ts",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^2.13.0",
     "chai": "~4.2.0",
     "chai-as-promised": "~7.1.1",
