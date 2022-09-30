@@ -17,5 +17,6 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 0,
     '@typescript-eslint/triple-slash-reference': 0,
     '@typescript-eslint/ban-ts-ignore': 0,
+    '@typescript-eslint/ban-types': 0,
   },
 };

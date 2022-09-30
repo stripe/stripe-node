@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 type RawErrorType =
   | 'card_error'
   | 'invalid_request_error'
