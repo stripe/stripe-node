@@ -36,7 +36,7 @@
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-chai-friendly": "^0.4.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "mocha": "^10.0.0",
+    "mocha": "8.4.0",
     "mocha-junit-reporter": "^1.23.1",
     "nock": "^13.1.1",
     "node-fetch": "^2.6.2",
