@@ -251,8 +251,8 @@ module.exports = {
   extends: ['plugin:prettier/recommended'],
   overrides: [
     {
-      files: ["**/*.ts"],
-      parser: "@typescript-eslint/parser",
+      files: ['**/*.ts'],
+      parser: '@typescript-eslint/parser',
       plugins: ['@typescript-eslint', 'prettier'],
       extends: [
         'eslint:recommended',
