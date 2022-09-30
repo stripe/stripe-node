@@ -41,7 +41,7 @@
     "nock": "^13.1.1",
     "node-fetch": "^2.6.2",
     "nyc": "^15.1.0",
-    "prettier": "^1.16.4",
+    "prettier": "^2.7.1",
     "typescript": "^4.8.4"
   },
   "resolutions": {
