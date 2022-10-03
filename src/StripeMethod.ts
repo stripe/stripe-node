@@ -22,7 +22,9 @@ const makeAutoPaginationMethods = autoPagination.makeAutoPaginationMethods;
 function stripeMethod(spec) {
   if (spec.path !== undefined && spec.fullPath !== undefined) {
     throw new Error(
-      `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`
+      `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${
+        spec.fullPath
+      }).`
     );
   }
   return function(...args) {

@@ -27,31 +27,30 @@
   "main": "lib/stripe.js",
   "types": "types/2022-08-01/index.d.ts",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.13.0",
-    "@typescript-eslint/parser": "^2.13.0",
-    "chai": "~4.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "chai": "^4.3.6",
     "chai-as-promised": "~7.1.1",
     "coveralls": "^3.1.1",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^4.1.0",
-    "eslint-plugin-chai-friendly": "^0.4.0",
-    "eslint-plugin-prettier": "^3.0.1",
-    "mocha": "^8.3.2",
-    "mocha-junit-reporter": "^1.23.1",
-    "nock": "^13.1.1",
-    "node-fetch": "^2.6.2",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-chai-friendly": "^0.7.2",
+    "eslint-plugin-prettier": "3.4.1",
+    "mocha": "^8.4.0",
+    "mocha-junit-reporter": "^2.1.0",
+    "nock": "^13.2.9",
+    "node-fetch": "2.6.6",
     "nyc": "^15.1.0",
-    "prettier": "^1.16.4",
-    "typescript": "^4.8.3"
+    "prettier": "1.16.4",
+    "typescript": "^4.8.4"
   },
   "resolutions": {
-    "ansi-regex": "5.0.1",
     "minimist": "1.2.6",
-    "nanoid": "3.2.0"
+    "nanoid": "^3.2.0"
   },
   "dependencies": {
     "@types/node": ">=8.1.0",
-    "qs": "^6.10.3"
+    "qs": "^6.11.0"
   },
   "license": "MIT",
   "scripts": {
@@ -68,5 +67,5 @@
     "report": "nyc -r text -r lcov report",
     "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prettier-format": "prettier --config .prettierrc 'lib/**/*.js' --write"
-}
+  }
 }

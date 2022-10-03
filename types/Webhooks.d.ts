@@ -13,7 +13,6 @@ declare module 'stripe' {
          * Raw text body payload received from Stripe.
          */
         payload: string | Buffer,
-
         /**
          * Value of the `stripe-signature` header from Stripe.
          * Typically a string.
@@ -25,18 +24,15 @@ declare module 'stripe' {
          * only a string.
          */
         header: string | Buffer | Array<string>,
-
         /**
          * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
          * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
          */
         secret: string,
-
         /**
          * Seconds of tolerance on timestamps.
          */
         tolerance?: number,
-
         /**
          * Optional CryptoProvider to use for computing HMAC signatures.
          */
@@ -54,7 +50,6 @@ declare module 'stripe' {
          * Raw text body payload received from Stripe.
          */
         payload: string | Buffer,
-
         /**
          * Value of the `stripe-signature` header from Stripe.
          * Typically a string.
@@ -66,18 +61,15 @@ declare module 'stripe' {
          * only a string.
          */
         header: string | Buffer | Array<string>,
-
         /**
          * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
          * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
          */
         secret: string,
-
         /**
          * Seconds of tolerance on timestamps.
          */
         tolerance?: number,
-
         /**
          * Optional CryptoProvider to use for computing HMAC signatures.
          */

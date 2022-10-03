@@ -51,10 +51,7 @@ describe('Plans Resource', () => {
       stripe.plans.create({
         currency: 'usd',
         billing_scheme: 'tiered',
-        tiers: [
-          {up_to: 123, amount: 100},
-          {up_to: 'inf', amount: 200},
-        ],
+        tiers: [{up_to: 123, amount: 100}, {up_to: 'inf', amount: 200}],
         tiers_mode: 'volume',
       });
       expect(stripe.LAST_REQUEST).to.deep.equal({
@@ -64,10 +61,7 @@ describe('Plans Resource', () => {
         data: {
           currency: 'usd',
           billing_scheme: 'tiered',
-          tiers: [
-            {up_to: 123, amount: 100},
-            {up_to: 'inf', amount: 200},
-          ],
+          tiers: [{up_to: 123, amount: 100}, {up_to: 'inf', amount: 200}],
           tiers_mode: 'volume',
         },
         settings: {},
