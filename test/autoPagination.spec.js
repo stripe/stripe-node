@@ -497,7 +497,10 @@ describe('auto pagination', function() {
     describe('foward pagination', () => {
       it('paginates forwards through a page', () => {
         return testCase(mockPagination, {
-          pages: [[1, 2], [3, 4]],
+          pages: [
+            [1, 2],
+            [3, 4],
+          ],
           limit: 10,
           expectedIds: [1, 2, 3, 4],
           expectedParamsLog: ['?starting_after=2'],
@@ -515,7 +518,11 @@ describe('auto pagination', function() {
 
       it('respects limit even when paginating', () => {
         return testCase(mockPagination, {
-          pages: [[1, 2], [3, 4], [5, 6]],
+          pages: [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+          ],
           limit: 5,
           expectedIds: [1, 2, 3, 4, 5],
           expectedParamsLog: ['?starting_after=2', '?starting_after=4'],
@@ -524,7 +531,13 @@ describe('auto pagination', function() {
 
       it('paginates through multiple full pages', () => {
         return testCase(mockPagination, {
-          pages: [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]],
+          pages: [
+            [1, 2],
+            [3, 4],
+            [5, 6],
+            [7, 8],
+            [9, 10],
+          ],
           limit: 10,
           expectedIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
           expectedParamsLog: [
@@ -540,7 +553,10 @@ describe('auto pagination', function() {
     describe('backwards pagination', () => {
       it('paginates forwards through a page', () => {
         return testCase(mockPagination, {
-          pages: [[-2, -1], [-4, -3]],
+          pages: [
+            [-2, -1],
+            [-4, -3],
+          ],
           limit: 5,
           expectedIds: [-1, -2, -3, -4],
           expectedParamsLog: ['?ending_before=-2'],
@@ -560,7 +576,11 @@ describe('auto pagination', function() {
 
       it('respects limit', () => {
         return testCase(mockPagination, {
-          pages: [[-2, -1], [-4, -3], [-6, -5]],
+          pages: [
+            [-2, -1],
+            [-4, -3],
+            [-6, -5],
+          ],
           limit: 5,
           expectedIds: [-1, -2, -3, -4, -5],
           expectedParamsLog: ['?ending_before=-2', '?ending_before=-4'],
@@ -621,7 +641,10 @@ describe('auto pagination', function() {
 
     it('paginates forwards through a page', () => {
       return testCase(mockPagination, {
-        pages: [[1, 2], [3, 4]],
+        pages: [
+          [1, 2],
+          [3, 4],
+        ],
         limit: 10,
         expectedIds: [1, 2, 3, 4],
         expectedParamsLog: ['?page=2-encoded'],
@@ -639,7 +662,11 @@ describe('auto pagination', function() {
 
     it('respects limit even when paginating', () => {
       return testCase(mockPagination, {
-        pages: [[1, 2], [3, 4], [5, 6]],
+        pages: [
+          [1, 2],
+          [3, 4],
+          [5, 6],
+        ],
         limit: 5,
         expectedIds: [1, 2, 3, 4, 5],
         expectedParamsLog: ['?page=2-encoded', '?page=4-encoded'],
@@ -648,7 +675,13 @@ describe('auto pagination', function() {
 
     it('paginates through multiple full pages', () => {
       return testCase(mockPagination, {
-        pages: [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]],
+        pages: [
+          [1, 2],
+          [3, 4],
+          [5, 6],
+          [7, 8],
+          [9, 10],
+        ],
         limit: 10,
         expectedIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         expectedParamsLog: [
