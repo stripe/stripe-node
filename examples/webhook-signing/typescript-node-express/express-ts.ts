@@ -65,9 +65,6 @@ app.post(
   }
 );
 
-app.listen(
-  3000,
-  (): void => {
-    console.log('Example app listening on port 3000!');
-  }
-);
+app.listen(3000, (): void => {
+  console.log('Example app listening on port 3000!');
+});

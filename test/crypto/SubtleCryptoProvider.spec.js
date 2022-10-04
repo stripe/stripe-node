@@ -7,9 +7,7 @@ const expect = require('chai').expect;
 // webcrypto is only available on Node 15+.
 if (!webcrypto || !webcrypto.subtle) {
   console.log(
-    `Skipping SubtleCryptoProvider tests. No 'webcrypto.subtle' available for ${
-      process.version
-    }.`
+    `Skipping SubtleCryptoProvider tests. No 'webcrypto.subtle' available for ${process.version}.`
   );
   return;
 }

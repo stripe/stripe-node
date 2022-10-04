@@ -14,7 +14,7 @@ declare module 'stripe' {
 
     export class StripeResource {
       static extend<
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         T extends {[prop: string]: any} & {
           includeBasic?: Array<
             'create' | 'retrieve' | 'update' | 'list' | 'del'
