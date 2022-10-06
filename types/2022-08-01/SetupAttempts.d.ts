@@ -108,6 +108,8 @@ declare module 'stripe' {
 
         ideal?: PaymentMethodDetails.Ideal;
 
+        klarna?: PaymentMethodDetails.Klarna;
+
         link?: PaymentMethodDetails.Link;
 
         sepa_debit?: PaymentMethodDetails.SepaDebit;
@@ -308,6 +310,8 @@ declare module 'stripe' {
             | 'SNSBNL2A'
             | 'TRIONL2U';
         }
+
+        interface Klarna {}
 
         interface Link {}
 
