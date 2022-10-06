@@ -1,5 +1,15 @@
 # Changelog
 
+## 10.13.0 - 2022-10-06
+* [#1571](https://github.com/stripe/stripe-node/pull/1571) API Updates
+  * Add support for new value `invalid_dob_age_under_18` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `Capability.future_requirements.errors[].code`, `Capability.requirements.errors[].code`, `Person.future_requirements.errors[].code`, and `Person.requirements.errors[].code`
+  * Add support for new value `bank_of_china` on enums `Charge.payment_method_details.fpx.bank`, `PaymentIntentConfirmParams.payment_method_data.fpx.bank`, `PaymentIntentCreateParams.payment_method_data.fpx.bank`, `PaymentIntentUpdateParams.payment_method_data.fpx.bank`, `PaymentMethod.fpx.bank`, `PaymentMethodCreateParams.fpx.bank`, `SetupIntentConfirmParams.payment_method_data.fpx.bank`, `SetupIntentCreateParams.payment_method_data.fpx.bank`, and `SetupIntentUpdateParams.payment_method_data.fpx.bank`
+  * Add support for new values `America/Nuuk`, `Europe/Kyiv`, and `Pacific/Kanton` on enum `ReportingReportRunCreateParams.parameters.timezone`
+  * Add support for `klarna` on `SetupAttempt.payment_method_details`
+* [#1570](https://github.com/stripe/stripe-node/pull/1570) Update node-fetch to 2.6.7
+* [#1568](https://github.com/stripe/stripe-node/pull/1568) Upgrade dependencies
+* [#1567](https://github.com/stripe/stripe-node/pull/1567) Fix release tag calculation
+
 ## 10.12.0 - 2022-09-29
 * [#1564](https://github.com/stripe/stripe-node/pull/1564) API Updates
   * Change type of `Charge.payment_method_details.card_present.incremental_authorization_supported` and `Charge.payment_method_details.card_present.overcapture_supported` from `boolean | null` to `boolean`
