@@ -133,9 +133,9 @@ declare module 'stripe' {
 
           /**
            * Populated when the `product_type` of the `financingoffer` is `refill`.
-           * Represents the discount rate percentage on remaining premium on the existing loan. When the `financing_offer`
+           * Represents the discount rate percentage on remaining fee on the existing loan. When the `financing_offer`
            * is paid out, the `previous_financing_fee_discount_amount` will be computed as the multiple of this rate
-           * and the remaining premium.
+           * and the remaining fee.
            */
           previous_financing_fee_discount_rate: number | null;
 

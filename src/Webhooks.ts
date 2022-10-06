@@ -1,10 +1,10 @@
-'use strict';
-
-const utils = require('./utils');
-const {StripeError, StripeSignatureVerificationError} = require('./Error');
+import utils = require('./utils');
+import _Error = require('./Error');
+const {StripeError, StripeSignatureVerificationError} = _Error;
 
 const Webhook = {
   DEFAULT_TOLERANCE: 300, // 5 minutes
+  signature: null,
 
   constructEvent(payload, header, secret, tolerance, cryptoProvider) {
     this.signature.verifyHeader(
@@ -169,6 +169,7 @@ function parseEventDetails(encodedPayload, encodedHeader, expectedScheme) {
   if (!details || details.timestamp === -1) {
     throw new StripeSignatureVerificationError({
       message: 'Unable to extract timestamp and signatures from header',
+      // @ts-expect-error Type '{ decodedHeader: any; decodedPayload: any; }' is not assignable to type 'string'.
       detail: {
         decodedHeader,
         decodedPayload,
@@ -179,6 +180,7 @@ function parseEventDetails(encodedPayload, encodedHeader, expectedScheme) {
   if (!details.signatures.length) {
     throw new StripeSignatureVerificationError({
       message: 'No signatures found with expected scheme',
+      // @ts-expect-error Type '{ decodedHeader: any; decodedPayload: any; }' is not assignable to type 'string'.
       detail: {
         decodedHeader,
         decodedPayload,
@@ -210,6 +212,7 @@ function validateComputedSignature(
         'No signatures found matching the expected signature for payload.' +
         ' Are you passing the raw request body you received from Stripe?' +
         ' https://github.com/stripe/stripe-node#webhook-signing',
+      // @ts-expect-error Type '{ header: any; payload: any; }' is not assignable to type 'string'.
       detail: {
         header,
         payload,
@@ -222,6 +225,7 @@ function validateComputedSignature(
   if (tolerance > 0 && timestampAge > tolerance) {
     throw new StripeSignatureVerificationError({
       message: 'Timestamp outside the tolerance zone',
+      // @ts-expect-error Type '{ header: any; payload: any; }' is not assignable to type 'string'.
       detail: {
         header,
         payload,
@@ -242,7 +246,7 @@ function parseHeader(header, scheme) {
       const kv = item.split('=');
 
       if (kv[0] === 't') {
-        accum.timestamp = kv[1];
+        accum.timestamp = parseInt(kv[1], 10);
       }
 
       if (kv[0] === scheme) {
@@ -274,4 +278,4 @@ function getNodeCryptoProvider() {
 
 Webhook.signature = signature;
 
-module.exports = Webhook;
+export = Webhook;

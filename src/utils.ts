@@ -1,10 +1,6 @@
-'use strict';
-
 const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
 const crypto = require('crypto');
-
-const hasOwn = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop);
 
 // Certain sandboxed environments (our known example right now are CloudFlare
 // Workers) may make `child_process` unavailable. Because `exec` isn't critical
@@ -37,13 +33,30 @@ const DEPRECATED_OPTIONS = {
 };
 const DEPRECATED_OPTIONS_KEYS = Object.keys(DEPRECATED_OPTIONS);
 
-const utils = (module.exports = {
+type Settings = {
+  timeout?: number;
+  maxNetworkRetries?: number;
+};
+
+type Options = {
+  auth?: string;
+  host?: string;
+  settings?: Settings;
+  streaming?: boolean;
+  headers?: Record<string, string>;
+};
+
+const utils = {
   isOptionsHash(o) {
     return (
       o &&
       typeof o === 'object' &&
-      (OPTIONS_KEYS.some((prop) => hasOwn(o, prop)) ||
-        DEPRECATED_OPTIONS_KEYS.some((prop) => hasOwn(o, prop)))
+      (OPTIONS_KEYS.some((prop) =>
+        Object.prototype.hasOwnProperty.call(o, prop)
+      ) ||
+        DEPRECATED_OPTIONS_KEYS.some((prop) =>
+          Object.prototype.hasOwnProperty.call(o, prop)
+        ))
     );
   },
 
@@ -140,7 +153,7 @@ const utils = (module.exports = {
    * Return the options hash from a list of arguments
    */
   getOptionsFromArgs: (args) => {
-    const opts = {
+    const opts: Options = {
       auth: null,
       headers: {},
       settings: {},
@@ -210,8 +223,9 @@ const utils = (module.exports = {
    * Provide simple "Class" extension mechanism
    */
   protoExtend(sub) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const Super = this;
-    const Constructor = hasOwn(sub, 'constructor')
+    const Constructor = Object.prototype.hasOwnProperty.call(sub, 'constructor')
       ? sub.constructor
       : function(...args) {
           Super.apply(this, args);
@@ -388,7 +402,10 @@ const utils = (module.exports = {
         const newKey = prevKey ? `${prevKey}[${key}]` : key;
 
         if (utils.isObject(value)) {
-          if (!Buffer.isBuffer(value) && !value.hasOwnProperty('data')) {
+          if (
+            !Buffer.isBuffer(value) &&
+            !Object.prototype.hasOwnProperty.call(value, 'data')
+          ) {
             // Non-buffer non-file Objects are recursively flattened
             return step(value, newKey);
           } else {
@@ -402,7 +419,7 @@ const utils = (module.exports = {
       });
     };
 
-    step(data);
+    step(data, null);
 
     return result;
   },
@@ -438,7 +455,7 @@ const utils = (module.exports = {
           platform: process.platform,
         };
   },
-});
+};
 
 function emitWarning(warning) {
   if (typeof process.emitWarning !== 'function') {
@@ -449,3 +466,5 @@ function emitWarning(warning) {
 
   return process.emitWarning(warning, 'Stripe');
 }
+
+export = utils;

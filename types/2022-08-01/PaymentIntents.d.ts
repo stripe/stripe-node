@@ -1585,6 +1585,11 @@ declare module 'stripe' {
            * Preferred locale of the PayPal checkout page that the customer is redirected to.
            */
           preferred_locale: string | null;
+
+          /**
+           * A unique reference ID of the PayPal transaction. This must be a globally unique ID across all PayPal transactions or the transaction will fail.
+           */
+          reference_id?: string | null;
         }
 
         interface Pix {
@@ -1597,6 +1602,15 @@ declare module 'stripe' {
            * The timestamp at which the Pix expires.
            */
           expires_at: number | null;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Promptpay {
@@ -2350,6 +2364,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -3445,6 +3460,8 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           preferred_locale?: Paypal.PreferredLocale;
+
+          reference_id?: string;
         }
 
         namespace Paypal {
@@ -3482,6 +3499,17 @@ declare module 'stripe' {
            * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
            */
           expires_at?: number;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Promptpay {
@@ -4182,6 +4210,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -5277,6 +5306,8 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           preferred_locale?: Paypal.PreferredLocale;
+
+          reference_id?: string;
         }
 
         namespace Paypal {
@@ -5314,6 +5345,17 @@ declare module 'stripe' {
            * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
            */
           expires_at?: number;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Promptpay {
@@ -6112,6 +6154,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -7207,6 +7250,8 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           preferred_locale?: Paypal.PreferredLocale;
+
+          reference_id?: string;
         }
 
         namespace Paypal {
@@ -7244,6 +7289,17 @@ declare module 'stripe' {
            * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
            */
           expires_at?: number;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
 
         interface Promptpay {

@@ -144,7 +144,7 @@ declare module 'stripe' {
         billing_thresholds: DefaultSettings.BillingThresholds | null;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
          */
         collection_method: DefaultSettings.CollectionMethod | null;
 
@@ -239,7 +239,7 @@ declare module 'stripe' {
         billing_thresholds: Phase.BillingThresholds | null;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
          */
         collection_method: Phase.CollectionMethod | null;
 
@@ -593,7 +593,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: DefaultSettings.CollectionMethod;
 
@@ -691,7 +691,7 @@ declare module 'stripe' {
         billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: Phase.CollectionMethod;
 
@@ -1126,7 +1126,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: DefaultSettings.CollectionMethod;
 
@@ -1224,7 +1224,7 @@ declare module 'stripe' {
         billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: Phase.CollectionMethod;
 
@@ -1631,7 +1631,7 @@ declare module 'stripe' {
       /**
        * Changes to apply to the phases of the subscription schedule, in the order provided.
        */
-      amendments: Array<SubscriptionScheduleAmendParams.Amendment>;
+      amendments?: Array<SubscriptionScheduleAmendParams.Amendment>;
 
       /**
        * Specifies which fields in the response should be expanded.
@@ -1677,7 +1677,7 @@ declare module 'stripe' {
           /**
            * A precise Unix timestamp for the amendment to end. Must be after the `amendment_start`.
            */
-          timestamp?: AmendmentEnd.Timestamp;
+          timestamp?: number;
 
           /**
            * Select one of three ways to pass the `amendment_end`.
@@ -1702,13 +1702,6 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          interface Timestamp {
-            /**
-             * A precise numeric timestamp, provided as an integer number of seconds since the Unix epoch.
-             */
-            value: number;
-          }
-
           type Type = 'duration' | 'schedule_end' | 'timestamp';
         }
 
@@ -1721,7 +1714,7 @@ declare module 'stripe' {
           /**
            * A precise Unix timestamp for the amendment to start.
            */
-          timestamp?: AmendmentStart.Timestamp;
+          timestamp?: number;
 
           /**
            * Select one of three ways to pass the `amendment_start`.
@@ -1735,13 +1728,6 @@ declare module 'stripe' {
              * The position of the previous amendment in the `amendments` array after which this amendment should begin. Indexes start from 0 and must be less than the index of the current amendment in the array.
              */
             index: number;
-          }
-
-          interface Timestamp {
-            /**
-             * A precise numeric timestamp, provided as an integer number of seconds since the Unix epoch.
-             */
-            value: number;
           }
 
           type Type = 'amendment_end' | 'now' | 'timestamp';
@@ -2047,7 +2033,11 @@ declare module 'stripe' {
        */
       amend(
         id: string,
-        params: SubscriptionScheduleAmendParams,
+        params?: SubscriptionScheduleAmendParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
+      amend(
+        id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.SubscriptionSchedule>>;
 

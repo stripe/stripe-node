@@ -708,6 +708,7 @@ declare module 'stripe' {
         namespace Error {
           type Code =
             | 'invalid_address_city_state_postal_code'
+            | 'invalid_dob_age_under_18'
             | 'invalid_street_address'
             | 'invalid_tos_acceptance'
             | 'invalid_value_other'
@@ -831,6 +832,7 @@ declare module 'stripe' {
         namespace Error {
           type Code =
             | 'invalid_address_city_state_postal_code'
+            | 'invalid_dob_age_under_18'
             | 'invalid_street_address'
             | 'invalid_tos_acceptance'
             | 'invalid_value_other'
