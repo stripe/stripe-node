@@ -337,7 +337,7 @@ declare module 'stripe' {
       rendering_options: Invoice.RenderingOptions | null;
 
       /**
-       * Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance.
+       * Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance. For revision invoices, this also includes any customer balance that was applied to the original invoice.
        */
       starting_balance: number;
 
