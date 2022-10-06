@@ -601,6 +601,11 @@ declare module 'stripe' {
                * Preferred locale of the PayPal checkout page that the customer is redirected to.
                */
               preferred_locale: string | null;
+
+              /**
+               * A unique reference ID of the PayPal transaction. This must be a globally unique ID across all PayPal transactions or the transaction will fail.
+               */
+              reference_id?: string | null;
             }
 
             interface SepaDebit {
@@ -1756,6 +1761,8 @@ declare module 'stripe' {
               capture_method?: Stripe.Emptyable<'manual'>;
 
               preferred_locale?: Paypal.PreferredLocale;
+
+              reference_id?: string;
             }
 
             namespace Paypal {
@@ -2972,6 +2979,8 @@ declare module 'stripe' {
               capture_method?: Stripe.Emptyable<'manual'>;
 
               preferred_locale?: Paypal.PreferredLocale;
+
+              reference_id?: string;
             }
 
             namespace Paypal {
