@@ -1030,7 +1030,7 @@ declare module 'stripe' {
           /**
            * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
            */
-          incremental_authorization_supported: boolean | null;
+          incremental_authorization_supported: boolean;
 
           /**
            * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
@@ -1050,7 +1050,7 @@ declare module 'stripe' {
           /**
            * Defines whether the authorized amount can be over-captured or not
            */
-          overcapture_supported: boolean | null;
+          overcapture_supported: boolean;
 
           /**
            * How card details were read in this transaction.
@@ -1178,7 +1178,7 @@ declare module 'stripe' {
           account_holder_type: Fpx.AccountHolderType | null;
 
           /**
-           * The customer's bank. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, or `pb_enterprise`.
+           * The customer's bank. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `pb_enterprise`, or `bank_of_china`.
            */
           bank: Fpx.Bank;
 
@@ -1198,6 +1198,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
