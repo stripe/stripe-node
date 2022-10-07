@@ -3,6 +3,7 @@
 ## 10.14.0-beta.1 - 2022-10-07
 * [#1572](https://github.com/stripe/stripe-node/pull/1572) API Updates for beta branch
   * Updated stable APIs to the latest version
+  * Add `reference_id` to `Paypal` interface.
 
 ## 10.13.0 - 2022-10-06
 * [#1571](https://github.com/stripe/stripe-node/pull/1571) API Updates
