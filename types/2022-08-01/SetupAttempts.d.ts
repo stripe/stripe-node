@@ -429,6 +429,11 @@ declare module 'stripe' {
         payment_method_type?: string;
 
         /**
+         * A URL to the request log entry in your dashboard.
+         */
+        request_log_url?: string;
+
+        /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
          * For example, you could use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
          * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
