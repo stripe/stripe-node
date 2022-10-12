@@ -69,7 +69,6 @@ jobs:
           - "16"
           - "14"
           - "12"
-          - "10"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
