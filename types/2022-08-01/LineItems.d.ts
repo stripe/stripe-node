@@ -57,13 +57,6 @@ declare module 'stripe' {
       price: Stripe.Price | null;
 
       /**
-       * The ID of the product for this line item.
-       *
-       * This will always be the same as `price.product`.
-       */
-      product?: string | Stripe.Product | Stripe.DeletedProduct;
-
-      /**
        * The quantity of products being purchased.
        */
       quantity: number | null;

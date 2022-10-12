@@ -28,7 +28,6 @@ module.exports = {
   InvoiceItems: require('./resources/InvoiceItems'),
   Mandates: require('./resources/Mandates'),
   OAuth: require('./resources/OAuth'),
-  Orders: require('./resources/Orders'),
   PaymentIntents: require('./resources/PaymentIntents'),
   PaymentLinks: require('./resources/PaymentLinks'),
   PaymentMethods: require('./resources/PaymentMethods'),

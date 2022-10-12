@@ -76,7 +76,7 @@ declare module 'stripe' {
       /**
        * Charges that were created by this PaymentIntent, if any.
        */
-      charges?: ApiList<Stripe.Charge>;
+      charges: ApiList<Stripe.Charge>;
 
       /**
        * The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key.
@@ -316,6 +316,11 @@ declare module 'stripe' {
          * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
          */
         payment_method_type?: string;
+
+        /**
+         * A URL to the request log entry in your dashboard.
+         */
+        request_log_url?: string;
 
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
