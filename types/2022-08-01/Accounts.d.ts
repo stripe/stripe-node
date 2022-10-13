@@ -709,6 +709,7 @@ declare module 'stripe' {
           type Code =
             | 'invalid_address_city_state_postal_code'
             | 'invalid_dob_age_under_18'
+            | 'invalid_representative_country'
             | 'invalid_street_address'
             | 'invalid_tos_acceptance'
             | 'invalid_value_other'
@@ -749,6 +750,7 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_executives'
@@ -833,6 +835,7 @@ declare module 'stripe' {
           type Code =
             | 'invalid_address_city_state_postal_code'
             | 'invalid_dob_age_under_18'
+            | 'invalid_representative_country'
             | 'invalid_street_address'
             | 'invalid_tos_acceptance'
             | 'invalid_value_other'
@@ -873,6 +876,7 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_executives'

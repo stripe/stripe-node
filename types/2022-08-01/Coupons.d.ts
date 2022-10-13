@@ -157,7 +157,7 @@ declare module 'stripe' {
       };
 
       /**
-       * Specifies how long the discount will be in effect if used on a subscription. Can be `forever`, `once`, or `repeating`. Defaults to `once`.
+       * Specifies how long the discount will be in effect if used on a subscription. Defaults to `once`.
        */
       duration?: CouponCreateParams.Duration;
 

@@ -89,6 +89,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata;
 
         /**
+         * Details about the authorization, such as identifiers, set by the card network.
+         */
+        network_data: Authorization.NetworkData | null;
+
+        /**
          * The pending authorization request. This field will only be non-null during an `issuing_authorization.request` webhook.
          */
         pending_request: Authorization.PendingRequest | null;
@@ -176,6 +181,13 @@ declare module 'stripe' {
            * State where the seller is located
            */
           state: string | null;
+        }
+
+        interface NetworkData {
+          /**
+           * ID from the network that identifies the acquiring financial institution. For Visa and Mastercard credit transactions this is as 6 digit code. For Maestro debit transactions this is a 9 digit code. Uncommonly, acquiring institution ID is not provided. When this occurs, the value will be null.
+           */
+          acquiring_institution_id: string | null;
         }
 
         interface PendingRequest {
