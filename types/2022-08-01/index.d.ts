@@ -78,7 +78,6 @@
 ///<reference path='./Reporting/ReportTypes.d.ts' />
 ///<reference path='./ReserveTransactions.d.ts' />
 ///<reference path='./Reviews.d.ts' />
-///<reference path='./SKUs.d.ts' />
 ///<reference path='./SetupAttempts.d.ts' />
 ///<reference path='./SetupIntents.d.ts' />
 ///<reference path='./ShippingRates.d.ts' />
@@ -176,7 +175,6 @@ declare module 'stripe' {
     setupAttempts: Stripe.SetupAttemptsResource;
     setupIntents: Stripe.SetupIntentsResource;
     shippingRates: Stripe.ShippingRatesResource;
-    skus: Stripe.SkusResource;
     sources: Stripe.SourcesResource;
     subscriptions: Stripe.SubscriptionsResource;
     subscriptionItems: Stripe.SubscriptionItemsResource;

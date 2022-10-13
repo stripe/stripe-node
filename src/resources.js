@@ -42,7 +42,6 @@ module.exports = {
   SetupAttempts: require('./resources/SetupAttempts'),
   SetupIntents: require('./resources/SetupIntents'),
   ShippingRates: require('./resources/ShippingRates'),
-  Skus: require('./resources/SKUs'),
   Sources: require('./resources/Sources'),
   Subscriptions: require('./resources/Subscriptions'),
   SubscriptionItems: require('./resources/SubscriptionItems'),
