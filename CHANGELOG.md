@@ -1,5 +1,12 @@
 # Changelog
 
+## 10.14.0 - 2022-10-13
+* [#1582](https://github.com/stripe/stripe-node/pull/1582) API Updates
+  * Add support for new values `invalid_representative_country` and `verification_failed_residential_address` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `Capability.future_requirements.errors[].code`, `Capability.requirements.errors[].code`, `Person.future_requirements.errors[].code`, and `Person.requirements.errors[].code`
+  * Add support for `request_log_url` on `StripeError` objects
+  * Add support for `network_data` on `Issuing.Authorization`
+  * ⚠️  Remove `currency`, `description`, `images`, and `name` from `Checkout.SessionCreateParams`. These properties do not work on the latest API version. (fixes #1575)
+
 ## 10.13.0 - 2022-10-06
 * [#1571](https://github.com/stripe/stripe-node/pull/1571) API Updates
   * Add support for new value `invalid_dob_age_under_18` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `Capability.future_requirements.errors[].code`, `Capability.requirements.errors[].code`, `Person.future_requirements.errors[].code`, and `Person.requirements.errors[].code`
