@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.15.0-beta.1 - 2022-10-14
+* Add support for `schedule_settings` on `SubscriptionScheduleAmendParams`
+* Add support for new value `upcoming_invoice` on enum `SubscriptionScheduleAmendParams.amendments[].amendment_end.type`
+* Add support for new values `schedule_end` and `upcoming_invoice` on enum `SubscriptionScheduleAmendParams.amendments[].amendment_start.type`
+
 ## 10.14.0 - 2022-10-13
 * [#1582](https://github.com/stripe/stripe-node/pull/1582) API Updates
   * Add support for new values `invalid_representative_country` and `verification_failed_residential_address` on enums `Account.future_requirements.errors[].code`, `Account.requirements.errors[].code`, `Capability.future_requirements.errors[].code`, `Capability.requirements.errors[].code`, `Person.future_requirements.errors[].code`, and `Person.requirements.errors[].code`
