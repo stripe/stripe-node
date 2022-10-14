@@ -1536,7 +1536,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The mode of the Checkout Session. Required when using prices or `setup` mode. Pass `subscription` if the Checkout Session includes at least one recurring item.
+         * The mode of the Checkout Session. Pass `subscription` if the Checkout Session includes at least one recurring item.
          */
         mode?: SessionCreateParams.Mode;
 
@@ -1729,29 +1729,9 @@ declare module 'stripe' {
           amount?: number;
 
           /**
-           * [Deprecated] Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Required if `amount` is passed.
-           */
-          currency?: string;
-
-          /**
-           * [Deprecated] The description for the line item, to be displayed on the Checkout page.
-           */
-          description?: string;
-
-          /**
            * The [tax rates](https://stripe.com/docs/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
            */
           dynamic_tax_rates?: Array<string>;
-
-          /**
-           * [Deprecated] A list of image URLs representing this line item. Each image can be up to 5 MB in size. If passing `price` or `price_data`, specify images on the associated product instead.
-           */
-          images?: Array<string>;
-
-          /**
-           * [Deprecated] The name for the item to be displayed on the Checkout page. Required if `amount` is passed.
-           */
-          name?: string;
 
           /**
            * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
