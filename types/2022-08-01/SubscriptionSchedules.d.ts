@@ -1637,6 +1637,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Changes to apply to the subscription schedule.
+       */
+      schedule_settings?: SubscriptionScheduleAmendParams.ScheduleSettings;
     }
 
     namespace SubscriptionScheduleAmendParams {
@@ -1702,7 +1707,11 @@ declare module 'stripe' {
             type Interval = 'day' | 'month' | 'week' | 'year';
           }
 
-          type Type = 'duration' | 'schedule_end' | 'timestamp';
+          type Type =
+            | 'duration'
+            | 'schedule_end'
+            | 'timestamp'
+            | 'upcoming_invoice';
         }
 
         interface AmendmentStart {
@@ -1730,7 +1739,12 @@ declare module 'stripe' {
             index: number;
           }
 
-          type Type = 'amendment_end' | 'now' | 'timestamp';
+          type Type =
+            | 'amendment_end'
+            | 'now'
+            | 'schedule_end'
+            | 'timestamp'
+            | 'upcoming_invoice';
         }
 
         interface DiscountAction {
@@ -1951,6 +1965,17 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
+      }
+
+      interface ScheduleSettings {
+        /**
+         * Configures how the subscription schedule behaves when it ends.
+         */
+        end_behavior?: ScheduleSettings.EndBehavior;
+      }
+
+      namespace ScheduleSettings {
+        type EndBehavior = 'cancel' | 'release';
       }
     }
 
