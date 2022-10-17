@@ -609,6 +609,17 @@ describe('utils', () => {
       }).to.throw();
     });
   });
+
+  describe('uuid', () => {
+    it('should return a well-formatted v4 UUID', () => {
+      expect(utils.uuid4()).to.match(
+        // regex from https://createuuid.com/validator/, specifically for v4
+        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+      );
+      // further test: could spy on crypto.randomUUID to ensure it's being used, if available
+      // whether that's useful is a race between using jest/sinon for these tests and dropping support for node < 14
+    });
+  });
 });
 
 function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
