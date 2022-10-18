@@ -611,6 +611,26 @@ describe('utils', () => {
   });
 
   describe('uuid', () => {
+    describe('crypto.randomUUID', () => {
+      const crypto = require('crypto');
+      let randomUUID$;
+      let called;
+      beforeEach(() => {
+        called = false;
+        randomUUID$ = crypto.randomUUID;
+        crypto.randomUUID = () => {
+          called = true;
+          return 'no, YOU you id';
+        };
+      });
+      afterEach(() => {
+        crypto.randomUUID = randomUUID$;
+      });
+      it('is called if available', () => {
+        expect(utils.uuid4()).to.equal('no, YOU you id');
+        expect(called).to.equal(true);
+      });
+    });
     it('should return a well-formatted v4 UUID', () => {
       expect(utils.uuid4()).to.match(
         // regex from https://createuuid.com/validator/, specifically for v4
