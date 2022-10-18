@@ -616,19 +616,27 @@ describe('utils', () => {
       let randomUUID$;
       let called;
       beforeEach(() => {
-        called = false;
-        randomUUID$ = crypto.randomUUID;
-        crypto.randomUUID = () => {
-          called = true;
-          return 'no, YOU you id';
-        };
+        // if it's available, mock it and ensure it's called
+        // otherwise, skip this whole operation
+        if (crypto.randomUUID) {
+          called = false;
+          randomUUID$ = crypto.randomUUID;
+          crypto.randomUUID = () => {
+            called = true;
+            return 'no, YOU you id';
+          };
+        }
       });
       afterEach(() => {
-        crypto.randomUUID = randomUUID$;
+        if (randomUUID$) {
+          crypto.randomUUID = randomUUID$;
+        }
       });
       it('is called if available', () => {
-        expect(utils.uuid4()).to.equal('no, YOU you id');
-        expect(called).to.equal(true);
+        if (randomUUID$) {
+          expect(utils.uuid4()).to.equal('no, YOU you id');
+          expect(called).to.equal(true);
+        }
       });
     });
     it('should return a well-formatted v4 UUID', () => {
