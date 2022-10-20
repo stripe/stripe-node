@@ -134,7 +134,7 @@ declare module 'stripe' {
   export class Stripe {
     static Stripe: typeof Stripe;
 
-    constructor(apiKey: string, config: Stripe.StripeConfig);
+    constructor(apiKey: string, config?: Stripe.StripeConfig);
 
     setAppInfo(info: Stripe.AppInfo): void;
 
