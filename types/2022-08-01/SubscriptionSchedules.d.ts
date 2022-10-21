@@ -1657,6 +1657,11 @@ declare module 'stripe' {
         amendment_start: Amendment.AmendmentStart;
 
         /**
+         * For a point-in-time amendment, this attribute lets you set or update whether the subscription's billing cycle anchor is reset at the `amendment_start` timestamp.
+         */
+        billing_cycle_anchor?: Amendment.BillingCycleAnchor;
+
+        /**
          * Changes to the coupons being redeemed or discounts being applied during the amendment time span.
          */
         discount_actions?: Array<Amendment.DiscountAction>;
@@ -1746,6 +1751,8 @@ declare module 'stripe' {
             | 'timestamp'
             | 'upcoming_invoice';
         }
+
+        type BillingCycleAnchor = 'amendment_start' | 'automatic';
 
         interface DiscountAction {
           /**
