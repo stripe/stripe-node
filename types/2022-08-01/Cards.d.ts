@@ -3,7 +3,11 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Card object.
+     * You can store multiple cards on a customer in order to charge the customer
+     * later. You can also store multiple debit cards on a recipient in order to
+     * transfer to those cards later.
+     *
+     * Related guide: [Card Payments with Sources](https://stripe.com/docs/sources/cards).
      */
     interface Card {
       /**
@@ -187,7 +191,7 @@ declare module 'stripe' {
       /**
        * Three-letter [ISO code for the currency](https://stripe.com/docs/payouts) paid out to the bank account.
        */
-      currency: string | null;
+      currency?: string | null;
 
       /**
        * Always true for a deleted object

@@ -4,7 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Issuing {
       /**
-       * The Dispute object.
+       * As a [card issuer](https://stripe.com/docs/issuing), you can dispute transactions that the cardholder does not recognize, suspects to be fraudulent, or has other issues with.
+       *
+       * Related guide: [Disputing Transactions](https://stripe.com/docs/issuing/purchases/disputes)
        */
       interface Dispute {
         /**
@@ -337,6 +339,11 @@ declare module 'stripe' {
 
       interface DisputeCreateParams {
         /**
+         * The dispute amount in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal). If not set, defaults to the full transaction amount.
+         */
+        amount?: number;
+
+        /**
          * Evidence provided for the dispute.
          */
         evidence?: DisputeCreateParams.Evidence;
@@ -660,6 +667,11 @@ declare module 'stripe' {
       }
 
       interface DisputeUpdateParams {
+        /**
+         * The dispute amount in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+         */
+        amount?: number;
+
         /**
          * Evidence provided for the dispute.
          */

@@ -1,2 +1,4 @@
 *.node*.js
 node_modules
+lib
+testProjects

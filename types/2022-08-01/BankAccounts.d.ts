@@ -3,7 +3,13 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The BankAccount object.
+     * These bank accounts are payment methods on `Customer` objects.
+     *
+     * On the other hand [External Accounts](https://stripe.com/docs/api#external_accounts) are transfer
+     * destinations on `Account` objects for [Custom accounts](https://stripe.com/docs/connect/custom-accounts).
+     * They can be bank accounts or debit cards as well, and are documented in the links above.
+     *
+     * Related guide: [Bank Debits and Transfers](https://stripe.com/docs/payments/bank-debits-transfers).
      */
     interface BankAccount {
       /**
@@ -119,7 +125,7 @@ declare module 'stripe' {
       /**
        * Three-letter [ISO code for the currency](https://stripe.com/docs/payouts) paid out to the bank account.
        */
-      currency: string | null;
+      currency?: string | null;
 
       /**
        * Always true for a deleted object

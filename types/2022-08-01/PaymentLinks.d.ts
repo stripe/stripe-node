@@ -3,7 +3,11 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The PaymentLink object.
+     * A payment link is a shareable URL that will take your customers to a hosted payment page. A payment link can be shared and used multiple times.
+     *
+     * When a customer opens a payment link it will open a new [checkout session](https://stripe.com/docs/api/checkout/sessions) to render the payment page. You can use [checkout session events](https://stripe.com/docs/api/events/types#event_types-checkout.session.completed) to track payments through payment links.
+     *
+     * Related guide: [Payment Links API](https://stripe.com/docs/payments/payment-links/api)
      */
     interface PaymentLink {
       /**
@@ -49,6 +53,11 @@ declare module 'stripe' {
        * When set, provides configuration to gather active consent from customers.
        */
       consent_collection: PaymentLink.ConsentCollection | null;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+       */
+      currency: string;
 
       /**
        * Configuration for Customer creation during checkout.
@@ -169,10 +178,17 @@ declare module 'stripe' {
          * If set to `auto`, enables the collection of customer consent for promotional communications.
          */
         promotions: ConsentCollection.Promotions | null;
+
+        /**
+         * If set to `required`, it requires cutomers to accept the terms of service before being able to pay. If set to `none`, customers won't be shown a checkbox to accept the terms of service.
+         */
+        terms_of_service: ConsentCollection.TermsOfService | null;
       }
 
       namespace ConsentCollection {
         type Promotions = 'auto' | 'none';
+
+        type TermsOfService = 'none' | 'required';
       }
 
       type CustomerCreation = 'always' | 'if_required';
@@ -217,6 +233,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
@@ -494,6 +511,11 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
@@ -694,10 +716,18 @@ declare module 'stripe' {
          * from the merchant depending on the customer's locale. Only available to US merchants.
          */
         promotions?: ConsentCollection.Promotions;
+
+        /**
+         * If set to `required`, it requires customers to check a terms of service checkbox before being able to pay.
+         * There must be a valid terms of service URL set in your [Dashboard settings](https://dashboard.stripe.com/settings/public).
+         */
+        terms_of_service?: ConsentCollection.TermsOfService;
       }
 
       namespace ConsentCollection {
         type Promotions = 'auto' | 'none';
+
+        type TermsOfService = 'none' | 'required';
       }
 
       type CustomerCreation = 'always' | 'if_required';
@@ -788,6 +818,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
@@ -1061,6 +1092,11 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time. Has to be at least 1.
          */
         trial_period_days?: number;
@@ -1271,6 +1307,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'

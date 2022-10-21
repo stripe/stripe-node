@@ -4,7 +4,20 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Checkout {
       /**
-       * The Session object.
+       * A Checkout Session represents your customer's session as they pay for
+       * one-time purchases or subscriptions through [Checkout](https://stripe.com/docs/payments/checkout)
+       * or [Payment Links](https://stripe.com/docs/payments/payment-links). We recommend creating a
+       * new Session each time your customer attempts to pay.
+       *
+       * Once payment is successful, the Checkout Session will contain a reference
+       * to the [Customer](https://stripe.com/docs/api/customers), and either the successful
+       * [PaymentIntent](https://stripe.com/docs/api/payment_intents) or an active
+       * [Subscription](https://stripe.com/docs/api/subscriptions).
+       *
+       * You can create a Checkout Session on your server and pass its ID to the
+       * client to begin Checkout.
+       *
+       * Related guide: [Checkout Quickstart](https://stripe.com/docs/checkout/quickstart).
        */
       interface Session {
         /**
@@ -66,6 +79,11 @@ declare module 'stripe' {
          * When set, provides configuration for the Checkout Session to gather active consent from customers.
          */
         consent_collection: Session.ConsentCollection | null;
+
+        /**
+         * Time at which the object was created. Measured in seconds since the Unix epoch.
+         */
+        created: number;
 
         /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -227,6 +245,7 @@ declare module 'stripe' {
 
         /**
          * The URL to the Checkout Session. Redirect customers to this URL to take them to Checkout. If you're using [Custom Domains](https://stripe.com/docs/payments/checkout/custom-domains), the URL will use your subdomain. Otherwise, it'll use `checkout.stripe.com.`
+         * This value is only present when the session is active.
          */
         url: string | null;
       }
@@ -289,6 +308,11 @@ declare module 'stripe' {
            * from the merchant about this Checkout Session.
            */
           promotions: Consent.Promotions | null;
+
+          /**
+           * If `accepted`, the customer in this Checkout Session has agreed to the merchant's terms of service.
+           */
+          terms_of_service: 'accepted' | null;
         }
 
         namespace Consent {
@@ -302,10 +326,17 @@ declare module 'stripe' {
            * from the merchant depending on the customer's locale. Only available to US merchants.
            */
           promotions: ConsentCollection.Promotions | null;
+
+          /**
+           * If set to `required`, it requires customers to accept the terms of service before being able to pay.
+           */
+          terms_of_service: ConsentCollection.TermsOfService | null;
         }
 
         namespace ConsentCollection {
           type Promotions = 'auto' | 'none';
+
+          type TermsOfService = 'none' | 'required';
         }
 
         type CustomerCreation = 'always' | 'if_required';
@@ -348,7 +379,7 @@ declare module 'stripe' {
 
           interface TaxId {
             /**
-             * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, or `unknown`
+             * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, or `unknown`
              */
             type: TaxId.Type;
 
@@ -387,6 +418,8 @@ declare module 'stripe' {
               | 'is_vat'
               | 'jp_cn'
               | 'jp_rn'
+              | 'jp_trn'
+              | 'ke_pin'
               | 'kr_brn'
               | 'li_uid'
               | 'mx_rfc'
@@ -497,6 +530,8 @@ declare module 'stripe' {
           p24?: PaymentMethodOptions.P24;
 
           paynow?: PaymentMethodOptions.Paynow;
+
+          pix?: PaymentMethodOptions.Pix;
 
           sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -882,6 +917,13 @@ declare module 'stripe' {
              * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface Pix {
+            /**
+             * The number of seconds after which Pix payment will expire.
+             */
+            expires_after_seconds: number | null;
           }
 
           interface SepaDebit {
@@ -1481,7 +1523,7 @@ declare module 'stripe' {
          *
          * For `payment` mode, there is a maximum of 100 line items, however it is recommended to consolidate line items if there are more than a few dozen.
          *
-         * For `subscription` mode, there is a maximum of 20 line items with recurring Prices and 20 line items with one-time Prices. Line items with one-time Prices in will be on the initial invoice only.
+         * For `subscription` mode, there is a maximum of 20 line items with recurring Prices and 20 line items with one-time Prices. Line items with one-time Prices will be on the initial invoice only.
          */
         line_items?: Array<SessionCreateParams.LineItem>;
 
@@ -1496,7 +1538,7 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
-         * The mode of the Checkout Session. Required when using prices or `setup` mode. Pass `subscription` if the Checkout Session includes at least one recurring item.
+         * The mode of the Checkout Session. Pass `subscription` if the Checkout Session includes at least one recurring item.
          */
         mode?: SessionCreateParams.Mode;
 
@@ -1523,7 +1565,8 @@ declare module 'stripe' {
         /**
          * A list of the types of payment methods (e.g., `card`) this Checkout Session can accept.
          *
-         * Do not include this attribute if you prefer to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+         * In `payment` and `subscription` mode, you can omit this attribute to manage your payment methods from the [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods).
+         * It is required in `setup` mode.
          *
          * Read more about the supported payment methods and their requirements in our [payment
          * method details guide](https://stripe.com/docs/payments/checkout/payment-methods).
@@ -1621,10 +1664,18 @@ declare module 'stripe' {
            * from the merchant depending on the customer's locale. Only available to US merchants.
            */
           promotions?: ConsentCollection.Promotions;
+
+          /**
+           * If set to `required`, it requires customers to check a terms of service checkbox before being able to pay.
+           * There must be a valid terms of service URL set in your [Dashboard settings](https://dashboard.stripe.com/settings/public).
+           */
+          terms_of_service?: ConsentCollection.TermsOfService;
         }
 
         namespace ConsentCollection {
           type Promotions = 'auto' | 'none';
+
+          type TermsOfService = 'none' | 'required';
         }
 
         type CustomerCreation = 'always' | 'if_required';
@@ -1680,29 +1731,9 @@ declare module 'stripe' {
           amount?: number;
 
           /**
-           * [Deprecated] Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Required if `amount` is passed.
-           */
-          currency?: string;
-
-          /**
-           * [Deprecated] The description for the line item, to be displayed on the Checkout page.
-           */
-          description?: string;
-
-          /**
            * The [tax rates](https://stripe.com/docs/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
            */
           dynamic_tax_rates?: Array<string>;
-
-          /**
-           * [Deprecated] A list of image URLs representing this line item. Each image can be up to 5 MB in size. If passing `price` or `price_data`, specify images on the associated product instead.
-           */
-          images?: Array<string>;
-
-          /**
-           * [Deprecated] The name for the item to be displayed on the Checkout page. Required if `amount` is passed.
-           */
-          name?: string;
 
           /**
            * The ID of the [Price](https://stripe.com/docs/api/prices) or [Plan](https://stripe.com/docs/api/plans) object. One of `price` or `price_data` is required.
@@ -1733,7 +1764,7 @@ declare module 'stripe' {
             enabled: boolean;
 
             /**
-             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999.
+             * The maximum quantity the customer can purchase for the Checkout Session. By default this value is 99. You can specify a value up to 999999.
              */
             maximum?: number;
 
@@ -2067,7 +2098,7 @@ declare module 'stripe' {
           eps?: PaymentMethodOptions.Eps;
 
           /**
-           * contains details about the EPS payment method options.
+           * contains details about the FPX payment method options.
            */
           fpx?: PaymentMethodOptions.Fpx;
 
@@ -2110,6 +2141,11 @@ declare module 'stripe' {
            * contains details about the PayNow payment method options.
            */
           paynow?: PaymentMethodOptions.Paynow;
+
+          /**
+           * contains details about the Pix payment method options.
+           */
+          pix?: PaymentMethodOptions.Pix;
 
           /**
            * contains details about the Sepa Debit payment method options.
@@ -2323,37 +2359,10 @@ declare module 'stripe' {
           namespace Card {
             interface Installments {
               /**
-               * Setting to true enables installments for this PaymentIntent.
-               * This will cause the response to contain a list of available installment plans.
-               * Setting to false will prevent any selected plan from applying to a charge.
+               * Setting to true enables installments for this Checkout Session.
+               * Setting to false will prevent any installment plan from applying to a payment.
                */
               enabled?: boolean;
-
-              /**
-               * The selected installment plan to use for this payment attempt.
-               * This parameter can only be provided during confirmation.
-               */
-              plan?: Stripe.Emptyable<Installments.Plan>;
-            }
-
-            namespace Installments {
-              interface Plan {
-                /**
-                 * For `fixed_count` installment plans, this is the number of installment payments your customer will make to their credit card.
-                 */
-                count: number;
-
-                /**
-                 * For `fixed_count` installment plans, this is the interval between installment payments your customer will make to their credit card.
-                 * One of `month`.
-                 */
-                interval: 'month';
-
-                /**
-                 * Type of installment plan, one of `fixed_count`.
-                 */
-                type: 'fixed_count';
-              }
             }
 
             type SetupFutureUsage = 'off_session' | 'on_session';
@@ -2555,6 +2564,13 @@ declare module 'stripe' {
             tos_shown_and_accepted?: boolean;
           }
 
+          interface Pix {
+            /**
+             * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+             */
+            expires_after_seconds?: number;
+          }
+
           interface SepaDebit {
             /**
              * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2671,6 +2687,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -3116,7 +3133,7 @@ declare module 'stripe' {
           description?: string;
 
           /**
-           * A list of items, each with an attached plan, that the customer is subscribing to. Prefer using `line_items`.
+           * This parameter is deprecated. Use the line_items parameter on the Session instead.
            */
           items?: Array<SubscriptionData.Item>;
 

@@ -3,7 +3,11 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Order object.
+     * An Order describes a purchase being made by a customer, including the
+     * products & quantities being purchased, the order status, the payment information,
+     * and the billing/shipping details.
+     *
+     * Related guide: [Orders overview](https://stripe.com/docs/orders)
      */
     interface Order {
       /**
@@ -653,7 +657,6 @@ declare module 'stripe' {
             | 'link'
             | 'oxxo'
             | 'p24'
-            | 'paypal'
             | 'sepa_debit'
             | 'sofort'
             | 'wechat_pay';
@@ -766,7 +769,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, or `unknown`
+           * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, or `unknown`
            */
           type: TaxId.Type;
 
@@ -805,6 +808,8 @@ declare module 'stripe' {
             | 'is_vat'
             | 'jp_cn'
             | 'jp_rn'
+            | 'jp_trn'
+            | 'ke_pin'
             | 'kr_brn'
             | 'li_uid'
             | 'mx_rfc'
@@ -1579,11 +1584,13 @@ declare module 'stripe' {
               type PreferredLocale =
                 | 'da-DK'
                 | 'de-AT'
+                | 'de-CH'
                 | 'de-DE'
                 | 'en-AT'
                 | 'en-AU'
                 | 'en-BE'
                 | 'en-CA'
+                | 'en-CH'
                 | 'en-DE'
                 | 'en-DK'
                 | 'en-ES'
@@ -1595,6 +1602,8 @@ declare module 'stripe' {
                 | 'en-NL'
                 | 'en-NO'
                 | 'en-NZ'
+                | 'en-PL'
+                | 'en-PT'
                 | 'en-SE'
                 | 'en-US'
                 | 'es-ES'
@@ -1602,11 +1611,15 @@ declare module 'stripe' {
                 | 'fi-FI'
                 | 'fr-BE'
                 | 'fr-CA'
+                | 'fr-CH'
                 | 'fr-FR'
+                | 'it-CH'
                 | 'it-IT'
                 | 'nb-NO'
                 | 'nl-BE'
                 | 'nl-NL'
+                | 'pl-PL'
+                | 'pt-PT'
                 | 'sv-FI'
                 | 'sv-SE';
             }
@@ -1779,7 +1792,6 @@ declare module 'stripe' {
             | 'link'
             | 'oxxo'
             | 'p24'
-            | 'paypal'
             | 'sepa_debit'
             | 'sofort'
             | 'wechat_pay';
@@ -1970,7 +1982,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -2009,6 +2021,8 @@ declare module 'stripe' {
             | 'is_vat'
             | 'jp_cn'
             | 'jp_rn'
+            | 'jp_trn'
+            | 'ke_pin'
             | 'kr_brn'
             | 'li_uid'
             | 'mx_rfc'
@@ -2734,11 +2748,13 @@ declare module 'stripe' {
               type PreferredLocale =
                 | 'da-DK'
                 | 'de-AT'
+                | 'de-CH'
                 | 'de-DE'
                 | 'en-AT'
                 | 'en-AU'
                 | 'en-BE'
                 | 'en-CA'
+                | 'en-CH'
                 | 'en-DE'
                 | 'en-DK'
                 | 'en-ES'
@@ -2750,6 +2766,8 @@ declare module 'stripe' {
                 | 'en-NL'
                 | 'en-NO'
                 | 'en-NZ'
+                | 'en-PL'
+                | 'en-PT'
                 | 'en-SE'
                 | 'en-US'
                 | 'es-ES'
@@ -2757,11 +2775,15 @@ declare module 'stripe' {
                 | 'fi-FI'
                 | 'fr-BE'
                 | 'fr-CA'
+                | 'fr-CH'
                 | 'fr-FR'
+                | 'it-CH'
                 | 'it-IT'
                 | 'nb-NO'
                 | 'nl-BE'
                 | 'nl-NL'
+                | 'pl-PL'
+                | 'pt-PT'
                 | 'sv-FI'
                 | 'sv-SE';
             }
@@ -2934,7 +2956,6 @@ declare module 'stripe' {
             | 'link'
             | 'oxxo'
             | 'p24'
-            | 'paypal'
             | 'sepa_debit'
             | 'sofort'
             | 'wechat_pay';
@@ -3125,7 +3146,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -3164,6 +3185,8 @@ declare module 'stripe' {
             | 'is_vat'
             | 'jp_cn'
             | 'jp_rn'
+            | 'jp_trn'
+            | 'ke_pin'
             | 'kr_brn'
             | 'li_uid'
             | 'mx_rfc'

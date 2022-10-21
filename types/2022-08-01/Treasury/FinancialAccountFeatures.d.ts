@@ -4,7 +4,8 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Treasury {
       /**
-       * The FinancialAccountFeatures object.
+       * Encodes whether a FinancialAccount has access to a particular Feature, with a `status` enum and associated `status_details`.
+       * Stripe or the platform can control Features via the requested field.
        */
       interface FinancialAccountFeatures {
         /**
@@ -234,7 +235,7 @@ declare module 'stripe' {
 
         interface InboundTransfers {
           /**
-           * Toggle settings for enabling/disabling a feature
+           * Toggle settings for enabling/disabling an ACH specific feature
            */
           ach?: InboundTransfers.Ach;
         }
@@ -359,7 +360,7 @@ declare module 'stripe' {
 
         interface OutboundPayments {
           /**
-           * Toggle settings for enabling/disabling a feature
+           * Toggle settings for enabling/disabling an ACH specific feature
            */
           ach?: OutboundPayments.Ach;
 
@@ -489,7 +490,7 @@ declare module 'stripe' {
 
         interface OutboundTransfers {
           /**
-           * Toggle settings for enabling/disabling a feature
+           * Toggle settings for enabling/disabling an ACH specific feature
            */
           ach?: OutboundTransfers.Ach;
 

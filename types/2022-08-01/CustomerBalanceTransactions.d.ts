@@ -3,7 +3,12 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The CustomerBalanceTransaction object.
+     * Each customer has a [`balance`](https://stripe.com/docs/api/customers/object#customer_object-balance) value,
+     * which denotes a debit or credit that's automatically applied to their next invoice upon finalization.
+     * You may modify the value directly by using the [update customer API](https://stripe.com/docs/api/customers/update),
+     * or by creating a Customer Balance Transaction, which increments or decrements the customer's `balance` by the specified `amount`.
+     *
+     * Related guide: [Customer Balance](https://stripe.com/docs/billing/customer/balance) to learn more.
      */
     interface CustomerBalanceTransaction {
       /**
@@ -92,7 +97,7 @@ declare module 'stripe' {
       amount: number;
 
       /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). If the customer's [`currency`](https://stripe.com/docs/api/customers/object#customer_object-currency) is set, this value must match it. If the customer's `currency` is not set, it will be updated to this value.
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Specifies the [`invoice_credit_balance`](https://stripe.com/docs/api/customers/object#customer_object-invoice_credit_balance) that this transaction will apply to. If the customer's `currency` is not set, it will be updated to this value.
        */
       currency: string;
 

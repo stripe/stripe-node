@@ -3,7 +3,7 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Mandate object.
+     * A Mandate is a record of the permission a customer has given you to debit their payment method.
      */
     interface Mandate {
       /**

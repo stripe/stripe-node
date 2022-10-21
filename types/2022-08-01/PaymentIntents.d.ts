@@ -3,7 +3,17 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The PaymentIntent object.
+     * A PaymentIntent guides you through the process of collecting a payment from your customer.
+     * We recommend that you create exactly one PaymentIntent for each order or
+     * customer session in your system. You can reference the PaymentIntent later to
+     * see the history of payment attempts for a particular session.
+     *
+     * A PaymentIntent transitions through
+     * [multiple statuses](https://stripe.com/docs/payments/intents#intent-statuses)
+     * throughout its lifetime as it interfaces with Stripe.js to perform
+     * authentication flows and ultimately creates at most one successful charge.
+     *
+     * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents).
      */
     interface PaymentIntent {
       /**
@@ -66,7 +76,7 @@ declare module 'stripe' {
       /**
        * Charges that were created by this PaymentIntent, if any.
        */
-      charges: ApiList<Stripe.Charge>;
+      charges?: ApiList<Stripe.Charge>;
 
       /**
        * The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key.
@@ -308,6 +318,11 @@ declare module 'stripe' {
         payment_method_type?: string;
 
         /**
+         * A URL to the request log entry in your dashboard.
+         */
+        request_log_url?: string;
+
+        /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
          * For example, you could use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
          * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
@@ -363,6 +378,8 @@ declare module 'stripe' {
         oxxo_display_details?: NextAction.OxxoDisplayDetails;
 
         paynow_display_qr_code?: NextAction.PaynowDisplayQrCode;
+
+        pix_display_qr_code?: NextAction.PixDisplayQrCode;
 
         promptpay_display_qr_code?: NextAction.PromptpayDisplayQrCode;
 
@@ -739,6 +756,33 @@ declare module 'stripe' {
           image_url_svg: string;
         }
 
+        interface PixDisplayQrCode {
+          /**
+           * The raw data string used to generate QR code, it should be used together with QR code library.
+           */
+          data?: string;
+
+          /**
+           * The date (unix timestamp) when the PIX expires.
+           */
+          expires_at?: number;
+
+          /**
+           * The URL to the hosted pix instructions page, which allows customers to view the pix QR code.
+           */
+          hosted_instructions_url?: string;
+
+          /**
+           * The image_url_png string used to render png QR code
+           */
+          image_url_png?: string;
+
+          /**
+           * The image_url_svg string used to render svg QR code
+           */
+          image_url_svg?: string;
+        }
+
         interface PromptpayDisplayQrCode {
           /**
            * The raw data string used to generate QR code, it should be used together with QR code library.
@@ -911,6 +955,8 @@ declare module 'stripe' {
         p24?: PaymentMethodOptions.P24;
 
         paynow?: PaymentMethodOptions.Paynow;
+
+        pix?: PaymentMethodOptions.Pix;
 
         promptpay?: PaymentMethodOptions.Promptpay;
 
@@ -1527,6 +1573,27 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Pix {
+          /**
+           * The number of seconds (between 10 and 1209600) after which Pix payment will expire.
+           */
+          expires_after_seconds: number | null;
+
+          /**
+           * The timestamp at which the Pix expires.
+           */
+          expires_at: number | null;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: 'none';
+        }
+
         interface Promptpay {
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -2082,6 +2149,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -2219,6 +2291,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -2260,6 +2333,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -2377,6 +2451,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -2426,6 +2502,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -2592,6 +2669,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
+         */
+        pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
         /**
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
@@ -3182,11 +3264,13 @@ declare module 'stripe' {
           type PreferredLocale =
             | 'da-DK'
             | 'de-AT'
+            | 'de-CH'
             | 'de-DE'
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
             | 'en-CA'
+            | 'en-CH'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
@@ -3198,6 +3282,8 @@ declare module 'stripe' {
             | 'en-NL'
             | 'en-NO'
             | 'en-NZ'
+            | 'en-PL'
+            | 'en-PT'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -3205,11 +3291,15 @@ declare module 'stripe' {
             | 'fi-FI'
             | 'fr-BE'
             | 'fr-CA'
+            | 'fr-CH'
             | 'fr-FR'
+            | 'it-CH'
             | 'it-IT'
             | 'nb-NO'
             | 'nl-BE'
             | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
             | 'sv-FI'
             | 'sv-SE';
         }
@@ -3315,6 +3405,29 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Pix {
+          /**
+           * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+           */
+          expires_after_seconds?: number;
+
+          /**
+           * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+           */
+          expires_at?: number;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -3794,6 +3907,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -3931,6 +4049,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -3972,6 +4091,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -4089,6 +4209,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -4138,6 +4260,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -4304,6 +4427,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
+         */
+        pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
         /**
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
@@ -4894,11 +5022,13 @@ declare module 'stripe' {
           type PreferredLocale =
             | 'da-DK'
             | 'de-AT'
+            | 'de-CH'
             | 'de-DE'
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
             | 'en-CA'
+            | 'en-CH'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
@@ -4910,6 +5040,8 @@ declare module 'stripe' {
             | 'en-NL'
             | 'en-NO'
             | 'en-NZ'
+            | 'en-PL'
+            | 'en-PT'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -4917,11 +5049,15 @@ declare module 'stripe' {
             | 'fi-FI'
             | 'fr-BE'
             | 'fr-CA'
+            | 'fr-CH'
             | 'fr-FR'
+            | 'it-CH'
             | 'it-IT'
             | 'nb-NO'
             | 'nl-BE'
             | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
             | 'sv-FI'
             | 'sv-SE';
         }
@@ -5027,6 +5163,29 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Pix {
+          /**
+           * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+           */
+          expires_after_seconds?: number;
+
+          /**
+           * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+           */
+          expires_at?: number;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -5641,6 +5800,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -5778,6 +5942,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -5819,6 +5984,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -5936,6 +6102,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -5985,6 +6153,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -6151,6 +6320,11 @@ declare module 'stripe' {
          * If this is a `paynow` PaymentMethod, this sub-hash contains details about the PayNow payment method options.
          */
         paynow?: Stripe.Emptyable<PaymentMethodOptions.Paynow>;
+
+        /**
+         * If this is a `pix` PaymentMethod, this sub-hash contains details about the Pix payment method options.
+         */
+        pix?: Stripe.Emptyable<PaymentMethodOptions.Pix>;
 
         /**
          * If this is a `promptpay` PaymentMethod, this sub-hash contains details about the PromptPay payment method options.
@@ -6741,11 +6915,13 @@ declare module 'stripe' {
           type PreferredLocale =
             | 'da-DK'
             | 'de-AT'
+            | 'de-CH'
             | 'de-DE'
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
             | 'en-CA'
+            | 'en-CH'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
@@ -6757,6 +6933,8 @@ declare module 'stripe' {
             | 'en-NL'
             | 'en-NO'
             | 'en-NZ'
+            | 'en-PL'
+            | 'en-PT'
             | 'en-SE'
             | 'en-US'
             | 'es-ES'
@@ -6764,11 +6942,15 @@ declare module 'stripe' {
             | 'fi-FI'
             | 'fr-BE'
             | 'fr-CA'
+            | 'fr-CH'
             | 'fr-FR'
+            | 'it-CH'
             | 'it-IT'
             | 'nb-NO'
             | 'nl-BE'
             | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
             | 'sv-FI'
             | 'sv-SE';
         }
@@ -6874,6 +7056,29 @@ declare module 'stripe' {
         }
 
         interface Paynow {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
+        }
+
+        interface Pix {
+          /**
+           * The number of seconds (between 10 and 1209600) after which Pix payment will expire. Defaults to 86400 seconds.
+           */
+          expires_after_seconds?: number;
+
+          /**
+           * The timestamp at which the Pix expires (between 10 and 1209600 seconds in the future). Defaults to 1 day in the future.
+           */
+          expires_at?: number;
+
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
@@ -7111,6 +7316,11 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
 
       /**
+       * For non-card charges, you can use this value as the complete description that appears on your customers' statements. Must contain at least one letter, maximum 22 characters.
+       */
+      statement_descriptor?: string;
+
+      /**
        * The parameters used to automatically create a Transfer when the payment is captured.
        * For more information, see the PaymentIntents [use case for connected accounts](https://stripe.com/docs/payments/connected-accounts).
        */
@@ -7275,20 +7485,17 @@ declare module 'stripe' {
        * Confirm that your customer intends to pay with current or provided
        * payment method. Upon confirmation, the PaymentIntent will attempt to initiate
        * a payment.
-       *
        * If the selected payment method requires additional authentication steps, the
        * PaymentIntent will transition to the requires_action status and
        * suggest additional actions via next_action. If payment fails,
        * the PaymentIntent will transition to the requires_payment_method status. If
        * payment succeeds, the PaymentIntent will transition to the succeeded
        * status (or requires_capture, if capture_method is set to manual).
-       *
        * If the confirmation_method is automatic, payment may be attempted
        * using our [client SDKs](https://stripe.com/docs/stripe-js/reference#stripe-handle-card-payment)
        * and the PaymentIntent's [client_secret](https://stripe.com/docs/api#payment_intent_object-client_secret).
        * After next_actions are handled by the client, no additional
        * confirmation is required to complete the payment.
-       *
        * If the confirmation_method is manual, all payment attempts must be
        * initiated using a secret key.
        * If any actions are required for the payment, the PaymentIntent will

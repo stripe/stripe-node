@@ -3,7 +3,11 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The PaymentMethod object.
+     * PaymentMethod objects represent your customer's payment instruments.
+     * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+     * Customer objects to store instrument details for future payments.
+     *
+     * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
      */
     interface PaymentMethod {
       /**
@@ -85,6 +89,8 @@ declare module 'stripe' {
       p24?: PaymentMethod.P24;
 
       paynow?: PaymentMethod.Paynow;
+
+      pix?: PaymentMethod.Pix;
 
       promptpay?: PaymentMethod.Promptpay;
 
@@ -412,7 +418,7 @@ declare module 'stripe' {
 
       interface Eps {
         /**
-         * The customer's bank. Should be one of `arzte_und_apotheker_bank`, `austrian_anadi_bank_ag`, `bank_austria`, `bankhaus_carl_spangler`, `bankhaus_schelhammer_und_schattera_ag`, `bawag_psk_ag`, `bks_bank_ag`, `brull_kallmus_bank_ag`, `btv_vier_lander_bank`, `capital_bank_grawe_gruppe_ag`, `dolomitenbank`, `easybank_ag`, `erste_bank_und_sparkassen`, `hypo_alpeadriabank_international_ag`, `hypo_noe_lb_fur_niederosterreich_u_wien`, `hypo_oberosterreich_salzburg_steiermark`, `hypo_tirol_bank_ag`, `hypo_vorarlberg_bank_ag`, `hypo_bank_burgenland_aktiengesellschaft`, `marchfelder_bank`, `oberbank_ag`, `raiffeisen_bankengruppe_osterreich`, `schoellerbank_ag`, `sparda_bank_wien`, `volksbank_gruppe`, `volkskreditbank_ag`, or `vr_bank_braunau`.
+         * The customer's bank. Should be one of `arzte_und_apotheker_bank`, `austrian_anadi_bank_ag`, `bank_austria`, `bankhaus_carl_spangler`, `bankhaus_schelhammer_und_schattera_ag`, `bawag_psk_ag`, `bks_bank_ag`, `brull_kallmus_bank_ag`, `btv_vier_lander_bank`, `capital_bank_grawe_gruppe_ag`, `deutsche_bank_ag`, `dolomitenbank`, `easybank_ag`, `erste_bank_und_sparkassen`, `hypo_alpeadriabank_international_ag`, `hypo_noe_lb_fur_niederosterreich_u_wien`, `hypo_oberosterreich_salzburg_steiermark`, `hypo_tirol_bank_ag`, `hypo_vorarlberg_bank_ag`, `hypo_bank_burgenland_aktiengesellschaft`, `marchfelder_bank`, `oberbank_ag`, `raiffeisen_bankengruppe_osterreich`, `schoellerbank_ag`, `sparda_bank_wien`, `volksbank_gruppe`, `volkskreditbank_ag`, or `vr_bank_braunau`.
          */
         bank: Eps.Bank | null;
       }
@@ -429,6 +435,7 @@ declare module 'stripe' {
           | 'brull_kallmus_bank_ag'
           | 'btv_vier_lander_bank'
           | 'capital_bank_grawe_gruppe_ag'
+          | 'deutsche_bank_ag'
           | 'dolomitenbank'
           | 'easybank_ag'
           | 'erste_bank_und_sparkassen'
@@ -455,7 +462,7 @@ declare module 'stripe' {
         account_holder_type: Fpx.AccountHolderType | null;
 
         /**
-         * The customer's bank, if provided. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, or `pb_enterprise`.
+         * The customer's bank, if provided. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `pb_enterprise`, or `bank_of_china`.
          */
         bank: Fpx.Bank;
       }
@@ -470,6 +477,7 @@ declare module 'stripe' {
           | 'ambank'
           | 'bank_islam'
           | 'bank_muamalat'
+          | 'bank_of_china'
           | 'bank_rakyat'
           | 'bsn'
           | 'cimb'
@@ -617,6 +625,8 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface Pix {}
+
       interface Promptpay {}
 
       interface RadarOptions {
@@ -704,6 +714,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
@@ -919,6 +930,11 @@ declare module 'stripe' {
       paynow?: PaymentMethodCreateParams.Paynow;
 
       /**
+       * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+       */
+      pix?: PaymentMethodCreateParams.Pix;
+
+      /**
        * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
        */
       promptpay?: PaymentMethodCreateParams.Promptpay;
@@ -1082,6 +1098,7 @@ declare module 'stripe' {
           | 'brull_kallmus_bank_ag'
           | 'btv_vier_lander_bank'
           | 'capital_bank_grawe_gruppe_ag'
+          | 'deutsche_bank_ag'
           | 'dolomitenbank'
           | 'easybank_ag'
           | 'erste_bank_und_sparkassen'
@@ -1123,6 +1140,7 @@ declare module 'stripe' {
           | 'ambank'
           | 'bank_islam'
           | 'bank_muamalat'
+          | 'bank_of_china'
           | 'bank_rakyat'
           | 'bsn'
           | 'cimb'
@@ -1240,6 +1258,8 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface Pix {}
+
       interface Promptpay {}
 
       interface RadarOptions {
@@ -1290,6 +1310,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
@@ -1504,6 +1525,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'

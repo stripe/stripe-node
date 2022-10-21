@@ -4,7 +4,10 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Radar {
       /**
-       * The EarlyFraudWarning object.
+       * An early fraud warning indicates that the card issuer has notified us that a
+       * charge may be fraudulent.
+       *
+       * Related guide: [Early Fraud Warnings](https://stripe.com/docs/disputes/measuring#early-fraud-warnings).
        */
       interface EarlyFraudWarning {
         /**

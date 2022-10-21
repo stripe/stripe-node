@@ -3,7 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The SubscriptionSchedule object.
+     * A subscription schedule allows you to create and manage the lifecycle of a subscription by predefining expected changes.
+     *
+     * Related guide: [Subscription Schedules](https://stripe.com/docs/billing/subscriptions/subscription-schedules).
      */
     interface SubscriptionSchedule {
       /**
@@ -130,7 +132,7 @@ declare module 'stripe' {
         billing_thresholds: DefaultSettings.BillingThresholds | null;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
          */
         collection_method: DefaultSettings.CollectionMethod | null;
 
@@ -138,6 +140,11 @@ declare module 'stripe' {
          * ID of the default payment method for the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
          */
         default_payment_method: string | Stripe.PaymentMethod | null;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
 
         /**
          * The subscription schedule's default invoice settings.
@@ -220,7 +227,7 @@ declare module 'stripe' {
         billing_thresholds: Phase.BillingThresholds | null;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
          */
         collection_method: Phase.CollectionMethod | null;
 
@@ -232,7 +239,7 @@ declare module 'stripe' {
         /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
-        currency?: string;
+        currency: string;
 
         /**
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
@@ -243,6 +250,11 @@ declare module 'stripe' {
          * The default tax rates to apply to the subscription during this phase of the subscription schedule.
          */
         default_tax_rates?: Array<Stripe.TaxRate> | null;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
 
         /**
          * The end of this phase of the subscription schedule.
@@ -462,7 +474,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: DefaultSettings.CollectionMethod;
 
@@ -470,6 +482,11 @@ declare module 'stripe' {
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
          */
         default_payment_method?: string;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
 
         /**
          * All invoices will be billed using the specified settings.
@@ -555,7 +572,7 @@ declare module 'stripe' {
         billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: Phase.CollectionMethod;
 
@@ -578,6 +595,11 @@ declare module 'stripe' {
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
          */
         default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.
@@ -887,7 +909,7 @@ declare module 'stripe' {
         >;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: DefaultSettings.CollectionMethod;
 
@@ -895,6 +917,11 @@ declare module 'stripe' {
          * ID of the default payment method for the subscription schedule. It must belong to the customer associated with the subscription schedule. If not set, invoices will use the default payment method in the customer's invoice settings.
          */
         default_payment_method?: string;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
 
         /**
          * All invoices will be billed using the specified settings.
@@ -980,7 +1007,7 @@ declare module 'stripe' {
         billing_thresholds?: Stripe.Emptyable<Phase.BillingThresholds>;
 
         /**
-         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically` on creation.
+         * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically` on creation.
          */
         collection_method?: Phase.CollectionMethod;
 
@@ -1003,6 +1030,11 @@ declare module 'stripe' {
          * A list of [Tax Rate](https://stripe.com/docs/api/tax_rates) ids. These Tax Rates will set the Subscription's [`default_tax_rates`](https://stripe.com/docs/api/subscriptions/create#create_subscription-default_tax_rates), which means they will be the Invoice's [`default_tax_rates`](https://stripe.com/docs/api/invoices/create#create_invoice-default_tax_rates) for any Invoices issued by the Subscription during this Phase.
          */
         default_tax_rates?: Stripe.Emptyable<Array<string>>;
+
+        /**
+         * Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
 
         /**
          * The date at which this phase of the subscription schedule ends. If set, `iterations` must not be set.

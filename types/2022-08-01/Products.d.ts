@@ -3,7 +3,14 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Product object.
+     * Products describe the specific goods or services you offer to your customers.
+     * For example, you might offer a Standard and Premium version of your goods or service; each version would be a separate Product.
+     * They can be used in conjunction with [Prices](https://stripe.com/docs/api#prices) to configure pricing in Payment Links, Checkout, and Subscriptions.
+     *
+     * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription),
+     * [share a Payment Link](https://stripe.com/docs/payments/payment-links/overview),
+     * [accept payments with Checkout](https://stripe.com/docs/payments/accept-a-payment#create-product-prices-upfront),
+     * and more about [Products and Prices](https://stripe.com/docs/products-prices/overview)
      */
     interface Product {
       /**
@@ -29,7 +36,7 @@ declare module 'stripe' {
       /**
        * A short one-line description of the product, meant to be displayable to the customer. Only applicable to products of `type=good`.
        */
-      caption: string | null;
+      caption?: string | null;
 
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
@@ -86,7 +93,7 @@ declare module 'stripe' {
       /**
        * Extra information about a product which will appear on your customer's credit card statement. In the case that multiple products are billed at once, the first statement descriptor will be used.
        */
-      statement_descriptor: string | null;
+      statement_descriptor?: string | null;
 
       /**
        * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
@@ -101,7 +108,7 @@ declare module 'stripe' {
       /**
        * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
        */
-      unit_label: string | null;
+      unit_label?: string | null;
 
       /**
        * Time at which the object was last updated. Measured in seconds since the Unix epoch.

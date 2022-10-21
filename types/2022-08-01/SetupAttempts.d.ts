@@ -3,7 +3,10 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The SetupAttempt object.
+     * A SetupAttempt describes one attempted confirmation of a SetupIntent,
+     * whether that confirmation was successful or unsuccessful. You can use
+     * SetupAttempts to inspect details of a specific attempt at setting up a
+     * payment method using a SetupIntent.
      */
     interface SetupAttempt {
       /**
@@ -104,6 +107,8 @@ declare module 'stripe' {
         card_present?: PaymentMethodDetails.CardPresent;
 
         ideal?: PaymentMethodDetails.Ideal;
+
+        klarna?: PaymentMethodDetails.Klarna;
 
         link?: PaymentMethodDetails.Link;
 
@@ -306,6 +311,8 @@ declare module 'stripe' {
             | 'TRIONL2U';
         }
 
+        interface Klarna {}
+
         interface Link {}
 
         interface SepaDebit {}
@@ -420,6 +427,11 @@ declare module 'stripe' {
          * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
          */
         payment_method_type?: string;
+
+        /**
+         * A URL to the request log entry in your dashboard.
+         */
+        request_log_url?: string;
 
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.

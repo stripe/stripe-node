@@ -3,7 +3,8 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Quote object.
+     * A Quote is a way to model prices that you'd like to provide to a customer.
+     * Once accepted, it will automatically create an invoice, subscription or subscription schedule.
      */
     interface Quote {
       /**
@@ -48,7 +49,7 @@ declare module 'stripe' {
       automatic_tax: Quote.AutomaticTax;
 
       /**
-       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
+       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
        */
       collection_method: Quote.CollectionMethod;
 
@@ -418,6 +419,11 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
+
+        /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. This date is ignored if it is in the past when the quote is accepted. Measured in seconds since the Unix epoch.
          */
         effective_date: number | null;
@@ -527,7 +533,7 @@ declare module 'stripe' {
       automatic_tax?: QuoteCreateParams.AutomaticTax;
 
       /**
-       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or at invoice finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
+       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or at invoice finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
        */
       collection_method?: QuoteCreateParams.CollectionMethod;
 
@@ -731,6 +737,11 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
+        /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
          */
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
@@ -783,7 +794,7 @@ declare module 'stripe' {
       automatic_tax?: QuoteUpdateParams.AutomaticTax;
 
       /**
-       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or at invoice finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
+       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or at invoice finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
        */
       collection_method?: QuoteUpdateParams.CollectionMethod;
 
@@ -969,6 +980,11 @@ declare module 'stripe' {
       }
 
       interface SubscriptionData {
+        /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description?: string;
+
         /**
          * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. When updating a subscription, the date of which the subscription will be updated using a subscription schedule. The special value `current_period_end` can be provided to update a subscription at the end of its current period. The `effective_date` is ignored if it is in the past when the quote is accepted.
          */

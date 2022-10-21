@@ -3,7 +3,9 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Subscription object.
+     * Subscriptions allow you to charge a customer on a recurring basis.
+     *
+     * Related guide: [Creating Subscriptions](https://stripe.com/docs/billing/subscriptions/creating).
      */
     interface Subscription {
       /**
@@ -58,7 +60,7 @@ declare module 'stripe' {
       canceled_at: number | null;
 
       /**
-       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions.
+       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
        */
       collection_method: Subscription.CollectionMethod;
 
@@ -70,7 +72,7 @@ declare module 'stripe' {
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      currency?: string;
+      currency: string;
 
       /**
        * End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.
@@ -344,6 +346,11 @@ declare module 'stripe' {
             mandate_options?: Card.MandateOptions;
 
             /**
+             * Selected network to process this Subscription on. Depends on the available networks of the card attached to the Subscription. Can be only set confirm-time.
+             */
+            network: Card.Network | null;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure: Card.RequestThreeDSecure | null;
@@ -370,6 +377,18 @@ declare module 'stripe' {
             namespace MandateOptions {
               type AmountType = 'fixed' | 'maximum';
             }
+
+            type Network =
+              | 'amex'
+              | 'cartes_bancaires'
+              | 'diners'
+              | 'discover'
+              | 'interac'
+              | 'jcb'
+              | 'mastercard'
+              | 'unionpay'
+              | 'unknown'
+              | 'visa';
 
             type RequestThreeDSecure = 'any' | 'automatic';
           }
@@ -575,7 +594,7 @@ declare module 'stripe' {
       cancel_at_period_end?: boolean;
 
       /**
-       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
+       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
        */
       collection_method?: SubscriptionCreateParams.CollectionMethod;
 
@@ -635,6 +654,8 @@ declare module 'stripe' {
       off_session?: boolean;
 
       /**
+       * Only applies to subscriptions with `collection_method=charge_automatically`.
+       *
        * Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
        *
        * Use `default_incomplete` to create Subscriptions with `status=incomplete` when the first invoice requires payment, otherwise start as active. Subscriptions transition to `status=active` when successfully confirming the payment intent on the first invoice. This allows simpler management of scenarios where additional user actions are needed to pay a subscription's invoice. Such as failed payments, [SCA regulation](https://stripe.com/docs/billing/migration/strong-customer-authentication), or collecting a mandate for a bank debit payment method. If the payment intent is not confirmed within 23 hours subscriptions transition to `status=incomplete_expired`, which is a terminal state.
@@ -642,6 +663,8 @@ declare module 'stripe' {
        * Use `error_if_incomplete` if you want Stripe to return an HTTP 402 status code if a subscription's first invoice cannot be paid. For example, if a payment method requires 3DS authentication due to SCA regulation and further user action is needed, this parameter does not create a subscription and returns an error instead. This was the default behavior for API versions prior to 2019-03-14. See the [changelog](https://stripe.com/docs/upgrades#2019-03-14) to learn more.
        *
        * `pending_if_incomplete` is only used with updates and cannot be passed when creating a subscription.
+       *
+       * Subscriptions with `collection_method=send_invoice` are automatically activated regardless of the first invoice status.
        */
       payment_behavior?: SubscriptionCreateParams.PaymentBehavior;
 
@@ -971,6 +994,11 @@ declare module 'stripe' {
             mandate_options?: Card.MandateOptions;
 
             /**
+             * Selected network to process this Subscription on. Depends on the available networks of the card attached to the Subscription. Can be only set confirm-time.
+             */
+            network?: Card.Network;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
@@ -997,6 +1025,18 @@ declare module 'stripe' {
             namespace MandateOptions {
               type AmountType = 'fixed' | 'maximum';
             }
+
+            type Network =
+              | 'amex'
+              | 'cartes_bancaires'
+              | 'diners'
+              | 'discover'
+              | 'interac'
+              | 'jcb'
+              | 'mastercard'
+              | 'unionpay'
+              | 'unknown'
+              | 'visa';
 
             type RequestThreeDSecure = 'any' | 'automatic';
           }
@@ -1174,7 +1214,7 @@ declare module 'stripe' {
       cancel_at_period_end?: boolean;
 
       /**
-       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions. Defaults to `charge_automatically`.
+       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
        */
       collection_method?: SubscriptionUpdateParams.CollectionMethod;
 
@@ -1605,6 +1645,11 @@ declare module 'stripe' {
             mandate_options?: Card.MandateOptions;
 
             /**
+             * Selected network to process this Subscription on. Depends on the available networks of the card attached to the Subscription. Can be only set confirm-time.
+             */
+            network?: Card.Network;
+
+            /**
              * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
              */
             request_three_d_secure?: Card.RequestThreeDSecure;
@@ -1631,6 +1676,18 @@ declare module 'stripe' {
             namespace MandateOptions {
               type AmountType = 'fixed' | 'maximum';
             }
+
+            type Network =
+              | 'amex'
+              | 'cartes_bancaires'
+              | 'diners'
+              | 'discover'
+              | 'interac'
+              | 'jcb'
+              | 'mastercard'
+              | 'unionpay'
+              | 'unknown'
+              | 'visa';
 
             type RequestThreeDSecure = 'any' | 'automatic';
           }

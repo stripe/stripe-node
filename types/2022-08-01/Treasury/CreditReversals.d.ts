@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Treasury {
       /**
-       * The CreditReversal object.
+       * You can reverse some [ReceivedCredits](https://stripe.com/docs/api#received_credits) depending on their network and source flow. Reversing a ReceivedCredit leads to the creation of a new object known as a CreditReversal.
        */
       interface CreditReversal {
         /**
@@ -21,6 +21,11 @@ declare module 'stripe' {
          * Amount (in cents) transferred.
          */
         amount: number;
+
+        /**
+         * Time at which the object was created. Measured in seconds since the Unix epoch.
+         */
+        created: number;
 
         /**
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).

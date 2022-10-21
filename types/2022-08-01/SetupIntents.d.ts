@@ -3,7 +3,28 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The SetupIntent object.
+     * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
+     * For example, you could use a SetupIntent to set up and save your customer's card without immediately collecting a payment.
+     * Later, you can use [PaymentIntents](https://stripe.com/docs/api#payment_intents) to drive the payment flow.
+     *
+     * Create a SetupIntent as soon as you're ready to collect your customer's payment credentials.
+     * Do not maintain long-lived, unconfirmed SetupIntents as they may no longer be valid.
+     * The SetupIntent then transitions through multiple [statuses](https://stripe.com/docs/payments/intents#intent-statuses) as it guides
+     * you through the setup process.
+     *
+     * Successful SetupIntents result in payment credentials that are optimized for future payments.
+     * For example, cardholders in [certain regions](https://stripe.com/guides/strong-customer-authentication) may need to be run through
+     * [Strong Customer Authentication](https://stripe.com/docs/strong-customer-authentication) at the time of payment method collection
+     * in order to streamline later [off-session payments](https://stripe.com/docs/payments/setup-intents).
+     * If the SetupIntent is used with a [Customer](https://stripe.com/docs/api#setup_intent_object-customer), upon success,
+     * it will automatically attach the resulting payment method to that Customer.
+     * We recommend using SetupIntents or [setup_future_usage](https://stripe.com/docs/api#payment_intent_object-setup_future_usage) on
+     * PaymentIntents to save payment methods in order to prevent saving invalid or unoptimized payment methods.
+     *
+     * By using SetupIntents, you ensure that your customers experience the minimum set of required friction,
+     * even as regulations change over time.
+     *
+     * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents).
      */
     interface SetupIntent {
       /**
@@ -199,6 +220,11 @@ declare module 'stripe' {
          * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
          */
         payment_method_type?: string;
+
+        /**
+         * A URL to the request log entry in your dashboard.
+         */
+        request_log_url?: string;
 
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
@@ -827,6 +853,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -964,6 +995,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -1005,6 +1037,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -1122,6 +1155,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -1171,6 +1206,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -1327,6 +1363,11 @@ declare module 'stripe' {
           moto?: boolean;
 
           /**
+           * Selected network to process this SetupIntent on. Depends on the available networks of the card attached to the SetupIntent. Can be only set confirm-time.
+           */
+          network?: Card.Network;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
@@ -1390,6 +1431,18 @@ declare module 'stripe' {
 
             type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
           }
+
+          type Network =
+            | 'amex'
+            | 'cartes_bancaires'
+            | 'diners'
+            | 'discover'
+            | 'interac'
+            | 'jcb'
+            | 'mastercard'
+            | 'unionpay'
+            | 'unknown'
+            | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
         }
@@ -1676,6 +1729,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -1813,6 +1871,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -1854,6 +1913,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -1971,6 +2031,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -2020,6 +2082,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -2176,6 +2239,11 @@ declare module 'stripe' {
           moto?: boolean;
 
           /**
+           * Selected network to process this SetupIntent on. Depends on the available networks of the card attached to the SetupIntent. Can be only set confirm-time.
+           */
+          network?: Card.Network;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
@@ -2239,6 +2307,18 @@ declare module 'stripe' {
 
             type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
           }
+
+          type Network =
+            | 'amex'
+            | 'cartes_bancaires'
+            | 'diners'
+            | 'discover'
+            | 'interac'
+            | 'jcb'
+            | 'mastercard'
+            | 'unionpay'
+            | 'unknown'
+            | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
         }
@@ -2607,6 +2687,11 @@ declare module 'stripe' {
         paynow?: PaymentMethodData.Paynow;
 
         /**
+         * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
+         */
+        pix?: PaymentMethodData.Pix;
+
+        /**
          * If this is a `promptpay` PaymentMethod, this hash contains details about the PromptPay payment method.
          */
         promptpay?: PaymentMethodData.Promptpay;
@@ -2744,6 +2829,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -2785,6 +2871,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -2902,6 +2989,8 @@ declare module 'stripe' {
 
         interface Paynow {}
 
+        interface Pix {}
+
         interface Promptpay {}
 
         interface RadarOptions {
@@ -2951,6 +3040,7 @@ declare module 'stripe' {
           | 'oxxo'
           | 'p24'
           | 'paynow'
+          | 'pix'
           | 'promptpay'
           | 'sepa_debit'
           | 'sofort'
@@ -3107,6 +3197,11 @@ declare module 'stripe' {
           moto?: boolean;
 
           /**
+           * Selected network to process this SetupIntent on. Depends on the available networks of the card attached to the SetupIntent. Can be only set confirm-time.
+           */
+          network?: Card.Network;
+
+          /**
            * We strongly recommend that you rely on our SCA Engine to automatically prompt your customers for authentication based on risk level and [other requirements](https://stripe.com/docs/strong-customer-authentication). However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option. Permitted values include: `automatic` or `any`. If not provided, defaults to `automatic`. Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
            */
           request_three_d_secure?: Card.RequestThreeDSecure;
@@ -3170,6 +3265,18 @@ declare module 'stripe' {
 
             type Interval = 'day' | 'month' | 'sporadic' | 'week' | 'year';
           }
+
+          type Network =
+            | 'amex'
+            | 'cartes_bancaires'
+            | 'diners'
+            | 'discover'
+            | 'interac'
+            | 'jcb'
+            | 'mastercard'
+            | 'unionpay'
+            | 'unknown'
+            | 'visa';
 
           type RequestThreeDSecure = 'any' | 'automatic';
         }

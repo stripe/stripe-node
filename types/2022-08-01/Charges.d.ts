@@ -3,7 +3,11 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Charge object.
+     * To charge a credit or a debit card, you create a `Charge` object. You can
+     * retrieve and refund individual charges as well as list all charges. Charges
+     * are identified by a unique, random ID.
+     *
+     * Related guide: [Accept a payment with the Charges API](https://stripe.com/docs/payments/accept-a-payment-charges).
      */
     interface Charge {
       /**
@@ -200,7 +204,7 @@ declare module 'stripe' {
       /**
        * A list of refunds that have been applied to the charge.
        */
-      refunds: ApiList<Stripe.Refund>;
+      refunds?: ApiList<Stripe.Refund>;
 
       /**
        * ID of the review associated with this charge if one exists.
@@ -440,6 +444,8 @@ declare module 'stripe' {
         p24?: PaymentMethodDetails.P24;
 
         paynow?: PaymentMethodDetails.Paynow;
+
+        pix?: PaymentMethodDetails.Pix;
 
         promptpay?: PaymentMethodDetails.Promptpay;
 
@@ -1024,7 +1030,7 @@ declare module 'stripe' {
           /**
            * Whether this [PaymentIntent](https://stripe.com/docs/api/payment_intents) is eligible for incremental authorizations. Request support using [request_incremental_authorization_support](https://stripe.com/docs/api/payment_intents/create#create_payment_intent-payment_method_options-card_present-request_incremental_authorization_support).
            */
-          incremental_authorization_supported: boolean | null;
+          incremental_authorization_supported: boolean;
 
           /**
            * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
@@ -1044,7 +1050,7 @@ declare module 'stripe' {
           /**
            * Defines whether the authorized amount can be over-captured or not
            */
-          overcapture_supported: boolean | null;
+          overcapture_supported: boolean;
 
           /**
            * How card details were read in this transaction.
@@ -1121,7 +1127,7 @@ declare module 'stripe' {
 
         interface Eps {
           /**
-           * The customer's bank. Should be one of `arzte_und_apotheker_bank`, `austrian_anadi_bank_ag`, `bank_austria`, `bankhaus_carl_spangler`, `bankhaus_schelhammer_und_schattera_ag`, `bawag_psk_ag`, `bks_bank_ag`, `brull_kallmus_bank_ag`, `btv_vier_lander_bank`, `capital_bank_grawe_gruppe_ag`, `dolomitenbank`, `easybank_ag`, `erste_bank_und_sparkassen`, `hypo_alpeadriabank_international_ag`, `hypo_noe_lb_fur_niederosterreich_u_wien`, `hypo_oberosterreich_salzburg_steiermark`, `hypo_tirol_bank_ag`, `hypo_vorarlberg_bank_ag`, `hypo_bank_burgenland_aktiengesellschaft`, `marchfelder_bank`, `oberbank_ag`, `raiffeisen_bankengruppe_osterreich`, `schoellerbank_ag`, `sparda_bank_wien`, `volksbank_gruppe`, `volkskreditbank_ag`, or `vr_bank_braunau`.
+           * The customer's bank. Should be one of `arzte_und_apotheker_bank`, `austrian_anadi_bank_ag`, `bank_austria`, `bankhaus_carl_spangler`, `bankhaus_schelhammer_und_schattera_ag`, `bawag_psk_ag`, `bks_bank_ag`, `brull_kallmus_bank_ag`, `btv_vier_lander_bank`, `capital_bank_grawe_gruppe_ag`, `deutsche_bank_ag`, `dolomitenbank`, `easybank_ag`, `erste_bank_und_sparkassen`, `hypo_alpeadriabank_international_ag`, `hypo_noe_lb_fur_niederosterreich_u_wien`, `hypo_oberosterreich_salzburg_steiermark`, `hypo_tirol_bank_ag`, `hypo_vorarlberg_bank_ag`, `hypo_bank_burgenland_aktiengesellschaft`, `marchfelder_bank`, `oberbank_ag`, `raiffeisen_bankengruppe_osterreich`, `schoellerbank_ag`, `sparda_bank_wien`, `volksbank_gruppe`, `volkskreditbank_ag`, or `vr_bank_braunau`.
            */
           bank: Eps.Bank | null;
 
@@ -1145,6 +1151,7 @@ declare module 'stripe' {
             | 'brull_kallmus_bank_ag'
             | 'btv_vier_lander_bank'
             | 'capital_bank_grawe_gruppe_ag'
+            | 'deutsche_bank_ag'
             | 'dolomitenbank'
             | 'easybank_ag'
             | 'erste_bank_und_sparkassen'
@@ -1171,7 +1178,7 @@ declare module 'stripe' {
           account_holder_type: Fpx.AccountHolderType | null;
 
           /**
-           * The customer's bank. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, or `pb_enterprise`.
+           * The customer's bank. Can be one of `affin_bank`, `agrobank`, `alliance_bank`, `ambank`, `bank_islam`, `bank_muamalat`, `bank_rakyat`, `bsn`, `cimb`, `hong_leong_bank`, `hsbc`, `kfh`, `maybank2u`, `ocbc`, `public_bank`, `rhb`, `standard_chartered`, `uob`, `deutsche_bank`, `maybank2e`, `pb_enterprise`, or `bank_of_china`.
            */
           bank: Fpx.Bank;
 
@@ -1191,6 +1198,7 @@ declare module 'stripe' {
             | 'ambank'
             | 'bank_islam'
             | 'bank_muamalat'
+            | 'bank_of_china'
             | 'bank_rakyat'
             | 'bsn'
             | 'cimb'
@@ -1462,7 +1470,7 @@ declare module 'stripe' {
 
           /**
            * Preferred language of the Klarna authorization page that the customer is redirected to.
-           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, `en-FR`, `en-AU`, `en-NZ`, `en-CA`, or `fr-CA`
+           * Can be one of `de-AT`, `en-AT`, `nl-BE`, `fr-BE`, `en-BE`, `de-DE`, `en-DE`, `da-DK`, `en-DK`, `es-ES`, `en-ES`, `fi-FI`, `sv-FI`, `en-FI`, `en-GB`, `en-IE`, `it-IT`, `en-IT`, `nl-NL`, `en-NL`, `nb-NO`, `en-NO`, `sv-SE`, `en-SE`, `en-US`, `es-US`, `fr-FR`, `en-FR`, `en-AU`, `en-NZ`, `en-CA`, `fr-CA`, `pl-PL`, `en-PL`, `pt-PT`, `en-PT`, `de-CH`, `fr-CH`, `it-CH`, or `en-CH`
            */
           preferred_locale: string | null;
         }
@@ -1561,6 +1569,13 @@ declare module 'stripe' {
            * Reference number associated with this PayNow payment
            */
           reference: string | null;
+        }
+
+        interface Pix {
+          /**
+           * Unique transaction id generated by BCB
+           */
+          bank_transaction_id?: string | null;
         }
 
         interface Promptpay {

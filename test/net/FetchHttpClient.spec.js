@@ -2,6 +2,7 @@
 
 const expect = require('chai').expect;
 const fetch = require('node-fetch');
+const nock = require('nock');
 const {Readable} = require('stream');
 const {FetchHttpClient} = require('../../lib/net/FetchHttpClient');
 
@@ -55,5 +56,59 @@ describe('FetchHttpClient', () => {
         });
       });
     });
+  });
+
+  describe('it sets a body value for empty POST requests', () => {
+    let capturedBody;
+
+    const patchedFetch = (url, params) => {
+      capturedBody = params.body;
+      return fetch(url, params);
+    };
+
+    nock('http://stripe.com')
+      .post('/test', '')
+      .reply(200);
+
+    const client = new FetchHttpClient(patchedFetch);
+    client.makeRequest(
+      'stripe.com',
+      80,
+      '/test',
+      'POST',
+      {},
+      '', // requestData
+      'http',
+      1000
+    );
+
+    expect(capturedBody).to.equal('');
+  });
+
+  describe('it does not set a body value for empty GET requests', () => {
+    let capturedBody;
+
+    const patchedFetch = (url, params) => {
+      capturedBody = params.body;
+      return fetch(url, params);
+    };
+
+    nock('http://stripe.com')
+      .get('/test')
+      .reply(200);
+
+    const client = new FetchHttpClient(patchedFetch);
+    client.makeRequest(
+      'stripe.com',
+      80,
+      '/test',
+      'GET',
+      {},
+      '', // requestData
+      'http',
+      1000
+    );
+
+    expect(capturedBody).to.be.undefined;
   });
 });

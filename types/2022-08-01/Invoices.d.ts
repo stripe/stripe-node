@@ -3,11 +3,42 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Invoice object.
+     * Invoices are statements of amounts owed by a customer, and are either
+     * generated one-off, or generated periodically from a subscription.
+     *
+     * They contain [invoice items](https://stripe.com/docs/api#invoiceitems), and proration adjustments
+     * that may be caused by subscription upgrades/downgrades (if necessary).
+     *
+     * If your invoice is configured to be billed through automatic charges,
+     * Stripe automatically finalizes your invoice and attempts payment. Note
+     * that finalizing the invoice,
+     * [when automatic](https://stripe.com/docs/billing/invoices/workflow/#auto_advance), does
+     * not happen immediately as the invoice is created. Stripe waits
+     * until one hour after the last webhook was successfully sent (or the last
+     * webhook timed out after failing). If you (and the platforms you may have
+     * connected to) have no webhooks configured, Stripe waits one hour after
+     * creation to finalize the invoice.
+     *
+     * If your invoice is configured to be billed by sending an email, then based on your
+     * [email settings](https://dashboard.stripe.com/account/billing/automatic),
+     * Stripe will email the invoice to your customer and await payment. These
+     * emails can contain a link to a hosted page to pay the invoice.
+     *
+     * Stripe applies any customer credit on the account before determining the
+     * amount due for the invoice (i.e., the amount that will be actually
+     * charged). If the amount due for the invoice is less than Stripe's [minimum allowed charge
+     * per currency](https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts), the
+     * invoice is automatically marked paid, and we add the amount due to the
+     * customer's credit balance which is applied to the next invoice.
+     *
+     * More details on the customer's credit balance are
+     * [here](https://stripe.com/docs/billing/customer/balance).
+     *
+     * Related guide: [Send Invoices to Customers](https://stripe.com/docs/billing/invoices/sending).
      */
     interface Invoice {
       /**
-       * Unique identifier for the object.
+       * Unique identifier for the object. This property is always present unless the invoice is an upcoming invoice. See [Retrieve an upcoming invoice](https://stripe.com/docs/api/invoices/upcoming) for more details.
        */
       id?: string;
 
@@ -199,6 +230,11 @@ declare module 'stripe' {
       footer: string | null;
 
       /**
+       * Details of the invoice that was cloned. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
+       */
+      from_invoice: Invoice.FromInvoice | null;
+
+      /**
        * The URL for the hosted invoice page, which allows customers to view and pay an invoice. If the invoice has not been finalized yet, this will be null.
        */
       hosted_invoice_url?: string | null;
@@ -212,6 +248,11 @@ declare module 'stripe' {
        * The error encountered during the previous attempt to finalize the invoice. This field is cleared when the invoice is successfully finalized.
        */
       last_finalization_error: Invoice.LastFinalizationError | null;
+
+      /**
+       * The ID of the most recent non-draft revision of this invoice
+       */
+      latest_revision: string | Stripe.Invoice | null;
 
       /**
        * The individual line items that make up the invoice. `lines` is sorted as follows: invoice items in reverse chronological order, followed by the subscription, if any.
@@ -296,7 +337,7 @@ declare module 'stripe' {
       rendering_options: Invoice.RenderingOptions | null;
 
       /**
-       * Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance.
+       * Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance. For revision invoices, this also includes any customer balance that was applied to the original invoice.
        */
       starting_balance: number;
 
@@ -433,7 +474,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, or `unknown`
+         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, or `unknown`
          */
         type: CustomerTaxId.Type;
 
@@ -472,6 +513,8 @@ declare module 'stripe' {
           | 'is_vat'
           | 'jp_cn'
           | 'jp_rn'
+          | 'jp_trn'
+          | 'ke_pin'
           | 'kr_brn'
           | 'li_uid'
           | 'mx_rfc'
@@ -504,6 +547,18 @@ declare module 'stripe' {
          * The value of the custom field.
          */
         value: string;
+      }
+
+      interface FromInvoice {
+        /**
+         * The relation between this invoice and the cloned invoice
+         */
+        action: string;
+
+        /**
+         * The invoice that was cloned.
+         */
+        invoice: string | Stripe.Invoice;
       }
 
       interface LastFinalizationError {
@@ -565,6 +620,11 @@ declare module 'stripe' {
          * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
          */
         payment_method_type?: string;
+
+        /**
+         * A URL to the request log entry in your dashboard.
+         */
+        request_log_url?: string;
 
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
@@ -1011,6 +1071,11 @@ declare module 'stripe' {
       footer?: string;
 
       /**
+       * Revise an existing invoice. The new invoice will be created in `status=draft`. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
+       */
+      from_invoice?: InvoiceCreateParams.FromInvoice;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
@@ -1085,6 +1150,18 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+      }
+
+      interface FromInvoice {
+        /**
+         * The relation between the new invoice and the original invoice. Currently, only 'revision' is permitted
+         */
+        action: 'revision';
+
+        /**
+         * The `id` of the invoice that will be cloned.
+         */
+        invoice: string;
       }
 
       interface PaymentSettings {
@@ -2002,7 +2079,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -2041,6 +2118,8 @@ declare module 'stripe' {
             | 'is_vat'
             | 'jp_cn'
             | 'jp_rn'
+            | 'jp_trn'
+            | 'ke_pin'
             | 'kr_brn'
             | 'li_uid'
             | 'mx_rfc'
@@ -2550,7 +2629,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -2589,6 +2668,8 @@ declare module 'stripe' {
             | 'is_vat'
             | 'jp_cn'
             | 'jp_rn'
+            | 'jp_trn'
+            | 'ke_pin'
             | 'kr_brn'
             | 'li_uid'
             | 'mx_rfc'
@@ -2913,7 +2994,7 @@ declare module 'stripe' {
 
     class InvoicesResource {
       /**
-       * This endpoint creates a draft invoice for a given customer. The draft invoice created pulls in all pending invoice items on that customer, including prorations. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](#pay_invoice) or <a href="#send_invoice">send](https://stripe.com/docs/api#finalize_invoice) the invoice to your customers.
+       * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](#pay_invoice) or <a href="#send_invoice">send](https://stripe.com/docs/api#finalize_invoice) the invoice to your customers.
        */
       create(
         params?: InvoiceCreateParams,

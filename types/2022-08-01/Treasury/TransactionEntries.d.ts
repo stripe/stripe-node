@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Treasury {
       /**
-       * The TransactionEntry object.
+       * TransactionEntries represent individual units of money movements within a single [Transaction](https://stripe.com/docs/api#transactions).
        */
       interface TransactionEntry {
         /**

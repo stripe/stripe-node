@@ -3,7 +3,12 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * The Person object.
+     * This is an object representing a person associated with a Stripe account.
+     *
+     * A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
+     * See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform pre-filling and account onboarding steps.
+     *
+     * Related guide: [Handling Identity Verification with the API](https://stripe.com/docs/connect/identity-verification-api#person-information).
      */
     interface Person {
       /**
@@ -301,6 +306,8 @@ declare module 'stripe' {
         namespace Error {
           type Code =
             | 'invalid_address_city_state_postal_code'
+            | 'invalid_dob_age_under_18'
+            | 'invalid_representative_country'
             | 'invalid_street_address'
             | 'invalid_tos_acceptance'
             | 'invalid_value_other'
@@ -341,6 +348,7 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_executives'
@@ -448,6 +456,8 @@ declare module 'stripe' {
         namespace Error {
           type Code =
             | 'invalid_address_city_state_postal_code'
+            | 'invalid_dob_age_under_18'
+            | 'invalid_representative_country'
             | 'invalid_street_address'
             | 'invalid_tos_acceptance'
             | 'invalid_value_other'
@@ -488,6 +498,7 @@ declare module 'stripe' {
             | 'verification_failed_keyed_match'
             | 'verification_failed_name_match'
             | 'verification_failed_other'
+            | 'verification_failed_residential_address'
             | 'verification_failed_tax_id_match'
             | 'verification_failed_tax_id_not_issued'
             | 'verification_missing_executives'
