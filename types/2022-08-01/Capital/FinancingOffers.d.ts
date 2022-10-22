@@ -204,6 +204,7 @@ declare module 'stripe' {
           | 'fully_repaid'
           | 'paid_out'
           | 'rejected'
+          | 'revoked'
           | 'undelivered';
       }
 

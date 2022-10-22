@@ -89,6 +89,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata;
 
         /**
+         * Details about the transaction, such as processing dates, set by the card network.
+         */
+        network_data?: Transaction.NetworkData | null;
+
+        /**
          * Additional purchase information that is optionally provided by the merchant.
          */
         purchase_details: Transaction.PurchaseDetails | null;
@@ -157,6 +162,13 @@ declare module 'stripe' {
            * State where the seller is located
            */
           state: string | null;
+        }
+
+        interface NetworkData {
+          /**
+           * The date the transaction was processed by the card network. This can be different from the date the seller recorded the transaction depending on when the acquirer submits the transaction to the network.
+           */
+          processing_date: string | null;
         }
 
         interface PurchaseDetails {
@@ -307,12 +319,12 @@ declare module 'stripe' {
 
         interface Treasury {
           /**
-           * The Treasury [ReceivedCredit](https://stripe.com/docs/api/treasury/received_debits) representing this Issuing transaction if it is a refund
+           * The Treasury [ReceivedCredit](https://stripe.com/docs/api/treasury/received_credits) representing this Issuing transaction if it is a refund
            */
           received_credit: string | null;
 
           /**
-           * The Treasury [ReceivedDebit](https://stripe.com/docs/api/treasury/received_credits) representing this Issuing transaction if it is a capture
+           * The Treasury [ReceivedDebit](https://stripe.com/docs/api/treasury/received_debits) representing this Issuing transaction if it is a capture
            */
           received_debit: string | null;
         }

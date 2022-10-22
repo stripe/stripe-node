@@ -8,6 +8,10 @@ declare module 'stripe' {
      * just like a `Card` object: once chargeable, they can be charged, or can be
      * attached to customers.
      *
+     * Stripe doesn't recommend using the deprecated [Sources API](https://stripe.com/docs/api/sources).
+     * We recommend that you adopt the [PaymentMethods API](https://stripe.com/docs/api/payment_methods).
+     * This newer API provides access to our latest features and payment method types.
+     *
      * Related guides: [Sources API](https://stripe.com/docs/sources) and [Sources & Customers](https://stripe.com/docs/sources/customers).
      */
     interface Source {
@@ -95,6 +99,8 @@ declare module 'stripe' {
       owner: Source.Owner | null;
 
       p24?: Source.P24;
+
+      paypal?: Source.Paypal;
 
       receiver?: Source.Receiver;
 
@@ -468,6 +474,26 @@ declare module 'stripe' {
         reference?: string | null;
       }
 
+      interface Paypal {
+        billing_agreement?: string | null;
+
+        fingerprint?: string | null;
+
+        payer_id?: string | null;
+
+        reference_id?: string;
+
+        reference_transaction_amount?: string;
+
+        reference_transaction_charged?: boolean;
+
+        statement_descriptor?: string | null;
+
+        transaction_id?: string;
+
+        verified_email?: string | null;
+      }
+
       interface Receiver {
         /**
          * The address of the receiver source. This is the value that should be communicated to the customer to send their funds to.
@@ -717,6 +743,7 @@ declare module 'stripe' {
         | 'klarna'
         | 'multibanco'
         | 'p24'
+        | 'paypal'
         | 'sepa_credit_transfer'
         | 'sepa_debit'
         | 'sofort'
