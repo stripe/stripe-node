@@ -1,5 +1,14 @@
 # Changelog
 
+## 10.16.0-beta.1 - 2022-10-21
+* [#1589](https://github.com/stripe/stripe-node/pull/1589) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add support for new value `revoked` on enum `CapitalFinancingOfferListParams.status`
+  * Add support for `paypal` on `Charge.payment_method_details` and `Source`
+  * Add support for `network_data` on `Issuing.Transaction`
+  * Add support for new value `paypal` on enum `Source.type`
+  * Add support for `billing_cycle_anchor` on `SubscriptionScheduleAmendParams.amendments[]`
+
 ## 10.15.0 - 2022-10-20
 * [#1588](https://github.com/stripe/stripe-node/pull/1588) API Updates
   * Add support for new values `jp_trn` and `ke_pin` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, `Order.tax_details.tax_ids[].type`, and `TaxId.type`
