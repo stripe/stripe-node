@@ -102,7 +102,7 @@ jobs:
 
       - name: Coveralls
         run: yarn report && yarn coveralls
-        if: matrix.node == '18'
+        if: env.COVERALLS_REPO_TOKEN && matrix.node == '18'
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
