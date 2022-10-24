@@ -32,6 +32,11 @@ app.post(
   // Stripe requires the raw body to construct the event
   express.raw({type: 'application/json'}),
   (req: express.Request, res: express.Response): void => {
+    if (!req.headers['stripe-signature']) {
+      console.log('❌ Error message: missing stripe-signature header');
+      return;
+    }
+
     const sig = req.headers['stripe-signature'];
 
     let event: Stripe.Event;
