@@ -129,6 +129,20 @@ declare module 'stripe' {
                * Override showing a tipping selection screen on this transaction.
                */
               skip_tipping?: boolean;
+
+              /**
+               * Represents a per-transaction tipping configuration
+               */
+              tipping?: ProcessConfig.Tipping;
+            }
+
+            namespace ProcessConfig {
+              interface Tipping {
+                /**
+                 * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
+                 */
+                amount_eligible?: number;
+              }
             }
           }
 
@@ -353,6 +367,20 @@ declare module 'stripe' {
            * Override showing a tipping selection screen on this transaction.
            */
           skip_tipping?: boolean;
+
+          /**
+           * Tipping configuration for this transaction.
+           */
+          tipping?: ProcessConfig.Tipping;
+        }
+
+        namespace ProcessConfig {
+          interface Tipping {
+            /**
+             * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
+             */
+            amount_eligible?: number;
+          }
         }
       }
 
