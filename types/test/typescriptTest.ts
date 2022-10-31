@@ -35,14 +35,10 @@ stripe = new Stripe('sk_test_123', {
   port: 123,
   telemetry: true,
   httpClient: Stripe.createNodeHttpClient(),
+  appInfo: {
+    name: 'my-wordpress-plugin',
+  },
 });
-
-stripe.setTimeout(3000);
-stripe.setAppInfo({
-  name: 'my-wordpress-plugin',
-});
-
-stripe.setHost('host', 'port', 'protocol');
 
 (async (): Promise<void> => {
   const params: Stripe.CustomerCreateParams = {

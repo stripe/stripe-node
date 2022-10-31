@@ -134,8 +134,6 @@ declare module 'stripe' {
 
     constructor(apiKey: string, config?: Stripe.StripeConfig);
 
-    setAppInfo(info: Stripe.AppInfo): void;
-
     StripeResource: Stripe.StripeResource;
 
     /**
@@ -283,25 +281,6 @@ declare module 'stripe' {
     ): void;
 
     setProtocol(protocol: string): void;
-
-    /** @deprecated Please use the StripeConfig object instead. */
-    setHost(host: string, port?: string | number, protocol?: string): void;
-
-    /** @deprecated Please use the StripeConfig object instead. */
-    setPort(port: string | number): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setApiVersion(version: Stripe.LatestApiVersion): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setApiKey(key: string): void;
-
-    /** @deprecated Please use the StripeConfig object instead. */
-    setTimeout(timeout?: number): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setMaxNetworkRetries(maxNetworkRetries: number): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setTelemetryEnabled(enabled: boolean): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setHttpAgent(agent: Stripe.HttpAgent): void;
   }
 
   export default Stripe;

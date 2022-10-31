@@ -50,34 +50,7 @@ describe('EphemeralKey Resource', () => {
       });
     });
 
-    describe('when an api version is set', () => {
-      beforeEach(function() {
-        this.oldVersion = stripe.getApiField('version');
-        stripe.setApiVersion('2017-05-25');
-      });
-
-      afterEach(function() {
-        stripe.setApiVersion(this.oldVersion);
-      });
-
-      it('Errors if no stripe-version is specified', () =>
-        errorsOnNoStripeVersion());
-
-      it('Sends the correct stripe-version', () => {
-        sendsCorrectStripeVersion();
-      });
-    });
-
-    describe('when no api version is set', () => {
-      beforeEach(function() {
-        this.oldVersion = stripe.getApiField('version');
-        stripe.setApiVersion(null);
-      });
-
-      afterEach(function() {
-        stripe.setApiVersion(this.oldVersion);
-      });
-
+    describe('stripe-version', () => {
       it('Errors if no stripe-version is specified', () =>
         errorsOnNoStripeVersion());
 
