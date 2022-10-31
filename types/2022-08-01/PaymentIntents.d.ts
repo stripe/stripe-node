@@ -7485,20 +7485,17 @@ declare module 'stripe' {
        * Confirm that your customer intends to pay with current or provided
        * payment method. Upon confirmation, the PaymentIntent will attempt to initiate
        * a payment.
-       *
        * If the selected payment method requires additional authentication steps, the
        * PaymentIntent will transition to the requires_action status and
        * suggest additional actions via next_action. If payment fails,
        * the PaymentIntent will transition to the requires_payment_method status. If
        * payment succeeds, the PaymentIntent will transition to the succeeded
        * status (or requires_capture, if capture_method is set to manual).
-       *
        * If the confirmation_method is automatic, payment may be attempted
        * using our [client SDKs](https://stripe.com/docs/stripe-js/reference#stripe-handle-card-payment)
        * and the PaymentIntent's [client_secret](https://stripe.com/docs/api#payment_intent_object-client_secret).
        * After next_actions are handled by the client, no additional
        * confirmation is required to complete the payment.
-       *
        * If the confirmation_method is manual, all payment attempts must be
        * initiated using a secret key.
        * If any actions are required for the payment, the PaymentIntent will
