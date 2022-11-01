@@ -1023,8 +1023,6 @@ describe('StripeResource', () => {
 
   describe('Request Timeout', () => {
     it('should allow the setting of a request timeout on a per-request basis', (done) => {
-      stripe.setTimeout(1000);
-
       stripe.charges.create({});
 
       expect(stripe.LAST_REQUEST.settings).to.deep.equal({});

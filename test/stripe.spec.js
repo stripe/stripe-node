@@ -111,8 +111,8 @@ describe('Stripe Module', function() {
       });
 
       cases.forEach((item) => {
-        const stripe = Stripe(testUtils.getUserStripeKey(), item);
-        expect(stripe.getApiField('version')).to.equal(null);
+        const newStripe = Stripe(testUtils.getUserStripeKey(), item);
+        expect(newStripe.getApiField('version')).to.equal(null);
       });
     });
 
@@ -178,22 +178,22 @@ describe('Stripe Module', function() {
     it('Should include whether typescript: true was passed, respecting reinstantiations', () => {
       return new Promise((resolve) => resolve())
         .then(() => {
-          const stripe = new Stripe('sk_test_123', {
+          const newStripe = new Stripe('sk_test_123', {
             typescript: true,
           });
           return expect(
             new Promise((resolve, reject) => {
-              stripe.getClientUserAgent((c) => {
+              newStripe.getClientUserAgent((c) => {
                 resolve(JSON.parse(c));
               });
             })
           ).to.eventually.have.property('typescript', 'true');
         })
         .then(() => {
-          const stripe = new Stripe('sk_test_123', {});
+          const newStripe = new Stripe('sk_test_123', {});
           return expect(
             new Promise((resolve, reject) => {
-              stripe.getClientUserAgent((c) => {
+              newStripe.getClientUserAgent((c) => {
                 resolve(JSON.parse(c));
               });
             })
@@ -276,25 +276,28 @@ describe('Stripe Module', function() {
     });
   });
 
-  describe('setTimeout', () => {
+  describe('timeout config', () => {
     const defaultTimeout = 80000;
     it('Should define a default of 80000', () => {
       expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
     });
     it('Should allow me to set a custom timeout', () => {
-      stripe.setTimeout(900);
-      expect(stripe.getApiField('timeout')).to.equal(900);
+      const newStripe = Stripe('sk_test', {
+        timeout: 900,
+      });
+      expect(newStripe.getApiField('timeout')).to.equal(900);
     });
     it('Should allow me to set null, to reset to the default', () => {
-      stripe.setTimeout(null);
-      expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
+      const newStripe = Stripe('sk_test', {
+        timeout: null,
+      });
+      expect(newStripe.getApiField('timeout')).to.equal(defaultTimeout);
     });
   });
 
-  describe('setAppInfo', () => {
+  describe('appInfo config', () => {
     describe('when given nothing or an empty object', () => {
       it('should unset stripe._appInfo', () => {
-        stripe.setAppInfo();
         expect(stripe._appInfo).to.be.undefined;
       });
     });
@@ -308,7 +311,9 @@ describe('Stripe Module', function() {
     describe('when given a non-object variable', () => {
       it('should throw an error', () => {
         expect(() => {
-          stripe.setAppInfo('foo');
+          Stripe('sk_test', {
+            appInfo: 'foo',
+          });
         }).to.throw(/AppInfo must be an object./);
       });
     });
@@ -316,18 +321,24 @@ describe('Stripe Module', function() {
     describe('when given an object with no `name`', () => {
       it('should throw an error', () => {
         expect(() => {
-          stripe.setAppInfo({});
-        }).to.throw(/AppInfo.name is required/);
-
-        expect(() => {
-          stripe.setAppInfo({
-            version: '1.2.3',
+          Stripe('sk_test', {
+            appInfo: {},
           });
         }).to.throw(/AppInfo.name is required/);
 
         expect(() => {
-          stripe.setAppInfo({
-            cats: '42',
+          Stripe('sk_test', {
+            appInfo: {
+              version: '1.2.3',
+            },
+          });
+        }).to.throw(/AppInfo.name is required/);
+
+        expect(() => {
+          Stripe('sk_test', {
+            appInfo: {
+              cats: '42',
+            },
           });
         }).to.throw(/AppInfo.name is required/);
       });
@@ -335,50 +346,60 @@ describe('Stripe Module', function() {
 
     describe('when given at least a `name`', () => {
       it('should set name, partner ID, url, and version of stripe._appInfo', () => {
-        stripe.setAppInfo({
-          name: 'MyAwesomeApp',
+        let newStripe = Stripe('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+          },
         });
-        expect(stripe._appInfo).to.eql({
+        expect(newStripe._appInfo).to.eql({
           name: 'MyAwesomeApp',
         });
 
-        stripe.setAppInfo({
+        newStripe = Stripe('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+            version: '1.2.345',
+          },
+        });
+        expect(newStripe._appInfo).to.eql({
           name: 'MyAwesomeApp',
           version: '1.2.345',
         });
-        expect(stripe._appInfo).to.eql({
-          name: 'MyAwesomeApp',
-          version: '1.2.345',
-        });
 
-        stripe.setAppInfo({
-          name: 'MyAwesomeApp',
-          url: 'https://myawesomeapp.info',
+        newStripe = Stripe('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+            url: 'https://myawesomeapp.info',
+          },
         });
-        expect(stripe._appInfo).to.eql({
+        expect(newStripe._appInfo).to.eql({
           name: 'MyAwesomeApp',
           url: 'https://myawesomeapp.info',
         });
 
-        stripe.setAppInfo({
-          name: 'MyAwesomeApp',
-          partner_id: 'partner_1234',
+        newStripe = Stripe('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+            partner_id: 'partner_1234',
+          },
         });
-        expect(stripe._appInfo).to.eql({
+        expect(newStripe._appInfo).to.eql({
           name: 'MyAwesomeApp',
           partner_id: 'partner_1234',
         });
       });
 
       it('should ignore any invalid properties', () => {
-        stripe.setAppInfo({
-          name: 'MyAwesomeApp',
-          partner_id: 'partner_1234',
-          version: '1.2.345',
-          url: 'https://myawesomeapp.info',
-          countOfRadishes: 512,
+        const newStripe = Stripe('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+            partner_id: 'partner_1234',
+            version: '1.2.345',
+            url: 'https://myawesomeapp.info',
+            countOfRadishes: 512,
+          },
         });
-        expect(stripe._appInfo).to.eql({
+        expect(newStripe._appInfo).to.eql({
           name: 'MyAwesomeApp',
           partner_id: 'partner_1234',
           version: '1.2.345',
@@ -394,12 +415,14 @@ describe('Stripe Module', function() {
         url: 'https://myawesomeapp.info',
       };
 
-      stripe.setAppInfo(appInfo);
+      const newStripe = Stripe('sk_test', {
+        appInfo,
+      });
 
-      stripe.getClientUserAgent((uaString) => {
+      newStripe.getClientUserAgent((uaString) => {
         expect(JSON.parse(uaString).application).to.eql(appInfo);
 
-        expect(stripe.getAppInfoAsString()).to.eql(
+        expect(newStripe.getAppInfoAsString()).to.eql(
           `${appInfo.name}/${appInfo.version} (${appInfo.url})`
         );
 
@@ -496,7 +519,6 @@ describe('Stripe Module', function() {
 
   describe('errors', () => {
     it('Exports errors as types', () => {
-      const Stripe = require('../lib/stripe');
       expect(
         new Stripe.errors.StripeInvalidRequestError({
           message: 'error',
