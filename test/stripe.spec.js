@@ -282,13 +282,13 @@ describe('Stripe Module', function() {
       expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
     });
     it('Should allow me to set a custom timeout', () => {
-      const stripe = require('../lib/stripe')('sk_test', {
+      const stripe = Stripe('sk_test', {
         timeout: 900,
       });
       expect(stripe.getApiField('timeout')).to.equal(900);
     });
     it('Should allow me to set null, to reset to the default', () => {
-      const stripe = require('../lib/stripe')('sk_test', {
+      const stripe = Stripe('sk_test', {
         timeout: null,
       });
       expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
@@ -311,7 +311,7 @@ describe('Stripe Module', function() {
     describe('when given a non-object variable', () => {
       it('should throw an error', () => {
         expect(() => {
-          require('../lib/stripe')('sk_test', {
+          Stripe('sk_test', {
             appInfo: 'foo',
           });
         }).to.throw(/AppInfo must be an object./);
@@ -321,13 +321,13 @@ describe('Stripe Module', function() {
     describe('when given an object with no `name`', () => {
       it('should throw an error', () => {
         expect(() => {
-          require('../lib/stripe')('sk_test', {
+          Stripe('sk_test', {
             appInfo: {},
           });
         }).to.throw(/AppInfo.name is required/);
 
         expect(() => {
-          require('../lib/stripe')('sk_test', {
+          Stripe('sk_test', {
             appInfo: {
               version: '1.2.3',
             },
@@ -335,7 +335,7 @@ describe('Stripe Module', function() {
         }).to.throw(/AppInfo.name is required/);
 
         expect(() => {
-          require('../lib/stripe')('sk_test', {
+          Stripe('sk_test', {
             appInfo: {
               cats: '42',
             },
@@ -346,7 +346,7 @@ describe('Stripe Module', function() {
 
     describe('when given at least a `name`', () => {
       it('should set name, partner ID, url, and version of stripe._appInfo', () => {
-        let stripe = require('../lib/stripe')('sk_test', {
+        let stripe = Stripe('sk_test', {
           appInfo: {
             name: 'MyAwesomeApp',
           },
@@ -355,7 +355,7 @@ describe('Stripe Module', function() {
           name: 'MyAwesomeApp',
         });
 
-        stripe = require('../lib/stripe')('sk_test', {
+        stripe = Stripe('sk_test', {
           appInfo: {
             name: 'MyAwesomeApp',
             version: '1.2.345',
@@ -366,7 +366,7 @@ describe('Stripe Module', function() {
           version: '1.2.345',
         });
 
-        stripe = require('../lib/stripe')('sk_test', {
+        stripe = Stripe('sk_test', {
           appInfo: {
             name: 'MyAwesomeApp',
             url: 'https://myawesomeapp.info',
@@ -377,7 +377,7 @@ describe('Stripe Module', function() {
           url: 'https://myawesomeapp.info',
         });
 
-        stripe = require('../lib/stripe')('sk_test', {
+        stripe = Stripe('sk_test', {
           appInfo: {
             name: 'MyAwesomeApp',
             partner_id: 'partner_1234',
@@ -390,7 +390,7 @@ describe('Stripe Module', function() {
       });
 
       it('should ignore any invalid properties', () => {
-        const stripe = require('../lib/stripe')('sk_test', {
+        const stripe = Stripe('sk_test', {
           appInfo: {
             name: 'MyAwesomeApp',
             partner_id: 'partner_1234',
@@ -415,7 +415,7 @@ describe('Stripe Module', function() {
         url: 'https://myawesomeapp.info',
       };
 
-      const stripe = require('../lib/stripe')('sk_test', {
+      const stripe = Stripe('sk_test', {
         appInfo,
       });
 
@@ -519,7 +519,6 @@ describe('Stripe Module', function() {
 
   describe('errors', () => {
     it('Exports errors as types', () => {
-      const Stripe = require('../lib/stripe');
       expect(
         new Stripe.errors.StripeInvalidRequestError({
           message: 'error',
