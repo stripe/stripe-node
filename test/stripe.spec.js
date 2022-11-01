@@ -276,6 +276,161 @@ describe('Stripe Module', function() {
     });
   });
 
+  describe('timeout config', () => {
+    const defaultTimeout = 80000;
+    it('Should define a default of 80000', () => {
+      expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
+    });
+    it('Should allow me to set a custom timeout', () => {
+      const stripe = require('../lib/stripe')('sk_test', {
+        timeout: 900,
+      });
+      expect(stripe.getApiField('timeout')).to.equal(900);
+    });
+    it('Should allow me to set null, to reset to the default', () => {
+      const stripe = require('../lib/stripe')('sk_test', {
+        timeout: null,
+      });
+      expect(stripe.getApiField('timeout')).to.equal(defaultTimeout);
+    });
+  });
+
+  describe('appInfo config', () => {
+    describe('when given nothing or an empty object', () => {
+      it('should unset stripe._appInfo', () => {
+        expect(stripe._appInfo).to.be.undefined;
+      });
+    });
+
+    describe('when not set', () => {
+      it('should return empty string', () => {
+        expect(stripe.getAppInfoAsString()).to.equal('');
+      });
+    });
+
+    describe('when given a non-object variable', () => {
+      it('should throw an error', () => {
+        expect(() => {
+          require('../lib/stripe')('sk_test', {
+            appInfo: 'foo',
+          });
+        }).to.throw(/AppInfo must be an object./);
+      });
+    });
+
+    describe('when given an object with no `name`', () => {
+      it('should throw an error', () => {
+        expect(() => {
+          require('../lib/stripe')('sk_test', {
+            appInfo: {},
+          });
+        }).to.throw(/AppInfo.name is required/);
+
+        expect(() => {
+          require('../lib/stripe')('sk_test', {
+            appInfo: {
+              version: '1.2.3',
+            },
+          });
+        }).to.throw(/AppInfo.name is required/);
+
+        expect(() => {
+          require('../lib/stripe')('sk_test', {
+            appInfo: {
+              cats: '42',
+            },
+          });
+        }).to.throw(/AppInfo.name is required/);
+      });
+    });
+
+    describe('when given at least a `name`', () => {
+      it('should set name, partner ID, url, and version of stripe._appInfo', () => {
+        let stripe = require('../lib/stripe')('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+          },
+        });
+        expect(stripe._appInfo).to.eql({
+          name: 'MyAwesomeApp',
+        });
+
+        stripe = require('../lib/stripe')('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+            version: '1.2.345',
+          },
+        });
+        expect(stripe._appInfo).to.eql({
+          name: 'MyAwesomeApp',
+          version: '1.2.345',
+        });
+
+        stripe = require('../lib/stripe')('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+            url: 'https://myawesomeapp.info',
+          },
+        });
+        expect(stripe._appInfo).to.eql({
+          name: 'MyAwesomeApp',
+          url: 'https://myawesomeapp.info',
+        });
+
+        stripe = require('../lib/stripe')('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+            partner_id: 'partner_1234',
+          },
+        });
+        expect(stripe._appInfo).to.eql({
+          name: 'MyAwesomeApp',
+          partner_id: 'partner_1234',
+        });
+      });
+
+      it('should ignore any invalid properties', () => {
+        const stripe = require('../lib/stripe')('sk_test', {
+          appInfo: {
+            name: 'MyAwesomeApp',
+            partner_id: 'partner_1234',
+            version: '1.2.345',
+            url: 'https://myawesomeapp.info',
+            countOfRadishes: 512,
+          },
+        });
+        expect(stripe._appInfo).to.eql({
+          name: 'MyAwesomeApp',
+          partner_id: 'partner_1234',
+          version: '1.2.345',
+          url: 'https://myawesomeapp.info',
+        });
+      });
+    });
+
+    it('should be included in the ClientUserAgent and be added to the UserAgent String', (done) => {
+      const appInfo = {
+        name: testUtils.getRandomString(),
+        version: '1.2.345',
+        url: 'https://myawesomeapp.info',
+      };
+
+      const stripe = require('../lib/stripe')('sk_test', {
+        appInfo,
+      });
+
+      stripe.getClientUserAgent((uaString) => {
+        expect(JSON.parse(uaString).application).to.eql(appInfo);
+
+        expect(stripe.getAppInfoAsString()).to.eql(
+          `${appInfo.name}/${appInfo.version} (${appInfo.url})`
+        );
+
+        done();
+      });
+    });
+  });
+
   describe('Callback support', () => {
     describe('Any given endpoint', () => {
       it('Will call a callback if successful', () =>

@@ -3,7 +3,7 @@
 const stripe = require('../../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 
-function errorsOnNoStripeVersion() {
+function errorsOnNoStripeVersion(stripe) {
   return expect(
     stripe.ephemeralKeys.create({customer: 'cus_123'})
   ).to.be.eventually.rejectedWith(
@@ -11,7 +11,7 @@ function errorsOnNoStripeVersion() {
   );
 }
 
-function sendsCorrectStripeVersion() {
+function sendsCorrectStripeVersion(stripe) {
   stripe.ephemeralKeys.create(
     {customer: 'cus_123'},
     {apiVersion: '2017-06-05'}
@@ -50,12 +50,29 @@ describe('EphemeralKey Resource', () => {
       });
     });
 
-    describe('stripe-version', () => {
+    describe('when an api version is set', () => {
+      const stripe = require('../../testUtils').getSpyableStripe({
+        apiVersion: '2017-05-25',
+      });
+
       it('Errors if no stripe-version is specified', () =>
-        errorsOnNoStripeVersion());
+        errorsOnNoStripeVersion(stripe));
 
       it('Sends the correct stripe-version', () => {
-        sendsCorrectStripeVersion();
+        sendsCorrectStripeVersion(stripe);
+      });
+    });
+
+    describe('when no api version is set', () => {
+      const stripe = require('../../testUtils').getSpyableStripe({
+        apiVersion: null,
+      });
+
+      it('Errors if no stripe-version is specified', () =>
+        errorsOnNoStripeVersion(stripe));
+
+      it('Sends the correct stripe-version', () => {
+        sendsCorrectStripeVersion(stripe);
       });
     });
   });

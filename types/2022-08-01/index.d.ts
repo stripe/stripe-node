@@ -279,8 +279,6 @@ declare module 'stripe' {
       event: 'response',
       handler: (event: Stripe.ResponseEvent) => void
     ): void;
-
-    setProtocol(protocol: string): void;
   }
 
   export default Stripe;
