@@ -3143,6 +3143,11 @@ declare module 'stripe' {
           metadata?: Stripe.MetadataParam;
 
           /**
+           * The account on behalf of which to charge, for each of the subscription's invoices.
+           */
+          on_behalf_of?: string;
+
+          /**
            * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
            */
           transfer_data?: SubscriptionData.TransferData;
