@@ -91,6 +91,11 @@ declare module 'stripe' {
       }
 
       interface Trial {
+        /**
+         * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+         */
+        converts_to?: Array<string> | null;
+
         type: Trial.Type;
       }
 
@@ -282,6 +287,11 @@ declare module 'stripe' {
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
 
       interface Trial {
+        /**
+         * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+         */
+        converts_to?: Array<string>;
+
         /**
          * Determines the type of trial for this item.
          */

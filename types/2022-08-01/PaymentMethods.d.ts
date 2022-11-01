@@ -44,6 +44,8 @@ declare module 'stripe' {
 
       card_present?: PaymentMethod.CardPresent;
 
+      cashapp?: PaymentMethod.Cashapp;
+
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
@@ -113,6 +115,8 @@ declare module 'stripe' {
       us_bank_account?: PaymentMethod.UsBankAccount;
 
       wechat_pay?: PaymentMethod.WechatPay;
+
+      zip?: PaymentMethod.Zip;
     }
 
     namespace PaymentMethod {
@@ -416,6 +420,8 @@ declare module 'stripe' {
 
       interface CardPresent {}
 
+      interface Cashapp {}
+
       interface CustomerBalance {}
 
       interface Eps {
@@ -705,6 +711,7 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'card_present'
+        | 'cashapp'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
@@ -724,7 +731,8 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface UsBankAccount {
         /**
@@ -791,6 +799,8 @@ declare module 'stripe' {
       }
 
       interface WechatPay {}
+
+      interface Zip {}
     }
 
     interface PaymentMethodCreateParams {
@@ -848,6 +858,11 @@ declare module 'stripe' {
        * If this is a `card` PaymentMethod, this hash contains the user's card details. For backwards compatibility, you can alternatively provide a Stripe token (e.g., for Apple Pay, Amex Express Checkout, or legacy Checkout) into the card hash with format `card: {token: "tok_visa"}`. When providing a card number, you must meet the requirements for [PCI compliance](https://stripe.com/docs/security#validating-pci-compliance). We strongly recommend using Stripe.js instead of interacting with this API directly.
        */
       card?: PaymentMethodCreateParams.Card1 | PaymentMethodCreateParams.Card2;
+
+      /**
+       * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+       */
+      cashapp?: PaymentMethodCreateParams.Cashapp;
 
       /**
        * The `Customer` to whom the original PaymentMethod is attached.
@@ -978,6 +993,11 @@ declare module 'stripe' {
        * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
        */
       wechat_pay?: PaymentMethodCreateParams.WechatPay;
+
+      /**
+       * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+       */
+      zip?: PaymentMethodCreateParams.Zip;
     }
 
     namespace PaymentMethodCreateParams {
@@ -1086,6 +1106,8 @@ declare module 'stripe' {
       interface Card2 {
         token: string;
       }
+
+      interface Cashapp {}
 
       interface CustomerBalance {}
 
@@ -1310,6 +1332,7 @@ declare module 'stripe' {
         | 'blik'
         | 'boleto'
         | 'card'
+        | 'cashapp'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
@@ -1328,7 +1351,8 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface UsBankAccount {
         /**
@@ -1364,6 +1388,8 @@ declare module 'stripe' {
       }
 
       interface WechatPay {}
+
+      interface Zip {}
     }
 
     interface PaymentMethodRetrieveParams {
@@ -1410,6 +1436,11 @@ declare module 'stripe' {
       card?: PaymentMethodUpdateParams.Card;
 
       /**
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
+       */
+      cashapp?: PaymentMethodUpdateParams.Cashapp;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -1433,6 +1464,11 @@ declare module 'stripe' {
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
        */
       us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
+
+      /**
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
+       */
+      zip?: PaymentMethodUpdateParams.Zip;
     }
 
     namespace PaymentMethodUpdateParams {
@@ -1480,6 +1516,8 @@ declare module 'stripe' {
         exp_year?: number;
       }
 
+      interface Cashapp {}
+
       interface Link {}
 
       interface SepaDebit {}
@@ -1494,6 +1532,8 @@ declare module 'stripe' {
       namespace UsBankAccount {
         type AccountHolderType = 'company' | 'individual';
       }
+
+      interface Zip {}
     }
 
     interface PaymentMethodListParams extends PaginationParams {
@@ -1526,6 +1566,7 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'card_present'
+        | 'cashapp'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
@@ -1544,7 +1585,8 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
     }
 
     interface PaymentMethodAttachParams {

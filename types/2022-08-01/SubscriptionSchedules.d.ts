@@ -164,6 +164,11 @@ declare module 'stripe' {
         invoice_settings: DefaultSettings.InvoiceSettings | null;
 
         /**
+         * The account (if any) the charge was made on behalf of for charges associated with the schedule's subscription. See the Connect documentation for details.
+         */
+        on_behalf_of: string | Stripe.Account | null;
+
+        /**
          * The account (if any) the associated subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
          */
         transfer_data: DefaultSettings.TransferData | null;
@@ -294,6 +299,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata | null;
 
         /**
+         * The account (if any) the charge was made on behalf of for charges associated with the schedule's subscription. See the Connect documentation for details.
+         */
+        on_behalf_of: string | Stripe.Account | null;
+
+        /**
          * If the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
          */
         proration_behavior: Phase.ProrationBehavior;
@@ -317,6 +327,11 @@ declare module 'stripe' {
          * When the trial ends within the phase.
          */
         trial_end: number | null;
+
+        /**
+         * Settings related to any trials on the subscription during this phase.
+         */
+        trial_settings?: Phase.TrialSettings | null;
       }
 
       namespace Phase {
@@ -461,6 +476,11 @@ declare module 'stripe' {
           }
 
           interface Trial {
+            /**
+             * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+             */
+            converts_to?: Array<string> | null;
+
             type: Trial.Type;
           }
 
@@ -487,6 +507,26 @@ declare module 'stripe' {
         }
 
         type TrialContinuation = 'continue' | 'none';
+
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behaves when a trial ensd.
+           */
+          end_behavior: TrialSettings.EndBehavior | null;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Configure how an opt-in following a paid trial is billed when using `billing_behavior: prorate_up_front`.
+             */
+            prorate_up_front: EndBehavior.ProrateUpFront | null;
+          }
+
+          namespace EndBehavior {
+            type ProrateUpFront = 'defer' | 'include';
+          }
+        }
       }
 
       interface Prebilling {
@@ -611,6 +651,11 @@ declare module 'stripe' {
          * All invoices will be billed using the specified settings.
          */
         invoice_settings?: DefaultSettings.InvoiceSettings;
+
+        /**
+         * The account on behalf of which to charge, for each of the associated subscription's invoices.
+         */
+        on_behalf_of?: Stripe.Emptyable<string>;
 
         /**
          * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
@@ -751,6 +796,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * The account on behalf of which to charge, for each of the associated subscription's invoices.
+         */
+        on_behalf_of?: string;
+
+        /**
          * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`.
          */
         proration_behavior?: Phase.ProrationBehavior;
@@ -774,6 +824,11 @@ declare module 'stripe' {
          * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
          */
         trial_end?: number;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: Phase.TrialSettings;
       }
 
       namespace Phase {
@@ -1012,6 +1067,11 @@ declare module 'stripe' {
 
           interface Trial {
             /**
+             * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+             */
+            converts_to?: Array<string>;
+
+            /**
              * Determines the type of trial for this item.
              */
             type: Trial.Type;
@@ -1040,6 +1100,26 @@ declare module 'stripe' {
         }
 
         type TrialContinuation = 'continue' | 'none';
+
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when a trial ends.
+           */
+          end_behavior?: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Configure how an opt-in following a paid trial is billed when using `billing_behavior: prorate_up_front`.
+             */
+            prorate_up_front?: EndBehavior.ProrateUpFront;
+          }
+
+          namespace EndBehavior {
+            type ProrateUpFront = 'defer' | 'include';
+          }
+        }
       }
 
       interface Prebilling {
@@ -1144,6 +1224,11 @@ declare module 'stripe' {
          * All invoices will be billed using the specified settings.
          */
         invoice_settings?: DefaultSettings.InvoiceSettings;
+
+        /**
+         * The account on behalf of which to charge, for each of the associated subscription's invoices.
+         */
+        on_behalf_of?: Stripe.Emptyable<string>;
 
         /**
          * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
@@ -1284,6 +1369,11 @@ declare module 'stripe' {
         metadata?: Stripe.MetadataParam;
 
         /**
+         * The account on behalf of which to charge, for each of the associated subscription's invoices.
+         */
+        on_behalf_of?: string;
+
+        /**
          * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`.
          */
         proration_behavior?: Phase.ProrationBehavior;
@@ -1312,6 +1402,11 @@ declare module 'stripe' {
          * Sets the phase to trialing from the start date to this date. Must be before the phase end date, can not be combined with `trial`
          */
         trial_end?: number | 'now';
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: Phase.TrialSettings;
       }
 
       namespace Phase {
@@ -1550,6 +1645,11 @@ declare module 'stripe' {
 
           interface Trial {
             /**
+             * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+             */
+            converts_to?: Array<string>;
+
+            /**
              * Determines the type of trial for this item.
              */
             type: Trial.Type;
@@ -1578,6 +1678,26 @@ declare module 'stripe' {
         }
 
         type TrialContinuation = 'continue' | 'none';
+
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when a trial ends.
+           */
+          end_behavior?: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Configure how an opt-in following a paid trial is billed when using `billing_behavior: prorate_up_front`.
+             */
+            prorate_up_front?: EndBehavior.ProrateUpFront;
+          }
+
+          namespace EndBehavior {
+            type ProrateUpFront = 'defer' | 'include';
+          }
+        }
       }
 
       interface Prebilling {
@@ -1675,10 +1795,20 @@ declare module 'stripe' {
          * Changes to how Stripe handles prorations during the amendment time span. Affects if and how prorations are created when a future phase starts. In cases where the amendment changes the currently active phase, it is used to determine whether or how to prorate now, at the time of the request. Also supported as a point-in-time operation when `amendment_end` is `null`.
          */
         proration_behavior?: Amendment.ProrationBehavior;
+
+        /**
+         * Settings related to subscription trials.
+         */
+        trial_settings?: Amendment.TrialSettings;
       }
 
       namespace Amendment {
         interface AmendmentEnd {
+          /**
+           * Use the `end` time of a given discount.
+           */
+          discount_end?: AmendmentEnd.DiscountEnd;
+
           /**
            * Time span for the amendment starting from the `amendment_start`.
            */
@@ -1696,6 +1826,13 @@ declare module 'stripe' {
         }
 
         namespace AmendmentEnd {
+          interface DiscountEnd {
+            /**
+             * The ID of a specific discount.
+             */
+            discount: string;
+          }
+
           interface Duration {
             /**
              * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
@@ -1713,6 +1850,7 @@ declare module 'stripe' {
           }
 
           type Type =
+            | 'discount_end'
             | 'duration'
             | 'schedule_end'
             | 'timestamp'
@@ -1724,6 +1862,11 @@ declare module 'stripe' {
            * Details of another amendment in the same array, immediately after which this amendment should begin.
            */
           amendment_end?: AmendmentStart.AmendmentEnd;
+
+          /**
+           * Use the `end` time of a given discount.
+           */
+          discount_end?: AmendmentStart.DiscountEnd;
 
           /**
            * A precise Unix timestamp for the amendment to start.
@@ -1744,8 +1887,16 @@ declare module 'stripe' {
             index: number;
           }
 
+          interface DiscountEnd {
+            /**
+             * The ID of a specific discount.
+             */
+            discount: string;
+          }
+
           type Type =
             | 'amendment_end'
+            | 'discount_end'
             | 'now'
             | 'schedule_end'
             | 'timestamp'
@@ -1891,6 +2042,11 @@ declare module 'stripe' {
 
             interface Trial {
               /**
+               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+               */
+              converts_to?: Array<string>;
+
+              /**
                * Determines the type of trial for this item.
                */
               type: Trial.Type;
@@ -1910,12 +2066,12 @@ declare module 'stripe' {
 
           interface Set {
             /**
-             * If the an item with the `price` already exists, passing this will override the `discounts` array on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `discounts`.
+             * If an item with the `price` already exists, passing this will override the `discounts` array on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `discounts`.
              */
             discounts?: Array<Set.Discount>;
 
             /**
-             * If the an item with the `price` already exists, passing this will override the `metadata` on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `metadata`.
+             * If an item with the `price` already exists, passing this will override the `metadata` on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `metadata`.
              */
             metadata?: Stripe.MetadataParam;
 
@@ -1925,17 +2081,17 @@ declare module 'stripe' {
             price: string;
 
             /**
-             * If the an item with the `price` already exists, passing this will override the quantity on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `quantity`.
+             * If an item with the `price` already exists, passing this will override the quantity on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `quantity`.
              */
             quantity?: number;
 
             /**
-             * If the an item with the `price` already exists, passing this will override the `tax_rates` array on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `tax_rates`.
+             * If an item with the `price` already exists, passing this will override the `tax_rates` array on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `tax_rates`.
              */
             tax_rates?: Array<string>;
 
             /**
-             * If the an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
+             * If an item with the `price` already exists, passing this will override the `trial` configuration on the subscription item that matches that price. Otherwise, the `items` array is cleared and a single new item is added with the supplied `trial`.
              */
             trial?: Set.Trial;
           }
@@ -1955,6 +2111,11 @@ declare module 'stripe' {
 
             interface Trial {
               /**
+               * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+               */
+              converts_to?: Array<string>;
+
+              /**
                * Determines the type of trial for this item.
                */
               type: Trial.Type;
@@ -1972,6 +2133,26 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
+
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behave when a trial ends.
+           */
+          end_behavior?: TrialSettings.EndBehavior;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Configure how an opt-in following a paid trial is billed when using `billing_behavior: prorate_up_front`.
+             */
+            prorate_up_front?: EndBehavior.ProrateUpFront;
+          }
+
+          namespace EndBehavior {
+            type ProrateUpFront = 'defer' | 'include';
+          }
+        }
       }
 
       interface ScheduleSettings {

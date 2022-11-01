@@ -155,6 +155,11 @@ declare module 'stripe' {
       next_pending_invoice_item_invoice: number | null;
 
       /**
+       * The account (if any) the charge was made on behalf of for charges associated with this subscription. See the Connect documentation for details.
+       */
+      on_behalf_of: string | Stripe.Account | null;
+
+      /**
        * If specified, payment collection for this subscription will be paused.
        */
       pause_collection: Subscription.PauseCollection | null;
@@ -691,6 +696,11 @@ declare module 'stripe' {
       off_session?: boolean;
 
       /**
+       * The account on behalf of which to charge, for each of the subscription's invoices.
+       */
+      on_behalf_of?: Stripe.Emptyable<string>;
+
+      /**
        * Only applies to subscriptions with `collection_method=charge_automatically`.
        *
        * Use `allow_incomplete` to create subscriptions with `status=incomplete` if the first invoice cannot be paid. Creating subscriptions with this status allows you to manage scenarios where additional user actions are needed to pay a subscription's invoice. For example, SCA regulation may require 3DS authentication to complete payment. See the [SCA Migration Guide](https://stripe.com/docs/billing/migration/strong-customer-authentication) for Billing to learn more. This is the default behavior.
@@ -979,6 +989,11 @@ declare module 'stripe' {
         }
 
         interface Trial {
+          /**
+           * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+           */
+          converts_to?: Array<string>;
+
           /**
            * Determines the type of trial for this item.
            */
@@ -1383,6 +1398,11 @@ declare module 'stripe' {
        * Indicates if a customer is on or off-session while an invoice payment is attempted.
        */
       off_session?: boolean;
+
+      /**
+       * The account on behalf of which to charge, for each of the subscription's invoices.
+       */
+      on_behalf_of?: Stripe.Emptyable<string>;
 
       /**
        * If specified, payment collection for this subscription will be paused.

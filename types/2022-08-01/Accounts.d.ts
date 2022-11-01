@@ -222,6 +222,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The status of the Cash App Pay capability of the account, or whether the account can directly process Cash App Pay payments.
+         */
+        cashapp_payments?: Capabilities.CashappPayments;
+
+        /**
          * The status of the EPS payments capability of the account, or whether the account can directly process EPS charges.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -325,6 +330,11 @@ declare module 'stripe' {
          * The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The status of the Zip capability of the account, or whether the account can directly process Zip charges.
+         */
+        zip_payments?: Capabilities.ZipPayments;
       }
 
       namespace Capabilities {
@@ -351,6 +361,8 @@ declare module 'stripe' {
         type CardPayments = 'active' | 'inactive' | 'pending';
 
         type CartesBancairesPayments = 'active' | 'inactive' | 'pending';
+
+        type CashappPayments = 'active' | 'inactive' | 'pending';
 
         type EpsPayments = 'active' | 'inactive' | 'pending';
 
@@ -393,6 +405,8 @@ declare module 'stripe' {
         type Treasury = 'active' | 'inactive' | 'pending';
 
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
+
+        type ZipPayments = 'active' | 'inactive' | 'pending';
       }
 
       interface Company {
@@ -1339,6 +1353,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The cashapp_payments capability.
+         */
+        cashapp_payments?: Capabilities.CashappPayments;
+
+        /**
          * The eps_payments capability.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -1442,6 +1461,11 @@ declare module 'stripe' {
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The zip_payments capability.
+         */
+        zip_payments?: Capabilities.ZipPayments;
       }
 
       namespace Capabilities {
@@ -1523,6 +1547,13 @@ declare module 'stripe' {
         }
 
         interface CartesBancairesPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CashappPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1670,6 +1701,13 @@ declare module 'stripe' {
         }
 
         interface UsBankAccountAchPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface ZipPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2554,6 +2592,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The cashapp_payments capability.
+         */
+        cashapp_payments?: Capabilities.CashappPayments;
+
+        /**
          * The eps_payments capability.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -2657,6 +2700,11 @@ declare module 'stripe' {
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The zip_payments capability.
+         */
+        zip_payments?: Capabilities.ZipPayments;
       }
 
       namespace Capabilities {
@@ -2738,6 +2786,13 @@ declare module 'stripe' {
         }
 
         interface CartesBancairesPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CashappPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -2885,6 +2940,13 @@ declare module 'stripe' {
         }
 
         interface UsBankAccountAchPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface ZipPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

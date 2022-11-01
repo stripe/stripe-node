@@ -464,6 +464,7 @@ declare module 'stripe' {
 
         /**
          * Approves a pending Issuing Authorization object. This request should be made within the timeout window of the [real-time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
+         * You can also respond directly to the webhook request to approve an authorization (preferred). More details can be found [here](https://site-admin.stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
          */
         approve(
           id: string,
@@ -477,6 +478,7 @@ declare module 'stripe' {
 
         /**
          * Declines a pending Issuing Authorization object. This request should be made within the timeout window of the [real time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
+         * You can also respond directly to the webhook request to decline an authorization (preferred). More details can be found [here](https://site-admin.stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
          */
         decline(
           id: string,
