@@ -1,6 +1,5 @@
 'use strict';
 
-const stripe = require('../../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 
 function errorsOnNoStripeVersion(stripe) {
@@ -32,6 +31,8 @@ function sendsCorrectStripeVersion(stripe) {
 
 describe('EphemeralKey Resource', () => {
   describe('create', () => {
+    const stripe = require('../../testUtils').getSpyableStripe();
+
     it('Sends the correct request', () => {
       stripe.ephemeralKeys.create(
         {customer: 'cus_123'},
@@ -78,6 +79,8 @@ describe('EphemeralKey Resource', () => {
   });
 
   describe('delete', () => {
+    const stripe = require('../../testUtils').getSpyableStripe();
+
     it('Sends the correct request', () => {
       stripe.ephemeralKeys.del('ephkey_123');
       expect(stripe.LAST_REQUEST).to.deep.equal({
