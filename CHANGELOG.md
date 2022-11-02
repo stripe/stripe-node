@@ -1,5 +1,12 @@
 # Changelog
 
+## 10.16.0-beta.2 - 2022-11-02
+* [#1598](https://github.com/stripe/stripe-node/pull/1598) API Updates for beta branch
+  * Updated beta APIs to the latest stable version
+  * Add support for `cashappPayments` and `zipPayments` on `Account`.
+  * Add support for `cashapp` and `zip` on `Charge`, `PaymentMethod`.
+  * Add support for `trialSettings` on `SubscriptionSchedule`.
+
 ## 10.16.0-beta.1 - 2022-10-21
 * [#1589](https://github.com/stripe/stripe-node/pull/1589) API Updates for beta branch
   * Updated stable APIs to the latest version
