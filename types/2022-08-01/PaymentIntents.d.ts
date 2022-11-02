@@ -376,6 +376,8 @@ declare module 'stripe' {
 
         card_await_notification?: NextAction.CardAwaitNotification;
 
+        cashapp_handle_redirect_or_display_qr_code?: NextAction.CashappHandleRedirectOrDisplayQrCode;
+
         display_bank_transfer_instructions?: NextAction.DisplayBankTransferInstructions;
 
         konbini_display_details?: NextAction.KonbiniDisplayDetails;
@@ -464,6 +466,39 @@ declare module 'stripe' {
            * For payments greater than INR 15000, the customer must provide explicit approval of the payment with their bank. For payments of lower amount, no customer action is required.
            */
           customer_approval_required: boolean | null;
+        }
+
+        interface CashappHandleRedirectOrDisplayQrCode {
+          /**
+           * The URL to the hosted Cash App Pay instructions page, which allows customers to view the QR code, and supports QR code refreshing on expiration.
+           */
+          hosted_instructions_url?: string;
+
+          /**
+           * The url for mobile redirect based auth
+           */
+          mobile_auth_url?: string;
+
+          qr_code?: CashappHandleRedirectOrDisplayQrCode.QrCode;
+        }
+
+        namespace CashappHandleRedirectOrDisplayQrCode {
+          interface QrCode {
+            /**
+             * The date (unix timestamp) when the QR code expires.
+             */
+            expires_at?: number;
+
+            /**
+             * The image_url_png string used to render QR code
+             */
+            image_url_png?: string;
+
+            /**
+             * The image_url_svg string used to render QR code
+             */
+            image_url_svg?: string;
+          }
         }
 
         interface DisplayBankTransferInstructions {
@@ -935,6 +970,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodOptions.CardPresent;
 
+        cashapp?: PaymentMethodOptions.Cashapp;
+
         customer_balance?: PaymentMethodOptions.CustomerBalance;
 
         eps?: PaymentMethodOptions.Eps;
@@ -1340,6 +1377,26 @@ declare module 'stripe' {
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support: boolean | null;
+        }
+
+        interface Cashapp {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Cashapp.SetupFutureUsage;
+        }
+
+        namespace Cashapp {
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
         interface CustomerBalance {
@@ -2110,6 +2167,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+         */
+        cashapp?: PaymentMethodData.Cashapp;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -2223,6 +2285,11 @@ declare module 'stripe' {
          * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
          */
         wechat_pay?: PaymentMethodData.WechatPay;
+
+        /**
+         * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+         */
+        zip?: PaymentMethodData.Zip;
       }
 
       namespace PaymentMethodData {
@@ -2305,6 +2372,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -2528,6 +2597,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'blik'
           | 'boleto'
+          | 'cashapp'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -2546,7 +2616,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface UsBankAccount {
           /**
@@ -2582,6 +2653,8 @@ declare module 'stripe' {
         }
 
         interface WechatPay {}
+
+        interface Zip {}
       }
 
       interface PaymentMethodOptions {
@@ -2641,6 +2714,11 @@ declare module 'stripe' {
          * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
          */
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
+         * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
+         */
+        cashapp?: Stripe.Emptyable<PaymentMethodOptions.Cashapp>;
 
         /**
          * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
@@ -3141,6 +3219,32 @@ declare module 'stripe' {
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+        }
+
+        interface Cashapp {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Cashapp.SetupFutureUsage>;
+        }
+
+        namespace Cashapp {
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
         interface CustomerBalance {
@@ -3956,6 +4060,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+         */
+        cashapp?: PaymentMethodData.Cashapp;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -4069,6 +4178,11 @@ declare module 'stripe' {
          * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
          */
         wechat_pay?: PaymentMethodData.WechatPay;
+
+        /**
+         * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+         */
+        zip?: PaymentMethodData.Zip;
       }
 
       namespace PaymentMethodData {
@@ -4151,6 +4265,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -4374,6 +4490,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'blik'
           | 'boleto'
+          | 'cashapp'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -4392,7 +4509,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface UsBankAccount {
           /**
@@ -4428,6 +4546,8 @@ declare module 'stripe' {
         }
 
         interface WechatPay {}
+
+        interface Zip {}
       }
 
       interface PaymentMethodOptions {
@@ -4487,6 +4607,11 @@ declare module 'stripe' {
          * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
          */
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
+         * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
+         */
+        cashapp?: Stripe.Emptyable<PaymentMethodOptions.Cashapp>;
 
         /**
          * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
@@ -4987,6 +5112,32 @@ declare module 'stripe' {
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+        }
+
+        interface Cashapp {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Cashapp.SetupFutureUsage>;
+        }
+
+        namespace Cashapp {
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
         interface CustomerBalance {
@@ -5900,6 +6051,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+         */
+        cashapp?: PaymentMethodData.Cashapp;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -6013,6 +6169,11 @@ declare module 'stripe' {
          * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
          */
         wechat_pay?: PaymentMethodData.WechatPay;
+
+        /**
+         * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+         */
+        zip?: PaymentMethodData.Zip;
       }
 
       namespace PaymentMethodData {
@@ -6095,6 +6256,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -6318,6 +6481,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'blik'
           | 'boleto'
+          | 'cashapp'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -6336,7 +6500,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface UsBankAccount {
           /**
@@ -6372,6 +6537,8 @@ declare module 'stripe' {
         }
 
         interface WechatPay {}
+
+        interface Zip {}
       }
 
       interface PaymentMethodOptions {
@@ -6431,6 +6598,11 @@ declare module 'stripe' {
          * If this is a `card_present` PaymentMethod, this sub-hash contains details about the Card Present payment method options.
          */
         card_present?: Stripe.Emptyable<PaymentMethodOptions.CardPresent>;
+
+        /**
+         * If this is a `cashapp` PaymentMethod, this sub-hash contains details about the Cash App Pay payment method options.
+         */
+        cashapp?: Stripe.Emptyable<PaymentMethodOptions.Cashapp>;
 
         /**
          * If this is a `customer balance` PaymentMethod, this sub-hash contains details about the customer balance payment method options.
@@ -6931,6 +7103,32 @@ declare module 'stripe' {
            * Request ability to [increment](https://stripe.com/docs/terminal/features/incremental-authorizations) this PaymentIntent if the combination of MCC and card brand is eligible. Check [incremental_authorization_supported](https://stripe.com/docs/api/charges/object#charge_object-payment_method_details-card_present-incremental_authorization_supported) in the [Confirm](https://stripe.com/docs/api/payment_intents/confirm) response to verify support.
            */
           request_incremental_authorization_support?: boolean;
+        }
+
+        interface Cashapp {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           *
+           * If provided, this parameter will override the top-level `capture_method` when finalizing the payment with this payment method type.
+           *
+           * If `capture_method` is already set on the PaymentIntent, providing an empty value for this parameter will unset the stored value for this payment method type.
+           */
+          capture_method?: Stripe.Emptyable<'manual'>;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: Stripe.Emptyable<Cashapp.SetupFutureUsage>;
+        }
+
+        namespace Cashapp {
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
         }
 
         interface CustomerBalance {

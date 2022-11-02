@@ -417,6 +417,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodDetails.CardPresent;
 
+        cashapp?: PaymentMethodDetails.Cashapp;
+
         customer_balance?: PaymentMethodDetails.CustomerBalance;
 
         eps?: PaymentMethodDetails.Eps;
@@ -471,6 +473,8 @@ declare module 'stripe' {
         wechat?: PaymentMethodDetails.Wechat;
 
         wechat_pay?: PaymentMethodDetails.WechatPay;
+
+        zip?: PaymentMethodDetails.Zip;
       }
 
       namespace PaymentMethodDetails {
@@ -1124,6 +1128,8 @@ declare module 'stripe' {
             type AccountType = 'checking' | 'credit' | 'prepaid' | 'unknown';
           }
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -1787,6 +1793,8 @@ declare module 'stripe' {
            */
           transaction_id: string | null;
         }
+
+        interface Zip {}
       }
 
       interface RadarOptions {

@@ -269,6 +269,8 @@ declare module 'stripe' {
       }
 
       interface NextAction {
+        cashapp_handle_redirect_or_display_qr_code?: NextAction.CashappHandleRedirectOrDisplayQrCode;
+
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
@@ -285,6 +287,39 @@ declare module 'stripe' {
       }
 
       namespace NextAction {
+        interface CashappHandleRedirectOrDisplayQrCode {
+          /**
+           * The URL to the hosted Cash App Pay instructions page, which allows customers to view the QR code, and supports QR code refreshing on expiration.
+           */
+          hosted_instructions_url?: string;
+
+          /**
+           * The url for mobile redirect based auth
+           */
+          mobile_auth_url?: string;
+
+          qr_code?: CashappHandleRedirectOrDisplayQrCode.QrCode;
+        }
+
+        namespace CashappHandleRedirectOrDisplayQrCode {
+          interface QrCode {
+            /**
+             * The date (unix timestamp) when the QR code expires.
+             */
+            expires_at?: number;
+
+            /**
+             * The image_url_png string used to render QR code
+             */
+            image_url_png?: string;
+
+            /**
+             * The image_url_svg string used to render QR code
+             */
+            image_url_svg?: string;
+          }
+        }
+
         interface RedirectToUrl {
           /**
            * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.
@@ -783,6 +818,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+         */
+        cashapp?: PaymentMethodData.Cashapp;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -896,6 +936,11 @@ declare module 'stripe' {
          * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
          */
         wechat_pay?: PaymentMethodData.WechatPay;
+
+        /**
+         * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+         */
+        zip?: PaymentMethodData.Zip;
       }
 
       namespace PaymentMethodData {
@@ -978,6 +1023,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -1201,6 +1248,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'blik'
           | 'boleto'
+          | 'cashapp'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -1219,7 +1267,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface UsBankAccount {
           /**
@@ -1255,6 +1304,8 @@ declare module 'stripe' {
         }
 
         interface WechatPay {}
+
+        interface Zip {}
       }
 
       interface PaymentMethodOptions {
@@ -1667,6 +1718,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+         */
+        cashapp?: PaymentMethodData.Cashapp;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -1780,6 +1836,11 @@ declare module 'stripe' {
          * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
          */
         wechat_pay?: PaymentMethodData.WechatPay;
+
+        /**
+         * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+         */
+        zip?: PaymentMethodData.Zip;
       }
 
       namespace PaymentMethodData {
@@ -1862,6 +1923,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -2085,6 +2148,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'blik'
           | 'boleto'
+          | 'cashapp'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -2103,7 +2167,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface UsBankAccount {
           /**
@@ -2139,6 +2204,8 @@ declare module 'stripe' {
         }
 
         interface WechatPay {}
+
+        interface Zip {}
       }
 
       interface PaymentMethodOptions {
@@ -2633,6 +2700,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+         */
+        cashapp?: PaymentMethodData.Cashapp;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -2746,6 +2818,11 @@ declare module 'stripe' {
          * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
          */
         wechat_pay?: PaymentMethodData.WechatPay;
+
+        /**
+         * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+         */
+        zip?: PaymentMethodData.Zip;
       }
 
       namespace PaymentMethodData {
@@ -2828,6 +2905,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -3051,6 +3130,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'blik'
           | 'boleto'
+          | 'cashapp'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -3069,7 +3149,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface UsBankAccount {
           /**
@@ -3105,6 +3186,8 @@ declare module 'stripe' {
         }
 
         interface WechatPay {}
+
+        interface Zip {}
       }
 
       interface PaymentMethodOptions {

@@ -69,6 +69,16 @@ declare module 'stripe' {
         product_type?: FinancingOffer.ProductType;
 
         /**
+         * The ID of the financing offer that replaced this offer.
+         */
+        replacement?: string;
+
+        /**
+         * The ID of the financing offer that this offer is a replacement for.
+         */
+        replacement_for?: string;
+
+        /**
          * The current status of the offer.
          */
         status: FinancingOffer.Status;
@@ -163,6 +173,7 @@ declare module 'stripe' {
           | 'fully_repaid'
           | 'paid_out'
           | 'rejected'
+          | 'replaced'
           | 'undelivered';
 
         type Type = 'cash_advance' | 'flex_loan';
