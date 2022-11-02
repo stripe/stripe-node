@@ -233,6 +233,16 @@ declare module 'stripe' {
       subscription?: string;
 
       /**
+       * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+       */
+      tax_behavior?: InvoiceItemCreateParams.TaxBehavior;
+
+      /**
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+       */
+      tax_code?: Stripe.Emptyable<string>;
+
+      /**
        * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
        */
       tax_rates?: Array<string>;
@@ -303,6 +313,8 @@ declare module 'stripe' {
       namespace PriceData {
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
+
+      type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
     interface InvoiceItemRetrieveParams {
@@ -362,6 +374,16 @@ declare module 'stripe' {
        * Non-negative integer. The quantity of units for the invoice item.
        */
       quantity?: number;
+
+      /**
+       * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+       */
+      tax_behavior?: InvoiceItemUpdateParams.TaxBehavior;
+
+      /**
+       * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+       */
+      tax_code?: Stripe.Emptyable<string>;
 
       /**
        * The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item. Pass an empty string to remove previously-defined tax rates.
@@ -434,6 +456,8 @@ declare module 'stripe' {
       namespace PriceData {
         type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
+
+      type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
     }
 
     interface InvoiceItemListParams extends PaginationParams {
