@@ -3133,11 +3133,6 @@ declare module 'stripe' {
           description?: string;
 
           /**
-           * This parameter is deprecated. Use the line_items parameter on the Session instead.
-           */
-          items?: Array<SubscriptionData.Item>;
-
-          /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
            */
           metadata?: Stripe.MetadataParam;
@@ -3172,24 +3167,6 @@ declare module 'stripe' {
         }
 
         namespace SubscriptionData {
-          interface Item {
-            /**
-             * Plan ID for this item.
-             */
-            plan: string;
-
-            /**
-             * The quantity of the subscription item being purchased. Quantity should not be defined when `recurring.usage_type=metered`.
-             */
-            quantity?: number;
-
-            /**
-             * The tax rates which apply to this item. When set, the `default_tax_rates`
-             * on `subscription_data` do not apply to this item.
-             */
-            tax_rates?: Array<string>;
-          }
-
           interface TransferData {
             /**
              * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.

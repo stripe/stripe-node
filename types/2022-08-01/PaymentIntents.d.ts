@@ -76,7 +76,7 @@ declare module 'stripe' {
       /**
        * Charges that were created by this PaymentIntent, if any.
        */
-      charges?: ApiList<Stripe.Charge>;
+      charges: ApiList<Stripe.Charge>;
 
       /**
        * The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key.

@@ -19,7 +19,7 @@ See [video demonstrations][youtube-playlist] covering how to use the library.
 
 ## Requirements
 
-Node 8, 10 or higher.
+Node 12 or higher.
 
 ## Installation
 
