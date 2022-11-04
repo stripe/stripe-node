@@ -2211,6 +2211,16 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: InvoiceItem.TaxBehavior;
+
+        /**
+         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+         */
+        tax_code?: Stripe.Emptyable<string>;
+
+        /**
          * The tax rates that apply to the item. When set, any `default_tax_rates` do not apply to this item.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
@@ -2281,6 +2291,8 @@ declare module 'stripe' {
         namespace PriceData {
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
         }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
 
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
@@ -2761,6 +2773,16 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: InvoiceItem.TaxBehavior;
+
+        /**
+         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+         */
+        tax_code?: Stripe.Emptyable<string>;
+
+        /**
          * The tax rates that apply to the item. When set, any `default_tax_rates` do not apply to this item.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
@@ -2831,6 +2853,8 @@ declare module 'stripe' {
         namespace PriceData {
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
         }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
 
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
