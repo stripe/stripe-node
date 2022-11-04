@@ -152,6 +152,11 @@ declare module 'stripe' {
         invoice_settings: DefaultSettings.InvoiceSettings | null;
 
         /**
+         * The account (if any) the charge was made on behalf of for charges associated with the schedule's subscription. See the Connect documentation for details.
+         */
+        on_behalf_of: string | Stripe.Account | null;
+
+        /**
          * The account (if any) the associated subscription's payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the subscription's invoices.
          */
         transfer_data: DefaultSettings.TransferData | null;
@@ -275,6 +280,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered. Updating the underlying subscription's `metadata` directly will not affect the current phase's `metadata`.
          */
         metadata: Stripe.Metadata | null;
+
+        /**
+         * The account (if any) the charge was made on behalf of for charges associated with the schedule's subscription. See the Connect documentation for details.
+         */
+        on_behalf_of: string | Stripe.Account | null;
 
         /**
          * If the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
@@ -494,6 +504,11 @@ declare module 'stripe' {
         invoice_settings?: DefaultSettings.InvoiceSettings;
 
         /**
+         * The account on behalf of which to charge, for each of the associated subscription's invoices.
+         */
+        on_behalf_of?: Stripe.Emptyable<string>;
+
+        /**
          * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
         transfer_data?: Stripe.Emptyable<DefaultSettings.TransferData>;
@@ -625,6 +640,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * The account on behalf of which to charge, for each of the associated subscription's invoices.
+         */
+        on_behalf_of?: string;
 
         /**
          * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`.
@@ -929,6 +949,11 @@ declare module 'stripe' {
         invoice_settings?: DefaultSettings.InvoiceSettings;
 
         /**
+         * The account on behalf of which to charge, for each of the associated subscription's invoices.
+         */
+        on_behalf_of?: Stripe.Emptyable<string>;
+
+        /**
          * The data with which to automatically create a Transfer for each of the associated subscription's invoices.
          */
         transfer_data?: Stripe.Emptyable<DefaultSettings.TransferData>;
@@ -1060,6 +1085,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered, adding new keys and replacing existing keys in the subscription's `metadata`. Individual keys in the subscription's `metadata` can be unset by posting an empty value to them in the phase's `metadata`. To unset all keys in the subscription's `metadata`, update the subscription directly or unset every key individually from the phase's `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * The account on behalf of which to charge, for each of the associated subscription's invoices.
+         */
+        on_behalf_of?: string;
 
         /**
          * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`.
