@@ -6,10 +6,8 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'billing_portal/sessions',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/billing_portal/sessions',
   }),
 });

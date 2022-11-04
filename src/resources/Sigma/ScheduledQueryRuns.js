@@ -6,16 +6,14 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'sigma/scheduled_query_runs',
-
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{scheduledQueryRun}',
+    fullPath: '/v1/sigma/scheduled_query_runs/{scheduled_query_run}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/sigma/scheduled_query_runs',
     methodType: 'list',
   }),
 });
