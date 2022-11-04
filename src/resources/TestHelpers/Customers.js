@@ -6,10 +6,8 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'test_helpers/customers',
-
   fundCashBalance: stripeMethod({
     method: 'POST',
-    path: '/{customer}/fund_cash_balance',
+    fullPath: '/v1/test_helpers/customers/{customer}/fund_cash_balance',
   }),
 });

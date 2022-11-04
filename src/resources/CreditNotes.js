@@ -6,48 +6,46 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'credit_notes',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/credit_notes',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{id}',
+    fullPath: '/v1/credit_notes/{id}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{id}',
+    fullPath: '/v1/credit_notes/{id}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/credit_notes',
     methodType: 'list',
   }),
 
   listPreviewLineItems: stripeMethod({
     method: 'GET',
-    path: '/preview/lines',
+    fullPath: '/v1/credit_notes/preview/lines',
     methodType: 'list',
   }),
 
   preview: stripeMethod({
     method: 'GET',
-    path: '/preview',
+    fullPath: '/v1/credit_notes/preview',
   }),
 
   voidCreditNote: stripeMethod({
     method: 'POST',
-    path: '/{id}/void',
+    fullPath: '/v1/credit_notes/{id}/void',
   }),
 
   listLineItems: stripeMethod({
     method: 'GET',
-    path: '/{creditNote}/lines',
+    fullPath: '/v1/credit_notes/{credit_note}/lines',
     methodType: 'list',
   }),
 });

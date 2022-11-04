@@ -6,10 +6,8 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'account_links',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/account_links',
   }),
 });
