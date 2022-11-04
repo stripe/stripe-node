@@ -25,9 +25,8 @@ type Options = {
 // Provide extension mechanism for Stripe Resource Sub-Classes
 StripeResource.extend = utils.protoExtend;
 
-// Expose method-creator & prepared (basic) methods
+// Expose method-creator
 StripeResource.method = require('./StripeMethod');
-StripeResource.BASIC_METHODS = require('./StripeMethod.basic');
 
 StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;
 const MAX_RETRY_AFTER_WAIT = 60;
@@ -48,14 +47,6 @@ function StripeResource(stripe, deprecatedUrlData) {
   );
   this.resourcePath = this.path;
   this.path = utils.makeURLInterpolator(this.path);
-
-  // DEPRECATED: This was kept for backwards compatibility in case users were
-  // using this, but basic methods are now explicitly defined on a resource.
-  if (this.includeBasic) {
-    this.includeBasic.forEach(function(methodName) {
-      this[methodName] = StripeResource.BASIC_METHODS[methodName];
-    }, this);
-  }
 
   this.initialize(...arguments);
 }
@@ -116,9 +107,6 @@ StripeResource.prototype = {
     // interface and so we need to preserve backwards compatibility.
     return parts.join('/').replace(/\/{2,}/g, '/');
   },
-
-  // DEPRECATED: Here for backcompat in case users relied on this.
-  wrapTimeout: utils.callbackifyPromiseWithTimeout,
 
   _timeoutHandler(timeout, req, callback) {
     return () => {
