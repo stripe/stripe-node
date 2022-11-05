@@ -4,7 +4,6 @@ const resources = require('./resources');
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
-const DEFAULT_BASE_PATH = '/v1/';
 const DEFAULT_API_VERSION = null;
 
 const DEFAULT_TIMEOUT = 80000;
@@ -95,7 +94,6 @@ function Stripe(key, config = {}) {
     host: props.host || DEFAULT_HOST,
     port: props.port || DEFAULT_PORT,
     protocol: props.protocol || 'https',
-    basePath: DEFAULT_BASE_PATH,
     version: props.apiVersion || DEFAULT_API_VERSION,
     timeout: utils.validateInteger('timeout', props.timeout, DEFAULT_TIMEOUT),
     maxNetworkRetries: utils.validateInteger(
@@ -259,7 +257,7 @@ Stripe.prototype = {
       case 'DEFAULT_PORT':
         return DEFAULT_PORT;
       case 'DEFAULT_BASE_PATH':
-        return DEFAULT_BASE_PATH;
+        throw new Error("DEFAULT_BASE_BATH was removed in v11.0.0")
       case 'DEFAULT_API_VERSION':
         return DEFAULT_API_VERSION;
       case 'DEFAULT_TIMEOUT':
