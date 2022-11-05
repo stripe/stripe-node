@@ -257,7 +257,7 @@ Stripe.prototype = {
       case 'DEFAULT_PORT':
         return DEFAULT_PORT;
       case 'DEFAULT_BASE_PATH':
-        throw new Error("DEFAULT_BASE_BATH was removed in v11.0.0")
+        throw new Error('DEFAULT_BASE_BATH was removed in v11.0.0');
       case 'DEFAULT_API_VERSION':
         return DEFAULT_API_VERSION;
       case 'DEFAULT_TIMEOUT':

@@ -6,10 +6,8 @@ function getRequestOpts(self, requestArgs, spec, overrideData) {
   const urlParams = spec.urlParams || [];
   const encode = spec.encode || ((data) => data);
 
-  const commandPath = utils.makeURLInterpolator(
-    spec.fullPath || ''
-  );
-  const path = spec.fullPath
+  const commandPath = utils.makeURLInterpolator(spec.fullPath || '');
+  const path = spec.fullPath;
 
   // Don't mutate args externally.
   const args = [].slice.call(requestArgs);
@@ -40,7 +38,7 @@ function getRequestOpts(self, requestArgs, spec, overrideData) {
     );
   }
 
-  const requestPath = commandPath(urlData)
+  const requestPath = commandPath(urlData);
 
   const headers = Object.assign(options.headers, spec.headers);
 

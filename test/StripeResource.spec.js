@@ -1030,7 +1030,7 @@ describe('StripeResource', () => {
     const makeResource = (stripe) => {
       return new (StripeResource.extend({
         testMethod: stripeMethod({
-          fullPath: "/v1/test",
+          fullPath: '/v1/test',
           method: 'GET',
           host: 'some.host.stripe.com',
         }),
@@ -1109,7 +1109,6 @@ describe('StripeResource', () => {
      */
     const makeResourceWithPDFMethod = (stripe) => {
       return new (StripeResource.extend({
-
         pdf: stripeMethod({
           method: 'GET',
           fullPath: '/v1/resourceWithPDF',
