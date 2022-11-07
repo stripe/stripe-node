@@ -6,16 +6,14 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'treasury/transactions',
-
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{id}',
+    fullPath: '/v1/treasury/transactions/{id}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/treasury/transactions',
     methodType: 'list',
   }),
 });

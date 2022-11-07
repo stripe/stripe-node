@@ -6,11 +6,9 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'ephemeral_keys',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/ephemeral_keys',
     validator: (data, options) => {
       if (!options.headers || !options.headers['Stripe-Version']) {
         throw new Error(
@@ -22,6 +20,6 @@ module.exports = StripeResource.extend({
 
   del: stripeMethod({
     method: 'DELETE',
-    path: '/{key}',
+    fullPath: '/v1/ephemeral_keys/{key}',
   }),
 });

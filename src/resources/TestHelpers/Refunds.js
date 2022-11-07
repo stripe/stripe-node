@@ -6,10 +6,8 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'test_helpers/refunds',
-
   expire: stripeMethod({
     method: 'POST',
-    path: '/{refund}/expire',
+    fullPath: '/v1/test_helpers/refunds/{refund}/expire',
   }),
 });

@@ -6,15 +6,13 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'financial_connections/sessions',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/financial_connections/sessions',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{session}',
+    fullPath: '/v1/financial_connections/sessions/{session}',
   }),
 });
