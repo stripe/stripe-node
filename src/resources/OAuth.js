@@ -7,6 +7,8 @@ const utils = require('../utils');
 const oAuthHost = 'connect.stripe.com';
 
 module.exports = StripeResource.extend({
+  basePath: '/',
+
   authorizeUrl(params, options) {
     params = params || {};
     options = options || {};
@@ -35,7 +37,7 @@ module.exports = StripeResource.extend({
 
   token: stripeMethod({
     method: 'POST',
-    fullPath: '/oauth/token',
+    path: 'oauth/token',
     host: oAuthHost,
   }),
 
@@ -46,7 +48,7 @@ module.exports = StripeResource.extend({
 
     return stripeMethod({
       method: 'POST',
-      fullPath: '/oauth/deauthorize',
+      path: 'oauth/deauthorize',
       host: oAuthHost,
     }).apply(this, arguments);
   },
