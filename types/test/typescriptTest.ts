@@ -167,6 +167,10 @@ stripe = new Stripe('sk_test_123', {
 
 const Foo = Stripe.StripeResource.extend({
   includeBasic: ['retrieve'],
+  foo: Stripe.StripeResource.method({
+    method: 'create',
+    path: 'foo',
+  }),
   fooFullPath: Stripe.StripeResource.method({
     method: 'create',
     fullPath: '/v1/full/path',

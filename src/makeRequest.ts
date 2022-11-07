@@ -6,8 +6,15 @@ function getRequestOpts(self, requestArgs, spec, overrideData) {
   const urlParams = spec.urlParams || [];
   const encode = spec.encode || ((data) => data);
 
-  const commandPath = utils.makeURLInterpolator(spec.fullPath || '');
-  const path = spec.fullPath;
+  const isUsingFullPath = !!spec.fullPath;
+  const commandPath = utils.makeURLInterpolator(
+    isUsingFullPath ? spec.fullPath : spec.path || ''
+  );
+  // When using fullPath, we ignore the resource path as it should already be
+  // fully qualified.
+  const path = isUsingFullPath
+    ? spec.fullPath
+    : self.createResourcePathWithSymbols(spec.path);
 
   // Don't mutate args externally.
   const args = [].slice.call(requestArgs);
@@ -38,7 +45,11 @@ function getRequestOpts(self, requestArgs, spec, overrideData) {
     );
   }
 
-  const requestPath = commandPath(urlData);
+  // When using full path, we can just invoke the URL interpolator directly
+  // as we don't need to use the resource to create a full path.
+  const requestPath = isUsingFullPath
+    ? commandPath(urlData)
+    : self.createFullPath(commandPath, urlData);
 
   const headers = Object.assign(options.headers, spec.headers);
 

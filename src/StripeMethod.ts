@@ -3,19 +3,12 @@ import makeRequest = require('./makeRequest');
 import autoPagination = require('./autoPagination');
 const makeAutoPaginationMethods = autoPagination.makeAutoPaginationMethods;
 
-type StripeMethodSpec = {
-  method?: 'GET' | 'POST' | 'DELETE';
-  path: void; // removed in v11.0.0
-  fullPath: string;
-  urlParams?: Array<string>;
-  encode: any;
-  host?: string;
-  methodType?: 'list' | 'search';
-};
 /**
  * Create an API method from the declared spec.
  *
  * @param [spec.method='GET'] Request Method (POST, GET, DELETE, PUT)
+ * @param [spec.path=''] Path to be appended to the API BASE_PATH, joined with
+ *  the instance's path (e.g. 'charges' or 'customers')
  * @param [spec.fullPath=''] Fully qualified path to the method (eg. /v1/a/b/c).
  *  If this is specified, path should not be specified.
  * @param [spec.urlParams=[]] Array of required arguments in the order that they
@@ -26,19 +19,18 @@ type StripeMethodSpec = {
  *  Usefully for applying transforms to data on a per-method basis.
  * @param [spec.host] Hostname for the request.
  */
-function stripeMethod(spec: StripeMethodSpec) {
-  if (spec.path !== undefined) {
+function stripeMethod(spec) {
+  if (spec.path !== undefined && spec.fullPath !== undefined) {
     throw new Error(
-      `Support for relative 'path' was removed in stripe-node v11.0.0. Please specify 'fullPath'`
+      `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`
     );
-  }
-  if (!spec.fullPath) {
-    throw new Error(`'fullPath' must be provided when calling 'stripeMethod'`);
   }
   return function(...args) {
     const callback = typeof args[args.length - 1] == 'function' && args.pop();
 
-    spec.urlParams = utils.extractUrlParams(spec.fullPath);
+    spec.urlParams = utils.extractUrlParams(
+      spec.fullPath || this.createResourcePathWithSymbols(spec.path || '')
+    );
 
     const requestPromise = utils.callbackifyPromiseWithTimeout(
       makeRequest(this, args, spec, {}),

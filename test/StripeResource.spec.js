@@ -21,6 +21,58 @@ const {
 } = require('../lib/Error');
 
 describe('StripeResource', () => {
+  describe('createResourcePathWithSymbols', () => {
+    let testResource;
+    before(() => {
+      testResource = new (StripeResource.extend({
+        path: 'widgets',
+        create: stripeMethod({
+          method: 'POST',
+          path: '',
+        }),
+      }))(stripe);
+    });
+    it('Generates a path when there is a symbol', () => {
+      testResource.create({});
+      const path = testResource.createResourcePathWithSymbols('{id}');
+      expect(path).to.equal('/widgets/{id}');
+    });
+
+    it('Generates a path when there is nothing beyond the resource path', () => {
+      testResource.create({});
+      const path = testResource.createResourcePathWithSymbols('');
+      // This explicitly shouldn't have a trailing slash.
+      expect(path).to.equal('/widgets');
+    });
+
+    it('Handles accidental double slashes', () => {
+      testResource.create({});
+      const path = testResource.createResourcePathWithSymbols('/{id}');
+      expect(path).to.equal('/widgets/{id}');
+    });
+  });
+
+  describe('_joinUrlParts', () => {
+    it('includes trailing empty values', () => {
+      const path = stripe.invoices._joinUrlParts(['a', '']);
+      expect(path).to.equal('a/');
+    });
+
+    it('joins parts', () => {
+      const path = stripe.invoices._joinUrlParts(['a', 'b', 'c']);
+      expect(path).to.equal('a/b/c');
+    });
+
+    it('handles redundant slashes', () => {
+      const path = stripe.invoices._joinUrlParts([
+        '/v1/',
+        '/customers/',
+        '/{id}',
+      ]);
+      expect(path).to.equal('/v1/customers/{id}');
+    });
+  });
+
   describe('_makeHeaders', () => {
     it('sets the Authorization header with Bearer auth using the global API key', () => {
       const headers = stripe.invoices._makeHeaders(null, 0, null);
@@ -1029,8 +1081,9 @@ describe('StripeResource', () => {
   describe('custom host on method', () => {
     const makeResource = (stripe) => {
       return new (StripeResource.extend({
+        path: 'resourceWithHost',
+
         testMethod: stripeMethod({
-          fullPath: '/v1/test',
           method: 'GET',
           host: 'some.host.stripe.com',
         }),
@@ -1043,7 +1096,7 @@ describe('StripeResource', () => {
       });
 
       const scope = nock('https://some.host.stripe.com')
-        .get('/v1/test')
+        .get('/v1/resourceWithHost')
         .reply(200, '{}');
 
       makeResource(stripe).testMethod({}, (err, response) => {
@@ -1056,7 +1109,7 @@ describe('StripeResource', () => {
       const stripe = require('../lib/stripe')('sk_test');
 
       const scope = nock('https://some.other.host.stripe.com')
-        .get('/v1/test')
+        .get('/v1/resourceWithHost')
         .reply(200, '{}');
 
       makeResource(stripe).testMethod(
@@ -1109,9 +1162,10 @@ describe('StripeResource', () => {
      */
     const makeResourceWithPDFMethod = (stripe) => {
       return new (StripeResource.extend({
+        path: 'resourceWithPDF',
+
         pdf: stripeMethod({
           method: 'GET',
-          fullPath: '/v1/resourceWithPDF',
           host: 'files.stripe.com',
           streaming: true,
         }),

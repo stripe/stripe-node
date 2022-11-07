@@ -42,22 +42,21 @@ function StripeResource(stripe, deprecatedUrlData) {
     );
   }
 
-  if (this.path) {
-    throw new Error(
-      'Support for StripeResource.path was dropped in stripe-node v11.0.0. Instead, you must fully specify "fullPath" on .stripeMethod({...})'
-    );
-  }
-
-  if (this.basePath) {
-    throw new Error(
-      'Support for StripeResource.basePath was dropped in stripe-node v11.0.0. Instead, you must fully specify "fullPath" on .stripeMethod({...})'
-    );
-  }
+  this.basePath = utils.makeURLInterpolator(
+    this.basePath || stripe.getApiField('basePath')
+  );
+  this.resourcePath = this.path;
+  this.path = utils.makeURLInterpolator(this.path);
 
   this.initialize(...arguments);
 }
 
 StripeResource.prototype = {
+  path: '',
+
+  // Methods that don't use the API's default '/v1' path can override it with this setting.
+  basePath: null,
+
   initialize() {},
 
   // Function to override the default data processor. This allows full control
@@ -70,22 +69,43 @@ StripeResource.prototype = {
   // be thrown, and they will be passed to the callback/promise.
   validateRequest: null,
 
-  createFullPath(_commandPath, _urlData) {
-    throw new Error(
-      "Support for `createFullPath` was removed in stripe-node v11.0.0. Please specify 'fullPath' directly on .stripeMethod({})"
-    );
+  createFullPath(commandPath, urlData) {
+    const urlParts = [this.basePath(urlData), this.path(urlData)];
+
+    if (typeof commandPath === 'function') {
+      const computedCommandPath = commandPath(urlData);
+      // If we have no actual command path, we just omit it to avoid adding a
+      // trailing slash. This is important for top-level listing requests, which
+      // do not have a command path.
+      if (computedCommandPath) {
+        urlParts.push(computedCommandPath);
+      }
+    } else {
+      urlParts.push(commandPath);
+    }
+
+    return this._joinUrlParts(urlParts);
   },
 
-  createResourcePathWithSymbols(_pathWithSymbols) {
-    throw new Error(
-      "Support for `createResourcePathWithSymbols` was removed in stripe-node v11.0.0. Please specify 'fullPath' directly on .stripeMethod({})"
-    );
+  // Creates a relative resource path with symbols left in (unlike
+  // createFullPath which takes some data to replace them with). For example it
+  // might produce: /invoices/{id}
+  createResourcePathWithSymbols(pathWithSymbols) {
+    // If there is no path beyond the resource path, we want to produce just
+    // /<resource path> rather than /<resource path>/.
+    if (pathWithSymbols) {
+      return `/${this._joinUrlParts([this.resourcePath, pathWithSymbols])}`;
+    } else {
+      return `/${this.resourcePath}`;
+    }
   },
 
   _joinUrlParts(parts) {
-    throw new Error(
-      "Support for `_joinUrlParts` was removed in stripe-node v11.0.0. Please specify 'fullPath' directly on .stripeMethod({})"
-    );
+    // Replace any accidentally doubled up slashes. This previously used
+    // path.join, which would do this as well. Unfortunately we need to do this
+    // as the functions for creating paths are technically part of the public
+    // interface and so we need to preserve backwards compatibility.
+    return parts.join('/').replace(/\/{2,}/g, '/');
   },
 
   _timeoutHandler(timeout, req, callback) {
