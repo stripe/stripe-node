@@ -4,14 +4,14 @@ import autoPagination = require('./autoPagination');
 const makeAutoPaginationMethods = autoPagination.makeAutoPaginationMethods;
 
 type StripeMethodSpec = {
-  method?: 'GET' | 'POST' | 'DELETE';
-  path: void; // removed in v11.0.0
-  fullPath: string;
-  urlParams?: Array<string>;
-  encode: any;
-  host?: string;
-  methodType?: 'list' | 'search';
-};
+  method?: 'GET' | 'POST' | 'DELETE',
+  path: void, // removed in v11.0.0
+  fullPath: string,
+  urlParams?: Array<string>,
+  encode: any // TODO
+  host?: string,
+  methodType?: 'list' | 'search'
+}
 /**
  * Create an API method from the declared spec.
  *
@@ -33,12 +33,16 @@ function stripeMethod(spec: StripeMethodSpec) {
     );
   }
   if (!spec.fullPath) {
-    throw new Error(`'fullPath' must be provided when calling 'stripeMethod'`);
+    throw new Error(
+      `'fullPath' must be provided when calling 'stripeMethod'`
+    );
   }
   return function(...args) {
     const callback = typeof args[args.length - 1] == 'function' && args.pop();
 
-    spec.urlParams = utils.extractUrlParams(spec.fullPath);
+    spec.urlParams = utils.extractUrlParams(
+      spec.fullPath
+    );
 
     const requestPromise = utils.callbackifyPromiseWithTimeout(
       makeRequest(this, args, spec, {}),

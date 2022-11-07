@@ -45,13 +45,13 @@ function StripeResource(stripe, deprecatedUrlData) {
   if (this.path) {
     throw new Error(
       'Support for StripeResource.path was dropped in stripe-node v11.0.0. Instead, you must fully specify "fullPath" on .stripeMethod({...})'
-    );
+    )
   }
 
   if (this.basePath) {
     throw new Error(
       'Support for StripeResource.basePath was dropped in stripe-node v11.0.0. Instead, you must fully specify "fullPath" on .stripeMethod({...})'
-    );
+    )
   }
 
   this.initialize(...arguments);
@@ -71,21 +71,15 @@ StripeResource.prototype = {
   validateRequest: null,
 
   createFullPath(_commandPath, _urlData) {
-    throw new Error(
-      "Support for `createFullPath` was removed in stripe-node v11.0.0. Please specify 'fullPath' directly on .stripeMethod({})"
-    );
+    throw new Error('Support for `createFullPath` was removed in stripe-node v11.0.0. Please specify \'fullPath\' directly on .stripeMethod({})');
   },
 
   createResourcePathWithSymbols(_pathWithSymbols) {
-    throw new Error(
-      "Support for `createResourcePathWithSymbols` was removed in stripe-node v11.0.0. Please specify 'fullPath' directly on .stripeMethod({})"
-    );
+    throw new Error('Support for `createResourcePathWithSymbols` was removed in stripe-node v11.0.0. Please specify \'fullPath\' directly on .stripeMethod({})')
   },
 
   _joinUrlParts(parts) {
-    throw new Error(
-      "Support for `_joinUrlParts` was removed in stripe-node v11.0.0. Please specify 'fullPath' directly on .stripeMethod({})"
-    );
+    throw new Error('Support for `_joinUrlParts` was removed in stripe-node v11.0.0. Please specify \'fullPath\' directly on .stripeMethod({})')
   },
 
   _timeoutHandler(timeout, req, callback) {
