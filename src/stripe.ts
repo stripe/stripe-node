@@ -1,5 +1,4 @@
 import _Error = require('./Error');
-import StripeResource = require('./StripeResource');
 
 const resources = require('./resources');
 
@@ -47,7 +46,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
 ];
 
 const EventEmitter = require('events').EventEmitter;
-
+import StripeResource = require('./StripeResource');
 Stripe.StripeResource = StripeResource;
 Stripe.resources = resources;
 
