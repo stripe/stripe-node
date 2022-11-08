@@ -161,10 +161,9 @@ const utils = {
     if (args.length > 0) {
       const arg = args[args.length - 1];
       if (typeof arg === 'string') {
-        args.pop();
-        opts.auth = arg;
+        opts.auth = args.pop() as string;
       } else if (utils.isOptionsHash(arg)) {
-        const params = {...(arg as Record<string, unknown>)};
+        const params = {...(args.pop() as Record<string, unknown>)};
 
         const extraKeys = Object.keys(params).filter(
           (key) => !OPTIONS_KEYS.includes(key)
