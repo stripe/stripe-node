@@ -321,7 +321,7 @@ const utils = {
    * Determine if file data is a derivative of EventEmitter class.
    * https://nodejs.org/api/events.html#events_events
    */
-  checkForStream: (obj) => {
+  checkForStream: (obj): boolean => {
     if (obj.file && obj.file.data) {
       return obj.file.data instanceof EventEmitter;
     }
