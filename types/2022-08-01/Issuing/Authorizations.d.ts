@@ -89,6 +89,11 @@ declare module 'stripe' {
         metadata: Stripe.Metadata;
 
         /**
+         * Details about the authorization, such as identifiers, set by the card network.
+         */
+        network_data: Authorization.NetworkData | null;
+
+        /**
          * The pending authorization request. This field will only be non-null during an `issuing_authorization.request` webhook.
          */
         pending_request: Authorization.PendingRequest | null;
@@ -178,6 +183,13 @@ declare module 'stripe' {
           state: string | null;
         }
 
+        interface NetworkData {
+          /**
+           * ID from the network that identifies the acquiring financial institution. For Visa and Mastercard credit transactions this is as 6 digit code. For Maestro debit transactions this is a 9 digit code. Uncommonly, acquiring institution ID is not provided. When this occurs, the value will be null.
+           */
+          acquiring_institution_id: string | null;
+        }
+
         interface PendingRequest {
           /**
            * The additional amount Stripe will hold if the authorization is approved, in the card's [currency](https://stripe.com/docs/api#issuing_authorization_object-pending-request-currency) and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
@@ -259,6 +271,11 @@ declare module 'stripe' {
            * The reason for the approval or decline.
            */
           reason: RequestHistory.Reason;
+
+          /**
+           * If approve/decline decision is directly responsed to the webhook with json payload and if the response is invalid (e.g., parsing errors), we surface the detailed message via this field.
+           */
+          reason_message: string | null;
         }
 
         namespace RequestHistory {
@@ -282,6 +299,7 @@ declare module 'stripe' {
             | 'verification_failed'
             | 'webhook_approved'
             | 'webhook_declined'
+            | 'webhook_error'
             | 'webhook_timeout';
         }
 
@@ -452,6 +470,7 @@ declare module 'stripe' {
 
         /**
          * Approves a pending Issuing Authorization object. This request should be made within the timeout window of the [real-time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
+         * You can also respond directly to the webhook request to approve an authorization (preferred). More details can be found [here](https://site-admin.stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
          */
         approve(
           id: string,
@@ -465,6 +484,7 @@ declare module 'stripe' {
 
         /**
          * Declines a pending Issuing Authorization object. This request should be made within the timeout window of the [real time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
+         * You can also respond directly to the webhook request to decline an authorization (preferred). More details can be found [here](https://site-admin.stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
          */
         decline(
           id: string,

@@ -38,7 +38,7 @@ declare module 'stripe' {
      */
     interface Invoice {
       /**
-       * Unique identifier for the object.
+       * Unique identifier for the object. This property is always present unless the invoice is an upcoming invoice. See [Retrieve an upcoming invoice](https://stripe.com/docs/api/invoices/upcoming) for more details.
        */
       id?: string;
 
@@ -474,7 +474,7 @@ declare module 'stripe' {
 
       interface CustomerTaxId {
         /**
-         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, or `unknown`
+         * The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
          */
         type: CustomerTaxId.Type;
 
@@ -500,6 +500,7 @@ declare module 'stripe' {
           | 'ca_qst'
           | 'ch_vat'
           | 'cl_tin'
+          | 'eg_tin'
           | 'es_cif'
           | 'eu_oss_vat'
           | 'eu_vat'
@@ -513,6 +514,8 @@ declare module 'stripe' {
           | 'is_vat'
           | 'jp_cn'
           | 'jp_rn'
+          | 'jp_trn'
+          | 'ke_pin'
           | 'kr_brn'
           | 'li_uid'
           | 'mx_rfc'
@@ -521,6 +524,7 @@ declare module 'stripe' {
           | 'my_sst'
           | 'no_vat'
           | 'nz_gst'
+          | 'ph_tin'
           | 'ru_inn'
           | 'ru_kpp'
           | 'sa_vat'
@@ -528,6 +532,7 @@ declare module 'stripe' {
           | 'sg_uen'
           | 'si_tin'
           | 'th_vat'
+          | 'tr_tin'
           | 'tw_vat'
           | 'ua_vat'
           | 'unknown'
@@ -618,6 +623,11 @@ declare module 'stripe' {
          * If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
          */
         payment_method_type?: string;
+
+        /**
+         * A URL to the request log entry in your dashboard.
+         */
+        request_log_url?: string;
 
         /**
          * A SetupIntent guides you through the process of setting up and saving a customer's payment credentials for future payments.
@@ -2072,7 +2082,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ph_tin`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -2098,6 +2108,7 @@ declare module 'stripe' {
             | 'ca_qst'
             | 'ch_vat'
             | 'cl_tin'
+            | 'eg_tin'
             | 'es_cif'
             | 'eu_oss_vat'
             | 'eu_vat'
@@ -2111,6 +2122,8 @@ declare module 'stripe' {
             | 'is_vat'
             | 'jp_cn'
             | 'jp_rn'
+            | 'jp_trn'
+            | 'ke_pin'
             | 'kr_brn'
             | 'li_uid'
             | 'mx_rfc'
@@ -2119,6 +2132,7 @@ declare module 'stripe' {
             | 'my_sst'
             | 'no_vat'
             | 'nz_gst'
+            | 'ph_tin'
             | 'ru_inn'
             | 'ru_kpp'
             | 'sa_vat'
@@ -2126,6 +2140,7 @@ declare module 'stripe' {
             | 'sg_uen'
             | 'si_tin'
             | 'th_vat'
+            | 'tr_tin'
             | 'tw_vat'
             | 'ua_vat'
             | 'us_ein'
@@ -2202,6 +2217,16 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: InvoiceItem.TaxBehavior;
+
+        /**
+         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+         */
+        tax_code?: Stripe.Emptyable<string>;
+
+        /**
          * The tax rates that apply to the item. When set, any `default_tax_rates` do not apply to this item.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
@@ -2272,6 +2297,8 @@ declare module 'stripe' {
         namespace PriceData {
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
         }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
 
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
@@ -2620,7 +2647,7 @@ declare module 'stripe' {
 
         interface TaxId {
           /**
-           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+           * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ph_tin`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
            */
           type: TaxId.Type;
 
@@ -2646,6 +2673,7 @@ declare module 'stripe' {
             | 'ca_qst'
             | 'ch_vat'
             | 'cl_tin'
+            | 'eg_tin'
             | 'es_cif'
             | 'eu_oss_vat'
             | 'eu_vat'
@@ -2659,6 +2687,8 @@ declare module 'stripe' {
             | 'is_vat'
             | 'jp_cn'
             | 'jp_rn'
+            | 'jp_trn'
+            | 'ke_pin'
             | 'kr_brn'
             | 'li_uid'
             | 'mx_rfc'
@@ -2667,6 +2697,7 @@ declare module 'stripe' {
             | 'my_sst'
             | 'no_vat'
             | 'nz_gst'
+            | 'ph_tin'
             | 'ru_inn'
             | 'ru_kpp'
             | 'sa_vat'
@@ -2674,6 +2705,7 @@ declare module 'stripe' {
             | 'sg_uen'
             | 'si_tin'
             | 'th_vat'
+            | 'tr_tin'
             | 'tw_vat'
             | 'ua_vat'
             | 'us_ein'
@@ -2750,6 +2782,16 @@ declare module 'stripe' {
         quantity?: number;
 
         /**
+         * Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+         */
+        tax_behavior?: InvoiceItem.TaxBehavior;
+
+        /**
+         * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+         */
+        tax_code?: Stripe.Emptyable<string>;
+
+        /**
          * The tax rates that apply to the item. When set, any `default_tax_rates` do not apply to this item.
          */
         tax_rates?: Stripe.Emptyable<Array<string>>;
@@ -2820,6 +2862,8 @@ declare module 'stripe' {
         namespace PriceData {
           type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
         }
+
+        type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
       }
 
       type SubscriptionBillingCycleAnchor = 'now' | 'unchanged';
