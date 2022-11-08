@@ -7,11 +7,9 @@ const stripeMethod = StripeResource.method;
 
 // Since path can either be `account` or `accounts`, support both through stripeMethod path;
 module.exports = StripeResource.extend({
-  path: '',
-
   create: stripeMethod({
     method: 'POST',
-    path: 'accounts',
+    fullPath: '/v1/accounts',
   }),
 
   retrieve(id) {
@@ -20,7 +18,7 @@ module.exports = StripeResource.extend({
     if (typeof id === 'string') {
       return stripeMethod({
         method: 'GET',
-        path: 'accounts/{id}',
+        fullPath: '/v1/accounts/{id}',
       }).apply(this, arguments);
     } else {
       if (id === null || id === undefined) {
@@ -29,102 +27,102 @@ module.exports = StripeResource.extend({
       }
       return stripeMethod({
         method: 'GET',
-        path: 'account',
+        fullPath: '/v1/account',
       }).apply(this, arguments);
     }
   },
 
   update: stripeMethod({
     method: 'POST',
-    path: 'accounts/{account}',
+    fullPath: '/v1/accounts/{account}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: 'accounts',
+    fullPath: '/v1/accounts',
     methodType: 'list',
   }),
 
   del: stripeMethod({
     method: 'DELETE',
-    path: 'accounts/{account}',
+    fullPath: '/v1/accounts/{account}',
   }),
 
   reject: stripeMethod({
     method: 'POST',
-    path: 'accounts/{account}/reject',
+    fullPath: '/v1/accounts/{account}/reject',
   }),
 
   retrieveCapability: stripeMethod({
     method: 'GET',
-    path: 'accounts/{account}/capabilities/{capability}',
+    fullPath: '/v1/accounts/{account}/capabilities/{capability}',
   }),
 
   updateCapability: stripeMethod({
     method: 'POST',
-    path: 'accounts/{account}/capabilities/{capability}',
+    fullPath: '/v1/accounts/{account}/capabilities/{capability}',
   }),
 
   listCapabilities: stripeMethod({
     method: 'GET',
-    path: 'accounts/{account}/capabilities',
+    fullPath: '/v1/accounts/{account}/capabilities',
     methodType: 'list',
   }),
 
   createExternalAccount: stripeMethod({
     method: 'POST',
-    path: 'accounts/{account}/external_accounts',
+    fullPath: '/v1/accounts/{account}/external_accounts',
   }),
 
   retrieveExternalAccount: stripeMethod({
     method: 'GET',
-    path: 'accounts/{account}/external_accounts/{id}',
+    fullPath: '/v1/accounts/{account}/external_accounts/{id}',
   }),
 
   updateExternalAccount: stripeMethod({
     method: 'POST',
-    path: 'accounts/{account}/external_accounts/{id}',
+    fullPath: '/v1/accounts/{account}/external_accounts/{id}',
   }),
 
   listExternalAccounts: stripeMethod({
     method: 'GET',
-    path: 'accounts/{account}/external_accounts',
+    fullPath: '/v1/accounts/{account}/external_accounts',
     methodType: 'list',
   }),
 
   deleteExternalAccount: stripeMethod({
     method: 'DELETE',
-    path: 'accounts/{account}/external_accounts/{id}',
+    fullPath: '/v1/accounts/{account}/external_accounts/{id}',
   }),
 
   createLoginLink: stripeMethod({
     method: 'POST',
-    path: 'accounts/{account}/login_links',
+    fullPath: '/v1/accounts/{account}/login_links',
   }),
 
   createPerson: stripeMethod({
     method: 'POST',
-    path: 'accounts/{account}/persons',
+    fullPath: '/v1/accounts/{account}/persons',
   }),
 
   retrievePerson: stripeMethod({
     method: 'GET',
-    path: 'accounts/{account}/persons/{person}',
+    fullPath: '/v1/accounts/{account}/persons/{person}',
   }),
 
   updatePerson: stripeMethod({
     method: 'POST',
-    path: 'accounts/{account}/persons/{person}',
+    fullPath: '/v1/accounts/{account}/persons/{person}',
   }),
 
   listPersons: stripeMethod({
     method: 'GET',
-    path: 'accounts/{account}/persons',
+    fullPath: '/v1/accounts/{account}/persons',
     methodType: 'list',
   }),
 
   deletePerson: stripeMethod({
     method: 'DELETE',
-    path: 'accounts/{account}/persons/{person}',
+    fullPath: '/v1/accounts/{account}/persons/{person}',
   }),
 });

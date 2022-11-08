@@ -6,11 +6,9 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'setup_attempts',
-
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/setup_attempts',
     methodType: 'list',
   }),
 });

@@ -6,36 +6,34 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'payment_methods',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/payment_methods',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{paymentMethod}',
+    fullPath: '/v1/payment_methods/{payment_method}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{paymentMethod}',
+    fullPath: '/v1/payment_methods/{payment_method}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/payment_methods',
     methodType: 'list',
   }),
 
   attach: stripeMethod({
     method: 'POST',
-    path: '/{paymentMethod}/attach',
+    fullPath: '/v1/payment_methods/{payment_method}/attach',
   }),
 
   detach: stripeMethod({
     method: 'POST',
-    path: '/{paymentMethod}/detach',
+    fullPath: '/v1/payment_methods/{payment_method}/detach',
   }),
 });
