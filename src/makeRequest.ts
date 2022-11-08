@@ -1,6 +1,21 @@
 const utils = require('./utils');
 
-function getRequestOpts(self, requestArgs, spec, overrideData) {
+type MethodSpec = {
+  method: string;
+  urlParams: Array<string>;
+  path?: string;
+  fullPath?: string;
+  encode: (data: Record<string, unknown>) => Record<string, unknown>;
+  validator: (
+    data: Record<string, unknown>,
+    headers: Record<string, string>
+  ) => void;
+  headers: Record<string, string>;
+  streaming?: boolean;
+  host?: string;
+};
+
+function getRequestOpts(self, requestArgs, spec: MethodSpec, overrideData) {
   // Extract spec values with defaults.
   const requestMethod = (spec.method || 'GET').toUpperCase();
   const urlParams = spec.urlParams || [];
@@ -20,17 +35,20 @@ function getRequestOpts(self, requestArgs, spec, overrideData) {
   const args = [].slice.call(requestArgs);
 
   // Generate and validate url params.
-  const urlData = urlParams.reduce((urlData, param) => {
-    const arg = args.shift();
-    if (typeof arg !== 'string') {
-      throw new Error(
-        `Stripe: Argument "${param}" must be a string, but got: ${arg} (on API request to \`${requestMethod} ${path}\`)`
-      );
-    }
+  const urlData = urlParams.reduce<Record<string, unknown>>(
+    (urlData, param) => {
+      const arg = args.shift();
+      if (typeof arg !== 'string') {
+        throw new Error(
+          `Stripe: Argument "${param}" must be a string, but got: ${arg} (on API request to \`${requestMethod} ${path}\`)`
+        );
+      }
 
-    urlData[param] = arg;
-    return urlData;
-  }, {});
+      urlData[param] = arg;
+      return urlData;
+    },
+    {}
+  );
 
   // Pull request data and options (headers, auth) from args.
   const dataFromArgs = utils.getDataFromArgs(args);
@@ -84,7 +102,7 @@ function makeRequest(self, requestArgs, spec, overrideData) {
       return;
     }
 
-    function requestCallback(err, response) {
+    function requestCallback(err: any, response) {
       if (err) {
         reject(err);
       } else {

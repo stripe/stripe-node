@@ -43,11 +43,11 @@ type Options = {
   host?: string;
   settings?: Settings;
   streaming?: boolean;
-  headers?: Record<string, string>;
+  headers?: Record<string, unknown>;
 };
 
 const utils = {
-  isOptionsHash(o) {
+  isOptionsHash(o: unknown): boolean {
     return (
       o &&
       typeof o === 'object' &&
@@ -64,7 +64,7 @@ const utils = {
    * Stringifies an Object, accommodating nested objects
    * (forming the conventional key 'parent[child]=value')
    */
-  stringifyRequestData: (data) => {
+  stringifyRequestData: (data: unknown): string => {
     return (
       qs
         .stringify(data, {
@@ -101,7 +101,7 @@ const utils = {
     };
   })(),
 
-  extractUrlParams: (path) => {
+  extractUrlParams: (path: string): Array<string> => {
     const params = path.match(/\{\w+\}/g);
     if (!params) {
       return [];
@@ -116,7 +116,7 @@ const utils = {
    * @param {object[]} args
    * @returns {object}
    */
-  getDataFromArgs(args) {
+  getDataFromArgs(args: Array<unknown>): Record<string, unknown> {
     if (!Array.isArray(args) || !args[0] || typeof args[0] !== 'object') {
       return {};
     }
@@ -152,7 +152,7 @@ const utils = {
   /**
    * Return the options hash from a list of arguments
    */
-  getOptionsFromArgs: (args) => {
+  getOptionsFromArgs: (args: Array<unknown>): Options => {
     const opts: Options = {
       auth: null,
       headers: {},
@@ -161,9 +161,10 @@ const utils = {
     if (args.length > 0) {
       const arg = args[args.length - 1];
       if (typeof arg === 'string') {
-        opts.auth = args.pop();
+        args.pop();
+        opts.auth = arg;
       } else if (utils.isOptionsHash(arg)) {
-        const params = {...args.pop()};
+        const params = {...(arg as Record<string, unknown>)};
 
         const extraKeys = Object.keys(params).filter(
           (key) => !OPTIONS_KEYS.includes(key)
@@ -194,7 +195,7 @@ const utils = {
         }
 
         if (params.apiKey) {
-          opts.auth = params.apiKey;
+          opts.auth = params.apiKey as string;
         }
         if (params.idempotencyKey) {
           opts.headers['Idempotency-Key'] = params.idempotencyKey;
@@ -206,13 +207,13 @@ const utils = {
           opts.headers['Stripe-Version'] = params.apiVersion;
         }
         if (Number.isInteger(params.maxNetworkRetries)) {
-          opts.settings.maxNetworkRetries = params.maxNetworkRetries;
+          opts.settings.maxNetworkRetries = params.maxNetworkRetries as number;
         }
         if (Number.isInteger(params.timeout)) {
-          opts.settings.timeout = params.timeout;
+          opts.settings.timeout = params.timeout as number;
         }
         if (params.host) {
-          opts.host = params.host;
+          opts.host = params.host as string;
         }
       }
     }
@@ -246,7 +247,7 @@ const utils = {
   /**
    * Secure compare, from https://github.com/freewil/scmp
    */
-  secureCompare: (a, b) => {
+  secureCompare: (a: Uint8Array, b: Uint8Array): boolean => {
     a = Buffer.from(a);
     b = Buffer.from(b);
 
@@ -274,7 +275,7 @@ const utils = {
   /**
    * Remove empty values from an object
    */
-  removeNullish: (obj) => {
+  removeNullish: (obj: Record<string, unknown>): Record<string, unknown> => {
     if (typeof obj !== 'object') {
       throw new Error('Argument must be an object');
     }
@@ -293,7 +294,7 @@ const utils = {
    * becomes
    * {'Foo-Bar': 'hi'}
    */
-  normalizeHeaders: (obj) => {
+  normalizeHeaders: (obj: Record<string, unknown>): Record<string, unknown> => {
     if (!(obj && typeof obj === 'object')) {
       return obj;
     }
@@ -308,7 +309,7 @@ const utils = {
    * Stolen from https://github.com/marten-de-vries/header-case-normalizer/blob/master/index.js#L36-L41
    * without the exceptions which are irrelevant to us.
    */
-  normalizeHeader: (header) => {
+  normalizeHeader: (header: string): string => {
     return header
       .split('-')
       .map(
@@ -328,7 +329,10 @@ const utils = {
     return false;
   },
 
-  callbackifyPromiseWithTimeout: (promise, callback) => {
+  callbackifyPromiseWithTimeout: <T>(
+    promise: Promise<T>,
+    callback: (error: unknown, result: T) => void
+  ): Promise<T | void> => {
     if (callback) {
       // Ensure callback is called outside of promise stack.
       return promise.then(
@@ -351,7 +355,7 @@ const utils = {
   /**
    * Allow for special capitalization cases (such as OAuth)
    */
-  pascalToCamelCase: (name) => {
+  pascalToCamelCase: (name: string): string => {
     if (name === 'OAuth') {
       return 'oauth';
     } else {
@@ -368,7 +372,7 @@ const utils = {
    *
    * This unifies that interface.
    */
-  safeExec: (cmd, cb) => {
+  safeExec: (cmd: string, cb: (error: Error, stdout: string) => void): void => {
     // Occurs if we couldn't load the `child_process` module, which might
     // happen in certain sandboxed environments like a CloudFlare Worker.
     if (utils._exec === null) {
@@ -386,13 +390,15 @@ const utils = {
   // For mocking in tests.
   _exec: exec,
 
-  isObject: (obj) => {
+  isObject: (obj: unknown): boolean => {
     const type = typeof obj;
     return (type === 'function' || type === 'object') && !!obj;
   },
 
   // For use in multipart requests
-  flattenAndStringify: (data) => {
+  flattenAndStringify: (
+    data: Record<string, unknown>
+  ): Record<string, unknown> => {
     const result = {};
 
     const step = (obj, prevKey) => {
@@ -427,7 +433,7 @@ const utils = {
   /**
    * https://stackoverflow.com/a/2117523
    */
-  uuid4: () => {
+  uuid4: (): string => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
       const r = (Math.random() * 16) | 0;
       const v = c === 'x' ? r : (r & 0x3) | 0x8;
@@ -435,7 +441,7 @@ const utils = {
     });
   },
 
-  validateInteger: (name, n, defaultVal) => {
+  validateInteger: (name: string, n: unknown, defaultVal?: number): number => {
     if (!Number.isInteger(n)) {
       if (defaultVal !== undefined) {
         return defaultVal;
@@ -444,10 +450,10 @@ const utils = {
       }
     }
 
-    return n;
+    return n as number;
   },
 
-  determineProcessUserAgentProperties: () => {
+  determineProcessUserAgentProperties: (): Record<string, string> => {
     return typeof process === 'undefined'
       ? {}
       : {
@@ -457,7 +463,7 @@ const utils = {
   },
 };
 
-function emitWarning(warning) {
+function emitWarning(warning: string): void {
   if (typeof process.emitWarning !== 'function') {
     return console.warn(
       `Stripe: ${warning}`

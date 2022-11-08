@@ -14,6 +14,7 @@ const {HttpClient} = require('./net/HttpClient');
 
 type Settings = {
   timeout?: number;
+  maxNetworkRetries?: number;
 };
 
 type Options = {
@@ -35,7 +36,7 @@ const MAX_RETRY_AFTER_WAIT = 60;
 /**
  * Encapsulates request logic for a Stripe Resource
  */
-function StripeResource(stripe, deprecatedUrlData) {
+function StripeResource(stripe, deprecatedUrlData?: never) {
   this._stripe = stripe;
   if (deprecatedUrlData) {
     throw new Error(
@@ -78,7 +79,10 @@ StripeResource.prototype = {
   // be thrown, and they will be passed to the callback/promise.
   validateRequest: null,
 
-  createFullPath(commandPath, urlData) {
+  createFullPath(
+    commandPath: string | ((urlData: Record<string, unknown>) => string),
+    urlData: Record<string, unknown>
+  ) {
     const urlParts = [this.basePath(urlData), this.path(urlData)];
 
     if (typeof commandPath === 'function') {
@@ -99,7 +103,7 @@ StripeResource.prototype = {
   // Creates a relative resource path with symbols left in (unlike
   // createFullPath which takes some data to replace them with). For example it
   // might produce: /invoices/{id}
-  createResourcePathWithSymbols(pathWithSymbols) {
+  createResourcePathWithSymbols(pathWithSymbols: string) {
     // If there is no path beyond the resource path, we want to produce just
     // /<resource path> rather than /<resource path>/.
     if (pathWithSymbols) {
@@ -109,7 +113,7 @@ StripeResource.prototype = {
     }
   },
 
-  _joinUrlParts(parts) {
+  _joinUrlParts(parts: Array<string>) {
     // Replace any accidentally doubled up slashes. This previously used
     // path.join, which would do this as well. Unfortunately we need to do this
     // as the functions for creating paths are technically part of the public
@@ -129,7 +133,10 @@ StripeResource.prototype = {
     };
   },
 
-  _addHeadersDirectlyToObject(obj, headers) {
+  _addHeadersDirectlyToObject(
+    obj: Record<string, unknown>,
+    headers: Record<string, unknown>
+  ) {
     // For convenience, make some headers easily accessible on
     // lastResponse.
 
@@ -140,7 +147,11 @@ StripeResource.prototype = {
     obj.idempotencyKey = obj.idempotencyKey || headers['idempotency-key'];
   },
 
-  _makeResponseEvent(requestEvent, statusCode, headers) {
+  _makeResponseEvent(
+    requestEvent,
+    statusCode: number,
+    headers: Record<string, unknown>
+  ) {
     const requestEndTime = Date.now();
     const requestDurationMs = requestEndTime - requestEvent.request_start_time;
 
@@ -158,7 +169,7 @@ StripeResource.prototype = {
     });
   },
 
-  _getRequestId(headers) {
+  _getRequestId(headers: Record<string, unknown>) {
     return headers['request-id'];
   },
 
@@ -301,7 +312,7 @@ StripeResource.prototype = {
   },
 
   // For more on when and how to retry API requests, see https://stripe.com/docs/error-handling#safely-retrying-requests-with-idempotency
-  _shouldRetry(res, numRetries, maxRetries, error) {
+  _shouldRetry(res, numRetries: number, maxRetries: number, error?) {
     if (
       error &&
       numRetries === 0 &&
@@ -346,7 +357,7 @@ StripeResource.prototype = {
     return false;
   },
 
-  _getSleepTimeInMS(numRetries, retryAfter = null) {
+  _getSleepTimeInMS(numRetries: number, retryAfter: number | null = null) {
     const initialNetworkRetryDelay = this._stripe.getInitialNetworkRetryDelay();
     const maxNetworkRetryDelay = this._stripe.getMaxNetworkRetryDelay();
 
@@ -374,14 +385,14 @@ StripeResource.prototype = {
   },
 
   // Max retries can be set on a per request basis. Favor those over the global setting
-  _getMaxNetworkRetries(settings: {maxNetworkRetries?: number} = {}) {
+  _getMaxNetworkRetries(settings: Settings = {}) {
     return settings.maxNetworkRetries &&
       Number.isInteger(settings.maxNetworkRetries)
       ? settings.maxNetworkRetries
       : this._stripe.getMaxNetworkRetries();
   },
 
-  _defaultIdempotencyKey(method, settings) {
+  _defaultIdempotencyKey(method: string, settings: Settings) {
     // If this is a POST and we allow multiple retries, ensure an idempotency key.
     const maxRetries = this._getMaxNetworkRetries(settings);
 
@@ -392,14 +403,14 @@ StripeResource.prototype = {
   },
 
   _makeHeaders(
-    auth,
-    contentLength,
-    apiVersion,
-    clientUserAgent,
-    method,
-    userSuppliedHeaders,
-    userSuppliedSettings
-  ) {
+    auth: string,
+    contentLength: number,
+    apiVersion: string,
+    clientUserAgent: string,
+    method: string,
+    userSuppliedHeaders: Record<string, unknown>,
+    userSuppliedSettings: Settings
+  ): Record<string, unknown> {
     const defaultHeaders = {
       // Use specified auth token or use default from this stripe instance:
       Authorization: auth ? `Bearer ${auth}` : this._stripe.getApiField('auth'),
@@ -451,7 +462,7 @@ StripeResource.prototype = {
     );
   },
 
-  _getUserAgentString() {
+  _getUserAgentString(): string {
     const packageVersion = this._stripe.getConstant('PACKAGE_VERSION');
     const appInfo = this._stripe._appInfo
       ? this._stripe.getAppInfoAsString()
@@ -460,7 +471,7 @@ StripeResource.prototype = {
     return `Stripe/v1 NodeBindings/${packageVersion} ${appInfo}`.trim();
   },
 
-  _getTelemetryHeader() {
+  _getTelemetryHeader(): string {
     if (
       this._stripe.getTelemetryEnabled() &&
       this._stripe._prevRequestMetrics.length > 0
@@ -472,7 +483,7 @@ StripeResource.prototype = {
     }
   },
 
-  _recordRequestMetrics(requestId, requestDurationMs) {
+  _recordRequestMetrics(requestId, requestDurationMs): void {
     if (this._stripe.getTelemetryEnabled() && requestId) {
       if (
         this._stripe._prevRequestMetrics.length >
@@ -490,15 +501,23 @@ StripeResource.prototype = {
     }
   },
 
-  _request(method, host, path, data, auth, options: Options = {}, callback) {
+  _request(
+    method: string,
+    host: string,
+    path: string,
+    data: unknown,
+    auth: string,
+    options: Options = {},
+    callback
+  ) {
     let requestData;
 
     const retryRequest = (
-      requestFn,
-      apiVersion,
-      headers,
-      requestRetries,
-      retryAfter
+      requestFn: typeof makeRequest,
+      apiVersion: string,
+      headers: Record<string, unknown>,
+      requestRetries: number,
+      retryAfter: number | null
     ) => {
       return setTimeout(
         requestFn,
@@ -509,7 +528,11 @@ StripeResource.prototype = {
       );
     };
 
-    const makeRequest = (apiVersion, headers, numRetries) => {
+    const makeRequest = (
+      apiVersion: string,
+      headers: Record<string, unknown>,
+      numRetries: number
+    ) => {
       // timeout can be set on a per-request basis. Favor that over the global setting
       const timeout =
         options.settings &&

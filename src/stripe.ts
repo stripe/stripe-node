@@ -1,4 +1,5 @@
 import _Error = require('./Error');
+import StripeResource = require('./StripeResource');
 
 const resources = require('./resources');
 
@@ -47,7 +48,6 @@ const ALLOWED_CONFIG_PROPERTIES = [
 
 const EventEmitter = require('events').EventEmitter;
 
-import StripeResource = require('./StripeResource');
 Stripe.StripeResource = StripeResource;
 Stripe.resources = resources;
 
@@ -327,7 +327,7 @@ Stripe.prototype = {
 
     info = info || {};
 
-    const appInfo = APP_INFO_PROPERTIES.reduce(
+    this._appInfo = APP_INFO_PROPERTIES.reduce(
       (accum: Record<string, any>, prop) => {
         if (typeof info[prop] == 'string') {
           accum = accum || {};
@@ -339,8 +339,6 @@ Stripe.prototype = {
       },
       undefined
     );
-
-    this._appInfo = appInfo;
   },
 
   /**
@@ -374,15 +372,15 @@ Stripe.prototype = {
    *
    * It may be deprecated and removed in the future.
    */
-  getApiField(key) {
+  getApiField(key: string): unknown {
     return this._api[key];
   },
 
-  setClientId(clientId) {
+  setClientId(clientId: string): void {
     this._clientId = clientId;
   },
 
-  getClientId() {
+  getClientId(): string {
     return this._clientId;
   },
 
@@ -413,7 +411,7 @@ Stripe.prototype = {
     return Stripe[c];
   },
 
-  getMaxNetworkRetries() {
+  getMaxNetworkRetries(): number {
     return this.getApiField('maxNetworkRetries');
   },
 
@@ -425,7 +423,7 @@ Stripe.prototype = {
    * });
    *
    */
-  setMaxNetworkRetries(maxNetworkRetries) {
+  setMaxNetworkRetries(maxNetworkRetries: number) {
     this._setApiNumberField('maxNetworkRetries', maxNetworkRetries);
   },
 
@@ -433,7 +431,7 @@ Stripe.prototype = {
    * @private
    * This may be removed in the future.
    */
-  _setApiNumberField(prop, n, defaultVal) {
+  _setApiNumberField(prop: string, n: number, defaultVal?: number) {
     const val = utils.validateInteger(prop, n, defaultVal);
 
     this._setApiField(prop, val);
