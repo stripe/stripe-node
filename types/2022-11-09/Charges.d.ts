@@ -204,7 +204,7 @@ declare module 'stripe' {
       /**
        * A list of refunds that have been applied to the charge.
        */
-      refunds?: ApiList<Stripe.Refund>;
+      refunds: ApiList<Stripe.Refund> | null;
 
       /**
        * ID of the review associated with this charge if one exists.

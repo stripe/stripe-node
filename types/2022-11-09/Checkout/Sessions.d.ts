@@ -1729,11 +1729,6 @@ declare module 'stripe' {
           adjustable_quantity?: LineItem.AdjustableQuantity;
 
           /**
-           * [Deprecated] The amount to be collected per unit of the line item. If specified, must also pass `currency` and `name`.
-           */
-          amount?: number;
-
-          /**
            * The [tax rates](https://stripe.com/docs/api/tax_rates) that will be applied to this line item depending on the customer's billing/shipping address. We currently support the following countries: US, GB, AU, and all countries in the EU.
            */
           dynamic_tax_rates?: Array<string>;
@@ -2560,11 +2555,6 @@ declare module 'stripe' {
              * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
-
-            /**
-             * Confirm that the payer has accepted the P24 terms and conditions.
-             */
-            tos_shown_and_accepted?: boolean;
           }
 
           interface Pix {

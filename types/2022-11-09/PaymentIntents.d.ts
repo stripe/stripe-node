@@ -74,11 +74,6 @@ declare module 'stripe' {
       capture_method: PaymentIntent.CaptureMethod;
 
       /**
-       * Charges that were created by this PaymentIntent, if any.
-       */
-      charges?: ApiList<Stripe.Charge>;
-
-      /**
        * The client secret of this PaymentIntent. Used for client-side retrieval using a publishable key.
        *
        * The client secret can be used to complete a payment from your frontend. It should not be stored, logged, or exposed to anyone other than the customer. Make sure that you have TLS enabled on any page that includes the client secret.
@@ -122,6 +117,11 @@ declare module 'stripe' {
        * The payment error encountered in the previous PaymentIntent confirmation. It will be cleared if the PaymentIntent is later updated for any reason.
        */
       last_payment_error: PaymentIntent.LastPaymentError | null;
+
+      /**
+       * The latest charge created by this payment intent.
+       */
+      latest_charge?: string | Stripe.Charge | null;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
