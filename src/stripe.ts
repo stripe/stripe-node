@@ -132,6 +132,7 @@ function Stripe(this: StripeObject, key: string, config = {}): void {
   this._enableTelemetry = props.telemetry !== false;
 
   // Expose StripeResource on the instance too
+  // @ts-ignore
   this.StripeResource = Stripe.StripeResource;
 }
 
