@@ -271,6 +271,11 @@ declare module 'stripe' {
            * The reason for the approval or decline.
            */
           reason: RequestHistory.Reason;
+
+          /**
+           * If approve/decline decision is directly responsed to the webhook with json payload and if the response is invalid (e.g., parsing errors), we surface the detailed message via this field.
+           */
+          reason_message: string | null;
         }
 
         namespace RequestHistory {
@@ -294,6 +299,7 @@ declare module 'stripe' {
             | 'verification_failed'
             | 'webhook_approved'
             | 'webhook_declined'
+            | 'webhook_error'
             | 'webhook_timeout';
         }
 
