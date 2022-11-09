@@ -188,3 +188,15 @@ type StripeRawError = {
   source?: any;
   exception?: any;
 };
+type IterationDoneCallback = () => void;
+type IterationItemCallback = (
+  item: any,
+  next: any
+) => void | boolean | Promise<void | boolean>;
+type ListResult = {
+  data: Array<any>;
+  has_more: boolean;
+};
+type ListOptions = {
+  limit?: number;
+};
