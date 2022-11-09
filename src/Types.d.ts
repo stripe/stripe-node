@@ -104,9 +104,13 @@ type UrlInterpolator = (params: Record<string, unknown>) => string;
 type AppInfo = {
   name?: string;
 } & Record<string, unknown>;
-
+type StripeResourceNamespaceObject = Record<
+  string,
+  StripeResourceObject | unknown
+>;
 type MethodSpec = {
   method: string;
+  methodType: string;
   urlParams: Array<string>;
   path?: string;
   fullPath?: string;
@@ -145,7 +149,8 @@ interface HttpClientInterface {
     timeout: number
   ) => Promise<HttpClientResponseInterface>;
 }
-type ResponseHeaders = Record<string, string>;
+type ResponseHeaderValue = string | string[];
+type ResponseHeaders = Record<string, ResponseHeaderValue>;
 interface HttpClientResponseInterface {
   getStatusCode: () => number;
   getHeaders: () => ResponseHeaders;
