@@ -30,7 +30,7 @@ const DEPRECATED_OPTIONS = {
   stripe_account: 'stripeAccount',
   stripe_version: 'apiVersion',
   stripeVersion: 'apiVersion',
-};
+} as Record<string, string>;
 const DEPRECATED_OPTIONS_KEYS = Object.keys(DEPRECATED_OPTIONS);
 
 type Settings = {
@@ -68,7 +68,7 @@ const utils = {
     return (
       qs
         .stringify(data, {
-          serializeDate: (d) => Math.floor(d.getTime() / 1000),
+          serializeDate: (d: Date) => Math.floor(d.getTime() / 1000),
         })
         // Don't use strict form encoding by changing the square bracket control
         // characters back to their literals. This is fine by the server, and
@@ -90,10 +90,10 @@ const utils = {
       '"': '\\"',
       '\u2028': '\\u2028',
       '\u2029': '\\u2029',
-    };
-    return (str) => {
+    } as Record<string, string>;
+    return (str: string) => {
       const cleanString = str.replace(/["\n\r\u2028\u2029]/g, ($0) => rc[$0]);
-      return (outputs) => {
+      return (outputs: Record<string, undefined>) => {
         return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) =>
           encodeURIComponent(outputs[$1] || '')
         );
@@ -222,12 +222,12 @@ const utils = {
   /**
    * Provide simple "Class" extension mechanism
    */
-  protoExtend(sub) {
+  protoExtend(sub: any) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const Super = this;
     const Constructor = Object.prototype.hasOwnProperty.call(sub, 'constructor')
       ? sub.constructor
-      : function(...args) {
+      : function(...args: any[]) {
           Super.apply(this, args);
         };
 

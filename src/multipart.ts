@@ -14,7 +14,7 @@ const multipartDataGenerator = (method, data, headers) => {
   headers['Content-Type'] = `multipart/form-data; boundary=${segno}`;
   let buffer = Buffer.alloc(0);
 
-  function push(l) {
+  function push(l: Buffer | string) {
     const prevBuffer = buffer;
     const newBuffer = l instanceof Buffer ? l : Buffer.from(l);
     buffer = Buffer.alloc(prevBuffer.length + newBuffer.length + 2);
@@ -59,7 +59,12 @@ const multipartDataGenerator = (method, data, headers) => {
   return buffer;
 };
 
-const streamProcessor = (method, data, headers, callback) => {
+const streamProcessor = (
+  method: string,
+  data: RequestData,
+  headers: HttpHeaders,
+  callback
+) => {
   const bufferArray = [];
   data.file.data
     .on('data', (line) => {
@@ -83,7 +88,12 @@ const streamProcessor = (method, data, headers, callback) => {
     });
 };
 
-const multipartRequestDataProcessor = (method, data, headers, callback) => {
+const multipartRequestDataProcessor = (
+  method: string,
+  data: RequestData,
+  headers: HttpHeaders,
+  callback
+) => {
   data = data || {};
 
   if (method !== 'POST') {

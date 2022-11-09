@@ -25,14 +25,14 @@ class NodeHttpClient extends HttpClient {
   }
 
   makeRequest(
-    host,
-    port,
-    path,
-    method,
-    headers,
-    requestData,
-    protocol,
-    timeout
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: HttpHeaders,
+    requestData: Record<string, unknown>,
+    protocol: string,
+    timeout: number
   ) {
     const isInsecureConnection = protocol === 'http';
 

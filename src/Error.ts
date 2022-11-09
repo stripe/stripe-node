@@ -83,7 +83,7 @@ class StripeError extends Error {
   /**
    * Helper factory which takes raw stripe errors and outputs wrapping instances
    */
-  static generate(rawStripeError) {
+  static generate(rawStripeError: StripeRawError) {
     switch (rawStripeError.type) {
       case 'card_error':
         return new StripeCardError(rawStripeError);

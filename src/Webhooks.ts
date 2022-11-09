@@ -2,11 +2,41 @@ import utils = require('./utils');
 import _Error = require('./Error');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 
+type StripeCryptoProvider = {
+  computeHMACSignature: (data: string, secret: string) => string;
+  computeHMACSignatureAsync: (data: string, secret: string) => Promise<string>;
+};
+
+type WebhookPayload = string | Buffer;
+type WebhookHeader = string | Buffer;
+type WebhookParsedHeader = {
+  signatures: Array<string>;
+  timestamp: number;
+};
+type WebhookParsedEvent = {
+  details: WebhookParsedHeader;
+  decodedPayload: string;
+  decodedHeader: string;
+};
+type WebhookTestHeaderOptions = {
+  timestamp: number;
+  payload: string;
+  secret: string;
+  scheme: string;
+  signature: string;
+  cryptoProvider: StripeCryptoProvider;
+};
 const Webhook = {
   DEFAULT_TOLERANCE: 300, // 5 minutes
-  signature: null,
+  signature: null as typeof signature,
 
-  constructEvent(payload, header, secret, tolerance, cryptoProvider) {
+  constructEvent(
+    payload: WebhookPayload,
+    header: WebhookHeader,
+    secret: string,
+    tolerance: null,
+    cryptoProvider: StripeCryptoProvider
+  ) {
     this.signature.verifyHeader(
       payload,
       header,
@@ -15,16 +45,17 @@ const Webhook = {
       cryptoProvider
     );
 
+    // @ts-ignore
     const jsonPayload = JSON.parse(payload);
     return jsonPayload;
   },
 
   async constructEventAsync(
-    payload,
-    header,
-    secret,
-    tolerance,
-    cryptoProvider
+    payload: WebhookPayload,
+    header: WebhookHeader,
+    secret: string,
+    tolerance: number,
+    cryptoProvider: StripeCryptoProvider
   ) {
     await this.signature.verifyHeaderAsync(
       payload,
@@ -34,6 +65,7 @@ const Webhook = {
       cryptoProvider
     );
 
+    // @ts-ignore
     const jsonPayload = JSON.parse(payload);
     return jsonPayload;
   },
@@ -49,7 +81,7 @@ const Webhook = {
    * @property {string} signature - Computed webhook signature
    * @property {CryptoProvider} cryptoProvider - Crypto provider to use for computing the signature if none was provided. Defaults to NodeCryptoProvider.
    */
-  generateTestHeaderString: function(opts) {
+  generateTestHeaderString: function(opts: WebhookTestHeaderOptions) {
     if (!opts) {
       throw new StripeError({
         message: 'Options are required',
@@ -82,11 +114,11 @@ const signature = {
   EXPECTED_SCHEME: 'v1',
 
   verifyHeader(
-    encodedPayload,
-    encodedHeader,
-    secret,
-    tolerance,
-    cryptoProvider
+    encodedPayload: WebhookPayload,
+    encodedHeader: WebhookHeader,
+    secret: string,
+    tolerance: number,
+    cryptoProvider: StripeCryptoProvider
   ) {
     const {
       decodedHeader: header,
@@ -112,11 +144,11 @@ const signature = {
   },
 
   async verifyHeaderAsync(
-    encodedPayload,
-    encodedHeader,
-    secret,
-    tolerance,
-    cryptoProvider
+    encodedPayload: WebhookPayload,
+    encodedHeader: WebhookHeader,
+    secret: string,
+    tolerance: number,
+    cryptoProvider: StripeCryptoProvider
   ) {
     const {
       decodedHeader: header,
@@ -141,11 +173,18 @@ const signature = {
   },
 };
 
-function makeHMACContent(payload, details) {
+function makeHMACContent(
+  payload: WebhookPayload,
+  details: WebhookParsedHeader
+) {
   return `${details.timestamp}.${payload}`;
 }
 
-function parseEventDetails(encodedPayload, encodedHeader, expectedScheme) {
+function parseEventDetails(
+  encodedPayload: WebhookPayload,
+  encodedHeader: WebhookHeader,
+  expectedScheme: string
+): WebhookParsedEvent {
   const decodedPayload = Buffer.isBuffer(encodedPayload)
     ? encodedPayload.toString('utf8')
     : encodedPayload;
@@ -196,11 +235,11 @@ function parseEventDetails(encodedPayload, encodedHeader, expectedScheme) {
 }
 
 function validateComputedSignature(
-  payload,
-  header,
-  details,
-  expectedSignature,
-  tolerance
+  payload: WebhookPayload,
+  header: string,
+  details: WebhookParsedHeader,
+  expectedSignature: string,
+  tolerance: number
 ) {
   const signatureFound = !!details.signatures.filter(
     utils.secureCompare.bind(utils, expectedSignature)
@@ -236,7 +275,7 @@ function validateComputedSignature(
   return true;
 }
 
-function parseHeader(header, scheme) {
+function parseHeader(header: string, scheme: string): WebhookParsedHeader {
   if (typeof header !== 'string') {
     return null;
   }
@@ -262,13 +301,13 @@ function parseHeader(header, scheme) {
   );
 }
 
-let webhooksNodeCryptoProviderInstance = null;
+let webhooksNodeCryptoProviderInstance = null as StripeCryptoProvider;
 
 /**
  * Lazily instantiate a NodeCryptoProvider instance. This is a stateless object
  * so a singleton can be used here.
  */
-function getNodeCryptoProvider() {
+function getNodeCryptoProvider(): StripeCryptoProvider {
   if (!webhooksNodeCryptoProviderInstance) {
     const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
     webhooksNodeCryptoProviderInstance = new NodeCryptoProvider();
