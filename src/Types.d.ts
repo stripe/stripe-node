@@ -44,13 +44,14 @@ type StripeResourceObject = {
     auth: string,
     options: RequestOptions,
     callback: RequestCallback
-  ) => Promise<any>;
+  ) => void;
 };
+type RequestCallbackReturn = any;
 type RequestCallback = (
   this: StripeResourceObject | void,
   error: Error,
   response?: any
-) => void;
+) => RequestCallbackReturn;
 
 type RequestEvent = {
   api_version?: string;
@@ -99,6 +100,23 @@ type UserProvidedConfig = {
 type HttpHeaderValue = string | number | string[];
 type RequestHeaders = Record<string, string | number | string[]>;
 type RequestData = Record<string, unknown>;
+type MultipartRequestData = RequestData | StreamingFile | BufferedFile;
+
+type BufferedFile = {
+  name: string;
+  type: string;
+  file: {
+    data: Buffer;
+  };
+};
+
+type StreamingFile = {
+  name: string;
+  type: string;
+  file: {
+    data: import('events').EventEmitter;
+  };
+};
 type RequestArgs = Array<any>;
 type UrlInterpolator = (params: Record<string, unknown>) => string;
 type AppInfo = {
@@ -197,6 +215,6 @@ type ListResult = {
   data: Array<any>;
   has_more: boolean;
 };
-type ListOptions = {
-  limit?: number;
+type HttpClientResponseError = {
+  code: number;
 };

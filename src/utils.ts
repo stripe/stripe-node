@@ -396,7 +396,7 @@ const utils = {
 
   // For use in multipart requests
   flattenAndStringify: (
-    data: Record<string, unknown>
+    data: MultipartRequestData
   ): Record<string, unknown> => {
     const result: RequestData = {};
 

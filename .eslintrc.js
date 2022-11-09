@@ -265,7 +265,7 @@ module.exports = {
         '@typescript-eslint/no-empty-interface': 0,
         '@typescript-eslint/no-unused-vars': 0,
         '@typescript-eslint/triple-slash-reference': 0,
-        '@typescript-eslint/ban-ts-ignore': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-empty-function': 0,
         '@typescript-eslint/camelcase': 0,
         '@typescript-eslint/no-explicit-any': 0,

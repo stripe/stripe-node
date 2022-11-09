@@ -114,7 +114,13 @@ StripeResource.prototype = {
   // DEPRECATED: Here for backcompat in case users relied on this.
   wrapTimeout: utils.callbackifyPromiseWithTimeout,
 
-  _timeoutHandler(timeout: number, req, callback): () => void {
+  // eslint-disable-next-line no-warning-comments
+  // TODO: Unused?
+  _timeoutHandler(
+    timeout: number,
+    req: any,
+    callback: RequestCallback
+  ): () => void {
     return (): void => {
       const timeoutErr = new TypeError('ETIMEDOUT');
       (timeoutErr as any).code = 'ETIMEDOUT';
@@ -176,11 +182,11 @@ StripeResource.prototype = {
   _streamingResponseHandler(
     requestEvent: RequestEvent,
     callback: RequestCallback
-  ) {
-    return (res: HttpClientResponseInterface) => {
+  ): (res: HttpClientResponseInterface) => RequestCallbackReturn {
+    return (res: HttpClientResponseInterface): RequestCallbackReturn => {
       const headers = res.getHeaders();
 
-      const streamCompleteCallback = () => {
+      const streamCompleteCallback = (): void => {
         const responseEvent = this._makeResponseEvent(
           requestEvent,
           res.getStatusCode(),
@@ -261,7 +267,7 @@ StripeResource.prototype = {
             throw new StripeAPIError({
               message: 'Invalid JSON received from the Stripe API',
               exception: e,
-              requestId: headers['request-id'],
+              requestId: headers['request-id'] as string,
             });
           }
         )
@@ -313,7 +319,7 @@ StripeResource.prototype = {
     res: HttpClientResponseInterface,
     numRetries: number,
     maxRetries: number,
-    error?
+    error?: {code: number}
   ): boolean {
     if (
       error &&
@@ -514,7 +520,7 @@ StripeResource.prototype = {
     auth: string,
     options: RequestOptions = {},
     callback: RequestCallback
-  ) {
+  ): void {
     let requestData: string;
 
     const retryRequest = (
@@ -585,6 +591,7 @@ StripeResource.prototype = {
               apiVersion,
               headers,
               requestRetries,
+              // @ts-ignore
               res.getHeaders()['retry-after']
             );
           } else if (options.streaming && res.getStatusCode() < 400) {
@@ -593,7 +600,7 @@ StripeResource.prototype = {
             return this._jsonResponseHandler(requestEvent, callback)(res);
           }
         })
-        .catch((error) => {
+        .catch((error: HttpClientResponseError) => {
           if (this._shouldRetry(null, requestRetries, maxRetries, error)) {
             return retryRequest(
               makeRequest,
@@ -612,6 +619,7 @@ StripeResource.prototype = {
                 message: isTimeoutError
                   ? `Request aborted due to timeout being reached (${timeout}ms)`
                   : this._generateConnectionErrorMessage(requestRetries),
+                // @ts-ignore
                 detail: error,
               })
             );

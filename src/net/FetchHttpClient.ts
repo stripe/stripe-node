@@ -52,7 +52,9 @@ class FetchHttpClient extends HttpClient implements HttpClientInterface {
     const fetchFn = this._fetchFn || fetch;
     const fetchPromise = fetchFn(url.toString(), {
       method,
+      // @ts-ignore
       headers,
+      // @ts-ignore
       body,
     });
 

@@ -13,8 +13,11 @@ type AutoPagingEach = (
   onDone?: IterationDoneCallback
 ) => Promise<void>;
 
+type AutoPagingToArrayOptions = {
+  limit?: number;
+};
 type AutoPagingToArray = (
-  opts: ListOptions,
+  opts: AutoPagingToArrayOptions,
   onDone: IterationDoneCallback
 ) => Promise<Array<any>>;
 
