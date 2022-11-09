@@ -1,7 +1,12 @@
 import makeRequest = require('./makeRequest');
 const utils = require('./utils');
 
-function makeAutoPaginationMethods(self, requestArgs, spec, firstPagePromise) {
+function makeAutoPaginationMethods(
+  self: StripeResourceObject,
+  requestArgs,
+  spec,
+  firstPagePromise
+) {
   const promiseCache = {currentPromise: null};
   const reverseIteration = isReverseIteration(requestArgs);
   let pagePromise = firstPagePromise;

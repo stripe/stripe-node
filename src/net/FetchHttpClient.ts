@@ -9,33 +9,30 @@ const {HttpClient, HttpClientResponse} = _HttpClient;
  * Fetch API. As an example, this could be the function provided by the
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
-class FetchHttpClient extends HttpClient {
-  _fetchFn: (
-    input: RequestInfo | URL,
-    init?: RequestInit | undefined
-  ) => Promise<Response>;
+class FetchHttpClient extends HttpClient implements HttpClientInterface {
+  _fetchFn: typeof fetch;
   _res: Response;
 
-  constructor(fetchFn) {
+  constructor(fetchFn: typeof fetch) {
     super();
     this._fetchFn = fetchFn;
   }
 
   /** @override. */
-  getClientName() {
+  getClientName(): string {
     return 'fetch';
   }
 
   makeRequest(
-    host,
-    port,
-    path,
-    method,
-    headers,
-    requestData,
-    protocol,
-    timeout
-  ) {
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: RequestData,
+    protocol: string,
+    timeout: number
+  ): Promise<HttpClientResponseInterface> {
     const isInsecureConnection = protocol === 'http';
 
     const url = new URL(
@@ -72,7 +69,7 @@ class FetchHttpClient extends HttpClient {
     // to be established followed by 20s for the body, Fetch would timeout but
     // Node would not. The more fine-grained timeout cannot be implemented with
     // fetch.
-    let pendingTimeoutId;
+    let pendingTimeoutId: NodeJS.Timeout;
     const timeoutPromise = new Promise((_, reject) => {
       pendingTimeoutId = setTimeout(() => {
         pendingTimeoutId = null;
@@ -81,7 +78,7 @@ class FetchHttpClient extends HttpClient {
     });
 
     return Promise.race([fetchPromise, timeoutPromise])
-      .then((res) => {
+      .then((res: Response) => {
         return new FetchHttpClientResponse(res);
       })
       .finally(() => {
@@ -92,10 +89,11 @@ class FetchHttpClient extends HttpClient {
   }
 }
 
-class FetchHttpClientResponse extends HttpClientResponse {
+class FetchHttpClientResponse extends HttpClientResponse
+  implements HttpClientResponseInterface {
   _res: Response;
 
-  constructor(res) {
+  constructor(res: Response) {
     super(
       res.status,
       FetchHttpClientResponse._transformHeadersToObject(res.headers)
@@ -103,11 +101,11 @@ class FetchHttpClientResponse extends HttpClientResponse {
     this._res = res;
   }
 
-  getRawResponse() {
+  getRawResponse(): Response {
     return this._res;
   }
 
-  toStream(streamCompleteCallback) {
+  toStream(streamCompleteCallback: () => void): ReadableStream<Uint8Array> {
     // Unfortunately `fetch` does not have event handlers for when the stream is
     // completely read. We therefore invoke the streamCompleteCallback right
     // away. This callback emits a response event with metadata and completes
@@ -119,15 +117,14 @@ class FetchHttpClientResponse extends HttpClientResponse {
     return this._res.body;
   }
 
-  toJSON() {
+  toJSON(): Promise<any> {
     return this._res.json();
   }
 
-  static _transformHeadersToObject(headers) {
+  static _transformHeadersToObject(headers: Headers): ResponseHeaders {
     // Fetch uses a Headers instance so this must be converted to a barebones
     // JS object to meet the HttpClient interface.
-    const headersObj = {};
-
+    const headersObj: ResponseHeaders = {};
     for (const entry of headers) {
       if (!Array.isArray(entry) || entry.length != 2) {
         throw new Error(

@@ -1,28 +1,18 @@
 const utils = require('./utils');
 
-type MethodSpec = {
-  method: string;
-  urlParams: Array<string>;
-  path?: string;
-  fullPath?: string;
-  encode: (data: Record<string, unknown>) => Record<string, unknown>;
-  validator: (
-    data: Record<string, unknown>,
-    headers: Record<string, string>
-  ) => void;
-  headers: Record<string, string>;
-  streaming?: boolean;
-  host?: string;
-};
-
-function getRequestOpts(self, requestArgs, spec: MethodSpec, overrideData) {
+function getRequestOpts(
+  self: StripeResourceObject,
+  requestArgs: RequestArgs,
+  spec: MethodSpec,
+  overrideData: RequestData
+): RequestOpts {
   // Extract spec values with defaults.
   const requestMethod = (spec.method || 'GET').toUpperCase();
   const urlParams = spec.urlParams || [];
-  const encode = spec.encode || ((data) => data);
+  const encode = spec.encode || ((data): RequestData => data);
 
   const isUsingFullPath = !!spec.fullPath;
-  const commandPath = utils.makeURLInterpolator(
+  const commandPath: UrlInterpolator = utils.makeURLInterpolator(
     isUsingFullPath ? spec.fullPath : spec.path || ''
   );
   // When using fullPath, we ignore the resource path as it should already be
@@ -32,23 +22,20 @@ function getRequestOpts(self, requestArgs, spec: MethodSpec, overrideData) {
     : self.createResourcePathWithSymbols(spec.path);
 
   // Don't mutate args externally.
-  const args = [].slice.call(requestArgs);
+  const args: RequestArgs = [].slice.call(requestArgs);
 
   // Generate and validate url params.
-  const urlData = urlParams.reduce<Record<string, unknown>>(
-    (urlData, param) => {
-      const arg = args.shift();
-      if (typeof arg !== 'string') {
-        throw new Error(
-          `Stripe: Argument "${param}" must be a string, but got: ${arg} (on API request to \`${requestMethod} ${path}\`)`
-        );
-      }
+  const urlData = urlParams.reduce<RequestData>((urlData, param) => {
+    const arg = args.shift();
+    if (typeof arg !== 'string') {
+      throw new Error(
+        `Stripe: Argument "${param}" must be a string, but got: ${arg} (on API request to \`${requestMethod} ${path}\`)`
+      );
+    }
 
-      urlData[param] = arg;
-      return urlData;
-    },
-    {}
-  );
+    urlData[param] = arg;
+    return urlData;
+  }, {});
 
   // Pull request data and options (headers, auth) from args.
   const dataFromArgs = utils.getDataFromArgs(args);
@@ -92,9 +79,14 @@ function getRequestOpts(self, requestArgs, spec: MethodSpec, overrideData) {
   };
 }
 
-function makeRequest(self, requestArgs, spec, overrideData) {
-  return new Promise((resolve, reject) => {
-    let opts;
+function makeRequest(
+  self: StripeResourceObject,
+  requestArgs: RequestArgs,
+  spec: MethodSpec,
+  overrideData: RequestData
+): Promise<any> {
+  return new Promise<any>((resolve, reject) => {
+    let opts: RequestOpts;
     try {
       opts = getRequestOpts(self, requestArgs, spec, overrideData);
     } catch (err) {
@@ -102,7 +94,10 @@ function makeRequest(self, requestArgs, spec, overrideData) {
       return;
     }
 
-    function requestCallback(err: any, response) {
+    function requestCallback(
+      err: any,
+      response: HttpClientResponseInterface
+    ): void {
       if (err) {
         reject(err);
       } else {

@@ -2,11 +2,6 @@ import utils = require('./utils');
 import _Error = require('./Error');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 
-type StripeCryptoProvider = {
-  computeHMACSignature: (data: string, secret: string) => string;
-  computeHMACSignatureAsync: (data: string, secret: string) => Promise<string>;
-};
-
 type WebhookPayload = string | Buffer;
 type WebhookHeader = string | Buffer;
 type WebhookParsedHeader = {
@@ -26,6 +21,8 @@ type WebhookTestHeaderOptions = {
   signature: string;
   cryptoProvider: StripeCryptoProvider;
 };
+type WebhookEvent = Record<string, unknown>;
+
 const Webhook = {
   DEFAULT_TOLERANCE: 300, // 5 minutes
   signature: null as typeof signature,
@@ -36,7 +33,7 @@ const Webhook = {
     secret: string,
     tolerance: null,
     cryptoProvider: StripeCryptoProvider
-  ) {
+  ): WebhookEvent {
     this.signature.verifyHeader(
       payload,
       header,
@@ -56,7 +53,7 @@ const Webhook = {
     secret: string,
     tolerance: number,
     cryptoProvider: StripeCryptoProvider
-  ) {
+  ): Promise<WebhookEvent> {
     await this.signature.verifyHeaderAsync(
       payload,
       header,
@@ -81,7 +78,7 @@ const Webhook = {
    * @property {string} signature - Computed webhook signature
    * @property {CryptoProvider} cryptoProvider - Crypto provider to use for computing the signature if none was provided. Defaults to NodeCryptoProvider.
    */
-  generateTestHeaderString: function(opts: WebhookTestHeaderOptions) {
+  generateTestHeaderString: function(opts: WebhookTestHeaderOptions): string {
     if (!opts) {
       throw new StripeError({
         message: 'Options are required',
@@ -119,7 +116,7 @@ const signature = {
     secret: string,
     tolerance: number,
     cryptoProvider: StripeCryptoProvider
-  ) {
+  ): boolean {
     const {
       decodedHeader: header,
       decodedPayload: payload,
@@ -149,7 +146,7 @@ const signature = {
     secret: string,
     tolerance: number,
     cryptoProvider: StripeCryptoProvider
-  ) {
+  ): Promise<boolean> {
     const {
       decodedHeader: header,
       decodedPayload: payload,
@@ -176,7 +173,7 @@ const signature = {
 function makeHMACContent(
   payload: WebhookPayload,
   details: WebhookParsedHeader
-) {
+): string {
   return `${details.timestamp}.${payload}`;
 }
 
@@ -240,7 +237,7 @@ function validateComputedSignature(
   details: WebhookParsedHeader,
   expectedSignature: string,
   tolerance: number
-) {
+): boolean {
   const signatureFound = !!details.signatures.filter(
     utils.secureCompare.bind(utils, expectedSignature)
   ).length;

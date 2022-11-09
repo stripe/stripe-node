@@ -62,7 +62,7 @@ const multipartDataGenerator = (method, data, headers) => {
 const streamProcessor = (
   method: string,
   data: RequestData,
-  headers: HttpHeaders,
+  headers: RequestHeaders,
   callback
 ) => {
   const bufferArray = [];
@@ -91,7 +91,7 @@ const streamProcessor = (
 const multipartRequestDataProcessor = (
   method: string,
   data: RequestData,
-  headers: HttpHeaders,
+  headers: RequestHeaders,
   callback
 ) => {
   data = data || {};

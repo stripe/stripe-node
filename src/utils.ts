@@ -64,7 +64,7 @@ const utils = {
    * Stringifies an Object, accommodating nested objects
    * (forming the conventional key 'parent[child]=value')
    */
-  stringifyRequestData: (data: unknown): string => {
+  stringifyRequestData: (data: RequestData | string): string => {
     return (
       qs
         .stringify(data, {
@@ -84,16 +84,16 @@ const utils = {
    *   const fn = makeURLInterpolator('some/url/{param1}/{param2}');
    *   fn({ param1: 123, param2: 456 }); // => 'some/url/123/456'
    */
-  makeURLInterpolator: (() => {
+  makeURLInterpolator: ((): ((s: string) => UrlInterpolator) => {
     const rc = {
       '\n': '\\n',
       '"': '\\"',
       '\u2028': '\\u2028',
       '\u2029': '\\u2029',
     } as Record<string, string>;
-    return (str: string) => {
+    return (str: string): UrlInterpolator => {
       const cleanString = str.replace(/["\n\r\u2028\u2029]/g, ($0) => rc[$0]);
-      return (outputs: Record<string, undefined>) => {
+      return (outputs: Record<string, undefined>): string => {
         return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) =>
           encodeURIComponent(outputs[$1] || '')
         );
@@ -116,7 +116,7 @@ const utils = {
    * @param {object[]} args
    * @returns {object}
    */
-  getDataFromArgs(args: Array<unknown>): Record<string, unknown> {
+  getDataFromArgs(args: RequestArgs): RequestData {
     if (!Array.isArray(args) || !args[0] || typeof args[0] !== 'object') {
       return {};
     }
@@ -152,7 +152,7 @@ const utils = {
   /**
    * Return the options hash from a list of arguments
    */
-  getOptionsFromArgs: (args: Array<unknown>): Options => {
+  getOptionsFromArgs: (args: RequestArgs): Options => {
     const opts: Options = {
       auth: null,
       headers: {},
@@ -222,12 +222,12 @@ const utils = {
   /**
    * Provide simple "Class" extension mechanism
    */
-  protoExtend(sub: any) {
+  protoExtend(sub: any): (...args: any[]) => void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const Super = this;
     const Constructor = Object.prototype.hasOwnProperty.call(sub, 'constructor')
       ? sub.constructor
-      : function(...args: any[]) {
+      : function(...args: any[]): void {
           Super.apply(this, args);
         };
 
@@ -274,12 +274,12 @@ const utils = {
   /**
    * Remove empty values from an object
    */
-  removeNullish: (obj: Record<string, unknown>): Record<string, unknown> => {
+  removeNullish: <T>(obj: Record<string, T>): Record<string, T> => {
     if (typeof obj !== 'object') {
       throw new Error('Argument must be an object');
     }
 
-    return Object.keys(obj).reduce((result, key) => {
+    return Object.keys(obj).reduce<Record<string, T>>((result, key) => {
       if (obj[key] != null) {
         result[key] = obj[key];
       }
@@ -293,12 +293,12 @@ const utils = {
    * becomes
    * {'Foo-Bar': 'hi'}
    */
-  normalizeHeaders: (obj: Record<string, unknown>): Record<string, unknown> => {
+  normalizeHeaders: (obj: RequestHeaders): RequestHeaders => {
     if (!(obj && typeof obj === 'object')) {
       return obj;
     }
 
-    return Object.keys(obj).reduce((result, header) => {
+    return Object.keys(obj).reduce<RequestHeaders>((result, header) => {
       result[utils.normalizeHeader(header)] = obj[header];
       return result;
     }, {});
@@ -321,7 +321,7 @@ const utils = {
    * Determine if file data is a derivative of EventEmitter class.
    * https://nodejs.org/api/events.html#events_events
    */
-  checkForStream: (obj): boolean => {
+  checkForStream: (obj: {file?: {data: unknown}}): boolean => {
     if (obj.file && obj.file.data) {
       return obj.file.data instanceof EventEmitter;
     }
@@ -398,9 +398,9 @@ const utils = {
   flattenAndStringify: (
     data: Record<string, unknown>
   ): Record<string, unknown> => {
-    const result = {};
+    const result: RequestData = {};
 
-    const step = (obj, prevKey) => {
+    const step = (obj: RequestData, prevKey: string): void => {
       Object.keys(obj).forEach((key) => {
         const value = obj[key];
 
@@ -412,7 +412,7 @@ const utils = {
             !Object.prototype.hasOwnProperty.call(value, 'data')
           ) {
             // Non-buffer non-file Objects are recursively flattened
-            return step(value, newKey);
+            return step(value as RequestData, newKey);
           } else {
             // Buffers and file objects are stored without modification
             result[newKey] = value;
