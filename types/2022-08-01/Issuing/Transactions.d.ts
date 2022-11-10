@@ -162,6 +162,11 @@ declare module 'stripe' {
            * State where the seller is located
            */
           state: string | null;
+
+          /**
+           * URL provided by the merchant on a 3DS request
+           */
+          url?: string | null;
         }
 
         interface NetworkData {

@@ -693,6 +693,25 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+      }
+
+      namespace Discount {
+        interface DiscountEnd {
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: 'timestamp';
+        }
       }
 
       interface FromQuote {
@@ -752,6 +771,25 @@ declare module 'stripe' {
            * ID of an existing discount on the object (or one of its ancestors) to reuse.
            */
           discount?: string;
+
+          /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+        }
+
+        namespace Discount {
+          interface DiscountEnd {
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: 'timestamp';
+          }
         }
 
         interface PriceData {
@@ -877,6 +915,25 @@ declare module 'stripe' {
            * ID of an existing discount on the object (or one of its ancestors) to reuse.
            */
           discount?: string;
+
+          /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+        }
+
+        namespace Discount {
+          interface DiscountEnd {
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: 'timestamp';
+          }
         }
 
         interface InvoiceSettings {
@@ -924,6 +981,25 @@ declare module 'stripe' {
              * ID of an existing discount on the object (or one of its ancestors) to reuse.
              */
             discount?: string;
+
+            /**
+             * Details to determine how long the discount should be applied for.
+             */
+            discount_end?: Discount.DiscountEnd;
+          }
+
+          namespace Discount {
+            interface DiscountEnd {
+              /**
+               * A precise Unix timestamp for the discount to end. Must be in the future.
+               */
+              timestamp?: number;
+
+              /**
+               * The type of calculation made to determine when the discount ends.
+               */
+              type: 'timestamp';
+            }
           }
 
           interface PriceData {
@@ -1203,6 +1279,25 @@ declare module 'stripe' {
          * ID of an existing discount on the object (or one of its ancestors) to reuse.
          */
         discount?: string;
+
+        /**
+         * Details to determine how long the discount should be applied for.
+         */
+        discount_end?: Discount.DiscountEnd;
+      }
+
+      namespace Discount {
+        interface DiscountEnd {
+          /**
+           * A precise Unix timestamp for the discount to end. Must be in the future.
+           */
+          timestamp?: number;
+
+          /**
+           * The type of calculation made to determine when the discount ends.
+           */
+          type: 'timestamp';
+        }
       }
 
       interface InvoiceSettings {
@@ -1255,6 +1350,25 @@ declare module 'stripe' {
            * ID of an existing discount on the object (or one of its ancestors) to reuse.
            */
           discount?: string;
+
+          /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+        }
+
+        namespace Discount {
+          interface DiscountEnd {
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: 'timestamp';
+          }
         }
 
         interface PriceData {
@@ -1380,6 +1494,25 @@ declare module 'stripe' {
            * ID of an existing discount on the object (or one of its ancestors) to reuse.
            */
           discount?: string;
+
+          /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd;
+        }
+
+        namespace Discount {
+          interface DiscountEnd {
+            /**
+             * A precise Unix timestamp for the discount to end. Must be in the future.
+             */
+            timestamp?: number;
+
+            /**
+             * The type of calculation made to determine when the discount ends.
+             */
+            type: 'timestamp';
+          }
         }
 
         interface InvoiceSettings {
@@ -1427,6 +1560,25 @@ declare module 'stripe' {
              * ID of an existing discount on the object (or one of its ancestors) to reuse.
              */
             discount?: string;
+
+            /**
+             * Details to determine how long the discount should be applied for.
+             */
+            discount_end?: Discount.DiscountEnd;
+          }
+
+          namespace Discount {
+            interface DiscountEnd {
+              /**
+               * A precise Unix timestamp for the discount to end. Must be in the future.
+               */
+              timestamp?: number;
+
+              /**
+               * The type of calculation made to determine when the discount ends.
+               */
+              type: 'timestamp';
+            }
           }
 
           interface PriceData {

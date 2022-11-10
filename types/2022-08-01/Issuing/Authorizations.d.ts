@@ -181,6 +181,11 @@ declare module 'stripe' {
            * State where the seller is located
            */
           state: string | null;
+
+          /**
+           * URL provided by the merchant on a 3DS request
+           */
+          url?: string | null;
         }
 
         interface NetworkData {
@@ -342,6 +347,11 @@ declare module 'stripe' {
            * Whether the cardholder provided an expiry date and if it matched Stripe's record.
            */
           expiry_check: VerificationData.ExpiryCheck;
+
+          /**
+           * 3D Secure details.
+           */
+          three_d_secure?: VerificationData.ThreeDSecure | null;
         }
 
         namespace VerificationData {
@@ -352,6 +362,21 @@ declare module 'stripe' {
           type CvcCheck = 'match' | 'mismatch' | 'not_provided';
 
           type ExpiryCheck = 'match' | 'mismatch' | 'not_provided';
+
+          interface ThreeDSecure {
+            /**
+             * The outcome of the 3D Secure authentication request.
+             */
+            result: ThreeDSecure.Result;
+          }
+
+          namespace ThreeDSecure {
+            type Result =
+              | 'attempt_acknowledged'
+              | 'authenticated'
+              | 'failed'
+              | 'required';
+          }
         }
       }
 
