@@ -25,7 +25,11 @@ const MAX_RETRY_AFTER_WAIT = 60;
 /**
  * Encapsulates request logic for a Stripe Resource
  */
-function StripeResource(stripe: StripeObject, deprecatedUrlData?: never): void {
+function StripeResource(
+  this: StripeResourceObject,
+  stripe: StripeObject,
+  deprecatedUrlData?: never
+): void {
   this._stripe = stripe;
   if (deprecatedUrlData) {
     throw new Error(
@@ -34,18 +38,13 @@ function StripeResource(stripe: StripeObject, deprecatedUrlData?: never): void {
   }
 
   this.basePath = utils.makeURLInterpolator(
+    // @ts-ignore changing type of basePath
     this.basePath || stripe.getApiField('basePath')
   );
+  // @ts-ignore changing type of path
   this.resourcePath = this.path;
+  // @ts-ignore changing type of path
   this.path = utils.makeURLInterpolator(this.path);
-
-  // DEPRECATED: This was kept for backwards compatibility in case users were
-  // using this, but basic methods are now explicitly defined on a resource.
-  if (this.includeBasic) {
-    this.includeBasic.forEach(function(methodName: string) {
-      this[methodName] = StripeResource.BASIC_METHODS[methodName];
-    }, this);
-  }
 
   this.initialize(...arguments);
 }

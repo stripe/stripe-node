@@ -7,6 +7,7 @@
     "checkJs": false,
     "alwaysStrict": true,
     "noImplicitAny": true,
+    "noImplicitThis": true
   },
   "include": ["./src/**/*"]
 }

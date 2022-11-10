@@ -222,12 +222,13 @@ const utils = {
   /**
    * Provide simple "Class" extension mechanism
    */
-  protoExtend(sub: any): (...args: any[]) => void {
+  protoExtend(this: StripeResourceObject, sub: any): (...args: any[]) => void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const Super = this;
     const Constructor = Object.prototype.hasOwnProperty.call(sub, 'constructor')
       ? sub.constructor
-      : function(...args: any[]): void {
+      : function(this: StripeResourceObject, ...args: any[]): void {
+          // @ts-ignore
           Super.apply(this, args);
         };
 

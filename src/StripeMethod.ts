@@ -25,7 +25,7 @@ function stripeMethod(spec: MethodSpec): (...args: any[]) => Promise<any> {
       `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`
     );
   }
-  return function(...args: any[]): Promise<any> {
+  return function(this: StripeResourceObject, ...args: any[]): Promise<any> {
     const callback = typeof args[args.length - 1] == 'function' && args.pop();
 
     spec.urlParams = utils.extractUrlParams(

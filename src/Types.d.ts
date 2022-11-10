@@ -31,6 +31,10 @@ type StripeObject = {
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
 };
 type StripeResourceObject = {
+  _stripe: StripeObject;
+  basePath: UrlInterpolator;
+  path: UrlInterpolator;
+  resourcePath: string;
   createResourcePathWithSymbols: (path: string) => string;
   createFullPath: (
     interpolator: UrlInterpolator,
@@ -45,6 +49,8 @@ type StripeResourceObject = {
     options: RequestOptions,
     callback: RequestCallback
   ) => void;
+  initialize: (...args: Array<any>) => void;
+  prototype: StripeResourceObject;
 };
 type RequestCallbackReturn = any;
 type RequestCallback = (
