@@ -8,7 +8,7 @@
     "alwaysStrict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strict": true
+    "strict": true,
   },
   "include": ["./src/**/*"]
 }
