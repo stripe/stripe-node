@@ -110,7 +110,7 @@ declare module 'stripe' {
         amount_off: number;
       }
 
-      type Duration = 'forever' | 'once' | 'repeating';
+      type Duration = 'forever' | 'once' | 'repeating' | 'variable';
     }
 
     /**
@@ -217,7 +217,7 @@ declare module 'stripe' {
         amount_off: number;
       }
 
-      type Duration = 'forever' | 'once' | 'repeating';
+      type Duration = 'forever' | 'once' | 'repeating' | 'variable';
     }
 
     interface CouponRetrieveParams {
