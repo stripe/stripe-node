@@ -2560,11 +2560,6 @@ declare module 'stripe' {
              * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
-
-            /**
-             * Confirm that the payer has accepted the P24 terms and conditions.
-             */
-            tos_shown_and_accepted?: boolean;
           }
 
           interface Pix {
