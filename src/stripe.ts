@@ -5,7 +5,7 @@ const resources = require('./resources');
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
-const DEFAULT_API_VERSION = null as string;
+const DEFAULT_API_VERSION = (null as unknown) as string;
 
 const DEFAULT_TIMEOUT = 80000;
 
@@ -24,7 +24,7 @@ Stripe.USER_AGENT = {
 };
 
 /** @private */
-Stripe._UNAME_CACHE = null as Promise<string>;
+Stripe._UNAME_CACHE = null as Promise<string> | null;
 
 const MAX_NETWORK_RETRY_DELAY_SEC = 2;
 const INITIAL_NETWORK_RETRY_DELAY_SEC = 0.5;
@@ -58,7 +58,11 @@ Stripe.HttpClientResponse = HttpClientResponse;
 const CryptoProvider = require('./crypto/CryptoProvider');
 Stripe.CryptoProvider = CryptoProvider;
 
-function Stripe(this: StripeObject, key: string, config = {}): void {
+function Stripe(
+  this: StripeObject,
+  key: string,
+  config: Record<string, unknown> = {}
+): void {
   if (!(this instanceof Stripe)) {
     return new (Stripe as any)(key, config);
   }
@@ -330,7 +334,7 @@ Stripe.prototype = {
 
     info = info || {};
 
-    this._appInfo = APP_INFO_PROPERTIES.reduce(
+    this._appInfo = APP_INFO_PROPERTIES.reduce<Record<string, any>>(
       (accum: Record<string, any>, prop) => {
         if (typeof info[prop] == 'string') {
           accum = accum || {};
@@ -340,6 +344,7 @@ Stripe.prototype = {
 
         return accum;
       },
+      // @ts-ignore
       undefined
     );
   },

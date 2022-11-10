@@ -12,16 +12,6 @@ const {
 
 const {HttpClient} = require('./net/HttpClient');
 
-// Provide extension mechanism for Stripe Resource Sub-Classes
-StripeResource.extend = utils.protoExtend;
-
-// Expose method-creator & prepared (basic) methods
-StripeResource.method = require('./StripeMethod');
-StripeResource.BASIC_METHODS = require('./StripeMethod.basic');
-
-StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;
-const MAX_RETRY_AFTER_WAIT = 60;
-
 /**
  * Encapsulates request logic for a Stripe Resource
  */
@@ -48,9 +38,18 @@ function StripeResource(
 
   this.initialize(...arguments);
 }
+// Provide extension mechanism for Stripe Resource Sub-Classes
+StripeResource.extend = utils.protoExtend;
+
+// Expose method-creator & prepared (basic) methods
+StripeResource.method = require('./StripeMethod');
+StripeResource.BASIC_METHODS = require('./StripeMethod.basic');
+
+StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;
+const MAX_RETRY_AFTER_WAIT = 60;
 
 StripeResource.prototype = {
-  _stripe: null as StripeObject,
+  _stripe: null as StripeObject | null,
   path: '',
 
   // Methods that don't use the API's default '/v1' path can override it with this setting.
@@ -92,7 +91,7 @@ StripeResource.prototype = {
   // Creates a relative resource path with symbols left in (unlike
   // createFullPath which takes some data to replace them with). For example it
   // might produce: /invoices/{id}
-  createResourcePathWithSymbols(pathWithSymbols: string): string {
+  createResourcePathWithSymbols(pathWithSymbols: string | null): string {
     // If there is no path beyond the resource path, we want to produce just
     // /<resource path> rather than /<resource path>/.
     if (pathWithSymbols) {
@@ -387,8 +386,8 @@ StripeResource.prototype = {
     sleepSeconds = Math.max(initialNetworkRetryDelay, sleepSeconds);
 
     // And never sleep less than the time the API asks us to wait, assuming it's a reasonable ask.
-    if (Number.isInteger(retryAfter) && retryAfter <= MAX_RETRY_AFTER_WAIT) {
-      sleepSeconds = Math.max(sleepSeconds, retryAfter);
+    if (Number.isInteger(retryAfter) && retryAfter! <= MAX_RETRY_AFTER_WAIT) {
+      sleepSeconds = Math.max(sleepSeconds, retryAfter!);
     }
 
     return sleepSeconds * 1000;
@@ -402,7 +401,10 @@ StripeResource.prototype = {
       : this._stripe.getMaxNetworkRetries();
   },
 
-  _defaultIdempotencyKey(method: string, settings: RequestSettings): string {
+  _defaultIdempotencyKey(
+    method: string,
+    settings: RequestSettings
+  ): string | null {
     // If this is a POST and we allow multiple retries, ensure an idempotency key.
     const maxRetries = this._getMaxNetworkRetries(settings);
 
@@ -481,7 +483,7 @@ StripeResource.prototype = {
     return `Stripe/v1 NodeBindings/${packageVersion} ${appInfo}`.trim();
   },
 
-  _getTelemetryHeader(): string {
+  _getTelemetryHeader(): string | undefined {
     if (
       this._stripe.getTelemetryEnabled() &&
       this._stripe._prevRequestMetrics.length > 0
@@ -567,6 +569,7 @@ StripeResource.prototype = {
 
       const requestStartTime = Date.now();
 
+      // @ts-ignore
       const requestEvent: RequestEvent = utils.removeNullish({
         api_version: apiVersion,
         account: headers['Stripe-Account'],
@@ -626,7 +629,7 @@ StripeResource.prototype = {
         });
     };
 
-    const prepareAndMakeRequest = (error: Error, data: string): void => {
+    const prepareAndMakeRequest = (error: Error | null, data: string): void => {
       if (error) {
         return callback(error);
       }

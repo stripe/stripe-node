@@ -5,8 +5,8 @@ const {StripeError} = _Error;
 class StreamProcessingError extends StripeError {}
 type MultipartCallbackReturn = any;
 type MultipartCallback = (
-  error: Error,
-  data: Buffer | string
+  error: Error | null,
+  data: Buffer | string | null
 ) => MultipartCallbackReturn;
 // Method for formatting HTTP body for the multipart/form-data specification
 // Mostly taken from Fermata.js

@@ -2,7 +2,6 @@ import utils = require('./utils');
 import _Error = require('./Error');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 
-type WebhookPayload = string | Buffer;
 type WebhookHeader = string | Buffer;
 type WebhookParsedHeader = {
   signatures: Array<string>;
@@ -21,12 +20,49 @@ type WebhookTestHeaderOptions = {
   signature: string;
   cryptoProvider: StripeCryptoProvider;
 };
+
 type WebhookEvent = Record<string, unknown>;
+type WebhookPayload = string | Buffer;
+type WebhookSignatureObject = {
+  verifyHeader: (
+    encodedPayload: WebhookPayload,
+    encodedHeader: WebhookHeader,
+    secret: string,
+    tolerance: number,
+    cryptoProvider: StripeCryptoProvider
+  ) => boolean;
+  verifyHeaderAsync: (
+    encodedPayload: WebhookPayload,
+    encodedHeader: WebhookHeader,
+    secret: string,
+    tolerance: number,
+    cryptoProvider: StripeCryptoProvider
+  ) => Promise<boolean>;
+};
+type WebhookObject = {
+  DEFAULT_TOLERANCE: number;
+  signature: WebhookSignatureObject;
+  constructEvent: (
+    payload: WebhookPayload,
+    header: WebhookHeader,
+    secret: string,
+    tolerance: null,
+    cryptoProvider: StripeCryptoProvider
+  ) => WebhookEvent;
+  constructEventAsync: (
+    payload: WebhookPayload,
+    header: WebhookHeader,
+    secret: string,
+    tolerance: number,
+    cryptoProvider: StripeCryptoProvider
+  ) => Promise<WebhookEvent>;
+  generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
+};
 
-const Webhook = {
+const Webhook: WebhookObject = {
   DEFAULT_TOLERANCE: 300, // 5 minutes
-  signature: null as typeof signature,
-
+  // @ts-ignore
+  signature: null,
   constructEvent(
     payload: WebhookPayload,
     header: WebhookHeader,
@@ -239,6 +275,7 @@ function validateComputedSignature(
   tolerance: number
 ): boolean {
   const signatureFound = !!details.signatures.filter(
+    // @ts-ignore
     utils.secureCompare.bind(utils, expectedSignature)
   ).length;
 
@@ -272,12 +309,15 @@ function validateComputedSignature(
   return true;
 }
 
-function parseHeader(header: string, scheme: string): WebhookParsedHeader {
+function parseHeader(
+  header: string,
+  scheme: string
+): WebhookParsedHeader | null {
   if (typeof header !== 'string') {
     return null;
   }
 
-  return header.split(',').reduce(
+  return header.split(',').reduce<WebhookParsedHeader>(
     (accum, item) => {
       const kv = item.split('=');
 
@@ -298,7 +338,7 @@ function parseHeader(header: string, scheme: string): WebhookParsedHeader {
   );
 }
 
-let webhooksNodeCryptoProviderInstance = null as StripeCryptoProvider;
+let webhooksNodeCryptoProviderInstance: StripeCryptoProvider | null = null;
 
 /**
  * Lazily instantiate a NodeCryptoProvider instance. This is a stateless object
@@ -309,7 +349,7 @@ function getNodeCryptoProvider(): StripeCryptoProvider {
     const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
     webhooksNodeCryptoProviderInstance = new NodeCryptoProvider();
   }
-  return webhooksNodeCryptoProviderInstance;
+  return webhooksNodeCryptoProviderInstance!;
 }
 
 Webhook.signature = signature;

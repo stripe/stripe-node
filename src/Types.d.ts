@@ -4,7 +4,7 @@ type StripeObject = {
   off: any;
   once: any;
   VERSION: string;
-  StripeResource: StripeResourceObject;
+  StripeResource: typeof StripeResource;
   errors: any;
   webhooks: any;
   getApiField: <T = string>(name: string) => T;
@@ -13,7 +13,7 @@ type StripeObject = {
   _setApiKey: (apiKey: string) => void;
   _prevRequestMetrics: number[];
   _api: {
-    auth: string;
+    auth: string | null;
     host: string;
     port: string | number;
     protocol: string;
@@ -24,7 +24,7 @@ type StripeObject = {
     agent: string;
     httpClient: any;
     dev: boolean;
-    stripeAccount: string;
+    stripeAccount: string | null;
   };
   _emitter: import('events').EventEmitter;
   _enableTelemetry: boolean;
@@ -35,7 +35,7 @@ type StripeResourceObject = {
   basePath: UrlInterpolator;
   path: UrlInterpolator;
   resourcePath: string;
-  createResourcePathWithSymbols: (path: string) => string;
+  createResourcePathWithSymbols: (path: string | null | undefined) => string;
   createFullPath: (
     interpolator: UrlInterpolator,
     urlData: RequestData
@@ -50,12 +50,11 @@ type StripeResourceObject = {
     callback: RequestCallback
   ) => void;
   initialize: (...args: Array<any>) => void;
-  prototype: StripeResourceObject;
 };
 type RequestCallbackReturn = any;
 type RequestCallback = (
   this: StripeResourceObject | void,
-  error: Error,
+  error: Error | null,
   response?: any
 ) => RequestCallbackReturn;
 
@@ -65,7 +64,7 @@ type RequestEvent = {
   idempotency_key?: string;
   method?: string;
   path?: string;
-  request_start_time?: number;
+  request_start_time: number;
 };
 
 type ResponseEvent = {
@@ -173,6 +172,9 @@ interface HttpClientInterface {
     timeout: number
   ) => Promise<HttpClientResponseInterface>;
 }
+type HttpClientResponseError = {
+  code: number;
+};
 type ResponseHeaderValue = string | string[];
 type ResponseHeaders = Record<string, ResponseHeaderValue>;
 interface HttpClientResponseInterface {
@@ -212,15 +214,13 @@ type StripeRawError = {
   source?: any;
   exception?: any;
 };
-type IterationDoneCallback = () => void;
-type IterationItemCallback = (
-  item: any,
-  next: any
-) => void | boolean | Promise<void | boolean>;
-type ListResult = {
-  data: Array<any>;
-  has_more: boolean;
+
+type StripeResourceConstructor = {
+  new (stripe: StripeObject, deprecatedUrlData?: never): StripeResourceObject;
 };
-type HttpClientResponseError = {
-  code: number;
+declare const StripeResource: StripeResourceConstructor;
+
+type StripeConstructor = {
+  new (key: string, config: Record<string, unknown>): StripeObject;
 };
+declare const Stripe: StripeConstructor;

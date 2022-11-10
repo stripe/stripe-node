@@ -9,6 +9,7 @@ let exec = null;
 try {
   exec = require('child_process').exec;
 } catch (e) {
+  // @ts-ignore
   if (e.code !== 'MODULE_NOT_FOUND') {
     throw e;
   }
@@ -39,15 +40,15 @@ type Settings = {
 };
 
 type Options = {
-  auth?: string;
+  auth?: string | null;
   host?: string;
-  settings?: Settings;
+  settings: Settings;
   streaming?: boolean;
-  headers?: Record<string, unknown>;
+  headers: Record<string, unknown>;
 };
 
 const utils = {
-  isOptionsHash(o: unknown): boolean {
+  isOptionsHash(o: unknown): boolean | unknown {
     return (
       o &&
       typeof o === 'object' &&
@@ -93,8 +94,9 @@ const utils = {
     } as Record<string, string>;
     return (str: string): UrlInterpolator => {
       const cleanString = str.replace(/["\n\r\u2028\u2029]/g, ($0) => rc[$0]);
-      return (outputs: Record<string, undefined>): string => {
+      return (outputs: Record<string, unknown>): string => {
         return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) =>
+          // @ts-ignore
           encodeURIComponent(outputs[$1] || '')
         );
       };
@@ -222,13 +224,12 @@ const utils = {
   /**
    * Provide simple "Class" extension mechanism
    */
-  protoExtend(this: StripeResourceObject, sub: any): (...args: any[]) => void {
+  protoExtend(this: any, sub: any): (...args: any[]) => void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const Super = this;
     const Constructor = Object.prototype.hasOwnProperty.call(sub, 'constructor')
       ? sub.constructor
       : function(this: StripeResourceObject, ...args: any[]): void {
-          // @ts-ignore
           Super.apply(this, args);
         };
 
@@ -331,7 +332,7 @@ const utils = {
 
   callbackifyPromiseWithTimeout: <T>(
     promise: Promise<T>,
-    callback: (error: unknown, result: T) => void
+    callback: (error: unknown, result: T | null) => void
   ): Promise<T | void> => {
     if (callback) {
       // Ensure callback is called outside of promise stack.
@@ -372,7 +373,10 @@ const utils = {
    *
    * This unifies that interface.
    */
-  safeExec: (cmd: string, cb: (error: Error, stdout: string) => void): void => {
+  safeExec: (
+    cmd: string,
+    cb: (error: unknown, stdout: string | null) => void
+  ): void => {
     // Occurs if we couldn't load the `child_process` module, which might
     // happen in certain sandboxed environments like a CloudFlare Worker.
     if (utils._exec === null) {
@@ -401,7 +405,7 @@ const utils = {
   ): Record<string, unknown> => {
     const result: RequestData = {};
 
-    const step = (obj: RequestData, prevKey: string): void => {
+    const step = (obj: RequestData, prevKey: string | null): void => {
       Object.keys(obj).forEach((key) => {
         const value = obj[key];
 

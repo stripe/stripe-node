@@ -11,7 +11,6 @@ const {HttpClient, HttpClientResponse} = _HttpClient;
  */
 class FetchHttpClient extends HttpClient implements HttpClientInterface {
   _fetchFn: typeof fetch;
-  _res: Response;
 
   constructor(fetchFn: typeof fetch) {
     super();
@@ -71,7 +70,7 @@ class FetchHttpClient extends HttpClient implements HttpClientInterface {
     // to be established followed by 20s for the body, Fetch would timeout but
     // Node would not. The more fine-grained timeout cannot be implemented with
     // fetch.
-    let pendingTimeoutId: NodeJS.Timeout;
+    let pendingTimeoutId: NodeJS.Timeout | null;
     const timeoutPromise = new Promise((_, reject) => {
       pendingTimeoutId = setTimeout(() => {
         pendingTimeoutId = null;
@@ -80,8 +79,8 @@ class FetchHttpClient extends HttpClient implements HttpClientInterface {
     });
 
     return Promise.race([fetchPromise, timeoutPromise])
-      .then((res: Response) => {
-        return new FetchHttpClientResponse(res);
+      .then((res) => {
+        return new FetchHttpClientResponse(res as Response);
       })
       .finally(() => {
         if (pendingTimeoutId) {
@@ -107,7 +106,9 @@ class FetchHttpClientResponse extends HttpClientResponse
     return this._res;
   }
 
-  toStream(streamCompleteCallback: () => void): ReadableStream<Uint8Array> {
+  toStream(
+    streamCompleteCallback: () => void
+  ): ReadableStream<Uint8Array> | null {
     // Unfortunately `fetch` does not have event handlers for when the stream is
     // completely read. We therefore invoke the streamCompleteCallback right
     // away. This callback emits a response event with metadata and completes

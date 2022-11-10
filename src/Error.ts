@@ -7,9 +7,9 @@ class StripeError extends Error {
   readonly message: string;
   readonly type: string;
   readonly raw: unknown;
-  readonly rawType: RawErrorType;
-  readonly headers: {[header: string]: string};
-  readonly requestId: string;
+  readonly rawType?: RawErrorType;
+  readonly headers?: {[header: string]: string};
+  readonly requestId?: string;
 
   readonly code?: string;
   readonly doc_url?: string;
@@ -38,6 +38,7 @@ class StripeError extends Error {
     this.headers = raw.headers;
     this.requestId = raw.requestId;
     this.statusCode = raw.statusCode;
+    // @ts-ignore
     this.message = raw.message;
 
     this.charge = raw.charge;

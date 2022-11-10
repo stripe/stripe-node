@@ -93,6 +93,7 @@ class NodeHttpClientResponse extends HttpClientResponse
   _res: http.IncomingMessage;
 
   constructor(res: http.IncomingMessage) {
+    // @ts-ignore
     super(res.statusCode, res.headers || {});
     this._res = res;
   }

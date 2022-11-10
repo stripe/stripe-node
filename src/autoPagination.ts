@@ -2,11 +2,21 @@ import makeRequest = require('./makeRequest');
 const utils = require('./utils');
 
 type PromiseCache = {
-  currentPromise: Promise<any>;
+  currentPromise: Promise<any> | undefined | null;
 };
 type IterationResult = {
   done: boolean;
   value?: any;
+};
+type IterationDoneCallback = () => void;
+type IterationItemCallback = (
+  item: any,
+  next: any
+) => void | boolean | Promise<void | boolean>;
+type ListResult = {
+  data: Array<any>;
+  // eslint-disable-next-line camelcase
+  has_more: boolean;
 };
 type AutoPagingEach = (
   onItem: IterationItemCallback,
@@ -144,7 +154,7 @@ function getAsyncIteratorSymbol(): symbol | string {
   return '@@asyncIterator';
 }
 
-function getDoneCallback(args: Array<any>): IterationDoneCallback {
+function getDoneCallback(args: Array<any>): IterationDoneCallback | undefined {
   if (args.length < 2) {
     return undefined;
   }
@@ -168,7 +178,7 @@ function getDoneCallback(args: Array<any>): IterationDoneCallback {
  * In addition to standard validation, this helper
  * coalesces the former forms into the latter form.
  */
-function getItemCallback(args: Array<any>): IterationItemCallback {
+function getItemCallback(args: Array<any>): IterationItemCallback | undefined {
   if (args.length === 0) {
     return undefined;
   }
@@ -244,6 +254,7 @@ function makeAutoPagingEach(
 
     const autoPagePromise = wrapAsyncIteratorWithCallback(
       asyncIteratorNext,
+      // @ts-ignore we might need a null check
       onItem
     );
     return utils.callbackifyPromiseWithTimeout(autoPagePromise, onDone);
@@ -290,7 +301,7 @@ function wrapAsyncIteratorWithCallback(
   onItem: IterationItemCallback
 ): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    function handleIteration(iterResult: IterationResult): Promise<any> {
+    function handleIteration(iterResult: IterationResult): Promise<any> | void {
       if (iterResult.done) {
         resolve();
         return;
