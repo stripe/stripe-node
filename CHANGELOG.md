@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.18.0-beta.1 - 2022-11-10
+* [#1616](https://github.com/stripe/stripe-node/pull/1616) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add `discount_end` to `Discount`.
+  * Add `url` to `MerchantData`.
+
 ## 10.17.0 - 2022-11-08
 * [#1610](https://github.com/stripe/stripe-node/pull/1610) API Updates
   * Add support for new values `eg_tin`, `ph_tin`, and `tr_tin` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, `Order.tax_details.tax_ids[].type`, and `TaxId.type`
