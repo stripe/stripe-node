@@ -9,6 +9,7 @@ let exec = null;
 try {
   exec = require('child_process').exec;
 } catch (e) {
+  // @ts-ignore
   if (e.code !== 'MODULE_NOT_FOUND') {
     throw e;
   }
@@ -30,7 +31,7 @@ const DEPRECATED_OPTIONS = {
   stripe_account: 'stripeAccount',
   stripe_version: 'apiVersion',
   stripeVersion: 'apiVersion',
-};
+} as Record<string, string>;
 const DEPRECATED_OPTIONS_KEYS = Object.keys(DEPRECATED_OPTIONS);
 
 type Settings = {
@@ -39,15 +40,15 @@ type Settings = {
 };
 
 type Options = {
-  auth?: string;
+  auth?: string | null;
   host?: string;
-  settings?: Settings;
+  settings: Settings;
   streaming?: boolean;
-  headers?: Record<string, string>;
+  headers: Record<string, unknown>;
 };
 
 const utils = {
-  isOptionsHash(o) {
+  isOptionsHash(o: unknown): boolean | unknown {
     return (
       o &&
       typeof o === 'object' &&
@@ -64,11 +65,11 @@ const utils = {
    * Stringifies an Object, accommodating nested objects
    * (forming the conventional key 'parent[child]=value')
    */
-  stringifyRequestData: (data) => {
+  stringifyRequestData: (data: RequestData | string): string => {
     return (
       qs
         .stringify(data, {
-          serializeDate: (d) => Math.floor(d.getTime() / 1000),
+          serializeDate: (d: Date) => Math.floor(d.getTime() / 1000),
         })
         // Don't use strict form encoding by changing the square bracket control
         // characters back to their literals. This is fine by the server, and
@@ -84,24 +85,25 @@ const utils = {
    *   const fn = makeURLInterpolator('some/url/{param1}/{param2}');
    *   fn({ param1: 123, param2: 456 }); // => 'some/url/123/456'
    */
-  makeURLInterpolator: (() => {
+  makeURLInterpolator: ((): ((s: string) => UrlInterpolator) => {
     const rc = {
       '\n': '\\n',
       '"': '\\"',
       '\u2028': '\\u2028',
       '\u2029': '\\u2029',
-    };
-    return (str) => {
+    } as Record<string, string>;
+    return (str: string): UrlInterpolator => {
       const cleanString = str.replace(/["\n\r\u2028\u2029]/g, ($0) => rc[$0]);
-      return (outputs) => {
+      return (outputs: Record<string, unknown>): string => {
         return cleanString.replace(/\{([\s\S]+?)\}/g, ($0, $1) =>
+          // @ts-ignore
           encodeURIComponent(outputs[$1] || '')
         );
       };
     };
   })(),
 
-  extractUrlParams: (path) => {
+  extractUrlParams: (path: string): Array<string> => {
     const params = path.match(/\{\w+\}/g);
     if (!params) {
       return [];
@@ -116,7 +118,7 @@ const utils = {
    * @param {object[]} args
    * @returns {object}
    */
-  getDataFromArgs(args) {
+  getDataFromArgs(args: RequestArgs): RequestData {
     if (!Array.isArray(args) || !args[0] || typeof args[0] !== 'object') {
       return {};
     }
@@ -152,7 +154,7 @@ const utils = {
   /**
    * Return the options hash from a list of arguments
    */
-  getOptionsFromArgs: (args) => {
+  getOptionsFromArgs: (args: RequestArgs): Options => {
     const opts: Options = {
       auth: null,
       headers: {},
@@ -161,9 +163,9 @@ const utils = {
     if (args.length > 0) {
       const arg = args[args.length - 1];
       if (typeof arg === 'string') {
-        opts.auth = args.pop();
+        opts.auth = args.pop() as string;
       } else if (utils.isOptionsHash(arg)) {
-        const params = {...args.pop()};
+        const params = {...(args.pop() as Record<string, unknown>)};
 
         const extraKeys = Object.keys(params).filter(
           (key) => !OPTIONS_KEYS.includes(key)
@@ -194,7 +196,7 @@ const utils = {
         }
 
         if (params.apiKey) {
-          opts.auth = params.apiKey;
+          opts.auth = params.apiKey as string;
         }
         if (params.idempotencyKey) {
           opts.headers['Idempotency-Key'] = params.idempotencyKey;
@@ -206,13 +208,13 @@ const utils = {
           opts.headers['Stripe-Version'] = params.apiVersion;
         }
         if (Number.isInteger(params.maxNetworkRetries)) {
-          opts.settings.maxNetworkRetries = params.maxNetworkRetries;
+          opts.settings.maxNetworkRetries = params.maxNetworkRetries as number;
         }
         if (Number.isInteger(params.timeout)) {
-          opts.settings.timeout = params.timeout;
+          opts.settings.timeout = params.timeout as number;
         }
         if (params.host) {
-          opts.host = params.host;
+          opts.host = params.host as string;
         }
       }
     }
@@ -222,12 +224,12 @@ const utils = {
   /**
    * Provide simple "Class" extension mechanism
    */
-  protoExtend(sub) {
+  protoExtend(this: any, sub: any): (...args: any[]) => void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const Super = this;
     const Constructor = Object.prototype.hasOwnProperty.call(sub, 'constructor')
       ? sub.constructor
-      : function(...args) {
+      : function(this: StripeResourceObject, ...args: any[]): void {
           Super.apply(this, args);
         };
 
@@ -246,7 +248,7 @@ const utils = {
   /**
    * Secure compare, from https://github.com/freewil/scmp
    */
-  secureCompare: (a, b) => {
+  secureCompare: (a: Uint8Array, b: Uint8Array): boolean => {
     a = Buffer.from(a);
     b = Buffer.from(b);
 
@@ -274,12 +276,12 @@ const utils = {
   /**
    * Remove empty values from an object
    */
-  removeNullish: (obj) => {
+  removeNullish: <T>(obj: Record<string, T>): Record<string, T> => {
     if (typeof obj !== 'object') {
       throw new Error('Argument must be an object');
     }
 
-    return Object.keys(obj).reduce((result, key) => {
+    return Object.keys(obj).reduce<Record<string, T>>((result, key) => {
       if (obj[key] != null) {
         result[key] = obj[key];
       }
@@ -293,12 +295,12 @@ const utils = {
    * becomes
    * {'Foo-Bar': 'hi'}
    */
-  normalizeHeaders: (obj) => {
+  normalizeHeaders: (obj: RequestHeaders): RequestHeaders => {
     if (!(obj && typeof obj === 'object')) {
       return obj;
     }
 
-    return Object.keys(obj).reduce((result, header) => {
+    return Object.keys(obj).reduce<RequestHeaders>((result, header) => {
       result[utils.normalizeHeader(header)] = obj[header];
       return result;
     }, {});
@@ -308,7 +310,7 @@ const utils = {
    * Stolen from https://github.com/marten-de-vries/header-case-normalizer/blob/master/index.js#L36-L41
    * without the exceptions which are irrelevant to us.
    */
-  normalizeHeader: (header) => {
+  normalizeHeader: (header: string): string => {
     return header
       .split('-')
       .map(
@@ -321,14 +323,17 @@ const utils = {
    * Determine if file data is a derivative of EventEmitter class.
    * https://nodejs.org/api/events.html#events_events
    */
-  checkForStream: (obj) => {
+  checkForStream: (obj: {file?: {data: unknown}}): boolean => {
     if (obj.file && obj.file.data) {
       return obj.file.data instanceof EventEmitter;
     }
     return false;
   },
 
-  callbackifyPromiseWithTimeout: (promise, callback) => {
+  callbackifyPromiseWithTimeout: <T>(
+    promise: Promise<T>,
+    callback: (error: unknown, result: T | null) => void
+  ): Promise<T | void> => {
     if (callback) {
       // Ensure callback is called outside of promise stack.
       return promise.then(
@@ -351,7 +356,7 @@ const utils = {
   /**
    * Allow for special capitalization cases (such as OAuth)
    */
-  pascalToCamelCase: (name) => {
+  pascalToCamelCase: (name: string): string => {
     if (name === 'OAuth') {
       return 'oauth';
     } else {
@@ -368,7 +373,10 @@ const utils = {
    *
    * This unifies that interface.
    */
-  safeExec: (cmd, cb) => {
+  safeExec: (
+    cmd: string,
+    cb: (error: unknown, stdout: string | null) => void
+  ): void => {
     // Occurs if we couldn't load the `child_process` module, which might
     // happen in certain sandboxed environments like a CloudFlare Worker.
     if (utils._exec === null) {
@@ -386,16 +394,18 @@ const utils = {
   // For mocking in tests.
   _exec: exec,
 
-  isObject: (obj) => {
+  isObject: (obj: unknown): boolean => {
     const type = typeof obj;
     return (type === 'function' || type === 'object') && !!obj;
   },
 
   // For use in multipart requests
-  flattenAndStringify: (data) => {
-    const result = {};
+  flattenAndStringify: (
+    data: MultipartRequestData
+  ): Record<string, unknown> => {
+    const result: RequestData = {};
 
-    const step = (obj, prevKey) => {
+    const step = (obj: RequestData, prevKey: string | null): void => {
       Object.keys(obj).forEach((key) => {
         const value = obj[key];
 
@@ -407,7 +417,7 @@ const utils = {
             !Object.prototype.hasOwnProperty.call(value, 'data')
           ) {
             // Non-buffer non-file Objects are recursively flattened
-            return step(value, newKey);
+            return step(value as RequestData, newKey);
           } else {
             // Buffers and file objects are stored without modification
             result[newKey] = value;
@@ -427,7 +437,7 @@ const utils = {
   /**
    * https://stackoverflow.com/a/2117523
    */
-  uuid4: () => {
+  uuid4: (): string => {
     // available in: v14.17.x+
     if (crypto.randomUUID) {
       return crypto.randomUUID();
@@ -441,7 +451,7 @@ const utils = {
     });
   },
 
-  validateInteger: (name, n, defaultVal) => {
+  validateInteger: (name: string, n: unknown, defaultVal?: number): number => {
     if (!Number.isInteger(n)) {
       if (defaultVal !== undefined) {
         return defaultVal;
@@ -450,10 +460,10 @@ const utils = {
       }
     }
 
-    return n;
+    return n as number;
   },
 
-  determineProcessUserAgentProperties: () => {
+  determineProcessUserAgentProperties: (): Record<string, string> => {
     return typeof process === 'undefined'
       ? {}
       : {
@@ -463,7 +473,7 @@ const utils = {
   },
 };
 
-function emitWarning(warning) {
+function emitWarning(warning: string): void {
   if (typeof process.emitWarning !== 'function') {
     return console.warn(
       `Stripe: ${warning}`

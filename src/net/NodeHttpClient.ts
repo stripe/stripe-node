@@ -14,26 +14,26 @@ const defaultHttpsAgent = new https.Agent({keepAlive: true});
 class NodeHttpClient extends HttpClient {
   _agent: http.Agent | https.Agent;
 
-  constructor(agent) {
+  constructor(agent: http.Agent | https.Agent) {
     super();
     this._agent = agent;
   }
 
   /** @override. */
-  getClientName() {
+  getClientName(): string {
     return 'node';
   }
 
   makeRequest(
-    host,
-    port,
-    path,
-    method,
-    headers,
-    requestData,
-    protocol,
-    timeout
-  ) {
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: RequestData,
+    protocol: string,
+    timeout: number
+  ): Promise<HttpClientResponseInterface> {
     const isInsecureConnection = protocol === 'http';
 
     let agent = this._agent;
@@ -41,64 +41,68 @@ class NodeHttpClient extends HttpClient {
       agent = isInsecureConnection ? defaultHttpAgent : defaultHttpsAgent;
     }
 
-    const requestPromise = new Promise((resolve, reject) => {
-      const req = (isInsecureConnection ? http : https).request({
-        host: host,
-        port: port,
-        path,
-        method,
-        agent,
-        headers,
-        ciphers: 'DEFAULT:!aNULL:!eNULL:!LOW:!EXPORT:!SSLv2:!MD5',
-      });
+    const requestPromise = new Promise<HttpClientResponseInterface>(
+      (resolve, reject) => {
+        const req = (isInsecureConnection ? http : https).request({
+          host: host,
+          port: port,
+          path,
+          method,
+          agent,
+          headers,
+          ciphers: 'DEFAULT:!aNULL:!eNULL:!LOW:!EXPORT:!SSLv2:!MD5',
+        });
 
-      req.setTimeout(timeout, () => {
-        req.destroy(HttpClient.makeTimeoutError());
-      });
+        req.setTimeout(timeout, () => {
+          req.destroy(HttpClient.makeTimeoutError());
+        });
 
-      req.on('response', (res) => {
-        resolve(new NodeHttpClientResponse(res));
-      });
+        req.on('response', (res) => {
+          resolve(new NodeHttpClientResponse(res));
+        });
 
-      req.on('error', (error) => {
-        reject(error);
-      });
+        req.on('error', (error) => {
+          reject(error);
+        });
 
-      req.once('socket', (socket) => {
-        if (socket.connecting) {
-          socket.once(
-            isInsecureConnection ? 'connect' : 'secureConnect',
-            () => {
-              // Send payload; we're safe:
-              req.write(requestData);
-              req.end();
-            }
-          );
-        } else {
-          // we're already connected
-          req.write(requestData);
-          req.end();
-        }
-      });
-    });
+        req.once('socket', (socket) => {
+          if (socket.connecting) {
+            socket.once(
+              isInsecureConnection ? 'connect' : 'secureConnect',
+              () => {
+                // Send payload; we're safe:
+                req.write(requestData);
+                req.end();
+              }
+            );
+          } else {
+            // we're already connected
+            req.write(requestData);
+            req.end();
+          }
+        });
+      }
+    );
 
     return requestPromise;
   }
 }
 
-class NodeHttpClientResponse extends HttpClientResponse {
+class NodeHttpClientResponse extends HttpClientResponse
+  implements HttpClientResponseInterface {
   _res: http.IncomingMessage;
 
   constructor(res: http.IncomingMessage) {
+    // @ts-ignore
     super(res.statusCode, res.headers || {});
     this._res = res;
   }
 
-  getRawResponse() {
+  getRawResponse(): http.IncomingMessage {
     return this._res;
   }
 
-  toStream(streamCompleteCallback) {
+  toStream(streamCompleteCallback: () => void): http.IncomingMessage {
     // The raw response is itself the stream, so we just return that. To be
     // backwards compatible, we should invoke the streamCompleteCallback only
     // once the stream has been fully consumed.
