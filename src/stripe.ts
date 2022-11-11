@@ -185,6 +185,20 @@ Stripe.createSubtleCryptoProvider = (
 };
 
 Stripe.prototype = {
+  // Properties are set in the constructor above
+  _appInfo: null!,
+  on: null!,
+  off: null!,
+  once: null!,
+  VERSION: null!,
+  StripeResource: null!,
+  webhooks: null!,
+  errors: null!,
+  _api: null!,
+  _prevRequestMetrics: null!,
+  _emitter: null!,
+  _enableTelemetry: null!,
+
   /**
    * @deprecated will be removed in a future major version. Use the config object instead:
    *
@@ -369,7 +383,10 @@ Stripe.prototype = {
    * @private
    * This may be removed in the future.
    */
-  _setApiField(key: string, value: unknown): void {
+  _setApiField<K extends keyof StripeObject['_api']>(
+    key: K,
+    value: StripeObject['_api'][K]
+  ): void {
     this._api[key] = value;
   },
 
@@ -380,7 +397,9 @@ Stripe.prototype = {
    *
    * It may be deprecated and removed in the future.
    */
-  getApiField<T>(key: string): T {
+  getApiField<K extends keyof StripeObject['_api']>(
+    key: K
+  ): StripeObject['_api'][K] {
     return this._api[key];
   },
 
@@ -388,7 +407,7 @@ Stripe.prototype = {
     this._clientId = clientId;
   },
 
-  getClientId(): string {
+  getClientId(): string | undefined {
     return this._clientId;
   },
 
@@ -439,7 +458,11 @@ Stripe.prototype = {
    * @private
    * This may be removed in the future.
    */
-  _setApiNumberField(prop: string, n: number, defaultVal?: number): void {
+  _setApiNumberField(
+    prop: keyof StripeObject['_api'],
+    n: number,
+    defaultVal?: number
+  ): void {
     const val = utils.validateInteger(prop, n, defaultVal);
 
     this._setApiField(prop, val);
@@ -567,6 +590,7 @@ Stripe.prototype = {
    */
   _prepResources(): void {
     for (const name in resources) {
+      // @ts-ignore
       this[utils.pascalToCamelCase(name)] = new resources[name](this);
     }
   },
@@ -611,7 +635,7 @@ Stripe.prototype = {
 
     return config;
   },
-};
+} as StripeObject;
 
 module.exports = Stripe;
 
