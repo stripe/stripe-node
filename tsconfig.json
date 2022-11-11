@@ -6,6 +6,9 @@
     "module": "commonjs",
     "checkJs": false,
     "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strict": true,
   },
   "include": ["./src/**/*"]
 }
