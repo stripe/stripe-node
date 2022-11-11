@@ -5,7 +5,7 @@ const resources = require('./resources');
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
-const DEFAULT_API_VERSION = null;
+const DEFAULT_API_VERSION = (null as unknown) as string;
 
 const DEFAULT_TIMEOUT = 80000;
 
@@ -24,7 +24,7 @@ Stripe.USER_AGENT = {
 };
 
 /** @private */
-Stripe._UNAME_CACHE = null;
+Stripe._UNAME_CACHE = null as Promise<string> | null;
 
 const MAX_NETWORK_RETRY_DELAY_SEC = 2;
 const INITIAL_NETWORK_RETRY_DELAY_SEC = 0.5;
@@ -46,8 +46,8 @@ const ALLOWED_CONFIG_PROPERTIES = [
 ];
 
 const EventEmitter = require('events').EventEmitter;
-
 import StripeResource = require('./StripeResource');
+import * as http from 'http';
 Stripe.StripeResource = StripeResource;
 Stripe.resources = resources;
 
@@ -58,7 +58,11 @@ Stripe.HttpClientResponse = HttpClientResponse;
 const CryptoProvider = require('./crypto/CryptoProvider');
 Stripe.CryptoProvider = CryptoProvider;
 
-function Stripe(key, config = {}) {
+function Stripe(
+  this: StripeObject,
+  key: string,
+  config: Record<string, unknown> = {}
+): void {
   if (!(this instanceof Stripe)) {
     return new (Stripe as any)(key, config);
   }
@@ -132,13 +136,14 @@ function Stripe(key, config = {}) {
   this._enableTelemetry = props.telemetry !== false;
 
   // Expose StripeResource on the instance too
+  // @ts-ignore
   this.StripeResource = Stripe.StripeResource;
 }
 
 Stripe.errors = _Error;
 Stripe.webhooks = require('./Webhooks');
 
-Stripe.createNodeHttpClient = (agent) => {
+Stripe.createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
   const {NodeHttpClient} = require('./net/NodeHttpClient');
   return new NodeHttpClient(agent);
 };
@@ -150,7 +155,7 @@ Stripe.createNodeHttpClient = (agent) => {
  * A fetch function can optionally be passed in as a parameter. If none is
  * passed, will default to the default `fetch` function in the global scope.
  */
-Stripe.createFetchHttpClient = (fetchFn) => {
+Stripe.createFetchHttpClient = (fetchFn: typeof fetch): typeof HttpClient => {
   const {FetchHttpClient} = require('./net/FetchHttpClient');
   return new FetchHttpClient(fetchFn);
 };
@@ -159,7 +164,7 @@ Stripe.createFetchHttpClient = (fetchFn) => {
  * Create a CryptoProvider which uses the built-in Node crypto libraries for
  * its crypto operations.
  */
-Stripe.createNodeCryptoProvider = () => {
+Stripe.createNodeCryptoProvider = (): StripeCryptoProvider => {
   const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
   return new NodeCryptoProvider();
 };
@@ -172,7 +177,9 @@ Stripe.createNodeCryptoProvider = () => {
  * is passed, will default to the default `crypto.subtle` object in the global
  * scope.
  */
-Stripe.createSubtleCryptoProvider = (subtleCrypto) => {
+Stripe.createSubtleCryptoProvider = (
+  subtleCrypto: typeof crypto.subtle
+): StripeCryptoProvider => {
   const SubtleCryptoProvider = require('./crypto/SubtleCryptoProvider');
   return new SubtleCryptoProvider(subtleCrypto);
 };
@@ -181,7 +188,7 @@ Stripe.prototype = {
   /**
    * @private
    */
-  _setApiKey(key) {
+  _setApiKey(key: string): void {
     if (key) {
       this._setApiField('auth', `Bearer ${key}`);
     }
@@ -191,7 +198,7 @@ Stripe.prototype = {
    * @private
    * This may be removed in the future.
    */
-  _setAppInfo(info) {
+  _setAppInfo(info: AppInfo): void {
     if (info && typeof info !== 'object') {
       throw new Error('AppInfo must be an object.');
     }
@@ -202,7 +209,7 @@ Stripe.prototype = {
 
     info = info || {};
 
-    const appInfo = APP_INFO_PROPERTIES.reduce(
+    this._appInfo = APP_INFO_PROPERTIES.reduce<Record<string, any>>(
       (accum: Record<string, any>, prop) => {
         if (typeof info[prop] == 'string') {
           accum = accum || {};
@@ -212,17 +219,16 @@ Stripe.prototype = {
 
         return accum;
       },
+      // @ts-ignore
       undefined
     );
-
-    this._appInfo = appInfo;
   },
 
   /**
    * @private
    * This may be removed in the future.
    */
-  _setApiField(key, value) {
+  _setApiField(key: string, value: unknown): void {
     this._api[key] = value;
   },
 
@@ -233,15 +239,15 @@ Stripe.prototype = {
    *
    * It may be deprecated and removed in the future.
    */
-  getApiField(key) {
+  getApiField<T>(key: string): T {
     return this._api[key];
   },
 
-  setClientId(clientId) {
+  setClientId(clientId: string): void {
     this._clientId = clientId;
   },
 
-  getClientId() {
+  getClientId(): string {
     return this._clientId;
   },
 
@@ -252,7 +258,7 @@ Stripe.prototype = {
    *
    * It may be deprecated and removed in the future.
    */
-  getConstant: (c) => {
+  getConstant: (c: string): unknown => {
     switch (c) {
       case 'DEFAULT_HOST':
         return DEFAULT_HOST;
@@ -269,10 +275,10 @@ Stripe.prototype = {
       case 'INITIAL_NETWORK_RETRY_DELAY_SEC':
         return INITIAL_NETWORK_RETRY_DELAY_SEC;
     }
-    return Stripe[c];
+    return ((Stripe as unknown) as Record<string, unknown>)[c];
   },
 
-  getMaxNetworkRetries() {
+  getMaxNetworkRetries(): number {
     return this.getApiField('maxNetworkRetries');
   },
 
@@ -280,32 +286,32 @@ Stripe.prototype = {
    * @private
    * This may be removed in the future.
    */
-  _setApiNumberField(prop, n, defaultVal) {
+  _setApiNumberField(prop: string, n: number, defaultVal?: number): void {
     const val = utils.validateInteger(prop, n, defaultVal);
 
     this._setApiField(prop, val);
   },
 
-  getMaxNetworkRetryDelay() {
+  getMaxNetworkRetryDelay(): number {
     return MAX_NETWORK_RETRY_DELAY_SEC;
   },
 
-  getInitialNetworkRetryDelay() {
+  getInitialNetworkRetryDelay(): number {
     return INITIAL_NETWORK_RETRY_DELAY_SEC;
   },
 
   /**
    * @private
    */
-  getUname(cb) {
+  getUname(cb: (uname: string) => void): void {
     if (!Stripe._UNAME_CACHE) {
-      Stripe._UNAME_CACHE = new Promise((resolve) => {
-        utils.safeExec('uname -a', (err, uname) => {
+      Stripe._UNAME_CACHE = new Promise<string>((resolve) => {
+        utils.safeExec('uname -a', (err: Error, uname: string) => {
           resolve(uname);
         });
       });
     }
-    Stripe._UNAME_CACHE.then((uname) => cb(uname));
+    Stripe._UNAME_CACHE.then((uname: string) => cb(uname));
   },
 
   /**
@@ -318,7 +324,7 @@ Stripe.prototype = {
    * Gets a JSON version of a User-Agent and uses a cached version for a slight
    * speed advantage.
    */
-  getClientUserAgent(cb) {
+  getClientUserAgent(cb: (userAgent: string) => void): void {
     return this.getClientUserAgentSeeded(Stripe.USER_AGENT, cb);
   },
 
@@ -332,8 +338,11 @@ Stripe.prototype = {
    * Gets a JSON version of a User-Agent by encoding a seeded object and
    * fetching a uname from the system.
    */
-  getClientUserAgentSeeded(seed, cb) {
-    this.getUname((uname) => {
+  getClientUserAgentSeeded(
+    seed: Record<string, string>,
+    cb: (userAgent: string) => void
+  ): void {
+    this.getUname((uname: string) => {
       const userAgent: Record<string, string> = {};
       for (const field in seed) {
         userAgent[field] = encodeURIComponent(seed[field]);
@@ -362,7 +371,7 @@ Stripe.prototype = {
    *
    * It may be deprecated and removed in the future.
    */
-  getAppInfoAsString() {
+  getAppInfoAsString(): string {
     if (!this._appInfo) {
       return '';
     }
@@ -380,7 +389,7 @@ Stripe.prototype = {
     return formatted;
   },
 
-  getTelemetryEnabled() {
+  getTelemetryEnabled(): boolean {
     return this._enableTelemetry;
   },
 
@@ -388,7 +397,7 @@ Stripe.prototype = {
    * @private
    * This may be removed in the future.
    */
-  _prepResources() {
+  _prepResources(): void {
     for (const name in resources) {
       this[utils.pascalToCamelCase(name)] = new resources[name](this);
     }
@@ -398,7 +407,7 @@ Stripe.prototype = {
    * @private
    * This may be removed in the future.
    */
-  _getPropsFromConfig(config) {
+  _getPropsFromConfig(config: Record<string, unknown>): UserProvidedConfig {
     // If config is null or undefined, just bail early with no props
     if (!config) {
       return {};

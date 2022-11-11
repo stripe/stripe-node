@@ -19,13 +19,13 @@ const makeAutoPaginationMethods = autoPagination.makeAutoPaginationMethods;
  *  Usefully for applying transforms to data on a per-method basis.
  * @param [spec.host] Hostname for the request.
  */
-function stripeMethod(spec) {
+function stripeMethod(spec: MethodSpec): (...args: any[]) => Promise<any> {
   if (spec.path !== undefined && spec.fullPath !== undefined) {
     throw new Error(
       `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`
     );
   }
-  return function(...args) {
+  return function(this: StripeResourceObject, ...args: any[]): Promise<any> {
     const callback = typeof args[args.length - 1] == 'function' && args.pop();
 
     spec.urlParams = utils.extractUrlParams(

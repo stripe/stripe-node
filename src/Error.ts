@@ -1,35 +1,4 @@
 /* eslint-disable camelcase */
-type RawErrorType =
-  | 'card_error'
-  | 'invalid_request_error'
-  | 'api_error'
-  | 'idempotency_error'
-  | 'rate_limit_error'
-  | 'authentication_error'
-  | 'invalid_grant';
-
-type StripeRawError = {
-  message?: string;
-  type?: RawErrorType;
-
-  headers?: {[header: string]: string};
-  statusCode?: number;
-  requestId?: string;
-  code?: string;
-  doc_url?: string;
-  decline_code?: string;
-  param?: string;
-  detail?: string;
-  charge?: string;
-  payment_method_type?: string;
-
-  payment_intent?: any;
-  payment_method?: any;
-  setup_intent?: any;
-  source?: any;
-  exception?: any;
-};
-
 /**
  * StripeError is the base error from which all other more specific Stripe errors derive.
  * Specifically for errors returned from Stripe's REST API.
@@ -38,9 +7,9 @@ class StripeError extends Error {
   readonly message: string;
   readonly type: string;
   readonly raw: unknown;
-  readonly rawType: RawErrorType;
-  readonly headers: {[header: string]: string};
-  readonly requestId: string;
+  readonly rawType?: RawErrorType;
+  readonly headers?: {[header: string]: string};
+  readonly requestId?: string;
 
   readonly code?: string;
   readonly doc_url?: string;
@@ -69,6 +38,7 @@ class StripeError extends Error {
     this.headers = raw.headers;
     this.requestId = raw.requestId;
     this.statusCode = raw.statusCode;
+    // @ts-ignore
     this.message = raw.message;
 
     this.charge = raw.charge;
@@ -83,7 +53,7 @@ class StripeError extends Error {
   /**
    * Helper factory which takes raw stripe errors and outputs wrapping instances
    */
-  static generate(rawStripeError) {
+  static generate(rawStripeError: StripeRawError): StripeError {
     switch (rawStripeError.type) {
       case 'card_error':
         return new StripeCardError(rawStripeError);
