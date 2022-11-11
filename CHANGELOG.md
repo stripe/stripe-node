@@ -1,5 +1,12 @@
 # Changelog
 
+## 10.17.0 - 2022-11-08
+* [#1610](https://github.com/stripe/stripe-node/pull/1610) API Updates
+  * Add support for new values `eg_tin`, `ph_tin`, and `tr_tin` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, `Order.tax_details.tax_ids[].type`, and `TaxId.type`
+  * Add support for new values `eg_tin`, `ph_tin`, and `tr_tin` on enums `CustomerCreateParams.tax_id_data[].type`, `InvoiceUpcomingLinesParams.customer_details.tax_ids[].type`, `InvoiceUpcomingParams.customer_details.tax_ids[].type`, `OrderCreateParams.tax_details.tax_ids[].type`, `OrderUpdateParams.tax_details.tax_ids[].type`, and `TaxIdCreateParams.type`
+  * Add support for `reason_message` on `Issuing.Authorization.request_history[]`
+  * Add support for new value `webhook_error` on enum `Issuing.Authorization.request_history[].reason`
+
 ## 10.16.0 - 2022-11-03
 * [#1596](https://github.com/stripe/stripe-node/pull/1596) API Updates
   * Add support for `on_behalf_of` on `CheckoutSessionCreateParams.subscription_data`, `SubscriptionCreateParams`, `SubscriptionSchedule.default_settings`, `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.default_settings`, `SubscriptionScheduleCreateParams.phases[]`, `SubscriptionScheduleUpdateParams.default_settings`, `SubscriptionScheduleUpdateParams.phases[]`, `SubscriptionUpdateParams`, and `Subscription`
