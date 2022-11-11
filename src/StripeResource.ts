@@ -120,21 +120,6 @@ StripeResource.prototype = {
   // DEPRECATED: Here for backcompat in case users relied on this.
   wrapTimeout: utils.callbackifyPromiseWithTimeout,
 
-  // eslint-disable-next-line no-warning-comments
-  // TODO: Unused?
-  _timeoutHandler(
-    timeout: number,
-    req: any,
-    callback: RequestCallback
-  ): () => void {
-    return (): void => {
-      const timeoutErr = new TypeError('ETIMEDOUT');
-      (timeoutErr as any).code = 'ETIMEDOUT';
-
-      req.destroy(timeoutErr);
-    };
-  },
-
   _addHeadersDirectlyToObject(
     obj: Record<string, unknown>,
     headers: RequestHeaders
