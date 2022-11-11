@@ -497,7 +497,7 @@ StripeResource.prototype = {
     options: RequestOptions = {},
     callback: RequestCallback
   ): void {
-    let requestData: RequestData;
+    let requestData: string;
 
     const retryRequest = (
       requestFn: typeof makeRequest,
@@ -609,7 +609,7 @@ StripeResource.prototype = {
         return callback(error);
       }
 
-      const requestData = data;
+      requestData = data;
 
       this._stripe.getClientUserAgent((clientUserAgent: string) => {
         const apiVersion = this._stripe.getApiField('version');
