@@ -9,6 +9,7 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strict": true,
+    "strictFunctionTypes": true,
   },
   "include": ["./src/**/*"]
 }

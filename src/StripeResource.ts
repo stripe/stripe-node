@@ -58,10 +58,12 @@ function StripeResource(
 
 StripeResource.prototype = {
   _stripe: null as StripeObject | null,
-  path: '',
+  // @ts-ignore the type of path changes in ctor
+  path: '' as UrlInterpolator,
+  resourcePath: '',
 
   // Methods that don't use the API's default '/v1' path can override it with this setting.
-  basePath: null,
+  basePath: null!,
 
   initialize(): void {},
 
@@ -120,10 +122,7 @@ StripeResource.prototype = {
   // DEPRECATED: Here for backcompat in case users relied on this.
   wrapTimeout: utils.callbackifyPromiseWithTimeout,
 
-  _addHeadersDirectlyToObject(
-    obj: Record<string, unknown>,
-    headers: RequestHeaders
-  ): void {
+  _addHeadersDirectlyToObject(obj: any, headers: RequestHeaders): void {
     // For convenience, make some headers easily accessible on
     // lastResponse.
 
@@ -288,29 +287,12 @@ StripeResource.prototype = {
     }`;
   },
 
-  _errorHandler(
-    res: never,
-    requestRetries: number,
-    callback: RequestCallback
-  ): (message: string, detail: string) => void {
-    return (message: string, detail: string): void => {
-      callback.call(
-        this,
-        new StripeConnectionError({
-          message: this._generateConnectionErrorMessage(requestRetries),
-          detail,
-        }),
-        null
-      );
-    };
-  },
-
   // For more on when and how to retry API requests, see https://stripe.com/docs/error-handling#safely-retrying-requests-with-idempotency
   _shouldRetry(
-    res: HttpClientResponseInterface,
+    res: null | HttpClientResponseInterface,
     numRetries: number,
     maxRetries: number,
-    error?: {code: number}
+    error?: HttpClientResponseError
   ): boolean {
     if (
       error &&
@@ -510,12 +492,12 @@ StripeResource.prototype = {
     method: string,
     host: string,
     path: string,
-    data: string,
+    data: RequestData,
     auth: string,
     options: RequestOptions = {},
     callback: RequestCallback
   ): void {
-    let requestData: string;
+    let requestData: RequestData;
 
     const retryRequest = (
       requestFn: typeof makeRequest,
@@ -574,7 +556,7 @@ StripeResource.prototype = {
 
       const requestRetries = numRetries || 0;
 
-      const maxRetries = this._getMaxNetworkRetries(options.settings);
+      const maxRetries = this._getMaxNetworkRetries(options.settings || {});
 
       this._stripe._emitter.emit('request', requestEvent);
 
@@ -627,7 +609,7 @@ StripeResource.prototype = {
         return callback(error);
       }
 
-      requestData = data;
+      const requestData = data;
 
       this._stripe.getClientUserAgent((clientUserAgent: string) => {
         const apiVersion = this._stripe.getApiField('version');
@@ -656,6 +638,6 @@ StripeResource.prototype = {
       prepareAndMakeRequest(null, utils.stringifyRequestData(data || {}));
     }
   },
-};
+} as StripeResourceObject;
 
 export = StripeResource;
