@@ -107,6 +107,29 @@ interface HttpClientInterface {
   ) => Promise<HttpClientResponseInterface>;
 }
 type StripeObject = {
+  getClientUserAgentSeeded: (
+    seed: Record<string, string>,
+    callback: (userAgent: string) => void
+  ) => void;
+  getUname: (callback: (uname: string) => void) => void;
+  setProtocol: (protocol: string) => void;
+  setPort: (port: number) => void;
+  getClientUserAgent: (callback: (clientUserAgent: string) => void) => void;
+  getTelemetryEnabled: () => boolean;
+  getAppInfoAsString: () => string;
+  getInitialNetworkRetryDelay: () => number;
+  getMaxNetworkRetryDelay: () => number;
+  getMaxNetworkRetries: () => number;
+  getConstant: <T = string>(name: string) => T;
+  _setApiField: <K extends keyof StripeObject['_api']>(
+    name: K,
+    value: StripeObject['_api'][K]
+  ) => void;
+  getApiField: <K extends keyof StripeObject['_api']>(
+    key: K
+  ) => StripeObject['_api'][K];
+  _setApiNumberField: (name: string, value: number) => unknown;
+  _appInfo: any;
   on: any;
   off: any;
   once: any;
@@ -114,11 +137,13 @@ type StripeObject = {
   StripeResource: typeof StripeResource;
   errors: any;
   webhooks: any;
-  getApiField: <T = string>(name: string) => T;
   _prepResources: () => void;
   _setAppInfo: (appInfo: AppInfo) => void;
   _setApiKey: (apiKey: string) => void;
-  _prevRequestMetrics: number[];
+  _prevRequestMetrics: Array<{
+    request_id: string;
+    request_duration_ms: number;
+  }>;
   _api: {
     auth: string | null;
     host: string;
@@ -126,7 +151,7 @@ type StripeObject = {
     protocol: string;
     basePath: string;
     version: string;
-    timeout: string;
+    timeout: number;
     maxNetworkRetries: number;
     agent: string;
     httpClient: any;
@@ -136,6 +161,7 @@ type StripeObject = {
   _emitter: import('events').EventEmitter;
   _enableTelemetry: boolean;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
+  _clientId?: string;
 };
 type StripeRawError = {
   message?: string;
@@ -169,13 +195,13 @@ type StripeResourceObject = {
   basePath: UrlInterpolator;
   path: UrlInterpolator;
   resourcePath: string;
-  includeBasic: Array<string>;
+  includeBasic?: Array<string>;
   createResourcePathWithSymbols: (path: string | null | undefined) => string;
   createFullPath: (
     interpolator: UrlInterpolator,
     urlData: RequestData
   ) => string;
-  _request: (
+  _request(
     method: string,
     host: string,
     path: string,
@@ -183,8 +209,62 @@ type StripeResourceObject = {
     auth: string,
     options: RequestOptions,
     callback: RequestCallback
-  ) => void;
+  ): void;
   initialize: (...args: Array<any>) => void;
+  _joinUrlParts: (urlParts: string[]) => string;
+  _getRequestId: (headers: RequestHeaders) => string;
+  _makeResponseEvent: (
+    requestEvent: RequestEvent,
+    statusCode: number,
+    headers: ResponseHeaders
+  ) => ResponseEvent;
+  _getUserAgentString: () => string;
+  _getTelemetryHeader: () => string;
+  requestDataProcessor:
+    | null
+    | ((
+        method: string,
+        data: RequestData,
+        headers: RequestHeaders | undefined,
+        prepareAndMakeRequest: (error: Error | null, data: string) => void
+      ) => void);
+  _recordRequestMetrics: (requestId: string, elapsed?: number) => void;
+  _addHeadersDirectlyToObject: (obj: any, headers: ResponseHeaders) => void;
+  _getMaxNetworkRetries: (settings: RequestSettings) => number;
+  _defaultIdempotencyKey: (
+    method: string,
+    userSuppliedSettings: RequestSettings
+  ) => string | number | string[];
+  _getSleepTimeInMS: (
+    requestRetries: number,
+    retryAfter: number | null
+  ) => number | undefined;
+  _shouldRetry: (
+    res: HttpClientResponseInterface | null,
+    requestRetries: number,
+    maxRetries: number,
+    error?: HttpClientResponseError
+  ) => boolean | undefined;
+  _jsonResponseHandler: (
+    requestEvent: RequestEvent,
+    callback: RequestCallback
+  ) => (res: HttpClientResponseInterface) => void;
+  _streamingResponseHandler: (
+    requestEvent: RequestEvent,
+    callback: RequestCallback
+  ) => (res: HttpClientResponseInterface) => RequestCallbackReturn;
+  _generateConnectionErrorMessage: (
+    requestRetries: number
+  ) => string | undefined;
+  _makeHeaders: (
+    auth: string,
+    length: number,
+    apiVersion: string,
+    clientUserAgent: string,
+    method: string,
+    headers: RequestHeaders | undefined,
+    settings: RequestSettings | undefined
+  ) => RequestHeaders;
 };
 type UrlInterpolator = (params: Record<string, unknown>) => string;
 type UserProvidedConfig = {
