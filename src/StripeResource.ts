@@ -111,9 +111,6 @@ StripeResource.prototype = {
     return parts.join('/').replace(/\/{2,}/g, '/');
   },
 
-  // DEPRECATED: Here for backcompat in case users relied on this.
-  wrapTimeout: utils.callbackifyPromiseWithTimeout,
-
   _addHeadersDirectlyToObject(obj: any, headers: RequestHeaders): void {
     // For convenience, make some headers easily accessible on
     // lastResponse.

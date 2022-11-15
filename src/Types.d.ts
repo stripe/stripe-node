@@ -112,8 +112,6 @@ type StripeObject = {
     callback: (userAgent: string) => void
   ) => void;
   getUname: (callback: (uname: string) => void) => void;
-  setProtocol: (protocol: string) => void;
-  setPort: (port: number) => void;
   getClientUserAgent: (callback: (clientUserAgent: string) => void) => void;
   getTelemetryEnabled: () => boolean;
   getAppInfoAsString: () => string;

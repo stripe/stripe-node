@@ -186,7 +186,7 @@ Stripe.createSubtleCryptoProvider = (
 
 Stripe.prototype = {
   // Properties are set in the constructor above
-  _appInfo: null!,
+  _appInfo: undefined!,
   on: null!,
   off: null!,
   once: null!,
