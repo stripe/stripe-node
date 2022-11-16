@@ -1,5 +1,74 @@
 # Changelog
 
+## 11.0.0 - 2022-11-16
+
+This release includes breaking changes resulting from moving to use the new API version "2022-11-15". To learn more about these changes to Stripe products, see https://stripe.com/docs/upgrades#2022-11-15
+
+"⚠️" symbol highlights breaking changes.
+
+* [#1608](https://github.com/stripe/stripe-node/pull/1608) Next major release changes
+* [#1619](https://github.com/stripe/stripe-node/pull/1619) Annotate prototypes with types
+* [#1612](https://github.com/stripe/stripe-node/pull/1612) Add type information here and there
+* [#1615](https://github.com/stripe/stripe-node/pull/1615) API Updates
+  * ⚠️ Remove support for `tos_shown_and_accepted` on `CheckoutSessionCreateParams.payment_method_options.paynow`. The property was mistakenly released and never worked.
+
+### ⚠️ Changed
+* Drop support for Node.js 8 and 10. We now support Node.js 12+. ((#1579)
+* Change `StripeSignatureVerificationError` to have `header` and `payload` fields instead of `detail`. To access these properties, use `err.header` and `err.payload` instead of `err.detail.header` and `err.detail.payload`. (#1574)
+
+### ⚠️ Removed
+* Remove `Orders` resource. (#1580)
+* Remove `SKU` resource (#1583)
+* Remove deprecated `CheckoutSessionCreateParams.subscription_data.items`. (#1580)
+* Remove deprecated configuration setter methods (`setHost`, `setProtocol`, `setPort`, `setApiVersion`, `setApiKey`, `setTimeout`, `setAppInfo`, `setHttpAgent`, `setMaxNetworkRetries`, and `setTelemetryEnabled`). (#1597)
+
+  Use the config object to set these options instead, for example:
+  ```typescript
+  const stripe = Stripe('sk_test_...', {
+    apiVersion: '2019-08-08',
+    maxNetworkRetries: 1,
+    httpAgent: new ProxyAgent(process.env.http_proxy),
+    timeout: 1000,
+    host: 'api.example.com',
+    port: 123,
+    telemetry: true,
+  });
+  ```
+* Remove deprecated basic method definitions. (#1600)
+  Use basic methods defined on the resource instead.
+  ```typescript
+  // Before
+  basicMethods: true
+
+  // After
+  create: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/resource',
+  }),
+  list: stripeMethod({
+    method: 'GET',
+    methodType: 'list',
+    fullPath: '/v1/resource',
+  }),
+  retrieve: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/resource/{id}',
+  }),
+  update: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/resource/{id}',
+  }),
+  // Avoid 'delete' keyword in JS
+  del: stripeMethod({
+    method: 'DELETE',
+    fullPath: '/v1/resource/{id}',
+  }),
+  ```
+* Remove deprecated option names. Use the following option names instead (`OLD`->`NEW`): `api_key`->`apiKey`, `idempotency_key`->`idempotencyKey`, `stripe_account`->`stripeAccount`, `stripe_version`->`apiVersion`, `stripeVersion`->`apiVersion`. (#1600)
+* Remove `charges` field on `PaymentIntent` and replace it with `latest_charge`. (#1614 )
+* Remove deprecated `amount` field on `Checkout.Session.LineItem`. (#1614 )
+* Remove support for `tos_shown_and_accepted` on `Checkout.Session.PaymentMethodOptions.Paynow`. (#1614 )
+
 ## 10.17.0 - 2022-11-08
 * [#1610](https://github.com/stripe/stripe-node/pull/1610) API Updates
   * Add support for new values `eg_tin`, `ph_tin`, and `tr_tin` on enums `Checkout.Session.customer_details.tax_ids[].type`, `Invoice.customer_tax_ids[].type`, `Order.tax_details.tax_ids[].type`, and `TaxId.type`
