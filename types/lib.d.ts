@@ -52,7 +52,7 @@ declare module 'stripe' {
       };
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
-    export type LatestApiVersion = '2022-08-01';
+    export type LatestApiVersion = '2022-11-15';
     export type HttpAgent = Agent;
     export type HttpProtocol = 'http' | 'https';
 

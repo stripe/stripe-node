@@ -6,10 +6,8 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'terminal/connection_tokens',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/terminal/connection_tokens',
   }),
 });

@@ -58,12 +58,12 @@ const utils = (module.exports = {
     return key;
   },
 
-  getSpyableStripe: () => {
+  getSpyableStripe: (config) => {
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
 
     const stripe = require('../lib/stripe');
-    const stripeInstance = stripe('fakeAuthToken');
+    const stripeInstance = stripe('fakeAuthToken', config);
 
     stripeInstance.REQUESTS = [];
 

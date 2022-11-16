@@ -7,10 +7,9 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'files',
-
   create: stripeMethod({
     method: 'POST',
+    fullPath: '/v1/files',
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -19,12 +18,12 @@ module.exports = StripeResource.extend({
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{file}',
+    fullPath: '/v1/files/{file}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/files',
     methodType: 'list',
   }),
 

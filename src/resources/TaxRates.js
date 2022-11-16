@@ -6,26 +6,24 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'tax_rates',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/tax_rates',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{taxRate}',
+    fullPath: '/v1/tax_rates/{tax_rate}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{taxRate}',
+    fullPath: '/v1/tax_rates/{tax_rate}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/tax_rates',
     methodType: 'list',
   }),
 });

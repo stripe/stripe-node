@@ -19,7 +19,7 @@ See [video demonstrations][youtube-playlist] covering how to use the library.
 
 ## Requirements
 
-Node 8, 10 or higher.
+Node 12 or higher.
 
 ## Installation
 
@@ -73,7 +73,7 @@ and instantiate it as `new Stripe()` with the latest API version.
 ```ts
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...', {
-  apiVersion: '2022-08-01',
+  apiVersion: '2022-11-15',
 });
 
 const createCustomer = async () => {

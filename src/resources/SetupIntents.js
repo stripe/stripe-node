@@ -6,41 +6,39 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'setup_intents',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/setup_intents',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{intent}',
+    fullPath: '/v1/setup_intents/{intent}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{intent}',
+    fullPath: '/v1/setup_intents/{intent}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/setup_intents',
     methodType: 'list',
   }),
 
   cancel: stripeMethod({
     method: 'POST',
-    path: '/{intent}/cancel',
+    fullPath: '/v1/setup_intents/{intent}/cancel',
   }),
 
   confirm: stripeMethod({
     method: 'POST',
-    path: '/{intent}/confirm',
+    fullPath: '/v1/setup_intents/{intent}/confirm',
   }),
 
   verifyMicrodeposits: stripeMethod({
     method: 'POST',
-    path: '/{intent}/verify_microdeposits',
+    fullPath: '/v1/setup_intents/{intent}/verify_microdeposits',
   }),
 });

@@ -59,7 +59,6 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
-///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
@@ -79,7 +78,6 @@
 ///<reference path='./Reporting/ReportTypes.d.ts' />
 ///<reference path='./ReserveTransactions.d.ts' />
 ///<reference path='./Reviews.d.ts' />
-///<reference path='./SKUs.d.ts' />
 ///<reference path='./SetupAttempts.d.ts' />
 ///<reference path='./SetupIntents.d.ts' />
 ///<reference path='./ShippingRates.d.ts' />
@@ -136,8 +134,6 @@ declare module 'stripe' {
 
     constructor(apiKey: string, config: Stripe.StripeConfig);
 
-    setAppInfo(info: Stripe.AppInfo): void;
-
     StripeResource: Stripe.StripeResource;
 
     /**
@@ -163,7 +159,6 @@ declare module 'stripe' {
     invoices: Stripe.InvoicesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
     mandates: Stripe.MandatesResource;
-    orders: Stripe.OrdersResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethods: Stripe.PaymentMethodsResource;
@@ -178,7 +173,6 @@ declare module 'stripe' {
     setupAttempts: Stripe.SetupAttemptsResource;
     setupIntents: Stripe.SetupIntentsResource;
     shippingRates: Stripe.ShippingRatesResource;
-    skus: Stripe.SkusResource;
     sources: Stripe.SourcesResource;
     subscriptions: Stripe.SubscriptionsResource;
     subscriptionItems: Stripe.SubscriptionItemsResource;
@@ -285,27 +279,6 @@ declare module 'stripe' {
       event: 'response',
       handler: (event: Stripe.ResponseEvent) => void
     ): void;
-
-    setProtocol(protocol: string): void;
-
-    /** @deprecated Please use the StripeConfig object instead. */
-    setHost(host: string, port?: string | number, protocol?: string): void;
-
-    /** @deprecated Please use the StripeConfig object instead. */
-    setPort(port: string | number): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setApiVersion(version: Stripe.LatestApiVersion): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setApiKey(key: string): void;
-
-    /** @deprecated Please use the StripeConfig object instead. */
-    setTimeout(timeout?: number): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setMaxNetworkRetries(maxNetworkRetries: number): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setTelemetryEnabled(enabled: boolean): void;
-    /** @deprecated Please use the StripeConfig object instead. */
-    setHttpAgent(agent: Stripe.HttpAgent): void;
   }
 
   export default Stripe;

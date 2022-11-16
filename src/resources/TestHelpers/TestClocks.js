@@ -6,31 +6,29 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'test_helpers/test_clocks',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/test_helpers/test_clocks',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{testClock}',
+    fullPath: '/v1/test_helpers/test_clocks/{test_clock}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/test_helpers/test_clocks',
     methodType: 'list',
   }),
 
   del: stripeMethod({
     method: 'DELETE',
-    path: '/{testClock}',
+    fullPath: '/v1/test_helpers/test_clocks/{test_clock}',
   }),
 
   advance: stripeMethod({
     method: 'POST',
-    path: '/{testClock}/advance',
+    fullPath: '/v1/test_helpers/test_clocks/{test_clock}/advance',
   }),
 });

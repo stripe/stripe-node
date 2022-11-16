@@ -6,42 +6,41 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'subscription_items',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/subscription_items',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{item}',
+    fullPath: '/v1/subscription_items/{item}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{item}',
+    fullPath: '/v1/subscription_items/{item}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/subscription_items',
     methodType: 'list',
   }),
 
   del: stripeMethod({
     method: 'DELETE',
-    path: '/{item}',
+    fullPath: '/v1/subscription_items/{item}',
   }),
 
   createUsageRecord: stripeMethod({
     method: 'POST',
-    path: '/{subscriptionItem}/usage_records',
+    fullPath: '/v1/subscription_items/{subscription_item}/usage_records',
   }),
 
   listUsageRecordSummaries: stripeMethod({
     method: 'GET',
-    path: '/{subscriptionItem}/usage_record_summaries',
+    fullPath:
+      '/v1/subscription_items/{subscription_item}/usage_record_summaries',
     methodType: 'list',
   }),
 });

@@ -186,7 +186,7 @@ Stripe.createSubtleCryptoProvider = (
 
 Stripe.prototype = {
   // Properties are set in the constructor above
-  _appInfo: null!,
+  _appInfo: undefined!,
   on: null!,
   off: null!,
   once: null!,
@@ -200,137 +200,12 @@ Stripe.prototype = {
   _enableTelemetry: null!,
 
   /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const stripe = new Stripe(API_KEY, {
-   *   host: 'example.com',
-   *   port: '8080',
-   *   protocol: 'http',
-   * });
-   *
-   */
-  setHost(host: string, port: number, protocol: string): void {
-    emitWarning(
-      '`setHost` is deprecated. Use the `host` config option instead.'
-    );
-    this._setApiField('host', host);
-    if (port) {
-      this.setPort(port);
-    }
-    if (protocol) {
-      this.setProtocol(protocol);
-    }
-  },
-
-  /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const stripe = new Stripe(API_KEY, {
-   *   protocol: 'http',
-   * });
-   *
-   */
-  setProtocol(protocol: string): void {
-    emitWarning(
-      '`setProtocol` is deprecated. Use the `protocol` config option instead.'
-    );
-    this._setApiField('protocol', protocol.toLowerCase());
-  },
-
-  /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const stripe = new Stripe(API_KEY, {
-   *   port: 3000,
-   * });
-   *
-   */
-  setPort(port: number): void {
-    emitWarning(
-      '`setPort` is deprecated. Use the `port` config option instead.'
-    );
-    this._setApiField('port', port);
-  },
-
-  /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const stripe = new Stripe(API_KEY, {
-   *   apiVersion: API_VERSION,
-   * });
-   *
-   */
-  setApiVersion(version: string): void {
-    emitWarning(
-      '`setApiVersion` is deprecated. Use the `apiVersion` config or request option instead.'
-    );
-    if (version) {
-      this._setApiField('version', version);
-    }
-  },
-
-  /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const stripe = new Stripe(API_KEY);
-   *
-   * Or, for Stripe Connect, use `stripeAccount` instead:
-   *
-   * const stripe = new Stripe(API_KEY, {
-   *   stripeAccount: 'acct_...',
-   * });
-   *
-   * Or, to use a different apiKey on a given request:
-   *
-   * stripe.customers.create(params, {apiKey: 'sk_test_...'});
-   */
-  setApiKey(key: string): void {
-    emitWarning(
-      '`setApiKey` is deprecated. Use the `apiKey` request option instead.'
-    );
-    this._setApiKey(key);
-  },
-
-  /**
    * @private
    */
   _setApiKey(key: string): void {
     if (key) {
       this._setApiField('auth', `Bearer ${key}`);
     }
-  },
-
-  /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const stripe = new Stripe(API_KEY, {
-   *   timeout: TIMEOUT_MS,
-   * });
-   */
-  setTimeout(timeout: number): void {
-    emitWarning(
-      '`setTimeout` is deprecated. Use the `timeout` config or request option instead.'
-    );
-    this._setApiField('timeout', timeout == null ? DEFAULT_TIMEOUT : timeout);
-  },
-
-  /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const stripe = new Stripe(API_KEY, {
-   *   appInfo: {
-   *     name: 'MyPlugin',
-   *     version: '1.4.2',
-   *     url: 'https://myplugin.com',
-   *     partner_id: '1234',
-   *   },
-   * });
-   */
-  setAppInfo(info: AppInfo): void {
-    emitWarning(
-      '`setAppInfo` is deprecated. Use the `appInfo` config option instead.'
-    );
-    this._setAppInfo(info);
   },
 
   /**
@@ -361,22 +236,6 @@ Stripe.prototype = {
       // @ts-ignore
       undefined
     );
-  },
-
-  /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const ProxyAgent = require('https-proxy-agent');
-   * const stripe = new Stripe(API_KEY, {
-   *   httpAgent: new ProxyAgent(process.env.http_proxy),
-   * });
-   *
-   */
-  setHttpAgent(agent: string): void {
-    emitWarning(
-      '`setHttpAgent` is deprecated. Use the `httpAgent` config option instead.'
-    );
-    this._setApiField('agent', agent);
   },
 
   /**
@@ -440,18 +299,6 @@ Stripe.prototype = {
 
   getMaxNetworkRetries(): number {
     return this.getApiField('maxNetworkRetries');
-  },
-
-  /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const stripe = new Stripe(API_KEY, {
-   *   maxNetworkRetries: 2,
-   * });
-   *
-   */
-  setMaxNetworkRetries(maxNetworkRetries: number): void {
-    this._setApiNumberField('maxNetworkRetries', maxNetworkRetries);
   },
 
   /**
@@ -563,21 +410,6 @@ Stripe.prototype = {
     }
 
     return formatted;
-  },
-
-  /**
-   * @deprecated will be removed in a future major version. Use the config object instead:
-   *
-   * const stripe = new Stripe(API_KEY, {
-   *   telemetry: false,
-   * });
-   *
-   */
-  setTelemetryEnabled(enableTelemetry: boolean): void {
-    emitWarning(
-      '`setTelemetryEnabled` is deprecated. Use the `telemetry` config option instead.'
-    );
-    this._enableTelemetry = enableTelemetry;
   },
 
   getTelemetryEnabled(): boolean {

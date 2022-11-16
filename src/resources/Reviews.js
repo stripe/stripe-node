@@ -6,21 +6,19 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'reviews',
-
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{review}',
+    fullPath: '/v1/reviews/{review}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/reviews',
     methodType: 'list',
   }),
 
   approve: stripeMethod({
     method: 'POST',
-    path: '/{review}/approve',
+    fullPath: '/v1/reviews/{review}/approve',
   }),
 });

@@ -25,15 +25,6 @@ const OPTIONS_KEYS = [
   'host',
 ];
 
-const DEPRECATED_OPTIONS = {
-  api_key: 'apiKey',
-  idempotency_key: 'idempotencyKey',
-  stripe_account: 'stripeAccount',
-  stripe_version: 'apiVersion',
-  stripeVersion: 'apiVersion',
-} as Record<string, string>;
-const DEPRECATED_OPTIONS_KEYS = Object.keys(DEPRECATED_OPTIONS);
-
 type Settings = {
   timeout?: number;
   maxNetworkRetries?: number;
@@ -52,12 +43,7 @@ const utils = {
     return (
       o &&
       typeof o === 'object' &&
-      (OPTIONS_KEYS.some((prop) =>
-        Object.prototype.hasOwnProperty.call(o, prop)
-      ) ||
-        DEPRECATED_OPTIONS_KEYS.some((prop) =>
-          Object.prototype.hasOwnProperty.call(o, prop)
-        ))
+      OPTIONS_KEYS.some((prop) => Object.prototype.hasOwnProperty.call(o, prop))
     );
   },
 
@@ -172,27 +158,9 @@ const utils = {
         );
 
         if (extraKeys.length) {
-          const nonDeprecated = extraKeys.filter((key) => {
-            if (!DEPRECATED_OPTIONS[key]) {
-              return true;
-            }
-            const newParam = DEPRECATED_OPTIONS[key];
-            if (params[newParam]) {
-              throw Error(
-                `Both '${newParam}' and '${key}' were provided; please remove '${key}', which is deprecated.`
-              );
-            }
-            /**
-             * TODO turn this into a hard error in a future major version (once we have fixed our docs).
-             */
-            emitWarning(`'${key}' is deprecated; use '${newParam}' instead.`);
-            params[newParam] = params[key];
-          });
-          if (nonDeprecated.length) {
-            emitWarning(
-              `Invalid options found (${extraKeys.join(', ')}); ignoring.`
-            );
-          }
+          emitWarning(
+            `Invalid options found (${extraKeys.join(', ')}); ignoring.`
+          );
         }
 
         if (params.apiKey) {

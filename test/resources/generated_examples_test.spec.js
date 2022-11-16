@@ -2270,41 +2270,6 @@ describe('Sigma.ScheduledQueryRun', function() {
   });
 });
 
-describe('Sku', function() {
-  it('list method', async function() {
-    const skus = await stripe.skus.list({limit: 3});
-    expect(skus).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const sku = await stripe.skus.create({
-      attributes: {size: 'Medium', gender: 'Unisex'},
-      price: 1500,
-      currency: 'usd',
-      inventory: {type: 'finite', quantity: 500},
-      product: 'prod_xxxxxxxxxxxxx',
-    });
-    expect(sku).not.to.be.null;
-  });
-
-  it('del method', async function() {
-    const deleted = await stripe.skus.del('sku_xxxxxxxxxxxxx');
-    expect(deleted).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const sku = await stripe.skus.retrieve('sku_xxxxxxxxxxxxx');
-    expect(sku).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const sku = await stripe.skus.update('sku_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
-    });
-    expect(sku).not.to.be.null;
-  });
-});
-
 describe('Source', function() {
   it('retrieve method', async function() {
     const source = await stripe.sources.retrieve('src_xxxxxxxxxxxxx');

@@ -127,7 +127,16 @@ class StripeConnectionError extends StripeError {}
  * SignatureVerificationError is raised when the signature verification for a
  * webhook fails
  */
-class StripeSignatureVerificationError extends StripeError {}
+class StripeSignatureVerificationError extends StripeError {
+  header: string;
+  payload: string;
+
+  constructor(header: string, payload: string, raw: StripeRawError = {}) {
+    super(raw);
+    this.header = header;
+    this.payload = payload;
+  }
+}
 
 /**
  * IdempotencyError is raised in cases where an idempotency key was used
