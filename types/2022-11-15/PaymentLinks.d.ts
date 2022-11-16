@@ -59,6 +59,8 @@ declare module 'stripe' {
        */
       currency: string;
 
+      custom_text: PaymentLink.CustomText;
+
       /**
        * Configuration for Customer creation during checkout.
        */
@@ -192,6 +194,34 @@ declare module 'stripe' {
       }
 
       type CustomerCreation = 'always' | 'if_required';
+
+      interface CustomText {
+        /**
+         * Custom text that should be displayed alongside shipping address collection.
+         */
+        shipping_address: CustomText.ShippingAddress | null;
+
+        /**
+         * Custom text that should be displayed alongside the payment confirmation button.
+         */
+        submit: CustomText.Submit | null;
+      }
+
+      namespace CustomText {
+        interface ShippingAddress {
+          /**
+           * Text may be up to 500 characters in length.
+           */
+          message: string;
+        }
+
+        interface Submit {
+          /**
+           * Text may be up to 500 characters in length.
+           */
+          message: string;
+        }
+      }
 
       interface PaymentIntentData {
         /**
@@ -588,6 +618,11 @@ declare module 'stripe' {
       currency?: string;
 
       /**
+       * Display additional text for your customers using custom text.
+       */
+      custom_text?: PaymentLinkCreateParams.CustomText;
+
+      /**
        * Configures whether [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link create a [Customer](https://stripe.com/docs/api/customers).
        */
       customer_creation?: PaymentLinkCreateParams.CustomerCreation;
@@ -731,6 +766,34 @@ declare module 'stripe' {
       }
 
       type CustomerCreation = 'always' | 'if_required';
+
+      interface CustomText {
+        /**
+         * Custom text that should be displayed alongside shipping address collection.
+         */
+        shipping_address?: Stripe.Emptyable<CustomText.ShippingAddress>;
+
+        /**
+         * Custom text that should be displayed alongside the payment confirmation button.
+         */
+        submit?: Stripe.Emptyable<CustomText.Submit>;
+      }
+
+      namespace CustomText {
+        interface ShippingAddress {
+          /**
+           * Text may be up to 500 characters in length.
+           */
+          message: string;
+        }
+
+        interface Submit {
+          /**
+           * Text may be up to 500 characters in length.
+           */
+          message: string;
+        }
+      }
 
       interface LineItem {
         /**
@@ -1159,6 +1222,11 @@ declare module 'stripe' {
       billing_address_collection?: PaymentLinkUpdateParams.BillingAddressCollection;
 
       /**
+       * Display additional text for your customers using custom text.
+       */
+      custom_text?: PaymentLinkUpdateParams.CustomText;
+
+      /**
        * Configures whether [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link create a [Customer](https://stripe.com/docs/api/customers).
        */
       customer_creation?: PaymentLinkUpdateParams.CustomerCreation;
@@ -1248,6 +1316,34 @@ declare module 'stripe' {
       type BillingAddressCollection = 'auto' | 'required';
 
       type CustomerCreation = 'always' | 'if_required';
+
+      interface CustomText {
+        /**
+         * Custom text that should be displayed alongside shipping address collection.
+         */
+        shipping_address?: Stripe.Emptyable<CustomText.ShippingAddress>;
+
+        /**
+         * Custom text that should be displayed alongside the payment confirmation button.
+         */
+        submit?: Stripe.Emptyable<CustomText.Submit>;
+      }
+
+      namespace CustomText {
+        interface ShippingAddress {
+          /**
+           * Text may be up to 500 characters in length.
+           */
+          message: string;
+        }
+
+        interface Submit {
+          /**
+           * Text may be up to 500 characters in length.
+           */
+          message: string;
+        }
+      }
 
       interface LineItem {
         /**

@@ -90,6 +90,8 @@ declare module 'stripe' {
          */
         currency: string | null;
 
+        custom_text: Session.CustomText;
+
         /**
          * The ID of the customer for this Session.
          * For Checkout Sessions in `payment` or `subscription` mode, Checkout
@@ -443,6 +445,34 @@ declare module 'stripe' {
               | 'unknown'
               | 'us_ein'
               | 'za_vat';
+          }
+        }
+
+        interface CustomText {
+          /**
+           * Custom text that should be displayed alongside shipping address collection.
+           */
+          shipping_address: CustomText.ShippingAddress | null;
+
+          /**
+           * Custom text that should be displayed alongside the payment confirmation button.
+           */
+          submit: CustomText.Submit | null;
+        }
+
+        namespace CustomText {
+          interface ShippingAddress {
+            /**
+             * Text may be up to 500 characters in length.
+             */
+            message: string;
+          }
+
+          interface Submit {
+            /**
+             * Text may be up to 500 characters in length.
+             */
+            message: string;
           }
         }
 
@@ -1465,6 +1495,11 @@ declare module 'stripe' {
         currency?: string;
 
         /**
+         * Display additional text for your customers using custom text.
+         */
+        custom_text?: SessionCreateParams.CustomText;
+
+        /**
          * ID of an existing Customer, if one exists. In `payment` mode, the customer's most recent card
          * payment method will be used to prefill the email, name, card details, and billing address
          * on the Checkout page. In `subscription` mode, the customer's [default payment method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method)
@@ -1708,6 +1743,34 @@ declare module 'stripe' {
           type Name = 'auto' | 'never';
 
           type Shipping = 'auto' | 'never';
+        }
+
+        interface CustomText {
+          /**
+           * Custom text that should be displayed alongside shipping address collection.
+           */
+          shipping_address?: Stripe.Emptyable<CustomText.ShippingAddress>;
+
+          /**
+           * Custom text that should be displayed alongside the payment confirmation button.
+           */
+          submit?: Stripe.Emptyable<CustomText.Submit>;
+        }
+
+        namespace CustomText {
+          interface ShippingAddress {
+            /**
+             * Text may be up to 500 characters in length.
+             */
+            message: string;
+          }
+
+          interface Submit {
+            /**
+             * Text may be up to 500 characters in length.
+             */
+            message: string;
+          }
         }
 
         interface Discount {
