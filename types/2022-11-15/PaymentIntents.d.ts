@@ -746,6 +746,11 @@ declare module 'stripe' {
           data: string;
 
           /**
+           * The URL to the hosted PayNow instructions page, which allows customers to view the PayNow QR code.
+           */
+          hosted_instructions_url: string | null;
+
+          /**
            * The image_url_png string used to render QR code
            */
           image_url_png: string;
