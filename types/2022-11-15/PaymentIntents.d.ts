@@ -800,12 +800,12 @@ declare module 'stripe' {
           hosted_instructions_url: string;
 
           /**
-           * The image_url_png string used to render QR code, can be used as <img src="…" />
+           * The PNG path used to render the QR code, can be used as the source in an HTML img tag
            */
           image_url_png: string;
 
           /**
-           * The image_url_svg string used to render QR code, can be used as <img src="…" />
+           * The SVG path used to render the QR code, can be used as the source in an HTML img tag
            */
           image_url_svg: string;
         }
@@ -850,6 +850,11 @@ declare module 'stripe' {
            * The data being used to generate QR code
            */
           data: string;
+
+          /**
+           * The URL to the hosted WeChat Pay instructions page, which allows customers to view the WeChat Pay QR code.
+           */
+          hosted_instructions_url: string;
 
           /**
            * The base64 image data for a pre-generated QR code
