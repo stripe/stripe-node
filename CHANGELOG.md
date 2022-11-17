@@ -1,5 +1,13 @@
 # Changelog
 
+## 11.1.0 - 2022-11-17
+* [#1623](https://github.com/stripe/stripe-node/pull/1623) API Updates
+  * Add support for `hosted_instructions_url` on `PaymentIntent.next_action.wechat_pay_display_qr_code`
+* [#1622](https://github.com/stripe/stripe-node/pull/1622) API Updates
+  * Add support for `custom_text` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  * Add support for `hosted_instructions_url` on `PaymentIntent.next_action.paynow_display_qr_code`
+
+
 ## 11.0.0 - 2022-11-16
 
 This release includes breaking changes resulting from moving to use the new API version "2022-11-15". To learn more about these changes to Stripe products, see https://stripe.com/docs/upgrades#2022-11-15
