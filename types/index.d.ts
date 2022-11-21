@@ -1,12 +1,12 @@
 // File generated from our OpenAPI spec
 
-///<reference path='../lib.d.ts' />
-///<reference path='../crypto/crypto.d.ts' />
-///<reference path='../net/net.d.ts' />
-///<reference path='../shared.d.ts' />
-///<reference path='../Errors.d.ts' />
-///<reference path='../OAuth.d.ts' />
-///<reference path='../Webhooks.d.ts' />
+///<reference path='./lib.d.ts' />
+///<reference path='./crypto/crypto.d.ts' />
+///<reference path='./net/net.d.ts' />
+///<reference path='./shared.d.ts' />
+///<reference path='./Errors.d.ts' />
+///<reference path='./OAuth.d.ts' />
+///<reference path='./Webhooks.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./ApplePayDomains.d.ts' />

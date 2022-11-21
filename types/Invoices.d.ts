@@ -1111,7 +1111,7 @@ declare module 'stripe' {
       statement_descriptor?: string;
 
       /**
-       * The ID of the subscription to invoice, if any. If set, the created invoice will only include pending invoice items for that subscription and pending invoice items not associated with any subscription if `pending_invoice_items_behavior` is `include`. The subscription's billing cycle and regular subscription events won't be affected.
+       * The ID of the subscription to invoice, if any. If set, the created invoice will only include pending invoice items for that subscription. The subscription's billing cycle and regular subscription events won't be affected.
        */
       subscription?: string;
 
