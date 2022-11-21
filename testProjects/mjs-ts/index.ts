@@ -1,14 +1,14 @@
 import {Stripe} from 'stripe';
 import DefaultStripe from 'stripe';
 
-const stripe = new Stripe(process.argv[2]);
-const defaultStripe = new DefaultStripe(process.argv[2]);
+const stripe = new Stripe(process.argv[2], {apiVersion: '2022-11-15'});
+const defaultStripe = new DefaultStripe(process.argv[2], {apiVersion: '2022-11-15'});
 
 try {
   throw new stripe.errors.StripeError({
     charge: 'foo',
     unknown_prop: 'bar',
-  });
+  } as any);
 } catch (e) {
   if (e instanceof stripe.errors.StripeError) {
     console.log("Caught StripeError");
@@ -17,9 +17,9 @@ try {
   }
 }
 
-async function exampleFunction(args) {
+async function exampleFunction(args: Stripe.PaymentIntentCreateParams) {
   try {
-    await stripe.paymentIntents.create(args);
+    const pi: Stripe.PaymentIntent = await stripe.paymentIntents.create(args);
   } catch (e) {
     if (e instanceof stripe.errors.StripeInvalidRequestError) {
       console.log("Caught StripeInvalidRequestError");
