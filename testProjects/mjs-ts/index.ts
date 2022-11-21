@@ -29,10 +29,11 @@ async function exampleFunction(args: Stripe.PaymentIntentCreateParams) {
   }
 }
 
-exampleFunction({
+exampleFunction(
+  //@ts-ignore
+  {
   // The required parameter currency is missing
   amount: 2000,
   confirm: true,
   payment_method: 'pm_card_visa',
-  currency: 'usd'
 });

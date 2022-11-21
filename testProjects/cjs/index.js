@@ -30,5 +30,4 @@ exampleFunction({
   amount: 2000,
   confirm: true,
   payment_method: 'pm_card_visa',
-  currency: 'usd'
 });
