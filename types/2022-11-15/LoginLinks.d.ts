@@ -21,12 +21,5 @@ declare module 'stripe' {
        */
       url: string;
     }
-
-    interface LoginLinkCreateParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
   }
 }

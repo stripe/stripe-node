@@ -641,7 +641,7 @@ describe('Stripe Module', function() {
       const script = `
       cd testProjects/${projectName}
       npm install
-      node index.js ${testUtils.getUserStripeKey()}
+      npm run-script runtestproject -- ${testUtils.getUserStripeKey()}
     `;
       require('child_process').execSync(script);
     };
@@ -657,6 +657,7 @@ describe('Stripe Module', function() {
       }
 
       expect(runTestProject.bind(null, 'mjs')).to.not.throw();
+      expect(runTestProject.bind(null, 'mjs-ts')).to.not.throw();
     });
   });
 });

@@ -119,12 +119,5 @@ declare module 'stripe' {
 
       type Type = 'custom_line_item' | 'invoice_line_item';
     }
-
-    interface CreditNoteLineItemListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
   }
 }
