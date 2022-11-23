@@ -138,20 +138,5 @@ declare module 'stripe' {
         payment_intent: string | Stripe.PaymentIntent;
       }
     }
-
-    interface CustomerCashBalanceTransactionRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface CustomerCashBalanceTransactionListParams
-      extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
   }
 }

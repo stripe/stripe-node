@@ -189,12 +189,5 @@ declare module 'stripe' {
 
       type Type = 'invoiceitem' | 'subscription';
     }
-
-    interface InvoiceLineItemListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
   }
 }
