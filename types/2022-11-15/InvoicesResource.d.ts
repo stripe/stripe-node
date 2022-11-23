@@ -2040,6 +2040,13 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface InvoiceLineItemListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     class InvoicesResource {
       /**
        * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](#pay_invoice) or <a href="#send_invoice">send](https://stripe.com/docs/api#finalize_invoice) the invoice to your customers.

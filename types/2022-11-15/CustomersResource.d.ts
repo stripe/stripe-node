@@ -636,6 +636,351 @@ declare module 'stripe' {
       page?: string;
     }
 
+    interface CashBalanceRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CashBalanceUpdateParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * A hash of settings for this cash balance.
+       */
+      settings?: CashBalanceUpdateParams.Settings;
+    }
+
+    namespace CashBalanceUpdateParams {
+      interface Settings {
+        /**
+         * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic` or `manual`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
+         */
+        reconciliation_mode?: Settings.ReconciliationMode;
+      }
+
+      namespace Settings {
+        type ReconciliationMode = 'automatic' | 'manual';
+      }
+    }
+
+    interface CustomerBalanceTransactionCreateParams {
+      /**
+       * The integer amount in **cents (or local equivalent)** to apply to the customer's credit balance.
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Specifies the [`invoice_credit_balance`](https://stripe.com/docs/api/customers/object#customer_object-invoice_credit_balance) that this transaction will apply to. If the customer's `currency` is not set, it will be updated to this value.
+       */
+      currency: string;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+    }
+
+    interface CustomerBalanceTransactionRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerBalanceTransactionUpdateParams {
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+    }
+
+    interface CustomerBalanceTransactionListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerCashBalanceTransactionRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerCashBalanceTransactionListParams
+      extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerSourceCreateParams {
+      /**
+       * Please refer to full [documentation](https://stripe.com/docs/api) instead.
+       */
+      source: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.MetadataParam;
+
+      validate?: boolean;
+    }
+
+    interface CustomerSourceRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerSourceUpdateParams {
+      /**
+       * The name of the person or business that owns the bank account.
+       */
+      account_holder_name?: string;
+
+      /**
+       * The type of entity that holds the account. This can be either `individual` or `company`.
+       */
+      account_holder_type?: CustomerSourceUpdateParams.AccountHolderType;
+
+      /**
+       * City/District/Suburb/Town/Village.
+       */
+      address_city?: string;
+
+      /**
+       * Billing address country, if provided when creating card.
+       */
+      address_country?: string;
+
+      /**
+       * Address line 1 (Street address/PO Box/Company name).
+       */
+      address_line1?: string;
+
+      /**
+       * Address line 2 (Apartment/Suite/Unit/Building).
+       */
+      address_line2?: string;
+
+      /**
+       * State/County/Province/Region.
+       */
+      address_state?: string;
+
+      /**
+       * ZIP or postal code.
+       */
+      address_zip?: string;
+
+      /**
+       * Two digit number representing the card's expiration month.
+       */
+      exp_month?: string;
+
+      /**
+       * Four digit number representing the card's expiration year.
+       */
+      exp_year?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * Cardholder name.
+       */
+      name?: string;
+
+      owner?: CustomerSourceUpdateParams.Owner;
+    }
+
+    namespace CustomerSourceUpdateParams {
+      type AccountHolderType = 'company' | 'individual';
+
+      interface Owner {
+        /**
+         * Owner's address.
+         */
+        address?: Stripe.AddressParam;
+
+        /**
+         * Owner's email address.
+         */
+        email?: string;
+
+        /**
+         * Owner's full name.
+         */
+        name?: string;
+
+        /**
+         * Owner's phone number.
+         */
+        phone?: string;
+      }
+    }
+
+    interface CustomerSourceListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Filter sources according to a particular object type.
+       */
+      object?: string;
+    }
+
+    interface CustomerSourceDeleteParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerSourceVerifyParams {
+      /**
+       * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
+       */
+      amounts?: Array<number>;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface TaxIdCreateParams {
+      /**
+       * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ph_tin`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+       */
+      type: TaxIdCreateParams.Type;
+
+      /**
+       * Value of the tax ID.
+       */
+      value: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    namespace TaxIdCreateParams {
+      type Type =
+        | 'ae_trn'
+        | 'au_abn'
+        | 'au_arn'
+        | 'bg_uic'
+        | 'br_cnpj'
+        | 'br_cpf'
+        | 'ca_bn'
+        | 'ca_gst_hst'
+        | 'ca_pst_bc'
+        | 'ca_pst_mb'
+        | 'ca_pst_sk'
+        | 'ca_qst'
+        | 'ch_vat'
+        | 'cl_tin'
+        | 'eg_tin'
+        | 'es_cif'
+        | 'eu_oss_vat'
+        | 'eu_vat'
+        | 'gb_vat'
+        | 'ge_vat'
+        | 'hk_br'
+        | 'hu_tin'
+        | 'id_npwp'
+        | 'il_vat'
+        | 'in_gst'
+        | 'is_vat'
+        | 'jp_cn'
+        | 'jp_rn'
+        | 'jp_trn'
+        | 'ke_pin'
+        | 'kr_brn'
+        | 'li_uid'
+        | 'mx_rfc'
+        | 'my_frp'
+        | 'my_itn'
+        | 'my_sst'
+        | 'no_vat'
+        | 'nz_gst'
+        | 'ph_tin'
+        | 'ru_inn'
+        | 'ru_kpp'
+        | 'sa_vat'
+        | 'sg_gst'
+        | 'sg_uen'
+        | 'si_tin'
+        | 'th_vat'
+        | 'tr_tin'
+        | 'tw_vat'
+        | 'ua_vat'
+        | 'us_ein'
+        | 'za_vat';
+    }
+
+    interface TaxIdRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface TaxIdListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface TaxIdDeleteParams {}
+
     class CustomersResource {
       /**
        * Creates a new customer object.
