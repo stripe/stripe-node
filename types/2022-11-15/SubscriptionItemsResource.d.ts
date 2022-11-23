@@ -320,6 +320,39 @@ declare module 'stripe' {
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
     }
 
+    interface UsageRecordCreateParams {
+      /**
+       * The usage quantity for the specified timestamp.
+       */
+      quantity: number;
+
+      /**
+       * Valid values are `increment` (default) or `set`. When using `increment` the specified `quantity` will be added to the usage at the specified timestamp. The `set` action will overwrite the usage quantity at that timestamp. If the subscription has [billing thresholds](https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_thresholds), `increment` is the only allowed value.
+       */
+      action?: UsageRecordCreateParams.Action;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * The timestamp for the usage event. This timestamp must be within the current billing period of the subscription of the provided `subscription_item`, and must not be in the future. When passing `"now"`, Stripe records usage for the current time. Default is `"now"` if a value is not provided.
+       */
+      timestamp?: 'now' | number;
+    }
+
+    namespace UsageRecordCreateParams {
+      type Action = 'increment' | 'set';
+    }
+
+    interface UsageRecordSummaryListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     class SubscriptionItemsResource {
       /**
        * Adds a new item to an existing subscription. No existing items will be changed or replaced.

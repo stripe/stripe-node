@@ -383,6 +383,13 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface CreditNoteLineItemListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     class CreditNotesResource {
       /**
        * Issue a credit note to adjust the amount of a finalized invoice. For a status=open invoice, a credit note reduces
