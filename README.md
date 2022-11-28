@@ -54,13 +54,11 @@ Or using ES modules and `async`/`await`:
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
 
-(async () => {
-  const customer = await stripe.customers.create({
-    email: 'customer@example.com',
-  });
+const customer = await stripe.customers.create({
+  email: 'customer@example.com',
+});
 
-  console.log(customer.id);
-})();
+console.log(customer.id);
 ```
 
 ### Usage with TypeScript
