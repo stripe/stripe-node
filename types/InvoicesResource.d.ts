@@ -2168,10 +2168,10 @@ declare module 'stripe' {
       retrieveUpcoming(
         params?: InvoiceRetrieveUpcomingParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      ): Promise<Stripe.Response<Omit<Stripe.Invoice, 'id'>>>;
       retrieveUpcoming(
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Invoice>>;
+      ): Promise<Stripe.Response<Omit<Stripe.Invoice, 'id'>>>;
 
       /**
        * Search for invoices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
