@@ -123,6 +123,10 @@ stripe = new Stripe('sk_test_123', {
       return undefined;
     });
 
+  // @ts-expect-error
+  (await stripe.invoices.retrieveUpcoming()).id;
+  (await stripe.invoices.retrieve('')).id;
+
   try {
     await stripe.paymentIntents.create({amount: 100, currency: 'USD'});
   } catch (err) {

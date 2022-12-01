@@ -7,6 +7,7 @@
 ///<reference path='./Errors.d.ts' />
 ///<reference path='./OAuth.d.ts' />
 ///<reference path='./Webhooks.d.ts' />
+///<reference path='./UpcomingInvoices.d.ts' />
 ///<reference path='./AccountsResource.d.ts' />
 ///<reference path='./AccountLinksResource.d.ts' />
 ///<reference path='./ApplePayDomainsResource.d.ts' />
