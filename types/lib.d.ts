@@ -15,11 +15,7 @@ declare module 'stripe' {
     export class StripeResource {
       static extend<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        T extends {[prop: string]: any} & {
-          includeBasic?: Array<
-            'create' | 'retrieve' | 'update' | 'list' | 'del'
-          >;
-        }
+        T extends {[prop: string]: any}
       >(spec: T): StripeResourceExtension<T>;
       static method<ResponseObject = object>(spec: {
         method: string;
@@ -29,27 +25,6 @@ declare module 'stripe' {
         // change/removal at any time.
         methodType?: 'list' | 'search';
       }): (...args: any[]) => Response<ResponseObject>; //eslint-disable-line @typescript-eslint/no-explicit-any
-      static BASIC_METHODS: {
-        create<T>(
-          params: CouponCreateParams,
-          options?: RequestOptions
-        ): Promise<T>;
-        retrieve<T>(
-          id: string,
-          params?: CouponRetrieveParams,
-          options?: RequestOptions
-        ): Promise<T>;
-        update<T>(
-          id: string,
-          params?: CouponUpdateParams,
-          options?: RequestOptions
-        ): Promise<T>;
-        list<T>(
-          params?: CouponListParams,
-          options?: RequestOptions
-        ): ApiListPromise<T>;
-        del<T>(id: string, options?: RequestOptions): Promise<T>;
-      };
       static MAX_BUFFERED_REQUEST_METRICS: number;
     }
     export type LatestApiVersion = '2022-11-15';
