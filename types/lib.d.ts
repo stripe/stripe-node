@@ -15,11 +15,7 @@ declare module 'stripe' {
     export class StripeResource {
       static extend<
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        T extends {[prop: string]: any} & {
-          includeBasic?: Array<
-            'create' | 'retrieve' | 'update' | 'list' | 'del'
-          >;
-        }
+        T extends {[prop: string]: any}
       >(spec: T): StripeResourceExtension<T>;
       static method<ResponseObject = object>(spec: {
         method: string;
