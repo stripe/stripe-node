@@ -193,7 +193,6 @@ type StripeResourceObject = {
   basePath: UrlInterpolator;
   path: UrlInterpolator;
   resourcePath: string;
-  includeBasic?: Array<string>;
   createResourcePathWithSymbols: (path: string | null | undefined) => string;
   createFullPath: (
     interpolator: UrlInterpolator,
