@@ -20,6 +20,11 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
+         * Information about a specific flow for the customer to go through.
+         */
+        flow_data?: SessionCreateParams.FlowData;
+
+        /**
          * The IETF language tag of the locale Customer Portal is displayed in. If blank or auto, the customer's `preferred_locales` or browser's locale is used.
          */
         locale?: SessionCreateParams.Locale;
@@ -36,6 +41,69 @@ declare module 'stripe' {
       }
 
       namespace SessionCreateParams {
+        interface FlowData {
+          /**
+           * Behavior after the flow is completed.
+           */
+          after_completion?: FlowData.AfterCompletion;
+
+          /**
+           * Configuration when `flow_data.type=subscription_cancel`.
+           */
+          subscription_cancel?: FlowData.SubscriptionCancel;
+
+          /**
+           * Type of flow that the customer will go through.
+           */
+          type: FlowData.Type;
+        }
+
+        namespace FlowData {
+          interface AfterCompletion {
+            /**
+             * Configuration when `after_completion.type=hosted_confirmation`.
+             */
+            hosted_confirmation?: AfterCompletion.HostedConfirmation;
+
+            /**
+             * Configuration when `after_completion.type=redirect`.
+             */
+            redirect?: AfterCompletion.Redirect;
+
+            /**
+             * The specified behavior after the flow is completed.
+             */
+            type: AfterCompletion.Type;
+          }
+
+          namespace AfterCompletion {
+            interface HostedConfirmation {
+              /**
+               * A custom message to display to the customer after the flow is completed.
+               */
+              custom_message?: string;
+            }
+
+            interface Redirect {
+              /**
+               * The URL the customer will be redirected to after the flow is completed.
+               */
+              return_url: string;
+            }
+
+            type Type = 'hosted_confirmation' | 'portal_homepage' | 'redirect';
+          }
+
+          interface SubscriptionCancel {
+            /**
+             * The ID of the subscription to be canceled.
+             */
+            subscription: string;
+          }
+
+          type Type = 'payment_method_update' | 'subscription_cancel';
+        }
+
         type Locale =
           | 'auto'
           | 'bg'
