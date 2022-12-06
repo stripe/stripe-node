@@ -126,6 +126,16 @@ declare module 'stripe' {
         expires_at: number;
 
         /**
+         * ID of the invoice created by the Checkout Session, if it exists.
+         */
+        invoice: string | Stripe.Invoice | null;
+
+        /**
+         * Details on the state of invoice creation for the Checkout Session.
+         */
+        invoice_creation: Session.InvoiceCreation | null;
+
+        /**
          * The line items purchased by the customer.
          */
         line_items?: ApiList<Stripe.LineItem>;
@@ -473,6 +483,72 @@ declare module 'stripe' {
              * Text may be up to 500 characters in length.
              */
             message: string;
+          }
+        }
+
+        interface InvoiceCreation {
+          /**
+           * Indicates whether invoice creation is enabled for the Checkout Session.
+           */
+          enabled: boolean;
+
+          invoice_data: InvoiceCreation.InvoiceData;
+        }
+
+        namespace InvoiceCreation {
+          interface InvoiceData {
+            /**
+             * The account tax IDs associated with the invoice.
+             */
+            account_tax_ids: Array<
+              string | Stripe.TaxId | Stripe.DeletedTaxId
+            > | null;
+
+            /**
+             * Custom fields displayed on the invoice.
+             */
+            custom_fields: Array<InvoiceData.CustomField> | null;
+
+            /**
+             * An arbitrary string attached to the object. Often useful for displaying to users.
+             */
+            description: string | null;
+
+            /**
+             * Footer displayed on the invoice.
+             */
+            footer: string | null;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             */
+            metadata: Stripe.Metadata | null;
+
+            /**
+             * Options for invoice PDF rendering.
+             */
+            rendering_options: InvoiceData.RenderingOptions | null;
+          }
+
+          namespace InvoiceData {
+            interface CustomField {
+              /**
+               * The name of the custom field.
+               */
+              name: string;
+
+              /**
+               * The value of the custom field.
+               */
+              value: string;
+            }
+
+            interface RenderingOptions {
+              /**
+               * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+               */
+              amount_tax_display: string | null;
+            }
           }
         }
 

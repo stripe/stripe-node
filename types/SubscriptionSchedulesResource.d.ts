@@ -345,6 +345,11 @@ declare module 'stripe' {
           billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
            * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.
            */
           plan?: string;
@@ -793,6 +798,11 @@ declare module 'stripe' {
            * Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
            */
           billing_thresholds?: Stripe.Emptyable<Item.BillingThresholds>;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a configuration item. Metadata on a configuration item will update the underlying subscription item's `metadata` when the phase is entered, adding new keys and replacing existing keys. Individual keys in the subscription item's `metadata` can be unset by posting an empty value to them in the configuration item's `metadata`. To unset all keys in the subscription item's `metadata`, update the subscription item directly or unset every key individually from the configuration item's `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
 
           /**
            * The plan ID to subscribe to. You may specify the same ID in `plan` and `price`.

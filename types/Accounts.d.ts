@@ -247,6 +247,11 @@ declare module 'stripe' {
         ideal_payments?: Capabilities.IdealPayments;
 
         /**
+         * The status of the india_international_payments capability of the account, or whether the account can process international charges (non INR) in India.
+         */
+        india_international_payments?: Capabilities.IndiaInternationalPayments;
+
+        /**
          * The status of the JCB payments capability of the account, or whether the account (Japan only) can directly process JCB credit card charges in JPY currency.
          */
         jcb_payments?: Capabilities.JcbPayments;
@@ -361,6 +366,8 @@ declare module 'stripe' {
         type GrabpayPayments = 'active' | 'inactive' | 'pending';
 
         type IdealPayments = 'active' | 'inactive' | 'pending';
+
+        type IndiaInternationalPayments = 'active' | 'inactive' | 'pending';
 
         type JcbPayments = 'active' | 'inactive' | 'pending';
 

@@ -144,7 +144,7 @@ declare module 'stripe' {
           name: string | null;
 
           /**
-           * Identifier assigned to the seller by the card brand
+           * Identifier assigned to the seller by the card network. Different card networks may assign different network_id fields to the same merchant.
            */
           network_id: string;
 
