@@ -46,6 +46,11 @@ declare module 'stripe' {
         customer: string;
 
         /**
+         * Information about a specific flow for the customer to go through.
+         */
+        flow: Session.Flow | null;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
@@ -72,6 +77,66 @@ declare module 'stripe' {
       }
 
       namespace Session {
+        interface Flow {
+          after_completion: Flow.AfterCompletion;
+
+          /**
+           * Configuration when `flow.type=subscription_cancel`.
+           */
+          subscription_cancel: Flow.SubscriptionCancel | null;
+
+          /**
+           * Type of flow that the customer will go through.
+           */
+          type: Flow.Type;
+        }
+
+        namespace Flow {
+          interface AfterCompletion {
+            /**
+             * Configuration when `after_completion.type=hosted_confirmation`.
+             */
+            hosted_confirmation: AfterCompletion.HostedConfirmation | null;
+
+            /**
+             * Configuration when `after_completion.type=redirect`.
+             */
+            redirect: AfterCompletion.Redirect | null;
+
+            /**
+             * The specified type of behavior after the flow is completed.
+             */
+            type: AfterCompletion.Type;
+          }
+
+          namespace AfterCompletion {
+            interface HostedConfirmation {
+              /**
+               * A custom message to display to the customer after the flow is completed.
+               */
+              custom_message: string | null;
+            }
+
+            interface Redirect {
+              /**
+               * The URL the customer will be redirected to after the flow is completed.
+               */
+              return_url: string;
+            }
+
+            type Type = 'hosted_confirmation' | 'portal_homepage' | 'redirect';
+          }
+
+          interface SubscriptionCancel {
+            /**
+             * The ID of the subscription to be canceled.
+             */
+            subscription: string;
+          }
+
+          type Type = 'payment_method_update' | 'subscription_cancel';
+        }
+
         type Locale =
           | 'auto'
           | 'bg'
