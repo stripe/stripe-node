@@ -99,7 +99,7 @@ declare module 'stripe' {
         pending_request: Authorization.PendingRequest | null;
 
         /**
-         * History of every time `pending_request` was approved/denied, either by you directly or by Stripe (e.g. based on your `spending_controls`). If the merchant changes the authorization by performing an [incremental authorization](https://stripe.com/docs/issuing/purchases/authorizations), you can look at this field to see the previous requests for the authorization.
+         * History of every time a `pending_request` authorization was approved/declined, either by you directly or by Stripe (e.g. based on your spending_controls). If the merchant changes the authorization by performing an incremental authorization, you can look at this field to see the previous requests for the authorization. This field can be helpful in determining why a given authorization was approved/declined.
          */
         request_history: Array<Authorization.RequestHistory>;
 
@@ -121,7 +121,7 @@ declare module 'stripe' {
         verification_data: Authorization.VerificationData;
 
         /**
-         * The digital wallet used for this authorization. One of `apple_pay`, `google_pay`, or `samsung_pay`.
+         * The digital wallet used for this transaction. One of `apple_pay`, `google_pay`, or `samsung_pay`. Will populate as `null` when no digital wallet was utilized.
          */
         wallet: string | null;
       }
@@ -168,7 +168,7 @@ declare module 'stripe' {
           name: string | null;
 
           /**
-           * Identifier assigned to the seller by the card brand
+           * Identifier assigned to the seller by the card network. Different card networks may assign different network_id fields to the same merchant.
            */
           network_id: string;
 
@@ -185,7 +185,7 @@ declare module 'stripe' {
 
         interface NetworkData {
           /**
-           * ID from the network that identifies the acquiring financial institution. For Visa and Mastercard credit transactions this is as 6 digit code. For Maestro debit transactions this is a 9 digit code. Uncommonly, acquiring institution ID is not provided. When this occurs, the value will be null.
+           * Identifier assigned to the acquirer by the card network. Sometimes this value is not provided by the network; in this case, the value will be `null`.
            */
           acquiring_institution_id: string | null;
         }
@@ -268,7 +268,7 @@ declare module 'stripe' {
           merchant_currency: string;
 
           /**
-           * The reason for the approval or decline.
+           * When an authorization is approved or declined by you or by Stripe, this field provides additional detail on the reason for the outcome.
            */
           reason: RequestHistory.Reason;
 

@@ -362,6 +362,11 @@ declare module 'stripe' {
           billing_thresholds: Item.BillingThresholds | null;
 
           /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
+           */
+          metadata: Stripe.Metadata | null;
+
+          /**
            * ID of the plan to which the customer should be subscribed.
            */
           plan: string | Stripe.Plan | Stripe.DeletedPlan;

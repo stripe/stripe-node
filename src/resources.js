@@ -5,10 +5,10 @@
 const resourceNamespace = require('./ResourceNamespace');
 
 module.exports = {
-  Accounts: require('./resources/Accounts'),
   // Support Accounts for consistency, Account for backwards compatibility
   Account: require('./resources/Accounts'),
   AccountLinks: require('./resources/AccountLinks'),
+  Accounts: require('./resources/Accounts'),
   ApplePayDomains: require('./resources/ApplePayDomains'),
   ApplicationFees: require('./resources/ApplicationFees'),
   Balance: require('./resources/Balance'),
@@ -22,10 +22,10 @@ module.exports = {
   EphemeralKeys: require('./resources/EphemeralKeys'),
   Events: require('./resources/Events'),
   ExchangeRates: require('./resources/ExchangeRates'),
-  Files: require('./resources/Files'),
   FileLinks: require('./resources/FileLinks'),
-  Invoices: require('./resources/Invoices'),
+  Files: require('./resources/Files'),
   InvoiceItems: require('./resources/InvoiceItems'),
+  Invoices: require('./resources/Invoices'),
   Mandates: require('./resources/Mandates'),
   OAuth: require('./resources/OAuth'),
   PaymentIntents: require('./resources/PaymentIntents'),
@@ -43,8 +43,8 @@ module.exports = {
   SetupIntents: require('./resources/SetupIntents'),
   ShippingRates: require('./resources/ShippingRates'),
   Sources: require('./resources/Sources'),
-  Subscriptions: require('./resources/Subscriptions'),
   SubscriptionItems: require('./resources/SubscriptionItems'),
+  Subscriptions: require('./resources/Subscriptions'),
   SubscriptionSchedules: require('./resources/SubscriptionSchedules'),
   TaxCodes: require('./resources/TaxCodes'),
   TaxRates: require('./resources/TaxRates'),
@@ -72,15 +72,15 @@ module.exports = {
   }),
   Issuing: resourceNamespace('issuing', {
     Authorizations: require('./resources/Issuing/Authorizations'),
-    Cards: require('./resources/Issuing/Cards'),
     Cardholders: require('./resources/Issuing/Cardholders'),
+    Cards: require('./resources/Issuing/Cards'),
     Disputes: require('./resources/Issuing/Disputes'),
     Transactions: require('./resources/Issuing/Transactions'),
   }),
   Radar: resourceNamespace('radar', {
     EarlyFraudWarnings: require('./resources/Radar/EarlyFraudWarnings'),
-    ValueLists: require('./resources/Radar/ValueLists'),
     ValueListItems: require('./resources/Radar/ValueListItems'),
+    ValueLists: require('./resources/Radar/ValueLists'),
   }),
   Reporting: resourceNamespace('reporting', {
     ReportRuns: require('./resources/Reporting/ReportRuns'),
@@ -122,7 +122,7 @@ module.exports = {
     OutboundTransfers: require('./resources/Treasury/OutboundTransfers'),
     ReceivedCredits: require('./resources/Treasury/ReceivedCredits'),
     ReceivedDebits: require('./resources/Treasury/ReceivedDebits'),
-    Transactions: require('./resources/Treasury/Transactions'),
     TransactionEntries: require('./resources/Treasury/TransactionEntries'),
+    Transactions: require('./resources/Treasury/Transactions'),
   }),
 };

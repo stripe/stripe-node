@@ -222,6 +222,11 @@ declare module 'stripe' {
         ideal_payments?: Capabilities.IdealPayments;
 
         /**
+         * The india_international_payments capability.
+         */
+        india_international_payments?: Capabilities.IndiaInternationalPayments;
+
+        /**
          * The jcb_payments capability.
          */
         jcb_payments?: Capabilities.JcbPayments;
@@ -416,6 +421,13 @@ declare module 'stripe' {
         }
 
         interface IdealPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IndiaInternationalPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1437,6 +1449,11 @@ declare module 'stripe' {
         ideal_payments?: Capabilities.IdealPayments;
 
         /**
+         * The india_international_payments capability.
+         */
+        india_international_payments?: Capabilities.IndiaInternationalPayments;
+
+        /**
          * The jcb_payments capability.
          */
         jcb_payments?: Capabilities.JcbPayments;
@@ -1631,6 +1648,13 @@ declare module 'stripe' {
         }
 
         interface IdealPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface IndiaInternationalPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

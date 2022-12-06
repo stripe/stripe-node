@@ -5,7 +5,7 @@
 const stripe = require('../../testUtils').getStripeMockClient();
 const expect = require('chai').expect;
 
-describe('Apps.Secret', function() {
+describe('Apps.Secrets', function() {
   it('list method', async function() {
     const secrets = await stripe.apps.secrets.list({
       scope: {type: 'account'},
@@ -49,7 +49,7 @@ describe('Apps.Secret', function() {
   });
 });
 
-describe('Checkout.Session', function() {
+describe('Checkout.Sessions', function() {
   it('create method', async function() {
     const session = await stripe.checkout.sessions.create({
       success_url: 'https://example.com/success',
@@ -111,7 +111,7 @@ describe('Checkout.Session', function() {
   });
 });
 
-describe('CashBalance', function() {
+describe('CashBalances', function() {
   it('retrieveCashBalance method', async function() {
     const cashBalance = await stripe.customers.retrieveCashBalance('cus_123');
     expect(cashBalance).not.to.be.null;
@@ -125,7 +125,7 @@ describe('CashBalance', function() {
   });
 });
 
-describe('Customer', function() {
+describe('Customers', function() {
   it('createFundingInstructions method', async function() {
     const fundingInstructions = await stripe.customers.createFundingInstructions(
       'cus_123',
@@ -147,14 +147,6 @@ describe('Customer', function() {
       {type: 'card'}
     );
     expect(paymentMethods).not.to.be.null;
-  });
-
-  it('fundCashBalance method', async function() {
-    const customerCashBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
-      'cus_123',
-      {amount: 30, currency: 'eur'}
-    );
-    expect(customerCashBalanceTransaction).not.to.be.null;
   });
 
   it('list method', async function() {
@@ -214,7 +206,7 @@ describe('Customer', function() {
   });
 });
 
-describe('FinancialConnections.Account', function() {
+describe('FinancialConnections.Accounts', function() {
   it('list method', async function() {
     const accounts = await stripe.financialConnections.accounts.list();
     expect(accounts).not.to.be.null;
@@ -273,7 +265,7 @@ describe('FinancialConnections.Account', function() {
   });
 });
 
-describe('FinancialConnections.Session', function() {
+describe('FinancialConnections.Sessions', function() {
   it('create method', async function() {
     const session = await stripe.financialConnections.sessions.create({
       account_holder: {type: 'customer', customer: 'cus_123'},
@@ -306,7 +298,7 @@ describe('FinancialConnections.Session', function() {
   });
 });
 
-describe('PaymentIntent', function() {
+describe('PaymentIntents', function() {
   it('create method', async function() {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 1099,
@@ -397,7 +389,7 @@ describe('PaymentIntent', function() {
   });
 });
 
-describe('PaymentLink', function() {
+describe('PaymentLinks', function() {
   it('create method', async function() {
     const paymentLink = await stripe.paymentLinks.create({
       line_items: [{price: 'price_xxxxxxxxxxxxx', quantity: 1}],
@@ -443,7 +435,7 @@ describe('PaymentLink', function() {
   });
 });
 
-describe('Price', function() {
+describe('Prices', function() {
   it('create method', async function() {
     const price = await stripe.prices.create({
       unit_amount: 2000,
@@ -493,7 +485,7 @@ describe('Price', function() {
   });
 });
 
-describe('SetupAttempt', function() {
+describe('SetupAttempts', function() {
   it('list method', async function() {
     const setupAttempts = await stripe.setupAttempts.list({
       limit: 3,
@@ -503,7 +495,7 @@ describe('SetupAttempt', function() {
   });
 });
 
-describe('SetupIntent', function() {
+describe('SetupIntents', function() {
   it('verifyMicrodeposits method', async function() {
     const setupIntent = await stripe.setupIntents.verifyMicrodeposits(
       'seti_xxxxxxxxxxxxx'
@@ -551,7 +543,7 @@ describe('SetupIntent', function() {
   });
 });
 
-describe('ShippingRate', function() {
+describe('ShippingRates', function() {
   it('list method', async function() {
     const shippingRates = await stripe.shippingRates.list();
     expect(shippingRates).not.to.be.null;
@@ -596,7 +588,7 @@ describe('ShippingRate', function() {
   });
 });
 
-describe('Terminal.Configuration', function() {
+describe('Terminal.Configurations', function() {
   it('list method', async function() {
     const configurations = await stripe.terminal.configurations.list();
     expect(configurations).not.to.be.null;
@@ -664,7 +656,17 @@ describe('Terminal.Configuration', function() {
   });
 });
 
-describe('Issuing.Card', function() {
+describe('TestHelpers.Customers', function() {
+  it('fundCashBalance method', async function() {
+    const customerCashBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
+      'cus_123',
+      {amount: 30, currency: 'eur'}
+    );
+    expect(customerCashBalanceTransaction).not.to.be.null;
+  });
+});
+
+describe('TestHelpers.Issuing.Cards', function() {
   it('deliverCard method', async function() {
     const card = await stripe.testHelpers.issuing.cards.deliverCard('card_123');
     expect(card).not.to.be.null;
@@ -684,71 +686,16 @@ describe('Issuing.Card', function() {
     const card = await stripe.testHelpers.issuing.cards.shipCard('card_123');
     expect(card).not.to.be.null;
   });
-
-  it('list method', async function() {
-    const cards = await stripe.issuing.cards.list({limit: 3});
-    expect(cards).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const card = await stripe.issuing.cards.create({
-      cardholder: 'ich_xxxxxxxxxxxxx',
-      currency: 'usd',
-      type: 'virtual',
-    });
-    expect(card).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const card = await stripe.issuing.cards.retrieve('ic_xxxxxxxxxxxxx');
-    expect(card).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const card = await stripe.issuing.cards.update('ic_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
-    });
-    expect(card).not.to.be.null;
-  });
 });
 
-describe('Refund', function() {
+describe('TestHelpers.Refunds', function() {
   it('expire method', async function() {
     const refund = await stripe.testHelpers.refunds.expire('re_123');
     expect(refund).not.to.be.null;
   });
-
-  it('list method', async function() {
-    const refunds = await stripe.refunds.list({limit: 3});
-    expect(refunds).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const refund = await stripe.refunds.create({
-      charge: 'ch_xxxxxxxxxxxxx',
-    });
-    expect(refund).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const refund = await stripe.refunds.retrieve('re_xxxxxxxxxxxxx');
-    expect(refund).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const refund = await stripe.refunds.update('re_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
-    });
-    expect(refund).not.to.be.null;
-  });
-
-  it('cancel method', async function() {
-    const refund = await stripe.refunds.cancel('re_xxxxxxxxxxxxx');
-    expect(refund).not.to.be.null;
-  });
 });
 
-describe('TestHelpers.TestClock', function() {
+describe('TestHelpers.TestClocks', function() {
   it('list method', async function() {
     const testClocks = await stripe.testHelpers.testClocks.list();
     expect(testClocks).not.to.be.null;
@@ -814,7 +761,7 @@ describe('TestHelpers.TestClock', function() {
   });
 });
 
-describe('Treasury.InboundTransfer', function() {
+describe('TestHelpers.Treasury.InboundTransfers', function() {
   it('fail method', async function() {
     const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.fail(
       'ibt_123',
@@ -836,42 +783,9 @@ describe('Treasury.InboundTransfer', function() {
     );
     expect(inboundTransfer).not.to.be.null;
   });
-
-  it('list method', async function() {
-    const inboundTransfers = await stripe.treasury.inboundTransfers.list({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      limit: 3,
-    });
-    expect(inboundTransfers).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const inboundTransfer = await stripe.treasury.inboundTransfers.create({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      amount: 10000,
-      currency: 'usd',
-      origin_payment_method: 'pm_xxxxxxxxxxxxx',
-      description: 'InboundTransfer from my bank account',
-    });
-    expect(inboundTransfer).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const inboundTransfer = await stripe.treasury.inboundTransfers.retrieve(
-      'ibt_xxxxxxxxxxxxx'
-    );
-    expect(inboundTransfer).not.to.be.null;
-  });
-
-  it('cancel method', async function() {
-    const inboundTransfer = await stripe.treasury.inboundTransfers.cancel(
-      'ibt_xxxxxxxxxxxxx'
-    );
-    expect(inboundTransfer).not.to.be.null;
-  });
 });
 
-describe('Treasury.OutboundTransfer', function() {
+describe('TestHelpers.Treasury.OutboundTransfers', function() {
   it('fail method', async function() {
     const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.fail(
       'obt_123'
@@ -893,42 +807,9 @@ describe('Treasury.OutboundTransfer', function() {
     );
     expect(outboundTransfer).not.to.be.null;
   });
-
-  it('list method', async function() {
-    const outboundTransfers = await stripe.treasury.outboundTransfers.list({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      limit: 3,
-    });
-    expect(outboundTransfers).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const outboundTransfer = await stripe.treasury.outboundTransfers.create({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      destination_payment_method: 'pm_xxxxxxxxxxxxx',
-      amount: 500,
-      currency: 'usd',
-      description: 'OutboundTransfer to my external bank account',
-    });
-    expect(outboundTransfer).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const outboundTransfer = await stripe.treasury.outboundTransfers.retrieve(
-      'obt_xxxxxxxxxxxxx'
-    );
-    expect(outboundTransfer).not.to.be.null;
-  });
-
-  it('cancel method', async function() {
-    const outboundTransfer = await stripe.treasury.outboundTransfers.cancel(
-      'obt_xxxxxxxxxxxxx'
-    );
-    expect(outboundTransfer).not.to.be.null;
-  });
 });
 
-describe('Treasury.ReceivedCredit', function() {
+describe('TestHelpers.Treasury.ReceivedCredits', function() {
   it('create method', async function() {
     const receivedCredit = await stripe.testHelpers.treasury.receivedCredits.create(
       {
@@ -940,24 +821,9 @@ describe('Treasury.ReceivedCredit', function() {
     );
     expect(receivedCredit).not.to.be.null;
   });
-
-  it('list method', async function() {
-    const receivedCredits = await stripe.treasury.receivedCredits.list({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      limit: 3,
-    });
-    expect(receivedCredits).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const receivedCredit = await stripe.treasury.receivedCredits.retrieve(
-      'rc_xxxxxxxxxxxxx'
-    );
-    expect(receivedCredit).not.to.be.null;
-  });
 });
 
-describe('Treasury.ReceivedDebit', function() {
+describe('TestHelpers.Treasury.ReceivedDebits', function() {
   it('create method', async function() {
     const receivedDebit = await stripe.testHelpers.treasury.receivedDebits.create(
       {
@@ -969,24 +835,9 @@ describe('Treasury.ReceivedDebit', function() {
     );
     expect(receivedDebit).not.to.be.null;
   });
-
-  it('list method', async function() {
-    const receivedDebits = await stripe.treasury.receivedDebits.list({
-      financial_account: 'fa_xxxxxxxxxxxxx',
-      limit: 3,
-    });
-    expect(receivedDebits).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const receivedDebit = await stripe.treasury.receivedDebits.retrieve(
-      'rd_xxxxxxxxxxxxx'
-    );
-    expect(receivedDebit).not.to.be.null;
-  });
 });
 
-describe('Token', function() {
+describe('Tokens', function() {
   it('create method', async function() {
     const token = await stripe.tokens.create({
       card: {
@@ -1052,7 +903,7 @@ describe('Token', function() {
   });
 });
 
-describe('AccountLink', function() {
+describe('AccountLinks', function() {
   it('create method', async function() {
     const accountLink = await stripe.accountLinks.create({
       account: 'acct_xxxxxxxxxxxxx',
@@ -1064,7 +915,7 @@ describe('AccountLink', function() {
   });
 });
 
-describe('Account', function() {
+describe('Accounts', function() {
   it('list method', async function() {
     const accounts = await stripe.accounts.list({limit: 3});
     expect(accounts).not.to.be.null;
@@ -1108,7 +959,7 @@ describe('Account', function() {
   });
 });
 
-describe('Capability', function() {
+describe('Capabilities', function() {
   it('listCapabilities method', async function() {
     const capabilities = await stripe.accounts.listCapabilities(
       'acct_xxxxxxxxxxxxx'
@@ -1134,7 +985,7 @@ describe('Capability', function() {
   });
 });
 
-describe('LoginLink', function() {
+describe('LoginLinks', function() {
   it('createLoginLink method', async function() {
     const loginLink = await stripe.accounts.createLoginLink(
       'acct_xxxxxxxxxxxxx'
@@ -1143,7 +994,7 @@ describe('LoginLink', function() {
   });
 });
 
-describe('Person', function() {
+describe('Persons', function() {
   it('listPersons method', async function() {
     const persons = await stripe.accounts.listPersons('acct_xxxxxxxxxxxxx', {
       limit: 3,
@@ -1185,7 +1036,7 @@ describe('Person', function() {
   });
 });
 
-describe('ApplicationFee', function() {
+describe('ApplicationFees', function() {
   it('list method', async function() {
     const applicationFees = await stripe.applicationFees.list({limit: 3});
     expect(applicationFees).not.to.be.null;
@@ -1199,7 +1050,7 @@ describe('ApplicationFee', function() {
   });
 });
 
-describe('FeeRefund', function() {
+describe('FeeRefunds', function() {
   it('listRefunds method', async function() {
     const refunds = await stripe.applicationFees.listRefunds(
       'fee_xxxxxxxxxxxxx',
@@ -1233,7 +1084,7 @@ describe('FeeRefund', function() {
   });
 });
 
-describe('BalanceTransaction', function() {
+describe('BalanceTransactions', function() {
   it('list method', async function() {
     const balanceTransactions = await stripe.balanceTransactions.list({
       limit: 3,
@@ -1249,7 +1100,7 @@ describe('BalanceTransaction', function() {
   });
 });
 
-describe('BillingPortal.Configuration', function() {
+describe('BillingPortal.Configurations', function() {
   it('list method', async function() {
     const configurations = await stripe.billingPortal.configurations.list({
       limit: 3,
@@ -1295,7 +1146,7 @@ describe('BillingPortal.Configuration', function() {
   });
 });
 
-describe('BillingPortal.Session', function() {
+describe('BillingPortal.Sessions', function() {
   it('create method', async function() {
     const session = await stripe.billingPortal.sessions.create({
       customer: 'cus_xxxxxxxxxxxxx',
@@ -1305,7 +1156,7 @@ describe('BillingPortal.Session', function() {
   });
 });
 
-describe('Charge', function() {
+describe('Charges', function() {
   it('list method', async function() {
     const charges = await stripe.charges.list({limit: 3});
     expect(charges).not.to.be.null;
@@ -1346,7 +1197,7 @@ describe('Charge', function() {
   });
 });
 
-describe('CountrySpec', function() {
+describe('CountrySpecs', function() {
   it('list method', async function() {
     const countrySpecs = await stripe.countrySpecs.list({limit: 3});
     expect(countrySpecs).not.to.be.null;
@@ -1358,7 +1209,7 @@ describe('CountrySpec', function() {
   });
 });
 
-describe('Coupon', function() {
+describe('Coupons', function() {
   it('list method', async function() {
     const coupons = await stripe.coupons.list({limit: 3});
     expect(coupons).not.to.be.null;
@@ -1391,7 +1242,7 @@ describe('Coupon', function() {
   });
 });
 
-describe('CreditNote', function() {
+describe('CreditNotes', function() {
   it('list method', async function() {
     const creditNotes = await stripe.creditNotes.list({limit: 3});
     expect(creditNotes).not.to.be.null;
@@ -1433,7 +1284,7 @@ describe('CreditNote', function() {
   });
 });
 
-describe('CreditNoteLineItem', function() {
+describe('CreditNoteLineItems', function() {
   it('listLineItems method', async function() {
     const lineItems = await stripe.creditNotes.listLineItems(
       'cn_xxxxxxxxxxxxx',
@@ -1443,7 +1294,7 @@ describe('CreditNoteLineItem', function() {
   });
 });
 
-describe('CustomerBalanceTransaction', function() {
+describe('CustomerBalanceTransactions', function() {
   it('listBalanceTransactions method', async function() {
     const balanceTransactions = await stripe.customers.listBalanceTransactions(
       'cus_xxxxxxxxxxxxx',
@@ -1478,7 +1329,7 @@ describe('CustomerBalanceTransaction', function() {
   });
 });
 
-describe('CustomerSource', function() {
+describe('CustomerSources', function() {
   it('verifySource method', async function() {
     const bankAccount = await stripe.customers.verifySource(
       'cus_xxxxxxxxxxxxx',
@@ -1489,7 +1340,7 @@ describe('CustomerSource', function() {
   });
 });
 
-describe('TaxId', function() {
+describe('TaxIds', function() {
   it('listTaxIds method', async function() {
     const taxIds = await stripe.customers.listTaxIds('cus_xxxxxxxxxxxxx', {
       limit: 3,
@@ -1522,7 +1373,7 @@ describe('TaxId', function() {
   });
 });
 
-describe('Dispute', function() {
+describe('Disputes', function() {
   it('list method', async function() {
     const disputes = await stripe.disputes.list({limit: 3});
     expect(disputes).not.to.be.null;
@@ -1546,7 +1397,7 @@ describe('Dispute', function() {
   });
 });
 
-describe('Event', function() {
+describe('Events', function() {
   it('list method', async function() {
     const events = await stripe.events.list({limit: 3});
     expect(events).not.to.be.null;
@@ -1558,7 +1409,7 @@ describe('Event', function() {
   });
 });
 
-describe('FileLink', function() {
+describe('FileLinks', function() {
   it('list method', async function() {
     const fileLinks = await stripe.fileLinks.list({limit: 3});
     expect(fileLinks).not.to.be.null;
@@ -1584,7 +1435,7 @@ describe('FileLink', function() {
   });
 });
 
-describe('File', function() {
+describe('Files', function() {
   it('list method', async function() {
     const files = await stripe.files.list({limit: 3});
     expect(files).not.to.be.null;
@@ -1596,7 +1447,7 @@ describe('File', function() {
   });
 });
 
-describe('Identity.VerificationReport', function() {
+describe('Identity.VerificationReports', function() {
   it('list method', async function() {
     const verificationReports = await stripe.identity.verificationReports.list({
       limit: 3,
@@ -1612,7 +1463,7 @@ describe('Identity.VerificationReport', function() {
   });
 });
 
-describe('Identity.VerificationSession', function() {
+describe('Identity.VerificationSessions', function() {
   it('list method', async function() {
     const verificationSessions = await stripe.identity.verificationSessions.list(
       {limit: 3}
@@ -1657,7 +1508,7 @@ describe('Identity.VerificationSession', function() {
   });
 });
 
-describe('InvoiceItem', function() {
+describe('InvoiceItems', function() {
   it('list method', async function() {
     const invoiceItems = await stripe.invoiceItems.list({limit: 3});
     expect(invoiceItems).not.to.be.null;
@@ -1689,7 +1540,7 @@ describe('InvoiceItem', function() {
   });
 });
 
-describe('Invoice', function() {
+describe('Invoices', function() {
   it('list method', async function() {
     const invoices = await stripe.invoices.list({limit: 3});
     expect(invoices).not.to.be.null;
@@ -1752,7 +1603,7 @@ describe('Invoice', function() {
   });
 });
 
-describe('Issuing.Authorization', function() {
+describe('Issuing.Authorizations', function() {
   it('list method', async function() {
     const authorizations = await stripe.issuing.authorizations.list({
       limit: 3,
@@ -1790,7 +1641,7 @@ describe('Issuing.Authorization', function() {
   });
 });
 
-describe('Issuing.Cardholder', function() {
+describe('Issuing.Cardholders', function() {
   it('list method', async function() {
     const cardholders = await stripe.issuing.cardholders.list({limit: 3});
     expect(cardholders).not.to.be.null;
@@ -1831,7 +1682,35 @@ describe('Issuing.Cardholder', function() {
   });
 });
 
-describe('Issuing.Dispute', function() {
+describe('Issuing.Cards', function() {
+  it('list method', async function() {
+    const cards = await stripe.issuing.cards.list({limit: 3});
+    expect(cards).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const card = await stripe.issuing.cards.create({
+      cardholder: 'ich_xxxxxxxxxxxxx',
+      currency: 'usd',
+      type: 'virtual',
+    });
+    expect(card).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const card = await stripe.issuing.cards.retrieve('ic_xxxxxxxxxxxxx');
+    expect(card).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const card = await stripe.issuing.cards.update('ic_xxxxxxxxxxxxx', {
+      metadata: {order_id: '6735'},
+    });
+    expect(card).not.to.be.null;
+  });
+});
+
+describe('Issuing.Disputes', function() {
   it('list method', async function() {
     const disputes = await stripe.issuing.disputes.list({limit: 3});
     expect(disputes).not.to.be.null;
@@ -1859,7 +1738,7 @@ describe('Issuing.Dispute', function() {
   });
 });
 
-describe('Issuing.Transaction', function() {
+describe('Issuing.Transactions', function() {
   it('list method', async function() {
     const transactions = await stripe.issuing.transactions.list({limit: 3});
     expect(transactions).not.to.be.null;
@@ -1881,14 +1760,14 @@ describe('Issuing.Transaction', function() {
   });
 });
 
-describe('Mandate', function() {
+describe('Mandates', function() {
   it('retrieve method', async function() {
     const mandate = await stripe.mandates.retrieve('mandate_xxxxxxxxxxxxx');
     expect(mandate).not.to.be.null;
   });
 });
 
-describe('PaymentMethod', function() {
+describe('PaymentMethods', function() {
   it('list method', async function() {
     const paymentMethods = await stripe.paymentMethods.list({
       customer: 'cus_xxxxxxxxxxxxx',
@@ -1941,7 +1820,7 @@ describe('PaymentMethod', function() {
   });
 });
 
-describe('Payout', function() {
+describe('Payouts', function() {
   it('list method', async function() {
     const payouts = await stripe.payouts.list({limit: 3});
     expect(payouts).not.to.be.null;
@@ -1978,7 +1857,7 @@ describe('Payout', function() {
   });
 });
 
-describe('Plan', function() {
+describe('Plans', function() {
   it('list method', async function() {
     const plans = await stripe.plans.list({limit: 3});
     expect(plans).not.to.be.null;
@@ -2012,7 +1891,7 @@ describe('Plan', function() {
   });
 });
 
-describe('Product', function() {
+describe('Products', function() {
   it('list method', async function() {
     const products = await stripe.products.list({limit: 3});
     expect(products).not.to.be.null;
@@ -2048,7 +1927,7 @@ describe('Product', function() {
   });
 });
 
-describe('PromotionCode', function() {
+describe('PromotionCodes', function() {
   it('list method', async function() {
     const promotionCodes = await stripe.promotionCodes.list({limit: 3});
     expect(promotionCodes).not.to.be.null;
@@ -2077,7 +1956,7 @@ describe('PromotionCode', function() {
   });
 });
 
-describe('Quote', function() {
+describe('Quotes', function() {
   it('list method', async function() {
     const quotes = await stripe.quotes.list({limit: 3});
     expect(quotes).not.to.be.null;
@@ -2119,7 +1998,7 @@ describe('Quote', function() {
   });
 });
 
-describe('Radar.EarlyFraudWarning', function() {
+describe('Radar.EarlyFraudWarnings', function() {
   it('list method', async function() {
     const earlyFraudWarnings = await stripe.radar.earlyFraudWarnings.list({
       limit: 3,
@@ -2135,7 +2014,7 @@ describe('Radar.EarlyFraudWarning', function() {
   });
 });
 
-describe('Radar.ValueListItem', function() {
+describe('Radar.ValueListItems', function() {
   it('list method', async function() {
     const valueListItems = await stripe.radar.valueListItems.list({
       limit: 3,
@@ -2165,7 +2044,7 @@ describe('Radar.ValueListItem', function() {
   });
 });
 
-describe('Radar.ValueList', function() {
+describe('Radar.ValueLists', function() {
   it('list method', async function() {
     const valueLists = await stripe.radar.valueLists.list({limit: 3});
     expect(valueLists).not.to.be.null;
@@ -2201,7 +2080,38 @@ describe('Radar.ValueList', function() {
   });
 });
 
-describe('Reporting.ReportRun', function() {
+describe('Refunds', function() {
+  it('list method', async function() {
+    const refunds = await stripe.refunds.list({limit: 3});
+    expect(refunds).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const refund = await stripe.refunds.create({
+      charge: 'ch_xxxxxxxxxxxxx',
+    });
+    expect(refund).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const refund = await stripe.refunds.retrieve('re_xxxxxxxxxxxxx');
+    expect(refund).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const refund = await stripe.refunds.update('re_xxxxxxxxxxxxx', {
+      metadata: {order_id: '6735'},
+    });
+    expect(refund).not.to.be.null;
+  });
+
+  it('cancel method', async function() {
+    const refund = await stripe.refunds.cancel('re_xxxxxxxxxxxxx');
+    expect(refund).not.to.be.null;
+  });
+});
+
+describe('Reporting.ReportRuns', function() {
   it('list method', async function() {
     const reportRuns = await stripe.reporting.reportRuns.list({limit: 3});
     expect(reportRuns).not.to.be.null;
@@ -2223,7 +2133,7 @@ describe('Reporting.ReportRun', function() {
   });
 });
 
-describe('Reporting.ReportType', function() {
+describe('Reporting.ReportTypes', function() {
   it('list method', async function() {
     const reportTypes = await stripe.reporting.reportTypes.list();
     expect(reportTypes).not.to.be.null;
@@ -2237,7 +2147,7 @@ describe('Reporting.ReportType', function() {
   });
 });
 
-describe('Review', function() {
+describe('Reviews', function() {
   it('list method', async function() {
     const reviews = await stripe.reviews.list({limit: 3});
     expect(reviews).not.to.be.null;
@@ -2254,7 +2164,7 @@ describe('Review', function() {
   });
 });
 
-describe('Sigma.ScheduledQueryRun', function() {
+describe('Sigma.ScheduledQueryRuns', function() {
   it('list method', async function() {
     const scheduledQueryRuns = await stripe.sigma.scheduledQueryRuns.list({
       limit: 3,
@@ -2270,7 +2180,7 @@ describe('Sigma.ScheduledQueryRun', function() {
   });
 });
 
-describe('Source', function() {
+describe('Sources', function() {
   it('retrieve method', async function() {
     const source = await stripe.sources.retrieve('src_xxxxxxxxxxxxx');
     expect(source).not.to.be.null;
@@ -2289,7 +2199,7 @@ describe('Source', function() {
   });
 });
 
-describe('SubscriptionItem', function() {
+describe('SubscriptionItems', function() {
   it('list method', async function() {
     const subscriptionItems = await stripe.subscriptionItems.list({
       subscription: 'sub_xxxxxxxxxxxxx',
@@ -2327,7 +2237,7 @@ describe('SubscriptionItem', function() {
   });
 });
 
-describe('UsageRecordSummary', function() {
+describe('UsageRecordSummaries', function() {
   it('listUsageRecordSummaries method', async function() {
     const usageRecordSummaries = await stripe.subscriptionItems.listUsageRecordSummaries(
       'si_xxxxxxxxxxxxx',
@@ -2337,7 +2247,7 @@ describe('UsageRecordSummary', function() {
   });
 });
 
-describe('UsageRecord', function() {
+describe('UsageRecords', function() {
   it('createUsageRecord method', async function() {
     const usageRecord = await stripe.subscriptionItems.createUsageRecord(
       'si_xxxxxxxxxxxxx',
@@ -2347,7 +2257,7 @@ describe('UsageRecord', function() {
   });
 });
 
-describe('SubscriptionSchedule', function() {
+describe('SubscriptionSchedules', function() {
   it('list method', async function() {
     const subscriptionSchedules = await stripe.subscriptionSchedules.list({
       limit: 3,
@@ -2400,7 +2310,7 @@ describe('SubscriptionSchedule', function() {
   });
 });
 
-describe('Subscription', function() {
+describe('Subscriptions', function() {
   it('list method', async function() {
     const subscriptions = await stripe.subscriptions.list({limit: 3});
     expect(subscriptions).not.to.be.null;
@@ -2442,7 +2352,7 @@ describe('Subscription', function() {
   });
 });
 
-describe('TaxCode', function() {
+describe('TaxCodes', function() {
   it('list method', async function() {
     const taxCodes = await stripe.taxCodes.list({limit: 3});
     expect(taxCodes).not.to.be.null;
@@ -2454,7 +2364,7 @@ describe('TaxCode', function() {
   });
 });
 
-describe('TaxRate', function() {
+describe('TaxRates', function() {
   it('list method', async function() {
     const taxRates = await stripe.taxRates.list({limit: 3});
     expect(taxRates).not.to.be.null;
@@ -2484,14 +2394,14 @@ describe('TaxRate', function() {
   });
 });
 
-describe('Terminal.ConnectionToken', function() {
+describe('Terminal.ConnectionTokens', function() {
   it('create method', async function() {
     const connectionToken = await stripe.terminal.connectionTokens.create();
     expect(connectionToken).not.to.be.null;
   });
 });
 
-describe('Terminal.Location', function() {
+describe('Terminal.Locations', function() {
   it('list method', async function() {
     const locations = await stripe.terminal.locations.list({limit: 3});
     expect(locations).not.to.be.null;
@@ -2531,7 +2441,7 @@ describe('Terminal.Location', function() {
   });
 });
 
-describe('Terminal.Reader', function() {
+describe('Terminal.Readers', function() {
   it('list method', async function() {
     const readers = await stripe.terminal.readers.list({limit: 3});
     expect(readers).not.to.be.null;
@@ -2579,7 +2489,7 @@ describe('Terminal.Reader', function() {
   });
 });
 
-describe('Topup', function() {
+describe('Topups', function() {
   it('list method', async function() {
     const topups = await stripe.topups.list({limit: 3});
     expect(topups).not.to.be.null;
@@ -2613,7 +2523,7 @@ describe('Topup', function() {
   });
 });
 
-describe('Transfer', function() {
+describe('Transfers', function() {
   it('list method', async function() {
     const transfers = await stripe.transfers.list({limit: 3});
     expect(transfers).not.to.be.null;
@@ -2642,7 +2552,7 @@ describe('Transfer', function() {
   });
 });
 
-describe('TransferReversal', function() {
+describe('TransferReversals', function() {
   it('listReversals method', async function() {
     const reversals = await stripe.transfers.listReversals('tr_xxxxxxxxxxxxx', {
       limit: 3,
@@ -2675,7 +2585,7 @@ describe('TransferReversal', function() {
   });
 });
 
-describe('Treasury.CreditReversal', function() {
+describe('Treasury.CreditReversals', function() {
   it('list method', async function() {
     const creditReversals = await stripe.treasury.creditReversals.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
@@ -2699,7 +2609,7 @@ describe('Treasury.CreditReversal', function() {
   });
 });
 
-describe('Treasury.DebitReversal', function() {
+describe('Treasury.DebitReversals', function() {
   it('list method', async function() {
     const debitReversals = await stripe.treasury.debitReversals.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
@@ -2723,7 +2633,7 @@ describe('Treasury.DebitReversal', function() {
   });
 });
 
-describe('Treasury.FinancialAccount', function() {
+describe('Treasury.FinancialAccounts', function() {
   it('list method', async function() {
     const financialAccounts = await stripe.treasury.financialAccounts.list({
       limit: 3,
@@ -2770,7 +2680,42 @@ describe('Treasury.FinancialAccount', function() {
   });
 });
 
-describe('Treasury.OutboundPayment', function() {
+describe('Treasury.InboundTransfers', function() {
+  it('list method', async function() {
+    const inboundTransfers = await stripe.treasury.inboundTransfers.list({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      limit: 3,
+    });
+    expect(inboundTransfers).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const inboundTransfer = await stripe.treasury.inboundTransfers.create({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      amount: 10000,
+      currency: 'usd',
+      origin_payment_method: 'pm_xxxxxxxxxxxxx',
+      description: 'InboundTransfer from my bank account',
+    });
+    expect(inboundTransfer).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const inboundTransfer = await stripe.treasury.inboundTransfers.retrieve(
+      'ibt_xxxxxxxxxxxxx'
+    );
+    expect(inboundTransfer).not.to.be.null;
+  });
+
+  it('cancel method', async function() {
+    const inboundTransfer = await stripe.treasury.inboundTransfers.cancel(
+      'ibt_xxxxxxxxxxxxx'
+    );
+    expect(inboundTransfer).not.to.be.null;
+  });
+});
+
+describe('Treasury.OutboundPayments', function() {
   it('list method', async function() {
     const outboundPayments = await stripe.treasury.outboundPayments.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
@@ -2806,7 +2751,76 @@ describe('Treasury.OutboundPayment', function() {
   });
 });
 
-describe('Treasury.TransactionEntry', function() {
+describe('Treasury.OutboundTransfers', function() {
+  it('list method', async function() {
+    const outboundTransfers = await stripe.treasury.outboundTransfers.list({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      limit: 3,
+    });
+    expect(outboundTransfers).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const outboundTransfer = await stripe.treasury.outboundTransfers.create({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      destination_payment_method: 'pm_xxxxxxxxxxxxx',
+      amount: 500,
+      currency: 'usd',
+      description: 'OutboundTransfer to my external bank account',
+    });
+    expect(outboundTransfer).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const outboundTransfer = await stripe.treasury.outboundTransfers.retrieve(
+      'obt_xxxxxxxxxxxxx'
+    );
+    expect(outboundTransfer).not.to.be.null;
+  });
+
+  it('cancel method', async function() {
+    const outboundTransfer = await stripe.treasury.outboundTransfers.cancel(
+      'obt_xxxxxxxxxxxxx'
+    );
+    expect(outboundTransfer).not.to.be.null;
+  });
+});
+
+describe('Treasury.ReceivedCredits', function() {
+  it('list method', async function() {
+    const receivedCredits = await stripe.treasury.receivedCredits.list({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      limit: 3,
+    });
+    expect(receivedCredits).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const receivedCredit = await stripe.treasury.receivedCredits.retrieve(
+      'rc_xxxxxxxxxxxxx'
+    );
+    expect(receivedCredit).not.to.be.null;
+  });
+});
+
+describe('Treasury.ReceivedDebits', function() {
+  it('list method', async function() {
+    const receivedDebits = await stripe.treasury.receivedDebits.list({
+      financial_account: 'fa_xxxxxxxxxxxxx',
+      limit: 3,
+    });
+    expect(receivedDebits).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const receivedDebit = await stripe.treasury.receivedDebits.retrieve(
+      'rd_xxxxxxxxxxxxx'
+    );
+    expect(receivedDebit).not.to.be.null;
+  });
+});
+
+describe('Treasury.TransactionEntries', function() {
   it('list method', async function() {
     const transactionEntries = await stripe.treasury.transactionEntries.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
@@ -2823,7 +2837,7 @@ describe('Treasury.TransactionEntry', function() {
   });
 });
 
-describe('Treasury.Transaction', function() {
+describe('Treasury.Transactions', function() {
   it('list method', async function() {
     const transactions = await stripe.treasury.transactions.list({
       financial_account: 'fa_xxxxxxxxxxxxx',
@@ -2840,7 +2854,7 @@ describe('Treasury.Transaction', function() {
   });
 });
 
-describe('WebhookEndpoint', function() {
+describe('WebhookEndpoints', function() {
   it('list method', async function() {
     const webhookEndpoints = await stripe.webhookEndpoints.list({limit: 3});
     expect(webhookEndpoints).not.to.be.null;
