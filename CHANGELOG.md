@@ -1,5 +1,21 @@
 # Changelog
 
+## 11.2.0 - 2022-12-06
+* [#1632](https://github.com/stripe/stripe-node/pull/1632) API Updates
+  * Add support for `flow_data` on `BillingPortalSessionCreateParams`
+  * Add support for `flow` on `BillingPortal.Session`
+* [#1631](https://github.com/stripe/stripe-node/pull/1631) API Updates
+  * Add support for `india_international_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for `invoice_creation` on `Checkout.Session` and `CheckoutSessionCreateParams`
+  * Add support for `invoice` on `Checkout.Session`
+  * Add support for `metadata` on `SubscriptionSchedule.phases[].items[]`, `SubscriptionScheduleCreateParams.phases[].items[]`, and `SubscriptionScheduleUpdateParams.phases[].items[]`
+* [#1630](https://github.com/stripe/stripe-node/pull/1630) Remove BASIC_METHODS from TS definitions
+* [#1629](https://github.com/stripe/stripe-node/pull/1629) Narrower type for stripe.invoices.retrieveUpcoming()
+* [#1627](https://github.com/stripe/stripe-node/pull/1627) remove unneeded IIFE
+* [#1625](https://github.com/stripe/stripe-node/pull/1625) Remove API version from the path
+* [#1626](https://github.com/stripe/stripe-node/pull/1626) Move child resource method params next to method declarations
+* [#1624](https://github.com/stripe/stripe-node/pull/1624) Split resource and service types
+
 ## 11.1.0 - 2022-11-17
 * [#1623](https://github.com/stripe/stripe-node/pull/1623) API Updates
   * Add support for `hosted_instructions_url` on `PaymentIntent.next_action.wechat_pay_display_qr_code`
