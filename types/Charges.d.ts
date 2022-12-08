@@ -115,7 +115,7 @@ declare module 'stripe' {
       failure_balance_transaction: string | Stripe.BalanceTransaction | null;
 
       /**
-       * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/api#errors) for a list of codes).
+       * Error code explaining reason for charge failure if available (see [the errors section](https://stripe.com/docs/error-codes) for a list of codes).
        */
       failure_code: string | null;
 

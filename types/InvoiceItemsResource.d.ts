@@ -120,6 +120,11 @@ declare module 'stripe' {
       namespace Discount {
         interface DiscountEnd {
           /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
            * A precise Unix timestamp for the discount to end. Must be in the future.
            */
           timestamp?: number;
@@ -127,7 +132,27 @@ declare module 'stripe' {
           /**
            * The type of calculation made to determine when the discount ends.
            */
-          type: 'timestamp';
+          type: DiscountEnd.Type;
+        }
+
+        namespace DiscountEnd {
+          interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
         }
       }
 
@@ -282,6 +307,11 @@ declare module 'stripe' {
       namespace Discount {
         interface DiscountEnd {
           /**
+           * Time span for the redeemed discount.
+           */
+          duration?: DiscountEnd.Duration;
+
+          /**
            * A precise Unix timestamp for the discount to end. Must be in the future.
            */
           timestamp?: number;
@@ -289,7 +319,27 @@ declare module 'stripe' {
           /**
            * The type of calculation made to determine when the discount ends.
            */
-          type: 'timestamp';
+          type: DiscountEnd.Type;
+        }
+
+        namespace DiscountEnd {
+          interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type = 'duration' | 'timestamp';
         }
       }
 
