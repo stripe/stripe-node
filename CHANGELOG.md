@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.3.0 - 2022-12-08
+* [#1634](https://github.com/stripe/stripe-node/pull/1634) API Updates
+  * Change `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type` to be optional
+
 ## 11.2.0 - 2022-12-06
 * [#1632](https://github.com/stripe/stripe-node/pull/1632) API Updates
   * Add support for `flow_data` on `BillingPortalSessionCreateParams`
