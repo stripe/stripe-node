@@ -564,14 +564,14 @@ declare module 'stripe' {
 
     interface CustomerListPaymentMethodsParams extends PaginationParams {
       /**
-       * A required filter on the list, based on the object `type` field.
-       */
-      type: CustomerListPaymentMethodsParams.Type;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * An optional filter on the list, based on the object `type` field. Without the filter, the list includes all current and future payment method types. If your integration expects only one type of payment method in the response, make sure to provide a type value in the request.
+       */
+      type?: CustomerListPaymentMethodsParams.Type;
     }
 
     namespace CustomerListPaymentMethodsParams {
@@ -1068,7 +1068,11 @@ declare module 'stripe' {
        */
       listPaymentMethods(
         id: string,
-        params: CustomerListPaymentMethodsParams,
+        params?: CustomerListPaymentMethodsParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.PaymentMethod>;
+      listPaymentMethods(
+        id: string,
         options?: RequestOptions
       ): ApiListPromise<Stripe.PaymentMethod>;
 
