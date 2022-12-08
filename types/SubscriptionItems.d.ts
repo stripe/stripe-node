@@ -30,6 +30,11 @@ declare module 'stripe' {
       deleted?: void;
 
       /**
+       * The discounts applied to the subscription item. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
+       */
+      discounts?: Array<string | Stripe.Discount> | null;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
        */
       metadata: Stripe.Metadata;
@@ -70,6 +75,11 @@ declare module 'stripe' {
        * The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
        */
       tax_rates: Array<Stripe.TaxRate> | null;
+
+      /**
+       * Options that configure the trial on the subscription item.
+       */
+      trial?: SubscriptionItem.Trial | null;
     }
 
     namespace SubscriptionItem {
@@ -78,6 +88,19 @@ declare module 'stripe' {
          * Usage threshold that triggers the subscription to create an invoice
          */
         usage_gte: number | null;
+      }
+
+      interface Trial {
+        /**
+         * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+         */
+        converts_to?: Array<string> | null;
+
+        type: Trial.Type;
+      }
+
+      namespace Trial {
+        type Type = 'free' | 'paid';
       }
     }
 

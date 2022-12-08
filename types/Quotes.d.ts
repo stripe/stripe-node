@@ -419,6 +419,16 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
+         * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+         */
+        billing_behavior?: SubscriptionData.BillingBehavior;
+
+        /**
+         * Whether the subscription will always start a new billing period when the quote is accepted.
+         */
+        billing_cycle_anchor?: 'reset' | null;
+
+        /**
          * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
          */
         description: string | null;
@@ -429,9 +439,49 @@ declare module 'stripe' {
         effective_date: number | null;
 
         /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` and `cancel`.
+         */
+        end_behavior?: SubscriptionData.EndBehavior | null;
+
+        /**
+         * The id of the subscription schedule that will be updated when the quote is accepted.
+         */
+        from_schedule?: string | Stripe.SubscriptionSchedule | null;
+
+        /**
+         * The id of the subscription that will be updated when the quote is accepted.
+         */
+        from_subscription?: string | Stripe.Subscription | null;
+
+        /**
+         * If specified, the invoicing for the given billing cycle iterations will be processed when the quote is accepted. Cannot be used with `effective_date`.
+         */
+        prebilling?: SubscriptionData.Prebilling | null;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the quote is accepted.
+         */
+        proration_behavior?: SubscriptionData.ProrationBehavior;
+
+        /**
          * Integer representing the number of trial period days before the customer is charged for the first time.
          */
         trial_period_days: number | null;
+      }
+
+      namespace SubscriptionData {
+        type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        type EndBehavior = 'cancel' | 'release';
+
+        interface Prebilling {
+          iterations: number;
+        }
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
       }
 
       interface TotalDetails {

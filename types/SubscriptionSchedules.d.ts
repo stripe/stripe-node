@@ -28,6 +28,11 @@ declare module 'stripe' {
         | null;
 
       /**
+       * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+       */
+      billing_behavior?: SubscriptionSchedule.BillingBehavior;
+
+      /**
        * Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
        */
       canceled_at: number | null;
@@ -75,6 +80,11 @@ declare module 'stripe' {
       phases: Array<SubscriptionSchedule.Phase>;
 
       /**
+       * Time period and invoice for a Subscription billed in advance.
+       */
+      prebilling?: SubscriptionSchedule.Prebilling | null;
+
+      /**
        * Time at which the subscription schedule was released. Measured in seconds since the Unix epoch.
        */
       released_at: number | null;
@@ -101,6 +111,8 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionSchedule {
+      type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
       interface CurrentPhase {
         /**
          * The end of this phase of the subscription schedule.
@@ -262,6 +274,11 @@ declare module 'stripe' {
         description: string | null;
 
         /**
+         * The stackable discounts that will be applied to the subscription on this phase. Subscription item discounts are applied before subscription discounts.
+         */
+        discounts?: Array<Phase.Discount> | null;
+
+        /**
          * The end of this phase of the subscription schedule.
          */
         end_date: number;
@@ -302,13 +319,28 @@ declare module 'stripe' {
         transfer_data: Phase.TransferData | null;
 
         /**
+         * Specify behavior of the trial when crossing schedule phase boundaries
+         */
+        trial_continuation?: Phase.TrialContinuation | null;
+
+        /**
          * When the trial ends within the phase.
          */
         trial_end: number | null;
+
+        /**
+         * Settings related to any trials on the subscription during this phase.
+         */
+        trial_settings?: Phase.TrialSettings | null;
       }
 
       namespace Phase {
         interface AddInvoiceItem {
+          /**
+           * The stackable discounts that will be applied to the item.
+           */
+          discounts?: Array<AddInvoiceItem.Discount> | null;
+
           /**
            * ID of the price used to generate the invoice item.
            */
@@ -323,6 +355,39 @@ declare module 'stripe' {
            * The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
            */
           tax_rates?: Array<Stripe.TaxRate> | null;
+        }
+
+        namespace AddInvoiceItem {
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon: string | Stripe.Coupon | null;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount: string | Stripe.Discount | null;
+
+            /**
+             * Details to determine how long the discount should be applied for.
+             */
+            discount_end?: Discount.DiscountEnd | null;
+          }
+
+          namespace Discount {
+            interface DiscountEnd {
+              /**
+               * The discount end timestamp
+               */
+              timestamp: number | null;
+
+              /**
+               * The discount end type
+               */
+              type: 'timestamp';
+            }
+          }
         }
 
         interface AutomaticTax {
@@ -348,6 +413,37 @@ declare module 'stripe' {
 
         type CollectionMethod = 'charge_automatically' | 'send_invoice';
 
+        interface Discount {
+          /**
+           * ID of the coupon to create a new discount for.
+           */
+          coupon: string | Stripe.Coupon | null;
+
+          /**
+           * ID of an existing discount on the object (or one of its ancestors) to reuse.
+           */
+          discount: string | Stripe.Discount | null;
+
+          /**
+           * Details to determine how long the discount should be applied for.
+           */
+          discount_end?: Discount.DiscountEnd | null;
+        }
+
+        namespace Discount {
+          interface DiscountEnd {
+            /**
+             * The discount end timestamp
+             */
+            timestamp: number | null;
+
+            /**
+             * The discount end type
+             */
+            type: 'timestamp';
+          }
+        }
+
         interface InvoiceSettings {
           /**
            * Number of days within which a customer must pay invoices generated by this subscription schedule. This value will be `null` for subscription schedules where `billing=charge_automatically`.
@@ -360,6 +456,11 @@ declare module 'stripe' {
            * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
            */
           billing_thresholds: Item.BillingThresholds | null;
+
+          /**
+           * The discounts applied to the subscription item. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
+           */
+          discounts?: Array<Item.Discount> | null;
 
           /**
            * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an item. Metadata on this item will update the underlying subscription item's `metadata` when the phase is entered.
@@ -385,6 +486,11 @@ declare module 'stripe' {
            * The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.
            */
           tax_rates?: Array<Stripe.TaxRate> | null;
+
+          /**
+           * Options that configure the trial on the subscription item.
+           */
+          trial?: Item.Trial | null;
         }
 
         namespace Item {
@@ -393,6 +499,50 @@ declare module 'stripe' {
              * Usage threshold that triggers the subscription to create an invoice
              */
             usage_gte: number | null;
+          }
+
+          interface Discount {
+            /**
+             * ID of the coupon to create a new discount for.
+             */
+            coupon: string | Stripe.Coupon | null;
+
+            /**
+             * ID of an existing discount on the object (or one of its ancestors) to reuse.
+             */
+            discount: string | Stripe.Discount | null;
+
+            /**
+             * Details to determine how long the discount should be applied for.
+             */
+            discount_end?: Discount.DiscountEnd | null;
+          }
+
+          namespace Discount {
+            interface DiscountEnd {
+              /**
+               * The discount end timestamp
+               */
+              timestamp: number | null;
+
+              /**
+               * The discount end type
+               */
+              type: 'timestamp';
+            }
+          }
+
+          interface Trial {
+            /**
+             * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
+             */
+            converts_to?: Array<string> | null;
+
+            type: Trial.Type;
+          }
+
+          namespace Trial {
+            type Type = 'free' | 'paid';
           }
         }
 
@@ -412,6 +562,45 @@ declare module 'stripe' {
            */
           destination: string | Stripe.Account;
         }
+
+        type TrialContinuation = 'continue' | 'none';
+
+        interface TrialSettings {
+          /**
+           * Defines how the subscription should behaves when a trial ensd.
+           */
+          end_behavior: TrialSettings.EndBehavior | null;
+        }
+
+        namespace TrialSettings {
+          interface EndBehavior {
+            /**
+             * Configure how an opt-in following a paid trial is billed when using `billing_behavior: prorate_up_front`.
+             */
+            prorate_up_front: EndBehavior.ProrateUpFront | null;
+          }
+
+          namespace EndBehavior {
+            type ProrateUpFront = 'defer' | 'include';
+          }
+        }
+      }
+
+      interface Prebilling {
+        /**
+         * ID of the prebilling invoice.
+         */
+        invoice: string | Stripe.Invoice;
+
+        /**
+         * The end of the last period for which the invoice pre-bills.
+         */
+        period_end: number;
+
+        /**
+         * The start of the first period for which the invoice pre-bills.
+         */
+        period_start: number;
       }
 
       type Status =

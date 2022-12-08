@@ -222,6 +222,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The status of the Cash App Pay capability of the account, or whether the account can directly process Cash App Pay payments.
+         */
+        cashapp_payments?: Capabilities.CashappPayments;
+
+        /**
          * The status of the EPS payments capability of the account, or whether the account can directly process EPS charges.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -330,6 +335,11 @@ declare module 'stripe' {
          * The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The status of the Zip capability of the account, or whether the account can directly process Zip charges.
+         */
+        zip_payments?: Capabilities.ZipPayments;
       }
 
       namespace Capabilities {
@@ -356,6 +366,8 @@ declare module 'stripe' {
         type CardPayments = 'active' | 'inactive' | 'pending';
 
         type CartesBancairesPayments = 'active' | 'inactive' | 'pending';
+
+        type CashappPayments = 'active' | 'inactive' | 'pending';
 
         type EpsPayments = 'active' | 'inactive' | 'pending';
 
@@ -400,6 +412,8 @@ declare module 'stripe' {
         type Treasury = 'active' | 'inactive' | 'pending';
 
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
+
+        type ZipPayments = 'active' | 'inactive' | 'pending';
       }
 
       interface Company {

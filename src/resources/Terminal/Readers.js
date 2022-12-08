@@ -49,7 +49,7 @@ module.exports = StripeResource.extend({
 
   refundPayment: stripeMethod({
     method: 'POST',
-    path: '/{reader}/refund_payment',
+    fullPath: '/v1/terminal/readers/{reader}/refund_payment',
   }),
 
   setReaderDisplay: stripeMethod({

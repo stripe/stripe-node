@@ -120,6 +120,11 @@ declare module 'stripe' {
       discount: Stripe.Discount | null;
 
       /**
+       * The discounts applied to the subscription. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
+       */
+      discounts?: Array<string | Stripe.Discount> | null;
+
+      /**
        * If the subscription has ended, the date the subscription ended.
        */
       ended_at: number | null;
@@ -178,6 +183,11 @@ declare module 'stripe' {
        * If specified, [pending updates](https://stripe.com/docs/billing/subscriptions/pending-updates) that will be applied to the subscription once the `latest_invoice` has been paid.
        */
       pending_update: Subscription.PendingUpdate | null;
+
+      /**
+       * Time period and invoice for a Subscription billed in advance.
+       */
+      prebilling?: Subscription.Prebilling | null;
 
       /**
        * The schedule attached to the subscription
@@ -513,6 +523,11 @@ declare module 'stripe' {
         expires_at: number;
 
         /**
+         * The number of iterations of prebilling to apply.
+         */
+        prebilling_iterations?: number | null;
+
+        /**
          * List of subscription items, each with an attached plan, that will be set if the update is applied.
          */
         subscription_items: Array<Stripe.SubscriptionItem> | null;
@@ -526,6 +541,23 @@ declare module 'stripe' {
          * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
          */
         trial_from_plan: boolean | null;
+      }
+
+      interface Prebilling {
+        /**
+         * ID of the prebilling invoice.
+         */
+        invoice: string | Stripe.Invoice;
+
+        /**
+         * The end of the last period for which the invoice pre-bills.
+         */
+        period_end: number;
+
+        /**
+         * The start of the first period for which the invoice pre-bills.
+         */
+        period_start: number;
       }
 
       type Status =

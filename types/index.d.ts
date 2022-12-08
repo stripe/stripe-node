@@ -10,6 +10,7 @@
 ///<reference path='./UpcomingInvoices.d.ts' />
 ///<reference path='./AccountsResource.d.ts' />
 ///<reference path='./AccountLinksResource.d.ts' />
+///<reference path='./AccountSessionsResource.d.ts' />
 ///<reference path='./ApplePayDomainsResource.d.ts' />
 ///<reference path='./ApplicationFeesResource.d.ts' />
 ///<reference path='./BalanceResource.d.ts' />
@@ -28,6 +29,7 @@
 ///<reference path='./InvoicesResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
+///<reference path='./OrdersResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
 ///<reference path='./PaymentLinksResource.d.ts' />
 ///<reference path='./PaymentMethodsResource.d.ts' />
@@ -37,6 +39,7 @@
 ///<reference path='./ProductsResource.d.ts' />
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
+///<reference path='./QuotePhasesResource.d.ts' />
 ///<reference path='./RefundsResource.d.ts' />
 ///<reference path='./ReviewsResource.d.ts' />
 ///<reference path='./SetupAttemptsResource.d.ts' />
@@ -55,9 +58,14 @@
 ///<reference path='./Apps/SecretsResource.d.ts' />
 ///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
 ///<reference path='./BillingPortal/SessionsResource.d.ts' />
+///<reference path='./Capital/FinancingOffersResource.d.ts' />
+///<reference path='./Capital/FinancingSummaryResource.d.ts' />
+///<reference path='./Capital/FinancingTransactionsResource.d.ts' />
 ///<reference path='./Checkout/SessionsResource.d.ts' />
 ///<reference path='./FinancialConnections/AccountsResource.d.ts' />
 ///<reference path='./FinancialConnections/SessionsResource.d.ts' />
+///<reference path='./GiftCards/CardsResource.d.ts' />
+///<reference path='./GiftCards/TransactionsResource.d.ts' />
 ///<reference path='./Identity/VerificationReportsResource.d.ts' />
 ///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./Issuing/AuthorizationsResource.d.ts' />
@@ -151,6 +159,7 @@
 ///<reference path='./LineItems.d.ts' />
 ///<reference path='./LoginLinks.d.ts' />
 ///<reference path='./Mandates.d.ts' />
+///<reference path='./Orders.d.ts' />
 ///<reference path='./PaymentIntents.d.ts' />
 ///<reference path='./PaymentLinks.d.ts' />
 ///<reference path='./PaymentMethods.d.ts' />
@@ -244,6 +253,7 @@ declare module 'stripe' {
     invoices: Stripe.InvoicesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
     mandates: Stripe.MandatesResource;
+    orders: Stripe.OrdersResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
     paymentMethods: Stripe.PaymentMethodsResource;

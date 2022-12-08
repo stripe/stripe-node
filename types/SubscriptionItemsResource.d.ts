@@ -2,128 +2,6 @@
 
 declare module 'stripe' {
   namespace Stripe {
-    /**
-     * Subscription items allow you to create customer subscriptions with more than
-     * one plan, making it easy to represent complex billing relationships.
-     */
-    interface SubscriptionItem {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'subscription_item';
-
-      /**
-       * Define thresholds at which an invoice will be sent, and the related subscription advanced to a new billing period
-       */
-      billing_thresholds: SubscriptionItem.BillingThresholds | null;
-
-      /**
-       * Time at which the object was created. Measured in seconds since the Unix epoch.
-       */
-      created: number;
-
-      deleted?: void;
-
-      /**
-       * The discounts applied to the subscription item. Subscription item discounts are applied before subscription discounts. Use `expand[]=discounts` to expand each discount.
-       */
-      discounts?: Array<string | Stripe.Discount> | null;
-
-      /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata: Stripe.Metadata;
-
-      /**
-       * You can now model subscriptions more flexibly using the [Prices API](https://stripe.com/docs/api#prices). It replaces the Plans API and is backwards compatible to simplify your migration.
-       *
-       * Plans define the base price, currency, and billing cycle for recurring purchases of products.
-       * [Products](https://stripe.com/docs/api#products) help you track inventory or provisioning, and plans help you track pricing. Different physical goods or levels of service should be represented by products, and pricing options should be represented by plans. This approach lets you change prices without having to change your provisioning scheme.
-       *
-       * For example, you might have a single "gold" product that has plans for $10/month, $100/year, €9/month, and €90/year.
-       *
-       * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription) and more about [products and prices](https://stripe.com/docs/products-prices/overview).
-       */
-      plan: Stripe.Plan;
-
-      /**
-       * Prices define the unit cost, currency, and (optional) billing cycle for both recurring and one-time purchases of products.
-       * [Products](https://stripe.com/docs/api#products) help you track inventory or provisioning, and prices help you track payment terms. Different physical goods or levels of service should be represented by products, and pricing options should be represented by prices. This approach lets you change prices without having to change your provisioning scheme.
-       *
-       * For example, you might have a single "gold" product that has prices for $10/month, $100/year, and €9 once.
-       *
-       * Related guides: [Set up a subscription](https://stripe.com/docs/billing/subscriptions/set-up-subscription), [create an invoice](https://stripe.com/docs/billing/invoices/create), and more about [products and prices](https://stripe.com/docs/products-prices/overview).
-       */
-      price: Stripe.Price;
-
-      /**
-       * The [quantity](https://stripe.com/docs/subscriptions/quantities) of the plan to which the customer should be subscribed.
-       */
-      quantity?: number;
-
-      /**
-       * The `subscription` this `subscription_item` belongs to.
-       */
-      subscription: string;
-
-      /**
-       * The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
-       */
-      tax_rates: Array<Stripe.TaxRate> | null;
-
-      /**
-       * Options that configure the trial on the subscription item.
-       */
-      trial?: SubscriptionItem.Trial | null;
-    }
-
-    namespace SubscriptionItem {
-      interface BillingThresholds {
-        /**
-         * Usage threshold that triggers the subscription to create an invoice
-         */
-        usage_gte: number | null;
-      }
-
-      interface Trial {
-        /**
-         * List of price IDs which, if present on the subscription following a paid trial, constitute opting-in to the paid trial.
-         */
-        converts_to?: Array<string> | null;
-
-        type: Trial.Type;
-      }
-
-      namespace Trial {
-        type Type = 'free' | 'paid';
-      }
-    }
-
-    /**
-     * The DeletedSubscriptionItem object.
-     */
-    interface DeletedSubscriptionItem {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
-
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'subscription_item';
-
-      /**
-       * Always true for a deleted object
-       */
-      deleted: true;
-    }
-
     interface SubscriptionItemCreateParams {
       /**
        * The identifier of the subscription to modify.
@@ -537,6 +415,39 @@ declare module 'stripe' {
 
     namespace SubscriptionItemDeleteParams {
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
+    }
+
+    interface UsageRecordCreateParams {
+      /**
+       * The usage quantity for the specified timestamp.
+       */
+      quantity: number;
+
+      /**
+       * Valid values are `increment` (default) or `set`. When using `increment` the specified `quantity` will be added to the usage at the specified timestamp. The `set` action will overwrite the usage quantity at that timestamp. If the subscription has [billing thresholds](https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_thresholds), `increment` is the only allowed value.
+       */
+      action?: UsageRecordCreateParams.Action;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * The timestamp for the usage event. This timestamp must be within the current billing period of the subscription of the provided `subscription_item`, and must not be in the future. When passing `"now"`, Stripe records usage for the current time. Default is `"now"` if a value is not provided.
+       */
+      timestamp?: 'now' | number;
+    }
+
+    namespace UsageRecordCreateParams {
+      type Action = 'increment' | 'set';
+    }
+
+    interface UsageRecordSummaryListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
     }
 
     class SubscriptionItemsResource {

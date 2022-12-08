@@ -44,6 +44,8 @@ declare module 'stripe' {
 
       card_present?: PaymentMethod.CardPresent;
 
+      cashapp?: PaymentMethod.Cashapp;
+
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
@@ -90,6 +92,8 @@ declare module 'stripe' {
 
       paynow?: PaymentMethod.Paynow;
 
+      paypal?: PaymentMethod.Paypal;
+
       pix?: PaymentMethod.Pix;
 
       promptpay?: PaymentMethod.Promptpay;
@@ -111,6 +115,8 @@ declare module 'stripe' {
       us_bank_account?: PaymentMethod.UsBankAccount;
 
       wechat_pay?: PaymentMethod.WechatPay;
+
+      zip?: PaymentMethod.Zip;
     }
 
     namespace PaymentMethod {
@@ -414,6 +420,8 @@ declare module 'stripe' {
 
       interface CardPresent {}
 
+      interface Cashapp {}
+
       interface CustomerBalance {}
 
       interface Eps {
@@ -625,6 +633,8 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface Paypal {}
+
       interface Pix {}
 
       interface Promptpay {}
@@ -701,6 +711,7 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'card_present'
+        | 'cashapp'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
@@ -714,12 +725,14 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'paypal'
         | 'pix'
         | 'promptpay'
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface UsBankAccount {
         /**
@@ -786,6 +799,8 @@ declare module 'stripe' {
       }
 
       interface WechatPay {}
+
+      interface Zip {}
     }
   }
 }

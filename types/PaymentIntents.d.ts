@@ -174,6 +174,11 @@ declare module 'stripe' {
       review: string | Stripe.Review | null;
 
       /**
+       * Indicates whether confirmation for this PaymentIntent using a secret key is `required` or `optional`.
+       */
+      secret_key_confirmation?: PaymentIntent.SecretKeyConfirmation;
+
+      /**
        * Indicates that you intend to make future payments with this PaymentIntent's payment method.
        *
        * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -371,6 +376,8 @@ declare module 'stripe' {
 
         card_await_notification?: NextAction.CardAwaitNotification;
 
+        cashapp_handle_redirect_or_display_qr_code?: NextAction.CashappHandleRedirectOrDisplayQrCode;
+
         display_bank_transfer_instructions?: NextAction.DisplayBankTransferInstructions;
 
         konbini_display_details?: NextAction.KonbiniDisplayDetails;
@@ -459,6 +466,39 @@ declare module 'stripe' {
            * For payments greater than INR 15000, the customer must provide explicit approval of the payment with their bank. For payments of lower amount, no customer action is required.
            */
           customer_approval_required: boolean | null;
+        }
+
+        interface CashappHandleRedirectOrDisplayQrCode {
+          /**
+           * The URL to the hosted Cash App Pay instructions page, which allows customers to view the QR code, and supports QR code refreshing on expiration.
+           */
+          hosted_instructions_url?: string;
+
+          /**
+           * The url for mobile redirect based auth
+           */
+          mobile_auth_url?: string;
+
+          qr_code?: CashappHandleRedirectOrDisplayQrCode.QrCode;
+        }
+
+        namespace CashappHandleRedirectOrDisplayQrCode {
+          interface QrCode {
+            /**
+             * The date (unix timestamp) when the QR code expires.
+             */
+            expires_at?: number;
+
+            /**
+             * The image_url_png string used to render QR code
+             */
+            image_url_png?: string;
+
+            /**
+             * The image_url_svg string used to render QR code
+             */
+            image_url_svg?: string;
+          }
         }
 
         interface DisplayBankTransferInstructions {
@@ -940,6 +980,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodOptions.CardPresent;
 
+        cashapp?: PaymentMethodOptions.Cashapp;
+
         customer_balance?: PaymentMethodOptions.CustomerBalance;
 
         eps?: PaymentMethodOptions.Eps;
@@ -965,6 +1007,8 @@ declare module 'stripe' {
         p24?: PaymentMethodOptions.P24;
 
         paynow?: PaymentMethodOptions.Paynow;
+
+        paypal?: PaymentMethodOptions.Paypal;
 
         pix?: PaymentMethodOptions.Pix;
 
@@ -1345,6 +1389,26 @@ declare module 'stripe' {
           request_incremental_authorization_support: boolean | null;
         }
 
+        interface Cashapp {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Cashapp.SetupFutureUsage;
+        }
+
+        namespace Cashapp {
+          type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
+        }
+
         interface CustomerBalance {
           bank_transfer?: CustomerBalance.BankTransfer;
 
@@ -1583,6 +1647,23 @@ declare module 'stripe' {
           setup_future_usage?: 'none';
         }
 
+        interface Paypal {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
+          capture_method?: 'manual';
+
+          /**
+           * Preferred locale of the PayPal checkout page that the customer is redirected to.
+           */
+          preferred_locale: string | null;
+
+          /**
+           * A unique reference ID of the PayPal transaction. This must be a globally unique ID across all PayPal transactions or the transaction will fail.
+           */
+          reference_id?: string | null;
+        }
+
         interface Pix {
           /**
            * The number of seconds (between 10 and 1209600) after which Pix payment will expire.
@@ -1761,6 +1842,8 @@ declare module 'stripe' {
           }
         }
       }
+
+      type SecretKeyConfirmation = 'optional' | 'required';
 
       type SetupFutureUsage = 'off_session' | 'on_session';
 
