@@ -1,5 +1,11 @@
 # Changelog
 
+## 11.3.0-beta.1 - 2022-12-08
+* [#1635](https://github.com/stripe/stripe-node/pull/1635) API Updates for beta branch
+  * Updated stable APIs to the latest version
+* [#1633](https://github.com/stripe/stripe-node/pull/1633) API Updates for beta branch
+  * Updated stable APIs to the latest version
+
 ## 11.2.0 - 2022-12-06
 * [#1632](https://github.com/stripe/stripe-node/pull/1632) API Updates
   * Add support for `flow_data` on `BillingPortalSessionCreateParams`
