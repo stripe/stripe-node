@@ -1,0 +1,13 @@
+{
+  "name": "mjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "stripe": "file:../../",
+    "ts-node": "^10.9.1"
+  },
+  "scripts": {
+    "runtestproject": "ts-node index.ts"
+  }
+}

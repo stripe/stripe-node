@@ -1,3 +1,3 @@
 // File generated from our OpenAPI spec
 
-module.exports = {ApiVersion: '2022-08-01'};
+module.exports = {ApiVersion: '2022-11-15'};

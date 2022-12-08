@@ -6,26 +6,24 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'disputes',
-
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{dispute}',
+    fullPath: '/v1/disputes/{dispute}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{dispute}',
+    fullPath: '/v1/disputes/{dispute}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/disputes',
     methodType: 'list',
   }),
 
   close: stripeMethod({
     method: 'POST',
-    path: '/{dispute}/close',
+    fullPath: '/v1/disputes/{dispute}/close',
   }),
 });

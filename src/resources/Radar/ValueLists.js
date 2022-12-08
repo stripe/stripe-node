@@ -6,31 +6,29 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'radar/value_lists',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/radar/value_lists',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{valueList}',
+    fullPath: '/v1/radar/value_lists/{value_list}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{valueList}',
+    fullPath: '/v1/radar/value_lists/{value_list}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/radar/value_lists',
     methodType: 'list',
   }),
 
   del: stripeMethod({
     method: 'DELETE',
-    path: '/{valueList}',
+    fullPath: '/v1/radar/value_lists/{value_list}',
   }),
 });

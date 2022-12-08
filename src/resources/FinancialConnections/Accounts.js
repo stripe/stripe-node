@@ -6,32 +6,30 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'financial_connections/accounts',
-
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{account}',
+    fullPath: '/v1/financial_connections/accounts/{account}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/financial_connections/accounts',
     methodType: 'list',
   }),
 
   disconnect: stripeMethod({
     method: 'POST',
-    path: '/{account}/disconnect',
+    fullPath: '/v1/financial_connections/accounts/{account}/disconnect',
   }),
 
   listOwners: stripeMethod({
     method: 'GET',
-    path: '/{account}/owners',
+    fullPath: '/v1/financial_connections/accounts/{account}/owners',
     methodType: 'list',
   }),
 
   refresh: stripeMethod({
     method: 'POST',
-    path: '/{account}/refresh',
+    fullPath: '/v1/financial_connections/accounts/{account}/refresh',
   }),
 });

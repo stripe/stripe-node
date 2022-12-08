@@ -6,26 +6,24 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'subscription_schedules',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/subscription_schedules',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{schedule}',
+    fullPath: '/v1/subscription_schedules/{schedule}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{schedule}',
+    fullPath: '/v1/subscription_schedules/{schedule}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/subscription_schedules',
     methodType: 'list',
   }),
 
@@ -36,11 +34,11 @@ module.exports = StripeResource.extend({
 
   cancel: stripeMethod({
     method: 'POST',
-    path: '/{schedule}/cancel',
+    fullPath: '/v1/subscription_schedules/{schedule}/cancel',
   }),
 
   release: stripeMethod({
     method: 'POST',
-    path: '/{schedule}/release',
+    fullPath: '/v1/subscription_schedules/{schedule}/release',
   }),
 });

@@ -6,32 +6,30 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'checkout/sessions',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/checkout/sessions',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{session}',
+    fullPath: '/v1/checkout/sessions/{session}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/checkout/sessions',
     methodType: 'list',
   }),
 
   expire: stripeMethod({
     method: 'POST',
-    path: '/{session}/expire',
+    fullPath: '/v1/checkout/sessions/{session}/expire',
   }),
 
   listLineItems: stripeMethod({
     method: 'GET',
-    path: '/{session}/line_items',
+    fullPath: '/v1/checkout/sessions/{session}/line_items',
     methodType: 'list',
   }),
 });

@@ -1,5 +1,40 @@
 # Changelog
 
+## 11.2.0 - 2022-12-06
+* [#1632](https://github.com/stripe/stripe-node/pull/1632) API Updates
+  * Add support for `flow_data` on `BillingPortalSessionCreateParams`
+  * Add support for `flow` on `BillingPortal.Session`
+* [#1631](https://github.com/stripe/stripe-node/pull/1631) API Updates
+  * Add support for `india_international_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for `invoice_creation` on `Checkout.Session` and `CheckoutSessionCreateParams`
+  * Add support for `invoice` on `Checkout.Session`
+  * Add support for `metadata` on `SubscriptionSchedule.phases[].items[]`, `SubscriptionScheduleCreateParams.phases[].items[]`, and `SubscriptionScheduleUpdateParams.phases[].items[]`
+* [#1630](https://github.com/stripe/stripe-node/pull/1630) Remove BASIC_METHODS from TS definitions
+* [#1629](https://github.com/stripe/stripe-node/pull/1629) Narrower type for stripe.invoices.retrieveUpcoming()
+* [#1627](https://github.com/stripe/stripe-node/pull/1627) remove unneeded IIFE
+* [#1625](https://github.com/stripe/stripe-node/pull/1625) Remove API version from the path
+* [#1626](https://github.com/stripe/stripe-node/pull/1626) Move child resource method params next to method declarations
+* [#1624](https://github.com/stripe/stripe-node/pull/1624) Split resource and service types
+
+## 11.1.0 - 2022-11-17
+* [#1623](https://github.com/stripe/stripe-node/pull/1623) API Updates
+  * Add support for `hosted_instructions_url` on `PaymentIntent.next_action.wechat_pay_display_qr_code`
+* [#1622](https://github.com/stripe/stripe-node/pull/1622) API Updates
+  * Add support for `custom_text` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  * Add support for `hosted_instructions_url` on `PaymentIntent.next_action.paynow_display_qr_code`
+
+## 11.0.0 - 2022-11-16
+
+This release includes breaking changes resulting from moving to use the new API version "2022-11-15". To learn more about these changes to Stripe products, see https://stripe.com/docs/upgrades#2022-11-15
+
+"⚠️" symbol highlights breaking changes.
+
+* [#1608](https://github.com/stripe/stripe-node/pull/1608) Next major release changes
+* [#1619](https://github.com/stripe/stripe-node/pull/1619) Annotate prototypes with types
+* [#1612](https://github.com/stripe/stripe-node/pull/1612) Add type information here and there
+* [#1615](https://github.com/stripe/stripe-node/pull/1615) API Updates
+  * ⚠️ Remove support for `tos_shown_and_accepted` on `CheckoutSessionCreateParams.payment_method_options.paynow`. The property was mistakenly released and never worked.
+
 ## 10.18.0-beta.1 - 2022-11-10
 * [#1616](https://github.com/stripe/stripe-node/pull/1616) API Updates for beta branch
   * Updated stable APIs to the latest version

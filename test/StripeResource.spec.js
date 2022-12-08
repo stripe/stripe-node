@@ -22,23 +22,33 @@ const {
 
 describe('StripeResource', () => {
   describe('createResourcePathWithSymbols', () => {
+    let testResource;
+    before(() => {
+      testResource = new (StripeResource.extend({
+        path: 'widgets',
+        create: stripeMethod({
+          method: 'POST',
+          path: '',
+        }),
+      }))(stripe);
+    });
     it('Generates a path when there is a symbol', () => {
-      stripe.invoices.create({});
-      const path = stripe.invoices.createResourcePathWithSymbols('{id}');
-      expect(path).to.equal('/invoices/{id}');
+      testResource.create({});
+      const path = testResource.createResourcePathWithSymbols('{id}');
+      expect(path).to.equal('/widgets/{id}');
     });
 
     it('Generates a path when there is nothing beyond the resource path', () => {
-      stripe.invoices.create({});
-      const path = stripe.invoices.createResourcePathWithSymbols('');
+      testResource.create({});
+      const path = testResource.createResourcePathWithSymbols('');
       // This explicitly shouldn't have a trailing slash.
-      expect(path).to.equal('/invoices');
+      expect(path).to.equal('/widgets');
     });
 
     it('Handles accidental double slashes', () => {
-      stripe.invoices.create({});
-      const path = stripe.invoices.createResourcePathWithSymbols('/{id}');
-      expect(path).to.equal('/invoices/{id}');
+      testResource.create({});
+      const path = testResource.createResourcePathWithSymbols('/{id}');
+      expect(path).to.equal('/widgets/{id}');
     });
   });
 
@@ -1023,8 +1033,6 @@ describe('StripeResource', () => {
 
   describe('Request Timeout', () => {
     it('should allow the setting of a request timeout on a per-request basis', (done) => {
-      stripe.setTimeout(1000);
-
       stripe.charges.create({});
 
       expect(stripe.LAST_REQUEST.settings).to.deep.equal({});
