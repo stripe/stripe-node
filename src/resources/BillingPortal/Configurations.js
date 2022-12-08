@@ -6,26 +6,24 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'billing_portal/configurations',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/billing_portal/configurations',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{configuration}',
+    fullPath: '/v1/billing_portal/configurations/{configuration}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{configuration}',
+    fullPath: '/v1/billing_portal/configurations/{configuration}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/billing_portal/configurations',
     methodType: 'list',
   }),
 });

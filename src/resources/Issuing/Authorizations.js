@@ -6,31 +6,29 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'issuing/authorizations',
-
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{authorization}',
+    fullPath: '/v1/issuing/authorizations/{authorization}',
   }),
 
   update: stripeMethod({
     method: 'POST',
-    path: '/{authorization}',
+    fullPath: '/v1/issuing/authorizations/{authorization}',
   }),
 
   list: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/issuing/authorizations',
     methodType: 'list',
   }),
 
   approve: stripeMethod({
     method: 'POST',
-    path: '/{authorization}/approve',
+    fullPath: '/v1/issuing/authorizations/{authorization}/approve',
   }),
 
   decline: stripeMethod({
     method: 'POST',
-    path: '/{authorization}/decline',
+    fullPath: '/v1/issuing/authorizations/{authorization}/decline',
   }),
 });

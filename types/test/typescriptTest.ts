@@ -5,11 +5,11 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-///<reference types="../2022-08-01" />
+///<reference types=".." />
 import Stripe from 'stripe';
 
 let stripe = new Stripe('sk_test_123', {
-  apiVersion: '2022-08-01',
+  apiVersion: '2022-11-15',
 });
 
 // @ts-ignore lazily ignore apiVersion requirement.
@@ -27,7 +27,7 @@ stripe = new Stripe('sk_test_123', {
 
 // Check config object.
 stripe = new Stripe('sk_test_123', {
-  apiVersion: '2022-08-01',
+  apiVersion: '2022-11-15',
   typescript: true,
   maxNetworkRetries: 1,
   timeout: 1000,
@@ -35,21 +35,17 @@ stripe = new Stripe('sk_test_123', {
   port: 123,
   telemetry: true,
   httpClient: Stripe.createNodeHttpClient(),
+  appInfo: {
+    name: 'my-wordpress-plugin',
+  },
 });
-
-stripe.setTimeout(3000);
-stripe.setAppInfo({
-  name: 'my-wordpress-plugin',
-});
-
-stripe.setHost('host', 'port', 'protocol');
 
 (async (): Promise<void> => {
   const params: Stripe.CustomerCreateParams = {
     description: 'test',
   };
   const opts: Stripe.RequestOptions = {
-    apiVersion: '2022-08-01',
+    apiVersion: '2022-11-15',
   };
   const customer: Stripe.Customer = await stripe.customers.create(params, opts);
 
@@ -127,6 +123,10 @@ stripe.setHost('host', 'port', 'protocol');
       return undefined;
     });
 
+  // @ts-expect-error
+  (await stripe.invoices.retrieveUpcoming()).id;
+  (await stripe.invoices.retrieve('')).id;
+
   try {
     await stripe.paymentIntents.create({amount: 100, currency: 'USD'});
   } catch (err) {
@@ -170,7 +170,6 @@ stripe.setHost('host', 'port', 'protocol');
 })();
 
 const Foo = Stripe.StripeResource.extend({
-  includeBasic: ['retrieve'],
   foo: Stripe.StripeResource.method({
     method: 'create',
     path: 'foo',

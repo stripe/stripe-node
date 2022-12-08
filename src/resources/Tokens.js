@@ -6,15 +6,13 @@ const StripeResource = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'tokens',
-
   create: stripeMethod({
     method: 'POST',
-    path: '',
+    fullPath: '/v1/tokens',
   }),
 
   retrieve: stripeMethod({
     method: 'GET',
-    path: '/{token}',
+    fullPath: '/v1/tokens/{token}',
   }),
 });

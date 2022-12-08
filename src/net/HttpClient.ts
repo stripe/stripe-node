@@ -9,30 +9,30 @@ type TimeoutError = TypeError & {code?: string};
  * 2. A client class which extends HttpClient and implements all methods,
  *    returning their own response class when making requests.
  */
-class HttpClient {
+class HttpClient implements HttpClientInterface {
   static CONNECTION_CLOSED_ERROR_CODES: string[];
   static TIMEOUT_ERROR_CODE: string;
 
   /** The client name used for diagnostics. */
-  getClientName() {
+  getClientName(): string {
     throw new Error('getClientName not implemented.');
   }
 
   makeRequest(
-    host,
-    port,
-    path,
-    method,
-    headers,
-    requestData,
-    protocol,
-    timeout
-  ) {
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: RequestData,
+    protocol: string,
+    timeout: number
+  ): Promise<HttpClientResponseInterface> {
     throw new Error('makeRequest not implemented.');
   }
 
   /** Helper to make a consistent timeout error across implementations. */
-  static makeTimeoutError() {
+  static makeTimeoutError(): TimeoutError {
     const timeoutErr: TimeoutError = new TypeError(
       HttpClient.TIMEOUT_ERROR_CODE
     );
@@ -44,11 +44,11 @@ class HttpClient {
 HttpClient.CONNECTION_CLOSED_ERROR_CODES = ['ECONNRESET', 'EPIPE'];
 HttpClient.TIMEOUT_ERROR_CODE = 'ETIMEDOUT';
 
-class HttpClientResponse {
+class HttpClientResponse implements HttpClientResponseInterface {
   _statusCode: number;
-  _headers: Record<string, string>;
+  _headers: ResponseHeaders;
 
-  constructor(statusCode, headers) {
+  constructor(statusCode: number, headers: ResponseHeaders) {
     this._statusCode = statusCode;
     this._headers = headers;
   }
@@ -57,15 +57,15 @@ class HttpClientResponse {
     return this._statusCode;
   }
 
-  getHeaders(): Record<string, string> {
+  getHeaders(): ResponseHeaders {
     return this._headers;
   }
 
-  getRawResponse() {
+  getRawResponse(): unknown {
     throw new Error('getRawResponse not implemented.');
   }
 
-  toStream(streamCompleteCallback) {
+  toStream(streamCompleteCallback: () => void): unknown {
     throw new Error('toStream not implemented.');
   }
 

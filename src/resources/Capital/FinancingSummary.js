@@ -6,10 +6,8 @@ const StripeResource = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
-  path: 'capital/financing_summary',
-
   retrieve: stripeMethod({
     method: 'GET',
-    path: '',
+    fullPath: '/v1/capital/financing_summary',
   }),
 });
