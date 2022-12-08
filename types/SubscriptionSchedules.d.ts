@@ -385,7 +385,11 @@ declare module 'stripe' {
               /**
                * The discount end type
                */
-              type: 'timestamp';
+              type: DiscountEnd.Type;
+            }
+
+            namespace DiscountEnd {
+              type Type = 'duration' | 'timestamp';
             }
           }
         }
@@ -440,7 +444,11 @@ declare module 'stripe' {
             /**
              * The discount end type
              */
-            type: 'timestamp';
+            type: DiscountEnd.Type;
+          }
+
+          namespace DiscountEnd {
+            type Type = 'duration' | 'timestamp';
           }
         }
 
@@ -528,7 +536,11 @@ declare module 'stripe' {
               /**
                * The discount end type
                */
-              type: 'timestamp';
+              type: DiscountEnd.Type;
+            }
+
+            namespace DiscountEnd {
+              type Type = 'duration' | 'timestamp';
             }
           }
 
