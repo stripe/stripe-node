@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@types/node": ">=8.1.0",
+    "events": "^3.3.0",
     "qs": "^6.11.0"
   },
   "license": "MIT",
@@ -67,5 +68,11 @@
     "report": "nyc -r text -r lcov report",
     "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "prettier-format": "prettier --config .prettierrc 'lib/**/*.js' --write"
+  },
+  "exports": {
+    ".": {
+      "worker": "./lib/stripe.worker.js",
+      "default": "./lib/stripe.js"
+    }
   }
 }
