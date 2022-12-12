@@ -108,7 +108,7 @@ interface HttpClientInterface {
 }
 type StripeObject = {
   getClientUserAgentSeeded: (
-    seed: Record<string, string>,
+    seed: Record<string, string | null | boolean>,
     callback: (userAgent: string) => void
   ) => void;
   getUname: (callback: (uname: string) => void) => void;
@@ -160,7 +160,6 @@ type StripeObject = {
   _enableTelemetry: boolean;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
-  utils: any;
 };
 type StripeRawError = {
   message?: string;

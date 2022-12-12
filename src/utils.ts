@@ -430,15 +430,6 @@ const utils = {
 
     return n as number;
   },
-
-  determineProcessUserAgentProperties: (): Record<string, string> => {
-    return typeof process === 'undefined'
-      ? {}
-      : {
-          lang_version: process.version,
-          platform: process.platform,
-        };
-  },
 };
 
 function emitWarning(warning: string): void {
