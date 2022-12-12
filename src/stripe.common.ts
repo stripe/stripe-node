@@ -1,3 +1,4 @@
+// @ts-ignore
 import _Error = require('./Error');
 
 const resources = require('./resources');
@@ -11,7 +12,17 @@ const DEFAULT_TIMEOUT = 80000;
 
 Stripe.PACKAGE_VERSION = require('../package.json').version;
 
-const {determineProcessUserAgentProperties, emitWarning} = utils;
+const throwUnimplemented = (...args: any[]): any => {
+  throw new Error('Unimplemented');
+};
+
+// const utils = require('./utils');
+// const {determineProcessUserAgentProperties, emitWarning} = utils;
+Stripe.utils = {
+  determineProcessUserAgentProperties: throwUnimplemented,
+  validateInteger: throwUnimplemented,
+  safeExec: throwUnimplemented,
+};
 
 Stripe.USER_AGENT = {
   bindings_version: Stripe.PACKAGE_VERSION,
@@ -19,7 +30,7 @@ Stripe.USER_AGENT = {
   publisher: 'stripe',
   uname: null,
   typescript: false,
-  ...determineProcessUserAgentProperties(),
+  ...Stripe.utils.determineProcessUserAgentProperties(),
 };
 
 /** @private */
@@ -100,8 +111,12 @@ function Stripe(
     protocol: props.protocol || 'https',
     basePath: DEFAULT_BASE_PATH,
     version: props.apiVersion || DEFAULT_API_VERSION,
-    timeout: utils.validateInteger('timeout', props.timeout, DEFAULT_TIMEOUT),
-    maxNetworkRetries: utils.validateInteger(
+    timeout: Stripe.utils.validateInteger(
+      'timeout',
+      props.timeout,
+      DEFAULT_TIMEOUT
+    ),
+    maxNetworkRetries: Stripe.utils.validateInteger(
       'maxNetworkRetries',
       props.maxNetworkRetries,
       0
@@ -309,7 +324,7 @@ Stripe.prototype = {
     n: number,
     defaultVal?: number
   ): void {
-    const val = utils.validateInteger(prop, n, defaultVal);
+    const val = Stripe.utils.validateInteger(prop, n, defaultVal);
 
     this._setApiField(prop, val);
   },
@@ -328,7 +343,7 @@ Stripe.prototype = {
   getUname(cb: (uname: string) => void): void {
     if (!Stripe._UNAME_CACHE) {
       Stripe._UNAME_CACHE = new Promise<string>((resolve) => {
-        utils.safeExec('uname -a', (err: Error, uname: string) => {
+        Stripe.utils.safeExec('uname -a', (err: Error, uname: string) => {
           resolve(uname);
         });
       });
@@ -422,7 +437,7 @@ Stripe.prototype = {
   _prepResources(): void {
     for (const name in resources) {
       // @ts-ignore
-      this[utils.pascalToCamelCase(name)] = new resources[name](this);
+      this[Stripe.utils.pascalToCamelCase(name)] = new resources[name](this);
     }
   },
 
@@ -466,13 +481,7 @@ Stripe.prototype = {
 
     return config;
   },
+  utils: Stripe.utils,
 } as StripeObject;
 
 module.exports = Stripe;
-
-// expose constructor as a named property to enable mocking with Sinon.JS
-module.exports.Stripe = Stripe;
-
-// Allow use with the TypeScript compiler without `esModuleInterop`.
-// We may also want to add `Object.defineProperty(exports, "__esModule", {value: true});` in the future, so that Babel users will use the `default` version.
-module.exports.default = Stripe;

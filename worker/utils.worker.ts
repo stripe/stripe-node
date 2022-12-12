@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+///<reference types="../src/Types" />
 const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
 
@@ -384,8 +386,8 @@ const utils = {
 
         if (utils.isObject(value)) {
           if (
-            // @ts-ignore // TODO: reimplement this method
-            !Buffer.isBuffer(value) &&
+            // @ts-ignore
+            !Buffer.isBuffer(value) && // TODO: reimplement this method
             !Object.prototype.hasOwnProperty.call(value, 'data')
           ) {
             // Non-buffer non-file Objects are recursively flattened

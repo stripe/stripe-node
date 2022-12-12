@@ -1,3 +1,0 @@
-const utils = require('./utils');
-
-exports = require('./stripe.common');

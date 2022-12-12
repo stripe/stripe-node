@@ -55,7 +55,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.json && yarn remove-exports-line && yarn prettier-format",
+    "build": "cd src && tsc -p tsconfig.json && cd ../worker && tsc -p tsconfig.json && cd .. && yarn remove-exports-line && yarn prettier-format",
     "remove-exports-line": "sed -i.bak '/Object.defineProperty(exports, \"__esModule\", { value: true });/d' ./lib/stripe.js; rm ./lib/stripe.js.bak",
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./lib",
     "prepack": "yarn install && yarn build",

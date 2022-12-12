@@ -160,6 +160,7 @@ type StripeObject = {
   _enableTelemetry: boolean;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
+  utils: any;
 };
 type StripeRawError = {
   message?: string;

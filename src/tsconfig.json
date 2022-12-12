@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./lib",
+    "outDir": "../lib",
     "allowJs": true,
     "target": "es2017",
     "module": "commonjs",
@@ -11,5 +11,5 @@
     "strict": true,
     "strictFunctionTypes": true,
   },
-  "include": ["./src/**/*"]
+  "include": ["./**/*"]
 }
