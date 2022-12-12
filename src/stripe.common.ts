@@ -13,16 +13,17 @@ const DEFAULT_TIMEOUT = 80000;
 Stripe.PACKAGE_VERSION = require('../package.json').version;
 
 const throwUnimplemented = (...args: any[]): any => {
-  throw new Error('Unimplemented');
+  // throw new Error('Unimplemented');
 };
 
 // const utils = require('./utils');
 // const {determineProcessUserAgentProperties, emitWarning} = utils;
-Stripe.utils = {
-  determineProcessUserAgentProperties: throwUnimplemented,
-  validateInteger: throwUnimplemented,
-  safeExec: throwUnimplemented,
-};
+// Stripe.utils = {
+//   determineProcessUserAgentProperties: throwUnimplemented,
+//   validateInteger: throwUnimplemented,
+//   safeExec: throwUnimplemented,
+// };
+const commonUtils = require('./utils.common');
 
 Stripe.USER_AGENT = {
   bindings_version: Stripe.PACKAGE_VERSION,
@@ -30,7 +31,7 @@ Stripe.USER_AGENT = {
   publisher: 'stripe',
   uname: null,
   typescript: false,
-  ...Stripe.utils.determineProcessUserAgentProperties(),
+  ...commonUtils.determineProcessUserAgentProperties(),
 };
 
 /** @private */
@@ -111,12 +112,12 @@ function Stripe(
     protocol: props.protocol || 'https',
     basePath: DEFAULT_BASE_PATH,
     version: props.apiVersion || DEFAULT_API_VERSION,
-    timeout: Stripe.utils.validateInteger(
+    timeout: commonUtils.validateInteger(
       'timeout',
       props.timeout,
       DEFAULT_TIMEOUT
     ),
-    maxNetworkRetries: Stripe.utils.validateInteger(
+    maxNetworkRetries: commonUtils.validateInteger(
       'maxNetworkRetries',
       props.maxNetworkRetries,
       0
@@ -324,7 +325,7 @@ Stripe.prototype = {
     n: number,
     defaultVal?: number
   ): void {
-    const val = Stripe.utils.validateInteger(prop, n, defaultVal);
+    const val = commonUtils.validateInteger(prop, n, defaultVal);
 
     this._setApiField(prop, val);
   },
@@ -343,7 +344,7 @@ Stripe.prototype = {
   getUname(cb: (uname: string) => void): void {
     if (!Stripe._UNAME_CACHE) {
       Stripe._UNAME_CACHE = new Promise<string>((resolve) => {
-        Stripe.utils.safeExec('uname -a', (err: Error, uname: string) => {
+        commonUtils.safeExec('uname -a', (err: Error, uname: string) => {
           resolve(uname);
         });
       });
@@ -481,7 +482,7 @@ Stripe.prototype = {
 
     return config;
   },
-  utils: Stripe.utils,
+  utils: commonUtils,
 } as StripeObject;
 
 module.exports = Stripe;
