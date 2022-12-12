@@ -12,9 +12,9 @@ const DEFAULT_TIMEOUT = 80000;
 
 Stripe.PACKAGE_VERSION = require('../package.json').version;
 
-const commonUtils = require('./utils.common');
+const emptyUtils = require('./emptyUtils');
 
-Stripe.utils = commonUtils;
+Stripe.utils = emptyUtils;
 
 const determineProcessUserAgentProperties = (): Record<string, string> => {
   return typeof process === 'undefined'
