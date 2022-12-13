@@ -1,8 +1,29 @@
 const utils = require('./utils');
+utils.crypto = require('crypto');
 
 const _Stripe = require('./stripe.common');
 
+import * as http from 'http';
+const {HttpClient} = require('./net/HttpClient');
+
+// The following property setting involves Node-specific dependencies.
+// If these dependencies are unavailable, stripe.worker.js
+// should be used as the main entrypoint.
 _Stripe.utils = utils;
+
+_Stripe.createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
+  const {NodeHttpClient} = require('./net/NodeHttpClient');
+  return new NodeHttpClient(agent);
+};
+
+/**
+ * Create a CryptoProvider which uses the built-in Node crypto libraries for
+ * its crypto operations.
+ */
+_Stripe.createNodeCryptoProvider = (): StripeCryptoProvider => {
+  const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
+  return new NodeCryptoProvider();
+};
 
 module.exports = _Stripe;
 

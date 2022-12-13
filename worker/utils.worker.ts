@@ -233,7 +233,7 @@ const utils = {
 
     // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
     // otherwise use our own scmp-internal function.
-    if (crypto.timingSafeEqual) {
+    if (crypto?.timingSafeEqual) {
       return crypto.timingSafeEqual(a, b);
     }
 
@@ -413,7 +413,7 @@ const utils = {
    */
   uuid4: (): string => {
     // available in: v14.17.x+
-    if (crypto.randomUUID) {
+    if (crypto?.randomUUID) {
       return crypto.randomUUID();
     }
 

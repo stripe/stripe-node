@@ -1,6 +1,5 @@
 const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
-const crypto = require('crypto');
 
 // Certain sandboxed environments (our known example right now are CloudFlare
 // Workers) may make `child_process` unavailable. Because `exec` isn't critical
@@ -39,6 +38,9 @@ type Options = {
 };
 
 const utils = {
+  // To be overriden if 'node:crypto' is available
+  crypto: null,
+
   isOptionsHash(o: unknown): boolean | unknown {
     return (
       o &&
@@ -228,8 +230,10 @@ const utils = {
 
     // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
     // otherwise use our own scmp-internal function.
-    if (crypto?.timingSafeEqual) {
-      return crypto.timingSafeEqual(a, b);
+    // @ts-ignore
+    if (utils.crypto?.timingSafeEqual) {
+      // @ts-ignore
+      return utils.crypto!.timingSafeEqual(a, b);
     }
 
     const len = a.length;
@@ -407,8 +411,10 @@ const utils = {
    */
   uuid4: (): string => {
     // available in: v14.17.x+
-    if (crypto?.randomUUID) {
-      return crypto.randomUUID();
+    // @ts-ignore
+    if (utils.crypto?.randomUUID) {
+      // @ts-ignore
+      return utils.crypto.randomUUID();
     }
 
     // legacy behavior if native UUIDs aren't available

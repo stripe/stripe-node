@@ -58,7 +58,6 @@ const ALLOWED_CONFIG_PROPERTIES = [
 
 const EventEmitter = require('events').EventEmitter;
 import StripeResource = require('./StripeResource');
-import * as http from 'http';
 Stripe.StripeResource = StripeResource;
 Stripe.resources = resources;
 
@@ -158,9 +157,8 @@ function Stripe(
 Stripe.errors = _Error;
 Stripe.webhooks = require('./Webhooks');
 
-Stripe.createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
-  const {NodeHttpClient} = require('./net/NodeHttpClient');
-  return new NodeHttpClient(agent);
+Stripe.createNodeHttpClient = (...args: any[]): any => {
+  // not implemented
 };
 
 /**
@@ -179,9 +177,8 @@ Stripe.createFetchHttpClient = (fetchFn: typeof fetch): typeof HttpClient => {
  * Create a CryptoProvider which uses the built-in Node crypto libraries for
  * its crypto operations.
  */
-Stripe.createNodeCryptoProvider = (): StripeCryptoProvider => {
-  const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
-  return new NodeCryptoProvider();
+Stripe.createNodeCryptoProvider = (...args: any[]): any => {
+  // not implemented
 };
 
 /**
