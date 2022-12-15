@@ -121,6 +121,11 @@ declare module 'stripe' {
       line_items?: ApiList<Stripe.LineItem>;
 
       /**
+       * A list of lines on the quote. These lines describe changes that will be used to create new subscription schedules or update existing subscription schedules when the quote is accepted.
+       */
+      lines?: Array<string> | null;
+
+      /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
        */
       livemode: boolean;
@@ -145,6 +150,11 @@ declare module 'stripe' {
        */
       status: Quote.Status;
 
+      /**
+       * Details on when and why a quote has been marked as stale or canceled.
+       */
+      status_details?: Quote.StatusDetails | null;
+
       status_transitions: Quote.StatusTransitions;
 
       /**
@@ -154,10 +164,19 @@ declare module 'stripe' {
 
       subscription_data: Quote.SubscriptionData;
 
+      subscription_data_overrides?: Array<
+        Quote.SubscriptionDataOverride
+      > | null;
+
       /**
        * The subscription schedule that was created or updated from this quote.
        */
       subscription_schedule: string | Stripe.SubscriptionSchedule | null;
+
+      /**
+       * The subscription schedules that were created or updated from this quote.
+       */
+      subscription_schedules?: Array<Quote.SubscriptionSchedule> | null;
 
       /**
        * ID of the test clock this quote belongs to.
@@ -196,6 +215,11 @@ declare module 'stripe' {
          * The definitive totals and line items the customer will be charged on a recurring basis. Takes into account the line items with recurring prices and discounts with `duration=forever` coupons only. Defaults to `null` if no inputted line items with recurring prices.
          */
         recurring: Computed.Recurring | null;
+
+        /**
+         * The time at which the quote's estimated schedules and upcoming invoices were generated.
+         */
+        updated_at?: number | null;
 
         upfront: Computed.Upfront;
       }
@@ -398,7 +422,116 @@ declare module 'stripe' {
         days_until_due: number | null;
       }
 
-      type Status = 'accepted' | 'canceled' | 'draft' | 'open';
+      type Status =
+        | 'accepted'
+        | 'accepting'
+        | 'canceled'
+        | 'draft'
+        | 'open'
+        | 'stale';
+
+      interface StatusDetails {
+        /**
+         * Details on when and why a quote has been marked as canceled.
+         */
+        canceled: StatusDetails.Canceled | null;
+
+        /**
+         * Details on when and why a quote has been marked as stale.
+         */
+        stale: StatusDetails.Stale | null;
+      }
+
+      namespace StatusDetails {
+        interface Canceled {
+          /**
+           * The reason this quote was marked as canceled.
+           */
+          reason: Canceled.Reason | null;
+
+          /**
+           * Time at which the quote was marked as canceled. Measured in seconds since the Unix epoch.
+           */
+          transitioned_at: number | null;
+        }
+
+        namespace Canceled {
+          type Reason =
+            | 'quote_accepted'
+            | 'quote_expired'
+            | 'quote_superseded'
+            | 'subscription_canceled'
+            | 'user_canceled';
+        }
+
+        interface Stale {
+          /**
+           * Time at which the quote expires. Measured in seconds since the Unix epoch.
+           */
+          expires_at: number | null;
+
+          /**
+           * The most recent reason this quote was marked as stale.
+           */
+          last_reason: Stale.LastReason | null;
+
+          /**
+           * Time at which the stale reason was updated. Measured in seconds since the Unix epoch.
+           */
+          last_updated_at: number | null;
+
+          /**
+           * Time at which the quote was marked as stale. Measured in seconds since the Unix epoch.
+           */
+          transitioned_at: number | null;
+        }
+
+        namespace Stale {
+          interface LastReason {
+            /**
+             * The ID of the line that is invalid if the stale reason type is `line_invalid`.
+             */
+            line_invalid: string | null;
+
+            /**
+             * The state of the subscription before the quote was marked as stale.
+             */
+            subscription_changed: LastReason.SubscriptionChanged | null;
+
+            /**
+             * The state of the subscription schedule before the quote was marked as stale.
+             */
+            subscription_schedule_changed: LastReason.SubscriptionScheduleChanged | null;
+
+            /**
+             * The reason the quote was marked as stale.
+             */
+            type: LastReason.Type | null;
+          }
+
+          namespace LastReason {
+            interface SubscriptionChanged {
+              /**
+               * The subscription's state before the quote was marked as stale.
+               */
+              previous_subscription: Stripe.Subscription | null;
+            }
+
+            interface SubscriptionScheduleChanged {
+              /**
+               * The subscription schedule's state before the quote was marked as stale.
+               */
+              previous_subscription_schedule: Stripe.SubscriptionSchedule | null;
+            }
+
+            type Type =
+              | 'bill_on_acceptance_invalid'
+              | 'line_invalid'
+              | 'subscription_changed'
+              | 'subscription_schedule_changed';
+          }
+        }
+      }
 
       interface StatusTransitions {
         /**
@@ -418,6 +551,11 @@ declare module 'stripe' {
       }
 
       interface SubscriptionData {
+        /**
+         * TODO
+         */
+        bill_on_acceptance?: SubscriptionData.BillOnAcceptance | null;
+
         /**
          * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
          */
@@ -472,6 +610,116 @@ declare module 'stripe' {
       namespace SubscriptionData {
         type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
 
+        interface BillOnAcceptance {
+          /**
+           * The start of the period to bill from when the Quote is accepted.
+           */
+          bill_from: BillOnAcceptance.BillFrom | null;
+
+          /**
+           * The end of the period to bill until when the Quote is accepted.
+           */
+          bill_until: BillOnAcceptance.BillUntil | null;
+        }
+
+        namespace BillOnAcceptance {
+          interface BillFrom {
+            /**
+             * The materialized time.
+             */
+            computed: number | null;
+
+            /**
+             * The timestamp the given line starts at.
+             */
+            line_starts_at: BillFrom.LineStartsAt | null;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp: number | null;
+
+            /**
+             * The type of method to specify the `bill_from` time.
+             */
+            type: BillFrom.Type;
+          }
+
+          namespace BillFrom {
+            interface LineStartsAt {
+              /**
+               * Unique identifier for the object.
+               */
+              id: string;
+            }
+
+            type Type =
+              | 'line_starts_at'
+              | 'now'
+              | 'quote_acceptance_date'
+              | 'timestamp';
+          }
+
+          interface BillUntil {
+            /**
+             * The materialized time.
+             */
+            computed: number | null;
+
+            /**
+             * Time span for the quote line starting from the `starts_at` date.
+             */
+            duration: BillUntil.Duration | null;
+
+            /**
+             * The timestamp the given line ends at.
+             */
+            line_ends_at: BillUntil.LineEndsAt | null;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp: number | null;
+
+            /**
+             * The type of method to specify the `bill_until` time.
+             */
+            type: BillUntil.Type;
+          }
+
+          namespace BillUntil {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
+              /**
+               * Unique identifier for the object.
+               */
+              id: string;
+            }
+
+            type Type =
+              | 'duration'
+              | 'line_ends_at'
+              | 'schedule_end'
+              | 'timestamp'
+              | 'upcoming_invoice';
+          }
+        }
+
         type EndBehavior = 'cancel' | 'release';
 
         interface Prebilling {
@@ -482,6 +730,214 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
+      }
+
+      interface SubscriptionDataOverride {
+        applies_to: SubscriptionDataOverride.AppliesTo;
+
+        /**
+         * The start of the period to bill from when the Quote is accepted.
+         */
+        bill_on_acceptance: SubscriptionDataOverride.BillOnAcceptance | null;
+
+        /**
+         * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
+         */
+        billing_behavior?: SubscriptionDataOverride.BillingBehavior;
+
+        /**
+         * The customer which this quote belongs to. A customer is required before finalizing the quote. Once specified, it cannot be changed.
+         */
+        customer: string | null;
+
+        /**
+         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
+         */
+        description: string | null;
+
+        /**
+         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` and `cancel`.
+         */
+        end_behavior: SubscriptionDataOverride.EndBehavior | null;
+
+        /**
+         * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the quote is accepted.
+         */
+        proration_behavior?: SubscriptionDataOverride.ProrationBehavior;
+      }
+
+      namespace SubscriptionDataOverride {
+        interface AppliesTo {
+          /**
+           * A custom string that identifies a new subscription schedule being created upon quote acceptance. All quote lines with the same `new_reference` field will be applied to the creation of a new subscription schedule.
+           */
+          new_reference: string | null;
+
+          /**
+           * The ID of the schedule the line applies to.
+           */
+          subscription_schedule: string | null;
+
+          /**
+           * Describes whether the quote line is affecting a new schedule or an existing schedule.
+           */
+          type: AppliesTo.Type;
+        }
+
+        namespace AppliesTo {
+          type Type = 'new_reference' | 'subscription_schedule';
+        }
+
+        type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
+
+        interface BillOnAcceptance {
+          /**
+           * The start of the period to bill from when the Quote is accepted.
+           */
+          bill_from: BillOnAcceptance.BillFrom | null;
+
+          /**
+           * The end of the period to bill until when the Quote is accepted.
+           */
+          bill_until: BillOnAcceptance.BillUntil | null;
+        }
+
+        namespace BillOnAcceptance {
+          interface BillFrom {
+            /**
+             * The materialized time.
+             */
+            computed: number | null;
+
+            /**
+             * The timestamp the given line starts at.
+             */
+            line_starts_at: BillFrom.LineStartsAt | null;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp: number | null;
+
+            /**
+             * The type of method to specify the `bill_from` time.
+             */
+            type: BillFrom.Type;
+          }
+
+          namespace BillFrom {
+            interface LineStartsAt {
+              /**
+               * Unique identifier for the object.
+               */
+              id: string;
+            }
+
+            type Type =
+              | 'line_starts_at'
+              | 'now'
+              | 'quote_acceptance_date'
+              | 'timestamp';
+          }
+
+          interface BillUntil {
+            /**
+             * The materialized time.
+             */
+            computed: number | null;
+
+            /**
+             * Time span for the quote line starting from the `starts_at` date.
+             */
+            duration: BillUntil.Duration | null;
+
+            /**
+             * The timestamp the given line ends at.
+             */
+            line_ends_at: BillUntil.LineEndsAt | null;
+
+            /**
+             * A precise Unix timestamp.
+             */
+            timestamp: number | null;
+
+            /**
+             * The type of method to specify the `bill_until` time.
+             */
+            type: BillUntil.Type;
+          }
+
+          namespace BillUntil {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
+              /**
+               * Unique identifier for the object.
+               */
+              id: string;
+            }
+
+            type Type =
+              | 'duration'
+              | 'line_ends_at'
+              | 'schedule_end'
+              | 'timestamp'
+              | 'upcoming_invoice';
+          }
+        }
+
+        type EndBehavior = 'cancel' | 'release';
+
+        type ProrationBehavior =
+          | 'always_invoice'
+          | 'create_prorations'
+          | 'none';
+      }
+
+      interface SubscriptionSchedule {
+        applies_to: SubscriptionSchedule.AppliesTo;
+
+        /**
+         * The subscription schedule that was created or updated from this quote.
+         */
+        subscription_schedule: string;
+      }
+
+      namespace SubscriptionSchedule {
+        interface AppliesTo {
+          /**
+           * A custom string that identifies a new subscription schedule being created upon quote acceptance. All quote lines with the same `new_reference` field will be applied to the creation of a new subscription schedule.
+           */
+          new_reference: string | null;
+
+          /**
+           * The ID of the schedule the line applies to.
+           */
+          subscription_schedule: string | null;
+
+          /**
+           * Describes whether the quote line is affecting a new schedule or an existing schedule.
+           */
+          type: AppliesTo.Type;
+        }
+
+        namespace AppliesTo {
+          type Type = 'new_reference' | 'subscription_schedule';
+        }
       }
 
       interface TotalDetails {
