@@ -49,6 +49,8 @@
 ///<reference path='./SubscriptionsResource.d.ts' />
 ///<reference path='./SubscriptionItemsResource.d.ts' />
 ///<reference path='./SubscriptionSchedulesResource.d.ts' />
+///<reference path='./TaxCalculationsResource.d.ts' />
+///<reference path='./TaxTransactionsResource.d.ts' />
 ///<reference path='./TaxCodesResource.d.ts' />
 ///<reference path='./TaxRatesResource.d.ts' />
 ///<reference path='./TokensResource.d.ts' />
@@ -170,6 +172,7 @@
 ///<reference path='./Prices.d.ts' />
 ///<reference path='./Products.d.ts' />
 ///<reference path='./PromotionCodes.d.ts' />
+///<reference path='./QuoteLines.d.ts' />
 ///<reference path='./QuotePhases.d.ts' />
 ///<reference path='./Quotes.d.ts' />
 ///<reference path='./Radar/EarlyFraudWarnings.d.ts' />
@@ -190,10 +193,12 @@
 ///<reference path='./SubscriptionItems.d.ts' />
 ///<reference path='./SubscriptionSchedules.d.ts' />
 ///<reference path='./Subscriptions.d.ts' />
+///<reference path='./TaxCalculations.d.ts' />
 ///<reference path='./TaxCodes.d.ts' />
 ///<reference path='./TaxDeductedAtSources.d.ts' />
 ///<reference path='./TaxIds.d.ts' />
 ///<reference path='./TaxRates.d.ts' />
+///<reference path='./TaxTransactions.d.ts' />
 ///<reference path='./Terminal/Configurations.d.ts' />
 ///<reference path='./Terminal/ConnectionTokens.d.ts' />
 ///<reference path='./Terminal/Locations.d.ts' />
@@ -273,6 +278,8 @@ declare module 'stripe' {
     subscriptions: Stripe.SubscriptionsResource;
     subscriptionItems: Stripe.SubscriptionItemsResource;
     subscriptionSchedules: Stripe.SubscriptionSchedulesResource;
+    taxCalculations: Stripe.TaxCalculationsResource;
+    taxTransactions: Stripe.TaxTransactionsResource;
     taxCodes: Stripe.TaxCodesResource;
     taxRates: Stripe.TaxRatesResource;
     tokens: Stripe.TokensResource;
