@@ -1,5 +1,10 @@
 # Changelog
 
+## 11.4.0 - 2022-12-15
+* [#1639](https://github.com/stripe/stripe-node/pull/1639) API Updates
+  * Add support for new value `invoice_overpaid` on enum `CustomerBalanceTransaction.type`
+* [#1637](https://github.com/stripe/stripe-node/pull/1637) Update packages in examples/webhook-signing
+
 ## 11.3.0 - 2022-12-08
 * [#1634](https://github.com/stripe/stripe-node/pull/1634) API Updates
   * Change `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type` to be optional
