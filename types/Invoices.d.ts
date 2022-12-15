@@ -93,6 +93,8 @@ declare module 'stripe' {
        */
       application_fee_amount: number | null;
 
+      applies_to?: Invoice.AppliesTo | null;
+
       /**
        * Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule.
        */
@@ -118,7 +120,7 @@ declare module 'stripe' {
       /**
        * ID of the latest charge generated for this invoice, if any.
        */
-      charge: string | Stripe.Charge | null;
+      charge?: string | Stripe.Charge | null;
 
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions.
@@ -143,7 +145,7 @@ declare module 'stripe' {
       /**
        * The ID of the customer who will be billed.
        */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+      customer?: string | Stripe.Customer | Stripe.DeletedCustomer | null;
 
       /**
        * The customer's address. Until the invoice is finalized, this field will equal `customer.address`. Once the invoice is finalized, this field will no longer be updated.
@@ -417,6 +419,27 @@ declare module 'stripe' {
     }
 
     namespace Invoice {
+      interface AppliesTo {
+        /**
+         * A custom string that identifies a new subscription schedule being created upon quote acceptance. All quote lines with the same `new_reference` field will be applied to the creation of a new subscription schedule.
+         */
+        new_reference: string | null;
+
+        /**
+         * The ID of the schedule the line applies to.
+         */
+        subscription_schedule: string | null;
+
+        /**
+         * Describes whether the quote line is affecting a new schedule or an existing schedule.
+         */
+        type: AppliesTo.Type;
+      }
+
+      namespace AppliesTo {
+        type Type = 'new_reference' | 'subscription_schedule';
+      }
+
       interface AutomaticTax {
         /**
          * Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.

@@ -37,6 +37,11 @@ module.exports = StripeResource.extend({
     fullPath: '/v1/quotes/{quote}/cancel',
   }),
 
+  draftQuote: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/quotes/{quote}/draft',
+  }),
+
   finalizeQuote: stripeMethod({
     method: 'POST',
     fullPath: '/v1/quotes/{quote}/finalize',
@@ -54,10 +59,39 @@ module.exports = StripeResource.extend({
     methodType: 'list',
   }),
 
+  listLines: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/lines',
+    methodType: 'list',
+  }),
+
   pdf: stripeMethod({
     host: 'files.stripe.com',
     method: 'GET',
     fullPath: '/v1/quotes/{quote}/pdf',
     streaming: true,
+  }),
+
+  previewInvoiceLines: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_invoice_lines',
+    methodType: 'list',
+  }),
+
+  previewInvoices: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_invoices',
+    methodType: 'list',
+  }),
+
+  previewSubscriptionSchedules: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/quotes/{quote}/preview_subscription_schedules',
+    methodType: 'list',
+  }),
+
+  reestimate: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/quotes/{quote}/reestimate',
   }),
 });

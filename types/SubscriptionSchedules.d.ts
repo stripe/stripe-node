@@ -28,6 +28,11 @@ declare module 'stripe' {
         | null;
 
       /**
+       * Details to identify the subscription schedule the quote line applies to.
+       */
+      applies_to?: SubscriptionSchedule.AppliesTo | null;
+
+      /**
        * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
        */
       billing_behavior?: SubscriptionSchedule.BillingBehavior;
@@ -111,6 +116,27 @@ declare module 'stripe' {
     }
 
     namespace SubscriptionSchedule {
+      interface AppliesTo {
+        /**
+         * A custom string that identifies a new subscription schedule being created upon quote acceptance. All quote lines with the same `new_reference` field will be applied to the creation of a new subscription schedule.
+         */
+        new_reference: string | null;
+
+        /**
+         * The ID of the schedule the line applies to.
+         */
+        subscription_schedule: string | null;
+
+        /**
+         * Describes whether the quote line is affecting a new schedule or an existing schedule.
+         */
+        type: AppliesTo.Type;
+      }
+
+      namespace AppliesTo {
+        type Type = 'new_reference' | 'subscription_schedule';
+      }
+
       type BillingBehavior = 'prorate_on_next_phase' | 'prorate_up_front';
 
       interface CurrentPhase {
@@ -373,6 +399,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd | null;
+
+            /**
+             * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
+             */
+            index?: number | null;
           }
 
           namespace Discount {
@@ -385,11 +416,7 @@ declare module 'stripe' {
               /**
                * The discount end type
                */
-              type: DiscountEnd.Type;
-            }
-
-            namespace DiscountEnd {
-              type Type = 'duration' | 'timestamp';
+              type: 'timestamp';
             }
           }
         }
@@ -432,6 +459,11 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: Discount.DiscountEnd | null;
+
+          /**
+           * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
+           */
+          index?: number | null;
         }
 
         namespace Discount {
@@ -444,11 +476,7 @@ declare module 'stripe' {
             /**
              * The discount end type
              */
-            type: DiscountEnd.Type;
-          }
-
-          namespace DiscountEnd {
-            type Type = 'duration' | 'timestamp';
+            type: 'timestamp';
           }
         }
 
@@ -524,6 +552,11 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd | null;
+
+            /**
+             * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
+             */
+            index?: number | null;
           }
 
           namespace Discount {
@@ -536,11 +569,7 @@ declare module 'stripe' {
               /**
                * The discount end type
                */
-              type: DiscountEnd.Type;
-            }
-
-            namespace DiscountEnd {
-              type Type = 'duration' | 'timestamp';
+              type: 'timestamp';
             }
           }
 
