@@ -1,5 +1,12 @@
 # Changelog
 
+## 11.5.0-beta.1 - 2022-12-15
+* [#1640](https://github.com/stripe/stripe-node/pull/1640) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add support for new resources `QuoteLine`, `TaxCalculation`, and `TaxTransaction`
+  * Add support for `create` and `list_line_items` methods on resource `TaxCalculation`
+  * Add support for `create_reversal`, `create`, and `retrieve` methods on resource `TaxTransaction`
+
 ## 11.4.0 - 2022-12-15
 * [#1639](https://github.com/stripe/stripe-node/pull/1639) API Updates
   * Add support for new value `invoice_overpaid` on enum `CustomerBalanceTransaction.type`
