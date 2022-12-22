@@ -552,7 +552,7 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
-         * TODO
+         * Describes what period to bill for upon accepting the quote.
          */
         bill_on_acceptance?: SubscriptionData.BillOnAcceptance | null;
 
@@ -577,7 +577,7 @@ declare module 'stripe' {
         effective_date: number | null;
 
         /**
-         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` and `cancel`.
+         * Behavior of the subscription schedule and underlying subscription when it ends.
          */
         end_behavior?: SubscriptionData.EndBehavior | null;
 
@@ -756,7 +756,7 @@ declare module 'stripe' {
         description: string | null;
 
         /**
-         * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` and `cancel`.
+         * Behavior of the subscription schedule and underlying subscription when it ends.
          */
         end_behavior: SubscriptionDataOverride.EndBehavior | null;
 
