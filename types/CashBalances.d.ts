@@ -37,6 +37,11 @@ declare module 'stripe' {
          * The configuration for how funds that land in the customer cash balance are reconciled.
          */
         reconciliation_mode: Settings.ReconciliationMode;
+
+        /**
+         * A flag to indicate if reconciliation mode returned is the user's default or is specific to this customer cash balance
+         */
+        using_merchant_default: boolean;
       }
 
       namespace Settings {
