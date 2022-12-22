@@ -622,6 +622,9 @@ declare module 'stripe' {
 
             namespace CustomerBalance {
               interface BankTransfer {
+                /**
+                 * Configuration for the eu_bank_transfer funding type.
+                 */
                 eu_bank_transfer?: BankTransfer.EuBankTransfer;
 
                 /**
@@ -1845,6 +1848,9 @@ declare module 'stripe' {
 
             namespace CustomerBalance {
               interface BankTransfer {
+                /**
+                 * Configuration for the eu_bank_transfer funding type.
+                 */
                 eu_bank_transfer?: BankTransfer.EuBankTransfer;
 
                 /**

@@ -1175,7 +1175,7 @@ declare module 'stripe' {
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
 
         /**
-         * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         * Behavior of the subscription schedule and underlying subscription when it ends.
          */
         end_behavior?: SubscriptionData.EndBehavior;
 
@@ -1359,7 +1359,7 @@ declare module 'stripe' {
         description?: string;
 
         /**
-         * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         * Behavior of the subscription schedule and underlying subscription when it ends.
          */
         end_behavior?: SubscriptionDataOverride.EndBehavior;
 
@@ -2696,7 +2696,7 @@ declare module 'stripe' {
         effective_date?: Stripe.Emptyable<'current_period_end' | number>;
 
         /**
-         * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         * Behavior of the subscription schedule and underlying subscription when it ends.
          */
         end_behavior?: SubscriptionData.EndBehavior;
 
@@ -2870,7 +2870,7 @@ declare module 'stripe' {
         description?: string;
 
         /**
-         * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+         * Behavior of the subscription schedule and underlying subscription when it ends.
          */
         end_behavior?: SubscriptionDataOverride.EndBehavior;
 

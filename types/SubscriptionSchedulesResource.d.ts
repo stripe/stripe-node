@@ -19,7 +19,7 @@ declare module 'stripe' {
       default_settings?: SubscriptionScheduleCreateParams.DefaultSettings;
 
       /**
-       * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+       * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
        */
       end_behavior?: SubscriptionScheduleCreateParams.EndBehavior;
 
@@ -729,7 +729,7 @@ declare module 'stripe' {
       default_settings?: SubscriptionScheduleUpdateParams.DefaultSettings;
 
       /**
-       * Configures how the subscription schedule behaves when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
+       * Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
        */
       end_behavior?: SubscriptionScheduleUpdateParams.EndBehavior;
 
@@ -1577,6 +1577,8 @@ declare module 'stripe' {
             | 'duration'
             | 'schedule_end'
             | 'timestamp'
+            | 'trial_end'
+            | 'trial_start'
             | 'upcoming_invoice';
         }
 
@@ -1623,6 +1625,8 @@ declare module 'stripe' {
             | 'now'
             | 'schedule_end'
             | 'timestamp'
+            | 'trial_end'
+            | 'trial_start'
             | 'upcoming_invoice';
         }
 
@@ -2014,7 +2018,7 @@ declare module 'stripe' {
 
       interface ScheduleSettings {
         /**
-         * Configures how the subscription schedule behaves when it ends.
+         * Behavior of the subscription schedule and underlying subscription when it ends.
          */
         end_behavior?: ScheduleSettings.EndBehavior;
       }

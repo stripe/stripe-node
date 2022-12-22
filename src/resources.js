@@ -49,10 +49,8 @@ module.exports = {
   SubscriptionItems: require('./resources/SubscriptionItems'),
   Subscriptions: require('./resources/Subscriptions'),
   SubscriptionSchedules: require('./resources/SubscriptionSchedules'),
-  TaxCalculations: require('./resources/TaxCalculations'),
   TaxCodes: require('./resources/TaxCodes'),
   TaxRates: require('./resources/TaxRates'),
-  TaxTransactions: require('./resources/TaxTransactions'),
   Tokens: require('./resources/Tokens'),
   Topups: require('./resources/Topups'),
   Transfers: require('./resources/Transfers'),
@@ -102,6 +100,10 @@ module.exports = {
   }),
   Sigma: resourceNamespace('sigma', {
     ScheduledQueryRuns: require('./resources/Sigma/ScheduledQueryRuns'),
+  }),
+  Tax: resourceNamespace('tax', {
+    Calculations: require('./resources/Tax/Calculations'),
+    Transactions: require('./resources/Tax/Transactions'),
   }),
   Terminal: resourceNamespace('terminal', {
     Configurations: require('./resources/Terminal/Configurations'),
