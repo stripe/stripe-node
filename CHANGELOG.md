@@ -1,5 +1,13 @@
 # Changelog
 
+## 11.7.0-beta.1 - 2023-01-05
+* [#1648](https://github.com/stripe/stripe-node/pull/1648) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add support for `mark_stale_quote` method on resource `Quote`
+  * Add support for `duration` and `line_ends_at` on `QuoteCreateParams.subscription_data.bill_on_acceptance.bill_until`, `QuoteCreateParams.subscription_data_overrides[].bill_on_acceptance.bill_until`, `QuoteUpdateParams.subscription_data.bill_on_acceptance.bill_until`, and `QuoteUpdateParams.subscription_data_overrides[].bill_on_acceptance.bill_until`
+  * Remove support for `line_starts_at` on `QuoteCreateParams.subscription_data.bill_on_acceptance.bill_until`, `QuoteCreateParams.subscription_data_overrides[].bill_on_acceptance.bill_until`, `QuoteUpdateParams.subscription_data.bill_on_acceptance.bill_until`, and `QuoteUpdateParams.subscription_data_overrides[].bill_on_acceptance.bill_until`
+  * Add support for `metadata` on `Terminal.Reader.action.refund_payment` and `TerminalReaderRefundPaymentParams`
+
 ## 11.6.0 - 2023-01-05
 * [#1646](https://github.com/stripe/stripe-node/pull/1646) API Updates
   * Add support for `card_issuing` on `Issuing.Cardholder.individual`
