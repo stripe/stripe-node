@@ -92,6 +92,8 @@ declare module 'stripe' {
         }
 
         interface Individual {
+          card_issuing: Individual.CardIssuing | null;
+
           /**
            * The date of birth of this cardholder.
            */
@@ -114,6 +116,32 @@ declare module 'stripe' {
         }
 
         namespace Individual {
+          interface CardIssuing {
+            /**
+             * Information about cardholder acceptance of [Authorized User Terms](https://stripe.com/docs/issuing/cards).
+             */
+            user_terms_acceptance: CardIssuing.UserTermsAcceptance | null;
+          }
+
+          namespace CardIssuing {
+            interface UserTermsAcceptance {
+              /**
+               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
+               */
+              date: number | null;
+
+              /**
+               * The IP address from which the cardholder accepted the Authorized User Terms.
+               */
+              ip: string | null;
+
+              /**
+               * The user agent of the browser from which the cardholder accepted the Authorized User Terms.
+               */
+              user_agent: string | null;
+            }
+          }
+
           interface Dob {
             /**
              * The day of birth, between 1 and 31.
