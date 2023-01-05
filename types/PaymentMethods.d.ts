@@ -278,7 +278,7 @@ declare module 'stripe' {
         networks: Card.Networks | null;
 
         /**
-         * Contains details on how this Card maybe be used for 3D Secure authentication.
+         * Contains details on how this Card may be used for 3D Secure authentication.
          */
         three_d_secure_usage: Card.ThreeDSecureUsage | null;
 

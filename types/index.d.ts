@@ -8,13 +8,17 @@
 ///<reference path='./OAuth.d.ts' />
 ///<reference path='./Webhooks.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
-///<reference path='./AccountsResource.d.ts' />
 ///<reference path='./AccountLinksResource.d.ts' />
+///<reference path='./AccountsResource.d.ts' />
 ///<reference path='./ApplePayDomainsResource.d.ts' />
 ///<reference path='./ApplicationFeesResource.d.ts' />
+///<reference path='./Apps/SecretsResource.d.ts' />
 ///<reference path='./BalanceResource.d.ts' />
 ///<reference path='./BalanceTransactionsResource.d.ts' />
+///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
+///<reference path='./BillingPortal/SessionsResource.d.ts' />
 ///<reference path='./ChargesResource.d.ts' />
+///<reference path='./Checkout/SessionsResource.d.ts' />
 ///<reference path='./CountrySpecsResource.d.ts' />
 ///<reference path='./CouponsResource.d.ts' />
 ///<reference path='./CreditNotesResource.d.ts' />
@@ -23,10 +27,19 @@
 ///<reference path='./EphemeralKeysResource.d.ts' />
 ///<reference path='./EventsResource.d.ts' />
 ///<reference path='./ExchangeRatesResource.d.ts' />
-///<reference path='./FilesResource.d.ts' />
 ///<reference path='./FileLinksResource.d.ts' />
-///<reference path='./InvoicesResource.d.ts' />
+///<reference path='./FilesResource.d.ts' />
+///<reference path='./FinancialConnections/AccountsResource.d.ts' />
+///<reference path='./FinancialConnections/SessionsResource.d.ts' />
+///<reference path='./Identity/VerificationReportsResource.d.ts' />
+///<reference path='./Identity/VerificationSessionsResource.d.ts' />
 ///<reference path='./InvoiceItemsResource.d.ts' />
+///<reference path='./InvoicesResource.d.ts' />
+///<reference path='./Issuing/AuthorizationsResource.d.ts' />
+///<reference path='./Issuing/CardholdersResource.d.ts' />
+///<reference path='./Issuing/CardsResource.d.ts' />
+///<reference path='./Issuing/DisputesResource.d.ts' />
+///<reference path='./Issuing/TransactionsResource.d.ts' />
 ///<reference path='./MandatesResource.d.ts' />
 ///<reference path='./PaymentIntentsResource.d.ts' />
 ///<reference path='./PaymentLinksResource.d.ts' />
@@ -37,54 +50,40 @@
 ///<reference path='./ProductsResource.d.ts' />
 ///<reference path='./PromotionCodesResource.d.ts' />
 ///<reference path='./QuotesResource.d.ts' />
+///<reference path='./Radar/EarlyFraudWarningsResource.d.ts' />
+///<reference path='./Radar/ValueListItemsResource.d.ts' />
+///<reference path='./Radar/ValueListsResource.d.ts' />
 ///<reference path='./RefundsResource.d.ts' />
+///<reference path='./Reporting/ReportRunsResource.d.ts' />
+///<reference path='./Reporting/ReportTypesResource.d.ts' />
 ///<reference path='./ReviewsResource.d.ts' />
 ///<reference path='./SetupAttemptsResource.d.ts' />
 ///<reference path='./SetupIntentsResource.d.ts' />
 ///<reference path='./ShippingRatesResource.d.ts' />
+///<reference path='./Sigma/ScheduledQueryRunsResource.d.ts' />
 ///<reference path='./SourcesResource.d.ts' />
-///<reference path='./SubscriptionsResource.d.ts' />
 ///<reference path='./SubscriptionItemsResource.d.ts' />
 ///<reference path='./SubscriptionSchedulesResource.d.ts' />
+///<reference path='./SubscriptionsResource.d.ts' />
 ///<reference path='./TaxCodesResource.d.ts' />
 ///<reference path='./TaxRatesResource.d.ts' />
-///<reference path='./TokensResource.d.ts' />
-///<reference path='./TopupsResource.d.ts' />
-///<reference path='./TransfersResource.d.ts' />
-///<reference path='./WebhookEndpointsResource.d.ts' />
-///<reference path='./Apps/SecretsResource.d.ts' />
-///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
-///<reference path='./BillingPortal/SessionsResource.d.ts' />
-///<reference path='./Checkout/SessionsResource.d.ts' />
-///<reference path='./FinancialConnections/AccountsResource.d.ts' />
-///<reference path='./FinancialConnections/SessionsResource.d.ts' />
-///<reference path='./Identity/VerificationReportsResource.d.ts' />
-///<reference path='./Identity/VerificationSessionsResource.d.ts' />
-///<reference path='./Issuing/AuthorizationsResource.d.ts' />
-///<reference path='./Issuing/CardsResource.d.ts' />
-///<reference path='./Issuing/CardholdersResource.d.ts' />
-///<reference path='./Issuing/DisputesResource.d.ts' />
-///<reference path='./Issuing/TransactionsResource.d.ts' />
-///<reference path='./Radar/EarlyFraudWarningsResource.d.ts' />
-///<reference path='./Radar/ValueListsResource.d.ts' />
-///<reference path='./Radar/ValueListItemsResource.d.ts' />
-///<reference path='./Reporting/ReportRunsResource.d.ts' />
-///<reference path='./Reporting/ReportTypesResource.d.ts' />
-///<reference path='./Sigma/ScheduledQueryRunsResource.d.ts' />
 ///<reference path='./Terminal/ConfigurationsResource.d.ts' />
 ///<reference path='./Terminal/ConnectionTokensResource.d.ts' />
 ///<reference path='./Terminal/LocationsResource.d.ts' />
 ///<reference path='./Terminal/ReadersResource.d.ts' />
-///<reference path='./TestHelpers/TestClocksResource.d.ts' />
 ///<reference path='./TestHelpers/CustomersResource.d.ts' />
-///<reference path='./TestHelpers/RefundsResource.d.ts' />
 ///<reference path='./TestHelpers/Issuing/CardsResource.d.ts' />
+///<reference path='./TestHelpers/RefundsResource.d.ts' />
 ///<reference path='./TestHelpers/Terminal/ReadersResource.d.ts' />
+///<reference path='./TestHelpers/TestClocksResource.d.ts' />
 ///<reference path='./TestHelpers/Treasury/InboundTransfersResource.d.ts' />
 ///<reference path='./TestHelpers/Treasury/OutboundPaymentsResource.d.ts' />
 ///<reference path='./TestHelpers/Treasury/OutboundTransfersResource.d.ts' />
 ///<reference path='./TestHelpers/Treasury/ReceivedCreditsResource.d.ts' />
 ///<reference path='./TestHelpers/Treasury/ReceivedDebitsResource.d.ts' />
+///<reference path='./TokensResource.d.ts' />
+///<reference path='./TopupsResource.d.ts' />
+///<reference path='./TransfersResource.d.ts' />
 ///<reference path='./Treasury/CreditReversalsResource.d.ts' />
 ///<reference path='./Treasury/DebitReversalsResource.d.ts' />
 ///<reference path='./Treasury/FinancialAccountsResource.d.ts' />
@@ -93,8 +92,9 @@
 ///<reference path='./Treasury/OutboundTransfersResource.d.ts' />
 ///<reference path='./Treasury/ReceivedCreditsResource.d.ts' />
 ///<reference path='./Treasury/ReceivedDebitsResource.d.ts' />
-///<reference path='./Treasury/TransactionsResource.d.ts' />
 ///<reference path='./Treasury/TransactionEntriesResource.d.ts' />
+///<reference path='./Treasury/TransactionsResource.d.ts' />
+///<reference path='./WebhookEndpointsResource.d.ts' />
 ///<reference path='./AccountLinks.d.ts' />
 ///<reference path='./Accounts.d.ts' />
 ///<reference path='./ApplePayDomains.d.ts' />
@@ -216,8 +216,8 @@ declare module 'stripe' {
     /**
      * Top Level Resources
      */
-    accounts: Stripe.AccountsResource;
     accountLinks: Stripe.AccountLinksResource;
+    accounts: Stripe.AccountsResource;
     applePayDomains: Stripe.ApplePayDomainsResource;
     applicationFees: Stripe.ApplicationFeesResource;
     balance: Stripe.BalanceResource;
@@ -231,10 +231,10 @@ declare module 'stripe' {
     ephemeralKeys: Stripe.EphemeralKeysResource;
     events: Stripe.EventsResource;
     exchangeRates: Stripe.ExchangeRatesResource;
-    files: Stripe.FilesResource;
     fileLinks: Stripe.FileLinksResource;
-    invoices: Stripe.InvoicesResource;
+    files: Stripe.FilesResource;
     invoiceItems: Stripe.InvoiceItemsResource;
+    invoices: Stripe.InvoicesResource;
     mandates: Stripe.MandatesResource;
     paymentIntents: Stripe.PaymentIntentsResource;
     paymentLinks: Stripe.PaymentLinksResource;
@@ -251,9 +251,9 @@ declare module 'stripe' {
     setupIntents: Stripe.SetupIntentsResource;
     shippingRates: Stripe.ShippingRatesResource;
     sources: Stripe.SourcesResource;
-    subscriptions: Stripe.SubscriptionsResource;
     subscriptionItems: Stripe.SubscriptionItemsResource;
     subscriptionSchedules: Stripe.SubscriptionSchedulesResource;
+    subscriptions: Stripe.SubscriptionsResource;
     taxCodes: Stripe.TaxCodesResource;
     taxRates: Stripe.TaxRatesResource;
     tokens: Stripe.TokensResource;
@@ -310,9 +310,9 @@ declare module 'stripe' {
       readers: Stripe.Terminal.ReadersResource;
     };
     testHelpers: {
-      testClocks: Stripe.TestHelpers.TestClocksResource;
       customers: Stripe.TestHelpers.CustomersResource;
       refunds: Stripe.TestHelpers.RefundsResource;
+      testClocks: Stripe.TestHelpers.TestClocksResource;
       issuing: {
         cards: Stripe.TestHelpers.Issuing.CardsResource;
       };

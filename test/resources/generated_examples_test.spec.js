@@ -111,7 +111,7 @@ describe('Checkout.Sessions', function() {
   });
 });
 
-describe('CashBalances', function() {
+describe('CashBalance', function() {
   it('retrieveCashBalance method', async function() {
     const cashBalance = await stripe.customers.retrieveCashBalance('cus_123');
     expect(cashBalance).not.to.be.null;
