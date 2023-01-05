@@ -175,6 +175,11 @@ declare module 'stripe' {
             charge?: string | Stripe.Charge;
 
             /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             */
+            metadata?: Stripe.Metadata;
+
+            /**
              * Payment intent that is being refunded.
              */
             payment_intent?: string | Stripe.PaymentIntent;
