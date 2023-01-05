@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.6.0 - 2023-01-05
+* [#1646](https://github.com/stripe/stripe-node/pull/1646) API Updates
+  * Add support for `card_issuing` on `Issuing.Cardholder.individual`
+
 ## 11.6.0-beta.1 - 2022-12-22
 * [#1643](https://github.com/stripe/stripe-node/pull/1643) API Updates for beta branch
   * Updated stable APIs to the latest version

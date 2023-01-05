@@ -1150,7 +1150,7 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
-         * The start of the period to bill from when the Quote is accepted.
+         * Describes the period to bill for upon accepting the quote.
          */
         bill_on_acceptance?: SubscriptionData.BillOnAcceptance;
 
@@ -1273,9 +1273,14 @@ declare module 'stripe' {
 
           interface BillUntil {
             /**
+             * Details of the duration over which to bill.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
              * Details of a Quote line item from which to bill until.
              */
-            line_starts_at?: BillUntil.LineStartsAt;
+            line_ends_at?: BillUntil.LineEndsAt;
 
             /**
              * Details of a Unix timestamp to bill until.
@@ -1289,7 +1294,23 @@ declare module 'stripe' {
           }
 
           namespace BillUntil {
-            interface LineStartsAt {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
               /**
                * The ID of a quote line.
                */
@@ -1339,7 +1360,7 @@ declare module 'stripe' {
         applies_to: SubscriptionDataOverride.AppliesTo;
 
         /**
-         * The start of the period to bill from when the Quote is accepted.
+         * Describes the period to bill for upon accepting the quote.
          */
         bill_on_acceptance?: SubscriptionDataOverride.BillOnAcceptance;
 
@@ -1458,9 +1479,14 @@ declare module 'stripe' {
 
           interface BillUntil {
             /**
+             * Details of the duration over which to bill.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
              * Details of a Quote line item from which to bill until.
              */
-            line_starts_at?: BillUntil.LineStartsAt;
+            line_ends_at?: BillUntil.LineEndsAt;
 
             /**
              * Details of a Unix timestamp to bill until.
@@ -1474,7 +1500,23 @@ declare module 'stripe' {
           }
 
           namespace BillUntil {
-            interface LineStartsAt {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
               /**
                * The ID of a quote line.
                */
@@ -2671,7 +2713,7 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
-         * The start of the period to bill from when the Quote is accepted.
+         * Describes the period to bill for upon accepting the quote.
          */
         bill_on_acceptance?: SubscriptionData.BillOnAcceptance;
 
@@ -2784,9 +2826,14 @@ declare module 'stripe' {
 
           interface BillUntil {
             /**
+             * Details of the duration over which to bill.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
              * Details of a Quote line item from which to bill until.
              */
-            line_starts_at?: BillUntil.LineStartsAt;
+            line_ends_at?: BillUntil.LineEndsAt;
 
             /**
              * Details of a Unix timestamp to bill until.
@@ -2800,7 +2847,23 @@ declare module 'stripe' {
           }
 
           namespace BillUntil {
-            interface LineStartsAt {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
               /**
                * The ID of a quote line.
                */
@@ -2850,7 +2913,7 @@ declare module 'stripe' {
         applies_to: SubscriptionDataOverride.AppliesTo;
 
         /**
-         * The start of the period to bill from when the Quote is accepted.
+         * Describes the period to bill for upon accepting the quote.
          */
         bill_on_acceptance?: SubscriptionDataOverride.BillOnAcceptance;
 
@@ -2969,9 +3032,14 @@ declare module 'stripe' {
 
           interface BillUntil {
             /**
+             * Details of the duration over which to bill.
+             */
+            duration?: BillUntil.Duration;
+
+            /**
              * Details of a Quote line item from which to bill until.
              */
-            line_starts_at?: BillUntil.LineStartsAt;
+            line_ends_at?: BillUntil.LineEndsAt;
 
             /**
              * Details of a Unix timestamp to bill until.
@@ -2985,7 +3053,23 @@ declare module 'stripe' {
           }
 
           namespace BillUntil {
-            interface LineStartsAt {
+            interface Duration {
+              /**
+               * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+               */
+              interval: Duration.Interval;
+
+              /**
+               * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+               */
+              interval_count: number;
+            }
+
+            namespace Duration {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            interface LineEndsAt {
               /**
                * The ID of a quote line.
                */
@@ -3124,6 +3208,13 @@ declare module 'stripe' {
     }
 
     interface QuoteListLinesParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface QuoteMarkStaleQuoteParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -3324,6 +3415,19 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): ApiListPromise<Stripe.QuoteLine>;
+
+      /**
+       * Converts a draft or open quote to stale.
+       */
+      markStaleQuote(
+        id: string,
+        params?: QuoteMarkStaleQuoteParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Quote>>;
+      markStaleQuote(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Quote>>;
 
       /**
        * Download the PDF for a finalized quote

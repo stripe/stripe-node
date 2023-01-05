@@ -552,7 +552,7 @@ declare module 'stripe' {
 
       interface SubscriptionData {
         /**
-         * Describes what period to bill for upon accepting the quote.
+         * Describes the period to bill for upon accepting the quote.
          */
         bill_on_acceptance?: SubscriptionData.BillOnAcceptance | null;
 
@@ -736,7 +736,7 @@ declare module 'stripe' {
         applies_to: SubscriptionDataOverride.AppliesTo;
 
         /**
-         * The start of the period to bill from when the Quote is accepted.
+         * Describes the period to bill for upon accepting the quote.
          */
         bill_on_acceptance: SubscriptionDataOverride.BillOnAcceptance | null;
 

@@ -65,6 +65,11 @@ module.exports = StripeResource.extend({
     methodType: 'list',
   }),
 
+  markStaleQuote: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/quotes/{quote}/mark_stale',
+  }),
+
   pdf: stripeMethod({
     host: 'files.stripe.com',
     method: 'GET',
