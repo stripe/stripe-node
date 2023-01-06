@@ -9,8 +9,8 @@ type WebhookParsedHeader = {
 };
 type WebhookParsedEvent = {
   details: WebhookParsedHeader;
-  decodedPayload: string;
-  decodedHeader: string;
+  decodedPayload: WebhookHeader;
+  decodedHeader: WebhookPayload;
 };
 type WebhookTestHeaderOptions = {
   timestamp: number;
@@ -218,7 +218,18 @@ function parseEventDetails(
   encodedHeader: WebhookHeader,
   expectedScheme: string
 ): WebhookParsedEvent {
-  const decodedPayload = Buffer.isBuffer(encodedPayload)
+  function isBuffer(obj: unknown): boolean {
+    return (
+      obj != null &&
+      obj.constructor != null &&
+      // @ts-ignore
+      typeof obj.constructor.isBuffer === 'function' &&
+      // @ts-ignore
+      obj.constructor.isBuffer(obj)
+    );
+  }
+
+  const decodedPayload = isBuffer(encodedPayload)
     ? encodedPayload.toString('utf8')
     : encodedPayload;
 
@@ -232,7 +243,7 @@ function parseEventDetails(
     );
   }
 
-  const decodedHeader = Buffer.isBuffer(encodedHeader)
+  const decodedHeader = isBuffer(encodedHeader)
     ? encodedHeader.toString('utf8')
     : encodedHeader;
 
@@ -259,7 +270,7 @@ function parseEventDetails(
 
 function validateComputedSignature(
   payload: WebhookPayload,
-  header: string,
+  header: WebhookHeader,
   details: WebhookParsedHeader,
   expectedSignature: string,
   tolerance: number
@@ -292,7 +303,7 @@ function validateComputedSignature(
 }
 
 function parseHeader(
-  header: string,
+  header: WebhookHeader,
   scheme: string
 ): WebhookParsedHeader | null {
   if (typeof header !== 'string') {

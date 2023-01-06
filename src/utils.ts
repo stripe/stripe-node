@@ -216,9 +216,12 @@ const utils = {
   /**
    * Secure compare, from https://github.com/freewil/scmp
    */
-  secureCompare: (a: Uint8Array, b: Uint8Array): boolean => {
-    a = Buffer.from(a);
-    b = Buffer.from(b);
+  secureCompare: (astring: string, bstring: string): boolean => {
+    if (!astring || !bstring) {
+      throw Error();
+    }
+    const a: Uint8Array = new TextEncoder().encode(astring);
+    const b: Uint8Array = new TextEncoder().encode(bstring);
 
     // return early here if buffer lengths are not equal since timingSafeEqual
     // will throw if buffer lengths are not equal
@@ -371,6 +374,17 @@ const utils = {
   flattenAndStringify: (
     data: MultipartRequestData
   ): Record<string, unknown> => {
+    function isBuffer(obj: unknown): boolean {
+      return (
+        obj != null &&
+        obj.constructor != null &&
+        // @ts-ignore
+        typeof obj.constructor.isBuffer === 'function' &&
+        // @ts-ignore
+        obj.constructor.isBuffer(obj)
+      );
+    }
+
     const result: RequestData = {};
 
     const step = (obj: RequestData, prevKey: string | null): void => {
@@ -381,7 +395,7 @@ const utils = {
 
         if (utils.isObject(value)) {
           if (
-            !Buffer.isBuffer(value) &&
+            !isBuffer(value) &&
             !Object.prototype.hasOwnProperty.call(value, 'data')
           ) {
             // Non-buffer non-file Objects are recursively flattened

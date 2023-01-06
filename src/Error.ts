@@ -128,10 +128,14 @@ class StripeConnectionError extends StripeError {}
  * webhook fails
  */
 class StripeSignatureVerificationError extends StripeError {
-  header: string;
-  payload: string;
+  header: string | Buffer;
+  payload: string | Buffer;
 
-  constructor(header: string, payload: string, raw: StripeRawError = {}) {
+  constructor(
+    header: string | Buffer,
+    payload: string | Buffer,
+    raw: StripeRawError = {}
+  ) {
     super(raw);
     this.header = header;
     this.payload = payload;
