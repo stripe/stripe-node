@@ -87,7 +87,7 @@ declare module 'stripe' {
       type?: ProductCreateParams.Type;
 
       /**
-       * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions.
+       * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal.
        */
       unit_label?: string;
 
@@ -341,7 +341,7 @@ declare module 'stripe' {
       tax_code?: Stripe.Emptyable<string>;
 
       /**
-       * A label that represents units of this product in Stripe and on customers' receipts and invoices. When set, this will be included in associated invoice line item descriptions. May only be set if `type=service`.
+       * A label that represents units of this product. When set, this will be included in customers' receipts, invoices, Checkout, and the customer portal. May only be set if `type=service`.
        */
       unit_label?: string;
 
