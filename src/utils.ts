@@ -396,7 +396,7 @@ const utils = {
 
         if (utils.isObject(value)) {
           if (
-            !utils.isBuffer(value) &&
+            !(value instanceof Uint8Array) &&
             !Object.prototype.hasOwnProperty.call(value, 'data')
           ) {
             // Non-buffer non-file Objects are recursively flattened
