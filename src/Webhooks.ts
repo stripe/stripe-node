@@ -218,9 +218,11 @@ function parseEventDetails(
   encodedHeader: WebhookHeader,
   expectedScheme: string
 ): WebhookParsedEvent {
-  const decodedPayload = utils.isBuffer(encodedPayload)
-    ? encodedPayload.toString('utf8')
-    : encodedPayload;
+  const textDecoder = new TextDecoder('utf8');
+  const decodedPayload =
+    encodedPayload instanceof Uint8Array
+      ? textDecoder.decode(encodedPayload)
+      : encodedPayload;
 
   // Express's type for `Request#headers` is `string | []string`
   // which is because the `set-cookie` header is an array,
@@ -232,9 +234,10 @@ function parseEventDetails(
     );
   }
 
-  const decodedHeader = utils.isBuffer(encodedHeader)
-    ? encodedHeader.toString('utf8')
-    : encodedHeader;
+  const decodedHeader =
+    encodedHeader instanceof Uint8Array
+      ? textDecoder.decode(encodedHeader)
+      : encodedHeader;
 
   const details = parseHeader(decodedHeader, expectedScheme);
 

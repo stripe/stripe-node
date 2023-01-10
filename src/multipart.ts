@@ -82,9 +82,9 @@ const streamProcessor = (
       bufferArray.push(line);
     })
     .once('end', () => {
-      const bufferData: StreamingFile = Object.assign({}, data);
-      // @ts-ignore - bufferArray will not store Uint8Array's nested greater than depth 1
-      bufferData.file.data = bufferArray.flatMap((e) => e);
+      // @ts-ignore
+      const bufferData: BufferedFile = Object.assign({}, data);
+      bufferData.file.data = utils.concat(bufferArray);
       const buffer = multipartDataGenerator(method, bufferData, headers);
       callback(null, buffer);
     })
