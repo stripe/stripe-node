@@ -1,7 +1,6 @@
 const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
 const crypto = require('crypto');
-
 // Certain sandboxed environments (our known example right now are CloudFlare
 // Workers) may make `child_process` unavailable. Because `exec` isn't critical
 // to the operation of stripe-node, we handle this unavailability gracefully.
@@ -216,30 +215,30 @@ const utils = {
   /**
    * Secure compare, from https://github.com/freewil/scmp
    */
-  secureCompare: (astring: string, bstring: string): boolean => {
-    if (!astring || !bstring) {
-      throw Error();
+  secureCompare: (a: string, b: string): boolean => {
+    if (!a || !b) {
+      throw new Error('secureCompare must receive two arguments');
     }
-    const a: Uint8Array = new TextEncoder().encode(astring);
-    const b: Uint8Array = new TextEncoder().encode(bstring);
+    const aEncoded: Uint8Array = new TextEncoder().encode(a);
+    const bEncoded: Uint8Array = new TextEncoder().encode(b);
 
     // return early here if buffer lengths are not equal since timingSafeEqual
     // will throw if buffer lengths are not equal
-    if (a.length !== b.length) {
+    if (aEncoded.length !== bEncoded.length) {
       return false;
     }
 
     // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
     // otherwise use our own scmp-internal function.
     if (crypto.timingSafeEqual) {
-      return crypto.timingSafeEqual(a, b);
+      return crypto.timingSafeEqual(aEncoded, bEncoded);
     }
 
     const len = a.length;
     let result = 0;
 
     for (let i = 0; i < len; ++i) {
-      result |= a[i] ^ b[i];
+      result |= aEncoded[i] ^ bEncoded[i];
     }
     return result === 0;
   },

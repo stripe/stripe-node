@@ -25,22 +25,13 @@ const multipartDataGenerator = (
 
   function push(l: any): void {
     const prevBuffer = buffer;
-    console.log(typeof l + ', ' + l);
-    const newBuffer = l instanceof Uint8Array ? l : new Uint8Array(l);
+    const newBuffer =
+      l instanceof Uint8Array ? l : new Uint8Array(new TextEncoder().encode(l));
     buffer = new Uint8Array(prevBuffer.length + newBuffer.length + 2);
 
     buffer.set(prevBuffer);
     buffer.set(newBuffer, prevBuffer.length);
     buffer.set(endBuffer, buffer.length - 2);
-
-    console.log('Buffer is now', buffer);
-
-    // const prevBuffer = buffer;
-    // const newBuffer = Buffer.isBuffer(l) ? l : Buffer.from(l);
-    // buffer = Buffer.alloc(prevBuffer.length + newBuffer.length + 2);
-    // prevBuffer.copy(buffer);
-    // newBuffer.copy(buffer, prevBuffer.length);
-    // buffer.write('\r\n', buffer.length - 2);
   }
 
   function q(s: string): string {
@@ -89,14 +80,9 @@ const streamProcessor = (
       bufferArray.push(line);
     })
     .once('end', () => {
-      // @ts-ignore
-      const bufferData: BufferedFile = Object.assign({}, data);
-      // @ts-ignore
+      const bufferData: StreamingFile = Object.assign({}, data);
+      // @ts-ignore - bufferArray will not store Uint8Array's nested greater than depth 1
       bufferData.file.data = bufferArray.flatMap((e) => e);
-
-      // // @ts-ignore
-      // const bufferData: BufferedFile = Object.assign({}, data);
-      // bufferData.file.data = Buffer.concat(bufferArray);
       const buffer = multipartDataGenerator(method, bufferData, headers);
       callback(null, buffer);
     })
