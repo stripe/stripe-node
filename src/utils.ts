@@ -1,6 +1,7 @@
 const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
 const crypto = require('crypto');
+
 // Certain sandboxed environments (our known example right now are CloudFlare
 // Workers) may make `child_process` unavailable. Because `exec` isn't critical
 // to the operation of stripe-node, we handle this unavailability gracefully.
@@ -369,21 +370,22 @@ const utils = {
     return (type === 'function' || type === 'object') && !!obj;
   },
 
+  // taken from https://github.com/feross/is-buffer/blob/master/index.js
+  isBuffer: (obj: unknown): boolean => {
+    return (
+      obj != null &&
+      obj.constructor != null &&
+      // @ts-ignore
+      typeof obj.constructor.isBuffer === 'function' &&
+      // @ts-ignore
+      obj.constructor.isBuffer(obj)
+    );
+  },
+
   // For use in multipart requests
   flattenAndStringify: (
     data: MultipartRequestData
   ): Record<string, unknown> => {
-    function isBuffer(obj: unknown): boolean {
-      return (
-        obj != null &&
-        obj.constructor != null &&
-        // @ts-ignore
-        typeof obj.constructor.isBuffer === 'function' &&
-        // @ts-ignore
-        obj.constructor.isBuffer(obj)
-      );
-    }
-
     const result: RequestData = {};
 
     const step = (obj: RequestData, prevKey: string | null): void => {
@@ -394,7 +396,7 @@ const utils = {
 
         if (utils.isObject(value)) {
           if (
-            !isBuffer(value) &&
+            !utils.isBuffer(value) &&
             !Object.prototype.hasOwnProperty.call(value, 'data')
           ) {
             // Non-buffer non-file Objects are recursively flattened

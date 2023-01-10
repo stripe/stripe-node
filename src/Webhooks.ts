@@ -218,18 +218,7 @@ function parseEventDetails(
   encodedHeader: WebhookHeader,
   expectedScheme: string
 ): WebhookParsedEvent {
-  function isBuffer(obj: unknown): boolean {
-    return (
-      obj != null &&
-      obj.constructor != null &&
-      // @ts-ignore
-      typeof obj.constructor.isBuffer === 'function' &&
-      // @ts-ignore
-      obj.constructor.isBuffer(obj)
-    );
-  }
-
-  const decodedPayload = isBuffer(encodedPayload)
+  const decodedPayload = utils.isBuffer(encodedPayload)
     ? encodedPayload.toString('utf8')
     : encodedPayload;
 
@@ -243,7 +232,7 @@ function parseEventDetails(
     );
   }
 
-  const decodedHeader = isBuffer(encodedHeader)
+  const decodedHeader = utils.isBuffer(encodedHeader)
     ? encodedHeader.toString('utf8')
     : encodedHeader;
 

@@ -20,13 +20,15 @@ const multipartDataGenerator = (
     Math.round(Math.random() * 1e16) + Math.round(Math.random() * 1e16)
   ).toString();
   headers['Content-Type'] = `multipart/form-data; boundary=${segno}`;
-  let buffer = new Uint8Array(0); // let buffer = Buffer.alloc(0);
-  const endBuffer = new TextEncoder().encode('\r\n');
+  const textEncoder = new TextEncoder();
+
+  let buffer = new Uint8Array(0);
+  const endBuffer = textEncoder.encode('\r\n');
 
   function push(l: any): void {
     const prevBuffer = buffer;
     const newBuffer =
-      l instanceof Uint8Array ? l : new Uint8Array(new TextEncoder().encode(l));
+      l instanceof Uint8Array ? l : new Uint8Array(textEncoder.encode(l));
     buffer = new Uint8Array(prevBuffer.length + newBuffer.length + 2);
 
     buffer.set(prevBuffer);
