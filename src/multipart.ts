@@ -25,7 +25,7 @@ const multipartDataGenerator = (
   let buffer = new Uint8Array(0);
   const endBuffer = textEncoder.encode('\r\n');
 
-  function push(l: any): void {
+  function push(l: string | Uint8Array): void {
     const prevBuffer = buffer;
     const newBuffer =
       l instanceof Uint8Array ? l : new Uint8Array(textEncoder.encode(l));
@@ -48,7 +48,7 @@ const multipartDataGenerator = (
     if (Object.prototype.hasOwnProperty.call(v, 'data')) {
       const typedEntry: {
         name: string;
-        data: BufferedFile;
+        data: string | Uint8Array;
         type: string;
       } = v as any;
       push(

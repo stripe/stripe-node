@@ -374,11 +374,12 @@ const utils = {
   // For use in multipart requests
   flattenAndStringify: (
     data: MultipartRequestData
-  ): Record<string, unknown> => {
-    const result: RequestData = {};
+  ): Record<string, string | Uint8Array> => {
+    const result: Record<string, string | Uint8Array> = {};
 
-    const step = (obj: RequestData, prevKey: string | null): void => {
+    const step = (obj: MultipartRequestData, prevKey: string | null): void => {
       Object.keys(obj).forEach((key) => {
+        // @ts-ignore
         const value = obj[key];
 
         const newKey = prevKey ? `${prevKey}[${key}]` : key;
@@ -389,7 +390,7 @@ const utils = {
             !Object.prototype.hasOwnProperty.call(value, 'data')
           ) {
             // Non-buffer non-file Objects are recursively flattened
-            return step(value as RequestData, newKey);
+            return step(value, newKey);
           } else {
             // Buffers and file objects are stored without modification
             result[newKey] = value;
