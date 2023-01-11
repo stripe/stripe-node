@@ -63,6 +63,22 @@ describe('Webhooks', () => {
         expect(event.id).to.equal(EVENT_PAYLOAD.id);
       });
 
+      it('should return an Event instance from a payload and header with type Uint8Array', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        const textEncoder = new TextEncoder();
+        const event = await constructEventFn(
+          new Uint8Array(textEncoder.encode(EVENT_PAYLOAD_STRING)),
+          new Uint8Array(textEncoder.encode(header)),
+          SECRET
+        );
+
+        expect(event.id).to.equal(EVENT_PAYLOAD.id);
+      });
+
       it('should raise a JSON error from invalid JSON payload', async () => {
         const header = stripe.webhooks.generateTestHeaderString({
           payload: '} I am not valid JSON; 123][',
