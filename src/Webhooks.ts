@@ -80,7 +80,7 @@ const Webhook: WebhookObject = {
 
     const jsonPayload =
       payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder().decode(payload))
+        ? JSON.parse(new TextDecoder('utf8').decode(payload))
         : JSON.parse(payload);
     return jsonPayload;
   },
@@ -100,10 +100,9 @@ const Webhook: WebhookObject = {
       cryptoProvider
     );
 
-    // @ts-ignore
     const jsonPayload =
       payload instanceof Uint8Array
-        ? JSON.parse(new TextDecoder().decode(payload))
+        ? JSON.parse(new TextDecoder('utf8').decode(payload))
         : JSON.parse(payload);
     return jsonPayload;
   },

@@ -71,8 +71,8 @@ describe('Webhooks', () => {
 
         const textEncoder = new TextEncoder();
         const event = await constructEventFn(
-          new Uint8Array(textEncoder.encode(EVENT_PAYLOAD_STRING)),
-          new Uint8Array(textEncoder.encode(header)),
+          textEncoder.encode(EVENT_PAYLOAD_STRING),
+          textEncoder.encode(header),
           SECRET
         );
 
