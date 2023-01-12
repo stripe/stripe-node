@@ -2,7 +2,7 @@ import utils = require('./utils');
 import _Error = require('./Error');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 
-type WebhookHeader = string | Buffer;
+type WebhookHeader = string | Uint8Array;
 type WebhookParsedHeader = {
   signatures: Array<string>;
   timestamp: number;
@@ -22,7 +22,7 @@ type WebhookTestHeaderOptions = {
 };
 
 type WebhookEvent = Record<string, unknown>;
-type WebhookPayload = string | Buffer;
+type WebhookPayload = string | Uint8Array;
 type WebhookSignatureObject = {
   verifyHeader: (
     encodedPayload: WebhookPayload,
