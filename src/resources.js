@@ -103,6 +103,7 @@ module.exports = {
   }),
   Tax: resourceNamespace('tax', {
     Calculations: require('./resources/Tax/Calculations'),
+    Registrations: require('./resources/Tax/Registrations'),
     Transactions: require('./resources/Tax/Transactions'),
   }),
   Terminal: resourceNamespace('terminal', {

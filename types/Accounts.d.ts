@@ -639,6 +639,10 @@ declare module 'stripe' {
       }
 
       interface Controller {
+        application?: Controller.Application;
+
+        dashboard?: Controller.Dashboard;
+
         /**
          * `true` if the Connect application retrieving the resource controls the account and can therefore exercise [platform controls](https://stripe.com/docs/connect/platform-controls-for-standard-accounts). Otherwise, this field is null.
          */
@@ -651,6 +655,34 @@ declare module 'stripe' {
       }
 
       namespace Controller {
+        interface Application {
+          /**
+           * `true` if the Connect application is responsible for negative balances and should manage credit and fraud risk on the account.
+           */
+          loss_liable: boolean;
+
+          /**
+           * `true` if the Connect application is responsible for onboarding the account.
+           */
+          onboarding_owner: boolean;
+
+          /**
+           * `true` if the Connect application is responsible for paying Stripe fees on pricing-control eligible products.
+           */
+          pricing_controls: boolean;
+        }
+
+        interface Dashboard {
+          /**
+           * Whether this account has access to the full Stripe dashboard (`full`), to the Express dashboard (`express`), or to no dashboard (`none`).
+           */
+          type: Dashboard.Type;
+        }
+
+        namespace Dashboard {
+          type Type = 'express' | 'full' | 'none';
+        }
+
         type Type = 'account' | 'application';
       }
 

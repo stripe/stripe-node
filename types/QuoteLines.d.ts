@@ -129,20 +129,15 @@ declare module 'stripe' {
           /**
            * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
            */
-          index?: number | null;
+          index: number | null;
         }
 
         namespace AddDiscount {
           interface DiscountEnd {
             /**
-             * The discount end timestamp
+             * The discount end type.
              */
-            timestamp: number | null;
-
-            /**
-             * The discount end type
-             */
-            type: 'timestamp';
+            type: 'line_ends_at';
           }
         }
 
@@ -194,22 +189,17 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd | null;
-
-            /**
-             * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
-             */
-            index?: number | null;
           }
 
           namespace Discount {
             interface DiscountEnd {
               /**
-               * The discount end timestamp
+               * The discount end timestamp.
                */
               timestamp: number | null;
 
               /**
-               * The discount end type
+               * The discount end type.
                */
               type: 'timestamp';
             }
@@ -244,22 +234,17 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: RemoveDiscount.DiscountEnd | null;
-
-          /**
-           * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
-           */
-          index?: number | null;
         }
 
         namespace RemoveDiscount {
           interface DiscountEnd {
             /**
-             * The discount end timestamp
+             * The discount end timestamp.
              */
             timestamp: number | null;
 
             /**
-             * The discount end type
+             * The discount end type.
              */
             type: 'timestamp';
           }
@@ -287,22 +272,17 @@ declare module 'stripe' {
            * Details to determine how long the discount should be applied for.
            */
           discount_end?: SetDiscount.DiscountEnd | null;
-
-          /**
-           * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
-           */
-          index?: number | null;
         }
 
         namespace SetDiscount {
           interface DiscountEnd {
             /**
-             * The discount end timestamp
+             * The discount end timestamp.
              */
             timestamp: number | null;
 
             /**
-             * The discount end type
+             * The discount end type.
              */
             type: 'timestamp';
           }
@@ -356,22 +336,17 @@ declare module 'stripe' {
              * Details to determine how long the discount should be applied for.
              */
             discount_end?: Discount.DiscountEnd | null;
-
-            /**
-             * The index, starting at 0, at which to position the new discount. When not supplied, Stripe defaults to appending the discount to the end of the `discounts` array.
-             */
-            index?: number | null;
           }
 
           namespace Discount {
             interface DiscountEnd {
               /**
-               * The discount end timestamp
+               * The discount end timestamp.
                */
               timestamp: number | null;
 
               /**
-               * The discount end type
+               * The discount end type.
                */
               type: 'timestamp';
             }

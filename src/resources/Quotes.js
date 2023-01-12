@@ -39,7 +39,7 @@ module.exports = StripeResource.extend({
 
   draftQuote: stripeMethod({
     method: 'POST',
-    fullPath: '/v1/quotes/{quote}/draft',
+    fullPath: '/v1/quotes/{quote}/mark_draft',
   }),
 
   finalizeQuote: stripeMethod({
