@@ -563,6 +563,28 @@ describe('utils', () => {
       // whether that's useful is a race between using jest/sinon for these tests and dropping support for node < 14
     });
   });
+
+  describe('concat', () => {
+    it('should return a joined Uint8Array', () => {
+      const arr1 = new Uint8Array([1, 2, 3]);
+      const arr2 = new Uint8Array([4, 5]);
+      const arrs = [arr1, arr2];
+      expect(utils.concat(arrs)).to.eql(new Uint8Array([1, 2, 3, 4, 5]));
+    });
+
+    it('should return an empty Uint8Array given an empty array', () => {
+      expect(utils.concat([])).to.eql(new Uint8Array(0));
+    });
+
+    it('should work with Buffers', () => {
+      const buf1 = Buffer.from('foo');
+      const buf2 = Buffer.from('bar');
+      const mergedBufToString = new TextDecoder('utf8').decode(
+        utils.concat([buf1, buf2])
+      );
+      expect(mergedBufToString).to.equal('foobar');
+    });
+  });
 });
 
 function handleWarnings(doWithShimmedConsoleWarn, onWarn) {

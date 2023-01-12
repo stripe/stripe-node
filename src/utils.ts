@@ -216,9 +216,10 @@ const utils = {
   /**
    * Secure compare, from https://github.com/freewil/scmp
    */
-  secureCompare: (a: Uint8Array, b: Uint8Array): boolean => {
-    a = Buffer.from(a);
-    b = Buffer.from(b);
+  secureCompare: (a: string, b: string): boolean => {
+    if (!a || !b) {
+      throw new Error('secureCompare must receive two arguments');
+    }
 
     // return early here if buffer lengths are not equal since timingSafeEqual
     // will throw if buffer lengths are not equal
@@ -229,14 +230,17 @@ const utils = {
     // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
     // otherwise use our own scmp-internal function.
     if (crypto.timingSafeEqual) {
-      return crypto.timingSafeEqual(a, b);
+      const textEncoder = new TextEncoder();
+      const aEncoded: Uint8Array = textEncoder.encode(a);
+      const bEncoded: Uint8Array = textEncoder.encode(b);
+      return crypto.timingSafeEqual(aEncoded, bEncoded);
     }
 
     const len = a.length;
     let result = 0;
 
     for (let i = 0; i < len; ++i) {
-      result |= a[i] ^ b[i];
+      result |= a.charCodeAt(i) ^ b.charCodeAt(i);
     }
     return result === 0;
   },
@@ -370,22 +374,23 @@ const utils = {
   // For use in multipart requests
   flattenAndStringify: (
     data: MultipartRequestData
-  ): Record<string, unknown> => {
-    const result: RequestData = {};
+  ): Record<string, string | Uint8Array> => {
+    const result: Record<string, string | Uint8Array> = {};
 
-    const step = (obj: RequestData, prevKey: string | null): void => {
+    const step = (obj: MultipartRequestData, prevKey: string | null): void => {
       Object.keys(obj).forEach((key) => {
+        // @ts-ignore
         const value = obj[key];
 
         const newKey = prevKey ? `${prevKey}[${key}]` : key;
 
         if (utils.isObject(value)) {
           if (
-            !Buffer.isBuffer(value) &&
+            !(value instanceof Uint8Array) &&
             !Object.prototype.hasOwnProperty.call(value, 'data')
           ) {
             // Non-buffer non-file Objects are recursively flattened
-            return step(value as RequestData, newKey);
+            return step(value, newKey);
           } else {
             // Buffers and file objects are stored without modification
             result[newKey] = value;
@@ -438,6 +443,22 @@ const utils = {
           lang_version: process.version,
           platform: process.platform,
         };
+  },
+
+  /**
+   * Joins an array of Uint8Arrays into a single Uint8Array
+   */
+  concat: (arrays: Array<Uint8Array>): Uint8Array => {
+    const totalLength = arrays.reduce((len, array) => len + array.length, 0);
+    const merged = new Uint8Array(totalLength);
+
+    let offset = 0;
+    arrays.forEach((array) => {
+      merged.set(array, offset);
+      offset += array.length;
+    });
+
+    return merged;
   },
 };
 

@@ -2,15 +2,15 @@ import utils = require('./utils');
 import _Error = require('./Error');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 
-type WebhookHeader = string | Buffer;
+type WebhookHeader = string | Uint8Array;
 type WebhookParsedHeader = {
   signatures: Array<string>;
   timestamp: number;
 };
 type WebhookParsedEvent = {
   details: WebhookParsedHeader;
-  decodedPayload: string;
-  decodedHeader: string;
+  decodedPayload: WebhookHeader;
+  decodedHeader: WebhookPayload;
 };
 type WebhookTestHeaderOptions = {
   timestamp: number;
@@ -22,7 +22,7 @@ type WebhookTestHeaderOptions = {
 };
 
 type WebhookEvent = Record<string, unknown>;
-type WebhookPayload = string | Buffer;
+type WebhookPayload = string | Uint8Array;
 type WebhookSignatureObject = {
   verifyHeader: (
     encodedPayload: WebhookPayload,
@@ -78,8 +78,10 @@ const Webhook: WebhookObject = {
       cryptoProvider
     );
 
-    // @ts-ignore
-    const jsonPayload = JSON.parse(payload);
+    const jsonPayload =
+      payload instanceof Uint8Array
+        ? JSON.parse(new TextDecoder('utf8').decode(payload))
+        : JSON.parse(payload);
     return jsonPayload;
   },
 
@@ -98,8 +100,10 @@ const Webhook: WebhookObject = {
       cryptoProvider
     );
 
-    // @ts-ignore
-    const jsonPayload = JSON.parse(payload);
+    const jsonPayload =
+      payload instanceof Uint8Array
+        ? JSON.parse(new TextDecoder('utf8').decode(payload))
+        : JSON.parse(payload);
     return jsonPayload;
   },
 
@@ -218,9 +222,11 @@ function parseEventDetails(
   encodedHeader: WebhookHeader,
   expectedScheme: string
 ): WebhookParsedEvent {
-  const decodedPayload = Buffer.isBuffer(encodedPayload)
-    ? encodedPayload.toString('utf8')
-    : encodedPayload;
+  const textDecoder = new TextDecoder('utf8');
+  const decodedPayload =
+    encodedPayload instanceof Uint8Array
+      ? textDecoder.decode(encodedPayload)
+      : encodedPayload;
 
   // Express's type for `Request#headers` is `string | []string`
   // which is because the `set-cookie` header is an array,
@@ -232,9 +238,10 @@ function parseEventDetails(
     );
   }
 
-  const decodedHeader = Buffer.isBuffer(encodedHeader)
-    ? encodedHeader.toString('utf8')
-    : encodedHeader;
+  const decodedHeader =
+    encodedHeader instanceof Uint8Array
+      ? textDecoder.decode(encodedHeader)
+      : encodedHeader;
 
   const details = parseHeader(decodedHeader, expectedScheme);
 
@@ -259,7 +266,7 @@ function parseEventDetails(
 
 function validateComputedSignature(
   payload: WebhookPayload,
-  header: string,
+  header: WebhookHeader,
   details: WebhookParsedHeader,
   expectedSignature: string,
   tolerance: number
@@ -292,7 +299,7 @@ function validateComputedSignature(
 }
 
 function parseHeader(
-  header: string,
+  header: WebhookHeader,
   scheme: string
 ): WebhookParsedHeader | null {
   if (typeof header !== 'string') {

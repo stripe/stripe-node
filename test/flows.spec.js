@@ -466,6 +466,27 @@ describe('Flows', function() {
       ).to.eventually.have.nested.property('size', 739);
     });
 
+    it('Allows you to upload a file synchronously as a Uint8Array', () => {
+      const testFilename = path.join(__dirname, 'resources/data/minimal.pdf');
+      const buf = fs.readFileSync(testFilename);
+
+      // Create Uint8Array from Buffer
+      const f = new Uint8Array(buf.buffer, buf.byteOffset, buf.length);
+
+      return expect(
+        stripe.files
+          .create({
+            purpose: 'dispute_evidence',
+            file: {
+              data: f,
+              name: 'minimal.pdf',
+              type: 'application/octet-stream',
+            },
+          })
+          .then(null, (error) => error)
+      ).to.eventually.have.nested.property('size', 739);
+    });
+
     it('Surfaces stream errors correctly', (done) => {
       const mockedStream = new stream.Readable();
       mockedStream._read = () => {};
