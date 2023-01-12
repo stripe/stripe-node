@@ -5,11 +5,6 @@ declare module 'stripe' {
     namespace Checkout {
       interface SessionCreateParams {
         /**
-         * The URL the customer will be directed to if they decide to cancel payment and return to your website.
-         */
-        cancel_url: string;
-
-        /**
          * The URL to which Stripe should send customers when payment or setup
          * is complete.
          * If you'd like to use information from the successful Checkout Session on your page,
@@ -36,6 +31,11 @@ declare module 'stripe' {
          * Specify whether Checkout should collect the customer's billing address.
          */
         billing_address_collection?: SessionCreateParams.BillingAddressCollection;
+
+        /**
+         * If set, Checkout displays a back button and customers will be directed to this URL if they decide to cancel payment and return to your website.
+         */
+        cancel_url?: string;
 
         /**
          * A unique string to reference the Checkout Session. This can be a
@@ -80,7 +80,7 @@ declare module 'stripe' {
          * When a Customer is not created, you can still retrieve email, address, and other customer data entered in Checkout
          * with [customer_details](https://stripe.com/docs/api/checkout/sessions/object#checkout_session_object-customer_details).
          *
-         * Sessions that don't create Customers instead create [Guest Customers](https://support.stripe.com/questions/guest-customer-faq)
+         * Sessions that don't create Customers instead are grouped by [guest customers](https://stripe.com/docs/payments/checkout/guest-customers)
          * in the Dashboard. Promotion codes limited to first time customers will return invalid for these Sessions.
          *
          * Can only be set in `payment` and `setup` mode.

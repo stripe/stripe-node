@@ -1,5 +1,25 @@
 # Changelog
 
+## 11.6.0 - 2023-01-05
+* [#1646](https://github.com/stripe/stripe-node/pull/1646) API Updates
+  * Add support for `card_issuing` on `Issuing.Cardholder.individual`
+
+## 11.5.0 - 2022-12-22
+* [#1642](https://github.com/stripe/stripe-node/pull/1642) API Updates
+  * Add support for new value `merchant_default` on enums `CashBalanceUpdateParams.settings.reconciliation_mode`, `CustomerCreateParams.cash_balance.settings.reconciliation_mode`, and `CustomerUpdateParams.cash_balance.settings.reconciliation_mode`
+  * Add support for `using_merchant_default` on `CashBalance.settings`
+  * Change `CheckoutSessionCreateParams.cancel_url` to be optional
+  * Change type of `Checkout.Session.cancel_url` from `string` to `string | null`
+
+## 11.4.0 - 2022-12-15
+* [#1639](https://github.com/stripe/stripe-node/pull/1639) API Updates
+  * Add support for new value `invoice_overpaid` on enum `CustomerBalanceTransaction.type`
+* [#1637](https://github.com/stripe/stripe-node/pull/1637) Update packages in examples/webhook-signing
+
+## 11.3.0 - 2022-12-08
+* [#1634](https://github.com/stripe/stripe-node/pull/1634) API Updates
+  * Change `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type` to be optional
+
 ## 11.2.0 - 2022-12-06
 * [#1632](https://github.com/stripe/stripe-node/pull/1632) API Updates
   * Add support for `flow_data` on `BillingPortalSessionCreateParams`
