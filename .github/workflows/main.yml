@@ -65,6 +65,7 @@ jobs:
         os:
           - "ubuntu-latest"
         node:
+          - "19"
           - "18"
           - "16"
           - "14"
