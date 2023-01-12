@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 type AppInfo = {name?: string} & Record<string, unknown>;
-type BufferedFile = {name: string; type: string; file: {data: Buffer}};
+type BufferedFile = {name: string; type: string; file: {data: Uint8Array}};
 type HttpClientResponseError = {code: number};
 type HttpHeaderValue = string | number | string[];
 type MethodSpec = {

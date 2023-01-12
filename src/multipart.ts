@@ -6,7 +6,7 @@ class StreamProcessingError extends StripeError {}
 type MultipartCallbackReturn = any;
 type MultipartCallback = (
   error: Error | null,
-  data: Buffer | string | null
+  data: Uint8Array | string | null
 ) => MultipartCallbackReturn;
 // Method for formatting HTTP body for the multipart/form-data specification
 // Mostly taken from Fermata.js
@@ -15,20 +15,25 @@ const multipartDataGenerator = (
   method: string,
   data: MultipartRequestData,
   headers: RequestHeaders
-): Buffer => {
+): Uint8Array => {
   const segno = (
     Math.round(Math.random() * 1e16) + Math.round(Math.random() * 1e16)
   ).toString();
   headers['Content-Type'] = `multipart/form-data; boundary=${segno}`;
-  let buffer = Buffer.alloc(0);
+  const textEncoder = new TextEncoder();
 
-  function push(l: any): void {
+  let buffer = new Uint8Array(0);
+  const endBuffer = textEncoder.encode('\r\n');
+
+  function push(l: string | Uint8Array): void {
     const prevBuffer = buffer;
-    const newBuffer = l instanceof Buffer ? l : Buffer.from(l);
-    buffer = Buffer.alloc(prevBuffer.length + newBuffer.length + 2);
-    prevBuffer.copy(buffer);
-    newBuffer.copy(buffer, prevBuffer.length);
-    buffer.write('\r\n', buffer.length - 2);
+    const newBuffer =
+      l instanceof Uint8Array ? l : new Uint8Array(textEncoder.encode(l));
+    buffer = new Uint8Array(prevBuffer.length + newBuffer.length + 2);
+
+    buffer.set(prevBuffer);
+    buffer.set(newBuffer, prevBuffer.length);
+    buffer.set(endBuffer, buffer.length - 2);
   }
 
   function q(s: string): string {
@@ -43,7 +48,7 @@ const multipartDataGenerator = (
     if (Object.prototype.hasOwnProperty.call(v, 'data')) {
       const typedEntry: {
         name: string;
-        data: BufferedFile;
+        data: string | Uint8Array;
         type: string;
       } = v as any;
       push(
@@ -71,15 +76,15 @@ const streamProcessor = (
   headers: RequestHeaders,
   callback: MultipartCallback
 ): void => {
-  const bufferArray: Array<Buffer> = [];
+  const bufferArray: Array<Uint8Array> = [];
   data.file.data
-    .on('data', (line: Buffer) => {
+    .on('data', (line: Uint8Array) => {
       bufferArray.push(line);
     })
     .once('end', () => {
       // @ts-ignore
       const bufferData: BufferedFile = Object.assign({}, data);
-      bufferData.file.data = Buffer.concat(bufferArray);
+      bufferData.file.data = utils.concat(bufferArray);
       const buffer = multipartDataGenerator(method, bufferData, headers);
       callback(null, buffer);
     })

@@ -763,7 +763,7 @@ declare module 'stripe' {
         /**
          * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the quote is accepted.
          */
-        proration_behavior?: SubscriptionDataOverride.ProrationBehavior;
+        proration_behavior?: SubscriptionDataOverride.ProrationBehavior | null;
       }
 
       namespace SubscriptionDataOverride {

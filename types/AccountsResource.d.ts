@@ -29,6 +29,11 @@ declare module 'stripe' {
       company?: AccountCreateParams.Company;
 
       /**
+       * The configuration of the account when `type` is not provided.
+       */
+      controller?: AccountCreateParams.Controller;
+
+      /**
        * The country in which the account holder resides, or in which the business is legally established. This should be an ISO 3166-1 alpha-2 country code. For example, if you are in the United States and the business for which you're creating an account is legally represented in Canada, you would use `CA` as the country for the account being created. Available countries include [Stripe's global markets](https://stripe.com/global) as well as countries where [cross-border payouts](https://stripe.com/docs/connect/cross-border-payouts) are supported.
        */
       country?: string;
@@ -720,6 +725,48 @@ declare module 'stripe' {
         }
       }
 
+      interface Controller {
+        /**
+         * The documentation for the application hash.
+         */
+        application?: Controller.Application;
+
+        /**
+         * Properties of the account's dashboard.
+         */
+        dashboard?: Controller.Dashboard;
+      }
+
+      namespace Controller {
+        interface Application {
+          /**
+           * Whether the controller is liable for losses on this account. For details, see [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances).
+           */
+          loss_liable: boolean;
+
+          /**
+           * Whether the controller owns onboarding for this account.
+           */
+          onboarding_owner?: boolean;
+
+          /**
+           * Whether the controller has pricing controls for this account.
+           */
+          pricing_controls?: boolean;
+        }
+
+        interface Dashboard {
+          /**
+           * Whether this account should have access to the full Stripe dashboard (`full`) or no dashboard (`none`).
+           */
+          type?: Dashboard.Type;
+        }
+
+        namespace Dashboard {
+          type Type = 'express' | 'full' | 'none';
+        }
+      }
+
       interface Documents {
         /**
          * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the account's primary active bank account that displays the last 4 digits of the account number, either a statement or a voided check.
@@ -1288,6 +1335,11 @@ declare module 'stripe' {
        * Information about the company or business. This field is available for any `business_type`.
        */
       company?: AccountUpdateParams.Company;
+
+      /**
+       * The configuration of the account when using unified accounts.
+       */
+      controller?: AccountUpdateParams.Controller;
 
       /**
        * Three-letter ISO currency code representing the default currency for the account. This must be a currency that [Stripe supports in the account's country](https://stripe.com/docs/payouts).
@@ -1968,6 +2020,22 @@ declare module 'stripe' {
              */
             front?: string;
           }
+        }
+      }
+
+      interface Controller {
+        /**
+         * Properties of the controlling application.
+         */
+        application?: Controller.Application;
+      }
+
+      namespace Controller {
+        interface Application {
+          /**
+           * A Boolean indicating whether the application has pricing controls for this accounts.
+           */
+          pricing_controls?: boolean;
         }
       }
 
