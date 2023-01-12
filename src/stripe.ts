@@ -48,7 +48,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
 const EventEmitter = require('events').EventEmitter;
 import StripeResource = require('./StripeResource');
 import * as http from 'http';
-import RequestSender = require('./makeRequest');
+import RequestSender = require('./RequestSender');
 Stripe.StripeResource = StripeResource;
 Stripe.resources = resources;
 

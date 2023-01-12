@@ -9,7 +9,7 @@ require('chai').use(require('chai-as-promised'));
 const http = require('http');
 
 const CryptoProvider = require('../lib/crypto/CryptoProvider');
-const RequestSender = require('../lib/makeRequest');
+const RequestSender = require('../lib/RequestSender');
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 
