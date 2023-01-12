@@ -14,7 +14,13 @@
     "@types/node": "^13.1.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "stripe": "^8.0.1",
-    "typescript": "^3.7.4"
+    "koa": "^2.14.1",
+    "stripe": "^11.6.0",
+    "typescript": "^3.7.4",
+    "koa-bodyparser": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.5",
+    "@types/koa-bodyparser": "^4.3.10"
   }
 }
