@@ -1,5 +1,3 @@
-// File generated from our OpenAPI spec
-
 ///<reference path='./lib.d.ts' />
 ///<reference path='./crypto/crypto.d.ts' />
 ///<reference path='./net/net.d.ts' />
@@ -8,6 +6,7 @@
 ///<reference path='./OAuth.d.ts' />
 ///<reference path='./Webhooks.d.ts' />
 ///<reference path='./UpcomingInvoices.d.ts' />
+// Imports: The beginning of the section generated from our OpenAPI spec
 ///<reference path='./AccountLinksResource.d.ts' />
 ///<reference path='./AccountsResource.d.ts' />
 ///<reference path='./ApplePayDomainsResource.d.ts' />
@@ -201,6 +200,7 @@
 ///<reference path='./UsageRecordSummaries.d.ts' />
 ///<reference path='./UsageRecords.d.ts' />
 ///<reference path='./WebhookEndpoints.d.ts' />
+// Imports: The end of the section generated from our OpenAPI spec
 
 declare module 'stripe' {
   // Added to in other modules, referenced above.
@@ -213,9 +213,7 @@ declare module 'stripe' {
 
     StripeResource: Stripe.StripeResource;
 
-    /**
-     * Top Level Resources
-     */
+    // Fields: The beginning of the section generated from our OpenAPI spec
     accountLinks: Stripe.AccountLinksResource;
     accounts: Stripe.AccountsResource;
     applePayDomains: Stripe.ApplePayDomainsResource;
@@ -260,12 +258,6 @@ declare module 'stripe' {
     topups: Stripe.TopupsResource;
     transfers: Stripe.TransfersResource;
     webhookEndpoints: Stripe.WebhookEndpointsResource;
-    webhooks: Stripe.Webhooks;
-    oauth: Stripe.OAuthResource;
-
-    /**
-     * Namespaced Resources
-     */
     apps: {
       secrets: Stripe.Apps.SecretsResource;
     };
@@ -339,6 +331,9 @@ declare module 'stripe' {
       transactions: Stripe.Treasury.TransactionsResource;
       transactionEntries: Stripe.Treasury.TransactionEntriesResource;
     };
+    // Fields: The end of the section generated from our OpenAPI spec
+    webhooks: Stripe.Webhooks;
+    oauth: Stripe.OAuthResource;
     /**
      * API Errors
      */
