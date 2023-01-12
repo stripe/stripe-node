@@ -33,7 +33,7 @@ function stripeMethod(spec: MethodSpec): (...args: any[]) => Promise<any> {
     );
 
     const requestPromise = utils.callbackifyPromiseWithTimeout(
-      makeRequest(this, args, spec, {}),
+      this._makeRequest(args, spec, {}),
       callback
     );
 

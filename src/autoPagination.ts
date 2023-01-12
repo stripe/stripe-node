@@ -1,4 +1,3 @@
-import makeRequest = require('./makeRequest');
 const utils = require('./utils');
 
 type PromiseCache = {
@@ -64,14 +63,14 @@ function makeAutoPaginationMethods(
           'Unexpected: Stripe API response does not have a well-formed `next_page` field, but `has_more` was true.'
         );
       }
-      return makeRequest(self, requestArgs, spec, {
+      return self._makeRequest(requestArgs, spec, {
         page: pageResult.next_page,
       });
     };
   } else {
     getNextPagePromise = (pageResult): Promise<any> => {
       const lastId = getLastId(pageResult, reverseIteration);
-      return makeRequest(self, requestArgs, spec, {
+      return self._makeRequest(requestArgs, spec, {
         [reverseIteration ? 'ending_before' : 'starting_after']: lastId,
       });
     };

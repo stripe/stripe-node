@@ -31,8 +31,8 @@ type Settings = {
 };
 
 type Options = {
-  auth?: string | null;
-  host?: string;
+  auth: string | null;
+  host: string | null;
   settings: Settings;
   streaming?: boolean;
   headers: Record<string, unknown>;
@@ -143,6 +143,7 @@ const utils = {
   getOptionsFromArgs: (args: RequestArgs): Options => {
     const opts: Options = {
       auth: null,
+      host: null,
       headers: {},
       settings: {},
     };
