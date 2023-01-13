@@ -1,9 +1,10 @@
 'use strict';
 
-const {StripeSignatureVerificationError} = require('../lib/Error');
+import Error = require('../src/Error');
+const {StripeSignatureVerificationError} = Error;
 const {getSpyableStripe, FakeCryptoProvider} = require('../testUtils');
 const stripe = getSpyableStripe();
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
 const EVENT_PAYLOAD = {
   id: 'evt_test_webhook',
