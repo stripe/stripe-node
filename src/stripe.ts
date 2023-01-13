@@ -48,6 +48,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
 const EventEmitter = require('events').EventEmitter;
 import StripeResource = require('./StripeResource');
 import * as http from 'http';
+import RequestSender = require('./RequestSender');
 Stripe.StripeResource = StripeResource;
 Stripe.resources = resources;
 
@@ -135,6 +136,10 @@ function Stripe(
   this._prevRequestMetrics = [];
   this._enableTelemetry = props.telemetry !== false;
 
+  this._requestSender = new RequestSender(
+    this,
+    Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+  );
   // Expose StripeResource on the instance too
   // @ts-ignore
   this.StripeResource = Stripe.StripeResource;
@@ -198,6 +203,7 @@ Stripe.prototype = {
   _prevRequestMetrics: null!,
   _emitter: null!,
   _enableTelemetry: null!,
+  _requestSender: null!,
 
   /**
    * @private
