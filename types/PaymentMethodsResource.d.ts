@@ -699,11 +699,6 @@ declare module 'stripe' {
 
     interface PaymentMethodListParams extends PaginationParams {
       /**
-       * A required filter on the list, based on the object `type` field.
-       */
-      type: PaymentMethodListParams.Type;
-
-      /**
        * The ID of the customer whose PaymentMethods will be retrieved.
        */
       customer?: string;
@@ -712,6 +707,11 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * An optional filter on the list, based on the object `type` field. Without the filter, the list includes all current and future payment method types. If your integration expects only one type of payment method in the response, make sure to provide a type value in the request.
+       */
+      type?: PaymentMethodListParams.Type;
     }
 
     namespace PaymentMethodListParams {
@@ -806,9 +806,10 @@ declare module 'stripe' {
        * Returns a list of PaymentMethods for Treasury flows. If you want to list the PaymentMethods attached to a Customer for payments, you should use the [List a Customer's PaymentMethods](https://stripe.com/docs/api/payment_methods/customer_list) API instead.
        */
       list(
-        params: PaymentMethodListParams,
+        params?: PaymentMethodListParams,
         options?: RequestOptions
       ): ApiListPromise<Stripe.PaymentMethod>;
+      list(options?: RequestOptions): ApiListPromise<Stripe.PaymentMethod>;
 
       /**
        * Attaches a PaymentMethod object to a Customer.

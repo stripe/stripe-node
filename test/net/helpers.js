@@ -166,7 +166,13 @@ const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
             await response.toJSON();
             fail();
           } catch (e) {
-            expect(e.message).to.contain('Unexpected end of JSON input');
+            expect(e.message).to.satisfy(
+              (v) =>
+                // Node < 19
+                v.includes('Unexpected end of JSON input') ||
+                // Node >= 19
+                v.includes('Unterminated string in JSON at position 3')
+            );
           }
         });
       });

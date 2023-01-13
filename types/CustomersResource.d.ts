@@ -119,13 +119,13 @@ declare module 'stripe' {
       namespace CashBalance {
         interface Settings {
           /**
-           * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic` or `manual`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
+           * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic`, `manual`, or `merchant_default`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
            */
           reconciliation_mode?: Settings.ReconciliationMode;
         }
 
         namespace Settings {
-          type ReconciliationMode = 'automatic' | 'manual';
+          type ReconciliationMode = 'automatic' | 'manual' | 'merchant_default';
         }
       }
 
@@ -393,13 +393,13 @@ declare module 'stripe' {
       namespace CashBalance {
         interface Settings {
           /**
-           * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic` or `manual`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
+           * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic`, `manual`, or `merchant_default`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
            */
           reconciliation_mode?: Settings.ReconciliationMode;
         }
 
         namespace Settings {
-          type ReconciliationMode = 'automatic' | 'manual';
+          type ReconciliationMode = 'automatic' | 'manual' | 'merchant_default';
         }
       }
 
@@ -564,14 +564,14 @@ declare module 'stripe' {
 
     interface CustomerListPaymentMethodsParams extends PaginationParams {
       /**
-       * A required filter on the list, based on the object `type` field.
-       */
-      type: CustomerListPaymentMethodsParams.Type;
-
-      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * An optional filter on the list, based on the object `type` field. Without the filter, the list includes all current and future payment method types. If your integration expects only one type of payment method in the response, make sure to provide a type value in the request.
+       */
+      type?: CustomerListPaymentMethodsParams.Type;
     }
 
     namespace CustomerListPaymentMethodsParams {
@@ -658,13 +658,13 @@ declare module 'stripe' {
     namespace CashBalanceUpdateParams {
       interface Settings {
         /**
-         * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic` or `manual`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
+         * Controls how funds transferred by the customer are applied to payment intents and invoices. Valid options are `automatic`, `manual`, or `merchant_default`. For more information about these reconciliation modes, see [Reconciliation](https://stripe.com/docs/payments/customer-balance/reconciliation).
          */
         reconciliation_mode?: Settings.ReconciliationMode;
       }
 
       namespace Settings {
-        type ReconciliationMode = 'automatic' | 'manual';
+        type ReconciliationMode = 'automatic' | 'manual' | 'merchant_default';
       }
     }
 
@@ -1068,7 +1068,11 @@ declare module 'stripe' {
        */
       listPaymentMethods(
         id: string,
-        params: CustomerListPaymentMethodsParams,
+        params?: CustomerListPaymentMethodsParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.PaymentMethod>;
+      listPaymentMethods(
+        id: string,
         options?: RequestOptions
       ): ApiListPromise<Stripe.PaymentMethod>;
 
