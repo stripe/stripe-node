@@ -1,6 +1,6 @@
 import _Error = require('./Error');
 
-const resources = require('./resources');
+import resources = require('./resources');
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -11,7 +11,7 @@ const DEFAULT_TIMEOUT = 80000;
 
 Stripe.PACKAGE_VERSION = require('../package.json').version;
 
-const utils = require('./utils');
+import utils = require('./utils');
 const {determineProcessUserAgentProperties, emitWarning} = utils;
 
 Stripe.USER_AGENT = {
@@ -52,11 +52,11 @@ import RequestSender = require('./RequestSender');
 Stripe.StripeResource = StripeResource;
 Stripe.resources = resources;
 
-const {HttpClient, HttpClientResponse} = require('./net/HttpClient');
-Stripe.HttpClient = HttpClient;
-Stripe.HttpClientResponse = HttpClientResponse;
+import HttpClient = require('./net/HttpClient');
+Stripe.HttpClient = HttpClient.HttpClient;
+Stripe.HttpClientResponse = HttpClient.HttpClientResponse;
 
-const CryptoProvider = require('./crypto/CryptoProvider');
+import CryptoProvider = require('./crypto/CryptoProvider');
 Stripe.CryptoProvider = CryptoProvider;
 
 function Stripe(
@@ -335,8 +335,8 @@ Stripe.prototype = {
   getUname(cb: (uname: string) => void): void {
     if (!Stripe._UNAME_CACHE) {
       Stripe._UNAME_CACHE = new Promise<string>((resolve) => {
-        utils.safeExec('uname -a', (err: Error, uname: string) => {
-          resolve(uname);
+        utils.safeExec('uname -a', (err: unknown, uname: string | null) => {
+          resolve(uname!);
         });
       });
     }
@@ -368,13 +368,13 @@ Stripe.prototype = {
    * fetching a uname from the system.
    */
   getClientUserAgentSeeded(
-    seed: Record<string, string>,
+    seed: Record<string, string | boolean | null>,
     cb: (userAgent: string) => void
   ): void {
     this.getUname((uname: string) => {
       const userAgent: Record<string, string> = {};
       for (const field in seed) {
-        userAgent[field] = encodeURIComponent(seed[field]);
+        userAgent[field] = encodeURIComponent(seed[field] ?? 'null');
       }
 
       // URI-encode in case there are unusual characters in the system's uname.

@@ -107,7 +107,7 @@ interface HttpClientInterface {
 }
 type StripeObject = {
   getClientUserAgentSeeded: (
-    seed: Record<string, string>,
+    seed: Record<string, string | boolean | null>,
     callback: (userAgent: string) => void
   ) => void;
   getUname: (callback: (uname: string) => void) => void;

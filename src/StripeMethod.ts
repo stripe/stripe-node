@@ -1,4 +1,4 @@
-const utils = require('./utils');
+import utils = require('./utils');
 import makeRequest = require('./RequestSender');
 import autoPagination = require('./autoPagination');
 const makeAutoPaginationMethods = autoPagination.makeAutoPaginationMethods;

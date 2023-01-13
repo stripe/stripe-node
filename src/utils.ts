@@ -305,7 +305,7 @@ const utils = {
 
   callbackifyPromiseWithTimeout: <T>(
     promise: Promise<T>,
-    callback: (error: unknown, result: T | null) => void
+    callback: ((error: unknown, result: T | null) => void) | null
   ): Promise<T | void> => {
     if (callback) {
       // Ensure callback is called outside of promise stack.
