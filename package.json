@@ -54,8 +54,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.json && yarn remove-exports-line && yarn prettier-format",
-    "remove-exports-line": "sed -i.bak '/Object.defineProperty(exports, \"__esModule\", { value: true });/d' ./lib/stripe.js; rm ./lib/stripe.js.bak",
+    "build": "tsc -p tsconfig.json",
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./lib",
     "prepack": "yarn install && yarn build",
     "mocha": "nyc mocha --config=test/.mocharc.js",
@@ -65,7 +64,6 @@
     "lint": "eslint --ext .js,.jsx,.ts .",
     "fix": "yarn lint --fix && ./scripts/updateAPIVersion.js",
     "report": "nyc -r text -r lcov report",
-    "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "prettier-format": "prettier --config .prettierrc 'lib/**/*.js' --write"
+    "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   }
 }
