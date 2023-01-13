@@ -2,7 +2,6 @@
 type AppInfo = {name?: string} & Record<string, unknown>;
 type BufferedFile = {name: string; type: string; file: {data: Uint8Array}};
 type HttpClientResponseError = {code: number};
-type HttpHeaderValue = string | number | string[];
 type MethodSpec = {
   method: string;
   methodType: string;
@@ -10,7 +9,7 @@ type MethodSpec = {
   path?: string;
   fullPath?: string;
   encode: (data: RequestData) => RequestData;
-  validator: (data: RequestData, headers: RequestHeaders) => void;
+  validator: (data: RequestData, options: {headers: RequestHeaders}) => void;
   headers: Record<string, string>;
   streaming?: boolean;
   host?: string;
@@ -27,7 +26,7 @@ type RawErrorType =
   | 'invalid_grant';
 type RequestArgs = Array<any>;
 type RequestCallback = (
-  this: StripeResourceObject | void,
+  this: void,
   error: Error | null,
   response?: any
 ) => RequestCallbackReturn;
@@ -52,9 +51,9 @@ type RequestOpts = {
   requestPath: string;
   bodyData: RequestData;
   queryData: RequestData;
-  auth: string;
+  auth: string | null;
   headers: RequestHeaders;
-  host: string;
+  host: string | null;
   streaming: boolean;
   settings: RequestSettings;
 };
@@ -67,7 +66,7 @@ type ResponseEvent = {
   path?: string;
   status?: number;
   request_id?: string;
-  elapsed?: number;
+  elapsed: number;
   request_start_time?: number;
   request_end_time?: number;
 };
@@ -158,8 +157,21 @@ type StripeObject = {
   };
   _emitter: import('events').EventEmitter;
   _enableTelemetry: boolean;
+  _requestSender: RequestSender;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
+};
+type RequestSender = {
+  _request(
+    method: string,
+    host: string | null,
+    path: string,
+    data: RequestData,
+    auth: string | null,
+    options: RequestOptions,
+    callback: RequestCallback,
+    requestDataProcessor: RequestDataProcessor | null
+  ): void;
 };
 type StripeRawError = {
   message?: string;
@@ -198,71 +210,26 @@ type StripeResourceObject = {
     interpolator: UrlInterpolator,
     urlData: RequestData
   ) => string;
-  _request(
-    method: string,
-    host: string,
-    path: string,
-    data: RequestData,
-    auth: string,
-    options: RequestOptions,
-    callback: RequestCallback
-  ): void;
   initialize: (...args: Array<any>) => void;
   _joinUrlParts: (urlParts: string[]) => string;
-  _getRequestId: (headers: RequestHeaders) => string;
-  _makeResponseEvent: (
-    requestEvent: RequestEvent,
-    statusCode: number,
-    headers: ResponseHeaders
-  ) => ResponseEvent;
-  _getUserAgentString: () => string;
-  _getTelemetryHeader: () => string;
-  requestDataProcessor:
-    | null
-    | ((
-        method: string,
-        data: RequestData,
-        headers: RequestHeaders | undefined,
-        prepareAndMakeRequest: (error: Error | null, data: string) => void
-      ) => void);
-  _recordRequestMetrics: (requestId: string, elapsed?: number) => void;
-  _addHeadersDirectlyToObject: (obj: any, headers: ResponseHeaders) => void;
-  _getMaxNetworkRetries: (settings: RequestSettings) => number;
-  _defaultIdempotencyKey: (
-    method: string,
-    userSuppliedSettings: RequestSettings
-  ) => string | number | string[];
-  _getSleepTimeInMS: (
-    requestRetries: number,
-    retryAfter: number | null
-  ) => number | undefined;
-  _shouldRetry: (
-    res: HttpClientResponseInterface | null,
-    requestRetries: number,
-    maxRetries: number,
-    error?: HttpClientResponseError
-  ) => boolean | undefined;
-  _jsonResponseHandler: (
-    requestEvent: RequestEvent,
-    callback: RequestCallback
-  ) => (res: HttpClientResponseInterface) => void;
-  _streamingResponseHandler: (
-    requestEvent: RequestEvent,
-    callback: RequestCallback
-  ) => (res: HttpClientResponseInterface) => RequestCallbackReturn;
-  _generateConnectionErrorMessage: (
-    requestRetries: number
-  ) => string | undefined;
-  _makeHeaders: (
-    auth: string,
-    length: number,
-    apiVersion: string,
-    clientUserAgent: string,
-    method: string,
-    headers: RequestHeaders | undefined,
-    settings: RequestSettings | undefined
-  ) => RequestHeaders;
+  requestDataProcessor: null | RequestDataProcessor;
+  _makeRequest(
+    requestArgs: RequestArgs,
+    spec: MethodSpec,
+    overrideData: RequestData
+  ): Promise<any>;
+  _getRequestOpts(
+    requestArgs: RequestArgs,
+    spec: MethodSpec,
+    overrideData: RequestData
+  ): RequestOpts;
 };
+type RequestDataProcessor = (
+  method: string,
+  data: RequestData,
+  headers: RequestHeaders | undefined,
+  prepareAndMakeRequest: (error: Error | null, data: string) => void
+) => void;
 type UrlInterpolator = (params: Record<string, unknown>) => string;
 type UserProvidedConfig = {
   apiVersion?: string;
