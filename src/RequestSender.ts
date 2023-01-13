@@ -1,4 +1,4 @@
-const utils = require('./utils');
+import utils = require('./utils');
 
 import _Error = require('./Error');
 const {
@@ -43,9 +43,9 @@ class RequestSender {
     const requestDurationMs = requestEndTime - requestEvent.request_start_time;
 
     return utils.removeNullish({
-      api_version: headers['stripe-version'],
-      account: headers['stripe-account'],
-      idempotency_key: headers['idempotency-key'],
+      api_version: headers['stripe-version'] as string,
+      account: headers['stripe-account'] as string,
+      idempotency_key: headers['idempotency-key'] as string,
       method: requestEvent.method,
       path: requestEvent.path,
       status: statusCode,

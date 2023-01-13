@@ -245,17 +245,17 @@ const utils = {
   /**
    * Remove empty values from an object
    */
-  removeNullish: <T>(obj: Record<string, T>): Record<string, T> => {
+  removeNullish: <T extends Record<string, unknown>>(obj: T): T => {
     if (typeof obj !== 'object') {
       throw new Error('Argument must be an object');
     }
 
-    return Object.keys(obj).reduce<Record<string, T>>((result, key) => {
+    return Object.keys(obj).reduce<Record<string, unknown>>((result, key) => {
       if (obj[key] != null) {
         result[key] = obj[key];
       }
       return result;
-    }, {});
+    }, {}) as T;
   },
 
   /**
@@ -264,7 +264,7 @@ const utils = {
    * becomes
    * {'Foo-Bar': 'hi'}
    */
-  normalizeHeaders: (obj: RequestHeaders): RequestHeaders => {
+  normalizeHeaders: (obj: RequestHeaders | null): RequestHeaders | null => {
     if (!(obj && typeof obj === 'object')) {
       return obj;
     }

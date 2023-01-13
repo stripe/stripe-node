@@ -9,7 +9,7 @@ type MethodSpec = {
   path?: string;
   fullPath?: string;
   encode: (data: RequestData) => RequestData;
-  validator: (data: RequestData, headers: {headers: RequestHeaders}) => void;
+  validator: (data: RequestData, options: {headers: RequestHeaders}) => void;
   headers: Record<string, string>;
   streaming?: boolean;
   host?: string;
