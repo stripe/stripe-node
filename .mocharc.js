@@ -11,8 +11,7 @@ const config = {
   require: "ts-node/register/transpile-only"
 };
 
-if (process.argv.find(a => a.includes('WebStorm')))
-{
+if (process.argv.find(a => a.includes('WebStorm'))) {
   // Parallel doesn't work correctly when running from JetBrains WebStorm
   config.parallel = false;
 }
