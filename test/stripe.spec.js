@@ -263,7 +263,7 @@ describe('Stripe Module', function() {
       });
 
       it('sets uname to UNKOWN in case of an error', () => {
-        utils.safeExec = (cmd, cb) => {
+        Stripe.safeExec = (cmd, cb) => {
           cb(new Error('security'), null);
         };
         return expect(

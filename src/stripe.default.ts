@@ -1,5 +1,4 @@
 import Stripe = require('./stripe.common');
-import utils = require('./utils');
 import nodeUtils = require('./nodeUtils');
 import http = require('http');
 import HttpClient = require('./net/HttpClient');
