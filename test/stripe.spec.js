@@ -4,7 +4,6 @@
 
 const testUtils = require('../testUtils');
 const utils = require('../lib/utils');
-const nodeUtils = require('../lib/nodeUtils');
 const Stripe = require('../lib/stripe');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 const crypto = require('crypto');

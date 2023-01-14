@@ -11,23 +11,15 @@ const nodeUtils = {
     cmd: string,
     cb: (error: unknown, stdout: string | null) => void
   ): void => {
-    // Occurs if we couldn't load the `child_process` module, which might
-    // happen in certain sandboxed environments like a CloudFlare Worker.
-    if (nodeUtils._exec === null) {
-      cb(new Error('exec not available'), null);
-      return;
-    }
-
     try {
-      // @ts-ignore
       nodeUtils._exec(cmd, cb);
     } catch (e) {
       cb(e, null);
     }
   },
 
-  // For mocking in tests. To be set when exporting Stripe.
-  _exec: null,
+  // For mocking in tests.
+  _exec: require('child_process').exec,
 };
 
 export = nodeUtils;

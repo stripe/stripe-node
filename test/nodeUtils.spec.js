@@ -53,21 +53,5 @@ describe('nodeUtils', () => {
       nodeUtils.safeExec('hello', myCb);
       expect(calls).to.deep.equal([[myErr, null]]);
     });
-
-    it('handles being unable to require `child_process`', () => {
-      nodeUtils._exec = null;
-
-      let actualErr = null;
-      let actualRes = null;
-      function myCb(err, res) {
-        actualErr = err;
-        actualRes = res;
-      }
-      nodeUtils.safeExec('hello', myCb);
-      expect(actualErr.toString()).to.equal(
-        new Error('exec not available').toString()
-      );
-      expect(actualRes).to.equal(null);
-    });
   });
 });
