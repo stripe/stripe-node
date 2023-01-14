@@ -3,7 +3,7 @@
 const {StripeSignatureVerificationError} = require('../lib/Error');
 const {getSpyableStripe, FakeCryptoProvider} = require('../testUtils');
 const stripe = getSpyableStripe();
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
 const EVENT_PAYLOAD = {
   id: 'evt_test_webhook',
@@ -31,8 +31,10 @@ describe('Webhooks', () => {
     });
   });
 
-  const makeConstructEventTests = (constructEventFn) => {
-    return () => {
+  const makeConstructEventTests = (
+    constructEventFn: typeof stripe.webhooks.construct
+  ) => {
+    return (): void => {
       it('should return an Event instance from a valid JSON payload and valid signature header', async () => {
         const header = stripe.webhooks.generateTestHeaderString({
           payload: EVENT_PAYLOAD_STRING,
@@ -137,7 +139,7 @@ describe('Webhooks', () => {
 
   describe(
     '.constructEvent',
-    makeConstructEventTests(async (...args) => {
+    makeConstructEventTests(async (...args: any) => {
       const result = await stripe.webhooks.constructEvent(...args);
       return result;
     })
@@ -145,13 +147,15 @@ describe('Webhooks', () => {
 
   describe(
     '.constructEventAsync',
-    makeConstructEventTests((...args) =>
+    makeConstructEventTests((...args: any) =>
       stripe.webhooks.constructEventAsync(...args)
     )
   );
 
-  const makeVerifySignatureHeaderTests = (verifyHeaderFn) => {
-    return () => {
+  const makeVerifySignatureHeaderTests = (
+    verifyHeaderFn: typeof stripe.webhooks.verify
+  ) => {
+    return (): void => {
       it('should raise a SignatureVerificationError when the header does not have the expected format', async () => {
         const header = "I'm not even a real signature header";
 
@@ -329,7 +333,7 @@ describe('Webhooks', () => {
 
   describe(
     '.verifySignatureHeader',
-    makeVerifySignatureHeaderTests(async (...args) => {
+    makeVerifySignatureHeaderTests(async (...args: any) => {
       const result = await stripe.webhooks.signature.verifyHeader(...args);
       return result;
     })
@@ -337,7 +341,7 @@ describe('Webhooks', () => {
 
   describe(
     '.verifySignatureHeaderAsync',
-    makeVerifySignatureHeaderTests((...args) =>
+    makeVerifySignatureHeaderTests((...args: any) =>
       stripe.webhooks.signature.verifyHeaderAsync(...args)
     )
   );
