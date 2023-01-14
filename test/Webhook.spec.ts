@@ -1,7 +1,6 @@
 'use strict';
 
-import Error = require('../src/Error');
-const {StripeSignatureVerificationError} = Error;
+const {StripeSignatureVerificationError} = require('../lib/Error');
 const {getSpyableStripe, FakeCryptoProvider} = require('../testUtils');
 const stripe = getSpyableStripe();
 import {expect} from 'chai';
