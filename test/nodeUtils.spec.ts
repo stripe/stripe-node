@@ -2,8 +2,8 @@
 
 require('../testUtils');
 
-const nodeUtils = require('../lib/nodeUtils');
-const expect = require('chai').expect;
+import {expect} from 'chai';
+import nodeUtils = require('../lib/nodeUtils');
 
 describe('nodeUtils', () => {
   describe('safeExec', () => {
@@ -16,24 +16,24 @@ describe('nodeUtils', () => {
     });
 
     it('runs exec', () => {
-      const calls = [];
-      nodeUtils._exec = (cmd, cb) => {
+      const calls: any[] = [];
+      nodeUtils._exec = (cmd: string, cb: any): void => {
         calls.push([cmd, cb]);
       };
 
-      function myCb() {}
+      function myCb(): void {}
       nodeUtils.safeExec('hello', myCb);
       expect(calls).to.deep.equal([['hello', myCb]]);
     });
 
     it('passes along normal errors', () => {
       const myErr = Error('hi');
-      nodeUtils._exec = (cmd, cb) => {
+      nodeUtils._exec = (cmd: string, cb: any): void => {
         cb(myErr, null);
       };
 
-      const calls = [];
-      function myCb(err, x) {
+      const calls: any[] = [];
+      function myCb(err, x): void {
         calls.push([err, x]);
       }
       nodeUtils.safeExec('hello', myCb);
@@ -42,12 +42,12 @@ describe('nodeUtils', () => {
 
     it('passes along thrown errors as normal callback errors', () => {
       const myErr = Error('hi');
-      nodeUtils._exec = (cmd, cb) => {
+      nodeUtils._exec = (cmd: string, cb: any): void => {
         throw myErr;
       };
 
-      const calls = [];
-      function myCb(err, x) {
+      const calls: any[] = [];
+      function myCb(err, x): void {
         calls.push([err, x]);
       }
       nodeUtils.safeExec('hello', myCb);

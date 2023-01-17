@@ -2,8 +2,8 @@
 
 require('../testUtils');
 
-const utils = require('../lib/utils');
-const expect = require('chai').expect;
+import {expect} from 'chai';
+import utils = require('../lib/utils');
 
 describe('utils', () => {
   describe('makeURLInterpolator', () => {
@@ -117,7 +117,7 @@ describe('utils', () => {
 
   describe('protoExtend', () => {
     it('Provides an extension mechanism', () => {
-      function A() {}
+      function A(): any {}
       A.extend = utils.protoExtend;
       const B = A.extend({
         constructor: function() {
@@ -481,7 +481,7 @@ describe('utils', () => {
         if (crypto.randomUUID) {
           called = false;
           randomUUID$ = crypto.randomUUID;
-          crypto.randomUUID = () => {
+          crypto.randomUUID = (): string => {
             called = true;
             return 'no, YOU you id';
           };
@@ -532,7 +532,7 @@ describe('utils', () => {
   });
 });
 
-function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
+function handleWarnings(doWithShimmedConsoleWarn, onWarn): void {
   if (typeof process.emitWarning !== 'function') {
     /* eslint-disable no-console */
 
@@ -548,7 +548,7 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
     /* eslint-enable no-console */
   } else {
     /* eslint-disable-next-line no-inner-declarations */
-    function onProcessWarn(warning) {
+    function onProcessWarn(warning): any {
       onWarn(`${warning.name}: ${warning.message}`);
     }
 
