@@ -2,8 +2,6 @@ import _Error = require('./Error');
 
 import resources = require('./resources');
 
-const utils = require('./utils');
-
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
@@ -66,8 +64,8 @@ import CryptoProvider = require('./crypto/CryptoProvider');
 import EventEmitter = require('events');
 Stripe.CryptoProvider = CryptoProvider;
 
-// @ts-ignore
-Stripe.safeExec = null;
+import utils = require('./utils');
+Stripe._utils = utils;
 
 function Stripe(
   this: StripeObject,
@@ -112,8 +110,12 @@ function Stripe(
     protocol: props.protocol || 'https',
     basePath: DEFAULT_BASE_PATH,
     version: props.apiVersion || DEFAULT_API_VERSION,
-    timeout: utils.validateInteger('timeout', props.timeout, DEFAULT_TIMEOUT),
-    maxNetworkRetries: utils.validateInteger(
+    timeout: Stripe._utils.validateInteger(
+      'timeout',
+      props.timeout,
+      DEFAULT_TIMEOUT
+    ),
+    maxNetworkRetries: Stripe._utils.validateInteger(
       'maxNetworkRetries',
       props.maxNetworkRetries,
       0
@@ -322,7 +324,7 @@ Stripe.prototype = {
     n: number,
     defaultVal?: number
   ): void {
-    const val = utils.validateInteger(prop, n, defaultVal);
+    const val = Stripe._utils.validateInteger(prop, n, defaultVal);
 
     this._setApiField(prop, val);
   },
@@ -341,9 +343,12 @@ Stripe.prototype = {
   getUname(cb: (uname: string) => void): void {
     if (!Stripe._UNAME_CACHE) {
       Stripe._UNAME_CACHE = new Promise<string>((resolve) => {
-        Stripe?.safeExec('uname -a', (err: unknown, uname: string | null) => {
-          resolve(uname!);
-        });
+        Stripe._utils.safeExec(
+          'uname -a',
+          (err: unknown, uname: string | null) => {
+            resolve(uname!);
+          }
+        );
       });
     }
     Stripe._UNAME_CACHE.then((uname: string) => cb(uname));
@@ -435,7 +440,7 @@ Stripe.prototype = {
   _prepResources(): void {
     for (const name in resources) {
       // @ts-ignore
-      this[utils.pascalToCamelCase(name)] = new resources[name](this);
+      this[Stripe._utils.pascalToCamelCase(name)] = new resources[name](this);
     }
   },
 

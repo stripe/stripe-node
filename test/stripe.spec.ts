@@ -3,7 +3,6 @@
 'use strict';
 
 const testUtils = require('../testUtils');
-const utils = require('../lib/utils');
 const Stripe = require('../lib/stripe');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 const crypto = require('crypto');
@@ -176,7 +175,7 @@ describe('Stripe Module', function() {
     });
 
     it('Should include whether typescript: true was passed, respecting reinstantiations', () => {
-      return new Promise((resolve) => resolve())
+      return new Promise((resolve) => resolve(null))
         .then(() => {
           const newStripe = new Stripe('sk_test_123', {
             typescript: true,
@@ -242,14 +241,14 @@ describe('Stripe Module', function() {
         Stripe._UNAME_CACHE = null;
       });
       beforeEach(() => {
-        origExec = utils.safeExec;
+        origExec = Stripe._utils.safeExec;
       });
       afterEach(() => {
-        utils.safeExec = origExec;
+        Stripe._utils.safeExec = origExec;
       });
 
       it('gets added to the user-agent', () => {
-        Stripe.safeExec = (cmd, cb) => {
+        Stripe._utils.safeExec = (cmd: string, cb: any): void => {
           cb(null, 'foøname');
         };
         return expect(
@@ -262,7 +261,7 @@ describe('Stripe Module', function() {
       });
 
       it('sets uname to UNKOWN in case of an error', () => {
-        Stripe.safeExec = (cmd, cb) => {
+        Stripe._utils.safeExec = (cmd: string, cb: any): void => {
           cb(new Error('security'), null);
         };
         return expect(
@@ -479,6 +478,7 @@ describe('Stripe Module', function() {
         it('Will have the idempotency key', () =>
           expect(
             new Promise((resolve, reject) => {
+              // @ts-ignore - "Property 'randomBytes' does not exist on type 'Crypto'""
               const key = crypto.randomBytes(16).toString('hex');
 
               stripe.customers.create(
@@ -637,7 +637,7 @@ describe('Stripe Module', function() {
   });
 
   describe('imports', function() {
-    const runTestProject = (projectName) => {
+    const runTestProject = (projectName: string): void => {
       const script = `
       cd testProjects/${projectName}
       npm install

@@ -3,7 +3,7 @@ import nodeUtils = require('./nodeUtils');
 import http = require('http');
 import HttpClient = require('./net/HttpClient');
 
-Stripe.safeExec = nodeUtils.safeExec;
+Stripe._utils = Object.assign(Stripe._utils, nodeUtils);
 
 Stripe.createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
   const {NodeHttpClient} = require('./net/NodeHttpClient');

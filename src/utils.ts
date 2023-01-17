@@ -1,6 +1,5 @@
 const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
-const crypto = require('crypto');
 
 const OPTIONS_KEYS = [
   'apiKey',
@@ -202,26 +201,12 @@ const utils = {
   },
 
   /**
-   * Secure compare, from https://github.com/freewil/scmp
+   * Our own scmp-internal function for when crypto.timingSafeEqual is not available.
    */
   secureCompare: (a: string, b: string): boolean => {
-    if (!a || !b) {
-      throw new Error('secureCompare must receive two arguments');
-    }
-
-    // return early here if buffer lengths are not equal since timingSafeEqual
-    // will throw if buffer lengths are not equal
+    // return early here if buffer lengths are not equal
     if (a.length !== b.length) {
       return false;
-    }
-
-    // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
-    // otherwise use our own scmp-internal function.
-    if (crypto.timingSafeEqual) {
-      const textEncoder = new TextEncoder();
-      const aEncoded: Uint8Array = textEncoder.encode(a);
-      const bEncoded: Uint8Array = textEncoder.encode(b);
-      return crypto.timingSafeEqual(aEncoded, bEncoded);
     }
 
     const len = a.length;
@@ -326,6 +311,19 @@ const utils = {
 
   emitWarning,
 
+  /**
+   * To be overriden if 'node:child_process' is available.
+   * Otherwise, throws an error.
+   */
+  safeExec: (
+    cmd: string,
+    cb: (error: unknown, stdout: string | null) => void
+  ): void => {
+    cb(new Error('exec not available'), null);
+  },
+
+  _exec: null,
+
   isObject: (obj: unknown): boolean => {
     const type = typeof obj;
     return (type === 'function' || type === 'object') && !!obj;
@@ -371,12 +369,6 @@ const utils = {
    * https://stackoverflow.com/a/2117523
    */
   uuid4: (): string => {
-    // available in: v14.17.x+
-    if (crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-
-    // legacy behavior if native UUIDs aren't available
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
       const r = (Math.random() * 16) | 0;
       const v = c === 'x' ? r : (r & 0x3) | 0x8;
