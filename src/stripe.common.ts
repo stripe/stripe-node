@@ -144,6 +144,7 @@ function Stripe(
 
   this.errors = _Error;
   this.webhooks = require('./Webhooks');
+  this.webhooks._stripe = this;
 
   this._prevRequestMetrics = [];
   this._enableTelemetry = props.telemetry !== false;
@@ -155,6 +156,8 @@ function Stripe(
   // Expose StripeResource on the instance too
   // @ts-ignore
   this.StripeResource = Stripe.StripeResource;
+
+  this._utils = Stripe._utils;
 }
 
 Stripe.errors = _Error;
@@ -212,6 +215,7 @@ Stripe.prototype = {
   _emitter: null!,
   _enableTelemetry: null!,
   _requestSender: null!,
+  _utils: null!,
 
   /**
    * @private

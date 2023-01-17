@@ -160,6 +160,7 @@ type StripeObject = {
   _requestSender: RequestSender;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
+  _utils: any;
 };
 type RequestSender = {
   _request(

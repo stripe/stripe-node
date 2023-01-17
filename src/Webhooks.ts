@@ -57,6 +57,7 @@ type WebhookObject = {
     cryptoProvider: StripeCryptoProvider
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
+  _stripe: StripeObject | null;
 };
 
 const Webhook: WebhookObject = {
@@ -145,6 +146,8 @@ const Webhook: WebhookObject = {
 
     return generatedHeader;
   },
+
+  _stripe: null,
 };
 
 const signature = {
@@ -272,8 +275,10 @@ function validateComputedSignature(
   tolerance: number
 ): boolean {
   const signatureFound = !!details.signatures.filter(
-    // @ts-ignore
-    utils.secureCompare.bind(utils, expectedSignature)
+    Webhook._stripe!._utils.secureCompare.bind(
+      Webhook._stripe!._utils,
+      expectedSignature
+    )
   ).length;
 
   if (!signatureFound) {
