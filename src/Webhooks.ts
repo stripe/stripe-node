@@ -1,6 +1,5 @@
 import utils = require('./utils');
 import _Error = require('./Error');
-import CryptoProvider = require('./crypto/CryptoProvider');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 
 type WebhookHeader = string | Uint8Array;
@@ -58,7 +57,6 @@ type WebhookObject = {
     cryptoProvider: StripeCryptoProvider
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
-  createCryptoProvider: () => CryptoProvider | null;
   _platformFunctions: import('./platform/DefaultPlatformFunctions') | null;
 };
 
@@ -132,7 +130,7 @@ const Webhook: WebhookObject = {
       Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
     opts.scheme = opts.scheme || signature.EXPECTED_SCHEME;
 
-    opts.cryptoProvider = opts.cryptoProvider || getCryptoProvider();
+    opts.cryptoProvider = opts.cryptoProvider || getNodeCryptoProvider();
 
     opts.signature =
       opts.signature ||
@@ -148,8 +146,6 @@ const Webhook: WebhookObject = {
 
     return generatedHeader;
   },
-
-  createCryptoProvider: () => null,
 
   _platformFunctions: null,
 };
@@ -170,7 +166,7 @@ const signature = {
       details,
     } = parseEventDetails(encodedPayload, encodedHeader, this.EXPECTED_SCHEME);
 
-    cryptoProvider = cryptoProvider || getCryptoProvider();
+    cryptoProvider = cryptoProvider || getNodeCryptoProvider();
     const expectedSignature = cryptoProvider.computeHMACSignature(
       makeHMACContent(payload, details),
       secret
@@ -200,7 +196,7 @@ const signature = {
       details,
     } = parseEventDetails(encodedPayload, encodedHeader, this.EXPECTED_SCHEME);
 
-    cryptoProvider = cryptoProvider || getCryptoProvider();
+    cryptoProvider = cryptoProvider || getNodeCryptoProvider();
 
     const expectedSignature = await cryptoProvider.computeHMACSignatureAsync(
       makeHMACContent(payload, details),
@@ -336,17 +332,18 @@ function parseHeader(
   );
 }
 
-let webhooksCryptoProviderInstance: StripeCryptoProvider | null = null;
+let webhooksNodeCryptoProviderInstance: StripeCryptoProvider | null = null;
 
 /**
- * Lazily instantiate a CryptoProvider instance. This is a stateless object
+ * Lazily instantiate a NodeCryptoProvider instance. This is a stateless object
  * so a singleton can be used here.
  */
-function getCryptoProvider(): StripeCryptoProvider {
-  if (!webhooksCryptoProviderInstance) {
-    webhooksCryptoProviderInstance = Webhook.createCryptoProvider();
+function getNodeCryptoProvider(): StripeCryptoProvider {
+  if (!webhooksNodeCryptoProviderInstance) {
+    const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
+    webhooksNodeCryptoProviderInstance = new NodeCryptoProvider();
   }
-  return webhooksCryptoProviderInstance!;
+  return webhooksNodeCryptoProviderInstance!;
 }
 
 Webhook.signature = signature;
