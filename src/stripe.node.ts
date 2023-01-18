@@ -13,10 +13,12 @@ const createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
 Stripe.createNodeHttpClient = createNodeHttpClient;
 Stripe.createHttpClient = createNodeHttpClient;
 
-Stripe.createNodeCryptoProvider = (): StripeCryptoProvider => {
+const createNodeCryptoProvider = (): StripeCryptoProvider => {
   const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
   return new NodeCryptoProvider();
 };
+Stripe.createNodeCryptoProvider = createNodeCryptoProvider;
+Stripe.webhooks.createCryptoProvider = createNodeCryptoProvider;
 
 module.exports = Stripe;
 
