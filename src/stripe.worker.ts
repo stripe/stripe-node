@@ -1,5 +1,7 @@
 import Stripe = require('./stripe.common');
 
+Stripe.webhooks.createCryptoProvider = Stripe.createSubtleCryptoProvider;
+
 module.exports = Stripe;
 
 // expose constructor as a named property to enable mocking with Sinon.JS
