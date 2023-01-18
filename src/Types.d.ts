@@ -110,7 +110,6 @@ type StripeObject = {
     seed: Record<string, string | boolean | null>,
     callback: (userAgent: string) => void
   ) => void;
-  getUname: (callback: (uname: string) => void) => void;
   getClientUserAgent: (callback: (clientUserAgent: string) => void) => void;
   getTelemetryEnabled: () => boolean;
   getAppInfoAsString: () => string;

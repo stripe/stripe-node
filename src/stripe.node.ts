@@ -4,6 +4,7 @@ import http = require('http');
 import HttpClient = require('./net/HttpClient');
 
 Stripe._platformFunctions = new NodePlatformFunctions();
+Stripe.webhooks._platformFunctions = Stripe._platformFunctions;
 
 Stripe.createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
   const {NodeHttpClient} = require('./net/NodeHttpClient');

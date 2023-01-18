@@ -238,7 +238,7 @@ describe('Stripe Module', function() {
     describe('uname', () => {
       let origExec;
       beforeEach(() => {
-        Stripe._UNAME_CACHE = null;
+        Stripe._platformFunctions._UNAME_CACHE = null;
       });
       beforeEach(() => {
         origExec = Stripe._platformFunctions.safeExec;

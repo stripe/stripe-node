@@ -30,9 +30,6 @@ Stripe.USER_AGENT = {
   ...determineProcessUserAgentProperties(),
 };
 
-/** @private */
-Stripe._UNAME_CACHE = null as Promise<string> | null;
-
 const MAX_NETWORK_RETRY_DELAY_SEC = 2;
 const INITIAL_NETWORK_RETRY_DELAY_SEC = 0.5;
 
@@ -143,7 +140,7 @@ function Stripe(
 
   this.errors = _Error;
   this.webhooks = require('./Webhooks');
-  this.webhooks._stripe = this;
+  this.webhooks._platformFunctions = Stripe._platformFunctions;
 
   this._prevRequestMetrics = [];
   this._enableTelemetry = props.telemetry !== false;
@@ -348,23 +345,6 @@ Stripe.prototype = {
 
   /**
    * @private
-   */
-  getUname(cb: (uname: string) => void): void {
-    if (!Stripe._UNAME_CACHE) {
-      Stripe._UNAME_CACHE = new Promise<string>((resolve) => {
-        Stripe._platformFunctions.safeExec(
-          'uname -a',
-          (err: unknown, uname: string | null) => {
-            resolve(uname!);
-          }
-        );
-      });
-    }
-    Stripe._UNAME_CACHE.then((uname: string) => cb(uname));
-  },
-
-  /**
-   * @private
    * Please open or upvote an issue at github.com/stripe/stripe-node
    * if you use this, detailing your use-case.
    *
@@ -391,7 +371,7 @@ Stripe.prototype = {
     seed: Record<string, string | boolean | null>,
     cb: (userAgent: string) => void
   ): void {
-    this.getUname((uname: string) => {
+    this._platformFunctions.getUname((uname: string) => {
       const userAgent: Record<string, string> = {};
       for (const field in seed) {
         userAgent[field] = encodeURIComponent(seed[field] ?? 'null');
