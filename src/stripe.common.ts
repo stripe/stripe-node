@@ -1,4 +1,5 @@
 import _Error = require('./Error');
+import http = require('http');
 
 import resources = require('./resources');
 
@@ -163,8 +164,11 @@ function Stripe(
 Stripe.errors = _Error;
 Stripe.webhooks = require('./Webhooks');
 
-// @ts-ignore
-Stripe.createNodeHttpClient = null;
+Stripe.createNodeHttpClient = (agent: http.Agent): void => {
+  throw new Error(
+    'Stripe: createNodeHttpClient() is not available in non-Node environments. When instantiating the Stripe client, please set the `httpClient` configuration option to `Stripe.createFetchHttpClient()`, or to your own implementation of `HttpClient`.'
+  );
+};
 
 /**
  * Creates an HTTP client for issuing Stripe API requests which uses the Web
@@ -182,8 +186,11 @@ Stripe.createFetchHttpClient = (fetchFn: typeof fetch): typeof HttpClient => {
  * Create a CryptoProvider which uses the built-in Node crypto libraries for
  * its crypto operations.
  */
-// @ts-ignore
-Stripe.createNodeCryptoProvider = null;
+Stripe.createNodeCryptoProvider = (): void => {
+  throw new Error(
+    'Stripe: `createNodeCryptoProvider()` is not available in non-Node environments. Please use `createSubtleCryptoProvider()` instead.'
+  );
+};
 
 /**
  * Creates a CryptoProvider which uses the Subtle Crypto API from the Web
