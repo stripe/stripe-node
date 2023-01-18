@@ -1,1 +1,1 @@
-export = require('./stripe.default');
+export = require('./stripe.node');

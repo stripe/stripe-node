@@ -65,8 +65,10 @@ import CryptoProvider = require('./crypto/CryptoProvider');
 import EventEmitter = require('events');
 Stripe.CryptoProvider = CryptoProvider;
 
+import DefaultPlatformFunctions = require('./platform/DefaultPlatformFunctions');
+Stripe._platformFunctions = new DefaultPlatformFunctions();
+
 import utils = require('./utils');
-Stripe._utils = utils;
 
 function Stripe(
   this: StripeObject,
@@ -111,12 +113,8 @@ function Stripe(
     protocol: props.protocol || 'https',
     basePath: DEFAULT_BASE_PATH,
     version: props.apiVersion || DEFAULT_API_VERSION,
-    timeout: Stripe._utils.validateInteger(
-      'timeout',
-      props.timeout,
-      DEFAULT_TIMEOUT
-    ),
-    maxNetworkRetries: Stripe._utils.validateInteger(
+    timeout: utils.validateInteger('timeout', props.timeout, DEFAULT_TIMEOUT),
+    maxNetworkRetries: utils.validateInteger(
       'maxNetworkRetries',
       props.maxNetworkRetries,
       0
@@ -158,7 +156,7 @@ function Stripe(
   // @ts-ignore
   this.StripeResource = Stripe.StripeResource;
 
-  this._utils = Stripe._utils;
+  this._platformFunctions = Stripe._platformFunctions;
 }
 
 Stripe.errors = _Error;
@@ -222,7 +220,7 @@ Stripe.prototype = {
   _emitter: null!,
   _enableTelemetry: null!,
   _requestSender: null!,
-  _utils: null!,
+  _platformFunctions: null!,
 
   /**
    * @private
@@ -335,7 +333,7 @@ Stripe.prototype = {
     n: number,
     defaultVal?: number
   ): void {
-    const val = Stripe._utils.validateInteger(prop, n, defaultVal);
+    const val = utils.validateInteger(prop, n, defaultVal);
 
     this._setApiField(prop, val);
   },
@@ -354,7 +352,7 @@ Stripe.prototype = {
   getUname(cb: (uname: string) => void): void {
     if (!Stripe._UNAME_CACHE) {
       Stripe._UNAME_CACHE = new Promise<string>((resolve) => {
-        Stripe._utils.safeExec(
+        Stripe._platformFunctions.safeExec(
           'uname -a',
           (err: unknown, uname: string | null) => {
             resolve(uname!);
@@ -451,7 +449,7 @@ Stripe.prototype = {
   _prepResources(): void {
     for (const name in resources) {
       // @ts-ignore
-      this[Stripe._utils.pascalToCamelCase(name)] = new resources[name](this);
+      this[utils.pascalToCamelCase(name)] = new resources[name](this);
     }
   },
 

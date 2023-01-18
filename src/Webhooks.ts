@@ -275,8 +275,8 @@ function validateComputedSignature(
   tolerance: number
 ): boolean {
   const signatureFound = !!details.signatures.filter(
-    Webhook._stripe!._utils.secureCompare.bind(
-      Webhook._stripe!._utils,
+    Webhook._stripe!._platformFunctions!.secureCompare.bind(
+      Webhook._stripe!._platformFunctions,
       expectedSignature
     )
   ).length;

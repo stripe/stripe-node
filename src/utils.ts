@@ -201,24 +201,6 @@ const utils = {
   },
 
   /**
-   * Our own scmp-internal function for when crypto.timingSafeEqual is not available.
-   */
-  secureCompare: (a: string, b: string): boolean => {
-    // return early here if buffer lengths are not equal
-    if (a.length !== b.length) {
-      return false;
-    }
-
-    const len = a.length;
-    let result = 0;
-
-    for (let i = 0; i < len; ++i) {
-      result |= a.charCodeAt(i) ^ b.charCodeAt(i);
-    }
-    return result === 0;
-  },
-
-  /**
    * Remove empty values from an object
    */
   removeNullish: <T extends Record<string, unknown>>(obj: T): T => {
@@ -311,17 +293,6 @@ const utils = {
 
   emitWarning,
 
-  /**
-   * To be overriden if 'node:child_process' is available.
-   * Otherwise, throws an error.
-   */
-  safeExec: (
-    cmd: string,
-    cb: (error: unknown, stdout: string | null) => void
-  ): void => {
-    cb(new Error('exec not available'), null);
-  },
-
   _exec: null,
 
   isObject: (obj: unknown): boolean => {
@@ -363,17 +334,6 @@ const utils = {
     step(data, null);
 
     return result;
-  },
-
-  /**
-   * https://stackoverflow.com/a/2117523
-   */
-  uuid4: (): string => {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
   },
 
   validateInteger: (name: string, n: unknown, defaultVal?: number): number => {

@@ -1,9 +1,9 @@
 import Stripe = require('./stripe.common');
-import nodeUtils = require('./nodeUtils');
+import NodePlatformFunctions = require('./platform/NodePlatformFunctions');
 import http = require('http');
 import HttpClient = require('./net/HttpClient');
 
-Stripe._utils = Object.assign(Stripe._utils, nodeUtils);
+Stripe._platformFunctions = new NodePlatformFunctions();
 
 Stripe.createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
   const {NodeHttpClient} = require('./net/NodeHttpClient');

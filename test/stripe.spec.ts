@@ -241,14 +241,14 @@ describe('Stripe Module', function() {
         Stripe._UNAME_CACHE = null;
       });
       beforeEach(() => {
-        origExec = Stripe._utils.safeExec;
+        origExec = Stripe._platformFunctions.safeExec;
       });
       afterEach(() => {
-        Stripe._utils.safeExec = origExec;
+        Stripe._platformFunctions.safeExec = origExec;
       });
 
       it('gets added to the user-agent', () => {
-        Stripe._utils.safeExec = (cmd: string, cb: any): void => {
+        Stripe._platformFunctions.safeExec = (cmd: string, cb: any): void => {
           cb(null, 'foøname');
         };
         return expect(
@@ -261,7 +261,7 @@ describe('Stripe Module', function() {
       });
 
       it('sets uname to UNKOWN in case of an error', () => {
-        Stripe._utils.safeExec = (cmd: string, cb: any): void => {
+        Stripe._platformFunctions.safeExec = (cmd: string, cb: any): void => {
           cb(new Error('security'), null);
         };
         return expect(

@@ -1,47 +1,53 @@
-const crypto = require('crypto');
-import utils = require('./utils');
+import crypto = require('crypto');
+
+import DefaultPlatformFunctions = require('./DefaultPlatformFunctions');
 
 /**
- * Utility functions that rely on Node.js built-in libraries.
+ * Specializes DefaultPlatformFunctions using APIs available in Node.js.
  */
-const nodeUtils = {
+class NodePlatformFunctions extends DefaultPlatformFunctions {
+  // For mocking in tests.
+  _exec: any;
+
+  constructor() {
+    super();
+
+    this._exec = require('child_process').exec;
+  }
+
+  /** @override */
+  uuid4(): string {
+    // available in: v14.17.x+
+    if (crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+    return super.uuid4();
+  }
+
   /**
+   * @override
    * Node's built in `exec` function sometimes throws outright,
    * and sometimes has a callback with an error,
    * depending on the type of error.
    *
    * This unifies that interface.
    */
-  safeExec: (
+  safeExec(
     cmd: string,
     cb: (error: unknown, stdout: string | null) => void
-  ): void => {
+  ): void {
     try {
-      nodeUtils._exec(cmd, cb);
+      this._exec(cmd, cb);
     } catch (e) {
       cb(e, null);
     }
-  },
-
-  // For mocking in tests.
-  _exec: require('child_process').exec,
+  }
 
   /**
-   * https://stackoverflow.com/a/2117523
-   */
-  uuid4: (): string => {
-    // available in: v14.17.x+
-    if (crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-
-    return utils.uuid4();
-  },
-
-  /**
+   * @override
    * Secure compare, from https://github.com/freewil/scmp
    */
-  secureCompare: (a: string, b: string): boolean => {
+  secureCompare(a: string, b: string): boolean {
     if (!a || !b) {
       throw new Error('secureCompare must receive two arguments');
     }
@@ -61,8 +67,8 @@ const nodeUtils = {
       return crypto.timingSafeEqual(aEncoded, bEncoded);
     }
 
-    return utils.secureCompare(a, b);
-  },
-};
+    return super.secureCompare(a, b);
+  }
+}
 
-export = nodeUtils;
+export = NodePlatformFunctions;
