@@ -117,7 +117,7 @@ function Stripe(
       0
     ),
     agent: agent,
-    httpClient: props.httpClient || Stripe.createNodeHttpClient(agent),
+    httpClient: props.httpClient || Stripe.createHttpClient(agent),
     dev: false,
     stripeAccount: props.stripeAccount || null,
   };
@@ -158,6 +158,9 @@ function Stripe(
 
 Stripe.errors = _Error;
 Stripe.webhooks = require('./Webhooks');
+
+// @ts-ignore
+Stripe.createHttpClient = null;
 
 Stripe.createNodeHttpClient = (agent: http.Agent): void => {
   throw new Error(

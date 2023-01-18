@@ -2,6 +2,9 @@
 
 'use strict';
 
+import {FetchHttpClient} from '../lib/net/FetchHttpClient';
+import {NodeHttpClient} from '../lib/net/NodeHttpClient';
+
 const testUtils = require('../testUtils');
 const Stripe = require('../lib/stripe');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
@@ -146,6 +149,30 @@ describe('Stripe Module', function() {
       expect(stripe.getApiField('auth')).to.equal(
         `Bearer ${testUtils.getUserStripeKey()}`
       );
+    });
+  });
+
+  describe('createHttpClient', () => {
+    describe('creates correct HttpClient instances', () => {
+      let origCreateHttpClient;
+      beforeEach(() => {
+        origCreateHttpClient = Stripe.createHttpClient;
+      });
+      afterEach(() => {
+        Stripe.createHttpClient = origCreateHttpClient;
+      });
+
+      it('defaults to createNodeHttpClient', () => {
+        Stripe.createHttpClient = Stripe.createNodeHttpClient;
+        const httpClient = Stripe.createHttpClient();
+        expect(httpClient).to.be.an.instanceof(NodeHttpClient);
+      });
+
+      it('creates an instance of FetchHttpClient when set to FetchHttpClient', () => {
+        Stripe.createHttpClient = Stripe.createFetchHttpClient;
+        const httpClient = Stripe.createHttpClient();
+        expect(httpClient).to.be.an.instanceof(FetchHttpClient);
+      });
     });
   });
 

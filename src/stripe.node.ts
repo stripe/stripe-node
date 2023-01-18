@@ -6,10 +6,12 @@ import HttpClient = require('./net/HttpClient');
 Stripe._platformFunctions = new NodePlatformFunctions();
 Stripe.webhooks._platformFunctions = Stripe._platformFunctions;
 
-Stripe.createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
+const createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
   const {NodeHttpClient} = require('./net/NodeHttpClient');
   return new NodeHttpClient(agent);
 };
+Stripe.createNodeHttpClient = createNodeHttpClient;
+Stripe.createHttpClient = createNodeHttpClient;
 
 Stripe.createNodeCryptoProvider = (): StripeCryptoProvider => {
   const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');

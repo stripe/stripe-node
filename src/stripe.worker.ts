@@ -1,5 +1,7 @@
 import Stripe = require('./stripe.common');
 
+Stripe.createHttpClient = Stripe.createFetchHttpClient;
+
 module.exports = Stripe;
 
 // expose constructor as a named property to enable mocking with Sinon.JS
