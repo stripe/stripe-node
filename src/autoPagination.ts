@@ -1,5 +1,4 @@
-import makeRequest = require('./makeRequest');
-const utils = require('./utils');
+import utils = require('./utils');
 
 type PromiseCache = {
   currentPromise: Promise<any> | undefined | null;
@@ -64,14 +63,14 @@ function makeAutoPaginationMethods(
           'Unexpected: Stripe API response does not have a well-formed `next_page` field, but `has_more` was true.'
         );
       }
-      return makeRequest(self, requestArgs, spec, {
+      return self._makeRequest(requestArgs, spec, {
         page: pageResult.next_page,
       });
     };
   } else {
     getNextPagePromise = (pageResult): Promise<any> => {
       const lastId = getLastId(pageResult, reverseIteration);
-      return makeRequest(self, requestArgs, spec, {
+      return self._makeRequest(requestArgs, spec, {
         [reverseIteration ? 'ending_before' : 'starting_after']: lastId,
       });
     };
@@ -154,9 +153,9 @@ function getAsyncIteratorSymbol(): symbol | string {
   return '@@asyncIterator';
 }
 
-function getDoneCallback(args: Array<any>): IterationDoneCallback | undefined {
+function getDoneCallback(args: Array<any>): IterationDoneCallback | null {
   if (args.length < 2) {
-    return undefined;
+    return null;
   }
   const onDone = args[1];
   if (typeof onDone !== 'function') {
@@ -279,7 +278,7 @@ function makeAutoPagingToArray(
         'You cannot specify a limit of more than 10,000 items to fetch in `autoPagingToArray`; use `autoPagingEach` to iterate through longer lists.'
       );
     }
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise<Array<any>>((resolve, reject) => {
       const items: Array<any> = [];
       autoPagingEach((item) => {
         items.push(item);
@@ -292,6 +291,7 @@ function makeAutoPagingToArray(
         })
         .catch(reject);
     });
+    // @ts-ignore
     return utils.callbackifyPromiseWithTimeout(promise, onDone);
   };
 }

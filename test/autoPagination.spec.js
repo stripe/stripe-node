@@ -3,6 +3,7 @@
 /* eslint-disable callback-return */
 
 const testUtils = require('../testUtils');
+const StripeResource = require('../lib/StripeResource');
 
 const makeAutoPaginationMethods = require('../lib/autoPagination')
   .makeAutoPaginationMethods;
@@ -35,24 +36,27 @@ describe('auto pagination', function() {
       const paramsLog = [];
       const spec = {
         method: 'GET',
+        fullPath: '/v1/items',
       };
 
+      const mockStripe = testUtils.getMockStripe(
+        {},
+        (_1, _2, path, _4, _5, _6, callback) => {
+          paramsLog.push(path.slice(path.indexOf('?')));
+          callback(
+            null,
+            Promise.resolve({
+              data: pages[i].map((id) => ({id})),
+              has_more: i < pages.length - 1,
+            })
+          );
+          i += 1;
+        }
+      );
+      const resource = new StripeResource(mockStripe);
+
       const paginator = makeAutoPaginationMethods(
-        {
-          createResourcePathWithSymbols: () => {},
-          createFullPath: () => {},
-          _request: (_1, _2, path, _4, _5, _6, callback) => {
-            paramsLog.push(path);
-            callback(
-              null,
-              Promise.resolve({
-                data: pages[i].map((id) => ({id})),
-                has_more: i < pages.length - 1,
-              })
-            );
-            i += 1;
-          },
-        },
+        resource,
         initialArgs || {},
         spec,
         Promise.resolve({
@@ -608,25 +612,27 @@ describe('auto pagination', function() {
         return {...props, ...nextPageProperties};
       };
 
-      const paginator = makeAutoPaginationMethods(
-        {
-          createResourcePathWithSymbols: () => {},
-          createFullPath: () => {},
-          _request: (_1, _2, path, _4, _5, _6, callback) => {
-            paramsLog.push(path);
+      const mockStripe = testUtils.getMockStripe(
+        {},
+        (_1, _2, path, _4, _5, _6, callback) => {
+          paramsLog.push(path.slice(path.indexOf('?')));
 
-            callback(
-              null,
-              Promise.resolve(
-                addNextPage({
-                  data: pages[i].map((id) => ({id})),
-                  has_more: i < pages.length - 1,
-                })
-              )
-            );
-            i += 1;
-          },
-        },
+          callback(
+            null,
+            Promise.resolve(
+              addNextPage({
+                data: pages[i].map((id) => ({id})),
+                has_more: i < pages.length - 1,
+              })
+            )
+          );
+          i += 1;
+        }
+      );
+      const resource = new StripeResource(mockStripe);
+
+      const paginator = makeAutoPaginationMethods(
+        resource,
         initialArgs || {},
         spec,
         Promise.resolve(

@@ -187,6 +187,7 @@ describe('utils', () => {
     it('handles an empty list', () => {
       expect(utils.getOptionsFromArgs([])).to.deep.equal({
         auth: null,
+        host: null,
         headers: {},
         settings: {},
       });
@@ -196,6 +197,7 @@ describe('utils', () => {
       const args = [1, 3];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
+        host: null,
         headers: {},
         settings: {},
       });
@@ -206,6 +208,7 @@ describe('utils', () => {
       const args = [{foo: 'bar'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
+        host: null,
         headers: {},
         settings: {},
       });
@@ -216,6 +219,7 @@ describe('utils', () => {
       const args = ['sk_test_iiiiiiiiiiiiiiiiiiiiiiii'];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        host: null,
         headers: {},
         settings: {},
       });
@@ -226,6 +230,7 @@ describe('utils', () => {
       const args = ['yolo'];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'yolo',
+        host: null,
         headers: {},
         settings: {},
       });
@@ -236,6 +241,7 @@ describe('utils', () => {
       const args = [{foo: 'bar'}, {idempotencyKey: 'foo'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
+        host: null,
         headers: {'Idempotency-Key': 'foo'},
         settings: {},
       });
@@ -246,6 +252,7 @@ describe('utils', () => {
       const args = [{foo: 'bar'}, {apiVersion: '2003-03-30'}];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
+        host: null,
         headers: {'Stripe-Version': '2003-03-30'},
         settings: {},
       });
@@ -263,6 +270,7 @@ describe('utils', () => {
       ];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        host: null,
         headers: {
           'Idempotency-Key': 'foo',
           'Stripe-Version': '2010-01-10',
@@ -282,6 +290,7 @@ describe('utils', () => {
       ];
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: 'sk_test_iiiiiiiiiiiiiiiiiiiiiiii',
+        host: null,
         headers: {
           'Idempotency-Key': 'foo',
           'Stripe-Version': 'hunter2',
@@ -301,6 +310,7 @@ describe('utils', () => {
 
       expect(utils.getOptionsFromArgs(args)).to.deep.equal({
         auth: null,
+        host: null,
         headers: {},
         settings: {
           maxNetworkRetries: 5,
