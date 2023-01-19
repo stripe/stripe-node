@@ -457,11 +457,11 @@ declare module 'stripe' {
 
         namespace Canceled {
           type Reason =
+            | 'canceled'
             | 'quote_accepted'
             | 'quote_expired'
             | 'quote_superseded'
-            | 'subscription_canceled'
-            | 'user_canceled';
+            | 'subscription_canceled';
         }
 
         interface Stale {
@@ -491,17 +491,31 @@ declare module 'stripe' {
             /**
              * The ID of the line that is invalid if the stale reason type is `line_invalid`.
              */
-            line_invalid: string | null;
+            line_invalid?: string;
 
             /**
-             * The state of the subscription before the quote was marked as stale.
+             * The ID of the subscription that was canceled.
              */
-            subscription_changed: LastReason.SubscriptionChanged | null;
+            subscription_canceled?: string;
+
+            subscription_changed?: LastReason.SubscriptionChanged;
 
             /**
-             * The state of the subscription schedule before the quote was marked as stale.
+             * The ID of the subscription that was expired
              */
-            subscription_schedule_changed: LastReason.SubscriptionScheduleChanged | null;
+            subscription_expired?: string;
+
+            /**
+             * The ID of the subscription schedule that was canceled.
+             */
+            subscription_schedule_canceled?: string;
+
+            subscription_schedule_changed?: LastReason.SubscriptionScheduleChanged;
+
+            /**
+             * The ID of the subscription schedule that was released.
+             */
+            subscription_schedule_released?: string;
 
             /**
              * The reason the quote was marked as stale.
@@ -527,8 +541,13 @@ declare module 'stripe' {
             type Type =
               | 'bill_on_acceptance_invalid'
               | 'line_invalid'
+              | 'marked_stale'
+              | 'subscription_canceled'
               | 'subscription_changed'
-              | 'subscription_schedule_changed';
+              | 'subscription_expired'
+              | 'subscription_schedule_canceled'
+              | 'subscription_schedule_changed'
+              | 'subscription_schedule_released';
           }
         }
       }
