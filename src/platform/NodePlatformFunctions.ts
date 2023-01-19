@@ -38,10 +38,9 @@ class NodePlatformFunctions extends DefaultPlatformFunctions {
    */
   getUname(): Promise<string | null> {
     if (!this._UNAME_CACHE) {
-      const self = this;
       this._UNAME_CACHE = new Promise<string | null>((resolve, reject) => {
         try {
-          self._exec('uname -a', (err: unknown, uname: string | null) => {
+          this._exec('uname -a', (err: unknown, uname: string | null) => {
             if (err) {
               return resolve(null);
             }
