@@ -1,5 +1,11 @@
 # Changelog
 
+## 11.7.0 - 2023-01-19
+* [#1661](https://github.com/stripe/stripe-node/pull/1661) API Updates
+  * Add support for `verification_session` on `EphemeralKeyCreateParams`
+  * Add support for new values `refund.created` and `refund.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#1647](https://github.com/stripe/stripe-node/pull/1647) Bump json5 from 2.2.1 to 2.2.3
+
 ## 11.6.0 - 2023-01-05
 * [#1646](https://github.com/stripe/stripe-node/pull/1646) API Updates
   * Add support for `card_issuing` on `Issuing.Cardholder.individual`
