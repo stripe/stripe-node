@@ -52,7 +52,7 @@ declare module 'stripe' {
       price_data?: SubscriptionItemCreateParams.PriceData;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionItemCreateParams.ProrationBehavior;
 
@@ -198,7 +198,7 @@ declare module 'stripe' {
       price_data?: SubscriptionItemUpdateParams.PriceData;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionItemUpdateParams.ProrationBehavior;
 
@@ -306,7 +306,7 @@ declare module 'stripe' {
       clear_usage?: boolean;
 
       /**
-       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
        */
       proration_behavior?: SubscriptionItemDeleteParams.ProrationBehavior;
 
