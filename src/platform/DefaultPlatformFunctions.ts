@@ -7,7 +7,7 @@ class DefaultPlatformFunctions {
    * Gets uname with Node's built-in `exec` function, if available.
    */
   getUname(): Promise<string | null> {
-    return Promise.reject(new Error('not implemented'));
+    return Promise.resolve(null);
   }
 
   /**

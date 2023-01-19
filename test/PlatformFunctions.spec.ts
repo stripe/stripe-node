@@ -144,10 +144,8 @@ for (const platform in platforms) {
       });
 
       if (!isNodeEnvironment) {
-        it('not implemented on non-Node environments', () => {
-          expect(platformFunctions.getUname()).to.be.rejectedWith(
-            'not implemented'
-          );
+        it('not implemented on non-Node environments', async () => {
+          expect(await platformFunctions.getUname()).to.be.null;
         });
 
         // No need to run further tests on non-Node environments
