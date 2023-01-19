@@ -2,8 +2,11 @@
 
 'use strict';
 
+import {FetchHttpClient} from '../lib/net/FetchHttpClient';
+import {NodeHttpClient} from '../lib/net/NodeHttpClient';
+import {getMockPlatformFunctions} from '../testUtils';
+
 const testUtils = require('../testUtils');
-const utils = require('../lib/utils');
 const Stripe = require('../lib/stripe');
 const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
 const crypto = require('crypto');
@@ -150,6 +153,30 @@ describe('Stripe Module', function() {
     });
   });
 
+  describe('createHttpClient', () => {
+    describe('creates correct HttpClient instances', () => {
+      let origCreateHttpClient;
+      beforeEach(() => {
+        origCreateHttpClient = Stripe.createHttpClient;
+      });
+      afterEach(() => {
+        Stripe.createHttpClient = origCreateHttpClient;
+      });
+
+      it('defaults to createNodeHttpClient', () => {
+        Stripe.createHttpClient = Stripe.createNodeHttpClient;
+        const httpClient = Stripe.createHttpClient();
+        expect(httpClient).to.be.an.instanceof(NodeHttpClient);
+      });
+
+      it('creates an instance of FetchHttpClient when set to FetchHttpClient', () => {
+        Stripe.createHttpClient = Stripe.createFetchHttpClient;
+        const httpClient = Stripe.createHttpClient();
+        expect(httpClient).to.be.an.instanceof(FetchHttpClient);
+      });
+    });
+  });
+
   describe('GetClientUserAgent', () => {
     it('Should return a user-agent serialized JSON object', () =>
       expect(
@@ -176,7 +203,7 @@ describe('Stripe Module', function() {
     });
 
     it('Should include whether typescript: true was passed, respecting reinstantiations', () => {
-      return new Promise((resolve) => resolve())
+      return new Promise((resolve) => resolve(null))
         .then(() => {
           const newStripe = new Stripe('sk_test_123', {
             typescript: true,
@@ -237,21 +264,12 @@ describe('Stripe Module', function() {
     });
 
     describe('uname', () => {
-      let origExec;
-      beforeEach(() => {
-        Stripe._UNAME_CACHE = null;
-      });
-      beforeEach(() => {
-        origExec = utils.safeExec;
-      });
-      afterEach(() => {
-        utils.safeExec = origExec;
-      });
-
       it('gets added to the user-agent', () => {
-        utils.safeExec = (cmd, cb) => {
-          cb(null, 'foøname');
-        };
+        stripe._platformFunctions = getMockPlatformFunctions(
+          (cmd: string, cb: any): void => {
+            cb(null, 'foøname');
+          }
+        );
         return expect(
           new Promise((resolve, reject) => {
             stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -262,9 +280,11 @@ describe('Stripe Module', function() {
       });
 
       it('sets uname to UNKOWN in case of an error', () => {
-        utils.safeExec = (cmd, cb) => {
-          cb(new Error('security'), null);
-        };
+        stripe._platformFunctions = getMockPlatformFunctions(
+          (cmd: string, cb: any): void => {
+            cb(new Error('security'), null);
+          }
+        );
         return expect(
           new Promise((resolve, reject) => {
             stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -479,6 +499,7 @@ describe('Stripe Module', function() {
         it('Will have the idempotency key', () =>
           expect(
             new Promise((resolve, reject) => {
+              // @ts-ignore - "Property 'randomBytes' does not exist on type 'Crypto'""
               const key = crypto.randomBytes(16).toString('hex');
 
               stripe.customers.create(
@@ -637,7 +658,7 @@ describe('Stripe Module', function() {
   });
 
   describe('imports', function() {
-    const runTestProject = (projectName) => {
+    const runTestProject = (projectName: string): void => {
       const script = `
       cd testProjects/${projectName}
       npm install
