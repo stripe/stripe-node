@@ -17,6 +17,11 @@ declare module 'stripe' {
        * The ID of the Issuing Card you'd like to access using the resulting ephemeral key.
        */
       issuing_card?: string;
+
+      /**
+       * The ID of the Identity VerificationSession you'd like to access using the resulting ephemeral key
+       */
+      verification_session?: string;
     }
 
     interface EphemeralKeyDeleteParams {

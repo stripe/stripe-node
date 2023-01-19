@@ -210,14 +210,14 @@ declare module 'stripe' {
       namespace CustomText {
         interface ShippingAddress {
           /**
-           * Text may be up to 500 characters in length.
+           * Text may be up to 1000 characters in length.
            */
           message: string;
         }
 
         interface Submit {
           /**
-           * Text may be up to 500 characters in length.
+           * Text may be up to 1000 characters in length.
            */
           message: string;
         }
