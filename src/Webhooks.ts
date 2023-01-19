@@ -59,7 +59,7 @@ type WebhookObject = {
     cryptoProvider: StripeCryptoProvider
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
-  createCryptoProvider: () => CryptoProvider | null;
+  _createCryptoProvider: () => CryptoProvider | null;
   _platformFunctions: DefaultPlatformFunctions | null;
 };
 
@@ -150,7 +150,7 @@ const Webhook: WebhookObject = {
     return generatedHeader;
   },
 
-  createCryptoProvider: () => null,
+  _createCryptoProvider: () => null,
 
   _platformFunctions: null,
 };
@@ -345,7 +345,7 @@ let webhooksCryptoProviderInstance: StripeCryptoProvider | null = null;
  */
 function getCryptoProvider(): StripeCryptoProvider {
   if (!webhooksCryptoProviderInstance) {
-    webhooksCryptoProviderInstance = Webhook.createCryptoProvider();
+    webhooksCryptoProviderInstance = Webhook._createCryptoProvider();
   }
   return webhooksCryptoProviderInstance!;
 }

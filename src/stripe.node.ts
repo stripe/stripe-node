@@ -18,7 +18,7 @@ const createNodeCryptoProvider = (): StripeCryptoProvider => {
   return new NodeCryptoProvider();
 };
 Stripe.createNodeCryptoProvider = createNodeCryptoProvider;
-Stripe.webhooks.createCryptoProvider = createNodeCryptoProvider;
+Stripe.webhooks._createCryptoProvider = createNodeCryptoProvider;
 
 module.exports = Stripe;
 

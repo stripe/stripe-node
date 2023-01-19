@@ -4,6 +4,7 @@
 
 import {FetchHttpClient} from '../lib/net/FetchHttpClient';
 import {NodeHttpClient} from '../lib/net/NodeHttpClient';
+import {getMockPlatformFunctions} from '../testUtils';
 
 const testUtils = require('../testUtils');
 const Stripe = require('../lib/stripe');
@@ -263,21 +264,12 @@ describe('Stripe Module', function() {
     });
 
     describe('uname', () => {
-      let origExec;
-      beforeEach(() => {
-        Stripe._platformFunctions._UNAME_CACHE = null;
-      });
-      beforeEach(() => {
-        origExec = Stripe._platformFunctions._exec;
-      });
-      afterEach(() => {
-        Stripe._platformFunctions._exec = origExec;
-      });
-
       it('gets added to the user-agent', () => {
-        Stripe._platformFunctions._exec = (cmd: string, cb: any): void => {
-          cb(null, 'foøname');
-        };
+        stripe._platformFunctions = getMockPlatformFunctions(
+          (cmd: string, cb: any): void => {
+            cb(null, 'foøname');
+          }
+        );
         return expect(
           new Promise((resolve, reject) => {
             stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -288,9 +280,11 @@ describe('Stripe Module', function() {
       });
 
       it('sets uname to UNKOWN in case of an error', () => {
-        Stripe._platformFunctions._exec = (cmd: string, cb: any): void => {
-          cb(new Error('security'), null);
-        };
+        stripe._platformFunctions = getMockPlatformFunctions(
+          (cmd: string, cb: any): void => {
+            cb(new Error('security'), null);
+          }
+        );
         return expect(
           new Promise((resolve, reject) => {
             stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {

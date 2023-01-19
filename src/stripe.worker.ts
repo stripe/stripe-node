@@ -1,7 +1,7 @@
 import Stripe = require('./stripe.common');
 
 Stripe.createHttpClient = Stripe.createFetchHttpClient;
-Stripe.webhooks.createCryptoProvider = Stripe.createSubtleCryptoProvider;
+Stripe.webhooks._createCryptoProvider = Stripe.createSubtleCryptoProvider;
 
 module.exports = Stripe;
 
