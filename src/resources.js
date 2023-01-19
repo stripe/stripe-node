@@ -104,6 +104,7 @@ module.exports = {
   Tax: resourceNamespace('tax', {
     Calculations: require('./resources/Tax/Calculations'),
     Registrations: require('./resources/Tax/Registrations'),
+    Settings: require('./resources/Tax/Settings'),
     Transactions: require('./resources/Tax/Transactions'),
   }),
   Terminal: resourceNamespace('terminal', {
