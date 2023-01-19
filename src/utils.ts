@@ -293,8 +293,6 @@ const utils = {
 
   emitWarning,
 
-  _exec: null,
-
   isObject: (obj: unknown): boolean => {
     const type = typeof obj;
     return (type === 'function' || type === 'object') && !!obj;
@@ -346,6 +344,15 @@ const utils = {
     }
 
     return n as number;
+  },
+
+  determineProcessUserAgentProperties: (): Record<string, string> => {
+    return typeof process === 'undefined'
+      ? {}
+      : {
+          lang_version: process.version,
+          platform: process.platform,
+        };
   },
 
   /**

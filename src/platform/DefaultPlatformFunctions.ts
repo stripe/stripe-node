@@ -3,32 +3,11 @@
  * implementations depend on the platform / JS runtime.
  */
 class DefaultPlatformFunctions {
-  _UNAME_CACHE: Promise<string> | null;
-
-  constructor() {
-    this._UNAME_CACHE = null as Promise<string> | null;
-  }
-
   /**
-   * Calls Node's built-in `exec` function.
-   * If the `child_process` module is not available, return an error.
+   * Gets uname with Node's built-in `exec` function, if available.
    */
-  safeExec(
-    cmd: string,
-    cb: (error: unknown, stdout: string | null) => void
-  ): void {
-    cb(new Error('exec not available'), null);
-  }
-
-  getUname(cb: (uname: string) => void): void {
-    if (!this._UNAME_CACHE) {
-      this._UNAME_CACHE = new Promise<string>((resolve) => {
-        this.safeExec('uname -a', (err: unknown, uname: string | null) => {
-          resolve(uname!);
-        });
-      });
-    }
-    this._UNAME_CACHE.then((uname: string) => cb(uname));
+  getUname(): Promise<string | null> {
+    return Promise.reject(new Error('not implemented'));
   }
 
   /**

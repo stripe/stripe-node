@@ -1,3 +1,4 @@
+import {rejects} from 'assert';
 import crypto = require('crypto');
 
 import DefaultPlatformFunctions = require('./DefaultPlatformFunctions');
@@ -6,13 +7,15 @@ import DefaultPlatformFunctions = require('./DefaultPlatformFunctions');
  * Specializes DefaultPlatformFunctions using APIs available in Node.js.
  */
 class NodePlatformFunctions extends DefaultPlatformFunctions {
-  // For mocking in tests.
+  /** For mocking in tests */
   _exec: any;
+  _UNAME_CACHE: Promise<string | null> | null;
 
   constructor() {
     super();
 
     this._exec = require('child_process').exec;
+    this._UNAME_CACHE = null as Promise<string | null> | null;
   }
 
   /** @override */
@@ -30,17 +33,26 @@ class NodePlatformFunctions extends DefaultPlatformFunctions {
    * and sometimes has a callback with an error,
    * depending on the type of error.
    *
-   * This unifies that interface.
+   * This unifies that interface by resolving with a null uname
+   * if an error is encountered.
    */
-  safeExec(
-    cmd: string,
-    cb: (error: unknown, stdout: string | null) => void
-  ): void {
-    try {
-      this._exec(cmd, cb);
-    } catch (e) {
-      cb(e, null);
+  getUname(): Promise<string | null> {
+    if (!this._UNAME_CACHE) {
+      const self = this;
+      this._UNAME_CACHE = new Promise<string | null>((resolve, reject) => {
+        try {
+          self._exec('uname -a', (err: unknown, uname: string | null) => {
+            if (err) {
+              return resolve(null);
+            }
+            resolve(uname!);
+          });
+        } catch (e) {
+          resolve(null);
+        }
+      });
     }
+    return this._UNAME_CACHE;
   }
 
   /**

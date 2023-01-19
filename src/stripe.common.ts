@@ -12,14 +12,8 @@ const DEFAULT_TIMEOUT = 80000;
 
 Stripe.PACKAGE_VERSION = require('../package.json').version;
 
-const determineProcessUserAgentProperties = (): Record<string, string> => {
-  return typeof process === 'undefined'
-    ? {}
-    : {
-        lang_version: process.version,
-        platform: process.platform,
-      };
-};
+import utils = require('./utils');
+const {determineProcessUserAgentProperties} = utils;
 
 Stripe.USER_AGENT = {
   bindings_version: Stripe.PACKAGE_VERSION,
@@ -64,8 +58,6 @@ Stripe.CryptoProvider = CryptoProvider;
 
 import DefaultPlatformFunctions = require('./platform/DefaultPlatformFunctions');
 Stripe._platformFunctions = new DefaultPlatformFunctions();
-
-import utils = require('./utils');
 
 function Stripe(
   this: StripeObject,
@@ -374,7 +366,7 @@ Stripe.prototype = {
     seed: Record<string, string | boolean | null>,
     cb: (userAgent: string) => void
   ): void {
-    this._platformFunctions.getUname((uname: string) => {
+    this._platformFunctions.getUname().then((uname: string | null) => {
       const userAgent: Record<string, string> = {};
       for (const field in seed) {
         userAgent[field] = encodeURIComponent(seed[field] ?? 'null');

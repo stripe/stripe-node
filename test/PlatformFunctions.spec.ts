@@ -133,61 +133,54 @@ for (const platform in platforms) {
       });
     });
 
-    describe('safeExec', () => {
-      let origExec;
+    describe('getUname', () => {
+      let origGetUname;
       beforeEach(() => {
-        origExec = platformFunctions._exec;
+        origGetUname = platformFunctions.getUname;
       });
       afterEach(() => {
-        platformFunctions._exec = origExec;
-      });
-
-      it('throws in non-Node environments', () => {
-        expect(platformFunctions.safeExec.bind('hello', () => {})).to.throw();
+        platformFunctions.getUname = origGetUname;
+        platformFunctions._UNAME_CACHE = null;
       });
 
       if (!isNodeEnvironment) {
+        it('not implemented on non-Node environments', () => {
+          expect(platformFunctions.getUname()).to.be.rejectedWith(
+            'not implemented'
+          );
+        });
+
         // No need to run further tests on non-Node environments
         return;
       }
 
-      it('runs exec', () => {
+      it('runs exec', async () => {
         const calls: any[] = [];
         platformFunctions._exec = (cmd: string, cb: any): void => {
-          calls.push([cmd, cb]);
+          calls.push([cmd]);
+          cb();
         };
 
-        function myCb(): void {}
-        platformFunctions.safeExec('hello', myCb);
-        expect(calls).to.deep.equal([['hello', myCb]]);
+        await platformFunctions.getUname();
+        expect(calls).to.deep.equal([['uname -a']]);
       });
 
-      it('passes along normal errors', () => {
+      it('passes along normal errors', async () => {
         const myErr = Error('hi');
         platformFunctions._exec = (cmd: string, cb: any): void => {
           cb(myErr, null);
         };
 
-        const calls: any[] = [];
-        function myCb(err, x): void {
-          calls.push([err, x]);
-        }
-        platformFunctions.safeExec('hello', myCb);
-        expect(calls).to.deep.equal([[myErr, null]]);
+        expect(await platformFunctions.getUname()).to.be.null;
       });
 
-      it('passes along thrown errors as normal callback errors', () => {
+      it('passes along thrown errors as normal callback errors', async () => {
         const myErr = Error('hi');
         platformFunctions._exec = (cmd: string, cb: any): void => {
           throw myErr;
         };
 
-        const calls: any[] = [];
-        function myCb(err, x): void {
-          calls.push([err, x]);
-        }
-        platformFunctions.safeExec('hello', myCb);
-        expect(calls).to.deep.equal([[myErr, null]]);
+        expect(await platformFunctions.getUname()).to.be.null;
       });
     });
   });
