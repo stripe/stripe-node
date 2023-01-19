@@ -1,5 +1,10 @@
 # Changelog
 
+## 11.8.0-beta.1 - 2023-01-19
+* [#1662](https://github.com/stripe/stripe-node/pull/1662) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add support for `Tax.Settings` resource.
+
 ## 11.7.0 - 2023-01-19
 * [#1661](https://github.com/stripe/stripe-node/pull/1661) API Updates
   * Add support for `verification_session` on `EphemeralKeyCreateParams`
@@ -19,7 +24,7 @@
   * Remove support for `index` on `QuoteLine.actions[].add_item.discounts[]`, `QuoteLine.actions[].remove_discount`, `QuoteLine.actions[].set_discounts[]`, `QuoteLine.actions[].set_items[].discounts[]`, `SubscriptionSchedule.phases[].add_invoice_items[].discounts[]`, `SubscriptionSchedule.phases[].discounts[]`, and `SubscriptionSchedule.phases[].items[].discounts[]`
   * Change `QuoteLine.actions[].add_discount.index` to be required
   * Add support for new values `quote.accepting`, `quote.reestimated`, and `quote.stale` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
-  
+
   * Change `quote.draft_quote` implementation from hitting `POST /v1/quotes/{quote}/draft` to `POST /v1/quotes/{quote}/mark_draft`
 
 ## 11.7.0-beta.1 - 2023-01-05
