@@ -1,6 +1,5 @@
-import utils = require('./utils');
-
 import _Error = require('./Error');
+import utils = require('./utils');
 const {
   StripeAPIError,
   StripeAuthenticationError,
@@ -285,7 +284,7 @@ class RequestSender {
     const maxRetries = this._getMaxNetworkRetries(settings);
 
     if (method === 'POST' && maxRetries > 0) {
-      return `stripe-node-retry-${utils.uuid4()}`;
+      return `stripe-node-retry-${this._stripe._platformFunctions.uuid4()}`;
     }
     return null;
   }

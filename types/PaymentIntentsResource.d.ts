@@ -1410,7 +1410,7 @@ declare module 'stripe' {
           namespace BankTransfer {
             interface EuBankTransfer {
               /**
-               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
                */
               country: string;
             }
@@ -1530,21 +1530,25 @@ declare module 'stripe' {
 
         namespace Klarna {
           type PreferredLocale =
+            | 'cs-CZ'
             | 'da-DK'
             | 'de-AT'
             | 'de-CH'
             | 'de-DE'
+            | 'el-GR'
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
             | 'en-CA'
             | 'en-CH'
+            | 'en-CZ'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
             | 'en-FI'
             | 'en-FR'
             | 'en-GB'
+            | 'en-GR'
             | 'en-IE'
             | 'en-IT'
             | 'en-NL'
@@ -3306,7 +3310,7 @@ declare module 'stripe' {
           namespace BankTransfer {
             interface EuBankTransfer {
               /**
-               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
                */
               country: string;
             }
@@ -3426,21 +3430,25 @@ declare module 'stripe' {
 
         namespace Klarna {
           type PreferredLocale =
+            | 'cs-CZ'
             | 'da-DK'
             | 'de-AT'
             | 'de-CH'
             | 'de-DE'
+            | 'el-GR'
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
             | 'en-CA'
             | 'en-CH'
+            | 'en-CZ'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
             | 'en-FI'
             | 'en-FR'
             | 'en-GB'
+            | 'en-GR'
             | 'en-IE'
             | 'en-IT'
             | 'en-NL'
@@ -5300,7 +5308,7 @@ declare module 'stripe' {
           namespace BankTransfer {
             interface EuBankTransfer {
               /**
-               * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+               * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
                */
               country: string;
             }
@@ -5420,21 +5428,25 @@ declare module 'stripe' {
 
         namespace Klarna {
           type PreferredLocale =
+            | 'cs-CZ'
             | 'da-DK'
             | 'de-AT'
             | 'de-CH'
             | 'de-DE'
+            | 'el-GR'
             | 'en-AT'
             | 'en-AU'
             | 'en-BE'
             | 'en-CA'
             | 'en-CH'
+            | 'en-CZ'
             | 'en-DE'
             | 'en-DK'
             | 'en-ES'
             | 'en-FI'
             | 'en-FR'
             | 'en-GB'
+            | 'en-GR'
             | 'en-IE'
             | 'en-IT'
             | 'en-NL'

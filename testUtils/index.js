@@ -9,6 +9,7 @@ require('chai').use(require('chai-as-promised'));
 const http = require('http');
 
 const CryptoProvider = require('../lib/crypto/CryptoProvider');
+const NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
 const RequestSender = require('../lib/RequestSender');
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
@@ -56,6 +57,17 @@ const utils = (module.exports = {
       process.env.STRIPE_TEST_API_KEY || 'tGN0bIwXnHdwOa85VABjPdSn8nWY7G7I';
 
     return key;
+  },
+
+  getMockPlatformFunctions: (cb) => {
+    class MockPlatformFunctions extends NodePlatformFunctions {
+      constructor(cb) {
+        super();
+        this._exec = cb;
+      }
+    }
+
+    return new MockPlatformFunctions(cb);
   },
 
   getMockStripe: (config, request) => {
