@@ -95,6 +95,20 @@ declare module 'stripe' {
         type Mode = 'full' | 'partial';
       }
 
+      interface TransactionListLineItemsParams extends PaginationParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      interface TransactionListTransactionsParams extends PaginationParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       class TransactionsResource {
         /**
          * Creates a Tax Transaction from a calculation.
@@ -124,6 +138,30 @@ declare module 'stripe' {
           params: TransactionCreateReversalParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Tax.Transaction>>;
+
+        /**
+         * Retrieves the line items of a committed standalone transaction as a collection.
+         */
+        listLineItems(
+          id: string,
+          params?: TransactionListLineItemsParams,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.LineItem>;
+        listLineItems(
+          id: string,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.LineItem>;
+
+        /**
+         * Lists Tax Transaction objects.
+         */
+        listTransactions(
+          params?: TransactionListTransactionsParams,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Tax.Transaction>;
+        listTransactions(
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.Tax.Transaction>;
       }
     }
   }

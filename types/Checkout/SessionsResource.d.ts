@@ -1264,6 +1264,8 @@ declare module 'stripe' {
           }
 
           interface Paypal {
+            billing_agreement_id?: string;
+
             currency: string;
           }
 

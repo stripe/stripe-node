@@ -1520,6 +1520,11 @@ declare module 'stripe' {
         proration_behavior?: Amendment.ProrationBehavior;
 
         /**
+         * Ends the subscription schedule early as dictated by either the accompanying amendment's start or end.
+         */
+        set_schedule_end?: Amendment.SetScheduleEnd;
+
+        /**
          * Settings related to subscription trials.
          */
         trial_settings?: Amendment.TrialSettings;
@@ -1992,6 +1997,8 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
+
+        type SetScheduleEnd = 'amendment_end' | 'amendment_start';
 
         interface TrialSettings {
           /**

@@ -233,6 +233,11 @@ declare module 'stripe' {
         proration_behavior?: Line.ProrationBehavior;
 
         /**
+         * Timestsamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
+         */
+        set_schedule_end?: Line.SetScheduleEnd;
+
+        /**
          * Details to identify the earliest timestamp where the proposed change should take effect.
          */
         starts_at?: Line.StartsAt;
@@ -671,6 +676,8 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
+
+        type SetScheduleEnd = 'line_ends_at' | 'line_starts_at';
 
         interface StartsAt {
           /**
@@ -1234,9 +1241,9 @@ declare module 'stripe' {
             line_starts_at?: BillFrom.LineStartsAt;
 
             /**
-             * Details for a Unix timestamp to start the bill period from.
+             * A precise Unix timestamp.
              */
-            timestamp?: BillFrom.Timestamp;
+            timestamp?: number;
 
             /**
              * The type of method to specify the `bill_from` time.
@@ -1255,13 +1262,6 @@ declare module 'stripe' {
                * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
                */
               index?: number;
-            }
-
-            interface Timestamp {
-              /**
-               * A precise Unix timestamp.
-               */
-              timestamp?: number;
             }
 
             type Type =
@@ -1283,9 +1283,9 @@ declare module 'stripe' {
             line_ends_at?: BillUntil.LineEndsAt;
 
             /**
-             * Details of a Unix timestamp to bill until.
+             * A precise Unix timestamp.
              */
-            timestamp?: BillUntil.Timestamp;
+            timestamp?: number;
 
             /**
              * The type of method to specify the `bill_until` time.
@@ -1320,13 +1320,6 @@ declare module 'stripe' {
                * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
                */
               index?: number;
-            }
-
-            interface Timestamp {
-              /**
-               * A precise Unix timestamp.
-               */
-              timestamp?: number;
             }
 
             type Type =
@@ -1440,9 +1433,9 @@ declare module 'stripe' {
             line_starts_at?: BillFrom.LineStartsAt;
 
             /**
-             * Details for a Unix timestamp to start the bill period from.
+             * A precise Unix timestamp.
              */
-            timestamp?: BillFrom.Timestamp;
+            timestamp?: number;
 
             /**
              * The type of method to specify the `bill_from` time.
@@ -1461,13 +1454,6 @@ declare module 'stripe' {
                * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
                */
               index?: number;
-            }
-
-            interface Timestamp {
-              /**
-               * A precise Unix timestamp.
-               */
-              timestamp?: number;
             }
 
             type Type =
@@ -1489,9 +1475,9 @@ declare module 'stripe' {
             line_ends_at?: BillUntil.LineEndsAt;
 
             /**
-             * Details of a Unix timestamp to bill until.
+             * A precise Unix timestamp.
              */
-            timestamp?: BillUntil.Timestamp;
+            timestamp?: number;
 
             /**
              * The type of method to specify the `bill_until` time.
@@ -1526,13 +1512,6 @@ declare module 'stripe' {
                * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
                */
               index?: number;
-            }
-
-            interface Timestamp {
-              /**
-               * A precise Unix timestamp.
-               */
-              timestamp?: number;
             }
 
             type Type =
@@ -1676,8 +1655,8 @@ declare module 'stripe' {
       /**
        * List representing overrides for `subscription_data` configurations for specific groups.
        */
-      subscription_data_overrides?: Array<
-        QuoteUpdateParams.SubscriptionDataOverride
+      subscription_data_overrides?: Stripe.Emptyable<
+        Array<QuoteUpdateParams.SubscriptionDataOverride>
       >;
 
       /**
@@ -1789,6 +1768,11 @@ declare module 'stripe' {
          * Changes to how Stripe handles prorations during the quote line's time span. Affects if and how prorations are created when a future phase starts.
          */
         proration_behavior?: Line.ProrationBehavior;
+
+        /**
+         * Timestsamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
+         */
+        set_schedule_end?: Line.SetScheduleEnd;
 
         /**
          * Details to identify the earliest timestamp where the proposed change should take effect.
@@ -2229,6 +2213,8 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
+
+        type SetScheduleEnd = 'line_ends_at' | 'line_starts_at';
 
         interface StartsAt {
           /**
@@ -2715,7 +2701,9 @@ declare module 'stripe' {
         /**
          * Describes the period to bill for upon accepting the quote.
          */
-        bill_on_acceptance?: SubscriptionData.BillOnAcceptance;
+        bill_on_acceptance?: Stripe.Emptyable<
+          SubscriptionData.BillOnAcceptance
+        >;
 
         /**
          * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
@@ -2787,9 +2775,9 @@ declare module 'stripe' {
             line_starts_at?: BillFrom.LineStartsAt;
 
             /**
-             * Details for a Unix timestamp to start the bill period from.
+             * A precise Unix timestamp.
              */
-            timestamp?: BillFrom.Timestamp;
+            timestamp?: number;
 
             /**
              * The type of method to specify the `bill_from` time.
@@ -2808,13 +2796,6 @@ declare module 'stripe' {
                * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
                */
               index?: number;
-            }
-
-            interface Timestamp {
-              /**
-               * A precise Unix timestamp.
-               */
-              timestamp?: number;
             }
 
             type Type =
@@ -2836,9 +2817,9 @@ declare module 'stripe' {
             line_ends_at?: BillUntil.LineEndsAt;
 
             /**
-             * Details of a Unix timestamp to bill until.
+             * A precise Unix timestamp.
              */
-            timestamp?: BillUntil.Timestamp;
+            timestamp?: number;
 
             /**
              * The type of method to specify the `bill_until` time.
@@ -2875,13 +2856,6 @@ declare module 'stripe' {
               index?: number;
             }
 
-            interface Timestamp {
-              /**
-               * A precise Unix timestamp.
-               */
-              timestamp?: number;
-            }
-
             type Type =
               | 'duration'
               | 'line_ends_at'
@@ -2915,7 +2889,9 @@ declare module 'stripe' {
         /**
          * Describes the period to bill for upon accepting the quote.
          */
-        bill_on_acceptance?: SubscriptionDataOverride.BillOnAcceptance;
+        bill_on_acceptance?: Stripe.Emptyable<
+          SubscriptionDataOverride.BillOnAcceptance
+        >;
 
         /**
          * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
@@ -2923,7 +2899,7 @@ declare module 'stripe' {
         billing_behavior?: SubscriptionDataOverride.BillingBehavior;
 
         /**
-         * The customer the Subscription Data override applies to. This is only relevant when `applies_to.type=new_reference`.
+         * The customer the Subscription Data override applies to.
          */
         customer?: string;
 
@@ -2993,9 +2969,9 @@ declare module 'stripe' {
             line_starts_at?: BillFrom.LineStartsAt;
 
             /**
-             * Details for a Unix timestamp to start the bill period from.
+             * A precise Unix timestamp.
              */
-            timestamp?: BillFrom.Timestamp;
+            timestamp?: number;
 
             /**
              * The type of method to specify the `bill_from` time.
@@ -3014,13 +2990,6 @@ declare module 'stripe' {
                * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
                */
               index?: number;
-            }
-
-            interface Timestamp {
-              /**
-               * A precise Unix timestamp.
-               */
-              timestamp?: number;
             }
 
             type Type =
@@ -3042,9 +3011,9 @@ declare module 'stripe' {
             line_ends_at?: BillUntil.LineEndsAt;
 
             /**
-             * Details of a Unix timestamp to bill until.
+             * A precise Unix timestamp.
              */
-            timestamp?: BillUntil.Timestamp;
+            timestamp?: number;
 
             /**
              * The type of method to specify the `bill_until` time.
@@ -3079,13 +3048,6 @@ declare module 'stripe' {
                * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
                */
               index?: number;
-            }
-
-            interface Timestamp {
-              /**
-               * A precise Unix timestamp.
-               */
-              timestamp?: number;
             }
 
             type Type =
