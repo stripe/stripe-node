@@ -1,5 +1,12 @@
 # Changelog
 
+## 11.9.0-beta.1 - 2023-01-26
+* [#1666](https://github.com/stripe/stripe-node/pull/1666) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add support for `billing_agreement_id` on `CheckoutSessionCreateParams.payment_method_options.paypal`
+  * Add support for `list_transactions` method on resource `Tax.Transaction`
+  * Change type of `QuoteUpdateParams.subscription_data_overrides` from `array(create_specs)` to `emptyStringable(array(update_specs))`
+
 ## 11.8.0 - 2023-01-26
 * [#1665](https://github.com/stripe/stripe-node/pull/1665) API Updates
   * Add support for new value `BE` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, `Invoice.payment_settings.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, and `Subscription.payment_settings.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`
