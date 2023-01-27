@@ -69,5 +69,10 @@
     "fix": "yarn lint --fix && ./scripts/updateAPIVersion.js",
     "report": "nyc -r text -r lcov report",
     "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "exports": {
+    "browser": "./lib/stripe.worker.js",
+    "worker": "./lib/stripe.worker.js",
+    "default": "./lib/stripe.js"
   }
 }

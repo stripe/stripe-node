@@ -1,19 +1,5 @@
 const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
-const crypto = require('crypto');
-
-// Certain sandboxed environments (our known example right now are CloudFlare
-// Workers) may make `child_process` unavailable. Because `exec` isn't critical
-// to the operation of stripe-node, we handle this unavailability gracefully.
-let exec = null;
-try {
-  exec = require('child_process').exec;
-} catch (e) {
-  // @ts-ignore
-  if (e.code !== 'MODULE_NOT_FOUND') {
-    throw e;
-  }
-}
 
 const OPTIONS_KEYS = [
   'apiKey',
@@ -215,38 +201,6 @@ const utils = {
   },
 
   /**
-   * Secure compare, from https://github.com/freewil/scmp
-   */
-  secureCompare: (a: string, b: string): boolean => {
-    if (!a || !b) {
-      throw new Error('secureCompare must receive two arguments');
-    }
-
-    // return early here if buffer lengths are not equal since timingSafeEqual
-    // will throw if buffer lengths are not equal
-    if (a.length !== b.length) {
-      return false;
-    }
-
-    // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
-    // otherwise use our own scmp-internal function.
-    if (crypto.timingSafeEqual) {
-      const textEncoder = new TextEncoder();
-      const aEncoded: Uint8Array = textEncoder.encode(a);
-      const bEncoded: Uint8Array = textEncoder.encode(b);
-      return crypto.timingSafeEqual(aEncoded, bEncoded);
-    }
-
-    const len = a.length;
-    let result = 0;
-
-    for (let i = 0; i < len; ++i) {
-      result |= a.charCodeAt(i) ^ b.charCodeAt(i);
-    }
-    return result === 0;
-  },
-
-  /**
    * Remove empty values from an object
    */
   removeNullish: <T extends Record<string, unknown>>(obj: T): T => {
@@ -339,34 +293,6 @@ const utils = {
 
   emitWarning,
 
-  /**
-   * Node's built in `exec` function sometimes throws outright,
-   * and sometimes has a callback with an error,
-   * depending on the type of error.
-   *
-   * This unifies that interface.
-   */
-  safeExec: (
-    cmd: string,
-    cb: (error: unknown, stdout: string | null) => void
-  ): void => {
-    // Occurs if we couldn't load the `child_process` module, which might
-    // happen in certain sandboxed environments like a CloudFlare Worker.
-    if (utils._exec === null) {
-      cb(new Error('exec not available'), null);
-      return;
-    }
-
-    try {
-      utils._exec(cmd, cb);
-    } catch (e) {
-      cb(e, null);
-    }
-  },
-
-  // For mocking in tests.
-  _exec: exec,
-
   isObject: (obj: unknown): boolean => {
     const type = typeof obj;
     return (type === 'function' || type === 'object') && !!obj;
@@ -406,23 +332,6 @@ const utils = {
     step(data, null);
 
     return result;
-  },
-
-  /**
-   * https://stackoverflow.com/a/2117523
-   */
-  uuid4: (): string => {
-    // available in: v14.17.x+
-    if (crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-
-    // legacy behavior if native UUIDs aren't available
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
   },
 
   validateInteger: (name: string, n: unknown, defaultVal?: number): number => {

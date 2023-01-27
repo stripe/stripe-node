@@ -110,7 +110,6 @@ type StripeObject = {
     seed: Record<string, string | boolean | null>,
     callback: (userAgent: string) => void
   ) => void;
-  getUname: (callback: (uname: string) => void) => void;
   getClientUserAgent: (callback: (clientUserAgent: string) => void) => void;
   getTelemetryEnabled: () => boolean;
   getAppInfoAsString: () => string;
@@ -160,6 +159,7 @@ type StripeObject = {
   _requestSender: RequestSender;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
+  _platformFunctions: import('./platform/DefaultPlatformFunctions');
 };
 type RequestSender = {
   _request(

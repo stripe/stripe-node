@@ -100,12 +100,12 @@ declare module 'stripe' {
           dob: Individual.Dob | null;
 
           /**
-           * The first name of this cardholder.
+           * The first name of this cardholder. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           first_name: string;
 
           /**
-           * The last name of this cardholder.
+           * The last name of this cardholder. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           last_name: string;
 

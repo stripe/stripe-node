@@ -2,8 +2,8 @@
 
 require('../testUtils');
 
-const utils = require('../lib/utils');
-const expect = require('chai').expect;
+import {expect} from 'chai';
+import utils = require('../lib/utils');
 
 describe('utils', () => {
   describe('makeURLInterpolator', () => {
@@ -117,7 +117,7 @@ describe('utils', () => {
 
   describe('protoExtend', () => {
     it('Provides an extension mechanism', () => {
-      function A() {}
+      function A(): any {}
       A.extend = utils.protoExtend;
       const B = A.extend({
         constructor: function() {
@@ -346,22 +346,6 @@ describe('utils', () => {
     });
   });
 
-  describe('secureCompare', () => {
-    it('returns true given two equal things', () => {
-      expect(utils.secureCompare('potato', 'potato')).to.equal(true);
-    });
-
-    it('returns false given two unequal things', () => {
-      expect(utils.secureCompare('potato', 'tomato')).to.equal(false);
-    });
-
-    it('throws an error if not given two things to compare', () => {
-      expect(() => {
-        utils.secureCompare('potato');
-      }).to.throw();
-    });
-  });
-
   describe('removeNullish', () => {
     it('removes empty properties and leaves non-empty ones', () => {
       expect(
@@ -381,71 +365,6 @@ describe('utils', () => {
       expect(() => {
         utils.removeNullish('potato');
       }).to.throw();
-    });
-  });
-
-  describe('safeExec', () => {
-    let origExec;
-    beforeEach(() => {
-      origExec = utils._exec;
-    });
-    afterEach(() => {
-      utils._exec = origExec;
-    });
-
-    it('runs exec', () => {
-      const calls = [];
-      utils._exec = (cmd, cb) => {
-        calls.push([cmd, cb]);
-      };
-
-      function myCb() {}
-      utils.safeExec('hello', myCb);
-      expect(calls).to.deep.equal([['hello', myCb]]);
-    });
-
-    it('passes along normal errors', () => {
-      const myErr = Error('hi');
-      utils._exec = (cmd, cb) => {
-        cb(myErr, null);
-      };
-
-      const calls = [];
-      function myCb(err, x) {
-        calls.push([err, x]);
-      }
-      utils.safeExec('hello', myCb);
-      expect(calls).to.deep.equal([[myErr, null]]);
-    });
-
-    it('passes along thrown errors as normal callback errors', () => {
-      const myErr = Error('hi');
-      utils._exec = (cmd, cb) => {
-        throw myErr;
-      };
-
-      const calls = [];
-      function myCb(err, x) {
-        calls.push([err, x]);
-      }
-      utils.safeExec('hello', myCb);
-      expect(calls).to.deep.equal([[myErr, null]]);
-    });
-
-    it('handles being unable to require `child_process`', () => {
-      utils._exec = null;
-
-      let actualErr = null;
-      let actualRes = null;
-      function myCb(err, res) {
-        actualErr = err;
-        actualRes = res;
-      }
-      utils.safeExec('hello', myCb);
-      expect(actualErr.toString()).to.equal(
-        new Error('exec not available').toString()
-      );
-      expect(actualRes).to.equal(null);
     });
   });
 
@@ -535,45 +454,6 @@ describe('utils', () => {
     });
   });
 
-  describe('uuid', () => {
-    describe('crypto.randomUUID', () => {
-      const crypto = require('crypto');
-      let randomUUID$;
-      let called;
-      beforeEach(() => {
-        // if it's available, mock it and ensure it's called
-        // otherwise, skip this whole operation
-        if (crypto.randomUUID) {
-          called = false;
-          randomUUID$ = crypto.randomUUID;
-          crypto.randomUUID = () => {
-            called = true;
-            return 'no, YOU you id';
-          };
-        }
-      });
-      afterEach(() => {
-        if (randomUUID$) {
-          crypto.randomUUID = randomUUID$;
-        }
-      });
-      it('is called if available', () => {
-        if (randomUUID$) {
-          expect(utils.uuid4()).to.equal('no, YOU you id');
-          expect(called).to.equal(true);
-        }
-      });
-    });
-    it('should return a well-formatted v4 UUID', () => {
-      expect(utils.uuid4()).to.match(
-        // regex from https://createuuid.com/validator/, specifically for v4
-        /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-      );
-      // further test: could spy on crypto.randomUUID to ensure it's being used, if available
-      // whether that's useful is a race between using jest/sinon for these tests and dropping support for node < 14
-    });
-  });
-
   describe('concat', () => {
     it('should return a joined Uint8Array', () => {
       const arr1 = new Uint8Array([1, 2, 3]);
@@ -597,7 +477,7 @@ describe('utils', () => {
   });
 });
 
-function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
+function handleWarnings(doWithShimmedConsoleWarn, onWarn): void {
   if (typeof process.emitWarning !== 'function') {
     /* eslint-disable no-console */
 
@@ -613,7 +493,7 @@ function handleWarnings(doWithShimmedConsoleWarn, onWarn) {
     /* eslint-enable no-console */
   } else {
     /* eslint-disable-next-line no-inner-declarations */
-    function onProcessWarn(warning) {
+    function onProcessWarn(warning): any {
       onWarn(`${warning.name}: ${warning.message}`);
     }
 

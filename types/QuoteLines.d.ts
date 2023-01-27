@@ -42,6 +42,11 @@ declare module 'stripe' {
       proration_behavior: QuoteLine.ProrationBehavior | null;
 
       /**
+       * Timestsamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
+       */
+      set_schedule_end?: QuoteLine.SetScheduleEnd | null;
+
+      /**
        * Details to identify the earliest timestamp where the proposed change should take effect.
        */
       starts_at: QuoteLine.StartsAt | null;
@@ -464,6 +469,8 @@ declare module 'stripe' {
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
+
+      type SetScheduleEnd = 'line_ends_at' | 'line_starts_at';
 
       interface StartsAt {
         /**
