@@ -71,6 +71,7 @@
     "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "exports": {
+    "types": "./types/index.d.ts",
     "browser": "./lib/stripe.worker.js",
     "worker": "./lib/stripe.worker.js",
     "default": "./lib/stripe.js"
