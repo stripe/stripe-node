@@ -55,8 +55,8 @@ Stripe.HttpClientResponse = HttpClient.HttpClientResponse;
 import CryptoProvider = require('./crypto/CryptoProvider');
 Stripe.CryptoProvider = CryptoProvider;
 
-import DefaultPlatformFunctions = require('./platform/DefaultPlatformFunctions');
-Stripe._platformFunctions = new DefaultPlatformFunctions();
+import PlatformFunctions = require('./platform/PlatformFunctions');
+Stripe._platformFunctions = new PlatformFunctions();
 
 function Stripe(
   this: StripeObject,
@@ -202,7 +202,6 @@ Stripe.prototype = {
   on: null!,
   off: null!,
   once: null!,
-  emit: null!,
   VERSION: null!,
   StripeResource: null!,
   webhooks: null!,

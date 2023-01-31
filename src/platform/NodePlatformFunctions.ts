@@ -1,12 +1,11 @@
 import crypto = require('crypto');
 import EventEmitter = require('events');
-
-import DefaultPlatformFunctions = require('./DefaultPlatformFunctions');
+import PlatformFunctions = require('./PlatformFunctions');
 
 /**
- * Specializes DefaultPlatformFunctions using APIs available in Node.js.
+ * Specializes WebPlatformFunctions using APIs available in Node.js.
  */
-class NodePlatformFunctions extends DefaultPlatformFunctions {
+class NodePlatformFunctions extends PlatformFunctions {
   /** For mocking in tests */
   _exec: any;
   _UNAME_CACHE: Promise<string | null> | null;

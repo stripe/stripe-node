@@ -1,15 +1,11 @@
 import Stripe = require('./stripe.common');
-import StripeEmitter = require('./StripeEmitter');
+import WebPlatformFunctions = require('./platform/WebPlatformFunctions');
+
+Stripe._platformFunctions = new WebPlatformFunctions();
+Stripe.webhooks._platformFunctions = Stripe._platformFunctions;
 
 Stripe.createHttpClient = Stripe.createFetchHttpClient;
 Stripe.webhooks._createCryptoProvider = Stripe.createSubtleCryptoProvider;
-
-// StripeEmitter uses the Event Web API. `Event` is not available
-// in the global scope until Node 15, so we set `createEmitter` here
-// to avoid reference errors.
-Stripe._platformFunctions.createEmitter = (): StripeEmitter => {
-  return new StripeEmitter(new EventTarget());
-};
 
 module.exports = Stripe;
 

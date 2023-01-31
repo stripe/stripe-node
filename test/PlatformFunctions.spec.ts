@@ -2,22 +2,33 @@
 
 require('../testUtils');
 
-import DefaultPlatformFunctions = require('../lib/platform/DefaultPlatformFunctions');
-import EventEmitter = require('events');
 import NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
+import PlatformFunctions = require('../lib/platform/PlatformFunctions');
 
 import {expect} from 'chai';
 
-const platforms = {
-  default: new DefaultPlatformFunctions(),
-  node: new NodePlatformFunctions(),
-};
+let platforms: Record<string, PlatformFunctions>;
+
+if (process.versions.node < '15') {
+  console.log(
+    `Skipping WebPlatformFunctions tests. Cannot load WebPlatformFunctions because 'Event' is not available in the global scope for ${process.version}.`
+  );
+  platforms = {
+    Node: new NodePlatformFunctions(),
+  };
+} else {
+  const WebPlatformFunctions = require('../lib/platform/WebPlatformFunctions');
+  platforms = {
+    Web: new WebPlatformFunctions(),
+    Node: new NodePlatformFunctions(),
+  };
+}
 
 for (const platform in platforms) {
   const platformFunctions = platforms[platform];
-  const isNodeEnvironment = platform === 'node';
+  const isNodeEnvironment = platform === 'Node';
 
-  describe(`${platform} platform functions`, () => {
+  describe(`${platform}PlatformFunctions`, () => {
     describe('uuid', () => {
       describe('should use crypto.randomUUID if it exists', () => {
         const crypto = require('crypto');
@@ -185,58 +196,36 @@ for (const platform in platforms) {
     });
 
     describe('createEmitter', () => {
-      // Only run tests if EventTarget is available (Node >= 15).
-      if (process.version < '14') {
-        const StripeEmitter = require('../lib/StripeEmitter');
-        let oldCreateEmitter;
+      let emitter;
+      beforeEach(() => {
+        emitter = platformFunctions.createEmitter();
+      });
 
-        if (!isNodeEnvironment) {
-          before(() => {
-            oldCreateEmitter = platformFunctions.createEmitter;
+      it('should emit a `foo` event with data to listeners', (done) => {
+        function onFoo(data): void {
+          emitter.removeListener('foo', onFoo);
 
-            // StripeEmitter uses the Event Web API. `createEmitter` needs
-            // to be defined here to avoid reference errors in Node versions <15.
-            platformFunctions.createEmitter = (): typeof StripeEmitter => {
-              return new StripeEmitter(new EventTarget());
-            };
-          });
-
-          after(() => {
-            platformFunctions.createEmitter = oldCreateEmitter;
-          });
-        }
-
-        let emitter;
-        beforeEach(() => {
-          emitter = platformFunctions.createEmitter();
-        });
-
-        it('should emit a `foo` event with data to listeners', (done) => {
-          function onFoo(data): void {
-            emitter.removeListener('foo', onFoo);
-
-            expect(data.bar).to.equal('bar');
-            expect(data.baz).to.equal('baz');
-
-            done();
-          }
-
-          emitter.on('foo', onFoo);
-          emitter.emit('foo', {bar: 'bar', baz: 'baz'});
-        });
-
-        it('should not emit a `foo` event to removed listeners', (done) => {
-          function onFoo(): void {
-            done(new Error('How did you get here?'));
-          }
-
-          emitter.once('response', onFoo);
-          emitter.removeListener('response', onFoo);
-          emitter.emit('foo');
+          expect(data.bar).to.equal('bar');
+          expect(data.baz).to.equal('baz');
 
           done();
-        });
-      }
+        }
+
+        emitter.on('foo', onFoo);
+        emitter.emit('foo', {bar: 'bar', baz: 'baz'});
+      });
+
+      it('should not emit a `foo` event to removed listeners', (done) => {
+        function onFoo(): void {
+          done(new Error('How did you get here?'));
+        }
+
+        emitter.once('response', onFoo);
+        emitter.removeListener('response', onFoo);
+        emitter.emit('foo');
+
+        done();
+      });
     });
   });
 }

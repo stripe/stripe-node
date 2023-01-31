@@ -1,21 +1,17 @@
 import EventEmitter = require('events');
 import StripeEmitter = require('../StripeEmitter');
+import PlatformFunctions = require('./PlatformFunctions');
 
 /**
- * Interface encapsulating various utility functions whose
- * implementations depend on the platform / JS runtime.
+ * Specializes WebPlatformFunctions using APIs available in Web workers.
  */
-class DefaultPlatformFunctions {
-  /**
-   * Gets uname with Node's built-in `exec` function, if available.
-   */
+class WebPlatformFunctions extends PlatformFunctions {
+  /** @override */
   getUname(): Promise<string | null> {
     return Promise.resolve(null);
   }
 
-  /**
-   * Generates a v4 UUID. See https://stackoverflow.com/a/2117523
-   */
+  /** @override */
   uuid4(): string {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
       const r = (Math.random() * 16) | 0;
@@ -24,9 +20,7 @@ class DefaultPlatformFunctions {
     });
   }
 
-  /**
-   * Compares strings in constant time.
-   */
+  /** @override */
   secureCompare(a: string, b: string): boolean {
     // return early here if buffer lengths are not equal
     if (a.length !== b.length) {
@@ -42,9 +36,10 @@ class DefaultPlatformFunctions {
     return result === 0;
   }
 
+  /** @override */
   createEmitter(): StripeEmitter | EventEmitter {
-    throw new Error('createEmitter not implemented');
+    return new StripeEmitter(new EventTarget());
   }
 }
 
-export = DefaultPlatformFunctions;
+export = WebPlatformFunctions;
