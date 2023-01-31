@@ -5,7 +5,6 @@ require('../testUtils');
 import DefaultPlatformFunctions = require('../lib/platform/DefaultPlatformFunctions');
 import EventEmitter = require('events');
 import NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
-import StripeEmitter = require('../lib/StripeEmitter');
 
 import {expect} from 'chai';
 
@@ -188,7 +187,8 @@ for (const platform in platforms) {
     describe('createEmitter', () => {
       // Only run tests if EventTarget is available (Node >= 15).
       if (process.version < '14') {
-        let oldCreateEmitter: StripeEmitter;
+        const StripeEmitter = require('../lib/StripeEmitter');
+        let oldCreateEmitter;
 
         if (!isNodeEnvironment) {
           before(() => {
@@ -196,7 +196,7 @@ for (const platform in platforms) {
 
             // StripeEmitter uses the Event Web API. `createEmitter` needs
             // to be defined here to avoid reference errors in Node versions <15.
-            platformFunctions.createEmitter = (): StripeEmitter => {
+            platformFunctions.createEmitter = (): typeof StripeEmitter => {
               return new StripeEmitter(new EventTarget());
             };
           });
@@ -206,7 +206,7 @@ for (const platform in platforms) {
           });
         }
 
-        let emitter: StripeEmitter | EventEmitter;
+        let emitter;
         beforeEach(() => {
           emitter = platformFunctions.createEmitter();
         });
