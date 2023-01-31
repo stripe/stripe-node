@@ -1,8 +1,10 @@
-/** @private
+/**
+ * @private
  * (For internal use in stripe-node.)
- * Wrapper around the Event Web API. */
+ * Wrapper around the Event Web API.
+ */
 class _StripeEvent extends Event {
-  data: any;
+  data?: RequestEvent | ResponseEvent;
   constructor(eventName: string, data: any) {
     super(eventName);
     this.data = data;
@@ -20,7 +22,7 @@ class StripeEmitter {
   }
 
   on(eventName: string, listener: (...args: any[]) => void): void {
-    const listenerWrapper = (event: any): void => {
+    const listenerWrapper = (event: _StripeEvent): void => {
       listener(event.data);
     };
     this.listenerMapping[listener.toString()] = listenerWrapper;
@@ -34,7 +36,7 @@ class StripeEmitter {
   }
 
   once(eventName: string, listener: (...args: any[]) => void): void {
-    const listenerWrapper = (event: any): void => {
+    const listenerWrapper = (event: _StripeEvent): void => {
       listener(event.data);
     };
     this.listenerMapping[listener.toString()] = listenerWrapper;
@@ -43,7 +45,7 @@ class StripeEmitter {
     });
   }
 
-  emit(eventName: string, data: any): boolean {
+  emit(eventName: string, data: RequestEvent | ResponseEvent): boolean {
     return this.eventTarget.dispatchEvent(new _StripeEvent(eventName, data));
   }
 }

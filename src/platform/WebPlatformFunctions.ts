@@ -37,7 +37,7 @@ class WebPlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createEmitter(): StripeEmitter | EventEmitter {
+  createEmitter(): StripeEmitter {
     return new StripeEmitter(new EventTarget());
   }
 }
