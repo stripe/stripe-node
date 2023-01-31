@@ -2,9 +2,13 @@
 
 require('../testUtils');
 
-import {expect} from 'chai';
+import EventEmitter from 'events';
+import StripeEmitter from '../lib/StripeEmitter';
+
 import DefaultPlatformFunctions = require('../lib/platform/DefaultPlatformFunctions');
 import NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
+
+import {expect} from 'chai';
 
 const platforms = {
   default: new DefaultPlatformFunctions(),
@@ -179,6 +183,39 @@ for (const platform in platforms) {
         };
 
         expect(await platformFunctions.getUname()).to.be.null;
+      });
+    });
+
+    describe('createEmitter', () => {
+      let emitter: StripeEmitter | EventEmitter;
+      beforeEach(() => {
+        emitter = platformFunctions.createEmitter();
+      });
+
+      it('should emit a `foo` event with data to listeners', (done) => {
+        function onFoo(data): void {
+          emitter.removeListener('foo', onFoo);
+
+          expect(data.bar).to.equal('bar');
+          expect(data.baz).to.equal('baz');
+
+          done();
+        }
+
+        emitter.on('foo', onFoo);
+        emitter.emit('foo', {bar: 'bar', baz: 'baz'});
+      });
+
+      it('should not emit a `foo` event to removed listeners', (done) => {
+        function onFoo(): void {
+          done(new Error('How did you get here?'));
+        }
+
+        emitter.once('response', onFoo);
+        emitter.removeListener('response', onFoo);
+        emitter.emit('foo');
+
+        done();
       });
     });
   });
