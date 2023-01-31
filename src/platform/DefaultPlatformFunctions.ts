@@ -43,7 +43,7 @@ class DefaultPlatformFunctions {
   }
 
   createEmitter(): StripeEmitter | EventEmitter {
-    return new StripeEmitter(new EventTarget());
+    throw new Error('createEmitter not implemented');
   }
 }
 

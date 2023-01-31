@@ -2,11 +2,10 @@
 
 require('../testUtils');
 
-import EventEmitter from 'events';
-import StripeEmitter from '../lib/StripeEmitter';
-
 import DefaultPlatformFunctions = require('../lib/platform/DefaultPlatformFunctions');
+import EventEmitter = require('events');
 import NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
+import StripeEmitter = require('../lib/StripeEmitter');
 
 import {expect} from 'chai';
 
@@ -187,36 +186,57 @@ for (const platform in platforms) {
     });
 
     describe('createEmitter', () => {
-      let emitter: StripeEmitter | EventEmitter;
-      beforeEach(() => {
-        emitter = platformFunctions.createEmitter();
-      });
+      // Only run tests if EventTarget is available (Node >= 15).
+      if (!process.version.startsWith('14')) {
+        let oldCreateEmitter: StripeEmitter;
 
-      it('should emit a `foo` event with data to listeners', (done) => {
-        function onFoo(data): void {
-          emitter.removeListener('foo', onFoo);
+        if (!isNodeEnvironment) {
+          before(() => {
+            oldCreateEmitter = platformFunctions.createEmitter;
 
-          expect(data.bar).to.equal('bar');
-          expect(data.baz).to.equal('baz');
+            // StripeEmitter uses the Event Web API. `createEmitter` needs
+            // to be defined here to avoid reference errors in Node versions <15.
+            platformFunctions.createEmitter = (): StripeEmitter => {
+              return new StripeEmitter(new EventTarget());
+            };
+          });
+
+          after(() => {
+            platformFunctions.createEmitter = oldCreateEmitter;
+          });
+        }
+
+        let emitter: StripeEmitter | EventEmitter;
+        beforeEach(() => {
+          emitter = platformFunctions.createEmitter();
+        });
+
+        it('should emit a `foo` event with data to listeners', (done) => {
+          function onFoo(data): void {
+            emitter.removeListener('foo', onFoo);
+
+            expect(data.bar).to.equal('bar');
+            expect(data.baz).to.equal('baz');
+
+            done();
+          }
+
+          emitter.on('foo', onFoo);
+          emitter.emit('foo', {bar: 'bar', baz: 'baz'});
+        });
+
+        it('should not emit a `foo` event to removed listeners', (done) => {
+          function onFoo(): void {
+            done(new Error('How did you get here?'));
+          }
+
+          emitter.once('response', onFoo);
+          emitter.removeListener('response', onFoo);
+          emitter.emit('foo');
 
           done();
-        }
-
-        emitter.on('foo', onFoo);
-        emitter.emit('foo', {bar: 'bar', baz: 'baz'});
-      });
-
-      it('should not emit a `foo` event to removed listeners', (done) => {
-        function onFoo(): void {
-          done(new Error('How did you get here?'));
-        }
-
-        emitter.once('response', onFoo);
-        emitter.removeListener('response', onFoo);
-        emitter.emit('foo');
-
-        done();
-      });
+        });
+      }
     });
   });
 }
