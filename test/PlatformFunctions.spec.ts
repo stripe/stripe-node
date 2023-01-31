@@ -187,7 +187,7 @@ for (const platform in platforms) {
 
     describe('createEmitter', () => {
       // Only run tests if EventTarget is available (Node >= 15).
-      if (!process.version.startsWith('14')) {
+      if (process.version < '14') {
         let oldCreateEmitter: StripeEmitter;
 
         if (!isNodeEnvironment) {
