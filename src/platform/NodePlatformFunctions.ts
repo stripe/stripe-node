@@ -1,5 +1,5 @@
-import {rejects} from 'assert';
 import crypto = require('crypto');
+import EventEmitter = require('events');
 
 import DefaultPlatformFunctions = require('./DefaultPlatformFunctions');
 
@@ -79,6 +79,10 @@ class NodePlatformFunctions extends DefaultPlatformFunctions {
     }
 
     return super.secureCompare(a, b);
+  }
+
+  createEmitter(): EventEmitter {
+    return new EventEmitter();
   }
 }
 

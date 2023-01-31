@@ -1,3 +1,6 @@
+import EventEmitter = require('events');
+import StripeEmitter = require('../StripeEmitter');
+
 /**
  * Interface encapsulating various utility functions whose
  * implementations depend on the platform / JS runtime.
@@ -37,6 +40,10 @@ class DefaultPlatformFunctions {
       result |= a.charCodeAt(i) ^ b.charCodeAt(i);
     }
     return result === 0;
+  }
+
+  createEmitter(): StripeEmitter | EventEmitter {
+    throw new Error('createEmitter not implemented');
   }
 }
 

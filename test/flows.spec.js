@@ -427,6 +427,23 @@ describe('Flows', function() {
           done();
         });
     });
+
+    it('should not emit a `response` event to removed listeners on response', (done) => {
+      function onResponse(response) {
+        done(new Error('How did you get here?'));
+      }
+
+      stripe.on('response', onResponse);
+      stripe.off('response', onResponse);
+
+      stripe.customers
+        .create({
+          description: 'stripe-node test customer',
+        })
+        .then(() => {
+          done();
+        });
+    });
   });
 
   describe('File', () => {
