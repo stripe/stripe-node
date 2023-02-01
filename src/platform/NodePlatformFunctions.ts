@@ -92,7 +92,7 @@ class NodePlatformFunctions extends PlatformFunctions {
   /** @override */
   tryBufferData(data: StreamingFile): Promise<any> {
     if (!(data.file.data instanceof EventEmitter)) {
-      return new Promise<any>(() => data);
+      return Promise.resolve(data);
     }
     const bufferArray: Array<Uint8Array> = [];
     return new Promise<any>((resolve, reject) => {

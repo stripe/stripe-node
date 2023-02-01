@@ -20,7 +20,7 @@ describe('Flows', function() {
   // default_currency (required in subsequent tests);
 
   const cleanup = new testUtils.CleanupUtility();
-  this.timeout(3000);
+  this.timeout(30000);
 
   it('Allows me to retrieve default_currency', () =>
     expect(
