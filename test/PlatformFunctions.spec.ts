@@ -215,6 +215,55 @@ for (const platform in platforms) {
         emitter.emit('foo', {bar: 'bar', baz: 'baz'});
       });
 
+      it('listeners registered via `on` keep firing until removed', (done) => {
+        let calls = 0;
+
+        function onFoo(): void {
+          calls += 1;
+        }
+
+        emitter.on('foo', onFoo);
+        emitter.emit('foo');
+        expect(calls).to.equal(1);
+        emitter.emit('foo');
+        expect(calls).to.equal(2);
+        emitter.removeListener('foo', onFoo);
+
+        done();
+      });
+
+      it('listeners registered via `once` only fire once', (done) => {
+        let calls = 0;
+
+        function onFoo(): void {
+          calls += 1;
+        }
+
+        emitter.once('foo', onFoo);
+        emitter.emit('foo');
+        expect(calls).to.equal(1);
+        emitter.emit('foo');
+        expect(calls).to.equal(1);
+
+        done();
+      });
+
+      it('listeners registered multiple times are for each time it was registered', (done) => {
+        let calls = 0;
+
+        function onFoo(): void {
+          calls += 1;
+        }
+
+        emitter.on('foo', onFoo);
+        emitter.once('foo', onFoo);
+
+        emitter.emit('foo');
+        expect(calls).to.equal(2);
+
+        done();
+      });
+
       it('should not emit a `foo` event to removed listeners', (done) => {
         function onFoo(): void {
           done(new Error('How did you get here?'));
