@@ -1,6 +1,5 @@
-import utils = require('./utils');
 import _Error = require('./Error');
-import WebPlatformFunctions = require('./platform/WebPlatformFunctions');
+import PlatformFunctions = require('./platform/PlatformFunctions');
 import CryptoProvider = require('./crypto/CryptoProvider');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 

@@ -11,35 +11,37 @@ class _StripeEvent extends Event {
   }
 }
 
+type Listener = (...args: any[]) => any;
+
 /** Minimal EventEmitter wrapper around EventTarget. */
 class StripeEmitter {
   eventTarget: EventTarget;
-  listenerMapping: Record<string, (...args: any[]) => any>;
+  listenerMapping: Map<Listener, Listener>;
 
-  constructor(eventTarget: EventTarget) {
-    this.eventTarget = eventTarget;
-    this.listenerMapping = {};
+  constructor() {
+    this.eventTarget = new EventTarget();
+    this.listenerMapping = new Map();
   }
 
-  on(eventName: string, listener: (...args: any[]) => void): void {
+  on(eventName: string, listener: Listener): void {
     const listenerWrapper = (event: _StripeEvent): void => {
       listener(event.data);
     };
-    this.listenerMapping[listener.toString()] = listenerWrapper;
+    this.listenerMapping.set(listener, listenerWrapper);
     return this.eventTarget.addEventListener(eventName, listenerWrapper);
   }
 
-  removeListener(eventName: string, listener: (...args: any[]) => void): void {
-    const listenerWrapper = this.listenerMapping[listener.toString()];
-    delete this.listenerMapping[listener.toString()];
-    return this.eventTarget.removeEventListener(eventName, listenerWrapper);
+  removeListener(eventName: string, listener: Listener): void {
+    const listenerWrapper = this.listenerMapping.get(listener);
+    this.listenerMapping.delete(listener);
+    return this.eventTarget.removeEventListener(eventName, listenerWrapper!);
   }
 
-  once(eventName: string, listener: (...args: any[]) => void): void {
+  once(eventName: string, listener: Listener): void {
     const listenerWrapper = (event: _StripeEvent): void => {
       listener(event.data);
     };
-    this.listenerMapping[listener.toString()] = listenerWrapper;
+    this.listenerMapping.set(listener, listenerWrapper);
     return this.eventTarget.addEventListener(eventName, listenerWrapper, {
       once: true,
     });
