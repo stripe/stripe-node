@@ -31,7 +31,7 @@ type RequestCallback = (
   response?: any
 ) => RequestCallbackReturn;
 type RequestCallbackReturn = any;
-type RequestData = Record<string, unknown>;
+type RequestData = Record<string, any>;
 type RequestEvent = {
   api_version?: string;
   account?: string;
@@ -159,7 +159,7 @@ type StripeObject = {
   _requestSender: RequestSender;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
-  _platformFunctions: import('./platform/DefaultPlatformFunctions');
+  _platformFunctions: import('./platform/PlatformFunctions');
 };
 type RequestSender = {
   _request(
@@ -170,7 +170,7 @@ type RequestSender = {
     auth: string | null,
     options: RequestOptions,
     callback: RequestCallback,
-    requestDataProcessor: RequestDataProcessor | null
+    requestDataProcessor: RequestDataProcessor | undefined
   ): void;
 };
 type StripeRawError = {
@@ -183,7 +183,7 @@ type StripeRawError = {
   doc_url?: string;
   decline_code?: string;
   param?: string;
-  detail?: string;
+  detail?: string | Error;
   charge?: string;
   payment_method_type?: string;
   payment_intent?: any;

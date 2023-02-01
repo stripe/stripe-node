@@ -14,7 +14,7 @@ class StripeError extends Error {
   readonly code?: string;
   readonly doc_url?: string;
   readonly param?: string;
-  readonly detail?: string;
+  readonly detail?: string | Error;
   readonly statusCode?: number;
   readonly charge?: string;
   readonly decline_code?: string;

@@ -1,8 +1,6 @@
 import utils = require('./utils');
 import _Error = require('./Error');
-const {StripeError} = _Error;
 
-class StreamProcessingError extends StripeError {}
 type MultipartCallbackReturn = any;
 type MultipartCallback = (
   error: Error | null,
@@ -70,56 +68,27 @@ const multipartDataGenerator = (
   return buffer;
 };
 
-const streamProcessor = (
+function multipartRequestDataProcessor(
+  this: StripeResourceObject,
   method: string,
-  data: StreamingFile,
+  data: RequestData,
   headers: RequestHeaders,
   callback: MultipartCallback
-): void => {
-  const bufferArray: Array<Uint8Array> = [];
-  data.file.data
-    .on('data', (line: Uint8Array) => {
-      bufferArray.push(line);
-    })
-    .once('end', () => {
-      // @ts-ignore
-      const bufferData: BufferedFile = Object.assign({}, data);
-      bufferData.file.data = utils.concat(bufferArray);
-      const buffer = multipartDataGenerator(method, bufferData, headers);
-      callback(null, buffer);
-    })
-    .on('error', (err) => {
-      callback(
-        new StreamProcessingError({
-          message:
-            'An error occurred while attempting to process the file for upload.',
-          detail: err,
-        }),
-        null
-      );
-    });
-};
-
-const multipartRequestDataProcessor = (
-  method: string,
-  data: MultipartRequestData,
-  headers: RequestHeaders,
-  callback: MultipartCallback
-): MultipartCallbackReturn => {
+): MultipartCallbackReturn {
   data = data || {};
 
   if (method !== 'POST') {
     return callback(null, utils.stringifyRequestData(data));
   }
 
-  const isStream = utils.checkForStream(data);
-  if (isStream) {
-    return streamProcessor(method, data as StreamingFile, headers, callback);
-  }
-
-  const buffer = multipartDataGenerator(method, data, headers);
-  return callback(null, buffer);
-};
+  this._stripe._platformFunctions
+    .tryBufferData(data)
+    .then((bufferedData: MultipartRequestData) => {
+      const buffer = multipartDataGenerator(method, bufferedData, headers);
+      return callback(null, buffer);
+    })
+    .catch((err: Error) => callback(err, null));
+}
 
 export = {
   multipartRequestDataProcessor: multipartRequestDataProcessor,

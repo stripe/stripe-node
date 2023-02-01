@@ -1,4 +1,3 @@
-const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
 
 const OPTIONS_KEYS = [
@@ -244,17 +243,6 @@ const utils = {
         (text) => text.charAt(0).toUpperCase() + text.substr(1).toLowerCase()
       )
       .join('-');
-  },
-
-  /**
-   * Determine if file data is a derivative of EventEmitter class.
-   * https://nodejs.org/api/events.html#events_events
-   */
-  checkForStream: (obj: {file?: {data: unknown}}): boolean => {
-    if (obj.file && obj.file.data) {
-      return obj.file.data instanceof EventEmitter;
-    }
-    return false;
   },
 
   callbackifyPromiseWithTimeout: <T>(

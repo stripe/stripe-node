@@ -1,12 +1,16 @@
-import {rejects} from 'assert';
 import crypto = require('crypto');
+import EventEmitter = require('events');
+import _Error = require('../Error');
+const StripeError = _Error.StripeError;
+import utils = require('../utils');
+import PlatformFunctions = require('./PlatformFunctions');
 
-import DefaultPlatformFunctions = require('./DefaultPlatformFunctions');
+class StreamProcessingError extends StripeError {}
 
 /**
- * Specializes DefaultPlatformFunctions using APIs available in Node.js.
+ * Specializes WebPlatformFunctions using APIs available in Node.js.
  */
-class NodePlatformFunctions extends DefaultPlatformFunctions {
+class NodePlatformFunctions extends PlatformFunctions {
   /** For mocking in tests */
   _exec: any;
   _UNAME_CACHE: Promise<string | null> | null;
@@ -15,7 +19,7 @@ class NodePlatformFunctions extends DefaultPlatformFunctions {
     super();
 
     this._exec = require('child_process').exec;
-    this._UNAME_CACHE = null as Promise<string | null> | null;
+    this._UNAME_CACHE = null;
   }
 
   /** @override */
@@ -79,6 +83,41 @@ class NodePlatformFunctions extends DefaultPlatformFunctions {
     }
 
     return super.secureCompare(a, b);
+  }
+
+  createEmitter(): EventEmitter {
+    return new EventEmitter();
+  }
+
+  /** @override */
+  tryBufferData(
+    data: MultipartRequestData
+  ): Promise<RequestData | BufferedFile> {
+    if (!(data.file.data instanceof EventEmitter)) {
+      return Promise.resolve(data);
+    }
+    const bufferArray: Array<Uint8Array> = [];
+    return new Promise<BufferedFile>((resolve, reject) => {
+      data.file.data
+        .on('data', (line: Uint8Array) => {
+          bufferArray.push(line);
+        })
+        .once('end', () => {
+          // @ts-ignore
+          const bufferData: BufferedFile = Object.assign({}, data);
+          bufferData.file.data = utils.concat(bufferArray);
+          resolve(bufferData);
+        })
+        .on('error', (err: Error) => {
+          reject(
+            new StreamProcessingError({
+              message:
+                'An error occurred while attempting to process the file for upload.',
+              detail: err,
+            })
+          );
+        });
+    });
   }
 }
 

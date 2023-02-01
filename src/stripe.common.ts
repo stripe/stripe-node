@@ -53,11 +53,10 @@ Stripe.HttpClient = HttpClient.HttpClient;
 Stripe.HttpClientResponse = HttpClient.HttpClientResponse;
 
 import CryptoProvider = require('./crypto/CryptoProvider');
-import EventEmitter = require('events');
 Stripe.CryptoProvider = CryptoProvider;
 
-import DefaultPlatformFunctions = require('./platform/DefaultPlatformFunctions');
-Stripe._platformFunctions = new DefaultPlatformFunctions();
+// @ts-ignore
+Stripe._platformFunctions = null;
 
 function Stripe(
   this: StripeObject,
@@ -71,7 +70,7 @@ function Stripe(
   const props = this._getPropsFromConfig(config);
 
   Object.defineProperty(this, '_emitter', {
-    value: new EventEmitter(),
+    value: Stripe._platformFunctions.createEmitter(),
     enumerable: false,
     configurable: false,
     writable: false,
