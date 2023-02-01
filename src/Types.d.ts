@@ -31,7 +31,7 @@ type RequestCallback = (
   response?: any
 ) => RequestCallbackReturn;
 type RequestCallbackReturn = any;
-type RequestData = Record<string, unknown>;
+type RequestData = Record<string, any>;
 type RequestEvent = {
   api_version?: string;
   account?: string;

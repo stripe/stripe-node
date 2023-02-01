@@ -51,7 +51,9 @@ class PlatformFunctions {
    * Checks if the request data is a stream. If so, read the entire stream
    * to a buffer and return the buffer.
    */
-  tryBufferData(data: MultipartRequestData): Promise<any> {
+  tryBufferData(
+    data: MultipartRequestData
+  ): Promise<RequestData | BufferedFile> {
     throw new Error('tryBufferData not implemented.');
   }
 }

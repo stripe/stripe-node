@@ -32,7 +32,9 @@ class WebPlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  tryBufferData(data: any): Promise<any> {
+  tryBufferData(
+    data: MultipartRequestData
+  ): Promise<RequestData | BufferedFile> {
     if (data.file.data instanceof ReadableStream) {
       throw new Error(
         'Uploading a file as a stream is not supported in non-Node environments. Please open or upvote an issue at github.com/stripe/stripe-node if you use this, detailing your use-case.'

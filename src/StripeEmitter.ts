@@ -12,11 +12,12 @@ class _StripeEvent extends Event {
 }
 
 type Listener = (...args: any[]) => any;
+type ListenerWrapper = (event: _StripeEvent) => void;
 
 /** Minimal EventEmitter wrapper around EventTarget. */
 class StripeEmitter {
   eventTarget: EventTarget;
-  listenerMapping: Map<Listener, Listener>;
+  listenerMapping: Map<Listener, ListenerWrapper>;
 
   constructor() {
     this.eventTarget = new EventTarget();
@@ -24,7 +25,7 @@ class StripeEmitter {
   }
 
   on(eventName: string, listener: Listener): void {
-    const listenerWrapper = (event: _StripeEvent): void => {
+    const listenerWrapper: ListenerWrapper = (event: _StripeEvent): void => {
       listener(event.data);
     };
     this.listenerMapping.set(listener, listenerWrapper);
@@ -38,7 +39,7 @@ class StripeEmitter {
   }
 
   once(eventName: string, listener: Listener): void {
-    const listenerWrapper = (event: _StripeEvent): void => {
+    const listenerWrapper: ListenerWrapper = (event: _StripeEvent): void => {
       listener(event.data);
     };
     this.listenerMapping.set(listener, listenerWrapper);
