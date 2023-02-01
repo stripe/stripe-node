@@ -1,5 +1,6 @@
 import EventEmitter = require('events');
 import StripeEmitter = require('../StripeEmitter');
+import {emitWarning} from '../utils';
 import PlatformFunctions = require('./PlatformFunctions');
 
 /**
@@ -39,6 +40,19 @@ class WebPlatformFunctions extends PlatformFunctions {
   /** @override */
   createEmitter(): StripeEmitter {
     return new StripeEmitter(new EventTarget());
+  }
+
+  /** @override */
+  tryBufferData(data: any): Promise<any> {
+    if (
+      data.file.data.pipeThrough &&
+      typeof data.file.data.pipeThrough === 'function'
+    ) {
+      throw new Error(
+        'Uploading a file as a stream is not supported in non-Node environments. Please open or upvote an issue at github.com/stripe/stripe-node if you use this, detailing your use-case.'
+      );
+    }
+    return Promise.resolve(data);
   }
 }
 
