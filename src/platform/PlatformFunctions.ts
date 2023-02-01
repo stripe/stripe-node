@@ -40,8 +40,19 @@ class PlatformFunctions {
     return result === 0;
   }
 
+  /**
+   * Creates an event emitter.
+   */
   createEmitter(): StripeEmitter | EventEmitter {
     throw new Error('createEmitter not implemented.');
+  }
+
+  /**
+   * Checks if the request data is a stream. If so, read the entire stream
+   * to a buffer and return the buffer.
+   */
+  tryBufferData(data: MultipartRequestData): Promise<any> {
+    throw new Error('tryBufferData not implemented.');
   }
 }
 

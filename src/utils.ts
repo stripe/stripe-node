@@ -251,13 +251,14 @@ const utils = {
    */
   checkForStream: (obj: {file?: {data: unknown}}): boolean => {
     if (obj.file && obj.file.data) {
-      return (
-        typeof obj.file.data === 'object' &&
-        'on' in obj.file.data &&
-        'off' in obj.file.data &&
-        'once' in obj.file.data &&
-        'emit' in obj.file.data
-      );
+      // return (
+      //   typeof obj.file.data === 'object' &&
+      //   'on' in obj.file.data &&
+      //   typeof obj.file.data.on === 'function' &&
+      //   'once' in obj.file.data &&
+      //   typeof obj.file.data.once === 'function'
+      // );
+      return obj.file.data.constructor.name === 'EventEmitter';
     }
     return false;
   },

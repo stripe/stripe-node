@@ -170,7 +170,7 @@ type RequestSender = {
     auth: string | null,
     options: RequestOptions,
     callback: RequestCallback,
-    requestDataProcessor: RequestDataProcessor | null
+    requestDataProcessor: RequestDataProcessor | undefined
   ): void;
 };
 type StripeRawError = {
@@ -183,7 +183,7 @@ type StripeRawError = {
   doc_url?: string;
   decline_code?: string;
   param?: string;
-  detail?: string;
+  detail?: string | Error;
   charge?: string;
   payment_method_type?: string;
   payment_intent?: any;

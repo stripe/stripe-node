@@ -1,6 +1,11 @@
 import crypto = require('crypto');
 import EventEmitter = require('events');
+import _Error = require('../Error');
+const StripeError = _Error.StripeError;
+import utils = require('../utils');
 import PlatformFunctions = require('./PlatformFunctions');
+
+class StreamProcessingError extends StripeError {}
 
 /**
  * Specializes WebPlatformFunctions using APIs available in Node.js.
@@ -82,6 +87,35 @@ class NodePlatformFunctions extends PlatformFunctions {
 
   createEmitter(): EventEmitter {
     return new EventEmitter();
+  }
+
+  /** @override */
+  tryBufferData(data: StreamingFile): Promise<any> {
+    if (!(data.file.data instanceof EventEmitter)) {
+      return new Promise<any>(() => data);
+    }
+    const bufferArray: Array<Uint8Array> = [];
+    return new Promise<any>((resolve, reject) => {
+      data.file.data
+        .on('data', (line: Uint8Array) => {
+          bufferArray.push(line);
+        })
+        .once('end', () => {
+          // @ts-ignore
+          const bufferData: BufferedFile = Object.assign({}, data);
+          bufferData.file.data = utils.concat(bufferArray);
+          resolve(bufferData);
+        })
+        .on('error', (err: Error) => {
+          reject(
+            new StreamProcessingError({
+              message:
+                'An error occurred while attempting to process the file for upload.',
+              detail: err,
+            })
+          );
+        });
+    });
   }
 }
 
