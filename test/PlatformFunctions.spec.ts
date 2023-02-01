@@ -2,6 +2,8 @@
 
 require('../testUtils');
 
+import fs = require('fs');
+import path = require('path');
 import NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
 import PlatformFunctions = require('../lib/platform/PlatformFunctions');
 
@@ -275,6 +277,77 @@ for (const platform in platforms) {
 
         done();
       });
+    });
+
+    describe('tryBufferData', () => {
+      if (!isNodeEnvironment) {
+        // WebPlatformFunctions
+        it('should throw an error in web environments if streaming data is provided', () => {
+          if (process.versions.node < '18') {
+            console.log(
+              `'ReadableStream' is not available in the global scope for ${process.version}, skipping test.`
+            );
+            return;
+          }
+
+          const f = new ReadableStream();
+          const data = {
+            file: {
+              data: f,
+              name: 'test.pdf',
+              type: 'application/octet-stream',
+            },
+          };
+
+          expect(() => {
+            platformFunctions.tryBufferData(data);
+          }).to.throw();
+        });
+      } else {
+        // NodePlatformFunctions
+        it('should return data unmodified if not a file stream', () => {
+          const testFilename = path.join(
+            __dirname,
+            'resources/data/minimal.pdf'
+          );
+          const buf = fs.readFileSync(testFilename);
+
+          // Create Uint8Array from Buffer
+          const f = new Uint8Array(buf.buffer, buf.byteOffset, buf.length);
+
+          const data = {
+            file: {
+              data: f,
+              name: 'minimal.pdf',
+              type: 'application/octet-stream',
+            },
+          };
+
+          expect(
+            platformFunctions.tryBufferData(data)
+          ).to.eventually.deep.equal(data);
+        });
+
+        it('should load file streams into buffer', () => {
+          const testFilename = path.join(
+            __dirname,
+            'resources/data/minimal.pdf'
+          );
+          const f = fs.createReadStream(testFilename);
+
+          const data = {
+            file: {
+              data: f,
+              name: 'minimal.pdf',
+              type: 'application/octet-stream',
+            },
+          };
+
+          return expect(
+            platformFunctions.tryBufferData(data).then((d) => d.file.data)
+          ).to.eventually.have.nested.property('length', 739);
+        });
+      }
     });
   });
 }

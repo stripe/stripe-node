@@ -1,7 +1,5 @@
 import utils = require('./utils');
 import _Error = require('./Error');
-import PlatformFunctions = require('./platform/PlatformFunctions');
-const {StripeError} = _Error;
 
 type MultipartCallbackReturn = any;
 type MultipartCallback = (
