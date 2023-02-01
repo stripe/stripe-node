@@ -245,24 +245,6 @@ const utils = {
       .join('-');
   },
 
-  /**
-   * Determine if file data is a derivative of EventEmitter class.
-   * https://nodejs.org/api/events.html#events_events
-   */
-  checkForStream: (obj: {file?: {data: unknown}}): boolean => {
-    if (obj.file && obj.file.data) {
-      // return (
-      //   typeof obj.file.data === 'object' &&
-      //   'on' in obj.file.data &&
-      //   typeof obj.file.data.on === 'function' &&
-      //   'once' in obj.file.data &&
-      //   typeof obj.file.data.once === 'function'
-      // );
-      return obj.file.data.constructor.name === 'EventEmitter';
-    }
-    return false;
-  },
-
   callbackifyPromiseWithTimeout: <T>(
     promise: Promise<T>,
     callback: ((error: unknown, result: T | null) => void) | null
