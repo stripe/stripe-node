@@ -19,7 +19,7 @@ class NodePlatformFunctions extends PlatformFunctions {
     super();
 
     this._exec = require('child_process').exec;
-    this._UNAME_CACHE = null as Promise<string | null> | null;
+    this._UNAME_CACHE = null;
   }
 
   /** @override */
