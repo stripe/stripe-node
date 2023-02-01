@@ -60,7 +60,7 @@ type WebhookObject = {
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
   _createCryptoProvider: () => CryptoProvider | null;
-  _platformFunctions: WebPlatformFunctions | null;
+  _platformFunctions: PlatformFunctions | null;
 };
 
 const Webhook: WebhookObject = {
