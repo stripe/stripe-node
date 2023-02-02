@@ -74,6 +74,6 @@
     "types": "./types/index.d.ts",
     "browser": "./lib/stripe.worker.js",
     "worker": "./lib/stripe.worker.js",
-    "default": "./lib/stripe.js"
+    "default": "./lib/stripe.node.js"
   }
 }
