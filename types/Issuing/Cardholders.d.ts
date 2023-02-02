@@ -102,12 +102,12 @@ declare module 'stripe' {
           /**
            * The first name of this cardholder. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
-          first_name: string;
+          first_name: string | null;
 
           /**
            * The last name of this cardholder. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
-          last_name: string;
+          last_name: string | null;
 
           /**
            * Government-issued ID document for this cardholder.

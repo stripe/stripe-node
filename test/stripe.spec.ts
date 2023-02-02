@@ -7,8 +7,11 @@ import {NodeHttpClient} from '../lib/net/NodeHttpClient';
 import {getMockPlatformFunctions} from '../testUtils';
 
 const testUtils = require('../testUtils');
-const Stripe = require('../lib/stripe');
-const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
+const Stripe = require('../lib/stripe.node');
+const stripe = require('../lib/stripe.node')(
+  testUtils.getUserStripeKey(),
+  'latest'
+);
 const crypto = require('crypto');
 
 const expect = require('chai').expect;

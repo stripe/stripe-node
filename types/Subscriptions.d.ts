@@ -228,6 +228,11 @@ declare module 'stripe' {
       trial_end: number | null;
 
       /**
+       * Settings related to subscription trials.
+       */
+      trial_settings?: Subscription.TrialSettings | null;
+
+      /**
        * If the subscription has a trial, the beginning of that trial.
        */
       trial_start: number | null;
@@ -566,6 +571,7 @@ declare module 'stripe' {
         | 'incomplete'
         | 'incomplete_expired'
         | 'past_due'
+        | 'paused'
         | 'trialing'
         | 'unpaid';
 
@@ -579,6 +585,26 @@ declare module 'stripe' {
          * The account where funds from the payment will be transferred to upon payment success.
          */
         destination: string | Stripe.Account;
+      }
+
+      interface TrialSettings {
+        /**
+         * Defines how a subscription behaves when a free trial ends.
+         */
+        end_behavior?: TrialSettings.EndBehavior;
+      }
+
+      namespace TrialSettings {
+        interface EndBehavior {
+          /**
+           * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+           */
+          missing_payment_method: EndBehavior.MissingPaymentMethod;
+        }
+
+        namespace EndBehavior {
+          type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+        }
       }
     }
   }

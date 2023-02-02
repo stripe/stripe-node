@@ -1,4 +1,8 @@
 import Stripe = require('./stripe.common');
+import WebPlatformFunctions = require('./platform/WebPlatformFunctions');
+
+Stripe._platformFunctions = new WebPlatformFunctions();
+Stripe.webhooks._platformFunctions = Stripe._platformFunctions;
 
 Stripe.createHttpClient = Stripe.createFetchHttpClient;
 Stripe.webhooks._createCryptoProvider = Stripe.createSubtleCryptoProvider;

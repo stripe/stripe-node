@@ -1,6 +1,5 @@
-import utils = require('./utils');
 import _Error = require('./Error');
-import DefaultPlatformFunctions = require('./platform/DefaultPlatformFunctions');
+import PlatformFunctions = require('./platform/PlatformFunctions');
 import CryptoProvider = require('./crypto/CryptoProvider');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 
@@ -60,7 +59,7 @@ type WebhookObject = {
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
   _createCryptoProvider: () => CryptoProvider | null;
-  _platformFunctions: DefaultPlatformFunctions | null;
+  _platformFunctions: PlatformFunctions | null;
 };
 
 const Webhook: WebhookObject = {
