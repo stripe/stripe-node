@@ -2,7 +2,10 @@
 
 const testUtils = require('../testUtils');
 const chai = require('chai');
-const stripe = require('../lib/stripe')(testUtils.getUserStripeKey(), 'latest');
+const stripe = require('../lib/stripe.node')(
+  testUtils.getUserStripeKey(),
+  'latest'
+);
 const fs = require('fs');
 const path = require('path');
 const stream = require('stream');
@@ -326,7 +329,7 @@ describe('Flows', function() {
         .slice(2);
       const lowerBoundStartTime = Date.now();
 
-      function onRequest(request) {
+      function onRequest(request): void {
         expect(request.api_version).to.equal('latest');
         expect(request.idempotency_key).to.equal(idempotencyKey);
         expect(request.account).to.equal(connectedAccountId);
@@ -365,7 +368,7 @@ describe('Flows', function() {
         .toString(36)
         .slice(2);
 
-      function onResponse(response) {
+      function onResponse(response): void {
         // On the off chance we're picking up a response from a differentrequest
         // then just ignore this and wait for the right one:
         if (response.idempotency_key !== idempotencyKey) {
@@ -412,7 +415,7 @@ describe('Flows', function() {
     });
 
     it('should not emit a `response` event to removed listeners on response', (done) => {
-      function onResponse(response) {
+      function onResponse(response): void {
         done(new Error('How did you get here?'));
       }
 
@@ -466,9 +469,30 @@ describe('Flows', function() {
       ).to.eventually.have.nested.property('size', 739);
     });
 
+    it('Allows you to upload a file synchronously as a Uint8Array', () => {
+      const testFilename = path.join(__dirname, 'resources/data/minimal.pdf');
+      const buf = fs.readFileSync(testFilename);
+
+      // Create Uint8Array from Buffer
+      const f = new Uint8Array(buf.buffer, buf.byteOffset, buf.length);
+
+      return expect(
+        stripe.files
+          .create({
+            purpose: 'dispute_evidence',
+            file: {
+              data: f,
+              name: 'minimal.pdf',
+              type: 'application/octet-stream',
+            },
+          })
+          .then(null, (error) => error)
+      ).to.eventually.have.nested.property('size', 739);
+    });
+
     it('Surfaces stream errors correctly', (done) => {
       const mockedStream = new stream.Readable();
-      mockedStream._read = () => {};
+      mockedStream._read = (): void => {};
 
       const fakeError = new Error('I am a fake error');
 

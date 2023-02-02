@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "11.6.0",
+  "version": "11.9.0",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -27,6 +27,9 @@
   "main": "lib/stripe.js",
   "types": "types/index.d.ts",
   "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/chai-as-promised": "^7.1.5",
+    "@types/mocha": "^10.0.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "chai": "^4.3.6",
@@ -42,7 +45,8 @@
     "node-fetch": "^2.6.7",
     "nyc": "^15.1.0",
     "prettier": "^1.16.4",
-    "typescript": "^4.8.4"
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
   },
   "resolutions": {
     "minimist": "1.2.6",
@@ -54,18 +58,22 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.json && yarn remove-exports-line && yarn prettier-format",
-    "remove-exports-line": "sed -i.bak '/Object.defineProperty(exports, \"__esModule\", { value: true });/d' ./lib/stripe.js; rm ./lib/stripe.js.bak",
+    "build": "tsc -p tsconfig.json",
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./lib",
     "prepack": "yarn install && yarn build",
-    "mocha": "nyc mocha --config=test/.mocharc.js",
-    "mocha-only": "mocha --config=test/.mocharc.js",
+    "mocha": "nyc mocha",
+    "mocha-only": "mocha",
     "test": "yarn build && yarn test-typescript && yarn mocha",
     "test-typescript": "tsc --build types/test",
     "lint": "eslint --ext .js,.jsx,.ts .",
     "fix": "yarn lint --fix && ./scripts/updateAPIVersion.js",
     "report": "nyc -r text -r lcov report",
-    "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "prettier-format": "prettier --config .prettierrc 'lib/**/*.js' --write"
+    "coveralls": "cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "exports": {
+    "types": "./types/index.d.ts",
+    "browser": "./lib/stripe.worker.js",
+    "worker": "./lib/stripe.worker.js",
+    "default": "./lib/stripe.node.js"
   }
 }

@@ -80,6 +80,11 @@ declare module 'stripe' {
       amount_remaining: number;
 
       /**
+       * This is the sum of all the shipping amounts.
+       */
+      amount_shipping: number;
+
+      /**
        * ID of the Connect Application that created the invoice.
        */
       application:
@@ -335,6 +340,16 @@ declare module 'stripe' {
        * Options for invoice PDF rendering.
        */
       rendering_options: Invoice.RenderingOptions | null;
+
+      /**
+       * The details of the cost of shipping, including the ShippingRate applied on the invoice.
+       */
+      shipping_cost: Invoice.ShippingCost | null;
+
+      /**
+       * Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is set, otherwise the PDF will render the shipping address from the customer.
+       */
+      shipping_details: Invoice.ShippingDetails | null;
 
       /**
        * Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance. For revision invoices, this also includes any customer balance that was applied to the original invoice.
@@ -799,13 +814,13 @@ declare module 'stripe' {
             namespace BankTransfer {
               interface EuBankTransfer {
                 /**
-                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
                  */
                 country: EuBankTransfer.Country;
               }
 
               namespace EuBankTransfer {
-                type Country = 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
+                type Country = 'BE' | 'DE' | 'ES' | 'FR' | 'IE' | 'NL';
               }
             }
           }
@@ -867,6 +882,73 @@ declare module 'stripe' {
          * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
          */
         amount_tax_display: string | null;
+      }
+
+      interface ShippingCost {
+        /**
+         * Total shipping cost before any taxes are applied.
+         */
+        amount_subtotal: number;
+
+        /**
+         * Total tax amount applied due to shipping costs. If no tax was applied, defaults to 0.
+         */
+        amount_tax: number;
+
+        /**
+         * Total shipping cost after taxes are applied.
+         */
+        amount_total: number;
+
+        /**
+         * The ID of the ShippingRate for this invoice.
+         */
+        shipping_rate: string | Stripe.ShippingRate | null;
+
+        /**
+         * The taxes applied to the shipping rate.
+         */
+        taxes?: Array<ShippingCost.Tax>;
+      }
+
+      namespace ShippingCost {
+        interface Tax {
+          /**
+           * Amount of tax applied for this rate.
+           */
+          amount: number;
+
+          /**
+           * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+           *
+           * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+           */
+          rate: Stripe.TaxRate;
+        }
+      }
+
+      interface ShippingDetails {
+        address?: Stripe.Address;
+
+        /**
+         * The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
+         */
+        carrier?: string | null;
+
+        /**
+         * Recipient name.
+         */
+        name?: string;
+
+        /**
+         * Recipient phone (including extension).
+         */
+        phone?: string | null;
+
+        /**
+         * The tracking number for a physical product, obtained from the delivery service. If multiple tracking numbers were generated for this purchase, please separate them with commas.
+         */
+        tracking_number?: string | null;
       }
 
       type Status =

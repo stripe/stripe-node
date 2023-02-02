@@ -1,19 +1,4 @@
-const EventEmitter = require('events').EventEmitter;
 const qs = require('qs');
-const crypto = require('crypto');
-
-// Certain sandboxed environments (our known example right now are CloudFlare
-// Workers) may make `child_process` unavailable. Because `exec` isn't critical
-// to the operation of stripe-node, we handle this unavailability gracefully.
-let exec = null;
-try {
-  exec = require('child_process').exec;
-} catch (e) {
-  // @ts-ignore
-  if (e.code !== 'MODULE_NOT_FOUND') {
-    throw e;
-  }
-}
 
 const OPTIONS_KEYS = [
   'apiKey',
@@ -31,8 +16,8 @@ type Settings = {
 };
 
 type Options = {
-  auth?: string | null;
-  host?: string;
+  auth: string | null;
+  host: string | null;
   settings: Settings;
   streaming?: boolean;
   headers: Record<string, unknown>;
@@ -143,6 +128,7 @@ const utils = {
   getOptionsFromArgs: (args: RequestArgs): Options => {
     const opts: Options = {
       auth: null,
+      host: null,
       headers: {},
       settings: {},
     };
@@ -214,47 +200,19 @@ const utils = {
   },
 
   /**
-   * Secure compare, from https://github.com/freewil/scmp
-   */
-  secureCompare: (a: Uint8Array, b: Uint8Array): boolean => {
-    a = Buffer.from(a);
-    b = Buffer.from(b);
-
-    // return early here if buffer lengths are not equal since timingSafeEqual
-    // will throw if buffer lengths are not equal
-    if (a.length !== b.length) {
-      return false;
-    }
-
-    // use crypto.timingSafeEqual if available (since Node.js v6.6.0),
-    // otherwise use our own scmp-internal function.
-    if (crypto.timingSafeEqual) {
-      return crypto.timingSafeEqual(a, b);
-    }
-
-    const len = a.length;
-    let result = 0;
-
-    for (let i = 0; i < len; ++i) {
-      result |= a[i] ^ b[i];
-    }
-    return result === 0;
-  },
-
-  /**
    * Remove empty values from an object
    */
-  removeNullish: <T>(obj: Record<string, T>): Record<string, T> => {
+  removeNullish: <T extends Record<string, unknown>>(obj: T): T => {
     if (typeof obj !== 'object') {
       throw new Error('Argument must be an object');
     }
 
-    return Object.keys(obj).reduce<Record<string, T>>((result, key) => {
+    return Object.keys(obj).reduce<Record<string, unknown>>((result, key) => {
       if (obj[key] != null) {
         result[key] = obj[key];
       }
       return result;
-    }, {});
+    }, {}) as T;
   },
 
   /**
@@ -263,7 +221,7 @@ const utils = {
    * becomes
    * {'Foo-Bar': 'hi'}
    */
-  normalizeHeaders: (obj: RequestHeaders): RequestHeaders => {
+  normalizeHeaders: (obj: RequestHeaders | null): RequestHeaders | null => {
     if (!(obj && typeof obj === 'object')) {
       return obj;
     }
@@ -287,20 +245,9 @@ const utils = {
       .join('-');
   },
 
-  /**
-   * Determine if file data is a derivative of EventEmitter class.
-   * https://nodejs.org/api/events.html#events_events
-   */
-  checkForStream: (obj: {file?: {data: unknown}}): boolean => {
-    if (obj.file && obj.file.data) {
-      return obj.file.data instanceof EventEmitter;
-    }
-    return false;
-  },
-
   callbackifyPromiseWithTimeout: <T>(
     promise: Promise<T>,
-    callback: (error: unknown, result: T | null) => void
+    callback: ((error: unknown, result: T | null) => void) | null
   ): Promise<T | void> => {
     if (callback) {
       // Ensure callback is called outside of promise stack.
@@ -334,34 +281,6 @@ const utils = {
 
   emitWarning,
 
-  /**
-   * Node's built in `exec` function sometimes throws outright,
-   * and sometimes has a callback with an error,
-   * depending on the type of error.
-   *
-   * This unifies that interface.
-   */
-  safeExec: (
-    cmd: string,
-    cb: (error: unknown, stdout: string | null) => void
-  ): void => {
-    // Occurs if we couldn't load the `child_process` module, which might
-    // happen in certain sandboxed environments like a CloudFlare Worker.
-    if (utils._exec === null) {
-      cb(new Error('exec not available'), null);
-      return;
-    }
-
-    try {
-      utils._exec(cmd, cb);
-    } catch (e) {
-      cb(e, null);
-    }
-  },
-
-  // For mocking in tests.
-  _exec: exec,
-
   isObject: (obj: unknown): boolean => {
     const type = typeof obj;
     return (type === 'function' || type === 'object') && !!obj;
@@ -370,22 +289,23 @@ const utils = {
   // For use in multipart requests
   flattenAndStringify: (
     data: MultipartRequestData
-  ): Record<string, unknown> => {
-    const result: RequestData = {};
+  ): Record<string, string | Uint8Array> => {
+    const result: Record<string, string | Uint8Array> = {};
 
-    const step = (obj: RequestData, prevKey: string | null): void => {
+    const step = (obj: MultipartRequestData, prevKey: string | null): void => {
       Object.keys(obj).forEach((key) => {
+        // @ts-ignore
         const value = obj[key];
 
         const newKey = prevKey ? `${prevKey}[${key}]` : key;
 
         if (utils.isObject(value)) {
           if (
-            !Buffer.isBuffer(value) &&
+            !(value instanceof Uint8Array) &&
             !Object.prototype.hasOwnProperty.call(value, 'data')
           ) {
             // Non-buffer non-file Objects are recursively flattened
-            return step(value as RequestData, newKey);
+            return step(value, newKey);
           } else {
             // Buffers and file objects are stored without modification
             result[newKey] = value;
@@ -400,23 +320,6 @@ const utils = {
     step(data, null);
 
     return result;
-  },
-
-  /**
-   * https://stackoverflow.com/a/2117523
-   */
-  uuid4: (): string => {
-    // available in: v14.17.x+
-    if (crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-
-    // legacy behavior if native UUIDs aren't available
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-      const r = (Math.random() * 16) | 0;
-      const v = c === 'x' ? r : (r & 0x3) | 0x8;
-      return v.toString(16);
-    });
   },
 
   validateInteger: (name: string, n: unknown, defaultVal?: number): number => {
@@ -438,6 +341,22 @@ const utils = {
           lang_version: process.version,
           platform: process.platform,
         };
+  },
+
+  /**
+   * Joins an array of Uint8Arrays into a single Uint8Array
+   */
+  concat: (arrays: Array<Uint8Array>): Uint8Array => {
+    const totalLength = arrays.reduce((len, array) => len + array.length, 0);
+    const merged = new Uint8Array(totalLength);
+
+    let offset = 0;
+    arrays.forEach((array) => {
+      merged.set(array, offset);
+      offset += array.length;
+    });
+
+    return merged;
   },
 };
 

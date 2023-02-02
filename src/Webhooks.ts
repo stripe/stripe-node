@@ -1,16 +1,17 @@
-import utils = require('./utils');
 import _Error = require('./Error');
+import PlatformFunctions = require('./platform/PlatformFunctions');
+import CryptoProvider = require('./crypto/CryptoProvider');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 
-type WebhookHeader = string | Buffer;
+type WebhookHeader = string | Uint8Array;
 type WebhookParsedHeader = {
   signatures: Array<string>;
   timestamp: number;
 };
 type WebhookParsedEvent = {
   details: WebhookParsedHeader;
-  decodedPayload: string;
-  decodedHeader: string;
+  decodedPayload: WebhookHeader;
+  decodedHeader: WebhookPayload;
 };
 type WebhookTestHeaderOptions = {
   timestamp: number;
@@ -22,7 +23,7 @@ type WebhookTestHeaderOptions = {
 };
 
 type WebhookEvent = Record<string, unknown>;
-type WebhookPayload = string | Buffer;
+type WebhookPayload = string | Uint8Array;
 type WebhookSignatureObject = {
   verifyHeader: (
     encodedPayload: WebhookPayload,
@@ -57,6 +58,8 @@ type WebhookObject = {
     cryptoProvider: StripeCryptoProvider
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
+  _createCryptoProvider: () => CryptoProvider | null;
+  _platformFunctions: PlatformFunctions | null;
 };
 
 const Webhook: WebhookObject = {
@@ -78,8 +81,10 @@ const Webhook: WebhookObject = {
       cryptoProvider
     );
 
-    // @ts-ignore
-    const jsonPayload = JSON.parse(payload);
+    const jsonPayload =
+      payload instanceof Uint8Array
+        ? JSON.parse(new TextDecoder('utf8').decode(payload))
+        : JSON.parse(payload);
     return jsonPayload;
   },
 
@@ -98,8 +103,10 @@ const Webhook: WebhookObject = {
       cryptoProvider
     );
 
-    // @ts-ignore
-    const jsonPayload = JSON.parse(payload);
+    const jsonPayload =
+      payload instanceof Uint8Array
+        ? JSON.parse(new TextDecoder('utf8').decode(payload))
+        : JSON.parse(payload);
     return jsonPayload;
   },
 
@@ -125,7 +132,7 @@ const Webhook: WebhookObject = {
       Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
     opts.scheme = opts.scheme || signature.EXPECTED_SCHEME;
 
-    opts.cryptoProvider = opts.cryptoProvider || getNodeCryptoProvider();
+    opts.cryptoProvider = opts.cryptoProvider || getCryptoProvider();
 
     opts.signature =
       opts.signature ||
@@ -141,6 +148,10 @@ const Webhook: WebhookObject = {
 
     return generatedHeader;
   },
+
+  _createCryptoProvider: () => null,
+
+  _platformFunctions: null,
 };
 
 const signature = {
@@ -159,7 +170,7 @@ const signature = {
       details,
     } = parseEventDetails(encodedPayload, encodedHeader, this.EXPECTED_SCHEME);
 
-    cryptoProvider = cryptoProvider || getNodeCryptoProvider();
+    cryptoProvider = cryptoProvider || getCryptoProvider();
     const expectedSignature = cryptoProvider.computeHMACSignature(
       makeHMACContent(payload, details),
       secret
@@ -189,7 +200,7 @@ const signature = {
       details,
     } = parseEventDetails(encodedPayload, encodedHeader, this.EXPECTED_SCHEME);
 
-    cryptoProvider = cryptoProvider || getNodeCryptoProvider();
+    cryptoProvider = cryptoProvider || getCryptoProvider();
 
     const expectedSignature = await cryptoProvider.computeHMACSignatureAsync(
       makeHMACContent(payload, details),
@@ -218,9 +229,11 @@ function parseEventDetails(
   encodedHeader: WebhookHeader,
   expectedScheme: string
 ): WebhookParsedEvent {
-  const decodedPayload = Buffer.isBuffer(encodedPayload)
-    ? encodedPayload.toString('utf8')
-    : encodedPayload;
+  const textDecoder = new TextDecoder('utf8');
+  const decodedPayload =
+    encodedPayload instanceof Uint8Array
+      ? textDecoder.decode(encodedPayload)
+      : encodedPayload;
 
   // Express's type for `Request#headers` is `string | []string`
   // which is because the `set-cookie` header is an array,
@@ -232,9 +245,10 @@ function parseEventDetails(
     );
   }
 
-  const decodedHeader = Buffer.isBuffer(encodedHeader)
-    ? encodedHeader.toString('utf8')
-    : encodedHeader;
+  const decodedHeader =
+    encodedHeader instanceof Uint8Array
+      ? textDecoder.decode(encodedHeader)
+      : encodedHeader;
 
   const details = parseHeader(decodedHeader, expectedScheme);
 
@@ -259,14 +273,16 @@ function parseEventDetails(
 
 function validateComputedSignature(
   payload: WebhookPayload,
-  header: string,
+  header: WebhookHeader,
   details: WebhookParsedHeader,
   expectedSignature: string,
   tolerance: number
 ): boolean {
   const signatureFound = !!details.signatures.filter(
-    // @ts-ignore
-    utils.secureCompare.bind(utils, expectedSignature)
+    Webhook._platformFunctions!.secureCompare.bind(
+      Webhook._platformFunctions,
+      expectedSignature
+    )
   ).length;
 
   if (!signatureFound) {
@@ -292,7 +308,7 @@ function validateComputedSignature(
 }
 
 function parseHeader(
-  header: string,
+  header: WebhookHeader,
   scheme: string
 ): WebhookParsedHeader | null {
   if (typeof header !== 'string') {
@@ -320,18 +336,17 @@ function parseHeader(
   );
 }
 
-let webhooksNodeCryptoProviderInstance: StripeCryptoProvider | null = null;
+let webhooksCryptoProviderInstance: StripeCryptoProvider | null = null;
 
 /**
- * Lazily instantiate a NodeCryptoProvider instance. This is a stateless object
+ * Lazily instantiate a CryptoProvider instance. This is a stateless object
  * so a singleton can be used here.
  */
-function getNodeCryptoProvider(): StripeCryptoProvider {
-  if (!webhooksNodeCryptoProviderInstance) {
-    const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
-    webhooksNodeCryptoProviderInstance = new NodeCryptoProvider();
+function getCryptoProvider(): StripeCryptoProvider {
+  if (!webhooksCryptoProviderInstance) {
+    webhooksCryptoProviderInstance = Webhook._createCryptoProvider();
   }
-  return webhooksNodeCryptoProviderInstance!;
+  return webhooksCryptoProviderInstance!;
 }
 
 Webhook.signature = signature;

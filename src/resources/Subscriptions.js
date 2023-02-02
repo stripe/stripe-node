@@ -42,6 +42,11 @@ module.exports = StripeResource.extend({
     fullPath: '/v1/subscriptions/{subscription_exposed_id}/discount',
   }),
 
+  resume: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/subscriptions/{subscription}/resume',
+  }),
+
   search: stripeMethod({
     method: 'GET',
     fullPath: '/v1/subscriptions/search',

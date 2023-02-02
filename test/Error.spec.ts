@@ -2,8 +2,8 @@
 
 require('../testUtils');
 
-const Error = require('../lib/Error');
-const expect = require('chai').expect;
+import Error = require('../src/Error');
+import {expect} from 'chai';
 
 describe('Error', () => {
   describe('StripeError', () => {

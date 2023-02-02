@@ -325,14 +325,14 @@ declare module 'stripe' {
         namespace CustomText {
           interface ShippingAddress {
             /**
-             * Text may be up to 500 characters in length.
+             * Text may be up to 1000 characters in length.
              */
             message: string;
           }
 
           interface Submit {
             /**
-             * Text may be up to 500 characters in length.
+             * Text may be up to 1000 characters in length.
              */
             message: string;
           }
@@ -1113,7 +1113,7 @@ declare module 'stripe' {
             namespace BankTransfer {
               interface EuBankTransfer {
                 /**
-                 * The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+                 * The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
                  */
                 country: string;
               }
@@ -1858,6 +1858,11 @@ declare module 'stripe' {
            * customer is charged for the first time. Has to be at least 1.
            */
           trial_period_days?: number;
+
+          /**
+           * Settings related to subscription trials.
+           */
+          trial_settings?: SubscriptionData.TrialSettings;
         }
 
         namespace SubscriptionData {
@@ -1871,6 +1876,26 @@ declare module 'stripe' {
              * ID of an existing, connected Stripe account.
              */
             destination: string;
+          }
+
+          interface TrialSettings {
+            /**
+             * Defines how the subscription should behave when the user's free trial ends.
+             */
+            end_behavior: TrialSettings.EndBehavior;
+          }
+
+          namespace TrialSettings {
+            interface EndBehavior {
+              /**
+               * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+               */
+              missing_payment_method: EndBehavior.MissingPaymentMethod;
+            }
+
+            namespace EndBehavior {
+              type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+            }
           }
         }
 
@@ -1909,6 +1934,11 @@ declare module 'stripe' {
          * Only return the Checkout Session for the PaymentIntent specified.
          */
         payment_intent?: string;
+
+        /**
+         * Only return the Checkout Sessions for the Payment Link specified.
+         */
+        payment_link?: string;
 
         /**
          * Only return the Checkout Session for the subscription specified.

@@ -1,5 +1,5 @@
-const utils = require('./utils');
-import makeRequest = require('./makeRequest');
+import utils = require('./utils');
+import makeRequest = require('./RequestSender');
 import autoPagination = require('./autoPagination');
 const makeAutoPaginationMethods = autoPagination.makeAutoPaginationMethods;
 
@@ -33,7 +33,7 @@ function stripeMethod(spec: MethodSpec): (...args: any[]) => Promise<any> {
     );
 
     const requestPromise = utils.callbackifyPromiseWithTimeout(
-      makeRequest(this, args, spec, {}),
+      this._makeRequest(args, spec, {}),
       callback
     );
 

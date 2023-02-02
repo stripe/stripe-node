@@ -9,7 +9,8 @@ require('chai').use(require('chai-as-promised'));
 const http = require('http');
 
 const CryptoProvider = require('../lib/crypto/CryptoProvider');
-const ResourceNamespace = require('../lib/ResourceNamespace').ResourceNamespace;
+const NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
+const RequestSender = require('../lib/RequestSender');
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 
@@ -25,7 +26,7 @@ const utils = (module.exports = {
     });
     server.listen(0, () => {
       const {port} = server.address();
-      const stripe = require('../lib/stripe')(
+      const stripe = require('../lib/stripe.node')(
         module.exports.getUserStripeKey(),
         {
           host: 'localhost',
@@ -42,7 +43,7 @@ const utils = (module.exports = {
   },
 
   getStripeMockClient: () => {
-    const stripe = require('../lib/stripe');
+    const stripe = require('../lib/stripe.node');
 
     return stripe('sk_test_123', {
       host: process.env.STRIPE_MOCK_HOST || 'localhost',
@@ -58,36 +59,70 @@ const utils = (module.exports = {
     return key;
   },
 
-  getSpyableStripe: (config) => {
-    // Provide a testable stripe instance
-    // That is, with mock-requests built in and hookable
-
-    const stripe = require('../lib/stripe');
-    const stripeInstance = stripe('fakeAuthToken', config);
-
-    stripeInstance.REQUESTS = [];
-
-    for (const i in stripeInstance) {
-      makeInstanceSpyable(stripeInstance, stripeInstance[i]);
-    }
-
-    function makeInstanceSpyable(stripeInstance, thisInstance) {
-      if (thisInstance instanceof stripe.StripeResource) {
-        patchRequest(stripeInstance, thisInstance);
-      } else if (thisInstance instanceof ResourceNamespace) {
-        const namespace = thisInstance;
-
-        for (const j in namespace) {
-          makeInstanceSpyable(stripeInstance, namespace[j]);
-        }
+  getMockPlatformFunctions: (cb) => {
+    class MockPlatformFunctions extends NodePlatformFunctions {
+      constructor(cb) {
+        super();
+        this._exec = cb;
       }
     }
 
-    function patchRequest(stripeInstance, instance) {
-      instance._request = function(method, host, url, data, auth, options, cb) {
+    return new MockPlatformFunctions(cb);
+  },
+
+  getMockStripe: (config, request) => {
+    class MockRequestSender extends RequestSender {
+      _request(
+        method,
+        host,
+        path,
+        data,
+        auth,
+        options = {},
+        callback,
+        requestDataProcessor = null
+      ) {
+        return request(
+          method,
+          host,
+          path,
+          data,
+          auth,
+          options,
+          callback,
+          requestDataProcessor
+        );
+      }
+    }
+
+    // Provide a testable stripe instance
+    // That is, with mock-requests built in and hookable
+    const stripe = require('../lib/stripe.node');
+    const stripeInstance = stripe('fakeAuthToken', config);
+
+    stripeInstance._requestSender = new MockRequestSender(
+      stripeInstance,
+      stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+    );
+
+    return stripeInstance;
+  },
+
+  getSpyableStripe: (config) => {
+    class SpyableRequestSender extends RequestSender {
+      _request(
+        method,
+        host,
+        path,
+        data,
+        auth,
+        options = {},
+        callback,
+        requestDataProcessor = null
+      ) {
         const req = (stripeInstance.LAST_REQUEST = {
           method,
-          url,
+          url: path,
           data,
           headers: options.headers || {},
           settings: options.settings || {},
@@ -101,11 +136,11 @@ const utils = (module.exports = {
 
         const handleMockRequest = (err, req) => {
           stripeInstance.REQUESTS.push(req);
-          cb.call(this, err, {});
+          callback.call(this, err, {});
         };
 
-        if (this.requestDataProcessor) {
-          this.requestDataProcessor(
+        if (requestDataProcessor) {
+          requestDataProcessor(
             method,
             data,
             options.headers,
@@ -114,8 +149,31 @@ const utils = (module.exports = {
         } else {
           handleMockRequest(null, req);
         }
-      };
+
+        return super._request(
+          method,
+          host,
+          path,
+          data,
+          auth,
+          options,
+          callback,
+          requestDataProcessor
+        );
+      }
     }
+
+    // Provide a testable stripe instance
+    // That is, with mock-requests built in and hookable
+    const stripe = require('../lib/stripe.node');
+    const stripeInstance = stripe('fakeAuthToken', config);
+
+    stripeInstance.REQUESTS = [];
+
+    stripeInstance._requestSender = new SpyableRequestSender(
+      stripeInstance,
+      stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+    );
 
     return stripeInstance;
   },
@@ -131,7 +189,7 @@ const utils = (module.exports = {
     function CleanupUtility(timeout) {
       const self = this;
       this._cleanupFns = [];
-      this._stripe = require('../lib/stripe')(
+      this._stripe = require('../lib/stripe.node')(
         utils.getUserStripeKey(),
         'latest'
       );
