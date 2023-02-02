@@ -1,5 +1,27 @@
 # Changelog
 
+## 11.9.0 - 2023-02-02
+* [#1669](https://github.com/stripe/stripe-node/pull/1669) API Updates
+  * Add support for `resume` method on resource `Subscription`
+  * Add support for `payment_link` on `CheckoutSessionListParams`
+  * Add support for `trial_settings` on `CheckoutSessionCreateParams.subscription_data`, `SubscriptionCreateParams`, `SubscriptionUpdateParams`, and `Subscription`
+  * Add support for `shipping_cost` on `CreditNoteCreateParams`, `CreditNotePreviewLinesParams`, `CreditNotePreviewParams`, `CreditNote`, `InvoiceCreateParams`, `InvoiceUpdateParams`, and `Invoice`
+  * Add support for `amount_shipping` on `CreditNote` and `Invoice`
+  * Add support for `shipping_details` on `InvoiceCreateParams`, `InvoiceUpdateParams`, and `Invoice`
+  * Add support for `subscription_resume_at` on `InvoiceUpcomingLinesParams` and `InvoiceUpcomingParams`
+  * Change `IssuingCardholderCreateParams.individual.first_name`, `IssuingCardholderCreateParams.individual.last_name`, `IssuingCardholderUpdateParams.individual.first_name`, and `IssuingCardholderUpdateParams.individual.last_name` to be optional
+  * Change type of `Issuing.Cardholder.individual.first_name` and `Issuing.Cardholder.individual.last_name` from `string` to `string | null`
+  * Add support for `invoice_creation` on `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  * Add support for new value `America/Ciudad_Juarez` on enum `ReportingReportRunCreateParams.parameters.timezone`
+  * Add support for new value `paused` on enum `SubscriptionListParams.status`
+  * Add support for new value `paused` on enum `Subscription.status`
+  * Add support for new values `customer.subscription.paused` and `customer.subscription.resumed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+  * Add support for new value `funding_reversed` on enum `CustomerCashBalanceTransaction.type`
+  
+* [#1670](https://github.com/stripe/stripe-node/pull/1670) Change default entrypoint to stripe.node
+* [#1668](https://github.com/stripe/stripe-node/pull/1668) Use EventTarget in worker / browser runtimes
+* [#1667](https://github.com/stripe/stripe-node/pull/1667) fix: added support for TypeScript "NodeNext" module resolution
+
 ## 11.8.0 - 2023-01-26
 * [#1665](https://github.com/stripe/stripe-node/pull/1665) API Updates
   * Add support for new value `BE` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, `Invoice.payment_settings.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, and `Subscription.payment_settings.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`
