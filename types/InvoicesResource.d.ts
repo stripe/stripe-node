@@ -121,6 +121,16 @@ declare module 'stripe' {
       >;
 
       /**
+       * Settings for the cost of shipping for this invoice.
+       */
+      shipping_cost?: InvoiceCreateParams.ShippingCost;
+
+      /**
+       * Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is set, otherwise the PDF will render the shipping address from the customer.
+       */
+      shipping_details?: InvoiceCreateParams.ShippingDetails;
+
+      /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
        */
       statement_descriptor?: string;
@@ -440,6 +450,161 @@ declare module 'stripe' {
         type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
       }
 
+      interface ShippingCost {
+        /**
+         * The ID of the shipping rate to use for this order.
+         */
+        shipping_rate?: string;
+
+        /**
+         * Parameters to create a new ad-hoc shipping rate for this order.
+         */
+        shipping_rate_data?: ShippingCost.ShippingRateData;
+      }
+
+      namespace ShippingCost {
+        interface ShippingRateData {
+          /**
+           * The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
+           */
+          delivery_estimate?: ShippingRateData.DeliveryEstimate;
+
+          /**
+           * The name of the shipping rate, meant to be displayable to the customer. This will appear on CheckoutSessions.
+           */
+          display_name: string;
+
+          /**
+           * Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
+           */
+          fixed_amount?: ShippingRateData.FixedAmount;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
+           * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+           */
+          tax_behavior?: ShippingRateData.TaxBehavior;
+
+          /**
+           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+           */
+          tax_code?: string;
+
+          /**
+           * The type of calculation to use on the shipping rate. Can only be `fixed_amount` for now.
+           */
+          type?: 'fixed_amount';
+        }
+
+        namespace ShippingRateData {
+          interface DeliveryEstimate {
+            /**
+             * The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
+             */
+            maximum?: DeliveryEstimate.Maximum;
+
+            /**
+             * The lower bound of the estimated range. If empty, represents no lower bound.
+             */
+            minimum?: DeliveryEstimate.Minimum;
+          }
+
+          namespace DeliveryEstimate {
+            interface Maximum {
+              /**
+               * A unit of time.
+               */
+              unit: Maximum.Unit;
+
+              /**
+               * Must be greater than 0.
+               */
+              value: number;
+            }
+
+            namespace Maximum {
+              type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+            }
+
+            interface Minimum {
+              /**
+               * A unit of time.
+               */
+              unit: Minimum.Unit;
+
+              /**
+               * Must be greater than 0.
+               */
+              value: number;
+            }
+
+            namespace Minimum {
+              type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+            }
+          }
+
+          interface FixedAmount {
+            /**
+             * A non-negative integer in cents representing how much to charge.
+             */
+            amount: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency_options?: {
+              [key: string]: FixedAmount.CurrencyOptions;
+            };
+          }
+
+          namespace FixedAmount {
+            interface CurrencyOptions {
+              /**
+               * A non-negative integer in cents representing how much to charge.
+               */
+              amount: number;
+
+              /**
+               * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+               */
+              tax_behavior?: CurrencyOptions.TaxBehavior;
+            }
+
+            namespace CurrencyOptions {
+              type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            }
+          }
+
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+      }
+
+      interface ShippingDetails {
+        /**
+         * Shipping address
+         */
+        address: Stripe.AddressParam;
+
+        /**
+         * Recipient name.
+         */
+        name: string;
+
+        /**
+         * Recipient phone (including extension)
+         */
+        phone?: string;
+      }
+
       interface TransferData {
         /**
          * The amount that will be transferred automatically when the invoice is paid. If no amount is set, the full amount is transferred.
@@ -557,6 +722,16 @@ declare module 'stripe' {
       rendering_options?: Stripe.Emptyable<
         InvoiceUpdateParams.RenderingOptions
       >;
+
+      /**
+       * Settings for the cost of shipping for this invoice.
+       */
+      shipping_cost?: Stripe.Emptyable<InvoiceUpdateParams.ShippingCost>;
+
+      /**
+       * Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is set, otherwise the PDF will render the shipping address from the customer.
+       */
+      shipping_details?: Stripe.Emptyable<InvoiceUpdateParams.ShippingDetails>;
 
       /**
        * Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
@@ -856,6 +1031,161 @@ declare module 'stripe' {
         type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
       }
 
+      interface ShippingCost {
+        /**
+         * The ID of the shipping rate to use for this order.
+         */
+        shipping_rate?: string;
+
+        /**
+         * Parameters to create a new ad-hoc shipping rate for this order.
+         */
+        shipping_rate_data?: ShippingCost.ShippingRateData;
+      }
+
+      namespace ShippingCost {
+        interface ShippingRateData {
+          /**
+           * The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
+           */
+          delivery_estimate?: ShippingRateData.DeliveryEstimate;
+
+          /**
+           * The name of the shipping rate, meant to be displayable to the customer. This will appear on CheckoutSessions.
+           */
+          display_name: string;
+
+          /**
+           * Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
+           */
+          fixed_amount?: ShippingRateData.FixedAmount;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.MetadataParam;
+
+          /**
+           * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+           */
+          tax_behavior?: ShippingRateData.TaxBehavior;
+
+          /**
+           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+           */
+          tax_code?: string;
+
+          /**
+           * The type of calculation to use on the shipping rate. Can only be `fixed_amount` for now.
+           */
+          type?: 'fixed_amount';
+        }
+
+        namespace ShippingRateData {
+          interface DeliveryEstimate {
+            /**
+             * The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
+             */
+            maximum?: DeliveryEstimate.Maximum;
+
+            /**
+             * The lower bound of the estimated range. If empty, represents no lower bound.
+             */
+            minimum?: DeliveryEstimate.Minimum;
+          }
+
+          namespace DeliveryEstimate {
+            interface Maximum {
+              /**
+               * A unit of time.
+               */
+              unit: Maximum.Unit;
+
+              /**
+               * Must be greater than 0.
+               */
+              value: number;
+            }
+
+            namespace Maximum {
+              type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+            }
+
+            interface Minimum {
+              /**
+               * A unit of time.
+               */
+              unit: Minimum.Unit;
+
+              /**
+               * Must be greater than 0.
+               */
+              value: number;
+            }
+
+            namespace Minimum {
+              type Unit = 'business_day' | 'day' | 'hour' | 'month' | 'week';
+            }
+          }
+
+          interface FixedAmount {
+            /**
+             * A non-negative integer in cents representing how much to charge.
+             */
+            amount: number;
+
+            /**
+             * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency: string;
+
+            /**
+             * Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+             */
+            currency_options?: {
+              [key: string]: FixedAmount.CurrencyOptions;
+            };
+          }
+
+          namespace FixedAmount {
+            interface CurrencyOptions {
+              /**
+               * A non-negative integer in cents representing how much to charge.
+               */
+              amount: number;
+
+              /**
+               * Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+               */
+              tax_behavior?: CurrencyOptions.TaxBehavior;
+            }
+
+            namespace CurrencyOptions {
+              type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+            }
+          }
+
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'unspecified';
+        }
+      }
+
+      interface ShippingDetails {
+        /**
+         * Shipping address
+         */
+        address: Stripe.AddressParam;
+
+        /**
+         * Recipient name.
+         */
+        name: string;
+
+        /**
+         * Recipient phone (including extension)
+         */
+        phone?: string;
+      }
+
       interface TransferData {
         /**
          * The amount that will be transferred automatically when the invoice is paid. If no amount is set, the full amount is transferred.
@@ -1013,9 +1343,14 @@ declare module 'stripe' {
       subscription_proration_behavior?: InvoiceListUpcomingLinesParams.SubscriptionProrationBehavior;
 
       /**
-       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
        */
       subscription_proration_date?: number;
+
+      /**
+       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+       */
+      subscription_resume_at?: 'now';
 
       /**
        * Date a subscription is intended to start (can be future or past)
@@ -1578,9 +1913,14 @@ declare module 'stripe' {
       subscription_proration_behavior?: InvoiceRetrieveUpcomingParams.SubscriptionProrationBehavior;
 
       /**
-       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+       * If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
        */
       subscription_proration_date?: number;
+
+      /**
+       * For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+       */
+      subscription_resume_at?: 'now';
 
       /**
        * Date a subscription is intended to start (can be future or past)

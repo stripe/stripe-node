@@ -126,6 +126,7 @@ declare module 'stripe' {
       type Type =
         | 'applied_to_payment'
         | 'funded'
+        | 'funding_reversed'
         | 'refunded_from_payment'
         | 'return_canceled'
         | 'return_initiated'
