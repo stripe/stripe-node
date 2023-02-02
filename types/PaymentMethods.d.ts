@@ -741,6 +741,11 @@ declare module 'stripe' {
         account_holder_type: UsBankAccount.AccountHolderType | null;
 
         /**
+         * Account number of the bank account.
+         */
+        account_number?: string | null;
+
+        /**
          * Account type: checkings or savings. Defaults to checking if omitted.
          */
         account_type: UsBankAccount.AccountType | null;

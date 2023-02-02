@@ -39,15 +39,29 @@ declare module 'stripe' {
          */
         livemode: boolean;
 
+        manual_entry?: Session.ManualEntry;
+
         /**
          * Permissions requested for accounts collected during this session.
          */
         permissions: Array<Session.Permission>;
 
         /**
+         * Data features requested to be retrieved upon account creation.
+         */
+        prefetch?: Array<Session.Prefetch> | null;
+
+        /**
          * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
          */
         return_url?: string;
+
+        /**
+         * The current state of the session.
+         */
+        status?: Session.Status;
+
+        status_details?: Session.StatusDetails;
       }
 
       namespace Session {
@@ -79,11 +93,38 @@ declare module 'stripe' {
           countries: Array<string> | null;
         }
 
+        interface ManualEntry {}
+
         type Permission =
           | 'balances'
           | 'ownership'
           | 'payment_method'
           | 'transactions';
+
+        type Prefetch =
+          | 'balances'
+          | 'inferred_balances'
+          | 'ownership'
+          | 'transactions';
+
+        type Status = 'cancelled' | 'failed' | 'pending' | 'succeeded';
+
+        interface StatusDetails {
+          cancelled?: StatusDetails.Cancelled;
+        }
+
+        namespace StatusDetails {
+          interface Cancelled {
+            /**
+             * The reason for the Session being cancelled.
+             */
+            reason: Cancelled.Reason;
+          }
+
+          namespace Cancelled {
+            type Reason = 'custom_manual_entry' | 'other';
+          }
+        }
       }
     }
   }

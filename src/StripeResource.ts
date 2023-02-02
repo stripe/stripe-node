@@ -222,7 +222,7 @@ StripeResource.prototype = {
         opts.auth,
         {headers, settings, streaming: opts.streaming},
         requestCallback,
-        this.requestDataProcessor
+        this.requestDataProcessor?.bind(this)
       );
     });
   },

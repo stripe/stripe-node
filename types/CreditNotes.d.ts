@@ -24,6 +24,11 @@ declare module 'stripe' {
       amount: number;
 
       /**
+       * This is the sum of all the shipping amounts.
+       */
+      amount_shipping: number;
+
+      /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
       created: number;
@@ -107,6 +112,11 @@ declare module 'stripe' {
       refund: string | Stripe.Refund | null;
 
       /**
+       * The details of the cost of shipping, including the ShippingRate applied to the invoice.
+       */
+      shipping_cost: CreditNote.ShippingCost | null;
+
+      /**
        * Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
        */
       status: CreditNote.Status;
@@ -165,6 +175,49 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'order_change'
         | 'product_unsatisfactory';
+
+      interface ShippingCost {
+        /**
+         * Total shipping cost before any taxes are applied.
+         */
+        amount_subtotal: number;
+
+        /**
+         * Total tax amount applied due to shipping costs. If no tax was applied, defaults to 0.
+         */
+        amount_tax: number;
+
+        /**
+         * Total shipping cost after taxes are applied.
+         */
+        amount_total: number;
+
+        /**
+         * The ID of the ShippingRate for this invoice.
+         */
+        shipping_rate: string | Stripe.ShippingRate | null;
+
+        /**
+         * The taxes applied to the shipping rate.
+         */
+        taxes?: Array<ShippingCost.Tax>;
+      }
+
+      namespace ShippingCost {
+        interface Tax {
+          /**
+           * Amount of tax applied for this rate.
+           */
+          amount: number;
+
+          /**
+           * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+           *
+           * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+           */
+          rate: Stripe.TaxRate;
+        }
+      }
 
       type Status = 'issued' | 'void';
 

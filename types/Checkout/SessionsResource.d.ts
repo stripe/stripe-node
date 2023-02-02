@@ -1266,7 +1266,7 @@ declare module 'stripe' {
           interface Paypal {
             billing_agreement_id?: string;
 
-            currency: string;
+            currency?: string;
           }
 
           interface Pix {
@@ -1329,6 +1329,11 @@ declare module 'stripe' {
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * List of data features that you would like to retrieve upon account creation.
+               */
+              prefetch?: Array<FinancialConnections.Prefetch>;
             }
 
             namespace FinancialConnections {
@@ -1336,6 +1341,12 @@ declare module 'stripe' {
                 | 'balances'
                 | 'ownership'
                 | 'payment_method'
+                | 'transactions';
+
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
                 | 'transactions';
             }
 
@@ -1870,6 +1881,11 @@ declare module 'stripe' {
            * customer is charged for the first time. Has to be at least 1.
            */
           trial_period_days?: number;
+
+          /**
+           * Settings related to subscription trials.
+           */
+          trial_settings?: SubscriptionData.TrialSettings;
         }
 
         namespace SubscriptionData {
@@ -1883,6 +1899,26 @@ declare module 'stripe' {
              * ID of an existing, connected Stripe account.
              */
             destination: string;
+          }
+
+          interface TrialSettings {
+            /**
+             * Defines how the subscription should behave when the user's free trial ends.
+             */
+            end_behavior: TrialSettings.EndBehavior;
+          }
+
+          namespace TrialSettings {
+            interface EndBehavior {
+              /**
+               * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+               */
+              missing_payment_method: EndBehavior.MissingPaymentMethod;
+            }
+
+            namespace EndBehavior {
+              type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+            }
           }
         }
 
@@ -1921,6 +1957,11 @@ declare module 'stripe' {
          * Only return the Checkout Session for the PaymentIntent specified.
          */
         payment_intent?: string;
+
+        /**
+         * Only return the Checkout Sessions for the Payment Link specified.
+         */
+        payment_link?: string;
 
         /**
          * Only return the Checkout Session for the subscription specified.

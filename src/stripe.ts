@@ -1,1 +1,0 @@
-export = require('./stripe.node');

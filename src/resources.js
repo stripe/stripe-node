@@ -73,6 +73,7 @@ module.exports = {
   FinancialConnections: resourceNamespace('financialConnections', {
     Accounts: require('./resources/FinancialConnections/Accounts'),
     Sessions: require('./resources/FinancialConnections/Sessions'),
+    Transactions: require('./resources/FinancialConnections/Transactions'),
   }),
   GiftCards: resourceNamespace('giftCards', {
     Cards: require('./resources/GiftCards/Cards'),

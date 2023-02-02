@@ -181,6 +181,11 @@ declare module 'stripe' {
        * Integer representing the number of trial period days before the customer is charged for the first time. This will always overwrite any trials that might apply via a subscribed plan. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
        */
       trial_period_days?: number;
+
+      /**
+       * Settings related to subscription trials.
+       */
+      trial_settings?: SubscriptionCreateParams.TrialSettings;
     }
 
     namespace SubscriptionCreateParams {
@@ -767,6 +772,11 @@ declare module 'stripe' {
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * List of data features that you would like to retrieve upon account creation.
+               */
+              prefetch?: Array<FinancialConnections.Prefetch>;
             }
 
             namespace FinancialConnections {
@@ -774,6 +784,12 @@ declare module 'stripe' {
                 | 'balances'
                 | 'ownership'
                 | 'payment_method'
+                | 'transactions';
+
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
                 | 'transactions';
             }
 
@@ -843,6 +859,26 @@ declare module 'stripe' {
          * ID of an existing, connected Stripe account.
          */
         destination: string;
+      }
+
+      interface TrialSettings {
+        /**
+         * Defines how the subscription should behave when the user's free trial ends.
+         */
+        end_behavior: TrialSettings.EndBehavior;
+      }
+
+      namespace TrialSettings {
+        interface EndBehavior {
+          /**
+           * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+           */
+          missing_payment_method: EndBehavior.MissingPaymentMethod;
+        }
+
+        namespace EndBehavior {
+          type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+        }
       }
     }
 
@@ -1020,6 +1056,11 @@ declare module 'stripe' {
        * Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
        */
       trial_from_plan?: boolean;
+
+      /**
+       * Settings related to subscription trials.
+       */
+      trial_settings?: SubscriptionUpdateParams.TrialSettings;
     }
 
     namespace SubscriptionUpdateParams {
@@ -1618,6 +1659,11 @@ declare module 'stripe' {
                * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
                */
               permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * List of data features that you would like to retrieve upon account creation.
+               */
+              prefetch?: Array<FinancialConnections.Prefetch>;
             }
 
             namespace FinancialConnections {
@@ -1625,6 +1671,12 @@ declare module 'stripe' {
                 | 'balances'
                 | 'ownership'
                 | 'payment_method'
+                | 'transactions';
+
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
                 | 'transactions';
             }
 
@@ -1695,6 +1747,26 @@ declare module 'stripe' {
          */
         destination: string;
       }
+
+      interface TrialSettings {
+        /**
+         * Defines how the subscription should behave when the user's free trial ends.
+         */
+        end_behavior: TrialSettings.EndBehavior;
+      }
+
+      namespace TrialSettings {
+        interface EndBehavior {
+          /**
+           * Indicates how the subscription should change when the trial ends if the user did not provide a payment method.
+           */
+          missing_payment_method: EndBehavior.MissingPaymentMethod;
+        }
+
+        namespace EndBehavior {
+          type MissingPaymentMethod = 'cancel' | 'create_invoice' | 'pause';
+        }
+      }
     }
 
     interface SubscriptionListParams extends PaginationParams {
@@ -1751,6 +1823,7 @@ declare module 'stripe' {
         | 'incomplete'
         | 'incomplete_expired'
         | 'past_due'
+        | 'paused'
         | 'trialing'
         | 'unpaid';
     }
@@ -1790,6 +1863,34 @@ declare module 'stripe' {
     }
 
     interface SubscriptionDeleteDiscountParams {}
+
+    interface SubscriptionResumeParams {
+      /**
+       * Either `now` or `unchanged`. Setting the value to `now` resets the subscription's billing cycle anchor to the current time (in UTC). Setting the value to `unchanged` advances the subscription's billing cycle anchor to the period that surrounds the current time. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
+       */
+      billing_cycle_anchor?: SubscriptionResumeParams.BillingCycleAnchor;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+       */
+      proration_behavior?: SubscriptionResumeParams.ProrationBehavior;
+
+      /**
+       * If set, the proration will be calculated as though the subscription was resumed at the given time. This can be used to apply exactly the same proration that was previewed with [upcoming invoice](https://stripe.com/docs/api#retrieve_customer_invoice) endpoint.
+       */
+      proration_date?: number;
+    }
+
+    namespace SubscriptionResumeParams {
+      type BillingCycleAnchor = 'now' | 'unchanged';
+
+      type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
+    }
 
     interface SubscriptionSearchParams {
       /**
@@ -1905,6 +2006,19 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
+
+      /**
+       * Initiates resumption of a paused subscription, optionally resetting the billing cycle anchor and creating prorations. If a resumption invoice is generated, it must be paid or marked uncollectible before the subscription will be unpaused. If payment succeeds the subscription will become active, and if payment fails the subscription will be past_due. The resumption invoice will void automatically if not paid by the expiration date.
+       */
+      resume(
+        id: string,
+        params?: SubscriptionResumeParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
+      resume(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Subscription>>;
 
       /**
        * Search for subscriptions you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).

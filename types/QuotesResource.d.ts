@@ -711,11 +711,6 @@ declare module 'stripe' {
 
           interface LineEndsAt {
             /**
-             * The ID of a quote line.
-             */
-            id?: string;
-
-            /**
              * The position of the previous quote line in the `lines` array after which this line should begin. Indexes start from 0 and must be less than the index of the current line in the array.
              */
             index?: number;
