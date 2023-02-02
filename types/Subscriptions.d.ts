@@ -463,10 +463,25 @@ declare module 'stripe' {
                * The list of permissions to request. The `payment_method` permission must be included.
                */
               permissions?: Array<FinancialConnections.Permission>;
+
+              /**
+               * Data features requested to be retrieved upon account creation.
+               */
+              prefetch?: Array<FinancialConnections.Prefetch> | null;
             }
 
             namespace FinancialConnections {
-              type Permission = 'balances' | 'payment_method' | 'transactions';
+              type Permission =
+                | 'balances'
+                | 'ownership'
+                | 'payment_method'
+                | 'transactions';
+
+              type Prefetch =
+                | 'balances'
+                | 'inferred_balances'
+                | 'ownership'
+                | 'transactions';
             }
 
             type VerificationMethod = 'automatic' | 'instant' | 'microdeposits';

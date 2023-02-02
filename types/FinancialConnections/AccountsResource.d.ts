@@ -73,7 +73,18 @@ declare module 'stripe' {
       }
 
       namespace AccountRefreshParams {
-        type Feature = 'balance' | 'ownership';
+        type Feature =
+          | 'balance'
+          | 'inferred_balances'
+          | 'ownership'
+          | 'transactions';
+      }
+
+      interface InferredBalanceListParams extends PaginationParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
       }
 
       class AccountsResource {
@@ -131,6 +142,19 @@ declare module 'stripe' {
           params: AccountRefreshParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
+
+        /**
+         * Lists the recorded inferred balances for a Financial Connections Account.
+         */
+        listInferredBalances(
+          id: string,
+          params?: InferredBalanceListParams,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.FinancialConnections.InferredBalance>;
+        listInferredBalances(
+          id: string,
+          options?: RequestOptions
+        ): ApiListPromise<Stripe.FinancialConnections.InferredBalance>;
       }
     }
   }

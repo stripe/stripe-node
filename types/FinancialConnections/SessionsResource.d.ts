@@ -27,6 +27,16 @@ declare module 'stripe' {
         filters?: SessionCreateParams.Filters;
 
         /**
+         * Settings for configuring manual entry of account details for this Session.
+         */
+        manual_entry?: SessionCreateParams.ManualEntry;
+
+        /**
+         * List of data features that you would like to retrieve upon account creation.
+         */
+        prefetch?: Array<SessionCreateParams.Prefetch>;
+
+        /**
          * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
          */
         return_url?: string;
@@ -61,10 +71,32 @@ declare module 'stripe' {
           countries: Array<string>;
         }
 
+        interface ManualEntry {
+          /**
+           * Whether manual entry will be allowed on this Session.
+           */
+          enabled: boolean;
+
+          /**
+           * Whether manual entry will be handled by Stripe during the Session.
+           */
+          mode?: ManualEntry.Mode;
+        }
+
+        namespace ManualEntry {
+          type Mode = 'automatic' | 'custom';
+        }
+
         type Permission =
           | 'balances'
           | 'ownership'
           | 'payment_method'
+          | 'transactions';
+
+        type Prefetch =
+          | 'balances'
+          | 'inferred_balances'
+          | 'ownership'
           | 'transactions';
       }
 

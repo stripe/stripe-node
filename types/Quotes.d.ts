@@ -757,7 +757,7 @@ declare module 'stripe' {
         /**
          * Describes the period to bill for upon accepting the quote.
          */
-        bill_on_acceptance: SubscriptionDataOverride.BillOnAcceptance | null;
+        bill_on_acceptance?: SubscriptionDataOverride.BillOnAcceptance | null;
 
         /**
          * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.
