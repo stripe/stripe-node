@@ -57,6 +57,11 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
        */
       refund_amount?: number;
+
+      /**
+       * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note.
+       */
+      shipping_cost?: CreditNoteCreateParams.ShippingCost;
     }
 
     namespace CreditNoteCreateParams {
@@ -111,6 +116,13 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'order_change'
         | 'product_unsatisfactory';
+
+      interface ShippingCost {
+        /**
+         * The ID of the shipping rate to use for this order.
+         */
+        shipping_rate?: string;
+      }
     }
 
     interface CreditNoteRetrieveParams {
@@ -209,6 +221,11 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
        */
       refund_amount?: number;
+
+      /**
+       * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note.
+       */
+      shipping_cost?: CreditNoteListPreviewLineItemsParams.ShippingCost;
     }
 
     namespace CreditNoteListPreviewLineItemsParams {
@@ -263,6 +280,13 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'order_change'
         | 'product_unsatisfactory';
+
+      interface ShippingCost {
+        /**
+         * The ID of the shipping rate to use for this order.
+         */
+        shipping_rate?: string;
+      }
     }
 
     interface CreditNotePreviewParams {
@@ -320,6 +344,11 @@ declare module 'stripe' {
        * The integer amount in cents (or local equivalent) representing the amount to refund. If set, a refund will be created for the charge associated with the invoice.
        */
       refund_amount?: number;
+
+      /**
+       * When shipping_cost contains the shipping_rate from the invoice, the shipping_cost is included in the credit note.
+       */
+      shipping_cost?: CreditNotePreviewParams.ShippingCost;
     }
 
     namespace CreditNotePreviewParams {
@@ -374,6 +403,13 @@ declare module 'stripe' {
         | 'fraudulent'
         | 'order_change'
         | 'product_unsatisfactory';
+
+      interface ShippingCost {
+        /**
+         * The ID of the shipping rate to use for this order.
+         */
+        shipping_rate?: string;
+      }
     }
 
     interface CreditNoteVoidCreditNoteParams {

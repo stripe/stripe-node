@@ -118,12 +118,12 @@ declare module 'stripe' {
           /**
            * The first name of this cardholder. This field cannot contain any special characters or numbers.
            */
-          first_name: string;
+          first_name?: string;
 
           /**
            * The last name of this cardholder. This field cannot contain any special characters or numbers.
            */
-          last_name: string;
+          last_name?: string;
 
           /**
            * Government-issued ID document for this cardholder.
@@ -1209,12 +1209,12 @@ declare module 'stripe' {
           /**
            * The first name of this cardholder. This field cannot contain any special characters or numbers.
            */
-          first_name: string;
+          first_name?: string;
 
           /**
            * The last name of this cardholder. This field cannot contain any special characters or numbers.
            */
-          last_name: string;
+          last_name?: string;
 
           /**
            * Government-issued ID document for this cardholder.
