@@ -1231,6 +1231,56 @@ describe('CustomerSources', function() {
   });
 });
 
+describe('Subscriptions', function() {
+  it('resume method', async function() {
+    const subscription = await stripe.subscriptions.resume(
+      'sub_xxxxxxxxxxxxx',
+      {proration_date: 1675400000, proration_behavior: 'always_invoice'}
+    );
+    expect(subscription).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const subscriptions = await stripe.subscriptions.list({limit: 3});
+    expect(subscriptions).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const subscription = await stripe.subscriptions.create({
+      customer: 'cus_xxxxxxxxxxxxx',
+      items: [{price: 'price_xxxxxxxxxxxxx'}],
+    });
+    expect(subscription).not.to.be.null;
+  });
+
+  it('cancel method', async function() {
+    const subscription = await stripe.subscriptions.cancel('sub_xxxxxxxxxxxxx');
+    expect(subscription).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const subscription = await stripe.subscriptions.retrieve(
+      'sub_xxxxxxxxxxxxx'
+    );
+    expect(subscription).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const subscription = await stripe.subscriptions.update(
+      'sub_xxxxxxxxxxxxx',
+      {metadata: {order_id: '6735'}}
+    );
+    expect(subscription).not.to.be.null;
+  });
+
+  it('search method', async function() {
+    const subscriptions = await stripe.subscriptions.search({
+      query: "status:'active' AND metadata['order_id']:'6735'",
+    });
+    expect(subscriptions).not.to.be.null;
+  });
+});
+
 describe('LoginLinks', function() {
   it('createLoginLink method', async function() {
     const loginLink = await stripe.accounts.createLoginLink(
@@ -2479,48 +2529,6 @@ describe('SubscriptionSchedules', function() {
       'sub_sched_xxxxxxxxxxxxx'
     );
     expect(subscriptionSchedule).not.to.be.null;
-  });
-});
-
-describe('Subscriptions', function() {
-  it('list method', async function() {
-    const subscriptions = await stripe.subscriptions.list({limit: 3});
-    expect(subscriptions).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const subscription = await stripe.subscriptions.create({
-      customer: 'cus_xxxxxxxxxxxxx',
-      items: [{price: 'price_xxxxxxxxxxxxx'}],
-    });
-    expect(subscription).not.to.be.null;
-  });
-
-  it('cancel method', async function() {
-    const subscription = await stripe.subscriptions.cancel('sub_xxxxxxxxxxxxx');
-    expect(subscription).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const subscription = await stripe.subscriptions.retrieve(
-      'sub_xxxxxxxxxxxxx'
-    );
-    expect(subscription).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const subscription = await stripe.subscriptions.update(
-      'sub_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
-    );
-    expect(subscription).not.to.be.null;
-  });
-
-  it('search method', async function() {
-    const subscriptions = await stripe.subscriptions.search({
-      query: "status:'active' AND metadata['order_id']:'6735'",
-    });
-    expect(subscriptions).not.to.be.null;
   });
 });
 
