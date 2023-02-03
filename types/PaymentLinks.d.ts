@@ -67,6 +67,11 @@ declare module 'stripe' {
       customer_creation: PaymentLink.CustomerCreation;
 
       /**
+       * Configuration for creating invoice for payment mode payment links.
+       */
+      invoice_creation: PaymentLink.InvoiceCreation | null;
+
+      /**
        * The line items representing what is being sold.
        */
       line_items?: ApiList<Stripe.LineItem>;
@@ -220,6 +225,75 @@ declare module 'stripe' {
            * Text may be up to 1000 characters in length.
            */
           message: string;
+        }
+      }
+
+      interface InvoiceCreation {
+        /**
+         * Enable creating an invoice on successful payment.
+         */
+        enabled: boolean;
+
+        /**
+         * Configuration for the invoice. Default invoice values will be used if unspecified.
+         */
+        invoice_data: InvoiceCreation.InvoiceData | null;
+      }
+
+      namespace InvoiceCreation {
+        interface InvoiceData {
+          /**
+           * The account tax IDs associated with the invoice.
+           */
+          account_tax_ids: Array<
+            string | Stripe.TaxId | Stripe.DeletedTaxId
+          > | null;
+
+          /**
+           * A list of up to 4 custom fields to be displayed on the invoice.
+           */
+          custom_fields: Array<InvoiceData.CustomField> | null;
+
+          /**
+           * An arbitrary string attached to the object. Often useful for displaying to users.
+           */
+          description: string | null;
+
+          /**
+           * Footer to be displayed on the invoice.
+           */
+          footer: string | null;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+           */
+          metadata: Stripe.Metadata | null;
+
+          /**
+           * Options for invoice PDF rendering.
+           */
+          rendering_options: InvoiceData.RenderingOptions | null;
+        }
+
+        namespace InvoiceData {
+          interface CustomField {
+            /**
+             * The name of the custom field.
+             */
+            name: string;
+
+            /**
+             * The value of the custom field.
+             */
+            value: string;
+          }
+
+          interface RenderingOptions {
+            /**
+             * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+             */
+            amount_tax_display: string | null;
+          }
         }
       }
 

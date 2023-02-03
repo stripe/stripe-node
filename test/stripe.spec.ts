@@ -661,12 +661,14 @@ describe('Stripe Module', function() {
   });
 
   describe('imports', function() {
+    this.timeout(30000);
     const runTestProject = (projectName: string): void => {
       const script = `
-      cd testProjects/${projectName}
-      npm install
-      npm run-script runtestproject -- ${testUtils.getUserStripeKey()}
-    `;
+        cd testProjects/${projectName} &&
+        npm install &&
+        npm run lint &&
+        npm run runtestproject -- ${testUtils.getUserStripeKey()}
+      `;
       require('child_process').execSync(script);
     };
 
