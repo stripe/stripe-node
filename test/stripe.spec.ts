@@ -686,4 +686,31 @@ describe('Stripe Module', function() {
       expect(runTestProject.bind(null, 'mjs-ts')).to.not.throw();
     });
   });
+
+  describe('stripe.worker', function() {
+    if (process.versions.node < '16.13') {
+      console.log('Wrangler requires at least node.js v16.13.0, skipping test');
+      return;
+    }
+    const runTestCloudflareProject = (projectName: string): void => {
+      const script = `
+        cd testProjects/${projectName} &&
+        npm install &&
+        npm run build
+      `;
+      require('child_process').execSync(script);
+    };
+
+    it('should build successfully in Cloudflare Workers', function() {
+      expect(
+        runTestCloudflareProject.bind(null, 'cloudflare-worker')
+      ).to.not.throw();
+    });
+
+    it('should build successfully in Cloudflare Pages Functions', function() {
+      expect(
+        runTestCloudflareProject.bind(null, 'cloudflare-pages')
+      ).to.not.throw();
+    });
+  });
 });
