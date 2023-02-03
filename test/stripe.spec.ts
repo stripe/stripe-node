@@ -694,8 +694,8 @@ describe('Stripe Module', function() {
     }
     const runTestCloudflareProject = (projectName: string): void => {
       const script = `
-        cd testProjects/${projectName}
-        npm install
+        cd testProjects/${projectName} &&
+        npm install &&
         npm run build
       `;
       require('child_process').execSync(script);
