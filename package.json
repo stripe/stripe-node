@@ -24,7 +24,7 @@
   "engines": {
     "node": ">=12.*"
   },
-  "main": "lib/stripe.js",
+  "main": "lib/stripe.node.js",
   "types": "types/index.d.ts",
   "devDependencies": {
     "@types/chai": "^4.3.4",
