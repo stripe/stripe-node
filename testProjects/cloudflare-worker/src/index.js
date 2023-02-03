@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 
 async function handleRequest(request, env) {
-  const stripe = Stripe(STRIPE_API_KEY, {
+  const stripe = Stripe(env.STRIPE_API_KEY, {
     // Cloudflare Workers use the Fetch API for their API requests.
     httpClient: Stripe.createFetchHttpClient()
   });

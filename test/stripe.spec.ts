@@ -686,6 +686,10 @@ describe('Stripe Module', function() {
   });
 
   describe('stripe.worker', function() {
+    if (process.versions.node < '16.13') {
+      console.log('Wrangler requires at least node.js v16.13.0, skipping test');
+      return;
+    }
     const runTestCloudflareProject = (projectName: string): void => {
       const script = `
         cd testProjects/${projectName}
@@ -695,15 +699,15 @@ describe('Stripe Module', function() {
       require('child_process').execSync(script);
     };
 
-    it('should work when used in a Cloudflare Worker project', function() {
-      if (process.versions.node < '16.13') {
-        console.log(
-          'Wrangler requires at least node.js v16.13.0, skipping test'
-        );
-        this.skip();
-      }
+    it('should build successfully in Cloudflare Workers', function() {
       expect(
         runTestCloudflareProject.bind(null, 'cloudflare-worker')
+      ).to.not.throw();
+    });
+
+    it('should build successfully in Cloudflare Pages Functions', function() {
+      expect(
+        runTestCloudflareProject.bind(null, 'cloudflare-pages')
       ).to.not.throw();
     });
   });

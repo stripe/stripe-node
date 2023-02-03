@@ -1,10 +1,9 @@
 {
-  "name": "cloudflare-worker",
+  "name": "cloudflare-pages",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.js",
   "scripts": {
-    "build": "wrangler publish --dry-run"
+    "build": "wrangler pages functions build && rm _worker.js"
   },
   "keywords": [],
   "author": "",
