@@ -661,6 +661,7 @@ describe('Stripe Module', function() {
   });
 
   describe('imports', function() {
+    this.timeout(30000);
     const runTestProject = (projectName: string): void => {
       const script = `
         cd testProjects/${projectName} &&
