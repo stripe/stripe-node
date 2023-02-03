@@ -684,4 +684,27 @@ describe('Stripe Module', function() {
       expect(runTestProject.bind(null, 'mjs-ts')).to.not.throw();
     });
   });
+
+  describe('stripe.worker', function() {
+    const runTestCloudflareProject = (projectName: string): void => {
+      const script = `
+        cd testProjects/${projectName}
+        npm install
+        npm run build
+      `;
+      require('child_process').execSync(script);
+    };
+
+    it('should work when used in a Cloudflare Worker project', function() {
+      if (process.versions.node < '16.13') {
+        console.log(
+          'Wrangler requires at least node.js v16.13.0, skipping test'
+        );
+        this.skip();
+      }
+      expect(
+        runTestCloudflareProject.bind(null, 'cloudflare-worker')
+      ).to.not.throw();
+    });
+  });
 });

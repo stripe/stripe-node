@@ -1,0 +1,19 @@
+{
+  "name": "cloudflare-worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.js",
+  "scripts": {
+    "build": "wrangler publish --dry-run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "stripe": "file:../../"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.5",
+    "wrangler": "^2.9.0"
+  }
+}
