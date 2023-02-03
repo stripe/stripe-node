@@ -64,6 +64,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Generate a post-purchase Invoice for one-time payments.
+       */
+      invoice_creation?: PaymentLinkCreateParams.InvoiceCreation;
+
+      /**
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`. Metadata associated with this Payment Link will automatically be copied to [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link.
        */
       metadata?: Stripe.MetadataParam;
@@ -223,6 +228,79 @@ declare module 'stripe' {
            * Text may be up to 1000 characters in length.
            */
           message: string;
+        }
+      }
+
+      interface InvoiceCreation {
+        /**
+         * Whether the feature is enabled
+         */
+        enabled: boolean;
+
+        /**
+         * Invoice PDF configuration.
+         */
+        invoice_data?: InvoiceCreation.InvoiceData;
+      }
+
+      namespace InvoiceCreation {
+        interface InvoiceData {
+          /**
+           * The account tax IDs associated with the invoice.
+           */
+          account_tax_ids?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Default custom fields to be displayed on invoices for this customer.
+           */
+          custom_fields?: Stripe.Emptyable<Array<InvoiceData.CustomField>>;
+
+          /**
+           * An arbitrary string attached to the object. Often useful for displaying to users.
+           */
+          description?: string;
+
+          /**
+           * Default footer to be displayed on invoices for this customer.
+           */
+          footer?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * Default options for invoice PDF rendering for this customer.
+           */
+          rendering_options?: Stripe.Emptyable<InvoiceData.RenderingOptions>;
+        }
+
+        namespace InvoiceData {
+          interface CustomField {
+            /**
+             * The name of the custom field. This may be up to 30 characters.
+             */
+            name: string;
+
+            /**
+             * The value of the custom field. This may be up to 30 characters.
+             */
+            value: string;
+          }
+
+          interface RenderingOptions {
+            /**
+             * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+             */
+            amount_tax_display?: Stripe.Emptyable<
+              RenderingOptions.AmountTaxDisplay
+            >;
+          }
+
+          namespace RenderingOptions {
+            type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+          }
         }
       }
 
@@ -668,6 +746,11 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
+       * Generate a post-purchase Invoice for one-time payments.
+       */
+      invoice_creation?: PaymentLinkUpdateParams.InvoiceCreation;
+
+      /**
        * The line items representing what is being sold. Each line item represents an item being sold. Up to 20 line items are supported.
        */
       line_items?: Array<PaymentLinkUpdateParams.LineItem>;
@@ -773,6 +856,79 @@ declare module 'stripe' {
            * Text may be up to 1000 characters in length.
            */
           message: string;
+        }
+      }
+
+      interface InvoiceCreation {
+        /**
+         * Whether the feature is enabled
+         */
+        enabled: boolean;
+
+        /**
+         * Invoice PDF configuration.
+         */
+        invoice_data?: InvoiceCreation.InvoiceData;
+      }
+
+      namespace InvoiceCreation {
+        interface InvoiceData {
+          /**
+           * The account tax IDs associated with the invoice.
+           */
+          account_tax_ids?: Stripe.Emptyable<Array<string>>;
+
+          /**
+           * Default custom fields to be displayed on invoices for this customer.
+           */
+          custom_fields?: Stripe.Emptyable<Array<InvoiceData.CustomField>>;
+
+          /**
+           * An arbitrary string attached to the object. Often useful for displaying to users.
+           */
+          description?: string;
+
+          /**
+           * Default footer to be displayed on invoices for this customer.
+           */
+          footer?: string;
+
+          /**
+           * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+           */
+          metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+          /**
+           * Default options for invoice PDF rendering for this customer.
+           */
+          rendering_options?: Stripe.Emptyable<InvoiceData.RenderingOptions>;
+        }
+
+        namespace InvoiceData {
+          interface CustomField {
+            /**
+             * The name of the custom field. This may be up to 30 characters.
+             */
+            name: string;
+
+            /**
+             * The value of the custom field. This may be up to 30 characters.
+             */
+            value: string;
+          }
+
+          interface RenderingOptions {
+            /**
+             * How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+             */
+            amount_tax_display?: Stripe.Emptyable<
+              RenderingOptions.AmountTaxDisplay
+            >;
+          }
+
+          namespace RenderingOptions {
+            type AmountTaxDisplay = 'exclude_tax' | 'include_inclusive_tax';
+          }
         }
       }
 
