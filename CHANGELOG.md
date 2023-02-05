@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.9.1 - 2023-02-03
+* [#1672](https://github.com/stripe/stripe-node/pull/1672) Update main entrypoint on package.json
+
 ## 11.9.0 - 2023-02-02
 * [#1669](https://github.com/stripe/stripe-node/pull/1669) API Updates
   * Add support for `resume` method on resource `Subscription`

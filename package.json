@@ -1,6 +1,6 @@
 {
   "name": "stripe",
-  "version": "11.9.0",
+  "version": "11.9.1",
   "description": "Stripe API wrapper",
   "keywords": [
     "stripe",
@@ -24,7 +24,7 @@
   "engines": {
     "node": ">=12.*"
   },
-  "main": "lib/stripe.js",
+  "main": "lib/stripe.node.js",
   "types": "types/index.d.ts",
   "devDependencies": {
     "@types/chai": "^4.3.4",
