@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 import Koa from 'koa';
 import bodyParser from 'koa-bodyparser';
 import env from 'dotenv';
+import {AddressInfo} from 'net';
 
 const app = new Koa();
 
@@ -61,6 +62,10 @@ app.use(async (ctx, next) => {
   ctx.body = `hello ${name}, you hit ${ctx.request.path}`;
 });
 
-app.listen(3000, () => {
-  console.log('Webhook endpoint available at http://localhost:3000/webhook');
-});
+const server = app.listen();
+
+console.log(
+  `Webhook endpoint available at http://localhost:${
+    (<AddressInfo>server.address()).port
+  }/webhook`
+);

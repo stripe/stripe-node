@@ -26,7 +26,7 @@ server.stderr.pipe(process.stdout);
 
 const serverReady = new Promise<string>((resolve, reject) => {
   server.stdout.on('data', (data) => {
-    const match = /Webhook endpoint available1 at (.*)/gm.exec(data);
+    const match = /Webhook endpoint available at (.*)/gm.exec(data);
     if (match) {
       resolve(match[1]);
     }

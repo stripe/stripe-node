@@ -3,6 +3,7 @@
 import Stripe from 'stripe';
 import express from 'express';
 import env from 'dotenv';
+import {AddressInfo} from 'net';
 
 env.config();
 
@@ -67,6 +68,9 @@ app.post(
   }
 );
 
-app.listen(3000, (): void => {
-  console.log('Webhook endpoint available at http://localhost:3000/webhook');
-});
+const server = app.listen();
+console.log(
+  `Webhook endpoint available at http://localhost:${
+    (<AddressInfo>server.address()).port
+  }/webhook`
+);
