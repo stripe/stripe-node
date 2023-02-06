@@ -1,26 +1,15 @@
 'use strict';
 
 import * as childProcess from 'child_process';
+import {promisify} from 'util';
+const exec = promisify(childProcess.exec);
 
 const testUtils = require('../testUtils');
 
 describe('Integration test', function() {
   this.timeout(30000);
-  const testExec = (cmd: string): Promise<void> => {
-    const child = childProcess.exec(cmd);
-
-    child.stdout?.pipe(process.stdout);
-    child.stderr?.pipe(process.stderr);
-
-    return new Promise((resolve, reject) => {
-      child.on('exit', (code) => {
-        if (code == 0) {
-          resolve();
-        } else {
-          reject(new Error('Test failed'));
-        }
-      });
-    });
+  const testExec = async (cmd: string): Promise<void> => {
+    await exec(cmd);
   };
   const runTestProject = (projectName: string): Promise<void> => {
     return testExec(`
