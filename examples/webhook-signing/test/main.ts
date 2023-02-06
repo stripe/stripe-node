@@ -95,6 +95,7 @@ const sendTestRequest = async (url: string): Promise<string> => {
       }
     );
     request.write(payload);
+    request.end();
   });
 };
 
