@@ -61,7 +61,7 @@ To add a new example:
   2. Must have `#!/usr/bin/env -S npm run-script run` header to be directly runable.
   3. Must print `Webhook endpoint available at <url>` when the server is started.
   4. Must return `{"received":true}` and 200 status code for `charge.succeeded` event.
-5. Test you example
+5. Test your example
   1. `cd examples/webhook-signing/test`
   2. `./main.ts ../<your test directory>`
   3. Add a test to `/tests/Integration.spec.ts`
