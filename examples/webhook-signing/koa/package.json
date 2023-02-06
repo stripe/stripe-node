@@ -5,7 +5,7 @@
   "main": "./main.ts",
   "scripts": {
     "run": "./main.ts",
-    "prepare": "cp -f ../.eslintrc.js . && cp -f ../tsconfig.json . && cp -n ../.env.example ./.env || true"
+    "prepare": "../prepare.sh"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "koa-bodyparser": "^4.3.0"
   },
   "devDependencies": {
+    "eslint": "^8.33.0",
     "@types/node": "^13.1.4",
     "@types/koa": "^2.13.5",
     "@types/koa-bodyparser": "^4.3.10",

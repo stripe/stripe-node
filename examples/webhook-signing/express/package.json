@@ -1,11 +1,12 @@
 {
   "name": "webhook-signing-example-express",
   "version": "1.0.0",
-  "description": "",
+  "description": "Express webhook parsing sample",
+  "repository": {},
   "main": "./main.ts",
   "scripts": {
     "run": "./main.ts",
-    "prepare": "cp -f ../.eslintrc.js . && cp -f ../tsconfig.json . && cp -n ../.env.example ./.env || true"
+    "prepare": "../prepare.sh"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "stripe": "^11.9.1"
   },
   "devDependencies": {
+    "eslint": "^8.33.0",
     "@types/koa": "^2.13.5",
     "@types/koa-bodyparser": "^4.3.10",
     "@types/node": "^13.1.4",

@@ -1,11 +1,12 @@
 {
   "name": "webhook-signing-example-koa",
   "version": "1.0.0",
-  "description": "",
+  "description": "Koa webhook parsing sample",
+  "repository": {},
   "main": "./main.ts",
   "scripts": {
     "run": "./main.ts",
-    "prepare": "cp -f ../.eslintrc.js . && cp -f ../tsconfig.json ."
+    "prepare": "../prepare.sh"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "stripe": "^11.9.1"
   },
   "devDependencies": {
+    "eslint": "^8.33.0",
     "@types/node": "^13.1.4",
     "typescript": "^4.8.3",
     "ts-node": "^10.9.1"
