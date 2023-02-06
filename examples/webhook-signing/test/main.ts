@@ -32,6 +32,7 @@ const serverReady = new Promise<string>((resolve, reject) => {
     }
   });
   server.on('error', (m) => reject(m));
+  server.on('exit', (m) => reject(m));
 });
 
 env.config({
