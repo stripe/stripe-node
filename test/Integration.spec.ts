@@ -6,41 +6,64 @@ const testUtils = require('../testUtils');
 
 describe('Integration test', function() {
   this.timeout(30000);
-  const runTestProject = (projectName: string): void => {
-    const script = `
+  const testExec = (cmd: string): Promise<void> => {
+    const child = childProcess.exec(cmd);
+
+    child.stdout?.pipe(process.stdout);
+    child.stderr?.pipe(process.stderr);
+
+    return new Promise((resolve, reject) => {
+      child.on('exit', (code) => {
+        if (code == 0) {
+          resolve();
+        } else {
+          reject(new Error('Test failed'));
+        }
+      });
+    });
+  };
+  const runTestProject = (projectName: string): Promise<void> => {
+    return testExec(`
       cd testProjects/${projectName} &&
       npm install &&
       npm run lint &&
       npm run runtestproject -- ${testUtils.getUserStripeKey()}
-    `;
-    childProcess.execSync(script);
+    `);
   };
 
-  it('should work with CommonJS imports', () => {
-    runTestProject('cjs');
-  });
+  it('should work with CommonJS imports', () =>
+    runTestProject('cjs')
+  );
 
-  it('should work with ESModule imports', function() {
+  it('should work with ESModule imports', async function() {
     // Node supports ES Modules starting at v12
     if (parseInt(process.versions.node.split('.')[0], 10) <= 12) {
       this.skip();
     }
 
-    runTestProject('mjs');
-    runTestProject('mjs-ts');
+    await runTestProject('mjs');
   });
 
-  const runTestCloudflareProject = (projectName: string): void => {
+  it('should work with Typescript ESModule imports', async function() {
+    // Node supports ES Modules starting at v12
+    if (parseInt(process.versions.node.split('.')[0], 10) <= 12) {
+      this.skip();
+    }
+
+    await runTestProject('mjs-ts');
+  });
+
+  const runTestCloudflareProject = (projectName: string): Promise<void> => {
     if (process.versions.node < '16.13') {
       console.log('Wrangler requires at least node.js v16.13.0, skipping test');
-      return;
+      return Promise.resolve();
     }
     const script = `
       cd testProjects/${projectName} &&
       npm install &&
       npm run build
     `;
-    childProcess.execSync(script);
+    return testExec(script);
   };
 
   it('should build successfully in Cloudflare Workers', function() {
@@ -51,10 +74,10 @@ describe('Integration test', function() {
     runTestCloudflareProject('cloudflare-pages');
   });
 
-  const runWebhookTest = (projectName: string): void => {
+  const runWebhookTest = (projectName: string): Promise<void> => {
     if (parseInt(process.versions.node.split('.')[0], 10) < 14) {
       console.log('Webhook test requires at least node.js v14, skipping test');
-      return;
+      return Promise.resolve();
     }
 
     const script = `
@@ -62,14 +85,10 @@ describe('Integration test', function() {
       npm install &&
       ./main.ts ../${projectName}
     `;
-    console.log(childProcess.execSync(script).toString());
+    return testExec(script);
   };
 
-  it('Webhook sample express', function() {
-    runWebhookTest('express');
-  });
+  it('Webhook sample express', () => runWebhookTest('express'));
 
-  it('Webhook sample koa', function() {
-    runWebhookTest('koa');
-  });
+  it('Webhook sample koa', () =>  runWebhookTest('koa'));
 });
