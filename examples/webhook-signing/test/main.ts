@@ -109,6 +109,7 @@ const sendTestRequest = async (url: string): Promise<string> => {
       throw new Error(`Unexpected response ${response}`);
     }
     console.log('Test succeeded');
+    process.exit(0);
   } catch (e) {
     console.error(e);
   } finally {
