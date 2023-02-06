@@ -31,9 +31,7 @@ describe('Integration test', function() {
     `);
   };
 
-  it('should work with CommonJS imports', () =>
-    runTestProject('cjs')
-  );
+  it('should work with CommonJS imports', () => runTestProject('cjs'));
 
   it('should work with ESModule imports', async function() {
     // Node supports ES Modules starting at v12
@@ -90,5 +88,5 @@ describe('Integration test', function() {
 
   it('Webhook sample express', () => runWebhookTest('express'));
 
-  it('Webhook sample koa', () =>  runWebhookTest('koa'));
+  it('Webhook sample koa', () => runWebhookTest('koa'));
 });
