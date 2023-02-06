@@ -1,4 +1,4 @@
-#!/usr/bin/env npx ts-node
+#!/usr/bin/env -S npx ts-node
 /* eslint-disable prettier/prettier */
 
 import env from 'dotenv';
