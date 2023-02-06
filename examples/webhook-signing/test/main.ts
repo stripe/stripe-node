@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import * as child_process from 'child_process';
 import Stripe from 'stripe';
 import * as http from 'http';
+import {exit} from 'process';
 
 const path = process.argv[3];
 
@@ -111,5 +112,6 @@ const sendTestRequest = async (url: string): Promise<string> => {
     console.error(e);
   } finally {
     server.kill();
+    exit(0);
   }
 })().catch(console.log);

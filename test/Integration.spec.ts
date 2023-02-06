@@ -8,8 +8,21 @@ const testUtils = require('../testUtils');
 
 describe('Integration test', function() {
   this.timeout(30000);
-  const testExec = async (cmd: string): Promise<void> => {
-    await exec(cmd);
+  const testExec = (cmd: string): Promise<void> => {
+    const child = childProcess.exec(cmd);
+
+    child.stdout?.on('data', console.debug);
+    child.stderr?.on('data', console.debug);
+
+    return new Promise((resolve, reject) => {
+      child.on('exit', (code) => {
+        if (code == 0) {
+          resolve();
+        } else {
+          reject(new Error('Test failed'));
+        }
+      });
+    });
   };
   const runTestProject = (projectName: string): Promise<void> => {
     return testExec(`
