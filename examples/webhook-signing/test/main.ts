@@ -113,6 +113,5 @@ const sendTestRequest = async (url: string): Promise<string> => {
     console.error(e);
   } finally {
     server.kill();
-    exit(0);
   }
 })().catch(console.log);
