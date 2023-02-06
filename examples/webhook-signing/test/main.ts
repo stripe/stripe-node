@@ -6,7 +6,6 @@ import * as fs from 'fs'
 import * as child_process from 'child_process'
 import Stripe from 'stripe';
 import * as http from 'http';
-import { exit } from 'process';
 
 const path = process.argv[2];
 
