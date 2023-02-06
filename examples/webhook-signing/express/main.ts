@@ -1,3 +1,5 @@
+#!/usr/bin/env npx ts-node
+
 import Stripe from 'stripe';
 import express from 'express';
 import env from 'dotenv';

@@ -8,7 +8,7 @@ You can find a Node.js TypeScript server example in [stripe-samples](https://git
 
 You’ll need the following:
 
-- [Node.js](http://nodejs.org) >=10.0.0
+- [Node.js](http://nodejs.org) >=14.0.0
 - Stripe account to accept payments ([sign up](https://dashboard.stripe.com/register) for free).
 - [Stripe CLI](https://github.com/stripe/stripe-cli) or [ngrok](https://ngrok.com/) to tunnel requests to your local server.
 
