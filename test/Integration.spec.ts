@@ -1,8 +1,6 @@
 'use strict';
 
 import * as childProcess from 'child_process';
-import {promisify} from 'util';
-const exec = promisify(childProcess.exec);
 
 const testUtils = require('../testUtils');
 
