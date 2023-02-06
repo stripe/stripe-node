@@ -5,20 +5,16 @@
   "main": "./main.ts",
   "scripts": {
     "run": "./main.ts",
-    "prepare": "cp -f ../.eslintrc.js . && cp -f ../tsconfig.json . && cp -n ../.env.example ./.env || true"
+    "prepare": "cp -f ../.eslintrc.js . && cp -f ../tsconfig.json ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "koa": "^2.14.1",
-    "stripe": "^11.6.0",
-    "koa-bodyparser": "^4.3.0"
+    "stripe": "^11.6.0"
   },
   "devDependencies": {
     "@types/node": "^13.1.4",
-    "@types/koa": "^2.13.5",
-    "@types/koa-bodyparser": "^4.3.10",
     "typescript": "^4.8.3",
     "ts-node": "^10.9.1"
   }

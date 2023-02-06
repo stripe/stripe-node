@@ -68,5 +68,5 @@ app.post(
 );
 
 app.listen(3000, (): void => {
-  console.log('Example app listening on port 3000!');
+  console.log('Webhook endpoint available at http://localhost:3000/webhook');
 });

@@ -5,7 +5,7 @@
   "main": "./main.ts",
   "scripts": {
     "run": "./main.ts",
-    "prepare": "cp ../.eslintrc.js . && cp ../tsconfig.json . && cp ../.env.example ./.env"
+    "prepare": "cp -f ../.eslintrc.js . && cp -f ../tsconfig.json . && cp -n ../.env.example ./.env || true"
   },
   "author": "",
   "license": "ISC",

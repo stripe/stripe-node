@@ -16,7 +16,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 const handleWebhook = async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
   const sig = ctx.request.headers['stripe-signature'];
-
   let event;
 
   try {
@@ -63,5 +62,5 @@ app.use(async (ctx, next) => {
 });
 
 app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+  console.log('Webhook endpoint available at http://localhost:3000/webhook');
 });
