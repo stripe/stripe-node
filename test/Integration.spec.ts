@@ -1,5 +1,3 @@
-/* eslint-disable new-cap */
-
 'use strict';
 
 import * as childProcess from 'child_process';
@@ -54,6 +52,11 @@ describe('Integration test', function() {
   });
 
   const runWebhookTest = (projectName: string): void => {
+    if (parseInt(process.versions.node.split('.')[0], 10) < 14) {
+      console.log('Webhook test requires at least node.js v14, skipping test');
+      return;
+    }
+
     const script = `
       cd examples/webhook-signing/test &&
       npm install &&
