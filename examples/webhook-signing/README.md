@@ -57,8 +57,8 @@ To add a new example:
 2. Copy `package.json` from one of the existing samples. Remove extra dependencies.
 3. Create a `main.ts` file with sample server code and run `chmod +x main.ts` so it's directly executable.
 4. The `main.ts` has to follow some rules:
-  1. Written in typescript using `import .. from ..`
-  2. Must have `#!/usr/bin/env -S npx ts-node` header to be directly runable.
+  1. Written in typescript using `import .. from ..` import syntax.
+  2. Must have `#!/usr/bin/env -S npm run-script run` header to be directly runable.
   3. Must print `Webhook endpoint available at <url>` when the server is started.
   4. Must return `{"received":true}` and 200 status code for `charge.succeeded` event.
 5. Test you example

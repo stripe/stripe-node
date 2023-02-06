@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node
+#!/usr/bin/env -S npm run-script run
 
 import Stripe from 'stripe';
 import express from 'express';

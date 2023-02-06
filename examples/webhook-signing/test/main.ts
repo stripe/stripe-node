@@ -1,4 +1,4 @@
-#!/usr/bin/env -S npx ts-node
+#!/usr/bin/env -S npm run-script run
 /* eslint-disable prettier/prettier */
 
 import env from 'dotenv';
@@ -7,7 +7,7 @@ import * as child_process from 'child_process';
 import Stripe from 'stripe';
 import * as http from 'http';
 
-const path = process.argv[2];
+const path = process.argv[3];
 
 if (!path || !fs.statSync(path)) {
   console.error('Please specify the test application path');

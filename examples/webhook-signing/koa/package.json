@@ -4,7 +4,7 @@
   "description": "",
   "main": "./main.ts",
   "scripts": {
-    "run": "./main.ts",
+    "run": "ts-node-transpile-only ./main.ts",
     "prepare": "../prepare.sh"
   },
   "author": "",
