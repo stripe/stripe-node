@@ -2,8 +2,8 @@
 
 'use strict';
 
-const expect = require('chai').expect;
-import child_process = require('child_process').expect;
+import * as childProcess from 'child_process';
+
 const testUtils = require('../testUtils');
 
 describe('Integration test', function() {
@@ -15,7 +15,7 @@ describe('Integration test', function() {
       npm run lint &&
       npm run runtestproject -- ${testUtils.getUserStripeKey()}
     `;
-    child_process.execSync(script);
+    childProcess.execSync(script);
   };
 
   it('should work with CommonJS imports', () => {
@@ -42,7 +42,7 @@ describe('Integration test', function() {
       npm install &&
       npm run build
     `;
-    child_process.execSync(script);
+    childProcess.execSync(script);
   };
 
   it('should build successfully in Cloudflare Workers', function() {
@@ -59,7 +59,7 @@ describe('Integration test', function() {
       npm install &&
       ./main.ts ../${projectName}
     `;
-    console.log(child_process.execSync(script).toString());
+    console.log(childProcess.execSync(script).toString());
   };
 
   it('Webhook sample express', function() {
