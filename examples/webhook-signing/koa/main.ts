@@ -1,7 +1,10 @@
-const Stripe = require('stripe');
-const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
-const env = require('dotenv');
+#!/usr/bin/env -S npm run-script run
+
+import Stripe from 'stripe';
+import Koa from 'koa';
+import bodyParser from 'koa-bodyparser';
+import env from 'dotenv';
+import {AddressInfo} from 'net';
 
 const app = new Koa();
 
@@ -12,9 +15,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2022-11-15',
 });
 
-const handleWebhook = async (ctx, next) => {
+const handleWebhook = async (ctx: Koa.ParameterizedContext, next: Koa.Next) => {
   const sig = ctx.request.headers['stripe-signature'];
-
   let event;
 
   try {
@@ -56,10 +58,14 @@ app.use(async (ctx, next) => {
   if (ctx.request.path === '/webhook') {
     return handleWebhook(ctx, next);
   }
-  const name = ctx.request.body?.name ?? 'world';
+  const name = ctx.request.body?.['name'] ?? 'world';
   ctx.body = `hello ${name}, you hit ${ctx.request.path}`;
 });
 
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
-});
+const server = app.listen();
+
+console.log(
+  `Webhook endpoint available at http://localhost:${
+    (<AddressInfo>server.address()).port
+  }/webhook`
+);

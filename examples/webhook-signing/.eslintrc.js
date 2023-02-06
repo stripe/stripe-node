@@ -2,6 +2,9 @@ module.exports = {
   env: {
     node: true,
   },
+  parserOptions: {
+    warnOnUnsupportedTypeScriptVersion: false,
+  },
   root: true,
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'prettier'],

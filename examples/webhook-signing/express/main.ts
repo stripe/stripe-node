@@ -1,6 +1,9 @@
+#!/usr/bin/env -S npm run-script run
+
 import Stripe from 'stripe';
 import express from 'express';
 import env from 'dotenv';
+import {AddressInfo} from 'net';
 
 env.config();
 
@@ -65,6 +68,9 @@ app.post(
   }
 );
 
-app.listen(3000, (): void => {
-  console.log('Example app listening on port 3000!');
-});
+const server = app.listen();
+console.log(
+  `Webhook endpoint available at http://localhost:${
+    (<AddressInfo>server.address()).port
+  }/webhook`
+);
