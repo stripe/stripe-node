@@ -144,7 +144,8 @@ const utils = (module.exports = {
             method,
             data,
             options.headers,
-            handleMockRequest
+            handleMockRequest,
+            utils.getMockPlatformFunctions().tryBufferData
           );
         } else {
           handleMockRequest(null, req);
@@ -167,12 +168,15 @@ const utils = (module.exports = {
     // That is, with mock-requests built in and hookable
     const stripe = require('../lib/stripe.node');
     const stripeInstance = stripe('fakeAuthToken', config);
+    const mockPlatformFunctions = utils.getMockPlatformFunctions();
 
     stripeInstance.REQUESTS = [];
 
     stripeInstance._requestSender = new SpyableRequestSender(
       stripeInstance,
-      stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+      stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS,
+      mockPlatformFunctions.uuid4,
+      mockPlatformFunctions.tryBufferData
     );
 
     return stripeInstance;
