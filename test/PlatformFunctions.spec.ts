@@ -402,7 +402,9 @@ for (const platform in platforms) {
       }
 
       it('should create an instance of SubtleCryptoProvider', () => {
-        const cryptoProvider = platformFunctions.createSubtleCryptoProvider();
+        const cryptoProvider = platformFunctions.createSubtleCryptoProvider(
+          webcrypto.subtle
+        );
         expect(cryptoProvider).to.be.an.instanceof(SubtleCryptoProvider);
       });
     });
