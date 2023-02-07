@@ -83,21 +83,20 @@ class PlatformFunctions {
     return new FetchHttpClient(fetchFn);
   }
 
+  /**
+   * Creates a CryptoProvider which uses the Node `crypto` package for its computations.
+   */
   createNodeCryptoProvider(): StripeCryptoProvider {
     throw new Error('createNodeCryptoProvider not implemented.');
   }
 
+  /**
+   * Creates a CryptoProvider which uses the SubtleCrypto interface of the Web Crypto API.
+   */
   createSubtleCryptoProvider(
     subtleCrypto: typeof crypto.subtle
   ): StripeCryptoProvider {
     return new SubtleCryptoProvider(subtleCrypto);
-  }
-
-  /**
-   * Creates a Node or subtle crypto provider according to the runtime environment.
-   */
-  createCryptoProvider(arg?: typeof crypto.subtle): StripeCryptoProvider {
-    throw new Error('createCryptoProvider now implemented.');
   }
 }
 
