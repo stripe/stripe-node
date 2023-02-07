@@ -1,7 +1,7 @@
 import StripeEmitter = require('../StripeEmitter');
 import PlatformFunctions = require('./PlatformFunctions');
-import http = require('http');
 import _HttpClient = require('../net/HttpClient');
+import CryptoProvider = require('../crypto/CryptoProvider');
 const HttpClient = _HttpClient.HttpClient;
 
 /**
@@ -43,14 +43,14 @@ class WebPlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createNodeCryptoProvider(): StripeCryptoProvider {
+  createNodeCryptoProvider(): CryptoProvider {
     throw new Error(
       'Stripe: `createNodeCryptoProvider()` is not available in non-Node environments. Please use `createSubtleCryptoProvider()` instead.'
     );
   }
 
   /** @override */
-  createCryptoProvider(): StripeCryptoProvider {
+  createCryptoProvider(): CryptoProvider {
     return this.createSubtleCryptoProvider();
   }
 }

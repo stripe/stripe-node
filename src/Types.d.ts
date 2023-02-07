@@ -88,10 +88,6 @@ type StripeConstructor = {
   new (key: string, config: Record<string, unknown>): StripeObject;
 };
 declare const Stripe: StripeConstructor;
-type StripeCryptoProvider = {
-  computeHMACSignature: (data: string, secret: string) => string;
-  computeHMACSignatureAsync: (data: string, secret: string) => Promise<string>;
-};
 interface HttpClientInterface {
   getClientName: () => string;
   makeRequest: (

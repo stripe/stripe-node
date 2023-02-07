@@ -10,6 +10,7 @@ const HttpClient = _HttpClient.HttpClient;
 import _NodeHttpClient = require('../net/NodeHttpClient');
 const NodeHttpClient = _NodeHttpClient.NodeHttpClient;
 import NodeCryptoProvider = require('../crypto/NodeCryptoProvider');
+import CryptoProvider = require('../crypto/CryptoProvider');
 
 class StreamProcessingError extends StripeError {}
 
@@ -139,12 +140,12 @@ class NodePlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createNodeCryptoProvider(): StripeCryptoProvider {
+  createNodeCryptoProvider(): CryptoProvider {
     return new NodeCryptoProvider();
   }
 
   /** @override */
-  createCryptoProvider(): StripeCryptoProvider {
+  createCryptoProvider(): CryptoProvider {
     return this.createNodeCryptoProvider();
   }
 }

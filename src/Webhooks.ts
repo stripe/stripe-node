@@ -19,7 +19,7 @@ type WebhookTestHeaderOptions = {
   secret: string;
   scheme: string;
   signature: string;
-  cryptoProvider: StripeCryptoProvider;
+  cryptoProvider: CryptoProvider;
 };
 
 type WebhookEvent = Record<string, unknown>;
@@ -30,14 +30,14 @@ type WebhookSignatureObject = {
     encodedHeader: WebhookHeader,
     secret: string,
     tolerance: number,
-    cryptoProvider: StripeCryptoProvider
+    cryptoProvider: CryptoProvider
   ) => boolean;
   verifyHeaderAsync: (
     encodedPayload: WebhookPayload,
     encodedHeader: WebhookHeader,
     secret: string,
     tolerance: number,
-    cryptoProvider: StripeCryptoProvider
+    cryptoProvider: CryptoProvider
   ) => Promise<boolean>;
 };
 type WebhookObject = {
@@ -48,14 +48,14 @@ type WebhookObject = {
     header: WebhookHeader,
     secret: string,
     tolerance: null,
-    cryptoProvider: StripeCryptoProvider
+    cryptoProvider: CryptoProvider
   ) => WebhookEvent;
   constructEventAsync: (
     payload: WebhookPayload,
     header: WebhookHeader,
     secret: string,
     tolerance: number,
-    cryptoProvider: StripeCryptoProvider
+    cryptoProvider: CryptoProvider
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
 };
@@ -70,7 +70,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
       header: WebhookHeader,
       secret: string,
       tolerance: null,
-      cryptoProvider: StripeCryptoProvider
+      cryptoProvider: CryptoProvider
     ): WebhookEvent {
       this.signature.verifyHeader(
         payload,
@@ -92,7 +92,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
       header: WebhookHeader,
       secret: string,
       tolerance: number,
-      cryptoProvider: StripeCryptoProvider
+      cryptoProvider: CryptoProvider
     ): Promise<WebhookEvent> {
       await this.signature.verifyHeaderAsync(
         payload,
@@ -157,7 +157,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
       encodedHeader: WebhookHeader,
       secret: string,
       tolerance: number,
-      cryptoProvider: StripeCryptoProvider
+      cryptoProvider: CryptoProvider
     ): boolean {
       const {
         decodedHeader: header,
@@ -191,7 +191,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
       encodedHeader: WebhookHeader,
       secret: string,
       tolerance: number,
-      cryptoProvider: StripeCryptoProvider
+      cryptoProvider: CryptoProvider
     ): Promise<boolean> {
       const {
         decodedHeader: header,
@@ -344,13 +344,13 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
     );
   }
 
-  let webhooksCryptoProviderInstance: StripeCryptoProvider | null = null;
+  let webhooksCryptoProviderInstance: CryptoProvider | null = null;
 
   /**
    * Lazily instantiate a CryptoProvider instance. This is a stateless object
    * so a singleton can be used here.
    */
-  function getCryptoProvider(): StripeCryptoProvider {
+  function getCryptoProvider(): CryptoProvider {
     if (!webhooksCryptoProviderInstance) {
       webhooksCryptoProviderInstance = platformFunctions.createCryptoProvider();
     }

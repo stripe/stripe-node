@@ -6,6 +6,7 @@ const HttpClient = _HttpClient.HttpClient;
 import _FetchHttpClient = require('../net/FetchHttpClient');
 const FetchHttpClient = _FetchHttpClient.FetchHttpClient;
 import SubtleCryptoProvider = require('../crypto/SubtleCryptoProvider');
+import CryptoProvider = require('../crypto/CryptoProvider');
 
 /**
  * Interface encapsulating various utility functions whose
@@ -101,7 +102,7 @@ class PlatformFunctions {
   /**
    * Creates a CryptoProvider which uses the Node `crypto` package for its computations.
    */
-  createNodeCryptoProvider(): StripeCryptoProvider {
+  createNodeCryptoProvider(): CryptoProvider {
     throw new Error('createNodeCryptoProvider not implemented.');
   }
 
@@ -110,11 +111,11 @@ class PlatformFunctions {
    */
   createSubtleCryptoProvider(
     subtleCrypto?: typeof crypto.subtle
-  ): StripeCryptoProvider {
+  ): CryptoProvider {
     return new SubtleCryptoProvider(subtleCrypto);
   }
 
-  createCryptoProvider(): StripeCryptoProvider {
+  createCryptoProvider(): CryptoProvider {
     throw new Error('createCryptoProvider not implemented.');
   }
 }
