@@ -1,6 +1,6 @@
+import CryptoProvider = require('./crypto/CryptoProvider');
 import _Error = require('./Error');
 import PlatformFunctions = require('./platform/PlatformFunctions');
-import CryptoProvider = require('./crypto/CryptoProvider');
 const {StripeError, StripeSignatureVerificationError} = _Error;
 
 type WebhookHeader = string | Uint8Array;
@@ -131,7 +131,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
         Math.floor(opts.timestamp) || Math.floor(Date.now() / 1000);
       opts.scheme = opts.scheme || signature.EXPECTED_SCHEME;
 
-      opts.cryptoProvider = opts.cryptoProvider || getNodeCryptoProvider();
+      opts.cryptoProvider = opts.cryptoProvider || getCryptoProvider();
 
       opts.signature =
         opts.signature ||
@@ -169,7 +169,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
         this.EXPECTED_SCHEME
       );
 
-      cryptoProvider = cryptoProvider || getNodeCryptoProvider();
+      cryptoProvider = cryptoProvider || getCryptoProvider();
       const expectedSignature = cryptoProvider.computeHMACSignature(
         makeHMACContent(payload, details),
         secret
@@ -203,7 +203,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
         this.EXPECTED_SCHEME
       );
 
-      cryptoProvider = cryptoProvider || getNodeCryptoProvider();
+      cryptoProvider = cryptoProvider || getCryptoProvider();
 
       const expectedSignature = await cryptoProvider.computeHMACSignatureAsync(
         makeHMACContent(payload, details),
@@ -290,10 +290,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
     tolerance: number
   ): boolean {
     const signatureFound = !!details.signatures.filter(
-      platformFunctions!.secureCompare.bind(
-        platformFunctions,
-        expectedSignature
-      )
+      platformFunctions.secureCompare.bind(platformFunctions, expectedSignature)
     ).length;
 
     if (!signatureFound) {
@@ -353,9 +350,9 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
    * Lazily instantiate a CryptoProvider instance. This is a stateless object
    * so a singleton can be used here.
    */
-  function getNodeCryptoProvider(): StripeCryptoProvider {
+  function getCryptoProvider(): StripeCryptoProvider {
     if (!webhooksCryptoProviderInstance) {
-      webhooksCryptoProviderInstance = platformFunctions.createNodeCryptoProvider();
+      webhooksCryptoProviderInstance = platformFunctions.createCryptoProvider();
     }
     return webhooksCryptoProviderInstance!;
   }

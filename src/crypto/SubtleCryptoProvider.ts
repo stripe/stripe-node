@@ -8,7 +8,7 @@ import CryptoProvider = require('./CryptoProvider');
 class SubtleCryptoProvider extends CryptoProvider {
   subtleCrypto: SubtleCrypto;
 
-  constructor(subtleCrypto: SubtleCrypto) {
+  constructor(subtleCrypto?: SubtleCrypto) {
     super();
 
     // If no subtle crypto is interface, default to the global namespace. This

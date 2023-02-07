@@ -12,6 +12,14 @@ import SubtleCryptoProvider = require('../crypto/SubtleCryptoProvider');
  * implementations depend on the platform / JS runtime.
  */
 class PlatformFunctions {
+  _fetchFn: any | null;
+  _agent: http.Agent | null;
+
+  constructor() {
+    this._fetchFn = null;
+    this._agent = null;
+  }
+
   /**
    * Gets uname with Node's built-in `exec` function, if available.
    */
@@ -67,7 +75,7 @@ class PlatformFunctions {
    * Creates an HTTP client which uses the Node `http` and `https` packages
    * to issue requests.
    */
-  createNodeHttpClient(agent: http.Agent): typeof HttpClient {
+  createNodeHttpClient(agent?: http.Agent | null): typeof HttpClient {
     throw new Error('createNodeHttpClient not implemented.');
   }
 
@@ -78,9 +86,16 @@ class PlatformFunctions {
    * A fetch function can optionally be passed in as a parameter. If none is
    * passed, will default to the default `fetch` function in the global scope.
    */
-  createFetchHttpClient(fetchFn: typeof fetch): typeof HttpClient {
+  createFetchHttpClient(fetchFn?: typeof fetch | null): typeof HttpClient {
     // @ts-ignore
     return new FetchHttpClient(fetchFn);
+  }
+
+  /**
+   * Creates an HTTP client using runtime-specific APIs.
+   */
+  createHttpClient(agent?: http.Agent | null): typeof HttpClient {
+    throw new Error('createHttpClient not implemented.');
   }
 
   /**
@@ -94,9 +109,13 @@ class PlatformFunctions {
    * Creates a CryptoProvider which uses the SubtleCrypto interface of the Web Crypto API.
    */
   createSubtleCryptoProvider(
-    subtleCrypto: typeof crypto.subtle
+    subtleCrypto?: typeof crypto.subtle
   ): StripeCryptoProvider {
     return new SubtleCryptoProvider(subtleCrypto);
+  }
+
+  createCryptoProvider(): StripeCryptoProvider {
+    throw new Error('createCryptoProvider not implemented.');
   }
 }
 

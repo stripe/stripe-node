@@ -1,5 +1,4 @@
 import _Error = require('./Error');
-import http = require('http');
 
 import resources = require('./resources');
 
@@ -39,7 +38,7 @@ import CryptoProvider = require('./crypto/CryptoProvider');
 import PlatformFunctions = require('./platform/PlatformFunctions');
 import createWebhooks = require('./Webhooks');
 
-function createStripe(platformFunctions: PlatformFunctions): any {
+function createStripe(platformFunctions: PlatformFunctions): typeof Stripe {
   Stripe.PACKAGE_VERSION = require('../package.json').version;
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
@@ -108,7 +107,7 @@ function createStripe(platformFunctions: PlatformFunctions): any {
       ),
       agent: agent,
       httpClient:
-        props.httpClient || this._platformFunctions.createNodeHttpClient(agent),
+        props.httpClient || this._platformFunctions.createHttpClient(agent),
       dev: false,
       stripeAccount: props.stripeAccount || null,
     };

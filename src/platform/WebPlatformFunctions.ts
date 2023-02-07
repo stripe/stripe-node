@@ -31,10 +31,15 @@ class WebPlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createNodeHttpClient(agent: http.Agent): typeof HttpClient {
+  createNodeHttpClient(): typeof HttpClient {
     throw new Error(
       'Stripe: `createNodeHttpClient()` is not available in non-Node environments. Please use `createFetchHttpClient()` instead.'
     );
+  }
+
+  /** @override */
+  createHttpClient(): typeof HttpClient {
+    return super.createFetchHttpClient();
   }
 
   /** @override */
@@ -42,6 +47,11 @@ class WebPlatformFunctions extends PlatformFunctions {
     throw new Error(
       'Stripe: `createNodeCryptoProvider()` is not available in non-Node environments. Please use `createSubtleCryptoProvider()` instead.'
     );
+  }
+
+  /** @override */
+  createCryptoProvider(): StripeCryptoProvider {
+    return this.createSubtleCryptoProvider();
   }
 }
 

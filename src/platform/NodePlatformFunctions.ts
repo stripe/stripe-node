@@ -133,8 +133,19 @@ class NodePlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
+  createHttpClient(agent?: http.Agent): typeof HttpClient {
+    // @ts-ignore
+    return new NodeHttpClient(agent);
+  }
+
+  /** @override */
   createNodeCryptoProvider(): StripeCryptoProvider {
     return new NodeCryptoProvider();
+  }
+
+  /** @override */
+  createCryptoProvider(): StripeCryptoProvider {
+    return this.createNodeCryptoProvider();
   }
 }
 
