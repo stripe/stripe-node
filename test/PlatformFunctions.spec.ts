@@ -357,7 +357,6 @@ for (const platform in platforms) {
 
     describe('createNodeHttpClient', () => {
       if (!isNodeEnvironment) {
-        // WebPlatformFunctions
         it('should throw an error in web environments', () => {
           expect(() => {
             platformFunctions.createNodeHttpClient();
