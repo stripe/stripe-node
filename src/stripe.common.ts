@@ -39,11 +39,7 @@ import CryptoProvider = require('./crypto/CryptoProvider');
 import PlatformFunctions = require('./platform/PlatformFunctions');
 import createWebhooks = require('./Webhooks');
 
-function createStripe(
-  platformFunctions: PlatformFunctions,
-  createHttpClient: (arg: any) => typeof HttpClient,
-  createCryptoProvider: (...args: any[]) => StripeCryptoProvider
-): any {
+function createStripe(platformFunctions: PlatformFunctions): any {
   Stripe.PACKAGE_VERSION = require('../package.json').version;
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
@@ -73,7 +69,7 @@ function createStripe(
     this._platformFunctions = platformFunctions;
 
     Object.defineProperty(this, '_emitter', {
-      value: platformFunctions.createEmitter(),
+      value: this._platformFunctions.createEmitter(),
       enumerable: false,
       configurable: false,
       writable: false,
@@ -111,7 +107,8 @@ function createStripe(
         0
       ),
       agent: agent,
-      httpClient: props.httpClient || createHttpClient(agent),
+      httpClient:
+        props.httpClient || this._platformFunctions.createNodeHttpClient(agent),
       dev: false,
       stripeAccount: props.stripeAccount || null,
     };
@@ -133,7 +130,7 @@ function createStripe(
     this._setApiKey(key);
 
     this.errors = _Error;
-    this.webhooks = createWebhooks(platformFunctions, createCryptoProvider);
+    this.webhooks = createWebhooks(platformFunctions);
 
     this._prevRequestMetrics = [];
     this._enableTelemetry = props.telemetry !== false;
@@ -150,11 +147,7 @@ function createStripe(
   Stripe.errors = _Error;
   Stripe.webhooks = require('./Webhooks');
 
-  Stripe.createNodeHttpClient = (agent: http.Agent): void => {
-    throw new Error(
-      'Stripe: createNodeHttpClient() is not available in non-Node environments. When instantiating the Stripe client, please set the `httpClient` configuration option to `Stripe.createFetchHttpClient()`, or to your own implementation of `HttpClient`.'
-    );
-  };
+  Stripe.createNodeHttpClient = platformFunctions.createNodeHttpClient;
 
   /**
    * Creates an HTTP client for issuing Stripe API requests which uses the Web
@@ -163,20 +156,13 @@ function createStripe(
    * A fetch function can optionally be passed in as a parameter. If none is
    * passed, will default to the default `fetch` function in the global scope.
    */
-  Stripe.createFetchHttpClient = (fetchFn: typeof fetch): typeof HttpClient => {
-    const {FetchHttpClient} = require('./net/FetchHttpClient');
-    return new FetchHttpClient(fetchFn);
-  };
+  Stripe.createFetchHttpClient = platformFunctions.createFetchHttpClient;
 
-  // /**
-  //  * Create a CryptoProvider which uses the built-in Node crypto libraries for
-  //  * its crypto operations.
-  //  */
-  // Stripe.createNodeCryptoProvider = (): void => {
-  //   throw new Error(
-  //     'Stripe: `createNodeCryptoProvider()` is not available in non-Node environments. Please use `createSubtleCryptoProvider()` instead.'
-  //   );
-  // };
+  /**
+   * Create a CryptoProvider which uses the built-in Node crypto libraries for
+   * its crypto operations.
+   */
+  Stripe.createNodeCryptoProvider = platformFunctions.createNodeCryptoProvider;
 
   /**
    * Creates a CryptoProvider which uses the Subtle Crypto API from the Web
@@ -186,12 +172,8 @@ function createStripe(
    * is passed, will default to the default `crypto.subtle` object in the global
    * scope.
    */
-  Stripe.createSubtleCryptoProvider = (
-    subtleCrypto: typeof crypto.subtle
-  ): StripeCryptoProvider => {
-    const SubtleCryptoProvider = require('./crypto/SubtleCryptoProvider');
-    return new SubtleCryptoProvider(subtleCrypto);
-  };
+  Stripe.createSubtleCryptoProvider =
+    platformFunctions.createSubtleCryptoProvider;
 
   Stripe.prototype = {
     // Properties are set in the constructor above
@@ -362,7 +344,7 @@ function createStripe(
       seed: Record<string, string | boolean | null>,
       cb: (userAgent: string) => void
     ): void {
-      platformFunctions.getUname().then((uname: string | null) => {
+      this._platformFunctions.getUname().then((uname: string | null) => {
         const userAgent: Record<string, string> = {};
         for (const field in seed) {
           userAgent[field] = encodeURIComponent(seed[field] ?? 'null');

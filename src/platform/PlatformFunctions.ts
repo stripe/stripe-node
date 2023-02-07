@@ -1,5 +1,11 @@
 import EventEmitter = require('events');
 import StripeEmitter = require('../StripeEmitter');
+import http = require('http');
+import _HttpClient = require('../net/HttpClient');
+const HttpClient = _HttpClient.HttpClient;
+import _FetchHttpClient = require('../net/FetchHttpClient');
+const FetchHttpClient = _FetchHttpClient.FetchHttpClient;
+import SubtleCryptoProvider = require('../crypto/SubtleCryptoProvider');
 
 /**
  * Interface encapsulating various utility functions whose
@@ -55,6 +61,43 @@ class PlatformFunctions {
     data: MultipartRequestData
   ): Promise<RequestData | BufferedFile> {
     throw new Error('tryBufferData not implemented.');
+  }
+
+  /**
+   * Creates an HTTP client which uses the Node `http` and `https` packages
+   * to issue requests.
+   */
+  createNodeHttpClient(agent: http.Agent): typeof HttpClient {
+    throw new Error('createNodeHttpClient not implemented.');
+  }
+
+  /**
+   * Creates an HTTP client for issuing Stripe API requests which uses the Web
+   * Fetch API.
+   *
+   * A fetch function can optionally be passed in as a parameter. If none is
+   * passed, will default to the default `fetch` function in the global scope.
+   */
+  createFetchHttpClient(fetchFn: typeof fetch): typeof HttpClient {
+    // @ts-ignore
+    return new FetchHttpClient(fetchFn);
+  }
+
+  createNodeCryptoProvider(): StripeCryptoProvider {
+    throw new Error('createNodeCryptoProvider not implemented.');
+  }
+
+  createSubtleCryptoProvider(
+    subtleCrypto: typeof crypto.subtle
+  ): StripeCryptoProvider {
+    return new SubtleCryptoProvider(subtleCrypto);
+  }
+
+  /**
+   * Creates a Node or subtle crypto provider according to the runtime environment.
+   */
+  createCryptoProvider(arg?: typeof crypto.subtle): StripeCryptoProvider {
+    throw new Error('createCryptoProvider now implemented.');
   }
 }
 

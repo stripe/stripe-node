@@ -4,6 +4,12 @@ import _Error = require('../Error');
 const StripeError = _Error.StripeError;
 import utils = require('../utils');
 import PlatformFunctions = require('./PlatformFunctions');
+import http = require('http');
+import _HttpClient = require('../net/HttpClient');
+const HttpClient = _HttpClient.HttpClient;
+import _NodeHttpClient = require('../net/NodeHttpClient');
+const NodeHttpClient = _NodeHttpClient.NodeHttpClient;
+import NodeCryptoProvider = require('../crypto/NodeCryptoProvider');
 
 class StreamProcessingError extends StripeError {}
 
@@ -118,6 +124,17 @@ class NodePlatformFunctions extends PlatformFunctions {
           );
         });
     });
+  }
+
+  /** @override */
+  createNodeHttpClient(agent: http.Agent): typeof HttpClient {
+    // @ts-ignore
+    return new NodeHttpClient(agent);
+  }
+
+  /** @override */
+  createNodeCryptoProvider(): StripeCryptoProvider {
+    return new NodeCryptoProvider();
   }
 }
 

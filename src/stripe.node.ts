@@ -1,28 +1,8 @@
 import _Stripe = require('./stripe.common');
 import NodePlatformFunctions = require('./platform/NodePlatformFunctions');
-import http = require('http');
-import HttpClient = require('./net/HttpClient');
 
-// Stripe._platformFunctions = new NodePlatformFunctions();
-// Stripe.webhooks._platformFunctions = Stripe._platformFunctions;
+const Stripe = _Stripe.createStripe(new NodePlatformFunctions());
 
-const createNodeHttpClient = (agent: http.Agent): typeof HttpClient => {
-  const {NodeHttpClient} = require('./net/NodeHttpClient');
-  return new NodeHttpClient(agent);
-};
-
-const createNodeCryptoProvider = (): StripeCryptoProvider => {
-  const NodeCryptoProvider = require('./crypto/NodeCryptoProvider');
-  return new NodeCryptoProvider();
-};
-// Stripe.createNodeCryptoProvider = createNodeCryptoProvider;
-// Stripe.webhooks._createCryptoProvider = createNodeCryptoProvider;
-
-const Stripe = _Stripe.createStripe(
-  new NodePlatformFunctions(),
-  createNodeHttpClient,
-  createNodeCryptoProvider
-);
 module.exports = Stripe;
 
 // expose constructor as a named property to enable mocking with Sinon.JS
