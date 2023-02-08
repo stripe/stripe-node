@@ -95,8 +95,8 @@ class PlatformFunctions {
   /**
    * Creates an HTTP client using runtime-specific APIs.
    */
-  createHttpClient(agent?: http.Agent | null): typeof HttpClient {
-    throw new Error('createHttpClient not implemented.');
+  createDefaultHttpClient(agent?: http.Agent | null): typeof HttpClient {
+    throw new Error('createDefaultHttpClient not implemented.');
   }
 
   /**
@@ -115,8 +115,8 @@ class PlatformFunctions {
     return new SubtleCryptoProvider(subtleCrypto);
   }
 
-  createCryptoProvider(): CryptoProvider {
-    throw new Error('createCryptoProvider not implemented.');
+  createDefaultCryptoProvider(): CryptoProvider {
+    throw new Error('createDefaultCryptoProvider not implemented.');
   }
 }
 

@@ -38,7 +38,7 @@ class WebPlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createHttpClient(): typeof HttpClient {
+  createDefaultHttpClient(): typeof HttpClient {
     return super.createFetchHttpClient();
   }
 
@@ -50,7 +50,7 @@ class WebPlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createCryptoProvider(): CryptoProvider {
+  createDefaultCryptoProvider(): CryptoProvider {
     return this.createSubtleCryptoProvider();
   }
 }

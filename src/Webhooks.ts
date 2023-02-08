@@ -352,7 +352,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
    */
   function getCryptoProvider(): CryptoProvider {
     if (!webhooksCryptoProviderInstance) {
-      webhooksCryptoProviderInstance = platformFunctions.createCryptoProvider();
+      webhooksCryptoProviderInstance = platformFunctions.createDefaultCryptoProvider();
     }
     return webhooksCryptoProviderInstance!;
   }

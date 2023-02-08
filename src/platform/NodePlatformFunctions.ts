@@ -128,13 +128,13 @@ class NodePlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createNodeHttpClient(agent: http.Agent): typeof HttpClient {
+  createNodeHttpClient(agent: http.Agent | null): typeof HttpClient {
     // @ts-ignore
     return new NodeHttpClient(agent);
   }
 
   /** @override */
-  createHttpClient(agent?: http.Agent): typeof HttpClient {
+  createDefaultHttpClient(agent?: http.Agent | null): typeof HttpClient {
     // @ts-ignore
     return new NodeHttpClient(agent);
   }
@@ -145,7 +145,7 @@ class NodePlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createCryptoProvider(): CryptoProvider {
+  createDefaultCryptoProvider(): CryptoProvider {
     return this.createNodeCryptoProvider();
   }
 }

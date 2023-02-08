@@ -107,7 +107,8 @@ function createStripe(platformFunctions: PlatformFunctions): typeof Stripe {
       ),
       agent: agent,
       httpClient:
-        props.httpClient || this._platformFunctions.createHttpClient(agent),
+        props.httpClient ||
+        this._platformFunctions.createDefaultHttpClient(agent),
       dev: false,
       stripeAccount: props.stripeAccount || null,
     };
