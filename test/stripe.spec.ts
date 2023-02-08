@@ -4,6 +4,7 @@
 
 import {FetchHttpClient} from '../lib/net/FetchHttpClient';
 import {NodeHttpClient} from '../lib/net/NodeHttpClient';
+import {createStripe} from '../lib/stripe.common';
 import {getMockPlatformFunctions} from '../testUtils';
 
 const testUtils = require('../testUtils');
@@ -156,30 +157,6 @@ describe('Stripe Module', function() {
     });
   });
 
-  describe('createHttpClient', () => {
-    describe('creates correct HttpClient instances', () => {
-      let origCreateHttpClient;
-      beforeEach(() => {
-        origCreateHttpClient = Stripe.createHttpClient;
-      });
-      afterEach(() => {
-        Stripe.createHttpClient = origCreateHttpClient;
-      });
-
-      it('defaults to createNodeHttpClient', () => {
-        Stripe.createHttpClient = Stripe.createNodeHttpClient;
-        const httpClient = Stripe.createHttpClient();
-        expect(httpClient).to.be.an.instanceof(NodeHttpClient);
-      });
-
-      it('creates an instance of FetchHttpClient when set to FetchHttpClient', () => {
-        Stripe.createHttpClient = Stripe.createFetchHttpClient;
-        const httpClient = Stripe.createHttpClient();
-        expect(httpClient).to.be.an.instanceof(FetchHttpClient);
-      });
-    });
-  });
-
   describe('GetClientUserAgent', () => {
     it('Should return a user-agent serialized JSON object', () =>
       expect(
@@ -268,11 +245,11 @@ describe('Stripe Module', function() {
 
     describe('uname', () => {
       it('gets added to the user-agent', () => {
-        stripe._platformFunctions = getMockPlatformFunctions(
-          (cmd: string, cb: any): void => {
+        const stripe = createStripe(
+          getMockPlatformFunctions((cmd: string, cb: any): void => {
             cb(null, 'foøname');
-          }
-        );
+          })
+        )(testUtils.getUserStripeKey(), 'latest');
         return expect(
           new Promise((resolve, reject) => {
             stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {
@@ -283,11 +260,11 @@ describe('Stripe Module', function() {
       });
 
       it('sets uname to UNKOWN in case of an error', () => {
-        stripe._platformFunctions = getMockPlatformFunctions(
-          (cmd: string, cb: any): void => {
+        const stripe = createStripe(
+          getMockPlatformFunctions((cmd: string, cb: any): void => {
             cb(new Error('security'), null);
-          }
-        );
+          })
+        )(testUtils.getUserStripeKey(), 'latest');
         return expect(
           new Promise((resolve, reject) => {
             stripe.getClientUserAgentSeeded({lang: 'node'}, (c) => {

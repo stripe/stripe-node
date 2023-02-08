@@ -1,5 +1,8 @@
 import StripeEmitter = require('../StripeEmitter');
 import PlatformFunctions = require('./PlatformFunctions');
+import _HttpClient = require('../net/HttpClient');
+import CryptoProvider = require('../crypto/CryptoProvider');
+const HttpClient = _HttpClient.HttpClient;
 
 /**
  * Specializes WebPlatformFunctions using APIs available in Web workers.
@@ -25,6 +28,30 @@ class WebPlatformFunctions extends PlatformFunctions {
       );
     }
     return Promise.resolve(data);
+  }
+
+  /** @override */
+  createNodeHttpClient(): typeof HttpClient {
+    throw new Error(
+      'Stripe: `createNodeHttpClient()` is not available in non-Node environments. Please use `createFetchHttpClient()` instead.'
+    );
+  }
+
+  /** @override */
+  createDefaultHttpClient(): typeof HttpClient {
+    return super.createFetchHttpClient();
+  }
+
+  /** @override */
+  createNodeCryptoProvider(): CryptoProvider {
+    throw new Error(
+      'Stripe: `createNodeCryptoProvider()` is not available in non-Node environments. Please use `createSubtleCryptoProvider()` instead.'
+    );
+  }
+
+  /** @override */
+  createDefaultCryptoProvider(): CryptoProvider {
+    return this.createSubtleCryptoProvider();
   }
 }
 
