@@ -1,0 +1,23 @@
+{
+  "name": "webhook-signing-example-koa",
+  "version": "1.0.0",
+  "description": "Koa webhook parsing sample",
+  "repository": {},
+  "main": "./main.ts",
+  "scripts": {
+    "run": "ts-node-transpile-only ./main.ts",
+    "prepare": "../prepare.sh"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "stripe": "^11.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "@types/node": "^13.1.4",
+    "typescript": "^4.8.3",
+    "ts-node": "^10.9.1"
+  }
+}

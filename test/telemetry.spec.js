@@ -57,11 +57,15 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../lib/stripe')(
-          'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
+        const stripe = require('../lib/stripe.node')(
+          'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
+          {
+            telemetry: false,
+            host,
+            port,
+            protocol: 'http',
+          }
         );
-        stripe.setTelemetryEnabled(false);
-        stripe.setHost(host, port, 'http');
 
         stripe.balance
           .retrieve()
@@ -103,11 +107,15 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../lib/stripe')(
-          'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
+        const stripe = require('../lib/stripe.node')(
+          'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
+          {
+            telemetry: true,
+            host,
+            port,
+            protocol: 'http',
+          }
         );
-        stripe.setTelemetryEnabled(true);
-        stripe.setHost(host, port, 'http');
 
         stripe.balance
           .retrieve()
@@ -151,11 +159,15 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../lib/stripe')(
-          'sk_test_FEiILxKZwnmmocJDUjUNO6pa'
+        const stripe = require('../lib/stripe.node')(
+          'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
+          {
+            telemetry: true,
+            host,
+            port,
+            protocol: 'http',
+          }
         );
-        stripe.setTelemetryEnabled(true);
-        stripe.setHost(host, port, 'http');
 
         Promise.all([stripe.balance.retrieve(), stripe.balance.retrieve()])
           .then(() =>

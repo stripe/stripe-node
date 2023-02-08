@@ -19,7 +19,7 @@ See [video demonstrations][youtube-playlist] covering how to use the library.
 
 ## Requirements
 
-Node 8, 10 or higher.
+Node 12 or higher.
 
 ## Installation
 
@@ -54,13 +54,11 @@ Or using ES modules and `async`/`await`:
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
 
-(async () => {
-  const customer = await stripe.customers.create({
-    email: 'customer@example.com',
-  });
+const customer = await stripe.customers.create({
+  email: 'customer@example.com',
+});
 
-  console.log(customer.id);
-})();
+console.log(customer.id);
 ```
 
 ### Usage with TypeScript
@@ -73,7 +71,7 @@ and instantiate it as `new Stripe()` with the latest API version.
 ```ts
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...', {
-  apiVersion: '2022-08-01',
+  apiVersion: '2022-11-15',
 });
 
 const createCustomer = async () => {
@@ -531,13 +529,13 @@ stripe-mock
 Run a single test suite without a coverage report:
 
 ```bash
-$ yarn mocha-only test/Error.spec.js
+$ yarn mocha-only test/Error.spec.ts
 ```
 
 Run a single test (case sensitive) in watch mode:
 
 ```bash
-$ yarn mocha-only test/Error.spec.js --grep 'Populates with type' --watch
+$ yarn mocha-only test/Error.spec.ts --grep 'Populates with type' --watch
 ```
 
 If you wish, you may run tests using your Stripe _Test_ API key by setting the

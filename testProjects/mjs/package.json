@@ -1,0 +1,18 @@
+{
+  "name": "mjs",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "stripe": "file:../../"
+  },
+  "scripts": {
+    "runtestproject": "node index.js",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "eslint-plugin-import": "^2.27.5"
+  }
+}
