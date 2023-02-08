@@ -95,7 +95,7 @@ class PlatformFunctions {
   /**
    * Creates an HTTP client using runtime-specific APIs.
    */
-  createDefaultHttpClient(agent?: http.Agent | null): typeof HttpClient {
+  createDefaultHttpClient(): typeof HttpClient {
     throw new Error('createDefaultHttpClient not implemented.');
   }
 

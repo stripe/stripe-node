@@ -134,9 +134,9 @@ class NodePlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createDefaultHttpClient(agent?: http.Agent | null): typeof HttpClient {
+  createDefaultHttpClient(): typeof HttpClient {
     // @ts-ignore
-    return new NodeHttpClient(agent);
+    return new NodeHttpClient(null);
   }
 
   /** @override */
