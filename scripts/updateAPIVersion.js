@@ -30,10 +30,7 @@ const main = () => {
 
   replaceAPIVersion('README.md', 'apiVersion: [\'"]API_VERSION[\'"]');
   replaceAPIVersion('package.json', '"types": "types/API_VERSION/index.d.ts');
-  replaceAPIVersion(
-    'examples/webhook-signing/typescript-node-express/express-ts.ts',
-    'apiVersion: [\'"]API_VERSION[\'"]'
-  );
+
   replaceAPIVersion(
     'types/lib.d.ts',
     'export type LatestApiVersion = [\'"]API_VERSION[\'"]'
