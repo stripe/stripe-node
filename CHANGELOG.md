@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.10.0 - 2023-02-09
+* [#1679](https://github.com/stripe/stripe-node/pull/1679) Enable library to work in worker environments without extra configuration.
+
 ## 11.9.1 - 2023-02-03
 * [#1672](https://github.com/stripe/stripe-node/pull/1672) Update main entrypoint on package.json
 
@@ -20,7 +23,7 @@
   * Add support for new value `paused` on enum `Subscription.status`
   * Add support for new values `customer.subscription.paused` and `customer.subscription.resumed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
   * Add support for new value `funding_reversed` on enum `CustomerCashBalanceTransaction.type`
-  
+
 * [#1670](https://github.com/stripe/stripe-node/pull/1670) Change default entrypoint to stripe.node
 * [#1668](https://github.com/stripe/stripe-node/pull/1668) Use EventTarget in worker / browser runtimes
 * [#1667](https://github.com/stripe/stripe-node/pull/1667) fix: added support for TypeScript "NodeNext" module resolution
