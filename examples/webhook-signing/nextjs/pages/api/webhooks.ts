@@ -14,11 +14,6 @@ const handler = async (
   if (req.method === 'POST') {
     const sig = req.headers['stripe-signature'];
 
-    console.log(req.headers);
-    console.log(sig);
-    console.log(webhookSecret);
-    console.log(req.body);
-
     let event: Stripe.Event;
 
     try {
