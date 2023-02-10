@@ -232,6 +232,34 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
     encodedHeader: WebhookHeader,
     expectedScheme: string
   ): WebhookParsedEvent {
+    if (!encodedPayload) {
+      throw new StripeSignatureVerificationError(
+        encodedHeader,
+        encodedPayload,
+        {
+          message: 'No webhook payload was provided.',
+        }
+      );
+    }
+
+    if (
+      typeof encodedPayload != 'string' &&
+      !(encodedPayload instanceof Uint8Array)
+    ) {
+      throw new StripeSignatureVerificationError(
+        encodedHeader,
+        encodedPayload,
+        {
+          message:
+            'Webhook payload must be provided as a string or a Buffer/Uint8Array instance representing the _raw_ request body.' +
+            'Payload was provided as a parsed JavaScript object instead. \n' +
+            'Signature verification is impossible without access to the original signed material. \n' +
+            'Learn more about webhook signing and explore webhook integration examples for various frameworks at ' +
+            'https://github.com/stripe/stripe-node#webhook-signing',
+        }
+      );
+    }
+
     const textDecoder = new TextDecoder('utf8');
     const decodedPayload =
       encodedPayload instanceof Uint8Array
@@ -245,6 +273,16 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
     if (Array.isArray(encodedHeader)) {
       throw new Error(
         'Unexpected: An array was passed as a header, which should not be possible for the stripe-signature header.'
+      );
+    }
+
+    if (encodedHeader == null || encodedHeader == '') {
+      throw new StripeSignatureVerificationError(
+        encodedHeader,
+        encodedPayload,
+        {
+          message: 'No stripe-signature header value was provided.',
+        }
       );
     }
 
@@ -294,12 +332,12 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
     ).length;
 
     if (!signatureFound) {
-      // @ts-ignore
       throw new StripeSignatureVerificationError(header, payload, {
         message:
           'No signatures found matching the expected signature for payload.' +
-          ' Are you passing the raw request body you received from Stripe?' +
-          ' https://github.com/stripe/stripe-node#webhook-signing',
+          ' Are you passing the raw request body you received from Stripe? \n' +
+          'Learn more about webhook signing and explore webhook integration examples for various frameworks at ' +
+          'https://github.com/stripe/stripe-node#webhook-signing',
       });
     }
 
