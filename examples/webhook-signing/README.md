@@ -5,6 +5,7 @@ Verify the events that Stripe sends to your webhook endpoints. Additional detail
 Available examples:
 - [`express`](./express) - Express 4
 - [`koa`](./koa) - Koa 2
+- [`nextjs`](./nextjs) - NextJS 13
 
 ### Requirements
 
