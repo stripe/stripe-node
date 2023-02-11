@@ -331,7 +331,7 @@ Stripe can optionally sign the webhook events it sends to your endpoint, allowin
 
 Please note that you must pass the _raw_ request body, exactly as received from Stripe, to the `constructEvent()` function; this will not work with a parsed (i.e., JSON) request body.
 
-You can find an example of how to use this with [Express](https://expressjs.com/) in the [`examples/webhook-signing`](examples/webhook-signing) folder, but here's what it looks like:
+You can find an example of how to use this with various JavaScript frameworks in [`examples/webhook-signing`](examples/webhook-signing) folder, but here's what it looks like:
 
 ```js
 const event = stripe.webhooks.constructEvent(
