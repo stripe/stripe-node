@@ -12,6 +12,7 @@ type WebhookParsedEvent = {
   details: WebhookParsedHeader;
   decodedPayload: WebhookHeader;
   decodedHeader: WebhookPayload;
+  suspectPayloadType: boolean;
 };
 type WebhookTestHeaderOptions = {
   timestamp: number;
@@ -163,6 +164,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
         decodedHeader: header,
         decodedPayload: payload,
         details,
+        suspectPayloadType,
       } = parseEventDetails(
         encodedPayload,
         encodedHeader,
@@ -180,7 +182,8 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
         header,
         details,
         expectedSignature,
-        tolerance
+        tolerance,
+        suspectPayloadType
       );
 
       return true;
@@ -197,6 +200,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
         decodedHeader: header,
         decodedPayload: payload,
         details,
+        suspectPayloadType,
       } = parseEventDetails(
         encodedPayload,
         encodedHeader,
@@ -215,7 +219,8 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
         header,
         details,
         expectedSignature,
-        tolerance
+        tolerance,
+        suspectPayloadType
       );
     },
   };
@@ -242,23 +247,9 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
       );
     }
 
-    if (
+    const suspectPayloadType =
       typeof encodedPayload != 'string' &&
-      !(encodedPayload instanceof Uint8Array)
-    ) {
-      throw new StripeSignatureVerificationError(
-        encodedHeader,
-        encodedPayload,
-        {
-          message:
-            'Webhook payload must be provided as a string or a Buffer/Uint8Array instance representing the _raw_ request body.' +
-            'Payload was provided as a parsed JavaScript object instead. \n' +
-            'Signature verification is impossible without access to the original signed material. \n' +
-            'Learn more about webhook signing and explore webhook integration examples for various frameworks at ' +
-            'https://github.com/stripe/stripe-node#webhook-signing',
-        }
-      );
-    }
+      !(encodedPayload instanceof Uint8Array);
 
     const textDecoder = new TextDecoder('utf8');
     const decodedPayload =
@@ -317,6 +308,7 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
       decodedPayload,
       decodedHeader,
       details,
+      suspectPayloadType,
     };
   }
 
@@ -325,13 +317,24 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
     header: WebhookHeader,
     details: WebhookParsedHeader,
     expectedSignature: string,
-    tolerance: number
+    tolerance: number,
+    suspectPayloadType: boolean
   ): boolean {
     const signatureFound = !!details.signatures.filter(
       platformFunctions.secureCompare.bind(platformFunctions, expectedSignature)
     ).length;
 
     if (!signatureFound) {
+      if (suspectPayloadType) {
+        throw new StripeSignatureVerificationError(header, payload, {
+          message:
+            'Webhook payload must be provided as a string or a Buffer (https://nodejs.org/api/buffer.html) instance representing the _raw_ request body.' +
+            'Payload was provided as a parsed JavaScript object instead. \n' +
+            'Signature verification is impossible without access to the original signed material. \n' +
+            'Learn more about webhook signing and explore webhook integration examples for various frameworks at ' +
+            'https://github.com/stripe/stripe-node#webhook-signing',
+        });
+      }
       throw new StripeSignatureVerificationError(header, payload, {
         message:
           'No signatures found matching the expected signature for payload.' +

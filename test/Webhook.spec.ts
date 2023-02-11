@@ -306,12 +306,17 @@ describe('Webhooks', () => {
       });
 
       it('should raise a SignatureVerificationError when payload is of an unknown type', async () => {
-        await expect(verifyHeaderFn({}, 'header', SECRET)).to.be.rejectedWith(
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        await expect(verifyHeaderFn({}, header, SECRET)).to.be.rejectedWith(
           StripeSignatureVerificationError,
           /Webhook payload must be provided as a string or a Buffer/
         );
         await expect(
-          verifyHeaderFn(new Date(), 'header', SECRET)
+          verifyHeaderFn(new Date(), header, SECRET)
         ).to.be.rejectedWith(
           StripeSignatureVerificationError,
           /Webhook payload must be provided as a string or a Buffer/
