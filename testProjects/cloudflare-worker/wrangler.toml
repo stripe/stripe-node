@@ -1,0 +1,5 @@
+name = "my-stripe-worker"
+main = "src/index.js"
+compatibility_flags = []
+compatibility_date = "2022-02-02"
+workers_dev = true

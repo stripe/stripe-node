@@ -6,8 +6,13 @@ import fs = require('fs');
 import path = require('path');
 import NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
 import PlatformFunctions = require('../lib/platform/PlatformFunctions');
+import NodeCryptoProvider = require('../lib/crypto/NodeCryptoProvider');
+import SubtleCryptoProvider = require('../lib/crypto/SubtleCryptoProvider');
 
+import {FetchHttpClient} from '../lib/net/FetchHttpClient';
+import {NodeHttpClient} from '../lib/net/NodeHttpClient';
 import {expect} from 'chai';
+import {webcrypto} from 'crypto';
 
 let platforms: Record<string, PlatformFunctions>;
 
@@ -348,6 +353,60 @@ for (const platform in platforms) {
           ).to.eventually.have.nested.property('length', 739);
         });
       }
+    });
+
+    describe('createNodeHttpClient', () => {
+      if (!isNodeEnvironment) {
+        it('should throw an error in web environments', () => {
+          expect(() => {
+            platformFunctions.createNodeHttpClient();
+          }).to.throw();
+        });
+      } else {
+        it('should create an instance of NodeHttpClient', () => {
+          const httpClient = platformFunctions.createNodeHttpClient();
+          expect(httpClient).to.be.an.instanceof(NodeHttpClient);
+        });
+      }
+    });
+
+    describe('createFetchHttpClient', () => {
+      it('should create an instance of FetchHttpClient', () => {
+        const cryptoProvider = platformFunctions.createFetchHttpClient();
+        expect(cryptoProvider).to.be.an.instanceof(FetchHttpClient);
+      });
+    });
+
+    describe('createNodeCryptoProvider', () => {
+      if (!isNodeEnvironment) {
+        it('should throw an error in web environments', () => {
+          expect(() => {
+            platformFunctions.createNodeCryptoProvider();
+          }).to.throw();
+        });
+      } else {
+        it('should create an instance of NodeCryptoProvider', () => {
+          const cryptoProvider = platformFunctions.createNodeCryptoProvider();
+          expect(cryptoProvider).to.be.an.instanceof(NodeCryptoProvider);
+        });
+      }
+    });
+
+    describe('createSubtleCryptoProvider', () => {
+      // webcrypto is only available on Node 15+.
+      if (!webcrypto || !webcrypto.subtle) {
+        console.log(
+          `Skipping SubtleCryptoProvider tests. No 'webcrypto.subtle' available for ${process.version}.`
+        );
+        return;
+      }
+
+      it('should create an instance of SubtleCryptoProvider', () => {
+        const cryptoProvider = platformFunctions.createSubtleCryptoProvider(
+          webcrypto.subtle
+        );
+        expect(cryptoProvider).to.be.an.instanceof(SubtleCryptoProvider);
+      });
     });
   });
 }

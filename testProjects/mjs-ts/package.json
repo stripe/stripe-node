@@ -8,6 +8,13 @@
     "ts-node": "^10.9.1"
   },
   "scripts": {
-    "runtestproject": "ts-node index.ts"
+    "runtestproject": "ts-node index.ts",
+    "lint": "eslint . --ext .ts"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "@typescript-eslint/parser": "^5.50.0",
+    "eslint": "^8.33.0",
+    "eslint-plugin-import": "^2.27.5"
   }
 }

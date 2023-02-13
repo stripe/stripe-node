@@ -1,11 +1,26 @@
 import EventEmitter = require('events');
 import StripeEmitter = require('../StripeEmitter');
+import http = require('http');
+import _HttpClient = require('../net/HttpClient');
+const HttpClient = _HttpClient.HttpClient;
+import _FetchHttpClient = require('../net/FetchHttpClient');
+const FetchHttpClient = _FetchHttpClient.FetchHttpClient;
+import SubtleCryptoProvider = require('../crypto/SubtleCryptoProvider');
+import CryptoProvider = require('../crypto/CryptoProvider');
 
 /**
  * Interface encapsulating various utility functions whose
  * implementations depend on the platform / JS runtime.
  */
 class PlatformFunctions {
+  _fetchFn: any | null;
+  _agent: http.Agent | null;
+
+  constructor() {
+    this._fetchFn = null;
+    this._agent = null;
+  }
+
   /**
    * Gets uname with Node's built-in `exec` function, if available.
    */
@@ -55,6 +70,53 @@ class PlatformFunctions {
     data: MultipartRequestData
   ): Promise<RequestData | BufferedFile> {
     throw new Error('tryBufferData not implemented.');
+  }
+
+  /**
+   * Creates an HTTP client which uses the Node `http` and `https` packages
+   * to issue requests.
+   */
+  createNodeHttpClient(agent?: http.Agent | null): typeof HttpClient {
+    throw new Error('createNodeHttpClient not implemented.');
+  }
+
+  /**
+   * Creates an HTTP client for issuing Stripe API requests which uses the Web
+   * Fetch API.
+   *
+   * A fetch function can optionally be passed in as a parameter. If none is
+   * passed, will default to the default `fetch` function in the global scope.
+   */
+  createFetchHttpClient(fetchFn?: typeof fetch | null): typeof HttpClient {
+    // @ts-ignore
+    return new FetchHttpClient(fetchFn);
+  }
+
+  /**
+   * Creates an HTTP client using runtime-specific APIs.
+   */
+  createDefaultHttpClient(): typeof HttpClient {
+    throw new Error('createDefaultHttpClient not implemented.');
+  }
+
+  /**
+   * Creates a CryptoProvider which uses the Node `crypto` package for its computations.
+   */
+  createNodeCryptoProvider(): CryptoProvider {
+    throw new Error('createNodeCryptoProvider not implemented.');
+  }
+
+  /**
+   * Creates a CryptoProvider which uses the SubtleCrypto interface of the Web Crypto API.
+   */
+  createSubtleCryptoProvider(
+    subtleCrypto?: typeof crypto.subtle
+  ): CryptoProvider {
+    return new SubtleCryptoProvider(subtleCrypto);
+  }
+
+  createDefaultCryptoProvider(): CryptoProvider {
+    throw new Error('createDefaultCryptoProvider not implemented.');
   }
 }
 

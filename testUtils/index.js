@@ -11,6 +11,8 @@ const http = require('http');
 const CryptoProvider = require('../lib/crypto/CryptoProvider');
 const NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
 const RequestSender = require('../lib/RequestSender');
+const {createStripe} = require('../lib/stripe.common');
+const stripe = require('../lib/stripe.node');
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 
@@ -97,15 +99,33 @@ const utils = (module.exports = {
 
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
-    const stripe = require('../lib/stripe.node');
-    const stripeInstance = stripe('fakeAuthToken', config);
-
-    stripeInstance._requestSender = new MockRequestSender(
-      stripeInstance,
-      stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+    const stripeFactory = createStripe(
+      new NodePlatformFunctions(),
+      (stripeInstance) =>
+        new MockRequestSender(
+          stripeInstance,
+          stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+        )
     );
+    return stripeFactory('fakeAuthToken', config);
+  },
 
-    return stripeInstance;
+  createMockClient: (requests) => {
+    return utils.getMockStripe(
+      {},
+      (method, host, path, _4, _5, _6, callback) => {
+        const request = requests.find(
+          (r) => r.method == method && r.path == path
+        );
+        if (!request) {
+          throw new Error(
+            `Unable to find a mock request for ${method} ${path}`
+          );
+        }
+
+        callback(null, Promise.resolve(JSON.parse(request.response)));
+      }
+    );
   },
 
   getSpyableStripe: (config) => {
