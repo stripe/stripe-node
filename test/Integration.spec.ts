@@ -5,7 +5,7 @@ import * as childProcess from 'child_process';
 const testUtils = require('../testUtils');
 
 describe('Integration test', function() {
-  this.timeout(30000);
+  this.timeout(50000);
   const testExec = (cmd: string): Promise<void> => {
     const child = childProcess.exec(cmd);
 
@@ -89,4 +89,6 @@ describe('Integration test', function() {
   it('Webhook sample express', () => runWebhookTest('express'));
 
   it('Webhook sample koa', () => runWebhookTest('koa'));
+
+  it('Webhook sample nextjs', () => runWebhookTest('nextjs'));
 });
