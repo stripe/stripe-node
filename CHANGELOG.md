@@ -1,5 +1,12 @@
 # Changelog
 
+## 11.11.0-beta.1 - 2023-02-13
+* [#1676](https://github.com/stripe/stripe-node/pull/1676) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add support for `currency_conversion` on `Checkout.Session`
+  * Add support for `limits` on `FinancialConnections.Session` and `FinancialConnectionsSessionCreateParams`
+  * Remove support for `enabled` on `FinancialConnectionsSessionCreateParams.manual_entry`
+
 ## 11.10.0 - 2023-02-09
 * [#1679](https://github.com/stripe/stripe-node/pull/1679) Enable library to work in worker environments without extra configuration.
 
