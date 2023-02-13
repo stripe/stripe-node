@@ -38,7 +38,15 @@ import CryptoProvider = require('./crypto/CryptoProvider');
 import PlatformFunctions = require('./platform/PlatformFunctions');
 import createWebhooks = require('./Webhooks');
 
-function createStripe(platformFunctions: PlatformFunctions): typeof Stripe {
+type RequestSenderFactory = (stripe: StripeObject) => RequestSender;
+
+const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
+  new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
+
+function createStripe(
+  platformFunctions: PlatformFunctions,
+  requestSender: RequestSenderFactory = defaultRequestSenderFactory
+): typeof Stripe {
   Stripe.PACKAGE_VERSION = require('../package.json').version;
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
@@ -137,10 +145,8 @@ function createStripe(platformFunctions: PlatformFunctions): typeof Stripe {
     this._prevRequestMetrics = [];
     this._enableTelemetry = props.telemetry !== false;
 
-    this._requestSender = new RequestSender(
-      this,
-      Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
-    );
+    this._requestSender = requestSender(this);
+
     // Expose StripeResource on the instance too
     // @ts-ignore
     this.StripeResource = Stripe.StripeResource;

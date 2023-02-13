@@ -104,6 +104,21 @@ describe('Webhooks', () => {
         );
       });
 
+      it('should raise a SignatureVerificationError from a valid JSON payload and an invalid signature header', async () => {
+        const header = 'bad_header';
+        const expected = /No webhook payload was provided/;
+
+        await expect(constructEventFn(null, header, SECRET)).to.be.rejectedWith(
+          expected
+        );
+        await expect(
+          constructEventFn(undefined, header, SECRET)
+        ).to.be.rejectedWith(expected);
+        await expect(constructEventFn('', header, SECRET)).to.be.rejectedWith(
+          expected
+        );
+      });
+
       it('should error if you pass a signature which is an array, even though our types say you can', async () => {
         const header = stripe.webhooks.generateTestHeaderString({
           payload: EVENT_PAYLOAD_STRING,
@@ -164,6 +179,10 @@ describe('Webhooks', () => {
         await expect(
           verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET)
         ).to.be.rejectedWith(StripeSignatureVerificationError, expectedMessage);
+      });
+
+      it('should raise a SignatureVerificationError when the header is null or empty', async () => {
+        const expectedMessage = /No stripe-signature header value was provided./;
 
         await expect(
           verifyHeaderFn(EVENT_PAYLOAD_STRING, null, SECRET)
@@ -284,6 +303,24 @@ describe('Webhooks', () => {
             10
           )
         ).to.equal(true);
+      });
+
+      it('should raise a SignatureVerificationError when payload is of an unknown type', async () => {
+        const header = stripe.webhooks.generateTestHeaderString({
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        await expect(verifyHeaderFn({}, header, SECRET)).to.be.rejectedWith(
+          StripeSignatureVerificationError,
+          /Webhook payload must be provided as a string or a Buffer/
+        );
+        await expect(
+          verifyHeaderFn(new Date(), header, SECRET)
+        ).to.be.rejectedWith(
+          StripeSignatureVerificationError,
+          /Webhook payload must be provided as a string or a Buffer/
+        );
       });
 
       describe('custom CryptoProvider', () => {
