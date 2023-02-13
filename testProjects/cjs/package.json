@@ -8,6 +8,11 @@
     "stripe": "file:../../"
   },
   "scripts": {
-    "runtestproject": "node index.js"
+    "runtestproject": "node index.js",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "eslint": "^8.33.0",
+    "eslint-plugin-import": "^2.27.5"
   }
 }

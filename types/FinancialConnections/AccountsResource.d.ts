@@ -60,6 +60,13 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface InferredBalanceListParams extends PaginationParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       interface AccountRefreshParams {
         /**
          * The list of account features that you would like to refresh.
@@ -78,13 +85,6 @@ declare module 'stripe' {
           | 'inferred_balances'
           | 'ownership'
           | 'transactions';
-      }
-
-      interface InferredBalanceListParams extends PaginationParams {
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
       }
 
       class AccountsResource {
@@ -135,15 +135,6 @@ declare module 'stripe' {
         ): ApiListPromise<Stripe.FinancialConnections.AccountOwner>;
 
         /**
-         * Refreshes the data associated with a Financial Connections Account.
-         */
-        refresh(
-          id: string,
-          params: AccountRefreshParams,
-          options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
-
-        /**
          * Lists the recorded inferred balances for a Financial Connections Account.
          */
         listInferredBalances(
@@ -155,6 +146,15 @@ declare module 'stripe' {
           id: string,
           options?: RequestOptions
         ): ApiListPromise<Stripe.FinancialConnections.InferredBalance>;
+
+        /**
+         * Refreshes the data associated with a Financial Connections Account.
+         */
+        refresh(
+          id: string,
+          params: AccountRefreshParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
       }
     }
   }

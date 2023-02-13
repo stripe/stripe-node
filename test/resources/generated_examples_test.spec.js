@@ -5,6 +5,195 @@
 const stripe = require('../../testUtils').getStripeMockClient();
 const expect = require('chai').expect;
 
+describe('Accounts', function() {
+  it('listExternalAccounts method', async function() {
+    const externalAccount = await stripe.accounts.listExternalAccounts(
+      'acct_xxxxxxxxxxxxx',
+      {limit: 3}
+    );
+    expect(externalAccount).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const accounts = await stripe.accounts.list({limit: 3});
+    expect(accounts).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const account = await stripe.accounts.create({
+      type: 'custom',
+      country: 'US',
+      email: 'jenny.rosen@example.com',
+      capabilities: {
+        card_payments: {requested: true},
+        transfers: {requested: true},
+      },
+    });
+    expect(account).not.to.be.null;
+  });
+
+  it('del method', async function() {
+    const deleted = await stripe.accounts.del('acct_xxxxxxxxxxxxx');
+    expect(deleted).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const account = await stripe.accounts.retrieve('acct_xxxxxxxxxxxxx');
+    expect(account).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const account = await stripe.accounts.update('acct_xxxxxxxxxxxxx', {
+      metadata: {order_id: '6735'},
+    });
+    expect(account).not.to.be.null;
+  });
+
+  it('reject method', async function() {
+    const account = await stripe.accounts.reject('acct_xxxxxxxxxxxxx', {
+      reason: 'fraud',
+    });
+    expect(account).not.to.be.null;
+  });
+
+  it('listCapabilities method', async function() {
+    const capabilities = await stripe.accounts.listCapabilities(
+      'acct_xxxxxxxxxxxxx'
+    );
+    expect(capabilities).not.to.be.null;
+  });
+
+  it('retrieveCapability method', async function() {
+    const capability = await stripe.accounts.retrieveCapability(
+      'acct_xxxxxxxxxxxxx',
+      'card_payments'
+    );
+    expect(capability).not.to.be.null;
+  });
+
+  it('updateCapability method', async function() {
+    const capability = await stripe.accounts.updateCapability(
+      'acct_xxxxxxxxxxxxx',
+      'card_payments',
+      {requested: true}
+    );
+    expect(capability).not.to.be.null;
+  });
+
+  it('createExternalAccount method', async function() {
+    const externalAccount = await stripe.accounts.createExternalAccount(
+      'acct_xxxxxxxxxxxxx',
+      {external_account: 'btok_xxxxxxxxxxxxx'}
+    );
+    expect(externalAccount).not.to.be.null;
+  });
+
+  it('createExternalAccount method', async function() {
+    const externalAccount = await stripe.accounts.createExternalAccount(
+      'acct_xxxxxxxxxxxxx',
+      {external_account: 'tok_xxxx_debit'}
+    );
+    expect(externalAccount).not.to.be.null;
+  });
+
+  it('deleteExternalAccount method', async function() {
+    const deletedExternalAccount = await stripe.accounts.deleteExternalAccount(
+      'acct_xxxxxxxxxxxxx',
+      'ba_xxxxxxxxxxxxx'
+    );
+    expect(deletedExternalAccount).not.to.be.null;
+  });
+
+  it('deleteExternalAccount method', async function() {
+    const deletedExternalAccount = await stripe.accounts.deleteExternalAccount(
+      'acct_xxxxxxxxxxxxx',
+      'card_xxxxxxxxxxxxx'
+    );
+    expect(deletedExternalAccount).not.to.be.null;
+  });
+
+  it('retrieveExternalAccount method', async function() {
+    const externalAccount = await stripe.accounts.retrieveExternalAccount(
+      'acct_xxxxxxxxxxxxx',
+      'ba_xxxxxxxxxxxxx'
+    );
+    expect(externalAccount).not.to.be.null;
+  });
+
+  it('retrieveExternalAccount method', async function() {
+    const externalAccount = await stripe.accounts.retrieveExternalAccount(
+      'acct_xxxxxxxxxxxxx',
+      'card_xxxxxxxxxxxxx'
+    );
+    expect(externalAccount).not.to.be.null;
+  });
+
+  it('updateExternalAccount method', async function() {
+    const externalAccount = await stripe.accounts.updateExternalAccount(
+      'acct_xxxxxxxxxxxxx',
+      'ba_xxxxxxxxxxxxx',
+      {metadata: {order_id: '6735'}}
+    );
+    expect(externalAccount).not.to.be.null;
+  });
+
+  it('updateExternalAccount method', async function() {
+    const externalAccount = await stripe.accounts.updateExternalAccount(
+      'acct_xxxxxxxxxxxxx',
+      'card_xxxxxxxxxxxxx',
+      {metadata: {order_id: '6735'}}
+    );
+    expect(externalAccount).not.to.be.null;
+  });
+
+  it('createLoginLink method', async function() {
+    const loginLink = await stripe.accounts.createLoginLink(
+      'acct_xxxxxxxxxxxxx'
+    );
+    expect(loginLink).not.to.be.null;
+  });
+
+  it('listPersons method', async function() {
+    const persons = await stripe.accounts.listPersons('acct_xxxxxxxxxxxxx', {
+      limit: 3,
+    });
+    expect(persons).not.to.be.null;
+  });
+
+  it('createPerson method', async function() {
+    const person = await stripe.accounts.createPerson('acct_xxxxxxxxxxxxx', {
+      first_name: 'Jane',
+      last_name: 'Diaz',
+    });
+    expect(person).not.to.be.null;
+  });
+
+  it('deletePerson method', async function() {
+    const deleted = await stripe.accounts.deletePerson(
+      'acct_xxxxxxxxxxxxx',
+      'person_xxxxxxxxxxxxx'
+    );
+    expect(deleted).not.to.be.null;
+  });
+
+  it('retrievePerson method', async function() {
+    const person = await stripe.accounts.retrievePerson(
+      'acct_xxxxxxxxxxxxx',
+      'person_xxxxxxxxxxxxx'
+    );
+    expect(person).not.to.be.null;
+  });
+
+  it('updatePerson method', async function() {
+    const person = await stripe.accounts.updatePerson(
+      'acct_xxxxxxxxxxxxx',
+      'person_xxxxxxxxxxxxx',
+      {metadata: {order_id: '6735'}}
+    );
+    expect(person).not.to.be.null;
+  });
+});
+
 describe('Apps.Secrets', function() {
   it('list method', async function() {
     const secrets = await stripe.apps.secrets.list({
@@ -37,6 +226,14 @@ describe('Apps.Secrets', function() {
       scope: {type: 'account'},
     });
     expect(secret).not.to.be.null;
+  });
+
+  it('list method', async function() {
+    const secrets = await stripe.apps.secrets.list({
+      scope: {type: 'account'},
+      limit: 2,
+    });
+    expect(secrets).not.to.be.null;
   });
 
   it('create method', async function() {
@@ -89,7 +286,6 @@ describe('Checkout.Sessions', function() {
   it('create method', async function() {
     const session = await stripe.checkout.sessions.create({
       success_url: 'https://example.com/success',
-      cancel_url: 'https://example.com/cancel',
       line_items: [{price: 'price_xxxxxxxxxxxxx', quantity: 2}],
       mode: 'payment',
     });
@@ -111,7 +307,7 @@ describe('Checkout.Sessions', function() {
   });
 });
 
-describe('CashBalance', function() {
+describe('Customers', function() {
   it('retrieveCashBalance method', async function() {
     const cashBalance = await stripe.customers.retrieveCashBalance('cus_123');
     expect(cashBalance).not.to.be.null;
@@ -123,9 +319,7 @@ describe('CashBalance', function() {
     });
     expect(cashBalance).not.to.be.null;
   });
-});
 
-describe('Customers', function() {
   it('createFundingInstructions method', async function() {
     const fundingInstructions = await stripe.customers.createFundingInstructions(
       'cus_123',
@@ -149,6 +343,13 @@ describe('Customers', function() {
     expect(paymentMethods).not.to.be.null;
   });
 
+  it('updateSource method', async function() {
+    const card = await stripe.customers.updateSource('cus_123', 'card_123', {
+      account_holder_name: 'Kamil',
+    });
+    expect(card).not.to.be.null;
+  });
+
   it('list method', async function() {
     const customers = await stripe.customers.list({limit: 3});
     expect(customers).not.to.be.null;
@@ -161,7 +362,8 @@ describe('Customers', function() {
 
   it('create method', async function() {
     const customer = await stripe.customers.create({
-      description: 'My First Test Customer (created for API docs)',
+      description:
+        'My First Test Customer (created for API docs at https://www.stripe.com/docs/api)',
     });
     expect(customer).not.to.be.null;
   });
@@ -183,12 +385,167 @@ describe('Customers', function() {
     expect(customer).not.to.be.null;
   });
 
+  it('listBalanceTransactions method', async function() {
+    const customerBalanceTransactions = await stripe.customers.listBalanceTransactions(
+      'cus_xxxxxxxxxxxxx',
+      {limit: 3}
+    );
+    expect(customerBalanceTransactions).not.to.be.null;
+  });
+
+  it('createBalanceTransaction method', async function() {
+    const customerBalanceTransaction = await stripe.customers.createBalanceTransaction(
+      'cus_xxxxxxxxxxxxx',
+      {amount: -500, currency: 'usd'}
+    );
+    expect(customerBalanceTransaction).not.to.be.null;
+  });
+
+  it('retrieveBalanceTransaction method', async function() {
+    const customerBalanceTransaction = await stripe.customers.retrieveBalanceTransaction(
+      'cus_xxxxxxxxxxxxx',
+      'cbtxn_xxxxxxxxxxxxx'
+    );
+    expect(customerBalanceTransaction).not.to.be.null;
+  });
+
+  it('updateBalanceTransaction method', async function() {
+    const customerBalanceTransaction = await stripe.customers.updateBalanceTransaction(
+      'cus_xxxxxxxxxxxxx',
+      'cbtxn_xxxxxxxxxxxxx',
+      {metadata: {order_id: '6735'}}
+    );
+    expect(customerBalanceTransaction).not.to.be.null;
+  });
+
   it('listPaymentMethods method', async function() {
     const paymentMethods = await stripe.customers.listPaymentMethods(
       'cus_xxxxxxxxxxxxx',
       {type: 'card'}
     );
     expect(paymentMethods).not.to.be.null;
+  });
+
+  it('listSources method', async function() {
+    const paymentSource = await stripe.customers.listSources(
+      'cus_xxxxxxxxxxxxx',
+      {object: 'bank_account', limit: 3}
+    );
+    expect(paymentSource).not.to.be.null;
+  });
+
+  it('listSources method', async function() {
+    const paymentSource = await stripe.customers.listSources(
+      'cus_xxxxxxxxxxxxx',
+      {object: 'card', limit: 3}
+    );
+    expect(paymentSource).not.to.be.null;
+  });
+
+  it('createSource method', async function() {
+    const paymentSource = await stripe.customers.createSource(
+      'cus_xxxxxxxxxxxxx',
+      {source: 'btok_xxxxxxxxxxxxx'}
+    );
+    expect(paymentSource).not.to.be.null;
+  });
+
+  it('createSource method', async function() {
+    const paymentSource = await stripe.customers.createSource(
+      'cus_xxxxxxxxxxxxx',
+      {source: 'tok_xxxx'}
+    );
+    expect(paymentSource).not.to.be.null;
+  });
+
+  it('deleteSource method', async function() {
+    const paymentSource = await stripe.customers.deleteSource(
+      'cus_xxxxxxxxxxxxx',
+      'ba_xxxxxxxxxxxxx'
+    );
+    expect(paymentSource).not.to.be.null;
+  });
+
+  it('deleteSource method', async function() {
+    const paymentSource = await stripe.customers.deleteSource(
+      'cus_xxxxxxxxxxxxx',
+      'card_xxxxxxxxxxxxx'
+    );
+    expect(paymentSource).not.to.be.null;
+  });
+
+  it('retrieveSource method', async function() {
+    const paymentSource = await stripe.customers.retrieveSource(
+      'cus_xxxxxxxxxxxxx',
+      'ba_xxxxxxxxxxxxx'
+    );
+    expect(paymentSource).not.to.be.null;
+  });
+
+  it('retrieveSource method', async function() {
+    const paymentSource = await stripe.customers.retrieveSource(
+      'cus_xxxxxxxxxxxxx',
+      'card_xxxxxxxxxxxxx'
+    );
+    expect(paymentSource).not.to.be.null;
+  });
+
+  it('updateSource method', async function() {
+    const card = await stripe.customers.updateSource(
+      'cus_xxxxxxxxxxxxx',
+      'ba_xxxxxxxxxxxxx',
+      {metadata: {order_id: '6735'}}
+    );
+    expect(card).not.to.be.null;
+  });
+
+  it('updateSource method', async function() {
+    const card = await stripe.customers.updateSource(
+      'cus_xxxxxxxxxxxxx',
+      'card_xxxxxxxxxxxxx',
+      {name: 'Jenny Rosen'}
+    );
+    expect(card).not.to.be.null;
+  });
+
+  it('verifySource method', async function() {
+    const bankAccount = await stripe.customers.verifySource(
+      'cus_xxxxxxxxxxxxx',
+      'ba_xxxxxxxxxxxxx',
+      {amounts: [32, 45]}
+    );
+    expect(bankAccount).not.to.be.null;
+  });
+
+  it('listTaxIds method', async function() {
+    const taxIds = await stripe.customers.listTaxIds('cus_xxxxxxxxxxxxx', {
+      limit: 3,
+    });
+    expect(taxIds).not.to.be.null;
+  });
+
+  it('createTaxId method', async function() {
+    const taxId = await stripe.customers.createTaxId('cus_xxxxxxxxxxxxx', {
+      type: 'eu_vat',
+      value: 'DE123456789',
+    });
+    expect(taxId).not.to.be.null;
+  });
+
+  it('deleteTaxId method', async function() {
+    const deleted = await stripe.customers.deleteTaxId(
+      'cus_xxxxxxxxxxxxx',
+      'txi_xxxxxxxxxxxxx'
+    );
+    expect(deleted).not.to.be.null;
+  });
+
+  it('retrieveTaxId method', async function() {
+    const taxId = await stripe.customers.retrieveTaxId(
+      'cus_xxxxxxxxxxxxx',
+      'txi_xxxxxxxxxxxxx'
+    );
+    expect(taxId).not.to.be.null;
   });
 
   it('search method', async function() {
@@ -251,6 +608,13 @@ describe('FinancialConnections.Accounts', function() {
 
   it('retrieve method', async function() {
     const account = await stripe.financialConnections.accounts.retrieve(
+      'fca_xxxxxxxxxxxxx'
+    );
+    expect(account).not.to.be.null;
+  });
+
+  it('disconnect method', async function() {
+    const account = await stripe.financialConnections.accounts.disconnect(
       'fca_xxxxxxxxxxxxx'
     );
     expect(account).not.to.be.null;
@@ -394,7 +758,7 @@ describe('PaymentIntents', function() {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 2000,
       currency: 'usd',
-      payment_method_types: ['card'],
+      automatic_payment_methods: {enabled: true},
     });
     expect(paymentIntent).not.to.be.null;
   });
@@ -447,6 +811,14 @@ describe('PaymentIntents', function() {
     const paymentIntent = await stripe.paymentIntents.incrementAuthorization(
       'pi_xxxxxxxxxxxxx',
       {amount: 2099}
+    );
+    expect(paymentIntent).not.to.be.null;
+  });
+
+  it('verifyMicrodeposits method', async function() {
+    const paymentIntent = await stripe.paymentIntents.verifyMicrodeposits(
+      'pi_xxxxxxxxxxxxx',
+      {amounts: [32, 45]}
     );
     expect(paymentIntent).not.to.be.null;
   });
@@ -608,6 +980,14 @@ describe('SetupIntents', function() {
     const setupIntent = await stripe.setupIntents.confirm(
       'seti_xxxxxxxxxxxxx',
       {payment_method: 'pm_card_visa'}
+    );
+    expect(setupIntent).not.to.be.null;
+  });
+
+  it('verifyMicrodeposits method', async function() {
+    const setupIntent = await stripe.setupIntents.verifyMicrodeposits(
+      'seti_xxxxxxxxxxxxx',
+      {amounts: [32, 45]}
     );
     expect(setupIntent).not.to.be.null;
   });
@@ -825,7 +1205,7 @@ describe('TestHelpers.TestClocks', function() {
   it('advance method', async function() {
     const testClock = await stripe.testHelpers.testClocks.advance(
       'clock_xxxxxxxxxxxxx',
-      {frozen_time: 1652390605}
+      {frozen_time: 1675552261}
     );
     expect(testClock).not.to.be.null;
   });
@@ -985,353 +1365,6 @@ describe('AccountLinks', function() {
   });
 });
 
-describe('Accounts', function() {
-  it('list method', async function() {
-    const accounts = await stripe.accounts.list({limit: 3});
-    expect(accounts).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const account = await stripe.accounts.create({
-      type: 'custom',
-      country: 'US',
-      email: 'jenny.rosen@example.com',
-      capabilities: {
-        card_payments: {requested: true},
-        transfers: {requested: true},
-      },
-    });
-    expect(account).not.to.be.null;
-  });
-
-  it('del method', async function() {
-    const deleted = await stripe.accounts.del('acct_xxxxxxxxxxxxx');
-    expect(deleted).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const account = await stripe.accounts.retrieve('acct_xxxxxxxxxxxxx');
-    expect(account).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const account = await stripe.accounts.update('acct_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
-    });
-    expect(account).not.to.be.null;
-  });
-
-  it('reject method', async function() {
-    const account = await stripe.accounts.reject('acct_xxxxxxxxxxxxx', {
-      reason: 'fraud',
-    });
-    expect(account).not.to.be.null;
-  });
-});
-
-describe('Capabilities', function() {
-  it('listCapabilities method', async function() {
-    const capabilities = await stripe.accounts.listCapabilities(
-      'acct_xxxxxxxxxxxxx'
-    );
-    expect(capabilities).not.to.be.null;
-  });
-
-  it('retrieveCapability method', async function() {
-    const capability = await stripe.accounts.retrieveCapability(
-      'acct_xxxxxxxxxxxxx',
-      'card_payments'
-    );
-    expect(capability).not.to.be.null;
-  });
-
-  it('updateCapability method', async function() {
-    const capability = await stripe.accounts.updateCapability(
-      'acct_xxxxxxxxxxxxx',
-      'card_payments',
-      {requested: true}
-    );
-    expect(capability).not.to.be.null;
-  });
-});
-
-describe('ExternalAccounts', function() {
-  it('listExternalAccounts method', async function() {
-    const externalAccount = await stripe.accounts.listExternalAccounts(
-      'acct_xxxxxxxxxxxxx',
-      {limit: 3}
-    );
-    expect(externalAccount).not.to.be.null;
-  });
-
-  it('createExternalAccount method', async function() {
-    const externalAccount = await stripe.accounts.createExternalAccount(
-      'acct_xxxxxxxxxxxxx',
-      {external_account: 'btok_xxxxxxxxxxxxx'}
-    );
-    expect(externalAccount).not.to.be.null;
-  });
-
-  it('createExternalAccount method', async function() {
-    const externalAccount = await stripe.accounts.createExternalAccount(
-      'acct_xxxxxxxxxxxxx',
-      {external_account: 'tok_xxxx_debit'}
-    );
-    expect(externalAccount).not.to.be.null;
-  });
-
-  it('deleteExternalAccount method', async function() {
-    const deletedExternalAccount = await stripe.accounts.deleteExternalAccount(
-      'acct_xxxxxxxxxxxxx',
-      'ba_xxxxxxxxxxxxx'
-    );
-    expect(deletedExternalAccount).not.to.be.null;
-  });
-
-  it('deleteExternalAccount method', async function() {
-    const deletedExternalAccount = await stripe.accounts.deleteExternalAccount(
-      'acct_xxxxxxxxxxxxx',
-      'card_xxxxxxxxxxxxx'
-    );
-    expect(deletedExternalAccount).not.to.be.null;
-  });
-
-  it('retrieveExternalAccount method', async function() {
-    const externalAccount = await stripe.accounts.retrieveExternalAccount(
-      'acct_xxxxxxxxxxxxx',
-      'ba_xxxxxxxxxxxxx'
-    );
-    expect(externalAccount).not.to.be.null;
-  });
-
-  it('retrieveExternalAccount method', async function() {
-    const externalAccount = await stripe.accounts.retrieveExternalAccount(
-      'acct_xxxxxxxxxxxxx',
-      'card_xxxxxxxxxxxxx'
-    );
-    expect(externalAccount).not.to.be.null;
-  });
-
-  it('updateExternalAccount method', async function() {
-    const externalAccount = await stripe.accounts.updateExternalAccount(
-      'acct_xxxxxxxxxxxxx',
-      'ba_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
-    );
-    expect(externalAccount).not.to.be.null;
-  });
-
-  it('updateExternalAccount method', async function() {
-    const externalAccount = await stripe.accounts.updateExternalAccount(
-      'acct_xxxxxxxxxxxxx',
-      'card_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
-    );
-    expect(externalAccount).not.to.be.null;
-  });
-});
-
-describe('CustomerSources', function() {
-  it('updateSource method', async function() {
-    const card = await stripe.customers.updateSource('cus_123', 'card_123', {
-      account_holder_name: 'Kamil',
-    });
-    expect(card).not.to.be.null;
-  });
-
-  it('listSources method', async function() {
-    const paymentSource = await stripe.customers.listSources(
-      'cus_xxxxxxxxxxxxx',
-      {object: 'bank_account', limit: 3}
-    );
-    expect(paymentSource).not.to.be.null;
-  });
-
-  it('listSources method', async function() {
-    const paymentSource = await stripe.customers.listSources(
-      'cus_xxxxxxxxxxxxx',
-      {object: 'card', limit: 3}
-    );
-    expect(paymentSource).not.to.be.null;
-  });
-
-  it('createSource method', async function() {
-    const paymentSource = await stripe.customers.createSource(
-      'cus_xxxxxxxxxxxxx',
-      {source: 'btok_xxxxxxxxxxxxx'}
-    );
-    expect(paymentSource).not.to.be.null;
-  });
-
-  it('createSource method', async function() {
-    const paymentSource = await stripe.customers.createSource(
-      'cus_xxxxxxxxxxxxx',
-      {source: 'tok_xxxx'}
-    );
-    expect(paymentSource).not.to.be.null;
-  });
-
-  it('deleteSource method', async function() {
-    const paymentSource = await stripe.customers.deleteSource(
-      'cus_xxxxxxxxxxxxx',
-      'ba_xxxxxxxxxxxxx'
-    );
-    expect(paymentSource).not.to.be.null;
-  });
-
-  it('deleteSource method', async function() {
-    const paymentSource = await stripe.customers.deleteSource(
-      'cus_xxxxxxxxxxxxx',
-      'card_xxxxxxxxxxxxx'
-    );
-    expect(paymentSource).not.to.be.null;
-  });
-
-  it('retrieveSource method', async function() {
-    const paymentSource = await stripe.customers.retrieveSource(
-      'cus_xxxxxxxxxxxxx',
-      'ba_xxxxxxxxxxxxx'
-    );
-    expect(paymentSource).not.to.be.null;
-  });
-
-  it('retrieveSource method', async function() {
-    const paymentSource = await stripe.customers.retrieveSource(
-      'cus_xxxxxxxxxxxxx',
-      'card_xxxxxxxxxxxxx'
-    );
-    expect(paymentSource).not.to.be.null;
-  });
-
-  it('updateSource method', async function() {
-    const card = await stripe.customers.updateSource(
-      'cus_xxxxxxxxxxxxx',
-      'ba_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
-    );
-    expect(card).not.to.be.null;
-  });
-
-  it('updateSource method', async function() {
-    const card = await stripe.customers.updateSource(
-      'cus_xxxxxxxxxxxxx',
-      'card_xxxxxxxxxxxxx',
-      {name: 'Jenny Rosen'}
-    );
-    expect(card).not.to.be.null;
-  });
-
-  it('verifySource method', async function() {
-    const bankAccount = await stripe.customers.verifySource(
-      'cus_xxxxxxxxxxxxx',
-      'ba_xxxxxxxxxxxxx',
-      {amounts: [32, 45]}
-    );
-    expect(bankAccount).not.to.be.null;
-  });
-});
-
-describe('Subscriptions', function() {
-  it('resume method', async function() {
-    const subscription = await stripe.subscriptions.resume(
-      'sub_xxxxxxxxxxxxx',
-      {proration_date: 1675400000, proration_behavior: 'always_invoice'}
-    );
-    expect(subscription).not.to.be.null;
-  });
-
-  it('list method', async function() {
-    const subscriptions = await stripe.subscriptions.list({limit: 3});
-    expect(subscriptions).not.to.be.null;
-  });
-
-  it('create method', async function() {
-    const subscription = await stripe.subscriptions.create({
-      customer: 'cus_xxxxxxxxxxxxx',
-      items: [{price: 'price_xxxxxxxxxxxxx'}],
-    });
-    expect(subscription).not.to.be.null;
-  });
-
-  it('cancel method', async function() {
-    const subscription = await stripe.subscriptions.cancel('sub_xxxxxxxxxxxxx');
-    expect(subscription).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const subscription = await stripe.subscriptions.retrieve(
-      'sub_xxxxxxxxxxxxx'
-    );
-    expect(subscription).not.to.be.null;
-  });
-
-  it('update method', async function() {
-    const subscription = await stripe.subscriptions.update(
-      'sub_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
-    );
-    expect(subscription).not.to.be.null;
-  });
-
-  it('search method', async function() {
-    const subscriptions = await stripe.subscriptions.search({
-      query: "status:'active' AND metadata['order_id']:'6735'",
-    });
-    expect(subscriptions).not.to.be.null;
-  });
-});
-
-describe('LoginLinks', function() {
-  it('createLoginLink method', async function() {
-    const loginLink = await stripe.accounts.createLoginLink(
-      'acct_xxxxxxxxxxxxx'
-    );
-    expect(loginLink).not.to.be.null;
-  });
-});
-
-describe('Persons', function() {
-  it('listPersons method', async function() {
-    const persons = await stripe.accounts.listPersons('acct_xxxxxxxxxxxxx', {
-      limit: 3,
-    });
-    expect(persons).not.to.be.null;
-  });
-
-  it('createPerson method', async function() {
-    const person = await stripe.accounts.createPerson('acct_xxxxxxxxxxxxx', {
-      first_name: 'Jane',
-      last_name: 'Diaz',
-    });
-    expect(person).not.to.be.null;
-  });
-
-  it('deletePerson method', async function() {
-    const deleted = await stripe.accounts.deletePerson(
-      'acct_xxxxxxxxxxxxx',
-      'person_xxxxxxxxxxxxx'
-    );
-    expect(deleted).not.to.be.null;
-  });
-
-  it('retrievePerson method', async function() {
-    const person = await stripe.accounts.retrievePerson(
-      'acct_xxxxxxxxxxxxx',
-      'person_xxxxxxxxxxxxx'
-    );
-    expect(person).not.to.be.null;
-  });
-
-  it('updatePerson method', async function() {
-    const person = await stripe.accounts.updatePerson(
-      'acct_xxxxxxxxxxxxx',
-      'person_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
-    );
-    expect(person).not.to.be.null;
-  });
-});
-
 describe('ApplicationFees', function() {
   it('list method', async function() {
     const applicationFees = await stripe.applicationFees.list({limit: 3});
@@ -1344,39 +1377,37 @@ describe('ApplicationFees', function() {
     );
     expect(applicationFee).not.to.be.null;
   });
-});
 
-describe('FeeRefunds', function() {
   it('listRefunds method', async function() {
-    const refunds = await stripe.applicationFees.listRefunds(
+    const feeRefunds = await stripe.applicationFees.listRefunds(
       'fee_xxxxxxxxxxxxx',
       {limit: 3}
     );
-    expect(refunds).not.to.be.null;
+    expect(feeRefunds).not.to.be.null;
   });
 
   it('createRefund method', async function() {
-    const refund = await stripe.applicationFees.createRefund(
+    const feeRefund = await stripe.applicationFees.createRefund(
       'fee_xxxxxxxxxxxxx'
     );
-    expect(refund).not.to.be.null;
+    expect(feeRefund).not.to.be.null;
   });
 
   it('retrieveRefund method', async function() {
-    const refund = await stripe.applicationFees.retrieveRefund(
+    const feeRefund = await stripe.applicationFees.retrieveRefund(
       'fee_xxxxxxxxxxxxx',
       'fr_xxxxxxxxxxxxx'
     );
-    expect(refund).not.to.be.null;
+    expect(feeRefund).not.to.be.null;
   });
 
   it('updateRefund method', async function() {
-    const refund = await stripe.applicationFees.updateRefund(
+    const feeRefund = await stripe.applicationFees.updateRefund(
       'fee_xxxxxxxxxxxxx',
       'fr_xxxxxxxxxxxxx',
       {metadata: {order_id: '6735'}}
     );
-    expect(refund).not.to.be.null;
+    expect(feeRefund).not.to.be.null;
   });
 });
 
@@ -1463,7 +1494,8 @@ describe('Charges', function() {
       amount: 2000,
       currency: 'usd',
       source: 'tok_xxxx',
-      description: 'My First Test Charge (created for API docs)',
+      description:
+        'My First Test Charge (created for API docs at https://www.stripe.com/docs/api)',
     });
     expect(charge).not.to.be.null;
   });
@@ -1565,6 +1597,14 @@ describe('CreditNotes', function() {
     expect(creditNote).not.to.be.null;
   });
 
+  it('listLineItems method', async function() {
+    const creditNoteLineItems = await stripe.creditNotes.listLineItems(
+      'cn_xxxxxxxxxxxxx',
+      {limit: 3}
+    );
+    expect(creditNoteLineItems).not.to.be.null;
+  });
+
   it('preview method', async function() {
     const creditNote = await stripe.creditNotes.preview({
       invoice: 'in_xxxxxxxxxxxxx',
@@ -1577,84 +1617,6 @@ describe('CreditNotes', function() {
       ],
     });
     expect(creditNote).not.to.be.null;
-  });
-});
-
-describe('CreditNoteLineItems', function() {
-  it('listLineItems method', async function() {
-    const lineItems = await stripe.creditNotes.listLineItems(
-      'cn_xxxxxxxxxxxxx',
-      {limit: 3}
-    );
-    expect(lineItems).not.to.be.null;
-  });
-});
-
-describe('CustomerBalanceTransactions', function() {
-  it('listBalanceTransactions method', async function() {
-    const balanceTransactions = await stripe.customers.listBalanceTransactions(
-      'cus_xxxxxxxxxxxxx',
-      {limit: 3}
-    );
-    expect(balanceTransactions).not.to.be.null;
-  });
-
-  it('createBalanceTransaction method', async function() {
-    const balanceTransaction = await stripe.customers.createBalanceTransaction(
-      'cus_xxxxxxxxxxxxx',
-      {amount: -500, currency: 'usd'}
-    );
-    expect(balanceTransaction).not.to.be.null;
-  });
-
-  it('retrieveBalanceTransaction method', async function() {
-    const balanceTransaction = await stripe.customers.retrieveBalanceTransaction(
-      'cus_xxxxxxxxxxxxx',
-      'cbtxn_xxxxxxxxxxxxx'
-    );
-    expect(balanceTransaction).not.to.be.null;
-  });
-
-  it('updateBalanceTransaction method', async function() {
-    const balanceTransaction = await stripe.customers.updateBalanceTransaction(
-      'cus_xxxxxxxxxxxxx',
-      'cbtxn_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
-    );
-    expect(balanceTransaction).not.to.be.null;
-  });
-});
-
-describe('TaxIds', function() {
-  it('listTaxIds method', async function() {
-    const taxIds = await stripe.customers.listTaxIds('cus_xxxxxxxxxxxxx', {
-      limit: 3,
-    });
-    expect(taxIds).not.to.be.null;
-  });
-
-  it('createTaxId method', async function() {
-    const taxId = await stripe.customers.createTaxId('cus_xxxxxxxxxxxxx', {
-      type: 'eu_vat',
-      value: 'DE123456789',
-    });
-    expect(taxId).not.to.be.null;
-  });
-
-  it('deleteTaxId method', async function() {
-    const deleted = await stripe.customers.deleteTaxId(
-      'cus_xxxxxxxxxxxxx',
-      'txi_xxxxxxxxxxxxx'
-    );
-    expect(deleted).not.to.be.null;
-  });
-
-  it('retrieveTaxId method', async function() {
-    const taxId = await stripe.customers.retrieveTaxId(
-      'cus_xxxxxxxxxxxxx',
-      'txi_xxxxxxxxxxxxx'
-    );
-    expect(taxId).not.to.be.null;
   });
 });
 
@@ -1717,18 +1679,6 @@ describe('FileLinks', function() {
       metadata: {order_id: '6735'},
     });
     expect(fileLink).not.to.be.null;
-  });
-});
-
-describe('Files', function() {
-  it('list method', async function() {
-    const files = await stripe.files.list({limit: 3});
-    expect(files).not.to.be.null;
-  });
-
-  it('retrieve method', async function() {
-    const file = await stripe.files.retrieve('file_xxxxxxxxxxxxx');
-    expect(file).not.to.be.null;
   });
 });
 
@@ -2003,8 +1953,8 @@ describe('PaymentMethods', function() {
       type: 'card',
       card: {
         number: '4242424242424242',
-        exp_month: 5,
-        exp_year: 2023,
+        exp_month: 8,
+        exp_year: 2024,
         cvc: '314',
       },
     });
@@ -2457,9 +2407,7 @@ describe('SubscriptionItems', function() {
     );
     expect(subscriptionItem).not.to.be.null;
   });
-});
 
-describe('UsageRecordSummaries', function() {
   it('listUsageRecordSummaries method', async function() {
     const usageRecordSummaries = await stripe.subscriptionItems.listUsageRecordSummaries(
       'si_xxxxxxxxxxxxx',
@@ -2467,9 +2415,7 @@ describe('UsageRecordSummaries', function() {
     );
     expect(usageRecordSummaries).not.to.be.null;
   });
-});
 
-describe('UsageRecords', function() {
   it('createUsageRecord method', async function() {
     const usageRecord = await stripe.subscriptionItems.createUsageRecord(
       'si_xxxxxxxxxxxxx',
@@ -2490,7 +2436,7 @@ describe('SubscriptionSchedules', function() {
   it('create method', async function() {
     const subscriptionSchedule = await stripe.subscriptionSchedules.create({
       customer: 'cus_xxxxxxxxxxxxx',
-      start_date: 1652909005,
+      start_date: 1676070661,
       end_behavior: 'release',
       phases: [
         {
@@ -2529,6 +2475,48 @@ describe('SubscriptionSchedules', function() {
       'sub_sched_xxxxxxxxxxxxx'
     );
     expect(subscriptionSchedule).not.to.be.null;
+  });
+});
+
+describe('Subscriptions', function() {
+  it('list method', async function() {
+    const subscriptions = await stripe.subscriptions.list({limit: 3});
+    expect(subscriptions).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const subscription = await stripe.subscriptions.create({
+      customer: 'cus_xxxxxxxxxxxxx',
+      items: [{price: 'price_xxxxxxxxxxxxx'}],
+    });
+    expect(subscription).not.to.be.null;
+  });
+
+  it('cancel method', async function() {
+    const subscription = await stripe.subscriptions.cancel('sub_xxxxxxxxxxxxx');
+    expect(subscription).not.to.be.null;
+  });
+
+  it('retrieve method', async function() {
+    const subscription = await stripe.subscriptions.retrieve(
+      'sub_xxxxxxxxxxxxx'
+    );
+    expect(subscription).not.to.be.null;
+  });
+
+  it('update method', async function() {
+    const subscription = await stripe.subscriptions.update(
+      'sub_xxxxxxxxxxxxx',
+      {metadata: {order_id: '6735'}}
+    );
+    expect(subscription).not.to.be.null;
+  });
+
+  it('search method', async function() {
+    const subscriptions = await stripe.subscriptions.search({
+      query: "status:'active' AND metadata['order_id']:'6735'",
+    });
+    expect(subscriptions).not.to.be.null;
   });
 });
 
@@ -2593,8 +2581,9 @@ describe('Terminal.Locations', function() {
       address: {
         line1: '1234 Main Street',
         city: 'San Francisco',
-        country: 'US',
         postal_code: '94111',
+        state: 'CA',
+        country: 'US',
       },
     });
     expect(location).not.to.be.null;
@@ -2667,6 +2656,14 @@ describe('Terminal.Readers', function() {
     );
     expect(reader).not.to.be.null;
   });
+
+  it('processSetupIntent method', async function() {
+    const reader = await stripe.terminal.readers.processSetupIntent(
+      'tmr_xxxxxxxxxxxxx',
+      {setup_intent: 'seti_xxxxxxxxxxxxx', customer_consent_collected: true}
+    );
+    expect(reader).not.to.be.null;
+  });
 });
 
 describe('Topups', function() {
@@ -2730,38 +2727,38 @@ describe('Transfers', function() {
     });
     expect(transfer).not.to.be.null;
   });
-});
 
-describe('TransferReversals', function() {
   it('listReversals method', async function() {
-    const reversals = await stripe.transfers.listReversals('tr_xxxxxxxxxxxxx', {
-      limit: 3,
-    });
-    expect(reversals).not.to.be.null;
+    const transferReversals = await stripe.transfers.listReversals(
+      'tr_xxxxxxxxxxxxx',
+      {limit: 3}
+    );
+    expect(transferReversals).not.to.be.null;
   });
 
   it('createReversal method', async function() {
-    const reversal = await stripe.transfers.createReversal('tr_xxxxxxxxxxxxx', {
-      amount: 100,
-    });
-    expect(reversal).not.to.be.null;
+    const transferReversal = await stripe.transfers.createReversal(
+      'tr_xxxxxxxxxxxxx',
+      {amount: 100}
+    );
+    expect(transferReversal).not.to.be.null;
   });
 
   it('retrieveReversal method', async function() {
-    const reversal = await stripe.transfers.retrieveReversal(
+    const transferReversal = await stripe.transfers.retrieveReversal(
       'tr_xxxxxxxxxxxxx',
       'trr_xxxxxxxxxxxxx'
     );
-    expect(reversal).not.to.be.null;
+    expect(transferReversal).not.to.be.null;
   });
 
   it('updateReversal method', async function() {
-    const reversal = await stripe.transfers.updateReversal(
+    const transferReversal = await stripe.transfers.updateReversal(
       'tr_xxxxxxxxxxxxx',
       'trr_xxxxxxxxxxxxx',
       {metadata: {order_id: '6735'}}
     );
-    expect(reversal).not.to.be.null;
+    expect(transferReversal).not.to.be.null;
   });
 });
 
@@ -2850,14 +2847,6 @@ describe('Treasury.FinancialAccounts', function() {
     );
     expect(financialAccountFeatures).not.to.be.null;
   });
-
-  it('updateFeatures method', async function() {
-    const financialAccountFeatures = await stripe.treasury.financialAccounts.updateFeatures(
-      'fa_xxxxxxxxxxxxx',
-      {card_issuing: {requested: false}}
-    );
-    expect(financialAccountFeatures).not.to.be.null;
-  });
 });
 
 describe('Treasury.InboundTransfers', function() {
@@ -2909,7 +2898,7 @@ describe('Treasury.OutboundPayments', function() {
       financial_account: 'fa_xxxxxxxxxxxxx',
       amount: 10000,
       currency: 'usd',
-      customer: 'cu_xxxxxxxxxxxxx',
+      customer: 'cus_xxxxxxxxxxxxx',
       destination_payment_method: 'pm_xxxxxxxxxxxxx',
       description: 'OutboundPayment to a 3rd party',
     });
@@ -2918,14 +2907,14 @@ describe('Treasury.OutboundPayments', function() {
 
   it('retrieve method', async function() {
     const outboundPayment = await stripe.treasury.outboundPayments.retrieve(
-      'obp_xxxxxxxxxxxxx'
+      'bot_xxxxxxxxxxxxx'
     );
     expect(outboundPayment).not.to.be.null;
   });
 
   it('cancel method', async function() {
     const outboundPayment = await stripe.treasury.outboundPayments.cancel(
-      'obp_xxxxxxxxxxxxx'
+      'bot_xxxxxxxxxxxxx'
     );
     expect(outboundPayment).not.to.be.null;
   });

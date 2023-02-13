@@ -34,6 +34,8 @@ declare module 'stripe' {
 
         filters?: Session.Filters;
 
+        limits?: Session.Limits;
+
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
@@ -91,6 +93,13 @@ declare module 'stripe' {
            * List of countries from which to filter accounts.
            */
           countries: Array<string> | null;
+        }
+
+        interface Limits {
+          /**
+           * The number of accounts that can be linked in this Session.
+           */
+          accounts: number;
         }
 
         interface ManualEntry {}

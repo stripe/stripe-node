@@ -22,6 +22,12 @@ module.exports = StripeResource.extend({
     fullPath: '/v1/application_fees/{id}/refunds',
   }),
 
+  listRefunds: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/application_fees/{id}/refunds',
+    methodType: 'list',
+  }),
+
   retrieveRefund: stripeMethod({
     method: 'GET',
     fullPath: '/v1/application_fees/{fee}/refunds/{id}',
@@ -30,11 +36,5 @@ module.exports = StripeResource.extend({
   updateRefund: stripeMethod({
     method: 'POST',
     fullPath: '/v1/application_fees/{fee}/refunds/{id}',
-  }),
-
-  listRefunds: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/application_fees/{id}/refunds',
-    methodType: 'list',
   }),
 });

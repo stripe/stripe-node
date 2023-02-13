@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.10.0 - 2023-02-09
+* [#1679](https://github.com/stripe/stripe-node/pull/1679) Enable library to work in worker environments without extra configuration.
+
 ## 11.10.0-beta.1 - 2023-02-02
 * [#1671](https://github.com/stripe/stripe-node/pull/1671) API Updates for beta branch
   * Updated stable APIs to the latest version
@@ -15,6 +18,9 @@
   * Add support for `account_number` on `PaymentMethod.us_bank_account`
   * Remove support for `id` on `QuoteCreateParams.lines[].starts_at.line_ends_at`
   * Add support for new values `customer.subscription.paused`, `customer.subscription.resumed`, `financial_connections.account.refreshed_inferred_balances`, `financial_connections.account.refreshed_ownership`, `financial_connections.account.refreshed_transactions`, and `financial_connections.session.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
+## 11.9.1 - 2023-02-03
+* [#1672](https://github.com/stripe/stripe-node/pull/1672) Update main entrypoint on package.json
 
 ## 11.9.0 - 2023-02-02
 * [#1669](https://github.com/stripe/stripe-node/pull/1669) API Updates

@@ -48,51 +48,9 @@ module.exports = StripeResource.extend({
     fullPath: '/v1/accounts/{account}',
   }),
 
-  reject: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/accounts/{account}/reject',
-  }),
-
-  retrieveCapability: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/accounts/{account}/capabilities/{capability}',
-  }),
-
-  updateCapability: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/accounts/{account}/capabilities/{capability}',
-  }),
-
-  listCapabilities: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/accounts/{account}/capabilities',
-    methodType: 'list',
-  }),
-
   createExternalAccount: stripeMethod({
     method: 'POST',
     fullPath: '/v1/accounts/{account}/external_accounts',
-  }),
-
-  retrieveExternalAccount: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/accounts/{account}/external_accounts/{id}',
-  }),
-
-  updateExternalAccount: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/accounts/{account}/external_accounts/{id}',
-  }),
-
-  listExternalAccounts: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/accounts/{account}/external_accounts',
-    methodType: 'list',
-  }),
-
-  deleteExternalAccount: stripeMethod({
-    method: 'DELETE',
-    fullPath: '/v1/accounts/{account}/external_accounts/{id}',
   }),
 
   createLoginLink: stripeMethod({
@@ -105,14 +63,26 @@ module.exports = StripeResource.extend({
     fullPath: '/v1/accounts/{account}/persons',
   }),
 
-  retrievePerson: stripeMethod({
-    method: 'GET',
+  deleteExternalAccount: stripeMethod({
+    method: 'DELETE',
+    fullPath: '/v1/accounts/{account}/external_accounts/{id}',
+  }),
+
+  deletePerson: stripeMethod({
+    method: 'DELETE',
     fullPath: '/v1/accounts/{account}/persons/{person}',
   }),
 
-  updatePerson: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/accounts/{account}/persons/{person}',
+  listCapabilities: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/accounts/{account}/capabilities',
+    methodType: 'list',
+  }),
+
+  listExternalAccounts: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/accounts/{account}/external_accounts',
+    methodType: 'list',
   }),
 
   listPersons: stripeMethod({
@@ -121,8 +91,38 @@ module.exports = StripeResource.extend({
     methodType: 'list',
   }),
 
-  deletePerson: stripeMethod({
-    method: 'DELETE',
+  reject: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/accounts/{account}/reject',
+  }),
+
+  retrieveCapability: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/accounts/{account}/capabilities/{capability}',
+  }),
+
+  retrieveExternalAccount: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/accounts/{account}/external_accounts/{id}',
+  }),
+
+  retrievePerson: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/accounts/{account}/persons/{person}',
+  }),
+
+  updateCapability: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/accounts/{account}/capabilities/{capability}',
+  }),
+
+  updateExternalAccount: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/accounts/{account}/external_accounts/{id}',
+  }),
+
+  updatePerson: stripeMethod({
+    method: 'POST',
     fullPath: '/v1/accounts/{account}/persons/{person}',
   }),
 });

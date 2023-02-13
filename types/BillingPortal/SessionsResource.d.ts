@@ -20,7 +20,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Information about a specific flow for the customer to go through.
+         * Information about a specific flow for the customer to go through. See the [docs](https://stripe.com/docs/customer-management/portal-deep-links) to learn more about using customer portal deep links and flows.
          */
         flow_data?: SessionCreateParams.FlowData;
 
