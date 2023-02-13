@@ -27,6 +27,11 @@ declare module 'stripe' {
         filters?: SessionCreateParams.Filters;
 
         /**
+         * Settings for configuring Session-specific limits.
+         */
+        limits?: SessionCreateParams.Limits;
+
+        /**
          * Settings for configuring manual entry of account details for this Session.
          */
         manual_entry?: SessionCreateParams.ManualEntry;
@@ -71,12 +76,14 @@ declare module 'stripe' {
           countries: Array<string>;
         }
 
-        interface ManualEntry {
+        interface Limits {
           /**
-           * Whether manual entry will be allowed on this Session.
+           * The number of accounts that can be linked in this Session.
            */
-          enabled: boolean;
+          accounts: number;
+        }
 
+        interface ManualEntry {
           /**
            * Whether manual entry will be handled by Stripe during the Session.
            */

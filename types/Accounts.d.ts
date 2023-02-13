@@ -4,11 +4,13 @@ declare module 'stripe' {
   namespace Stripe {
     /**
      * This is an object representing a Stripe account. You can retrieve it to see
-     * properties on the account like its current e-mail address or if the account is
-     * enabled yet to make live charges.
+     * properties on the account like its current requirements or if the account is
+     * enabled to make live charges or receive payouts.
      *
-     * Some properties, marked below, are available only to platforms that want to
-     * [create and manage Express or Custom accounts](https://stripe.com/docs/connect/accounts).
+     * For Custom accounts, the properties below are always returned. For other accounts, some properties are returned until that
+     * account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links)
+     * for a Standard or Express account, some parameters are no longer returned. These are marked as **Custom Only** or **Custom and Express**
+     * below. Learn about the differences [between accounts](https://stripe.com/docs/connect/accounts).
      */
     interface Account {
       /**

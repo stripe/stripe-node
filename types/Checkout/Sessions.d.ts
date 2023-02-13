@@ -14,15 +14,14 @@ declare module 'stripe' {
        * [PaymentIntent](https://stripe.com/docs/api/payment_intents) or an active
        * [Subscription](https://stripe.com/docs/api/subscriptions).
        *
-       * You can create a Checkout Session on your server and pass its ID to the
-       * client to begin Checkout.
+       * You can create a Checkout Session on your server and redirect to its URL
+       * to begin Checkout.
        *
        * Related guide: [Checkout Quickstart](https://stripe.com/docs/checkout/quickstart).
        */
       interface Session {
         /**
-         * Unique identifier for the object. Used to pass to `redirectToCheckout`
-         * in Stripe.js.
+         * Unique identifier for the object.
          */
         id: string;
 
@@ -89,6 +88,11 @@ declare module 'stripe' {
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         currency: string | null;
+
+        /**
+         * Currency conversion details for automatic currency conversion sessions
+         */
+        currency_conversion?: Session.CurrencyConversion | null;
 
         custom_text: Session.CustomText;
 
@@ -349,6 +353,23 @@ declare module 'stripe' {
           type Promotions = 'auto' | 'none';
 
           type TermsOfService = 'none' | 'required';
+        }
+
+        interface CurrencyConversion {
+          /**
+           * Total of all items in source currency before discounts or taxes are applied.
+           */
+          amount_subtotal: number;
+
+          /**
+           * Total of all items in source currency after discounts and taxes are applied.
+           */
+          amount_total: number;
+
+          /**
+           * Creation currency of the CheckoutSession before localization
+           */
+          source_currency: string;
         }
 
         type CustomerCreation = 'always' | 'if_required';

@@ -230,7 +230,7 @@ declare module 'stripe' {
       /**
        * Settings related to subscription trials.
        */
-      trial_settings?: Subscription.TrialSettings | null;
+      trial_settings: Subscription.TrialSettings | null;
 
       /**
        * If the subscription has a trial, the beginning of that trial.
@@ -606,7 +606,7 @@ declare module 'stripe' {
         /**
          * Defines how a subscription behaves when a free trial ends.
          */
-        end_behavior?: TrialSettings.EndBehavior;
+        end_behavior: TrialSettings.EndBehavior;
       }
 
       namespace TrialSettings {

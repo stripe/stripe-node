@@ -28,14 +28,14 @@ module.exports = StripeResource.extend({
     methodType: 'list',
   }),
 
-  refresh: stripeMethod({
-    method: 'POST',
-    fullPath: '/v1/financial_connections/accounts/{account}/refresh',
-  }),
-
   listInferredBalances: stripeMethod({
     method: 'GET',
     fullPath: '/v1/financial_connections/accounts/{account}/inferred_balances',
     methodType: 'list',
+  }),
+
+  refresh: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/financial_connections/accounts/{account}/refresh',
   }),
 });

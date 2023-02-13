@@ -32,6 +32,12 @@ module.exports = StripeResource.extend({
     fullPath: '/v1/transfers/{id}/reversals',
   }),
 
+  listReversals: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/transfers/{id}/reversals',
+    methodType: 'list',
+  }),
+
   retrieveReversal: stripeMethod({
     method: 'GET',
     fullPath: '/v1/transfers/{transfer}/reversals/{id}',
@@ -40,11 +46,5 @@ module.exports = StripeResource.extend({
   updateReversal: stripeMethod({
     method: 'POST',
     fullPath: '/v1/transfers/{transfer}/reversals/{id}',
-  }),
-
-  listReversals: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/transfers/{id}/reversals',
-    methodType: 'list',
   }),
 });
