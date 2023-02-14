@@ -6,7 +6,7 @@ const HttpClient = _HttpClient.HttpClient;
 import _FetchHttpClient = require('../net/FetchHttpClient');
 const FetchHttpClient = _FetchHttpClient.FetchHttpClient;
 import SubtleCryptoProvider = require('../crypto/SubtleCryptoProvider');
-import CryptoProvider = require('../crypto/CryptoProvider');
+import CryptoProvider from '../crypto/CryptoProvider';
 
 /**
  * Interface encapsulating various utility functions whose

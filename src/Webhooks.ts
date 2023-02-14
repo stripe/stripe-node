@@ -1,4 +1,4 @@
-import CryptoProvider = require('./crypto/CryptoProvider');
+import CryptoProvider from './crypto/CryptoProvider';
 import _Error = require('./Error');
 import PlatformFunctions = require('./platform/PlatformFunctions');
 const {StripeError, StripeSignatureVerificationError} = _Error;

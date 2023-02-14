@@ -9,8 +9,9 @@ import _HttpClient = require('../net/HttpClient');
 const HttpClient = _HttpClient.HttpClient;
 import _NodeHttpClient = require('../net/NodeHttpClient');
 const NodeHttpClient = _NodeHttpClient.NodeHttpClient;
-import NodeCryptoProvider = require('../crypto/NodeCryptoProvider');
-import CryptoProvider = require('../crypto/CryptoProvider');
+
+import CryptoProvider from '../crypto/CryptoProvider';
+import NodeCryptoProvider from '../crypto/NodeCryptoProvider';
 
 class StreamProcessingError extends StripeError {}
 

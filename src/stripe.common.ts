@@ -34,7 +34,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
 import StripeResource = require('./StripeResource');
 import RequestSender = require('./RequestSender');
 import HttpClient = require('./net/HttpClient');
-import CryptoProvider = require('./crypto/CryptoProvider');
+import CryptoProvider from './crypto/CryptoProvider';
 import PlatformFunctions = require('./platform/PlatformFunctions');
 import createWebhooks = require('./Webhooks');
 

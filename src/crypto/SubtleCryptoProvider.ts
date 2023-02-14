@@ -1,4 +1,4 @@
-import CryptoProvider = require('./CryptoProvider');
+import CryptoProvider from './CryptoProvider';
 
 /**
  * `CryptoProvider which uses the SubtleCrypto interface of the Web Crypto API.

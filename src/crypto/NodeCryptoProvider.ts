@@ -1,6 +1,6 @@
-import crypto = require('crypto');
+import * as crypto from 'crypto';
 
-import CryptoProvider = require('./CryptoProvider');
+import CryptoProvider from './CryptoProvider';
 
 /**
  * `CryptoProvider which uses the Node `crypto` package for its computations.
@@ -24,4 +24,4 @@ class NodeCryptoProvider extends CryptoProvider {
   }
 }
 
-export = NodeCryptoProvider;
+export default NodeCryptoProvider;

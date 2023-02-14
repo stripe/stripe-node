@@ -31,4 +31,4 @@ class CryptoProvider {
   }
 }
 
-export = CryptoProvider;
+export default CryptoProvider;

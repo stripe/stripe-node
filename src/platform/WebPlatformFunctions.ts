@@ -1,8 +1,9 @@
 import StripeEmitter = require('../StripeEmitter');
 import PlatformFunctions = require('./PlatformFunctions');
 import _HttpClient = require('../net/HttpClient');
-import CryptoProvider = require('../crypto/CryptoProvider');
 const HttpClient = _HttpClient.HttpClient;
+
+import CryptoProvider from '../crypto/CryptoProvider';
 
 /**
  * Specializes WebPlatformFunctions using APIs available in Web workers.
