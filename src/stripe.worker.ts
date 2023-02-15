@@ -1,5 +1,5 @@
-import _Stripe = require('./stripe.common');
-import WebPlatformFunctions = require('./platform/WebPlatformFunctions');
+import _Stripe from './stripe.common';
+import WebPlatformFunctions from './platform/WebPlatformFunctions';
 
 const Stripe = _Stripe.createStripe(new WebPlatformFunctions());
 

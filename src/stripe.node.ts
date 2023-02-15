@@ -1,5 +1,5 @@
-import _Stripe = require('./stripe.common');
-import NodePlatformFunctions = require('./platform/NodePlatformFunctions');
+import _Stripe from './stripe.common';
+import NodePlatformFunctions from './platform/NodePlatformFunctions';
 
 const Stripe = _Stripe.createStripe(new NodePlatformFunctions());
 

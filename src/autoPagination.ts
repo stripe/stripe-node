@@ -1,4 +1,4 @@
-import utils = require('./utils');
+import utils from './utils';
 
 type PromiseCache = {
   currentPromise: Promise<any> | undefined | null;

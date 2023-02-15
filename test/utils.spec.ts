@@ -3,7 +3,7 @@
 require('../testUtils');
 
 import {expect} from 'chai';
-import utils = require('../lib/utils');
+import utils from '../lib/utils';
 
 describe('utils', () => {
   describe('makeURLInterpolator', () => {

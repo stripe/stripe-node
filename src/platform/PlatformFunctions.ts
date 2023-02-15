@@ -1,11 +1,11 @@
-import EventEmitter = require('events');
-import StripeEmitter = require('../StripeEmitter');
-import http = require('http');
-import _HttpClient = require('../net/HttpClient');
+import EventEmitter from 'events';
+import StripeEmitter from '../StripeEmitter';
+import http from 'http';
+import _HttpClient from '../net/HttpClient';
 const HttpClient = _HttpClient.HttpClient;
-import _FetchHttpClient = require('../net/FetchHttpClient');
+import _FetchHttpClient from '../net/FetchHttpClient';
 const FetchHttpClient = _FetchHttpClient.FetchHttpClient;
-import SubtleCryptoProvider = require('../crypto/SubtleCryptoProvider');
+import SubtleCryptoProvider from '../crypto/SubtleCryptoProvider';
 import CryptoProvider from '../crypto/CryptoProvider';
 
 /**

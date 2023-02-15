@@ -1,4 +1,4 @@
-const qs = require('qs');
+import qs from 'qs';
 
 const OPTIONS_KEYS = [
   'apiKey',
@@ -370,4 +370,4 @@ function emitWarning(warning: string): void {
   return process.emitWarning(warning, 'Stripe');
 }
 
-export = utils;
+export default utils;

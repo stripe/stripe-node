@@ -2,12 +2,12 @@
 
 require('../testUtils');
 
-import fs = require('fs');
-import path = require('path');
-import NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
-import PlatformFunctions = require('../lib/platform/PlatformFunctions');
-import NodeCryptoProvider = require('../lib/crypto/NodeCryptoProvider');
-import SubtleCryptoProvider = require('../lib/crypto/SubtleCryptoProvider');
+import fs from 'fs';
+import path from 'path';
+import NodePlatformFunctions from '../lib/platform/NodePlatformFunctions';
+import PlatformFunctions from '../lib/platform/PlatformFunctions';
+import NodeCryptoProvider from '../lib/crypto/NodeCryptoProvider';
+import SubtleCryptoProvider from '../lib/crypto/SubtleCryptoProvider';
 
 import {FetchHttpClient} from '../lib/net/FetchHttpClient';
 import {NodeHttpClient} from '../lib/net/NodeHttpClient';

@@ -1,5 +1,5 @@
-import _Error = require('./Error');
-import utils = require('./utils');
+import _Error from './Error';
+import utils from './utils';
 const {
   StripeAPIError,
   StripeAuthenticationError,
@@ -543,4 +543,4 @@ class RequestSender {
   }
 }
 
-export = RequestSender;
+export default RequestSender;

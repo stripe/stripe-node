@@ -1,6 +1,6 @@
-import StripeEmitter = require('../StripeEmitter');
-import PlatformFunctions = require('./PlatformFunctions');
-import _HttpClient = require('../net/HttpClient');
+import StripeEmitter from '../StripeEmitter';
+import PlatformFunctions from './PlatformFunctions';
+import _HttpClient from '../net/HttpClient';
 const HttpClient = _HttpClient.HttpClient;
 
 import CryptoProvider from '../crypto/CryptoProvider';

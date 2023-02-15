@@ -1,4 +1,4 @@
-import _HttpClient = require('./HttpClient');
+import _HttpClient from './HttpClient';
 const {HttpClient, HttpClientResponse} = _HttpClient;
 
 /**

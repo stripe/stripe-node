@@ -1,6 +1,6 @@
-import _Error = require('./Error');
+import _Error from './Error';
 
-import resources = require('./resources');
+import resources from './resources';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -9,7 +9,7 @@ const DEFAULT_API_VERSION = (null as unknown) as string;
 
 const DEFAULT_TIMEOUT = 80000;
 
-import utils = require('./utils');
+import utils from './utils';
 const {determineProcessUserAgentProperties} = utils;
 
 const MAX_NETWORK_RETRY_DELAY_SEC = 2;
@@ -31,19 +31,19 @@ const ALLOWED_CONFIG_PROPERTIES = [
   'stripeAccount',
 ];
 
-import StripeResource = require('./StripeResource');
-import RequestSender = require('./RequestSender');
-import HttpClient = require('./net/HttpClient');
+import StripeResource from './StripeResource';
+import RequestSender from './RequestSender';
+import HttpClient from './net/HttpClient';
 import CryptoProvider from './crypto/CryptoProvider';
-import PlatformFunctions = require('./platform/PlatformFunctions');
-import createWebhooks = require('./Webhooks');
+import PlatformFunctions from './platform/PlatformFunctions';
+import createWebhooks from './Webhooks';
 
 type RequestSenderFactory = (stripe: StripeObject) => RequestSender;
 
 const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
   new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 
-function createStripe(
+export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
@@ -458,5 +458,3 @@ function createStripe(
 
   return Stripe;
 }
-
-export = {createStripe};

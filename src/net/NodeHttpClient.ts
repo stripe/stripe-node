@@ -1,7 +1,7 @@
-import http = require('http');
-import https = require('https');
+import http from 'http';
+import https from 'https';
 
-import _HttpClient = require('./HttpClient');
+import _HttpClient from './HttpClient';
 const {HttpClient, HttpClientResponse} = _HttpClient;
 
 const defaultHttpAgent = new http.Agent({keepAlive: true});

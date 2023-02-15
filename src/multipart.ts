@@ -1,5 +1,5 @@
-import utils = require('./utils');
-import _Error = require('./Error');
+import utils from './utils';
+import _Error from './Error';
 
 type MultipartCallbackReturn = any;
 type MultipartCallback = (
