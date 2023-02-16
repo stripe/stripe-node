@@ -59,6 +59,11 @@ declare module 'stripe' {
        */
       currency: string;
 
+      /**
+       * Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+       */
+      custom_fields: Array<PaymentLink.CustomField>;
+
       custom_text: PaymentLink.CustomText;
 
       /**
@@ -199,6 +204,67 @@ declare module 'stripe' {
       }
 
       type CustomerCreation = 'always' | 'if_required';
+
+      interface CustomField {
+        /**
+         * Configuration for `type=dropdown` fields.
+         */
+        dropdown: CustomField.Dropdown | null;
+
+        /**
+         * String of your choice that your integration can use to reconcile this field. Must be unique to this field, alphanumeric, and up to 200 characters.
+         */
+        key: string;
+
+        label: CustomField.Label;
+
+        /**
+         * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+         */
+        optional: boolean;
+
+        /**
+         * The type of the field.
+         */
+        type: CustomField.Type;
+      }
+
+      namespace CustomField {
+        interface Dropdown {
+          /**
+           * The options available for the customer to select. Up to 200 options allowed.
+           */
+          options: Array<Dropdown.Option>;
+        }
+
+        namespace Dropdown {
+          interface Option {
+            /**
+             * The label for the option, displayed to the customer. Up to 100 characters.
+             */
+            label: string;
+
+            /**
+             * The value for this option, not displayed to the customer, used by your integration to reconcile the option selected by the customer. Must be unique to this option, alphanumeric, and up to 100 characters.
+             */
+            value: string;
+          }
+        }
+
+        interface Label {
+          /**
+           * Custom text for the label, displayed to the customer. Up to 50 characters.
+           */
+          custom: string | null;
+
+          /**
+           * The type of the label.
+           */
+          type: 'custom';
+        }
+
+        type Type = 'dropdown' | 'numeric' | 'text';
+      }
 
       interface CustomText {
         /**

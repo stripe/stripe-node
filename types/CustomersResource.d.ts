@@ -771,6 +771,40 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface CustomerBalanceTransactionListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerCashBalanceTransactionListParams
+      extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerSourceListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Filter sources according to a particular object type.
+       */
+      object?: string;
+    }
+
+    interface TaxIdListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface CustomerRetrievePaymentMethodParams {
       /**
        * Specifies which fields in the response should be expanded.
