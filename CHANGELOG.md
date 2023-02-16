@@ -1,5 +1,19 @@
 # Changelog
 
+## 11.11.0 - 2023-02-16
+* [#1681](https://github.com/stripe/stripe-node/pull/1681) API Updates
+  * Add support for `refund_payment` method on resource `Terminal.Reader`
+  * Add support for new value `name` on enums `BillingPortal.Configuration.features.customer_update.allowed_updates[]`, `BillingPortalConfigurationCreateParams.features.customer_update.allowed_updates[]`, and `BillingPortalConfigurationUpdateParams.features.customer_update.allowed_updates[]`
+  * Add support for `custom_fields` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  * Change `Subscription.trial_settings.end_behavior` and `Subscription.trial_settings` to be required
+  * Add support for `interac_present` on `TerminalReaderPresentPaymentMethodParams.testHelpers`
+  * Change type of `TerminalReaderPresentPaymentMethodParams.testHelpers.type` from `literal('card_present')` to `enum('card_present'|'interac_present')`
+  * Add support for `refund_payment` on `Terminal.Reader.action`
+  * Add support for new value `refund_payment` on enum `Terminal.Reader.action.type`
+* [#1683](https://github.com/stripe/stripe-node/pull/1683) Add NextJS webhook sample
+* [#1685](https://github.com/stripe/stripe-node/pull/1685) Add more webhook parsing checks
+* [#1684](https://github.com/stripe/stripe-node/pull/1684) Add infrastructure for mocked tests
+
 ## 11.10.0 - 2023-02-09
 * [#1679](https://github.com/stripe/stripe-node/pull/1679) Enable library to work in worker environments without extra configuration.
 
