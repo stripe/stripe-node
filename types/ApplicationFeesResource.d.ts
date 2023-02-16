@@ -40,6 +40,13 @@ declare module 'stripe' {
       metadata?: Stripe.MetadataParam;
     }
 
+    interface FeeRefundListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface FeeRefundRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -57,13 +64,6 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
-    }
-
-    interface FeeRefundListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
     }
 
     class ApplicationFeesResource {
@@ -111,6 +111,19 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.FeeRefund>>;
 
       /**
+       * You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
+       */
+      listRefunds(
+        id: string,
+        params?: FeeRefundListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.FeeRefund>;
+      listRefunds(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.FeeRefund>;
+
+      /**
        * By default, you can see the 10 most recent refunds stored directly on the application fee object, but you can also retrieve details about a specific refund stored on the application fee.
        */
       retrieveRefund(
@@ -136,19 +149,11 @@ declare module 'stripe' {
         params?: FeeRefundUpdateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.FeeRefund>>;
-
-      /**
-       * You can see a list of the refunds belonging to a specific application fee. Note that the 10 most recent refunds are always available by default on the application fee object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional refunds.
-       */
-      listRefunds(
-        id: string,
-        params?: FeeRefundListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.FeeRefund>;
-      listRefunds(
+      updateRefund(
+        feeId: string,
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<Stripe.FeeRefund>;
+      ): Promise<Stripe.Response<Stripe.FeeRefund>>;
     }
   }
 }

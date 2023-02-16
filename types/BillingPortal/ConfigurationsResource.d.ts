@@ -104,6 +104,7 @@ declare module 'stripe' {
             type AllowedUpdate =
               | 'address'
               | 'email'
+              | 'name'
               | 'phone'
               | 'shipping'
               | 'tax_id';
@@ -352,6 +353,7 @@ declare module 'stripe' {
             type AllowedUpdate =
               | 'address'
               | 'email'
+              | 'name'
               | 'phone'
               | 'shipping'
               | 'tax_id';

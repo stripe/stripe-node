@@ -47,6 +47,11 @@ module.exports = StripeResource.extend({
     fullPath: '/v1/terminal/readers/{reader}/process_setup_intent',
   }),
 
+  refundPayment: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/terminal/readers/{reader}/refund_payment',
+  }),
+
   setReaderDisplay: stripeMethod({
     method: 'POST',
     fullPath: '/v1/terminal/readers/{reader}/set_reader_display',

@@ -14,15 +14,14 @@ declare module 'stripe' {
        * [PaymentIntent](https://stripe.com/docs/api/payment_intents) or an active
        * [Subscription](https://stripe.com/docs/api/subscriptions).
        *
-       * You can create a Checkout Session on your server and pass its ID to the
-       * client to begin Checkout.
+       * You can create a Checkout Session on your server and redirect to its URL
+       * to begin Checkout.
        *
        * Related guide: [Checkout Quickstart](https://stripe.com/docs/checkout/quickstart).
        */
       interface Session {
         /**
-         * Unique identifier for the object. Used to pass to `redirectToCheckout`
-         * in Stripe.js.
+         * Unique identifier for the object.
          */
         id: string;
 
@@ -89,6 +88,11 @@ declare module 'stripe' {
          * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
          */
         currency: string | null;
+
+        /**
+         * Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+         */
+        custom_fields: Array<Session.CustomField>;
 
         custom_text: Session.CustomText;
 
@@ -456,6 +460,96 @@ declare module 'stripe' {
               | 'us_ein'
               | 'za_vat';
           }
+        }
+
+        interface CustomField {
+          /**
+           * Configuration for `type=dropdown` fields.
+           */
+          dropdown: CustomField.Dropdown | null;
+
+          /**
+           * String of your choice that your integration can use to reconcile this field. Must be unique to this field, alphanumeric, and up to 200 characters.
+           */
+          key: string;
+
+          label: CustomField.Label;
+
+          /**
+           * Configuration for `type=numeric` fields.
+           */
+          numeric: CustomField.Numeric | null;
+
+          /**
+           * Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+           */
+          optional: boolean;
+
+          /**
+           * Configuration for `type=text` fields.
+           */
+          text: CustomField.Text | null;
+
+          /**
+           * The type of the field.
+           */
+          type: CustomField.Type;
+        }
+
+        namespace CustomField {
+          interface Dropdown {
+            /**
+             * The options available for the customer to select. Up to 200 options allowed.
+             */
+            options: Array<Dropdown.Option>;
+
+            /**
+             * The option selected by the customer. This will be the `value` for the option.
+             */
+            value: string | null;
+          }
+
+          namespace Dropdown {
+            interface Option {
+              /**
+               * The label for the option, displayed to the customer. Up to 100 characters.
+               */
+              label: string;
+
+              /**
+               * The value for this option, not displayed to the customer, used by your integration to reconcile the option selected by the customer. Must be unique to this option, alphanumeric, and up to 100 characters.
+               */
+              value: string;
+            }
+          }
+
+          interface Label {
+            /**
+             * Custom text for the label, displayed to the customer. Up to 50 characters.
+             */
+            custom: string | null;
+
+            /**
+             * The type of the label.
+             */
+            type: 'custom';
+          }
+
+          interface Numeric {
+            /**
+             * The value entered by the customer, containing only digits.
+             */
+            value: string | null;
+          }
+
+          interface Text {
+            /**
+             * The value entered by the customer.
+             */
+            value: string | null;
+          }
+
+          type Type = 'dropdown' | 'numeric' | 'text';
         }
 
         interface CustomText {

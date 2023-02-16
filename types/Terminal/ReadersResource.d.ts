@@ -154,6 +154,43 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface ReaderRefundPaymentParams {
+        /**
+         * A positive integer in __cents__ representing how much of this charge to refund.
+         */
+        amount?: number;
+
+        /**
+         * ID of the Charge to refund.
+         */
+        charge?: string;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+
+        /**
+         * ID of the PaymentIntent to refund.
+         */
+        payment_intent?: string;
+
+        /**
+         * Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. An application fee can be refunded only by the application that created the charge.
+         */
+        refund_application_fee?: boolean;
+
+        /**
+         * Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). A transfer can be reversed only by the application that created the charge.
+         */
+        reverse_transfer?: boolean;
+      }
+
       interface ReaderSetReaderDisplayParams {
         /**
          * Type
@@ -307,6 +344,19 @@ declare module 'stripe' {
         processSetupIntent(
           id: string,
           params: ReaderProcessSetupIntentParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+
+        /**
+         * Initiates a refund on a Reader
+         */
+        refundPayment(
+          id: string,
+          params?: ReaderRefundPaymentParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+        refundPayment(
+          id: string,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 
