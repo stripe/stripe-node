@@ -560,7 +560,134 @@ declare module 'stripe' {
       }
     }
 
+    interface CustomerBalanceTransactionCreateParams {
+      /**
+       * The integer amount in **cents (or local equivalent)** to apply to the customer's credit balance.
+       */
+      amount: number;
+
+      /**
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Specifies the [`invoice_credit_balance`](https://stripe.com/docs/api/customers/object#customer_object-invoice_credit_balance) that this transaction will apply to. If the customer's `currency` is not set, it will be updated to this value.
+       */
+      currency: string;
+
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+    }
+
+    interface CustomerSourceCreateParams {
+      /**
+       * Please refer to full [documentation](https://stripe.com/docs/api) instead.
+       */
+      source: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.MetadataParam;
+
+      validate?: boolean;
+    }
+
+    interface TaxIdCreateParams {
+      /**
+       * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ph_tin`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+       */
+      type: TaxIdCreateParams.Type;
+
+      /**
+       * Value of the tax ID.
+       */
+      value: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    namespace TaxIdCreateParams {
+      type Type =
+        | 'ae_trn'
+        | 'au_abn'
+        | 'au_arn'
+        | 'bg_uic'
+        | 'br_cnpj'
+        | 'br_cpf'
+        | 'ca_bn'
+        | 'ca_gst_hst'
+        | 'ca_pst_bc'
+        | 'ca_pst_mb'
+        | 'ca_pst_sk'
+        | 'ca_qst'
+        | 'ch_vat'
+        | 'cl_tin'
+        | 'eg_tin'
+        | 'es_cif'
+        | 'eu_oss_vat'
+        | 'eu_vat'
+        | 'gb_vat'
+        | 'ge_vat'
+        | 'hk_br'
+        | 'hu_tin'
+        | 'id_npwp'
+        | 'il_vat'
+        | 'in_gst'
+        | 'is_vat'
+        | 'jp_cn'
+        | 'jp_rn'
+        | 'jp_trn'
+        | 'ke_pin'
+        | 'kr_brn'
+        | 'li_uid'
+        | 'mx_rfc'
+        | 'my_frp'
+        | 'my_itn'
+        | 'my_sst'
+        | 'no_vat'
+        | 'nz_gst'
+        | 'ph_tin'
+        | 'ru_inn'
+        | 'ru_kpp'
+        | 'sa_vat'
+        | 'sg_gst'
+        | 'sg_uen'
+        | 'si_tin'
+        | 'th_vat'
+        | 'tr_tin'
+        | 'tw_vat'
+        | 'ua_vat'
+        | 'us_ein'
+        | 'za_vat';
+    }
+
     interface CustomerDeleteDiscountParams {}
+
+    interface CustomerSourceDeleteParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface TaxIdDeleteParams {}
 
     interface CustomerListPaymentMethodsParams extends PaginationParams {
       /**
@@ -607,7 +734,76 @@ declare module 'stripe' {
         | 'wechat_pay';
     }
 
+    interface CustomerBalanceTransactionListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerCashBalanceTransactionListParams
+      extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerSourceListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Filter sources according to a particular object type.
+       */
+      object?: string;
+    }
+
+    interface TaxIdListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface CustomerRetrievePaymentMethodParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerBalanceTransactionRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CashBalanceRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerCashBalanceTransactionRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CustomerSourceRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface TaxIdRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -636,11 +832,21 @@ declare module 'stripe' {
       page?: string;
     }
 
-    interface CashBalanceRetrieveParams {
+    interface CustomerBalanceTransactionUpdateParams {
+      /**
+       * An arbitrary string attached to the object. Often useful for displaying to users.
+       */
+      description?: string;
+
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
     }
 
     interface CashBalanceUpdateParams {
@@ -666,105 +872,6 @@ declare module 'stripe' {
       namespace Settings {
         type ReconciliationMode = 'automatic' | 'manual' | 'merchant_default';
       }
-    }
-
-    interface CustomerBalanceTransactionCreateParams {
-      /**
-       * The integer amount in **cents (or local equivalent)** to apply to the customer's credit balance.
-       */
-      amount: number;
-
-      /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Specifies the [`invoice_credit_balance`](https://stripe.com/docs/api/customers/object#customer_object-invoice_credit_balance) that this transaction will apply to. If the customer's `currency` is not set, it will be updated to this value.
-       */
-      currency: string;
-
-      /**
-       * An arbitrary string attached to the object. Often useful for displaying to users.
-       */
-      description?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-       */
-      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
-    }
-
-    interface CustomerBalanceTransactionRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface CustomerBalanceTransactionUpdateParams {
-      /**
-       * An arbitrary string attached to the object. Often useful for displaying to users.
-       */
-      description?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-       */
-      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
-    }
-
-    interface CustomerBalanceTransactionListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface CustomerCashBalanceTransactionRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface CustomerCashBalanceTransactionListParams
-      extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface CustomerSourceCreateParams {
-      /**
-       * Please refer to full [documentation](https://stripe.com/docs/api) instead.
-       */
-      source: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-       */
-      metadata?: Stripe.MetadataParam;
-
-      validate?: boolean;
-    }
-
-    interface CustomerSourceRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
     }
 
     interface CustomerSourceUpdateParams {
@@ -862,25 +969,6 @@ declare module 'stripe' {
       }
     }
 
-    interface CustomerSourceListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Filter sources according to a particular object type.
-       */
-      object?: string;
-    }
-
-    interface CustomerSourceDeleteParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface CustomerSourceVerifyParams {
       /**
        * Two positive integers, in *cents*, equal to the values of the microdeposits sent to the bank account.
@@ -892,94 +980,6 @@ declare module 'stripe' {
        */
       expand?: Array<string>;
     }
-
-    interface TaxIdCreateParams {
-      /**
-       * Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ph_tin`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
-       */
-      type: TaxIdCreateParams.Type;
-
-      /**
-       * Value of the tax ID.
-       */
-      value: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    namespace TaxIdCreateParams {
-      type Type =
-        | 'ae_trn'
-        | 'au_abn'
-        | 'au_arn'
-        | 'bg_uic'
-        | 'br_cnpj'
-        | 'br_cpf'
-        | 'ca_bn'
-        | 'ca_gst_hst'
-        | 'ca_pst_bc'
-        | 'ca_pst_mb'
-        | 'ca_pst_sk'
-        | 'ca_qst'
-        | 'ch_vat'
-        | 'cl_tin'
-        | 'eg_tin'
-        | 'es_cif'
-        | 'eu_oss_vat'
-        | 'eu_vat'
-        | 'gb_vat'
-        | 'ge_vat'
-        | 'hk_br'
-        | 'hu_tin'
-        | 'id_npwp'
-        | 'il_vat'
-        | 'in_gst'
-        | 'is_vat'
-        | 'jp_cn'
-        | 'jp_rn'
-        | 'jp_trn'
-        | 'ke_pin'
-        | 'kr_brn'
-        | 'li_uid'
-        | 'mx_rfc'
-        | 'my_frp'
-        | 'my_itn'
-        | 'my_sst'
-        | 'no_vat'
-        | 'nz_gst'
-        | 'ph_tin'
-        | 'ru_inn'
-        | 'ru_kpp'
-        | 'sa_vat'
-        | 'sg_gst'
-        | 'sg_uen'
-        | 'si_tin'
-        | 'th_vat'
-        | 'tr_tin'
-        | 'tw_vat'
-        | 'ua_vat'
-        | 'us_ein'
-        | 'za_vat';
-    }
-
-    interface TaxIdRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface TaxIdListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface TaxIdDeleteParams {}
 
     class CustomersResource {
       /**
@@ -1051,80 +1051,6 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.FundingInstructions>>;
 
       /**
-       * Removes the currently applied discount on a customer.
-       */
-      deleteDiscount(
-        id: string,
-        params?: CustomerDeleteDiscountParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
-      deleteDiscount(
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
-
-      /**
-       * Returns a list of PaymentMethods for a given Customer
-       */
-      listPaymentMethods(
-        id: string,
-        params?: CustomerListPaymentMethodsParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.PaymentMethod>;
-      listPaymentMethods(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.PaymentMethod>;
-
-      /**
-       * Retrieves a PaymentMethod object for a given Customer.
-       */
-      retrievePaymentMethod(
-        customerId: string,
-        id: string,
-        params?: CustomerRetrievePaymentMethodParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
-      retrievePaymentMethod(
-        customerId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
-
-      /**
-       * Search for customers you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
-       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
-       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
-       * to an hour behind during outages. Search functionality is not available to merchants in India.
-       */
-      search(
-        params: CustomerSearchParams,
-        options?: RequestOptions
-      ): ApiSearchResultPromise<Stripe.Customer>;
-
-      /**
-       * Retrieves a customer's cash balance.
-       */
-      retrieveCashBalance(
-        id: string,
-        params?: CashBalanceRetrieveParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CashBalance>>;
-      retrieveCashBalance(
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CashBalance>>;
-
-      /**
-       * Changes the settings on a customer's cash balance.
-       */
-      updateCashBalance(
-        id: string,
-        params?: CashBalanceUpdateParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CashBalance>>;
-
-      /**
        * Creates an immutable transaction that updates the customer's credit [balance](https://stripe.com/docs/billing/customer/balance).
        */
       createBalanceTransaction(
@@ -1132,72 +1058,6 @@ declare module 'stripe' {
         params: CustomerBalanceTransactionCreateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
-
-      /**
-       * Retrieves a specific customer balance transaction that updated the customer's [balances](https://stripe.com/docs/billing/customer/balance).
-       */
-      retrieveBalanceTransaction(
-        customerId: string,
-        id: string,
-        params?: CustomerBalanceTransactionRetrieveParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
-      retrieveBalanceTransaction(
-        customerId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
-
-      /**
-       * Most credit balance transaction fields are immutable, but you may update its description and metadata.
-       */
-      updateBalanceTransaction(
-        customerId: string,
-        id: string,
-        params?: CustomerBalanceTransactionUpdateParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
-
-      /**
-       * Returns a list of transactions that updated the customer's [balances](https://stripe.com/docs/billing/customer/balance).
-       */
-      listBalanceTransactions(
-        id: string,
-        params?: CustomerBalanceTransactionListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.CustomerBalanceTransaction>;
-      listBalanceTransactions(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.CustomerBalanceTransaction>;
-
-      /**
-       * Retrieves a specific cash balance transaction, which updated the customer's [cash balance](https://stripe.com/docs/payments/customer-balance).
-       */
-      retrieveCashBalanceTransaction(
-        customerId: string,
-        id: string,
-        params?: CustomerCashBalanceTransactionRetrieveParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerCashBalanceTransaction>>;
-      retrieveCashBalanceTransaction(
-        customerId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerCashBalanceTransaction>>;
-
-      /**
-       * Returns a list of transactions that modified the customer's [cash balance](https://stripe.com/docs/payments/customer-balance).
-       */
-      listCashBalanceTransactions(
-        id: string,
-        params?: CustomerCashBalanceTransactionListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.CustomerCashBalanceTransaction>;
-      listCashBalanceTransactions(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.CustomerCashBalanceTransaction>;
 
       /**
        * When you create a new credit card, you must specify a customer or recipient on which to create it.
@@ -1213,44 +1073,26 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.CustomerSource>>;
 
       /**
-       * Retrieve a specified source for a given customer.
+       * Creates a new TaxID object for a customer.
        */
-      retrieveSource(
-        customerId: string,
+      createTaxId(
         id: string,
-        params?: CustomerSourceRetrieveParams,
+        params: TaxIdCreateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
-      retrieveSource(
-        customerId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
+      ): Promise<Stripe.Response<Stripe.TaxId>>;
 
       /**
-       * Update a specified source for a given customer.
+       * Removes the currently applied discount on a customer.
        */
-      updateSource(
-        customerId: string,
+      deleteDiscount(
         id: string,
-        params?: CustomerSourceUpdateParams,
+        params?: CustomerDeleteDiscountParams,
         options?: RequestOptions
-      ): Promise<
-        Stripe.Response<Stripe.Card | Stripe.BankAccount | Stripe.Source>
-      >;
-
-      /**
-       * List sources for a specified customer.
-       */
-      listSources(
-        id: string,
-        params?: CustomerSourceListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.CustomerSource>;
-      listSources(
+      ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
+      deleteDiscount(
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<Stripe.CustomerSource>;
+      ): Promise<Stripe.Response<Stripe.DeletedDiscount>>;
 
       /**
        * Delete a specified source for a given customer.
@@ -1276,28 +1118,157 @@ declare module 'stripe' {
       >;
 
       /**
-       * Verify a specified bank account for a given customer.
+       * Deletes an existing TaxID object.
        */
-      verifySource(
+      deleteTaxId(
         customerId: string,
         id: string,
-        params?: CustomerSourceVerifyParams,
+        params?: TaxIdDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount>>;
-      verifySource(
+      ): Promise<Stripe.Response<Stripe.DeletedTaxId>>;
+      deleteTaxId(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount>>;
+      ): Promise<Stripe.Response<Stripe.DeletedTaxId>>;
 
       /**
-       * Creates a new TaxID object for a customer.
+       * Returns a list of PaymentMethods for a given Customer
        */
-      createTaxId(
+      listPaymentMethods(
         id: string,
-        params: TaxIdCreateParams,
+        params?: CustomerListPaymentMethodsParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.TaxId>>;
+      ): ApiListPromise<Stripe.PaymentMethod>;
+      listPaymentMethods(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.PaymentMethod>;
+
+      /**
+       * Returns a list of transactions that updated the customer's [balances](https://stripe.com/docs/billing/customer/balance).
+       */
+      listBalanceTransactions(
+        id: string,
+        params?: CustomerBalanceTransactionListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerBalanceTransaction>;
+      listBalanceTransactions(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerBalanceTransaction>;
+
+      /**
+       * Returns a list of transactions that modified the customer's [cash balance](https://stripe.com/docs/payments/customer-balance).
+       */
+      listCashBalanceTransactions(
+        id: string,
+        params?: CustomerCashBalanceTransactionListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerCashBalanceTransaction>;
+      listCashBalanceTransactions(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerCashBalanceTransaction>;
+
+      /**
+       * List sources for a specified customer.
+       */
+      listSources(
+        id: string,
+        params?: CustomerSourceListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerSource>;
+      listSources(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CustomerSource>;
+
+      /**
+       * Returns a list of tax IDs for a customer.
+       */
+      listTaxIds(
+        id: string,
+        params?: TaxIdListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.TaxId>;
+      listTaxIds(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.TaxId>;
+
+      /**
+       * Retrieves a PaymentMethod object for a given Customer.
+       */
+      retrievePaymentMethod(
+        customerId: string,
+        id: string,
+        params?: CustomerRetrievePaymentMethodParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
+      retrievePaymentMethod(
+        customerId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.PaymentMethod>>;
+
+      /**
+       * Retrieves a specific customer balance transaction that updated the customer's [balances](https://stripe.com/docs/billing/customer/balance).
+       */
+      retrieveBalanceTransaction(
+        customerId: string,
+        id: string,
+        params?: CustomerBalanceTransactionRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
+      retrieveBalanceTransaction(
+        customerId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
+
+      /**
+       * Retrieves a customer's cash balance.
+       */
+      retrieveCashBalance(
+        id: string,
+        params?: CashBalanceRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
+      retrieveCashBalance(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
+
+      /**
+       * Retrieves a specific cash balance transaction, which updated the customer's [cash balance](https://stripe.com/docs/payments/customer-balance).
+       */
+      retrieveCashBalanceTransaction(
+        customerId: string,
+        id: string,
+        params?: CustomerCashBalanceTransactionRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerCashBalanceTransaction>>;
+      retrieveCashBalanceTransaction(
+        customerId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerCashBalanceTransaction>>;
+
+      /**
+       * Retrieve a specified source for a given customer.
+       */
+      retrieveSource(
+        customerId: string,
+        id: string,
+        params?: CustomerSourceRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
+      retrieveSource(
+        customerId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CustomerSource>>;
 
       /**
        * Retrieves the TaxID object with the given identifier.
@@ -1315,32 +1286,77 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.TaxId>>;
 
       /**
-       * Returns a list of tax IDs for a customer.
+       * Search for customers you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
+       * Don't use search in read-after-write flows where strict consistency is necessary. Under normal operating
+       * conditions, data is searchable in less than a minute. Occasionally, propagation of new or updated data can be up
+       * to an hour behind during outages. Search functionality is not available to merchants in India.
        */
-      listTaxIds(
-        id: string,
-        params?: TaxIdListParams,
+      search(
+        params: CustomerSearchParams,
         options?: RequestOptions
-      ): ApiListPromise<Stripe.TaxId>;
-      listTaxIds(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.TaxId>;
+      ): ApiSearchResultPromise<Stripe.Customer>;
 
       /**
-       * Deletes an existing TaxID object.
+       * Most credit balance transaction fields are immutable, but you may update its description and metadata.
        */
-      deleteTaxId(
+      updateBalanceTransaction(
         customerId: string,
         id: string,
-        params?: TaxIdDeleteParams,
+        params?: CustomerBalanceTransactionUpdateParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.DeletedTaxId>>;
-      deleteTaxId(
+      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
+      updateBalanceTransaction(
         customerId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.DeletedTaxId>>;
+      ): Promise<Stripe.Response<Stripe.CustomerBalanceTransaction>>;
+
+      /**
+       * Changes the settings on a customer's cash balance.
+       */
+      updateCashBalance(
+        id: string,
+        params?: CashBalanceUpdateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
+      updateCashBalance(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.CashBalance>>;
+
+      /**
+       * Update a specified source for a given customer.
+       */
+      updateSource(
+        customerId: string,
+        id: string,
+        params?: CustomerSourceUpdateParams,
+        options?: RequestOptions
+      ): Promise<
+        Stripe.Response<Stripe.Card | Stripe.BankAccount | Stripe.Source>
+      >;
+      updateSource(
+        customerId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<
+        Stripe.Response<Stripe.Card | Stripe.BankAccount | Stripe.Source>
+      >;
+
+      /**
+       * Verify a specified bank account for a given customer.
+       */
+      verifySource(
+        customerId: string,
+        id: string,
+        params?: CustomerSourceVerifyParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.BankAccount>>;
+      verifySource(
+        customerId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.BankAccount>>;
     }
   }
 }

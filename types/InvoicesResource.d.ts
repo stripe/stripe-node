@@ -1250,6 +1250,13 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
+    interface InvoiceLineItemListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface InvoiceListUpcomingLinesParams extends PaginationParams {
       /**
        * Settings for automatic tax lookup for this invoice preview.
@@ -1710,7 +1717,7 @@ declare module 'stripe' {
       namespace SubscriptionItem {
         interface BillingThresholds {
           /**
-           * Usage threshold that triggers the subscription to advance to a new billing period
+           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
            */
           usage_gte: number;
         }
@@ -2280,7 +2287,7 @@ declare module 'stripe' {
       namespace SubscriptionItem {
         interface BillingThresholds {
           /**
-           * Usage threshold that triggers the subscription to advance to a new billing period
+           * Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
            */
           usage_gte: number;
         }
@@ -2380,13 +2387,6 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface InvoiceLineItemListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     class InvoicesResource {
       /**
        * This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](#pay_invoice) or <a href="#send_invoice">send](https://stripe.com/docs/api#finalize_invoice) the invoice to your customers.
@@ -2460,6 +2460,19 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
+
+      /**
+       * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+       */
+      listLineItems(
+        id: string,
+        params?: InvoiceLineItemListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.InvoiceLineItem>;
+      listLineItems(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.InvoiceLineItem>;
 
       /**
        * When retrieving an upcoming invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
@@ -2551,19 +2564,6 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.Invoice>>;
-
-      /**
-       * When retrieving an invoice, you'll get a lines property containing the total count of line items and the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-       */
-      listLineItems(
-        id: string,
-        params?: InvoiceLineItemListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.InvoiceLineItem>;
-      listLineItems(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.InvoiceLineItem>;
     }
   }
 }
