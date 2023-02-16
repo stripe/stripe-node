@@ -3361,7 +3361,7 @@ declare module 'stripe' {
       ): ApiListPromise<Stripe.LineItem>;
 
       /**
-       * When retrieving a quote, there is an includable lines property containing the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of lines.
+       * Retrieves a paginated list of lines for a quote. These lines describe changes that will be used to create new subscription schedules or update existing subscription schedules when the quote is accepted.
        */
       listLines(
         id: string,
