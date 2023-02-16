@@ -431,15 +431,9 @@ declare module 'stripe' {
         | 'stale';
 
       interface StatusDetails {
-        /**
-         * Details on when and why a quote has been marked as canceled.
-         */
-        canceled: StatusDetails.Canceled | null;
+        canceled?: StatusDetails.Canceled;
 
-        /**
-         * Details on when and why a quote has been marked as stale.
-         */
-        stale: StatusDetails.Stale | null;
+        stale?: StatusDetails.Stale;
       }
 
       namespace StatusDetails {

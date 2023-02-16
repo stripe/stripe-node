@@ -50,11 +50,6 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * A custom unique identifier, such as 'myOrder_123'.
-         */
-        reference: string | null;
-
-        /**
          * The amount of tax to be collected on top of the line item prices.
          */
         tax_amount_exclusive: number;

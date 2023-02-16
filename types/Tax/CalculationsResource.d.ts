@@ -35,11 +35,6 @@ declare module 'stripe' {
         preview?: boolean;
 
         /**
-         * A custom order or sale identifier, such as 'myOrder_123'.
-         */
-        reference?: string;
-
-        /**
          * Timestamp of date at which the tax rules and rates in effect applies for the calculation. Measured in seconds since the Unix epoch.
          */
         tax_date?: number;
