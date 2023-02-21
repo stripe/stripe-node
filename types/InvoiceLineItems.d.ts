@@ -99,7 +99,7 @@ declare module 'stripe' {
       subscription: string | null;
 
       /**
-       * The subscription item that generated this invoice item. Left empty if the line item is not an explicit result of a subscription.
+       * The subscription item that generated this line item. Left empty if the line item is not an explicit result of a subscription.
        */
       subscription_item?: string;
 

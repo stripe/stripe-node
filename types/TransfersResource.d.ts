@@ -123,6 +123,13 @@ declare module 'stripe' {
       refund_application_fee?: boolean;
     }
 
+    interface TransferReversalListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface TransferReversalRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
@@ -140,13 +147,6 @@ declare module 'stripe' {
        * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
        */
       metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
-    }
-
-    interface TransferReversalListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
     }
 
     class TransfersResource {
@@ -209,6 +209,19 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.TransferReversal>>;
 
       /**
+       * You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.
+       */
+      listReversals(
+        id: string,
+        params?: TransferReversalListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.TransferReversal>;
+      listReversals(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.TransferReversal>;
+
+      /**
        * By default, you can see the 10 most recent reversals stored directly on the transfer object, but you can also retrieve details about a specific reversal stored on the transfer.
        */
       retrieveReversal(
@@ -234,19 +247,11 @@ declare module 'stripe' {
         params?: TransferReversalUpdateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.TransferReversal>>;
-
-      /**
-       * You can see a list of the reversals belonging to a specific transfer. Note that the 10 most recent reversals are always available by default on the transfer object. If you need more than those 10, you can use this API method and the limit and starting_after parameters to page through additional reversals.
-       */
-      listReversals(
-        id: string,
-        params?: TransferReversalListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.TransferReversal>;
-      listReversals(
+      updateReversal(
+        transferId: string,
         id: string,
         options?: RequestOptions
-      ): ApiListPromise<Stripe.TransferReversal>;
+      ): Promise<Stripe.Response<Stripe.TransferReversal>>;
     }
   }
 }

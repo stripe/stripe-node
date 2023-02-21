@@ -27,6 +27,12 @@ module.exports = StripeResource.extend({
     methodType: 'list',
   }),
 
+  listLineItems: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/credit_notes/{credit_note}/lines',
+    methodType: 'list',
+  }),
+
   listPreviewLineItems: stripeMethod({
     method: 'GET',
     fullPath: '/v1/credit_notes/preview/lines',
@@ -41,11 +47,5 @@ module.exports = StripeResource.extend({
   voidCreditNote: stripeMethod({
     method: 'POST',
     fullPath: '/v1/credit_notes/{id}/void',
-  }),
-
-  listLineItems: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/credit_notes/{credit_note}/lines',
-    methodType: 'list',
   }),
 });

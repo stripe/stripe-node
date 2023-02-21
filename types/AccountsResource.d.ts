@@ -2431,44 +2431,6 @@ declare module 'stripe' {
 
     interface AccountDeleteParams {}
 
-    interface AccountRejectParams {
-      /**
-       * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
-       */
-      reason: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface CapabilityRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface CapabilityUpdateParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
-       */
-      requested?: boolean;
-    }
-
-    interface CapabilityListParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     interface ExternalAccountCreateParams {
       /**
        * Please refer to full [documentation](https://stripe.com/docs/api) instead.
@@ -2490,113 +2452,6 @@ declare module 'stripe' {
        */
       metadata?: Stripe.MetadataParam;
     }
-
-    interface ExternalAccountRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    interface ExternalAccountUpdateParams {
-      /**
-       * The name of the person or business that owns the bank account.
-       */
-      account_holder_name?: string;
-
-      /**
-       * The type of entity that holds the account. This can be either `individual` or `company`.
-       */
-      account_holder_type?: Stripe.Emptyable<
-        ExternalAccountUpdateParams.AccountHolderType
-      >;
-
-      /**
-       * The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
-       */
-      account_type?: ExternalAccountUpdateParams.AccountType;
-
-      /**
-       * City/District/Suburb/Town/Village.
-       */
-      address_city?: string;
-
-      /**
-       * Billing address country, if provided when creating card.
-       */
-      address_country?: string;
-
-      /**
-       * Address line 1 (Street address/PO Box/Company name).
-       */
-      address_line1?: string;
-
-      /**
-       * Address line 2 (Apartment/Suite/Unit/Building).
-       */
-      address_line2?: string;
-
-      /**
-       * State/County/Province/Region.
-       */
-      address_state?: string;
-
-      /**
-       * ZIP or postal code.
-       */
-      address_zip?: string;
-
-      /**
-       * When set to true, this becomes the default external account for its currency.
-       */
-      default_for_currency?: boolean;
-
-      /**
-       * Two digit number representing the card's expiration month.
-       */
-      exp_month?: string;
-
-      /**
-       * Four digit number representing the card's expiration year.
-       */
-      exp_year?: string;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-       */
-      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
-
-      /**
-       * Cardholder name.
-       */
-      name?: string;
-    }
-
-    namespace ExternalAccountUpdateParams {
-      type AccountHolderType = 'company' | 'individual';
-
-      type AccountType = 'checking' | 'futsu' | 'savings' | 'toza';
-    }
-
-    interface ExternalAccountListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      object?: ExternalAccountListParams.Object;
-    }
-
-    namespace ExternalAccountListParams {
-      type Object = 'bank_account' | 'card';
-    }
-
-    interface ExternalAccountDeleteParams {}
 
     interface LoginLinkCreateParams {
       /**
@@ -2871,11 +2726,194 @@ declare module 'stripe' {
       }
     }
 
+    interface ExternalAccountDeleteParams {}
+
+    interface PersonDeleteParams {}
+
+    interface CapabilityListParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface ExternalAccountListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      object?: ExternalAccountListParams.Object;
+    }
+
+    namespace ExternalAccountListParams {
+      type Object = 'bank_account' | 'card';
+    }
+
+    interface PersonListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Filters on the list of people returned based on the person's relationship to the account's company.
+       */
+      relationship?: PersonListParams.Relationship;
+    }
+
+    namespace PersonListParams {
+      interface Relationship {
+        /**
+         * A filter on the list of people returned based on whether these people are directors of the account's company.
+         */
+        director?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are executives of the account's company.
+         */
+        executive?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are owners of the account's company.
+         */
+        owner?: boolean;
+
+        /**
+         * A filter on the list of people returned based on whether these people are the representative of the account's company.
+         */
+        representative?: boolean;
+      }
+    }
+
+    interface AccountRejectParams {
+      /**
+       * The reason for rejecting the account. Can be `fraud`, `terms_of_service`, or `other`.
+       */
+      reason: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface CapabilityRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface ExternalAccountRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface PersonRetrieveParams {
       /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+    }
+
+    interface CapabilityUpdateParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+       */
+      requested?: boolean;
+    }
+
+    interface ExternalAccountUpdateParams {
+      /**
+       * The name of the person or business that owns the bank account.
+       */
+      account_holder_name?: string;
+
+      /**
+       * The type of entity that holds the account. This can be either `individual` or `company`.
+       */
+      account_holder_type?: Stripe.Emptyable<
+        ExternalAccountUpdateParams.AccountHolderType
+      >;
+
+      /**
+       * The bank account type. This can only be `checking` or `savings` in most countries. In Japan, this can only be `futsu` or `toza`.
+       */
+      account_type?: ExternalAccountUpdateParams.AccountType;
+
+      /**
+       * City/District/Suburb/Town/Village.
+       */
+      address_city?: string;
+
+      /**
+       * Billing address country, if provided when creating card.
+       */
+      address_country?: string;
+
+      /**
+       * Address line 1 (Street address/PO Box/Company name).
+       */
+      address_line1?: string;
+
+      /**
+       * Address line 2 (Apartment/Suite/Unit/Building).
+       */
+      address_line2?: string;
+
+      /**
+       * State/County/Province/Region.
+       */
+      address_state?: string;
+
+      /**
+       * ZIP or postal code.
+       */
+      address_zip?: string;
+
+      /**
+       * When set to true, this becomes the default external account for its currency.
+       */
+      default_for_currency?: boolean;
+
+      /**
+       * Two digit number representing the card's expiration month.
+       */
+      exp_month?: string;
+
+      /**
+       * Four digit number representing the card's expiration year.
+       */
+      exp_year?: string;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+       */
+      metadata?: Stripe.Emptyable<Stripe.MetadataParam>;
+
+      /**
+       * Cardholder name.
+       */
+      name?: string;
+    }
+
+    namespace ExternalAccountUpdateParams {
+      type AccountHolderType = 'company' | 'individual';
+
+      type AccountType = 'checking' | 'futsu' | 'savings' | 'toza';
     }
 
     interface PersonUpdateParams {
@@ -3144,48 +3182,14 @@ declare module 'stripe' {
       }
     }
 
-    interface PersonListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Filters on the list of people returned based on the person's relationship to the account's company.
-       */
-      relationship?: PersonListParams.Relationship;
-    }
-
-    namespace PersonListParams {
-      interface Relationship {
-        /**
-         * A filter on the list of people returned based on whether these people are directors of the account's company.
-         */
-        director?: boolean;
-
-        /**
-         * A filter on the list of people returned based on whether these people are executives of the account's company.
-         */
-        executive?: boolean;
-
-        /**
-         * A filter on the list of people returned based on whether these people are owners of the account's company.
-         */
-        owner?: boolean;
-
-        /**
-         * A filter on the list of people returned based on whether these people are the representative of the account's company.
-         */
-        representative?: boolean;
-      }
-    }
-
-    interface PersonDeleteParams {}
-
     class AccountsResource {
       /**
        * With [Connect](https://stripe.com/docs/connect), you can create Stripe accounts for your users.
        * To do this, you'll first need to [register your platform](https://dashboard.stripe.com/account/applications/settings).
+       *
+       * If you've already collected information for your connected accounts, you [can pre-fill that information](https://stripe.com/docs/connect/best-practices#onboarding) when
+       * creating the account. Connect Onboarding won't ask for the pre-filled information during account onboarding.
+       * You can pre-fill any information on the account.
        */
       create(
         params?: AccountCreateParams,
@@ -3220,9 +3224,16 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Account>>;
 
       /**
-       * Updates a [connected account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are left unchanged. Most parameters can be changed only for Custom accounts. (These are marked Custom Only below.) Parameters marked Custom and Express are not supported for Standard accounts.
+       * Updates a [connected account](https://stripe.com/docs/connect/accounts) by setting the values of the parameters passed. Any parameters not provided are
+       * left unchanged.
        *
-       * To update your own account, use the [Dashboard](https://dashboard.stripe.com/account). Refer to our [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
+       * For Custom accounts, you can update any information on the account. For other accounts, you can update all information until that
+       * account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links)
+       * for a Standard or Express account, some parameters can no longer be changed. These are marked as Custom Only or Custom and Express
+       * below.
+       *
+       * To update your own account, use the [Dashboard](https://dashboard.stripe.com/account). Refer to our
+       * [Connect](https://stripe.com/docs/connect/updating-accounts) documentation to learn more about updating accounts.
        */
       update(
         id: string,
@@ -3257,55 +3268,6 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.DeletedAccount>>;
 
       /**
-       * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
-       *
-       * Test-mode Custom and Express accounts can be rejected at any time. Accounts created using live-mode keys may only be rejected once all balances are zero.
-       */
-      reject(
-        id: string,
-        params: AccountRejectParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Account>>;
-
-      /**
-       * Retrieves information about the specified Account Capability.
-       */
-      retrieveCapability(
-        accountId: string,
-        id: string,
-        params?: CapabilityRetrieveParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Capability>>;
-      retrieveCapability(
-        accountId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Capability>>;
-
-      /**
-       * Updates an existing Account Capability.
-       */
-      updateCapability(
-        accountId: string,
-        id: string,
-        params?: CapabilityUpdateParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Capability>>;
-
-      /**
-       * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
-       */
-      listCapabilities(
-        id: string,
-        params?: CapabilityListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.Capability>;
-      listCapabilities(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.Capability>;
-
-      /**
        * Create an external account for a given account.
        */
       createExternalAccount(
@@ -3313,65 +3275,6 @@ declare module 'stripe' {
         params: ExternalAccountCreateParams,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
-
-      /**
-       * Retrieve a specified external account for a given account.
-       */
-      retrieveExternalAccount(
-        accountId: string,
-        id: string,
-        params?: ExternalAccountRetrieveParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
-      retrieveExternalAccount(
-        accountId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
-
-      /**
-       * Updates the metadata, account holder name, account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
-       *
-       * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
-       */
-      updateExternalAccount(
-        accountId: string,
-        id: string,
-        params?: ExternalAccountUpdateParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
-
-      /**
-       * List external accounts for an account.
-       */
-      listExternalAccounts(
-        id: string,
-        params?: ExternalAccountListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.BankAccount | Stripe.Card>;
-      listExternalAccounts(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.BankAccount | Stripe.Card>;
-
-      /**
-       * Delete a specified external account for a given account.
-       */
-      deleteExternalAccount(
-        accountId: string,
-        id: string,
-        params?: ExternalAccountDeleteParams,
-        options?: RequestOptions
-      ): Promise<
-        Stripe.Response<Stripe.DeletedBankAccount | Stripe.DeletedCard>
-      >;
-      deleteExternalAccount(
-        accountId: string,
-        id: string,
-        options?: RequestOptions
-      ): Promise<
-        Stripe.Response<Stripe.DeletedBankAccount | Stripe.DeletedCard>
-      >;
 
       /**
        * Creates a single-use login link for an Express account to access their Stripe dashboard.
@@ -3402,42 +3305,23 @@ declare module 'stripe' {
       ): Promise<Stripe.Response<Stripe.Person>>;
 
       /**
-       * Retrieves an existing person.
+       * Delete a specified external account for a given account.
        */
-      retrievePerson(
+      deleteExternalAccount(
         accountId: string,
         id: string,
-        params?: PersonRetrieveParams,
+        params?: ExternalAccountDeleteParams,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Person>>;
-      retrievePerson(
+      ): Promise<
+        Stripe.Response<Stripe.DeletedBankAccount | Stripe.DeletedCard>
+      >;
+      deleteExternalAccount(
         accountId: string,
         id: string,
         options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Person>>;
-
-      /**
-       * Updates an existing person.
-       */
-      updatePerson(
-        accountId: string,
-        id: string,
-        params?: PersonUpdateParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.Person>>;
-
-      /**
-       * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
-       */
-      listPersons(
-        id: string,
-        params?: PersonListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.Person>;
-      listPersons(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.Person>;
+      ): Promise<
+        Stripe.Response<Stripe.DeletedBankAccount | Stripe.DeletedCard>
+      >;
 
       /**
        * Deletes an existing person's relationship to the account's legal entity. Any person with a relationship for an account can be deleted through the API, except if the person is the account_opener. If your integration is using the executive parameter, you cannot delete the only verified executive on file.
@@ -3453,6 +3337,148 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.DeletedPerson>>;
+
+      /**
+       * Returns a list of capabilities associated with the account. The capabilities are returned sorted by creation date, with the most recent capability appearing first.
+       */
+      listCapabilities(
+        id: string,
+        params?: CapabilityListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.Capability>;
+      listCapabilities(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.Capability>;
+
+      /**
+       * List external accounts for an account.
+       */
+      listExternalAccounts(
+        id: string,
+        params?: ExternalAccountListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.BankAccount | Stripe.Card>;
+      listExternalAccounts(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.BankAccount | Stripe.Card>;
+
+      /**
+       * Returns a list of people associated with the account's legal entity. The people are returned sorted by creation date, with the most recent people appearing first.
+       */
+      listPersons(
+        id: string,
+        params?: PersonListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.Person>;
+      listPersons(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.Person>;
+
+      /**
+       * With [Connect](https://stripe.com/docs/connect), you may flag accounts as suspicious.
+       *
+       * Test-mode Custom and Express accounts can be rejected at any time. Accounts created using live-mode keys may only be rejected once all balances are zero.
+       */
+      reject(
+        id: string,
+        params: AccountRejectParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Account>>;
+
+      /**
+       * Retrieves information about the specified Account Capability.
+       */
+      retrieveCapability(
+        accountId: string,
+        id: string,
+        params?: CapabilityRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Capability>>;
+      retrieveCapability(
+        accountId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Capability>>;
+
+      /**
+       * Retrieve a specified external account for a given account.
+       */
+      retrieveExternalAccount(
+        accountId: string,
+        id: string,
+        params?: ExternalAccountRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
+      retrieveExternalAccount(
+        accountId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
+
+      /**
+       * Retrieves an existing person.
+       */
+      retrievePerson(
+        accountId: string,
+        id: string,
+        params?: PersonRetrieveParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Person>>;
+      retrievePerson(
+        accountId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Person>>;
+
+      /**
+       * Updates an existing Account Capability.
+       */
+      updateCapability(
+        accountId: string,
+        id: string,
+        params?: CapabilityUpdateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Capability>>;
+      updateCapability(
+        accountId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Capability>>;
+
+      /**
+       * Updates the metadata, account holder name, account holder type of a bank account belonging to a [Custom account](https://stripe.com/docs/connect/custom-accounts), and optionally sets it as the default for its currency. Other bank account details are not editable by design.
+       *
+       * You can re-enable a disabled bank account by performing an update call without providing any arguments or changes.
+       */
+      updateExternalAccount(
+        accountId: string,
+        id: string,
+        params?: ExternalAccountUpdateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
+      updateExternalAccount(
+        accountId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.BankAccount | Stripe.Card>>;
+
+      /**
+       * Updates an existing person.
+       */
+      updatePerson(
+        accountId: string,
+        id: string,
+        params?: PersonUpdateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Person>>;
+      updatePerson(
+        accountId: string,
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Person>>;
     }
   }
 }
