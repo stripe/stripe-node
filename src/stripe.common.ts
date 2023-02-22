@@ -28,7 +28,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
   'typescript',
   'maxNetworkRetries',
   'httpAgent',
-  'HttpClient.js',
+  'httpClient',
   'timeout',
   'host',
   'port',
