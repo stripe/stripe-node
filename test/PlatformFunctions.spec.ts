@@ -24,7 +24,9 @@ if (process.versions.node < '15') {
     Node: new NodePlatformFunctions(),
   };
 } else {
-  const WebPlatformFunctions = require('../lib/platform/WebPlatformFunctions');
+  const {WebPlatformFunctions} = await import(
+    '../lib/platform/WebPlatformFunctions'
+  );
   platforms = {
     Web: new WebPlatformFunctions(),
     Node: new NodePlatformFunctions(),
