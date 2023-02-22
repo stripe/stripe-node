@@ -20,24 +20,18 @@ if (process.versions.node < '15') {
   console.log(
     `Skipping WebPlatformFunctions tests. Cannot load WebPlatformFunctions because 'Event' is not available in the global scope for ${process.version}.`
   );
-  platforms = {
-    Node: new NodePlatformFunctions(),
-  };
 } else {
-  const {WebPlatformFunctions} = await import(
+  import(
     '../lib/platform/WebPlatformFunctions'
-  );
-  platforms = {
-    Web: new WebPlatformFunctions(),
-    Node: new NodePlatformFunctions(),
-  };
+  ).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
 }
 
-for (const platform in platforms) {
-  const platformFunctions = platforms[platform];
-  const isNodeEnvironment = platform === 'Node';
+testPlatform(new NodePlatformFunctions());
 
-  describe(`${platform}PlatformFunctions`, () => {
+function testPlatform(platformFunctions: PlatformFunctions): void {
+  const isNodeEnvironment = platformFunctions instanceof NodePlatformFunctions;
+
+  describe(`${platformFunctions.constructor.name}`, () => {
     describe('uuid', () => {
       describe('should use crypto.randomUUID if it exists', () => {
         const crypto = require('crypto');
