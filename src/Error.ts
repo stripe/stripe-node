@@ -1,4 +1,26 @@
 /* eslint-disable camelcase */
+
+const generate = (rawStripeError: StripeRawError): StripeError => {
+  switch (rawStripeError.type) {
+    case 'card_error':
+      return new StripeCardError(rawStripeError);
+    case 'invalid_request_error':
+      return new StripeInvalidRequestError(rawStripeError);
+    case 'api_error':
+      return new StripeAPIError(rawStripeError);
+    case 'authentication_error':
+      return new StripeAuthenticationError(rawStripeError);
+    case 'rate_limit_error':
+      return new StripeRateLimitError(rawStripeError);
+    case 'idempotency_error':
+      return new StripeIdempotencyError(rawStripeError);
+    case 'invalid_grant':
+      return new StripeInvalidGrantError(rawStripeError);
+    default:
+      return new StripeUnknownError(rawStripeError);
+  }
+};
+
 /**
  * StripeError is the base error from which all other more specific Stripe errors derive.
  * Specifically for errors returned from Stripe's REST API.
@@ -53,26 +75,7 @@ class StripeError extends Error {
   /**
    * Helper factory which takes raw stripe errors and outputs wrapping instances
    */
-  static generate(rawStripeError: StripeRawError): StripeError {
-    switch (rawStripeError.type) {
-      case 'card_error':
-        return new StripeCardError(rawStripeError);
-      case 'invalid_request_error':
-        return new StripeInvalidRequestError(rawStripeError);
-      case 'api_error':
-        return new StripeAPIError(rawStripeError);
-      case 'authentication_error':
-        return new StripeAuthenticationError(rawStripeError);
-      case 'rate_limit_error':
-        return new StripeRateLimitError(rawStripeError);
-      case 'idempotency_error':
-        return new StripeIdempotencyError(rawStripeError);
-      case 'invalid_grant':
-        return new StripeInvalidGrantError(rawStripeError);
-      default:
-        return new StripeUnknownError(rawStripeError);
-    }
-  }
+  static generate = generate;
 }
 
 // Specific Stripe Error types:
@@ -161,18 +164,18 @@ class StripeInvalidGrantError extends StripeError {}
  */
 class StripeUnknownError extends StripeError {}
 
-export = {
-  generate: StripeError.generate,
-  StripeError: StripeError,
-  StripeCardError: StripeCardError,
-  StripeInvalidRequestError: StripeInvalidRequestError,
-  StripeAPIError: StripeAPIError,
-  StripeAuthenticationError: StripeAuthenticationError,
-  StripePermissionError: StripePermissionError,
-  StripeRateLimitError: StripeRateLimitError,
-  StripeConnectionError: StripeConnectionError,
-  StripeSignatureVerificationError: StripeSignatureVerificationError,
-  StripeIdempotencyError: StripeIdempotencyError,
-  StripeInvalidGrantError: StripeInvalidGrantError,
-  StripeUnknownError: StripeUnknownError,
+export {
+  StripeError,
+  generate,
+  StripeCardError,
+  StripeInvalidRequestError,
+  StripeAPIError,
+  StripeAuthenticationError,
+  StripePermissionError,
+  StripeRateLimitError,
+  StripeConnectionError,
+  StripeSignatureVerificationError,
+  StripeIdempotencyError,
+  StripeInvalidGrantError,
+  StripeUnknownError,
 };

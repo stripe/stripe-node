@@ -1,16 +1,16 @@
 'use strict';
 
 require('../testUtils');
-
-import fs from 'fs';
-import path from 'path';
-import NodePlatformFunctions from '../lib/platform/NodePlatformFunctions';
-import PlatformFunctions from '../lib/platform/PlatformFunctions';
-import NodeCryptoProvider from '../lib/crypto/NodeCryptoProvider';
-import SubtleCryptoProvider from '../lib/crypto/SubtleCryptoProvider';
+const fs = require('fs');
+const path = require('path');
 
 import {FetchHttpClient} from '../lib/net/FetchHttpClient';
+import {NodeCryptoProvider} from '../lib/crypto/NodeCryptoProvider';
 import {NodeHttpClient} from '../lib/net/NodeHttpClient';
+import {NodePlatformFunctions} from '../lib/platform/NodePlatformFunctions';
+import {PlatformFunctions} from '../lib/platform/PlatformFunctions';
+import {SubtleCryptoProvider} from '../lib/crypto/SubtleCryptoProvider';
+
 import {expect} from 'chai';
 import {webcrypto} from 'crypto';
 

@@ -1,7 +1,7 @@
-import _Stripe from './stripe.common';
-import WebPlatformFunctions from './platform/WebPlatformFunctions';
+import {WebPlatformFunctions} from './platform/WebPlatformFunctions';
+import {createStripe} from './stripe.common';
 
-const Stripe = _Stripe.createStripe(new WebPlatformFunctions());
+const Stripe = createStripe(new WebPlatformFunctions());
 
 module.exports = Stripe;
 

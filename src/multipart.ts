@@ -1,5 +1,4 @@
-import utils from './utils';
-import _Error from './Error';
+import {flattenAndStringify, stringifyRequestData} from './utils';
 
 type MultipartCallbackReturn = any;
 type MultipartCallback = (
@@ -38,7 +37,7 @@ const multipartDataGenerator = (
     return `"${s.replace(/"|"/g, '%22').replace(/\r\n|\r|\n/g, ' ')}"`;
   }
 
-  const flattenedData = utils.flattenAndStringify(data);
+  const flattenedData = flattenAndStringify(data);
 
   for (const k in flattenedData) {
     const v = flattenedData[k];
@@ -78,7 +77,7 @@ function multipartRequestDataProcessor(
   data = data || {};
 
   if (method !== 'POST') {
-    return callback(null, utils.stringifyRequestData(data));
+    return callback(null, stringifyRequestData(data));
   }
 
   this._stripe._platformFunctions

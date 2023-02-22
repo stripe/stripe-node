@@ -1,6 +1,16 @@
-import _Error from './Error';
-
-import resources from './resources';
+import * as _Error from './Error';
+import {HttpClient, HttpClientResponse} from './net/HttpClient';
+import {
+  determineProcessUserAgentProperties,
+  pascalToCamelCase,
+  validateInteger,
+} from './utils';
+import {CryptoProvider} from './crypto/CryptoProvider';
+import {PlatformFunctions} from './platform/PlatformFunctions';
+import RequestSender from './RequestSender';
+import {StripeResource} from './StripeResource';
+import {createWebhooks} from './Webhooks';
+const resources = require('./resources');
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -8,9 +18,6 @@ const DEFAULT_BASE_PATH = '/v1/';
 const DEFAULT_API_VERSION = (null as unknown) as string;
 
 const DEFAULT_TIMEOUT = 80000;
-
-import utils from './utils';
-const {determineProcessUserAgentProperties} = utils;
 
 const MAX_NETWORK_RETRY_DELAY_SEC = 2;
 const INITIAL_NETWORK_RETRY_DELAY_SEC = 0.5;
@@ -30,13 +37,6 @@ const ALLOWED_CONFIG_PROPERTIES = [
   'appInfo',
   'stripeAccount',
 ];
-
-import StripeResource from './StripeResource';
-import RequestSender from './RequestSender';
-import HttpClient from './net/HttpClient';
-import CryptoProvider from './crypto/CryptoProvider';
-import PlatformFunctions from './platform/PlatformFunctions';
-import createWebhooks from './Webhooks';
 
 type RequestSenderFactory = (stripe: StripeObject) => RequestSender;
 
@@ -58,8 +58,8 @@ export function createStripe(
   };
   Stripe.StripeResource = StripeResource;
   Stripe.resources = resources;
-  Stripe.HttpClient = HttpClient.HttpClient;
-  Stripe.HttpClientResponse = HttpClient.HttpClientResponse;
+  Stripe.HttpClient = HttpClient;
+  Stripe.HttpClientResponse = HttpClientResponse;
   Stripe.CryptoProvider = CryptoProvider;
 
   function Stripe(
@@ -107,8 +107,8 @@ export function createStripe(
       protocol: props.protocol || 'https',
       basePath: DEFAULT_BASE_PATH,
       version: props.apiVersion || DEFAULT_API_VERSION,
-      timeout: utils.validateInteger('timeout', props.timeout, DEFAULT_TIMEOUT),
-      maxNetworkRetries: utils.validateInteger(
+      timeout: validateInteger('timeout', props.timeout, DEFAULT_TIMEOUT),
+      maxNetworkRetries: validateInteger(
         'maxNetworkRetries',
         props.maxNetworkRetries,
         0
@@ -311,7 +311,7 @@ export function createStripe(
       n: number,
       defaultVal?: number
     ): void {
-      const val = utils.validateInteger(prop, n, defaultVal);
+      const val = validateInteger(prop, n, defaultVal);
 
       this._setApiField(prop, val);
     },
@@ -410,7 +410,7 @@ export function createStripe(
     _prepResources(): void {
       for (const name in resources) {
         // @ts-ignore
-        this[utils.pascalToCamelCase(name)] = new resources[name](this);
+        this[pascalToCamelCase(name)] = new resources[name](this);
       }
     },
 

@@ -1,24 +1,20 @@
-import crypto from 'crypto';
-import EventEmitter from 'events';
-import _Error from '../Error';
-const StripeError = _Error.StripeError;
-import utils from '../utils';
-import PlatformFunctions from './PlatformFunctions';
-import http from 'http';
-import _HttpClient from '../net/HttpClient';
-const HttpClient = _HttpClient.HttpClient;
-import _NodeHttpClient from '../net/NodeHttpClient';
-const NodeHttpClient = _NodeHttpClient.NodeHttpClient;
-
-import CryptoProvider from '../crypto/CryptoProvider';
-import NodeCryptoProvider from '../crypto/NodeCryptoProvider';
+import * as crypto from 'crypto';
+import * as http from 'http';
+import {CryptoProvider} from '../crypto/CryptoProvider';
+import {EventEmitter} from 'events';
+import {HttpClient} from '../net/HttpClient';
+import {NodeCryptoProvider} from '../crypto/NodeCryptoProvider';
+import {NodeHttpClient} from '../net/NodeHttpClient';
+import {PlatformFunctions} from './PlatformFunctions';
+import {StripeError} from '../Error';
+import {concat} from '../utils';
 
 class StreamProcessingError extends StripeError {}
 
 /**
  * Specializes WebPlatformFunctions using APIs available in Node.js.
  */
-class NodePlatformFunctions extends PlatformFunctions {
+export class NodePlatformFunctions extends PlatformFunctions {
   /** For mocking in tests */
   _exec: any;
   _UNAME_CACHE: Promise<string | null> | null;
@@ -113,7 +109,7 @@ class NodePlatformFunctions extends PlatformFunctions {
         .once('end', () => {
           // @ts-ignore
           const bufferData: BufferedFile = Object.assign({}, data);
-          bufferData.file.data = utils.concat(bufferArray);
+          bufferData.file.data = concat(bufferArray);
           resolve(bufferData);
         })
         .on('error', (err: Error) => {
@@ -150,5 +146,3 @@ class NodePlatformFunctions extends PlatformFunctions {
     return this.createNodeCryptoProvider();
   }
 }
-
-export = NodePlatformFunctions;

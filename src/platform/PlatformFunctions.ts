@@ -1,18 +1,16 @@
-import EventEmitter from 'events';
-import StripeEmitter from '../StripeEmitter';
-import http from 'http';
-import _HttpClient from '../net/HttpClient';
-const HttpClient = _HttpClient.HttpClient;
-import _FetchHttpClient from '../net/FetchHttpClient';
-const FetchHttpClient = _FetchHttpClient.FetchHttpClient;
-import SubtleCryptoProvider from '../crypto/SubtleCryptoProvider';
-import CryptoProvider from '../crypto/CryptoProvider';
+import * as http from 'http';
+import {CryptoProvider} from '../crypto/CryptoProvider';
+import {EventEmitter} from 'events';
+import {FetchHttpClient} from '../net/FetchHttpClient';
+import {HttpClient} from '../net/HttpClient';
+import {StripeEmitter} from '../StripeEmitter';
+import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider';
 
 /**
  * Interface encapsulating various utility functions whose
  * implementations depend on the platform / JS runtime.
  */
-class PlatformFunctions {
+export class PlatformFunctions {
   _fetchFn: any | null;
   _agent: http.Agent | null;
 
@@ -119,5 +117,3 @@ class PlatformFunctions {
     throw new Error('createDefaultCryptoProvider not implemented.');
   }
 }
-
-export = PlatformFunctions;

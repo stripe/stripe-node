@@ -1,7 +1,5 @@
-import utils from './utils';
-import makeRequest from './RequestSender';
-import autoPagination from './autoPagination';
-const makeAutoPaginationMethods = autoPagination.makeAutoPaginationMethods;
+import {callbackifyPromiseWithTimeout, extractUrlParams} from './utils';
+import {makeAutoPaginationMethods} from './autoPagination';
 
 /**
  * Create an API method from the declared spec.
@@ -19,7 +17,9 @@ const makeAutoPaginationMethods = autoPagination.makeAutoPaginationMethods;
  *  Usefully for applying transforms to data on a per-method basis.
  * @param [spec.host] Hostname for the request.
  */
-function stripeMethod(spec: MethodSpec): (...args: any[]) => Promise<any> {
+export function stripeMethod(
+  spec: MethodSpec
+): (...args: any[]) => Promise<any> {
   if (spec.path !== undefined && spec.fullPath !== undefined) {
     throw new Error(
       `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`
@@ -28,11 +28,11 @@ function stripeMethod(spec: MethodSpec): (...args: any[]) => Promise<any> {
   return function(this: StripeResourceObject, ...args: any[]): Promise<any> {
     const callback = typeof args[args.length - 1] == 'function' && args.pop();
 
-    spec.urlParams = utils.extractUrlParams(
+    spec.urlParams = extractUrlParams(
       spec.fullPath || this.createResourcePathWithSymbols(spec.path || '')
     );
 
-    const requestPromise = utils.callbackifyPromiseWithTimeout(
+    const requestPromise = callbackifyPromiseWithTimeout(
       this._makeRequest(args, spec, {}),
       callback
     );
@@ -52,5 +52,3 @@ function stripeMethod(spec: MethodSpec): (...args: any[]) => Promise<any> {
     return requestPromise;
   };
 }
-
-export = stripeMethod;

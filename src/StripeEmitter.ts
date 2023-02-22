@@ -15,7 +15,7 @@ type Listener = (...args: any[]) => any;
 type ListenerWrapper = (event: _StripeEvent) => void;
 
 /** Minimal EventEmitter wrapper around EventTarget. */
-class StripeEmitter {
+export class StripeEmitter {
   eventTarget: EventTarget;
   listenerMapping: Map<Listener, ListenerWrapper>;
 
@@ -52,5 +52,3 @@ class StripeEmitter {
     return this.eventTarget.dispatchEvent(new _StripeEvent(eventName, data));
   }
 }
-
-export = StripeEmitter;

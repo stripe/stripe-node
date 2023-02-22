@@ -2,7 +2,7 @@
  * Interface encapsulating the various crypto computations used by the library,
  * allowing pluggable underlying crypto implementations.
  */
-class CryptoProvider {
+export class CryptoProvider {
   /**
    * Computes a SHA-256 HMAC given a secret and a payload (encoded in UTF-8).
    * The output HMAC should be encoded in hexadecimal.
@@ -30,5 +30,3 @@ class CryptoProvider {
     throw new Error('computeHMACSignatureAsync not implemented.');
   }
 }
-
-export default CryptoProvider;

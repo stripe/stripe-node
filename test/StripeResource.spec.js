@@ -6,8 +6,7 @@ const stripe = require('../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 const testUtils = require('../testUtils');
 
-const StripeResource = require('../lib/StripeResource');
-const stripeMethod = StripeResource.method;
+const {stripeMethod, StripeResource} = require('../lib/StripeResource');
 
 describe('StripeResource', () => {
   describe('createResourcePathWithSymbols', () => {

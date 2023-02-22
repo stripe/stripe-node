@@ -1,8 +1,6 @@
-import http from 'http';
-import https from 'https';
-
-import _HttpClient from './HttpClient';
-const {HttpClient, HttpClientResponse} = _HttpClient;
+import * as http from 'http';
+import * as https from 'https';
+import {HttpClient, HttpClientResponse} from './HttpClient';
 
 const defaultHttpAgent = new http.Agent({keepAlive: true});
 const defaultHttpsAgent = new https.Agent({keepAlive: true});
@@ -11,7 +9,7 @@ const defaultHttpsAgent = new https.Agent({keepAlive: true});
  * HTTP client which uses the Node `http` and `https` packages to issue
  * requests.`
  */
-class NodeHttpClient extends HttpClient {
+export class NodeHttpClient extends HttpClient {
   _agent: http.Agent | https.Agent;
 
   constructor(agent: http.Agent | https.Agent) {
@@ -88,7 +86,7 @@ class NodeHttpClient extends HttpClient {
   }
 }
 
-class NodeHttpClientResponse extends HttpClientResponse
+export class NodeHttpClientResponse extends HttpClientResponse
   implements HttpClientResponseInterface {
   _res: http.IncomingMessage;
 
@@ -128,5 +126,3 @@ class NodeHttpClientResponse extends HttpClientResponse
     });
   }
 }
-
-export = {NodeHttpClient, NodeHttpClientResponse};

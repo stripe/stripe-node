@@ -1,7 +1,6 @@
 'use strict';
 
-const StripeResource = require('../StripeResource');
-const stripeMethod = StripeResource.method;
+const {stripeMethod, StripeResource} = require('../StripeResource');
 const utils = require('../utils');
 
 const oAuthHost = 'connect.stripe.com';

@@ -1,11 +1,10 @@
 import * as crypto from 'crypto';
-
-import CryptoProvider from './CryptoProvider';
+import {CryptoProvider} from './CryptoProvider';
 
 /**
  * `CryptoProvider which uses the Node `crypto` package for its computations.
  */
-class NodeCryptoProvider extends CryptoProvider {
+export class NodeCryptoProvider extends CryptoProvider {
   /** @override */
   computeHMACSignature(payload: string, secret: string): string {
     return crypto
@@ -23,5 +22,3 @@ class NodeCryptoProvider extends CryptoProvider {
     return signature;
   }
 }
-
-export default NodeCryptoProvider;

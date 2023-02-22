@@ -1,7 +1,6 @@
-import CryptoProvider from './crypto/CryptoProvider';
-import _Error from './Error';
-import PlatformFunctions from './platform/PlatformFunctions';
-const {StripeError, StripeSignatureVerificationError} = _Error;
+import {StripeError, StripeSignatureVerificationError} from './Error';
+import {CryptoProvider} from './crypto/CryptoProvider';
+import {PlatformFunctions} from './platform/PlatformFunctions';
 
 type WebhookHeader = string | Uint8Array;
 type WebhookParsedHeader = {
@@ -61,7 +60,9 @@ type WebhookObject = {
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
 };
 
-function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
+export function createWebhooks(
+  platformFunctions: PlatformFunctions
+): WebhookObject {
   const Webhook: WebhookObject = {
     DEFAULT_TOLERANCE: 300, // 5 minutes
     // @ts-ignore
@@ -402,5 +403,3 @@ function createWebhooks(platformFunctions: PlatformFunctions): WebhookObject {
 
   return Webhook;
 }
-
-export = createWebhooks;

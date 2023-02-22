@@ -3,8 +3,7 @@
 'use strict';
 
 const {multipartRequestDataProcessor} = require('../multipart');
-const StripeResource = require('../StripeResource');
-const stripeMethod = StripeResource.method;
+const {stripeMethod, StripeResource} = require('../StripeResource');
 
 module.exports = StripeResource.extend({
   create: stripeMethod({
