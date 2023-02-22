@@ -125,15 +125,13 @@ export class NodePlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createNodeHttpClient(agent: http.Agent | null): typeof HttpClient {
-    // @ts-ignore
+  createNodeHttpClient(agent: http.Agent): HttpClient {
     return new NodeHttpClient(agent);
   }
 
   /** @override */
-  createDefaultHttpClient(): typeof HttpClient {
-    // @ts-ignore
-    return new NodeHttpClient(null);
+  createDefaultHttpClient(): HttpClient {
+    return new NodeHttpClient();
   }
 
   /** @override */

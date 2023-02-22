@@ -30,14 +30,14 @@ export class WebPlatformFunctions extends PlatformFunctions {
   }
 
   /** @override */
-  createNodeHttpClient(): typeof HttpClient {
+  createNodeHttpClient(): HttpClient {
     throw new Error(
       'Stripe: `createNodeHttpClient()` is not available in non-Node environments. Please use `createFetchHttpClient()` instead.'
     );
   }
 
   /** @override */
-  createDefaultHttpClient(): typeof HttpClient {
+  createDefaultHttpClient(): HttpClient {
     return super.createFetchHttpClient();
   }
 

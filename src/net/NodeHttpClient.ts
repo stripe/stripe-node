@@ -10,9 +10,9 @@ const defaultHttpsAgent = new https.Agent({keepAlive: true});
  * requests.`
  */
 export class NodeHttpClient extends HttpClient {
-  _agent: http.Agent | https.Agent;
+  _agent?: http.Agent | https.Agent | undefined;
 
-  constructor(agent: http.Agent | https.Agent) {
+  constructor(agent?: http.Agent | https.Agent) {
     super();
     this._agent = agent;
   }

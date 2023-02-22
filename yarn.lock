@@ -366,7 +366,7 @@
 
 "@types/qs@^6.9.7":
   version "6.9.7"
-  resolved "https://artifactory-content.stripe.build/artifactory/api/npm/npm/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
+  resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
   integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
 
 "@typescript-eslint/eslint-plugin@^4.33.0":

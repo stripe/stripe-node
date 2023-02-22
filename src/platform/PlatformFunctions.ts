@@ -74,7 +74,7 @@ export class PlatformFunctions {
    * Creates an HTTP client which uses the Node `http` and `https` packages
    * to issue requests.
    */
-  createNodeHttpClient(agent?: http.Agent | null): typeof HttpClient {
+  createNodeHttpClient(agent: http.Agent): HttpClient {
     throw new Error('createNodeHttpClient not implemented.');
   }
 
@@ -85,7 +85,7 @@ export class PlatformFunctions {
    * A fetch function can optionally be passed in as a parameter. If none is
    * passed, will default to the default `fetch` function in the global scope.
    */
-  createFetchHttpClient(fetchFn?: typeof fetch | null): typeof HttpClient {
+  createFetchHttpClient(fetchFn?: typeof fetch | null): HttpClient {
     // @ts-ignore
     return new FetchHttpClient(fetchFn);
   }
@@ -93,7 +93,7 @@ export class PlatformFunctions {
   /**
    * Creates an HTTP client using runtime-specific APIs.
    */
-  createDefaultHttpClient(): typeof HttpClient {
+  createDefaultHttpClient(): HttpClient {
     throw new Error('createDefaultHttpClient not implemented.');
   }
 
