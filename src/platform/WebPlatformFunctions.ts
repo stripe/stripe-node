@@ -1,7 +1,7 @@
-import {CryptoProvider} from '../crypto/CryptoProvider';
-import {HttpClient} from '../net/HttpClient';
-import {PlatformFunctions} from './PlatformFunctions';
-import {StripeEmitter} from '../StripeEmitter';
+import {CryptoProvider} from '../crypto/CryptoProvider.js';
+import {HttpClient} from '../net/HttpClient.js';
+import {PlatformFunctions} from './PlatformFunctions.js';
+import {StripeEmitter} from '../StripeEmitter.js';
 
 /**
  * Specializes WebPlatformFunctions using APIs available in Web workers.

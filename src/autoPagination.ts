@@ -1,4 +1,4 @@
-import {callbackifyPromiseWithTimeout, getDataFromArgs} from './utils';
+import {callbackifyPromiseWithTimeout, getDataFromArgs} from './utils.js';
 
 type PromiseCache = {
   currentPromise: Promise<any> | undefined | null;

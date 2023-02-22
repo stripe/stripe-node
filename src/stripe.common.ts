@@ -1,15 +1,15 @@
-import * as _Error from './Error';
-import {HttpClient, HttpClientResponse} from './net/HttpClient';
+import * as _Error from './Error.js';
+import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {
   determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
-} from './utils';
-import {CryptoProvider} from './crypto/CryptoProvider';
-import {PlatformFunctions} from './platform/PlatformFunctions';
-import RequestSender from './RequestSender';
-import {StripeResource} from './StripeResource';
-import {createWebhooks} from './Webhooks';
+} from './utils.js';
+import {CryptoProvider} from './crypto/CryptoProvider.js';
+import {PlatformFunctions} from './platform/PlatformFunctions.js';
+import RequestSender from './RequestSender.js';
+import {StripeResource} from './StripeResource.js';
+import {createWebhooks} from './Webhooks.js';
 const resources = require('./resources');
 
 const DEFAULT_HOST = 'api.stripe.com';
@@ -28,7 +28,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
   'typescript',
   'maxNetworkRetries',
   'httpAgent',
-  'httpClient',
+  'HttpClient.js',
   'timeout',
   'host',
   'port',
