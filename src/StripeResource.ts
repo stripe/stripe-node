@@ -7,6 +7,7 @@ import {
 } from './utils.js';
 import {stripeMethod} from './StripeMethod.js';
 
+// Provide extension mechanism for Stripe Resource Sub-Classes
 StripeResource.extend = protoExtend;
 
 StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;

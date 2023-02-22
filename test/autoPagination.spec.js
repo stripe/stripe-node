@@ -5,8 +5,7 @@
 const testUtils = require('../testUtils');
 const {StripeResource} = require('../lib/StripeResource');
 
-const makeAutoPaginationMethods = require('../lib/autoPagination')
-  .makeAutoPaginationMethods;
+const {makeAutoPaginationMethods} = require('../lib/autoPagination');
 
 const expect = require('chai').expect;
 

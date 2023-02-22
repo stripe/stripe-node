@@ -165,8 +165,8 @@ class StripeInvalidGrantError extends StripeError {}
 class StripeUnknownError extends StripeError {}
 
 export {
-  StripeError,
   generate,
+  StripeError,
   StripeCardError,
   StripeInvalidRequestError,
   StripeAPIError,

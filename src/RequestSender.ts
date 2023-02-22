@@ -16,7 +16,7 @@ import {HttpClient} from './net/HttpClient.js';
 
 const MAX_RETRY_AFTER_WAIT = 60;
 
-class RequestSender {
+export class RequestSender {
   protected _stripe: StripeObject;
   private readonly _maxBufferedRequestMetric: number;
 
@@ -545,5 +545,3 @@ class RequestSender {
     }
   }
 }
-
-export default RequestSender;

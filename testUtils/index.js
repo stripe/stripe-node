@@ -12,7 +12,7 @@ const {CryptoProvider} = require('../lib/crypto/CryptoProvider');
 const {
   NodePlatformFunctions,
 } = require('../lib/platform/NodePlatformFunctions');
-const RequestSender = require('../lib/RequestSender').default;
+const {RequestSender} = require('../lib/RequestSender');
 const {createStripe} = require('../lib/stripe.common');
 const stripe = require('../lib/stripe.node');
 

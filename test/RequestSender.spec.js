@@ -1,6 +1,6 @@
 'use strict';
 
-import RequestSender from '../lib/RequestSender';
+const {RequestSender} = require('../lib/RequestSender');
 
 const stripe = require('../testUtils').getSpyableStripe();
 const expect = require('chai').expect;

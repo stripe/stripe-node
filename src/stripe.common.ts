@@ -7,7 +7,7 @@ import {
 } from './utils.js';
 import {CryptoProvider} from './crypto/CryptoProvider.js';
 import {PlatformFunctions} from './platform/PlatformFunctions.js';
-import RequestSender from './RequestSender.js';
+import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
 import {createWebhooks} from './Webhooks.js';
 const resources = require('./resources');
