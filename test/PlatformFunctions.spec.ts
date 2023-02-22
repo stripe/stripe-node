@@ -1,8 +1,9 @@
 'use strict';
 
 require('../testUtils');
-const fs = require('fs');
-const path = require('path');
+
+import * as fs from 'fs';
+import * as path from 'path';
 
 import {FetchHttpClient} from '../lib/net/FetchHttpClient';
 import {NodeCryptoProvider} from '../lib/crypto/NodeCryptoProvider';
@@ -13,8 +14,6 @@ import {SubtleCryptoProvider} from '../lib/crypto/SubtleCryptoProvider';
 
 import {expect} from 'chai';
 import {webcrypto} from 'crypto';
-
-let platforms: Record<string, PlatformFunctions>;
 
 if (process.versions.node < '15') {
   console.log(
