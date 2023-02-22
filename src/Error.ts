@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-const generate = (rawStripeError: StripeRawError): StripeError => {
+export const generate = (rawStripeError: StripeRawError): StripeError => {
   switch (rawStripeError.type) {
     case 'card_error':
       return new StripeCardError(rawStripeError);
@@ -25,7 +25,7 @@ const generate = (rawStripeError: StripeRawError): StripeError => {
  * StripeError is the base error from which all other more specific Stripe errors derive.
  * Specifically for errors returned from Stripe's REST API.
  */
-class StripeError extends Error {
+export class StripeError extends Error {
   readonly message: string;
   readonly type: string;
   readonly raw: unknown;
@@ -84,13 +84,13 @@ class StripeError extends Error {
  * CardError is raised when a user enters a card that can't be charged for
  * some reason.
  */
-class StripeCardError extends StripeError {}
+export class StripeCardError extends StripeError {}
 
 /**
  * InvalidRequestError is raised when a request is initiated with invalid
  * parameters.
  */
-class StripeInvalidRequestError extends StripeError {}
+export class StripeInvalidRequestError extends StripeError {}
 
 /**
  * APIError is a generic error that may be raised in cases where none of the
@@ -98,39 +98,39 @@ class StripeInvalidRequestError extends StripeError {}
  * that a new error has been introduced in the API, but this version of the
  * Node.JS SDK doesn't know how to handle it.
  */
-class StripeAPIError extends StripeError {}
+export class StripeAPIError extends StripeError {}
 
 /**
  * AuthenticationError is raised when invalid credentials are used to connect
  * to Stripe's servers.
  */
-class StripeAuthenticationError extends StripeError {}
+export class StripeAuthenticationError extends StripeError {}
 
 /**
  * PermissionError is raised in cases where access was attempted on a resource
  * that wasn't allowed.
  */
-class StripePermissionError extends StripeError {}
+export class StripePermissionError extends StripeError {}
 
 /**
  * RateLimitError is raised in cases where an account is putting too much load
  * on Stripe's API servers (usually by performing too many requests). Please
  * back off on request rate.
  */
-class StripeRateLimitError extends StripeError {}
+export class StripeRateLimitError extends StripeError {}
 
 /**
  * StripeConnectionError is raised in the event that the SDK can't connect to
  * Stripe's servers. That can be for a variety of different reasons from a
  * downed network to a bad TLS certificate.
  */
-class StripeConnectionError extends StripeError {}
+export class StripeConnectionError extends StripeError {}
 
 /**
  * SignatureVerificationError is raised when the signature verification for a
  * webhook fails
  */
-class StripeSignatureVerificationError extends StripeError {
+export class StripeSignatureVerificationError extends StripeError {
   header: string | Uint8Array;
   payload: string | Uint8Array;
 
@@ -149,7 +149,7 @@ class StripeSignatureVerificationError extends StripeError {
  * IdempotencyError is raised in cases where an idempotency key was used
  * improperly.
  */
-class StripeIdempotencyError extends StripeError {}
+export class StripeIdempotencyError extends StripeError {}
 
 /**
  * InvalidGrantError is raised when a specified code doesn't exist, is
@@ -157,25 +157,9 @@ class StripeIdempotencyError extends StripeError {}
  * exist, or doesn't belong to you; or if an API key's mode (live or test)
  * doesn't match the mode of a code or refresh token.
  */
-class StripeInvalidGrantError extends StripeError {}
+export class StripeInvalidGrantError extends StripeError {}
 
 /**
  * Any other error from Stripe not specifically captured above
  */
-class StripeUnknownError extends StripeError {}
-
-export {
-  generate,
-  StripeError,
-  StripeCardError,
-  StripeInvalidRequestError,
-  StripeAPIError,
-  StripeAuthenticationError,
-  StripePermissionError,
-  StripeRateLimitError,
-  StripeConnectionError,
-  StripeSignatureVerificationError,
-  StripeIdempotencyError,
-  StripeInvalidGrantError,
-  StripeUnknownError,
-};
+export class StripeUnknownError extends StripeError {}
