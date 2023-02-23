@@ -16,6 +16,8 @@ import {makeAutoPaginationMethods} from './autoPagination';
  * @param [spec.encode] Function for mutating input parameters to a method.
  *  Usefully for applying transforms to data on a per-method basis.
  * @param [spec.host] Hostname for the request.
+ *
+ * <!-- Public API accessible via Stripe.StripeResource.method -->
  */
 export function stripeMethod(
   spec: MethodSpec

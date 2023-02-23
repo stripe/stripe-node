@@ -6,6 +6,10 @@ assert(Stripe.PACKAGE_VERSION);
 assert(Stripe.USER_AGENT);
 
 assert(Stripe.HttpClient);
+assert(Stripe.HttpClient.CONNECTION_CLOSED_ERROR_CODES);
+assert(Stripe.HttpClient.TIMEOUT_ERROR_CODE);
+assert(Stripe.HttpClient.makeTimeoutError);
+
 assert(Stripe.HttpClientResponse);
 assert(Stripe.createFetchHttpClient);
 assert(Stripe.createNodeHttpClient);

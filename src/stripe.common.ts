@@ -153,7 +153,7 @@ export function createStripe(
   }
 
   Stripe.errors = _Error;
-  Stripe.webhooks = require('./Webhooks');
+  Stripe.webhooks = createWebhooks;
 
   Stripe.createNodeHttpClient = platformFunctions.createNodeHttpClient;
 

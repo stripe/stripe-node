@@ -174,7 +174,8 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
 }
 
 /**
- * Provide simple "Class" extension mechanism
+ * Provide simple "Class" extension mechanism.
+ * <!-- Public API accessible via Stripe.StripeResource.extend -->
  */
 export function protoExtend(this: any, sub: any): (...args: any[]) => void {
   // eslint-disable-next-line @typescript-eslint/no-this-alias

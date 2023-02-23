@@ -41,6 +41,7 @@ export class HttpClient implements HttpClientInterface {
   }
 }
 
+// Public API accessible via Stripe.HttpClient
 HttpClient.CONNECTION_CLOSED_ERROR_CODES = ['ECONNRESET', 'EPIPE'];
 HttpClient.TIMEOUT_ERROR_CODE = 'ETIMEDOUT';
 
