@@ -15,13 +15,27 @@ assert(Stripe.createNodeCryptoProvider);
 assert(Stripe.createSubtleCryptoProvider);
 
 assert(Stripe.errors);
-assert(Stripe.resources);
-assert(Stripe.webhooks);
+assert(Stripe.errors.generate)
+assert(Stripe.errors.StripeError);
+assert(Stripe.errors.StripeCardError);
+assert(Stripe.errors.StripeInvalidRequestError);
+assert(Stripe.errors.StripeAPIError);
+assert(Stripe.errors.StripeAuthenticationError);
+assert(Stripe.errors.StripePermissionError);
+assert(Stripe.errors.StripeRateLimitError);
+assert(Stripe.errors.StripeConnectionError);
+assert(Stripe.errors.StripeSignatureVerificationError);
+assert(Stripe.errors.StripeIdempotencyError);
+assert(Stripe.errors.StripeInvalidGrantError);
+assert(Stripe.errors.StripeUnknownError);
 
 assert(Stripe.StripeResource);
 assert(Stripe.StripeResource.method);
 assert(Stripe.StripeResource.extend);
 assert(Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS);
+
+assert(Stripe.webhooks);
+assert(Stripe.resources);
 
 assert(Stripe.Stripe);
 assert(Stripe.default);
@@ -35,6 +49,7 @@ assert(stripe._enableTelemetry);
 assert(stripe._prevRequestMetrics);
 assert(stripe._requestSender);
 assert(stripe.VERSION);
+assert(stripe.errors);
 assert(stripe.webhookEndpoints);
 assert(stripe.webhooks);
 assert(stripe._emitter);
