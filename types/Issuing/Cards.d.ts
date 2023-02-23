@@ -107,7 +107,7 @@ declare module 'stripe' {
         spending_controls: Card.SpendingControls;
 
         /**
-         * Whether authorizations can be approved on this card.
+         * Whether authorizations can be approved on this card. May be blocked from activating cards depending on past-due Cardholder requirements. Defaults to `inactive`.
          */
         status: Card.Status;
 

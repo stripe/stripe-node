@@ -92,6 +92,9 @@ declare module 'stripe' {
         }
 
         interface Individual {
+          /**
+           * Information related to the card_issuing program for this cardholder.
+           */
           card_issuing: Individual.CardIssuing | null;
 
           /**
@@ -100,12 +103,12 @@ declare module 'stripe' {
           dob: Individual.Dob | null;
 
           /**
-           * The first name of this cardholder. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
+           * The first name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           first_name: string | null;
 
           /**
-           * The last name of this cardholder. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
+           * The last name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           last_name: string | null;
 
@@ -126,12 +129,12 @@ declare module 'stripe' {
           namespace CardIssuing {
             interface UserTermsAcceptance {
               /**
-               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
+               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
                */
               date: number | null;
 
               /**
-               * The IP address from which the cardholder accepted the Authorized User Terms.
+               * The IP address from which the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
                */
               ip: string | null;
 
