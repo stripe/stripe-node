@@ -6,7 +6,7 @@ declare module 'stripe' {
       namespace Terminal {
         interface ReaderPresentPaymentMethodParams {
           /**
-           * Simulated data for the card_present payment method
+           * Simulated data for the card_present payment method.
            */
           card_present?: ReaderPresentPaymentMethodParams.CardPresent;
 
@@ -16,12 +16,12 @@ declare module 'stripe' {
           expand?: Array<string>;
 
           /**
-           * Simulated data for the interac_present payment method
+           * Simulated data for the interac_present payment method.
            */
           interac_present?: ReaderPresentPaymentMethodParams.InteracPresent;
 
           /**
-           * Simulated payment type
+           * Simulated payment type.
            */
           type?: ReaderPresentPaymentMethodParams.Type;
         }
@@ -29,7 +29,7 @@ declare module 'stripe' {
         namespace ReaderPresentPaymentMethodParams {
           interface CardPresent {
             /**
-             * Card Number
+             * The card number, as a string without any separators.
              */
             number?: string;
           }
