@@ -1,5 +1,5 @@
-import {callbackifyPromiseWithTimeout, extractUrlParams} from './utils.js';
-import {makeAutoPaginationMethods} from './autoPagination.js';
+import {callbackifyPromiseWithTimeout, extractUrlParams} from './utils';
+import {makeAutoPaginationMethods} from './autoPagination';
 
 /**
  * Create an API method from the declared spec.

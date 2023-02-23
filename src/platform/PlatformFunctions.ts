@@ -1,10 +1,10 @@
 import * as http from 'http';
-import {CryptoProvider} from '../crypto/CryptoProvider.js';
+import {CryptoProvider} from '../crypto/CryptoProvider';
 import {EventEmitter} from 'events';
-import {FetchHttpClient} from '../net/FetchHttpClient.js';
-import {HttpClient} from '../net/HttpClient.js';
-import {StripeEmitter} from '../StripeEmitter.js';
-import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider.js';
+import {FetchHttpClient} from '../net/FetchHttpClient';
+import {HttpClient} from '../net/HttpClient';
+import {StripeEmitter} from '../StripeEmitter';
+import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider';
 
 /**
  * Interface encapsulating various utility functions whose
@@ -74,7 +74,7 @@ export class PlatformFunctions {
    * Creates an HTTP client which uses the Node `http` and `https` packages
    * to issue requests.
    */
-  createNodeHttpClient(agent: http.Agent): HttpClient {
+  createNodeHttpClient(agent?: http.Agent): HttpClient {
     throw new Error('createNodeHttpClient not implemented.');
   }
 
@@ -85,8 +85,7 @@ export class PlatformFunctions {
    * A fetch function can optionally be passed in as a parameter. If none is
    * passed, will default to the default `fetch` function in the global scope.
    */
-  createFetchHttpClient(fetchFn?: typeof fetch | null): HttpClient {
-    // @ts-ignore
+  createFetchHttpClient(fetchFn?: typeof fetch): HttpClient {
     return new FetchHttpClient(fetchFn);
   }
 

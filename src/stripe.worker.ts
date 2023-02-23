@@ -1,5 +1,5 @@
-import {WebPlatformFunctions} from './platform/WebPlatformFunctions.js';
-import {createStripe} from './stripe.common.js';
+import {WebPlatformFunctions} from './platform/WebPlatformFunctions';
+import {createStripe} from './stripe.common';
 
 const Stripe = createStripe(new WebPlatformFunctions());
 

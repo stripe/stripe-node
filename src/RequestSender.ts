@@ -5,14 +5,14 @@ import {
   StripeError,
   StripePermissionError,
   StripeRateLimitError,
-} from './Error.js';
+} from './Error';
 import {
   emitWarning,
   normalizeHeaders,
   removeNullish,
   stringifyRequestData,
-} from './utils.js';
-import {HttpClient} from './net/HttpClient.js';
+} from './utils';
+import {HttpClient} from './net/HttpClient';
 
 const MAX_RETRY_AFTER_WAIT = 60;
 

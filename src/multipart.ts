@@ -1,4 +1,4 @@
-import {flattenAndStringify, stringifyRequestData} from './utils.js';
+import {flattenAndStringify, stringifyRequestData} from './utils';
 
 type MultipartCallbackReturn = any;
 type MultipartCallback = (

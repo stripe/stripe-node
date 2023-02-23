@@ -4,8 +4,8 @@ import {
   makeURLInterpolator,
   protoExtend,
   stringifyRequestData,
-} from './utils.js';
-import {stripeMethod} from './StripeMethod.js';
+} from './utils';
+import {stripeMethod} from './StripeMethod';
 
 // Provide extension mechanism for Stripe Resource Sub-Classes
 StripeResource.extend = protoExtend;

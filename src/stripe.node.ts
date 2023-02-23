@@ -1,5 +1,5 @@
-import {NodePlatformFunctions} from './platform/NodePlatformFunctions.js';
-import {createStripe} from './stripe.common.js';
+import {NodePlatformFunctions} from './platform/NodePlatformFunctions';
+import {createStripe} from './stripe.common';
 
 const Stripe = createStripe(new NodePlatformFunctions());
 

@@ -1,4 +1,4 @@
-import {HttpClient, HttpClientResponse} from './HttpClient.js';
+import {HttpClient, HttpClientResponse} from './HttpClient';
 
 /**
  * HTTP client which uses a `fetch` function to issue requests.
@@ -9,9 +9,9 @@ import {HttpClient, HttpClientResponse} from './HttpClient.js';
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
 export class FetchHttpClient extends HttpClient implements HttpClientInterface {
-  _fetchFn: typeof fetch;
+  _fetchFn?: typeof fetch;
 
-  constructor(fetchFn: typeof fetch) {
+  constructor(fetchFn?: typeof fetch) {
     super();
     this._fetchFn = fetchFn;
   }

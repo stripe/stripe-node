@@ -1,5 +1,5 @@
 import * as crypto from 'crypto';
-import {CryptoProvider} from './CryptoProvider.js';
+import {CryptoProvider} from './CryptoProvider';
 
 /**
  * `CryptoProvider which uses the Node `crypto` package for its computations.
