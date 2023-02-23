@@ -52,7 +52,7 @@ declare module 'stripe' {
         spending_controls?: CardCreateParams.SpendingControls;
 
         /**
-         * Whether authorizations can be approved on this card. Defaults to `inactive`.
+         * Whether authorizations can be approved on this card. May be blocked from activating cards depending on past-due Cardholder requirements. Defaults to `inactive`.
          */
         status?: CardCreateParams.Status;
       }
@@ -1097,7 +1097,7 @@ declare module 'stripe' {
         spending_controls?: CardUpdateParams.SpendingControls;
 
         /**
-         * Dictates whether authorizations can be approved on this card. If this card is being canceled because it was lost or stolen, this information should be provided as `cancellation_reason`.
+         * Dictates whether authorizations can be approved on this card. May be blocked from activating cards depending on past-due Cardholder requirements. Defaults to `inactive`. If this card is being canceled because it was lost or stolen, this information should be provided as `cancellation_reason`.
          */
         status?: CardUpdateParams.Status;
       }

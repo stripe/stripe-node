@@ -15,7 +15,7 @@ declare module 'stripe' {
         name: string;
 
         /**
-         * One of `individual` or `company`.
+         * One of `individual` or `company`. See [Choose a cardholder type](https://stripe.com/docs/issuing/other/choose-cardholder) for more details.
          */
         type: CardholderCreateParams.Type;
 
@@ -116,12 +116,12 @@ declare module 'stripe' {
           dob?: Individual.Dob;
 
           /**
-           * The first name of this cardholder. This field cannot contain any special characters or numbers.
+           * The first name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           first_name?: string;
 
           /**
-           * The last name of this cardholder. This field cannot contain any special characters or numbers.
+           * The last name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           last_name?: string;
 
@@ -1207,12 +1207,12 @@ declare module 'stripe' {
           dob?: Individual.Dob;
 
           /**
-           * The first name of this cardholder. This field cannot contain any special characters or numbers.
+           * The first name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           first_name?: string;
 
           /**
-           * The last name of this cardholder. This field cannot contain any special characters or numbers.
+           * The last name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           last_name?: string;
 
