@@ -1,19 +1,22 @@
-import _Error = require('./Error');
-import utils = require('./utils');
-const {
+import {
   StripeAPIError,
   StripeAuthenticationError,
   StripeConnectionError,
   StripeError,
   StripePermissionError,
   StripeRateLimitError,
-} = _Error;
-
-const {HttpClient} = require('./net/HttpClient');
+} from './Error';
+import {
+  emitWarning,
+  normalizeHeaders,
+  removeNullish,
+  stringifyRequestData,
+} from './utils';
+import {HttpClient} from './net/HttpClient';
 
 const MAX_RETRY_AFTER_WAIT = 60;
 
-class RequestSender {
+export class RequestSender {
   protected _stripe: StripeObject;
   private readonly _maxBufferedRequestMetric: number;
 
@@ -41,7 +44,7 @@ class RequestSender {
     const requestEndTime = Date.now();
     const requestDurationMs = requestEndTime - requestEvent.request_start_time;
 
-    return utils.removeNullish({
+    return removeNullish({
       api_version: headers['stripe-version'] as string,
       account: headers['stripe-account'] as string,
       idempotency_key: headers['idempotency-key'] as string,
@@ -335,7 +338,7 @@ class RequestSender {
     // and fix these cases as they are semantically incorrect.
     if (methodHasPayload || contentLength) {
       if (!methodHasPayload) {
-        utils.emitWarning(
+        emitWarning(
           `${method} method had non-zero contentLength but no payload is expected for this verb`
         );
       }
@@ -343,9 +346,9 @@ class RequestSender {
     }
 
     return Object.assign(
-      utils.removeNullish(defaultHeaders),
+      removeNullish(defaultHeaders),
       // If the user supplied, say 'idempotency-key', override instead of appending by ensuring caps are the same.
-      utils.normalizeHeaders(userSuppliedHeaders)
+      normalizeHeaders(userSuppliedHeaders)
     );
   }
 
@@ -375,7 +378,7 @@ class RequestSender {
       if (
         this._stripe._prevRequestMetrics.length > this._maxBufferedRequestMetric
       ) {
-        utils.emitWarning(
+        emitWarning(
           'Request metrics buffer is full, dropping telemetry message.'
         );
       } else {
@@ -445,7 +448,7 @@ class RequestSender {
       const requestStartTime = Date.now();
 
       // @ts-ignore
-      const requestEvent: RequestEvent = utils.removeNullish({
+      const requestEvent: RequestEvent = removeNullish({
         api_version: apiVersion,
         account: headers['Stripe-Account'],
         idempotency_key: headers['Idempotency-Key'],
@@ -538,9 +541,7 @@ class RequestSender {
         prepareAndMakeRequest
       );
     } else {
-      prepareAndMakeRequest(null, utils.stringifyRequestData(data || {}));
+      prepareAndMakeRequest(null, stringifyRequestData(data || {}));
     }
   }
 }
-
-export = RequestSender;

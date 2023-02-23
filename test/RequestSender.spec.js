@@ -1,9 +1,10 @@
 'use strict';
 
+const {RequestSender} = require('../lib/RequestSender');
+
 const stripe = require('../testUtils').getSpyableStripe();
 const expect = require('chai').expect;
 
-const RequestSender = require('../lib/RequestSender');
 const {HttpClientResponse} = require('../lib/net/HttpClient');
 const utils = require('../testUtils');
 const nock = require('nock');

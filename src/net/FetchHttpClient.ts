@@ -1,5 +1,4 @@
-import _HttpClient = require('./HttpClient');
-const {HttpClient, HttpClientResponse} = _HttpClient;
+import {HttpClient, HttpClientResponse} from './HttpClient';
 
 /**
  * HTTP client which uses a `fetch` function to issue requests.
@@ -9,10 +8,10 @@ const {HttpClient, HttpClientResponse} = _HttpClient;
  * Fetch API. As an example, this could be the function provided by the
  * node-fetch package (https://github.com/node-fetch/node-fetch).
  */
-class FetchHttpClient extends HttpClient implements HttpClientInterface {
-  _fetchFn: typeof fetch;
+export class FetchHttpClient extends HttpClient implements HttpClientInterface {
+  _fetchFn?: typeof fetch;
 
-  constructor(fetchFn: typeof fetch) {
+  constructor(fetchFn?: typeof fetch) {
     super();
     this._fetchFn = fetchFn;
   }
@@ -90,7 +89,7 @@ class FetchHttpClient extends HttpClient implements HttpClientInterface {
   }
 }
 
-class FetchHttpClientResponse extends HttpClientResponse
+export class FetchHttpClientResponse extends HttpClientResponse
   implements HttpClientResponseInterface {
   _res: Response;
 
@@ -141,5 +140,3 @@ class FetchHttpClientResponse extends HttpClientResponse
     return headersObj;
   }
 }
-
-export = {FetchHttpClient, FetchHttpClientResponse};

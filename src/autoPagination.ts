@@ -1,4 +1,4 @@
-import utils = require('./utils');
+import {callbackifyPromiseWithTimeout, getDataFromArgs} from './utils';
 
 type PromiseCache = {
   currentPromise: Promise<any> | undefined | null;
@@ -37,7 +37,7 @@ type AutoPaginationMethods = {
   return: () => void;
 };
 
-function makeAutoPaginationMethods(
+export function makeAutoPaginationMethods(
   self: StripeResourceObject,
   requestArgs: RequestArgs,
   spec: MethodSpec,
@@ -134,10 +134,6 @@ function makeAutoPaginationMethods(
   };
   return autoPaginationMethods;
 }
-
-export = {
-  makeAutoPaginationMethods: makeAutoPaginationMethods,
-};
 
 /**
  * ----------------
@@ -256,7 +252,7 @@ function makeAutoPagingEach(
       // @ts-ignore we might need a null check
       onItem
     );
-    return utils.callbackifyPromiseWithTimeout(autoPagePromise, onDone);
+    return callbackifyPromiseWithTimeout(autoPagePromise, onDone);
   } as AutoPagingEach;
 }
 
@@ -292,7 +288,7 @@ function makeAutoPagingToArray(
         .catch(reject);
     });
     // @ts-ignore
-    return utils.callbackifyPromiseWithTimeout(promise, onDone);
+    return callbackifyPromiseWithTimeout(promise, onDone);
   };
 }
 
@@ -330,7 +326,7 @@ function wrapAsyncIteratorWithCallback(
 
 function isReverseIteration(requestArgs: RequestArgs): boolean {
   const args = [].slice.call(requestArgs);
-  const dataFromArgs = utils.getDataFromArgs(args);
+  const dataFromArgs = getDataFromArgs(args);
 
   return !!dataFromArgs.ending_before;
 }
