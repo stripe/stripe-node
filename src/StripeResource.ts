@@ -10,6 +10,9 @@ import {stripeMethod} from './StripeMethod.js';
 // Provide extension mechanism for Stripe Resource Sub-Classes
 StripeResource.extend = protoExtend;
 
+// Expose method-creator
+StripeResource.method = stripeMethod;
+
 StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;
 
 /**
@@ -232,8 +235,4 @@ StripeResource.prototype = {
   },
 } as StripeResourceObject;
 
-export {
-  // Expose method-creator
-  stripeMethod,
-  StripeResource,
-};
+export {StripeResource};

@@ -1,7 +1,8 @@
 'use strict';
 
-const {stripeMethod, StripeResource} = require('../StripeResource');
-const utils = require('../utils');
+const {StripeResource} = require('../StripeResource');
+const stripeMethod = StripeResource.method;
+const {stringifyRequestData} = require('../utils');
 
 const oAuthHost = 'connect.stripe.com';
 
@@ -31,7 +32,7 @@ module.exports = StripeResource.extend({
       params.scope = 'read_write';
     }
 
-    return `https://${oAuthHost}/${path}?${utils.stringifyRequestData(params)}`;
+    return `https://${oAuthHost}/${path}?${stringifyRequestData(params)}`;
   },
 
   token: stripeMethod({
