@@ -1,5 +1,5 @@
-import * as apiVersion from './apiVersion';
 import * as _Error from './Error';
+import * as apiVersion from './apiVersion';
 import {HttpClient, HttpClientResponse} from './net/HttpClient';
 import {
   determineProcessUserAgentProperties,
