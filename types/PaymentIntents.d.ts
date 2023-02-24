@@ -1764,6 +1764,8 @@ declare module 'stripe' {
 
         namespace UsBankAccount {
           interface FinancialConnections {
+            manual_entry?: FinancialConnections.ManualEntry;
+
             /**
              * The list of permissions to request. The `payment_method` permission must be included.
              */
@@ -1781,6 +1783,17 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode?: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'

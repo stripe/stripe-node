@@ -706,6 +706,13 @@ describe('Invoices', function() {
     expect(invoice).not.to.be.null;
   });
 
+  it('retrieve method', async function() {
+    const invoice = await stripe.invoices.retrieve('in_xxxxxxxxxxxxx', {
+      expand: ['customer'],
+    });
+    expect(invoice).not.to.be.null;
+  });
+
   it('update method', async function() {
     const invoice = await stripe.invoices.update('in_xxxxxxxxxxxxx', {
       metadata: {order_id: '6735'},

@@ -922,6 +922,11 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
+             * Customize manual entry behavior
+             */
+            manual_entry?: FinancialConnections.ManualEntry;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -938,6 +943,17 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'
@@ -1834,6 +1850,11 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
+             * Customize manual entry behavior
+             */
+            manual_entry?: FinancialConnections.ManualEntry;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -1850,6 +1871,17 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'
@@ -2828,6 +2860,11 @@ declare module 'stripe' {
         namespace UsBankAccount {
           interface FinancialConnections {
             /**
+             * Customize manual entry behavior
+             */
+            manual_entry?: FinancialConnections.ManualEntry;
+
+            /**
              * The list of permissions to request. If this parameter is passed, the `payment_method` permission must be included. Valid permissions include: `balances`, `ownership`, `payment_method`, and `transactions`.
              */
             permissions?: Array<FinancialConnections.Permission>;
@@ -2844,6 +2881,17 @@ declare module 'stripe' {
           }
 
           namespace FinancialConnections {
+            interface ManualEntry {
+              /**
+               * Settings for configuring manual entry of account details.
+               */
+              mode: ManualEntry.Mode;
+            }
+
+            namespace ManualEntry {
+              type Mode = 'automatic' | 'custom';
+            }
+
             type Permission =
               | 'balances'
               | 'ownership'
