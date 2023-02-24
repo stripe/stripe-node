@@ -2,7 +2,7 @@
 
 'use strict';
 
-const resourceNamespace = require('./ResourceNamespace');
+const {resourceNamespace} = require('./ResourceNamespace');
 
 module.exports = {
   // Support Accounts for consistency, Account for backwards compatibility

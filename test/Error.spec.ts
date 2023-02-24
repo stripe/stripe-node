@@ -2,7 +2,7 @@
 
 require('../testUtils');
 
-import Error = require('../src/Error');
+import * as Error from '../src/Error';
 import {expect} from 'chai';
 
 describe('Error', () => {

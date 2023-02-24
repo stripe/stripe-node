@@ -1,6 +1,5 @@
 // ResourceNamespace allows you to create nested resources, i.e. `stripe.issuing.cards`.
 // It also works recursively, so you could do i.e. `stripe.billing.invoicing.pay`.
-
 function ResourceNamespace(
   this: StripeResourceNamespaceObject,
   stripe: StripeObject,
@@ -15,13 +14,11 @@ function ResourceNamespace(
   }
 }
 
-module.exports = function(
+export function resourceNamespace(
   namespace: string,
   resources: Array<StripeResourceObject>
 ): (stripe: StripeObject) => StripeResourceNamespaceObject {
   return function(stripe: StripeObject): StripeResourceNamespaceObject {
     return new (ResourceNamespace as any)(stripe, resources);
   };
-};
-
-module.exports.ResourceNamespace = ResourceNamespace;
+}

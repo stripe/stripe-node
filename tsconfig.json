@@ -10,6 +10,7 @@
     "noImplicitThis": true,
     "strict": true,
     "strictFunctionTypes": true,
+    "types": [ "node" ]
   },
   "include": ["./src/**/*"]
 }

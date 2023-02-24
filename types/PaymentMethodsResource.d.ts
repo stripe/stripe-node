@@ -414,7 +414,8 @@ declare module 'stripe' {
           | 'revolut'
           | 'sns_bank'
           | 'triodos_bank'
-          | 'van_lanschot';
+          | 'van_lanschot'
+          | 'yoursafe';
       }
 
       interface InteracPresent {}

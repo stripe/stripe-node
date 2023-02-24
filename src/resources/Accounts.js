@@ -2,7 +2,7 @@
 
 'use strict';
 
-const StripeResource = require('../StripeResource');
+const {StripeResource} = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 // Since path can either be `account` or `accounts`, support both through stripeMethod path;

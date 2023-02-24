@@ -1,11 +1,11 @@
-import CryptoProvider = require('./CryptoProvider');
+import {CryptoProvider} from './CryptoProvider';
 
 /**
  * `CryptoProvider which uses the SubtleCrypto interface of the Web Crypto API.
  *
  * This only supports asynchronous operations.
  */
-class SubtleCryptoProvider extends CryptoProvider {
+export class SubtleCryptoProvider extends CryptoProvider {
   subtleCrypto: SubtleCrypto;
 
   constructor(subtleCrypto?: SubtleCrypto) {
@@ -68,5 +68,3 @@ const byteHexMapping = new Array(256);
 for (let i = 0; i < byteHexMapping.length; i++) {
   byteHexMapping[i] = i.toString(16).padStart(2, '0');
 }
-
-export = SubtleCryptoProvider;

@@ -1817,12 +1817,12 @@ declare module 'stripe' {
 
         interface Period {
           /**
-           * The end of the period, which must be greater than or equal to the start.
+           * The end of the period, which must be greater than or equal to the start. This value is inclusive.
            */
           end: number;
 
           /**
-           * The start of the period.
+           * The start of the period. This value is inclusive.
            */
           start: number;
         }
@@ -2548,12 +2548,12 @@ declare module 'stripe' {
 
         interface Period {
           /**
-           * The end of the period, which must be greater than or equal to the start.
+           * The end of the period, which must be greater than or equal to the start. This value is inclusive.
            */
           end: number;
 
           /**
-           * The start of the period.
+           * The start of the period. This value is inclusive.
            */
           start: number;
         }

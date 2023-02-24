@@ -8,9 +8,11 @@ require('chai').use(require('chai-as-promised'));
 
 const http = require('http');
 
-const CryptoProvider = require('../lib/crypto/CryptoProvider');
-const NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
-const RequestSender = require('../lib/RequestSender');
+const {CryptoProvider} = require('../lib/crypto/CryptoProvider');
+const {
+  NodePlatformFunctions,
+} = require('../lib/platform/NodePlatformFunctions');
+const {RequestSender} = require('../lib/RequestSender');
 const {createStripe} = require('../lib/stripe.common');
 const stripe = require('../lib/stripe.node');
 
