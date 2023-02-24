@@ -2,40 +2,35 @@
 
 require('../testUtils');
 
-import fs = require('fs');
-import path = require('path');
-import NodePlatformFunctions = require('../lib/platform/NodePlatformFunctions');
-import PlatformFunctions = require('../lib/platform/PlatformFunctions');
-import NodeCryptoProvider = require('../lib/crypto/NodeCryptoProvider');
-import SubtleCryptoProvider = require('../lib/crypto/SubtleCryptoProvider');
+import * as fs from 'fs';
+import * as path from 'path';
 
 import {FetchHttpClient} from '../lib/net/FetchHttpClient';
+import {NodeCryptoProvider} from '../lib/crypto/NodeCryptoProvider';
 import {NodeHttpClient} from '../lib/net/NodeHttpClient';
+import {NodePlatformFunctions} from '../lib/platform/NodePlatformFunctions';
+import {PlatformFunctions} from '../lib/platform/PlatformFunctions';
+import {SubtleCryptoProvider} from '../lib/crypto/SubtleCryptoProvider';
+
 import {expect} from 'chai';
 import {webcrypto} from 'crypto';
-
-let platforms: Record<string, PlatformFunctions>;
 
 if (process.versions.node < '15') {
   console.log(
     `Skipping WebPlatformFunctions tests. Cannot load WebPlatformFunctions because 'Event' is not available in the global scope for ${process.version}.`
   );
-  platforms = {
-    Node: new NodePlatformFunctions(),
-  };
 } else {
-  const WebPlatformFunctions = require('../lib/platform/WebPlatformFunctions');
-  platforms = {
-    Web: new WebPlatformFunctions(),
-    Node: new NodePlatformFunctions(),
-  };
+  import(
+    '../lib/platform/WebPlatformFunctions'
+  ).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
 }
 
-for (const platform in platforms) {
-  const platformFunctions = platforms[platform];
-  const isNodeEnvironment = platform === 'Node';
+testPlatform(new NodePlatformFunctions());
 
-  describe(`${platform}PlatformFunctions`, () => {
+function testPlatform(platformFunctions: PlatformFunctions): void {
+  const isNodeEnvironment = platformFunctions instanceof NodePlatformFunctions;
+
+  describe(`${platformFunctions.constructor.name}`, () => {
     describe('uuid', () => {
       describe('should use crypto.randomUUID if it exists', () => {
         const crypto = require('crypto');

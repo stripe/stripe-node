@@ -1,18 +1,16 @@
-import EventEmitter = require('events');
-import StripeEmitter = require('../StripeEmitter');
-import http = require('http');
-import _HttpClient = require('../net/HttpClient');
-const HttpClient = _HttpClient.HttpClient;
-import _FetchHttpClient = require('../net/FetchHttpClient');
-const FetchHttpClient = _FetchHttpClient.FetchHttpClient;
-import SubtleCryptoProvider = require('../crypto/SubtleCryptoProvider');
-import CryptoProvider = require('../crypto/CryptoProvider');
+import * as http from 'http';
+import {CryptoProvider} from '../crypto/CryptoProvider';
+import {EventEmitter} from 'events';
+import {FetchHttpClient} from '../net/FetchHttpClient';
+import {HttpClient} from '../net/HttpClient';
+import {StripeEmitter} from '../StripeEmitter';
+import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider';
 
 /**
  * Interface encapsulating various utility functions whose
  * implementations depend on the platform / JS runtime.
  */
-class PlatformFunctions {
+export class PlatformFunctions {
   _fetchFn: any | null;
   _agent: http.Agent | null;
 
@@ -76,7 +74,7 @@ class PlatformFunctions {
    * Creates an HTTP client which uses the Node `http` and `https` packages
    * to issue requests.
    */
-  createNodeHttpClient(agent?: http.Agent | null): typeof HttpClient {
+  createNodeHttpClient(agent?: http.Agent): HttpClient {
     throw new Error('createNodeHttpClient not implemented.');
   }
 
@@ -87,15 +85,14 @@ class PlatformFunctions {
    * A fetch function can optionally be passed in as a parameter. If none is
    * passed, will default to the default `fetch` function in the global scope.
    */
-  createFetchHttpClient(fetchFn?: typeof fetch | null): typeof HttpClient {
-    // @ts-ignore
+  createFetchHttpClient(fetchFn?: typeof fetch): HttpClient {
     return new FetchHttpClient(fetchFn);
   }
 
   /**
    * Creates an HTTP client using runtime-specific APIs.
    */
-  createDefaultHttpClient(): typeof HttpClient {
+  createDefaultHttpClient(): HttpClient {
     throw new Error('createDefaultHttpClient not implemented.');
   }
 
@@ -119,5 +116,3 @@ class PlatformFunctions {
     throw new Error('createDefaultCryptoProvider not implemented.');
   }
 }
-
-export = PlatformFunctions;

@@ -1,5 +1,12 @@
 # Changelog
 
+## 11.12.0 - 2023-02-23
+* [#1688](https://github.com/stripe/stripe-node/pull/1688) API Updates
+  * Add support for new value `yoursafe` on enums `Charge.payment_method_details.ideal.bank`, `PaymentIntentConfirmParams.payment_method_data.ideal.bank`, `PaymentIntentCreateParams.payment_method_data.ideal.bank`, `PaymentIntentUpdateParams.payment_method_data.ideal.bank`, `PaymentMethod.ideal.bank`, `PaymentMethodCreateParams.ideal.bank`, `SetupAttempt.payment_method_details.ideal.bank`, `SetupIntentConfirmParams.payment_method_data.ideal.bank`, `SetupIntentCreateParams.payment_method_data.ideal.bank`, and `SetupIntentUpdateParams.payment_method_data.ideal.bank`
+  * Add support for new value `BITSNL2A` on enums `Charge.payment_method_details.ideal.bic`, `PaymentMethod.ideal.bic`, and `SetupAttempt.payment_method_details.ideal.bic`
+  * Add support for new value `igst` on enums `TaxRate.tax_type`, `TaxRateCreateParams.tax_type`, and `TaxRateUpdateParams.tax_type`
+* [#1687](https://github.com/stripe/stripe-node/pull/1687) Convert TypeScript files to use ES modules
+
 ## 11.12.0-beta.1 - 2023-02-16
 * [#1686](https://github.com/stripe/stripe-node/pull/1686) API Updates for beta branch
   * Updated stable APIs to the latest version
@@ -8,6 +15,20 @@
   * Change `Quote.status_details.canceled` and `Quote.status_details.stale` to be optional
   * Remove support for `reference` on `Tax.Calculation` and `TaxCalculationCreateParams`
   * Add support for `reference` on `TaxTransactionCreateParams`
+
+## 11.11.0 - 2023-02-16
+* [#1681](https://github.com/stripe/stripe-node/pull/1681) API Updates
+  * Add support for `refund_payment` method on resource `Terminal.Reader`
+  * Add support for new value `name` on enums `BillingPortal.Configuration.features.customer_update.allowed_updates[]`, `BillingPortalConfigurationCreateParams.features.customer_update.allowed_updates[]`, and `BillingPortalConfigurationUpdateParams.features.customer_update.allowed_updates[]`
+  * Add support for `custom_fields` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  * Change `Subscription.trial_settings.end_behavior` and `Subscription.trial_settings` to be required
+  * Add support for `interac_present` on `TerminalReaderPresentPaymentMethodParams.testHelpers`
+  * Change type of `TerminalReaderPresentPaymentMethodParams.testHelpers.type` from `literal('card_present')` to `enum('card_present'|'interac_present')`
+  * Add support for `refund_payment` on `Terminal.Reader.action`
+  * Add support for new value `refund_payment` on enum `Terminal.Reader.action.type`
+* [#1683](https://github.com/stripe/stripe-node/pull/1683) Add NextJS webhook sample
+* [#1685](https://github.com/stripe/stripe-node/pull/1685) Add more webhook parsing checks
+* [#1684](https://github.com/stripe/stripe-node/pull/1684) Add infrastructure for mocked tests
 
 ## 11.11.0-beta.1 - 2023-02-13
 * [#1676](https://github.com/stripe/stripe-node/pull/1676) API Updates for beta branch

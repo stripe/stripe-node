@@ -2,7 +2,7 @@
 
 'use strict';
 
-const StripeResource = require('../../../StripeResource');
+const {StripeResource} = require('../../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({

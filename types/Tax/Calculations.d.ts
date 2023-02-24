@@ -211,6 +211,7 @@ declare module 'stripe' {
             type TaxType =
               | 'gst'
               | 'hst'
+              | 'igst'
               | 'jct'
               | 'pst'
               | 'qst'
