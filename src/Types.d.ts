@@ -4,13 +4,13 @@ type BufferedFile = {name: string; type: string; file: {data: Uint8Array}};
 type HttpClientResponseError = {code: string};
 type MethodSpec = {
   method: string;
-  methodType: string;
-  urlParams: Array<string>;
+  methodType?: string;
+  urlParams?: Array<string>;
   path?: string;
   fullPath?: string;
-  encode: (data: RequestData) => RequestData;
-  validator: (data: RequestData, options: {headers: RequestHeaders}) => void;
-  headers: Record<string, string>;
+  encode?: (data: RequestData) => RequestData;
+  validator?: (data: RequestData, options: {headers: RequestHeaders}) => void;
+  headers?: Record<string, string>;
   streaming?: boolean;
   host?: string;
   transformResponseData?: (response: HttpClientResponseInterface) => any;
@@ -126,7 +126,7 @@ type StripeObject = {
   off: any;
   once: any;
   VERSION: string;
-  StripeResource: typeof StripeResource;
+  StripeResource: StripeResourceConstructor;
   errors: any;
   webhooks: any;
   _prepResources: () => void;
@@ -191,7 +191,6 @@ type StripeRawError = {
 type StripeResourceConstructor = {
   new (stripe: StripeObject, deprecatedUrlData?: never): StripeResourceObject;
 };
-declare const StripeResource: StripeResourceConstructor;
 type StripeResourceNamespaceObject = Record<
   string,
   StripeResourceObject | unknown

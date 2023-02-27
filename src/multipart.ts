@@ -67,7 +67,7 @@ const multipartDataGenerator = (
   return buffer;
 };
 
-function multipartRequestDataProcessor(
+export function multipartRequestDataProcessor(
   this: StripeResourceObject,
   method: string,
   data: RequestData,
@@ -88,7 +88,3 @@ function multipartRequestDataProcessor(
     })
     .catch((err: Error) => callback(err, null));
 }
-
-export = {
-  multipartRequestDataProcessor: multipartRequestDataProcessor,
-};
