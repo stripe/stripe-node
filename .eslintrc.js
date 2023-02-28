@@ -224,7 +224,7 @@ module.exports = {
         before: false,
       },
     ],
-    'sort-imports': 'error',
+    'sort-imports': 'off',
     'sort-keys': 'off',
     'sort-vars': 'error',
     'space-before-blocks': 'error',
