@@ -10,7 +10,7 @@ import {PlatformFunctions} from './platform/PlatformFunctions';
 import {RequestSender} from './RequestSender';
 import {StripeResource} from './StripeResource';
 import {createWebhooks} from './Webhooks';
-const resources = require('./resources');
+import * as resources from './resources';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
