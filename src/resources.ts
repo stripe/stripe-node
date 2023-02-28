@@ -2,127 +2,165 @@
 
 'use strict';
 
-const {resourceNamespace} = require('./ResourceNamespace');
+import {resourceNamespace} from './ResourceNamespace';
 
-module.exports = {
-  // Support Accounts for consistency, Account for backwards compatibility
-  Account: require('./resources/Accounts'),
-  AccountLinks: require('./resources/AccountLinks'),
-  Accounts: require('./resources/Accounts'),
-  ApplePayDomains: require('./resources/ApplePayDomains'),
-  ApplicationFees: require('./resources/ApplicationFees'),
-  Balance: require('./resources/Balance'),
-  BalanceTransactions: require('./resources/BalanceTransactions'),
-  Charges: require('./resources/Charges'),
-  CountrySpecs: require('./resources/CountrySpecs'),
-  Coupons: require('./resources/Coupons'),
-  CreditNotes: require('./resources/CreditNotes'),
-  Customers: require('./resources/Customers'),
-  Disputes: require('./resources/Disputes'),
-  EphemeralKeys: require('./resources/EphemeralKeys'),
-  Events: require('./resources/Events'),
-  ExchangeRates: require('./resources/ExchangeRates'),
-  FileLinks: require('./resources/FileLinks'),
-  Files: require('./resources/Files'),
-  InvoiceItems: require('./resources/InvoiceItems'),
-  Invoices: require('./resources/Invoices'),
-  Mandates: require('./resources/Mandates'),
-  OAuth: require('./resources/OAuth'),
-  PaymentIntents: require('./resources/PaymentIntents'),
-  PaymentLinks: require('./resources/PaymentLinks'),
-  PaymentMethods: require('./resources/PaymentMethods'),
-  Payouts: require('./resources/Payouts'),
-  Plans: require('./resources/Plans'),
-  Prices: require('./resources/Prices'),
-  Products: require('./resources/Products'),
-  PromotionCodes: require('./resources/PromotionCodes'),
-  Quotes: require('./resources/Quotes'),
-  Refunds: require('./resources/Refunds'),
-  Reviews: require('./resources/Reviews'),
-  SetupAttempts: require('./resources/SetupAttempts'),
-  SetupIntents: require('./resources/SetupIntents'),
-  ShippingRates: require('./resources/ShippingRates'),
-  Sources: require('./resources/Sources'),
-  SubscriptionItems: require('./resources/SubscriptionItems'),
-  Subscriptions: require('./resources/Subscriptions'),
-  SubscriptionSchedules: require('./resources/SubscriptionSchedules'),
-  TaxCodes: require('./resources/TaxCodes'),
-  TaxRates: require('./resources/TaxRates'),
-  Tokens: require('./resources/Tokens'),
-  Topups: require('./resources/Topups'),
-  Transfers: require('./resources/Transfers'),
-  WebhookEndpoints: require('./resources/WebhookEndpoints'),
-  Apps: resourceNamespace('apps', {
-    Secrets: require('./resources/Apps/Secrets'),
-  }),
-  BillingPortal: resourceNamespace('billingPortal', {
-    Configurations: require('./resources/BillingPortal/Configurations'),
-    Sessions: require('./resources/BillingPortal/Sessions'),
-  }),
-  Checkout: resourceNamespace('checkout', {
-    Sessions: require('./resources/Checkout/Sessions'),
-  }),
-  FinancialConnections: resourceNamespace('financialConnections', {
-    Accounts: require('./resources/FinancialConnections/Accounts'),
-    Sessions: require('./resources/FinancialConnections/Sessions'),
-  }),
-  Identity: resourceNamespace('identity', {
-    VerificationReports: require('./resources/Identity/VerificationReports'),
-    VerificationSessions: require('./resources/Identity/VerificationSessions'),
-  }),
-  Issuing: resourceNamespace('issuing', {
-    Authorizations: require('./resources/Issuing/Authorizations'),
-    Cardholders: require('./resources/Issuing/Cardholders'),
-    Cards: require('./resources/Issuing/Cards'),
-    Disputes: require('./resources/Issuing/Disputes'),
-    Transactions: require('./resources/Issuing/Transactions'),
-  }),
-  Radar: resourceNamespace('radar', {
-    EarlyFraudWarnings: require('./resources/Radar/EarlyFraudWarnings'),
-    ValueListItems: require('./resources/Radar/ValueListItems'),
-    ValueLists: require('./resources/Radar/ValueLists'),
-  }),
-  Reporting: resourceNamespace('reporting', {
-    ReportRuns: require('./resources/Reporting/ReportRuns'),
-    ReportTypes: require('./resources/Reporting/ReportTypes'),
-  }),
-  Sigma: resourceNamespace('sigma', {
-    ScheduledQueryRuns: require('./resources/Sigma/ScheduledQueryRuns'),
-  }),
+import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts';
+import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations';
+import {Cardholders as IssuingCardholders} from './resources/Issuing/Cardholders';
+import {Cards as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards';
+import {Cards as IssuingCards} from './resources/Issuing/Cards';
+import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations';
+import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations';
+import {ConnectionTokens as TerminalConnectionTokens} from './resources/Terminal/ConnectionTokens';
+import {CreditReversals as TreasuryCreditReversals} from './resources/Treasury/CreditReversals';
+import {Customers as TestHelpersCustomers} from './resources/TestHelpers/Customers';
+import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/DebitReversals';
+import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes';
+import {EarlyFraudWarnings as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings';
+import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts';
+import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers';
+import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers';
+import {Locations as TerminalLocations} from './resources/Terminal/Locations';
+import {OutboundPayments as TestHelpersTreasuryOutboundPayments} from './resources/TestHelpers/Treasury/OutboundPayments';
+import {OutboundPayments as TreasuryOutboundPayments} from './resources/Treasury/OutboundPayments';
+import {OutboundTransfers as TestHelpersTreasuryOutboundTransfers} from './resources/TestHelpers/Treasury/OutboundTransfers';
+import {OutboundTransfers as TreasuryOutboundTransfers} from './resources/Treasury/OutboundTransfers';
+import {Readers as TestHelpersTerminalReaders} from './resources/TestHelpers/Terminal/Readers';
+import {Readers as TerminalReaders} from './resources/Terminal/Readers';
+import {ReceivedCredits as TestHelpersTreasuryReceivedCredits} from './resources/TestHelpers/Treasury/ReceivedCredits';
+import {ReceivedCredits as TreasuryReceivedCredits} from './resources/Treasury/ReceivedCredits';
+import {ReceivedDebits as TestHelpersTreasuryReceivedDebits} from './resources/TestHelpers/Treasury/ReceivedDebits';
+import {ReceivedDebits as TreasuryReceivedDebits} from './resources/Treasury/ReceivedDebits';
+import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds';
+import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns';
+import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes';
+import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns';
+import {Secrets as AppsSecrets} from './resources/Apps/Secrets';
+import {Sessions as BillingPortalSessions} from './resources/BillingPortal/Sessions';
+import {Sessions as CheckoutSessions} from './resources/Checkout/Sessions';
+import {Sessions as FinancialConnectionsSessions} from './resources/FinancialConnections/Sessions';
+import {TestClocks as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks';
+import {TransactionEntries as TreasuryTransactionEntries} from './resources/Treasury/TransactionEntries';
+import {Transactions as IssuingTransactions} from './resources/Issuing/Transactions';
+import {Transactions as TreasuryTransactions} from './resources/Treasury/Transactions';
+import {ValueListItems as RadarValueListItems} from './resources/Radar/ValueListItems';
+import {ValueLists as RadarValueLists} from './resources/Radar/ValueLists';
+import {VerificationReports as IdentityVerificationReports} from './resources/Identity/VerificationReports';
+import {VerificationSessions as IdentityVerificationSessions} from './resources/Identity/VerificationSessions';
+
+export {Accounts as Account} from './resources/Accounts';
+export {OAuth} from './resources/OAuth';
+export {Accounts} from './resources/Accounts';
+export {AccountLinks} from './resources/AccountLinks';
+export {ApplePayDomains} from './resources/ApplePayDomains';
+export {ApplicationFees} from './resources/ApplicationFees';
+export {Balance} from './resources/Balance';
+export {BalanceTransactions} from './resources/BalanceTransactions';
+export {Charges} from './resources/Charges';
+export {CountrySpecs} from './resources/CountrySpecs';
+export {Coupons} from './resources/Coupons';
+export {CreditNotes} from './resources/CreditNotes';
+export {Customers} from './resources/Customers';
+export {Disputes} from './resources/Disputes';
+export {EphemeralKeys} from './resources/EphemeralKeys';
+export {Events} from './resources/Events';
+export {ExchangeRates} from './resources/ExchangeRates';
+export {Files} from './resources/Files';
+export {FileLinks} from './resources/FileLinks';
+export {Invoices} from './resources/Invoices';
+export {InvoiceItems} from './resources/InvoiceItems';
+export {Mandates} from './resources/Mandates';
+export {PaymentIntents} from './resources/PaymentIntents';
+export {PaymentLinks} from './resources/PaymentLinks';
+export {PaymentMethods} from './resources/PaymentMethods';
+export {Payouts} from './resources/Payouts';
+export {Plans} from './resources/Plans';
+export {Prices} from './resources/Prices';
+export {Products} from './resources/Products';
+export {PromotionCodes} from './resources/PromotionCodes';
+export {Quotes} from './resources/Quotes';
+export {Refunds} from './resources/Refunds';
+export {Reviews} from './resources/Reviews';
+export {SetupAttempts} from './resources/SetupAttempts';
+export {SetupIntents} from './resources/SetupIntents';
+export {ShippingRates} from './resources/ShippingRates';
+export {Sources} from './resources/Sources';
+export {Subscriptions} from './resources/Subscriptions';
+export {SubscriptionItems} from './resources/SubscriptionItems';
+export {SubscriptionSchedules} from './resources/SubscriptionSchedules';
+export {TaxCodes} from './resources/TaxCodes';
+export {TaxRates} from './resources/TaxRates';
+export {Tokens} from './resources/Tokens';
+export {Topups} from './resources/Topups';
+export {Transfers} from './resources/Transfers';
+export {WebhookEndpoints} from './resources/WebhookEndpoints';
+
+export const Apps = resourceNamespace('apps', {Secrets: AppsSecrets});
+export const BillingPortal = resourceNamespace('billingPortal', {
+  Configurations: BillingPortalConfigurations,
+  Sessions: BillingPortalSessions,
+});
+export const Checkout = resourceNamespace('checkout', {
+  Sessions: CheckoutSessions,
+});
+export const FinancialConnections = resourceNamespace('financialConnections', {
+  Accounts: FinancialConnectionsAccounts,
+  Sessions: FinancialConnectionsSessions,
+});
+export const Identity = resourceNamespace('identity', {
+  VerificationReports: IdentityVerificationReports,
+  VerificationSessions: IdentityVerificationSessions,
+});
+export const Issuing = resourceNamespace('issuing', {
+  Authorizations: IssuingAuthorizations,
+  Cardholders: IssuingCardholders,
+  Cards: IssuingCards,
+  Disputes: IssuingDisputes,
+  Transactions: IssuingTransactions,
+});
+export const Radar = resourceNamespace('radar', {
+  EarlyFraudWarnings: RadarEarlyFraudWarnings,
+  ValueListItems: RadarValueListItems,
+  ValueLists: RadarValueLists,
+});
+export const Reporting = resourceNamespace('reporting', {
+  ReportRuns: ReportingReportRuns,
+  ReportTypes: ReportingReportTypes,
+});
+export const Sigma = resourceNamespace('sigma', {
+  ScheduledQueryRuns: SigmaScheduledQueryRuns,
+});
+export const Terminal = resourceNamespace('terminal', {
+  Configurations: TerminalConfigurations,
+  ConnectionTokens: TerminalConnectionTokens,
+  Locations: TerminalLocations,
+  Readers: TerminalReaders,
+});
+export const TestHelpers = resourceNamespace('testHelpers', {
+  Customers: TestHelpersCustomers,
+  Refunds: TestHelpersRefunds,
+  TestClocks: TestHelpersTestClocks,
+  Issuing: resourceNamespace('issuing', {Cards: TestHelpersIssuingCards}),
   Terminal: resourceNamespace('terminal', {
-    Configurations: require('./resources/Terminal/Configurations'),
-    ConnectionTokens: require('./resources/Terminal/ConnectionTokens'),
-    Locations: require('./resources/Terminal/Locations'),
-    Readers: require('./resources/Terminal/Readers'),
-  }),
-  TestHelpers: resourceNamespace('testHelpers', {
-    Customers: require('./resources/TestHelpers/Customers'),
-    Refunds: require('./resources/TestHelpers/Refunds'),
-    TestClocks: require('./resources/TestHelpers/TestClocks'),
-    Issuing: resourceNamespace('issuing', {
-      Cards: require('./resources/TestHelpers/Issuing/Cards'),
-    }),
-    Terminal: resourceNamespace('terminal', {
-      Readers: require('./resources/TestHelpers/Terminal/Readers'),
-    }),
-    Treasury: resourceNamespace('treasury', {
-      InboundTransfers: require('./resources/TestHelpers/Treasury/InboundTransfers'),
-      OutboundPayments: require('./resources/TestHelpers/Treasury/OutboundPayments'),
-      OutboundTransfers: require('./resources/TestHelpers/Treasury/OutboundTransfers'),
-      ReceivedCredits: require('./resources/TestHelpers/Treasury/ReceivedCredits'),
-      ReceivedDebits: require('./resources/TestHelpers/Treasury/ReceivedDebits'),
-    }),
+    Readers: TestHelpersTerminalReaders,
   }),
   Treasury: resourceNamespace('treasury', {
-    CreditReversals: require('./resources/Treasury/CreditReversals'),
-    DebitReversals: require('./resources/Treasury/DebitReversals'),
-    FinancialAccounts: require('./resources/Treasury/FinancialAccounts'),
-    InboundTransfers: require('./resources/Treasury/InboundTransfers'),
-    OutboundPayments: require('./resources/Treasury/OutboundPayments'),
-    OutboundTransfers: require('./resources/Treasury/OutboundTransfers'),
-    ReceivedCredits: require('./resources/Treasury/ReceivedCredits'),
-    ReceivedDebits: require('./resources/Treasury/ReceivedDebits'),
-    TransactionEntries: require('./resources/Treasury/TransactionEntries'),
-    Transactions: require('./resources/Treasury/Transactions'),
+    InboundTransfers: TestHelpersTreasuryInboundTransfers,
+    OutboundPayments: TestHelpersTreasuryOutboundPayments,
+    OutboundTransfers: TestHelpersTreasuryOutboundTransfers,
+    ReceivedCredits: TestHelpersTreasuryReceivedCredits,
+    ReceivedDebits: TestHelpersTreasuryReceivedDebits,
   }),
-};
+});
+export const Treasury = resourceNamespace('treasury', {
+  CreditReversals: TreasuryCreditReversals,
+  DebitReversals: TreasuryDebitReversals,
+  FinancialAccounts: TreasuryFinancialAccounts,
+  InboundTransfers: TreasuryInboundTransfers,
+  OutboundPayments: TreasuryOutboundPayments,
+  OutboundTransfers: TreasuryOutboundTransfers,
+  ReceivedCredits: TreasuryReceivedCredits,
+  ReceivedDebits: TreasuryReceivedDebits,
+  TransactionEntries: TreasuryTransactionEntries,
+  Transactions: TreasuryTransactions,
+});

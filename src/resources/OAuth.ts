@@ -9,7 +9,10 @@ const oAuthHost = 'connect.stripe.com';
 export const OAuth = StripeResource.extend({
   basePath: '/',
 
-  authorizeUrl(params: any, options: any) {
+  authorizeUrl(
+    params: OAuthAuthorizeUrlParams,
+    options: OAuthAuthorizeUrlOptions
+  ) {
     params = params || {};
     options = options || {};
 
@@ -41,7 +44,7 @@ export const OAuth = StripeResource.extend({
     host: oAuthHost,
   }),
 
-  deauthorize(spec: any) {
+  deauthorize(spec: OAuthDeauthorizeParams, ...args: any[]) {
     if (!spec.client_id) {
       spec.client_id = this._stripe.getClientId();
     }
@@ -50,6 +53,6 @@ export const OAuth = StripeResource.extend({
       method: 'POST',
       path: 'oauth/deauthorize',
       host: oAuthHost,
-    }).apply(this, arguments as any);
+    }).apply(this, [spec, ...args]);
   },
 });
