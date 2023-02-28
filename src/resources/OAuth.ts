@@ -1,7 +1,8 @@
 'use strict';
 
-import {stringifyRequestData} from '../utils';
 import {StripeResource} from '../StripeResource';
+import {stringifyRequestData} from '../utils';
+
 const stripeMethod = StripeResource.method;
 
 const oAuthHost = 'connect.stripe.com';
