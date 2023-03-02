@@ -1,5 +1,15 @@
 # Changelog
 
+## 11.14.0-beta.1 - 2023-03-02
+* [#1697](https://github.com/stripe/stripe-node/pull/1697) API Updates for beta branch
+  * Updated stable APIs to the latest version
+  * Add support for new resources `Issuing.CardBundle` and `Issuing.CardDesign`
+  * Add support for `list` and `retrieve` methods on resource `CardBundle`
+  * Add support for `list`, `retrieve`, and `update` methods on resource `CardDesign`
+  * Remove support for `controller` on `AccountUpdateParams`
+  * Add support for `card_design` on `Issuing.Card` and `IssuingCardCreateParams`
+  * Add support for new values `issuing_card_design.activated`, `issuing_card_design.deactivated`, and `issuing_card_design.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 11.13.0 - 2023-03-02
 * [#1696](https://github.com/stripe/stripe-node/pull/1696) API Updates
   * Add support for new values `electric_vehicle_charging`, `emergency_services_gcas_visa_use_only`, `government_licensed_horse_dog_racing_us_region_only`, `government_licensed_online_casions_online_gambling_us_region_only`, `government_owned_lotteries_non_us_region`, `government_owned_lotteries_us_region_only`, and `marketplaces` on spending control categories.
@@ -92,7 +102,7 @@
   * Add support for new value `paused` on enum `Subscription.status`
   * Add support for new values `customer.subscription.paused` and `customer.subscription.resumed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
   * Add support for new value `funding_reversed` on enum `CustomerCashBalanceTransaction.type`
-  
+
 * [#1670](https://github.com/stripe/stripe-node/pull/1670) Change default entrypoint to stripe.node
 * [#1668](https://github.com/stripe/stripe-node/pull/1668) Use EventTarget in worker / browser runtimes
 * [#1667](https://github.com/stripe/stripe-node/pull/1667) fix: added support for TypeScript "NodeNext" module resolution
