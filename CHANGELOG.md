@@ -1,5 +1,13 @@
 # Changelog
 
+## 11.13.0 - 2023-03-02
+* [#1696](https://github.com/stripe/stripe-node/pull/1696) API Updates
+  * Add support for new values `electric_vehicle_charging`, `emergency_services_gcas_visa_use_only`, `government_licensed_horse_dog_racing_us_region_only`, `government_licensed_online_casions_online_gambling_us_region_only`, `government_owned_lotteries_non_us_region`, `government_owned_lotteries_us_region_only`, and `marketplaces` on spending control categories.
+  * Add support for `reconciliation_status` on `Payout`
+  * Add support for new value `lease_tax` on enums `TaxRate.tax_type`, `TaxRateCreateParams.tax_type`, and `TaxRateUpdateParams.tax_type`
+
+* [#1689](https://github.com/stripe/stripe-node/pull/1689) Update v11.8.0 changelog with breaking change disclaimer
+
 ## 11.12.0 - 2023-02-23
 * [#1688](https://github.com/stripe/stripe-node/pull/1688) API Updates
   * Add support for new value `yoursafe` on enums `Charge.payment_method_details.ideal.bank`, `PaymentIntentConfirmParams.payment_method_data.ideal.bank`, `PaymentIntentCreateParams.payment_method_data.ideal.bank`, `PaymentIntentUpdateParams.payment_method_data.ideal.bank`, `PaymentMethod.ideal.bank`, `PaymentMethodCreateParams.ideal.bank`, `SetupAttempt.payment_method_details.ideal.bank`, `SetupIntentConfirmParams.payment_method_data.ideal.bank`, `SetupIntentCreateParams.payment_method_data.ideal.bank`, and `SetupIntentUpdateParams.payment_method_data.ideal.bank`
