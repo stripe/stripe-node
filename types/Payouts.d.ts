@@ -105,6 +105,11 @@ declare module 'stripe' {
       original_payout: string | Stripe.Payout | null;
 
       /**
+       * If `completed`, the [Balance Transactions API](https://stripe.com/docs/api/balance_transactions/list#balance_transaction_list-payout) may be used to list all Balance Transactions that were paid out in this payout.
+       */
+      reconciliation_status: Payout.ReconciliationStatus;
+
+      /**
        * If the payout was reversed, this is the ID of the payout that reverses this payout.
        */
       reversed_by: string | Stripe.Payout | null;
@@ -131,6 +136,11 @@ declare module 'stripe' {
     }
 
     namespace Payout {
+      type ReconciliationStatus =
+        | 'completed'
+        | 'in_progress'
+        | 'not_applicable';
+
       type Type = 'bank_account' | 'card';
     }
   }
