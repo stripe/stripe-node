@@ -28,6 +28,11 @@ declare module 'stripe' {
         cancellation_reason: Card.CancellationReason | null;
 
         /**
+         * The card design object belonging to this card.
+         */
+        card_design?: string | Stripe.Issuing.CardDesign | null;
+
+        /**
          * An Issuing `Cardholder` object represents an individual or business entity who is [issued](https://stripe.com/docs/issuing) cards.
          *
          * Related guide: [How to create a Cardholder](https://stripe.com/docs/issuing/cards#create-cardholder)

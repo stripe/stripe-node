@@ -85,6 +85,8 @@ module.exports = {
   }),
   Issuing: resourceNamespace('issuing', {
     Authorizations: require('./resources/Issuing/Authorizations'),
+    CardBundles: require('./resources/Issuing/CardBundles'),
+    CardDesigns: require('./resources/Issuing/CardDesigns'),
     Cardholders: require('./resources/Issuing/Cardholders'),
     Cards: require('./resources/Issuing/Cards'),
     Disputes: require('./resources/Issuing/Disputes'),
@@ -119,6 +121,7 @@ module.exports = {
     Refunds: require('./resources/TestHelpers/Refunds'),
     TestClocks: require('./resources/TestHelpers/TestClocks'),
     Issuing: resourceNamespace('issuing', {
+      CardDesigns: require('./resources/TestHelpers/Issuing/CardDesigns'),
       Cards: require('./resources/TestHelpers/Issuing/Cards'),
     }),
     Terminal: resourceNamespace('terminal', {

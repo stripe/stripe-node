@@ -15,6 +15,11 @@ declare module 'stripe' {
         type: CardCreateParams.Type;
 
         /**
+         * The card design object belonging to this card.
+         */
+        card_design?: string;
+
+        /**
          * The [Cardholder](https://stripe.com/docs/api#issuing_cardholder_object) object with which the card will be associated.
          */
         cardholder?: string;

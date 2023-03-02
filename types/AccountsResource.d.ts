@@ -1337,11 +1337,6 @@ declare module 'stripe' {
       company?: AccountUpdateParams.Company;
 
       /**
-       * The configuration of the account when using unified accounts.
-       */
-      controller?: AccountUpdateParams.Controller;
-
-      /**
        * Three-letter ISO currency code representing the default currency for the account. This must be a currency that [Stripe supports in the account's country](https://stripe.com/docs/payouts).
        */
       default_currency?: string;
@@ -2020,22 +2015,6 @@ declare module 'stripe' {
              */
             front?: string;
           }
-        }
-      }
-
-      interface Controller {
-        /**
-         * Properties of the controlling application.
-         */
-        application?: Controller.Application;
-      }
-
-      namespace Controller {
-        interface Application {
-          /**
-           * A Boolean indicating whether the application has pricing controls for this accounts.
-           */
-          pricing_controls?: boolean;
         }
       }
 
