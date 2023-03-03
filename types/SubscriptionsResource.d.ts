@@ -845,6 +845,15 @@ declare module 'stripe' {
          * This is used to determine the number of billing cycles to prebill.
          */
         iterations: number;
+
+        /**
+         * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+         */
+        update_behavior?: Prebilling.UpdateBehavior;
+      }
+
+      namespace Prebilling {
+        type UpdateBehavior = 'prebill' | 'reset';
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
@@ -926,6 +935,11 @@ declare module 'stripe' {
        * Boolean indicating whether this subscription should cancel at the end of the current period.
        */
       cancel_at_period_end?: boolean;
+
+      /**
+       * Details about why this subscription was cancelled
+       */
+      cancellation_details?: SubscriptionUpdateParams.CancellationDetails;
 
       /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
@@ -1199,6 +1213,30 @@ declare module 'stripe' {
          * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged.
          */
         reset_billing_cycle_anchor?: boolean;
+      }
+
+      interface CancellationDetails {
+        /**
+         * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
+         */
+        comment?: string;
+
+        /**
+         * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
+         */
+        feedback?: Stripe.Emptyable<CancellationDetails.Feedback>;
+      }
+
+      namespace CancellationDetails {
+        type Feedback =
+          | 'customer_service'
+          | 'low_quality'
+          | 'missing_features'
+          | 'other'
+          | 'switched_service'
+          | 'too_complex'
+          | 'too_expensive'
+          | 'unused';
       }
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
@@ -1732,6 +1770,15 @@ declare module 'stripe' {
          * This is used to determine the number of billing cycles to prebill.
          */
         iterations: number;
+
+        /**
+         * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+         */
+        update_behavior?: Prebilling.UpdateBehavior;
+      }
+
+      namespace Prebilling {
+        type UpdateBehavior = 'prebill' | 'reset';
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
@@ -1830,6 +1877,11 @@ declare module 'stripe' {
 
     interface SubscriptionCancelParams {
       /**
+       * Details about why this subscription was cancelled
+       */
+      cancellation_details?: SubscriptionCancelParams.CancellationDetails;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -1845,7 +1897,38 @@ declare module 'stripe' {
       prorate?: boolean;
     }
 
+    namespace SubscriptionCancelParams {
+      interface CancellationDetails {
+        /**
+         * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
+         */
+        comment?: string;
+
+        /**
+         * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
+         */
+        feedback?: Stripe.Emptyable<CancellationDetails.Feedback>;
+      }
+
+      namespace CancellationDetails {
+        type Feedback =
+          | 'customer_service'
+          | 'low_quality'
+          | 'missing_features'
+          | 'other'
+          | 'switched_service'
+          | 'too_complex'
+          | 'too_expensive'
+          | 'unused';
+      }
+    }
+
     interface SubscriptionDeleteParams {
+      /**
+       * Details about why this subscription was cancelled
+       */
+      cancellation_details?: SubscriptionDeleteParams.CancellationDetails;
+
       /**
        * Specifies which fields in the response should be expanded.
        */
@@ -1860,6 +1943,32 @@ declare module 'stripe' {
        * Will generate a proration invoice item that credits remaining unused time until the subscription period end.
        */
       prorate?: boolean;
+    }
+
+    namespace SubscriptionDeleteParams {
+      interface CancellationDetails {
+        /**
+         * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
+         */
+        comment?: string;
+
+        /**
+         * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
+         */
+        feedback?: Stripe.Emptyable<CancellationDetails.Feedback>;
+      }
+
+      namespace CancellationDetails {
+        type Feedback =
+          | 'customer_service'
+          | 'low_quality'
+          | 'missing_features'
+          | 'other'
+          | 'switched_service'
+          | 'too_complex'
+          | 'too_expensive'
+          | 'unused';
+      }
     }
 
     interface SubscriptionDeleteDiscountParams {}

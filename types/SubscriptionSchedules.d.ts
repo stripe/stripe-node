@@ -627,6 +627,15 @@ declare module 'stripe' {
          * The start of the first period for which the invoice pre-bills.
          */
         period_start: number;
+
+        /**
+         * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period.
+         */
+        update_behavior?: Prebilling.UpdateBehavior;
+      }
+
+      namespace Prebilling {
+        type UpdateBehavior = 'prebill' | 'reset';
       }
 
       type Status =
