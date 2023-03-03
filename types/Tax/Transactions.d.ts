@@ -91,10 +91,20 @@ declare module 'stripe' {
            * The customer's tax IDs (e.g., EU VAT numbers).
            */
           tax_ids: Array<CustomerDetails.TaxId>;
+
+          /**
+           * The taxability override used for taxation
+           */
+          taxability_override: CustomerDetails.TaxabilityOverride;
         }
 
         namespace CustomerDetails {
           type AddressSource = 'billing' | 'shipping';
+
+          type TaxabilityOverride =
+            | 'customer_exempt'
+            | 'none'
+            | 'reverse_charge';
 
           interface TaxId {
             /**

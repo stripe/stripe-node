@@ -60,14 +60,14 @@ declare module 'stripe' {
         tax_amount_inclusive: number;
 
         /**
-         * Breakdown of individual tax amounts that add up to the total.
-         */
-        tax_breakdown: Array<Calculation.TaxBreakdown>;
-
-        /**
          * Timestamp of date at which the tax rules and rates in effect applies for the calculation.
          */
         tax_date: number;
+
+        /**
+         * Summary of individual tax amounts that add up to the total.
+         */
+        tax_summary: Array<Calculation.TaxSummary>;
       }
 
       namespace Calculation {
@@ -91,10 +91,20 @@ declare module 'stripe' {
            * The customer's tax IDs (e.g., EU VAT numbers).
            */
           tax_ids: Array<CustomerDetails.TaxId>;
+
+          /**
+           * The taxability override used for taxation
+           */
+          taxability_override: CustomerDetails.TaxabilityOverride;
         }
 
         namespace CustomerDetails {
           type AddressSource = 'billing' | 'shipping';
+
+          type TaxabilityOverride =
+            | 'customer_exempt'
+            | 'none'
+            | 'reverse_charge';
 
           interface TaxId {
             /**
@@ -165,7 +175,7 @@ declare module 'stripe' {
           }
         }
 
-        interface TaxBreakdown {
+        interface TaxSummary {
           /**
            * The amount of tax, in integer cents.
            */
@@ -176,7 +186,7 @@ declare module 'stripe' {
            */
           inclusive: boolean;
 
-          tax_rate_details: TaxBreakdown.TaxRateDetails;
+          tax_rate_details: TaxSummary.TaxRateDetails;
 
           /**
            * The amount on which tax is calculated, in integer cents.
@@ -184,7 +194,7 @@ declare module 'stripe' {
           taxable_amount: number;
         }
 
-        namespace TaxBreakdown {
+        namespace TaxSummary {
           interface TaxRateDetails {
             /**
              * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).

@@ -61,6 +61,11 @@ declare module 'stripe' {
            * The customer's tax IDs.
            */
           tax_ids?: Array<CustomerDetails.TaxId>;
+
+          /**
+           * When `reverse_charge` is provided, the reverse charge rule is applied for taxation. When `customer_exempt` is sent, it treats the customer as tax exempt. Defaults to `none`.
+           */
+          taxability_override?: CustomerDetails.TaxabilityOverride;
         }
 
         namespace CustomerDetails {
@@ -97,6 +102,11 @@ declare module 'stripe' {
           }
 
           type AddressSource = 'billing' | 'shipping';
+
+          type TaxabilityOverride =
+            | 'customer_exempt'
+            | 'none'
+            | 'reverse_charge';
 
           interface TaxId {
             /**

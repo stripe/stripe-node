@@ -707,6 +707,15 @@ declare module 'stripe' {
          * This is used to determine the number of billing cycles to prebill.
          */
         iterations: number;
+
+        /**
+         * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+         */
+        update_behavior?: Prebilling.UpdateBehavior;
+      }
+
+      namespace Prebilling {
+        type UpdateBehavior = 'prebill' | 'reset';
       }
     }
 
@@ -1417,6 +1426,15 @@ declare module 'stripe' {
          * This is used to determine the number of billing cycles to prebill.
          */
         iterations: number;
+
+        /**
+         * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+         */
+        update_behavior?: Prebilling.UpdateBehavior;
+      }
+
+      namespace Prebilling {
+        type UpdateBehavior = 'prebill' | 'reset';
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
@@ -1469,6 +1487,13 @@ declare module 'stripe' {
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
+
+      /**
+       * Provide any time periods to bill in advance.
+       */
+      prebilling?: Stripe.Emptyable<
+        Array<SubscriptionScheduleAmendParams.Prebilling>
+      >;
 
       /**
        * In cases where the amendment changes the currently active phase,
@@ -2019,6 +2044,92 @@ declare module 'stripe' {
             type ProrateUpFront = 'defer' | 'include';
           }
         }
+      }
+
+      interface Prebilling {
+        /**
+         * The beginning of the prebilled time period. The default value is `now`.
+         */
+        bill_from?: Prebilling.BillFrom;
+
+        /**
+         * The end of the prebilled time period.
+         */
+        bill_until?: Prebilling.BillUntil;
+
+        /**
+         * When the prebilling invoice should be created. The default value is `now`.
+         */
+        invoice_at?: 'now';
+
+        /**
+         * Whether to cancel or preserve `prebilling` if the subscription is updated during the prebilled period. The default value is `reset`.
+         */
+        update_behavior?: Prebilling.UpdateBehavior;
+      }
+
+      namespace Prebilling {
+        interface BillFrom {
+          /**
+           * Select one of several ways to pass the `bill_from` value.
+           */
+          type: 'now';
+        }
+
+        interface BillUntil {
+          /**
+           * End the prebilled period when a specified amendment begins.
+           */
+          amendment_end?: BillUntil.AmendmentEnd;
+
+          /**
+           * Time span for prebilling, starting from `bill_from`.
+           */
+          duration?: BillUntil.Duration;
+
+          /**
+           * End the prebilled period at a precise integer timestamp, starting from the Unix epoch.
+           */
+          timestamp?: number;
+
+          /**
+           * Select one of several ways to pass the `bill_until` value.
+           */
+          type: BillUntil.Type;
+        }
+
+        namespace BillUntil {
+          interface AmendmentEnd {
+            /**
+             * The position of the amendment in the `amendments` array at which prebilling should end. Indexes start from 0 and must be less than the total number of supplied amendments.
+             */
+            index: number;
+          }
+
+          interface Duration {
+            /**
+             * Specifies a type of interval unit. Either `day`, `week`, `month` or `year`.
+             */
+            interval: Duration.Interval;
+
+            /**
+             * The number of intervals, as an whole number greater than 0. Stripe multiplies this by the interval type to get the overall duration.
+             */
+            interval_count: number;
+          }
+
+          namespace Duration {
+            type Interval = 'day' | 'month' | 'week' | 'year';
+          }
+
+          type Type =
+            | 'amendment_end'
+            | 'duration'
+            | 'schedule_end'
+            | 'timestamp';
+        }
+
+        type UpdateBehavior = 'prebill' | 'reset';
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
