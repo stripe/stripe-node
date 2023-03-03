@@ -2,7 +2,7 @@
 
 /* eslint-disable callback-return */
 
-const testUtils = require('../testUtils');
+const testUtils = require('./testUtils.js');
 const StripeResource = require('../lib/StripeResource');
 
 const makeAutoPaginationMethods = require('../lib/autoPagination')
