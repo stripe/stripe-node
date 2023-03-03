@@ -166,6 +166,13 @@ declare module 'stripe' {
       invoice?: string;
     }
 
+    interface CreditNoteLineItemListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
     interface CreditNoteListPreviewLineItemsParams extends PaginationParams {
       /**
        * ID of the invoice.
@@ -419,13 +426,6 @@ declare module 'stripe' {
       expand?: Array<string>;
     }
 
-    interface CreditNoteLineItemListParams extends PaginationParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
     class CreditNotesResource {
       /**
        * Issue a credit note to adjust the amount of a finalized invoice. For a status=open invoice, a credit note reduces
@@ -480,6 +480,19 @@ declare module 'stripe' {
       list(options?: RequestOptions): ApiListPromise<Stripe.CreditNote>;
 
       /**
+       * When retrieving a credit note, you'll get a lines property containing the the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
+       */
+      listLineItems(
+        id: string,
+        params?: CreditNoteLineItemListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CreditNoteLineItem>;
+      listLineItems(
+        id: string,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.CreditNoteLineItem>;
+
+      /**
        * When retrieving a credit note preview, you'll get a lines property containing the first handful of those items. This URL you can retrieve the full (paginated) list of line items.
        */
       listPreviewLineItems(
@@ -507,19 +520,6 @@ declare module 'stripe' {
         id: string,
         options?: RequestOptions
       ): Promise<Stripe.Response<Stripe.CreditNote>>;
-
-      /**
-       * When retrieving a credit note, you'll get a lines property containing the the first handful of those items. There is also a URL where you can retrieve the full (paginated) list of line items.
-       */
-      listLineItems(
-        id: string,
-        params?: CreditNoteLineItemListParams,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.CreditNoteLineItem>;
-      listLineItems(
-        id: string,
-        options?: RequestOptions
-      ): ApiListPromise<Stripe.CreditNoteLineItem>;
     }
   }
 }

@@ -2,7 +2,7 @@
 
 'use strict';
 
-const StripeResource = require('../../StripeResource');
+const {StripeResource} = require('../../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
@@ -45,6 +45,11 @@ module.exports = StripeResource.extend({
   processSetupIntent: stripeMethod({
     method: 'POST',
     fullPath: '/v1/terminal/readers/{reader}/process_setup_intent',
+  }),
+
+  refundPayment: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/terminal/readers/{reader}/refund_payment',
   }),
 
   setReaderDisplay: stripeMethod({

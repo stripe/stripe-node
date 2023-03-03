@@ -1,10 +1,17 @@
-import * as utils from './utils';
+import {
+  getDataFromArgs,
+  getOptionsFromArgs,
+  makeURLInterpolator,
+  protoExtend,
+  stringifyRequestData,
+} from './utils';
+import {stripeMethod} from './StripeMethod';
 
 // Provide extension mechanism for Stripe Resource Sub-Classes
-StripeResource.extend = utils.protoExtend;
+StripeResource.extend = protoExtend;
 
 // Expose method-creator
-StripeResource.method = require('./StripeMethod');
+StripeResource.method = stripeMethod;
 
 StripeResource.MAX_BUFFERED_REQUEST_METRICS = 100;
 
@@ -23,14 +30,14 @@ function StripeResource(
     );
   }
 
-  this.basePath = utils.makeURLInterpolator(
+  this.basePath = makeURLInterpolator(
     // @ts-ignore changing type of basePath
     this.basePath || stripe.getApiField('basePath')
   );
   // @ts-ignore changing type of path
   this.resourcePath = this.path;
   // @ts-ignore changing type of path
-  this.path = utils.makeURLInterpolator(this.path);
+  this.path = makeURLInterpolator(this.path);
 
   this.initialize(...arguments);
 }
@@ -109,7 +116,7 @@ StripeResource.prototype = {
     const encode = spec.encode || ((data): RequestData => data);
 
     const isUsingFullPath = !!spec.fullPath;
-    const commandPath: UrlInterpolator = utils.makeURLInterpolator(
+    const commandPath: UrlInterpolator = makeURLInterpolator(
       isUsingFullPath ? spec.fullPath! : spec.path || ''
     );
     // When using fullPath, we ignore the resource path as it should already be
@@ -135,9 +142,9 @@ StripeResource.prototype = {
     }, {});
 
     // Pull request data and options (headers, auth) from args.
-    const dataFromArgs = utils.getDataFromArgs(args);
+    const dataFromArgs = getDataFromArgs(args);
     const data = encode(Object.assign({}, dataFromArgs, overrideData));
-    const options = utils.getOptionsFromArgs(args);
+    const options = getOptionsFromArgs(args);
     const host = options.host || spec.host;
     const streaming = !!spec.streaming;
     // Validate that there are no more args.
@@ -209,7 +216,7 @@ StripeResource.prototype = {
       const path = [
         opts.requestPath,
         emptyQuery ? '' : '?',
-        utils.stringifyRequestData(opts.queryData),
+        stringifyRequestData(opts.queryData),
       ].join('');
 
       const {headers, settings} = opts;
@@ -228,4 +235,4 @@ StripeResource.prototype = {
   },
 } as StripeResourceObject;
 
-export = StripeResource;
+export {StripeResource};

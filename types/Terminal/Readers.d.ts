@@ -95,6 +95,11 @@ declare module 'stripe' {
           process_setup_intent?: Action.ProcessSetupIntent;
 
           /**
+           * Represents a reader action to refund a payment
+           */
+          refund_payment?: Action.RefundPayment;
+
+          /**
            * Represents a reader action to set the reader display
            */
           set_reader_display?: Action.SetReaderDisplay;
@@ -158,6 +163,52 @@ declare module 'stripe' {
             setup_intent: string | Stripe.SetupIntent;
           }
 
+          interface RefundPayment {
+            /**
+             * The amount being refunded.
+             */
+            amount?: number;
+
+            /**
+             * Charge that is being refunded.
+             */
+            charge?: string | Stripe.Charge;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             */
+            metadata?: Stripe.Metadata;
+
+            /**
+             * Payment intent that is being refunded.
+             */
+            payment_intent?: string | Stripe.PaymentIntent;
+
+            /**
+             * The reason for the refund.
+             */
+            reason?: RefundPayment.Reason;
+
+            /**
+             * Unique identifier for the refund object.
+             */
+            refund?: string | Stripe.Refund;
+
+            /**
+             * Boolean indicating whether the application fee should be refunded when refunding this charge. If a full charge refund is given, the full application fee will be refunded. Otherwise, the application fee will be refunded in an amount proportional to the amount of the charge refunded. An application fee can be refunded only by the application that created the charge.
+             */
+            refund_application_fee?: boolean;
+
+            /**
+             * Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). A transfer can be reversed only by the application that created the charge.
+             */
+            reverse_transfer?: boolean;
+          }
+
+          namespace RefundPayment {
+            type Reason = 'duplicate' | 'fraudulent' | 'requested_by_customer';
+          }
+
           interface SetReaderDisplay {
             /**
              * Cart object to be displayed by the reader.
@@ -218,6 +269,7 @@ declare module 'stripe' {
           type Type =
             | 'process_payment_intent'
             | 'process_setup_intent'
+            | 'refund_payment'
             | 'set_reader_display';
         }
 

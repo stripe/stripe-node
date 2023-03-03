@@ -56,7 +56,7 @@ declare module 'stripe' {
       failure_balance_transaction?: string | Stripe.BalanceTransaction;
 
       /**
-       * If the refund failed, the reason for refund failure if known. Possible values are `lost_or_stolen_card`, `expired_or_canceled_card`, or `unknown`.
+       * If the refund failed, the reason for refund failure if known. Possible values are `lost_or_stolen_card`, `expired_or_canceled_card`, `charge_for_pending_refund_disputed`, `insufficient_funds`, `declined`, `merchant_request` or `unknown`.
        */
       failure_reason?: string;
 

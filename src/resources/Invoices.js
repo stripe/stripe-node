@@ -2,7 +2,7 @@
 
 'use strict';
 
-const StripeResource = require('../StripeResource');
+const {StripeResource} = require('../StripeResource');
 const stripeMethod = StripeResource.method;
 
 module.exports = StripeResource.extend({
@@ -35,6 +35,12 @@ module.exports = StripeResource.extend({
   finalizeInvoice: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/finalize',
+  }),
+
+  listLineItems: stripeMethod({
+    method: 'GET',
+    fullPath: '/v1/invoices/{invoice}/lines',
+    methodType: 'list',
   }),
 
   listUpcomingLines: stripeMethod({
@@ -72,11 +78,5 @@ module.exports = StripeResource.extend({
   voidInvoice: stripeMethod({
     method: 'POST',
     fullPath: '/v1/invoices/{invoice}/void',
-  }),
-
-  listLineItems: stripeMethod({
-    method: 'GET',
-    fullPath: '/v1/invoices/{invoice}/lines',
-    methodType: 'list',
   }),
 });

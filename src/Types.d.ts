@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 type AppInfo = {name?: string} & Record<string, unknown>;
 type BufferedFile = {name: string; type: string; file: {data: Uint8Array}};
-type HttpClientResponseError = {code: number};
+type HttpClientResponseError = {code: string};
 type MethodSpec = {
   method: string;
   methodType: string;
@@ -155,7 +155,7 @@ type StripeObject = {
   _requestSender: RequestSender;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
-  _platformFunctions: import('./platform/PlatformFunctions');
+  _platformFunctions: import('./platform/PlatformFunctions').PlatformFunctions;
 };
 type RequestSender = {
   _request(

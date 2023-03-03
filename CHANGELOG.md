@@ -1,5 +1,34 @@
 # Changelog
 
+## 11.13.0 - 2023-03-02
+* [#1696](https://github.com/stripe/stripe-node/pull/1696) API Updates
+  * Add support for new values `electric_vehicle_charging`, `emergency_services_gcas_visa_use_only`, `government_licensed_horse_dog_racing_us_region_only`, `government_licensed_online_casions_online_gambling_us_region_only`, `government_owned_lotteries_non_us_region`, `government_owned_lotteries_us_region_only`, and `marketplaces` on spending control categories.
+  * Add support for `reconciliation_status` on `Payout`
+  * Add support for new value `lease_tax` on enums `TaxRate.tax_type`, `TaxRateCreateParams.tax_type`, and `TaxRateUpdateParams.tax_type`
+
+* [#1689](https://github.com/stripe/stripe-node/pull/1689) Update v11.8.0 changelog with breaking change disclaimer
+
+## 11.12.0 - 2023-02-23
+* [#1688](https://github.com/stripe/stripe-node/pull/1688) API Updates
+  * Add support for new value `yoursafe` on enums `Charge.payment_method_details.ideal.bank`, `PaymentIntentConfirmParams.payment_method_data.ideal.bank`, `PaymentIntentCreateParams.payment_method_data.ideal.bank`, `PaymentIntentUpdateParams.payment_method_data.ideal.bank`, `PaymentMethod.ideal.bank`, `PaymentMethodCreateParams.ideal.bank`, `SetupAttempt.payment_method_details.ideal.bank`, `SetupIntentConfirmParams.payment_method_data.ideal.bank`, `SetupIntentCreateParams.payment_method_data.ideal.bank`, and `SetupIntentUpdateParams.payment_method_data.ideal.bank`
+  * Add support for new value `BITSNL2A` on enums `Charge.payment_method_details.ideal.bic`, `PaymentMethod.ideal.bic`, and `SetupAttempt.payment_method_details.ideal.bic`
+  * Add support for new value `igst` on enums `TaxRate.tax_type`, `TaxRateCreateParams.tax_type`, and `TaxRateUpdateParams.tax_type`
+* [#1687](https://github.com/stripe/stripe-node/pull/1687) Convert TypeScript files to use ES modules
+
+## 11.11.0 - 2023-02-16
+* [#1681](https://github.com/stripe/stripe-node/pull/1681) API Updates
+  * Add support for `refund_payment` method on resource `Terminal.Reader`
+  * Add support for new value `name` on enums `BillingPortal.Configuration.features.customer_update.allowed_updates[]`, `BillingPortalConfigurationCreateParams.features.customer_update.allowed_updates[]`, and `BillingPortalConfigurationUpdateParams.features.customer_update.allowed_updates[]`
+  * Add support for `custom_fields` on `Checkout.Session`, `CheckoutSessionCreateParams`, `PaymentLinkCreateParams`, `PaymentLinkUpdateParams`, and `PaymentLink`
+  * Change `Subscription.trial_settings.end_behavior` and `Subscription.trial_settings` to be required
+  * Add support for `interac_present` on `TerminalReaderPresentPaymentMethodParams.testHelpers`
+  * Change type of `TerminalReaderPresentPaymentMethodParams.testHelpers.type` from `literal('card_present')` to `enum('card_present'|'interac_present')`
+  * Add support for `refund_payment` on `Terminal.Reader.action`
+  * Add support for new value `refund_payment` on enum `Terminal.Reader.action.type`
+* [#1683](https://github.com/stripe/stripe-node/pull/1683) Add NextJS webhook sample
+* [#1685](https://github.com/stripe/stripe-node/pull/1685) Add more webhook parsing checks
+* [#1684](https://github.com/stripe/stripe-node/pull/1684) Add infrastructure for mocked tests
+
 ## 11.10.0 - 2023-02-09
 * [#1679](https://github.com/stripe/stripe-node/pull/1679) Enable library to work in worker environments without extra configuration.
 
@@ -33,6 +62,7 @@
   * Add support for new value `BE` on enums `Checkout.Session.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, `Invoice.payment_settings.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, `PaymentIntent.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`, and `Subscription.payment_settings.payment_method_options.customer_balance.bank_transfer.eu_bank_transfer.country`
   * Add support for new values `cs-CZ`, `el-GR`, `en-CZ`, and `en-GR` on enums `PaymentIntentConfirmParams.payment_method_options.klarna.preferred_locale`, `PaymentIntentCreateParams.payment_method_options.klarna.preferred_locale`, and `PaymentIntentUpdateParams.payment_method_options.klarna.preferred_locale`
 * [#1660](https://github.com/stripe/stripe-node/pull/1660) Introduce separate entry point for worker environments
+  * This is technically a breaking change that explicitly defines package entry points and was mistakenly released in a minor version. If your application previously imported other internal files from stripe-node and this change breaks it, please open an issue detailing your use case.
 
 ## 11.7.0 - 2023-01-19
 * [#1661](https://github.com/stripe/stripe-node/pull/1661) API Updates

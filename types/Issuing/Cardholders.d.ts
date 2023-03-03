@@ -92,6 +92,9 @@ declare module 'stripe' {
         }
 
         interface Individual {
+          /**
+           * Information related to the card_issuing program for this cardholder.
+           */
           card_issuing: Individual.CardIssuing | null;
 
           /**
@@ -100,12 +103,12 @@ declare module 'stripe' {
           dob: Individual.Dob | null;
 
           /**
-           * The first name of this cardholder. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
+           * The first name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           first_name: string | null;
 
           /**
-           * The last name of this cardholder. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
+           * The last name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
            */
           last_name: string | null;
 
@@ -126,12 +129,12 @@ declare module 'stripe' {
           namespace CardIssuing {
             interface UserTermsAcceptance {
               /**
-               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
+               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
                */
               date: number | null;
 
               /**
-               * The IP address from which the cardholder accepted the Authorized User Terms.
+               * The IP address from which the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
                */
               ip: string | null;
 
@@ -340,11 +343,13 @@ declare module 'stripe' {
             | 'eating_places_restaurants'
             | 'educational_services'
             | 'electric_razor_stores'
+            | 'electric_vehicle_charging'
             | 'electrical_parts_and_equipment'
             | 'electrical_services'
             | 'electronics_repair_shops'
             | 'electronics_stores'
             | 'elementary_secondary_schools'
+            | 'emergency_services_gcas_visa_use_only'
             | 'employment_temp_agencies'
             | 'equipment_rental'
             | 'exterminating_services'
@@ -367,6 +372,10 @@ declare module 'stripe' {
             | 'glass_paint_and_wallpaper_stores'
             | 'glassware_crystal_stores'
             | 'golf_courses_public'
+            | 'government_licensed_horse_dog_racing_us_region_only'
+            | 'government_licensed_online_casions_online_gambling_us_region_only'
+            | 'government_owned_lotteries_non_us_region'
+            | 'government_owned_lotteries_us_region_only'
             | 'government_services'
             | 'grocery_stores_supermarkets'
             | 'hardware_equipment_and_supplies'
@@ -393,6 +402,7 @@ declare module 'stripe' {
             | 'lumber_building_materials_stores'
             | 'manual_cash_disburse'
             | 'marinas_service_and_supplies'
+            | 'marketplaces'
             | 'masonry_stonework_and_plaster'
             | 'massage_parlors'
             | 'medical_and_dental_labs'
@@ -630,11 +640,13 @@ declare module 'stripe' {
             | 'eating_places_restaurants'
             | 'educational_services'
             | 'electric_razor_stores'
+            | 'electric_vehicle_charging'
             | 'electrical_parts_and_equipment'
             | 'electrical_services'
             | 'electronics_repair_shops'
             | 'electronics_stores'
             | 'elementary_secondary_schools'
+            | 'emergency_services_gcas_visa_use_only'
             | 'employment_temp_agencies'
             | 'equipment_rental'
             | 'exterminating_services'
@@ -657,6 +669,10 @@ declare module 'stripe' {
             | 'glass_paint_and_wallpaper_stores'
             | 'glassware_crystal_stores'
             | 'golf_courses_public'
+            | 'government_licensed_horse_dog_racing_us_region_only'
+            | 'government_licensed_online_casions_online_gambling_us_region_only'
+            | 'government_owned_lotteries_non_us_region'
+            | 'government_owned_lotteries_us_region_only'
             | 'government_services'
             | 'grocery_stores_supermarkets'
             | 'hardware_equipment_and_supplies'
@@ -683,6 +699,7 @@ declare module 'stripe' {
             | 'lumber_building_materials_stores'
             | 'manual_cash_disburse'
             | 'marinas_service_and_supplies'
+            | 'marketplaces'
             | 'masonry_stonework_and_plaster'
             | 'massage_parlors'
             | 'medical_and_dental_labs'
@@ -938,11 +955,13 @@ declare module 'stripe' {
               | 'eating_places_restaurants'
               | 'educational_services'
               | 'electric_razor_stores'
+              | 'electric_vehicle_charging'
               | 'electrical_parts_and_equipment'
               | 'electrical_services'
               | 'electronics_repair_shops'
               | 'electronics_stores'
               | 'elementary_secondary_schools'
+              | 'emergency_services_gcas_visa_use_only'
               | 'employment_temp_agencies'
               | 'equipment_rental'
               | 'exterminating_services'
@@ -965,6 +984,10 @@ declare module 'stripe' {
               | 'glass_paint_and_wallpaper_stores'
               | 'glassware_crystal_stores'
               | 'golf_courses_public'
+              | 'government_licensed_horse_dog_racing_us_region_only'
+              | 'government_licensed_online_casions_online_gambling_us_region_only'
+              | 'government_owned_lotteries_non_us_region'
+              | 'government_owned_lotteries_us_region_only'
               | 'government_services'
               | 'grocery_stores_supermarkets'
               | 'hardware_equipment_and_supplies'
@@ -991,6 +1014,7 @@ declare module 'stripe' {
               | 'lumber_building_materials_stores'
               | 'manual_cash_disburse'
               | 'marinas_service_and_supplies'
+              | 'marketplaces'
               | 'masonry_stonework_and_plaster'
               | 'massage_parlors'
               | 'medical_and_dental_labs'
