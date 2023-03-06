@@ -2,9 +2,9 @@
 
 const nock = require('nock');
 
-const stripe = require('../testUtils').getSpyableStripe();
+const stripe = require('./testUtils.js').getSpyableStripe();
 const expect = require('chai').expect;
-const testUtils = require('../testUtils');
+const testUtils = require('./testUtils.js');
 
 const {StripeResource} = require('../lib/StripeResource');
 const stripeMethod = StripeResource.method;

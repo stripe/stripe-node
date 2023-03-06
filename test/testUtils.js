@@ -289,10 +289,6 @@ const utils = (module.exports = {
       .slice(2);
   },
 
-  envSupportsForAwait: () => {
-    return typeof Symbol !== 'undefined' && Symbol.asyncIterator;
-  },
-
   FakeCryptoProvider: class extends CryptoProvider {
     computeHMACSignature(payload, secret) {
       return 'fake signature';

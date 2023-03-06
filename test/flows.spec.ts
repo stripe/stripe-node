@@ -1,6 +1,6 @@
 'use strict';
 
-const testUtils = require('../testUtils');
+const testUtils = require('./testUtils.js');
 const chai = require('chai');
 const stripe = require('../lib/stripe.node')(
   testUtils.getUserStripeKey(),
