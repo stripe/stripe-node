@@ -2,7 +2,7 @@
 
 'use strict';
 
-const testUtils = require('../../testUtils');
+const testUtils = require('../testUtils.js');
 const stripe = testUtils.getStripeMockClient();
 const expect = require('chai').expect;
 

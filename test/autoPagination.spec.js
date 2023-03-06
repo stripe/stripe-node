@@ -357,7 +357,7 @@ describe('auto pagination', function() {
 
         return expect(
           new Promise((resolve, reject) => {
-            (paginator.for, TOTAL_OBJECTS + 1)
+            forAwaitUntil(paginator, TOTAL_OBJECTS + 1)
               .then((customers) => {
                 resolve(customers.map((customer) => customer.id));
               })
