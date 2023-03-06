@@ -18,12 +18,6 @@ module.exports = {
         allowSingleLine: true,
       },
     ],
-    camelcase: [
-      'error',
-      {
-        properties: 'never',
-      },
-    ],
     'capitalized-comments': 'off',
     'class-methods-use-this': 'off',
     'comma-dangle': 'off',
@@ -224,7 +218,7 @@ module.exports = {
         before: false,
       },
     ],
-    'sort-imports': 'error',
+    'sort-imports': 'off',
     'sort-keys': 'off',
     'sort-vars': 'error',
     'space-before-blocks': 'error',
@@ -267,7 +261,18 @@ module.exports = {
         '@typescript-eslint/triple-slash-reference': 0,
         '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/no-empty-function': 0,
-        '@typescript-eslint/camelcase': 0,
+        '@typescript-eslint/naming-convention': [
+          'error',
+          {
+            selector: 'default',
+            format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+            leadingUnderscore: 'allow',
+          },
+          {
+            selector: 'property',
+            format: null,
+          },
+        ],
         '@typescript-eslint/no-explicit-any': 0,
         '@typescript-eslint/explicit-function-return-type': 'error',
         '@typescript-eslint/no-var-requires': 0,
