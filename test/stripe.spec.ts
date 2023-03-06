@@ -5,7 +5,7 @@
 import {FetchHttpClient} from '../lib/net/FetchHttpClient';
 import {NodeHttpClient} from '../lib/net/NodeHttpClient';
 import {createStripe} from '../lib/stripe.common';
-import {getMockPlatformFunctions} from '../testUtils';
+import {getMockPlatformFunctions} from './testUtils.js';
 
 const testUtils = require('./testUtils.js');
 const Stripe = require('../lib/stripe.node');
