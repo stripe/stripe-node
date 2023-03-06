@@ -16,7 +16,7 @@ function ResourceNamespace(
 
 export function resourceNamespace(
   namespace: string,
-  resources: Record<string, any>
+  resources: Record<string, (...args: any[]) => void>
 ): (stripe: StripeObject) => StripeResourceNamespaceObject {
   return function(stripe: StripeObject): StripeResourceNamespaceObject {
     return new (ResourceNamespace as any)(stripe, resources);

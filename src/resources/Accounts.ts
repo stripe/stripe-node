@@ -12,7 +12,7 @@ export const Accounts = StripeResource.extend({
     fullPath: '/v1/accounts',
   }),
 
-  retrieve(id: string | null | undefined, ...args: any[]) {
+  retrieve(id: string, ...args: any[]) {
     // No longer allow an api key to be passed as the first string to this function due to ambiguity between
     // old account ids and api keys. To request the account for an api key, send null as the id
     if (typeof id === 'string') {

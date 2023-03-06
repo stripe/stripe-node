@@ -3,6 +3,18 @@
 import {StripeResource} from '../StripeResource';
 import {stringifyRequestData} from '../utils';
 
+type OAuthAuthorizeUrlParams = {
+  response_type?: 'code';
+  client_id?: string;
+  scope?: string;
+};
+type OAuthAuthorizeUrlOptions = {
+  express?: boolean;
+};
+type OAuthDeauthorizeParams = {
+  client_id?: string;
+};
+
 const stripeMethod = StripeResource.method;
 
 const oAuthHost = 'connect.stripe.com';

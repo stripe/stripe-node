@@ -240,14 +240,3 @@ type UserProvidedConfig = {
   telemetry?: boolean;
   appInfo?: AppInfo;
 };
-type OAuthAuthorizeUrlParams = {
-  response_type?: 'code';
-  client_id?: string;
-  scope?: string;
-};
-type OAuthAuthorizeUrlOptions = {
-  express?: boolean;
-};
-type OAuthDeauthorizeParams = {
-  client_id?: string;
-};
