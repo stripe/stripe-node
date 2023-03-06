@@ -2,7 +2,7 @@
 
 /* eslint-disable callback-return */
 
-const testUtils = require('../testUtils');
+const testUtils = require('./testUtils.js');
 const {StripeResource} = require('../lib/StripeResource');
 
 const {makeAutoPaginationMethods} = require('../lib/autoPagination');
@@ -305,42 +305,67 @@ describe('auto pagination', function() {
     });
 
     describe('async iterators', () => {
-      if (testUtils.envSupportsForAwait()) {
-        // `for await` throws a syntax error everywhere but node 10,
-        // so we must conditionally require it.
-        const forAwaitUntil = require('../testUtils/forAwait.node10')
-          .forAwaitUntil;
-
-        it('works with `for await` when that feature exists (user break)', () => {
-          const {paginator} = mockPagination(ID_PAGES, {});
-
-          return expect(
-            new Promise((resolve, reject) => {
-              forAwaitUntil(paginator, LIMIT)
-                .then((customers) => {
-                  resolve(customers.map((customer) => customer.id));
-                })
-                .catch(reject);
-            })
-          ).to.eventually.deep.equal(OBJECT_IDS.slice(0, LIMIT));
-        });
-
-        it('works with `for await` when that feature exists (end of list)', () => {
-          const {paginator} = mockPagination(ID_PAGES, {});
-
-          return expect(
-            new Promise((resolve, reject) => {
-              forAwaitUntil(paginator, TOTAL_OBJECTS + 1)
-                .then((customers) => {
-                  resolve(customers.map((customer) => customer.id));
-                })
-                .catch(reject);
-            })
-          ).to.eventually.deep.equal(OBJECT_IDS);
-        });
+      async function awaitUntil(iterator, limit) {
+        const items = [];
+        while (true) {
+          // eslint-disable-next-line no-await-in-loop
+          const {value, done} = await iterator.next();
+          if (done) {
+            break;
+          }
+          items.push(value);
+          if (items.length === limit) {
+            break;
+          }
+          if (items.length > limit) {
+            throw Error('Kept iterating after break.');
+          }
+        }
+        return items;
       }
 
-      const awaitUntil = require('../testUtils/await.node7').awaitUntil;
+      async function forAwaitUntil(iterator, limit) {
+        const items = [];
+        for await (const item of iterator) {
+          items.push(item);
+          if (items.length === limit) {
+            break;
+          }
+          if (items.length > limit) {
+            throw Error('Kept iterating after break.');
+          }
+        }
+        return items;
+      }
+
+      it('works with `for await` when that feature exists (user break)', () => {
+        const {paginator} = mockPagination(ID_PAGES, {});
+
+        return expect(
+          new Promise((resolve, reject) => {
+            forAwaitUntil(paginator, LIMIT)
+              .then((customers) => {
+                resolve(customers.map((customer) => customer.id));
+              })
+              .catch(reject);
+          })
+        ).to.eventually.deep.equal(OBJECT_IDS.slice(0, LIMIT));
+      });
+
+      it('works with `for await` when that feature exists (end of list)', () => {
+        const {paginator} = mockPagination(ID_PAGES, {});
+
+        return expect(
+          new Promise((resolve, reject) => {
+            forAwaitUntil(paginator, TOTAL_OBJECTS + 1)
+              .then((customers) => {
+                resolve(customers.map((customer) => customer.id));
+              })
+              .catch(reject);
+          })
+        ).to.eventually.deep.equal(OBJECT_IDS);
+      });
+
       it('works with `await` and a while loop when await exists', () => {
         const {paginator} = mockPagination(ID_PAGES, {});
 

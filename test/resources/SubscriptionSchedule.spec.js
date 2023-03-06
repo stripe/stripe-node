@@ -1,6 +1,6 @@
 'use strict';
 
-const stripe = require('../../testUtils').getSpyableStripe();
+const stripe = require('../testUtils.js').getSpyableStripe();
 const expect = require('chai').expect;
 
 const SCHEDULE_TEST_ID = 'sub_sched_123';

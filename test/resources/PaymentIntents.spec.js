@@ -1,6 +1,6 @@
 'use strict';
 
-const stripe = require('../../testUtils').getSpyableStripe();
+const stripe = require('../testUtils.js').getSpyableStripe();
 const expect = require('chai').expect;
 
 const PAYMENT_INTENT_TEST_ID = 'pi_123';
