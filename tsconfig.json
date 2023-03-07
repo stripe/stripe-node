@@ -3,7 +3,7 @@
     "outDir": "./lib",
     "allowJs": true,
     "target": "es2017",
-    "module": "commonjs",
+    "module": "ES2020",
     "checkJs": false,
     "alwaysStrict": true,
     "noImplicitAny": true,
@@ -12,5 +12,10 @@
     "strictFunctionTypes": true,
     "types": [ "node" ]
   },
+  // "ts-node": {
+  //   "compilerOptions": {
+  //     "module": "CommonJS"
+  //   }
+  // },
   "include": ["./src/**/*"]
 }

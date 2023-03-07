@@ -2,7 +2,7 @@
 
 'use strict';
 
-import {StripeResource} from '../../StripeResource';
+import {StripeResource} from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
 
 export const VerificationReports = StripeResource.extend({

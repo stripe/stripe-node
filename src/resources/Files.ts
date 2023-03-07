@@ -2,8 +2,8 @@
 
 'use strict';
 
-import {multipartRequestDataProcessor} from '../multipart';
-import {StripeResource} from '../StripeResource';
+import {multipartRequestDataProcessor} from '../multipart.js';
+import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 
 export const Files = StripeResource.extend({

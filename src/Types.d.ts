@@ -155,7 +155,7 @@ type StripeObject = {
   _requestSender: RequestSender;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
-  _platformFunctions: import('./platform/PlatformFunctions').PlatformFunctions;
+  _platformFunctions: import('./platform/PlatformFunctions.js').PlatformFunctions;
 };
 type RequestSender = {
   _request(

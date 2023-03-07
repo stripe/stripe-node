@@ -1,4 +1,4 @@
-import {HttpClient, HttpClientResponse} from './HttpClient';
+import {HttpClient, HttpClientResponse} from './HttpClient.js';
 
 /**
  * HTTP client which uses a `fetch` function to issue requests.

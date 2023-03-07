@@ -1,16 +1,17 @@
-import * as _Error from './Error';
-import * as resources from './resources';
-import {HttpClient, HttpClientResponse} from './net/HttpClient';
+import * as _Error from './Error.js';
+import * as resources from './resources.js';
+import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {
   determineProcessUserAgentProperties,
   pascalToCamelCase,
   validateInteger,
-} from './utils';
-import {CryptoProvider} from './crypto/CryptoProvider';
-import {PlatformFunctions} from './platform/PlatformFunctions';
-import {RequestSender} from './RequestSender';
-import {StripeResource} from './StripeResource';
-import {createWebhooks} from './Webhooks';
+} from './utils.js';
+import {CryptoProvider} from './crypto/CryptoProvider.js';
+import {PlatformFunctions} from './platform/PlatformFunctions.js';
+import {RequestSender} from './RequestSender.js';
+import {StripeResource} from './StripeResource.js';
+import {createWebhooks} from './Webhooks.js';
+import {createRequire} from 'module'; // TODO: will need to add another implementation for this
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -47,7 +48,9 @@ export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
-  Stripe.PACKAGE_VERSION = require('../package.json').version;
+  const require = createRequire(import.meta.url);
+  const data = require('../package.json');
+  Stripe.PACKAGE_VERSION = data.version;
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
