@@ -11,7 +11,7 @@ import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
 import {createWebhooks} from './Webhooks.js';
-import {createRequire} from 'module'; // TODO: will need to add another implementation for this
+import {version} from './version.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -48,9 +48,7 @@ export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
-  const require = createRequire(import.meta.url);
-  const data = require('../package.json');
-  Stripe.PACKAGE_VERSION = data.version;
+  Stripe.PACKAGE_VERSION = version;
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
