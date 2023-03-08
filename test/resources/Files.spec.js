@@ -1,12 +1,9 @@
 'use strict';
 
-import utils from '../testUtils.js';
-const stripe = utils.getSpyableStripe();
-import {expect} from 'chai';
-import fs from 'fs';
-import path from 'path';
-import * as url from 'url';
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
+const stripe = require('../testUtils.js').getSpyableStripe();
+const expect = require('chai').expect;
+const fs = require('fs');
+const path = require('path');
 
 const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';
 

@@ -2,10 +2,8 @@
 
 // Resource integration tests which use stripe-mock.
 
-
-import utils from '../testUtils.js';
-const stripe = utils.getStripeMockClient();
-import {expect} from 'chai';
+const stripe = require('../testUtils.js').getStripeMockClient();
+const expect = require('chai').expect;
 
 describe('Customers Resource', () => {
   describe('retrieve', () => {

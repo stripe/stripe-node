@@ -1,8 +1,10 @@
+// @ts-nocheck
+
 'use strict';
 
-import _testUtils from './testUtils.js';
+require('./testUtils.js');
 
-import * as Error from '../lib/Error.js';
+import * as Error from '../src/Error';
 import {expect} from 'chai';
 
 describe('Error', () => {

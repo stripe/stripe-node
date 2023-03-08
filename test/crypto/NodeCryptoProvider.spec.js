@@ -1,8 +1,8 @@
 'use strict';
 
-import {NodeCryptoProvider} from '../../lib/crypto/NodeCryptoProvider.js';
+const {NodeCryptoProvider} = require('../../cjs/crypto/NodeCryptoProvider');
 
-import {createCryptoProviderTestSuite} from './helpers.js';
+const {createCryptoProviderTestSuite} = require('./helpers');
 
 describe('NodeCryptoProvider', () => {
   createCryptoProviderTestSuite(new NodeCryptoProvider());

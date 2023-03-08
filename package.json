@@ -2,7 +2,7 @@
   "name": "stripe",
   "version": "11.13.0",
   "description": "Stripe API wrapper",
-  "type": "module",
+  "sideEffects": false,
   "keywords": [
     "stripe",
     "payment processing",

@@ -2,7 +2,7 @@
 
 import * as childProcess from 'child_process';
 
-import testUtils from './testUtils.js';
+const testUtils = require('./testUtils.js');
 
 describe('Integration test', function() {
   this.timeout(50000);

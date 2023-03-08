@@ -1,10 +1,8 @@
 'use strict';
 
-import utils from '../../testUtils.js';
-const {getSpyableStripe} = utils;
-const stripe = getSpyableStripe();
+const stripe = require('../../testUtils.js').getSpyableStripe();
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Checkout', () => {
   describe('Sessions Resource', () => {

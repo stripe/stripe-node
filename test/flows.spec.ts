@@ -1,17 +1,15 @@
-// @ts-nocheck
-
 'use strict';
 
-import testUtils from './testUtils.js';
-import fs from 'fs';
-import path from 'path';
-import stream from 'stream';
-import {expect} from 'chai';
-import * as url from 'url';
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-
-import Stripe from '../lib/stripe.node.js';
-const stripe = new Stripe(testUtils.getUserStripeKey(), 'latest');
+const testUtils = require('./testUtils.js');
+const chai = require('chai');
+const stripe = require('../cjs/stripe.node')(
+  testUtils.getUserStripeKey(),
+  'latest'
+);
+const fs = require('fs');
+const path = require('path');
+const stream = require('stream');
+const expect = chai.expect;
 
 const CUSTOMER_DETAILS = {
   description: 'Some customer',

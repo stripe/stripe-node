@@ -1,9 +1,8 @@
 'use strict';
 
-import utils from '../testUtils.js';
-const stripe = utils.getSpyableStripe();
-import testUtils from '../testUtils.js';
-import {expect} from 'chai';
+const stripe = require('../testUtils.js').getSpyableStripe();
+const testUtils = require('../testUtils.js');
+const expect = require('chai').expect;
 
 const QUOTE_TEST_ID = 'qt_123';
 

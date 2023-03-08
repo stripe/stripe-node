@@ -1,16 +1,16 @@
 'use strict';
 
-import {expect} from 'chai';
-import fetch from 'node-fetch';
-import nock from 'nock';
-import {Readable} from 'stream';
-import { FetchHttpClient } from '../../lib/net/FetchHttpClient.js';
-import {createHttpClientTestSuite, ArrayReadable} from './helpers.js';
+const expect = require('chai').expect;
+const fetch = require('node-fetch');
+const nock = require('nock');
+const {Readable} = require('stream');
+const {FetchHttpClient} = require('../../cjs/net/FetchHttpClient');
 
 const createFetchHttpClient = () => {
   return new FetchHttpClient(fetch);
 };
 
+const {createHttpClientTestSuite, ArrayReadable} = require('./helpers');
 
 describe('FetchHttpClient', () => {
   createHttpClientTestSuite(createFetchHttpClient, (setupNock, sendRequest) => {

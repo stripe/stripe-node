@@ -1,21 +1,19 @@
-import _testUtils from './testUtils.js';
+'use strict';
+
+require('./testUtils.js');
 
 import * as fs from 'fs';
 import * as path from 'path';
 
-import {FetchHttpClient} from '../lib/net/FetchHttpClient.js';
-import {NodeCryptoProvider} from '../lib/crypto/NodeCryptoProvider.js';
-import {NodeHttpClient} from '../lib/net/NodeHttpClient.js';
-import {NodePlatformFunctions} from '../lib/platform/NodePlatformFunctions.js';
-import {PlatformFunctions} from '../lib/platform/PlatformFunctions.js';
-import {SubtleCryptoProvider} from '../lib/crypto/SubtleCryptoProvider.js';
+import {FetchHttpClient} from '../cjs/net/FetchHttpClient';
+import {NodeCryptoProvider} from '../cjs/crypto/NodeCryptoProvider';
+import {NodeHttpClient} from '../cjs/net/NodeHttpClient';
+import {NodePlatformFunctions} from '../cjs/platform/NodePlatformFunctions';
+import {PlatformFunctions} from '../cjs/platform/PlatformFunctions';
+import {SubtleCryptoProvider} from '../cjs/crypto/SubtleCryptoProvider';
 
 import {expect} from 'chai';
-import * as crypto from 'crypto';
-import * as url from 'url';
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-
-const {webcrypto} = crypto;
+import {webcrypto} from 'crypto';
 
 if (process.versions.node < '15') {
   console.log(
@@ -23,7 +21,7 @@ if (process.versions.node < '15') {
   );
 } else {
   import(
-    '../lib/platform/WebPlatformFunctions'
+    '../cjs/platform/WebPlatformFunctions'
   ).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
 }
 
@@ -34,7 +32,8 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
 
   describe(`${platformFunctions.constructor.name}`, () => {
     describe('uuid', () => {
-      describe('should use crypto.randomUUID if it exists', async () => {
+      describe('should use crypto.randomUUID if it exists', () => {
+        const crypto = require('crypto');
         let randomUUID$;
         let called;
         beforeEach(() => {
@@ -43,7 +42,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
           if (isNodeEnvironment && crypto.randomUUID) {
             called = false;
             randomUUID$ = crypto.randomUUID;
-            // @ts-ignore
             crypto.randomUUID = (): string => {
               called = true;
               return 'no, YOU you id';
@@ -52,7 +50,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         });
         afterEach(() => {
           if (randomUUID$) {
-            // @ts-ignore
             crypto.randomUUID = randomUUID$;
           }
         });
@@ -64,7 +61,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
         });
 
         it('returns a valid v4 UUID without it', () => {
-          // @ts-ignore
           crypto.randomUUID = null;
           expect(platformFunctions.uuid4()).to.match(
             // regex from https://createuuid.com/validator/, specifically for v4
@@ -109,21 +105,20 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
       });
     });
 
-    describe('secureCompare without crypto.timingSafeEqual', async () => {
+    describe('secureCompare without crypto.timingSafeEqual', () => {
+      const crypto = require('crypto');
       let timingSafeEqual$;
       beforeEach(() => {
         // if it's available, mock it and ensure it's called
         // otherwise, skip this whole operation
         if (isNodeEnvironment && crypto.timingSafeEqual) {
           timingSafeEqual$ = crypto.timingSafeEqual;
-          // @ts-ignore
           crypto.timingSafeEqual = null;
         }
       });
 
       afterEach(() => {
         if (timingSafeEqual$) {
-          // @ts-ignore
           crypto.timingSafeEqual = timingSafeEqual$;
         }
       });
@@ -160,7 +155,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
       });
       afterEach(() => {
         platformFunctions.getUname = origGetUname;
-        // @ts-ignore
         platformFunctions._UNAME_CACHE = null;
       });
 
@@ -175,7 +169,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
 
       it('runs exec', async () => {
         const calls: any[] = [];
-        // @ts-ignore
         platformFunctions._exec = (cmd: string, cb: any): void => {
           calls.push([cmd]);
           cb();
@@ -187,7 +180,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
 
       it('passes along normal errors', async () => {
         const myErr = Error('hi');
-        // @ts-ignore
         platformFunctions._exec = (cmd: string, cb: any): void => {
           cb(myErr, null);
         };
@@ -197,7 +189,6 @@ function testPlatform(platformFunctions: PlatformFunctions): void {
 
       it('passes along thrown errors as normal callback errors', async () => {
         const myErr = Error('hi');
-        // @ts-ignore
         platformFunctions._exec = (cmd: string, cb: any): void => {
           throw myErr;
         };

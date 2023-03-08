@@ -3,6 +3,7 @@
     "outDir": "./cjs",
     "target": "es2017",
     "module": "commonjs",
+		"moduleResolution": "node",
     "checkJs": false,
     "alwaysStrict": true,
     "noImplicitAny": true,
@@ -10,12 +11,6 @@
     "strict": true,
     "strictFunctionTypes": true,
     "types": [ "node", "mocha" ]
-  },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS",
-      "transpileOnly": true
-    }
   },
   "include": ["./src/**/*"]
 }

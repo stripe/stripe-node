@@ -1,9 +1,8 @@
 'use strict';
 
-import utils from '../../../testUtils.js';
-const stripe = utils.getSpyableStripe();
+const stripe = require('../../../testUtils.js').getSpyableStripe();
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 describe('Terminal', () => {
   describe('Readers Resource', () => {

@@ -11,11 +11,5 @@
     "strictFunctionTypes": true,
     "types": [ "node", "mocha"]
   },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS",
-      "transpileOnly": true
-    }
-  },
   "include": ["./src/**/*"]
 }

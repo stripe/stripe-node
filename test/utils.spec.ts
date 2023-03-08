@@ -1,8 +1,8 @@
 'use strict';
 
-import _testUtils from './testUtils.js';
+require('./testUtils.js');
 
-import * as utils from '../lib/utils.js';
+import * as utils from '../cjs/utils';
 import {expect} from 'chai';
 
 describe('utils', () => {

@@ -1,6 +1,6 @@
 'use strict';
 
-import {expect} from 'chai';
+const expect = require('chai').expect;
 
 const SECRET = 'test_secret';
 
@@ -8,7 +8,7 @@ const SECRET = 'test_secret';
  * Test runner which runs a common set of tests for a given CryptoProvider to
  * make sure it satisfies the expected contract.
  */
-export const createCryptoProviderTestSuite = (cryptoProvider, isAsyncOnly = false) => {
+const createCryptoProviderTestSuite = (cryptoProvider, isAsyncOnly = false) => {
   const testCases = [
     {
       caseName: 'empty payload',
@@ -56,3 +56,5 @@ export const createCryptoProviderTestSuite = (cryptoProvider, isAsyncOnly = fals
     });
   });
 };
+
+module.exports = {createCryptoProviderTestSuite};

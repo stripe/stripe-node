@@ -1,9 +1,7 @@
 'use strict';
 
-import utils from '../../testUtils.js';
-const {getSpyableStripe} = utils;
-const stripe = getSpyableStripe();
-import {expect} from 'chai';
+const stripe = require('../../testUtils.js').getSpyableStripe();
+const expect = require('chai').expect;
 
 describe('Identity', () => {
   describe('VerificationReport Resource', () => {
