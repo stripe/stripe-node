@@ -1,7 +1,8 @@
 'use strict';
 
-const stripe = require('../testUtils.js').getSpyableStripe();
-const expect = require('chai').expect;
+import utils from '../testUtils.js';
+const stripe = utils.getSpyableStripe();
+import {expect} from 'chai';
 
 const MANDATE_TEST_ID = 'mandate_123';
 

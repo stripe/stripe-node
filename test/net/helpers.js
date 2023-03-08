@@ -1,18 +1,16 @@
 'use strict';
 
-const {Readable} = require('stream');
-
-const nock = require('nock');
-const expect = require('chai').expect;
-
-const utils = require('../../lib/utils');
-const {fail} = require('assert');
+import {Readable} from 'stream';
+import nock from 'nock';
+import {expect} from 'chai';
+import {stringifyRequestData} from '../../lib/utils.js';
+import {fail} from 'assert';
 
 /**
  * Readable stream which will emit a data event for each value in the array
  * passed. Readable.from accomplishes this beyond Node 10.17.
  */
-class ArrayReadable extends Readable {
+export class ArrayReadable extends Readable {
   constructor(values) {
     super();
     this._index = 0;
@@ -39,7 +37,7 @@ class ArrayReadable extends Readable {
  * This can be configured to run extra tests, providing the nock setup function
  * and request function for those tests.
  */
-const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
+export const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
   describe('HttpClientTestSuite', () => {
     const setupNock = () => {
       return nock('http://stripe.com').get('/test');
@@ -101,7 +99,7 @@ const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
       });
 
       it('sends request data (POST)', (done) => {
-        const expectedData = utils.stringifyRequestData({id: 'test'});
+        const expectedData = stringifyRequestData({id: 'test'});
 
         nock('http://stripe.com')
           .post('/test')
@@ -181,5 +179,3 @@ const createHttpClientTestSuite = (createHttpClientFn, extraTestsFn) => {
     extraTestsFn(setupNock, sendRequest);
   });
 };
-
-module.exports = {createHttpClientTestSuite, ArrayReadable};

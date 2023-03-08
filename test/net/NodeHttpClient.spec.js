@@ -1,11 +1,11 @@
 'use strict';
 
-const http = require('http');
-const expect = require('chai').expect;
+import http from 'http';
+import {expect} from 'chai';
+import  {createHttpClientTestSuite, ArrayReadable} from './helpers.js';
 
-const {createNodeHttpClient} = require('../../lib/stripe.node');
-
-const {createHttpClientTestSuite, ArrayReadable} = require('./helpers');
+import Stripe from '../../lib/stripe.node.js';
+const {createNodeHttpClient} = Stripe;
 
 describe('NodeHttpClient', () => {
   createHttpClientTestSuite(createNodeHttpClient, (setupNock, sendRequest) => {

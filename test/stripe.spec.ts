@@ -1,21 +1,15 @@
 /* eslint-disable new-cap */
-
+// @ts-nocheck
 'use strict';
 
-import {FetchHttpClient} from '../lib/net/FetchHttpClient';
-import {NodeHttpClient} from '../lib/net/NodeHttpClient';
-import {createStripe} from '../lib/stripe.common';
-import {getMockPlatformFunctions} from './testUtils.js';
+import {createStripe} from '../lib/stripe.common.js';
+import utils from './testUtils.js';
+import testUtils from './testUtils.js';
+import Stripe from '../lib/stripe.node.js';
+import crypto from 'crypto';
+import {expect} from 'chai';
 
-const testUtils = require('./testUtils.js');
-const Stripe = require('../lib/stripe.node');
-const stripe = require('../lib/stripe.node')(
-  testUtils.getUserStripeKey(),
-  'latest'
-);
-const crypto = require('crypto');
-
-const expect = require('chai').expect;
+const stripe = new Stripe(testUtils.getUserStripeKey(), 'latest');
 
 const CUSTOMER_DETAILS = {
   description: 'Some customer',
@@ -113,18 +107,18 @@ describe('Stripe Module', function() {
 
       cases.forEach((item) => {
         expect(() => {
-          Stripe(testUtils.getUserStripeKey(), item);
+          new Stripe(testUtils.getUserStripeKey(), item);
         }).to.not.throw();
       });
 
       cases.forEach((item) => {
-        const newStripe = Stripe(testUtils.getUserStripeKey(), item);
+        const newStripe = new Stripe(testUtils.getUserStripeKey(), item);
         expect(newStripe.getApiField('version')).to.equal(null);
       });
     });
 
     it('should enable telemetry if not explicitly set', () => {
-      const newStripe = Stripe(testUtils.getUserStripeKey());
+      const newStripe = new Stripe(testUtils.getUserStripeKey());
 
       expect(newStripe.getTelemetryEnabled()).to.equal(true);
     });
@@ -246,7 +240,7 @@ describe('Stripe Module', function() {
     describe('uname', () => {
       it('gets added to the user-agent', () => {
         const stripe = createStripe(
-          getMockPlatformFunctions((cmd: string, cb: any): void => {
+          utils.getMockPlatformFunctions((cmd: string, cb: any): void => {
             cb(null, 'foøname');
           })
         )(testUtils.getUserStripeKey(), 'latest');
@@ -261,7 +255,7 @@ describe('Stripe Module', function() {
 
       it('sets uname to UNKOWN in case of an error', () => {
         const stripe = createStripe(
-          getMockPlatformFunctions((cmd: string, cb: any): void => {
+          utils.getMockPlatformFunctions((cmd: string, cb: any): void => {
             cb(new Error('security'), null);
           })
         )(testUtils.getUserStripeKey(), 'latest');

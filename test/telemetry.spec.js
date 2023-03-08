@@ -1,9 +1,11 @@
 'use strict';
 
-require('./testUtils.js');
-const http = require('http');
+import _testUtils from './testUtils.js';
+import http from 'http';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
+import {Stripe} from '../lib/stripe.node.js';
+
 let testServer = null;
 
 function createTestServer(handlerFunc, cb) {
@@ -57,7 +59,7 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../lib/stripe.node')(
+        const stripe = Stripe(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
           {
             telemetry: false,
@@ -107,7 +109,7 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../lib/stripe.node')(
+        const stripe = Stripe(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
           {
             telemetry: true,
@@ -159,7 +161,7 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../lib/stripe.node')(
+        const stripe = Stripe(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
           {
             telemetry: true,

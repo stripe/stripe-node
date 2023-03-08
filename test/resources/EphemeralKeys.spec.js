@@ -1,7 +1,9 @@
 'use strict';
 
-const getSpyableStripe = require('../testUtils.js').getSpyableStripe;
-const expect = require('chai').expect;
+import utils from '../testUtils.js';
+import {expect} from 'chai';
+
+const {getSpyableStripe} = utils;
 
 function errorsOnNoStripeVersion(stripe) {
   return expect(

@@ -2,9 +2,9 @@
 
 'use strict';
 
-const testUtils = require('../testUtils.js');
+import testUtils from '../testUtils.js';
 const stripe = testUtils.getStripeMockClient();
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
 describe('Accounts', function() {
   it('listExternalAccounts method', async function() {

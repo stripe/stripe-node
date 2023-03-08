@@ -1,8 +1,10 @@
 'use strict';
 
-const stripe = require('../../testUtils.js').getSpyableStripe();
+import utils from '../../testUtils.js';
+const {getSpyableStripe} = utils;
+const stripe = getSpyableStripe();
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
 describe('Reporting', () => {
   describe('ReportRuns Resource', () => {

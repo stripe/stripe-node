@@ -1,7 +1,9 @@
 'use strict';
 
-const stripe = require('../../testUtils.js').getSpyableStripe();
-const expect = require('chai').expect;
+import utils from '../../testUtils.js';
+const {getSpyableStripe} = utils;
+const stripe = getSpyableStripe();
+import {expect} from 'chai';
 
 describe('Radar', () => {
   describe('EarlyFraudWarnings Resource', () => {

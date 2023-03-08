@@ -1,10 +1,11 @@
 'use strict';
 
-const stripe = require('../testUtils.js').getSpyableStripe();
+import utils from '../testUtils.js';
+const stripe = utils.getSpyableStripe();
 
-const expect = require('chai').expect;
-const URL = require('url');
-const qs = require('qs');
+import {expect} from 'chai';
+import URL from 'url';
+import qs from 'qs';
 
 describe('OAuth', () => {
   describe('authorize', () => {

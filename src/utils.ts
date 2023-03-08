@@ -23,7 +23,6 @@ type Options = {
   headers: Record<string, unknown>;
 };
 
-// const utils = {
 export function isOptionsHash(o: unknown): boolean | unknown {
   return (
     o &&

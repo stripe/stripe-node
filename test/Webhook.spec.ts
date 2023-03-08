@@ -1,9 +1,12 @@
+// @ts-nocheck
 'use strict';
 
-const {StripeSignatureVerificationError} = require('../lib/Error');
-const {getSpyableStripe, FakeCryptoProvider} = require('./testUtils.js');
-const stripe = getSpyableStripe();
+import {StripeSignatureVerificationError} from '../lib/Error.js';
+import utils from './testUtils.js';
 import {expect} from 'chai';
+
+const {getSpyableStripe, FakeCryptoProvider} = utils;
+const stripe = getSpyableStripe();
 
 const EVENT_PAYLOAD = {
   id: 'evt_test_webhook',

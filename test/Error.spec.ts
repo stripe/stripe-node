@@ -1,8 +1,8 @@
 'use strict';
 
-require('./testUtils.js');
+import _testUtils from './testUtils.js';
 
-import * as Error from '../src/Error';
+import * as Error from '../lib/Error.js';
 import {expect} from 'chai';
 
 describe('Error', () => {

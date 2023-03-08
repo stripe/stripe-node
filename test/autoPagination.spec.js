@@ -2,12 +2,12 @@
 
 /* eslint-disable callback-return */
 
-const testUtils = require('./testUtils.js');
-const {StripeResource} = require('../lib/StripeResource');
+import testUtils from './testUtils.js';
+import {StripeResource} from '../lib/StripeResource.js';
 
-const {makeAutoPaginationMethods} = require('../lib/autoPagination');
+import {makeAutoPaginationMethods} from '../lib/autoPagination.js';
 
-const expect = require('chai').expect;
+import {expect} from 'chai';
 
 describe('auto pagination', function() {
   const testCase = (

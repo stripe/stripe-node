@@ -1,24 +1,26 @@
 'use strict';
 
-// NOTE: testUtils should be require'd before anything else in each spec file!
+// NOTE: testUtils should be imported before anything else in each spec file!
 
-require('mocha');
+import mocha from 'mocha';
 // Ensure we are using the 'as promised' libs before any tests are run:
-require('chai').use(require('chai-as-promised'));
+import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+chai.use(chaiAsPromised);
 
-const http = require('http');
+import http from 'http';
 
-const {CryptoProvider} = require('../lib/crypto/CryptoProvider');
-const {
+import {CryptoProvider} from '../lib/crypto/CryptoProvider.js';
+import {
   NodePlatformFunctions,
-} = require('../lib/platform/NodePlatformFunctions');
-const {RequestSender} = require('../lib/RequestSender');
-const {createStripe} = require('../lib/stripe.common');
-const stripe = require('../lib/stripe.node');
+} from '../lib/platform/NodePlatformFunctions.js';
+import {RequestSender} from '../lib/RequestSender.js';
+import {createStripe} from '../lib/stripe.common.js';
+import Stripe from '../lib/stripe.node.js';
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 
-const utils = (module.exports = {
+const utils = {
   getTestServerStripe: (clientOptions, handler, callback) => {
     const server = http.createServer((req, res) => {
       const {shouldStayOpen} = handler(req, res) || {};
@@ -30,8 +32,8 @@ const utils = (module.exports = {
     });
     server.listen(0, () => {
       const {port} = server.address();
-      const stripe = require('../lib/stripe.node')(
-        module.exports.getUserStripeKey(),
+      const stripe = Stripe(
+        utils.getUserStripeKey(),
         {
           host: 'localhost',
           port,
@@ -47,9 +49,7 @@ const utils = (module.exports = {
   },
 
   getStripeMockClient: () => {
-    const stripe = require('../lib/stripe.node');
-
-    return stripe('sk_test_123', {
+    return Stripe('sk_test_123', {
       host: process.env.STRIPE_MOCK_HOST || 'localhost',
       port: process.env.STRIPE_MOCK_PORT || 12111,
       protocol: 'http',
@@ -106,7 +106,7 @@ const utils = (module.exports = {
       (stripeInstance) =>
         new MockRequestSender(
           stripeInstance,
-          stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+          Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
         )
     );
     return stripeFactory('fakeAuthToken', config);
@@ -130,7 +130,7 @@ const utils = (module.exports = {
     );
   },
 
-  getSpyableStripe: (config) => {
+  getSpyableStripe: (config)  => {
     class SpyableRequestSender extends RequestSender {
       _request(
         method,
@@ -187,14 +187,13 @@ const utils = (module.exports = {
 
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
-    const stripe = require('../lib/stripe.node');
-    const stripeInstance = stripe('fakeAuthToken', config);
+    const stripeInstance = Stripe('fakeAuthToken', config);
 
     stripeInstance.REQUESTS = [];
 
     stripeInstance._requestSender = new SpyableRequestSender(
       stripeInstance,
-      stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
+      Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS
     );
 
     return stripeInstance;
@@ -211,7 +210,7 @@ const utils = (module.exports = {
     function CleanupUtility(timeout) {
       const self = this;
       this._cleanupFns = [];
-      this._stripe = require('../lib/stripe.node')(
+      this._stripe = Stripe(
         utils.getUserStripeKey(),
         'latest'
       );
@@ -298,4 +297,6 @@ const utils = (module.exports = {
       return Promise.resolve('fake signature');
     }
   },
-});
+};
+
+export default utils;

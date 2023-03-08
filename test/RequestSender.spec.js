@@ -1,22 +1,23 @@
 'use strict';
 
-const {RequestSender} = require('../lib/RequestSender');
+import {RequestSender} from '../lib/RequestSender.js';
 
-const stripe = require('./testUtils.js').getSpyableStripe();
-const expect = require('chai').expect;
-
-const {HttpClientResponse} = require('../lib/net/HttpClient');
-const utils = require('./testUtils.js');
-const nock = require('nock');
-
-const {
+import utils from './testUtils.js';
+import {expect} from 'chai';
+import {
   StripeAuthenticationError,
   StripeIdempotencyError,
   StripePermissionError,
   StripeRateLimitError,
   StripeError,
   StripeConnectionError,
-} = require('../lib/Error');
+} from '../lib/Error.js';
+import {HttpClientResponse} from '../lib/net/HttpClient.js';
+import nock from 'nock';
+import Stripe from '../lib/stripe.node.js';
+
+const stripe = utils.getSpyableStripe();
+
 describe('RequestSender', () => {
   const sender = new RequestSender(stripe, 0);
 
@@ -88,7 +89,7 @@ describe('RequestSender', () => {
 
   describe('Parameter encoding', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../lib/stripe.node')(utils.getUserStripeKey());
+    const realStripe = new Stripe(utils.getUserStripeKey());
 
     after(() => {
       nock.cleanAll();
@@ -335,7 +336,7 @@ describe('RequestSender', () => {
 
   describe('Retry Network Requests', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../lib/stripe.node')(utils.getUserStripeKey());
+    const realStripe = new Stripe(utils.getUserStripeKey());
 
     // Override the sleep timer to speed up tests
     realStripe.charges._getSleepTimeInMS = () => 0;
