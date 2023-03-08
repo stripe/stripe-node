@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "outDir": "./lib",
-    "allowJs": true,
+    "outDir": "./esm",
     "target": "es2017",
     "module": "ES2022",
     "checkJs": false,
     "alwaysStrict": true,
-    // "noImplicitAny": true,
+    "noImplicitAny": true,
     "noImplicitThis": true,
-    // "strict": true,
+    "strict": true,
     "strictFunctionTypes": true,
     "types": [ "node", "mocha"]
   },
-  // "ts-node": {
-  //   "compilerOptions": {
-  //     "module": "CommonJS"
-  //   }
-  // },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "transpileOnly": true
+    }
+  },
   "include": ["./src/**/*"]
 }
