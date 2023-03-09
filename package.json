@@ -40,7 +40,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-chai-friendly": "^0.7.2",
     "eslint-plugin-prettier": "^3.4.1",
-    "mocha": "^9.2.0",
+    "mocha": "^8.4.0",
     "mocha-junit-reporter": "^2.1.0",
     "nock": "^13.2.9",
     "node-fetch": "^2.6.7",
@@ -59,7 +59,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "yarn build-esm && yarn build-cjs && yarn rename-entrypoints && yarn ",
+    "build": "yarn build-esm && yarn build-cjs && yarn rename-entrypoints && yarn lint --fix",
     "build-esm": "tsc -p tsconfig.esm.json && echo '{\"type\":\"commonjs\"}' > cjs/package.json",
     "build-cjs": "tsc -p tsconfig.cjs.json && echo '{\"type\":\"module\"}' > esm/package.json",
     "rename-entrypoints": "mv cjs/stripe.cjs.worker.js cjs/stripe.worker.js && mv cjs/stripe.cjs.node.js cjs/stripe.node.js && mv esm/stripe.esm.worker.js esm/stripe.worker.js && mv esm/stripe.esm.node.js esm/stripe.node.js",

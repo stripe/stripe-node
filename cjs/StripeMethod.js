@@ -1,8 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {value: true});
 exports.stripeMethod = void 0;
-const utils_js_1 = require("./utils.js");
-const autoPagination_js_1 = require("./autoPagination.js");
+const utils_js_1 = require('./utils.js');
+const autoPagination_js_1 = require('./autoPagination.js');
 /**
  * Create an API method from the declared spec.
  *
@@ -22,20 +23,33 @@ const autoPagination_js_1 = require("./autoPagination.js");
  * <!-- Public API accessible via Stripe.StripeResource.method -->
  */
 function stripeMethod(spec) {
-    if (spec.path !== undefined && spec.fullPath !== undefined) {
-        throw new Error(`Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`);
+  if (spec.path !== undefined && spec.fullPath !== undefined) {
+    throw new Error(
+      `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`
+    );
+  }
+  return function(...args) {
+    const callback = typeof args[args.length - 1] == 'function' && args.pop();
+    spec.urlParams = (0, utils_js_1.extractUrlParams)(
+      spec.fullPath || this.createResourcePathWithSymbols(spec.path || '')
+    );
+    const requestPromise = (0, utils_js_1.callbackifyPromiseWithTimeout)(
+      this._makeRequest(args, spec, {}),
+      callback
+    );
+    // Please note `spec.methodType === 'search'` is beta functionality and this
+    // interface is subject to change/removal at any time.
+    if (spec.methodType === 'list' || spec.methodType === 'search') {
+      const autoPaginationMethods = (0,
+      autoPagination_js_1.makeAutoPaginationMethods)(
+        this,
+        args,
+        spec,
+        requestPromise
+      );
+      Object.assign(requestPromise, autoPaginationMethods);
     }
-    return function (...args) {
-        const callback = typeof args[args.length - 1] == 'function' && args.pop();
-        spec.urlParams = (0, utils_js_1.extractUrlParams)(spec.fullPath || this.createResourcePathWithSymbols(spec.path || ''));
-        const requestPromise = (0, utils_js_1.callbackifyPromiseWithTimeout)(this._makeRequest(args, spec, {}), callback);
-        // Please note `spec.methodType === 'search'` is beta functionality and this
-        // interface is subject to change/removal at any time.
-        if (spec.methodType === 'list' || spec.methodType === 'search') {
-            const autoPaginationMethods = (0, autoPagination_js_1.makeAutoPaginationMethods)(this, args, spec, requestPromise);
-            Object.assign(requestPromise, autoPaginationMethods);
-        }
-        return requestPromise;
-    };
+    return requestPromise;
+  };
 }
 exports.stripeMethod = stripeMethod;

@@ -240,11 +240,16 @@ module.exports = {
   },
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module',
   },
   plugins: ['prettier'],
   extends: ['plugin:prettier/recommended'],
   overrides: [
+    {
+      files: ['esm/**/*.js'],
+      parserOptions: {
+        sourceType: 'module',
+      },
+    },
     {
       files: ['**/*.ts'],
       parser: '@typescript-eslint/parser',

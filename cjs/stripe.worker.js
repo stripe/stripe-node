@@ -1,8 +1,11 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const WebPlatformFunctions_js_1 = require("./platform/WebPlatformFunctions.js");
-const stripe_common_js_1 = require("./stripe.common.js");
-const Stripe = (0, stripe_common_js_1.createStripe)(new WebPlatformFunctions_js_1.WebPlatformFunctions());
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {value: true});
+const WebPlatformFunctions_js_1 = require('./platform/WebPlatformFunctions.js');
+const stripe_common_js_1 = require('./stripe.common.js');
+const Stripe = (0, stripe_common_js_1.createStripe)(
+  new WebPlatformFunctions_js_1.WebPlatformFunctions()
+);
 module.exports = Stripe;
 // expose constructor as a named property to enable mocking with Sinon.JS
 module.exports.Stripe = Stripe;
