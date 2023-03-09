@@ -27,10 +27,7 @@ declare module 'stripe' {
         | Stripe.DeletedApplication
         | null;
 
-      /**
-       * Details to identify the subscription schedule the quote line applies to.
-       */
-      applies_to?: SubscriptionSchedule.AppliesTo | null;
+      applies_to?: SubscriptionSchedule.AppliesTo;
 
       /**
        * Configures when the subscription schedule generates prorations for phase transitions. Possible values are `prorate_on_next_phase` or `prorate_up_front` with the default being `prorate_on_next_phase`. `prorate_on_next_phase` will apply phase changes and generate prorations at transition time.`prorate_up_front` will bill for all phases within the current billing cycle up front.

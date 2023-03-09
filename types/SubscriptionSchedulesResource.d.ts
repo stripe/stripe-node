@@ -2071,14 +2071,35 @@ declare module 'stripe' {
       namespace Prebilling {
         interface BillFrom {
           /**
+           * Start the prebilled period when a specified amendment begins.
+           */
+          amendment_start?: BillFrom.AmendmentStart;
+
+          /**
+           * Start the prebilled period at a precise integer timestamp, starting from the Unix epoch.
+           */
+          timestamp?: number;
+
+          /**
            * Select one of several ways to pass the `bill_from` value.
            */
-          type: 'now';
+          type: BillFrom.Type;
+        }
+
+        namespace BillFrom {
+          interface AmendmentStart {
+            /**
+             * The position of the amendment in the `amendments` array with which prebilling should begin. Indexes start from 0 and must be less than the total number of supplied amendments.
+             */
+            index: number;
+          }
+
+          type Type = 'amendment_start' | 'now' | 'timestamp';
         }
 
         interface BillUntil {
           /**
-           * End the prebilled period when a specified amendment begins.
+           * End the prebilled period when a specified amendment ends.
            */
           amendment_end?: BillUntil.AmendmentEnd;
 

@@ -2,10 +2,10 @@
 
 'use strict';
 
-const {StripeResource} = require('../../StripeResource');
+import {StripeResource} from '../../StripeResource';
 const stripeMethod = StripeResource.method;
 
-module.exports = StripeResource.extend({
+export const Transactions = StripeResource.extend({
   list: stripeMethod({
     method: 'GET',
     fullPath: '/v1/financial_connections/transactions',

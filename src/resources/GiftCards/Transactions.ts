@@ -2,10 +2,10 @@
 
 'use strict';
 
-const {StripeResource} = require('../../StripeResource');
+import {StripeResource} from '../../StripeResource';
 const stripeMethod = StripeResource.method;
 
-module.exports = StripeResource.extend({
+export const Transactions = StripeResource.extend({
   create: stripeMethod({
     method: 'POST',
     fullPath: '/v1/gift_cards/transactions',

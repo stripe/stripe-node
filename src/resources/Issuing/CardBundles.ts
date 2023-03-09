@@ -2,10 +2,10 @@
 
 'use strict';
 
-const {StripeResource} = require('../../StripeResource');
+import {StripeResource} from '../../StripeResource';
 const stripeMethod = StripeResource.method;
 
-module.exports = StripeResource.extend({
+export const CardBundles = StripeResource.extend({
   retrieve: stripeMethod({
     method: 'GET',
     fullPath: '/v1/issuing/card_bundles/{card_bundle}',

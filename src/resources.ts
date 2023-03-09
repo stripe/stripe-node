@@ -6,8 +6,13 @@ import {resourceNamespace} from './ResourceNamespace';
 
 import {Accounts as FinancialConnectionsAccounts} from './resources/FinancialConnections/Accounts';
 import {Authorizations as IssuingAuthorizations} from './resources/Issuing/Authorizations';
+import {Calculations as TaxCalculations} from './resources/Tax/Calculations';
+import {CardBundles as IssuingCardBundles} from './resources/Issuing/CardBundles';
+import {CardDesigns as TestHelpersIssuingCardDesigns} from './resources/TestHelpers/Issuing/CardDesigns';
+import {CardDesigns as IssuingCardDesigns} from './resources/Issuing/CardDesigns';
 import {Cardholders as IssuingCardholders} from './resources/Issuing/Cardholders';
 import {Cards as TestHelpersIssuingCards} from './resources/TestHelpers/Issuing/Cards';
+import {Cards as GiftCardsCards} from './resources/GiftCards/Cards';
 import {Cards as IssuingCards} from './resources/Issuing/Cards';
 import {Configurations as BillingPortalConfigurations} from './resources/BillingPortal/Configurations';
 import {Configurations as TerminalConfigurations} from './resources/Terminal/Configurations';
@@ -18,6 +23,9 @@ import {DebitReversals as TreasuryDebitReversals} from './resources/Treasury/Deb
 import {Disputes as IssuingDisputes} from './resources/Issuing/Disputes';
 import {EarlyFraudWarnings as RadarEarlyFraudWarnings} from './resources/Radar/EarlyFraudWarnings';
 import {FinancialAccounts as TreasuryFinancialAccounts} from './resources/Treasury/FinancialAccounts';
+import {FinancingOffers as CapitalFinancingOffers} from './resources/Capital/FinancingOffers';
+import {FinancingSummary as CapitalFinancingSummary} from './resources/Capital/FinancingSummary';
+import {FinancingTransactions as CapitalFinancingTransactions} from './resources/Capital/FinancingTransactions';
 import {InboundTransfers as TestHelpersTreasuryInboundTransfers} from './resources/TestHelpers/Treasury/InboundTransfers';
 import {InboundTransfers as TreasuryInboundTransfers} from './resources/Treasury/InboundTransfers';
 import {Locations as TerminalLocations} from './resources/Terminal/Locations';
@@ -32,6 +40,7 @@ import {ReceivedCredits as TreasuryReceivedCredits} from './resources/Treasury/R
 import {ReceivedDebits as TestHelpersTreasuryReceivedDebits} from './resources/TestHelpers/Treasury/ReceivedDebits';
 import {ReceivedDebits as TreasuryReceivedDebits} from './resources/Treasury/ReceivedDebits';
 import {Refunds as TestHelpersRefunds} from './resources/TestHelpers/Refunds';
+import {Registrations as TaxRegistrations} from './resources/Tax/Registrations';
 import {ReportRuns as ReportingReportRuns} from './resources/Reporting/ReportRuns';
 import {ReportTypes as ReportingReportTypes} from './resources/Reporting/ReportTypes';
 import {ScheduledQueryRuns as SigmaScheduledQueryRuns} from './resources/Sigma/ScheduledQueryRuns';
@@ -39,9 +48,13 @@ import {Secrets as AppsSecrets} from './resources/Apps/Secrets';
 import {Sessions as BillingPortalSessions} from './resources/BillingPortal/Sessions';
 import {Sessions as CheckoutSessions} from './resources/Checkout/Sessions';
 import {Sessions as FinancialConnectionsSessions} from './resources/FinancialConnections/Sessions';
+import {Settings as TaxSettings} from './resources/Tax/Settings';
 import {TestClocks as TestHelpersTestClocks} from './resources/TestHelpers/TestClocks';
 import {TransactionEntries as TreasuryTransactionEntries} from './resources/Treasury/TransactionEntries';
+import {Transactions as FinancialConnectionsTransactions} from './resources/FinancialConnections/Transactions';
+import {Transactions as GiftCardsTransactions} from './resources/GiftCards/Transactions';
 import {Transactions as IssuingTransactions} from './resources/Issuing/Transactions';
+import {Transactions as TaxTransactions} from './resources/Tax/Transactions';
 import {Transactions as TreasuryTransactions} from './resources/Treasury/Transactions';
 import {ValueListItems as RadarValueListItems} from './resources/Radar/ValueListItems';
 import {ValueLists as RadarValueLists} from './resources/Radar/ValueLists';
@@ -52,6 +65,7 @@ export {Accounts as Account} from './resources/Accounts';
 export {OAuth} from './resources/OAuth';
 export {Accounts} from './resources/Accounts';
 export {AccountLinks} from './resources/AccountLinks';
+export {AccountSessions} from './resources/AccountSessions';
 export {ApplePayDomains} from './resources/ApplePayDomains';
 export {ApplicationFees} from './resources/ApplicationFees';
 export {Balance} from './resources/Balance';
@@ -70,6 +84,7 @@ export {FileLinks} from './resources/FileLinks';
 export {Invoices} from './resources/Invoices';
 export {InvoiceItems} from './resources/InvoiceItems';
 export {Mandates} from './resources/Mandates';
+export {Orders} from './resources/Orders';
 export {PaymentIntents} from './resources/PaymentIntents';
 export {PaymentLinks} from './resources/PaymentLinks';
 export {PaymentMethods} from './resources/PaymentMethods';
@@ -79,6 +94,7 @@ export {Prices} from './resources/Prices';
 export {Products} from './resources/Products';
 export {PromotionCodes} from './resources/PromotionCodes';
 export {Quotes} from './resources/Quotes';
+export {QuotePhases} from './resources/QuotePhases';
 export {Refunds} from './resources/Refunds';
 export {Reviews} from './resources/Reviews';
 export {SetupAttempts} from './resources/SetupAttempts';
@@ -100,12 +116,22 @@ export const BillingPortal = resourceNamespace('billingPortal', {
   Configurations: BillingPortalConfigurations,
   Sessions: BillingPortalSessions,
 });
+export const Capital = resourceNamespace('capital', {
+  FinancingOffers: CapitalFinancingOffers,
+  FinancingSummary: CapitalFinancingSummary,
+  FinancingTransactions: CapitalFinancingTransactions,
+});
 export const Checkout = resourceNamespace('checkout', {
   Sessions: CheckoutSessions,
 });
 export const FinancialConnections = resourceNamespace('financialConnections', {
   Accounts: FinancialConnectionsAccounts,
   Sessions: FinancialConnectionsSessions,
+  Transactions: FinancialConnectionsTransactions,
+});
+export const GiftCards = resourceNamespace('giftCards', {
+  Cards: GiftCardsCards,
+  Transactions: GiftCardsTransactions,
 });
 export const Identity = resourceNamespace('identity', {
   VerificationReports: IdentityVerificationReports,
@@ -113,6 +139,8 @@ export const Identity = resourceNamespace('identity', {
 });
 export const Issuing = resourceNamespace('issuing', {
   Authorizations: IssuingAuthorizations,
+  CardBundles: IssuingCardBundles,
+  CardDesigns: IssuingCardDesigns,
   Cardholders: IssuingCardholders,
   Cards: IssuingCards,
   Disputes: IssuingDisputes,
@@ -130,6 +158,12 @@ export const Reporting = resourceNamespace('reporting', {
 export const Sigma = resourceNamespace('sigma', {
   ScheduledQueryRuns: SigmaScheduledQueryRuns,
 });
+export const Tax = resourceNamespace('tax', {
+  Calculations: TaxCalculations,
+  Registrations: TaxRegistrations,
+  Settings: TaxSettings,
+  Transactions: TaxTransactions,
+});
 export const Terminal = resourceNamespace('terminal', {
   Configurations: TerminalConfigurations,
   ConnectionTokens: TerminalConnectionTokens,
@@ -140,7 +174,10 @@ export const TestHelpers = resourceNamespace('testHelpers', {
   Customers: TestHelpersCustomers,
   Refunds: TestHelpersRefunds,
   TestClocks: TestHelpersTestClocks,
-  Issuing: resourceNamespace('issuing', {Cards: TestHelpersIssuingCards}),
+  Issuing: resourceNamespace('issuing', {
+    CardDesigns: TestHelpersIssuingCardDesigns,
+    Cards: TestHelpersIssuingCards,
+  }),
   Terminal: resourceNamespace('terminal', {
     Readers: TestHelpersTerminalReaders,
   }),
