@@ -8,6 +8,7 @@ import {NodeHttpClient} from '../net/NodeHttpClient';
 import {PlatformFunctions} from './PlatformFunctions';
 import {StripeError} from '../Error';
 import {concat} from '../utils';
+import {exec} from 'child_process';
 
 class StreamProcessingError extends StripeError {}
 
@@ -22,7 +23,7 @@ export class NodePlatformFunctions extends PlatformFunctions {
   constructor() {
     super();
 
-    this._exec = require('child_process').exec;
+    this._exec = exec;
     this._UNAME_CACHE = null;
   }
 

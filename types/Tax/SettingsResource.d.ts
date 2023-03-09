@@ -30,9 +30,18 @@ declare module 'stripe' {
       namespace SettingUpdateParams {
         interface Defaults {
           /**
+           * Specifies the default [tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#tax-behavior) to be used when the item's price has unspecified tax behavior. One of inclusive, exclusive, or inferred_by_currency. Once specified, it cannot be changed back to null.
+           */
+          tax_behavior?: Defaults.TaxBehavior;
+
+          /**
            * A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
            */
           tax_code?: string;
+        }
+
+        namespace Defaults {
+          type TaxBehavior = 'exclusive' | 'inclusive' | 'inferred_by_currency';
         }
 
         interface Location {

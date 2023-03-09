@@ -1,6 +1,6 @@
 'use strict';
 
-require('../testUtils');
+require('./testUtils.js');
 
 import * as fs from 'fs';
 import * as path from 'path';

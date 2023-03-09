@@ -1,6 +1,6 @@
 'use strict';
 
-require('../testUtils');
+require('./testUtils.js');
 
 import * as utils from '../lib/utils';
 import {expect} from 'chai';

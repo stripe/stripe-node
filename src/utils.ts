@@ -1,4 +1,4 @@
-const qs = require('qs');
+import * as qs from 'qs';
 
 const OPTIONS_KEYS = [
   'apiKey',
@@ -40,7 +40,7 @@ export function stringifyRequestData(data: RequestData | string): string {
   return (
     qs
       .stringify(data, {
-        serializeDate: (d: Date) => Math.floor(d.getTime() / 1000),
+        serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
       })
       // Don't use strict form encoding by changing the square bracket control
       // characters back to their literals. This is fine by the server, and

@@ -1,6 +1,6 @@
 'use strict';
 
-require('../testUtils');
+require('./testUtils.js');
 const http = require('http');
 
 const expect = require('chai').expect;

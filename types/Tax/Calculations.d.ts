@@ -223,6 +223,7 @@ declare module 'stripe' {
               | 'hst'
               | 'igst'
               | 'jct'
+              | 'lease_tax'
               | 'pst'
               | 'qst'
               | 'rst'
