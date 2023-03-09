@@ -3,14 +3,13 @@
     "outDir": "./cjs",
     "target": "es2017",
     "module": "commonjs",
-		"moduleResolution": "node",
     "checkJs": false,
     "alwaysStrict": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "strict": true,
     "strictFunctionTypes": true,
-    "types": [ "node", "mocha" ]
+    "types": [ "node" ]
   },
   "include": ["./src/**/*"],
   "exclude": ["./src/stripe.esm.node.ts", "./src/stripe.esm.worker.ts"],

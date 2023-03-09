@@ -9,7 +9,7 @@
     "noImplicitThis": true,
     "strict": true,
     "strictFunctionTypes": true,
-    "types": [ "node", "mocha"]
+    "types": [ "node" ]
   },
   "include": ["./src/**/*"],
   "exclude": ["./src/stripe.cjs.node.ts", "./src/stripe.cjs.worker.ts"],

@@ -169,7 +169,7 @@ module.exports = {
     'no-useless-rename': 'error',
     'no-useless-return': 'error',
     'no-var': 'off',
-    'no-void': 'error',
+    'no-void': 'off',
     'no-warning-comments': 'error',
     'no-whitespace-before-property': 'error',
     'no-with': 'error',
@@ -240,6 +240,7 @@ module.exports = {
   },
   parserOptions: {
     ecmaVersion: 2018,
+    sourceType: 'module',
   },
   plugins: ['prettier'],
   extends: ['plugin:prettier/recommended'],
