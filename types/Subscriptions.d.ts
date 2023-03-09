@@ -60,6 +60,11 @@ declare module 'stripe' {
       canceled_at: number | null;
 
       /**
+       * Details about why this subscription was cancelled
+       */
+      cancellation_details: Subscription.CancellationDetails | null;
+
+      /**
        * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
        */
       collection_method: Subscription.CollectionMethod;
@@ -246,6 +251,40 @@ declare module 'stripe' {
          * Indicates if the `billing_cycle_anchor` should be reset when a threshold is reached. If true, `billing_cycle_anchor` will be updated to the date/time the threshold was last reached; otherwise, the value will remain unchanged. This value may not be `true` if the subscription contains items with plans that have `aggregate_usage=last_ever`.
          */
         reset_billing_cycle_anchor: boolean | null;
+      }
+
+      interface CancellationDetails {
+        /**
+         * Additional comments about why the user canceled the subscription, if the subscription was cancelled explicitly by the user.
+         */
+        comment: string | null;
+
+        /**
+         * The customer submitted reason for why they cancelled, if the subscription was cancelled explicitly by the user.
+         */
+        feedback: CancellationDetails.Feedback | null;
+
+        /**
+         * Why this subscription was cancelled.
+         */
+        reason: CancellationDetails.Reason | null;
+      }
+
+      namespace CancellationDetails {
+        type Feedback =
+          | 'customer_service'
+          | 'low_quality'
+          | 'missing_features'
+          | 'other'
+          | 'switched_service'
+          | 'too_complex'
+          | 'too_expensive'
+          | 'unused';
+
+        type Reason =
+          | 'cancellation_requested'
+          | 'payment_disputed'
+          | 'payment_failed';
       }
 
       type CollectionMethod = 'charge_automatically' | 'send_invoice';
