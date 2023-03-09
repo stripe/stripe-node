@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 'use strict';
 
 require('./testUtils.js');
