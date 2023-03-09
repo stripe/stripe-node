@@ -1,6 +1,6 @@
 'use strict';
 
-const stripe = require('../../testUtils').getSpyableStripe();
+const stripe = require('../testUtils.js').getSpyableStripe();
 const expect = require('chai').expect;
 
 const TEST_AUTH_KEY = 'aGN0bIwXnHdw5645VABjPdSn8nWY7G11';

@@ -1,5 +1,15 @@
 # Changelog
 
+## 11.14.0 - 2023-03-09
+* [#1703](https://github.com/stripe/stripe-node/pull/1703) API Updates
+  * Add support for `card_issuing` on `IssuingCardholderCreateParams.individual` and `IssuingCardholderUpdateParams.individual`
+  * Add support for new value `requirements.past_due` on enum `Issuing.Cardholder.requirements.disabled_reason`
+  * Add support for new values `individual.card_issuing.user_terms_acceptance.date` and `individual.card_issuing.user_terms_acceptance.ip` on enum `Issuing.Cardholder.requirements.past_due[]`
+  * Add support for `cancellation_details` on `SubscriptionCancelParams`, `SubscriptionUpdateParams`, and `Subscription`
+* [#1701](https://github.com/stripe/stripe-node/pull/1701) Change httpProxy to httpAgent in README example
+* [#1695](https://github.com/stripe/stripe-node/pull/1695) Migrate generated files to ES module syntax
+* [#1699](https://github.com/stripe/stripe-node/pull/1699) Remove extra test directory
+
 ## 11.14.0-beta.2 - 2023-03-03
 * [#1698](https://github.com/stripe/stripe-node/pull/1698) API Updates for beta branch
   * Updated stable APIs to the latest version

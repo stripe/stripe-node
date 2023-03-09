@@ -1,7 +1,7 @@
 'use strict';
 
-const stripe = require('../../testUtils').getSpyableStripe();
-const testUtils = require('../../testUtils');
+const stripe = require('../testUtils.js').getSpyableStripe();
+const testUtils = require('../testUtils.js');
 const expect = require('chai').expect;
 
 const QUOTE_TEST_ID = 'qt_123';

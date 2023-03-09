@@ -1,5 +1,6 @@
 import * as _Error from './Error';
 import * as apiVersion from './apiVersion';
+import * as resources from './resources';
 import {HttpClient, HttpClientResponse} from './net/HttpClient';
 import {
   determineProcessUserAgentProperties,
@@ -11,7 +12,6 @@ import {PlatformFunctions} from './platform/PlatformFunctions';
 import {RequestSender} from './RequestSender';
 import {StripeResource} from './StripeResource';
 import {createWebhooks} from './Webhooks';
-const resources = require('./resources');
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';

@@ -112,6 +112,11 @@ declare module 'stripe' {
 
         interface Individual {
           /**
+           * Information related to the card_issuing program for this cardholder.
+           */
+          card_issuing?: Individual.CardIssuing;
+
+          /**
            * The date of birth of this cardholder.
            */
           dob?: Individual.Dob;
@@ -133,6 +138,32 @@ declare module 'stripe' {
         }
 
         namespace Individual {
+          interface CardIssuing {
+            /**
+             * Information about cardholder acceptance of [Authorized User Terms](https://stripe.com/docs/issuing/cards).
+             */
+            user_terms_acceptance?: CardIssuing.UserTermsAcceptance;
+          }
+
+          namespace CardIssuing {
+            interface UserTermsAcceptance {
+              /**
+               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               */
+              date?: number;
+
+              /**
+               * The IP address from which the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               */
+              ip?: string;
+
+              /**
+               * The user agent of the browser from which the cardholder accepted the Authorized User Terms.
+               */
+              user_agent?: string;
+            }
+          }
+
           interface Dob {
             /**
              * The day of birth, between 1 and 31.
@@ -1225,6 +1256,11 @@ declare module 'stripe' {
 
         interface Individual {
           /**
+           * Information related to the card_issuing program for this cardholder.
+           */
+          card_issuing?: Individual.CardIssuing;
+
+          /**
            * The date of birth of this cardholder.
            */
           dob?: Individual.Dob;
@@ -1246,6 +1282,32 @@ declare module 'stripe' {
         }
 
         namespace Individual {
+          interface CardIssuing {
+            /**
+             * Information about cardholder acceptance of [Authorized User Terms](https://stripe.com/docs/issuing/cards).
+             */
+            user_terms_acceptance?: CardIssuing.UserTermsAcceptance;
+          }
+
+          namespace CardIssuing {
+            interface UserTermsAcceptance {
+              /**
+               * The Unix timestamp marking when the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               */
+              date?: number;
+
+              /**
+               * The IP address from which the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+               */
+              ip?: string;
+
+              /**
+               * The user agent of the browser from which the cardholder accepted the Authorized User Terms.
+               */
+              user_agent?: string;
+            }
+          }
+
           interface Dob {
             /**
              * The day of birth, between 1 and 31.
