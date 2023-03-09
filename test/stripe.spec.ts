@@ -4,7 +4,7 @@
 
 import {FetchHttpClient} from '../cjs/net/FetchHttpClient';
 import {NodeHttpClient} from '../cjs/net/NodeHttpClient';
-import {createStripe} from '../cjs/stripe.common';
+import {createStripe} from '../cjs/createStripe';
 import {getMockPlatformFunctions} from './testUtils.js';
 
 const testUtils = require('./testUtils.js');

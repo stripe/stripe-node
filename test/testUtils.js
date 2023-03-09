@@ -13,7 +13,7 @@ const {
   NodePlatformFunctions,
 } = require('../cjs/platform/NodePlatformFunctions');
 const {RequestSender} = require('../cjs/RequestSender');
-const {createStripe} = require('../cjs/stripe.common');
+const {createStripe} = require('../cjs/createStripe');
 const stripe = require('../cjs/stripe.node');
 
 const testingHttpAgent = new http.Agent({keepAlive: false});

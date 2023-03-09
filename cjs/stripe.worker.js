@@ -2,8 +2,8 @@
 
 Object.defineProperty(exports, '__esModule', {value: true});
 const WebPlatformFunctions_js_1 = require('./platform/WebPlatformFunctions.js');
-const stripe_common_js_1 = require('./stripe.common.js');
-const Stripe = (0, stripe_common_js_1.createStripe)(
+const createStripe_js_1 = require('./createStripe.js');
+const Stripe = (0, createStripe_js_1.createStripe)(
   new WebPlatformFunctions_js_1.WebPlatformFunctions()
 );
 module.exports = Stripe;
