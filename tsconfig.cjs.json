@@ -13,5 +13,5 @@
     "types": [ "node", "mocha" ]
   },
   "include": ["./src/**/*"],
-  "exclude": ["./src/stripe.node.ts", "./src/stripe.worker.ts"]
+  "exclude": ["./src/stripe.esm.node.ts", "./src/stripe.esm.worker.ts"],
 }

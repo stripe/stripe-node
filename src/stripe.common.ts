@@ -62,6 +62,8 @@ export function createStripe(
   Stripe.HttpClient = HttpClient;
   Stripe.HttpClientResponse = HttpClientResponse;
   Stripe.CryptoProvider = CryptoProvider;
+  Stripe.Stripe = Stripe;
+  Stripe.default = Stripe;
 
   function Stripe(
     this: StripeObject,

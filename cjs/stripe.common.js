@@ -41,6 +41,8 @@ function createStripe(platformFunctions, requestSender = defaultRequestSenderFac
     Stripe.HttpClient = HttpClient_js_1.HttpClient;
     Stripe.HttpClientResponse = HttpClient_js_1.HttpClientResponse;
     Stripe.CryptoProvider = CryptoProvider_js_1.CryptoProvider;
+    Stripe.Stripe = Stripe;
+    Stripe.default = Stripe;
     function Stripe(key, config = {}) {
         if (!(this instanceof Stripe)) {
             return new Stripe(key, config);

@@ -38,6 +38,8 @@ export function createStripe(platformFunctions, requestSender = defaultRequestSe
     Stripe.HttpClient = HttpClient;
     Stripe.HttpClientResponse = HttpClientResponse;
     Stripe.CryptoProvider = CryptoProvider;
+    Stripe.Stripe = Stripe;
+    Stripe.default = Stripe;
     function Stripe(key, config = {}) {
         if (!(this instanceof Stripe)) {
             return new Stripe(key, config);
