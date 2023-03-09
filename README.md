@@ -237,7 +237,7 @@ if (process.env.http_proxy) {
   const ProxyAgent = require('https-proxy-agent');
 
   const stripe = Stripe('sk_test_...', {
-    httpProxy: new ProxyAgent(process.env.http_proxy),
+    httpAgent: new ProxyAgent(process.env.http_proxy),
   });
 }
 ```

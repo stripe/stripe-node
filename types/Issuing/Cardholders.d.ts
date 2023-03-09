@@ -197,10 +197,16 @@ declare module 'stripe' {
         }
 
         namespace Requirements {
-          type DisabledReason = 'listed' | 'rejected.listed' | 'under_review';
+          type DisabledReason =
+            | 'listed'
+            | 'rejected.listed'
+            | 'requirements.past_due'
+            | 'under_review';
 
           type PastDue =
             | 'company.tax_id'
+            | 'individual.card_issuing.user_terms_acceptance.date'
+            | 'individual.card_issuing.user_terms_acceptance.ip'
             | 'individual.dob.day'
             | 'individual.dob.month'
             | 'individual.dob.year'
