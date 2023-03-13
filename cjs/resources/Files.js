@@ -1,5 +1,5 @@
+"use strict";
 // File generated from our OpenAPI spec
-'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Files = void 0;
 const multipart_js_1 = require("../multipart.js");

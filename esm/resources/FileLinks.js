@@ -1,5 +1,4 @@
 // File generated from our OpenAPI spec
-'use strict';
 import { StripeResource } from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 export const FileLinks = StripeResource.extend({

@@ -1,5 +1,5 @@
+"use strict";
 // File generated from our OpenAPI spec
-'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Refunds = void 0;
 const StripeResource_js_1 = require("../../StripeResource.js");

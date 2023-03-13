@@ -1,5 +1,5 @@
+"use strict";
 // File generated from our OpenAPI spec
-'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FinancialConnections = exports.Checkout = exports.BillingPortal = exports.Apps = exports.WebhookEndpoints = exports.Transfers = exports.Topups = exports.Tokens = exports.TaxRates = exports.TaxCodes = exports.SubscriptionSchedules = exports.SubscriptionItems = exports.Subscriptions = exports.Sources = exports.ShippingRates = exports.SetupIntents = exports.SetupAttempts = exports.Reviews = exports.Refunds = exports.Quotes = exports.PromotionCodes = exports.Products = exports.Prices = exports.Plans = exports.Payouts = exports.PaymentMethods = exports.PaymentLinks = exports.PaymentIntents = exports.Mandates = exports.InvoiceItems = exports.Invoices = exports.FileLinks = exports.Files = exports.ExchangeRates = exports.Events = exports.EphemeralKeys = exports.Disputes = exports.Customers = exports.CreditNotes = exports.Coupons = exports.CountrySpecs = exports.Charges = exports.BalanceTransactions = exports.Balance = exports.ApplicationFees = exports.ApplePayDomains = exports.AccountLinks = exports.Accounts = exports.OAuth = exports.Account = void 0;
 exports.Treasury = exports.TestHelpers = exports.Terminal = exports.Sigma = exports.Reporting = exports.Radar = exports.Issuing = exports.Identity = void 0;

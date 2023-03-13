@@ -1,5 +1,4 @@
 // File generated from our OpenAPI spec
-'use strict';
 import { multipartRequestDataProcessor } from '../multipart.js';
 import { StripeResource } from '../StripeResource.js';
 const stripeMethod = StripeResource.method;

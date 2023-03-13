@@ -1,5 +1,4 @@
 // File generated from our OpenAPI spec
-'use strict';
 import { resourceNamespace } from './ResourceNamespace.js';
 import { Accounts as FinancialConnectionsAccounts } from './resources/FinancialConnections/Accounts.js';
 import { Authorizations as IssuingAuthorizations } from './resources/Issuing/Authorizations.js';
