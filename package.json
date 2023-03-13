@@ -77,6 +77,6 @@
     "types": "./types/index.d.ts",
     "browser": "./cjs/stripe.cjs.worker.js",
     "worker": "./cjs/stripe.cjs.worker.js",
-    "default":  "./cjs/stripe.cjs.node.js"
+    "default": "./cjs/stripe.cjs.node.js"
   }
 }
