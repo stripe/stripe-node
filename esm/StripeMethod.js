@@ -1,5 +1,5 @@
-import {callbackifyPromiseWithTimeout, extractUrlParams} from './utils.js';
-import {makeAutoPaginationMethods} from './autoPagination.js';
+import { callbackifyPromiseWithTimeout, extractUrlParams } from './utils.js';
+import { makeAutoPaginationMethods } from './autoPagination.js';
 /**
  * Create an API method from the declared spec.
  *
@@ -19,31 +19,19 @@ import {makeAutoPaginationMethods} from './autoPagination.js';
  * <!-- Public API accessible via Stripe.StripeResource.method -->
  */
 export function stripeMethod(spec) {
-  if (spec.path !== undefined && spec.fullPath !== undefined) {
-    throw new Error(
-      `Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`
-    );
-  }
-  return function(...args) {
-    const callback = typeof args[args.length - 1] == 'function' && args.pop();
-    spec.urlParams = extractUrlParams(
-      spec.fullPath || this.createResourcePathWithSymbols(spec.path || '')
-    );
-    const requestPromise = callbackifyPromiseWithTimeout(
-      this._makeRequest(args, spec, {}),
-      callback
-    );
-    // Please note `spec.methodType === 'search'` is beta functionality and this
-    // interface is subject to change/removal at any time.
-    if (spec.methodType === 'list' || spec.methodType === 'search') {
-      const autoPaginationMethods = makeAutoPaginationMethods(
-        this,
-        args,
-        spec,
-        requestPromise
-      );
-      Object.assign(requestPromise, autoPaginationMethods);
+    if (spec.path !== undefined && spec.fullPath !== undefined) {
+        throw new Error(`Method spec specified both a 'path' (${spec.path}) and a 'fullPath' (${spec.fullPath}).`);
     }
-    return requestPromise;
-  };
+    return function (...args) {
+        const callback = typeof args[args.length - 1] == 'function' && args.pop();
+        spec.urlParams = extractUrlParams(spec.fullPath || this.createResourcePathWithSymbols(spec.path || ''));
+        const requestPromise = callbackifyPromiseWithTimeout(this._makeRequest(args, spec, {}), callback);
+        // Please note `spec.methodType === 'search'` is beta functionality and this
+        // interface is subject to change/removal at any time.
+        if (spec.methodType === 'list' || spec.methodType === 'search') {
+            const autoPaginationMethods = makeAutoPaginationMethods(this, args, spec, requestPromise);
+            Object.assign(requestPromise, autoPaginationMethods);
+        }
+        return requestPromise;
+    };
 }

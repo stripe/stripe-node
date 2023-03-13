@@ -4,12 +4,12 @@
 
 import {FetchHttpClient} from '../cjs/net/FetchHttpClient';
 import {NodeHttpClient} from '../cjs/net/NodeHttpClient';
-import {createStripe} from '../cjs/createStripe';
+import {createStripe} from '../cjs/stripe.core';
 import {getMockPlatformFunctions} from './testUtils.js';
 
 const testUtils = require('./testUtils.js');
-const Stripe = require('../cjs/stripe.node');
-const stripe = require('../cjs/stripe.node')(
+const Stripe = require('../cjs/stripe.cjs.node');
+const stripe = require('../cjs/stripe.cjs.node')(
   testUtils.getUserStripeKey(),
   'latest'
 );

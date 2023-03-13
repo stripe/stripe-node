@@ -107,7 +107,7 @@ describe('StripeResource', () => {
     };
 
     it('is not impacted by the global host', (done) => {
-      const stripe = require('../cjs/stripe.node')('sk_test', {
+      const stripe = require('../cjs/stripe.cjs.node')('sk_test', {
         host: 'bad.host.stripe.com',
       });
 
@@ -122,7 +122,7 @@ describe('StripeResource', () => {
     });
 
     it('still lets users override the host on a per-request basis', (done) => {
-      const stripe = require('../cjs/stripe.node')('sk_test');
+      const stripe = require('../cjs/stripe.cjs.node')('sk_test');
 
       const scope = nock('https://some.other.host.stripe.com')
         .get('/v1/resourceWithHost')
