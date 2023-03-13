@@ -60,8 +60,8 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn build-esm && yarn build-cjs",
-    "build-esm": "mkdir -p cjs && tsc -p configs/tsconfig.esm.json && echo '{\"type\":\"commonjs\"}' > cjs/package.json",
-    "build-cjs": "mkdir -p esm && tsc -p configs/tsconfig.cjs.json && echo '{\"type\":\"module\"}' > esm/package.json",
+    "build-esm": "mkdir -p cjs && tsc -p configs/tsconfig.esm.json",
+    "build-cjs": "mkdir -p esm && tsc -p configs/tsconfig.cjs.json",
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./esm ./cjs",
     "prepack": "yarn install && yarn build",
     "mocha": "nyc mocha",
@@ -75,17 +75,8 @@
   },
   "exports": {
     "types": "./types/index.d.ts",
-    "browser": {
-        "import": "./esm/stripe.esm.worker.js",
-        "require": "./cjs/stripe.cjs.worker.js"
-    },
-    "worker": {
-      "import": "./esm/stripe.esm.worker.js",
-      "require": "./cjs/stripe.cjs.worker.js"
-    },
-    "default": {
-      "import": "./esm/stripe.esm.node.js",
-      "require": "./cjs/stripe.cjs.node.js"
-    }
+    "browser": "./cjs/stripe.cjs.worker.js",
+    "worker": "./cjs/stripe.cjs.worker.js",
+    "default":  "./cjs/stripe.cjs.node.js"
   }
 }
