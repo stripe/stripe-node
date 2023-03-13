@@ -88,7 +88,9 @@ describe('RequestSender', () => {
 
   describe('Parameter encoding', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../cjs/stripe.cjs.node')(utils.getUserStripeKey());
+    const realStripe = require('../cjs/stripe.cjs.node')(
+      utils.getUserStripeKey()
+    );
 
     after(() => {
       nock.cleanAll();
@@ -335,7 +337,9 @@ describe('RequestSender', () => {
 
   describe('Retry Network Requests', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../cjs/stripe.cjs.node')(utils.getUserStripeKey());
+    const realStripe = require('../cjs/stripe.cjs.node')(
+      utils.getUserStripeKey()
+    );
 
     // Override the sleep timer to speed up tests
     realStripe.charges._getSleepTimeInMS = () => 0;
