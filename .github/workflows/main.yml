@@ -48,7 +48,7 @@ jobs:
         run: |
           if [[ `git status --porcelain` ]]; then
             git diff
-            >&2 echo "Changes detected after compiling TypeScript. Please run yarn build and check in all compiled files in lib/."
+            >&2 echo "Changes detected after compiling TypeScript. Please run yarn build and check in all compiled files in cjs/ and esm/."
             exit 1
           else
             exit 0

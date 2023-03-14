@@ -1,13 +1,13 @@
 import * as crypto from 'crypto';
 import * as http from 'http';
-import {CryptoProvider} from '../crypto/CryptoProvider';
+import {CryptoProvider} from '../crypto/CryptoProvider.js';
 import {EventEmitter} from 'events';
-import {HttpClient} from '../net/HttpClient';
-import {NodeCryptoProvider} from '../crypto/NodeCryptoProvider';
-import {NodeHttpClient} from '../net/NodeHttpClient';
-import {PlatformFunctions} from './PlatformFunctions';
-import {StripeError} from '../Error';
-import {concat} from '../utils';
+import {HttpClient} from '../net/HttpClient.js';
+import {NodeCryptoProvider} from '../crypto/NodeCryptoProvider.js';
+import {NodeHttpClient} from '../net/NodeHttpClient.js';
+import {PlatformFunctions} from './PlatformFunctions.js';
+import {StripeError} from '../Error.js';
+import {concat} from '../utils.js';
 import {exec} from 'child_process';
 
 class StreamProcessingError extends StripeError {}

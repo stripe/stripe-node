@@ -2,14 +2,14 @@
 
 'use strict';
 
-import {FetchHttpClient} from '../lib/net/FetchHttpClient';
-import {NodeHttpClient} from '../lib/net/NodeHttpClient';
-import {createStripe} from '../lib/stripe.common';
+import {FetchHttpClient} from '../cjs/net/FetchHttpClient';
+import {NodeHttpClient} from '../cjs/net/NodeHttpClient';
+import {createStripe} from '../cjs/stripe.core';
 import {getMockPlatformFunctions} from './testUtils.js';
 
 const testUtils = require('./testUtils.js');
-const Stripe = require('../lib/stripe.node');
-const stripe = require('../lib/stripe.node')(
+const Stripe = require('../cjs/stripe.cjs.node');
+const stripe = require('../cjs/stripe.cjs.node')(
   testUtils.getUserStripeKey(),
   'latest'
 );

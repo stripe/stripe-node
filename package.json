@@ -24,7 +24,7 @@
   "engines": {
     "node": ">=12.*"
   },
-  "main": "lib/stripe.node.js",
+  "main": "cjs/stripe.cjs.node.js",
   "types": "types/index.d.ts",
   "devDependencies": {
     "@types/chai": "^4.3.4",
@@ -59,8 +59,10 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./lib",
+    "build": "yarn build-esm && yarn build-cjs",
+    "build-esm": "mkdir -p esm && tsc -p tsconfig.esm.json",
+    "build-cjs": "mkdir -p cjs && tsc -p tsconfig.json",
+    "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./esm ./cjs",
     "prepack": "yarn install && yarn build",
     "mocha": "nyc mocha",
     "mocha-only": "mocha",
@@ -73,8 +75,8 @@
   },
   "exports": {
     "types": "./types/index.d.ts",
-    "browser": "./lib/stripe.worker.js",
-    "worker": "./lib/stripe.worker.js",
-    "default": "./lib/stripe.node.js"
+    "browser": "./cjs/stripe.cjs.worker.js",
+    "worker": "./cjs/stripe.cjs.worker.js",
+    "default": "./cjs/stripe.cjs.node.js"
   }
 }
