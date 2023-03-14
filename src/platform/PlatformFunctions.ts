@@ -1,10 +1,10 @@
 import * as http from 'http';
-import {CryptoProvider} from '../crypto/CryptoProvider';
+import {CryptoProvider} from '../crypto/CryptoProvider.js';
 import {EventEmitter} from 'events';
-import {FetchHttpClient} from '../net/FetchHttpClient';
-import {HttpClient} from '../net/HttpClient';
-import {StripeEmitter} from '../StripeEmitter';
-import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider';
+import {FetchHttpClient} from '../net/FetchHttpClient.js';
+import {HttpClient} from '../net/HttpClient.js';
+import {StripeEmitter} from '../StripeEmitter.js';
+import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider.js';
 
 /**
  * Interface encapsulating various utility functions whose

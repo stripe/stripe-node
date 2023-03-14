@@ -8,13 +8,13 @@ require('chai').use(require('chai-as-promised'));
 
 const http = require('http');
 
-const {CryptoProvider} = require('../lib/crypto/CryptoProvider');
+const {CryptoProvider} = require('../cjs/crypto/CryptoProvider');
 const {
   NodePlatformFunctions,
-} = require('../lib/platform/NodePlatformFunctions');
-const {RequestSender} = require('../lib/RequestSender');
-const {createStripe} = require('../lib/stripe.common');
-const stripe = require('../lib/stripe.node');
+} = require('../cjs/platform/NodePlatformFunctions');
+const {RequestSender} = require('../cjs/RequestSender');
+const {createStripe} = require('../cjs/stripe.core');
+const stripe = require('../cjs/stripe.cjs.node');
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 
@@ -30,7 +30,7 @@ const utils = (module.exports = {
     });
     server.listen(0, () => {
       const {port} = server.address();
-      const stripe = require('../lib/stripe.node')(
+      const stripe = require('../cjs/stripe.cjs.node')(
         module.exports.getUserStripeKey(),
         {
           host: 'localhost',
@@ -47,7 +47,7 @@ const utils = (module.exports = {
   },
 
   getStripeMockClient: () => {
-    const stripe = require('../lib/stripe.node');
+    const stripe = require('../cjs/stripe.cjs.node');
 
     return stripe('sk_test_123', {
       host: process.env.STRIPE_MOCK_HOST || 'localhost',
@@ -187,7 +187,7 @@ const utils = (module.exports = {
 
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
-    const stripe = require('../lib/stripe.node');
+    const stripe = require('../cjs/stripe.cjs.node');
     const stripeInstance = stripe('fakeAuthToken', config);
 
     stripeInstance.REQUESTS = [];
@@ -211,7 +211,7 @@ const utils = (module.exports = {
     function CleanupUtility(timeout) {
       const self = this;
       this._cleanupFns = [];
-      this._stripe = require('../lib/stripe.node')(
+      this._stripe = require('../cjs/stripe.cjs.node')(
         utils.getUserStripeKey(),
         'latest'
       );

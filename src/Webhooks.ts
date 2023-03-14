@@ -1,6 +1,6 @@
-import {StripeError, StripeSignatureVerificationError} from './Error';
-import {CryptoProvider} from './crypto/CryptoProvider';
-import {PlatformFunctions} from './platform/PlatformFunctions';
+import {StripeError, StripeSignatureVerificationError} from './Error.js';
+import {CryptoProvider} from './crypto/CryptoProvider.js';
+import {PlatformFunctions} from './platform/PlatformFunctions.js';
 
 type WebhookHeader = string | Uint8Array;
 type WebhookParsedHeader = {

@@ -1,6 +1,6 @@
 'use strict';
 
-const {NodeCryptoProvider} = require('../../lib/crypto/NodeCryptoProvider');
+const {NodeCryptoProvider} = require('../../cjs/crypto/NodeCryptoProvider');
 
 const {createCryptoProviderTestSuite} = require('./helpers');
 

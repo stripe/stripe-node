@@ -2,7 +2,7 @@
 
 const testUtils = require('./testUtils.js');
 const chai = require('chai');
-const stripe = require('../lib/stripe.node')(
+const stripe = require('../cjs/stripe.cjs.node')(
   testUtils.getUserStripeKey(),
   'latest'
 );

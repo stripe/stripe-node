@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 const fetch = require('node-fetch');
 const nock = require('nock');
 const {Readable} = require('stream');
-const {FetchHttpClient} = require('../../lib/net/FetchHttpClient');
+const {FetchHttpClient} = require('../../cjs/net/FetchHttpClient');
 
 const createFetchHttpClient = () => {
   return new FetchHttpClient(fetch);
