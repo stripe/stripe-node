@@ -60,8 +60,8 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn build-esm && yarn build-cjs",
-    "build-esm": "mkdir -p cjs && tsc -p configs/tsconfig.esm.json",
-    "build-cjs": "mkdir -p esm && tsc -p configs/tsconfig.cjs.json",
+    "build-esm": "mkdir -p cjs && tsc -p tsconfig.esm.json",
+    "build-cjs": "mkdir -p esm && tsc -p tsconfig.json",
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./esm ./cjs",
     "prepack": "yarn install && yarn build",
     "mocha": "nyc mocha",

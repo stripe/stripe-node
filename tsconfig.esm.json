@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "outDir": "./esm",
+    "module": "es2022",
+  },
+  "exclude": ["./src/stripe.cjs.node.ts", "./src/stripe.cjs.worker.ts"],
+}

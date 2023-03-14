@@ -245,12 +245,6 @@ module.exports = {
   extends: ['plugin:prettier/recommended'],
   overrides: [
     {
-      files: ['esm/**/*.js'],
-      parserOptions: {
-        sourceType: 'module',
-      },
-    },
-    {
       files: ['**/*.ts'],
       parser: '@typescript-eslint/parser',
       plugins: ['@typescript-eslint', 'prettier'],

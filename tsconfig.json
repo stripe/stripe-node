@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "outDir": "./cjs",
+    "module": "commonjs",
     "target": "es2017",
     "checkJs": false,
     "alwaysStrict": true,
@@ -9,5 +11,6 @@
     "strictFunctionTypes": true,
     "types": [ "node" ]
   },
-  "include": ["../src/**/*"],
+  "include": ["./src/**/*"],
+  "exclude": ["./src/stripe.esm.node.ts", "./src/stripe.esm.worker.ts"],
 }

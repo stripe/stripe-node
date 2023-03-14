@@ -10,4 +10,5 @@
 !/VERSION
 !/package.json
 !/cjs/**/*
+!/esm/**/*
 !/types/**/*
