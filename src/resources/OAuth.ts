@@ -1,7 +1,7 @@
 'use strict';
 
-import {StripeResource} from '../StripeResource';
-import {stringifyRequestData} from '../utils';
+import {StripeResource} from '../StripeResource.js';
+import {stringifyRequestData} from '../utils.js';
 
 type OAuthAuthorizeUrlParams = {
   response_type?: 'code';

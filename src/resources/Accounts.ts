@@ -1,8 +1,6 @@
 // File generated from our OpenAPI spec
 
-'use strict';
-
-import {StripeResource} from '../StripeResource';
+import {StripeResource} from '../StripeResource.js';
 const stripeMethod = StripeResource.method;
 
 // Since path can either be `account` or `accounts`, support both through stripeMethod path;
