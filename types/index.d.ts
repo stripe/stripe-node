@@ -17,6 +17,8 @@
 ///<reference path='./BalanceTransactionsResource.d.ts' />
 ///<reference path='./BillingPortal/ConfigurationsResource.d.ts' />
 ///<reference path='./BillingPortal/SessionsResource.d.ts' />
+///<reference path='./Capital/FinancingOffersResource.d.ts' />
+///<reference path='./Capital/FinancingSummaryResource.d.ts' />
 ///<reference path='./Capital/FinancingTransactionsResource.d.ts' />
 ///<reference path='./ChargesResource.d.ts' />
 ///<reference path='./Checkout/SessionsResource.d.ts' />
@@ -121,6 +123,8 @@
 ///<reference path='./BillingPortal/Configurations.d.ts' />
 ///<reference path='./BillingPortal/Sessions.d.ts' />
 ///<reference path='./Capabilities.d.ts' />
+///<reference path='./Capital/FinancingOffers.d.ts' />
+///<reference path='./Capital/FinancingSummary.d.ts' />
 ///<reference path='./Capital/FinancingTransactions.d.ts' />
 ///<reference path='./Cards.d.ts' />
 ///<reference path='./CashBalances.d.ts' />
@@ -298,6 +302,8 @@ declare module 'stripe' {
       sessions: Stripe.BillingPortal.SessionsResource;
     };
     capital: {
+      financingOffers: Stripe.Capital.FinancingOffersResource;
+      financingSummary: Stripe.Capital.FinancingSummaryResource;
       financingTransactions: Stripe.Capital.FinancingTransactionsResource;
     };
     checkout: {

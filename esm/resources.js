@@ -19,6 +19,8 @@ import { DebitReversals as TreasuryDebitReversals } from './resources/Treasury/D
 import { Disputes as IssuingDisputes } from './resources/Issuing/Disputes.js';
 import { EarlyFraudWarnings as RadarEarlyFraudWarnings } from './resources/Radar/EarlyFraudWarnings.js';
 import { FinancialAccounts as TreasuryFinancialAccounts } from './resources/Treasury/FinancialAccounts.js';
+import { FinancingOffers as CapitalFinancingOffers } from './resources/Capital/FinancingOffers.js';
+import { FinancingSummary as CapitalFinancingSummary } from './resources/Capital/FinancingSummary.js';
 import { FinancingTransactions as CapitalFinancingTransactions } from './resources/Capital/FinancingTransactions.js';
 import { InboundTransfers as TestHelpersTreasuryInboundTransfers } from './resources/TestHelpers/Treasury/InboundTransfers.js';
 import { InboundTransfers as TreasuryInboundTransfers } from './resources/Treasury/InboundTransfers.js';
@@ -109,6 +111,8 @@ export const BillingPortal = resourceNamespace('billingPortal', {
     Sessions: BillingPortalSessions,
 });
 export const Capital = resourceNamespace('capital', {
+    FinancingOffers: CapitalFinancingOffers,
+    FinancingSummary: CapitalFinancingSummary,
     FinancingTransactions: CapitalFinancingTransactions,
 });
 export const Checkout = resourceNamespace('checkout', {
