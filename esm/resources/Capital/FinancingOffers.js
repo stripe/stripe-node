@@ -11,8 +11,4 @@ export const FinancingOffers = StripeResource.extend({
         fullPath: '/v1/capital/financing_offers',
         methodType: 'list',
     }),
-    markDelivered: stripeMethod({
-        method: 'POST',
-        fullPath: '/v1/capital/financing_offers/{financing_offer}/mark_delivered',
-    }),
 });

@@ -708,6 +708,11 @@ declare module 'stripe' {
         link?: PaymentMethodOptions.Link;
 
         /**
+         * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
+         */
+        paypal?: PaymentMethodOptions.Paypal;
+
+        /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -889,6 +894,12 @@ declare module 'stripe' {
            * Token used for persistent Link logins.
            */
           persistent_token?: string;
+        }
+
+        interface Paypal {
+          billing_agreement_id?: string;
+
+          currency?: string;
         }
 
         interface SepaDebit {
@@ -1636,6 +1647,11 @@ declare module 'stripe' {
         link?: PaymentMethodOptions.Link;
 
         /**
+         * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
+         */
+        paypal?: PaymentMethodOptions.Paypal;
+
+        /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -1817,6 +1833,12 @@ declare module 'stripe' {
            * Token used for persistent Link logins.
            */
           persistent_token?: string;
+        }
+
+        interface Paypal {
+          billing_agreement_id?: string;
+
+          currency?: string;
         }
 
         interface SepaDebit {
@@ -2646,6 +2668,11 @@ declare module 'stripe' {
         link?: PaymentMethodOptions.Link;
 
         /**
+         * If this is a `paypal` PaymentMethod, this sub-hash contains details about the PayPal payment method options.
+         */
+        paypal?: PaymentMethodOptions.Paypal;
+
+        /**
          * If this is a `sepa_debit` SetupIntent, this sub-hash contains details about the SEPA Debit payment method options.
          */
         sepa_debit?: PaymentMethodOptions.SepaDebit;
@@ -2827,6 +2854,12 @@ declare module 'stripe' {
            * Token used for persistent Link logins.
            */
           persistent_token?: string;
+        }
+
+        interface Paypal {
+          billing_agreement_id?: string;
+
+          currency?: string;
         }
 
         interface SepaDebit {

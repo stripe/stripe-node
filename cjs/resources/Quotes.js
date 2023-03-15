@@ -65,7 +65,7 @@ exports.Quotes = StripeResource_js_1.StripeResource.extend({
     }),
     previewInvoiceLines: stripeMethod({
         method: 'GET',
-        fullPath: '/v1/quotes/{quote}/preview_invoice_lines',
+        fullPath: '/v1/quotes/{quote}/preview_invoices/{preview_invoice}/lines',
         methodType: 'list',
     }),
     previewInvoices: stripeMethod({

@@ -98,7 +98,7 @@ declare module 'stripe' {
        */
       application_fee_amount: number | null;
 
-      applies_to?: Invoice.AppliesTo | null;
+      applies_to?: Invoice.AppliesTo;
 
       /**
        * Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule.
@@ -899,6 +899,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'cashapp'
           | 'customer_balance'
           | 'fpx'
           | 'giropay'
@@ -907,6 +908,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'paynow'
+          | 'paypal'
           | 'promptpay'
           | 'sepa_credit_transfer'
           | 'sepa_debit'

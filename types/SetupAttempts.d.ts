@@ -106,11 +106,15 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodDetails.CardPresent;
 
+        cashapp?: PaymentMethodDetails.Cashapp;
+
         ideal?: PaymentMethodDetails.Ideal;
 
         klarna?: PaymentMethodDetails.Klarna;
 
         link?: PaymentMethodDetails.Link;
+
+        paypal?: PaymentMethodDetails.Paypal;
 
         sepa_debit?: PaymentMethodDetails.SepaDebit;
 
@@ -246,6 +250,8 @@ declare module 'stripe' {
           generated_card: string | Stripe.PaymentMethod | null;
         }
 
+        interface Cashapp {}
+
         interface Ideal {
           /**
            * The customer's bank. Can be one of `abn_amro`, `asn_bank`, `bunq`, `handelsbanken`, `ing`, `knab`, `moneyou`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.
@@ -316,6 +322,8 @@ declare module 'stripe' {
         interface Klarna {}
 
         interface Link {}
+
+        interface Paypal {}
 
         interface SepaDebit {}
 
