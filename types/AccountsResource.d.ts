@@ -197,6 +197,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The cashapp_payments capability.
+         */
+        cashapp_payments?: Capabilities.CashappPayments;
+
+        /**
          * The eps_payments capability.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -386,6 +391,13 @@ declare module 'stripe' {
         }
 
         interface CartesBancairesPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CashappPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1424,6 +1436,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The cashapp_payments capability.
+         */
+        cashapp_payments?: Capabilities.CashappPayments;
+
+        /**
          * The eps_payments capability.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -1613,6 +1630,13 @@ declare module 'stripe' {
         }
 
         interface CartesBancairesPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface CashappPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

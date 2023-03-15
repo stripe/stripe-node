@@ -59,6 +59,11 @@ declare module 'stripe' {
       card?: PaymentMethodCreateParams.Card1 | PaymentMethodCreateParams.Card2;
 
       /**
+       * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+       */
+      cashapp?: PaymentMethodCreateParams.Cashapp;
+
+      /**
        * The `Customer` to whom the original PaymentMethod is attached.
        */
       customer?: string;
@@ -291,6 +296,8 @@ declare module 'stripe' {
         token: string;
       }
 
+      interface Cashapp {}
+
       interface CustomerBalance {}
 
       interface Eps {
@@ -513,6 +520,7 @@ declare module 'stripe' {
         | 'blik'
         | 'boleto'
         | 'card'
+        | 'cashapp'
         | 'customer_balance'
         | 'eps'
         | 'fpx'
@@ -612,6 +620,11 @@ declare module 'stripe' {
       card?: PaymentMethodUpdateParams.Card;
 
       /**
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
+       */
+      cashapp?: PaymentMethodUpdateParams.Cashapp;
+
+      /**
        * Specifies which fields in the response should be expanded.
        */
       expand?: Array<string>;
@@ -682,6 +695,8 @@ declare module 'stripe' {
         exp_year?: number;
       }
 
+      interface Cashapp {}
+
       interface Link {}
 
       interface SepaDebit {}
@@ -728,6 +743,7 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'card_present'
+        | 'cashapp'
         | 'customer_balance'
         | 'eps'
         | 'fpx'

@@ -269,6 +269,8 @@ declare module 'stripe' {
       }
 
       interface NextAction {
+        cashapp_handle_redirect_or_display_qr_code?: NextAction.CashappHandleRedirectOrDisplayQrCode;
+
         redirect_to_url?: NextAction.RedirectToUrl;
 
         /**
@@ -285,6 +287,39 @@ declare module 'stripe' {
       }
 
       namespace NextAction {
+        interface CashappHandleRedirectOrDisplayQrCode {
+          /**
+           * The URL to the hosted Cash App Pay instructions page, which allows customers to view the QR code, and supports QR code refreshing on expiration.
+           */
+          hosted_instructions_url: string;
+
+          /**
+           * The url for mobile redirect based auth
+           */
+          mobile_auth_url: string;
+
+          qr_code: CashappHandleRedirectOrDisplayQrCode.QrCode;
+        }
+
+        namespace CashappHandleRedirectOrDisplayQrCode {
+          interface QrCode {
+            /**
+             * The date (unix timestamp) when the QR code expires.
+             */
+            expires_at: number;
+
+            /**
+             * The image_url_png string used to render QR code
+             */
+            image_url_png: string;
+
+            /**
+             * The image_url_svg string used to render QR code
+             */
+            image_url_svg: string;
+          }
+        }
+
         interface RedirectToUrl {
           /**
            * If the customer does not exit their browser while authenticating, they will be redirected to this specified URL after completion.

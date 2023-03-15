@@ -417,6 +417,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodDetails.CardPresent;
 
+        cashapp?: PaymentMethodDetails.Cashapp;
+
         customer_balance?: PaymentMethodDetails.CustomerBalance;
 
         eps?: PaymentMethodDetails.Eps;
@@ -1122,6 +1124,8 @@ declare module 'stripe' {
             type AccountType = 'checking' | 'credit' | 'prepaid' | 'unknown';
           }
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
