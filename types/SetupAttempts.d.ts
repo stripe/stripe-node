@@ -106,6 +106,8 @@ declare module 'stripe' {
 
         card_present?: PaymentMethodDetails.CardPresent;
 
+        cashapp?: PaymentMethodDetails.Cashapp;
+
         ideal?: PaymentMethodDetails.Ideal;
 
         klarna?: PaymentMethodDetails.Klarna;
@@ -245,6 +247,8 @@ declare module 'stripe' {
            */
           generated_card: string | Stripe.PaymentMethod | null;
         }
+
+        interface Cashapp {}
 
         interface Ideal {
           /**

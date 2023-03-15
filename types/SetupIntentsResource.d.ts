@@ -195,6 +195,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+         */
+        cashapp?: PaymentMethodData.Cashapp;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -385,6 +390,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -607,6 +614,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'blik'
           | 'boleto'
+          | 'cashapp'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -1072,6 +1080,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+         */
+        cashapp?: PaymentMethodData.Cashapp;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -1262,6 +1275,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -1484,6 +1499,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'blik'
           | 'boleto'
+          | 'cashapp'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
@@ -2031,6 +2047,11 @@ declare module 'stripe' {
         boleto?: PaymentMethodData.Boleto;
 
         /**
+         * If this is a `cashapp` PaymentMethod, this hash contains details about the Cash App Pay payment method.
+         */
+        cashapp?: PaymentMethodData.Cashapp;
+
+        /**
          * If this is a `customer_balance` PaymentMethod, this hash contains details about the CustomerBalance payment method.
          */
         customer_balance?: PaymentMethodData.CustomerBalance;
@@ -2221,6 +2242,8 @@ declare module 'stripe' {
            */
           tax_id: string;
         }
+
+        interface Cashapp {}
 
         interface CustomerBalance {}
 
@@ -2443,6 +2466,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'blik'
           | 'boleto'
+          | 'cashapp'
           | 'customer_balance'
           | 'eps'
           | 'fpx'
