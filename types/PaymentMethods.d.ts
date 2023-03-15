@@ -44,6 +44,8 @@ declare module 'stripe' {
 
       card_present?: PaymentMethod.CardPresent;
 
+      cashapp?: PaymentMethod.Cashapp;
+
       /**
        * Time at which the object was created. Measured in seconds since the Unix epoch.
        */
@@ -414,6 +416,8 @@ declare module 'stripe' {
 
       interface CardPresent {}
 
+      interface Cashapp {}
+
       interface CustomerBalance {}
 
       interface Eps {
@@ -703,6 +707,7 @@ declare module 'stripe' {
         | 'boleto'
         | 'card'
         | 'card_present'
+        | 'cashapp'
         | 'customer_balance'
         | 'eps'
         | 'fpx'

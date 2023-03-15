@@ -224,6 +224,11 @@ declare module 'stripe' {
         cartes_bancaires_payments?: Capabilities.CartesBancairesPayments;
 
         /**
+         * The status of the Cash App Pay capability of the account, or whether the account can directly process Cash App Pay payments.
+         */
+        cashapp_payments?: Capabilities.CashappPayments;
+
+        /**
          * The status of the EPS payments capability of the account, or whether the account can directly process EPS charges.
          */
         eps_payments?: Capabilities.EpsPayments;
@@ -358,6 +363,8 @@ declare module 'stripe' {
         type CardPayments = 'active' | 'inactive' | 'pending';
 
         type CartesBancairesPayments = 'active' | 'inactive' | 'pending';
+
+        type CashappPayments = 'active' | 'inactive' | 'pending';
 
         type EpsPayments = 'active' | 'inactive' | 'pending';
 

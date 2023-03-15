@@ -511,6 +511,7 @@ declare module 'stripe' {
           | 'bancontact'
           | 'boleto'
           | 'card'
+          | 'cashapp'
           | 'customer_balance'
           | 'fpx'
           | 'giropay'
