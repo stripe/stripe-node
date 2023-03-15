@@ -291,14 +291,14 @@ declare module 'stripe' {
           /**
            * The URL to the hosted Cash App Pay instructions page, which allows customers to view the QR code, and supports QR code refreshing on expiration.
            */
-          hosted_instructions_url?: string;
+          hosted_instructions_url: string;
 
           /**
            * The url for mobile redirect based auth
            */
-          mobile_auth_url?: string;
+          mobile_auth_url: string;
 
-          qr_code?: CashappHandleRedirectOrDisplayQrCode.QrCode;
+          qr_code: CashappHandleRedirectOrDisplayQrCode.QrCode;
         }
 
         namespace CashappHandleRedirectOrDisplayQrCode {
@@ -306,17 +306,17 @@ declare module 'stripe' {
             /**
              * The date (unix timestamp) when the QR code expires.
              */
-            expires_at?: number;
+            expires_at: number;
 
             /**
              * The image_url_png string used to render QR code
              */
-            image_url_png?: string;
+            image_url_png: string;
 
             /**
              * The image_url_svg string used to render QR code
              */
-            image_url_svg?: string;
+            image_url_svg: string;
           }
         }
 
@@ -364,6 +364,8 @@ declare module 'stripe' {
         card?: PaymentMethodOptions.Card;
 
         link?: PaymentMethodOptions.Link;
+
+        paypal?: PaymentMethodOptions.Paypal;
 
         sepa_debit?: PaymentMethodOptions.SepaDebit;
 
@@ -572,6 +574,18 @@ declare module 'stripe' {
            * Token used for persistent Link logins.
            */
           persistent_token: string | null;
+        }
+
+        interface Paypal {
+          /**
+           * The ID of the PayPal Billing Agreement
+           */
+          billing_agreement_id: string | null;
+
+          /**
+           * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+           */
+          currency: string | null;
         }
 
         interface SepaDebit {

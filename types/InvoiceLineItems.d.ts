@@ -26,8 +26,6 @@ declare module 'stripe' {
        */
       amount_excluding_tax: number | null;
 
-      applies_to?: InvoiceLineItem.AppliesTo | null;
-
       /**
        * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
@@ -127,27 +125,6 @@ declare module 'stripe' {
     }
 
     namespace InvoiceLineItem {
-      interface AppliesTo {
-        /**
-         * A custom string that identifies a new subscription schedule being created upon quote acceptance. All quote lines with the same `new_reference` field will be applied to the creation of a new subscription schedule.
-         */
-        new_reference: string | null;
-
-        /**
-         * The ID of the schedule the line applies to.
-         */
-        subscription_schedule: string | null;
-
-        /**
-         * Describes whether the quote line is affecting a new schedule or an existing schedule.
-         */
-        type: AppliesTo.Type;
-      }
-
-      namespace AppliesTo {
-        type Type = 'new_reference' | 'subscription_schedule';
-      }
-
       interface DiscountAmount {
         /**
          * The amount, in %s, of the discount.

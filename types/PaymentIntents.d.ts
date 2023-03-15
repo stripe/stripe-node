@@ -472,14 +472,14 @@ declare module 'stripe' {
           /**
            * The URL to the hosted Cash App Pay instructions page, which allows customers to view the QR code, and supports QR code refreshing on expiration.
            */
-          hosted_instructions_url?: string;
+          hosted_instructions_url: string;
 
           /**
            * The url for mobile redirect based auth
            */
-          mobile_auth_url?: string;
+          mobile_auth_url: string;
 
-          qr_code?: CashappHandleRedirectOrDisplayQrCode.QrCode;
+          qr_code: CashappHandleRedirectOrDisplayQrCode.QrCode;
         }
 
         namespace CashappHandleRedirectOrDisplayQrCode {
@@ -487,17 +487,17 @@ declare module 'stripe' {
             /**
              * The date (unix timestamp) when the QR code expires.
              */
-            expires_at?: number;
+            expires_at: number;
 
             /**
              * The image_url_png string used to render QR code
              */
-            image_url_png?: string;
+            image_url_png: string;
 
             /**
              * The image_url_svg string used to render QR code
              */
-            image_url_svg?: string;
+            image_url_svg: string;
           }
         }
 
@@ -1083,6 +1083,11 @@ declare module 'stripe' {
           capture_method?: 'manual';
 
           /**
+           * Preferred language of the Affirm authorization page that the customer is redirected to.
+           */
+          preferred_locale?: string;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -1662,6 +1667,19 @@ declare module 'stripe' {
            * A unique reference ID of the PayPal transaction. This must be a globally unique ID across all PayPal transactions or the transaction will fail.
            */
           reference_id?: string | null;
+
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           */
+          setup_future_usage?: Paypal.SetupFutureUsage;
+        }
+
+        namespace Paypal {
+          type SetupFutureUsage = 'none' | 'off_session';
         }
 
         interface Pix {
