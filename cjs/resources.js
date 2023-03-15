@@ -23,7 +23,6 @@ const DebitReversals_js_1 = require("./resources/Treasury/DebitReversals.js");
 const Disputes_js_1 = require("./resources/Issuing/Disputes.js");
 const EarlyFraudWarnings_js_1 = require("./resources/Radar/EarlyFraudWarnings.js");
 const FinancialAccounts_js_1 = require("./resources/Treasury/FinancialAccounts.js");
-const FinancingOffers_js_1 = require("./resources/Capital/FinancingOffers.js");
 const FinancingTransactions_js_1 = require("./resources/Capital/FinancingTransactions.js");
 const InboundTransfers_js_1 = require("./resources/TestHelpers/Treasury/InboundTransfers.js");
 const InboundTransfers_js_2 = require("./resources/Treasury/InboundTransfers.js");
@@ -163,7 +162,6 @@ exports.BillingPortal = (0, ResourceNamespace_js_1.resourceNamespace)('billingPo
     Sessions: Sessions_js_1.Sessions,
 });
 exports.Capital = (0, ResourceNamespace_js_1.resourceNamespace)('capital', {
-    FinancingOffers: FinancingOffers_js_1.FinancingOffers,
     FinancingTransactions: FinancingTransactions_js_1.FinancingTransactions,
 });
 exports.Checkout = (0, ResourceNamespace_js_1.resourceNamespace)('checkout', {
