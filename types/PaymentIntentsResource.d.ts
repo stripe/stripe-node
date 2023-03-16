@@ -172,7 +172,7 @@ declare module 'stripe' {
         enabled: boolean;
       }
 
-      type CaptureMethod = 'automatic' | 'manual';
+      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
 
@@ -2035,7 +2035,7 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentUpdateParams {
-      type CaptureMethod = 'automatic' | 'manual';
+      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface PaymentMethodData {
         /**
@@ -3894,7 +3894,7 @@ declare module 'stripe' {
     }
 
     namespace PaymentIntentConfirmParams {
-      type CaptureMethod = 'automatic' | 'manual';
+      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       interface MandateData1 {
         /**
