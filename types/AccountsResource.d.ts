@@ -2909,6 +2909,11 @@ declare module 'stripe' {
       default_for_currency?: boolean;
 
       /**
+       * Documents that may be submitted to satisfy various informational requests.
+       */
+      documents?: ExternalAccountUpdateParams.Documents;
+
+      /**
        * Two digit number representing the card's expiration month.
        */
       exp_month?: string;
@@ -2938,6 +2943,22 @@ declare module 'stripe' {
       type AccountHolderType = 'company' | 'individual';
 
       type AccountType = 'checking' | 'futsu' | 'savings' | 'toza';
+
+      interface Documents {
+        /**
+         * One or more documents that support the [Bank account ownership verification](https://support.stripe.com/questions/bank-account-ownership-verification) requirement. Must be a document associated with the bank account that displays the last 4 digits of the account number, either a statement or a voided check.
+         */
+        bank_account_ownership_verification?: Documents.BankAccountOwnershipVerification;
+      }
+
+      namespace Documents {
+        interface BankAccountOwnershipVerification {
+          /**
+           * One or more document ids returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `account_requirement`.
+           */
+          files?: Array<string>;
+        }
+      }
     }
 
     interface PersonUpdateParams {
