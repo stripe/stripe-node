@@ -79,6 +79,10 @@
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
     },
+    "deno": {
+      "import": "./esm/stripe.esm.worker.js",
+      "require": "./cjs/stripe.cjs.worker.js"
+    },
     "worker": {
       "import": "./esm/stripe.esm.worker.js",
       "require": "./cjs/stripe.cjs.worker.js"
