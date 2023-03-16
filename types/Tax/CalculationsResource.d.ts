@@ -35,6 +35,11 @@ declare module 'stripe' {
         preview?: boolean;
 
         /**
+         * Shipping cost details to be used for the calculation
+         */
+        shipping_cost?: CalculationCreateParams.ShippingCost;
+
+        /**
          * Timestamp of date at which the tax rules and rates in effect applies for the calculation. Measured in seconds since the Unix epoch.
          */
         tax_date?: number;
@@ -48,7 +53,7 @@ declare module 'stripe' {
           address?: CustomerDetails.Address;
 
           /**
-           * The type of customer address provided. Required when using `address`.
+           * The type of customer address provided.
            */
           address_source?: CustomerDetails.AddressSource;
 
@@ -209,6 +214,32 @@ declare module 'stripe' {
         }
 
         namespace LineItem {
+          type TaxBehavior = 'exclusive' | 'inclusive';
+        }
+
+        interface ShippingCost {
+          /**
+           * A positive integer in cents representing the shipping charge. If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes are calculated on top of this amount.
+           */
+          amount?: number;
+
+          /**
+           * If provided, the shipping rate's `amount`, `tax_code` and `tax_behavior` are used. It cannot be used with `amount`, `tax_code` and `tax_behavior`
+           */
+          shipping_rate?: string;
+
+          /**
+           * Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes taxes. Defaults to `exclusive`.
+           */
+          tax_behavior?: ShippingCost.TaxBehavior;
+
+          /**
+           * The [tax code](https://stripe.com/docs/tax/tax-categories) used to calculate tax on shipping. If not provided, the default shipping tax code from your [Tax Settings](https://stripe.com/settings/tax) is used.
+           */
+          tax_code?: string;
+        }
+
+        namespace ShippingCost {
           type TaxBehavior = 'exclusive' | 'inclusive';
         }
       }

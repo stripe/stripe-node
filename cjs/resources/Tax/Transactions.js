@@ -13,6 +13,10 @@ exports.Transactions = StripeResource_js_1.StripeResource.extend({
         method: 'GET',
         fullPath: '/v1/tax/transactions/{transaction}',
     }),
+    createFromCalculation: stripeMethod({
+        method: 'POST',
+        fullPath: '/v1/tax/transactions/create_from_calculation',
+    }),
     createReversal: stripeMethod({
         method: 'POST',
         fullPath: '/v1/tax/transactions/create_reversal',

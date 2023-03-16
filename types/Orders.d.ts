@@ -375,7 +375,7 @@ declare module 'stripe' {
             }
 
             namespace AfterpayClearpay {
-              type CaptureMethod = 'automatic' | 'manual';
+              type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
             }
 
             interface Alipay {
@@ -434,7 +434,7 @@ declare module 'stripe' {
             }
 
             namespace Card {
-              type CaptureMethod = 'automatic' | 'manual';
+              type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
               type SetupFutureUsage = 'none' | 'off_session' | 'on_session';
             }
