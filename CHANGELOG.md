@@ -1,34 +1,32 @@
 # Changelog
 
-## 11.16.0-beta.1 - 2023-03-16
-* [#1713](https://github.com/stripe/stripe-node/pull/1713) API Updates
-  * Add support for `create_from_calculation` method on resource `Tax.Transaction`
-  * Change type of `Invoice.applies_to` from `QuotesResourceQuoteLinesAppliesTo | null` to `QuotesResourceQuoteLinesAppliesTo`
-  * Add support for `paypal` on `Mandate.payment_method_details`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_options`, and `SetupIntentUpdateParams.payment_method_options`
-  * Add support for new value `automatic_async` on enums `Order.payment.settings.payment_method_options.afterpay_clearpay.capture_method`, `Order.payment.settings.payment_method_options.card.capture_method`, `OrderCreateParams.payment.settings.payment_method_options.afterpay_clearpay.capture_method`, `OrderCreateParams.payment.settings.payment_method_options.card.capture_method`, `OrderUpdateParams.payment.settings.payment_method_options.afterpay_clearpay.capture_method`, and `OrderUpdateParams.payment.settings.payment_method_options.card.capture_method`
-  * Add support for `setup_future_usage` on `Order.payment.settings.payment_method_options.paypal`, `OrderCreateParams.payment.settings.payment_method_options.paypal`, `OrderUpdateParams.payment.settings.payment_method_options.paypal`, `PaymentIntent.payment_method_options.paypal`, `PaymentIntentConfirmParams.payment_method_options.paypal`, `PaymentIntentCreateParams.payment_method_options.paypal`, and `PaymentIntentUpdateParams.payment_method_options.paypal`
-  * Change `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.hosted_instructions_url`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.mobile_auth_url`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.expires_at`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.image_url_png`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.image_url_svg`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.hosted_instructions_url`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.mobile_auth_url`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.expires_at`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.image_url_png`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.image_url_svg`, and `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code` to be required
-  * Remove support for `applies_to` on `QuotePreviewInvoiceLinesParams`
-  * Add support for `shipping_cost` on `Tax.Calculation`, `Tax.Transaction`, `TaxCalculationCreateParams`, and `TaxTransactionCreateReversalParams`
-  * Add support for `tax_breakdown` on `Tax.Calculation`
-  * Remove support for `tax_summary` on `Tax.Calculation`
-* [#1715](https://github.com/stripe/stripe-node/pull/1715) Merge master into beta branch
-* [#1711](https://github.com/stripe/stripe-node/pull/1711) Update generated code for beta (new)
-  * Remove support for resource `Capital.FinancingSummary`
-  * Remove support for `retrieve` method on resource `FinancingSummary`
-  * Remove support for `mark_delivered` method on resource `Capital.FinancingOffer`
-  * Add support for `cashapp` on `Checkout.Session.payment_method_options`, `CheckoutSessionCreateParams.payment_method_options`, and `SetupAttempt.payment_method_details`
-  * Add support for new value `cashapp` on enum `CheckoutSessionCreateParams.payment_method_types[]`
-  * Add support for new values `cashapp` and `paypal` on enums `Invoice.payment_settings.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Subscription.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_types[]`
-  * Change type of `Invoice.applies_to` from `QuotesResourceQuoteLinesAppliesTo | null` to `QuotesResourceQuoteLinesAppliesTo`
-  * Add support for `paypal` on `Mandate.payment_method_details`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_options`, and `SetupIntentUpdateParams.payment_method_options`
-  * Add support for `setup_future_usage` on `Order.payment.settings.payment_method_options.paypal`, `OrderCreateParams.payment.settings.payment_method_options.paypal`, `OrderUpdateParams.payment.settings.payment_method_options.paypal`, `PaymentIntent.payment_method_options.paypal`, `PaymentIntentConfirmParams.payment_method_options.paypal`, `PaymentIntentCreateParams.payment_method_options.paypal`, and `PaymentIntentUpdateParams.payment_method_options.paypal`
-  * Add support for `preferred_locale` on `PaymentIntent.payment_method_options.affirm`, `PaymentIntentConfirmParams.payment_method_options.affirm`, `PaymentIntentCreateParams.payment_method_options.affirm`, and `PaymentIntentUpdateParams.payment_method_options.affirm`
-  * Change `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.hosted_instructions_url`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.mobile_auth_url`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.expires_at`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.image_url_png`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.image_url_svg`, `PaymentIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.hosted_instructions_url`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.mobile_auth_url`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.expires_at`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.image_url_png`, `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code.image_url_svg`, and `SetupIntent.next_action.cashapp_handle_redirect_or_display_qr_code.qr_code` to be required
-  * Add support for new value `cashapp` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
-  * Remove support for `applies_to` on `QuotePreviewInvoiceLinesParams`
+## 11.15.0 - 2023-03-16
+* [#1714](https://github.com/stripe/stripe-node/pull/1714) API Updates
+  * Add support for `cashapp_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for new value `cashapp` as a new `type` throughout the API.
+  * Add support for `future_requirements` and `requirements` on `BankAccount`
+  * Add support for `country` on `Charge.payment_method_details.link`
+  * Add support for new value `automatic_async` on enums `CheckoutSessionCreateParams.payment_intent_data.capture_method`, `PaymentIntent.capture_method`, `PaymentIntentConfirmParams.capture_method`, `PaymentIntentCreateParams.capture_method`, `PaymentIntentUpdateParams.capture_method`, `PaymentLink.payment_intent_data.capture_method`, and `PaymentLinkCreateParams.payment_intent_data.capture_method`
+  
+  * Add support for `preferred_locale` on `PaymentIntent.payment_method_options.affirm`, 
+  * Add support for `cashapp_handle_redirect_or_display_qr_code` on `PaymentIntent.next_action` and `SetupIntent.next_action`
   * Add support for new value `payout.reconciliation_completed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
-* [#1708](https://github.com/stripe/stripe-node/pull/1708) Merge origin/master into beta
+* [#1709](https://github.com/stripe/stripe-node/pull/1709) Add ES module package entry point
+  * Add support for ES modules by defining a separate ESM entry point. This updates stripe-node to be a [dual CommonJS / ES module package](https://nodejs.org/api/packages.html#dual-commonjses-module-packages).
+* [#1704](https://github.com/stripe/stripe-node/pull/1704) Configure 2 TypeScript compile targets for ESM and CJS
+* [#1710](https://github.com/stripe/stripe-node/pull/1710) Update generated code (new)
+  * Add support for `cashapp_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for `cashapp` on `Charge.payment_method_details`, `Checkout.Session.payment_method_options`, `CheckoutSessionCreateParams.payment_method_options`, `Mandate.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethodUpdateParams`, `PaymentMethod`, `SetupAttempt.payment_method_details`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for new value `cashapp` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for new value `cashapp` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
+  * Add support for new value `cashapp` on enums `Invoice.payment_settings.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Subscription.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_types[]`
+  * Add support for new value `cashapp` on enums `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
+  * Add support for `preferred_locale` on `PaymentIntent.payment_method_options.affirm`, `PaymentIntentConfirmParams.payment_method_options.affirm`, `PaymentIntentCreateParams.payment_method_options.affirm`, and `PaymentIntentUpdateParams.payment_method_options.affirm`
+  * Add support for `cashapp_handle_redirect_or_display_qr_code` on `PaymentIntent.next_action` and `SetupIntent.next_action`
+  * Add support for new value `cashapp` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
+  * Add support for new value `cashapp` on enum `PaymentMethodCreateParams.type`
+  * Add support for new value `cashapp` on enum `PaymentMethod.type`
+  * Add support for new value `payout.reconciliation_completed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
 
 ## 11.15.0-beta.1 - 2023-03-09
 * [#1705](https://github.com/stripe/stripe-node/pull/1705) API Updates for beta branch
