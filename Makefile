@@ -1,4 +1,4 @@
-.PHONY: codegen-format update-version
+.PHONY: codegen-format update-version test ci-test
 update-version:
 	@echo "$(VERSION)" > VERSION
 	@perl -pi -e 's|"version": "[.\-\d\w]+"|"version": "$(VERSION)"|' package.json
@@ -6,3 +6,8 @@ update-version:
 
 codegen-format:
 	yarn && yarn fix && yarn build
+
+ci-test:
+	yarn && yarn test
+
+test: ci-test

@@ -84,11 +84,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Start stripe-mock
-        run: docker run -d -p 12111-12112:12111-12112 stripe/stripe-mock && sleep 5
+      - uses: stripe/openapi/actions/stripe-mock@master
 
       - name: Test
-        run: yarn && yarn test
+        run: make ci-test
 
       - name: Coveralls
         run: yarn report && yarn coveralls
@@ -127,3 +126,7 @@ jobs:
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
           NPM_OTP: ${{ secrets.NPM_OTP }}
+      - uses: stripe/openapi/actions/notify-release@master
+        if: always()
+        with:
+          bot_token: ${{ secrets.SLACK_BOT_TOKEN }}

@@ -6,7 +6,7 @@ const stripe = require('./testUtils.js').getSpyableStripe();
 const expect = require('chai').expect;
 const testUtils = require('./testUtils.js');
 
-const {StripeResource} = require('../cjs/StripeResource');
+const {StripeResource} = require('../cjs/StripeResource.js');
 const stripeMethod = StripeResource.method;
 
 describe('StripeResource', () => {
@@ -107,7 +107,7 @@ describe('StripeResource', () => {
     };
 
     it('is not impacted by the global host', (done) => {
-      const stripe = require('../cjs/stripe.cjs.node')('sk_test', {
+      const stripe = require('../cjs/stripe.cjs.node.js')('sk_test', {
         host: 'bad.host.stripe.com',
       });
 
@@ -122,7 +122,7 @@ describe('StripeResource', () => {
     });
 
     it('still lets users override the host on a per-request basis', (done) => {
-      const stripe = require('../cjs/stripe.cjs.node')('sk_test');
+      const stripe = require('../cjs/stripe.cjs.node.js')('sk_test');
 
       const scope = nock('https://some.other.host.stripe.com')
         .get('/v1/resourceWithHost')

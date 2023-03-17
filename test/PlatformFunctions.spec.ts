@@ -5,12 +5,12 @@ require('./testUtils.js');
 import * as fs from 'fs';
 import * as path from 'path';
 
-import {FetchHttpClient} from '../cjs/net/FetchHttpClient';
-import {NodeCryptoProvider} from '../cjs/crypto/NodeCryptoProvider';
-import {NodeHttpClient} from '../cjs/net/NodeHttpClient';
-import {NodePlatformFunctions} from '../cjs/platform/NodePlatformFunctions';
-import {PlatformFunctions} from '../cjs/platform/PlatformFunctions';
-import {SubtleCryptoProvider} from '../cjs/crypto/SubtleCryptoProvider';
+import {FetchHttpClient} from '../cjs/net/FetchHttpClient.js';
+import {NodeCryptoProvider} from '../cjs/crypto/NodeCryptoProvider.js';
+import {NodeHttpClient} from '../cjs/net/NodeHttpClient.js';
+import {NodePlatformFunctions} from '../cjs/platform/NodePlatformFunctions.js';
+import {PlatformFunctions} from '../cjs/platform/PlatformFunctions.js';
+import {SubtleCryptoProvider} from '../cjs/crypto/SubtleCryptoProvider.js';
 
 import {expect} from 'chai';
 import {webcrypto} from 'crypto';
@@ -21,7 +21,7 @@ if (process.versions.node < '15') {
   );
 } else {
   import(
-    '../cjs/platform/WebPlatformFunctions'
+    '../cjs/platform/WebPlatformFunctions.js'
   ).then(({WebPlatformFunctions}) => testPlatform(new WebPlatformFunctions()));
 }
 
