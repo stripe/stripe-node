@@ -1,5 +1,33 @@
 # Changelog
 
+## 11.15.0 - 2023-03-16
+* [#1714](https://github.com/stripe/stripe-node/pull/1714) API Updates
+  * Add support for `cashapp_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for new value `cashapp` as a new `type` throughout the API.
+  * Add support for `future_requirements` and `requirements` on `BankAccount`
+  * Add support for `country` on `Charge.payment_method_details.link`
+  * Add support for new value `automatic_async` on enums `CheckoutSessionCreateParams.payment_intent_data.capture_method`, `PaymentIntent.capture_method`, `PaymentIntentConfirmParams.capture_method`, `PaymentIntentCreateParams.capture_method`, `PaymentIntentUpdateParams.capture_method`, `PaymentLink.payment_intent_data.capture_method`, and `PaymentLinkCreateParams.payment_intent_data.capture_method`
+  
+  * Add support for `preferred_locale` on `PaymentIntent.payment_method_options.affirm`, 
+  * Add support for `cashapp_handle_redirect_or_display_qr_code` on `PaymentIntent.next_action` and `SetupIntent.next_action`
+  * Add support for new value `payout.reconciliation_completed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#1709](https://github.com/stripe/stripe-node/pull/1709) Add ES module package entry point
+  * Add support for ES modules by defining a separate ESM entry point. This updates stripe-node to be a [dual CommonJS / ES module package](https://nodejs.org/api/packages.html#dual-commonjses-module-packages).
+* [#1704](https://github.com/stripe/stripe-node/pull/1704) Configure 2 TypeScript compile targets for ESM and CJS
+* [#1710](https://github.com/stripe/stripe-node/pull/1710) Update generated code (new)
+  * Add support for `cashapp_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
+  * Add support for `cashapp` on `Charge.payment_method_details`, `Checkout.Session.payment_method_options`, `CheckoutSessionCreateParams.payment_method_options`, `Mandate.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethodUpdateParams`, `PaymentMethod`, `SetupAttempt.payment_method_details`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentCreateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_data`
+  * Add support for new value `cashapp` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for new value `cashapp` on enums `CustomerListPaymentMethodsParams.type` and `PaymentMethodListParams.type`
+  * Add support for new value `cashapp` on enums `Invoice.payment_settings.payment_method_types[]`, `InvoiceCreateParams.payment_settings.payment_method_types[]`, `InvoiceUpdateParams.payment_settings.payment_method_types[]`, `Subscription.payment_settings.payment_method_types[]`, `SubscriptionCreateParams.payment_settings.payment_method_types[]`, and `SubscriptionUpdateParams.payment_settings.payment_method_types[]`
+  * Add support for new value `cashapp` on enums `PaymentIntentConfirmParams.payment_method_data.type`, `PaymentIntentCreateParams.payment_method_data.type`, `PaymentIntentUpdateParams.payment_method_data.type`, `SetupIntentConfirmParams.payment_method_data.type`, `SetupIntentCreateParams.payment_method_data.type`, and `SetupIntentUpdateParams.payment_method_data.type`
+  * Add support for `preferred_locale` on `PaymentIntent.payment_method_options.affirm`, `PaymentIntentConfirmParams.payment_method_options.affirm`, `PaymentIntentCreateParams.payment_method_options.affirm`, and `PaymentIntentUpdateParams.payment_method_options.affirm`
+  * Add support for `cashapp_handle_redirect_or_display_qr_code` on `PaymentIntent.next_action` and `SetupIntent.next_action`
+  * Add support for new value `cashapp` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
+  * Add support for new value `cashapp` on enum `PaymentMethodCreateParams.type`
+  * Add support for new value `cashapp` on enum `PaymentMethod.type`
+  * Add support for new value `payout.reconciliation_completed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 11.14.0 - 2023-03-09
 * [#1703](https://github.com/stripe/stripe-node/pull/1703) API Updates
   * Add support for `card_issuing` on `IssuingCardholderCreateParams.individual` and `IssuingCardholderUpdateParams.individual`
