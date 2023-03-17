@@ -2,8 +2,8 @@
 
 'use strict';
 
-import {FetchHttpClient} from '../cjs/net/FetchHttpClient';
-import {NodeHttpClient} from '../cjs/net/NodeHttpClient';
+import {FetchHttpClient} from '../cjs/net/FetchHttpClient.js';
+import {NodeHttpClient} from '../cjs/net/NodeHttpClient.js';
 import {createStripe} from '../cjs/stripe.core';
 import {getMockPlatformFunctions} from './testUtils.js';
 

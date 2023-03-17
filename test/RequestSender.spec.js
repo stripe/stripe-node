@@ -1,11 +1,11 @@
 'use strict';
 
-const {RequestSender} = require('../cjs/RequestSender');
+const {RequestSender} = require('../cjs/RequestSender.js');
 
 const stripe = require('./testUtils.js').getSpyableStripe();
 const expect = require('chai').expect;
 
-const {HttpClientResponse} = require('../cjs/net/HttpClient');
+const {HttpClientResponse} = require('../cjs/net/HttpClient.js');
 const utils = require('./testUtils.js');
 const nock = require('nock');
 
@@ -16,7 +16,7 @@ const {
   StripeRateLimitError,
   StripeError,
   StripeConnectionError,
-} = require('../cjs/Error');
+} = require('../cjs/Error.js');
 describe('RequestSender', () => {
   const sender = new RequestSender(stripe, 0);
 

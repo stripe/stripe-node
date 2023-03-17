@@ -1,6 +1,8 @@
 'use strict';
 
-const {SubtleCryptoProvider} = require('../../cjs/crypto/SubtleCryptoProvider');
+const {
+  SubtleCryptoProvider,
+} = require('../../cjs/crypto/SubtleCryptoProvider.js');
 const webcrypto = require('crypto').webcrypto;
 const expect = require('chai').expect;
 
@@ -10,7 +12,7 @@ if (!webcrypto || !webcrypto.subtle) {
     `Skipping SubtleCryptoProvider tests. No 'webcrypto.subtle' available for ${process.version}.`
   );
 } else {
-  const {createCryptoProviderTestSuite} = require('./helpers');
+  const {createCryptoProviderTestSuite} = require('./helpers.js');
 
   describe('SubtleCryptoProvider', () => {
     const provider = new SubtleCryptoProvider(webcrypto.subtle);
