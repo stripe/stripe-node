@@ -10,7 +10,7 @@ declare module 'stripe' {
         from_calculation: string;
 
         /**
-         * A custom order or sale identifier, such as 'myOrder_123'. Must be unique across all transactions.
+         * A custom order or sale identifier, such as 'myOrder_123'. Must be unique across all transactions including reversals.
          */
         reference: string;
 
@@ -32,9 +32,31 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface TransactionCreateFromCalculationParams {
+        /**
+         * Tax Calculation ID to be used as input when creating the transaction.
+         */
+        calculation: string;
+
+        /**
+         * A custom order or sale identifier, such as 'myOrder_123'. Must be unique across all transactions including reversals.
+         */
+        reference: string;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+         */
+        metadata?: Stripe.MetadataParam;
+      }
+
       interface TransactionCreateReversalParams {
         /**
-         * If `partial`, the provided line item amounts are reversed. If `full`, the original transaction is fully reversed.
+         * If `partial`, the provided line item or shipping cost amounts are reversed. If `full`, the original transaction is fully reversed.
          */
         mode: TransactionCreateReversalParams.Mode;
 
@@ -62,6 +84,11 @@ declare module 'stripe' {
          * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
          */
         metadata?: Stripe.MetadataParam;
+
+        /**
+         * The shipping cost to reverse.
+         */
+        shipping_cost?: TransactionCreateReversalParams.ShippingCost;
       }
 
       namespace TransactionCreateReversalParams {
@@ -98,6 +125,18 @@ declare module 'stripe' {
         }
 
         type Mode = 'full' | 'partial';
+
+        interface ShippingCost {
+          /**
+           * The amount to reverse, in negative integer cents.
+           */
+          amount: number;
+
+          /**
+           * The amount of tax to reverse, in negative integer cents.
+           */
+          amount_tax: number;
+        }
       }
 
       interface TransactionListLineItemsParams extends PaginationParams {
@@ -126,6 +165,14 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Tax.Transaction>>;
         retrieve(
           id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Tax.Transaction>>;
+
+        /**
+         * Creates a Tax Transaction from a calculation.
+         */
+        createFromCalculation(
+          params: TransactionCreateFromCalculationParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Tax.Transaction>>;
 

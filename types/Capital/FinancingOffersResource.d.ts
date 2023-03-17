@@ -43,6 +43,13 @@ declare module 'stripe' {
           | 'undelivered';
       }
 
+      interface FinancingOfferMarkDeliveredParams {
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
       class FinancingOffersResource {
         /**
          * Get the details of the financing offer
@@ -67,6 +74,21 @@ declare module 'stripe' {
         list(
           options?: RequestOptions
         ): ApiListPromise<Stripe.Capital.FinancingOffer>;
+
+        /**
+         * Acknowledges that platform has received and delivered the financing_offer to
+         * the intended merchant recipient. This is required to make the application
+         * accessible.
+         */
+        markDelivered(
+          id: string,
+          params?: FinancingOfferMarkDeliveredParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Capital.FinancingOffer>>;
+        markDelivered(
+          id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Capital.FinancingOffer>>;
       }
     }
   }

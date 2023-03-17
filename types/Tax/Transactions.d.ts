@@ -60,6 +60,11 @@ declare module 'stripe' {
         reversal: Transaction.Reversal | null;
 
         /**
+         * The shipping cost details for the transaction.
+         */
+        shipping_cost: Transaction.ShippingCost | null;
+
+        /**
          * Timestamp of date at which the tax rules and rates in effect applies for the calculation.
          */
         tax_date: number;
@@ -180,6 +185,37 @@ declare module 'stripe' {
            * The `id` of the reversed `Transaction` object.
            */
           original_transaction: string | null;
+        }
+
+        interface ShippingCost {
+          /**
+           * The shipping amount in integer cents. If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+           */
+          amount: number;
+
+          /**
+           * The amount of tax calculated for shipping, in integer cents.
+           */
+          amount_tax: number;
+
+          /**
+           * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object)
+           */
+          shipping_rate?: string;
+
+          /**
+           * Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes taxes.
+           */
+          tax_behavior: ShippingCost.TaxBehavior;
+
+          /**
+           * The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for shipping.
+           */
+          tax_code: string;
+        }
+
+        namespace ShippingCost {
+          type TaxBehavior = 'exclusive' | 'inclusive';
         }
 
         type Type = 'reversal' | 'transaction';
