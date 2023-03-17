@@ -376,7 +376,7 @@ declare module 'stripe' {
       }
 
       namespace PaymentIntentData {
-        type CaptureMethod = 'automatic' | 'manual';
+        type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
         type SetupFutureUsage = 'off_session' | 'on_session';
       }
