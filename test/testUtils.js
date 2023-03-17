@@ -8,13 +8,13 @@ require('chai').use(require('chai-as-promised'));
 
 const http = require('http');
 
-const {CryptoProvider} = require('../cjs/crypto/CryptoProvider');
+const {CryptoProvider} = require('../cjs/crypto/CryptoProvider.js');
 const {
   NodePlatformFunctions,
-} = require('../cjs/platform/NodePlatformFunctions');
-const {RequestSender} = require('../cjs/RequestSender');
-const {createStripe} = require('../cjs/stripe.core');
-const stripe = require('../cjs/stripe.cjs.node');
+} = require('../cjs/platform/NodePlatformFunctions.js');
+const {RequestSender} = require('../cjs/RequestSender.js');
+const {createStripe} = require('../cjs/stripe.core.js');
+const stripe = require('../cjs/stripe.cjs.node.js');
 
 const testingHttpAgent = new http.Agent({keepAlive: false});
 
@@ -30,7 +30,7 @@ const utils = (module.exports = {
     });
     server.listen(0, () => {
       const {port} = server.address();
-      const stripe = require('../cjs/stripe.cjs.node')(
+      const stripe = require('../cjs/stripe.cjs.node.js')(
         module.exports.getUserStripeKey(),
         {
           host: 'localhost',
@@ -47,7 +47,7 @@ const utils = (module.exports = {
   },
 
   getStripeMockClient: () => {
-    const stripe = require('../cjs/stripe.cjs.node');
+    const stripe = require('../cjs/stripe.cjs.node.js');
 
     return stripe('sk_test_123', {
       host: process.env.STRIPE_MOCK_HOST || 'localhost',
@@ -187,7 +187,7 @@ const utils = (module.exports = {
 
     // Provide a testable stripe instance
     // That is, with mock-requests built in and hookable
-    const stripe = require('../cjs/stripe.cjs.node');
+    const stripe = require('../cjs/stripe.cjs.node.js');
     const stripeInstance = stripe('fakeAuthToken', config);
 
     stripeInstance.REQUESTS = [];
@@ -211,7 +211,7 @@ const utils = (module.exports = {
     function CleanupUtility(timeout) {
       const self = this;
       this._cleanupFns = [];
-      this._stripe = require('../cjs/stripe.cjs.node')(
+      this._stripe = require('../cjs/stripe.cjs.node.js')(
         utils.getUserStripeKey(),
         'latest'
       );

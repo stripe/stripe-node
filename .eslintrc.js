@@ -44,6 +44,7 @@ module.exports = {
     'id-blacklist': 'error',
     'id-length': 'off',
     'id-match': 'error',
+    'import/extensions': ['error', 'ignorePackages'],
     'init-declarations': 'off',
     'jsx-quotes': 'error',
     'key-spacing': 'error',
@@ -241,7 +242,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2018,
   },
-  plugins: ['prettier'],
+  plugins: ['prettier', 'import'],
   extends: ['plugin:prettier/recommended'],
   overrides: [
     {
