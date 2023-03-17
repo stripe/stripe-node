@@ -50,6 +50,11 @@ declare module 'stripe' {
       attach_to_self?: boolean;
 
       /**
+       * Settings for automatic payment methods compatible with this Setup Intent
+       */
+      automatic_payment_methods: SetupIntent.AutomaticPaymentMethods | null;
+
+      /**
        * Reason for cancellation of this SetupIntent, one of `abandoned`, `requested_by_customer`, or `duplicate`.
        */
       cancellation_reason: SetupIntent.CancellationReason | null;
@@ -154,6 +159,13 @@ declare module 'stripe' {
     }
 
     namespace SetupIntent {
+      interface AutomaticPaymentMethods {
+        /**
+         * Automatically calculates compatible payment methods
+         */
+        enabled: boolean | null;
+      }
+
       type CancellationReason =
         | 'abandoned'
         | 'duplicate'
