@@ -88,7 +88,7 @@ describe('RequestSender', () => {
 
   describe('Parameter encoding', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../cjs/stripe.cjs.node')(
+    const realStripe = require('../cjs/stripe.cjs.node.js')(
       utils.getUserStripeKey()
     );
 
@@ -337,7 +337,7 @@ describe('RequestSender', () => {
 
   describe('Retry Network Requests', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../cjs/stripe.cjs.node')(
+    const realStripe = require('../cjs/stripe.cjs.node.js')(
       utils.getUserStripeKey()
     );
 
