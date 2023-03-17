@@ -87,7 +87,7 @@ jobs:
       - uses: stripe/openapi/actions/stripe-mock@master
 
       - name: Test
-        run: yarn && yarn test
+        run: make ci-test
 
       - name: Coveralls
         run: yarn report && yarn coveralls
