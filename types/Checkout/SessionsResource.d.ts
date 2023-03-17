@@ -1468,6 +1468,7 @@ declare module 'stripe' {
           | 'ideal'
           | 'klarna'
           | 'konbini'
+          | 'link'
           | 'oxxo'
           | 'p24'
           | 'paynow'
