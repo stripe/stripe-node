@@ -21,6 +21,11 @@ declare module 'stripe' {
         details: FinancingSummary.Details | null;
 
         /**
+         * The Financing Offer ID this Financing Summary corresponds to
+         */
+        financing_offer: string | null;
+
+        /**
          * Status of the Connected Account's financing. [/v1/capital/financing_summary](https://stripe.com/docs/api/capital/financing_summary) will only return `details` for `paid_out` financing.
          */
         status: FinancingSummary.Status | null;
