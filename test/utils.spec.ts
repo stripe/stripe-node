@@ -2,7 +2,7 @@
 
 require('./testUtils.js');
 
-import * as utils from '../cjs/utils';
+import * as utils from '../cjs/utils.js';
 import {expect} from 'chai';
 
 describe('utils', () => {

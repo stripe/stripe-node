@@ -3,9 +3,9 @@
 /* eslint-disable callback-return */
 
 const testUtils = require('./testUtils.js');
-const {StripeResource} = require('../cjs/StripeResource');
+const {StripeResource} = require('../cjs/StripeResource.js');
 
-const {makeAutoPaginationMethods} = require('../cjs/autoPagination');
+const {makeAutoPaginationMethods} = require('../cjs/autoPagination.js');
 
 const expect = require('chai').expect;
 

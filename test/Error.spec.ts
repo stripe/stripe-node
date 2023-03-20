@@ -2,7 +2,7 @@
 
 require('./testUtils.js');
 
-import * as Error from '../src/Error';
+import * as Error from '../cjs/Error.js';
 import {expect} from 'chai';
 
 describe('Error', () => {

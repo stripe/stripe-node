@@ -1501,7 +1501,13 @@ declare module 'stripe' {
           }
         }
 
-        interface Link {}
+        interface Link {
+          /**
+           * Two-letter ISO code representing the funding source country beneath the Link payment.
+           * You could use this attribute to get a sense of international fees.
+           */
+          country: string | null;
+        }
 
         interface Multibanco {
           /**

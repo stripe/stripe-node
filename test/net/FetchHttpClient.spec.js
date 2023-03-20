@@ -4,13 +4,13 @@ const expect = require('chai').expect;
 const fetch = require('node-fetch');
 const nock = require('nock');
 const {Readable} = require('stream');
-const {FetchHttpClient} = require('../../cjs/net/FetchHttpClient');
+const {FetchHttpClient} = require('../../cjs/net/FetchHttpClient.js');
 
 const createFetchHttpClient = () => {
   return new FetchHttpClient(fetch);
 };
 
-const {createHttpClientTestSuite, ArrayReadable} = require('./helpers');
+const {createHttpClientTestSuite, ArrayReadable} = require('./helpers.js');
 
 describe('FetchHttpClient', () => {
   createHttpClientTestSuite(createFetchHttpClient, (setupNock, sendRequest) => {

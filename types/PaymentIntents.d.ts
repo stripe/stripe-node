@@ -253,7 +253,7 @@ declare module 'stripe' {
         | 'requested_by_customer'
         | 'void_invoice';
 
-      type CaptureMethod = 'automatic' | 'manual';
+      type CaptureMethod = 'automatic' | 'automatic_async' | 'manual';
 
       type ConfirmationMethod = 'automatic' | 'manual';
 
