@@ -30,11 +30,6 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The boolean value that indicates if the calculation is a preview. If true, the calculation is not stored. If false, the calculation is stored for 48 hours. Defaults to true.
-         */
-        preview?: boolean;
-
-        /**
          * Shipping cost details to be used for the calculation
          */
         shipping_cost?: CalculationCreateParams.ShippingCost;
