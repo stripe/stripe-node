@@ -372,6 +372,11 @@ declare module 'stripe' {
           amount_total: number;
 
           /**
+           * Exchange rate used to convert source currency amounts to customer currency amounts
+           */
+          fx_rate: string;
+
+          /**
            * Creation currency of the CheckoutSession before localization
            */
           source_currency: string;
