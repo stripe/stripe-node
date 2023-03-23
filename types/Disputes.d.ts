@@ -227,7 +227,7 @@ declare module 'stripe' {
 
       interface EvidenceDetails {
         /**
-         * Date by which evidence must be submitted in order to successfully challenge dispute. Will be null if the customer's bank or credit card company doesn't allow a response for this particular dispute.
+         * Date by which evidence must be submitted in order to successfully challenge dispute. Will be 0 if the customer's bank or credit card company doesn't allow a response for this particular dispute.
          */
         due_by: number | null;
 
