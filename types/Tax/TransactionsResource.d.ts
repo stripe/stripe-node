@@ -191,11 +191,11 @@ declare module 'stripe' {
           id: string,
           params?: TransactionListLineItemsParams,
           options?: RequestOptions
-        ): ApiListPromise<Stripe.LineItem>;
+        ): ApiListPromise<Stripe.Tax.TransactionLineItem>;
         listLineItems(
           id: string,
           options?: RequestOptions
-        ): ApiListPromise<Stripe.LineItem>;
+        ): ApiListPromise<Stripe.Tax.TransactionLineItem>;
       }
     }
   }

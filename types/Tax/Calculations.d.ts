@@ -42,7 +42,7 @@ declare module 'stripe' {
         /**
          * The list of items the customer is purchasing.
          */
-        line_items: ApiList<Stripe.LineItem> | null;
+        line_items: ApiList<Stripe.Tax.CalculationLineItem> | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

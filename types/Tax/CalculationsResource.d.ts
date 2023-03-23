@@ -262,11 +262,11 @@ declare module 'stripe' {
           id: string,
           params?: CalculationListLineItemsParams,
           options?: RequestOptions
-        ): ApiListPromise<Stripe.LineItem>;
+        ): ApiListPromise<Stripe.Tax.CalculationLineItem>;
         listLineItems(
           id: string,
           options?: RequestOptions
-        ): ApiListPromise<Stripe.LineItem>;
+        ): ApiListPromise<Stripe.Tax.CalculationLineItem>;
       }
     }
   }
