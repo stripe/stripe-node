@@ -97,6 +97,98 @@ declare module 'stripe' {
         expand?: Array<string>;
       }
 
+      interface ReaderCollectInputsParams {
+        /**
+         * List of inputs to be collected using the Reader
+         */
+        inputs: Array<ReaderCollectInputsParams.Input>;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+
+        /**
+         * Metadata related to the inputs to be collected
+         */
+        metadata?: Stripe.MetadataParam;
+      }
+
+      namespace ReaderCollectInputsParams {
+        interface Input {
+          /**
+           * Customize the text which will be displayed while collecting this input
+           */
+          custom_text: Input.CustomText;
+
+          /**
+           * Indicate that this input is required, disabling the skip button
+           */
+          required?: boolean;
+
+          /**
+           * Options for the `selection` input
+           */
+          selection?: Input.Selection;
+
+          /**
+           * The type of input to collect
+           */
+          type: Input.Type;
+        }
+
+        namespace Input {
+          interface CustomText {
+            /**
+             * The description which will be displayed when collecting this input
+             */
+            description: string;
+
+            /**
+             * The skip button text
+             */
+            skip_button?: string;
+
+            /**
+             * The submit button text
+             */
+            submit_button?: string;
+
+            /**
+             * The title which will be displayed when collecting this input
+             */
+            title: string;
+          }
+
+          interface Selection {
+            /**
+             * List of choices for the `selection` input
+             */
+            choices: Array<Selection.Choice>;
+          }
+
+          namespace Selection {
+            interface Choice {
+              /**
+               * The style of the button which will be shown for this choice
+               */
+              style?: Choice.Style;
+
+              /**
+               * The text which will be shown on the button for this choice
+               */
+              value: string;
+            }
+
+            namespace Choice {
+              type Style = 'primary' | 'secondary';
+            }
+          }
+
+          type Type = 'selection' | 'signature';
+        }
+      }
+
       interface ReaderProcessPaymentIntentParams {
         /**
          * PaymentIntent ID
@@ -326,6 +418,15 @@ declare module 'stripe' {
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
         cancelAction(
           id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
+
+        /**
+         * Initiates an input collection flow on a Reader.
+         */
+        collectInputs(
+          id: string,
+          params: ReaderCollectInputsParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.Terminal.Reader>>;
 

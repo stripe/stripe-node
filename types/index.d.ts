@@ -202,9 +202,11 @@
 ///<reference path='./SubscriptionItems.d.ts' />
 ///<reference path='./SubscriptionSchedules.d.ts' />
 ///<reference path='./Subscriptions.d.ts' />
+///<reference path='./Tax/CalculationLineItems.d.ts' />
 ///<reference path='./Tax/Calculations.d.ts' />
 ///<reference path='./Tax/Registrations.d.ts' />
 ///<reference path='./Tax/Settings.d.ts' />
+///<reference path='./Tax/TransactionLineItems.d.ts' />
 ///<reference path='./Tax/Transactions.d.ts' />
 ///<reference path='./TaxCodes.d.ts' />
 ///<reference path='./TaxDeductedAtSources.d.ts' />

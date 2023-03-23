@@ -75,6 +75,11 @@ declare module 'stripe' {
       namespace Reader {
         interface Action {
           /**
+           * Represents a reader action to collect customer inputs
+           */
+          collect_inputs?: Action.CollectInputs;
+
+          /**
            * Failure code, only set if status is `failed`.
            */
           failure_code: string | null;
@@ -116,6 +121,106 @@ declare module 'stripe' {
         }
 
         namespace Action {
+          interface CollectInputs {
+            /**
+             * List of inputs to be collected.
+             */
+            inputs: Array<CollectInputs.Input>;
+
+            /**
+             * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+             */
+            metadata: Stripe.Metadata | null;
+          }
+
+          namespace CollectInputs {
+            interface Input {
+              custom_text: Input.CustomText | null;
+
+              required: boolean | null;
+
+              /**
+               * Information about a selection being collected using a reader
+               */
+              selection?: Input.Selection;
+
+              /**
+               * Information about a signature being collected using a reader
+               */
+              signature?: Input.Signature;
+
+              skipped?: boolean;
+
+              /**
+               * Which supported input type will be collected.
+               */
+              type: Input.Type;
+            }
+
+            namespace Input {
+              interface CustomText {
+                /**
+                 * Customize the default description for this input
+                 */
+                description: string | null;
+
+                /**
+                 * Customize the default label for this input's skip button
+                 */
+                skip_button: string | null;
+
+                /**
+                 * Customize the default label for this input's submit button
+                 */
+                submit_button: string | null;
+
+                /**
+                 * Customize the default title for this input
+                 */
+                title: string | null;
+              }
+
+              interface Selection {
+                /**
+                 * List of possible choices to be selected
+                 */
+                choices: Array<Selection.Choice>;
+
+                /**
+                 * The value of the selected choice
+                 */
+                value: string | null;
+              }
+
+              namespace Selection {
+                interface Choice {
+                  /**
+                   * The button style for the choice
+                   */
+                  style: Choice.Style | null;
+
+                  /**
+                   * A value to be selected
+                   */
+                  value: string;
+                }
+
+                namespace Choice {
+                  type Style = 'primary' | 'secondary';
+                }
+              }
+
+              interface Signature {
+                /**
+                 * The File ID of a collected signature image
+                 */
+                value: string | null;
+              }
+
+              type Type = 'selection' | 'signature';
+            }
+          }
+
           interface ProcessPaymentIntent {
             /**
              * Most recent PaymentIntent processed by the reader.
@@ -267,6 +372,7 @@ declare module 'stripe' {
           type Status = 'failed' | 'in_progress' | 'succeeded';
 
           type Type =
+            | 'collect_inputs'
             | 'process_payment_intent'
             | 'process_setup_intent'
             | 'refund_payment'

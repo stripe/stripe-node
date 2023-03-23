@@ -4,7 +4,7 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Tax {
       /**
-       * A Tax `Transaction` records the tax collected from or refunded to your customer.
+       * A Tax transaction records the tax collected from or refunded to your customer.
        */
       interface Transaction {
         /**
@@ -37,7 +37,7 @@ declare module 'stripe' {
         /**
          * The tax collected or refunded, by line item.
          */
-        line_items: ApiList<Stripe.LineItem> | null;
+        line_items: ApiList<Stripe.Tax.TransactionLineItem> | null;
 
         /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -78,7 +78,7 @@ declare module 'stripe' {
       namespace Transaction {
         interface CustomerDetails {
           /**
-           * The customer's postal address (e.g., home or business location).
+           * The customer's postal address (for example, home or business location).
            */
           address: Stripe.Address | null;
 
@@ -93,12 +93,12 @@ declare module 'stripe' {
           ip_address: string | null;
 
           /**
-           * The customer's tax IDs (e.g., EU VAT numbers).
+           * The customer's tax IDs (for example, EU VAT numbers).
            */
           tax_ids: Array<CustomerDetails.TaxId>;
 
           /**
-           * The taxability override used for taxation
+           * The taxability override used for taxation.
            */
           taxability_override: CustomerDetails.TaxabilityOverride;
         }

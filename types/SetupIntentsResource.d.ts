@@ -11,6 +11,11 @@ declare module 'stripe' {
       attach_to_self?: boolean;
 
       /**
+       * When enabled, this SetupIntent will accept payment methods that you have enabled in the Dashboard and are compatible with this SetupIntent's other parameters.
+       */
+      automatic_payment_methods?: SetupIntentCreateParams.AutomaticPaymentMethods;
+
+      /**
        * Set to `true` to attempt to confirm this SetupIntent immediately. This parameter defaults to `false`. If the payment method attached is a card, a return_url may be provided in case additional authentication is required.
        */
       confirm?: boolean;
@@ -92,6 +97,13 @@ declare module 'stripe' {
     }
 
     namespace SetupIntentCreateParams {
+      interface AutomaticPaymentMethods {
+        /**
+         * Whether this feature is enabled.
+         */
+        enabled: boolean;
+      }
+
       type FlowDirection = 'inbound' | 'outbound';
 
       interface MandateData {

@@ -39,7 +39,7 @@ declare module 'stripe' {
         calculation: string;
 
         /**
-         * A custom order or sale identifier, such as 'myOrder_123'. Must be unique across all transactions including reversals.
+         * A custom order or sale identifier, such as 'myOrder_123'. Must be unique across all transactions, including reversals.
          */
         reference: string;
 
@@ -66,7 +66,7 @@ declare module 'stripe' {
         original_transaction: string;
 
         /**
-         * A custom identifier for this reversal, such as 'myOrder_123-refund_1'. Must be unique across all transactions.
+         * A custom identifier for this reversal, such as 'myOrder_123-refund_1', which must be unique across all transactions. The reference helps identify this reversal transaction in exported [tax reports](https://stripe.com/docs/tax/reports).
          */
         reference: string;
 
@@ -114,7 +114,7 @@ declare module 'stripe' {
           original_line_item: string;
 
           /**
-           * The quantity reversed.
+           * The quantity reversed. Appears in [tax exports](https://stripe.com/docs/tax/reports), but does not affect the amount of tax reversed.
            */
           quantity?: number;
 
@@ -191,11 +191,11 @@ declare module 'stripe' {
           id: string,
           params?: TransactionListLineItemsParams,
           options?: RequestOptions
-        ): ApiListPromise<Stripe.LineItem>;
+        ): ApiListPromise<Stripe.Tax.TransactionLineItem>;
         listLineItems(
           id: string,
           options?: RequestOptions
-        ): ApiListPromise<Stripe.LineItem>;
+        ): ApiListPromise<Stripe.Tax.TransactionLineItem>;
       }
     }
   }
