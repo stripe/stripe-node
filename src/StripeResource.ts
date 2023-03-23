@@ -6,6 +6,16 @@ import {
   stringifyRequestData,
 } from './utils.js';
 import {stripeMethod} from './StripeMethod.js';
+import {
+  StripeResourceObject,
+  StripeObject,
+  RequestArgs,
+  MethodSpec,
+  RequestData,
+  RequestOpts,
+  UrlInterpolator,
+  HttpClientResponseInterface,
+} from './Types.js';
 
 // Provide extension mechanism for Stripe Resource Sub-Classes
 StripeResource.extend = protoExtend;

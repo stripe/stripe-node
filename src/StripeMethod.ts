@@ -1,5 +1,6 @@
 import {callbackifyPromiseWithTimeout, extractUrlParams} from './utils.js';
 import {makeAutoPaginationMethods} from './autoPagination.js';
+import {MethodSpec, StripeResourceObject} from './Types.js';
 
 /**
  * Create an API method from the declared spec.

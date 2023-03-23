@@ -1,3 +1,11 @@
+import {
+  HttpClientInterface,
+  HttpClientResponseInterface,
+  RequestData,
+  RequestHeaders,
+  ResponseHeaders,
+} from '../Types';
+
 type TimeoutError = TypeError & {code?: string};
 
 /**

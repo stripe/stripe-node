@@ -1,3 +1,10 @@
+import {
+  HttpClientInterface,
+  RequestHeaders,
+  RequestData,
+  HttpClientResponseInterface,
+  ResponseHeaders,
+} from '../Types.js';
 import {HttpClient, HttpClientResponse} from './HttpClient.js';
 
 /**
