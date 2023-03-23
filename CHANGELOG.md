@@ -1,5 +1,16 @@
 # Changelog
 
+## 11.16.0 - 2023-03-23
+* [#1730](https://github.com/stripe/stripe-node/pull/1730) Update generated code
+  * Add support for new resources `Tax.CalculationLineItem`, `Tax.Calculation`, `Tax.TransactionLineItem`, and `Tax.Transaction`
+  * Add support for `create` and `list_line_items` methods on resource `Calculation`
+  * Add support for `create_from_calculation`, `create_reversal`, `create`, `list_line_items`, and `retrieve` methods on resource `Transaction`
+  * Add support for new value `link` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for `currency_conversion` on `Checkout.Session`
+  * Add support for new value `link` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
+  * Add support for `automatic_payment_methods` on `SetupIntentCreateParams` and `SetupIntent`
+* [#1726](https://github.com/stripe/stripe-node/pull/1726) Add Deno entry point
+
 ## 11.15.0 - 2023-03-16
 * [#1714](https://github.com/stripe/stripe-node/pull/1714) API Updates
   * Add support for `cashapp_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
@@ -7,8 +18,8 @@
   * Add support for `future_requirements` and `requirements` on `BankAccount`
   * Add support for `country` on `Charge.payment_method_details.link`
   * Add support for new value `automatic_async` on enums `CheckoutSessionCreateParams.payment_intent_data.capture_method`, `PaymentIntent.capture_method`, `PaymentIntentConfirmParams.capture_method`, `PaymentIntentCreateParams.capture_method`, `PaymentIntentUpdateParams.capture_method`, `PaymentLink.payment_intent_data.capture_method`, and `PaymentLinkCreateParams.payment_intent_data.capture_method`
-  
-  * Add support for `preferred_locale` on `PaymentIntent.payment_method_options.affirm`, 
+
+  * Add support for `preferred_locale` on `PaymentIntent.payment_method_options.affirm`,
   * Add support for `cashapp_handle_redirect_or_display_qr_code` on `PaymentIntent.next_action` and `SetupIntent.next_action`
   * Add support for new value `payout.reconciliation_completed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
 * [#1709](https://github.com/stripe/stripe-node/pull/1709) Add ES module package entry point
