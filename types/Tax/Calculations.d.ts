@@ -35,7 +35,7 @@ declare module 'stripe' {
         customer_details: Calculation.CustomerDetails;
 
         /**
-         * Timestamp of date at which the tax calculation will expire. Empty if the calculation is an unsaved preview.
+         * Timestamp of date at which the tax calculation will expire.
          */
         expires_at: number | null;
 
@@ -78,7 +78,7 @@ declare module 'stripe' {
       namespace Calculation {
         interface CustomerDetails {
           /**
-           * The customer's postal address (e.g., home or business location).
+           * The customer's postal address (for example, home or business location).
            */
           address: Stripe.Address | null;
 
@@ -93,12 +93,12 @@ declare module 'stripe' {
           ip_address: string | null;
 
           /**
-           * The customer's tax IDs (e.g., EU VAT numbers).
+           * The customer's tax IDs (for example, EU VAT numbers).
            */
           tax_ids: Array<CustomerDetails.TaxId>;
 
           /**
-           * The taxability override used for taxation
+           * The taxability override used for taxation.
            */
           taxability_override: CustomerDetails.TaxabilityOverride;
         }

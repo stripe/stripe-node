@@ -35,7 +35,7 @@ declare module 'stripe' {
         shipping_cost?: CalculationCreateParams.ShippingCost;
 
         /**
-         * Timestamp of date at which the tax rules and rates in effect applies for the calculation. Measured in seconds since the Unix epoch.
+         * Timestamp of date at which the tax rules and rates in effect applies for the calculation. Measured in seconds since the Unix epoch. Can be up to 48 hours in the past, and up to 48 hours in the future.
          */
         tax_date?: number;
       }
@@ -43,7 +43,7 @@ declare module 'stripe' {
       namespace CalculationCreateParams {
         interface CustomerDetails {
           /**
-           * The customer's postal address (e.g., home or business location).
+           * The customer's postal address (for example, home or business location).
            */
           address?: CustomerDetails.Address;
 
@@ -63,7 +63,7 @@ declare module 'stripe' {
           tax_ids?: Array<CustomerDetails.TaxId>;
 
           /**
-           * When `reverse_charge` is provided, the reverse charge rule is applied for taxation. When `customer_exempt` is sent, it treats the customer as tax exempt. Defaults to `none`.
+           * Overrides the tax calculation result to allow you to not collect tax from your customer. Use this if you've manually checked your customer's tax exemptions. Prefer providing the customer's `tax_ids` where possible, which automatically determines whether `reverse_charge` applies.
            */
           taxability_override?: CustomerDetails.TaxabilityOverride;
         }
@@ -188,22 +188,22 @@ declare module 'stripe' {
           product?: string;
 
           /**
-           * The number of units of the item being purchased. The `amount` is a total amount for the whole line. Used to calculate the per-unit price, when required.
+           * The number of units of the item being purchased. Used to calculate the per-unit price from the total `amount` for the line. For example, if `amount=100` and `quantity=4`, the calculated unit price is 25.
            */
           quantity?: number;
 
           /**
-           * A custom identifier for this line item. Must be unique across the line items in the calculation.
+           * A custom identifier for this line item, which must be unique across the line items in the calculation. The reference helps identify each line item in exported [tax reports](https://stripe.com/docs/tax/reports).
            */
           reference?: string;
 
           /**
-           * Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes taxes.
+           * Specifies whether the `amount` includes taxes. Defaults to `exclusive`.
            */
           tax_behavior?: LineItem.TaxBehavior;
 
           /**
-           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID to use for this line item. If not provided, we will use the tax code from the provided `product` param. If neither `tax_code` or `product` is provided, we will use the default tax code from your Tax Settings.
+           * A [tax code](https://stripe.com/docs/tax/tax-categories) ID to use for this line item. If not provided, we will use the tax code from the provided `product` param. If neither `tax_code` nor `product` is provided, we will use the default tax code from your Tax Settings.
            */
           tax_code?: string;
         }
@@ -219,7 +219,7 @@ declare module 'stripe' {
           amount?: number;
 
           /**
-           * If provided, the shipping rate's `amount`, `tax_code` and `tax_behavior` are used. It cannot be used with `amount`, `tax_code` and `tax_behavior`
+           * If provided, the [shipping rate](https://stripe.com/docs/api/shipping_rates/object)'s `amount`, `tax_code` and `tax_behavior` are used. If you provide a shipping rate, then you cannot pass the `amount`, `tax_code`, or `tax_behavior` parameters.
            */
           shipping_rate?: string;
 
