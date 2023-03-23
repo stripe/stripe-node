@@ -2,6 +2,7 @@
 import { resourceNamespace } from './ResourceNamespace.js';
 import { Accounts as FinancialConnectionsAccounts } from './resources/FinancialConnections/Accounts.js';
 import { Authorizations as IssuingAuthorizations } from './resources/Issuing/Authorizations.js';
+import { Calculations as TaxCalculations } from './resources/Tax/Calculations.js';
 import { Cardholders as IssuingCardholders } from './resources/Issuing/Cardholders.js';
 import { Cards as TestHelpersIssuingCards } from './resources/TestHelpers/Issuing/Cards.js';
 import { Cards as IssuingCards } from './resources/Issuing/Cards.js';
@@ -38,6 +39,7 @@ import { Sessions as FinancialConnectionsSessions } from './resources/FinancialC
 import { TestClocks as TestHelpersTestClocks } from './resources/TestHelpers/TestClocks.js';
 import { TransactionEntries as TreasuryTransactionEntries } from './resources/Treasury/TransactionEntries.js';
 import { Transactions as IssuingTransactions } from './resources/Issuing/Transactions.js';
+import { Transactions as TaxTransactions } from './resources/Tax/Transactions.js';
 import { Transactions as TreasuryTransactions } from './resources/Treasury/Transactions.js';
 import { ValueListItems as RadarValueListItems } from './resources/Radar/ValueListItems.js';
 import { ValueLists as RadarValueLists } from './resources/Radar/ValueLists.js';
@@ -123,6 +125,10 @@ export const Reporting = resourceNamespace('reporting', {
 });
 export const Sigma = resourceNamespace('sigma', {
     ScheduledQueryRuns: SigmaScheduledQueryRuns,
+});
+export const Tax = resourceNamespace('tax', {
+    Calculations: TaxCalculations,
+    Transactions: TaxTransactions,
 });
 export const Terminal = resourceNamespace('terminal', {
     Configurations: TerminalConfigurations,

@@ -2,10 +2,11 @@
 // File generated from our OpenAPI spec
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FinancialConnections = exports.Checkout = exports.BillingPortal = exports.Apps = exports.WebhookEndpoints = exports.Transfers = exports.Topups = exports.Tokens = exports.TaxRates = exports.TaxCodes = exports.SubscriptionSchedules = exports.SubscriptionItems = exports.Subscriptions = exports.Sources = exports.ShippingRates = exports.SetupIntents = exports.SetupAttempts = exports.Reviews = exports.Refunds = exports.Quotes = exports.PromotionCodes = exports.Products = exports.Prices = exports.Plans = exports.Payouts = exports.PaymentMethods = exports.PaymentLinks = exports.PaymentIntents = exports.Mandates = exports.InvoiceItems = exports.Invoices = exports.FileLinks = exports.Files = exports.ExchangeRates = exports.Events = exports.EphemeralKeys = exports.Disputes = exports.Customers = exports.CreditNotes = exports.Coupons = exports.CountrySpecs = exports.Charges = exports.BalanceTransactions = exports.Balance = exports.ApplicationFees = exports.ApplePayDomains = exports.AccountLinks = exports.Accounts = exports.OAuth = exports.Account = void 0;
-exports.Treasury = exports.TestHelpers = exports.Terminal = exports.Sigma = exports.Reporting = exports.Radar = exports.Issuing = exports.Identity = void 0;
+exports.Treasury = exports.TestHelpers = exports.Terminal = exports.Tax = exports.Sigma = exports.Reporting = exports.Radar = exports.Issuing = exports.Identity = void 0;
 const ResourceNamespace_js_1 = require("./ResourceNamespace.js");
 const Accounts_js_1 = require("./resources/FinancialConnections/Accounts.js");
 const Authorizations_js_1 = require("./resources/Issuing/Authorizations.js");
+const Calculations_js_1 = require("./resources/Tax/Calculations.js");
 const Cardholders_js_1 = require("./resources/Issuing/Cardholders.js");
 const Cards_js_1 = require("./resources/TestHelpers/Issuing/Cards.js");
 const Cards_js_2 = require("./resources/Issuing/Cards.js");
@@ -42,7 +43,8 @@ const Sessions_js_3 = require("./resources/FinancialConnections/Sessions.js");
 const TestClocks_js_1 = require("./resources/TestHelpers/TestClocks.js");
 const TransactionEntries_js_1 = require("./resources/Treasury/TransactionEntries.js");
 const Transactions_js_1 = require("./resources/Issuing/Transactions.js");
-const Transactions_js_2 = require("./resources/Treasury/Transactions.js");
+const Transactions_js_2 = require("./resources/Tax/Transactions.js");
+const Transactions_js_3 = require("./resources/Treasury/Transactions.js");
 const ValueListItems_js_1 = require("./resources/Radar/ValueListItems.js");
 const ValueLists_js_1 = require("./resources/Radar/ValueLists.js");
 const VerificationReports_js_1 = require("./resources/Identity/VerificationReports.js");
@@ -174,6 +176,10 @@ exports.Reporting = (0, ResourceNamespace_js_1.resourceNamespace)('reporting', {
 exports.Sigma = (0, ResourceNamespace_js_1.resourceNamespace)('sigma', {
     ScheduledQueryRuns: ScheduledQueryRuns_js_1.ScheduledQueryRuns,
 });
+exports.Tax = (0, ResourceNamespace_js_1.resourceNamespace)('tax', {
+    Calculations: Calculations_js_1.Calculations,
+    Transactions: Transactions_js_2.Transactions,
+});
 exports.Terminal = (0, ResourceNamespace_js_1.resourceNamespace)('terminal', {
     Configurations: Configurations_js_2.Configurations,
     ConnectionTokens: ConnectionTokens_js_1.ConnectionTokens,
@@ -206,5 +212,5 @@ exports.Treasury = (0, ResourceNamespace_js_1.resourceNamespace)('treasury', {
     ReceivedCredits: ReceivedCredits_js_2.ReceivedCredits,
     ReceivedDebits: ReceivedDebits_js_2.ReceivedDebits,
     TransactionEntries: TransactionEntries_js_1.TransactionEntries,
-    Transactions: Transactions_js_2.Transactions,
+    Transactions: Transactions_js_3.Transactions,
 });
