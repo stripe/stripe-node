@@ -3078,3 +3078,22 @@ describe('WebhookEndpoints', function() {
     expect(webhookEndpoint).not.to.be.null;
   });
 });
+
+describe('Tax.Transactions', function() {
+  it('createFromCalculation method', async function() {
+    const transaction = await stripe.tax.transactions.createFromCalculation({
+      calculation: 'xxx',
+      reference: 'yyy',
+    });
+    expect(transaction).not.to.be.null;
+  });
+});
+
+describe('Tax.Calculations', function() {
+  it('listLineItems method', async function() {
+    const calculationLineItems = await stripe.tax.calculations.listLineItems(
+      'xxx'
+    );
+    expect(calculationLineItems).not.to.be.null;
+  });
+});
