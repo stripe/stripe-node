@@ -12,7 +12,6 @@ export type BufferedFile = {
   type: string;
   file: {data: Uint8Array};
 };
-export type HttpClientResponseError = {code: string};
 export type MethodSpec = {
   method: string;
   methodType?: string;
@@ -182,10 +181,6 @@ export type StripeRawError = {
 export type StripeResourceConstructor = {
   new (stripe: StripeObject, deprecatedUrlData?: never): StripeResourceObject;
 };
-export type StripeResourceNamespaceObject = Record<
-  string,
-  StripeResourceObject | unknown
->;
 export type StripeResourceObject = {
   _stripe: StripeObject;
   basePath: UrlInterpolator;

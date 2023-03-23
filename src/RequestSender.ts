@@ -20,12 +20,13 @@ import {
   ResponseEvent,
   RequestCallback,
   RequestCallbackReturn,
-  HttpClientResponseError,
   RequestSettings,
   RequestData,
   RequestOptions,
   RequestDataProcessor,
 } from './Types.js';
+
+export type HttpClientResponseError = {code: string};
 
 const MAX_RETRY_AFTER_WAIT = 60;
 
