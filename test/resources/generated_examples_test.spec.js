@@ -3096,3 +3096,12 @@ describe('Tax.Transactions', function() {
     expect(transaction).not.to.be.null;
   });
 });
+
+describe('Tax.Calculations', function() {
+  it('listLineItems method', async function() {
+    const calculationLineItems = await stripe.tax.calculations.listLineItems(
+      'xxx'
+    );
+    expect(calculationLineItems).not.to.be.null;
+  });
+});
