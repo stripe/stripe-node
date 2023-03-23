@@ -1,4 +1,12 @@
 import * as qs from 'qs';
+import {
+  RequestData,
+  UrlInterpolator,
+  RequestArgs,
+  StripeResourceObject,
+  RequestHeaders,
+  MultipartRequestData,
+} from './Types.js';
 
 const OPTIONS_KEYS = [
   'apiKey',

@@ -1,4 +1,28 @@
+import {RequestData, RequestHeaders, ResponseHeaders} from '../Types.js';
+
 type TimeoutError = TypeError & {code?: string};
+
+export interface HttpClientInterface {
+  getClientName: () => string;
+  makeRequest: (
+    host: string,
+    port: string,
+    path: string,
+    method: string,
+    headers: RequestHeaders,
+    requestData: RequestData,
+    protocol: string,
+    timeout: number
+  ) => Promise<HttpClientResponseInterface>;
+}
+
+export interface HttpClientResponseInterface {
+  getStatusCode: () => number;
+  getHeaders: () => ResponseHeaders;
+  getRawResponse: () => unknown;
+  toStream: (streamCompleteCallback: () => void) => unknown;
+  toJSON: () => Promise<any>;
+}
 
 /**
  * Encapsulates the logic for issuing a request to the Stripe API.

@@ -1,5 +1,7 @@
 /* eslint-disable camelcase */
 
+import {RawErrorType, StripeRawError} from './Types.js';
+
 export const generate = (rawStripeError: StripeRawError): StripeError => {
   switch (rawStripeError.type) {
     case 'card_error':
