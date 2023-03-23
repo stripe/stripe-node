@@ -3,8 +3,8 @@ import {EventEmitter} from 'events';
 import {
   HttpClientInterface,
   HttpClientResponseInterface,
-} from './net/HttpClient';
-import {PlatformFunctions} from './platform/PlatformFunctions';
+} from './net/HttpClient.js';
+import {PlatformFunctions} from './platform/PlatformFunctions.js';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
 export type BufferedFile = {
