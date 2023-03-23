@@ -1,4 +1,4 @@
-import {RequestEvent, ResponseEvent} from './Types';
+import {RequestEvent, ResponseEvent} from './Types.js';
 
 /**
  * @private

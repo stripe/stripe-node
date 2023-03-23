@@ -4,7 +4,7 @@ import {
   StripeResourceNamespaceObject,
   StripeObject,
   StripeResourceObject,
-} from './Types';
+} from './Types.js';
 
 // It also works recursively, so you could do i.e. `stripe.billing.invoicing.pay`.
 function ResourceNamespace(

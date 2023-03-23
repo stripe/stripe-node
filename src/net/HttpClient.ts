@@ -4,7 +4,7 @@ import {
   RequestData,
   RequestHeaders,
   ResponseHeaders,
-} from '../Types';
+} from '../Types.js';
 
 type TimeoutError = TypeError & {code?: string};
 

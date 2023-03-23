@@ -6,7 +6,7 @@ import {
   StripeResourceObject,
   RequestHeaders,
   MultipartRequestData,
-} from './Types';
+} from './Types.js';
 
 const OPTIONS_KEYS = [
   'apiKey',
