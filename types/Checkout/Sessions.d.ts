@@ -90,6 +90,11 @@ declare module 'stripe' {
         currency: string | null;
 
         /**
+         * Currency conversion details for automatic currency conversion sessions
+         */
+        currency_conversion?: Session.CurrencyConversion | null;
+
+        /**
          * Collect additional information from your customer using custom fields. Up to 2 fields are supported.
          */
         custom_fields: Array<Session.CustomField>;
@@ -353,6 +358,28 @@ declare module 'stripe' {
           type Promotions = 'auto' | 'none';
 
           type TermsOfService = 'none' | 'required';
+        }
+
+        interface CurrencyConversion {
+          /**
+           * Total of all items in source currency before discounts or taxes are applied.
+           */
+          amount_subtotal: number;
+
+          /**
+           * Total of all items in source currency after discounts and taxes are applied.
+           */
+          amount_total: number;
+
+          /**
+           * Exchange rate used to convert source currency amounts to customer currency amounts
+           */
+          fx_rate: string;
+
+          /**
+           * Creation currency of the CheckoutSession before localization
+           */
+          source_currency: string;
         }
 
         type CustomerCreation = 'always' | 'if_required';

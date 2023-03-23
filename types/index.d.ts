@@ -64,6 +64,8 @@
 ///<reference path='./SubscriptionItemsResource.d.ts' />
 ///<reference path='./SubscriptionSchedulesResource.d.ts' />
 ///<reference path='./SubscriptionsResource.d.ts' />
+///<reference path='./Tax/CalculationsResource.d.ts' />
+///<reference path='./Tax/TransactionsResource.d.ts' />
 ///<reference path='./TaxCodesResource.d.ts' />
 ///<reference path='./TaxRatesResource.d.ts' />
 ///<reference path='./Terminal/ConfigurationsResource.d.ts' />
@@ -173,6 +175,10 @@
 ///<reference path='./SubscriptionItems.d.ts' />
 ///<reference path='./SubscriptionSchedules.d.ts' />
 ///<reference path='./Subscriptions.d.ts' />
+///<reference path='./Tax/CalculationLineItems.d.ts' />
+///<reference path='./Tax/Calculations.d.ts' />
+///<reference path='./Tax/TransactionLineItems.d.ts' />
+///<reference path='./Tax/Transactions.d.ts' />
 ///<reference path='./TaxCodes.d.ts' />
 ///<reference path='./TaxDeductedAtSources.d.ts' />
 ///<reference path='./TaxIds.d.ts' />
@@ -294,6 +300,10 @@ declare module 'stripe' {
     };
     sigma: {
       scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
+    };
+    tax: {
+      calculations: Stripe.Tax.CalculationsResource;
+      transactions: Stripe.Tax.TransactionsResource;
     };
     terminal: {
       configurations: Stripe.Terminal.ConfigurationsResource;
