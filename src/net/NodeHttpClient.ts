@@ -1,11 +1,11 @@
 import * as http from 'http';
 import * as https from 'https';
+import {RequestHeaders, RequestData} from '../Types.js';
 import {
-  RequestHeaders,
-  RequestData,
+  HttpClient,
+  HttpClientResponse,
   HttpClientResponseInterface,
-} from '../Types.js';
-import {HttpClient, HttpClientResponse} from './HttpClient.js';
+} from './HttpClient.js';
 
 const defaultHttpAgent = new http.Agent({keepAlive: true});
 const defaultHttpsAgent = new https.Agent({keepAlive: true});

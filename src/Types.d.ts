@@ -1,5 +1,9 @@
 /* eslint-disable camelcase */
 import {EventEmitter} from 'events';
+import {
+  HttpClientInterface,
+  HttpClientResponseInterface,
+} from './net/HttpClient';
 import {PlatformFunctions} from './platform/PlatformFunctions';
 
 export type AppInfo = {name?: string} & Record<string, unknown>;
@@ -79,13 +83,6 @@ export type ResponseEvent = {
 };
 export type ResponseHeaderValue = string | string[];
 export type ResponseHeaders = Record<string, ResponseHeaderValue>;
-export interface HttpClientResponseInterface {
-  getStatusCode: () => number;
-  getHeaders: () => ResponseHeaders;
-  getRawResponse: () => unknown;
-  toStream: (streamCompleteCallback: () => void) => unknown;
-  toJSON: () => Promise<any>;
-}
 export type StreamingFile = {
   name: string;
   type: string;
@@ -95,19 +92,6 @@ export type StripeConstructor = {
   new (key: string, config: Record<string, unknown>): StripeObject;
 };
 declare const Stripe: StripeConstructor;
-export interface HttpClientInterface {
-  getClientName: () => string;
-  makeRequest: (
-    host: string,
-    port: string,
-    path: string,
-    method: string,
-    headers: RequestHeaders,
-    requestData: RequestData,
-    protocol: string,
-    timeout: number
-  ) => Promise<HttpClientResponseInterface>;
-}
 export type StripeObject = {
   getClientUserAgentSeeded: (
     seed: Record<string, string | boolean | null>,

@@ -12,14 +12,13 @@ import {
   removeNullish,
   stringifyRequestData,
 } from './utils.js';
-import {HttpClient} from './net/HttpClient.js';
+import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {
   StripeObject,
   RequestHeaders,
   RequestEvent,
   ResponseEvent,
   RequestCallback,
-  HttpClientResponseInterface,
   RequestCallbackReturn,
   HttpClientResponseError,
   RequestSettings,

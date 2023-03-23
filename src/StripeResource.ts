@@ -14,8 +14,8 @@ import {
   RequestData,
   RequestOpts,
   UrlInterpolator,
-  HttpClientResponseInterface,
 } from './Types.js';
+import {HttpClientResponseInterface} from './net/HttpClient.js';
 
 // Provide extension mechanism for Stripe Resource Sub-Classes
 StripeResource.extend = protoExtend;
