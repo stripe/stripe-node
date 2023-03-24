@@ -7,14 +7,6 @@ import {MethodSpec} from './StripeMethod.js';
 export type AppInfo = {name?: string} & Record<string, unknown>; // TODO: merge
 
 export type MultipartRequestData = RequestData | StreamingFile | BufferedFile;
-export type RawErrorType =
-  | 'card_error'
-  | 'invalid_request_error'
-  | 'api_error'
-  | 'idempotency_error'
-  | 'rate_limit_error'
-  | 'authentication_error'
-  | 'invalid_grant'; // TODO: merge
 export type RequestArgs = Array<any>;
 export type RequestCallback = (
   this: void,
@@ -140,25 +132,6 @@ export type RequestSender = {
     requestDataProcessor: RequestDataProcessor | undefined
   ): void;
 };
-export type StripeRawError = {
-  message?: string;
-  type?: RawErrorType;
-  headers?: {[header: string]: string};
-  statusCode?: number;
-  requestId?: string;
-  code?: string;
-  doc_url?: string;
-  decline_code?: string;
-  param?: string;
-  detail?: string | Error;
-  charge?: string;
-  payment_method_type?: string;
-  payment_intent?: any;
-  payment_method?: any;
-  setup_intent?: any;
-  source?: any;
-  exception?: any;
-}; // TODO:
 export type StripeResourceConstructor = {
   new (stripe: StripeObject, deprecatedUrlData?: never): StripeResourceObject;
 };

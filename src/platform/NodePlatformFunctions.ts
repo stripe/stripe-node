@@ -119,7 +119,7 @@ export class NodePlatformFunctions extends PlatformFunctions {
             new StreamProcessingError({
               message:
                 'An error occurred while attempting to process the file for upload.',
-              detail: err,
+              exception: err,
             })
           );
         });

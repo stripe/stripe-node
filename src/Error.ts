@@ -1,8 +1,10 @@
 /* eslint-disable camelcase */
+///<reference types="../types" />
+import {Stripe} from 'stripe';
 
-import {RawErrorType, StripeRawError} from './Types.js';
-
-export const generate = (rawStripeError: StripeRawError): StripeError => {
+export const generate = (
+  rawStripeError: Stripe.StripeRawError
+): StripeError => {
   switch (rawStripeError.type) {
     case 'card_error':
       return new StripeCardError(rawStripeError);
@@ -31,7 +33,7 @@ export class StripeError extends Error {
   readonly message: string;
   readonly type: string;
   readonly raw: unknown;
-  readonly rawType?: RawErrorType;
+  readonly rawType?: Stripe.RawErrorType;
   readonly headers?: {[header: string]: string};
   readonly requestId?: string;
 
@@ -49,7 +51,7 @@ export class StripeError extends Error {
   readonly setup_intent?: any;
   readonly source?: any;
 
-  constructor(raw: StripeRawError = {}) {
+  constructor(raw: Stripe.StripeRawError = {}) {
     super(raw.message);
     this.type = this.constructor.name;
 
@@ -139,7 +141,7 @@ export class StripeSignatureVerificationError extends StripeError {
   constructor(
     header: string | Uint8Array,
     payload: string | Uint8Array,
-    raw: StripeRawError = {}
+    raw: Stripe.StripeRawError = {}
   ) {
     super(raw);
     this.header = header;

@@ -12,7 +12,7 @@ declare module 'stripe' {
     export type StripeRawError = {
       message?: string;
 
-      type: RawErrorType;
+      type?: RawErrorType;
 
       headers?: {[header: string]: string};
       statusCode?: number;
@@ -20,6 +20,7 @@ declare module 'stripe' {
 
       code?: string;
       doc_code?: string;
+      doc_url?: string;
       decline_code?: string;
       param?: string;
       detail?: string;
@@ -27,8 +28,10 @@ declare module 'stripe' {
       charge?: string;
       payment_intent?: Stripe.PaymentIntent;
       payment_method?: Stripe.PaymentMethod;
+      payment_method_type?: Stripe.PaymentMethod.Type;
       setup_intent?: Stripe.SetupIntent;
       source?: Stripe.Source;
+      exception?: Error;
     };
 
     namespace errors {
