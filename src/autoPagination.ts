@@ -1,4 +1,5 @@
-import {MethodSpec, RequestArgs, StripeResourceObject} from './Types.js';
+import {MethodSpec} from './StripeMethod.js';
+import {RequestArgs, StripeResourceObject} from './Types.js';
 import {callbackifyPromiseWithTimeout, getDataFromArgs} from './utils.js';
 
 type PromiseCache = {

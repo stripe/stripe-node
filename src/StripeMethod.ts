@@ -1,6 +1,21 @@
 import {callbackifyPromiseWithTimeout, extractUrlParams} from './utils.js';
 import {makeAutoPaginationMethods} from './autoPagination.js';
-import {MethodSpec, StripeResourceObject} from './Types.js';
+import {RequestData, RequestHeaders, StripeResourceObject} from './Types.js';
+import {HttpClientResponseInterface} from './net/HttpClient.js';
+
+export type MethodSpec = {
+  method: string;
+  methodType?: string;
+  urlParams?: Array<string>;
+  path?: string;
+  fullPath?: string;
+  encode?: (data: RequestData) => RequestData;
+  validator?: (data: RequestData, options: {headers: RequestHeaders}) => void;
+  headers?: Record<string, string>;
+  streaming?: boolean;
+  host?: string;
+  transformResponseData?: (response: HttpClientResponseInterface) => any;
+};
 
 /**
  * Create an API method from the declared spec.

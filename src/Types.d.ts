@@ -1,30 +1,11 @@
 /* eslint-disable camelcase */
 import {EventEmitter} from 'events';
-import {
-  HttpClientInterface,
-  HttpClientResponseInterface,
-} from './net/HttpClient.js';
-import {PlatformFunctions} from './platform/PlatformFunctions.js';
+import {HttpClientInterface} from './net/HttpClient.js';
+import {BufferedFile, PlatformFunctions} from './platform/PlatformFunctions.js';
+import {MethodSpec} from './StripeMethod.js';
 
-export type AppInfo = {name?: string} & Record<string, unknown>;
-export type BufferedFile = {
-  name: string;
-  type: string;
-  file: {data: Uint8Array};
-};
-export type MethodSpec = {
-  method: string;
-  methodType?: string;
-  urlParams?: Array<string>;
-  path?: string;
-  fullPath?: string;
-  encode?: (data: RequestData) => RequestData;
-  validator?: (data: RequestData, options: {headers: RequestHeaders}) => void;
-  headers?: Record<string, string>;
-  streaming?: boolean;
-  host?: string;
-  transformResponseData?: (response: HttpClientResponseInterface) => any;
-};
+export type AppInfo = {name?: string} & Record<string, unknown>; // TODO: merge
+
 export type MultipartRequestData = RequestData | StreamingFile | BufferedFile;
 export type RawErrorType =
   | 'card_error'
@@ -33,7 +14,7 @@ export type RawErrorType =
   | 'idempotency_error'
   | 'rate_limit_error'
   | 'authentication_error'
-  | 'invalid_grant';
+  | 'invalid_grant'; // TODO: merge
 export type RequestArgs = Array<any>;
 export type RequestCallback = (
   this: void,
@@ -49,13 +30,13 @@ export type RequestEvent = {
   method?: string;
   path?: string;
   request_start_time: number;
-};
+}; // TODO:
 export type RequestHeaders = Record<string, string | number | string[]>;
 export type RequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
   headers?: RequestHeaders;
-};
+}; // TODO:
 export type RequestOpts = {
   requestMethod: string;
   requestPath: string;
@@ -66,7 +47,7 @@ export type RequestOpts = {
   host: string | null;
   streaming: boolean;
   settings: RequestSettings;
-};
+}; // TODO: maybe?
 export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};
 export type ResponseEvent = {
   api_version?: string;
@@ -146,7 +127,7 @@ export type StripeObject = {
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
   _platformFunctions: PlatformFunctions;
-};
+}; // TODO: maybe?
 export type RequestSender = {
   _request(
     method: string,
@@ -177,7 +158,7 @@ export type StripeRawError = {
   setup_intent?: any;
   source?: any;
   exception?: any;
-};
+}; // TODO:
 export type StripeResourceConstructor = {
   new (stripe: StripeObject, deprecatedUrlData?: never): StripeResourceObject;
 };

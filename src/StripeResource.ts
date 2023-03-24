@@ -5,12 +5,11 @@ import {
   protoExtend,
   stringifyRequestData,
 } from './utils.js';
-import {stripeMethod} from './StripeMethod.js';
+import {MethodSpec, stripeMethod} from './StripeMethod.js';
 import {
   StripeResourceObject,
   StripeObject,
   RequestArgs,
-  MethodSpec,
   RequestData,
   RequestOpts,
   UrlInterpolator,

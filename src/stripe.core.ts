@@ -47,7 +47,7 @@ const defaultRequestSenderFactory: RequestSenderFactory = (stripe) =>
 export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
-): typeof Stripe {
+): (this: StripeObject, key: string, config: Record<string, unknown>) => void {
   Stripe.PACKAGE_VERSION = '11.16.0';
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,

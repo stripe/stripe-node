@@ -5,7 +5,13 @@ import {FetchHttpClient} from '../net/FetchHttpClient.js';
 import {HttpClient} from '../net/HttpClient.js';
 import {StripeEmitter} from '../StripeEmitter.js';
 import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider.js';
-import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
+import {MultipartRequestData, RequestData} from '../Types.js';
+
+export type BufferedFile = {
+  name: string;
+  type: string;
+  file: {data: Uint8Array};
+};
 
 /**
  * Interface encapsulating various utility functions whose
