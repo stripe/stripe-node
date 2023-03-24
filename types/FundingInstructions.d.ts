@@ -1,188 +1,190 @@
 // File generated from our OpenAPI spec
 
-declare namespace Stripe {
-  /**
-   * Each customer has a [`balance`](https://stripe.com/docs/api/customers/object#customer_object-balance) that is
-   * automatically applied to future invoices and payments using the `customer_balance` payment method.
-   * Customers can fund this balance by initiating a bank transfer to any account in the
-   * `financial_addresses` field.
-   * Related guide: [Customer Balance - Funding Instructions](https://stripe.com/docs/payments/customer-balance/funding-instructions) to learn more
-   */
-  interface FundingInstructions {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * String representing the object's type. Objects of the same type share the same value.
+     * Each customer has a [`balance`](https://stripe.com/docs/api/customers/object#customer_object-balance) that is
+     * automatically applied to future invoices and payments using the `customer_balance` payment method.
+     * Customers can fund this balance by initiating a bank transfer to any account in the
+     * `financial_addresses` field.
+     * Related guide: [Customer Balance - Funding Instructions](https://stripe.com/docs/payments/customer-balance/funding-instructions) to learn more
      */
-    object: 'funding_instructions';
-
-    bank_transfer: FundingInstructions.BankTransfer;
-
-    /**
-     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-     */
-    currency: string;
-
-    /**
-     * The `funding_type` of the returned instructions
-     */
-    funding_type: 'bank_transfer';
-
-    /**
-     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-     */
-    livemode: boolean;
-  }
-
-  namespace FundingInstructions {
-    interface BankTransfer {
+    interface FundingInstructions {
       /**
-       * The country of the bank account to fund
+       * String representing the object's type. Objects of the same type share the same value.
        */
-      country: string;
+      object: 'funding_instructions';
+
+      bank_transfer: FundingInstructions.BankTransfer;
 
       /**
-       * A list of financial addresses that can be used to fund a particular balance
+       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
        */
-      financial_addresses: Array<BankTransfer.FinancialAddress>;
+      currency: string;
 
       /**
-       * The bank_transfer type
+       * The `funding_type` of the returned instructions
        */
-      type: BankTransfer.Type;
+      funding_type: 'bank_transfer';
+
+      /**
+       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       */
+      livemode: boolean;
     }
 
-    namespace BankTransfer {
-      interface FinancialAddress {
+    namespace FundingInstructions {
+      interface BankTransfer {
         /**
-         * Iban Records contain E.U. bank account details per the SEPA format.
+         * The country of the bank account to fund
          */
-        iban?: FinancialAddress.Iban;
+        country: string;
 
         /**
-         * Sort Code Records contain U.K. bank account details per the sort code format.
+         * A list of financial addresses that can be used to fund a particular balance
          */
-        sort_code?: FinancialAddress.SortCode;
+        financial_addresses: Array<BankTransfer.FinancialAddress>;
 
         /**
-         * SPEI Records contain Mexico bank account details per the SPEI format.
+         * The bank_transfer type
          */
-        spei?: FinancialAddress.Spei;
-
-        /**
-         * The payment networks supported by this FinancialAddress
-         */
-        supported_networks?: Array<FinancialAddress.SupportedNetwork>;
-
-        /**
-         * The type of financial address
-         */
-        type: FinancialAddress.Type;
-
-        /**
-         * Zengin Records contain Japan bank account details per the Zengin format.
-         */
-        zengin?: FinancialAddress.Zengin;
+        type: BankTransfer.Type;
       }
 
-      namespace FinancialAddress {
-        interface Iban {
+      namespace BankTransfer {
+        interface FinancialAddress {
           /**
-           * The name of the person or business that owns the bank account
+           * Iban Records contain E.U. bank account details per the SEPA format.
            */
-          account_holder_name: string;
+          iban?: FinancialAddress.Iban;
 
           /**
-           * The BIC/SWIFT code of the account.
+           * Sort Code Records contain U.K. bank account details per the sort code format.
            */
-          bic: string;
+          sort_code?: FinancialAddress.SortCode;
 
           /**
-           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+           * SPEI Records contain Mexico bank account details per the SPEI format.
            */
-          country: string;
+          spei?: FinancialAddress.Spei;
 
           /**
-           * The IBAN of the account.
+           * The payment networks supported by this FinancialAddress
            */
-          iban: string;
+          supported_networks?: Array<FinancialAddress.SupportedNetwork>;
+
+          /**
+           * The type of financial address
+           */
+          type: FinancialAddress.Type;
+
+          /**
+           * Zengin Records contain Japan bank account details per the Zengin format.
+           */
+          zengin?: FinancialAddress.Zengin;
         }
 
-        interface SortCode {
-          /**
-           * The name of the person or business that owns the bank account
-           */
-          account_holder_name: string;
+        namespace FinancialAddress {
+          interface Iban {
+            /**
+             * The name of the person or business that owns the bank account
+             */
+            account_holder_name: string;
 
-          /**
-           * The account number
-           */
-          account_number: string;
+            /**
+             * The BIC/SWIFT code of the account.
+             */
+            bic: string;
 
-          /**
-           * The six-digit sort code
-           */
-          sort_code: string;
+            /**
+             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+             */
+            country: string;
+
+            /**
+             * The IBAN of the account.
+             */
+            iban: string;
+          }
+
+          interface SortCode {
+            /**
+             * The name of the person or business that owns the bank account
+             */
+            account_holder_name: string;
+
+            /**
+             * The account number
+             */
+            account_number: string;
+
+            /**
+             * The six-digit sort code
+             */
+            sort_code: string;
+          }
+
+          interface Spei {
+            /**
+             * The three-digit bank code
+             */
+            bank_code: string;
+
+            /**
+             * The short banking institution name
+             */
+            bank_name: string;
+
+            /**
+             * The CLABE number
+             */
+            clabe: string;
+          }
+
+          type SupportedNetwork = 'bacs' | 'fps' | 'sepa' | 'spei' | 'zengin';
+
+          type Type = 'iban' | 'sort_code' | 'spei' | 'zengin';
+
+          interface Zengin {
+            /**
+             * The account holder name
+             */
+            account_holder_name: string | null;
+
+            /**
+             * The account number
+             */
+            account_number: string | null;
+
+            /**
+             * The bank account type. In Japan, this can only be `futsu` or `toza`.
+             */
+            account_type: string | null;
+
+            /**
+             * The bank code of the account
+             */
+            bank_code: string | null;
+
+            /**
+             * The bank name of the account
+             */
+            bank_name: string | null;
+
+            /**
+             * The branch code of the account
+             */
+            branch_code: string | null;
+
+            /**
+             * The branch name of the account
+             */
+            branch_name: string | null;
+          }
         }
 
-        interface Spei {
-          /**
-           * The three-digit bank code
-           */
-          bank_code: string;
-
-          /**
-           * The short banking institution name
-           */
-          bank_name: string;
-
-          /**
-           * The CLABE number
-           */
-          clabe: string;
-        }
-
-        type SupportedNetwork = 'bacs' | 'fps' | 'sepa' | 'spei' | 'zengin';
-
-        type Type = 'iban' | 'sort_code' | 'spei' | 'zengin';
-
-        interface Zengin {
-          /**
-           * The account holder name
-           */
-          account_holder_name: string | null;
-
-          /**
-           * The account number
-           */
-          account_number: string | null;
-
-          /**
-           * The bank account type. In Japan, this can only be `futsu` or `toza`.
-           */
-          account_type: string | null;
-
-          /**
-           * The bank code of the account
-           */
-          bank_code: string | null;
-
-          /**
-           * The bank name of the account
-           */
-          bank_name: string | null;
-
-          /**
-           * The branch code of the account
-           */
-          branch_code: string | null;
-
-          /**
-           * The branch name of the account
-           */
-          branch_name: string | null;
-        }
+        type Type = 'eu_bank_transfer' | 'jp_bank_transfer';
       }
-
-      type Type = 'eu_bank_transfer' | 'jp_bank_transfer';
     }
   }
 }

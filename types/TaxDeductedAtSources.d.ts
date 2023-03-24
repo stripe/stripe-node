@@ -1,33 +1,35 @@
 // File generated from our OpenAPI spec
 
-declare namespace Stripe {
-  /**
-   * The TaxDeductedAtSource object.
-   */
-  interface TaxDeductedAtSource {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * Unique identifier for the object.
+     * The TaxDeductedAtSource object.
      */
-    id: string;
+    interface TaxDeductedAtSource {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
 
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'tax_deducted_at_source';
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'tax_deducted_at_source';
 
-    /**
-     * The end of the invoicing period. This TDS applies to Stripe fees collected during this invoicing period.
-     */
-    period_end: number;
+      /**
+       * The end of the invoicing period. This TDS applies to Stripe fees collected during this invoicing period.
+       */
+      period_end: number;
 
-    /**
-     * The start of the invoicing period. This TDS applies to Stripe fees collected during this invoicing period.
-     */
-    period_start: number;
+      /**
+       * The start of the invoicing period. This TDS applies to Stripe fees collected during this invoicing period.
+       */
+      period_start: number;
 
-    /**
-     * The TAN that was supplied to Stripe when TDS was assessed
-     */
-    tax_deduction_account_number: string;
+      /**
+       * The TAN that was supplied to Stripe when TDS was assessed
+       */
+      tax_deduction_account_number: string;
+    }
   }
 }

@@ -1,50 +1,52 @@
 // File generated from our OpenAPI spec
 
-declare namespace Stripe {
-  /**
-   * The Application object.
-   */
-  interface Application {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * Unique identifier for the object.
+     * The Application object.
      */
-    id: string;
+    interface Application {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
+
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'application';
+
+      deleted?: void;
+
+      /**
+       * The name of the application.
+       */
+      name: string | null;
+    }
 
     /**
-     * String representing the object's type. Objects of the same type share the same value.
+     * The DeletedApplication object.
      */
-    object: 'application';
+    interface DeletedApplication {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
 
-    deleted?: void;
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'application';
 
-    /**
-     * The name of the application.
-     */
-    name: string | null;
-  }
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
 
-  /**
-   * The DeletedApplication object.
-   */
-  interface DeletedApplication {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
-
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'application';
-
-    /**
-     * Always true for a deleted object
-     */
-    deleted: true;
-
-    /**
-     * The name of the application.
-     */
-    name: string | null;
+      /**
+       * The name of the application.
+       */
+      name: string | null;
+    }
   }
 }

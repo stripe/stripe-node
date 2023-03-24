@@ -1,100 +1,102 @@
 // File generated from our OpenAPI spec
 
-declare namespace Stripe {
-  namespace FinancialConnections {
-    interface SessionCreateParams {
-      /**
-       * The account holder to link accounts for.
-       */
-      account_holder: SessionCreateParams.AccountHolder;
-
-      /**
-       * List of data features that you would like to request access to.
-       *
-       * Possible values are `balances`, `transactions`, `ownership`, and `payment_method`.
-       */
-      permissions: Array<SessionCreateParams.Permission>;
-
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-
-      /**
-       * Filters to restrict the kinds of accounts to collect.
-       */
-      filters?: SessionCreateParams.Filters;
-
-      /**
-       * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
-       */
-      return_url?: string;
-    }
-
-    namespace SessionCreateParams {
-      interface AccountHolder {
+declare module 'stripe' {
+  namespace Stripe {
+    namespace FinancialConnections {
+      interface SessionCreateParams {
         /**
-         * The ID of the Stripe account whose accounts will be retrieved. Should only be present if `type` is `account`.
+         * The account holder to link accounts for.
          */
-        account?: string;
+        account_holder: SessionCreateParams.AccountHolder;
 
         /**
-         * The ID of the Stripe customer whose accounts will be retrieved. Should only be present if `type` is `customer`.
+         * List of data features that you would like to request access to.
+         *
+         * Possible values are `balances`, `transactions`, `ownership`, and `payment_method`.
          */
-        customer?: string;
+        permissions: Array<SessionCreateParams.Permission>;
 
         /**
-         * Type of account holder to collect accounts for.
+         * Specifies which fields in the response should be expanded.
          */
-        type: AccountHolder.Type;
+        expand?: Array<string>;
+
+        /**
+         * Filters to restrict the kinds of accounts to collect.
+         */
+        filters?: SessionCreateParams.Filters;
+
+        /**
+         * For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
+         */
+        return_url?: string;
       }
 
-      namespace AccountHolder {
-        type Type = 'account' | 'customer';
+      namespace SessionCreateParams {
+        interface AccountHolder {
+          /**
+           * The ID of the Stripe account whose accounts will be retrieved. Should only be present if `type` is `account`.
+           */
+          account?: string;
+
+          /**
+           * The ID of the Stripe customer whose accounts will be retrieved. Should only be present if `type` is `customer`.
+           */
+          customer?: string;
+
+          /**
+           * Type of account holder to collect accounts for.
+           */
+          type: AccountHolder.Type;
+        }
+
+        namespace AccountHolder {
+          type Type = 'account' | 'customer';
+        }
+
+        interface Filters {
+          /**
+           * List of countries from which to collect accounts.
+           */
+          countries: Array<string>;
+        }
+
+        type Permission =
+          | 'balances'
+          | 'ownership'
+          | 'payment_method'
+          | 'transactions';
       }
 
-      interface Filters {
+      interface SessionRetrieveParams {
         /**
-         * List of countries from which to collect accounts.
+         * Specifies which fields in the response should be expanded.
          */
-        countries: Array<string>;
+        expand?: Array<string>;
       }
 
-      type Permission =
-        | 'balances'
-        | 'ownership'
-        | 'payment_method'
-        | 'transactions';
-    }
+      class SessionsResource {
+        /**
+         * To launch the Financial Connections authorization flow, create a Session. The session's client_secret can be used to launch the flow using Stripe.js.
+         */
+        create(
+          params: SessionCreateParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Session>>;
 
-    interface SessionRetrieveParams {
-      /**
-       * Specifies which fields in the response should be expanded.
-       */
-      expand?: Array<string>;
-    }
-
-    class SessionsResource {
-      /**
-       * To launch the Financial Connections authorization flow, create a Session. The session's client_secret can be used to launch the flow using Stripe.js.
-       */
-      create(
-        params: SessionCreateParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.FinancialConnections.Session>>;
-
-      /**
-       * Retrieves the details of a Financial Connections Session
-       */
-      retrieve(
-        id: string,
-        params?: SessionRetrieveParams,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.FinancialConnections.Session>>;
-      retrieve(
-        id: string,
-        options?: RequestOptions
-      ): Promise<Stripe.Response<Stripe.FinancialConnections.Session>>;
+        /**
+         * Retrieves the details of a Financial Connections Session
+         */
+        retrieve(
+          id: string,
+          params?: SessionRetrieveParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Session>>;
+        retrieve(
+          id: string,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Session>>;
+      }
     }
   }
 }

@@ -1,31 +1,33 @@
 // File generated from our OpenAPI spec
 
-declare namespace Stripe {
-  /**
-   * Account Links are the means by which a Connect platform grants a connected account permission to access
-   * Stripe-hosted applications, such as Connect Onboarding.
-   *
-   * Related guide: [Connect Onboarding](https://stripe.com/docs/connect/connect-onboarding).
-   */
-  interface AccountLink {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * String representing the object's type. Objects of the same type share the same value.
+     * Account Links are the means by which a Connect platform grants a connected account permission to access
+     * Stripe-hosted applications, such as Connect Onboarding.
+     *
+     * Related guide: [Connect Onboarding](https://stripe.com/docs/connect/connect-onboarding).
      */
-    object: 'account_link';
+    interface AccountLink {
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'account_link';
 
-    /**
-     * Time at which the object was created. Measured in seconds since the Unix epoch.
-     */
-    created: number;
+      /**
+       * Time at which the object was created. Measured in seconds since the Unix epoch.
+       */
+      created: number;
 
-    /**
-     * The timestamp at which this account link will expire.
-     */
-    expires_at: number;
+      /**
+       * The timestamp at which this account link will expire.
+       */
+      expires_at: number;
 
-    /**
-     * The URL for the account link.
-     */
-    url: string;
+      /**
+       * The URL for the account link.
+       */
+      url: string;
+    }
   }
 }

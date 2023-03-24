@@ -1,143 +1,145 @@
 /// <reference types="node" />
 
-declare namespace Stripe {
-  export class Webhooks {
-    /**
-     * Constructs and verifies the signature of an Event from the provided details.
-     *
-     * @throws Stripe.errors.StripeSignatureVerificationError
-     */
-    constructEvent(
+declare module 'stripe' {
+  namespace Stripe {
+    export class Webhooks {
       /**
-       * Raw text body payload received from Stripe.
-       */
-      payload: string | Buffer,
-      /**
-       * Value of the `stripe-signature` header from Stripe.
-       * Typically a string.
+       * Constructs and verifies the signature of an Event from the provided details.
        *
-       * Note that this is typed to accept an array of strings
-       * so that it works seamlessly with express's types,
-       * but will throw if an array is passed in practice
-       * since express should never return this header as an array,
-       * only a string.
+       * @throws Stripe.errors.StripeSignatureVerificationError
        */
-      header: string | Buffer | Array<string>,
-      /**
-       * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
-       * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
-       */
-      secret: string,
-      /**
-       * Seconds of tolerance on timestamps.
-       */
-      tolerance?: number,
-      /**
-       * Optional CryptoProvider to use for computing HMAC signatures.
-       */
-      cryptoProvider?: CryptoProvider
-    ): Stripe.Event;
+      constructEvent(
+        /**
+         * Raw text body payload received from Stripe.
+         */
+        payload: string | Buffer,
+        /**
+         * Value of the `stripe-signature` header from Stripe.
+         * Typically a string.
+         *
+         * Note that this is typed to accept an array of strings
+         * so that it works seamlessly with express's types,
+         * but will throw if an array is passed in practice
+         * since express should never return this header as an array,
+         * only a string.
+         */
+        header: string | Buffer | Array<string>,
+        /**
+         * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
+         * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
+         */
+        secret: string,
+        /**
+         * Seconds of tolerance on timestamps.
+         */
+        tolerance?: number,
+        /**
+         * Optional CryptoProvider to use for computing HMAC signatures.
+         */
+        cryptoProvider?: CryptoProvider
+      ): Stripe.Event;
 
-    /**
-     * Asynchronously constructs and verifies the signature of an Event from
-     * the provided details.
-     *
-     * @throws Stripe.errors.StripeSignatureVerificationError
-     */
-    constructEventAsync(
       /**
-       * Raw text body payload received from Stripe.
-       */
-      payload: string | Buffer,
-      /**
-       * Value of the `stripe-signature` header from Stripe.
-       * Typically a string.
+       * Asynchronously constructs and verifies the signature of an Event from
+       * the provided details.
        *
-       * Note that this is typed to accept an array of strings
-       * so that it works seamlessly with express's types,
-       * but will throw if an array is passed in practice
-       * since express should never return this header as an array,
-       * only a string.
+       * @throws Stripe.errors.StripeSignatureVerificationError
        */
-      header: string | Buffer | Array<string>,
-      /**
-       * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
-       * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
-       */
-      secret: string,
-      /**
-       * Seconds of tolerance on timestamps.
-       */
-      tolerance?: number,
-      /**
-       * Optional CryptoProvider to use for computing HMAC signatures.
-       */
-      cryptoProvider?: CryptoProvider
-    ): Promise<Stripe.Event>;
-
-    /**
-     * Generates a header to be used for webhook mocking
-     */
-    generateTestHeaderString(opts: {
-      /**
-       * JSON stringified payload object, containing the 'id' and 'object' parameters.
-       */
-      payload: string;
-
-      /**
-       * Timestamp of the header. Defaults to Date.now().
-       */
-      timestamp?: number;
+      constructEventAsync(
+        /**
+         * Raw text body payload received from Stripe.
+         */
+        payload: string | Buffer,
+        /**
+         * Value of the `stripe-signature` header from Stripe.
+         * Typically a string.
+         *
+         * Note that this is typed to accept an array of strings
+         * so that it works seamlessly with express's types,
+         * but will throw if an array is passed in practice
+         * since express should never return this header as an array,
+         * only a string.
+         */
+        header: string | Buffer | Array<string>,
+        /**
+         * Your Webhook Signing Secret for this endpoint (e.g., 'whsec_...').
+         * You can get this [in your dashboard](https://dashboard.stripe.com/webhooks).
+         */
+        secret: string,
+        /**
+         * Seconds of tolerance on timestamps.
+         */
+        tolerance?: number,
+        /**
+         * Optional CryptoProvider to use for computing HMAC signatures.
+         */
+        cryptoProvider?: CryptoProvider
+      ): Promise<Stripe.Event>;
 
       /**
-       * Stripe webhook secret, e.g., 'whsec_...'.
+       * Generates a header to be used for webhook mocking
        */
-      secret: string;
+      generateTestHeaderString(opts: {
+        /**
+         * JSON stringified payload object, containing the 'id' and 'object' parameters.
+         */
+        payload: string;
 
-      /**
-       * Version of API to hit. Defaults to 'v1'.
-       */
-      scheme?: string;
+        /**
+         * Timestamp of the header. Defaults to Date.now().
+         */
+        timestamp?: number;
 
-      /**
-       * Computed webhook signature.
-       */
-      signature?: string;
+        /**
+         * Stripe webhook secret, e.g., 'whsec_...'.
+         */
+        secret: string;
 
-      /**
-       * Optional CryptoProvider to use for computing HMAC signatures, if no
-       * signature is given.
-       */
-      cryptoProvider?: CryptoProvider;
-    }): string;
+        /**
+         * Version of API to hit. Defaults to 'v1'.
+         */
+        scheme?: string;
 
-    signature: Signature;
-  }
+        /**
+         * Computed webhook signature.
+         */
+        signature?: string;
 
-  export class Signature {
-    EXPECTED_SCHEME: 'v1';
+        /**
+         * Optional CryptoProvider to use for computing HMAC signatures, if no
+         * signature is given.
+         */
+        cryptoProvider?: CryptoProvider;
+      }): string;
 
-    verifyHeader(
-      payload: string,
-      header: string,
-      secret: string,
-      tolerance?: number,
-      cryptoProvider?: CryptoProvider
-    ): boolean;
-    verifyHeaderAsync(
-      payload: string,
-      header: string,
-      secret: string,
-      tolerance?: number,
-      cryptoProvider?: CryptoProvider
-    ): Promise<boolean>;
-    parseHeader(
-      header: string,
-      scheme?: string
-    ): {
-      t: number;
-      v0: string;
-      v1: string;
-    };
+      signature: Signature;
+    }
+
+    export class Signature {
+      EXPECTED_SCHEME: 'v1';
+
+      verifyHeader(
+        payload: string,
+        header: string,
+        secret: string,
+        tolerance?: number,
+        cryptoProvider?: CryptoProvider
+      ): boolean;
+      verifyHeaderAsync(
+        payload: string,
+        header: string,
+        secret: string,
+        tolerance?: number,
+        cryptoProvider?: CryptoProvider
+      ): Promise<boolean>;
+      parseHeader(
+        header: string,
+        scheme?: string
+      ): {
+        t: number;
+        v0: string;
+        v1: string;
+      };
+    }
   }
 }

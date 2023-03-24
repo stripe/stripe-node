@@ -1,52 +1,54 @@
 // File generated from our OpenAPI spec
 
-declare namespace Stripe {
-  /**
-   * The ApplePayDomain object.
-   */
-  interface ApplePayDomain {
+declare module 'stripe' {
+  namespace Stripe {
     /**
-     * Unique identifier for the object.
+     * The ApplePayDomain object.
      */
-    id: string;
+    interface ApplePayDomain {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
 
-    /**
-     * String representing the object's type. Objects of the same type share the same value.
-     */
-    object: 'apple_pay_domain';
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'apple_pay_domain';
 
-    /**
-     * Time at which the object was created. Measured in seconds since the Unix epoch.
-     */
-    created: number;
+      /**
+       * Time at which the object was created. Measured in seconds since the Unix epoch.
+       */
+      created: number;
 
-    deleted?: void;
+      deleted?: void;
 
-    domain_name: string;
+      domain_name: string;
 
-    /**
-     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-     */
-    livemode: boolean;
-  }
-
-  /**
-   * The DeletedApplePayDomain object.
-   */
-  interface DeletedApplePayDomain {
-    /**
-     * Unique identifier for the object.
-     */
-    id: string;
+      /**
+       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       */
+      livemode: boolean;
+    }
 
     /**
-     * String representing the object's type. Objects of the same type share the same value.
+     * The DeletedApplePayDomain object.
      */
-    object: 'apple_pay_domain';
+    interface DeletedApplePayDomain {
+      /**
+       * Unique identifier for the object.
+       */
+      id: string;
 
-    /**
-     * Always true for a deleted object
-     */
-    deleted: true;
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'apple_pay_domain';
+
+      /**
+       * Always true for a deleted object
+       */
+      deleted: true;
+    }
   }
 }
