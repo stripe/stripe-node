@@ -1,43 +1,41 @@
 // File generated from our OpenAPI spec
 
-declare module 'stripe' {
-  namespace Stripe {
+declare namespace Stripe {
+  /**
+   * Usage records allow you to report customer usage and metrics to Stripe for
+   * metered billing of subscription prices.
+   *
+   * Related guide: [Metered Billing](https://stripe.com/docs/billing/subscriptions/metered-billing).
+   */
+  interface UsageRecord {
     /**
-     * Usage records allow you to report customer usage and metrics to Stripe for
-     * metered billing of subscription prices.
-     *
-     * Related guide: [Metered Billing](https://stripe.com/docs/billing/subscriptions/metered-billing).
+     * Unique identifier for the object.
      */
-    interface UsageRecord {
-      /**
-       * Unique identifier for the object.
-       */
-      id: string;
+    id: string;
 
-      /**
-       * String representing the object's type. Objects of the same type share the same value.
-       */
-      object: 'usage_record';
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'usage_record';
 
-      /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-       */
-      livemode: boolean;
+    /**
+     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+     */
+    livemode: boolean;
 
-      /**
-       * The usage quantity for the specified date.
-       */
-      quantity: number;
+    /**
+     * The usage quantity for the specified date.
+     */
+    quantity: number;
 
-      /**
-       * The ID of the subscription item this usage record contains data for.
-       */
-      subscription_item: string;
+    /**
+     * The ID of the subscription item this usage record contains data for.
+     */
+    subscription_item: string;
 
-      /**
-       * The timestamp when this usage occurred.
-       */
-      timestamp: number;
-    }
+    /**
+     * The timestamp when this usage occurred.
+     */
+    timestamp: number;
   }
 }

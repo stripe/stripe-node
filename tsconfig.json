@@ -9,7 +9,9 @@
     "noImplicitThis": true,
     "strict": true,
     "strictFunctionTypes": true,
-    "types": [ "node" ]
+    "types": [ "node" ],
+    // "declaration": true,
+    // "declarationDir": "./types"
   },
   "include": ["./src/**/*"],
   "exclude": ["./src/stripe.esm.node.ts", "./src/stripe.esm.worker.ts"],

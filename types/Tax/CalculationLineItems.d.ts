@@ -1,176 +1,174 @@
 // File generated from our OpenAPI spec
 
-declare module 'stripe' {
-  namespace Stripe {
-    namespace Tax {
+declare namespace Stripe {
+  namespace Tax {
+    /**
+     * The CalculationLineItem object.
+     */
+    interface CalculationLineItem {
       /**
-       * The CalculationLineItem object.
+       * Unique identifier for the object.
        */
-      interface CalculationLineItem {
-        /**
-         * Unique identifier for the object.
-         */
-        id: string;
+      id: string;
 
-        /**
-         * String representing the object's type. Objects of the same type share the same value.
-         */
-        object: 'tax.calculation_line_item';
+      /**
+       * String representing the object's type. Objects of the same type share the same value.
+       */
+      object: 'tax.calculation_line_item';
 
+      /**
+       * The line item amount in integer cents. If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+       */
+      amount: number;
+
+      /**
+       * The amount of tax calculated for this line item, in integer cents.
+       */
+      amount_tax: number;
+
+      /**
+       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+       */
+      livemode: boolean;
+
+      /**
+       * A Product ID.
+       */
+      product: string | null;
+
+      /**
+       * The number of units of the item being purchased. For reversals, this is the quantity reversed.
+       */
+      quantity: number;
+
+      /**
+       * A custom identifier for this line item.
+       */
+      reference: string | null;
+
+      /**
+       * Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes taxes.
+       */
+      tax_behavior: CalculationLineItem.TaxBehavior;
+
+      /**
+       * Detailed account of taxes relevant to this line item.
+       */
+      tax_breakdown: Array<CalculationLineItem.TaxBreakdown> | null;
+
+      /**
+       * The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for this resource.
+       */
+      tax_code: string;
+    }
+
+    namespace CalculationLineItem {
+      type TaxBehavior = 'exclusive' | 'inclusive';
+
+      interface TaxBreakdown {
         /**
-         * The line item amount in integer cents. If `tax_behavior=inclusive`, then this amount includes taxes. Otherwise, taxes were calculated on top of this amount.
+         * The amount of tax, in integer cents.
          */
         amount: number;
 
-        /**
-         * The amount of tax calculated for this line item, in integer cents.
-         */
-        amount_tax: number;
+        jurisdiction: TaxBreakdown.Jurisdiction;
 
         /**
-         * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+         * Indicates whether the jurisdiction was determined by the origin (merchant's address) or destination (customer's address).
          */
-        livemode: boolean;
+        sourcing: TaxBreakdown.Sourcing;
 
         /**
-         * A Product ID.
+         * Details regarding the rate for this tax. This field will be `null` when the tax is not imposed, for example if the product is exempt from tax.
          */
-        product: string | null;
+        tax_rate_details: TaxBreakdown.TaxRateDetails | null;
 
         /**
-         * The number of units of the item being purchased. For reversals, this is the quantity reversed.
+         * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
          */
-        quantity: number;
+        taxability_reason: TaxBreakdown.TaxabilityReason;
 
         /**
-         * A custom identifier for this line item.
+         * The amount on which tax is calculated, in integer cents.
          */
-        reference: string | null;
-
-        /**
-         * Specifies whether the `amount` includes taxes. If `tax_behavior=inclusive`, then the amount includes taxes.
-         */
-        tax_behavior: CalculationLineItem.TaxBehavior;
-
-        /**
-         * Detailed account of taxes relevant to this line item.
-         */
-        tax_breakdown: Array<CalculationLineItem.TaxBreakdown> | null;
-
-        /**
-         * The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for this resource.
-         */
-        tax_code: string;
+        taxable_amount: number;
       }
 
-      namespace CalculationLineItem {
-        type TaxBehavior = 'exclusive' | 'inclusive';
-
-        interface TaxBreakdown {
+      namespace TaxBreakdown {
+        interface Jurisdiction {
           /**
-           * The amount of tax, in integer cents.
+           * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
            */
-          amount: number;
-
-          jurisdiction: TaxBreakdown.Jurisdiction;
+          country: string;
 
           /**
-           * Indicates whether the jurisdiction was determined by the origin (merchant's address) or destination (customer's address).
+           * A human-readable name for the jurisdiction imposing the tax.
            */
-          sourcing: TaxBreakdown.Sourcing;
+          display_name: string;
 
           /**
-           * Details regarding the rate for this tax. This field will be `null` when the tax is not imposed, for example if the product is exempt from tax.
+           * Indicates the level of the jurisdiction imposing the tax.
            */
-          tax_rate_details: TaxBreakdown.TaxRateDetails | null;
+          level: Jurisdiction.Level;
 
           /**
-           * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+           * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
            */
-          taxability_reason: TaxBreakdown.TaxabilityReason;
-
-          /**
-           * The amount on which tax is calculated, in integer cents.
-           */
-          taxable_amount: number;
+          state: string | null;
         }
 
-        namespace TaxBreakdown {
-          interface Jurisdiction {
-            /**
-             * Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
-             */
-            country: string;
+        namespace Jurisdiction {
+          type Level = 'city' | 'country' | 'county' | 'district' | 'state';
+        }
 
-            /**
-             * A human-readable name for the jurisdiction imposing the tax.
-             */
-            display_name: string;
+        type Sourcing = 'destination' | 'origin';
 
-            /**
-             * Indicates the level of the jurisdiction imposing the tax.
-             */
-            level: Jurisdiction.Level;
+        type TaxabilityReason =
+          | 'customer_exempt'
+          | 'not_collecting'
+          | 'not_subject_to_tax'
+          | 'not_supported'
+          | 'portion_product_exempt'
+          | 'portion_reduced_rated'
+          | 'portion_standard_rated'
+          | 'product_exempt'
+          | 'product_exempt_holiday'
+          | 'proportionally_rated'
+          | 'reduced_rated'
+          | 'reverse_charge'
+          | 'standard_rated'
+          | 'taxable_basis_reduced'
+          | 'zero_rated';
 
-            /**
-             * [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
-             */
-            state: string | null;
-          }
+        interface TaxRateDetails {
+          /**
+           * A localized display name for tax type, intended to be human-readable. For example, "Local Sales and Use Tax", "Value-added tax (VAT)", or "Umsatzsteuer (USt.)".
+           */
+          display_name: string;
 
-          namespace Jurisdiction {
-            type Level = 'city' | 'country' | 'county' | 'district' | 'state';
-          }
+          /**
+           * The tax rate percentage as a string. For example, 8.5% is represented as "8.5".
+           */
+          percentage_decimal: string;
 
-          type Sourcing = 'destination' | 'origin';
+          /**
+           * The tax type, such as `vat` or `sales_tax`.
+           */
+          tax_type: TaxRateDetails.TaxType;
+        }
 
-          type TaxabilityReason =
-            | 'customer_exempt'
-            | 'not_collecting'
-            | 'not_subject_to_tax'
-            | 'not_supported'
-            | 'portion_product_exempt'
-            | 'portion_reduced_rated'
-            | 'portion_standard_rated'
-            | 'product_exempt'
-            | 'product_exempt_holiday'
-            | 'proportionally_rated'
-            | 'reduced_rated'
-            | 'reverse_charge'
-            | 'standard_rated'
-            | 'taxable_basis_reduced'
-            | 'zero_rated';
-
-          interface TaxRateDetails {
-            /**
-             * A localized display name for tax type, intended to be human-readable. For example, "Local Sales and Use Tax", "Value-added tax (VAT)", or "Umsatzsteuer (USt.)".
-             */
-            display_name: string;
-
-            /**
-             * The tax rate percentage as a string. For example, 8.5% is represented as "8.5".
-             */
-            percentage_decimal: string;
-
-            /**
-             * The tax type, such as `vat` or `sales_tax`.
-             */
-            tax_type: TaxRateDetails.TaxType;
-          }
-
-          namespace TaxRateDetails {
-            type TaxType =
-              | 'gst'
-              | 'hst'
-              | 'igst'
-              | 'jct'
-              | 'lease_tax'
-              | 'pst'
-              | 'qst'
-              | 'rst'
-              | 'sales_tax'
-              | 'vat';
-          }
+        namespace TaxRateDetails {
+          type TaxType =
+            | 'gst'
+            | 'hst'
+            | 'igst'
+            | 'jct'
+            | 'lease_tax'
+            | 'pst'
+            | 'qst'
+            | 'rst'
+            | 'sales_tax'
+            | 'vat';
         }
       }
     }

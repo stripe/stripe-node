@@ -208,160 +208,152 @@
 ///<reference path='./WebhookEndpoints.d.ts' />
 // Imports: The end of the section generated from our OpenAPI spec
 
-declare module 'stripe' {
-  // Added to in other modules, referenced above.
-  export namespace Stripe {}
+// Added to in other modules, referenced above.
+declare namespace Stripe {}
 
-  export class Stripe {
-    static Stripe: typeof Stripe;
+declare class Stripe {
+  static Stripe: typeof Stripe;
 
-    constructor(apiKey: string, config: Stripe.StripeConfig);
+  constructor(apiKey: string, config: Stripe.StripeConfig);
 
-    StripeResource: Stripe.StripeResource;
+  StripeResource: Stripe.StripeResource;
 
-    // Fields: The beginning of the section generated from our OpenAPI spec
-    accountLinks: Stripe.AccountLinksResource;
-    accounts: Stripe.AccountsResource;
-    applePayDomains: Stripe.ApplePayDomainsResource;
-    applicationFees: Stripe.ApplicationFeesResource;
-    balance: Stripe.BalanceResource;
-    balanceTransactions: Stripe.BalanceTransactionsResource;
-    charges: Stripe.ChargesResource;
-    countrySpecs: Stripe.CountrySpecsResource;
-    coupons: Stripe.CouponsResource;
-    creditNotes: Stripe.CreditNotesResource;
-    customers: Stripe.CustomersResource;
-    disputes: Stripe.DisputesResource;
-    ephemeralKeys: Stripe.EphemeralKeysResource;
-    events: Stripe.EventsResource;
-    exchangeRates: Stripe.ExchangeRatesResource;
-    fileLinks: Stripe.FileLinksResource;
-    files: Stripe.FilesResource;
-    invoiceItems: Stripe.InvoiceItemsResource;
-    invoices: Stripe.InvoicesResource;
-    mandates: Stripe.MandatesResource;
-    paymentIntents: Stripe.PaymentIntentsResource;
-    paymentLinks: Stripe.PaymentLinksResource;
-    paymentMethods: Stripe.PaymentMethodsResource;
-    payouts: Stripe.PayoutsResource;
-    plans: Stripe.PlansResource;
-    prices: Stripe.PricesResource;
-    products: Stripe.ProductsResource;
-    promotionCodes: Stripe.PromotionCodesResource;
-    quotes: Stripe.QuotesResource;
-    refunds: Stripe.RefundsResource;
-    reviews: Stripe.ReviewsResource;
-    setupAttempts: Stripe.SetupAttemptsResource;
-    setupIntents: Stripe.SetupIntentsResource;
-    shippingRates: Stripe.ShippingRatesResource;
-    sources: Stripe.SourcesResource;
-    subscriptionItems: Stripe.SubscriptionItemsResource;
-    subscriptionSchedules: Stripe.SubscriptionSchedulesResource;
-    subscriptions: Stripe.SubscriptionsResource;
-    taxCodes: Stripe.TaxCodesResource;
-    taxRates: Stripe.TaxRatesResource;
-    tokens: Stripe.TokensResource;
-    topups: Stripe.TopupsResource;
-    transfers: Stripe.TransfersResource;
-    webhookEndpoints: Stripe.WebhookEndpointsResource;
-    apps: {
-      secrets: Stripe.Apps.SecretsResource;
-    };
-    billingPortal: {
-      configurations: Stripe.BillingPortal.ConfigurationsResource;
-      sessions: Stripe.BillingPortal.SessionsResource;
-    };
-    checkout: {
-      sessions: Stripe.Checkout.SessionsResource;
-    };
-    financialConnections: {
-      accounts: Stripe.FinancialConnections.AccountsResource;
-      sessions: Stripe.FinancialConnections.SessionsResource;
-    };
-    identity: {
-      verificationReports: Stripe.Identity.VerificationReportsResource;
-      verificationSessions: Stripe.Identity.VerificationSessionsResource;
-    };
+  // Fields: The beginning of the section generated from our OpenAPI spec
+  accountLinks: Stripe.AccountLinksResource;
+  accounts: Stripe.AccountsResource;
+  applePayDomains: Stripe.ApplePayDomainsResource;
+  applicationFees: Stripe.ApplicationFeesResource;
+  balance: Stripe.BalanceResource;
+  balanceTransactions: Stripe.BalanceTransactionsResource;
+  charges: Stripe.ChargesResource;
+  countrySpecs: Stripe.CountrySpecsResource;
+  coupons: Stripe.CouponsResource;
+  creditNotes: Stripe.CreditNotesResource;
+  customers: Stripe.CustomersResource;
+  disputes: Stripe.DisputesResource;
+  ephemeralKeys: Stripe.EphemeralKeysResource;
+  events: Stripe.EventsResource;
+  exchangeRates: Stripe.ExchangeRatesResource;
+  fileLinks: Stripe.FileLinksResource;
+  files: Stripe.FilesResource;
+  invoiceItems: Stripe.InvoiceItemsResource;
+  invoices: Stripe.InvoicesResource;
+  mandates: Stripe.MandatesResource;
+  paymentIntents: Stripe.PaymentIntentsResource;
+  paymentLinks: Stripe.PaymentLinksResource;
+  paymentMethods: Stripe.PaymentMethodsResource;
+  payouts: Stripe.PayoutsResource;
+  plans: Stripe.PlansResource;
+  prices: Stripe.PricesResource;
+  products: Stripe.ProductsResource;
+  promotionCodes: Stripe.PromotionCodesResource;
+  quotes: Stripe.QuotesResource;
+  refunds: Stripe.RefundsResource;
+  reviews: Stripe.ReviewsResource;
+  setupAttempts: Stripe.SetupAttemptsResource;
+  setupIntents: Stripe.SetupIntentsResource;
+  shippingRates: Stripe.ShippingRatesResource;
+  sources: Stripe.SourcesResource;
+  subscriptionItems: Stripe.SubscriptionItemsResource;
+  subscriptionSchedules: Stripe.SubscriptionSchedulesResource;
+  subscriptions: Stripe.SubscriptionsResource;
+  taxCodes: Stripe.TaxCodesResource;
+  taxRates: Stripe.TaxRatesResource;
+  tokens: Stripe.TokensResource;
+  topups: Stripe.TopupsResource;
+  transfers: Stripe.TransfersResource;
+  webhookEndpoints: Stripe.WebhookEndpointsResource;
+  apps: {
+    secrets: Stripe.Apps.SecretsResource;
+  };
+  billingPortal: {
+    configurations: Stripe.BillingPortal.ConfigurationsResource;
+    sessions: Stripe.BillingPortal.SessionsResource;
+  };
+  checkout: {
+    sessions: Stripe.Checkout.SessionsResource;
+  };
+  financialConnections: {
+    accounts: Stripe.FinancialConnections.AccountsResource;
+    sessions: Stripe.FinancialConnections.SessionsResource;
+  };
+  identity: {
+    verificationReports: Stripe.Identity.VerificationReportsResource;
+    verificationSessions: Stripe.Identity.VerificationSessionsResource;
+  };
+  issuing: {
+    authorizations: Stripe.Issuing.AuthorizationsResource;
+    cards: Stripe.Issuing.CardsResource;
+    cardholders: Stripe.Issuing.CardholdersResource;
+    disputes: Stripe.Issuing.DisputesResource;
+    transactions: Stripe.Issuing.TransactionsResource;
+  };
+  radar: {
+    earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
+    valueLists: Stripe.Radar.ValueListsResource;
+    valueListItems: Stripe.Radar.ValueListItemsResource;
+  };
+  reporting: {
+    reportRuns: Stripe.Reporting.ReportRunsResource;
+    reportTypes: Stripe.Reporting.ReportTypesResource;
+  };
+  sigma: {
+    scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
+  };
+  tax: {
+    calculations: Stripe.Tax.CalculationsResource;
+    transactions: Stripe.Tax.TransactionsResource;
+  };
+  terminal: {
+    configurations: Stripe.Terminal.ConfigurationsResource;
+    connectionTokens: Stripe.Terminal.ConnectionTokensResource;
+    locations: Stripe.Terminal.LocationsResource;
+    readers: Stripe.Terminal.ReadersResource;
+  };
+  testHelpers: {
+    customers: Stripe.TestHelpers.CustomersResource;
+    refunds: Stripe.TestHelpers.RefundsResource;
+    testClocks: Stripe.TestHelpers.TestClocksResource;
     issuing: {
-      authorizations: Stripe.Issuing.AuthorizationsResource;
-      cards: Stripe.Issuing.CardsResource;
-      cardholders: Stripe.Issuing.CardholdersResource;
-      disputes: Stripe.Issuing.DisputesResource;
-      transactions: Stripe.Issuing.TransactionsResource;
-    };
-    radar: {
-      earlyFraudWarnings: Stripe.Radar.EarlyFraudWarningsResource;
-      valueLists: Stripe.Radar.ValueListsResource;
-      valueListItems: Stripe.Radar.ValueListItemsResource;
-    };
-    reporting: {
-      reportRuns: Stripe.Reporting.ReportRunsResource;
-      reportTypes: Stripe.Reporting.ReportTypesResource;
-    };
-    sigma: {
-      scheduledQueryRuns: Stripe.Sigma.ScheduledQueryRunsResource;
-    };
-    tax: {
-      calculations: Stripe.Tax.CalculationsResource;
-      transactions: Stripe.Tax.TransactionsResource;
+      cards: Stripe.TestHelpers.Issuing.CardsResource;
     };
     terminal: {
-      configurations: Stripe.Terminal.ConfigurationsResource;
-      connectionTokens: Stripe.Terminal.ConnectionTokensResource;
-      locations: Stripe.Terminal.LocationsResource;
-      readers: Stripe.Terminal.ReadersResource;
-    };
-    testHelpers: {
-      customers: Stripe.TestHelpers.CustomersResource;
-      refunds: Stripe.TestHelpers.RefundsResource;
-      testClocks: Stripe.TestHelpers.TestClocksResource;
-      issuing: {
-        cards: Stripe.TestHelpers.Issuing.CardsResource;
-      };
-      terminal: {
-        readers: Stripe.TestHelpers.Terminal.ReadersResource;
-      };
-      treasury: {
-        inboundTransfers: Stripe.TestHelpers.Treasury.InboundTransfersResource;
-        outboundPayments: Stripe.TestHelpers.Treasury.OutboundPaymentsResource;
-        outboundTransfers: Stripe.TestHelpers.Treasury.OutboundTransfersResource;
-        receivedCredits: Stripe.TestHelpers.Treasury.ReceivedCreditsResource;
-        receivedDebits: Stripe.TestHelpers.Treasury.ReceivedDebitsResource;
-      };
+      readers: Stripe.TestHelpers.Terminal.ReadersResource;
     };
     treasury: {
-      creditReversals: Stripe.Treasury.CreditReversalsResource;
-      debitReversals: Stripe.Treasury.DebitReversalsResource;
-      financialAccounts: Stripe.Treasury.FinancialAccountsResource;
-      inboundTransfers: Stripe.Treasury.InboundTransfersResource;
-      outboundPayments: Stripe.Treasury.OutboundPaymentsResource;
-      outboundTransfers: Stripe.Treasury.OutboundTransfersResource;
-      receivedCredits: Stripe.Treasury.ReceivedCreditsResource;
-      receivedDebits: Stripe.Treasury.ReceivedDebitsResource;
-      transactions: Stripe.Treasury.TransactionsResource;
-      transactionEntries: Stripe.Treasury.TransactionEntriesResource;
+      inboundTransfers: Stripe.TestHelpers.Treasury.InboundTransfersResource;
+      outboundPayments: Stripe.TestHelpers.Treasury.OutboundPaymentsResource;
+      outboundTransfers: Stripe.TestHelpers.Treasury.OutboundTransfersResource;
+      receivedCredits: Stripe.TestHelpers.Treasury.ReceivedCreditsResource;
+      receivedDebits: Stripe.TestHelpers.Treasury.ReceivedDebitsResource;
     };
-    // Fields: The end of the section generated from our OpenAPI spec
-    webhooks: Stripe.Webhooks;
-    oauth: Stripe.OAuthResource;
-    /**
-     * API Errors
-     */
-    errors: typeof Stripe.errors;
+  };
+  treasury: {
+    creditReversals: Stripe.Treasury.CreditReversalsResource;
+    debitReversals: Stripe.Treasury.DebitReversalsResource;
+    financialAccounts: Stripe.Treasury.FinancialAccountsResource;
+    inboundTransfers: Stripe.Treasury.InboundTransfersResource;
+    outboundPayments: Stripe.Treasury.OutboundPaymentsResource;
+    outboundTransfers: Stripe.Treasury.OutboundTransfersResource;
+    receivedCredits: Stripe.Treasury.ReceivedCreditsResource;
+    receivedDebits: Stripe.Treasury.ReceivedDebitsResource;
+    transactions: Stripe.Treasury.TransactionsResource;
+    transactionEntries: Stripe.Treasury.TransactionEntriesResource;
+  };
+  // Fields: The end of the section generated from our OpenAPI spec
+  webhooks: Stripe.Webhooks;
+  oauth: Stripe.OAuthResource;
+  /**
+   * API Errors
+   */
+  errors: typeof Stripe.errors;
 
-    on(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
-    on(event: 'response', handler: (event: Stripe.ResponseEvent) => void): void;
-    once(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
-    once(
-      event: 'response',
-      handler: (event: Stripe.ResponseEvent) => void
-    ): void;
-    off(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
-    off(
-      event: 'response',
-      handler: (event: Stripe.ResponseEvent) => void
-    ): void;
-  }
-
-  export default Stripe;
+  on(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
+  on(event: 'response', handler: (event: Stripe.ResponseEvent) => void): void;
+  once(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
+  once(event: 'response', handler: (event: Stripe.ResponseEvent) => void): void;
+  off(event: 'request', handler: (event: Stripe.RequestEvent) => void): void;
+  off(event: 'response', handler: (event: Stripe.ResponseEvent) => void): void;
 }
+
+export default Stripe;

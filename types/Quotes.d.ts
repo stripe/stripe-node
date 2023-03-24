@@ -1,519 +1,513 @@
 // File generated from our OpenAPI spec
 
-declare module 'stripe' {
-  namespace Stripe {
+declare namespace Stripe {
+  /**
+   * A Quote is a way to model prices that you'd like to provide to a customer.
+   * Once accepted, it will automatically create an invoice, subscription or subscription schedule.
+   */
+  interface Quote {
     /**
-     * A Quote is a way to model prices that you'd like to provide to a customer.
-     * Once accepted, it will automatically create an invoice, subscription or subscription schedule.
+     * Unique identifier for the object.
      */
-    interface Quote {
+    id: string;
+
+    /**
+     * String representing the object's type. Objects of the same type share the same value.
+     */
+    object: 'quote';
+
+    /**
+     * Total before any discounts or taxes are applied.
+     */
+    amount_subtotal: number;
+
+    /**
+     * Total after discounts and taxes are applied.
+     */
+    amount_total: number;
+
+    /**
+     * ID of the Connect Application that created the quote.
+     */
+    application: string | Stripe.Application | Stripe.DeletedApplication | null;
+
+    /**
+     * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. Only applicable if there are no line items with recurring prices on the quote.
+     */
+    application_fee_amount: number | null;
+
+    /**
+     * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. Only applicable if there are line items with recurring prices on the quote.
+     */
+    application_fee_percent: number | null;
+
+    automatic_tax: Quote.AutomaticTax;
+
+    /**
+     * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
+     */
+    collection_method: Quote.CollectionMethod;
+
+    computed: Quote.Computed;
+
+    /**
+     * Time at which the object was created. Measured in seconds since the Unix epoch.
+     */
+    created: number;
+
+    /**
+     * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+     */
+    currency: string | null;
+
+    /**
+     * The customer which this quote belongs to. A customer is required before finalizing the quote. Once specified, it cannot be changed.
+     */
+    customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
+
+    /**
+     * The tax rates applied to this quote.
+     */
+    default_tax_rates?: Array<string | Stripe.TaxRate>;
+
+    /**
+     * A description that will be displayed on the quote PDF.
+     */
+    description: string | null;
+
+    /**
+     * The discounts applied to this quote.
+     */
+    discounts: Array<string | Stripe.Discount>;
+
+    /**
+     * The date on which the quote will be canceled if in `open` or `draft` status. Measured in seconds since the Unix epoch.
+     */
+    expires_at: number;
+
+    /**
+     * A footer that will be displayed on the quote PDF.
+     */
+    footer: string | null;
+
+    /**
+     * Details of the quote that was cloned. See the [cloning documentation](https://stripe.com/docs/quotes/clone) for more details.
+     */
+    from_quote: Quote.FromQuote | null;
+
+    /**
+     * A header that will be displayed on the quote PDF.
+     */
+    header: string | null;
+
+    /**
+     * The invoice that was created from this quote.
+     */
+    invoice: string | Stripe.Invoice | Stripe.DeletedInvoice | null;
+
+    /**
+     * All invoices will be billed using the specified settings.
+     */
+    invoice_settings: Quote.InvoiceSettings | null;
+
+    /**
+     * A list of items the customer is being quoted for.
+     */
+    line_items?: ApiList<Stripe.LineItem>;
+
+    /**
+     * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
+     */
+    livemode: boolean;
+
+    /**
+     * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+     */
+    metadata: Stripe.Metadata;
+
+    /**
+     * A unique number that identifies this particular quote. This number is assigned once the quote is [finalized](https://stripe.com/docs/quotes/overview#finalize).
+     */
+    number: string | null;
+
+    /**
+     * The account on behalf of which to charge. See the [Connect documentation](https://support.stripe.com/questions/sending-invoices-on-behalf-of-connected-accounts) for details.
+     */
+    on_behalf_of: string | Stripe.Account | null;
+
+    /**
+     * The status of the quote.
+     */
+    status: Quote.Status;
+
+    status_transitions: Quote.StatusTransitions;
+
+    /**
+     * The subscription that was created or updated from this quote.
+     */
+    subscription: string | Stripe.Subscription | null;
+
+    subscription_data: Quote.SubscriptionData;
+
+    /**
+     * The subscription schedule that was created or updated from this quote.
+     */
+    subscription_schedule: string | Stripe.SubscriptionSchedule | null;
+
+    /**
+     * ID of the test clock this quote belongs to.
+     */
+    test_clock: string | Stripe.TestHelpers.TestClock | null;
+
+    total_details: Quote.TotalDetails;
+
+    /**
+     * The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the invoices.
+     */
+    transfer_data: Quote.TransferData | null;
+  }
+
+  namespace Quote {
+    interface AutomaticTax {
       /**
-       * Unique identifier for the object.
+       * Automatically calculate taxes
        */
-      id: string;
+      enabled: boolean;
 
       /**
-       * String representing the object's type. Objects of the same type share the same value.
+       * The status of the most recent automated tax calculation for this quote.
        */
-      object: 'quote';
+      status: AutomaticTax.Status | null;
+    }
 
+    namespace AutomaticTax {
+      type Status = 'complete' | 'failed' | 'requires_location_inputs';
+    }
+
+    type CollectionMethod = 'charge_automatically' | 'send_invoice';
+
+    interface Computed {
       /**
-       * Total before any discounts or taxes are applied.
+       * The definitive totals and line items the customer will be charged on a recurring basis. Takes into account the line items with recurring prices and discounts with `duration=forever` coupons only. Defaults to `null` if no inputted line items with recurring prices.
        */
-      amount_subtotal: number;
+      recurring: Computed.Recurring | null;
 
+      upfront: Computed.Upfront;
+    }
+
+    namespace Computed {
+      interface Recurring {
+        /**
+         * Total before any discounts or taxes are applied.
+         */
+        amount_subtotal: number;
+
+        /**
+         * Total after discounts and taxes are applied.
+         */
+        amount_total: number;
+
+        /**
+         * The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
+         */
+        interval: Recurring.Interval;
+
+        /**
+         * The number of intervals (specified in the `interval` attribute) between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months.
+         */
+        interval_count: number;
+
+        total_details: Recurring.TotalDetails;
+      }
+
+      namespace Recurring {
+        type Interval = 'day' | 'month' | 'week' | 'year';
+
+        interface TotalDetails {
+          /**
+           * This is the sum of all the discounts.
+           */
+          amount_discount: number;
+
+          /**
+           * This is the sum of all the shipping amounts.
+           */
+          amount_shipping: number | null;
+
+          /**
+           * This is the sum of all the tax amounts.
+           */
+          amount_tax: number;
+
+          breakdown?: TotalDetails.Breakdown;
+        }
+
+        namespace TotalDetails {
+          interface Breakdown {
+            /**
+             * The aggregated discounts.
+             */
+            discounts: Array<Breakdown.Discount>;
+
+            /**
+             * The aggregated tax amounts by rate.
+             */
+            taxes: Array<Breakdown.Tax>;
+          }
+
+          namespace Breakdown {
+            interface Discount {
+              /**
+               * The amount discounted.
+               */
+              amount: number;
+
+              /**
+               * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+               * It contains information about when the discount began, when it will end, and what it is applied to.
+               *
+               * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
+               */
+              discount: Stripe.Discount;
+            }
+
+            interface Tax {
+              /**
+               * Amount of tax applied for this rate.
+               */
+              amount: number;
+
+              /**
+               * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+               *
+               * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+               */
+              rate: Stripe.TaxRate;
+            }
+          }
+        }
+      }
+
+      interface Upfront {
+        /**
+         * Total before any discounts or taxes are applied.
+         */
+        amount_subtotal: number;
+
+        /**
+         * Total after discounts and taxes are applied.
+         */
+        amount_total: number;
+
+        /**
+         * The line items that will appear on the next invoice after this quote is accepted. This does not include pending invoice items that exist on the customer but may still be included in the next invoice.
+         */
+        line_items?: ApiList<Stripe.LineItem>;
+
+        total_details: Upfront.TotalDetails;
+      }
+
+      namespace Upfront {
+        interface TotalDetails {
+          /**
+           * This is the sum of all the discounts.
+           */
+          amount_discount: number;
+
+          /**
+           * This is the sum of all the shipping amounts.
+           */
+          amount_shipping: number | null;
+
+          /**
+           * This is the sum of all the tax amounts.
+           */
+          amount_tax: number;
+
+          breakdown?: TotalDetails.Breakdown;
+        }
+
+        namespace TotalDetails {
+          interface Breakdown {
+            /**
+             * The aggregated discounts.
+             */
+            discounts: Array<Breakdown.Discount>;
+
+            /**
+             * The aggregated tax amounts by rate.
+             */
+            taxes: Array<Breakdown.Tax>;
+          }
+
+          namespace Breakdown {
+            interface Discount {
+              /**
+               * The amount discounted.
+               */
+              amount: number;
+
+              /**
+               * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+               * It contains information about when the discount began, when it will end, and what it is applied to.
+               *
+               * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
+               */
+              discount: Stripe.Discount;
+            }
+
+            interface Tax {
+              /**
+               * Amount of tax applied for this rate.
+               */
+              amount: number;
+
+              /**
+               * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+               *
+               * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+               */
+              rate: Stripe.TaxRate;
+            }
+          }
+        }
+      }
+    }
+
+    interface FromQuote {
       /**
-       * Total after discounts and taxes are applied.
+       * Whether this quote is a revision of a different quote.
        */
-      amount_total: number;
+      is_revision: boolean;
 
       /**
-       * ID of the Connect Application that created the quote.
+       * The quote that was cloned.
        */
-      application:
-        | string
-        | Stripe.Application
-        | Stripe.DeletedApplication
-        | null;
+      quote: string | Stripe.Quote;
+    }
 
+    interface InvoiceSettings {
       /**
-       * The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. Only applicable if there are no line items with recurring prices on the quote.
+       * Number of days within which a customer must pay invoices generated by this quote. This value will be `null` for quotes where `collection_method=charge_automatically`.
        */
-      application_fee_amount: number | null;
+      days_until_due: number | null;
+    }
 
+    type Status = 'accepted' | 'canceled' | 'draft' | 'open';
+
+    interface StatusTransitions {
       /**
-       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. Only applicable if there are line items with recurring prices on the quote.
+       * The time that the quote was accepted. Measured in seconds since Unix epoch.
        */
-      application_fee_percent: number | null;
-
-      automatic_tax: Quote.AutomaticTax;
+      accepted_at: number | null;
 
       /**
-       * Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
+       * The time that the quote was canceled. Measured in seconds since Unix epoch.
        */
-      collection_method: Quote.CollectionMethod;
-
-      computed: Quote.Computed;
+      canceled_at: number | null;
 
       /**
-       * Time at which the object was created. Measured in seconds since the Unix epoch.
+       * The time that the quote was finalized. Measured in seconds since Unix epoch.
        */
-      created: number;
+      finalized_at: number | null;
+    }
 
+    interface SubscriptionData {
       /**
-       * Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-       */
-      currency: string | null;
-
-      /**
-       * The customer which this quote belongs to. A customer is required before finalizing the quote. Once specified, it cannot be changed.
-       */
-      customer: string | Stripe.Customer | Stripe.DeletedCustomer | null;
-
-      /**
-       * The tax rates applied to this quote.
-       */
-      default_tax_rates?: Array<string | Stripe.TaxRate>;
-
-      /**
-       * A description that will be displayed on the quote PDF.
+       * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
        */
       description: string | null;
 
       /**
-       * The discounts applied to this quote.
+       * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. This date is ignored if it is in the past when the quote is accepted. Measured in seconds since the Unix epoch.
        */
-      discounts: Array<string | Stripe.Discount>;
+      effective_date: number | null;
 
       /**
-       * The date on which the quote will be canceled if in `open` or `draft` status. Measured in seconds since the Unix epoch.
+       * Integer representing the number of trial period days before the customer is charged for the first time.
        */
-      expires_at: number;
-
-      /**
-       * A footer that will be displayed on the quote PDF.
-       */
-      footer: string | null;
-
-      /**
-       * Details of the quote that was cloned. See the [cloning documentation](https://stripe.com/docs/quotes/clone) for more details.
-       */
-      from_quote: Quote.FromQuote | null;
-
-      /**
-       * A header that will be displayed on the quote PDF.
-       */
-      header: string | null;
-
-      /**
-       * The invoice that was created from this quote.
-       */
-      invoice: string | Stripe.Invoice | Stripe.DeletedInvoice | null;
-
-      /**
-       * All invoices will be billed using the specified settings.
-       */
-      invoice_settings: Quote.InvoiceSettings | null;
-
-      /**
-       * A list of items the customer is being quoted for.
-       */
-      line_items?: ApiList<Stripe.LineItem>;
-
-      /**
-       * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
-       */
-      livemode: boolean;
-
-      /**
-       * Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
-       */
-      metadata: Stripe.Metadata;
-
-      /**
-       * A unique number that identifies this particular quote. This number is assigned once the quote is [finalized](https://stripe.com/docs/quotes/overview#finalize).
-       */
-      number: string | null;
-
-      /**
-       * The account on behalf of which to charge. See the [Connect documentation](https://support.stripe.com/questions/sending-invoices-on-behalf-of-connected-accounts) for details.
-       */
-      on_behalf_of: string | Stripe.Account | null;
-
-      /**
-       * The status of the quote.
-       */
-      status: Quote.Status;
-
-      status_transitions: Quote.StatusTransitions;
-
-      /**
-       * The subscription that was created or updated from this quote.
-       */
-      subscription: string | Stripe.Subscription | null;
-
-      subscription_data: Quote.SubscriptionData;
-
-      /**
-       * The subscription schedule that was created or updated from this quote.
-       */
-      subscription_schedule: string | Stripe.SubscriptionSchedule | null;
-
-      /**
-       * ID of the test clock this quote belongs to.
-       */
-      test_clock: string | Stripe.TestHelpers.TestClock | null;
-
-      total_details: Quote.TotalDetails;
-
-      /**
-       * The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the invoices.
-       */
-      transfer_data: Quote.TransferData | null;
+      trial_period_days: number | null;
     }
 
-    namespace Quote {
-      interface AutomaticTax {
+    interface TotalDetails {
+      /**
+       * This is the sum of all the discounts.
+       */
+      amount_discount: number;
+
+      /**
+       * This is the sum of all the shipping amounts.
+       */
+      amount_shipping: number | null;
+
+      /**
+       * This is the sum of all the tax amounts.
+       */
+      amount_tax: number;
+
+      breakdown?: TotalDetails.Breakdown;
+    }
+
+    namespace TotalDetails {
+      interface Breakdown {
         /**
-         * Automatically calculate taxes
+         * The aggregated discounts.
          */
-        enabled: boolean;
+        discounts: Array<Breakdown.Discount>;
 
         /**
-         * The status of the most recent automated tax calculation for this quote.
+         * The aggregated tax amounts by rate.
          */
-        status: AutomaticTax.Status | null;
+        taxes: Array<Breakdown.Tax>;
       }
 
-      namespace AutomaticTax {
-        type Status = 'complete' | 'failed' | 'requires_location_inputs';
-      }
-
-      type CollectionMethod = 'charge_automatically' | 'send_invoice';
-
-      interface Computed {
-        /**
-         * The definitive totals and line items the customer will be charged on a recurring basis. Takes into account the line items with recurring prices and discounts with `duration=forever` coupons only. Defaults to `null` if no inputted line items with recurring prices.
-         */
-        recurring: Computed.Recurring | null;
-
-        upfront: Computed.Upfront;
-      }
-
-      namespace Computed {
-        interface Recurring {
+      namespace Breakdown {
+        interface Discount {
           /**
-           * Total before any discounts or taxes are applied.
+           * The amount discounted.
            */
-          amount_subtotal: number;
+          amount: number;
 
           /**
-           * Total after discounts and taxes are applied.
+           * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
+           * It contains information about when the discount began, when it will end, and what it is applied to.
+           *
+           * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
            */
-          amount_total: number;
-
-          /**
-           * The frequency at which a subscription is billed. One of `day`, `week`, `month` or `year`.
-           */
-          interval: Recurring.Interval;
-
-          /**
-           * The number of intervals (specified in the `interval` attribute) between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months.
-           */
-          interval_count: number;
-
-          total_details: Recurring.TotalDetails;
+          discount: Stripe.Discount;
         }
 
-        namespace Recurring {
-          type Interval = 'day' | 'month' | 'week' | 'year';
-
-          interface TotalDetails {
-            /**
-             * This is the sum of all the discounts.
-             */
-            amount_discount: number;
-
-            /**
-             * This is the sum of all the shipping amounts.
-             */
-            amount_shipping: number | null;
-
-            /**
-             * This is the sum of all the tax amounts.
-             */
-            amount_tax: number;
-
-            breakdown?: TotalDetails.Breakdown;
-          }
-
-          namespace TotalDetails {
-            interface Breakdown {
-              /**
-               * The aggregated discounts.
-               */
-              discounts: Array<Breakdown.Discount>;
-
-              /**
-               * The aggregated tax amounts by rate.
-               */
-              taxes: Array<Breakdown.Tax>;
-            }
-
-            namespace Breakdown {
-              interface Discount {
-                /**
-                 * The amount discounted.
-                 */
-                amount: number;
-
-                /**
-                 * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
-                 * It contains information about when the discount began, when it will end, and what it is applied to.
-                 *
-                 * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
-                 */
-                discount: Stripe.Discount;
-              }
-
-              interface Tax {
-                /**
-                 * Amount of tax applied for this rate.
-                 */
-                amount: number;
-
-                /**
-                 * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
-                 *
-                 * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
-                 */
-                rate: Stripe.TaxRate;
-              }
-            }
-          }
-        }
-
-        interface Upfront {
+        interface Tax {
           /**
-           * Total before any discounts or taxes are applied.
+           * Amount of tax applied for this rate.
            */
-          amount_subtotal: number;
+          amount: number;
 
           /**
-           * Total after discounts and taxes are applied.
+           * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+           *
+           * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
            */
-          amount_total: number;
-
-          /**
-           * The line items that will appear on the next invoice after this quote is accepted. This does not include pending invoice items that exist on the customer but may still be included in the next invoice.
-           */
-          line_items?: ApiList<Stripe.LineItem>;
-
-          total_details: Upfront.TotalDetails;
-        }
-
-        namespace Upfront {
-          interface TotalDetails {
-            /**
-             * This is the sum of all the discounts.
-             */
-            amount_discount: number;
-
-            /**
-             * This is the sum of all the shipping amounts.
-             */
-            amount_shipping: number | null;
-
-            /**
-             * This is the sum of all the tax amounts.
-             */
-            amount_tax: number;
-
-            breakdown?: TotalDetails.Breakdown;
-          }
-
-          namespace TotalDetails {
-            interface Breakdown {
-              /**
-               * The aggregated discounts.
-               */
-              discounts: Array<Breakdown.Discount>;
-
-              /**
-               * The aggregated tax amounts by rate.
-               */
-              taxes: Array<Breakdown.Tax>;
-            }
-
-            namespace Breakdown {
-              interface Discount {
-                /**
-                 * The amount discounted.
-                 */
-                amount: number;
-
-                /**
-                 * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
-                 * It contains information about when the discount began, when it will end, and what it is applied to.
-                 *
-                 * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
-                 */
-                discount: Stripe.Discount;
-              }
-
-              interface Tax {
-                /**
-                 * Amount of tax applied for this rate.
-                 */
-                amount: number;
-
-                /**
-                 * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
-                 *
-                 * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
-                 */
-                rate: Stripe.TaxRate;
-              }
-            }
-          }
+          rate: Stripe.TaxRate;
         }
       }
+    }
 
-      interface FromQuote {
-        /**
-         * Whether this quote is a revision of a different quote.
-         */
-        is_revision: boolean;
+    interface TransferData {
+      /**
+       * The amount in %s that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
+       */
+      amount: number | null;
 
-        /**
-         * The quote that was cloned.
-         */
-        quote: string | Stripe.Quote;
-      }
+      /**
+       * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount will be transferred to the destination.
+       */
+      amount_percent: number | null;
 
-      interface InvoiceSettings {
-        /**
-         * Number of days within which a customer must pay invoices generated by this quote. This value will be `null` for quotes where `collection_method=charge_automatically`.
-         */
-        days_until_due: number | null;
-      }
-
-      type Status = 'accepted' | 'canceled' | 'draft' | 'open';
-
-      interface StatusTransitions {
-        /**
-         * The time that the quote was accepted. Measured in seconds since Unix epoch.
-         */
-        accepted_at: number | null;
-
-        /**
-         * The time that the quote was canceled. Measured in seconds since Unix epoch.
-         */
-        canceled_at: number | null;
-
-        /**
-         * The time that the quote was finalized. Measured in seconds since Unix epoch.
-         */
-        finalized_at: number | null;
-      }
-
-      interface SubscriptionData {
-        /**
-         * The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
-         */
-        description: string | null;
-
-        /**
-         * When creating a new subscription, the date of which the subscription schedule will start after the quote is accepted. This date is ignored if it is in the past when the quote is accepted. Measured in seconds since the Unix epoch.
-         */
-        effective_date: number | null;
-
-        /**
-         * Integer representing the number of trial period days before the customer is charged for the first time.
-         */
-        trial_period_days: number | null;
-      }
-
-      interface TotalDetails {
-        /**
-         * This is the sum of all the discounts.
-         */
-        amount_discount: number;
-
-        /**
-         * This is the sum of all the shipping amounts.
-         */
-        amount_shipping: number | null;
-
-        /**
-         * This is the sum of all the tax amounts.
-         */
-        amount_tax: number;
-
-        breakdown?: TotalDetails.Breakdown;
-      }
-
-      namespace TotalDetails {
-        interface Breakdown {
-          /**
-           * The aggregated discounts.
-           */
-          discounts: Array<Breakdown.Discount>;
-
-          /**
-           * The aggregated tax amounts by rate.
-           */
-          taxes: Array<Breakdown.Tax>;
-        }
-
-        namespace Breakdown {
-          interface Discount {
-            /**
-             * The amount discounted.
-             */
-            amount: number;
-
-            /**
-             * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
-             * It contains information about when the discount began, when it will end, and what it is applied to.
-             *
-             * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
-             */
-            discount: Stripe.Discount;
-          }
-
-          interface Tax {
-            /**
-             * Amount of tax applied for this rate.
-             */
-            amount: number;
-
-            /**
-             * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
-             *
-             * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
-             */
-            rate: Stripe.TaxRate;
-          }
-        }
-      }
-
-      interface TransferData {
-        /**
-         * The amount in %s that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
-         */
-        amount: number | null;
-
-        /**
-         * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount will be transferred to the destination.
-         */
-        amount_percent: number | null;
-
-        /**
-         * The account where funds from the payment will be transferred to upon payment success.
-         */
-        destination: string | Stripe.Account;
-      }
+      /**
+       * The account where funds from the payment will be transferred to upon payment success.
+       */
+      destination: string | Stripe.Account;
     }
   }
 }

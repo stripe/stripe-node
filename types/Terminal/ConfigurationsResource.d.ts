@@ -1,803 +1,799 @@
 // File generated from our OpenAPI spec
 
-declare module 'stripe' {
-  namespace Stripe {
-    namespace Terminal {
-      interface ConfigurationCreateParams {
-        /**
-         * An object containing device type specific settings for BBPOS WisePOS E readers
-         */
-        bbpos_wisepos_e?: ConfigurationCreateParams.BbposWiseposE;
+declare namespace Stripe {
+  namespace Terminal {
+    interface ConfigurationCreateParams {
+      /**
+       * An object containing device type specific settings for BBPOS WisePOS E readers
+       */
+      bbpos_wisepos_e?: ConfigurationCreateParams.BbposWiseposE;
 
-        /**
-         * Specifies which fields in the response should be expanded.
-         */
-        expand?: Array<string>;
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
 
-        /**
-         * Tipping configurations for readers supporting on-reader tips
-         */
-        tipping?: Stripe.Emptyable<ConfigurationCreateParams.Tipping>;
+      /**
+       * Tipping configurations for readers supporting on-reader tips
+       */
+      tipping?: Stripe.Emptyable<ConfigurationCreateParams.Tipping>;
 
+      /**
+       * An object containing device type specific settings for Verifone P400 readers
+       */
+      verifone_p400?: ConfigurationCreateParams.VerifoneP400;
+    }
+
+    namespace ConfigurationCreateParams {
+      interface BbposWiseposE {
         /**
-         * An object containing device type specific settings for Verifone P400 readers
+         * A File ID representing an image you would like displayed on the reader.
          */
-        verifone_p400?: ConfigurationCreateParams.VerifoneP400;
+        splashscreen?: Stripe.Emptyable<string>;
       }
 
-      namespace ConfigurationCreateParams {
-        interface BbposWiseposE {
+      interface Tipping {
+        /**
+         * Tipping configuration for AUD
+         */
+        aud?: Tipping.Aud;
+
+        /**
+         * Tipping configuration for CAD
+         */
+        cad?: Tipping.Cad;
+
+        /**
+         * Tipping configuration for CHF
+         */
+        chf?: Tipping.Chf;
+
+        /**
+         * Tipping configuration for CZK
+         */
+        czk?: Tipping.Czk;
+
+        /**
+         * Tipping configuration for DKK
+         */
+        dkk?: Tipping.Dkk;
+
+        /**
+         * Tipping configuration for EUR
+         */
+        eur?: Tipping.Eur;
+
+        /**
+         * Tipping configuration for GBP
+         */
+        gbp?: Tipping.Gbp;
+
+        /**
+         * Tipping configuration for HKD
+         */
+        hkd?: Tipping.Hkd;
+
+        /**
+         * Tipping configuration for MYR
+         */
+        myr?: Tipping.Myr;
+
+        /**
+         * Tipping configuration for NOK
+         */
+        nok?: Tipping.Nok;
+
+        /**
+         * Tipping configuration for NZD
+         */
+        nzd?: Tipping.Nzd;
+
+        /**
+         * Tipping configuration for SEK
+         */
+        sek?: Tipping.Sek;
+
+        /**
+         * Tipping configuration for SGD
+         */
+        sgd?: Tipping.Sgd;
+
+        /**
+         * Tipping configuration for USD
+         */
+        usd?: Tipping.Usd;
+      }
+
+      namespace Tipping {
+        interface Aud {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * Fixed amounts displayed when collecting a tip
            */
-          splashscreen?: Stripe.Emptyable<string>;
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
         }
 
-        interface Tipping {
+        interface Cad {
           /**
-           * Tipping configuration for AUD
+           * Fixed amounts displayed when collecting a tip
            */
-          aud?: Tipping.Aud;
+          fixed_amounts?: Array<number>;
 
           /**
-           * Tipping configuration for CAD
+           * Percentages displayed when collecting a tip
            */
-          cad?: Tipping.Cad;
+          percentages?: Array<number>;
 
           /**
-           * Tipping configuration for CHF
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
            */
-          chf?: Tipping.Chf;
-
-          /**
-           * Tipping configuration for CZK
-           */
-          czk?: Tipping.Czk;
-
-          /**
-           * Tipping configuration for DKK
-           */
-          dkk?: Tipping.Dkk;
-
-          /**
-           * Tipping configuration for EUR
-           */
-          eur?: Tipping.Eur;
-
-          /**
-           * Tipping configuration for GBP
-           */
-          gbp?: Tipping.Gbp;
-
-          /**
-           * Tipping configuration for HKD
-           */
-          hkd?: Tipping.Hkd;
-
-          /**
-           * Tipping configuration for MYR
-           */
-          myr?: Tipping.Myr;
-
-          /**
-           * Tipping configuration for NOK
-           */
-          nok?: Tipping.Nok;
-
-          /**
-           * Tipping configuration for NZD
-           */
-          nzd?: Tipping.Nzd;
-
-          /**
-           * Tipping configuration for SEK
-           */
-          sek?: Tipping.Sek;
-
-          /**
-           * Tipping configuration for SGD
-           */
-          sgd?: Tipping.Sgd;
-
-          /**
-           * Tipping configuration for USD
-           */
-          usd?: Tipping.Usd;
+          smart_tip_threshold?: number;
         }
 
-        namespace Tipping {
-          interface Aud {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
+        interface Chf {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
 
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
 
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Cad {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Chf {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Czk {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Dkk {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Eur {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Gbp {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Hkd {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Myr {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Nok {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Nzd {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Sek {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Sgd {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Usd {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
         }
 
-        interface VerifoneP400 {
+        interface Czk {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * Fixed amounts displayed when collecting a tip
            */
-          splashscreen?: Stripe.Emptyable<string>;
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Dkk {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Eur {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Gbp {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Hkd {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Myr {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Nok {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Nzd {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Sek {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Sgd {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Usd {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
         }
       }
 
-      interface ConfigurationRetrieveParams {
+      interface VerifoneP400 {
         /**
-         * Specifies which fields in the response should be expanded.
+         * A File ID representing an image you would like displayed on the reader.
          */
-        expand?: Array<string>;
+        splashscreen?: Stripe.Emptyable<string>;
+      }
+    }
+
+    interface ConfigurationRetrieveParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+    }
+
+    interface ConfigurationUpdateParams {
+      /**
+       * An object containing device type specific settings for BBPOS WisePOS E readers
+       */
+      bbpos_wisepos_e?: Stripe.Emptyable<
+        ConfigurationUpdateParams.BbposWiseposE
+      >;
+
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
+
+      /**
+       * Tipping configurations for readers supporting on-reader tips
+       */
+      tipping?: Stripe.Emptyable<ConfigurationUpdateParams.Tipping>;
+
+      /**
+       * An object containing device type specific settings for Verifone P400 readers
+       */
+      verifone_p400?: Stripe.Emptyable<ConfigurationUpdateParams.VerifoneP400>;
+    }
+
+    namespace ConfigurationUpdateParams {
+      interface BbposWiseposE {
+        /**
+         * A File ID representing an image you would like displayed on the reader.
+         */
+        splashscreen?: Stripe.Emptyable<string>;
       }
 
-      interface ConfigurationUpdateParams {
+      interface Tipping {
         /**
-         * An object containing device type specific settings for BBPOS WisePOS E readers
+         * Tipping configuration for AUD
          */
-        bbpos_wisepos_e?: Stripe.Emptyable<
-          ConfigurationUpdateParams.BbposWiseposE
-        >;
+        aud?: Tipping.Aud;
 
         /**
-         * Specifies which fields in the response should be expanded.
+         * Tipping configuration for CAD
          */
-        expand?: Array<string>;
+        cad?: Tipping.Cad;
 
         /**
-         * Tipping configurations for readers supporting on-reader tips
+         * Tipping configuration for CHF
          */
-        tipping?: Stripe.Emptyable<ConfigurationUpdateParams.Tipping>;
+        chf?: Tipping.Chf;
 
         /**
-         * An object containing device type specific settings for Verifone P400 readers
+         * Tipping configuration for CZK
          */
-        verifone_p400?: Stripe.Emptyable<
-          ConfigurationUpdateParams.VerifoneP400
-        >;
+        czk?: Tipping.Czk;
+
+        /**
+         * Tipping configuration for DKK
+         */
+        dkk?: Tipping.Dkk;
+
+        /**
+         * Tipping configuration for EUR
+         */
+        eur?: Tipping.Eur;
+
+        /**
+         * Tipping configuration for GBP
+         */
+        gbp?: Tipping.Gbp;
+
+        /**
+         * Tipping configuration for HKD
+         */
+        hkd?: Tipping.Hkd;
+
+        /**
+         * Tipping configuration for MYR
+         */
+        myr?: Tipping.Myr;
+
+        /**
+         * Tipping configuration for NOK
+         */
+        nok?: Tipping.Nok;
+
+        /**
+         * Tipping configuration for NZD
+         */
+        nzd?: Tipping.Nzd;
+
+        /**
+         * Tipping configuration for SEK
+         */
+        sek?: Tipping.Sek;
+
+        /**
+         * Tipping configuration for SGD
+         */
+        sgd?: Tipping.Sgd;
+
+        /**
+         * Tipping configuration for USD
+         */
+        usd?: Tipping.Usd;
       }
 
-      namespace ConfigurationUpdateParams {
-        interface BbposWiseposE {
+      namespace Tipping {
+        interface Aud {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * Fixed amounts displayed when collecting a tip
            */
-          splashscreen?: Stripe.Emptyable<string>;
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
         }
 
-        interface Tipping {
+        interface Cad {
           /**
-           * Tipping configuration for AUD
+           * Fixed amounts displayed when collecting a tip
            */
-          aud?: Tipping.Aud;
+          fixed_amounts?: Array<number>;
 
           /**
-           * Tipping configuration for CAD
+           * Percentages displayed when collecting a tip
            */
-          cad?: Tipping.Cad;
+          percentages?: Array<number>;
 
           /**
-           * Tipping configuration for CHF
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
            */
-          chf?: Tipping.Chf;
-
-          /**
-           * Tipping configuration for CZK
-           */
-          czk?: Tipping.Czk;
-
-          /**
-           * Tipping configuration for DKK
-           */
-          dkk?: Tipping.Dkk;
-
-          /**
-           * Tipping configuration for EUR
-           */
-          eur?: Tipping.Eur;
-
-          /**
-           * Tipping configuration for GBP
-           */
-          gbp?: Tipping.Gbp;
-
-          /**
-           * Tipping configuration for HKD
-           */
-          hkd?: Tipping.Hkd;
-
-          /**
-           * Tipping configuration for MYR
-           */
-          myr?: Tipping.Myr;
-
-          /**
-           * Tipping configuration for NOK
-           */
-          nok?: Tipping.Nok;
-
-          /**
-           * Tipping configuration for NZD
-           */
-          nzd?: Tipping.Nzd;
-
-          /**
-           * Tipping configuration for SEK
-           */
-          sek?: Tipping.Sek;
-
-          /**
-           * Tipping configuration for SGD
-           */
-          sgd?: Tipping.Sgd;
-
-          /**
-           * Tipping configuration for USD
-           */
-          usd?: Tipping.Usd;
+          smart_tip_threshold?: number;
         }
 
-        namespace Tipping {
-          interface Aud {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
+        interface Chf {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
 
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
 
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Cad {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Chf {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Czk {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Dkk {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Eur {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Gbp {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Hkd {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Myr {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Nok {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Nzd {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Sek {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Sgd {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
-
-          interface Usd {
-            /**
-             * Fixed amounts displayed when collecting a tip
-             */
-            fixed_amounts?: Array<number>;
-
-            /**
-             * Percentages displayed when collecting a tip
-             */
-            percentages?: Array<number>;
-
-            /**
-             * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
-             */
-            smart_tip_threshold?: number;
-          }
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
         }
 
-        interface VerifoneP400 {
+        interface Czk {
           /**
-           * A File ID representing an image you would like displayed on the reader.
+           * Fixed amounts displayed when collecting a tip
            */
-          splashscreen?: Stripe.Emptyable<string>;
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Dkk {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Eur {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Gbp {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Hkd {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Myr {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Nok {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Nzd {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Sek {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Sgd {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
+        }
+
+        interface Usd {
+          /**
+           * Fixed amounts displayed when collecting a tip
+           */
+          fixed_amounts?: Array<number>;
+
+          /**
+           * Percentages displayed when collecting a tip
+           */
+          percentages?: Array<number>;
+
+          /**
+           * Below this amount, fixed amounts will be displayed; above it, percentages will be displayed
+           */
+          smart_tip_threshold?: number;
         }
       }
 
-      interface ConfigurationListParams extends PaginationParams {
+      interface VerifoneP400 {
         /**
-         * Specifies which fields in the response should be expanded.
+         * A File ID representing an image you would like displayed on the reader.
          */
-        expand?: Array<string>;
-
-        /**
-         * if present, only return the account default or non-default configurations.
-         */
-        is_account_default?: boolean;
+        splashscreen?: Stripe.Emptyable<string>;
       }
+    }
 
-      interface ConfigurationDeleteParams {}
+    interface ConfigurationListParams extends PaginationParams {
+      /**
+       * Specifies which fields in the response should be expanded.
+       */
+      expand?: Array<string>;
 
-      class ConfigurationsResource {
-        /**
-         * Creates a new Configuration object.
-         */
-        create(
-          params?: ConfigurationCreateParams,
-          options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Configuration>>;
-        create(
-          options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.Configuration>>;
+      /**
+       * if present, only return the account default or non-default configurations.
+       */
+      is_account_default?: boolean;
+    }
 
-        /**
-         * Retrieves a Configuration object.
-         */
-        retrieve(
-          id: string,
-          params?: ConfigurationRetrieveParams,
-          options?: RequestOptions
-        ): Promise<
-          Stripe.Response<
-            Stripe.Terminal.Configuration | Stripe.Terminal.DeletedConfiguration
-          >
-        >;
-        retrieve(
-          id: string,
-          options?: RequestOptions
-        ): Promise<
-          Stripe.Response<
-            Stripe.Terminal.Configuration | Stripe.Terminal.DeletedConfiguration
-          >
-        >;
+    interface ConfigurationDeleteParams {}
 
-        /**
-         * Updates a new Configuration object.
-         */
-        update(
-          id: string,
-          params?: ConfigurationUpdateParams,
-          options?: RequestOptions
-        ): Promise<
-          Stripe.Response<
-            Stripe.Terminal.Configuration | Stripe.Terminal.DeletedConfiguration
-          >
-        >;
+    class ConfigurationsResource {
+      /**
+       * Creates a new Configuration object.
+       */
+      create(
+        params?: ConfigurationCreateParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Terminal.Configuration>>;
+      create(
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Terminal.Configuration>>;
 
-        /**
-         * Returns a list of Configuration objects.
-         */
-        list(
-          params?: ConfigurationListParams,
-          options?: RequestOptions
-        ): ApiListPromise<Stripe.Terminal.Configuration>;
-        list(
-          options?: RequestOptions
-        ): ApiListPromise<Stripe.Terminal.Configuration>;
+      /**
+       * Retrieves a Configuration object.
+       */
+      retrieve(
+        id: string,
+        params?: ConfigurationRetrieveParams,
+        options?: RequestOptions
+      ): Promise<
+        Stripe.Response<
+          Stripe.Terminal.Configuration | Stripe.Terminal.DeletedConfiguration
+        >
+      >;
+      retrieve(
+        id: string,
+        options?: RequestOptions
+      ): Promise<
+        Stripe.Response<
+          Stripe.Terminal.Configuration | Stripe.Terminal.DeletedConfiguration
+        >
+      >;
 
-        /**
-         * Deletes a Configuration object.
-         */
-        del(
-          id: string,
-          params?: ConfigurationDeleteParams,
-          options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.DeletedConfiguration>>;
-        del(
-          id: string,
-          options?: RequestOptions
-        ): Promise<Stripe.Response<Stripe.Terminal.DeletedConfiguration>>;
-      }
+      /**
+       * Updates a new Configuration object.
+       */
+      update(
+        id: string,
+        params?: ConfigurationUpdateParams,
+        options?: RequestOptions
+      ): Promise<
+        Stripe.Response<
+          Stripe.Terminal.Configuration | Stripe.Terminal.DeletedConfiguration
+        >
+      >;
+
+      /**
+       * Returns a list of Configuration objects.
+       */
+      list(
+        params?: ConfigurationListParams,
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.Terminal.Configuration>;
+      list(
+        options?: RequestOptions
+      ): ApiListPromise<Stripe.Terminal.Configuration>;
+
+      /**
+       * Deletes a Configuration object.
+       */
+      del(
+        id: string,
+        params?: ConfigurationDeleteParams,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Terminal.DeletedConfiguration>>;
+      del(
+        id: string,
+        options?: RequestOptions
+      ): Promise<Stripe.Response<Stripe.Terminal.DeletedConfiguration>>;
     }
   }
 }
