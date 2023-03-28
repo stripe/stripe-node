@@ -65,6 +65,7 @@ declare module 'stripe' {
 
         type Type =
           | 'domestic_small_seller'
+          | 'ioss'
           | 'simplified'
           | 'standard'
           | 'vat_oss_non_union'
