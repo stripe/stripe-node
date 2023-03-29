@@ -9,6 +9,7 @@ import {PlatformFunctions} from './PlatformFunctions.js';
 import {StripeError} from '../Error.js';
 import {concat} from '../utils.js';
 import {exec} from 'child_process';
+import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
 
 class StreamProcessingError extends StripeError {}
 

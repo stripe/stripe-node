@@ -12,6 +12,7 @@ import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
 import {createWebhooks} from './Webhooks.js';
+import {StripeObject, AppInfo, UserProvidedConfig} from './Types.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';

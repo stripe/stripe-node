@@ -5,6 +5,7 @@ import {FetchHttpClient} from '../net/FetchHttpClient.js';
 import {HttpClient} from '../net/HttpClient.js';
 import {StripeEmitter} from '../StripeEmitter.js';
 import {SubtleCryptoProvider} from '../crypto/SubtleCryptoProvider.js';
+import {MultipartRequestData, RequestData, BufferedFile} from '../Types.js';
 
 /**
  * Interface encapsulating various utility functions whose

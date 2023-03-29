@@ -1,3 +1,5 @@
+import {RequestEvent, ResponseEvent} from './Types.js';
+
 /**
  * @private
  * (For internal use in stripe-node.)

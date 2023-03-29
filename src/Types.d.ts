@@ -1,8 +1,18 @@
 /* eslint-disable camelcase */
-type AppInfo = {name?: string} & Record<string, unknown>;
-type BufferedFile = {name: string; type: string; file: {data: Uint8Array}};
-type HttpClientResponseError = {code: string};
-type MethodSpec = {
+import {EventEmitter} from 'events';
+import {
+  HttpClientInterface,
+  HttpClientResponseInterface,
+} from './net/HttpClient.js';
+import {PlatformFunctions} from './platform/PlatformFunctions.js';
+
+export type AppInfo = {name?: string} & Record<string, unknown>;
+export type BufferedFile = {
+  name: string;
+  type: string;
+  file: {data: Uint8Array};
+};
+export type MethodSpec = {
   method: string;
   methodType?: string;
   urlParams?: Array<string>;
@@ -15,8 +25,8 @@ type MethodSpec = {
   host?: string;
   transformResponseData?: (response: HttpClientResponseInterface) => any;
 };
-type MultipartRequestData = RequestData | StreamingFile | BufferedFile;
-type RawErrorType =
+export type MultipartRequestData = RequestData | StreamingFile | BufferedFile;
+export type RawErrorType =
   | 'card_error'
   | 'invalid_request_error'
   | 'api_error'
@@ -24,15 +34,15 @@ type RawErrorType =
   | 'rate_limit_error'
   | 'authentication_error'
   | 'invalid_grant';
-type RequestArgs = Array<any>;
-type RequestCallback = (
+export type RequestArgs = Array<any>;
+export type RequestCallback = (
   this: void,
   error: Error | null,
   response?: any
 ) => RequestCallbackReturn;
-type RequestCallbackReturn = any;
-type RequestData = Record<string, any>;
-type RequestEvent = {
+export type RequestCallbackReturn = any;
+export type RequestData = Record<string, any>;
+export type RequestEvent = {
   api_version?: string;
   account?: string;
   idempotency_key?: string;
@@ -40,13 +50,13 @@ type RequestEvent = {
   path?: string;
   request_start_time: number;
 };
-type RequestHeaders = Record<string, string | number | string[]>;
-type RequestOptions = {
+export type RequestHeaders = Record<string, string | number | string[]>;
+export type RequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
   headers?: RequestHeaders;
 };
-type RequestOpts = {
+export type RequestOpts = {
   requestMethod: string;
   requestPath: string;
   bodyData: RequestData;
@@ -57,8 +67,8 @@ type RequestOpts = {
   streaming: boolean;
   settings: RequestSettings;
 };
-type RequestSettings = {timeout?: number; maxNetworkRetries?: number};
-type ResponseEvent = {
+export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};
+export type ResponseEvent = {
   api_version?: string;
   account?: string;
   idempotency_key?: string;
@@ -70,38 +80,18 @@ type ResponseEvent = {
   request_start_time?: number;
   request_end_time?: number;
 };
-type ResponseHeaderValue = string | string[];
-type ResponseHeaders = Record<string, ResponseHeaderValue>;
-interface HttpClientResponseInterface {
-  getStatusCode: () => number;
-  getHeaders: () => ResponseHeaders;
-  getRawResponse: () => unknown;
-  toStream: (streamCompleteCallback: () => void) => unknown;
-  toJSON: () => Promise<any>;
-}
-type StreamingFile = {
+export type ResponseHeaderValue = string | string[];
+export type ResponseHeaders = Record<string, ResponseHeaderValue>;
+export type StreamingFile = {
   name: string;
   type: string;
-  file: {data: import('events').EventEmitter};
+  file: {data: EventEmitter};
 };
-type StripeConstructor = {
+export type StripeConstructor = {
   new (key: string, config: Record<string, unknown>): StripeObject;
 };
 declare const Stripe: StripeConstructor;
-interface HttpClientInterface {
-  getClientName: () => string;
-  makeRequest: (
-    host: string,
-    port: string,
-    path: string,
-    method: string,
-    headers: RequestHeaders,
-    requestData: RequestData,
-    protocol: string,
-    timeout: number
-  ) => Promise<HttpClientResponseInterface>;
-}
-type StripeObject = {
+export type StripeObject = {
   getClientUserAgentSeeded: (
     seed: Record<string, string | boolean | null>,
     callback: (userAgent: string) => void
@@ -150,14 +140,14 @@ type StripeObject = {
     dev: boolean;
     stripeAccount: string | null;
   };
-  _emitter: import('events').EventEmitter;
+  _emitter: EventEmitter;
   _enableTelemetry: boolean;
   _requestSender: RequestSender;
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
-  _platformFunctions: import('./platform/PlatformFunctions.js').PlatformFunctions;
+  _platformFunctions: PlatformFunctions;
 };
-type RequestSender = {
+export type RequestSender = {
   _request(
     method: string,
     host: string | null,
@@ -169,7 +159,7 @@ type RequestSender = {
     requestDataProcessor: RequestDataProcessor | undefined
   ): void;
 };
-type StripeRawError = {
+export type StripeRawError = {
   message?: string;
   type?: RawErrorType;
   headers?: {[header: string]: string};
@@ -188,14 +178,10 @@ type StripeRawError = {
   source?: any;
   exception?: any;
 };
-type StripeResourceConstructor = {
+export type StripeResourceConstructor = {
   new (stripe: StripeObject, deprecatedUrlData?: never): StripeResourceObject;
 };
-type StripeResourceNamespaceObject = Record<
-  string,
-  StripeResourceObject | unknown
->;
-type StripeResourceObject = {
+export type StripeResourceObject = {
   _stripe: StripeObject;
   basePath: UrlInterpolator;
   path: UrlInterpolator;
@@ -219,14 +205,14 @@ type StripeResourceObject = {
     overrideData: RequestData
   ): RequestOpts;
 };
-type RequestDataProcessor = (
+export type RequestDataProcessor = (
   method: string,
   data: RequestData,
   headers: RequestHeaders | undefined,
   prepareAndMakeRequest: (error: Error | null, data: string) => void
 ) => void;
-type UrlInterpolator = (params: Record<string, unknown>) => string;
-type UserProvidedConfig = {
+export type UrlInterpolator = (params: Record<string, unknown>) => string;
+export type UserProvidedConfig = {
   apiVersion?: string;
   protocol?: string;
   host?: string;
