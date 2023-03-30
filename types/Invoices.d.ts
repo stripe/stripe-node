@@ -952,13 +952,7 @@ declare module 'stripe' {
         tracking_number?: string | null;
       }
 
-      type Status =
-        | 'deleted'
-        | 'draft'
-        | 'open'
-        | 'paid'
-        | 'uncollectible'
-        | 'void';
+      type Status = 'draft' | 'open' | 'paid' | 'uncollectible' | 'void';
 
       interface StatusTransitions {
         /**

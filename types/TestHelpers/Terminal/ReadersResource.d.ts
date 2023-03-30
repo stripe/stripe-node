@@ -6,6 +6,11 @@ declare module 'stripe' {
       namespace Terminal {
         interface ReaderPresentPaymentMethodParams {
           /**
+           * Simulated on-reader tip amount.
+           */
+          amount_tip?: number;
+
+          /**
            * Simulated data for the card_present payment method.
            */
           card_present?: ReaderPresentPaymentMethodParams.CardPresent;
