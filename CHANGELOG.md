@@ -1,5 +1,10 @@
 # Changelog
 
+## 11.18.0-beta.1 - 2023-03-30
+* [#1735](https://github.com/stripe/stripe-node/pull/1735) Update generated code
+  * Add support for new value `ioss` on enums `Tax.Registration.type` and `TaxRegistrationCreateParams.type`
+  * Change `TerminalReaderCollectInputsParams.inputs[].custom_text.description` to be optional
+
 ## 11.17.0-beta.1 - 2023-03-23
 * [#1724](https://github.com/stripe/stripe-node/pull/1724) Update generated code for beta (new)
   * Add support for new resources `Tax.CalculationLineItem` and `Tax.TransactionLineItem`
