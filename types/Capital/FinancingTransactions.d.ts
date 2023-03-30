@@ -78,7 +78,8 @@ declare module 'stripe' {
           fee_amount: number;
 
           /**
-           * The linked payment for the transaction. This field only applies to financing transactions of type `paydown` and reason `automatic_withholding`.
+           * The linked payment for the transaction. This field only applies to
+           * financing transactions of type `paydown` and reason `automatic_withholding`.
            */
           linked_payment?: string;
 
@@ -97,11 +98,6 @@ declare module 'stripe' {
            * The advance and fee amount being repaid, paid out, or reversed in minor units.
            */
           total_amount: number;
-
-          /**
-           * This is an object representing a linked transaction on a Capital Financing Transaction.
-           */
-          transaction?: Details.Transaction;
         }
 
         namespace Details {
@@ -114,18 +110,6 @@ declare module 'stripe' {
             | 'refill'
             | 'requested_by_user'
             | 'user_initiated';
-
-          interface Transaction {
-            /**
-             * The linked payment ID.
-             */
-            charge?: string;
-
-            /**
-             * The linked Treasury Financing Transaction ID.
-             */
-            treasury_transaction?: string;
-          }
         }
 
         type Type = 'payment' | 'payout' | 'reversal';
