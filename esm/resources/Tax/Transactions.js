@@ -2,10 +2,6 @@
 import { StripeResource } from '../../StripeResource.js';
 const stripeMethod = StripeResource.method;
 export const Transactions = StripeResource.extend({
-    create: stripeMethod({
-        method: 'POST',
-        fullPath: '/v1/tax/transactions',
-    }),
     retrieve: stripeMethod({
         method: 'GET',
         fullPath: '/v1/tax/transactions/{transaction}',

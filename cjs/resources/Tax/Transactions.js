@@ -5,10 +5,6 @@ exports.Transactions = void 0;
 const StripeResource_js_1 = require("../../StripeResource.js");
 const stripeMethod = StripeResource_js_1.StripeResource.method;
 exports.Transactions = StripeResource_js_1.StripeResource.extend({
-    create: stripeMethod({
-        method: 'POST',
-        fullPath: '/v1/tax/transactions',
-    }),
     retrieve: stripeMethod({
         method: 'GET',
         fullPath: '/v1/tax/transactions/{transaction}',
