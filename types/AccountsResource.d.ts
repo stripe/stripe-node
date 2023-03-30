@@ -586,6 +586,16 @@ declare module 'stripe' {
         executives_provided?: boolean;
 
         /**
+         * The export license ID number of the company, also referred as Import Export Code (India only).
+         */
+        export_license_id?: string;
+
+        /**
+         * The purpose code to use for export transactions (India only).
+         */
+        export_purpose_code?: string;
+
+        /**
          * The company's legal name.
          */
         name?: string;
@@ -1823,6 +1833,16 @@ declare module 'stripe' {
          * Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.executive` requirement.
          */
         executives_provided?: boolean;
+
+        /**
+         * The export license ID number of the company, also referred as Import Export Code (India only).
+         */
+        export_license_id?: string;
+
+        /**
+         * The purpose code to use for export transactions (India only).
+         */
+        export_purpose_code?: string;
 
         /**
          * The company's legal name.
