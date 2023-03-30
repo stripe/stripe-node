@@ -1,4 +1,10 @@
-import {HttpClient, HttpClientResponse} from './HttpClient.js';
+import {RequestHeaders, RequestData, ResponseHeaders} from '../Types.js';
+import {
+  HttpClient,
+  HttpClientInterface,
+  HttpClientResponse,
+  HttpClientResponseInterface,
+} from './HttpClient.js';
 
 /**
  * HTTP client which uses a `fetch` function to issue requests.

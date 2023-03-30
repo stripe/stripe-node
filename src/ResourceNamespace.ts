@@ -1,4 +1,12 @@
 // ResourceNamespace allows you to create nested resources, i.e. `stripe.issuing.cards`.
+
+import {StripeObject, StripeResourceObject} from './Types.js';
+
+export type StripeResourceNamespaceObject = Record<
+  string,
+  StripeResourceObject | unknown
+>;
+
 // It also works recursively, so you could do i.e. `stripe.billing.invoicing.pay`.
 function ResourceNamespace(
   this: StripeResourceNamespaceObject,

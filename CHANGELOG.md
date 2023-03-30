@@ -15,6 +15,17 @@
   * Add support for `collect_inputs` on `Terminal.Reader.action`
   * Add support for new value `collect_inputs` on enum `Terminal.Reader.action.type`
 
+## 11.16.0 - 2023-03-23
+* [#1730](https://github.com/stripe/stripe-node/pull/1730) Update generated code
+  * Add support for new resources `Tax.CalculationLineItem`, `Tax.Calculation`, `Tax.TransactionLineItem`, and `Tax.Transaction`
+  * Add support for `create` and `list_line_items` methods on resource `Calculation`
+  * Add support for `create_from_calculation`, `create_reversal`, `create`, `list_line_items`, and `retrieve` methods on resource `Transaction`
+  * Add support for new value `link` on enum `CheckoutSessionCreateParams.payment_method_types[]`
+  * Add support for `currency_conversion` on `Checkout.Session`
+  * Add support for new value `link` on enums `PaymentLink.payment_method_types[]`, `PaymentLinkCreateParams.payment_method_types[]`, and `PaymentLinkUpdateParams.payment_method_types[]`
+  * Add support for `automatic_payment_methods` on `SetupIntentCreateParams` and `SetupIntent`
+* [#1726](https://github.com/stripe/stripe-node/pull/1726) Add Deno entry point
+
 ## 11.16.0-beta.1 - 2023-03-17
 * [#1713](https://github.com/stripe/stripe-node/pull/1713) API Updates
   * Add support for `create_from_calculation` method on resource `Tax.Transaction`

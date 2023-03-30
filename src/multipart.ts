@@ -1,3 +1,9 @@
+import {
+  MultipartRequestData,
+  RequestHeaders,
+  StripeResourceObject,
+  RequestData,
+} from './Types.js';
 import {flattenAndStringify, stringifyRequestData} from './utils.js';
 
 type MultipartCallbackReturn = any;

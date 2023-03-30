@@ -12,7 +12,21 @@ import {
   removeNullish,
   stringifyRequestData,
 } from './utils.js';
-import {HttpClient} from './net/HttpClient.js';
+import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
+import {
+  StripeObject,
+  RequestHeaders,
+  RequestEvent,
+  ResponseEvent,
+  RequestCallback,
+  RequestCallbackReturn,
+  RequestSettings,
+  RequestData,
+  RequestOptions,
+  RequestDataProcessor,
+} from './Types.js';
+
+export type HttpClientResponseError = {code: string};
 
 const MAX_RETRY_AFTER_WAIT = 60;
 

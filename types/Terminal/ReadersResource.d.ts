@@ -142,7 +142,7 @@ declare module 'stripe' {
             /**
              * The description which will be displayed when collecting this input
              */
-            description: string;
+            description?: string;
 
             /**
              * The skip button text
