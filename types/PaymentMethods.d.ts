@@ -581,6 +581,12 @@ declare module 'stripe' {
 
       interface Link {
         /**
+         * Two-letter ISO code representing the funding source (i.e. card, bank) country beneath the Link payment method.
+         * You could use this attribute to get a sense of the international breakdown of funding sources you've collected.
+         */
+        country?: string;
+
+        /**
          * Account owner's email address.
          */
         email: string | null;
