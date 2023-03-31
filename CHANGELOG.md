@@ -5,6 +5,15 @@
   * Add support for new value `ioss` on enums `Tax.Registration.type` and `TaxRegistrationCreateParams.type`
   * Change `TerminalReaderCollectInputsParams.inputs[].custom_text.description` to be optional
 
+## 11.17.0 - 2023-03-30
+* [#1734](https://github.com/stripe/stripe-node/pull/1734) Update generated code
+  * Remove support for `create` method on resource `Tax.Transaction`
+    * This is not a breaking change, as this method was deprecated before the Tax Transactions API was released in favor of the `createFromCalculation` method.
+  * Add support for `export_license_id` and `export_purpose_code` on `Account.company`, `AccountCreateParams.company`, `AccountUpdateParams.company`, and `TokenCreateParams.account.company`
+  * Remove support for value `deleted` from enum `Invoice.status`
+    * This is not a breaking change, as `deleted` was never returned or accepted as input.
+  * Add support for `amount_tip` on `TerminalReaderPresentPaymentMethodParams.testHelpers`
+
 ## 11.17.0-beta.1 - 2023-03-23
 * [#1724](https://github.com/stripe/stripe-node/pull/1724) Update generated code for beta (new)
   * Add support for new resources `Tax.CalculationLineItem` and `Tax.TransactionLineItem`
