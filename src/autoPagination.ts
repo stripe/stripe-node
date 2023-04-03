@@ -43,7 +43,7 @@ type PageResult<T> = {
   next_page: string | null;
 };
 class StripeIterator<T> implements IStripeIterator<T> {
-  private i: number;
+  private index: number;
   private pagePromise: Promise<PageResult<T>>;
   private promiseCache: PromiseCache;
   protected requestArgs: RequestArgs;
@@ -55,7 +55,7 @@ class StripeIterator<T> implements IStripeIterator<T> {
     spec: MethodSpec,
     stripeResource: StripeResourceObject
   ) {
-    this.i = 0;
+    this.index = 0;
     this.pagePromise = firstPagePromise;
     this.promiseCache = {currentPromise: null};
     this.requestArgs = requestArgs;
@@ -79,17 +79,17 @@ class StripeIterator<T> implements IStripeIterator<T> {
     }
 
     const reverseIteration = isReverseIteration(this.requestArgs);
-    if (this.i < pageResult.data.length) {
+    if (this.index < pageResult.data.length) {
       const idx = reverseIteration
-        ? pageResult.data.length - 1 - this.i
-        : this.i;
+        ? pageResult.data.length - 1 - this.index
+        : this.index;
       const value = pageResult.data[idx];
-      this.i += 1;
+      this.index += 1;
 
       return {value, done: false};
     } else if (pageResult.has_more) {
       // Reset counter, request next page, and recurse.
-      this.i = 0;
+      this.index = 0;
       this.pagePromise = this.getNextPage(pageResult);
       const nextPageResult = await this.pagePromise;
       return this.iterate(nextPageResult)
