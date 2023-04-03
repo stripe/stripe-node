@@ -92,15 +92,17 @@ class StripeIterator<T> implements IStripeIterator<T> {
       const nextPageResult = await this.pagePromise;
       return this.iterate(nextPageResult);
     }
+    // eslint-disable-next-line no-warning-comments
     // TODO (next major) stop returning explicit undefined
     return {value: undefined, done: true};
   }
 
+  /** @abstract */
   getNextPage(_pageResult: PageResult<T>): Promise<PageResult<T>> {
     throw new Error('Unimplemented');
   }
 
-  private async _next() {
+  private async _next(): Promise<IterationResult<T>> {
     return this.iterate(await this.pagePromise);
   }
 
@@ -114,9 +116,11 @@ class StripeIterator<T> implements IStripeIterator<T> {
       return this.promiseCache.currentPromise;
     }
 
-    const nextPromise = this._next().then(
-      (x) => ((this.promiseCache.currentPromise = null), x)
-    );
+    const nextPromise = (async (): Promise<IterationResult<T>> => {
+      const ret = await this._next();
+      this.promiseCache.currentPromise = null;
+      return ret;
+    })();
     this.promiseCache.currentPromise = nextPromise;
 
     return nextPromise;
