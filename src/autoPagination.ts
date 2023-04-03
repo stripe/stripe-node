@@ -63,9 +63,9 @@ class StripeIterator<T> implements IStripeIterator<T> {
     this.stripeResource = stripeResource;
   }
 
-  iterate(
+  async iterate(
     pageResult: PageResult<T>
-  ): IterationResult<T> | Promise<IterationResult<T>> {
+  ): Promise<IterationResult<T>> {
     if (
       !(
         pageResult &&
@@ -91,8 +91,10 @@ class StripeIterator<T> implements IStripeIterator<T> {
       // Reset counter, request next page, and recurse.
       this.i = 0;
       this.pagePromise = this.getNextPage(pageResult);
-      return this.pagePromise.then((pageResult) => this.iterate(pageResult));
+      const nextPageResult = await this.pagePromise;
+      return this.iterate(nextPageResult)
     }
+    // TODO (next major) stop returning explicit undefined
     return {value: undefined, done: true};
   }
 
