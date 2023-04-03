@@ -40,17 +40,10 @@ export function stripeMethod(
       callback
     );
 
-    // Please note `spec.methodType === 'search'` is beta functionality and this
-    // interface is subject to change/removal at any time.
-    if (spec.methodType === 'list' || spec.methodType === 'search') {
-      const autoPaginationMethods = makeAutoPaginationMethods(
-        this,
-        args,
-        spec,
-        requestPromise
-      );
-      Object.assign(requestPromise, autoPaginationMethods);
-    }
+    Object.assign(
+      requestPromise,
+      makeAutoPaginationMethods(this, args, spec, requestPromise)
+    );
 
     return requestPromise;
   };
