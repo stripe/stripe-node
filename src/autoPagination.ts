@@ -63,9 +63,7 @@ class StripeIterator<T> implements IStripeIterator<T> {
     this.stripeResource = stripeResource;
   }
 
-  async iterate(
-    pageResult: PageResult<T>
-  ): Promise<IterationResult<T>> {
+  async iterate(pageResult: PageResult<T>): Promise<IterationResult<T>> {
     if (
       !(
         pageResult &&
@@ -92,7 +90,7 @@ class StripeIterator<T> implements IStripeIterator<T> {
       this.index = 0;
       this.pagePromise = this.getNextPage(pageResult);
       const nextPageResult = await this.pagePromise;
-      return this.iterate(nextPageResult)
+      return this.iterate(nextPageResult);
     }
     // TODO (next major) stop returning explicit undefined
     return {value: undefined, done: true};
@@ -103,8 +101,8 @@ class StripeIterator<T> implements IStripeIterator<T> {
   }
 
   private async _next() {
-    return this.iterate(await this.pagePromise)
-  };
+    return this.iterate(await this.pagePromise);
+  }
 
   next(): Promise<IterationResult<T>> {
     /**
@@ -116,7 +114,9 @@ class StripeIterator<T> implements IStripeIterator<T> {
       return this.promiseCache.currentPromise;
     }
 
-    const nextPromise = this._next().then((x) => (this.promiseCache.currentPromise = null, x))
+    const nextPromise = this._next().then(
+      (x) => ((this.promiseCache.currentPromise = null), x)
+    );
     this.promiseCache.currentPromise = nextPromise;
 
     return nextPromise;
