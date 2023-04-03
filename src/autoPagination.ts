@@ -102,13 +102,24 @@ class StripeIterator<T> implements IStripeIterator<T> {
     throw new Error('Unimplemented');
   }
 
+  private async _next() {
+    return this.iterate(await this.pagePromise)
+  };
+
   next(): Promise<IterationResult<T>> {
-    return memoizedPromise(this.promiseCache, (resolve, reject) => {
-      return this.pagePromise
-        .then((pageResult) => this.iterate(pageResult))
-        .then(resolve)
-        .catch(reject);
-    });
+    /**
+     * If a user calls `.next()` multiple times in parallel,
+     * return the same result until something has resolved
+     * to prevent page-turning race conditions.
+     */
+    if (this.promiseCache.currentPromise) {
+      return this.promiseCache.currentPromise;
+    }
+
+    const nextPromise = this._next().then((x) => (this.promiseCache.currentPromise = null, x))
+    this.promiseCache.currentPromise = nextPromise;
+
+    return nextPromise;
   }
 }
 
@@ -267,25 +278,6 @@ function getLastId<T extends {id: string}>(
     );
   }
   return lastId;
-}
-
-/**
- * If a user calls `.next()` multiple times in parallel,
- * return the same result until something has resolved
- * to prevent page-turning race conditions.
- */
-function memoizedPromise<T>(
-  promiseCache: PromiseCache,
-  cb: (resolve: (value: T) => void, reject: (reason?: any) => void) => void
-): Promise<T> {
-  if (promiseCache.currentPromise) {
-    return promiseCache.currentPromise;
-  }
-  promiseCache.currentPromise = new Promise(cb).then((ret) => {
-    promiseCache.currentPromise = undefined;
-    return ret;
-  });
-  return promiseCache.currentPromise;
 }
 
 function makeAutoPagingEach<T>(
