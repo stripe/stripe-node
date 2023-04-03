@@ -30,6 +30,11 @@ declare module 'stripe' {
          * Only returns transactions that are responsible for reversing this financing transaction ID.
          */
         reversed_transaction?: string;
+
+        /**
+         * For transactions of type `paydown` and reason `automatic_withholding` only, only returns transactions that were created as a result of this Treasury Transaction.
+         */
+        treasury_transaction?: string;
       }
 
       class FinancingTransactionsResource {
