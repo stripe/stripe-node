@@ -121,6 +121,7 @@ class StripeIterator<T> implements IStripeIterator<T> {
       this.promiseCache.currentPromise = null;
       return ret;
     })();
+
     this.promiseCache.currentPromise = nextPromise;
 
     return nextPromise;
