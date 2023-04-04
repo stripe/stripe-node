@@ -1,4 +1,5 @@
 import * as _Error from './Error.js';
+import * as apiVersion from './apiVersion.js';
 import * as resources from './resources.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {
@@ -16,7 +17,7 @@ import {StripeObject, AppInfo, UserProvidedConfig} from './Types.js';
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
-const DEFAULT_API_VERSION = (null as unknown) as string;
+const DEFAULT_API_VERSION = apiVersion.ApiVersion;
 
 const DEFAULT_TIMEOUT = 80000;
 
