@@ -97,8 +97,7 @@ We therefore encourage [upgrading your API version][api-version-upgrading]
 if you would like to take advantage of Stripe's TypeScript definitions.
 
 If you are on an older API version (e.g., `2019-10-17`) and not able to upgrade,
-you may pass another version or `apiVersion: null` to use your account's default API version,
-and use a comment like `// @ts-ignore stripe-version-2019-10-17` to silence type errors here
+you may pass another version and use a comment like `// @ts-ignore stripe-version-2019-10-17` to silence type errors here
 and anywhere the types differ between your API version and the latest.
 When you upgrade, you should remove these comments.
 
@@ -176,7 +175,7 @@ const stripe = Stripe('sk_test_...', {
 
 | Option              | Default            | Description                                                                                                                                                                                                                                       |
 | ------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `apiVersion`        | `null`             | Stripe API version to be used. If not set the account's default version will be used.                                                                                                                                                             |
+| `apiVersion`        | `null`             | Stripe API version to be used. If not set, stripe-node will use the latest version at the time of release.                                                                                                                                        |
 | `maxNetworkRetries` | 0                  | The amount of times a request should be [retried](#network-retries).                                                                                                                                                                              |
 | `httpAgent`         | `null`             | [Proxy](#configuring-a-proxy) agent to be used by the library.                                                                                                                                                                                    |
 | `timeout`           | 80000              | [Maximum time each request can take in ms.](#configuring-timeout)                                                                                                                                                                                 |
