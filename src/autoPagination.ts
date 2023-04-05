@@ -4,12 +4,6 @@ import {callbackifyPromiseWithTimeout, getDataFromArgs} from './utils.js';
 type PromiseCache = {
   currentPromise: Promise<any> | undefined | null;
 };
-type IterationResult<T> =
-  | {
-      done: false;
-      value: T;
-    }
-  | {done: true; value?: undefined};
 type IterationDoneCallback = () => void;
 type IterationItemCallback<T> = (
   item: T,
@@ -31,18 +25,15 @@ type AutoPagingToArray<T> = (
 type AutoPaginationMethods<T> = {
   autoPagingEach: AutoPagingEach<T>;
   autoPagingToArray: AutoPagingToArray<T>;
-  next: () => Promise<IterationResult<T>>;
+  next: () => Promise<IteratorResult<T>>;
   return: () => void;
 };
-interface IStripeIterator<T> {
-  next: () => Promise<IterationResult<T>>;
-}
 type PageResult<T> = {
   data: Array<T>;
   has_more: boolean;
   next_page: string | null;
 };
-class StripeIterator<T> implements IStripeIterator<T> {
+class StripeIterator<T> implements AsyncIterator<T> {
   private index: number;
   private pagePromise: Promise<PageResult<T>>;
   private promiseCache: PromiseCache;
@@ -63,7 +54,7 @@ class StripeIterator<T> implements IStripeIterator<T> {
     this.stripeResource = stripeResource;
   }
 
-  async iterate(pageResult: PageResult<T>): Promise<IterationResult<T>> {
+  async iterate(pageResult: PageResult<T>): Promise<IteratorResult<T>> {
     if (
       !(
         pageResult &&
@@ -92,9 +83,7 @@ class StripeIterator<T> implements IStripeIterator<T> {
       const nextPageResult = await this.pagePromise;
       return this.iterate(nextPageResult);
     }
-    // eslint-disable-next-line no-warning-comments
-    // TODO (next major) stop returning explicit undefined
-    return {value: undefined, done: true};
+    return {done: true, value: undefined};
   }
 
   /** @abstract */
@@ -102,11 +91,11 @@ class StripeIterator<T> implements IStripeIterator<T> {
     throw new Error('Unimplemented');
   }
 
-  private async _next(): Promise<IterationResult<T>> {
+  private async _next(): Promise<IteratorResult<T>> {
     return this.iterate(await this.pagePromise);
   }
 
-  next(): Promise<IterationResult<T>> {
+  next(): Promise<IteratorResult<T>> {
     /**
      * If a user calls `.next()` multiple times in parallel,
      * return the same result until something has resolved
@@ -116,7 +105,7 @@ class StripeIterator<T> implements IStripeIterator<T> {
       return this.promiseCache.currentPromise;
     }
 
-    const nextPromise = (async (): Promise<IterationResult<T>> => {
+    const nextPromise = (async (): Promise<IteratorResult<T>> => {
       const ret = await this._next();
       this.promiseCache.currentPromise = null;
       return ret;
@@ -174,9 +163,9 @@ export const makeAutoPaginationMethods = <
 };
 
 const makeAutoPaginationMethodsFromIterator = <T>(
-  iterator: IStripeIterator<T>
+  iterator: AsyncIterator<T>
 ): AutoPaginationMethods<T> => {
-  const autoPagingEach = makeAutoPagingEach((...args) =>
+  const autoPagingEach = makeAutoPagingEach<T>((...args) =>
     iterator.next(...args)
   );
   const autoPagingToArray = makeAutoPagingToArray(autoPagingEach);
@@ -286,7 +275,7 @@ function getLastId<T extends {id: string}>(
 }
 
 function makeAutoPagingEach<T>(
-  asyncIteratorNext: () => Promise<IterationResult<T>>
+  asyncIteratorNext: () => Promise<IteratorResult<T>>
 ): AutoPagingEach<T> {
   return function autoPagingEach(/* onItem?, onDone? */): Promise<void> {
     const args = [].slice.call(arguments);
@@ -342,12 +331,12 @@ function makeAutoPagingToArray<T>(
 }
 
 function wrapAsyncIteratorWithCallback<T>(
-  asyncIteratorNext: () => Promise<IterationResult<T>>,
+  asyncIteratorNext: () => Promise<IteratorResult<T>>,
   onItem: IterationItemCallback<T>
 ): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     function handleIteration(
-      iterResult: IterationResult<T>
+      iterResult: IteratorResult<T>
     ): Promise<any> | void {
       if (iterResult.done) {
         resolve();
@@ -362,7 +351,7 @@ function wrapAsyncIteratorWithCallback<T>(
         onItem(item, next);
       }).then((shouldContinue) => {
         if (shouldContinue === false) {
-          return handleIteration({done: true});
+          return handleIteration({done: true, value: undefined});
         } else {
           return asyncIteratorNext().then(handleIteration);
         }
