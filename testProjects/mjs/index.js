@@ -41,9 +41,6 @@ assert(Stripe.StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 assert(Stripe.webhooks);
 assert(Stripe.resources);
 
-assert(Stripe.Stripe);
-assert(Stripe.default);
-
 const stripe = new Stripe(process.argv[2]);
 const defaultStripe = new DefaultStripe(process.argv[2]);
 
