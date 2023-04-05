@@ -9,7 +9,7 @@ type IterationResult<T> =
       done: false;
       value: T;
     }
-  | {done: true; value?: undefined};
+  | {done: true};
 type IterationDoneCallback = () => void;
 type IterationItemCallback<T> = (
   item: T,
@@ -92,9 +92,7 @@ class StripeIterator<T> implements IStripeIterator<T> {
       const nextPageResult = await this.pagePromise;
       return this.iterate(nextPageResult);
     }
-    // eslint-disable-next-line no-warning-comments
-    // TODO (next major) stop returning explicit undefined
-    return {value: undefined, done: true};
+    return {done: true};
   }
 
   /** @abstract */
