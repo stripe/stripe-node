@@ -63,11 +63,6 @@ export function createStripe(
   Stripe.HttpClientResponse = HttpClientResponse;
   Stripe.CryptoProvider = CryptoProvider;
 
-  // For backwards compatibiblity after moving to separate CJS and ESM entrypoints.
-  // To be removed in the next major version.
-  Stripe.Stripe = Stripe;
-  Stripe.default = Stripe;
-
   function Stripe(
     this: StripeObject,
     key: string,
