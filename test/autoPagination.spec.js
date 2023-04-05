@@ -130,6 +130,7 @@ describe('auto pagination', () => {
         });
         expect(await paginator.next()).to.deep.equal({
           done: true,
+          value: undefined,
         });
       });
 
