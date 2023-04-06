@@ -9,11 +9,14 @@ const {makeAutoPaginationMethods} = require('../cjs/autoPagination.js');
 
 const expect = require('chai').expect;
 
-describe('auto pagination', function() {
-  const testCase = (
-    mockPaginationFn,
-    {pages, limit, expectedIds, expectedParamsLog, initialArgs}
-  ) => {
+describe('auto pagination', () => {
+  const testCase = (mockPaginationFn) => ({
+    pages,
+    limit,
+    expectedIds,
+    expectedParamsLog,
+    initialArgs,
+  }) => {
     const {paginator, paramsLog} = mockPaginationFn(pages, initialArgs);
 
     return expect(
@@ -28,14 +31,15 @@ describe('auto pagination', function() {
       paramsLog: expectedParamsLog,
     });
   };
-
-  describe('pagination logic using a mock paginator', () => {
-    const mockPagination = (pages, initialArgs) => {
+  describe('V1 list response pagination', () => {
+    const mockPaginationV1List = (pages, initialArgs) => {
       let i = 1;
       const paramsLog = [];
       const spec = {
         method: 'GET',
         fullPath: '/v1/items',
+        methodType: 'list',
+        apiMode: 'v1',
       };
 
       const mockStripe = testUtils.getMockStripe(
@@ -65,6 +69,7 @@ describe('auto pagination', function() {
       );
       return {paginator, paramsLog};
     };
+    const testCaseV1List = testCase(mockPaginationV1List);
 
     const ID_PAGES = [
       ['cus_1', 'cus_2', 'cus_3'],
@@ -83,7 +88,7 @@ describe('auto pagination', function() {
 
     describe('callbacks', () => {
       it('lets you call `next()` to iterate and `next(false)` to break', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -109,9 +114,28 @@ describe('auto pagination', function() {
           })
         ).to.eventually.deep.equal(OBJECT_IDS.slice(0, LIMIT));
       });
+      it('next() returns appropriately-shaped iterator results', async () => {
+        const {paginator} = mockPaginationV1List([['a', 'b'], ['c']], {});
+        expect(await paginator.next()).to.deep.equal({
+          value: {id: 'a'},
+          done: false,
+        });
+        expect(await paginator.next()).to.deep.equal({
+          value: {id: 'b'},
+          done: false,
+        });
+        expect(await paginator.next()).to.deep.equal({
+          value: {id: 'c'},
+          done: false,
+        });
+        expect(await paginator.next()).to.deep.equal({
+          done: true,
+          value: undefined,
+        });
+      });
 
       it('lets you ignore the second arg and `return false` to break', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -138,7 +162,7 @@ describe('auto pagination', function() {
       });
 
       it('lets you ignore the second arg and return a Promise which returns `false` to break', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -166,7 +190,7 @@ describe('auto pagination', function() {
       });
 
       it('can use a promise instead of a callback for onDone', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -187,7 +211,7 @@ describe('auto pagination', function() {
       });
 
       it('handles the end of a list properly when the last page is full', () => {
-        const {paginator} = mockPagination(
+        const {paginator} = mockPaginationV1List(
           [
             ['cus_1', 'cus_2'],
             ['cus_3', 'cus_4'],
@@ -213,7 +237,7 @@ describe('auto pagination', function() {
       });
 
       it('handles the end of a list properly when the last page is not full', () => {
-        const {paginator} = mockPagination(
+        const {paginator} = mockPaginationV1List(
           [
             ['cus_1', 'cus_2', 'cus_3'],
             ['cus_4', 'cus_5', 'cus_6'],
@@ -237,7 +261,7 @@ describe('auto pagination', function() {
       });
 
       it('handles a list which is shorter than the page size properly', () => {
-        const {paginator} = mockPagination([OBJECT_IDS], {
+        const {paginator} = mockPaginationV1List([OBJECT_IDS], {
           limit: TOTAL_OBJECTS + 2,
         });
 
@@ -257,7 +281,7 @@ describe('auto pagination', function() {
       });
 
       it('handles errors after the first page correctly (callback)', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -280,7 +304,7 @@ describe('auto pagination', function() {
       });
 
       it('handles errors after the first page correctly (promise)', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -339,7 +363,7 @@ describe('auto pagination', function() {
       }
 
       it('works with `for await` when that feature exists (user break)', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -353,7 +377,7 @@ describe('auto pagination', function() {
       });
 
       it('works with `for await` when that feature exists (end of list)', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -367,7 +391,7 @@ describe('auto pagination', function() {
       });
 
       it('works with `await` and a while loop when await exists', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -381,7 +405,7 @@ describe('auto pagination', function() {
       });
 
       it('returns an empty object from .return() so that `break;` works in for-await', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -403,7 +427,7 @@ describe('auto pagination', function() {
       });
 
       it('works when you call it sequentially', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -426,7 +450,7 @@ describe('auto pagination', function() {
       });
 
       it('gives you the same result each time when you call it multiple times in parallel', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         expect(
           new Promise((resolve, reject) => {
@@ -476,7 +500,7 @@ describe('auto pagination', function() {
 
     describe('autoPagingToArray', () => {
       it('can go to the end', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -490,7 +514,7 @@ describe('auto pagination', function() {
       });
 
       it('returns a promise of an array', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -504,7 +528,7 @@ describe('auto pagination', function() {
       });
 
       it('accepts an onDone callback, passing an array', () => {
-        const {paginator} = mockPagination(ID_PAGES, {});
+        const {paginator} = mockPaginationV1List(ID_PAGES, {});
 
         return expect(
           new Promise((resolve, reject) => {
@@ -524,7 +548,7 @@ describe('auto pagination', function() {
 
     describe('foward pagination', () => {
       it('paginates forwards through a page', () => {
-        return testCase(mockPagination, {
+        return testCaseV1List({
           pages: [
             [1, 2],
             [3, 4],
@@ -536,7 +560,7 @@ describe('auto pagination', function() {
       });
 
       it('paginates forwards through un-even sized pages', () => {
-        return testCase(mockPagination, {
+        return testCaseV1List({
           pages: [[1, 2], [3, 4], [5]],
           limit: 10,
           expectedIds: [1, 2, 3, 4, 5],
@@ -545,7 +569,7 @@ describe('auto pagination', function() {
       });
 
       it('respects limit even when paginating', () => {
-        return testCase(mockPagination, {
+        return testCaseV1List({
           pages: [
             [1, 2],
             [3, 4],
@@ -558,7 +582,7 @@ describe('auto pagination', function() {
       });
 
       it('paginates through multiple full pages', () => {
-        return testCase(mockPagination, {
+        return testCaseV1List({
           pages: [
             [1, 2],
             [3, 4],
@@ -580,7 +604,7 @@ describe('auto pagination', function() {
 
     describe('backwards pagination', () => {
       it('paginates forwards through a page', () => {
-        return testCase(mockPagination, {
+        return testCaseV1List({
           pages: [
             [-2, -1],
             [-4, -3],
@@ -593,7 +617,7 @@ describe('auto pagination', function() {
       });
 
       it('paginates backwards through un-even sized pages ', () => {
-        return testCase(mockPagination, {
+        return testCaseV1List({
           pages: [[-2, -1], [-4, -3], [-5]],
           limit: 5,
           expectedIds: [-1, -2, -3, -4, -5],
@@ -603,7 +627,7 @@ describe('auto pagination', function() {
       });
 
       it('respects limit', () => {
-        return testCase(mockPagination, {
+        return testCaseV1List({
           pages: [
             [-2, -1],
             [-4, -3],
@@ -618,13 +642,14 @@ describe('auto pagination', function() {
     });
   });
 
-  describe('pagination logic using a mock search paginator', () => {
-    const mockPagination = (pages, initialArgs) => {
+  describe('V1 search result pagination', () => {
+    const mockPaginationV1Search = (pages, initialArgs) => {
       let i = 1;
       const paramsLog = [];
       const spec = {
         method: 'GET',
         methodType: 'search',
+        apiMode: 'v1',
       };
 
       const addNextPage = (props) => {
@@ -668,9 +693,9 @@ describe('auto pagination', function() {
       );
       return {paginator, paramsLog};
     };
-
+    const testCaseV1Search = testCase(mockPaginationV1Search);
     it('paginates forwards through a page', () => {
-      return testCase(mockPagination, {
+      return testCaseV1Search({
         pages: [
           [1, 2],
           [3, 4],
@@ -682,7 +707,7 @@ describe('auto pagination', function() {
     });
 
     it('paginates forwards through uneven-sized pages', () => {
-      return testCase(mockPagination, {
+      return testCaseV1Search({
         pages: [[1, 2], [3, 4], [5]],
         limit: 10,
         expectedIds: [1, 2, 3, 4, 5],
@@ -691,7 +716,7 @@ describe('auto pagination', function() {
     });
 
     it('respects limit even when paginating', () => {
-      return testCase(mockPagination, {
+      return testCaseV1Search({
         pages: [
           [1, 2],
           [3, 4],
@@ -704,7 +729,7 @@ describe('auto pagination', function() {
     });
 
     it('paginates through multiple full pages', () => {
-      return testCase(mockPagination, {
+      return testCaseV1Search({
         pages: [
           [1, 2],
           [3, 4],
