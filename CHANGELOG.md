@@ -1,5 +1,13 @@
 # Changelog
 
+## 11.18.0 - 2023-04-06
+* [#1738](https://github.com/stripe/stripe-node/pull/1738) Update generated code
+  * Add support for new value `link` on enums `Charge.payment_method_details.card.wallet.type` and `PaymentMethod.card.wallet.type`
+  * Change `IssuingCardholderCreateParams.type` to be optional
+  * Add support for `country` on `PaymentMethod.link`
+  * Add support for `status_details` on `PaymentMethod.us_bank_account`
+* [#1747](https://github.com/stripe/stripe-node/pull/1747) (Typescript) remove deprecated properties
+
 ## 11.17.0 - 2023-03-30
 * [#1734](https://github.com/stripe/stripe-node/pull/1734) Update generated code
   * Remove support for `create` method on resource `Tax.Transaction`
