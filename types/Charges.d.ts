@@ -693,7 +693,7 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
 
@@ -767,7 +767,7 @@ declare module 'stripe' {
           moto?: boolean | null;
 
           /**
-           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
 
@@ -891,7 +891,7 @@ declare module 'stripe' {
             samsung_pay?: Wallet.SamsungPay;
 
             /**
-             * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+             * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, `visa_checkout`, or `link`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
              */
             type: Wallet.Type;
 
@@ -933,6 +933,7 @@ declare module 'stripe' {
               | 'amex_express_checkout'
               | 'apple_pay'
               | 'google_pay'
+              | 'link'
               | 'masterpass'
               | 'samsung_pay'
               | 'visa_checkout';
@@ -968,7 +969,7 @@ declare module 'stripe' {
           amount_authorized: number | null;
 
           /**
-           * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           brand: string | null;
 
@@ -1045,7 +1046,7 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
-           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
 
@@ -1387,7 +1388,7 @@ declare module 'stripe' {
           last4: string | null;
 
           /**
-           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
            */
           network: string | null;
 
