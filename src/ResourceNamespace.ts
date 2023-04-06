@@ -2,21 +2,23 @@
 
 import {StripeObject, StripeResourceObject} from './Types.js';
 
-export type StripeResourceNamespaceObject = Record<
-  string,
-  StripeResourceObject | unknown
->;
+export type StripeResourceNamespaceObject = {
+  [key: string]: StripeResourceObject | StripeResourceNamespaceObject;
+};
 
 // It also works recursively, so you could do i.e. `stripe.billing.invoicing.pay`.
 function ResourceNamespace(
   this: StripeResourceNamespaceObject,
   stripe: StripeObject,
-  resources: Array<StripeResourceObject>
+  resources: Record<
+    string,
+    new (...args: any[]) => StripeResourceObject | StripeResourceNamespaceObject
+  >
 ): void {
   for (const name in resources) {
     const camelCaseName = name[0].toLowerCase() + name.substring(1);
 
-    const resource = new (resources[name] as any)(stripe);
+    const resource = new resources[name](stripe);
 
     this[camelCaseName] = resource;
   }
@@ -24,9 +26,12 @@ function ResourceNamespace(
 
 export function resourceNamespace(
   namespace: string,
-  resources: Record<string, (...args: any[]) => void>
-): (stripe: StripeObject) => StripeResourceNamespaceObject {
+  resources: Record<
+    string,
+    new (...args: any[]) => StripeResourceObject | StripeResourceNamespaceObject
+  >
+): new (stripe: StripeObject) => StripeResourceNamespaceObject {
   return function(stripe: StripeObject): StripeResourceNamespaceObject {
     return new (ResourceNamespace as any)(stripe, resources);
-  };
+  } as any;
 }
