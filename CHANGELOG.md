@@ -1,5 +1,15 @@
 # Changelog
 
+## 12.1.0-beta.1 - 2023-04-06
+* [#1737](https://github.com/stripe/stripe-node/pull/1737) Update generated code for beta
+  * Add support for `treasury_transaction` on `CapitalFinancingTransactionListParams`
+  * Add support for `transaction` on `Capital.FinancingTransaction.details`
+  * Add support for new value `link` on enums `Charge.payment_method_details.card.wallet.type` and `PaymentMethod.card.wallet.type`
+  * Change `IssuingCardholderCreateParams.type` to be optional
+  * Add support for `country` on `PaymentMethod.link`
+  * Add support for `status_details` on `PaymentMethod.us_bank_account`
+* [#1750](https://github.com/stripe/stripe-node/pull/1750) Merge master into beta
+
 ## 12.0.0 - 2023-04-06
 * [#1743](https://github.com/stripe/stripe-node/pull/1743) Remove `Stripe.default` and `Stripe.Stripe`
 This was added to maintain backwards compatibility during the transition of stripe-node to a dual ES module / CommonJS package, and should not be functionally necessary.
