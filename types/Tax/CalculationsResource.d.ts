@@ -30,7 +30,7 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * Shipping cost details to be used for the calculation
+         * Shipping cost details to be used for the calculation.
          */
         shipping_cost?: CalculationCreateParams.ShippingCost;
 
