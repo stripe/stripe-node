@@ -26,7 +26,7 @@ declare module 'stripe' {
       expand?: Array<string>;
 
       /**
-       * Address to send refund email, use customer email if not specified
+       * For payment methods without native refund support (e.g., Konbini, PromptPay), use this email from the customer to receive refund instructions.
        */
       instructions_email?: string;
 
