@@ -114,6 +114,25 @@ describe('auto pagination', () => {
           })
         ).to.eventually.deep.equal(OBJECT_IDS.slice(0, LIMIT));
       });
+      it('next() returns appropriately-shaped iterator results', async () => {
+        const {paginator} = mockPaginationV1List([['a', 'b'], ['c']], {});
+        expect(await paginator.next()).to.deep.equal({
+          value: {id: 'a'},
+          done: false,
+        });
+        expect(await paginator.next()).to.deep.equal({
+          value: {id: 'b'},
+          done: false,
+        });
+        expect(await paginator.next()).to.deep.equal({
+          value: {id: 'c'},
+          done: false,
+        });
+        expect(await paginator.next()).to.deep.equal({
+          done: true,
+          value: undefined,
+        });
+      });
 
       it('lets you ignore the second arg and `return false` to break', () => {
         const {paginator} = mockPaginationV1List(ID_PAGES, {});
