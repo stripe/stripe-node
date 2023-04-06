@@ -1,9 +1,60 @@
 # Changelog
 
+## 12.0.0 - 2023-04-06
+* [#1743](https://github.com/stripe/stripe-node/pull/1743) Remove `Stripe.default` and `Stripe.Stripe`
+This was added to maintain backwards compatibility during the transition of stripe-node to a dual ES module / CommonJS package, and should not be functionally necessary.
+* [#1742](https://github.com/stripe/stripe-node/pull/1743) Pin latest API version as the default
+  **⚠️ ACTION REQUIRED: the breaking change in this release likely affects you ⚠️**
+  
+  In this release, Stripe API Version `2022-11-15` (the latest at time of release) will be sent by default on all requests. 
+  The previous default was to use your [Stripe account's default API version](https://stripe.com/docs/development/dashboard/request-logs#view-your-default-api-version).
+  
+  To successfully upgrade to stripe-node v12, you must either
+  
+  1. **(Recommended) Upgrade your integration to be compatible with API Version `2022-11-15`.**
+    
+     Please read the API Changelog carefully for each API Version from `2022-11-15` back to your [Stripe account's default API version](https://stripe.com/docs/development/dashboard/request-logs#view-your-default-api-version). Determine if you are using any of the APIs that have changed in a breaking way, and adjust your integration accordingly. Carefully test your changes with Stripe [Test Mode](https://stripe.com/docs/keys#test-live-modes) before deploying them to production.
+     
+     You can read the [v12 migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v12) for more detailed instructions.
+  2. **(Alternative option) Specify a version other than `2022-11-15` when initializing `stripe-node`.** 
+  
+     If you were previously initializing stripe-node without an explicit API Version, you can postpone modifying your integration by specifying a version equal to your [Stripe account's default API version](https://stripe.com/docs/development/dashboard/request-logs#view-your-default-api-version). For example:
+    
+     ```diff
+     - const stripe = require('stripe')('sk_test_...'); 
+     + const stripe = require('stripe')('sk_test_...', {
+     +   apiVersion: 'YYYY-MM-DD' // Determine your default version from https://dashboard.stripe.com/developers
+     + })
+     ```
+  
+     If you were already initializing stripe-node with an explicit API Version, upgrading to v12 will not affect your integration.
+  
+     Read the [v12 migration guide](https://github.com/stripe/stripe-node/wiki/Migration-guide-for-v12) for more details.
+  
+  Going forward, each major release of this library will be *pinned* by default to the latest Stripe API Version at the time of release. 
+  That is, instead of upgrading stripe-node and separately upgrading your Stripe API Version through the Stripe Dashboard. whenever you upgrade major versions of stripe-node, you should also upgrade your integration to be compatible with the latest Stripe API version.
+
+## 11.18.0 - 2023-04-06
+* [#1738](https://github.com/stripe/stripe-node/pull/1738) Update generated code
+  * Add support for new value `link` on enums `Charge.payment_method_details.card.wallet.type` and `PaymentMethod.card.wallet.type`
+  * Change `IssuingCardholderCreateParams.type` to be optional
+  * Add support for `country` on `PaymentMethod.link`
+  * Add support for `status_details` on `PaymentMethod.us_bank_account`
+* [#1747](https://github.com/stripe/stripe-node/pull/1747) (Typescript) remove deprecated properties
+
 ## 11.18.0-beta.1 - 2023-03-30
 * [#1735](https://github.com/stripe/stripe-node/pull/1735) Update generated code
   * Add support for new value `ioss` on enums `Tax.Registration.type` and `TaxRegistrationCreateParams.type`
   * Change `TerminalReaderCollectInputsParams.inputs[].custom_text.description` to be optional
+
+## 11.17.0 - 2023-03-30
+* [#1734](https://github.com/stripe/stripe-node/pull/1734) Update generated code
+  * Remove support for `create` method on resource `Tax.Transaction`
+    * This is not a breaking change, as this method was deprecated before the Tax Transactions API was released in favor of the `createFromCalculation` method.
+  * Add support for `export_license_id` and `export_purpose_code` on `Account.company`, `AccountCreateParams.company`, `AccountUpdateParams.company`, and `TokenCreateParams.account.company`
+  * Remove support for value `deleted` from enum `Invoice.status`
+    * This is not a breaking change, as `deleted` was never returned or accepted as input.
+  * Add support for `amount_tip` on `TerminalReaderPresentPaymentMethodParams.testHelpers`
 
 ## 11.17.0-beta.1 - 2023-03-23
 * [#1724](https://github.com/stripe/stripe-node/pull/1724) Update generated code for beta (new)

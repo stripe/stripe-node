@@ -61,7 +61,7 @@ declare module 'stripe' {
       failure_reason?: string;
 
       /**
-       * Email to which refund instructions, if required, are sent to.
+       * For payment methods without native refund support (e.g., Konbini, PromptPay), email for the customer to receive refund instructions.
        */
       instructions_email?: string;
 

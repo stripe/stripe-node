@@ -4,82 +4,57 @@ import {callbackifyPromiseWithTimeout, getDataFromArgs} from './utils.js';
 type PromiseCache = {
   currentPromise: Promise<any> | undefined | null;
 };
-type IterationResult = {
-  done: boolean;
-  value?: any;
-};
 type IterationDoneCallback = () => void;
-type IterationItemCallback = (
-  item: any,
+type IterationItemCallback<T> = (
+  item: T,
   next: any
 ) => void | boolean | Promise<void | boolean>;
-type ListResult = {
-  data: Array<any>;
-  // eslint-disable-next-line camelcase
-  has_more: boolean;
-};
-type AutoPagingEach = (
-  onItem: IterationItemCallback,
+type AutoPagingEach<T> = (
+  onItem: IterationItemCallback<T>,
   onDone?: IterationDoneCallback
 ) => Promise<void>;
 
 type AutoPagingToArrayOptions = {
   limit?: number;
 };
-type AutoPagingToArray = (
+type AutoPagingToArray<T> = (
   opts: AutoPagingToArrayOptions,
   onDone: IterationDoneCallback
-) => Promise<Array<any>>;
+) => Promise<Array<T>>;
 
-type AutoPaginationMethods = {
-  autoPagingEach: AutoPagingEach;
-  autoPagingToArray: AutoPagingToArray;
-  next: () => Promise<void>;
+type AutoPaginationMethods<T> = {
+  autoPagingEach: AutoPagingEach<T>;
+  autoPagingToArray: AutoPagingToArray<T>;
+  next: () => Promise<IteratorResult<T>>;
   return: () => void;
 };
-
-export function makeAutoPaginationMethods(
-  self: StripeResourceObject,
-  requestArgs: RequestArgs,
-  spec: MethodSpec,
-  firstPagePromise: Promise<any>
-): AutoPaginationMethods {
-  const promiseCache: PromiseCache = {currentPromise: null};
-  const reverseIteration = isReverseIteration(requestArgs);
-  let pagePromise = firstPagePromise;
-  let i = 0;
-
-  // Search and List methods iterate differently.
-  // Search relies on a `next_page` token and can only iterate in one direction.
-  // List relies on either an `ending_before` or `starting_after` field with
-  // an item ID to paginate and is bi-directional.
-  //
-  // Please note: spec.methodType === 'search' is beta functionality and is
-  // subject to change/removal at any time.
-  let getNextPagePromise: (pageResult: any) => Promise<any>;
-  if (spec.methodType === 'search') {
-    getNextPagePromise = (pageResult): Promise<any> => {
-      if (!pageResult.next_page) {
-        throw Error(
-          'Unexpected: Stripe API response does not have a well-formed `next_page` field, but `has_more` was true.'
-        );
-      }
-      return self._makeRequest(requestArgs, spec, {
-        page: pageResult.next_page,
-      });
-    };
-  } else {
-    getNextPagePromise = (pageResult): Promise<any> => {
-      const lastId = getLastId(pageResult, reverseIteration);
-      return self._makeRequest(requestArgs, spec, {
-        [reverseIteration ? 'ending_before' : 'starting_after']: lastId,
-      });
-    };
+type PageResult<T> = {
+  data: Array<T>;
+  has_more: boolean;
+  next_page: string | null;
+};
+class StripeIterator<T> implements AsyncIterator<T> {
+  private index: number;
+  private pagePromise: Promise<PageResult<T>>;
+  private promiseCache: PromiseCache;
+  protected requestArgs: RequestArgs;
+  protected spec: MethodSpec;
+  protected stripeResource: StripeResourceObject;
+  constructor(
+    firstPagePromise: Promise<PageResult<T>>,
+    requestArgs: RequestArgs,
+    spec: MethodSpec,
+    stripeResource: StripeResourceObject
+  ) {
+    this.index = 0;
+    this.pagePromise = firstPagePromise;
+    this.promiseCache = {currentPromise: null};
+    this.requestArgs = requestArgs;
+    this.spec = spec;
+    this.stripeResource = stripeResource;
   }
 
-  function iterate(
-    pageResult: ListResult
-  ): IterationResult | Promise<IterationResult> {
+  async iterate(pageResult: PageResult<T>): Promise<IteratorResult<T>> {
     if (
       !(
         pageResult &&
@@ -92,39 +67,115 @@ export function makeAutoPaginationMethods(
       );
     }
 
-    if (i < pageResult.data.length) {
-      const idx = reverseIteration ? pageResult.data.length - 1 - i : i;
+    const reverseIteration = isReverseIteration(this.requestArgs);
+    if (this.index < pageResult.data.length) {
+      const idx = reverseIteration
+        ? pageResult.data.length - 1 - this.index
+        : this.index;
       const value = pageResult.data[idx];
-      i += 1;
+      this.index += 1;
 
       return {value, done: false};
     } else if (pageResult.has_more) {
       // Reset counter, request next page, and recurse.
-      i = 0;
-      pagePromise = getNextPagePromise(pageResult);
-      return pagePromise.then(iterate);
+      this.index = 0;
+      this.pagePromise = this.getNextPage(pageResult);
+      const nextPageResult = await this.pagePromise;
+      return this.iterate(nextPageResult);
     }
-    return {value: undefined, done: true};
+    return {done: true, value: undefined};
   }
 
-  function asyncIteratorNext(): Promise<any> {
-    return memoizedPromise(promiseCache, (resolve, reject) => {
-      return pagePromise
-        .then(iterate)
-        .then(resolve)
-        .catch(reject);
+  /** @abstract */
+  getNextPage(_pageResult: PageResult<T>): Promise<PageResult<T>> {
+    throw new Error('Unimplemented');
+  }
+
+  private async _next(): Promise<IteratorResult<T>> {
+    return this.iterate(await this.pagePromise);
+  }
+
+  next(): Promise<IteratorResult<T>> {
+    /**
+     * If a user calls `.next()` multiple times in parallel,
+     * return the same result until something has resolved
+     * to prevent page-turning race conditions.
+     */
+    if (this.promiseCache.currentPromise) {
+      return this.promiseCache.currentPromise;
+    }
+
+    const nextPromise = (async (): Promise<IteratorResult<T>> => {
+      const ret = await this._next();
+      this.promiseCache.currentPromise = null;
+      return ret;
+    })();
+
+    this.promiseCache.currentPromise = nextPromise;
+
+    return nextPromise;
+  }
+}
+
+class ListIterator<T extends {id: string}> extends StripeIterator<T> {
+  getNextPage(pageResult: PageResult<T>): Promise<PageResult<T>> {
+    const reverseIteration = isReverseIteration(this.requestArgs);
+    const lastId = getLastId(pageResult, reverseIteration);
+    return this.stripeResource._makeRequest(this.requestArgs, this.spec, {
+      [reverseIteration ? 'ending_before' : 'starting_after']: lastId,
     });
   }
+}
 
-  const autoPagingEach = makeAutoPagingEach(asyncIteratorNext);
+class SearchIterator<T> extends StripeIterator<T> {
+  getNextPage(pageResult: PageResult<T>): Promise<PageResult<T>> {
+    if (!pageResult.next_page) {
+      throw Error(
+        'Unexpected: Stripe API response does not have a well-formed `next_page` field, but `has_more` was true.'
+      );
+    }
+    return this.stripeResource._makeRequest(this.requestArgs, this.spec, {
+      page: pageResult.next_page,
+    });
+  }
+}
+
+export const makeAutoPaginationMethods = <
+  TMethodSpec extends MethodSpec,
+  TItem extends {id: string}
+>(
+  stripeResource: StripeResourceObject,
+  requestArgs: RequestArgs,
+  spec: TMethodSpec,
+  firstPagePromise: Promise<PageResult<TItem>>
+): AutoPaginationMethods<TItem> | null => {
+  if (spec.methodType === 'search') {
+    return makeAutoPaginationMethodsFromIterator(
+      new SearchIterator(firstPagePromise, requestArgs, spec, stripeResource)
+    );
+  }
+  if (spec.methodType === 'list') {
+    return makeAutoPaginationMethodsFromIterator(
+      new ListIterator(firstPagePromise, requestArgs, spec, stripeResource)
+    );
+  }
+  return null;
+};
+
+const makeAutoPaginationMethodsFromIterator = <T>(
+  iterator: AsyncIterator<T>
+): AutoPaginationMethods<T> => {
+  const autoPagingEach = makeAutoPagingEach<T>((...args) =>
+    iterator.next(...args)
+  );
   const autoPagingToArray = makeAutoPagingToArray(autoPagingEach);
 
-  const autoPaginationMethods: AutoPaginationMethods = {
+  const autoPaginationMethods: AutoPaginationMethods<T> = {
     autoPagingEach,
     autoPagingToArray,
 
     // Async iterator functions:
-    next: asyncIteratorNext,
+    next: () => iterator.next(),
     return: (): any => {
       // This is required for `break`.
       return {};
@@ -134,7 +185,7 @@ export function makeAutoPaginationMethods(
     },
   };
   return autoPaginationMethods;
-}
+};
 
 /**
  * ----------------
@@ -174,7 +225,9 @@ function getDoneCallback(args: Array<any>): IterationDoneCallback | null {
  * In addition to standard validation, this helper
  * coalesces the former forms into the latter form.
  */
-function getItemCallback(args: Array<any>): IterationItemCallback | undefined {
+function getItemCallback<T>(
+  args: Array<any>
+): IterationItemCallback<T> | undefined {
   if (args.length === 0) {
     return undefined;
   }
@@ -206,7 +259,10 @@ function getItemCallback(args: Array<any>): IterationItemCallback | undefined {
   };
 }
 
-function getLastId(listResult: ListResult, reverseIteration: boolean): string {
+function getLastId<T extends {id: string}>(
+  listResult: PageResult<T>,
+  reverseIteration: boolean
+): string {
   const lastIdx = reverseIteration ? 0 : listResult.data.length - 1;
   const lastItem = listResult.data[lastIdx];
   const lastId = lastItem && lastItem.id;
@@ -218,28 +274,9 @@ function getLastId(listResult: ListResult, reverseIteration: boolean): string {
   return lastId;
 }
 
-/**
- * If a user calls `.next()` multiple times in parallel,
- * return the same result until something has resolved
- * to prevent page-turning race conditions.
- */
-function memoizedPromise<T>(
-  promiseCache: PromiseCache,
-  cb: (resolve: (value: T) => void, reject: (reason?: any) => void) => void
-): Promise<T> {
-  if (promiseCache.currentPromise) {
-    return promiseCache.currentPromise;
-  }
-  promiseCache.currentPromise = new Promise(cb).then((ret) => {
-    promiseCache.currentPromise = undefined;
-    return ret;
-  });
-  return promiseCache.currentPromise;
-}
-
-function makeAutoPagingEach(
-  asyncIteratorNext: () => Promise<IterationResult>
-): AutoPagingEach {
+function makeAutoPagingEach<T>(
+  asyncIteratorNext: () => Promise<IteratorResult<T>>
+): AutoPagingEach<T> {
   return function autoPagingEach(/* onItem?, onDone? */): Promise<void> {
     const args = [].slice.call(arguments);
     const onItem = getItemCallback(args);
@@ -254,12 +291,12 @@ function makeAutoPagingEach(
       onItem
     );
     return callbackifyPromiseWithTimeout(autoPagePromise, onDone);
-  } as AutoPagingEach;
+  } as AutoPagingEach<T>;
 }
 
-function makeAutoPagingToArray(
-  autoPagingEach: AutoPagingEach
-): AutoPagingToArray {
+function makeAutoPagingToArray<T>(
+  autoPagingEach: AutoPagingEach<T>
+): AutoPagingToArray<T> {
   return function autoPagingToArray(
     opts,
     onDone: IterationDoneCallback
@@ -293,12 +330,14 @@ function makeAutoPagingToArray(
   };
 }
 
-function wrapAsyncIteratorWithCallback(
-  asyncIteratorNext: () => Promise<IterationResult>,
-  onItem: IterationItemCallback
+function wrapAsyncIteratorWithCallback<T>(
+  asyncIteratorNext: () => Promise<IteratorResult<T>>,
+  onItem: IterationItemCallback<T>
 ): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    function handleIteration(iterResult: IterationResult): Promise<any> | void {
+    function handleIteration(
+      iterResult: IteratorResult<T>
+    ): Promise<any> | void {
       if (iterResult.done) {
         resolve();
         return;
@@ -312,7 +351,7 @@ function wrapAsyncIteratorWithCallback(
         onItem(item, next);
       }).then((shouldContinue) => {
         if (shouldContinue === false) {
-          return handleIteration({done: true});
+          return handleIteration({done: true, value: undefined});
         } else {
           return asyncIteratorNext().then(handleIteration);
         }
