@@ -218,7 +218,7 @@ declare module 'stripe' {
 
       interface Card {
         /**
-         * Card brand. Can be `amex`, `diners`, `discover`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+         * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
          */
         brand: string;
 
@@ -344,7 +344,7 @@ declare module 'stripe' {
           samsung_pay?: Wallet.SamsungPay;
 
           /**
-           * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+           * The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, `visa_checkout`, or `link`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
            */
           type: Wallet.Type;
 
@@ -386,6 +386,7 @@ declare module 'stripe' {
             | 'amex_express_checkout'
             | 'apple_pay'
             | 'google_pay'
+            | 'link'
             | 'masterpass'
             | 'samsung_pay'
             | 'visa_checkout';
@@ -774,6 +775,11 @@ declare module 'stripe' {
          * Routing number of the bank account.
          */
         routing_number: string | null;
+
+        /**
+         * Contains information about the future reusability of this PaymentMethod.
+         */
+        status_details?: UsBankAccount.StatusDetails | null;
       }
 
       namespace UsBankAccount {
@@ -795,6 +801,48 @@ declare module 'stripe' {
 
         namespace Networks {
           type Supported = 'ach' | 'us_domestic_wire';
+        }
+
+        interface StatusDetails {
+          blocked?: StatusDetails.Blocked;
+        }
+
+        namespace StatusDetails {
+          interface Blocked {
+            /**
+             * The ACH network code that resulted in this block.
+             */
+            network_code: Blocked.NetworkCode | null;
+
+            /**
+             * The reason why this PaymentMethod's fingerprint has been blocked
+             */
+            reason: Blocked.Reason | null;
+          }
+
+          namespace Blocked {
+            type NetworkCode =
+              | 'R02'
+              | 'R03'
+              | 'R04'
+              | 'R05'
+              | 'R07'
+              | 'R08'
+              | 'R10'
+              | 'R11'
+              | 'R16'
+              | 'R20'
+              | 'R29'
+              | 'R31';
+
+            type Reason =
+              | 'bank_account_closed'
+              | 'bank_account_frozen'
+              | 'bank_account_invalid_details'
+              | 'bank_account_restricted'
+              | 'bank_account_unusable'
+              | 'debit_not_authorized';
+          }
         }
       }
 
