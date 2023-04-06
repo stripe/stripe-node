@@ -15,11 +15,6 @@ declare module 'stripe' {
         name: string;
 
         /**
-         * One of `individual` or `company`. See [Choose a cardholder type](https://stripe.com/docs/issuing/other/choose-cardholder) for more details.
-         */
-        type: CardholderCreateParams.Type;
-
-        /**
          * Additional information about a `company` cardholder.
          */
         company?: CardholderCreateParams.Company;
@@ -58,6 +53,11 @@ declare module 'stripe' {
          * Specifies whether to permit authorizations on this cardholder's cards. Defaults to `active`.
          */
         status?: CardholderCreateParams.Status;
+
+        /**
+         * One of `individual` or `company`. See [Choose a cardholder type](https://stripe.com/docs/issuing/other/choose-cardholder) for more details.
+         */
+        type?: CardholderCreateParams.Type;
       }
 
       namespace CardholderCreateParams {

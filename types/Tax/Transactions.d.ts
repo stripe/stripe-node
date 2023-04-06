@@ -4,7 +4,9 @@ declare module 'stripe' {
   namespace Stripe {
     namespace Tax {
       /**
-       * A Tax transaction records the tax collected from or refunded to your customer.
+       * A Tax Transaction records the tax collected from or refunded to your customer.
+       *
+       * Related guide: [Calculate tax in your custom payment flow](https://stripe.com/docs/tax/custom#tax-transaction).
        */
       interface Transaction {
         /**

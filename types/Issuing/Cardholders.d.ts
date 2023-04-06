@@ -74,7 +74,7 @@ declare module 'stripe' {
         status: Cardholder.Status;
 
         /**
-         * One of `individual` or `company`.
+         * One of `individual` or `company`. See [Choose a cardholder type](https://stripe.com/docs/issuing/other/choose-cardholder) for more details.
          */
         type: Cardholder.Type;
       }
