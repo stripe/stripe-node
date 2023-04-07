@@ -1,5 +1,3 @@
-'use strict';
-
 const {
   SubtleCryptoProvider,
 } = require('../../src/crypto/SubtleCryptoProvider.js');

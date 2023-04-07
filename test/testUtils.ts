@@ -209,6 +209,7 @@ const utils = (module.exports = {
     CleanupUtility.DEFAULT_TIMEOUT = 20000;
 
     function CleanupUtility(timeout) {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this;
       this._cleanupFns = [];
       this._stripe = require('../src/stripe.cjs.node.js')(

@@ -330,6 +330,7 @@ describe('auto pagination', () => {
     describe('async iterators', () => {
       async function awaitUntil(iterator, limit) {
         const items = [];
+        // eslint-disable-next-line no-constant-condition
         while (true) {
           // eslint-disable-next-line no-await-in-loop
           const {value, done} = await iterator.next();
