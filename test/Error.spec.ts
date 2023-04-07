@@ -1,8 +1,6 @@
-'use strict';
+require('./testUtils.ts');
 
-require('./testUtils.js');
-
-import * as Error from '../cjs/Error.js';
+import * as Error from '../src/Error.js';
 import {expect} from 'chai';
 
 describe('Error', () => {
@@ -21,7 +19,7 @@ describe('Error', () => {
         Error.StripeError.generate({type: 'idempotency_error'})
       ).to.be.instanceOf(Error.StripeIdempotencyError);
       expect(
-        Error.StripeError.generate({type: 'weird_error'})
+        Error.StripeError.generate({type: 'weird_error' as any})
       ).to.be.instanceOf(Error.StripeUnknownError);
     });
 
@@ -29,7 +27,7 @@ describe('Error', () => {
       const e = new Error.StripeError({
         charge: 'foo',
         unknown_prop: 'bar',
-      });
+      } as any);
       expect(e).to.have.property('charge', 'foo');
       expect(e).not.to.have.property('unknown_prop', 'bar');
       expect(e).not.to.have.property('decline_code', 'xyzzy');

@@ -5,7 +5,7 @@ update-version:
 	@perl -pi -e "s|Stripe.PACKAGE_VERSION = '[.\-\d\w]+'|Stripe.PACKAGE_VERSION = '$(VERSION)'|" src/stripe.core.ts cjs/stripe.core.js esm/stripe.core.js
 
 codegen-format:
-	yarn && yarn fix && yarn build
+	yarn && yarn fix
 
 ci-test:
 	yarn && yarn test

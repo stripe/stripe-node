@@ -1,8 +1,8 @@
-'use strict';
+// @ts-nocheck
 
 const testUtils = require('./testUtils.js');
 const chai = require('chai');
-const stripe = require('../cjs/stripe.cjs.node.js')(
+const stripe = require('../src/stripe.cjs.node.js')(
   testUtils.getUserStripeKey(),
   'latest'
 );
@@ -520,3 +520,5 @@ describe('Flows', function() {
     });
   });
 });
+
+export = {};

@@ -1,16 +1,11 @@
 {
+  "extends": "./tsconfig.cjs.json",
   "compilerOptions": {
-    "outDir": "./cjs",
-    "module": "commonjs",
-    "target": "es2017",
-    "checkJs": false,
-    "alwaysStrict": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "strict": true,
-    "strictFunctionTypes": true,
-    "types": [ "node" ]
+    "noEmit": true,
+    "types": ["node", "mocha"]
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/stripe.esm.node.ts", "./src/stripe.esm.worker.ts"],
+  "ts-node": {
+    "experimentalResolver": true
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"]
 }

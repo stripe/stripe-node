@@ -47,6 +47,7 @@
     "node-fetch": "^2.6.7",
     "nyc": "^15.1.0",
     "prettier": "^1.16.4",
+    "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
   },
@@ -61,8 +62,8 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn build-esm && yarn build-cjs",
-    "build-esm": "mkdir -p esm && tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}' > esm/package.json",
-    "build-cjs": "mkdir -p cjs && tsc -p tsconfig.json && echo '{\"type\":\"commonjs\"}' > cjs/package.json",
+    "build-esm": "mkdir -p esm && tsc -p tsconfig.esm.json",
+    "build-cjs": "mkdir -p cjs && tsc -p tsconfig.cjs.json",
     "clean": "rm -rf ./.nyc_output ./node_modules/.cache ./coverage ./esm ./cjs",
     "prepack": "yarn install && yarn build",
     "mocha": "nyc mocha",

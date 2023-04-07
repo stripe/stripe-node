@@ -1,11 +1,11 @@
-'use strict';
+// @ts-nocheck
 
-const {RequestSender} = require('../cjs/RequestSender.js');
+const {RequestSender} = require('../src/RequestSender.js');
 
 const stripe = require('./testUtils.js').getSpyableStripe();
 const expect = require('chai').expect;
 
-const {HttpClientResponse} = require('../cjs/net/HttpClient.js');
+const {HttpClientResponse} = require('../src/net/HttpClient.js');
 const utils = require('./testUtils.js');
 const nock = require('nock');
 
@@ -16,7 +16,7 @@ const {
   StripeRateLimitError,
   StripeError,
   StripeConnectionError,
-} = require('../cjs/Error.js');
+} = require('../src/Error.js');
 describe('RequestSender', () => {
   const sender = new RequestSender(stripe, 0);
 
@@ -88,7 +88,7 @@ describe('RequestSender', () => {
 
   describe('Parameter encoding', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../cjs/stripe.cjs.node.js')(
+    const realStripe = require('../src/stripe.cjs.node.js')(
       utils.getUserStripeKey()
     );
 
@@ -337,7 +337,7 @@ describe('RequestSender', () => {
 
   describe('Retry Network Requests', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../cjs/stripe.cjs.node.js')(
+    const realStripe = require('../src/stripe.cjs.node.js')(
       utils.getUserStripeKey()
     );
 
