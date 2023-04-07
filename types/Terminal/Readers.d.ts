@@ -80,6 +80,16 @@ declare module 'stripe' {
           collect_inputs?: Action.CollectInputs;
 
           /**
+           * Represents a reader action to collect a payment method
+           */
+          collect_payment_method?: Action.CollectPaymentMethod;
+
+          /**
+           * Represents a reader action to confirm a payment
+           */
+          confirm_payment_intent?: Action.ConfirmPaymentIntent;
+
+          /**
            * Failure code, only set if status is `failed`.
            */
           failure_code: string | null;
@@ -221,6 +231,61 @@ declare module 'stripe' {
             }
           }
 
+          interface CollectPaymentMethod {
+            /**
+             * Represents a per-transaction override of a reader configuration
+             */
+            collect_config?: CollectPaymentMethod.CollectConfig;
+
+            /**
+             * Most recent PaymentIntent processed by the reader.
+             */
+            payment_intent: string | Stripe.PaymentIntent;
+
+            /**
+             * PaymentMethod objects represent your customer's payment instruments.
+             * You can use them with [PaymentIntents](https://stripe.com/docs/payments/payment-intents) to collect payments or save them to
+             * Customer objects to store instrument details for future payments.
+             *
+             * Related guides: [Payment Methods](https://stripe.com/docs/payments/payment-methods) and [More Payment Scenarios](https://stripe.com/docs/payments/more-payment-scenarios).
+             */
+            payment_method?: Stripe.PaymentMethod;
+
+            stripe_account?: string;
+          }
+
+          namespace CollectPaymentMethod {
+            interface CollectConfig {
+              /**
+               * Override showing a tipping selection screen on this transaction.
+               */
+              skip_tipping?: boolean;
+
+              /**
+               * Represents a per-transaction tipping configuration
+               */
+              tipping?: CollectConfig.Tipping;
+            }
+
+            namespace CollectConfig {
+              interface Tipping {
+                /**
+                 * Amount used to calculate tip suggestions on tipping selection screen for this transaction. Must be a positive integer in the smallest currency unit (e.g., 100 cents to represent $1.00 or 100 to represent ¥100, a zero-decimal currency).
+                 */
+                amount_eligible?: number;
+              }
+            }
+          }
+
+          interface ConfirmPaymentIntent {
+            /**
+             * Most recent PaymentIntent processed by the reader.
+             */
+            payment_intent: string | Stripe.PaymentIntent;
+
+            stripe_account?: string;
+          }
+
           interface ProcessPaymentIntent {
             /**
              * Most recent PaymentIntent processed by the reader.
@@ -231,6 +296,8 @@ declare module 'stripe' {
              * Represents a per-transaction override of a reader configuration
              */
             process_config?: ProcessPaymentIntent.ProcessConfig;
+
+            stripe_account?: string;
           }
 
           namespace ProcessPaymentIntent {
@@ -308,6 +375,8 @@ declare module 'stripe' {
              * Boolean indicating whether the transfer should be reversed when refunding this charge. The transfer will be reversed proportionally to the amount being refunded (either the entire or partial amount). A transfer can be reversed only by the application that created the charge.
              */
             reverse_transfer?: boolean;
+
+            stripe_account?: string;
           }
 
           namespace RefundPayment {
@@ -373,6 +442,8 @@ declare module 'stripe' {
 
           type Type =
             | 'collect_inputs'
+            | 'collect_payment_method'
+            | 'confirm_payment_intent'
             | 'process_payment_intent'
             | 'process_setup_intent'
             | 'refund_payment'
