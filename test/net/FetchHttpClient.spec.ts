@@ -1,4 +1,4 @@
-'use strict';
+// @ts-nocheck
 
 const expect = require('chai').expect;
 const fetch = require('node-fetch');
@@ -112,3 +112,5 @@ describe('FetchHttpClient', () => {
     expect(capturedBody).to.be.undefined;
   });
 });
+
+export {};

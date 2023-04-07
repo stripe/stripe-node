@@ -48,3 +48,5 @@ if (!webcrypto || !webcrypto.subtle) {
     });
   });
 }
+
+export {};
