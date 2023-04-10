@@ -1,10 +1,10 @@
-'use strict';
+// @ts-nocheck
 
 const expect = require('chai').expect;
 const fetch = require('node-fetch');
 const nock = require('nock');
 const {Readable} = require('stream');
-const {FetchHttpClient} = require('../../cjs/net/FetchHttpClient.js');
+const {FetchHttpClient} = require('../../src/net/FetchHttpClient.js');
 
 const createFetchHttpClient = () => {
   return new FetchHttpClient(fetch);
@@ -112,3 +112,5 @@ describe('FetchHttpClient', () => {
     expect(capturedBody).to.be.undefined;
   });
 });
+
+export {};

@@ -247,7 +247,6 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.ts'],
-      parser: '@typescript-eslint/parser',
       plugins: ['@typescript-eslint', 'prettier'],
       extends: [
         'eslint:recommended',
@@ -278,6 +277,12 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'error',
         '@typescript-eslint/no-var-requires': 0,
         'prefer-rest-params': 'off',
+      },
+    },
+    {
+      files: ['test/**/*.ts'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': 'off',
       },
     },
   ],
