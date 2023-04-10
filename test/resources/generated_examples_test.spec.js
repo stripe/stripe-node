@@ -850,6 +850,15 @@ describe('PaymentIntents', function() {
     });
     expect(paymentIntents).not.to.be.null;
   });
+
+  it('create method', async function() {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: 200,
+      currency: 'usd',
+      payment_method_data: {type: 'p24', p24: {bank: 'blik'}},
+    });
+    expect(paymentIntent).not.to.be.null;
+  });
 });
 
 describe('PaymentLinks', function() {
