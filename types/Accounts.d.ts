@@ -299,6 +299,11 @@ declare module 'stripe' {
         paynow_payments?: Capabilities.PaynowPayments;
 
         /**
+         * The status of the PayPal payments capability of the account, or whether the account can directly process PayPal charges.
+         */
+        paypal_payments?: Capabilities.PaypalPayments;
+
+        /**
          * The status of the promptpay payments capability of the account, or whether the account can directly process promptpay charges.
          */
         promptpay_payments?: Capabilities.PromptpayPayments;
@@ -398,6 +403,8 @@ declare module 'stripe' {
         type P24Payments = 'active' | 'inactive' | 'pending';
 
         type PaynowPayments = 'active' | 'inactive' | 'pending';
+
+        type PaypalPayments = 'active' | 'inactive' | 'pending';
 
         type PromptpayPayments = 'active' | 'inactive' | 'pending';
 
