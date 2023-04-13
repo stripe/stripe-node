@@ -154,16 +154,11 @@ stripe.customers
 ```
 ### Usage with Deno
 
-As of 11.16.0, stripe-node provides a `deno` export target. You may import stripe-node in Deno through npm specifiers or a third party CDN like esm.sh.
+As of 11.16.0, stripe-node provides a `deno` export target. In your Deno project, import stripe-node using an npm specifier:
 
 Import using npm specifiers:
 ```js
 import Stripe from 'npm:stripe';
-```
-
-Import using esm.sh:
-```js
-import Stripe from 'https://esm.sh/stripe?target=deno';
 ```
 
 Please see https://github.com/stripe-samples/stripe-node-deno-samples for more detailed examples and instructions on how to use stripe-node in Deno.
