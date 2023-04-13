@@ -31,7 +31,7 @@ const ALLOWED_CONFIG_PROPERTIES = [
 ];
 const defaultRequestSenderFactory = (stripe) => new RequestSender(stripe, StripeResource.MAX_BUFFERED_REQUEST_METRICS);
 export function createStripe(platformFunctions, requestSender = defaultRequestSenderFactory) {
-    Stripe.PACKAGE_VERSION = '12.1.0-beta.1';
+    Stripe.PACKAGE_VERSION = '12.2.0-beta.1';
     Stripe.USER_AGENT = Object.assign({ bindings_version: Stripe.PACKAGE_VERSION, lang: 'node', publisher: 'stripe', uname: null, typescript: false }, determineProcessUserAgentProperties());
     Stripe.StripeResource = StripeResource;
     Stripe.resources = resources;
