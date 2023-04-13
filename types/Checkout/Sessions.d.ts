@@ -92,7 +92,7 @@ declare module 'stripe' {
         /**
          * Currency conversion details for automatic currency conversion sessions
          */
-        currency_conversion?: Session.CurrencyConversion | null;
+        currency_conversion: Session.CurrencyConversion | null;
 
         /**
          * Collect additional information from your customer using custom fields. Up to 2 fields are supported.
