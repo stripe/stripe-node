@@ -184,7 +184,10 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
  * Provide simple "Class" extension mechanism.
  * <!-- Public API accessible via Stripe.StripeResource.extend -->
  */
-export function protoExtend(this: any, sub: any): (...args: any[]) => void {
+export function protoExtend(
+  this: any,
+  sub: any
+): {new (...args: any[]): StripeResourceObject} {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const Super = this;
   const Constructor = Object.prototype.hasOwnProperty.call(sub, 'constructor')

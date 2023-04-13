@@ -40,6 +40,16 @@ export const Readers = StripeResource.extend({
     fullPath: '/v1/terminal/readers/{reader}/collect_inputs',
   }),
 
+  collectPaymentMethod: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/terminal/readers/{reader}/collect_payment_method',
+  }),
+
+  confirmPaymentIntent: stripeMethod({
+    method: 'POST',
+    fullPath: '/v1/terminal/readers/{reader}/confirm_payment_intent',
+  }),
+
   processPaymentIntent: stripeMethod({
     method: 'POST',
     fullPath: '/v1/terminal/readers/{reader}/process_payment_intent',

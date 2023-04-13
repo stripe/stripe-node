@@ -1,16 +1,15 @@
+// @ts-nocheck
 /* eslint-disable new-cap */
 
 'use strict';
 
-import {FetchHttpClient} from '../cjs/net/FetchHttpClient.js';
-import {NodeHttpClient} from '../cjs/net/NodeHttpClient.js';
-import {createStripe} from '../cjs/stripe.core.js';
+import {createStripe} from '../src/stripe.core.js';
 import {getMockPlatformFunctions} from './testUtils.js';
-import {ApiVersion} from '../cjs/apiVersion.js';
+import {ApiVersion} from '../src/apiVersion.js';
 
 const testUtils = require('./testUtils.js');
-const Stripe = require('../cjs/stripe.cjs.node.js');
-const stripe = require('../cjs/stripe.cjs.node.js')(
+const Stripe = require('../src/stripe.cjs.node.js');
+const stripe = require('../src/stripe.cjs.node.js')(
   testUtils.getUserStripeKey(),
   'latest'
 );

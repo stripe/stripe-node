@@ -1,9 +1,9 @@
-'use strict';
+// @ts-nocheck
 
 const http = require('http');
 const expect = require('chai').expect;
 
-const {createNodeHttpClient} = require('../../cjs/stripe.cjs.node.js');
+const {createNodeHttpClient} = require('../../src/stripe.cjs.node.js');
 
 const {createHttpClientTestSuite, ArrayReadable} = require('./helpers.js');
 
@@ -29,7 +29,7 @@ describe('NodeHttpClient', () => {
           const stream = response.toStream(() => true);
 
           let streamedContent = '';
-          stream.on('data', (chunk) => {
+          stream.on('data', (chunk: any) => {
             streamedContent += chunk;
           });
           stream.on('end', () => {
@@ -60,3 +60,5 @@ describe('NodeHttpClient', () => {
     });
   });
 });
+
+export {};

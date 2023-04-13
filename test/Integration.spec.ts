@@ -1,7 +1,4 @@
-'use strict';
-
 import * as childProcess from 'child_process';
-
 const testUtils = require('./testUtils.js');
 
 describe('Integration test', function() {

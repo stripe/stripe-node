@@ -1,11 +1,10 @@
-'use strict';
-
+// @ts-nocheck
 /* eslint-disable callback-return */
 
 const testUtils = require('./testUtils.js');
-const {StripeResource} = require('../cjs/StripeResource.js');
+const {StripeResource} = require('../src/StripeResource.js');
 
-const {makeAutoPaginationMethods} = require('../cjs/autoPagination.js');
+const {makeAutoPaginationMethods} = require('../src/autoPagination.js');
 
 const expect = require('chai').expect;
 
@@ -331,6 +330,7 @@ describe('auto pagination', () => {
     describe('async iterators', () => {
       async function awaitUntil(iterator, limit) {
         const items = [];
+        // eslint-disable-next-line no-constant-condition
         while (true) {
           // eslint-disable-next-line no-await-in-loop
           const {value, done} = await iterator.next();
@@ -749,3 +749,5 @@ describe('auto pagination', () => {
     });
   });
 });
+
+export {};

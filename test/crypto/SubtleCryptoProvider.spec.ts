@@ -1,8 +1,6 @@
-'use strict';
-
 const {
   SubtleCryptoProvider,
-} = require('../../cjs/crypto/SubtleCryptoProvider.js');
+} = require('../../src/crypto/SubtleCryptoProvider.js');
 const webcrypto = require('crypto').webcrypto;
 const expect = require('chai').expect;
 
@@ -48,3 +46,5 @@ if (!webcrypto || !webcrypto.subtle) {
     });
   });
 }
+
+export {};

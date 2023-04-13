@@ -1,4 +1,4 @@
-'use strict';
+// @ts-nocheck
 
 require('./testUtils.js');
 const http = require('http');
@@ -57,7 +57,7 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../cjs/stripe.cjs.node.js')(
+        const stripe = require('../src/stripe.cjs.node.js')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
           {
             telemetry: false,
@@ -107,7 +107,7 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../cjs/stripe.cjs.node.js')(
+        const stripe = require('../src/stripe.cjs.node.js')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
           {
             telemetry: true,
@@ -159,7 +159,7 @@ describe('Client Telemetry', () => {
         res.end('{}');
       },
       (host, port) => {
-        const stripe = require('../cjs/stripe.cjs.node.js')(
+        const stripe = require('../src/stripe.cjs.node.js')(
           'sk_test_FEiILxKZwnmmocJDUjUNO6pa',
           {
             telemetry: true,
