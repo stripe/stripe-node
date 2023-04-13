@@ -545,6 +545,7 @@ declare module 'stripe' {
           | 'MOYONL21'
           | 'RABONL2U'
           | 'RBRBNL21'
+          | 'REVOIE23'
           | 'REVOLT21'
           | 'SNSBNL2A'
           | 'TRIONL2U';
