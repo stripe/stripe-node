@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.1.1 - 2023-04-13
+No product changes.
+
 ## 12.1.0 - 2023-04-13
 * [#1754](https://github.com/stripe/stripe-node/pull/1754) Update generated code
   * Add support for new value `REVOIE23` on enums `Charge.payment_method_details.ideal.bic`, `PaymentMethod.ideal.bic`, and `SetupAttempt.payment_method_details.ideal.bic`
