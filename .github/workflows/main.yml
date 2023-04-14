@@ -72,6 +72,14 @@ jobs:
       - name: Print Node.js version
         run: node -v
 
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Print Deno version
+        run: deno -V
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
