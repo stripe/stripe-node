@@ -8,8 +8,9 @@ import Stripe from 'npm:stripe@^11.16';
 const stripe = Stripe(Deno.env.get('STRIPE_API_KEY'));
 
 // Must specify hostname explicitly, see https://github.com/denoland/deno/issues/5144
-const server = Deno.listen({hostname: '127.0.0.1', port: 8080});
-console.log(`Webhook endpoint available at http://127.0.0.1:8080/`);
+const server = Deno.listen({hostname: '127.0.0.1', port: 0});
+const {port} = server.addr;
+console.log(`Webhook endpoint available at http://127.0.0.1:${port}/`);
 
 // This handler will be called for every incoming request.
 async function handler(request) {
