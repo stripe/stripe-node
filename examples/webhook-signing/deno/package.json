@@ -1,0 +1,12 @@
+{
+  "name": "webhook-signing-example-deno",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./main.ts",
+  "scripts": {
+    "run": "deno run --allow-net --allow-env --allow-read main.ts",
+    "prepare": "../prepare.sh"
+  },
+  "author": "",
+  "license": "ISC"
+}
