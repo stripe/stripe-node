@@ -234,7 +234,7 @@ declare module 'stripe' {
           namespace Ca {
             interface ProvinceStandard {
               /**
-               * Two-letter CA province code ([ISO 3166-2]((https://en.wikipedia.org/wiki/ISO_3166-2))).
+               * Two-letter CA province code ([ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)).
                */
               province: string;
             }
