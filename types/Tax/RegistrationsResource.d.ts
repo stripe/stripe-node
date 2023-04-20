@@ -1076,7 +1076,7 @@ declare module 'stripe' {
           namespace Us {
             interface LocalLeaseTax {
               /**
-               * A FIPS/GNIS code representing the local jurisdiction.
+               * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
                */
               jurisdiction: string;
             }

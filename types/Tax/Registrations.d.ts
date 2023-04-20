@@ -6,7 +6,7 @@ declare module 'stripe' {
       /**
        * A Tax `Registration` lets us know that your business is registered to collect tax on payments within a region, enabling you to [automatically collect tax](https://stripe.com/docs/tax).
        *
-       * Stripe will not register on your behalf with the relevant authorities when you create a Tax `Registration` object. For more information on how to register to collect tax, see [our guide](https://stripe.com/docs/tax/registering).
+       * Stripe doesn't register on your behalf with the relevant authorities when you create a Tax `Registration` object. For more information on how to register to collect tax, see [our guide](https://stripe.com/docs/tax/registering).
        */
       interface Registration {
         /**
@@ -891,7 +891,7 @@ declare module 'stripe' {
           namespace Us {
             interface LocalLeaseTax {
               /**
-               * A FIPS/GNIS code representing the local jurisdiction.
+               * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
                */
               jurisdiction: string;
             }
