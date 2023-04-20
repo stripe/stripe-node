@@ -47,7 +47,7 @@ declare module 'stripe' {
          */
         livemode: boolean;
 
-        options: VerificationReport.Options;
+        options?: VerificationReport.Options;
 
         /**
          * Result from a selfie check
@@ -57,7 +57,7 @@ declare module 'stripe' {
         /**
          * Type of report.
          */
-        type: VerificationReport.Type;
+        type?: VerificationReport.Type;
 
         /**
          * ID of the VerificationSession that created this report.
