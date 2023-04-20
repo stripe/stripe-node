@@ -60,7 +60,10 @@ declare module 'stripe' {
          */
         metadata: Stripe.Metadata;
 
-        options: VerificationSession.Options;
+        /**
+         * A set of options for the session's verification checks.
+         */
+        options: VerificationSession.Options | null;
 
         /**
          * Redaction status of this VerificationSession. If the VerificationSession is not redacted, this field will be null.
@@ -75,7 +78,7 @@ declare module 'stripe' {
         /**
          * The type of [verification check](https://stripe.com/docs/identity/verification-checks) to be performed.
          */
-        type: VerificationSession.Type;
+        type: VerificationSession.Type | null;
 
         /**
          * The short-lived URL that you use to redirect a user to Stripe to submit their identity information. This URL expires after 48 hours and can only be used once. Don't store it, log it, send it in emails or expose it to anyone other than the user. Refer to our docs on [verifying identity documents](https://stripe.com/docs/identity/verify-identity-documents?platform=web&type=redirect) to learn how to redirect users to Stripe.
