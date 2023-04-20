@@ -939,6 +939,11 @@ declare module 'stripe' {
          * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
          */
         wechat_pay?: Stripe.Emptyable<PaymentMethodOptions.WechatPay>;
+
+        /**
+         * If this is a `zip` PaymentMethod, this sub-hash contains details about the Zip payment method options.
+         */
+        zip?: Stripe.Emptyable<PaymentMethodOptions.Zip>;
       }
 
       namespace PaymentMethodOptions {
@@ -1949,6 +1954,19 @@ declare module 'stripe' {
 
         namespace WechatPay {
           type Client = 'android' | 'ios' | 'web';
+        }
+
+        interface Zip {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
       }
 
@@ -2885,6 +2903,11 @@ declare module 'stripe' {
          * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
          */
         wechat_pay?: Stripe.Emptyable<PaymentMethodOptions.WechatPay>;
+
+        /**
+         * If this is a `zip` PaymentMethod, this sub-hash contains details about the Zip payment method options.
+         */
+        zip?: Stripe.Emptyable<PaymentMethodOptions.Zip>;
       }
 
       namespace PaymentMethodOptions {
@@ -3895,6 +3918,19 @@ declare module 'stripe' {
 
         namespace WechatPay {
           type Client = 'android' | 'ios' | 'web';
+        }
+
+        interface Zip {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
       }
 
@@ -4929,6 +4965,11 @@ declare module 'stripe' {
          * If this is a `wechat_pay` PaymentMethod, this sub-hash contains details about the WeChat Pay payment method options.
          */
         wechat_pay?: Stripe.Emptyable<PaymentMethodOptions.WechatPay>;
+
+        /**
+         * If this is a `zip` PaymentMethod, this sub-hash contains details about the Zip payment method options.
+         */
+        zip?: Stripe.Emptyable<PaymentMethodOptions.Zip>;
       }
 
       namespace PaymentMethodOptions {
@@ -5939,6 +5980,19 @@ declare module 'stripe' {
 
         namespace WechatPay {
           type Client = 'android' | 'ios' | 'web';
+        }
+
+        interface Zip {
+          /**
+           * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+           *
+           * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+           *
+           * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+           *
+           * If `setup_future_usage` is already set and you are performing a request using a publishable key, you may only update the value from `on_session` to `off_session`.
+           */
+          setup_future_usage?: 'none';
         }
       }
 
