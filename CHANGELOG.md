@@ -1,5 +1,14 @@
 # Changelog
 
+## 12.2.0 - 2023-04-20
+* [#1759](https://github.com/stripe/stripe-node/pull/1759) Update generated code
+  * Change `Checkout.Session.currency_conversion` to be required
+  * Change `Identity.VerificationReport.options` and `Identity.VerificationReport.type` to be optional
+  * Change type of `Identity.VerificationSession.options` from `VerificationSessionOptions` to `VerificationSessionOptions | null`
+  * Change type of `Identity.VerificationSession.type` from `enum('document'|'id_number')` to `enum('document'|'id_number') | null`
+* [#1762](https://github.com/stripe/stripe-node/pull/1762) Add Deno webhook signing example
+* [#1761](https://github.com/stripe/stripe-node/pull/1761) Add Deno usage instructions in README
+
 ## 12.1.1 - 2023-04-13
 No product changes.
 
