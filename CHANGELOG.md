@@ -1,5 +1,11 @@
 # Changelog
 
+## 12.3.0-beta.1 - 2023-04-20
+* [#1760](https://github.com/stripe/stripe-node/pull/1760) Update generated code for beta
+  * Add support for `zip` on `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_options`, and `PaymentIntentUpdateParams.payment_method_options`
+  * Add support for `country_options` on `Tax.Registration` and `TaxRegistrationCreateParams`
+  * Remove support for `state` and `type` on `Tax.Registration` and `TaxRegistrationCreateParams`
+
 ## 12.2.0-beta.1 - 2023-04-13
 * [#1751](https://github.com/stripe/stripe-node/pull/1751) Update generated code for beta
   * Add support for `collect_payment_method` and `confirm_payment_intent` methods on resource `Terminal.Reader`
