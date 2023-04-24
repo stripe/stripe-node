@@ -164,6 +164,11 @@ declare module 'stripe' {
           state: string | null;
 
           /**
+           * An ID assigned by the seller to the location of the sale.
+           */
+          terminal_id: string | null;
+
+          /**
            * URL provided by the merchant on a 3DS request
            */
           url?: string | null;
