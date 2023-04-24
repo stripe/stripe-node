@@ -2075,6 +2075,16 @@ describe('Plans', function() {
     expect(plan).not.to.be.null;
   });
 
+  it('create method', async function() {
+    const plan = await stripe.plans.create({
+      amount: 2000,
+      currency: 'usd',
+      interval: 'month',
+      product: {name: 'My product'},
+    });
+    expect(plan).not.to.be.null;
+  });
+
   it('del method', async function() {
     const deleted = await stripe.plans.del('price_xxxxxxxxxxxxx');
     expect(deleted).not.to.be.null;
