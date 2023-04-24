@@ -157,6 +157,11 @@ declare module 'stripe' {
            * State where the seller is located
            */
           state: string | null;
+
+          /**
+           * An ID assigned by the seller to the location of the sale.
+           */
+          terminal_id: string | null;
         }
 
         interface PurchaseDetails {
