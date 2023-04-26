@@ -64,7 +64,7 @@ declare module 'stripe' {
       metadata: Stripe.Metadata | null;
 
       /**
-       * This represents the tax rate percent out of 100.
+       * Tax rate percentage out of 100. For tax calculations with automatic_tax[enabled]=true, this percentage includes the statutory tax rate of non-taxable jurisdictions.
        */
       percentage: number;
 
