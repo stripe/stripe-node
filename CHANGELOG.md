@@ -1,10 +1,36 @@
 # Changelog
 
+## 12.4.0-beta.1 - 2023-04-27
+* [#1769](https://github.com/stripe/stripe-node/pull/1769) Update generated code for beta
+  * Add support for `billing_cycle_anchor` and `proration_behavior` on `CheckoutSessionCreateParams.subscription_data`
+  * Add support for `terminal_id` on `Issuing.Authorization.merchant_data` and `Issuing.Transaction.merchant_data`
+  * Add support for `metadata` on `PaymentIntentCaptureParams`
+  * Add support for `checks` on `SetupAttempt.payment_method_details.card`
+  * Add support for `tax_breakdown` on `Tax.Calculation.shipping_cost` and `Tax.Transaction.shipping_cost`
+  * Change type of `TaxRegistrationCreateParams.active_from`, `TaxRegistrationUpdateParams.active_from`, and `TaxRegistrationUpdateParams.expires_at` from `longInteger` to `longInteger | literal('now')`
+
+## 12.3.0 - 2023-04-27
+* [#1770](https://github.com/stripe/stripe-node/pull/1770) Update generated code
+  * Add support for `billing_cycle_anchor` and `proration_behavior` on `CheckoutSessionCreateParams.subscription_data`
+  * Add support for `terminal_id` on `Issuing.Authorization.merchant_data` and `Issuing.Transaction.merchant_data`
+  * Add support for `metadata` on `PaymentIntentCaptureParams`
+  * Add support for `checks` on `SetupAttempt.payment_method_details.card`
+  * Add support for `tax_breakdown` on `Tax.Calculation.shipping_cost` and `Tax.Transaction.shipping_cost`
+
 ## 12.3.0-beta.1 - 2023-04-20
 * [#1760](https://github.com/stripe/stripe-node/pull/1760) Update generated code for beta
   * Add support for `zip` on `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_options`, and `PaymentIntentUpdateParams.payment_method_options`
   * Add support for `country_options` on `Tax.Registration` and `TaxRegistrationCreateParams`
   * Remove support for `state` and `type` on `Tax.Registration` and `TaxRegistrationCreateParams`
+
+## 12.2.0 - 2023-04-20
+* [#1759](https://github.com/stripe/stripe-node/pull/1759) Update generated code
+  * Change `Checkout.Session.currency_conversion` to be required
+  * Change `Identity.VerificationReport.options` and `Identity.VerificationReport.type` to be optional
+  * Change type of `Identity.VerificationSession.options` from `VerificationSessionOptions` to `VerificationSessionOptions | null`
+  * Change type of `Identity.VerificationSession.type` from `enum('document'|'id_number')` to `enum('document'|'id_number') | null`
+* [#1762](https://github.com/stripe/stripe-node/pull/1762) Add Deno webhook signing example
+* [#1761](https://github.com/stripe/stripe-node/pull/1761) Add Deno usage instructions in README
 
 ## 12.2.0-beta.1 - 2023-04-13
 * [#1751](https://github.com/stripe/stripe-node/pull/1751) Update generated code for beta
