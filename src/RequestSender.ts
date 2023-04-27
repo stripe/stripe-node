@@ -308,6 +308,7 @@ export class RequestSender {
 
   _makeHeaders(
     auth: string | null,
+    contentType: string,
     contentLength: number,
     apiVersion: string,
     clientUserAgent: string,
@@ -319,7 +320,7 @@ export class RequestSender {
       // Use specified auth token or use default from this stripe instance:
       Authorization: auth ? `Bearer ${auth}` : this._stripe.getApiField('auth'),
       Accept: 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': contentType,
       'User-Agent': this._getUserAgentString(),
       'X-Stripe-Client-User-Agent': clientUserAgent,
       'X-Stripe-Client-Telemetry': this._getTelemetryHeader(),
@@ -535,6 +536,9 @@ export class RequestSender {
         const apiVersion = this._stripe.getApiField('version');
         const headers = this._makeHeaders(
           auth,
+          options.encoding === 'json'
+            ? 'application/json'
+            : 'application/x-www-form-urlencoded',
           requestData.length,
           apiVersion,
           clientUserAgent,
@@ -555,7 +559,12 @@ export class RequestSender {
         prepareAndMakeRequest
       );
     } else {
-      prepareAndMakeRequest(null, stringifyRequestData(data || {}));
+      prepareAndMakeRequest(
+        null,
+        options.encoding === 'json'
+          ? JSON.stringify(data || {})
+          : stringifyRequestData(data || {})
+      );
     }
   }
 }

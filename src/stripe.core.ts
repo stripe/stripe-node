@@ -12,7 +12,15 @@ import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
 import {createWebhooks} from './Webhooks.js';
-import {StripeObject, AppInfo, UserProvidedConfig} from './Types.js';
+import {
+  StripeObject,
+  AppInfo,
+  UserProvidedConfig,
+  RequestOptions,
+  RequestCallback,
+  RequestData,
+  RequestDataProcessor,
+} from './Types.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
@@ -201,6 +209,25 @@ export function createStripe(
     _enableTelemetry: null!,
     _requestSender: null!,
     _platformFunctions: null!,
+
+    rawRequest(
+      method: string,
+      fullPath: string,
+      data: RequestData,
+      options: RequestOptions,
+      cb: RequestCallback
+    ): Promise<any> {
+      const Resource = Stripe.StripeResource.extend({
+        request: Stripe.StripeResource.method({
+          method,
+          fullPath,
+        }),
+      });
+
+      // @ts-ignore
+      const ret = new Resource(this).request(data, options, cb);
+      return ret;
+    },
 
     /**
      * @private

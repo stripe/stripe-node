@@ -636,4 +636,60 @@ describe('Stripe Module', function() {
       expect(newStripe.VERSION).to.equal(Stripe.PACKAGE_VERSION);
     });
   });
+
+  describe('rawRequest', () => {
+    it('should make request with specified params', (done) => {
+      stripe.rawRequest(
+        'POST',
+        '/v1/customers',
+        {description: 'test customer'},
+        null,
+        (err, result) => {
+          if (err) {
+            return done(err);
+          }
+          expect(result).to.have.property('description', 'test customer');
+          done();
+        }
+      );
+    });
+
+    it('should make request with request option encoding set to JSON', (done) => {
+      const returnedCustomer = {
+        id: 'cus_123',
+      };
+
+      return testUtils.getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal('application/json');
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal('{"description":"test customer"}');
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        (err, stripe, closeServer) => {
+          if (err) return done(err);
+          stripe.rawRequest(
+            'POST',
+            '/v1/customers',
+            {description: 'test customer'},
+            {encoding: 'json'},
+            (err, result) => {
+              if (err) return done(err);
+              expect(result).to.deep.equal(returnedCustomer);
+              closeServer();
+              done();
+            }
+          );
+        }
+      );
+    });
+  });
 });

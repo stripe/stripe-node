@@ -16,6 +16,7 @@ const OPTIONS_KEYS = [
   'maxNetworkRetries',
   'timeout',
   'host',
+  'encoding',
 ];
 
 type Settings = {
@@ -23,12 +24,15 @@ type Settings = {
   maxNetworkRetries?: number;
 };
 
+type Encoding = 'json' | 'form' | null;
+
 type Options = {
   auth: string | null;
   host: string | null;
   settings: Settings;
   streaming?: boolean;
   headers: Record<string, unknown>;
+  encoding?: Encoding;
 };
 
 export function isOptionsHash(o: unknown): boolean | unknown {
@@ -174,6 +178,15 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       }
       if (params.host) {
         opts.host = params.host as string;
+      }
+      if (params.encoding) {
+        if (params.encoding !== 'form' && params.encoding !== 'json') {
+          throw new Error(
+            `Invalid encoding: ${params.encoding}. Must be one of 'form' or 'json'`
+          );
+        }
+
+        opts.encoding = params.encoding as Encoding;
       }
     }
   }

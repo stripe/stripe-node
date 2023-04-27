@@ -157,6 +157,8 @@ StripeResource.prototype = {
     const options = getOptionsFromArgs(args);
     const host = options.host || spec.host;
     const streaming = !!spec.streaming;
+    const encoding = options.encoding || 'form';
+
     // Validate that there are no more args.
     if (args.filter((x) => x != null).length) {
       throw new Error(
@@ -190,6 +192,7 @@ StripeResource.prototype = {
       host: host ?? null,
       streaming,
       settings: options.settings,
+      encoding: encoding,
     };
   },
 
@@ -237,7 +240,7 @@ StripeResource.prototype = {
         path,
         opts.bodyData,
         opts.auth,
-        {headers, settings, streaming: opts.streaming},
+        {headers, settings, streaming: opts.streaming, encoding: opts.encoding},
         requestCallback,
         this.requestDataProcessor?.bind(this)
       );

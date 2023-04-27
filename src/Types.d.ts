@@ -55,6 +55,7 @@ export type RequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
   headers?: RequestHeaders;
+  encoding?: 'form' | 'json';
 };
 export type RequestOpts = {
   requestMethod: string;
@@ -66,6 +67,7 @@ export type RequestOpts = {
   host: string | null;
   streaming: boolean;
   settings: RequestSettings;
+  encoding?: 'form' | 'json';
 };
 export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};
 export type ResponseEvent = {
@@ -146,6 +148,13 @@ export type StripeObject = {
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
   _platformFunctions: PlatformFunctions;
+  rawRequest: (
+    method: string,
+    fullPath: string,
+    data: RequestData,
+    options: RequestOptions,
+    callback: RequestCallback
+  ) => Promise<any>;
 };
 export type RequestSender = {
   _request(
