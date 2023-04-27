@@ -1,5 +1,13 @@
 # Changelog
 
+## 12.3.0 - 2023-04-27
+* [#1770](https://github.com/stripe/stripe-node/pull/1770) Update generated code
+  * Add support for `billing_cycle_anchor` and `proration_behavior` on `CheckoutSessionCreateParams.subscription_data`
+  * Add support for `terminal_id` on `Issuing.Authorization.merchant_data` and `Issuing.Transaction.merchant_data`
+  * Add support for `metadata` on `PaymentIntentCaptureParams`
+  * Add support for `checks` on `SetupAttempt.payment_method_details.card`
+  * Add support for `tax_breakdown` on `Tax.Calculation.shipping_cost` and `Tax.Transaction.shipping_cost`
+
 ## 12.2.0 - 2023-04-20
 * [#1759](https://github.com/stripe/stripe-node/pull/1759) Update generated code
   * Change `Checkout.Session.currency_conversion` to be required
