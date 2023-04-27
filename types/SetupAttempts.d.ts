@@ -187,12 +187,34 @@ declare module 'stripe' {
 
         interface Card {
           /**
+           * Check results by Card networks on Card address and CVC at time of payment.
+           */
+          checks: Card.Checks | null;
+
+          /**
            * Populated if this authorization used 3D Secure authentication.
            */
           three_d_secure: Card.ThreeDSecure | null;
         }
 
         namespace Card {
+          interface Checks {
+            /**
+             * If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             */
+            address_line1_check: string | null;
+
+            /**
+             * If a address postal code was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             */
+            address_postal_code_check: string | null;
+
+            /**
+             * If a CVC was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
+             */
+            cvc_check: string | null;
+          }
+
           interface ThreeDSecure {
             /**
              * For authenticated transactions: how the customer was authenticated by

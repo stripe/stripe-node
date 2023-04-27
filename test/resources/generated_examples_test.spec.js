@@ -10,13 +10,17 @@ describe('Accounts', function() {
   it('listExternalAccounts method', async function() {
     const externalAccount = await stripe.accounts.listExternalAccounts(
       'acct_xxxxxxxxxxxxx',
-      {limit: 3}
+      {
+        limit: 3,
+      }
     );
     expect(externalAccount).not.to.be.null;
   });
 
   it('list method', async function() {
-    const accounts = await stripe.accounts.list({limit: 3});
+    const accounts = await stripe.accounts.list({
+      limit: 3,
+    });
     expect(accounts).not.to.be.null;
   });
 
@@ -26,8 +30,12 @@ describe('Accounts', function() {
       country: 'US',
       email: 'jenny.rosen@example.com',
       capabilities: {
-        card_payments: {requested: true},
-        transfers: {requested: true},
+        card_payments: {
+          requested: true,
+        },
+        transfers: {
+          requested: true,
+        },
       },
     });
     expect(account).not.to.be.null;
@@ -45,7 +53,9 @@ describe('Accounts', function() {
 
   it('update method', async function() {
     const account = await stripe.accounts.update('acct_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(account).not.to.be.null;
   });
@@ -76,7 +86,9 @@ describe('Accounts', function() {
     const capability = await stripe.accounts.updateCapability(
       'acct_xxxxxxxxxxxxx',
       'card_payments',
-      {requested: true}
+      {
+        requested: true,
+      }
     );
     expect(capability).not.to.be.null;
   });
@@ -84,7 +96,9 @@ describe('Accounts', function() {
   it('createExternalAccount method', async function() {
     const externalAccount = await stripe.accounts.createExternalAccount(
       'acct_xxxxxxxxxxxxx',
-      {external_account: 'btok_xxxxxxxxxxxxx'}
+      {
+        external_account: 'btok_xxxxxxxxxxxxx',
+      }
     );
     expect(externalAccount).not.to.be.null;
   });
@@ -92,7 +106,9 @@ describe('Accounts', function() {
   it('createExternalAccount method', async function() {
     const externalAccount = await stripe.accounts.createExternalAccount(
       'acct_xxxxxxxxxxxxx',
-      {external_account: 'tok_xxxx_debit'}
+      {
+        external_account: 'tok_xxxx_debit',
+      }
     );
     expect(externalAccount).not.to.be.null;
   });
@@ -133,7 +149,11 @@ describe('Accounts', function() {
     const externalAccount = await stripe.accounts.updateExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(externalAccount).not.to.be.null;
   });
@@ -142,7 +162,11 @@ describe('Accounts', function() {
     const externalAccount = await stripe.accounts.updateExternalAccount(
       'acct_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(externalAccount).not.to.be.null;
   });
@@ -189,7 +213,11 @@ describe('Accounts', function() {
     const person = await stripe.accounts.updatePerson(
       'acct_xxxxxxxxxxxxx',
       'person_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(person).not.to.be.null;
   });
@@ -211,7 +239,9 @@ describe('Accounts', function() {
 describe('Apps.Secrets', function() {
   it('list method', async function() {
     const secrets = await stripe.apps.secrets.list({
-      scope: {type: 'account'},
+      scope: {
+        type: 'account',
+      },
       limit: 2,
     });
     expect(secrets).not.to.be.null;
@@ -221,7 +251,9 @@ describe('Apps.Secrets', function() {
     const secret = await stripe.apps.secrets.create({
       name: 'sec_123',
       payload: 'very secret string',
-      scope: {type: 'account'},
+      scope: {
+        type: 'account',
+      },
     });
     expect(secret).not.to.be.null;
   });
@@ -229,7 +261,9 @@ describe('Apps.Secrets', function() {
   it('deleteWhere method', async function() {
     const secret = await stripe.apps.secrets.deleteWhere({
       name: 'my-api-key',
-      scope: {type: 'account'},
+      scope: {
+        type: 'account',
+      },
     });
     expect(secret).not.to.be.null;
   });
@@ -237,14 +271,18 @@ describe('Apps.Secrets', function() {
   it('find method', async function() {
     const secret = await stripe.apps.secrets.find({
       name: 'sec_123',
-      scope: {type: 'account'},
+      scope: {
+        type: 'account',
+      },
     });
     expect(secret).not.to.be.null;
   });
 
   it('list method', async function() {
     const secrets = await stripe.apps.secrets.list({
-      scope: {type: 'account'},
+      scope: {
+        type: 'account',
+      },
       limit: 2,
     });
     expect(secrets).not.to.be.null;
@@ -254,7 +292,9 @@ describe('Apps.Secrets', function() {
     const secret = await stripe.apps.secrets.create({
       name: 'my-api-key',
       payload: 'secret_key_xxxxxx',
-      scope: {type: 'account'},
+      scope: {
+        type: 'account',
+      },
     });
     expect(secret).not.to.be.null;
   });
@@ -267,13 +307,21 @@ describe('Checkout.Sessions', function() {
       cancel_url: 'https://example.com/cancel',
       mode: 'payment',
       shipping_options: [
-        {shipping_rate: 'shr_standard'},
+        {
+          shipping_rate: 'shr_standard',
+        },
         {
           shipping_rate_data: {
             display_name: 'Standard',
             delivery_estimate: {
-              minimum: {unit: 'day', value: 5},
-              maximum: {unit: 'day', value: 7},
+              minimum: {
+                unit: 'day',
+                value: 5,
+              },
+              maximum: {
+                unit: 'day',
+                value: 7,
+              },
             },
           },
         },
@@ -293,14 +341,21 @@ describe('Checkout.Sessions', function() {
   });
 
   it('list method', async function() {
-    const sessions = await stripe.checkout.sessions.list({limit: 3});
+    const sessions = await stripe.checkout.sessions.list({
+      limit: 3,
+    });
     expect(sessions).not.to.be.null;
   });
 
   it('create method', async function() {
     const session = await stripe.checkout.sessions.create({
       success_url: 'https://example.com/success',
-      line_items: [{price: 'price_xxxxxxxxxxxxx', quantity: 2}],
+      line_items: [
+        {
+          price: 'price_xxxxxxxxxxxxx',
+          quantity: 2,
+        },
+      ],
       mode: 'payment',
     });
     expect(session).not.to.be.null;
@@ -329,7 +384,9 @@ describe('Customers', function() {
 
   it('updateCashBalance method', async function() {
     const cashBalance = await stripe.customers.updateCashBalance('cus_123', {
-      settings: {reconciliation_mode: 'manual'},
+      settings: {
+        reconciliation_mode: 'manual',
+      },
     });
     expect(cashBalance).not.to.be.null;
   });
@@ -352,7 +409,9 @@ describe('Customers', function() {
   it('listPaymentMethods method', async function() {
     const paymentMethods = await stripe.customers.listPaymentMethods(
       'cus_xyz',
-      {type: 'card'}
+      {
+        type: 'card',
+      }
     );
     expect(paymentMethods).not.to.be.null;
   });
@@ -365,12 +424,16 @@ describe('Customers', function() {
   });
 
   it('list method', async function() {
-    const customers = await stripe.customers.list({limit: 3});
+    const customers = await stripe.customers.list({
+      limit: 3,
+    });
     expect(customers).not.to.be.null;
   });
 
   it('list method', async function() {
-    const customers = await stripe.customers.list({limit: 3});
+    const customers = await stripe.customers.list({
+      limit: 3,
+    });
     expect(customers).not.to.be.null;
   });
 
@@ -394,7 +457,9 @@ describe('Customers', function() {
 
   it('update method', async function() {
     const customer = await stripe.customers.update('cus_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(customer).not.to.be.null;
   });
@@ -402,7 +467,9 @@ describe('Customers', function() {
   it('listBalanceTransactions method', async function() {
     const customerBalanceTransactions = await stripe.customers.listBalanceTransactions(
       'cus_xxxxxxxxxxxxx',
-      {limit: 3}
+      {
+        limit: 3,
+      }
     );
     expect(customerBalanceTransactions).not.to.be.null;
   });
@@ -410,7 +477,10 @@ describe('Customers', function() {
   it('createBalanceTransaction method', async function() {
     const customerBalanceTransaction = await stripe.customers.createBalanceTransaction(
       'cus_xxxxxxxxxxxxx',
-      {amount: -500, currency: 'usd'}
+      {
+        amount: -500,
+        currency: 'usd',
+      }
     );
     expect(customerBalanceTransaction).not.to.be.null;
   });
@@ -427,7 +497,11 @@ describe('Customers', function() {
     const customerBalanceTransaction = await stripe.customers.updateBalanceTransaction(
       'cus_xxxxxxxxxxxxx',
       'cbtxn_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(customerBalanceTransaction).not.to.be.null;
   });
@@ -435,7 +509,9 @@ describe('Customers', function() {
   it('listPaymentMethods method', async function() {
     const paymentMethods = await stripe.customers.listPaymentMethods(
       'cus_xxxxxxxxxxxxx',
-      {type: 'card'}
+      {
+        type: 'card',
+      }
     );
     expect(paymentMethods).not.to.be.null;
   });
@@ -443,7 +519,10 @@ describe('Customers', function() {
   it('listSources method', async function() {
     const paymentSource = await stripe.customers.listSources(
       'cus_xxxxxxxxxxxxx',
-      {object: 'bank_account', limit: 3}
+      {
+        object: 'bank_account',
+        limit: 3,
+      }
     );
     expect(paymentSource).not.to.be.null;
   });
@@ -451,7 +530,10 @@ describe('Customers', function() {
   it('listSources method', async function() {
     const paymentSource = await stripe.customers.listSources(
       'cus_xxxxxxxxxxxxx',
-      {object: 'card', limit: 3}
+      {
+        object: 'card',
+        limit: 3,
+      }
     );
     expect(paymentSource).not.to.be.null;
   });
@@ -459,7 +541,9 @@ describe('Customers', function() {
   it('createSource method', async function() {
     const paymentSource = await stripe.customers.createSource(
       'cus_xxxxxxxxxxxxx',
-      {source: 'btok_xxxxxxxxxxxxx'}
+      {
+        source: 'btok_xxxxxxxxxxxxx',
+      }
     );
     expect(paymentSource).not.to.be.null;
   });
@@ -467,7 +551,9 @@ describe('Customers', function() {
   it('createSource method', async function() {
     const paymentSource = await stripe.customers.createSource(
       'cus_xxxxxxxxxxxxx',
-      {source: 'tok_xxxx'}
+      {
+        source: 'tok_xxxx',
+      }
     );
     expect(paymentSource).not.to.be.null;
   });
@@ -508,7 +594,11 @@ describe('Customers', function() {
     const card = await stripe.customers.updateSource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(card).not.to.be.null;
   });
@@ -517,7 +607,9 @@ describe('Customers', function() {
     const card = await stripe.customers.updateSource(
       'cus_xxxxxxxxxxxxx',
       'card_xxxxxxxxxxxxx',
-      {name: 'Jenny Rosen'}
+      {
+        name: 'Jenny Rosen',
+      }
     );
     expect(card).not.to.be.null;
   });
@@ -526,7 +618,9 @@ describe('Customers', function() {
     const bankAccount = await stripe.customers.verifySource(
       'cus_xxxxxxxxxxxxx',
       'ba_xxxxxxxxxxxxx',
-      {amounts: [32, 45]}
+      {
+        amounts: [32, 45],
+      }
     );
     expect(bankAccount).not.to.be.null;
   });
@@ -600,7 +694,9 @@ describe('FinancialConnections.Accounts', function() {
   it('listOwners method', async function() {
     const accountOwners = await stripe.financialConnections.accounts.listOwners(
       'fca_xyz',
-      {ownership: 'fcaowns_xyz'}
+      {
+        ownership: 'fcaowns_xyz',
+      }
     );
     expect(accountOwners).not.to.be.null;
   });
@@ -608,14 +704,18 @@ describe('FinancialConnections.Accounts', function() {
   it('refresh method', async function() {
     const account = await stripe.financialConnections.accounts.refresh(
       'fca_xyz',
-      {features: ['balance']}
+      {
+        features: ['balance'],
+      }
     );
     expect(account).not.to.be.null;
   });
 
   it('list method', async function() {
     const accounts = await stripe.financialConnections.accounts.list({
-      account_holder: {customer: 'cus_xxxxxxxxxxxxx'},
+      account_holder: {
+        customer: 'cus_xxxxxxxxxxxxx',
+      },
     });
     expect(accounts).not.to.be.null;
   });
@@ -637,7 +737,10 @@ describe('FinancialConnections.Accounts', function() {
   it('listOwners method', async function() {
     const accountOwners = await stripe.financialConnections.accounts.listOwners(
       'fca_xxxxxxxxxxxxx',
-      {limit: 3, ownership: 'fcaowns_xxxxxxxxxxxxx'}
+      {
+        limit: 3,
+        ownership: 'fcaowns_xxxxxxxxxxxxx',
+      }
     );
     expect(accountOwners).not.to.be.null;
   });
@@ -646,7 +749,10 @@ describe('FinancialConnections.Accounts', function() {
 describe('FinancialConnections.Sessions', function() {
   it('create method', async function() {
     const session = await stripe.financialConnections.sessions.create({
-      account_holder: {type: 'customer', customer: 'cus_123'},
+      account_holder: {
+        type: 'customer',
+        customer: 'cus_123',
+      },
       permissions: ['balances'],
     });
     expect(session).not.to.be.null;
@@ -661,9 +767,14 @@ describe('FinancialConnections.Sessions', function() {
 
   it('create method', async function() {
     const session = await stripe.financialConnections.sessions.create({
-      account_holder: {type: 'customer', customer: 'cus_xxxxxxxxxxxxx'},
+      account_holder: {
+        type: 'customer',
+        customer: 'cus_xxxxxxxxxxxxx',
+      },
       permissions: ['payment_method', 'balances'],
-      filters: {countries: ['US']},
+      filters: {
+        countries: ['US'],
+      },
     });
     expect(session).not.to.be.null;
   });
@@ -685,7 +796,9 @@ describe('Invoices', function() {
   });
 
   it('list method', async function() {
-    const invoices = await stripe.invoices.list({limit: 3});
+    const invoices = await stripe.invoices.list({
+      limit: 3,
+    });
     expect(invoices).not.to.be.null;
   });
 
@@ -715,7 +828,9 @@ describe('Invoices', function() {
 
   it('update method', async function() {
     const invoice = await stripe.invoices.update('in_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(invoice).not.to.be.null;
   });
@@ -758,7 +873,9 @@ describe('PaymentIntents', function() {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 1099,
       currency: 'eur',
-      automatic_payment_methods: {enabled: true},
+      automatic_payment_methods: {
+        enabled: true,
+      },
     });
     expect(paymentIntent).not.to.be.null;
   });
@@ -771,7 +888,9 @@ describe('PaymentIntents', function() {
   });
 
   it('list method', async function() {
-    const paymentIntents = await stripe.paymentIntents.list({limit: 3});
+    const paymentIntents = await stripe.paymentIntents.list({
+      limit: 3,
+    });
     expect(paymentIntents).not.to.be.null;
   });
 
@@ -779,7 +898,9 @@ describe('PaymentIntents', function() {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 2000,
       currency: 'usd',
-      automatic_payment_methods: {enabled: true},
+      automatic_payment_methods: {
+        enabled: true,
+      },
     });
     expect(paymentIntent).not.to.be.null;
   });
@@ -794,7 +915,11 @@ describe('PaymentIntents', function() {
   it('update method', async function() {
     const paymentIntent = await stripe.paymentIntents.update(
       'pi_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(paymentIntent).not.to.be.null;
   });
@@ -823,7 +948,9 @@ describe('PaymentIntents', function() {
   it('confirm method', async function() {
     const paymentIntent = await stripe.paymentIntents.confirm(
       'pi_xxxxxxxxxxxxx',
-      {payment_method: 'pm_card_visa'}
+      {
+        payment_method: 'pm_card_visa',
+      }
     );
     expect(paymentIntent).not.to.be.null;
   });
@@ -831,7 +958,9 @@ describe('PaymentIntents', function() {
   it('incrementAuthorization method', async function() {
     const paymentIntent = await stripe.paymentIntents.incrementAuthorization(
       'pi_xxxxxxxxxxxxx',
-      {amount: 2099}
+      {
+        amount: 2099,
+      }
     );
     expect(paymentIntent).not.to.be.null;
   });
@@ -839,7 +968,9 @@ describe('PaymentIntents', function() {
   it('verifyMicrodeposits method', async function() {
     const paymentIntent = await stripe.paymentIntents.verifyMicrodeposits(
       'pi_xxxxxxxxxxxxx',
-      {amounts: [32, 45]}
+      {
+        amounts: [32, 45],
+      }
     );
     expect(paymentIntent).not.to.be.null;
   });
@@ -855,7 +986,12 @@ describe('PaymentIntents', function() {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: 200,
       currency: 'usd',
-      payment_method_data: {type: 'p24', p24: {bank: 'blik'}},
+      payment_method_data: {
+        type: 'p24',
+        p24: {
+          bank: 'blik',
+        },
+      },
     });
     expect(paymentIntent).not.to.be.null;
   });
@@ -864,7 +1000,12 @@ describe('PaymentIntents', function() {
 describe('PaymentLinks', function() {
   it('create method', async function() {
     const paymentLink = await stripe.paymentLinks.create({
-      line_items: [{price: 'price_xxxxxxxxxxxxx', quantity: 1}],
+      line_items: [
+        {
+          price: 'price_xxxxxxxxxxxxx',
+          quantity: 1,
+        },
+      ],
     });
     expect(paymentLink).not.to.be.null;
   });
@@ -880,13 +1021,20 @@ describe('PaymentLinks', function() {
   });
 
   it('list method', async function() {
-    const paymentLinks = await stripe.paymentLinks.list({limit: 3});
+    const paymentLinks = await stripe.paymentLinks.list({
+      limit: 3,
+    });
     expect(paymentLinks).not.to.be.null;
   });
 
   it('create method', async function() {
     const paymentLink = await stripe.paymentLinks.create({
-      line_items: [{price: 'price_xxxxxxxxxxxxx', quantity: 1}],
+      line_items: [
+        {
+          price: 'price_xxxxxxxxxxxxx',
+          quantity: 1,
+        },
+      ],
     });
     expect(paymentLink).not.to.be.null;
   });
@@ -901,7 +1049,9 @@ describe('PaymentLinks', function() {
   it('update method', async function() {
     const paymentLink = await stripe.paymentLinks.update(
       'plink_xxxxxxxxxxxxx',
-      {active: false}
+      {
+        active: false,
+      }
     );
     expect(paymentLink).not.to.be.null;
   });
@@ -913,17 +1063,25 @@ describe('Prices', function() {
       unit_amount: 2000,
       currency: 'usd',
       currency_options: {
-        uah: {unit_amount: 5000},
-        eur: {unit_amount: 1800},
+        uah: {
+          unit_amount: 5000,
+        },
+        eur: {
+          unit_amount: 1800,
+        },
       },
-      recurring: {interval: 'month'},
+      recurring: {
+        interval: 'month',
+      },
       product: 'prod_xxxxxxxxxxxxx',
     });
     expect(price).not.to.be.null;
   });
 
   it('list method', async function() {
-    const prices = await stripe.prices.list({limit: 3});
+    const prices = await stripe.prices.list({
+      limit: 3,
+    });
     expect(prices).not.to.be.null;
   });
 
@@ -931,7 +1089,9 @@ describe('Prices', function() {
     const price = await stripe.prices.create({
       unit_amount: 2000,
       currency: 'usd',
-      recurring: {interval: 'month'},
+      recurring: {
+        interval: 'month',
+      },
       product: 'prod_xxxxxxxxxxxxx',
     });
     expect(price).not.to.be.null;
@@ -944,7 +1104,9 @@ describe('Prices', function() {
 
   it('update method', async function() {
     const price = await stripe.prices.update('price_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(price).not.to.be.null;
   });
@@ -976,7 +1138,9 @@ describe('SetupIntents', function() {
   });
 
   it('list method', async function() {
-    const setupIntents = await stripe.setupIntents.list({limit: 3});
+    const setupIntents = await stripe.setupIntents.list({
+      limit: 3,
+    });
     expect(setupIntents).not.to.be.null;
   });
 
@@ -996,7 +1160,9 @@ describe('SetupIntents', function() {
 
   it('update method', async function() {
     const setupIntent = await stripe.setupIntents.update('seti_xxxxxxxxxxxxx', {
-      metadata: {user_id: '3435453'},
+      metadata: {
+        user_id: '3435453',
+      },
     });
     expect(setupIntent).not.to.be.null;
   });
@@ -1009,7 +1175,9 @@ describe('SetupIntents', function() {
   it('confirm method', async function() {
     const setupIntent = await stripe.setupIntents.confirm(
       'seti_xxxxxxxxxxxxx',
-      {payment_method: 'pm_card_visa'}
+      {
+        payment_method: 'pm_card_visa',
+      }
     );
     expect(setupIntent).not.to.be.null;
   });
@@ -1017,7 +1185,9 @@ describe('SetupIntents', function() {
   it('verifyMicrodeposits method', async function() {
     const setupIntent = await stripe.setupIntents.verifyMicrodeposits(
       'seti_xxxxxxxxxxxxx',
-      {amounts: [32, 45]}
+      {
+        amounts: [32, 45],
+      }
     );
     expect(setupIntent).not.to.be.null;
   });
@@ -1032,14 +1202,19 @@ describe('ShippingRates', function() {
   it('create method', async function() {
     const shippingRate = await stripe.shippingRates.create({
       display_name: 'Sample Shipper',
-      fixed_amount: {currency: 'usd', amount: 400},
+      fixed_amount: {
+        currency: 'usd',
+        amount: 400,
+      },
       type: 'fixed_amount',
     });
     expect(shippingRate).not.to.be.null;
   });
 
   it('list method', async function() {
-    const shippingRates = await stripe.shippingRates.list({limit: 3});
+    const shippingRates = await stripe.shippingRates.list({
+      limit: 3,
+    });
     expect(shippingRates).not.to.be.null;
   });
 
@@ -1047,7 +1222,10 @@ describe('ShippingRates', function() {
     const shippingRate = await stripe.shippingRates.create({
       display_name: 'Ground shipping',
       type: 'fixed_amount',
-      fixed_amount: {amount: 500, currency: 'usd'},
+      fixed_amount: {
+        amount: 500,
+        currency: 'usd',
+      },
     });
     expect(shippingRate).not.to.be.null;
   });
@@ -1062,7 +1240,11 @@ describe('ShippingRates', function() {
   it('update method', async function() {
     const shippingRate = await stripe.shippingRates.update(
       'shr_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(shippingRate).not.to.be.null;
   });
@@ -1094,7 +1276,13 @@ describe('Terminal.Configurations', function() {
   it('update method', async function() {
     const configuration = await stripe.terminal.configurations.update(
       'uc_123',
-      {tipping: {usd: {fixed_amounts: [10]}}}
+      {
+        tipping: {
+          usd: {
+            fixed_amounts: [10],
+          },
+        },
+      }
     );
     expect(configuration).not.to.be.null;
   });
@@ -1108,7 +1296,9 @@ describe('Terminal.Configurations', function() {
 
   it('create method', async function() {
     const configuration = await stripe.terminal.configurations.create({
-      bbpos_wisepos_e: {splashscreen: 'file_xxxxxxxxxxxxx'},
+      bbpos_wisepos_e: {
+        splashscreen: 'file_xxxxxxxxxxxxx',
+      },
     });
     expect(configuration).not.to.be.null;
   });
@@ -1130,7 +1320,11 @@ describe('Terminal.Configurations', function() {
   it('update method', async function() {
     const configuration = await stripe.terminal.configurations.update(
       'tmc_xxxxxxxxxxxxx',
-      {bbpos_wisepos_e: {splashscreen: 'file_xxxxxxxxxxxxx'}}
+      {
+        bbpos_wisepos_e: {
+          splashscreen: 'file_xxxxxxxxxxxxx',
+        },
+      }
     );
     expect(configuration).not.to.be.null;
   });
@@ -1140,7 +1334,10 @@ describe('TestHelpers.Customers', function() {
   it('fundCashBalance method', async function() {
     const customerCashBalanceTransaction = await stripe.testHelpers.customers.fundCashBalance(
       'cus_123',
-      {amount: 30, currency: 'eur'}
+      {
+        amount: 30,
+        currency: 'eur',
+      }
     );
     expect(customerCashBalanceTransaction).not.to.be.null;
   });
@@ -1207,7 +1404,9 @@ describe('TestHelpers.TestClocks', function() {
   });
 
   it('list method', async function() {
-    const testClocks = await stripe.testHelpers.testClocks.list({limit: 3});
+    const testClocks = await stripe.testHelpers.testClocks.list({
+      limit: 3,
+    });
     expect(testClocks).not.to.be.null;
   });
 
@@ -1235,7 +1434,9 @@ describe('TestHelpers.TestClocks', function() {
   it('advance method', async function() {
     const testClock = await stripe.testHelpers.testClocks.advance(
       'clock_xxxxxxxxxxxxx',
-      {frozen_time: 1675552261}
+      {
+        frozen_time: 1675552261,
+      }
     );
     expect(testClock).not.to.be.null;
   });
@@ -1245,7 +1446,11 @@ describe('TestHelpers.Treasury.InboundTransfers', function() {
   it('fail method', async function() {
     const inboundTransfer = await stripe.testHelpers.treasury.inboundTransfers.fail(
       'ibt_123',
-      {failure_details: {code: 'account_closed'}}
+      {
+        failure_details: {
+          code: 'account_closed',
+        },
+      }
     );
     expect(inboundTransfer).not.to.be.null;
   });
@@ -1283,7 +1488,11 @@ describe('TestHelpers.Treasury.OutboundTransfers', function() {
   it('returnOutboundTransfer method', async function() {
     const outboundTransfer = await stripe.testHelpers.treasury.outboundTransfers.returnOutboundTransfer(
       'obt_123',
-      {returned_details: {code: 'account_closed'}}
+      {
+        returned_details: {
+          code: 'account_closed',
+        },
+      }
     );
     expect(outboundTransfer).not.to.be.null;
   });
@@ -1346,7 +1555,9 @@ describe('Tokens', function() {
 
   it('create method', async function() {
     const token = await stripe.tokens.create({
-      pii: {id_number: '000000000'},
+      pii: {
+        id_number: '000000000',
+      },
     });
     expect(token).not.to.be.null;
   });
@@ -1354,7 +1565,10 @@ describe('Tokens', function() {
   it('create method', async function() {
     const token = await stripe.tokens.create({
       account: {
-        individual: {first_name: 'Jane', last_name: 'Doe'},
+        individual: {
+          first_name: 'Jane',
+          last_name: 'Doe',
+        },
         tos_shown_and_accepted: true,
       },
     });
@@ -1366,14 +1580,20 @@ describe('Tokens', function() {
       person: {
         first_name: 'Jane',
         last_name: 'Doe',
-        relationship: {owner: true},
+        relationship: {
+          owner: true,
+        },
       },
     });
     expect(token).not.to.be.null;
   });
 
   it('create method', async function() {
-    const token = await stripe.tokens.create({cvc_update: {cvc: '123'}});
+    const token = await stripe.tokens.create({
+      cvc_update: {
+        cvc: '123',
+      },
+    });
     expect(token).not.to.be.null;
   });
 
@@ -1397,7 +1617,9 @@ describe('AccountLinks', function() {
 
 describe('ApplicationFees', function() {
   it('list method', async function() {
-    const applicationFees = await stripe.applicationFees.list({limit: 3});
+    const applicationFees = await stripe.applicationFees.list({
+      limit: 3,
+    });
     expect(applicationFees).not.to.be.null;
   });
 
@@ -1411,7 +1633,9 @@ describe('ApplicationFees', function() {
   it('listRefunds method', async function() {
     const feeRefunds = await stripe.applicationFees.listRefunds(
       'fee_xxxxxxxxxxxxx',
-      {limit: 3}
+      {
+        limit: 3,
+      }
     );
     expect(feeRefunds).not.to.be.null;
   });
@@ -1435,7 +1659,11 @@ describe('ApplicationFees', function() {
     const feeRefund = await stripe.applicationFees.updateRefund(
       'fee_xxxxxxxxxxxxx',
       'fr_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(feeRefund).not.to.be.null;
   });
@@ -1472,7 +1700,9 @@ describe('BillingPortal.Configurations', function() {
           allowed_updates: ['email', 'tax_id'],
           enabled: true,
         },
-        invoice_history: {enabled: true},
+        invoice_history: {
+          enabled: true,
+        },
       },
       business_profile: {
         privacy_policy_url: 'https://example.com/privacy',
@@ -1515,7 +1745,9 @@ describe('BillingPortal.Sessions', function() {
 
 describe('Charges', function() {
   it('list method', async function() {
-    const charges = await stripe.charges.list({limit: 3});
+    const charges = await stripe.charges.list({
+      limit: 3,
+    });
     expect(charges).not.to.be.null;
   });
 
@@ -1537,7 +1769,9 @@ describe('Charges', function() {
 
   it('update method', async function() {
     const charge = await stripe.charges.update('ch_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(charge).not.to.be.null;
   });
@@ -1557,7 +1791,9 @@ describe('Charges', function() {
 
 describe('CountrySpecs', function() {
   it('list method', async function() {
-    const countrySpecs = await stripe.countrySpecs.list({limit: 3});
+    const countrySpecs = await stripe.countrySpecs.list({
+      limit: 3,
+    });
     expect(countrySpecs).not.to.be.null;
   });
 
@@ -1569,7 +1805,9 @@ describe('CountrySpecs', function() {
 
 describe('Coupons', function() {
   it('list method', async function() {
-    const coupons = await stripe.coupons.list({limit: 3});
+    const coupons = await stripe.coupons.list({
+      limit: 3,
+    });
     expect(coupons).not.to.be.null;
   });
 
@@ -1594,7 +1832,9 @@ describe('Coupons', function() {
 
   it('update method', async function() {
     const coupon = await stripe.coupons.update('Z4OV52SU', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(coupon).not.to.be.null;
   });
@@ -1602,7 +1842,9 @@ describe('Coupons', function() {
 
 describe('CreditNotes', function() {
   it('list method', async function() {
-    const creditNotes = await stripe.creditNotes.list({limit: 3});
+    const creditNotes = await stripe.creditNotes.list({
+      limit: 3,
+    });
     expect(creditNotes).not.to.be.null;
   });
 
@@ -1630,7 +1872,9 @@ describe('CreditNotes', function() {
   it('listLineItems method', async function() {
     const creditNoteLineItems = await stripe.creditNotes.listLineItems(
       'cn_xxxxxxxxxxxxx',
-      {limit: 3}
+      {
+        limit: 3,
+      }
     );
     expect(creditNoteLineItems).not.to.be.null;
   });
@@ -1652,7 +1896,9 @@ describe('CreditNotes', function() {
 
 describe('Disputes', function() {
   it('list method', async function() {
-    const disputes = await stripe.disputes.list({limit: 3});
+    const disputes = await stripe.disputes.list({
+      limit: 3,
+    });
     expect(disputes).not.to.be.null;
   });
 
@@ -1663,7 +1909,9 @@ describe('Disputes', function() {
 
   it('update method', async function() {
     const dispute = await stripe.disputes.update('dp_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(dispute).not.to.be.null;
   });
@@ -1676,7 +1924,9 @@ describe('Disputes', function() {
 
 describe('Events', function() {
   it('list method', async function() {
-    const events = await stripe.events.list({limit: 3});
+    const events = await stripe.events.list({
+      limit: 3,
+    });
     expect(events).not.to.be.null;
   });
 
@@ -1688,7 +1938,9 @@ describe('Events', function() {
 
 describe('FileLinks', function() {
   it('list method', async function() {
-    const fileLinks = await stripe.fileLinks.list({limit: 3});
+    const fileLinks = await stripe.fileLinks.list({
+      limit: 3,
+    });
     expect(fileLinks).not.to.be.null;
   });
 
@@ -1706,7 +1958,9 @@ describe('FileLinks', function() {
 
   it('update method', async function() {
     const fileLink = await stripe.fileLinks.update('link_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(fileLink).not.to.be.null;
   });
@@ -1731,14 +1985,18 @@ describe('Identity.VerificationReports', function() {
 describe('Identity.VerificationSessions', function() {
   it('list method', async function() {
     const verificationSessions = await stripe.identity.verificationSessions.list(
-      {limit: 3}
+      {
+        limit: 3,
+      }
     );
     expect(verificationSessions).not.to.be.null;
   });
 
   it('create method', async function() {
     const verificationSession = await stripe.identity.verificationSessions.create(
-      {type: 'document'}
+      {
+        type: 'document',
+      }
     );
     expect(verificationSession).not.to.be.null;
   });
@@ -1753,7 +2011,9 @@ describe('Identity.VerificationSessions', function() {
   it('update method', async function() {
     const verificationSession = await stripe.identity.verificationSessions.update(
       'vs_xxxxxxxxxxxxx',
-      {type: 'id_number'}
+      {
+        type: 'id_number',
+      }
     );
     expect(verificationSession).not.to.be.null;
   });
@@ -1775,7 +2035,9 @@ describe('Identity.VerificationSessions', function() {
 
 describe('InvoiceItems', function() {
   it('list method', async function() {
-    const invoiceItems = await stripe.invoiceItems.list({limit: 3});
+    const invoiceItems = await stripe.invoiceItems.list({
+      limit: 3,
+    });
     expect(invoiceItems).not.to.be.null;
   });
 
@@ -1799,7 +2061,9 @@ describe('InvoiceItems', function() {
 
   it('update method', async function() {
     const invoiceItem = await stripe.invoiceItems.update('ii_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(invoiceItem).not.to.be.null;
   });
@@ -1823,7 +2087,11 @@ describe('Issuing.Authorizations', function() {
   it('update method', async function() {
     const authorization = await stripe.issuing.authorizations.update(
       'iauth_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(authorization).not.to.be.null;
   });
@@ -1845,7 +2113,9 @@ describe('Issuing.Authorizations', function() {
 
 describe('Issuing.Cardholders', function() {
   it('list method', async function() {
-    const cardholders = await stripe.issuing.cardholders.list({limit: 3});
+    const cardholders = await stripe.issuing.cardholders.list({
+      limit: 3,
+    });
     expect(cardholders).not.to.be.null;
   });
 
@@ -1878,7 +2148,11 @@ describe('Issuing.Cardholders', function() {
   it('update method', async function() {
     const cardholder = await stripe.issuing.cardholders.update(
       'ich_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(cardholder).not.to.be.null;
   });
@@ -1886,7 +2160,9 @@ describe('Issuing.Cardholders', function() {
 
 describe('Issuing.Cards', function() {
   it('list method', async function() {
-    const cards = await stripe.issuing.cards.list({limit: 3});
+    const cards = await stripe.issuing.cards.list({
+      limit: 3,
+    });
     expect(cards).not.to.be.null;
   });
 
@@ -1906,7 +2182,9 @@ describe('Issuing.Cards', function() {
 
   it('update method', async function() {
     const card = await stripe.issuing.cards.update('ic_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(card).not.to.be.null;
   });
@@ -1914,7 +2192,9 @@ describe('Issuing.Cards', function() {
 
 describe('Issuing.Disputes', function() {
   it('list method', async function() {
-    const disputes = await stripe.issuing.disputes.list({limit: 3});
+    const disputes = await stripe.issuing.disputes.list({
+      limit: 3,
+    });
     expect(disputes).not.to.be.null;
   });
 
@@ -1923,7 +2203,9 @@ describe('Issuing.Disputes', function() {
       transaction: 'ipi_xxxxxxxxxxxxx',
       evidence: {
         reason: 'fraudulent',
-        fraudulent: {explanation: 'Purchase was unrecognized.'},
+        fraudulent: {
+          explanation: 'Purchase was unrecognized.',
+        },
       },
     });
     expect(dispute).not.to.be.null;
@@ -1942,7 +2224,9 @@ describe('Issuing.Disputes', function() {
 
 describe('Issuing.Transactions', function() {
   it('list method', async function() {
-    const transactions = await stripe.issuing.transactions.list({limit: 3});
+    const transactions = await stripe.issuing.transactions.list({
+      limit: 3,
+    });
     expect(transactions).not.to.be.null;
   });
 
@@ -1956,7 +2240,11 @@ describe('Issuing.Transactions', function() {
   it('update method', async function() {
     const transaction = await stripe.issuing.transactions.update(
       'ipi_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(transaction).not.to.be.null;
   });
@@ -2001,7 +2289,11 @@ describe('PaymentMethods', function() {
   it('update method', async function() {
     const paymentMethod = await stripe.paymentMethods.update(
       'pm_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(paymentMethod).not.to.be.null;
   });
@@ -2009,7 +2301,9 @@ describe('PaymentMethods', function() {
   it('attach method', async function() {
     const paymentMethod = await stripe.paymentMethods.attach(
       'pm_xxxxxxxxxxxxx',
-      {customer: 'cus_xxxxxxxxxxxxx'}
+      {
+        customer: 'cus_xxxxxxxxxxxxx',
+      }
     );
     expect(paymentMethod).not.to.be.null;
   });
@@ -2024,7 +2318,9 @@ describe('PaymentMethods', function() {
 
 describe('Payouts', function() {
   it('list method', async function() {
-    const payouts = await stripe.payouts.list({limit: 3});
+    const payouts = await stripe.payouts.list({
+      limit: 3,
+    });
     expect(payouts).not.to.be.null;
   });
 
@@ -2043,7 +2339,9 @@ describe('Payouts', function() {
 
   it('update method', async function() {
     const payout = await stripe.payouts.update('po_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(payout).not.to.be.null;
   });
@@ -2061,7 +2359,9 @@ describe('Payouts', function() {
 
 describe('Plans', function() {
   it('list method', async function() {
-    const plans = await stripe.plans.list({limit: 3});
+    const plans = await stripe.plans.list({
+      limit: 3,
+    });
     expect(plans).not.to.be.null;
   });
 
@@ -2071,6 +2371,18 @@ describe('Plans', function() {
       currency: 'usd',
       interval: 'month',
       product: 'prod_xxxxxxxxxxxxx',
+    });
+    expect(plan).not.to.be.null;
+  });
+
+  it('create method', async function() {
+    const plan = await stripe.plans.create({
+      amount: 2000,
+      currency: 'usd',
+      interval: 'month',
+      product: {
+        name: 'My product',
+      },
     });
     expect(plan).not.to.be.null;
   });
@@ -2087,7 +2399,9 @@ describe('Plans', function() {
 
   it('update method', async function() {
     const plan = await stripe.plans.update('price_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(plan).not.to.be.null;
   });
@@ -2095,12 +2409,16 @@ describe('Plans', function() {
 
 describe('Products', function() {
   it('list method', async function() {
-    const products = await stripe.products.list({limit: 3});
+    const products = await stripe.products.list({
+      limit: 3,
+    });
     expect(products).not.to.be.null;
   });
 
   it('create method', async function() {
-    const product = await stripe.products.create({name: 'Gold Special'});
+    const product = await stripe.products.create({
+      name: 'Gold Special',
+    });
     expect(product).not.to.be.null;
   });
 
@@ -2116,7 +2434,9 @@ describe('Products', function() {
 
   it('update method', async function() {
     const product = await stripe.products.update('prod_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(product).not.to.be.null;
   });
@@ -2131,7 +2451,9 @@ describe('Products', function() {
 
 describe('PromotionCodes', function() {
   it('list method', async function() {
-    const promotionCodes = await stripe.promotionCodes.list({limit: 3});
+    const promotionCodes = await stripe.promotionCodes.list({
+      limit: 3,
+    });
     expect(promotionCodes).not.to.be.null;
   });
 
@@ -2152,7 +2474,11 @@ describe('PromotionCodes', function() {
   it('update method', async function() {
     const promotionCode = await stripe.promotionCodes.update(
       'promo_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(promotionCode).not.to.be.null;
   });
@@ -2160,14 +2486,21 @@ describe('PromotionCodes', function() {
 
 describe('Quotes', function() {
   it('list method', async function() {
-    const quotes = await stripe.quotes.list({limit: 3});
+    const quotes = await stripe.quotes.list({
+      limit: 3,
+    });
     expect(quotes).not.to.be.null;
   });
 
   it('create method', async function() {
     const quote = await stripe.quotes.create({
       customer: 'cus_xxxxxxxxxxxxx',
-      line_items: [{price: 'price_xxxxxxxxxxxxx', quantity: 2}],
+      line_items: [
+        {
+          price: 'price_xxxxxxxxxxxxx',
+          quantity: 2,
+        },
+      ],
     });
     expect(quote).not.to.be.null;
   });
@@ -2179,7 +2512,9 @@ describe('Quotes', function() {
 
   it('update method', async function() {
     const quote = await stripe.quotes.update('qt_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(quote).not.to.be.null;
   });
@@ -2248,7 +2583,9 @@ describe('Radar.ValueListItems', function() {
 
 describe('Radar.ValueLists', function() {
   it('list method', async function() {
-    const valueLists = await stripe.radar.valueLists.list({limit: 3});
+    const valueLists = await stripe.radar.valueLists.list({
+      limit: 3,
+    });
     expect(valueLists).not.to.be.null;
   });
 
@@ -2276,7 +2613,9 @@ describe('Radar.ValueLists', function() {
   it('update method', async function() {
     const valueList = await stripe.radar.valueLists.update(
       'rsl_xxxxxxxxxxxxx',
-      {name: 'Updated IP Block List'}
+      {
+        name: 'Updated IP Block List',
+      }
     );
     expect(valueList).not.to.be.null;
   });
@@ -2284,7 +2623,9 @@ describe('Radar.ValueLists', function() {
 
 describe('Refunds', function() {
   it('list method', async function() {
-    const refunds = await stripe.refunds.list({limit: 3});
+    const refunds = await stripe.refunds.list({
+      limit: 3,
+    });
     expect(refunds).not.to.be.null;
   });
 
@@ -2302,7 +2643,9 @@ describe('Refunds', function() {
 
   it('update method', async function() {
     const refund = await stripe.refunds.update('re_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(refund).not.to.be.null;
   });
@@ -2315,14 +2658,19 @@ describe('Refunds', function() {
 
 describe('Reporting.ReportRuns', function() {
   it('list method', async function() {
-    const reportRuns = await stripe.reporting.reportRuns.list({limit: 3});
+    const reportRuns = await stripe.reporting.reportRuns.list({
+      limit: 3,
+    });
     expect(reportRuns).not.to.be.null;
   });
 
   it('create method', async function() {
     const reportRun = await stripe.reporting.reportRuns.create({
       report_type: 'balance.summary.1',
-      parameters: {interval_start: 1522540800, interval_end: 1525132800},
+      parameters: {
+        interval_start: 1522540800,
+        interval_end: 1525132800,
+      },
     });
     expect(reportRun).not.to.be.null;
   });
@@ -2351,7 +2699,9 @@ describe('Reporting.ReportTypes', function() {
 
 describe('Reviews', function() {
   it('list method', async function() {
-    const reviews = await stripe.reviews.list({limit: 3});
+    const reviews = await stripe.reviews.list({
+      limit: 3,
+    });
     expect(reviews).not.to.be.null;
   });
 
@@ -2395,7 +2745,9 @@ describe('Sources', function() {
 
   it('update method', async function() {
     const source = await stripe.sources.update('src_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(source).not.to.be.null;
   });
@@ -2433,7 +2785,11 @@ describe('SubscriptionItems', function() {
   it('update method', async function() {
     const subscriptionItem = await stripe.subscriptionItems.update(
       'si_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(subscriptionItem).not.to.be.null;
   });
@@ -2441,7 +2797,9 @@ describe('SubscriptionItems', function() {
   it('listUsageRecordSummaries method', async function() {
     const usageRecordSummaries = await stripe.subscriptionItems.listUsageRecordSummaries(
       'si_xxxxxxxxxxxxx',
-      {limit: 3}
+      {
+        limit: 3,
+      }
     );
     expect(usageRecordSummaries).not.to.be.null;
   });
@@ -2449,7 +2807,10 @@ describe('SubscriptionItems', function() {
   it('createUsageRecord method', async function() {
     const usageRecord = await stripe.subscriptionItems.createUsageRecord(
       'si_xxxxxxxxxxxxx',
-      {quantity: 100, timestamp: 1571252444}
+      {
+        quantity: 100,
+        timestamp: 1571252444,
+      }
     );
     expect(usageRecord).not.to.be.null;
   });
@@ -2470,7 +2831,12 @@ describe('SubscriptionSchedules', function() {
       end_behavior: 'release',
       phases: [
         {
-          items: [{price: 'price_xxxxxxxxxxxxx', quantity: 1}],
+          items: [
+            {
+              price: 'price_xxxxxxxxxxxxx',
+              quantity: 1,
+            },
+          ],
           iterations: 12,
         },
       ],
@@ -2488,7 +2854,9 @@ describe('SubscriptionSchedules', function() {
   it('update method', async function() {
     const subscriptionSchedule = await stripe.subscriptionSchedules.update(
       'sub_sched_xxxxxxxxxxxxx',
-      {end_behavior: 'release'}
+      {
+        end_behavior: 'release',
+      }
     );
     expect(subscriptionSchedule).not.to.be.null;
   });
@@ -2510,14 +2878,20 @@ describe('SubscriptionSchedules', function() {
 
 describe('Subscriptions', function() {
   it('list method', async function() {
-    const subscriptions = await stripe.subscriptions.list({limit: 3});
+    const subscriptions = await stripe.subscriptions.list({
+      limit: 3,
+    });
     expect(subscriptions).not.to.be.null;
   });
 
   it('create method', async function() {
     const subscription = await stripe.subscriptions.create({
       customer: 'cus_xxxxxxxxxxxxx',
-      items: [{price: 'price_xxxxxxxxxxxxx'}],
+      items: [
+        {
+          price: 'price_xxxxxxxxxxxxx',
+        },
+      ],
     });
     expect(subscription).not.to.be.null;
   });
@@ -2537,7 +2911,11 @@ describe('Subscriptions', function() {
   it('update method', async function() {
     const subscription = await stripe.subscriptions.update(
       'sub_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(subscription).not.to.be.null;
   });
@@ -2552,7 +2930,9 @@ describe('Subscriptions', function() {
 
 describe('TaxCodes', function() {
   it('list method', async function() {
-    const taxCodes = await stripe.taxCodes.list({limit: 3});
+    const taxCodes = await stripe.taxCodes.list({
+      limit: 3,
+    });
     expect(taxCodes).not.to.be.null;
   });
 
@@ -2564,7 +2944,9 @@ describe('TaxCodes', function() {
 
 describe('TaxRates', function() {
   it('list method', async function() {
-    const taxRates = await stripe.taxRates.list({limit: 3});
+    const taxRates = await stripe.taxRates.list({
+      limit: 3,
+    });
     expect(taxRates).not.to.be.null;
   });
 
@@ -2601,7 +2983,9 @@ describe('Terminal.ConnectionTokens', function() {
 
 describe('Terminal.Locations', function() {
   it('list method', async function() {
-    const locations = await stripe.terminal.locations.list({limit: 3});
+    const locations = await stripe.terminal.locations.list({
+      limit: 3,
+    });
     expect(locations).not.to.be.null;
   });
 
@@ -2634,7 +3018,9 @@ describe('Terminal.Locations', function() {
   it('update method', async function() {
     const location = await stripe.terminal.locations.update(
       'tml_xxxxxxxxxxxxx',
-      {display_name: 'My First Store'}
+      {
+        display_name: 'My First Store',
+      }
     );
     expect(location).not.to.be.null;
   });
@@ -2642,7 +3028,9 @@ describe('Terminal.Locations', function() {
 
 describe('Terminal.Readers', function() {
   it('list method', async function() {
-    const readers = await stripe.terminal.readers.list({limit: 3});
+    const readers = await stripe.terminal.readers.list({
+      limit: 3,
+    });
     expect(readers).not.to.be.null;
   });
 
@@ -2682,7 +3070,9 @@ describe('Terminal.Readers', function() {
   it('processPaymentIntent method', async function() {
     const reader = await stripe.terminal.readers.processPaymentIntent(
       'tmr_xxxxxxxxxxxxx',
-      {payment_intent: 'pi_xxxxxxxxxxxxx'}
+      {
+        payment_intent: 'pi_xxxxxxxxxxxxx',
+      }
     );
     expect(reader).not.to.be.null;
   });
@@ -2690,7 +3080,10 @@ describe('Terminal.Readers', function() {
   it('processSetupIntent method', async function() {
     const reader = await stripe.terminal.readers.processSetupIntent(
       'tmr_xxxxxxxxxxxxx',
-      {setup_intent: 'seti_xxxxxxxxxxxxx', customer_consent_collected: true}
+      {
+        setup_intent: 'seti_xxxxxxxxxxxxx',
+        customer_consent_collected: true,
+      }
     );
     expect(reader).not.to.be.null;
   });
@@ -2698,7 +3091,9 @@ describe('Terminal.Readers', function() {
 
 describe('Topups', function() {
   it('list method', async function() {
-    const topups = await stripe.topups.list({limit: 3});
+    const topups = await stripe.topups.list({
+      limit: 3,
+    });
     expect(topups).not.to.be.null;
   });
 
@@ -2719,7 +3114,9 @@ describe('Topups', function() {
 
   it('update method', async function() {
     const topup = await stripe.topups.update('tu_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(topup).not.to.be.null;
   });
@@ -2732,7 +3129,9 @@ describe('Topups', function() {
 
 describe('Transfers', function() {
   it('list method', async function() {
-    const transfers = await stripe.transfers.list({limit: 3});
+    const transfers = await stripe.transfers.list({
+      limit: 3,
+    });
     expect(transfers).not.to.be.null;
   });
 
@@ -2753,7 +3152,9 @@ describe('Transfers', function() {
 
   it('update method', async function() {
     const transfer = await stripe.transfers.update('tr_xxxxxxxxxxxxx', {
-      metadata: {order_id: '6735'},
+      metadata: {
+        order_id: '6735',
+      },
     });
     expect(transfer).not.to.be.null;
   });
@@ -2761,7 +3162,9 @@ describe('Transfers', function() {
   it('listReversals method', async function() {
     const transferReversals = await stripe.transfers.listReversals(
       'tr_xxxxxxxxxxxxx',
-      {limit: 3}
+      {
+        limit: 3,
+      }
     );
     expect(transferReversals).not.to.be.null;
   });
@@ -2769,7 +3172,9 @@ describe('Transfers', function() {
   it('createReversal method', async function() {
     const transferReversal = await stripe.transfers.createReversal(
       'tr_xxxxxxxxxxxxx',
-      {amount: 100}
+      {
+        amount: 100,
+      }
     );
     expect(transferReversal).not.to.be.null;
   });
@@ -2786,7 +3191,11 @@ describe('Transfers', function() {
     const transferReversal = await stripe.transfers.updateReversal(
       'tr_xxxxxxxxxxxxx',
       'trr_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(transferReversal).not.to.be.null;
   });
@@ -2866,7 +3275,11 @@ describe('Treasury.FinancialAccounts', function() {
   it('update method', async function() {
     const financialAccount = await stripe.treasury.financialAccounts.update(
       'fa_xxxxxxxxxxxxx',
-      {metadata: {order_id: '6735'}}
+      {
+        metadata: {
+          order_id: '6735',
+        },
+      }
     );
     expect(financialAccount).not.to.be.null;
   });
@@ -3055,7 +3468,9 @@ describe('Treasury.Transactions', function() {
 
 describe('WebhookEndpoints', function() {
   it('list method', async function() {
-    const webhookEndpoints = await stripe.webhookEndpoints.list({limit: 3});
+    const webhookEndpoints = await stripe.webhookEndpoints.list({
+      limit: 3,
+    });
     expect(webhookEndpoints).not.to.be.null;
   });
 
@@ -3082,7 +3497,9 @@ describe('WebhookEndpoints', function() {
   it('update method', async function() {
     const webhookEndpoint = await stripe.webhookEndpoints.update(
       'we_xxxxxxxxxxxxx',
-      {url: 'https://example.com/new_endpoint'}
+      {
+        url: 'https://example.com/new_endpoint',
+      }
     );
     expect(webhookEndpoint).not.to.be.null;
   });
