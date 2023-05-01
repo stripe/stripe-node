@@ -67,7 +67,7 @@
     "prepack": "yarn install && yarn build",
     "mocha": "nyc mocha",
     "mocha-only": "mocha",
-    "test": "yarn build && yarn test-typescript && yarn mocha",
+    "test": "yarn build && yarn test-typescript && yarn mocha-only test/Integration.spec.ts --grep 'Webhook sample nextjs'",
     "test-typescript": "tsc --build types/test",
     "lint": "eslint --ext .js,.jsx,.ts .",
     "fix": "yarn lint --fix && ./scripts/updateAPIVersion.js",

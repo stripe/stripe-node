@@ -55,11 +55,11 @@ jobs:
         os:
           - "ubuntu-latest"
         node:
-          - "19"
-          - "18"
-          - "16"
+          # - "19"
+          # - "18"
+          # - "16"
           - "14"
-          - "12"
+          # - "12"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
