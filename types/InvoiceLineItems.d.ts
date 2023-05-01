@@ -54,7 +54,7 @@ declare module 'stripe' {
       /**
        * The ID of the [invoice item](https://stripe.com/docs/api/invoiceitems) associated with this line item if any.
        */
-      invoice_item?: string;
+      invoice_item?: string | Stripe.InvoiceItem;
 
       /**
        * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
@@ -96,12 +96,12 @@ declare module 'stripe' {
       /**
        * The subscription that the invoice item pertains to, if any.
        */
-      subscription: string | null;
+      subscription: string | Stripe.Subscription | null;
 
       /**
        * The subscription item that generated this line item. Left empty if the line item is not an explicit result of a subscription.
        */
-      subscription_item?: string;
+      subscription_item?: string | Stripe.SubscriptionItem;
 
       /**
        * The amount of tax calculated per tax rate for this line item

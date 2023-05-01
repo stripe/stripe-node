@@ -1899,6 +1899,11 @@ declare module 'stripe' {
           application_fee_percent?: number;
 
           /**
+           * A future timestamp to anchor the subscription's billing cycle for new subscriptions.
+           */
+          billing_cycle_anchor?: number;
+
+          /**
            * The ID of the coupon to apply to this subscription. A coupon applied to a subscription will only affect invoices created for that particular subscription.
            */
           coupon?: string;
@@ -1926,6 +1931,11 @@ declare module 'stripe' {
            * The account on behalf of which to charge, for each of the subscription's invoices.
            */
           on_behalf_of?: string;
+
+          /**
+           * Determines how to handle prorations resulting from the `billing_cycle_anchor`. If no value is passed, the default is `create_prorations`.
+           */
+          proration_behavior?: SubscriptionData.ProrationBehavior;
 
           /**
            * If specified, the funds from the subscription's invoices will be transferred to the destination and the ID of the resulting transfers will be found on the resulting charges.
@@ -1957,6 +1967,8 @@ declare module 'stripe' {
         }
 
         namespace SubscriptionData {
+          type ProrationBehavior = 'create_prorations' | 'none';
+
           interface TransferData {
             /**
              * A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
