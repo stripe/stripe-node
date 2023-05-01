@@ -227,7 +227,30 @@ describe('Webhooks', () => {
         );
       });
 
-      it('should raise a SignatureVerificationError when the timestamp is not within the tolerance', async () => {
+      it('should raise a SignatureVerificationError when the timestamp is not within the tolerance of the provided timestamp', async () => {
+        const someTime = 20000000;
+        const header = stripe.webhooks.generateTestHeaderString({
+          timestamp: someTime / 1000 - 15,
+          payload: EVENT_PAYLOAD_STRING,
+          secret: SECRET,
+        });
+
+        await expect(
+          verifyHeaderFn(
+            EVENT_PAYLOAD_STRING,
+            header,
+            SECRET,
+            10,
+            null,
+            someTime
+          )
+        ).to.be.rejectedWith(
+          StripeSignatureVerificationError,
+          /Timestamp outside the tolerance zone/
+        );
+      });
+
+      it('should raise a SignatureVerificationError when the timestamp is not within the tolerance of Date.now()', async () => {
         const header = stripe.webhooks.generateTestHeaderString({
           timestamp: Date.now() / 1000 - 15,
           payload: EVENT_PAYLOAD_STRING,
@@ -244,7 +267,7 @@ describe('Webhooks', () => {
 
       it(
         'should return true when the header contains a valid signature and ' +
-          'the timestamp is within the tolerance',
+          'the timestamp is within the tolerance of Date.now()',
         async () => {
           const header = stripe.webhooks.generateTestHeaderString({
             timestamp: Date.now() / 1000,
@@ -254,6 +277,30 @@ describe('Webhooks', () => {
 
           expect(
             await verifyHeaderFn(EVENT_PAYLOAD_STRING, header, SECRET, 10)
+          ).to.equal(true);
+        }
+      );
+
+      it(
+        'should return true when the header contains a valid signature and ' +
+          'the timestamp is within the tolerance of the provided timestamp',
+        async () => {
+          const someTime = 20000000;
+          const header = stripe.webhooks.generateTestHeaderString({
+            timestamp: someTime / 1000 - 9,
+            payload: EVENT_PAYLOAD_STRING,
+            secret: SECRET,
+          });
+
+          expect(
+            await verifyHeaderFn(
+              EVENT_PAYLOAD_STRING,
+              header,
+              SECRET,
+              10,
+              null,
+              someTime
+            )
           ).to.equal(true);
         }
       );
