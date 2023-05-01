@@ -638,31 +638,52 @@ describe('Stripe Module', function() {
   });
 
   describe('rawRequest', () => {
-    it('should make request with specified params', (done) => {
-      stripe.rawRequest(
-        'POST',
-        '/v1/customers',
-        {description: 'test customer'},
-        null,
-        (err, result) => {
-          if (err) {
-            return done(err);
-          }
-          expect(result).to.have.property('description', 'test customer');
-          done();
+    const returnedCustomer = {
+      id: 'cus_123',
+    };
+
+    it('should make request with specified encoding FORM', (done) => {
+      return testUtils.getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal(
+            'application/x-www-form-urlencoded'
+          );
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal('description=test%20customer');
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        (err, stripe, closeServer) => {
+          if (err) return done(err);
+          stripe.rawRequest(
+            'POST',
+            '/v1/customers',
+            {description: 'test customer'},
+            {encoding: 'form'},
+            (err, result) => {
+              if (err) return done(err);
+              expect(result).to.deep.equal(returnedCustomer);
+              closeServer();
+              done();
+            }
+          );
         }
       );
     });
 
-    it('should make request with request option encoding set to JSON', (done) => {
-      const returnedCustomer = {
-        id: 'cus_123',
-      };
-
+    it('should make request with specified encoding JSON', (done) => {
       return testUtils.getTestServerStripe(
         {},
         (req, res) => {
           expect(req.headers['content-type']).to.equal('application/json');
+          expect(req.headers.foo).to.equal('bar');
           const requestBody = [];
           req.on('data', (chunks) => {
             requestBody.push(chunks);
@@ -680,7 +701,69 @@ describe('Stripe Module', function() {
             'POST',
             '/v1/customers',
             {description: 'test customer'},
-            {encoding: 'json'},
+            {encoding: 'json', additionalHeaders: {foo: 'bar'}},
+            (err, result) => {
+              if (err) return done(err);
+              expect(result).to.deep.equal(returnedCustomer);
+              closeServer();
+              done();
+            }
+          );
+        }
+      );
+    });
+
+    it('defaults to form encoding request if not specified', (done) => {
+      return testUtils.getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal(
+            'application/x-www-form-urlencoded'
+          );
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal('description=test%20customer');
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        (err, stripe, closeServer) => {
+          if (err) return done(err);
+          stripe.rawRequest(
+            'POST',
+            '/v1/customers',
+            {description: 'test customer'},
+            null,
+            (err, result) => {
+              if (err) return done(err);
+              expect(result).to.deep.equal(returnedCustomer);
+              closeServer();
+              done();
+            }
+          );
+        }
+      );
+    });
+
+    it('should make request with specified additional headers', (done) => {
+      return testUtils.getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers.foo).to.equal('bar');
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        (err, stripe, closeServer) => {
+          if (err) return done(err);
+          stripe.rawRequest(
+            'GET',
+            '/v1/customers/cus_123',
+            {},
+            {additionalHeaders: {foo: 'bar'}},
             (err, result) => {
               if (err) return done(err);
               expect(result).to.deep.equal(returnedCustomer);

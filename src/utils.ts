@@ -17,6 +17,7 @@ const OPTIONS_KEYS = [
   'timeout',
   'host',
   'encoding',
+  'additionalHeaders',
 ];
 
 type Settings = {
@@ -187,6 +188,9 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
         }
 
         opts.encoding = params.encoding as Encoding;
+      }
+      if (params.additionalHeaders) {
+        opts.headers = params.additionalHeaders as Record<string, unknown>;
       }
     }
   }
