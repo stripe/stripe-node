@@ -224,8 +224,14 @@ export function createStripe(
         }),
       });
 
-      // @ts-ignore
-      const ret = new Resource(this).request(data, options, cb);
+      let ret;
+      if (typeof cb === 'function') {
+        // @ts-ignore
+        ret = new Resource(this).request(data, options, cb);
+      } else {
+        // @ts-ignore
+        ret = new Resource(this).request(data, options);
+      }
       return ret;
     },
 

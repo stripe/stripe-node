@@ -774,5 +774,16 @@ describe('Stripe Module', function() {
         }
       );
     });
+
+    it('should make request successfully', async () => {
+      const response = await stripe.rawRequest(
+        'GET',
+        '/v1/customers',
+        {},
+        {encoding: 'json'}
+      );
+
+      expect(response).to.have.property('object', 'list');
+    });
   });
 });
