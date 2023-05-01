@@ -187,14 +187,76 @@ declare module 'stripe' {
 
         interface Card {
           /**
-           * Check results by Card networks on Card address and CVC at time of payment.
+           * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           */
+          brand: string | null;
+
+          /**
+           * Check results by Card networks on Card address and CVC at the time of authorization
            */
           checks: Card.Checks | null;
+
+          /**
+           * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+           */
+          country: string | null;
+
+          /**
+           * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
+           */
+          description?: string | null;
+
+          /**
+           * Two-digit number representing the card's expiration month.
+           */
+          exp_month: number | null;
+
+          /**
+           * Four-digit number representing the card's expiration year.
+           */
+          exp_year: number | null;
+
+          /**
+           * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
+           *
+           * *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+           */
+          fingerprint?: string | null;
+
+          /**
+           * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+           */
+          funding: string | null;
+
+          /**
+           * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
+           */
+          iin?: string | null;
+
+          /**
+           * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
+           */
+          issuer?: string | null;
+
+          /**
+           * The last four digits of the card.
+           */
+          last4: string | null;
+
+          /**
+           * Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+           */
+          network: string | null;
 
           /**
            * Populated if this authorization used 3D Secure authentication.
            */
           three_d_secure: Card.ThreeDSecure | null;
+
+          /**
+           * If this Card is part of a card wallet, this contains the details of the card wallet.
+           */
+          wallet: Card.Wallet | null;
         }
 
         namespace Card {
@@ -260,6 +322,25 @@ declare module 'stripe' {
               | 'rejected';
 
             type Version = '1.0.2' | '2.1.0' | '2.2.0';
+          }
+
+          interface Wallet {
+            apple_pay?: Wallet.ApplePay;
+
+            google_pay?: Wallet.GooglePay;
+
+            /**
+             * The type of the card wallet, one of `apple_pay`, `google_pay`, or `link`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
+             */
+            type: Wallet.Type;
+          }
+
+          namespace Wallet {
+            interface ApplePay {}
+
+            interface GooglePay {}
+
+            type Type = 'apple_pay' | 'google_pay' | 'link';
           }
         }
 
