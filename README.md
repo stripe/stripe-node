@@ -522,6 +522,7 @@ stripe.rawRequest(
 ```
 
 Or using ES modules and `async`/`await`:
+
 ```javascript
 import Stripe from 'stripe';
 const stripe = new Stripe('sk_test_...');
