@@ -1,7 +1,11 @@
 import * as _Error from './Error.js';
 import * as apiVersion from './apiVersion.js';
 import * as resources from './resources.js';
-import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
+import {
+  HttpClient,
+  HttpClientResponse,
+  HttpClientResponseInterface,
+} from './net/HttpClient.js';
 import {
   determineProcessUserAgentProperties,
   pascalToCamelCase,
@@ -213,9 +217,9 @@ export function createStripe(
     rawRequest(
       method: string,
       fullPath: string,
-      data: RequestData,
-      options: RequestOptions,
-      cb: RequestCallback
+      params?: RequestData,
+      options?: RequestOptions,
+      callback?: RequestCallback // for testing
     ): Promise<any> {
       const Resource = Stripe.StripeResource.extend({
         request: Stripe.StripeResource.method({
@@ -225,12 +229,12 @@ export function createStripe(
       });
 
       let ret;
-      if (typeof cb === 'function') {
+      if (typeof callback === 'function') {
         // @ts-ignore
-        ret = new Resource(this).request(data, options, cb);
+        ret = new Resource(this).request(params, options, callback);
       } else {
         // @ts-ignore
-        ret = new Resource(this).request(data, options);
+        ret = new Resource(this).request(params, options);
       }
       return ret;
     },

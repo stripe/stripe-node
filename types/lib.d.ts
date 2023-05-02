@@ -151,6 +151,18 @@ declare module 'stripe' {
       host?: string;
     }
 
+    export type RawRequestOptions = RequestOptions & {
+      /**
+       * Specify encoding for the request body. This is an experimental interface and is not yet stable.
+       */
+      encoding?: 'form' | 'json';
+
+      /**
+       * Specify additional request headers. This is an experimental interface and is not yet stable.
+       */
+      additionalHeaders?: {[headerName: string]: string};
+    };
+
     export type Response<T> = T & {
       lastResponse: {
         headers: {[key: string]: string};
