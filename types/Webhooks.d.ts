@@ -36,7 +36,12 @@ declare module 'stripe' {
         /**
          * Optional CryptoProvider to use for computing HMAC signatures.
          */
-        cryptoProvider?: CryptoProvider
+        cryptoProvider?: CryptoProvider,
+
+        /**
+         * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
+         */
+        receivedAt?: number
       ): Stripe.Event;
 
       /**
@@ -73,7 +78,12 @@ declare module 'stripe' {
         /**
          * Optional CryptoProvider to use for computing HMAC signatures.
          */
-        cryptoProvider?: CryptoProvider
+        cryptoProvider?: CryptoProvider,
+
+        /**
+         * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
+         */
+        receivedAt?: number
       ): Promise<Stripe.Event>;
 
       /**
