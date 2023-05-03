@@ -228,9 +228,9 @@ describe('Webhooks', () => {
       });
 
       it('should raise a SignatureVerificationError when the timestamp is not within the tolerance of the provided timestamp', async () => {
-        const someTime = 20000000;
+        const receivedAt = 20000000;
         const header = stripe.webhooks.generateTestHeaderString({
-          timestamp: someTime / 1000 - 15,
+          timestamp: receivedAt / 1000 - 15,
           payload: EVENT_PAYLOAD_STRING,
           secret: SECRET,
         });
@@ -242,7 +242,7 @@ describe('Webhooks', () => {
             SECRET,
             10,
             null,
-            someTime
+            receivedAt
           )
         ).to.be.rejectedWith(
           StripeSignatureVerificationError,
@@ -285,9 +285,9 @@ describe('Webhooks', () => {
         'should return true when the header contains a valid signature and ' +
           'the timestamp is within the tolerance of the provided timestamp',
         async () => {
-          const someTime = 20000000;
+          const receivedAt = 20000000;
           const header = stripe.webhooks.generateTestHeaderString({
-            timestamp: someTime / 1000 - 9,
+            timestamp: receivedAt / 1000 - 9,
             payload: EVENT_PAYLOAD_STRING,
             secret: SECRET,
           });
@@ -299,7 +299,7 @@ describe('Webhooks', () => {
               SECRET,
               10,
               null,
-              someTime
+              receivedAt
             )
           ).to.equal(true);
         }

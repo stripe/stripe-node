@@ -41,7 +41,7 @@ declare module 'stripe' {
         /**
          * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
          */
-        now?: number
+        receivedAt?: number
       ): Stripe.Event;
 
       /**
@@ -83,7 +83,7 @@ declare module 'stripe' {
         /**
          * Optional: timestamp to use when checking signature validity. Defaults to Date.now().
          */
-        now?: number
+        receivedAt?: number
       ): Promise<Stripe.Event>;
 
       /**
