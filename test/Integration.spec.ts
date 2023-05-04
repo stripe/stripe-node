@@ -1,6 +1,8 @@
 import * as childProcess from 'child_process';
 const testUtils = require('./testUtils.js');
 
+const nodeVersion = parseInt(process.versions.node.split('.')[0], 10);
+
 describe('Integration test', function() {
   this.timeout(50000);
   const testExec = (cmd: string): Promise<void> => {
@@ -32,7 +34,7 @@ describe('Integration test', function() {
 
   it('should work with ESModule imports', async function() {
     // Node supports ES Modules starting at v12
-    if (parseInt(process.versions.node.split('.')[0], 10) <= 12) {
+    if (nodeVersion <= 12) {
       this.skip();
     }
 
@@ -41,7 +43,7 @@ describe('Integration test', function() {
 
   it('should work with Typescript ESModule imports', async function() {
     // Node supports ES Modules starting at v12
-    if (parseInt(process.versions.node.split('.')[0], 10) <= 12) {
+    if (nodeVersion <= 12) {
       this.skip();
     }
 
@@ -70,7 +72,7 @@ describe('Integration test', function() {
   });
 
   const runWebhookTest = (projectName: string): Promise<void> => {
-    if (parseInt(process.versions.node.split('.')[0], 10) < 14) {
+    if (nodeVersion < 14) {
       console.log('Webhook test requires at least node.js v14, skipping test');
       return Promise.resolve();
     }
@@ -87,7 +89,14 @@ describe('Integration test', function() {
 
   it('Webhook sample koa', () => runWebhookTest('koa'));
 
-  it('Webhook sample nextjs', () => runWebhookTest('nextjs'));
+  it('Webhook sample nextjs', function() {
+    // Next.js supports Node.js >=16
+    if (nodeVersion < 16) {
+      this.skip();
+    }
+
+    runWebhookTest('nextjs');
+  });
 
   it('Webhook sample deno', () => runWebhookTest('deno'));
 });
