@@ -201,7 +201,7 @@ declare module 'stripe' {
           amount_tax: number;
 
           /**
-           * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object)
+           * The ID of an existing [ShippingRate](https://stripe.com/docs/api/shipping_rates/object). (It is not populated for the transaction resource object and will be removed in the next API version.)
            */
           shipping_rate?: string;
 
@@ -211,7 +211,7 @@ declare module 'stripe' {
           tax_behavior: ShippingCost.TaxBehavior;
 
           /**
-           * Detailed account of taxes relevant to shipping cost.
+           * Detailed account of taxes relevant to shipping cost. (It is not populated for the transaction resource object and will be removed in the next API version.)
            */
           tax_breakdown?: Array<ShippingCost.TaxBreakdown>;
 
