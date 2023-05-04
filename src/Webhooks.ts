@@ -30,14 +30,16 @@ type WebhookSignatureObject = {
     encodedHeader: WebhookHeader,
     secret: string,
     tolerance: number,
-    cryptoProvider: CryptoProvider
+    cryptoProvider: CryptoProvider,
+    receivedAt: number
   ) => boolean;
   verifyHeaderAsync: (
     encodedPayload: WebhookPayload,
     encodedHeader: WebhookHeader,
     secret: string,
     tolerance: number,
-    cryptoProvider: CryptoProvider
+    cryptoProvider: CryptoProvider,
+    receivedAt: number
   ) => Promise<boolean>;
 };
 type WebhookObject = {
@@ -48,14 +50,16 @@ type WebhookObject = {
     header: WebhookHeader,
     secret: string,
     tolerance: null,
-    cryptoProvider: CryptoProvider
+    cryptoProvider: CryptoProvider,
+    receivedAt: number
   ) => WebhookEvent;
   constructEventAsync: (
     payload: WebhookPayload,
     header: WebhookHeader,
     secret: string,
     tolerance: number,
-    cryptoProvider: CryptoProvider
+    cryptoProvider: CryptoProvider,
+    receivedAt: number
   ) => Promise<WebhookEvent>;
   generateTestHeaderString: (opts: WebhookTestHeaderOptions) => string;
 };
@@ -72,14 +76,16 @@ export function createWebhooks(
       header: WebhookHeader,
       secret: string,
       tolerance: null,
-      cryptoProvider: CryptoProvider
+      cryptoProvider: CryptoProvider,
+      receivedAt: number
     ): WebhookEvent {
       this.signature.verifyHeader(
         payload,
         header,
         secret,
         tolerance || Webhook.DEFAULT_TOLERANCE,
-        cryptoProvider
+        cryptoProvider,
+        receivedAt
       );
 
       const jsonPayload =
@@ -94,14 +100,16 @@ export function createWebhooks(
       header: WebhookHeader,
       secret: string,
       tolerance: number,
-      cryptoProvider: CryptoProvider
+      cryptoProvider: CryptoProvider,
+      receivedAt: number
     ): Promise<WebhookEvent> {
       await this.signature.verifyHeaderAsync(
         payload,
         header,
         secret,
         tolerance || Webhook.DEFAULT_TOLERANCE,
-        cryptoProvider
+        cryptoProvider,
+        receivedAt
       );
 
       const jsonPayload =
@@ -159,7 +167,8 @@ export function createWebhooks(
       encodedHeader: WebhookHeader,
       secret: string,
       tolerance: number,
-      cryptoProvider: CryptoProvider
+      cryptoProvider: CryptoProvider,
+      receivedAt: number
     ): boolean {
       const {
         decodedHeader: header,
@@ -184,7 +193,8 @@ export function createWebhooks(
         details,
         expectedSignature,
         tolerance,
-        suspectPayloadType
+        suspectPayloadType,
+        receivedAt
       );
 
       return true;
@@ -195,7 +205,8 @@ export function createWebhooks(
       encodedHeader: WebhookHeader,
       secret: string,
       tolerance: number,
-      cryptoProvider: CryptoProvider
+      cryptoProvider: CryptoProvider,
+      receivedAt: number
     ): Promise<boolean> {
       const {
         decodedHeader: header,
@@ -221,7 +232,8 @@ export function createWebhooks(
         details,
         expectedSignature,
         tolerance,
-        suspectPayloadType
+        suspectPayloadType,
+        receivedAt
       );
     },
   };
@@ -319,7 +331,8 @@ export function createWebhooks(
     details: WebhookParsedHeader,
     expectedSignature: string,
     tolerance: number,
-    suspectPayloadType: boolean
+    suspectPayloadType: boolean,
+    receivedAt: number
   ): boolean {
     const signatureFound = !!details.signatures.filter(
       platformFunctions.secureCompare.bind(platformFunctions, expectedSignature)
@@ -345,7 +358,10 @@ export function createWebhooks(
       });
     }
 
-    const timestampAge = Math.floor(Date.now() / 1000) - details.timestamp;
+    const timestampAge =
+      Math.floor(
+        (typeof receivedAt === 'number' ? receivedAt : Date.now()) / 1000
+      ) - details.timestamp;
 
     if (tolerance > 0 && timestampAge > tolerance) {
       // @ts-ignore
