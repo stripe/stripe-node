@@ -1,5 +1,11 @@
 # Changelog
 
+## 12.4.0 - 2023-05-04
+* [#1774](https://github.com/stripe/stripe-node/pull/1774) Update generated code
+  * Add support for `link` on `Checkout.Session.payment_method_options` and `CheckoutSessionCreateParams.payment_method_options`
+  * Add support for `brand`, `country`, `description`, `exp_month`, `exp_year`, `fingerprint`, `funding`, `iin`, `issuer`, `last4`, `network`, and `wallet` on `SetupAttempt.payment_method_details.card`
+* [#1782](https://github.com/stripe/stripe-node/pull/1782) Let user supply a timestamp when verifying webhooks
+
 ## 12.3.0 - 2023-04-27
 * [#1770](https://github.com/stripe/stripe-node/pull/1770) Update generated code
   * Add support for `billing_cycle_anchor` and `proration_behavior` on `CheckoutSessionCreateParams.subscription_data`

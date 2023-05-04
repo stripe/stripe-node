@@ -49,7 +49,7 @@ export function createStripe(
   platformFunctions: PlatformFunctions,
   requestSender: RequestSenderFactory = defaultRequestSenderFactory
 ): typeof Stripe {
-  Stripe.PACKAGE_VERSION = '12.3.0';
+  Stripe.PACKAGE_VERSION = '12.4.0';
   Stripe.USER_AGENT = {
     bindings_version: Stripe.PACKAGE_VERSION,
     lang: 'node',
