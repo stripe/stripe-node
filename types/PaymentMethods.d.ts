@@ -643,7 +643,23 @@ declare module 'stripe' {
 
       interface Paynow {}
 
-      interface Paypal {}
+      interface Paypal {
+        /**
+         * Uniquely identifies this particular PayPal account. You can use this attribute to check whether two PayPal accounts are the same.
+         */
+        fingerprint?: string | null;
+
+        /**
+         * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
+         */
+        payer_id?: string | null;
+
+        /**
+         * Owner's verified email. Values are verified or provided by PayPal directly
+         * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+         */
+        verified_email?: string | null;
+      }
 
       interface Pix {}
 

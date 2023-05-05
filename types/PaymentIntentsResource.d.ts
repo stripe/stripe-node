@@ -1705,6 +1705,8 @@ declare module 'stripe' {
 
           preferred_locale?: Paypal.PreferredLocale;
 
+          reference?: string;
+
           reference_id?: string;
 
           /**
@@ -3668,6 +3670,8 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           preferred_locale?: Paypal.PreferredLocale;
+
+          reference?: string;
 
           reference_id?: string;
 
@@ -5735,6 +5739,8 @@ declare module 'stripe' {
           capture_method?: Stripe.Emptyable<'manual'>;
 
           preferred_locale?: Paypal.PreferredLocale;
+
+          reference?: string;
 
           reference_id?: string;
 

@@ -1591,9 +1591,21 @@ declare module 'stripe' {
 
         interface Paypal {
           /**
+           * Owner's email. Values are provided by PayPal directly
+           * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          payer_email?: string | null;
+
+          /**
            * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
            */
-          payer_id: string | null;
+          payer_id?: string | null;
+
+          /**
+           * Owner's full name. Values provided by PayPal directly
+           * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          payer_name?: string | null;
 
           /**
            * The shipping address for the customer, as supplied by the merchant at the point of payment
@@ -1618,13 +1630,13 @@ declare module 'stripe' {
            * Owner's verified email. Values are verified or provided by PayPal directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          verified_email: string | null;
+          verified_email?: string | null;
 
           /**
            * Owner's verified full name. Values are verified or provided by PayPal directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          verified_name: string | null;
+          verified_name?: string | null;
         }
 
         interface Pix {
