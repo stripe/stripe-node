@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.5.0-beta.1 - 2023-05-04
+* [#1773](https://github.com/stripe/stripe-node/pull/1773) Update generated code for beta
+  * Updated stable APIs to the latest version
+
 ## 12.4.0 - 2023-05-04
 * [#1774](https://github.com/stripe/stripe-node/pull/1774) Update generated code
   * Add support for `link` on `Checkout.Session.payment_method_options` and `CheckoutSessionCreateParams.payment_method_options`
