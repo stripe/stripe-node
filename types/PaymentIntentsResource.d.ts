@@ -1710,6 +1710,11 @@ declare module 'stripe' {
           reference_id?: string;
 
           /**
+           * The risk correlation ID for an on-session payment using a saved PayPal payment method.
+           */
+          risk_correlation_id?: string;
+
+          /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
            *
            * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
@@ -3674,6 +3679,11 @@ declare module 'stripe' {
           reference?: string;
 
           reference_id?: string;
+
+          /**
+           * The risk correlation ID for an on-session payment using a saved PayPal payment method.
+           */
+          risk_correlation_id?: string;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -5743,6 +5753,11 @@ declare module 'stripe' {
           reference?: string;
 
           reference_id?: string;
+
+          /**
+           * The risk correlation ID for an on-session payment using a saved PayPal payment method.
+           */
+          risk_correlation_id?: string;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
