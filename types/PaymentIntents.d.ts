@@ -1363,6 +1363,7 @@ declare module 'stripe' {
             | 'cartes_bancaires'
             | 'diners'
             | 'discover'
+            | 'eftpos_au'
             | 'interac'
             | 'jcb'
             | 'mastercard'
