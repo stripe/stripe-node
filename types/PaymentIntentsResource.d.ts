@@ -164,7 +164,7 @@ declare module 'stripe' {
       transfer_group?: string;
 
       /**
-       * Set to `true` only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
+       * Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to handle the next actions.
        */
       use_stripe_sdk?: boolean;
     }
@@ -1325,6 +1325,7 @@ declare module 'stripe' {
             | 'cartes_bancaires'
             | 'diners'
             | 'discover'
+            | 'eftpos_au'
             | 'interac'
             | 'jcb'
             | 'mastercard'
@@ -3296,6 +3297,7 @@ declare module 'stripe' {
             | 'cartes_bancaires'
             | 'diners'
             | 'discover'
+            | 'eftpos_au'
             | 'interac'
             | 'jcb'
             | 'mastercard'
@@ -4183,7 +4185,7 @@ declare module 'stripe' {
       shipping?: Stripe.Emptyable<PaymentIntentConfirmParams.Shipping>;
 
       /**
-       * Set to `true` only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
+       * Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to handle the next actions.
        */
       use_stripe_sdk?: boolean;
     }
@@ -5370,6 +5372,7 @@ declare module 'stripe' {
             | 'cartes_bancaires'
             | 'diners'
             | 'discover'
+            | 'eftpos_au'
             | 'interac'
             | 'jcb'
             | 'mastercard'
