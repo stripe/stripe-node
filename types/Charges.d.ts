@@ -1608,6 +1608,11 @@ declare module 'stripe' {
           payer_name?: string | null;
 
           /**
+           * The level of protection offered as defined by PayPal Seller Protection for Merchants, for this transaction.
+           */
+          seller_protection?: Paypal.SellerProtection | null;
+
+          /**
            * The shipping address for the customer, as supplied by the merchant at the point of payment
            * execution. This shipping address will not be updated if the merchant updates the shipping
            * address on the PaymentIntent after the PaymentIntent was successfully confirmed.
@@ -1637,6 +1642,26 @@ declare module 'stripe' {
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
           verified_name?: string | null;
+        }
+
+        namespace Paypal {
+          interface SellerProtection {
+            /**
+             * An array of conditions that are covered for the transaction, if applicable.
+             */
+            dispute_categories: Array<SellerProtection.DisputeCategory> | null;
+
+            /**
+             * Indicates whether the transaction is eligible for PayPal's seller protection.
+             */
+            status: SellerProtection.Status;
+          }
+
+          namespace SellerProtection {
+            type DisputeCategory = 'fraudulent' | 'product_not_received';
+
+            type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
+          }
         }
 
         interface Pix {
