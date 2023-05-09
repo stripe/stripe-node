@@ -1373,12 +1373,21 @@ declare module 'stripe' {
           }
 
           interface Paypal {
+            /**
+             * Controls when the funds will be captured from the customer's account.
+             */
             capture_method?: Stripe.Emptyable<'manual'>;
 
             preferred_locale?: Paypal.PreferredLocale;
 
+            /**
+             * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+             */
             reference?: string;
 
+            /**
+             * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+             */
             reference_id?: string;
 
             /**
