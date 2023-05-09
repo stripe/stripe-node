@@ -92,6 +92,8 @@ declare module 'stripe' {
 
       paynow?: PaymentMethod.Paynow;
 
+      paypal?: PaymentMethod.Paypal;
+
       pix?: PaymentMethod.Pix;
 
       promptpay?: PaymentMethod.Promptpay;
@@ -639,6 +641,13 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface Paypal {
+        /**
+         * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
+         */
+        payer_id?: string | null;
+      }
+
       interface Pix {}
 
       interface Promptpay {}
@@ -729,6 +738,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'paypal'
         | 'pix'
         | 'promptpay'
         | 'sepa_debit'

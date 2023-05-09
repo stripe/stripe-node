@@ -521,6 +521,7 @@ declare module 'stripe' {
           | 'konbini'
           | 'link'
           | 'paynow'
+          | 'paypal'
           | 'promptpay'
           | 'sepa_credit_transfer'
           | 'sepa_debit'
