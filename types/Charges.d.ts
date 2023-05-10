@@ -774,6 +774,11 @@ declare module 'stripe' {
           network: string | null;
 
           /**
+           * If this card has network token credentials, this contains the details of the network token credentials.
+           */
+          network_token?: Card.NetworkToken | null;
+
+          /**
            * Populated if this transaction used 3D Secure authentication.
            */
           three_d_secure: Card.ThreeDSecure | null;
@@ -827,6 +832,13 @@ declare module 'stripe' {
                */
               type: 'fixed_count';
             }
+          }
+
+          interface NetworkToken {
+            /**
+             * Indicates if Stripe used a network token, either user provided or Stripe managed when processing the transaction.
+             */
+            used: boolean;
           }
 
           interface ThreeDSecure {
