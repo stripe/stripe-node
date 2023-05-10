@@ -24,7 +24,7 @@ declare module 'stripe' {
         /**
          * The places where your business is located.
          */
-        locations: Array<Settings.Location>;
+        locations?: Array<Settings.Location>;
       }
 
       namespace Settings {
