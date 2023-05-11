@@ -22,7 +22,12 @@ declare module 'stripe' {
         expand?: Array<string>;
 
         /**
-         * The places where your business is located.
+         * The place where your business is located.
+         */
+        head_office?: SettingUpdateParams.HeadOffice;
+
+        /**
+         * The deprecated places where your business is located.
          */
         locations?: Array<SettingUpdateParams.Location>;
       }
@@ -42,6 +47,13 @@ declare module 'stripe' {
 
         namespace Defaults {
           type TaxBehavior = 'exclusive' | 'inclusive' | 'inferred_by_currency';
+        }
+
+        interface HeadOffice {
+          /**
+           * The location of the business for tax purposes.
+           */
+          address: Stripe.AddressParam;
         }
 
         interface Location {

@@ -164,7 +164,7 @@ declare module 'stripe' {
       transfer_group?: string;
 
       /**
-       * Set to `true` only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
+       * Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to handle the next actions.
        */
       use_stripe_sdk?: boolean;
     }
@@ -1325,6 +1325,7 @@ declare module 'stripe' {
             | 'cartes_bancaires'
             | 'diners'
             | 'discover'
+            | 'eftpos_au'
             | 'interac'
             | 'jcb'
             | 'mastercard'
@@ -1701,11 +1702,30 @@ declare module 'stripe' {
         }
 
         interface Paypal {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
           capture_method?: Stripe.Emptyable<'manual'>;
 
+          /**
+           * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
+           */
           preferred_locale?: Paypal.PreferredLocale;
 
+          /**
+           * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+           */
+          reference?: string;
+
+          /**
+           * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+           */
           reference_id?: string;
+
+          /**
+           * The risk correlation ID for an on-session payment using a saved PayPal payment method.
+           */
+          risk_correlation_id?: string;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -1721,27 +1741,27 @@ declare module 'stripe' {
 
         namespace Paypal {
           type PreferredLocale =
-            | 'cs_CZ'
-            | 'da_DK'
-            | 'de_AT'
-            | 'de_DE'
-            | 'de_LU'
-            | 'el_GR'
-            | 'en_GB'
-            | 'en_US'
-            | 'es_ES'
-            | 'fi_FI'
-            | 'fr_BE'
-            | 'fr_FR'
-            | 'fr_LU'
-            | 'hu_HU'
-            | 'it_IT'
-            | 'nl_BE'
-            | 'nl_NL'
-            | 'pl_PL'
-            | 'pt_PT'
-            | 'sk_SK'
-            | 'sv_SE';
+            | 'cs-CZ'
+            | 'da-DK'
+            | 'de-AT'
+            | 'de-DE'
+            | 'de-LU'
+            | 'el-GR'
+            | 'en-GB'
+            | 'en-US'
+            | 'es-ES'
+            | 'fi-FI'
+            | 'fr-BE'
+            | 'fr-FR'
+            | 'fr-LU'
+            | 'hu-HU'
+            | 'it-IT'
+            | 'nl-BE'
+            | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
+            | 'sk-SK'
+            | 'sv-SE';
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
@@ -3289,6 +3309,7 @@ declare module 'stripe' {
             | 'cartes_bancaires'
             | 'diners'
             | 'discover'
+            | 'eftpos_au'
             | 'interac'
             | 'jcb'
             | 'mastercard'
@@ -3665,11 +3686,30 @@ declare module 'stripe' {
         }
 
         interface Paypal {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
           capture_method?: Stripe.Emptyable<'manual'>;
 
+          /**
+           * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
+           */
           preferred_locale?: Paypal.PreferredLocale;
 
+          /**
+           * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+           */
+          reference?: string;
+
+          /**
+           * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+           */
           reference_id?: string;
+
+          /**
+           * The risk correlation ID for an on-session payment using a saved PayPal payment method.
+           */
+          risk_correlation_id?: string;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -3685,27 +3725,27 @@ declare module 'stripe' {
 
         namespace Paypal {
           type PreferredLocale =
-            | 'cs_CZ'
-            | 'da_DK'
-            | 'de_AT'
-            | 'de_DE'
-            | 'de_LU'
-            | 'el_GR'
-            | 'en_GB'
-            | 'en_US'
-            | 'es_ES'
-            | 'fi_FI'
-            | 'fr_BE'
-            | 'fr_FR'
-            | 'fr_LU'
-            | 'hu_HU'
-            | 'it_IT'
-            | 'nl_BE'
-            | 'nl_NL'
-            | 'pl_PL'
-            | 'pt_PT'
-            | 'sk_SK'
-            | 'sv_SE';
+            | 'cs-CZ'
+            | 'da-DK'
+            | 'de-AT'
+            | 'de-DE'
+            | 'de-LU'
+            | 'el-GR'
+            | 'en-GB'
+            | 'en-US'
+            | 'es-ES'
+            | 'fi-FI'
+            | 'fr-BE'
+            | 'fr-FR'
+            | 'fr-LU'
+            | 'hu-HU'
+            | 'it-IT'
+            | 'nl-BE'
+            | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
+            | 'sk-SK'
+            | 'sv-SE';
 
           type SetupFutureUsage = 'none' | 'off_session';
         }
@@ -4169,7 +4209,7 @@ declare module 'stripe' {
       shipping?: Stripe.Emptyable<PaymentIntentConfirmParams.Shipping>;
 
       /**
-       * Set to `true` only when using manual confirmation and the iOS or Android SDKs to handle additional authentication steps.
+       * Set to `true` when confirming server-side and using Stripe.js, iOS, or Android client-side SDKs to handle the next actions.
        */
       use_stripe_sdk?: boolean;
     }
@@ -5356,6 +5396,7 @@ declare module 'stripe' {
             | 'cartes_bancaires'
             | 'diners'
             | 'discover'
+            | 'eftpos_au'
             | 'interac'
             | 'jcb'
             | 'mastercard'
@@ -5732,11 +5773,30 @@ declare module 'stripe' {
         }
 
         interface Paypal {
+          /**
+           * Controls when the funds will be captured from the customer's account.
+           */
           capture_method?: Stripe.Emptyable<'manual'>;
 
+          /**
+           * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
+           */
           preferred_locale?: Paypal.PreferredLocale;
 
+          /**
+           * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+           */
+          reference?: string;
+
+          /**
+           * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+           */
           reference_id?: string;
+
+          /**
+           * The risk correlation ID for an on-session payment using a saved PayPal payment method.
+           */
+          risk_correlation_id?: string;
 
           /**
            * Indicates that you intend to make future payments with this PaymentIntent's payment method.
@@ -5752,27 +5812,27 @@ declare module 'stripe' {
 
         namespace Paypal {
           type PreferredLocale =
-            | 'cs_CZ'
-            | 'da_DK'
-            | 'de_AT'
-            | 'de_DE'
-            | 'de_LU'
-            | 'el_GR'
-            | 'en_GB'
-            | 'en_US'
-            | 'es_ES'
-            | 'fi_FI'
-            | 'fr_BE'
-            | 'fr_FR'
-            | 'fr_LU'
-            | 'hu_HU'
-            | 'it_IT'
-            | 'nl_BE'
-            | 'nl_NL'
-            | 'pl_PL'
-            | 'pt_PT'
-            | 'sk_SK'
-            | 'sv_SE';
+            | 'cs-CZ'
+            | 'da-DK'
+            | 'de-AT'
+            | 'de-DE'
+            | 'de-LU'
+            | 'el-GR'
+            | 'en-GB'
+            | 'en-US'
+            | 'es-ES'
+            | 'fi-FI'
+            | 'fr-BE'
+            | 'fr-FR'
+            | 'fr-LU'
+            | 'hu-HU'
+            | 'it-IT'
+            | 'nl-BE'
+            | 'nl-NL'
+            | 'pl-PL'
+            | 'pt-PT'
+            | 'sk-SK'
+            | 'sv-SE';
 
           type SetupFutureUsage = 'none' | 'off_session';
         }

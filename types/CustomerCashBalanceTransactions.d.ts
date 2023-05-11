@@ -79,6 +79,10 @@ declare module 'stripe' {
         interface BankTransfer {
           eu_bank_transfer?: BankTransfer.EuBankTransfer;
 
+          gb_bank_transfer?: BankTransfer.GbBankTransfer;
+
+          jp_bank_transfer?: BankTransfer.JpBankTransfer;
+
           /**
            * The user-supplied reference field on the bank transfer.
            */
@@ -101,6 +105,40 @@ declare module 'stripe' {
              * The last 4 digits of the IBAN of the sender of the funding.
              */
             iban_last4: string | null;
+
+            /**
+             * The full name of the sender, as supplied by the sending bank.
+             */
+            sender_name: string | null;
+          }
+
+          interface GbBankTransfer {
+            /**
+             * The last 4 digits of the account number of the sender of the funding.
+             */
+            account_number_last4: string | null;
+
+            /**
+             * The full name of the sender, as supplied by the sending bank.
+             */
+            sender_name: string | null;
+
+            /**
+             * The sort code of the bank of the sender of the funding
+             */
+            sort_code: string | null;
+          }
+
+          interface JpBankTransfer {
+            /**
+             * The name of the bank of the sender of the funding.
+             */
+            sender_bank: string | null;
+
+            /**
+             * The name of the bank branch of the sender of the funding.
+             */
+            sender_branch: string | null;
 
             /**
              * The full name of the sender, as supplied by the sending bank.
