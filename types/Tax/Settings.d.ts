@@ -17,12 +17,17 @@ declare module 'stripe' {
         defaults: Settings.Defaults;
 
         /**
+         * The place where your business is located.
+         */
+        head_office: Settings.HeadOffice | null;
+
+        /**
          * Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
          */
         livemode: boolean;
 
         /**
-         * The places where your business is located.
+         * The deprecated places where your business is located.
          */
         locations?: Array<Settings.Location>;
       }
@@ -42,6 +47,10 @@ declare module 'stripe' {
 
         namespace Defaults {
           type TaxBehavior = 'exclusive' | 'inclusive' | 'inferred_by_currency';
+        }
+
+        interface HeadOffice {
+          address: Stripe.Address;
         }
 
         interface Location {
