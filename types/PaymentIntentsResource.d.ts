@@ -1689,6 +1689,9 @@ declare module 'stripe' {
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
+          /**
+           * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
+           */
           preferred_locale?: Paypal.PreferredLocale;
 
           /**
@@ -3570,6 +3573,9 @@ declare module 'stripe' {
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
+          /**
+           * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
+           */
           preferred_locale?: Paypal.PreferredLocale;
 
           /**
@@ -5591,6 +5597,9 @@ declare module 'stripe' {
            */
           capture_method?: Stripe.Emptyable<'manual'>;
 
+          /**
+           * [Preferred locale](https://stripe.com/docs/payments/paypal/supported-locales) of the PayPal checkout page that the customer is redirected to.
+           */
           preferred_locale?: Paypal.PreferredLocale;
 
           /**
