@@ -149,6 +149,11 @@ declare module 'stripe' {
       paynow?: PaymentMethodCreateParams.Paynow;
 
       /**
+       * If this is a `paypal` PaymentMethod, this hash contains details about the PayPal payment method.
+       */
+      paypal?: PaymentMethodCreateParams.Paypal;
+
+      /**
        * If this is a `pix` PaymentMethod, this hash contains details about the Pix payment method.
        */
       pix?: PaymentMethodCreateParams.Pix;
@@ -480,6 +485,8 @@ declare module 'stripe' {
 
       interface Paynow {}
 
+      interface Paypal {}
+
       interface Pix {}
 
       interface Promptpay {}
@@ -533,6 +540,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'paypal'
         | 'pix'
         | 'promptpay'
         | 'sepa_debit'
@@ -756,6 +764,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'paypal'
         | 'pix'
         | 'promptpay'
         | 'sepa_debit'

@@ -2533,6 +2533,11 @@ describe('Quotes', function() {
     const quote = await stripe.quotes.finalizeQuote('qt_xxxxxxxxxxxxx');
     expect(quote).not.to.be.null;
   });
+
+  it('listLineItems method', async function() {
+    const lineItems = await stripe.quotes.listLineItems('qt_xxxxxxxxxxxxx');
+    expect(lineItems).not.to.be.null;
+  });
 });
 
 describe('Radar.EarlyFraudWarnings', function() {

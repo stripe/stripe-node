@@ -92,6 +92,8 @@ declare module 'stripe' {
 
       paynow?: PaymentMethod.Paynow;
 
+      paypal?: PaymentMethod.Paypal;
+
       pix?: PaymentMethod.Pix;
 
       promptpay?: PaymentMethod.Promptpay;
@@ -415,7 +417,80 @@ declare module 'stripe' {
         }
       }
 
-      interface CardPresent {}
+      interface CardPresent {
+        /**
+         * Card brand. Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
+         */
+        brand: string | null;
+
+        /**
+         * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`). In some cases, the cardholder name may not be available depending on how the issuer has configured the card. Cardholder name is typically not available on swipe or contactless payments, such as those made with Apple Pay and Google Pay.
+         */
+        cardholder_name: string | null;
+
+        /**
+         * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+         */
+        country: string | null;
+
+        /**
+         * Two-digit number representing the card's expiration month.
+         */
+        exp_month: number;
+
+        /**
+         * Four-digit number representing the card's expiration year.
+         */
+        exp_year: number;
+
+        /**
+         * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
+         *
+         * *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+         */
+        fingerprint: string | null;
+
+        /**
+         * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+         */
+        funding: string | null;
+
+        /**
+         * The last four digits of the card.
+         */
+        last4: string | null;
+
+        /**
+         * Contains information about card networks that can be used to process the payment.
+         */
+        networks: CardPresent.Networks | null;
+
+        /**
+         * How card details were read in this transaction.
+         */
+        read_method: CardPresent.ReadMethod | null;
+      }
+
+      namespace CardPresent {
+        interface Networks {
+          /**
+           * All available networks for the card.
+           */
+          available: Array<string>;
+
+          /**
+           * The preferred network for the card.
+           */
+          preferred: string | null;
+        }
+
+        type ReadMethod =
+          | 'contact_emv'
+          | 'contactless_emv'
+          | 'contactless_magstripe_mode'
+          | 'magnetic_stripe_fallback'
+          | 'magnetic_stripe_track2';
+      }
 
       interface Cashapp {}
 
@@ -551,7 +626,85 @@ declare module 'stripe' {
           | 'TRIONL2U';
       }
 
-      interface InteracPresent {}
+      interface InteracPresent {
+        /**
+         * Card brand. Can be `interac`, `mastercard` or `visa`.
+         */
+        brand: string | null;
+
+        /**
+         * The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`). In some cases, the cardholder name may not be available depending on how the issuer has configured the card. Cardholder name is typically not available on swipe or contactless payments, such as those made with Apple Pay and Google Pay.
+         */
+        cardholder_name: string | null;
+
+        /**
+         * Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
+         */
+        country: string | null;
+
+        /**
+         * Two-digit number representing the card's expiration month.
+         */
+        exp_month: number;
+
+        /**
+         * Four-digit number representing the card's expiration year.
+         */
+        exp_year: number;
+
+        /**
+         * Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
+         *
+         * *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+         */
+        fingerprint: string | null;
+
+        /**
+         * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
+         */
+        funding: string | null;
+
+        /**
+         * The last four digits of the card.
+         */
+        last4: string | null;
+
+        /**
+         * Contains information about card networks that can be used to process the payment.
+         */
+        networks: InteracPresent.Networks | null;
+
+        /**
+         * EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
+         */
+        preferred_locales: Array<string> | null;
+
+        /**
+         * How card details were read in this transaction.
+         */
+        read_method: InteracPresent.ReadMethod | null;
+      }
+
+      namespace InteracPresent {
+        interface Networks {
+          /**
+           * All available networks for the card.
+           */
+          available: Array<string>;
+
+          /**
+           * The preferred network for the card.
+           */
+          preferred: string | null;
+        }
+
+        type ReadMethod =
+          | 'contact_emv'
+          | 'contactless_emv'
+          | 'contactless_magstripe_mode'
+          | 'magnetic_stripe_fallback'
+          | 'magnetic_stripe_track2';
+      }
 
       interface Klarna {
         /**
@@ -638,6 +791,13 @@ declare module 'stripe' {
       }
 
       interface Paynow {}
+
+      interface Paypal {
+        /**
+         * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
+         */
+        payer_id?: string | null;
+      }
 
       interface Pix {}
 
@@ -729,6 +889,7 @@ declare module 'stripe' {
         | 'oxxo'
         | 'p24'
         | 'paynow'
+        | 'paypal'
         | 'pix'
         | 'promptpay'
         | 'sepa_debit'

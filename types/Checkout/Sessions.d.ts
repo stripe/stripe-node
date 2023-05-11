@@ -1555,6 +1555,38 @@ declare module 'stripe' {
              * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
              */
             rate: Stripe.TaxRate;
+
+            /**
+             * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+             */
+            taxability_reason: Tax.TaxabilityReason | null;
+
+            /**
+             * The amount on which tax is calculated, in %s.
+             */
+            taxable_amount: number | null;
+          }
+
+          namespace Tax {
+            type TaxabilityReason =
+              | 'customer_exempt'
+              | 'excluded_territory'
+              | 'jurisdiction_unsupported'
+              | 'not_collecting'
+              | 'not_subject_to_tax'
+              | 'not_supported'
+              | 'portion_product_exempt'
+              | 'portion_reduced_rated'
+              | 'portion_standard_rated'
+              | 'product_exempt'
+              | 'product_exempt_holiday'
+              | 'proportionally_rated'
+              | 'reduced_rated'
+              | 'reverse_charge'
+              | 'standard_rated'
+              | 'taxable_basis_reduced'
+              | 'vat_exempt'
+              | 'zero_rated';
           }
         }
 
@@ -1665,6 +1697,38 @@ declare module 'stripe' {
                * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
                */
               rate: Stripe.TaxRate;
+
+              /**
+               * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+               */
+              taxability_reason: Tax.TaxabilityReason | null;
+
+              /**
+               * The amount on which tax is calculated, in %s.
+               */
+              taxable_amount: number | null;
+            }
+
+            namespace Tax {
+              type TaxabilityReason =
+                | 'customer_exempt'
+                | 'excluded_territory'
+                | 'jurisdiction_unsupported'
+                | 'not_collecting'
+                | 'not_subject_to_tax'
+                | 'not_supported'
+                | 'portion_product_exempt'
+                | 'portion_reduced_rated'
+                | 'portion_standard_rated'
+                | 'product_exempt'
+                | 'product_exempt_holiday'
+                | 'proportionally_rated'
+                | 'reduced_rated'
+                | 'reverse_charge'
+                | 'standard_rated'
+                | 'taxable_basis_reduced'
+                | 'vat_exempt'
+                | 'zero_rated';
             }
           }
         }
