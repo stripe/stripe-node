@@ -343,6 +343,8 @@ declare module 'stripe' {
 
           google_pay?: Wallet.GooglePay;
 
+          link?: Wallet.Link;
+
           masterpass?: Wallet.Masterpass;
 
           samsung_pay?: Wallet.SamsungPay;
@@ -361,6 +363,8 @@ declare module 'stripe' {
           interface ApplePay {}
 
           interface GooglePay {}
+
+          interface Link {}
 
           interface Masterpass {
             /**
