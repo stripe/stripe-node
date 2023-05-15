@@ -34,7 +34,7 @@ declare module 'stripe' {
      * More details on the customer's credit balance are
      * [here](https://stripe.com/docs/billing/customer/balance).
      *
-     * Related guide: [Send Invoices to Customers](https://stripe.com/docs/billing/invoices/sending).
+     * Related guide: [Send invoices to customers](https://stripe.com/docs/billing/invoices/sending)
      */
     interface Invoice {
       /**
@@ -621,7 +621,7 @@ declare module 'stripe' {
          * throughout its lifetime as it interfaces with Stripe.js to perform
          * authentication flows and ultimately creates at most one successful charge.
          *
-         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents).
+         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents)
          */
         payment_intent?: Stripe.PaymentIntent;
 
@@ -666,7 +666,7 @@ declare module 'stripe' {
          * By using SetupIntents, you ensure that your customers experience the minimum set of required friction,
          * even as regulations change over time.
          *
-         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents).
+         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents)
          */
         setup_intent?: Stripe.SetupIntent;
 
@@ -923,7 +923,7 @@ declare module 'stripe' {
           /**
            * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
            *
-           * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+           * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
            */
           rate: Stripe.TaxRate;
 

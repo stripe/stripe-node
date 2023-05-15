@@ -5,7 +5,7 @@ declare module 'stripe' {
     /**
      * Issue a credit note to adjust an invoice's amount after the invoice is finalized.
      *
-     * Related guide: [Credit Notes](https://stripe.com/docs/billing/invoices/credit-notes).
+     * Related guide: [Credit notes](https://stripe.com/docs/billing/invoices/credit-notes)
      */
     interface CreditNote {
       /**
@@ -213,7 +213,7 @@ declare module 'stripe' {
           /**
            * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
            *
-           * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+           * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
            */
           rate: Stripe.TaxRate;
 

@@ -7,7 +7,7 @@ declare module 'stripe' {
      * retrieve and refund individual charges as well as list all charges. Charges
      * are identified by a unique, random ID.
      *
-     * Related guide: [Accept a payment with the Charges API](https://stripe.com/docs/payments/accept-a-payment-charges).
+     * Related guide: [Accept a payment with the Charges API](https://stripe.com/docs/payments/accept-a-payment-charges)
      */
     interface Charge {
       /**

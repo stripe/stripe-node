@@ -6,7 +6,7 @@ declare module 'stripe' {
       /**
        * A Location represents a grouping of readers.
        *
-       * Related guide: [Fleet Management](https://stripe.com/docs/terminal/fleet/locations).
+       * Related guide: [Fleet management](https://stripe.com/docs/terminal/fleet/locations)
        */
       interface Location {
         /**

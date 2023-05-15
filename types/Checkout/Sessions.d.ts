@@ -17,7 +17,7 @@ declare module 'stripe' {
        * You can create a Checkout Session on your server and redirect to its URL
        * to begin Checkout.
        *
-       * Related guide: [Checkout Quickstart](https://stripe.com/docs/checkout/quickstart).
+       * Related guide: [Checkout quickstart](https://stripe.com/docs/checkout/quickstart)
        */
       interface Session {
         /**
@@ -1552,7 +1552,7 @@ declare module 'stripe' {
             /**
              * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
              *
-             * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+             * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
              */
             rate: Stripe.TaxRate;
 
@@ -1680,7 +1680,7 @@ declare module 'stripe' {
                * A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
                * It contains information about when the discount began, when it will end, and what it is applied to.
                *
-               * Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
+               * Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
                */
               discount: Stripe.Discount;
             }
@@ -1694,7 +1694,7 @@ declare module 'stripe' {
               /**
                * Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
                *
-               * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+               * Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
                */
               rate: Stripe.TaxRate;
 
