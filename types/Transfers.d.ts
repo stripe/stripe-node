@@ -12,7 +12,7 @@ declare module 'stripe' {
      * information, read about the
      * [transfer/payout split](https://stripe.com/docs/transfer-payout-split).
      *
-     * Related guide: [Creating Separate Charges and Transfers](https://stripe.com/docs/connect/charges-transfers).
+     * Related guide: [Creating separate charges and transfers](https://stripe.com/docs/connect/charges-transfers)
      */
     interface Transfer {
       /**

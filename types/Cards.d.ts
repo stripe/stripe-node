@@ -7,7 +7,7 @@ declare module 'stripe' {
      * later. You can also store multiple debit cards on a recipient in order to
      * transfer to those cards later.
      *
-     * Related guide: [Card Payments with Sources](https://stripe.com/docs/sources/cards).
+     * Related guide: [Card payments with Sources](https://stripe.com/docs/sources/cards)
      */
     interface Card {
       /**
