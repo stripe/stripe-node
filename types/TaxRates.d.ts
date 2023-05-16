@@ -86,6 +86,8 @@ declare module 'stripe' {
 
     namespace TaxRate {
       type TaxType =
+        | 'amusement_tax'
+        | 'communications_tax'
         | 'gst'
         | 'hst'
         | 'igst'
