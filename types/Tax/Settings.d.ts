@@ -30,6 +30,13 @@ declare module 'stripe' {
          * The deprecated places where your business is located.
          */
         locations?: Array<Settings.Location>;
+
+        /**
+         * The `active` status indicates you have all required settings to calculate tax. A status can transition out of `active` when new required settings are introduced.
+         */
+        status: Settings.Status;
+
+        status_details: Settings.StatusDetails;
       }
 
       namespace Settings {
@@ -60,6 +67,25 @@ declare module 'stripe' {
            * The role of this location address.
            */
           role: 'head_office';
+        }
+
+        type Status = 'active' | 'pending';
+
+        interface StatusDetails {
+          active?: StatusDetails.Active;
+
+          pending?: StatusDetails.Pending;
+        }
+
+        namespace StatusDetails {
+          interface Active {}
+
+          interface Pending {
+            /**
+             * The list of missing fields that are required to perform calculations. It includes at least one entry when the status is `pending`. It is recommended to set the optional values even if they aren't listed as required for calculating taxes. Calculations can fail if missing fields aren't explicitly provided on every call.
+             */
+            missing_fields: Array<string> | null;
+          }
         }
       }
     }
