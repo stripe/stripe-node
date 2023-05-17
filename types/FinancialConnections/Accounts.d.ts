@@ -209,6 +209,11 @@ declare module 'stripe' {
           last_attempted_at: number;
 
           /**
+           * Time at which the next balance refresh can be initiated. This value will be `null` when when `status` is `pending`. Measured in seconds since the Unix epoch.
+           */
+          next_refresh_available_at?: number | null;
+
+          /**
            * The status of the last refresh attempt.
            */
           status: BalanceRefresh.Status;
@@ -227,6 +232,11 @@ declare module 'stripe' {
           last_attempted_at: number;
 
           /**
+           * Time at which the next inferred balance refresh can be initiated. This value will be `null` when when `status` is `pending`. Measured in seconds since the Unix epoch.
+           */
+          next_refresh_available_at: number | null;
+
+          /**
            * The status of the last refresh attempt.
            */
           status: InferredBalancesRefresh.Status;
@@ -241,6 +251,11 @@ declare module 'stripe' {
            * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
            */
           last_attempted_at: number;
+
+          /**
+           * Time at which the next ownership refresh can be initiated. This value will be `null` when when `status` is `pending`. Measured in seconds since the Unix epoch.
+           */
+          next_refresh_available_at?: number | null;
 
           /**
            * The status of the last refresh attempt.
@@ -282,6 +297,11 @@ declare module 'stripe' {
            * The time at which the last refresh attempt was initiated. Measured in seconds since the Unix epoch.
            */
           last_attempted_at: number;
+
+          /**
+           * Time at which the next transaction refresh can be initiated. This value will be `null` when when `status` is `pending`. Measured in seconds since the Unix epoch.
+           */
+          next_refresh_available_at: number | null;
 
           /**
            * The status of the last refresh attempt.
