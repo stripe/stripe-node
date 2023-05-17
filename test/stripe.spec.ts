@@ -690,7 +690,9 @@ describe('Stripe Module', function() {
           });
           req.on('end', () => {
             const body = Buffer.concat(requestBody).toString();
-            expect(body).to.equal('{"description":"test customer"}');
+            expect(body).to.equal(
+              '{"description":"test customer","created":"1234567890"}'
+            );
           });
           res.write(JSON.stringify(returnedCustomer));
           res.end();
@@ -700,7 +702,10 @@ describe('Stripe Module', function() {
           stripe.rawRequest(
             'POST',
             '/v1/customers',
-            {description: 'test customer'},
+            {
+              description: 'test customer',
+              created: new Date('2009-02-13T23:31:30Z'),
+            },
             {encoding: 'json', additionalHeaders: {foo: 'bar'}},
             (err, result) => {
               if (err) return done(err);
@@ -726,7 +731,9 @@ describe('Stripe Module', function() {
           });
           req.on('end', () => {
             const body = Buffer.concat(requestBody).toString();
-            expect(body).to.equal('description=test%20customer');
+            expect(body).to.equal(
+              'description=test%20customer&created=1234567890'
+            );
           });
           res.write(JSON.stringify(returnedCustomer));
           res.end();
@@ -736,7 +743,10 @@ describe('Stripe Module', function() {
           stripe.rawRequest(
             'POST',
             '/v1/customers',
-            {description: 'test customer'},
+            {
+              description: 'test customer',
+              created: new Date('2009-02-13T23:31:30Z'),
+            },
             null,
             (err, result) => {
               if (err) return done(err);

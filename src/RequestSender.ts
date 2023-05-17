@@ -551,6 +551,14 @@ export class RequestSender {
       });
     };
 
+    function dateTimeReplacer(this: any, key: string, value: any): any {
+      if (this[key] instanceof Date) {
+        return Math.floor(this[key].getTime() / 1000).toString();
+      }
+
+      return value;
+    }
+
     if (requestDataProcessor) {
       requestDataProcessor(
         method,
@@ -562,7 +570,7 @@ export class RequestSender {
       prepareAndMakeRequest(
         null,
         options.encoding === 'json'
-          ? JSON.stringify(data || {})
+          ? JSON.stringify(data || {}, dateTimeReplacer)
           : stringifyRequestData(data || {})
       );
     }
