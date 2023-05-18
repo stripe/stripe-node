@@ -801,53 +801,6 @@ declare module 'stripe' {
            * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
            */
           code?: string;
-
-          /**
-           * Details of the BLIK mandate
-           */
-          mandate_options?: Blik.MandateOptions;
-        }
-
-        namespace Blik {
-          interface MandateOptions {
-            /**
-             * Expiry date of the mandate.
-             */
-            expires_after?: number;
-
-            /**
-             * Details of off-session mandate.
-             */
-            off_session?: MandateOptions.OffSession;
-          }
-
-          namespace MandateOptions {
-            interface OffSession {
-              /**
-               * Amount of the recurring payments
-               */
-              amount: number;
-
-              /**
-               * Three letter ISO Currency-code. `PLN` only.
-               */
-              currency: 'pln';
-
-              /**
-               * Frequency interval of each recurring payment.
-               */
-              interval: OffSession.Interval;
-
-              /**
-               * Frequency indicator of each recurring payment.
-               */
-              interval_count: number;
-            }
-
-            namespace OffSession {
-              type Interval = 'day' | 'month' | 'week' | 'year';
-            }
-          }
         }
 
         interface Card {
@@ -1791,53 +1744,6 @@ declare module 'stripe' {
            * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
            */
           code?: string;
-
-          /**
-           * Details of the BLIK mandate
-           */
-          mandate_options?: Blik.MandateOptions;
-        }
-
-        namespace Blik {
-          interface MandateOptions {
-            /**
-             * Expiry date of the mandate.
-             */
-            expires_after?: number;
-
-            /**
-             * Details of off-session mandate.
-             */
-            off_session?: MandateOptions.OffSession;
-          }
-
-          namespace MandateOptions {
-            interface OffSession {
-              /**
-               * Amount of the recurring payments
-               */
-              amount: number;
-
-              /**
-               * Three letter ISO Currency-code. `PLN` only.
-               */
-              currency: 'pln';
-
-              /**
-               * Frequency interval of each recurring payment.
-               */
-              interval: OffSession.Interval;
-
-              /**
-               * Frequency indicator of each recurring payment.
-               */
-              interval_count: number;
-            }
-
-            namespace OffSession {
-              type Interval = 'day' | 'month' | 'week' | 'year';
-            }
-          }
         }
 
         interface Card {
@@ -2863,53 +2769,6 @@ declare module 'stripe' {
            * The 6-digit BLIK code that a customer has generated using their banking application. Can only be set on confirmation.
            */
           code?: string;
-
-          /**
-           * Details of the BLIK mandate
-           */
-          mandate_options?: Blik.MandateOptions;
-        }
-
-        namespace Blik {
-          interface MandateOptions {
-            /**
-             * Expiry date of the mandate.
-             */
-            expires_after?: number;
-
-            /**
-             * Details of off-session mandate.
-             */
-            off_session?: MandateOptions.OffSession;
-          }
-
-          namespace MandateOptions {
-            interface OffSession {
-              /**
-               * Amount of the recurring payments
-               */
-              amount: number;
-
-              /**
-               * Three letter ISO Currency-code. `PLN` only.
-               */
-              currency: 'pln';
-
-              /**
-               * Frequency interval of each recurring payment.
-               */
-              interval: OffSession.Interval;
-
-              /**
-               * Frequency indicator of each recurring payment.
-               */
-              interval_count: number;
-            }
-
-            namespace OffSession {
-              type Interval = 'day' | 'month' | 'week' | 'year';
-            }
-          }
         }
 
         interface Card {
