@@ -1188,7 +1188,55 @@ declare module 'stripe' {
           type SetupFutureUsage = 'none' | 'off_session';
         }
 
-        interface Blik {}
+        interface Blik {
+          mandate_options?: Blik.MandateOptions;
+        }
+
+        namespace Blik {
+          interface MandateOptions {
+            /**
+             * Date at which the mandate expires.
+             */
+            expires_after: number | null;
+
+            off_session?: MandateOptions.OffSession;
+
+            /**
+             * Type of the mandate.
+             */
+            type: MandateOptions.Type | null;
+          }
+
+          namespace MandateOptions {
+            interface OffSession {
+              /**
+               * Amount of each recurring payment.
+               */
+              amount: number | null;
+
+              /**
+               * Currency of each recurring payment.
+               */
+              currency: string | null;
+
+              /**
+               * Frequency interval of each recurring payment.
+               */
+              interval: OffSession.Interval | null;
+
+              /**
+               * Frequency indicator of each recurring payment.
+               */
+              interval_count: number | null;
+            }
+
+            namespace OffSession {
+              type Interval = 'day' | 'month' | 'week' | 'year';
+            }
+
+            type Type = 'off_session' | 'on_session';
+          }
+        }
 
         interface Boleto {
           /**
