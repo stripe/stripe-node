@@ -115,6 +115,35 @@ declare module 'stripe' {
          * The tax rate that was applied to get this tax amount.
          */
         tax_rate: string | Stripe.TaxRate;
+
+        /**
+         * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+         */
+        taxability_reason: TaxAmount.TaxabilityReason | null;
+
+        /**
+         * The amount on which tax is calculated, in %s.
+         */
+        taxable_amount: number | null;
+      }
+
+      namespace TaxAmount {
+        type TaxabilityReason =
+          | 'customer_exempt'
+          | 'not_collecting'
+          | 'not_subject_to_tax'
+          | 'not_supported'
+          | 'portion_product_exempt'
+          | 'portion_reduced_rated'
+          | 'portion_standard_rated'
+          | 'product_exempt'
+          | 'product_exempt_holiday'
+          | 'proportionally_rated'
+          | 'reduced_rated'
+          | 'reverse_charge'
+          | 'standard_rated'
+          | 'taxable_basis_reduced'
+          | 'zero_rated';
       }
 
       type Type = 'custom_line_item' | 'invoice_line_item';

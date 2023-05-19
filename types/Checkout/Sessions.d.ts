@@ -757,6 +757,8 @@ declare module 'stripe' {
 
           konbini?: PaymentMethodOptions.Konbini;
 
+          link?: PaymentMethodOptions.Link;
+
           oxxo?: PaymentMethodOptions.Oxxo;
 
           p24?: PaymentMethodOptions.P24;
@@ -1122,6 +1124,21 @@ declare module 'stripe' {
              * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
              */
             setup_future_usage?: 'none';
+          }
+
+          interface Link {
+            /**
+             * Indicates that you intend to make future payments with this PaymentIntent's payment method.
+             *
+             * Providing this parameter will [attach the payment method](https://stripe.com/docs/payments/save-during-payment) to the PaymentIntent's Customer, if present, after the PaymentIntent is confirmed and any required actions from the user are complete. If no Customer was provided, the payment method can still be [attached](https://stripe.com/docs/api/payment_methods/attach) to a Customer after the transaction completes.
+             *
+             * When processing card payments, Stripe also uses `setup_future_usage` to dynamically optimize your payment flow and comply with regional legislation and network rules, such as [SCA](https://stripe.com/docs/strong-customer-authentication).
+             */
+            setup_future_usage?: Link.SetupFutureUsage;
+          }
+
+          namespace Link {
+            type SetupFutureUsage = 'none' | 'off_session';
           }
 
           interface Oxxo {
@@ -1562,6 +1579,38 @@ declare module 'stripe' {
              * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
              */
             rate: Stripe.TaxRate;
+
+            /**
+             * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+             */
+            taxability_reason: Tax.TaxabilityReason | null;
+
+            /**
+             * The amount on which tax is calculated, in %s.
+             */
+            taxable_amount: number | null;
+          }
+
+          namespace Tax {
+            type TaxabilityReason =
+              | 'customer_exempt'
+              | 'excluded_territory'
+              | 'jurisdiction_unsupported'
+              | 'not_collecting'
+              | 'not_subject_to_tax'
+              | 'not_supported'
+              | 'portion_product_exempt'
+              | 'portion_reduced_rated'
+              | 'portion_standard_rated'
+              | 'product_exempt'
+              | 'product_exempt_holiday'
+              | 'proportionally_rated'
+              | 'reduced_rated'
+              | 'reverse_charge'
+              | 'standard_rated'
+              | 'taxable_basis_reduced'
+              | 'vat_exempt'
+              | 'zero_rated';
           }
         }
 
@@ -1672,6 +1721,38 @@ declare module 'stripe' {
                * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
                */
               rate: Stripe.TaxRate;
+
+              /**
+               * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+               */
+              taxability_reason: Tax.TaxabilityReason | null;
+
+              /**
+               * The amount on which tax is calculated, in %s.
+               */
+              taxable_amount: number | null;
+            }
+
+            namespace Tax {
+              type TaxabilityReason =
+                | 'customer_exempt'
+                | 'excluded_territory'
+                | 'jurisdiction_unsupported'
+                | 'not_collecting'
+                | 'not_subject_to_tax'
+                | 'not_supported'
+                | 'portion_product_exempt'
+                | 'portion_reduced_rated'
+                | 'portion_standard_rated'
+                | 'product_exempt'
+                | 'product_exempt_holiday'
+                | 'proportionally_rated'
+                | 'reduced_rated'
+                | 'reverse_charge'
+                | 'standard_rated'
+                | 'taxable_basis_reduced'
+                | 'vat_exempt'
+                | 'zero_rated';
             }
           }
         }

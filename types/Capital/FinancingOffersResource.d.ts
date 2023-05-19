@@ -77,8 +77,7 @@ declare module 'stripe' {
 
         /**
          * Acknowledges that platform has received and delivered the financing_offer to
-         * the intended merchant recipient. This is required to make the application
-         * accessible.
+         * the intended merchant recipient.
          */
         markDelivered(
           id: string,

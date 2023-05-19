@@ -603,7 +603,12 @@ declare module 'stripe' {
               preferred_locale: string | null;
 
               /**
-               * A unique reference ID of the PayPal transaction. This must be a globally unique ID across all PayPal transactions or the transaction will fail.
+               * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
+               */
+              reference?: string | null;
+
+              /**
+               * A reference of the PayPal transaction visible to customer which is mapped to PayPal's invoice ID. This must be a globally unique ID if you have configured in your PayPal settings to block multiple payments per invoice ID.
                */
               reference_id?: string | null;
 
@@ -782,6 +787,38 @@ declare module 'stripe' {
            * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
            */
           rate: Stripe.TaxRate;
+
+          /**
+           * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+           */
+          taxability_reason: Tax.TaxabilityReason | null;
+
+          /**
+           * The amount on which tax is calculated, in %s.
+           */
+          taxable_amount: number | null;
+        }
+
+        namespace Tax {
+          type TaxabilityReason =
+            | 'customer_exempt'
+            | 'excluded_territory'
+            | 'jurisdiction_unsupported'
+            | 'not_collecting'
+            | 'not_subject_to_tax'
+            | 'not_supported'
+            | 'portion_product_exempt'
+            | 'portion_reduced_rated'
+            | 'portion_standard_rated'
+            | 'product_exempt'
+            | 'product_exempt_holiday'
+            | 'proportionally_rated'
+            | 'reduced_rated'
+            | 'reverse_charge'
+            | 'standard_rated'
+            | 'taxable_basis_reduced'
+            | 'vat_exempt'
+            | 'zero_rated';
         }
       }
 
@@ -955,6 +992,38 @@ declare module 'stripe' {
              * Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
              */
             rate: Stripe.TaxRate;
+
+            /**
+             * The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+             */
+            taxability_reason: Tax.TaxabilityReason | null;
+
+            /**
+             * The amount on which tax is calculated, in %s.
+             */
+            taxable_amount: number | null;
+          }
+
+          namespace Tax {
+            type TaxabilityReason =
+              | 'customer_exempt'
+              | 'excluded_territory'
+              | 'jurisdiction_unsupported'
+              | 'not_collecting'
+              | 'not_subject_to_tax'
+              | 'not_supported'
+              | 'portion_product_exempt'
+              | 'portion_reduced_rated'
+              | 'portion_standard_rated'
+              | 'product_exempt'
+              | 'product_exempt_holiday'
+              | 'proportionally_rated'
+              | 'reduced_rated'
+              | 'reverse_charge'
+              | 'standard_rated'
+              | 'taxable_basis_reduced'
+              | 'vat_exempt'
+              | 'zero_rated';
           }
         }
       }

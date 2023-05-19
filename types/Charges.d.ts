@@ -776,6 +776,11 @@ declare module 'stripe' {
           network: string | null;
 
           /**
+           * If this card has network token credentials, this contains the details of the network token credentials.
+           */
+          network_token?: Card.NetworkToken | null;
+
+          /**
            * Populated if this transaction used 3D Secure authentication.
            */
           three_d_secure: Card.ThreeDSecure | null;
@@ -829,6 +834,13 @@ declare module 'stripe' {
                */
               type: 'fixed_count';
             }
+          }
+
+          interface NetworkToken {
+            /**
+             * Indicates if Stripe used a network token, either user provided or Stripe managed when processing the transaction.
+             */
+            used: boolean;
           }
 
           interface ThreeDSecure {
@@ -1591,9 +1603,26 @@ declare module 'stripe' {
 
         interface Paypal {
           /**
+           * Owner's email. Values are provided by PayPal directly
+           * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          payer_email?: string | null;
+
+          /**
            * PayPal account PayerID. This identifier uniquely identifies the PayPal customer.
            */
-          payer_id: string | null;
+          payer_id?: string | null;
+
+          /**
+           * Owner's full name. Values provided by PayPal directly
+           * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
+           */
+          payer_name?: string | null;
+
+          /**
+           * The level of protection offered as defined by PayPal Seller Protection for Merchants, for this transaction.
+           */
+          seller_protection?: Paypal.SellerProtection | null;
 
           /**
            * The shipping address for the customer, as supplied by the merchant at the point of payment
@@ -1618,13 +1647,33 @@ declare module 'stripe' {
            * Owner's verified email. Values are verified or provided by PayPal directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          verified_email: string | null;
+          verified_email?: string | null;
 
           /**
            * Owner's verified full name. Values are verified or provided by PayPal directly
            * (if supported) at the time of authorization or settlement. They cannot be set or mutated.
            */
-          verified_name: string | null;
+          verified_name?: string | null;
+        }
+
+        namespace Paypal {
+          interface SellerProtection {
+            /**
+             * An array of conditions that are covered for the transaction, if applicable.
+             */
+            dispute_categories: Array<SellerProtection.DisputeCategory> | null;
+
+            /**
+             * Indicates whether the transaction is eligible for PayPal's seller protection.
+             */
+            status: SellerProtection.Status;
+          }
+
+          namespace SellerProtection {
+            type DisputeCategory = 'fraudulent' | 'product_not_received';
+
+            type Status = 'eligible' | 'not_eligible' | 'partially_eligible';
+          }
         }
 
         interface Pix {

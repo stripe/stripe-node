@@ -44,6 +44,11 @@ declare module 'stripe' {
       display_name: string;
 
       /**
+       * Actual/effective tax rate percentage out of 100. For tax calculations with automatic_tax[enabled]=true, this percentage does not include the statutory tax rate of non-taxable jurisdictions.
+       */
+      effective_percentage: number | null;
+
+      /**
        * This specifies if the tax rate is inclusive or exclusive.
        */
       inclusive: boolean;
