@@ -42,7 +42,7 @@ declare module 'stripe' {
       proration_behavior: QuoteLine.ProrationBehavior | null;
 
       /**
-       * Timestsamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
+       * Timestamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
        */
       set_schedule_end?: QuoteLine.SetScheduleEnd | null;
 

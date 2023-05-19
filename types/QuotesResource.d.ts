@@ -233,7 +233,7 @@ declare module 'stripe' {
         proration_behavior?: Line.ProrationBehavior;
 
         /**
-         * Timestsamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
+         * Timestamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
          */
         set_schedule_end?: Line.SetScheduleEnd;
 
@@ -1765,7 +1765,7 @@ declare module 'stripe' {
         proration_behavior?: Line.ProrationBehavior;
 
         /**
-         * Timestsamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
+         * Timestamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
          */
         set_schedule_end?: Line.SetScheduleEnd;
 

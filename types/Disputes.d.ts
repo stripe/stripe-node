@@ -9,7 +9,7 @@ declare module 'stripe' {
      * information about the dispute process in our [Disputes and
      * Fraud](https://stripe.com/docs/disputes) documentation.
      *
-     * Related guide: [Disputes and Fraud](https://stripe.com/docs/disputes).
+     * Related guide: [Disputes and fraud](https://stripe.com/docs/disputes)
      */
     interface Dispute {
       /**

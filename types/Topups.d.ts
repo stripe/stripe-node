@@ -7,7 +7,7 @@ declare module 'stripe' {
      * individual top-ups, as well as list all top-ups. Top-ups are identified by a
      * unique, random ID.
      *
-     * Related guide: [Topping Up your Platform Account](https://stripe.com/docs/connect/top-ups).
+     * Related guide: [Topping up your platform account](https://stripe.com/docs/connect/top-ups)
      */
     interface Topup {
       /**

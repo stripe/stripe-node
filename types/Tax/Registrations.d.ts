@@ -8,7 +8,7 @@ declare module 'stripe' {
        *
        * Stripe doesn't register on your behalf with the relevant authorities when you create a Tax `Registration` object. For more information on how to register to collect tax, see [our guide](https://stripe.com/docs/tax/registering).
        *
-       * Related guide: [Using the Registrations API](https://stripe.com/docs/tax/registrations-api).
+       * Related guide: [Using the Registrations API](https://stripe.com/docs/tax/registrations-api)
        */
       interface Registration {
         /**
