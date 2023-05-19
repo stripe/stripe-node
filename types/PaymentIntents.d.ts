@@ -13,7 +13,7 @@ declare module 'stripe' {
      * throughout its lifetime as it interfaces with Stripe.js to perform
      * authentication flows and ultimately creates at most one successful charge.
      *
-     * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents).
+     * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents)
      */
     interface PaymentIntent {
       /**
@@ -299,7 +299,7 @@ declare module 'stripe' {
          * throughout its lifetime as it interfaces with Stripe.js to perform
          * authentication flows and ultimately creates at most one successful charge.
          *
-         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents).
+         * Related guide: [Payment Intents API](https://stripe.com/docs/payments/payment-intents)
          */
         payment_intent?: Stripe.PaymentIntent;
 
@@ -344,7 +344,7 @@ declare module 'stripe' {
          * By using SetupIntents, you ensure that your customers experience the minimum set of required friction,
          * even as regulations change over time.
          *
-         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents).
+         * Related guide: [Setup Intents API](https://stripe.com/docs/payments/setup-intents)
          */
         setup_intent?: Stripe.SetupIntent;
 
