@@ -1,5 +1,13 @@
 # Changelog
 
+## 12.6.0 - 2023-05-19
+* [#1787](https://github.com/stripe/stripe-node/pull/1787) Update generated code
+  * Add support for `subscription_update_confirm` and `subscription_update` on `BillingPortal.Session.flow` and `BillingPortalSessionCreateParams.flow_data`
+  * Add support for new values `subscription_update_confirm` and `subscription_update` on enums `BillingPortal.Session.flow.type` and `BillingPortalSessionCreateParams.flow_data.type`
+  * Add support for `link` on `Charge.payment_method_details.card.wallet` and `PaymentMethod.card.wallet`
+  * Add support for `buyer_id` and `cashtag` on `Charge.payment_method_details.cashapp` and `PaymentMethod.cashapp`
+  * Add support for new values `amusement_tax` and `communications_tax` on enums `TaxRate.tax_type`, `TaxRateCreateParams.tax_type`, and `TaxRateUpdateParams.tax_type`
+
 ## 12.5.0 - 2023-05-11
 * [#1785](https://github.com/stripe/stripe-node/pull/1785) Update generated code
   * Add support for `paypal` on `Charge.payment_method_details`, `CheckoutSessionCreateParams.payment_method_options`, `Mandate.payment_method_details`, `PaymentIntent.payment_method_options`, `PaymentIntentConfirmParams.payment_method_data`, `PaymentIntentConfirmParams.payment_method_options`, `PaymentIntentCreateParams.payment_method_data`, `PaymentIntentCreateParams.payment_method_options`, `PaymentIntentUpdateParams.payment_method_data`, `PaymentIntentUpdateParams.payment_method_options`, `PaymentMethodCreateParams`, `PaymentMethod`, `SetupAttempt.payment_method_details`, `SetupIntent.payment_method_options`, `SetupIntentConfirmParams.payment_method_data`, `SetupIntentConfirmParams.payment_method_options`, `SetupIntentCreateParams.payment_method_data`, `SetupIntentCreateParams.payment_method_options`, `SetupIntentUpdateParams.payment_method_data`, and `SetupIntentUpdateParams.payment_method_options`
