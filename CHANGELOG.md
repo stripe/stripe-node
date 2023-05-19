@@ -1,5 +1,12 @@
 # Changelog
 
+## 12.7.0-beta.1 - 2023-05-19
+* [#1788](https://github.com/stripe/stripe-node/pull/1788) Update generated code for beta
+  * Add support for `subscribe` and `unsubscribe` methods on resource `FinancialConnections.Account`
+  * Add support for `next_refresh_available_at` on `FinancialConnections.Account.balance_refresh`, `FinancialConnections.Account.inferred_balances_refresh`, `FinancialConnections.Account.ownership_refresh`, and `FinancialConnections.Account.transaction_refresh`
+  * Add support for `status_details` and `status` on `Tax.Settings`
+  * Add support for new value `tax.settings.updated` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+
 ## 12.6.0 - 2023-05-19
 * [#1787](https://github.com/stripe/stripe-node/pull/1787) Update generated code
   * Add support for `subscription_update_confirm` and `subscription_update` on `BillingPortal.Session.flow` and `BillingPortalSessionCreateParams.flow_data`
