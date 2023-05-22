@@ -536,7 +536,7 @@ export class RequestSender {
         const apiVersion = this._stripe.getApiField('version');
         const headers = this._makeHeaders(
           auth,
-          options.encoding === 'json'
+          options.apiMode === 'preview'
             ? 'application/json'
             : 'application/x-www-form-urlencoded',
           requestData.length,
@@ -569,7 +569,7 @@ export class RequestSender {
     } else {
       prepareAndMakeRequest(
         null,
-        options.encoding === 'json'
+        options.apiMode === 'preview'
           ? JSON.stringify(data || {}, dateTimeReplacer)
           : stringifyRequestData(data || {})
       );

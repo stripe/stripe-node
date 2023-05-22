@@ -55,7 +55,7 @@ export type RequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
   headers?: RequestHeaders;
-  encoding?: 'form' | 'json';
+  apiMode?: 'standard' | 'preview';
 };
 export type RequestOpts = {
   requestMethod: string;
@@ -67,7 +67,7 @@ export type RequestOpts = {
   host: string | null;
   streaming: boolean;
   settings: RequestSettings;
-  encoding?: 'form' | 'json';
+  apiMode?: 'standard' | 'preview';
 };
 export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};
 export type ResponseEvent = {

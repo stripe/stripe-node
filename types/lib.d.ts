@@ -155,7 +155,7 @@ declare module 'stripe' {
       /**
        * Specify encoding for the request body. This is an experimental interface and is not yet stable.
        */
-      encoding?: 'form' | 'json';
+      apiMode?: 'standard' | 'preview';
 
       /**
        * Specify additional request headers. This is an experimental interface and is not yet stable.

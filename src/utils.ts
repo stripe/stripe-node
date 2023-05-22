@@ -16,7 +16,7 @@ const OPTIONS_KEYS = [
   'maxNetworkRetries',
   'timeout',
   'host',
-  'encoding',
+  'apiMode',
   'additionalHeaders',
 ];
 
@@ -25,7 +25,7 @@ type Settings = {
   maxNetworkRetries?: number;
 };
 
-type Encoding = 'json' | 'form' | null;
+type APIMode = 'preview' | 'standard' | null;
 
 type Options = {
   auth: string | null;
@@ -33,7 +33,7 @@ type Options = {
   settings: Settings;
   streaming?: boolean;
   headers: Record<string, unknown>;
-  encoding?: Encoding;
+  apiMode?: APIMode;
 };
 
 export function isOptionsHash(o: unknown): boolean | unknown {
@@ -180,14 +180,14 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       if (params.host) {
         opts.host = params.host as string;
       }
-      if (params.encoding) {
-        if (params.encoding !== 'form' && params.encoding !== 'json') {
+      if (params.apiMode) {
+        if (params.apiMode !== 'standard' && params.apiMode !== 'preview') {
           throw new Error(
-            `Invalid encoding: ${params.encoding}. Must be one of 'form' or 'json'`
+            `Invalid apiMode: ${params.apiMode}. Must be one of 'standard' or 'preview'`
           );
         }
 
-        opts.encoding = params.encoding as Encoding;
+        opts.apiMode = params.apiMode as APIMode;
       }
       if (params.additionalHeaders) {
         opts.headers = params.additionalHeaders as Record<string, unknown>;

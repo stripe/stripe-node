@@ -666,7 +666,7 @@ describe('Stripe Module', function() {
             'POST',
             '/v1/customers',
             {description: 'test customer'},
-            {encoding: 'form'},
+            {apiMode: 'standard'},
             (err, result) => {
               if (err) return done(err);
               expect(result).to.deep.equal(returnedCustomer);
@@ -706,7 +706,7 @@ describe('Stripe Module', function() {
               description: 'test customer',
               created: new Date('2009-02-13T23:31:30Z'),
             },
-            {encoding: 'json', additionalHeaders: {foo: 'bar'}},
+            {apiMode: 'preview', additionalHeaders: {foo: 'bar'}},
             (err, result) => {
               if (err) return done(err);
               expect(result).to.deep.equal(returnedCustomer);
@@ -790,7 +790,7 @@ describe('Stripe Module', function() {
         'GET',
         '/v1/customers',
         {},
-        {encoding: 'json'}
+        {apiMode: 'preview'}
       );
 
       expect(response).to.have.property('object', 'list');

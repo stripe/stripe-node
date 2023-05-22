@@ -37,7 +37,7 @@ describe('RequestSender', () => {
       const headers = sender._makeHeaders(null, '', 0, null);
       expect(headers).to.not.include.keys('Stripe-Version');
     });
-    it('sets the content type header to application/json if the encoding option is JSON', () => {
+    it('sets the content type header to application/json if the apiMode option is preview', () => {
       const headers = sender._makeHeaders(null, 'application/json', 0, null);
       expect(headers['Content-Type']).to.equal('application/json');
     });
