@@ -86,6 +86,16 @@ declare module 'stripe' {
           subscription_cancel: Flow.SubscriptionCancel | null;
 
           /**
+           * Configuration when `flow.type=subscription_update`.
+           */
+          subscription_update: Flow.SubscriptionUpdate | null;
+
+          /**
+           * Configuration when `flow.type=subscription_update_confirm`.
+           */
+          subscription_update_confirm: Flow.SubscriptionUpdateConfirm | null;
+
+          /**
            * Type of flow that the customer will go through.
            */
           type: Flow.Type;
@@ -134,7 +144,66 @@ declare module 'stripe' {
             subscription: string;
           }
 
-          type Type = 'payment_method_update' | 'subscription_cancel';
+          interface SubscriptionUpdate {
+            /**
+             * The ID of the subscription to be updated.
+             */
+            subscription: string;
+          }
+
+          interface SubscriptionUpdateConfirm {
+            /**
+             * The coupon or promotion code to apply to this subscription update. Currently, only up to one may be specified.
+             */
+            discounts: Array<SubscriptionUpdateConfirm.Discount> | null;
+
+            /**
+             * The [subscription item](https://stripe.com/docs/api/subscription_items) to be updated through this flow. Currently, only up to one may be specified and subscriptions with multiple items are not updatable.
+             */
+            items: Array<SubscriptionUpdateConfirm.Item>;
+
+            /**
+             * The ID of the subscription to be updated.
+             */
+            subscription: string;
+          }
+
+          namespace SubscriptionUpdateConfirm {
+            interface Discount {
+              /**
+               * The ID of the coupon to apply to this subscription update.
+               */
+              coupon: string | null;
+
+              /**
+               * The ID of a promotion code to apply to this subscription update.
+               */
+              promotion_code: string | null;
+            }
+
+            interface Item {
+              /**
+               * The ID of the [subscription item](https://stripe.com/docs/api/subscriptions/object#subscription_object-items-data-id) to be updated.
+               */
+              id: string | null;
+
+              /**
+               * The price the customer should subscribe to through this flow. The price must also be included in the configuration's [`features.subscription_update.products`](docs/api/customer_portal/configuration#portal_configuration_object-features-subscription_update-products).
+               */
+              price: string | null;
+
+              /**
+               * [Quantity](https://stripe.com/docs/subscriptions/quantities) for this item that the customer should subscribe to through this flow.
+               */
+              quantity?: number;
+            }
+          }
+
+          type Type =
+            | 'payment_method_update'
+            | 'subscription_cancel'
+            | 'subscription_update'
+            | 'subscription_update_confirm';
         }
 
         type Locale =

@@ -112,7 +112,7 @@ declare module 'stripe' {
            * object is created. [Authorizations](https://stripe.com/docs/issuing/purchases/authorizations) must be approved for the
            * purchase to be completed successfully.
            *
-           * Related guide: [Issued Card Authorizations](https://stripe.com/docs/issuing/purchases/authorizations).
+           * Related guide: [Issued card authorizations](https://stripe.com/docs/issuing/purchases/authorizations)
            */
           issuing_authorization?: Stripe.Issuing.Authorization;
 

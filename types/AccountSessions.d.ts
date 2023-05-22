@@ -9,7 +9,7 @@ declare module 'stripe' {
      * to your user. Do not save AccountSessions to your database as they expire relatively
      * quickly, and cannot be used more than once.
      *
-     * Related guide: [Connect embedded components](https://stripe.com/docs/connect/get-started-connect-embedded-components).
+     * Related guide: [Connect embedded components](https://stripe.com/docs/connect/get-started-connect-embedded-components)
      */
     interface AccountSession {
       /**

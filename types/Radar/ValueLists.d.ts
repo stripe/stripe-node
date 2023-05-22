@@ -6,7 +6,7 @@ declare module 'stripe' {
       /**
        * Value lists allow you to group values together which can then be referenced in rules.
        *
-       * Related guide: [Default Stripe Lists](https://stripe.com/docs/radar/lists#managing-list-items).
+       * Related guide: [Default Stripe lists](https://stripe.com/docs/radar/lists#managing-list-items)
        */
       interface ValueList {
         /**

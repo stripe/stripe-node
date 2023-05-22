@@ -61,6 +61,8 @@ declare module 'stripe' {
 
     namespace TaxRateCreateParams {
       type TaxType =
+        | 'amusement_tax'
+        | 'communications_tax'
         | 'gst'
         | 'hst'
         | 'igst'
@@ -129,6 +131,8 @@ declare module 'stripe' {
 
     namespace TaxRateUpdateParams {
       type TaxType =
+        | 'amusement_tax'
+        | 'communications_tax'
         | 'gst'
         | 'hst'
         | 'igst'

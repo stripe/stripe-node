@@ -87,6 +87,38 @@ declare module 'stripe' {
           | 'transactions';
       }
 
+      interface AccountSubscribeParams {
+        /**
+         * The list of account features to which you would like to subscribe.`.
+         */
+        features: Array<AccountSubscribeParams.Feature>;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      namespace AccountSubscribeParams {
+        type Feature = 'inferred_balances' | 'transactions';
+      }
+
+      interface AccountUnsubscribeParams {
+        /**
+         * The list of account features from which you would like to unsubscribe.
+         */
+        features: Array<AccountUnsubscribeParams.Feature>;
+
+        /**
+         * Specifies which fields in the response should be expanded.
+         */
+        expand?: Array<string>;
+      }
+
+      namespace AccountUnsubscribeParams {
+        type Feature = 'inferred_balances' | 'transactions';
+      }
+
       class AccountsResource {
         /**
          * Retrieves the details of an Financial Connections Account.
@@ -153,6 +185,24 @@ declare module 'stripe' {
         refresh(
           id: string,
           params: AccountRefreshParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
+
+        /**
+         * Subscribes to periodic refreshes of data associated with a Financial Connections Account.
+         */
+        subscribe(
+          id: string,
+          params: AccountSubscribeParams,
+          options?: RequestOptions
+        ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
+
+        /**
+         * Unsubscribes from periodic refreshes of data associated with a Financial Connections Account.
+         */
+        unsubscribe(
+          id: string,
+          params: AccountUnsubscribeParams,
           options?: RequestOptions
         ): Promise<Stripe.Response<Stripe.FinancialConnections.Account>>;
       }

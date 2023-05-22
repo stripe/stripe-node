@@ -24,7 +24,7 @@ declare module 'stripe' {
      * [Radar](https://stripe.com/docs/radar), our integrated solution for automatic fraud protection,
      * performs best with integrations that use client-side tokenization.
      *
-     * Related guide: [Accept a payment](https://stripe.com/docs/payments/accept-a-payment-charges#web-create-token)
+     * Related guide: [Accept a payment with Charges and Tokens](https://stripe.com/docs/payments/accept-a-payment-charges#web-create-token)
      */
     interface Token {
       /**
@@ -44,7 +44,7 @@ declare module 'stripe' {
        * destinations on `Account` objects for [Custom accounts](https://stripe.com/docs/connect/custom-accounts).
        * They can be bank accounts or debit cards as well, and are documented in the links above.
        *
-       * Related guide: [Bank Debits and Transfers](https://stripe.com/docs/payments/bank-debits-transfers).
+       * Related guide: [Bank debits and transfers](https://stripe.com/docs/payments/bank-debits-transfers)
        */
       bank_account?: Stripe.BankAccount;
 
@@ -53,7 +53,7 @@ declare module 'stripe' {
        * later. You can also store multiple debit cards on a recipient in order to
        * transfer to those cards later.
        *
-       * Related guide: [Card Payments with Sources](https://stripe.com/docs/sources/cards).
+       * Related guide: [Card payments with Sources](https://stripe.com/docs/sources/cards)
        */
       card?: Stripe.Card;
 

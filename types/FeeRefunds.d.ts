@@ -7,7 +7,7 @@ declare module 'stripe' {
      * has previously been created but not yet refunded. Funds will be refunded to
      * the Stripe account from which the fee was originally collected.
      *
-     * Related guide: [Refunding Application Fees](https://stripe.com/docs/connect/destination-charges#refunding-app-fee).
+     * Related guide: [Refunding application fees](https://stripe.com/docs/connect/destination-charges#refunding-app-fee)
      */
     interface FeeRefund {
       /**

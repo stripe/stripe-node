@@ -5,7 +5,7 @@ declare module 'stripe' {
     /**
      * This object represents a customer of your business. It lets you create recurring charges and track payments that belong to the same customer.
      *
-     * Related guide: [Save a card during payment](https://stripe.com/docs/payments/save-during-payment).
+     * Related guide: [Save a card during payment](https://stripe.com/docs/payments/save-during-payment)
      */
     interface Customer {
       /**

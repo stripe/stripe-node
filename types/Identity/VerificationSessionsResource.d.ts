@@ -177,7 +177,7 @@ declare module 'stripe' {
          *
          * If your API key is in test mode, verification checks won't actually process, though everything else will occur as if in live mode.
          *
-         * Related guide: [Verify your users' identity documents](https://stripe.com/docs/identity/verify-identity-documents).
+         * Related guide: [Verify your users' identity documents](https://stripe.com/docs/identity/verify-identity-documents)
          */
         create(
           params: VerificationSessionCreateParams,
