@@ -3527,4 +3527,27 @@ describe('Tax.Calculations', function() {
     );
     expect(calculationLineItems).not.to.be.null;
   });
+
+  it('create method', async function() {
+    const calculation = await stripe.tax.calculations.create({
+      currency: 'usd',
+      line_items: [
+        {
+          amount: 1000,
+          reference: 'L1',
+        },
+      ],
+      customer_details: {
+        address: {
+          line1: '354 Oyster Point Blvd',
+          city: 'South San Francisco',
+          state: 'CA',
+          postal_code: '94080',
+          country: 'US',
+        },
+        address_source: 'shipping',
+      },
+    });
+    expect(calculation).not.to.be.null;
+  });
 });
