@@ -325,6 +325,11 @@ declare module 'stripe' {
          * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
          */
         wechat_pay?: PaymentMethodData.WechatPay;
+
+        /**
+         * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+         */
+        zip?: PaymentMethodData.Zip;
       }
 
       namespace PaymentMethodData {
@@ -652,7 +657,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface UsBankAccount {
           /**
@@ -688,6 +694,8 @@ declare module 'stripe' {
         }
 
         interface WechatPay {}
+
+        interface Zip {}
       }
 
       interface PaymentMethodOptions {
@@ -1231,6 +1239,11 @@ declare module 'stripe' {
          * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
          */
         wechat_pay?: PaymentMethodData.WechatPay;
+
+        /**
+         * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+         */
+        zip?: PaymentMethodData.Zip;
       }
 
       namespace PaymentMethodData {
@@ -1558,7 +1571,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface UsBankAccount {
           /**
@@ -1594,6 +1608,8 @@ declare module 'stripe' {
         }
 
         interface WechatPay {}
+
+        interface Zip {}
       }
 
       interface PaymentMethodOptions {
@@ -2219,6 +2235,11 @@ declare module 'stripe' {
          * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
          */
         wechat_pay?: PaymentMethodData.WechatPay;
+
+        /**
+         * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+         */
+        zip?: PaymentMethodData.Zip;
       }
 
       namespace PaymentMethodData {
@@ -2546,7 +2567,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface UsBankAccount {
           /**
@@ -2582,6 +2604,8 @@ declare module 'stripe' {
         }
 
         interface WechatPay {}
+
+        interface Zip {}
       }
 
       interface PaymentMethodOptions {

@@ -192,6 +192,11 @@ declare module 'stripe' {
        * If this is an `wechat_pay` PaymentMethod, this hash contains details about the wechat_pay payment method.
        */
       wechat_pay?: PaymentMethodCreateParams.WechatPay;
+
+      /**
+       * If this is a `zip` PaymentMethod, this hash contains details about the Zip payment method.
+       */
+      zip?: PaymentMethodCreateParams.Zip;
     }
 
     namespace PaymentMethodCreateParams {
@@ -546,7 +551,8 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface UsBankAccount {
         /**
@@ -582,6 +588,8 @@ declare module 'stripe' {
       }
 
       interface WechatPay {}
+
+      interface Zip {}
     }
 
     interface PaymentMethodRetrieveParams {
@@ -656,6 +664,11 @@ declare module 'stripe' {
        * If this is an `us_bank_account` PaymentMethod, this hash contains details about the US bank account payment method.
        */
       us_bank_account?: PaymentMethodUpdateParams.UsBankAccount;
+
+      /**
+       * This is a legacy parameter that will be removed in the future. It is a hash that does not accept any keys.
+       */
+      zip?: PaymentMethodUpdateParams.Zip;
     }
 
     namespace PaymentMethodUpdateParams {
@@ -719,6 +732,8 @@ declare module 'stripe' {
       namespace UsBankAccount {
         type AccountHolderType = 'company' | 'individual';
       }
+
+      interface Zip {}
     }
 
     interface PaymentMethodListParams extends PaginationParams {
@@ -770,7 +785,8 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
     }
 
     interface PaymentMethodAttachParams {

@@ -310,6 +310,11 @@ declare module 'stripe' {
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The zip_payments capability.
+         */
+        zip_payments?: Capabilities.ZipPayments;
       }
 
       namespace Capabilities {
@@ -552,6 +557,13 @@ declare module 'stripe' {
         }
 
         interface UsBankAccountAchPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface ZipPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */
@@ -1559,6 +1571,11 @@ declare module 'stripe' {
          * The us_bank_account_ach_payments capability.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The zip_payments capability.
+         */
+        zip_payments?: Capabilities.ZipPayments;
       }
 
       namespace Capabilities {
@@ -1801,6 +1818,13 @@ declare module 'stripe' {
         }
 
         interface UsBankAccountAchPayments {
+          /**
+           * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+           */
+          requested?: boolean;
+        }
+
+        interface ZipPayments {
           /**
            * Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
            */

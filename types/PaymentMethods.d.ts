@@ -115,6 +115,8 @@ declare module 'stripe' {
       us_bank_account?: PaymentMethod.UsBankAccount;
 
       wechat_pay?: PaymentMethod.WechatPay;
+
+      zip?: PaymentMethod.Zip;
     }
 
     namespace PaymentMethod {
@@ -909,7 +911,8 @@ declare module 'stripe' {
         | 'sepa_debit'
         | 'sofort'
         | 'us_bank_account'
-        | 'wechat_pay';
+        | 'wechat_pay'
+        | 'zip';
 
       interface UsBankAccount {
         /**
@@ -1023,6 +1026,8 @@ declare module 'stripe' {
       }
 
       interface WechatPay {}
+
+      interface Zip {}
     }
   }
 }
