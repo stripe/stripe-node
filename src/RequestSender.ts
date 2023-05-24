@@ -8,9 +8,10 @@ import {
 } from './Error.js';
 import {
   emitWarning,
+  jsonStringifyRequestData,
   normalizeHeaders,
   removeNullish,
-  stringifyRequestData,
+  queryStringifyRequestData,
 } from './utils.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {
@@ -551,14 +552,6 @@ export class RequestSender {
       });
     };
 
-    function dateTimeReplacer(this: any, key: string, value: any): any {
-      if (this[key] instanceof Date) {
-        return Math.floor(this[key].getTime() / 1000).toString();
-      }
-
-      return value;
-    }
-
     if (requestDataProcessor) {
       requestDataProcessor(
         method,
@@ -570,8 +563,8 @@ export class RequestSender {
       prepareAndMakeRequest(
         null,
         options.apiMode === 'preview'
-          ? JSON.stringify(data || {}, dateTimeReplacer)
-          : stringifyRequestData(data || {})
+          ? jsonStringifyRequestData(data || {})
+          : queryStringifyRequestData(data || {})
       );
     }
   }

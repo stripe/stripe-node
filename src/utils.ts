@@ -48,7 +48,7 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  * Stringifies an Object, accommodating nested objects
  * (forming the conventional key 'parent[child]=value')
  */
-export function stringifyRequestData(data: RequestData | string): string {
+export function queryStringifyRequestData(data: RequestData | string): string {
   return (
     qs
       .stringify(data, {
@@ -395,4 +395,22 @@ export function concat(arrays: Array<Uint8Array>): Uint8Array {
   });
 
   return merged;
+}
+
+/**
+ * Replaces Date objects with Unix timestamps
+ */
+function dateTimeReplacer(this: any, key: string, value: any): string {
+  if (this[key] instanceof Date) {
+    return Math.floor(this[key].getTime() / 1000).toString();
+  }
+
+  return value;
+}
+
+/**
+ * JSON stringifies an Object, replacing Date objects with Unix timestamps
+ */
+export function jsonStringifyRequestData(data: RequestData | string): string {
+  return JSON.stringify(data, dateTimeReplacer);
 }
