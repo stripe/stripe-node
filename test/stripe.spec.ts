@@ -5,8 +5,7 @@
 
 import {createStripe} from '../src/stripe.core.js';
 import {getMockPlatformFunctions} from './testUtils.js';
-import {ApiVersion} from '../src/apiVersion.js';
-import {PreviewVersion} from '../src/apiVersion.js';
+import {ApiVersion, PreviewVersion} from '../src/apiVersion.js';
 
 const testUtils = require('./testUtils.js');
 const Stripe = require('../src/stripe.cjs.node.js');
