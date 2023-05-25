@@ -517,6 +517,24 @@ describe('RequestSender', () => {
         });
       });
 
+      it('uses developer_message if it exists in error response', (done) => {
+        const error = {
+          developer_message: 'Unacceptable',
+        };
+
+        nock(`https://${options.host}`)
+          .post('/v1/charges')
+          .reply(400, {
+            error,
+          });
+
+        realStripe.rawRequest('POST', '/v1/charges', null, null, (err) => {
+          expect(err).to.be.an.instanceOf(StripeError);
+          expect(err.message).to.be.equal('Unacceptable');
+          done();
+        });
+      });
+
       it('retries connection timeout errors', (done) => {
         let nRequestsReceived = 0;
         return utils.getTestServerStripe(
