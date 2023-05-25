@@ -6,6 +6,7 @@
 import {createStripe} from '../src/stripe.core.js';
 import {getMockPlatformFunctions} from './testUtils.js';
 import {ApiVersion} from '../src/apiVersion.js';
+import {PreviewVersion} from '../src/apiVersion.js';
 
 const testUtils = require('./testUtils.js');
 const Stripe = require('../src/stripe.cjs.node.js');
@@ -683,6 +684,7 @@ describe('Stripe Module', function() {
         {},
         (req, res) => {
           expect(req.headers['content-type']).to.equal('application/json');
+          expect(req.headers['stripe-version']).to.equal(PreviewVersion);
           expect(req.headers.foo).to.equal('bar');
           const requestBody = [];
           req.on('data', (chunks) => {
@@ -786,12 +788,7 @@ describe('Stripe Module', function() {
     });
 
     it('should make request successfully', async () => {
-      const response = await stripe.rawRequest(
-        'GET',
-        '/v1/customers',
-        {},
-        {apiMode: 'preview'}
-      );
+      const response = await stripe.rawRequest('GET', '/v1/customers', {});
 
       expect(response).to.have.property('object', 'list');
     });

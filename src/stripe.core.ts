@@ -1,11 +1,7 @@
 import * as _Error from './Error.js';
-import * as apiVersion from './apiVersion.js';
+import {ApiVersion} from './apiVersion.js';
 import * as resources from './resources.js';
-import {
-  HttpClient,
-  HttpClientResponse,
-  HttpClientResponseInterface,
-} from './net/HttpClient.js';
+import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {
   determineProcessUserAgentProperties,
   pascalToCamelCase,
@@ -23,13 +19,12 @@ import {
   RequestOptions,
   RequestCallback,
   RequestData,
-  RequestDataProcessor,
 } from './Types.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
-const DEFAULT_API_VERSION = apiVersion.ApiVersion;
+const DEFAULT_API_VERSION = ApiVersion;
 
 const DEFAULT_TIMEOUT = 80000;
 

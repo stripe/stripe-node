@@ -31,6 +31,7 @@ import {
   RequestArgs,
   RequestOpts,
 } from './Types.js';
+import {PreviewVersion} from './apiVersion.js';
 
 export type HttpClientResponseError = {code: string};
 
@@ -620,13 +621,17 @@ export class RequestSender {
 
       requestData = data;
 
+      let contentType = 'application/x-www-form-urlencoded';
+      let apiVersion = this._stripe.getApiField('version');
+      if (options.apiMode === 'preview') {
+        contentType = 'application/json';
+        apiVersion = PreviewVersion;
+      }
+
       this._stripe.getClientUserAgent((clientUserAgent: string) => {
-        const apiVersion = this._stripe.getApiField('version');
         const headers = this._makeHeaders(
           auth,
-          options.apiMode === 'preview'
-            ? 'application/json'
-            : 'application/x-www-form-urlencoded',
+          contentType,
           requestData.length,
           apiVersion,
           clientUserAgent,
