@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.8.0-beta.1 - 2023-05-25
+* [#1795](https://github.com/stripe/stripe-node/pull/1795) Update generated code for beta
+
 ## 12.7.0 - 2023-05-25
 * [#1797](https://github.com/stripe/stripe-node/pull/1797) Update generated code
   * Add support for `zip_payments` on `Account.capabilities`, `AccountCreateParams.capabilities`, and `AccountUpdateParams.capabilities`
