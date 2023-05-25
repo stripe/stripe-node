@@ -49,11 +49,15 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  * Stringifies an Object, accommodating nested objects
  * (forming the conventional key 'parent[child]=value')
  */
-export function queryStringifyRequestData(data: RequestData | string): string {
+export function queryStringifyRequestData(
+  data: RequestData | string,
+  apiMode?: APIMode
+): string {
   return (
     qs
       .stringify(data, {
         serializeDate: (d: Date) => Math.floor(d.getTime() / 1000).toString(),
+        arrayFormat: apiMode === 'preview' ? 'repeat' : 'indices',
       })
       // Don't use strict form encoding by changing the square bracket control
       // characters back to their literals. This is fine by the server, and

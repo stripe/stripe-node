@@ -652,12 +652,18 @@ export class RequestSender {
         prepareAndMakeRequest
       );
     } else {
-      prepareAndMakeRequest(
-        null,
-        options.apiMode === 'preview'
-          ? jsonStringifyRequestData(data || {})
-          : queryStringifyRequestData(data || {})
-      );
+      let stringifiedData: string;
+
+      if (options.apiMode === 'preview') {
+        stringifiedData = data ? jsonStringifyRequestData(data) : '';
+      } else {
+        stringifiedData = queryStringifyRequestData(
+          data || {},
+          options.apiMode
+        );
+      }
+
+      prepareAndMakeRequest(null, stringifiedData);
     }
   }
 }
