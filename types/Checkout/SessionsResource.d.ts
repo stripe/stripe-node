@@ -1563,7 +1563,8 @@ declare module 'stripe' {
           | 'sepa_debit'
           | 'sofort'
           | 'us_bank_account'
-          | 'wechat_pay';
+          | 'wechat_pay'
+          | 'zip';
 
         interface PhoneNumberCollection {
           /**

@@ -67,7 +67,7 @@ declare module 'stripe' {
       details_submitted: boolean;
 
       /**
-       * An email address associated with the account. You can treat this as metadata: it is not used for authentication or messaging account holders.
+       * An email address associated with the account. It's not used for authentication and Stripe doesn't market to this field without explicit approval from the platform.
        */
       email: string | null;
 
@@ -337,6 +337,11 @@ declare module 'stripe' {
          * The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
          */
         us_bank_account_ach_payments?: Capabilities.UsBankAccountAchPayments;
+
+        /**
+         * The status of the Zip capability of the account, or whether the account can directly process Zip charges.
+         */
+        zip_payments?: Capabilities.ZipPayments;
       }
 
       namespace Capabilities {
@@ -409,6 +414,8 @@ declare module 'stripe' {
         type Treasury = 'active' | 'inactive' | 'pending';
 
         type UsBankAccountAchPayments = 'active' | 'inactive' | 'pending';
+
+        type ZipPayments = 'active' | 'inactive' | 'pending';
       }
 
       interface Company {

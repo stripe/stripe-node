@@ -473,6 +473,8 @@ declare module 'stripe' {
         wechat?: PaymentMethodDetails.Wechat;
 
         wechat_pay?: PaymentMethodDetails.WechatPay;
+
+        zip?: PaymentMethodDetails.Zip;
       }
 
       namespace PaymentMethodDetails {
@@ -1838,6 +1840,8 @@ declare module 'stripe' {
            */
           transaction_id: string | null;
         }
+
+        interface Zip {}
       }
 
       interface RadarOptions {
