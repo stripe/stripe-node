@@ -3,11 +3,10 @@
 declare module 'stripe' {
   namespace Stripe {
     /**
-     * To charge a credit or a debit card, you create a `Charge` object. You can
-     * retrieve and refund individual charges as well as list all charges. Charges
-     * are identified by a unique, random ID.
-     *
-     * Related guide: [Accept a payment with the Charges API](https://stripe.com/docs/payments/accept-a-payment-charges)
+     * The `Charge` object represents a single attempt to move money into your Stripe account.
+     * PaymentIntent confirmation is the most common way to create Charges, but transferring
+     * money to a different Stripe account through Connect also creates Charges.
+     * Some legacy payment flows create Charges directly, which is not recommended for new integrations.
      */
     interface Charge {
       /**
