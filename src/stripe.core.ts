@@ -221,23 +221,13 @@ export function createStripe(
       options?: RequestOptions,
       callback?: RequestCallback // for testing
     ): Promise<any> {
-      // const Resource = Stripe.StripeResource.extend({
-      //   request: Stripe.StripeResource.method({
-      //     method,
-      //     fullPath,
-      //   }),
-      // });
-
-      if (typeof callback === 'function') {
-        return this._requestSender._rawRequest(
-          method,
-          fullPath,
-          params,
-          options,
-          callback
-        );
-      }
-      return this._requestSender._rawRequest(method, fullPath, params, options);
+      return this._requestSender._rawRequest(
+        method,
+        fullPath,
+        params,
+        options,
+        callback
+      );
     },
 
     /**
