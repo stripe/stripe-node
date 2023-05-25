@@ -40,7 +40,7 @@ export type RequestCallback = (
   error: Error | null,
   response?: any
 ) => RequestCallbackReturn;
-export type RequestCallbackReturn = any;
+export type RequestCallbackReturn = void;
 export type RequestData = Record<string, any>;
 export type RequestEvent = {
   api_version?: string;
@@ -157,6 +157,13 @@ export type StripeObject = {
   ) => Promise<any>;
 };
 export type RequestSender = {
+  _rawRequest(
+    method: string,
+    fullPath: string,
+    params?: RequestData,
+    options?: RequestOptions,
+    callback?: RequestCallback
+  ): Promise<any>;
   _request(
     method: string,
     host: string | null,

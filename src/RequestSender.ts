@@ -12,6 +12,9 @@ import {
   normalizeHeaders,
   removeNullish,
   queryStringifyRequestData,
+  getDataFromArgs,
+  getOptionsFromArgs,
+  callbackifyPromiseWithTimeout,
 } from './utils.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {
@@ -25,6 +28,8 @@ import {
   RequestData,
   RequestOptions,
   RequestDataProcessor,
+  RequestArgs,
+  RequestOpts,
 } from './Types.js';
 
 export type HttpClientResponseError = {code: string};
@@ -404,6 +409,88 @@ export class RequestSender {
         });
       }
     }
+  }
+
+  _rawRequest(
+    method: string,
+    fullPath: string,
+    params?: RequestData,
+    options?: RequestOptions,
+    callback?: RequestCallback // for testing
+  ): Promise<any> {
+    const requestPromise = new Promise<any>((resolve, reject) => {
+      let opts: RequestOpts;
+      try {
+        const requestMethod = method.toUpperCase();
+
+        const args: RequestArgs = [].slice.call([params, options]);
+
+        // Pull request data and options (headers, auth) from args.
+        const dataFromArgs = getDataFromArgs(args);
+        const data = Object.assign({}, dataFromArgs);
+        const calculatedOptions = getOptionsFromArgs(args);
+        const apiMode = calculatedOptions.apiMode || 'standard';
+
+        const headers = calculatedOptions.headers;
+        const dataInQuery =
+          requestMethod === 'GET' || requestMethod === 'DELETE';
+        const bodyData = dataInQuery ? {} : data;
+        const queryData = dataInQuery ? data : {};
+
+        opts = {
+          requestMethod,
+          requestPath: fullPath,
+          bodyData,
+          queryData,
+          auth: calculatedOptions.auth,
+          // @ts-ignore-next-line
+          headers,
+          host: null,
+          streaming: false,
+          settings: {},
+          apiMode: apiMode,
+        };
+      } catch (err) {
+        reject(err);
+        return;
+      }
+
+      function requestCallback(
+        err: any,
+        response: HttpClientResponseInterface
+      ): void {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(response);
+        }
+      }
+
+      const emptyQuery = Object.keys(opts.queryData).length === 0;
+      const path = [
+        opts.requestPath,
+        emptyQuery ? '' : '?',
+        queryStringifyRequestData(opts.queryData),
+      ].join('');
+
+      const {headers, settings} = opts;
+
+      this._request(
+        opts.requestMethod,
+        opts.host,
+        path,
+        opts.bodyData,
+        opts.auth,
+        {headers, settings, streaming: opts.streaming, apiMode: opts.apiMode},
+        requestCallback
+      );
+    });
+
+    const requestPromiseWithCallback = callback
+      ? callbackifyPromiseWithTimeout(requestPromise, callback)
+      : requestPromise;
+
+    return requestPromiseWithCallback;
   }
 
   _request(

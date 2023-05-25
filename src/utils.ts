@@ -6,6 +6,7 @@ import {
   StripeResourceObject,
   RequestHeaders,
   MultipartRequestData,
+  RequestCallback,
 } from './Types.js';
 
 const OPTIONS_KEYS = [
@@ -273,7 +274,7 @@ export function normalizeHeader(header: string): string {
 
 export function callbackifyPromiseWithTimeout<T>(
   promise: Promise<T>,
-  callback: ((error: unknown, result: T | null) => void) | null
+  callback: RequestCallback | null
 ): Promise<T | void> {
   if (callback) {
     // Ensure callback is called outside of promise stack.
