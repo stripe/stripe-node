@@ -440,6 +440,11 @@ declare module 'stripe' {
         country: string | null;
 
         /**
+         * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
+         */
+        description?: string | null;
+
+        /**
          * Two-digit number representing the card's expiration month.
          */
         exp_month: number;
@@ -460,6 +465,16 @@ declare module 'stripe' {
          * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
          */
         funding: string | null;
+
+        /**
+         * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
+         */
+        iin?: string | null;
+
+        /**
+         * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
+         */
+        issuer?: string | null;
 
         /**
          * The last four digits of the card.
@@ -659,6 +674,11 @@ declare module 'stripe' {
         country: string | null;
 
         /**
+         * A high-level description of the type of cards issued in this range. (For internal use only and not typically available in standard API requests.)
+         */
+        description?: string | null;
+
+        /**
          * Two-digit number representing the card's expiration month.
          */
         exp_month: number;
@@ -679,6 +699,16 @@ declare module 'stripe' {
          * Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
          */
         funding: string | null;
+
+        /**
+         * Issuer identification number of the card. (For internal use only and not typically available in standard API requests.)
+         */
+        iin?: string | null;
+
+        /**
+         * The name of the card's issuing bank. (For internal use only and not typically available in standard API requests.)
+         */
+        issuer?: string | null;
 
         /**
          * The last four digits of the card.
