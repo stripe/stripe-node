@@ -211,14 +211,14 @@ export function createStripe(
 
     rawRequest(
       method: string,
-      fullPath: string,
+      path: string,
       params?: RequestData,
       options?: RequestOptions,
       callback?: RequestCallback // for testing
     ): Promise<any> {
       return this._requestSender._rawRequest(
         method,
-        fullPath,
+        path,
         params,
         options,
         callback

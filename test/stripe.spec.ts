@@ -792,29 +792,11 @@ describe('Stripe Module', function() {
       expect(response).to.have.property('object', 'list');
     });
 
-    it('should allow passing in query params', (done) => {
-      return testUtils.getTestServerStripe(
-        {},
-        (req, res) => {
-          expect(req.url).to.equal('/v1/customers/cus_123?foo=bar');
-          res.write(JSON.stringify(returnedCustomer));
-          res.end();
-        },
-        (err, stripe, closeServer) => {
-          if (err) return done(err);
-          stripe.rawRequest(
-            'GET',
-            '/v1/customers/cus_123',
-            {foo: 'bar'},
-            {additionalHeaders: {foo: 'bar'}},
-            (err, result) => {
-              if (err) return done(err);
-              expect(result).to.deep.equal(returnedCustomer);
-              closeServer();
-              done();
-            }
-          );
-        }
+    it('should throw error when passing in params to non-POST request', () => {
+      expect(
+        stripe.rawRequest('GET', '/v1/customers/cus_123', {foo: 'bar'})
+      ).to.eventually.throw(
+        /rawRequest only supports params on POST requests. Please pass null and add your parameters to path./
       );
     });
   });

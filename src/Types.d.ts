@@ -150,7 +150,7 @@ export type StripeObject = {
   _platformFunctions: PlatformFunctions;
   rawRequest: (
     method: string,
-    fullPath: string,
+    path: string,
     data: RequestData,
     options: RequestOptions,
     callback: RequestCallback
@@ -159,7 +159,7 @@ export type StripeObject = {
 export type RequestSender = {
   _rawRequest(
     method: string,
-    fullPath: string,
+    path: string,
     params?: RequestData,
     options?: RequestOptions,
     callback?: RequestCallback

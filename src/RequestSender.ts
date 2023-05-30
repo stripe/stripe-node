@@ -414,7 +414,7 @@ export class RequestSender {
 
   _rawRequest(
     method: string,
-    fullPath: string,
+    path: string,
     params?: RequestData,
     options?: RequestOptions,
     callback?: RequestCallback // for testing
@@ -423,7 +423,15 @@ export class RequestSender {
       let opts: RequestOpts;
       try {
         const requestMethod = method.toUpperCase();
-
+        if (
+          requestMethod !== 'POST' &&
+          params &&
+          Object.keys(params).length !== 0
+        ) {
+          throw new Error(
+            'rawRequest only supports params on POST requests. Please pass null and add your parameters to path.'
+          );
+        }
         const args: RequestArgs = [].slice.call([params, options]);
 
         // Pull request data and options (headers, auth) from args.
@@ -433,16 +441,12 @@ export class RequestSender {
         const apiMode = calculatedOptions.apiMode || 'standard';
 
         const headers = calculatedOptions.headers;
-        const dataInQuery =
-          requestMethod === 'GET' || requestMethod === 'DELETE';
-        const bodyData = dataInQuery ? {} : data;
-        const queryData = dataInQuery ? data : {};
 
         opts = {
           requestMethod,
-          requestPath: fullPath,
-          bodyData,
-          queryData,
+          requestPath: path,
+          bodyData: data,
+          queryData: {},
           auth: calculatedOptions.auth,
           // @ts-ignore-next-line
           headers,
@@ -466,13 +470,6 @@ export class RequestSender {
           resolve(response);
         }
       }
-
-      const emptyQuery = Object.keys(opts.queryData).length === 0;
-      const path = [
-        opts.requestPath,
-        emptyQuery ? '' : '?',
-        queryStringifyRequestData(opts.queryData),
-      ].join('');
 
       const {headers, settings} = opts;
 
