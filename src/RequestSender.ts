@@ -447,7 +447,6 @@ export class RequestSender {
           bodyData: data,
           queryData: {},
           auth: calculatedOptions.auth,
-          // @ts-ignore-next-line
           headers,
           host: null,
           streaming: false,

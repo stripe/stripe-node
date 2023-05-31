@@ -33,7 +33,7 @@ type Options = {
   host: string | null;
   settings: Settings;
   streaming?: boolean;
-  headers: Record<string, unknown>;
+  headers: RequestHeaders;
   apiMode?: APIMode;
 };
 
@@ -168,13 +168,13 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
         opts.auth = params.apiKey as string;
       }
       if (params.idempotencyKey) {
-        opts.headers['Idempotency-Key'] = params.idempotencyKey;
+        opts.headers['Idempotency-Key'] = params.idempotencyKey as string;
       }
       if (params.stripeAccount) {
-        opts.headers['Stripe-Account'] = params.stripeAccount;
+        opts.headers['Stripe-Account'] = params.stripeAccount as string;
       }
       if (params.apiVersion) {
-        opts.headers['Stripe-Version'] = params.apiVersion;
+        opts.headers['Stripe-Version'] = params.apiVersion as string;
       }
       if (Number.isInteger(params.maxNetworkRetries)) {
         opts.settings.maxNetworkRetries = params.maxNetworkRetries as number;
@@ -195,7 +195,9 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
         opts.apiMode = params.apiMode as APIMode;
       }
       if (params.additionalHeaders) {
-        opts.headers = params.additionalHeaders as Record<string, unknown>;
+        opts.headers = params.additionalHeaders as {
+          [headerName: string]: string;
+        };
       }
     }
   }

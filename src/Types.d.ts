@@ -50,7 +50,10 @@ export type RequestEvent = {
   path?: string;
   request_start_time: number;
 };
-export type RequestHeaders = Record<string, string | number | string[]>;
+export type RequestHeaders = Record<
+  string,
+  string | number | string[] | {[headerName: string]: string}
+>;
 export type RequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
