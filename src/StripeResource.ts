@@ -157,7 +157,6 @@ StripeResource.prototype = {
     const options = getOptionsFromArgs(args);
     const host = options.host || spec.host;
     const streaming = !!spec.streaming;
-    const apiMode = options.apiMode || 'standard';
 
     // Validate that there are no more args.
     if (args.filter((x) => x != null).length) {
@@ -192,7 +191,6 @@ StripeResource.prototype = {
       host: host ?? null,
       streaming,
       settings: options.settings,
-      apiMode: apiMode,
     };
   },
 
@@ -240,7 +238,7 @@ StripeResource.prototype = {
         path,
         opts.bodyData,
         opts.auth,
-        {headers, settings, streaming: opts.streaming, apiMode: opts.apiMode},
+        {headers, settings, streaming: opts.streaming},
         requestCallback,
         this.requestDataProcessor?.bind(this)
       );
