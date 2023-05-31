@@ -517,7 +517,7 @@ describe('RequestSender', () => {
         });
       });
 
-      it('uses developer_message if it exists in error response', (done) => {
+      it('uses developer_message if it exists in error response', async () => {
         const error = {
           developer_message: 'Unacceptable',
         };
@@ -528,11 +528,13 @@ describe('RequestSender', () => {
             error,
           });
 
-        realStripe.rawRequest('POST', '/v1/charges', null, null, (err) => {
+        try {
+          await realStripe.rawRequest('POST', '/v1/charges');
+          throw new Error('Should not reach here');
+        } catch (err) {
           expect(err).to.be.an.instanceOf(StripeError);
-          expect(err.message).to.be.equal('Unacceptable');
-          done();
-        });
+          expect(err.message).to.equal('Unacceptable');
+        }
       });
 
       it('retries connection timeout errors', (done) => {

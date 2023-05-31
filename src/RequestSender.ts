@@ -416,8 +416,7 @@ export class RequestSender {
     method: string,
     path: string,
     params?: RequestData,
-    options?: RequestOptions,
-    callback?: RequestCallback // for testing
+    options?: RequestOptions
   ): Promise<any> {
     const requestPromise = new Promise<any>((resolve, reject) => {
       let opts: RequestOpts;
@@ -484,11 +483,7 @@ export class RequestSender {
       );
     });
 
-    const requestPromiseWithCallback = callback
-      ? callbackifyPromiseWithTimeout(requestPromise, callback)
-      : requestPromise;
-
-    return requestPromiseWithCallback;
+    return requestPromise;
   }
 
   _request(

@@ -660,20 +660,21 @@ describe('Stripe Module', function() {
           res.write(JSON.stringify(returnedCustomer));
           res.end();
         },
-        (err, stripe, closeServer) => {
+        async (err, stripe, closeServer) => {
           if (err) return done(err);
-          stripe.rawRequest(
-            'POST',
-            '/v1/customers',
-            {description: 'test customer'},
-            {apiMode: 'standard'},
-            (err, result) => {
-              if (err) return done(err);
-              expect(result).to.deep.equal(returnedCustomer);
-              closeServer();
-              done();
-            }
-          );
+          try {
+            const result = await stripe.rawRequest(
+              'POST',
+              '/v1/customers',
+              {description: 'test customer'},
+              {apiMode: 'standard'}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
         }
       );
     });
@@ -698,23 +699,24 @@ describe('Stripe Module', function() {
           res.write(JSON.stringify(returnedCustomer));
           res.end();
         },
-        (err, stripe, closeServer) => {
+        async (err, stripe, closeServer) => {
           if (err) return done(err);
-          stripe.rawRequest(
-            'POST',
-            '/v1/customers',
-            {
-              description: 'test customer',
-              created: new Date('2009-02-13T23:31:30Z'),
-            },
-            {apiMode: 'preview', additionalHeaders: {foo: 'bar'}},
-            (err, result) => {
-              if (err) return done(err);
-              expect(result).to.deep.equal(returnedCustomer);
-              closeServer();
-              done();
-            }
-          );
+          try {
+            const result = await stripe.rawRequest(
+              'POST',
+              '/v1/customers',
+              {
+                description: 'test customer',
+                created: new Date('2009-02-13T23:31:30Z'),
+              },
+              {apiMode: 'preview', additionalHeaders: {foo: 'bar'}}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
         }
       );
     });
@@ -739,23 +741,19 @@ describe('Stripe Module', function() {
           res.write(JSON.stringify(returnedCustomer));
           res.end();
         },
-        (err, stripe, closeServer) => {
+        async (err, stripe, closeServer) => {
           if (err) return done(err);
-          stripe.rawRequest(
-            'POST',
-            '/v1/customers',
-            {
+          try {
+            const result = await stripe.rawRequest('POST', '/v1/customers', {
               description: 'test customer',
               created: new Date('2009-02-13T23:31:30Z'),
-            },
-            null,
-            (err, result) => {
-              if (err) return done(err);
-              expect(result).to.deep.equal(returnedCustomer);
-              closeServer();
-              done();
-            }
-          );
+            });
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
         }
       );
     });
@@ -768,20 +766,21 @@ describe('Stripe Module', function() {
           res.write(JSON.stringify(returnedCustomer));
           res.end();
         },
-        (err, stripe, closeServer) => {
+        async (err, stripe, closeServer) => {
           if (err) return done(err);
-          stripe.rawRequest(
-            'GET',
-            '/v1/customers/cus_123',
-            {},
-            {additionalHeaders: {foo: 'bar'}},
-            (err, result) => {
-              if (err) return done(err);
-              expect(result).to.deep.equal(returnedCustomer);
-              closeServer();
-              done();
-            }
-          );
+          try {
+            const result = await stripe.rawRequest(
+              'GET',
+              '/v1/customers/cus_123',
+              {},
+              {additionalHeaders: {foo: 'bar'}}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
         }
       );
     });

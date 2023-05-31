@@ -213,16 +213,9 @@ export function createStripe(
       method: string,
       path: string,
       params?: RequestData,
-      options?: RequestOptions,
-      callback?: RequestCallback // for testing
+      options?: RequestOptions
     ): Promise<any> {
-      return this._requestSender._rawRequest(
-        method,
-        path,
-        params,
-        options,
-        callback
-      );
+      return this._requestSender._rawRequest(method, path, params, options);
     },
 
     /**

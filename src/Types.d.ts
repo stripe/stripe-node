@@ -152,8 +152,7 @@ export type StripeObject = {
     method: string,
     path: string,
     data: RequestData,
-    options: RequestOptions,
-    callback: RequestCallback
+    options: RequestOptions
   ) => Promise<any>;
 };
 export type RequestSender = {
@@ -161,8 +160,7 @@ export type RequestSender = {
     method: string,
     path: string,
     params?: RequestData,
-    options?: RequestOptions,
-    callback?: RequestCallback
+    options?: RequestOptions
   ): Promise<any>;
   _request(
     method: string,
