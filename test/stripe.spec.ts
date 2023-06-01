@@ -5,7 +5,7 @@
 
 import {createStripe} from '../src/stripe.core.js';
 import {getMockPlatformFunctions} from './testUtils.js';
-import {ApiVersion} from '../src/apiVersion.js';
+import {ApiVersion, PreviewVersion} from '../src/apiVersion.js';
 
 const testUtils = require('./testUtils.js');
 const Stripe = require('../src/stripe.cjs.node.js');
@@ -634,6 +634,171 @@ describe('Stripe Module', function() {
       const newStripe = Stripe(testUtils.getUserStripeKey());
 
       expect(newStripe.VERSION).to.equal(Stripe.PACKAGE_VERSION);
+    });
+  });
+
+  describe('rawRequest', () => {
+    const returnedCustomer = {
+      id: 'cus_123',
+    };
+
+    it('should make request with specified encoding FORM', (done) => {
+      return testUtils.getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal(
+            'application/x-www-form-urlencoded'
+          );
+          expect(req.headers['stripe-version']).to.equal(ApiVersion);
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal('description=test%20customer');
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            const result = await stripe.rawRequest(
+              'POST',
+              '/v1/customers',
+              {description: 'test customer'},
+              {apiMode: 'standard'}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should make request with specified encoding JSON', (done) => {
+      return testUtils.getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal('application/json');
+          expect(req.headers['stripe-version']).to.equal(PreviewVersion);
+          expect(req.headers.foo).to.equal('bar');
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal(
+              '{"description":"test customer","created":"1234567890"}'
+            );
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            const result = await stripe.rawRequest(
+              'POST',
+              '/v1/customers',
+              {
+                description: 'test customer',
+                created: new Date('2009-02-13T23:31:30Z'),
+              },
+              {apiMode: 'preview', additionalHeaders: {foo: 'bar'}}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('defaults to form encoding request if not specified', (done) => {
+      return testUtils.getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers['content-type']).to.equal(
+            'application/x-www-form-urlencoded'
+          );
+          const requestBody = [];
+          req.on('data', (chunks) => {
+            requestBody.push(chunks);
+          });
+          req.on('end', () => {
+            const body = Buffer.concat(requestBody).toString();
+            expect(body).to.equal(
+              'description=test%20customer&created=1234567890'
+            );
+          });
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            const result = await stripe.rawRequest('POST', '/v1/customers', {
+              description: 'test customer',
+              created: new Date('2009-02-13T23:31:30Z'),
+            });
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should make request with specified additional headers', (done) => {
+      return testUtils.getTestServerStripe(
+        {},
+        (req, res) => {
+          expect(req.headers.foo).to.equal('bar');
+          res.write(JSON.stringify(returnedCustomer));
+          res.end();
+        },
+        async (err, stripe, closeServer) => {
+          if (err) return done(err);
+          try {
+            const result = await stripe.rawRequest(
+              'GET',
+              '/v1/customers/cus_123',
+              {},
+              {additionalHeaders: {foo: 'bar'}}
+            );
+            expect(result).to.deep.equal(returnedCustomer);
+            closeServer();
+            done();
+          } catch (err) {
+            return done(err);
+          }
+        }
+      );
+    });
+
+    it('should make request successfully', async () => {
+      const response = await stripe.rawRequest('GET', '/v1/customers', {});
+
+      expect(response).to.have.property('object', 'list');
+    });
+
+    it('should throw error when passing in params to non-POST request', async () => {
+      await expect(
+        stripe.rawRequest('GET', '/v1/customers/cus_123', {foo: 'bar'})
+      ).to.be.rejectedWith(
+        Error,
+        /rawRequest only supports params on POST requests. Please pass null and add your parameters to path./
+      );
     });
   });
 });

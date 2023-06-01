@@ -8,9 +8,12 @@ import {
 } from './Error.js';
 import {
   emitWarning,
+  jsonStringifyRequestData,
   normalizeHeaders,
   removeNullish,
-  stringifyRequestData,
+  queryStringifyRequestData,
+  getDataFromArgs,
+  getOptionsFromArgs,
 } from './utils.js';
 import {HttpClient, HttpClientResponseInterface} from './net/HttpClient.js';
 import {
@@ -24,7 +27,10 @@ import {
   RequestData,
   RequestOptions,
   RequestDataProcessor,
+  RequestArgs,
+  RequestOpts,
 } from './Types.js';
+import {PreviewVersion} from './apiVersion.js';
 
 export type HttpClientResponseError = {code: string};
 
@@ -308,6 +314,7 @@ export class RequestSender {
 
   _makeHeaders(
     auth: string | null,
+    contentType: string,
     contentLength: number,
     apiVersion: string,
     clientUserAgent: string,
@@ -319,7 +326,7 @@ export class RequestSender {
       // Use specified auth token or use default from this stripe instance:
       Authorization: auth ? `Bearer ${auth}` : this._stripe.getApiField('auth'),
       Accept: 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': contentType,
       'User-Agent': this._getUserAgentString(),
       'X-Stripe-Client-User-Agent': clientUserAgent,
       'X-Stripe-Client-Telemetry': this._getTelemetryHeader(),
@@ -402,6 +409,79 @@ export class RequestSender {
         });
       }
     }
+  }
+
+  _rawRequest(
+    method: string,
+    path: string,
+    params?: RequestData,
+    options?: RequestOptions
+  ): Promise<any> {
+    const requestPromise = new Promise<any>((resolve, reject) => {
+      let opts: RequestOpts;
+      try {
+        const requestMethod = method.toUpperCase();
+        if (
+          requestMethod !== 'POST' &&
+          params &&
+          Object.keys(params).length !== 0
+        ) {
+          throw new Error(
+            'rawRequest only supports params on POST requests. Please pass null and add your parameters to path.'
+          );
+        }
+        const args: RequestArgs = [].slice.call([params, options]);
+
+        // Pull request data and options (headers, auth) from args.
+        const dataFromArgs = getDataFromArgs(args);
+        const data = Object.assign({}, dataFromArgs);
+        const calculatedOptions = getOptionsFromArgs(args);
+        const apiMode = calculatedOptions.apiMode || 'standard';
+
+        const headers = calculatedOptions.headers;
+
+        opts = {
+          requestMethod,
+          requestPath: path,
+          bodyData: data,
+          queryData: {},
+          auth: calculatedOptions.auth,
+          headers,
+          host: null,
+          streaming: false,
+          settings: {},
+          apiMode: apiMode,
+        };
+      } catch (err) {
+        reject(err);
+        return;
+      }
+
+      function requestCallback(
+        err: any,
+        response: HttpClientResponseInterface
+      ): void {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(response);
+        }
+      }
+
+      const {headers, settings} = opts;
+
+      this._request(
+        opts.requestMethod,
+        opts.host,
+        path,
+        opts.bodyData,
+        opts.auth,
+        {headers, settings, streaming: opts.streaming, apiMode: opts.apiMode},
+        requestCallback
+      );
+    });
+
+    return requestPromise;
   }
 
   _request(
@@ -531,10 +611,17 @@ export class RequestSender {
 
       requestData = data;
 
+      let contentType = 'application/x-www-form-urlencoded';
+      let apiVersion = this._stripe.getApiField('version');
+      if (options.apiMode === 'preview') {
+        contentType = 'application/json';
+        apiVersion = PreviewVersion;
+      }
+
       this._stripe.getClientUserAgent((clientUserAgent: string) => {
-        const apiVersion = this._stripe.getApiField('version');
         const headers = this._makeHeaders(
           auth,
+          contentType,
           requestData.length,
           apiVersion,
           clientUserAgent,
@@ -555,7 +642,15 @@ export class RequestSender {
         prepareAndMakeRequest
       );
     } else {
-      prepareAndMakeRequest(null, stringifyRequestData(data || {}));
+      let stringifiedData: string;
+
+      if (options.apiMode === 'preview') {
+        stringifiedData = data ? jsonStringifyRequestData(data) : '';
+      } else {
+        stringifiedData = queryStringifyRequestData(data || {});
+      }
+
+      prepareAndMakeRequest(null, stringifiedData);
     }
   }
 }

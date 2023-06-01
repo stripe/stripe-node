@@ -1,5 +1,5 @@
 import * as _Error from './Error.js';
-import * as apiVersion from './apiVersion.js';
+import {ApiVersion} from './apiVersion.js';
 import * as resources from './resources.js';
 import {HttpClient, HttpClientResponse} from './net/HttpClient.js';
 import {
@@ -12,12 +12,18 @@ import {PlatformFunctions} from './platform/PlatformFunctions.js';
 import {RequestSender} from './RequestSender.js';
 import {StripeResource} from './StripeResource.js';
 import {createWebhooks} from './Webhooks.js';
-import {StripeObject, AppInfo, UserProvidedConfig} from './Types.js';
+import {
+  StripeObject,
+  AppInfo,
+  UserProvidedConfig,
+  RequestOptions,
+  RequestData,
+} from './Types.js';
 
 const DEFAULT_HOST = 'api.stripe.com';
 const DEFAULT_PORT = '443';
 const DEFAULT_BASE_PATH = '/v1/';
-const DEFAULT_API_VERSION = apiVersion.ApiVersion;
+const DEFAULT_API_VERSION = ApiVersion;
 
 const DEFAULT_TIMEOUT = 80000;
 
@@ -201,6 +207,15 @@ export function createStripe(
     _enableTelemetry: null!,
     _requestSender: null!,
     _platformFunctions: null!,
+
+    rawRequest(
+      method: string,
+      path: string,
+      params?: RequestData,
+      options?: RequestOptions
+    ): Promise<any> {
+      return this._requestSender._rawRequest(method, path, params, options);
+    },
 
     /**
      * @private

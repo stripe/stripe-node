@@ -6,6 +6,8 @@ import {
   StripeResourceObject,
   RequestHeaders,
   MultipartRequestData,
+  RequestCallback,
+  APIMode,
 } from './Types.js';
 
 const OPTIONS_KEYS = [
@@ -16,6 +18,8 @@ const OPTIONS_KEYS = [
   'maxNetworkRetries',
   'timeout',
   'host',
+  'apiMode',
+  'additionalHeaders',
 ];
 
 type Settings = {
@@ -28,7 +32,8 @@ type Options = {
   host: string | null;
   settings: Settings;
   streaming?: boolean;
-  headers: Record<string, unknown>;
+  headers: RequestHeaders;
+  apiMode?: APIMode;
 };
 
 export function isOptionsHash(o: unknown): boolean | unknown {
@@ -43,7 +48,7 @@ export function isOptionsHash(o: unknown): boolean | unknown {
  * Stringifies an Object, accommodating nested objects
  * (forming the conventional key 'parent[child]=value')
  */
-export function stringifyRequestData(data: RequestData | string): string {
+export function queryStringifyRequestData(data: RequestData | string): string {
   return (
     qs
       .stringify(data, {
@@ -158,13 +163,13 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
         opts.auth = params.apiKey as string;
       }
       if (params.idempotencyKey) {
-        opts.headers['Idempotency-Key'] = params.idempotencyKey;
+        opts.headers['Idempotency-Key'] = params.idempotencyKey as string;
       }
       if (params.stripeAccount) {
-        opts.headers['Stripe-Account'] = params.stripeAccount;
+        opts.headers['Stripe-Account'] = params.stripeAccount as string;
       }
       if (params.apiVersion) {
-        opts.headers['Stripe-Version'] = params.apiVersion;
+        opts.headers['Stripe-Version'] = params.apiVersion as string;
       }
       if (Number.isInteger(params.maxNetworkRetries)) {
         opts.settings.maxNetworkRetries = params.maxNetworkRetries as number;
@@ -174,6 +179,20 @@ export function getOptionsFromArgs(args: RequestArgs): Options {
       }
       if (params.host) {
         opts.host = params.host as string;
+      }
+      if (params.apiMode) {
+        if (params.apiMode !== 'standard' && params.apiMode !== 'preview') {
+          throw new Error(
+            `Invalid apiMode: ${params.apiMode}. Must be one of 'standard' or 'preview'`
+          );
+        }
+
+        opts.apiMode = params.apiMode as APIMode;
+      }
+      if (params.additionalHeaders) {
+        opts.headers = params.additionalHeaders as {
+          [headerName: string]: string;
+        };
       }
     }
   }
@@ -256,7 +275,7 @@ export function normalizeHeader(header: string): string {
 
 export function callbackifyPromiseWithTimeout<T>(
   promise: Promise<T>,
-  callback: ((error: unknown, result: T | null) => void) | null
+  callback: RequestCallback | null
 ): Promise<T | void> {
   if (callback) {
     // Ensure callback is called outside of promise stack.
@@ -378,4 +397,22 @@ export function concat(arrays: Array<Uint8Array>): Uint8Array {
   });
 
   return merged;
+}
+
+/**
+ * Replaces Date objects with Unix timestamps
+ */
+function dateTimeReplacer(this: any, key: string, value: any): string {
+  if (this[key] instanceof Date) {
+    return Math.floor(this[key].getTime() / 1000).toString();
+  }
+
+  return value;
+}
+
+/**
+ * JSON stringifies an Object, replacing Date objects with Unix timestamps
+ */
+export function jsonStringifyRequestData(data: RequestData | string): string {
+  return JSON.stringify(data, dateTimeReplacer);
 }

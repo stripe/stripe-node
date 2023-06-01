@@ -30,10 +30,10 @@ describe('utils', () => {
     });
   });
 
-  describe('stringifyRequestData', () => {
+  describe('queryStringifyRequestData', () => {
     it('Handles basic types', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           a: 1,
           b: 'foo',
         })
@@ -42,7 +42,7 @@ describe('utils', () => {
 
     it('Handles Dates', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           date: new Date('2009-02-13T23:31:30Z'),
           created: {
             gte: new Date('2009-02-13T23:31:30Z'),
@@ -60,7 +60,7 @@ describe('utils', () => {
 
     it('Handles deeply nested object', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           a: {
             b: {
               c: {
@@ -74,7 +74,7 @@ describe('utils', () => {
 
     it('Handles arrays of objects', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           a: [{b: 'c'}, {b: 'd'}],
         })
       ).to.equal('a[0][b]=c&a[1][b]=d');
@@ -82,7 +82,7 @@ describe('utils', () => {
 
     it('Handles indexed arrays', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           a: {
             0: {b: 'c'},
             1: {b: 'd'},
@@ -93,7 +93,7 @@ describe('utils', () => {
 
     it('Creates a string from an object, handling shallow nested objects', () => {
       expect(
-        utils.stringifyRequestData({
+        utils.queryStringifyRequestData({
           test: 1,
           foo: 'baz',
           somethingElse: '::""%&',
@@ -110,6 +110,31 @@ describe('utils', () => {
           'nested[1]=2',
           'nested[a%20n%20o%20t%20h%20e%20r]=',
         ].join('&')
+      );
+    });
+  });
+
+  describe('jsonStringifyRequestData', () => {
+    it('JSON stringifies data', () => {
+      expect(
+        utils.jsonStringifyRequestData({
+          a: 1,
+          b: 'foo',
+        })
+      ).to.equal('{"a":1,"b":"foo"}');
+    });
+
+    it('Handles Dates', () => {
+      expect(
+        utils.jsonStringifyRequestData({
+          date: new Date('2009-02-13T23:31:30Z'),
+          created: {
+            gte: new Date('2009-02-13T23:31:30Z'),
+            lt: new Date('2044-05-01T01:28:21Z'),
+          },
+        })
+      ).to.equal(
+        '{"date":"1234567890","created":{"gte":"1234567890","lt":"2345678901"}}'
       );
     });
   });

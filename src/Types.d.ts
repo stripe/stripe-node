@@ -40,7 +40,7 @@ export type RequestCallback = (
   error: Error | null,
   response?: any
 ) => RequestCallbackReturn;
-export type RequestCallbackReturn = any;
+export type RequestCallbackReturn = void;
 export type RequestData = Record<string, any>;
 export type RequestEvent = {
   api_version?: string;
@@ -51,10 +51,12 @@ export type RequestEvent = {
   request_start_time: number;
 };
 export type RequestHeaders = Record<string, string | number | string[]>;
+export type APIMode = 'preview' | 'standard';
 export type RequestOptions = {
   settings?: RequestSettings;
   streaming?: boolean;
   headers?: RequestHeaders;
+  apiMode?: APIMode;
 };
 export type RequestOpts = {
   requestMethod: string;
@@ -66,6 +68,7 @@ export type RequestOpts = {
   host: string | null;
   streaming: boolean;
   settings: RequestSettings;
+  apiMode?: APIMode;
 };
 export type RequestSettings = {timeout?: number; maxNetworkRetries?: number};
 export type ResponseEvent = {
@@ -146,8 +149,20 @@ export type StripeObject = {
   _getPropsFromConfig: (config: Record<string, unknown>) => UserProvidedConfig;
   _clientId?: string;
   _platformFunctions: PlatformFunctions;
+  rawRequest: (
+    method: string,
+    path: string,
+    data: RequestData,
+    options: RequestOptions
+  ) => Promise<any>;
 };
 export type RequestSender = {
+  _rawRequest(
+    method: string,
+    path: string,
+    params?: RequestData,
+    options?: RequestOptions
+  ): Promise<any>;
   _request(
     method: string,
     host: string | null,
@@ -161,6 +176,7 @@ export type RequestSender = {
 };
 export type StripeRawError = {
   message?: string;
+  developer_message?: string;
   type?: RawErrorType;
   headers?: {[header: string]: string};
   statusCode?: number;

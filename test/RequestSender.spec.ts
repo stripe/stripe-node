@@ -22,20 +22,24 @@ describe('RequestSender', () => {
 
   describe('_makeHeaders', () => {
     it('sets the Authorization header with Bearer auth using the global API key', () => {
-      const headers = sender._makeHeaders(null, 0, null);
+      const headers = sender._makeHeaders(null, '', 0, null);
       expect(headers.Authorization).to.equal('Bearer fakeAuthToken');
     });
     it('sets the Authorization header with Bearer auth using the specified API key', () => {
-      const headers = sender._makeHeaders('anotherFakeAuthToken', 0, null);
+      const headers = sender._makeHeaders('anotherFakeAuthToken', '', 0, null);
       expect(headers.Authorization).to.equal('Bearer anotherFakeAuthToken');
     });
     it('sets the Stripe-Version header if an API version is provided', () => {
-      const headers = sender._makeHeaders(null, 0, '1970-01-01');
+      const headers = sender._makeHeaders(null, '', 0, '1970-01-01');
       expect(headers['Stripe-Version']).to.equal('1970-01-01');
     });
     it('does not the set the Stripe-Version header if no API version is provided', () => {
-      const headers = sender._makeHeaders(null, 0, null);
+      const headers = sender._makeHeaders(null, '', 0, null);
       expect(headers).to.not.include.keys('Stripe-Version');
+    });
+    it('sets the content type header to application/json if the apiMode option is preview', () => {
+      const headers = sender._makeHeaders(null, 'application/json', 0, null);
+      expect(headers['Content-Type']).to.equal('application/json');
     });
   });
 
@@ -511,6 +515,22 @@ describe('RequestSender', () => {
           expect(err).to.be.an.instanceOf(StripeIdempotencyError);
           done();
         });
+      });
+
+      it('uses developer_message if it exists in error response', async () => {
+        const error = {
+          developer_message: 'Unacceptable',
+        };
+
+        nock(`https://${options.host}`)
+          .post('/v1/charges')
+          .reply(400, {
+            error,
+          });
+
+        await expect(
+          realStripe.rawRequest('POST', '/v1/charges')
+        ).to.be.rejectedWith(StripeError, /Unacceptable/);
       });
 
       it('retries connection timeout errors', (done) => {
