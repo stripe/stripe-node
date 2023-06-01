@@ -89,9 +89,11 @@ declare module 'stripe' {
           reference: string | null;
 
           /**
-           * The funding method type used to fund the customer balance. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+           * The funding method type used to fund the customer balance. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
            */
           type: BankTransfer.Type;
+
+          us_bank_transfer?: BankTransfer.UsBankTransfer;
         }
 
         namespace BankTransfer {
@@ -150,7 +152,24 @@ declare module 'stripe' {
             | 'eu_bank_transfer'
             | 'gb_bank_transfer'
             | 'jp_bank_transfer'
-            | 'mx_bank_transfer';
+            | 'mx_bank_transfer'
+            | 'us_bank_transfer';
+
+          interface UsBankTransfer {
+            /**
+             * The banking network used for this funding.
+             */
+            network?: UsBankTransfer.Network;
+
+            /**
+             * The full name of the sender, as supplied by the sending bank.
+             */
+            sender_name: string | null;
+          }
+
+          namespace UsBankTransfer {
+            type Network = 'ach' | 'domestic_wire_us' | 'swift';
+          }
         }
       }
 
