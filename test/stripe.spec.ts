@@ -649,6 +649,7 @@ describe('Stripe Module', function() {
           expect(req.headers['content-type']).to.equal(
             'application/x-www-form-urlencoded'
           );
+          expect(req.headers['stripe-version']).to.equal(ApiVersion);
           const requestBody = [];
           req.on('data', (chunks) => {
             requestBody.push(chunks);

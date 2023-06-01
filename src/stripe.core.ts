@@ -17,7 +17,6 @@ import {
   AppInfo,
   UserProvidedConfig,
   RequestOptions,
-  RequestCallback,
   RequestData,
 } from './Types.js';
 
