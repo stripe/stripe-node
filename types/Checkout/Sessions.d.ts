@@ -564,12 +564,32 @@ declare module 'stripe' {
 
           interface Numeric {
             /**
+             * The maximum character length constraint for the customer's input.
+             */
+            maximum_length: number | null;
+
+            /**
+             * The minimum character length requirement for the customer's input.
+             */
+            minimum_length: number | null;
+
+            /**
              * The value entered by the customer, containing only digits.
              */
             value: string | null;
           }
 
           interface Text {
+            /**
+             * The maximum character length constraint for the customer's input.
+             */
+            maximum_length: number | null;
+
+            /**
+             * The minimum character length requirement for the customer's input.
+             */
+            minimum_length: number | null;
+
             /**
              * The value entered by the customer.
              */
