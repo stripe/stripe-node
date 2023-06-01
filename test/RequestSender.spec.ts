@@ -337,7 +337,9 @@ describe('RequestSender', () => {
 
   describe('Retry Network Requests', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
-    const realStripe = require('../src/stripe.cjs.node.js')('sk_test_xyz');
+    const realStripe = require('../src/stripe.cjs.node.js')(FAKE_API_KEY, {
+      maxNetworkRetries: 0,
+    });
 
     // Override the sleep timer to speed up tests
     realStripe.charges._getSleepTimeInMS = () => 0;
@@ -374,7 +376,7 @@ describe('RequestSender', () => {
 
       it('throws an error on connection timeout', (done) => {
         return getTestServerStripe(
-          {timeout: 10},
+          {timeout: 10, maxNetworkRetries: 0},
           (req, res) => {
             // Do nothing. This will trigger a timeout.
           },
