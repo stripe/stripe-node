@@ -92,7 +92,7 @@ describe('RequestSender', () => {
     // Use a real instance of stripe as we're mocking the http.request responses.
     const realStripe = require('../src/stripe.cjs.node.js')('sk_test_xyz');
 
-    after(() => {
+    afterEach(() => {
       nock.cleanAll();
     });
 
@@ -359,10 +359,6 @@ describe('RequestSender', () => {
       stripe._setApiNumberField('maxNetworkRetries', 0);
     });
 
-    after(() => {
-      nock.cleanAll();
-    });
-
     describe('_request', () => {
       it('throws an error on connection failure', (done) => {
         // Mock the connection error.
@@ -603,7 +599,62 @@ describe('RequestSender', () => {
         });
       });
 
+      it('should give precedence to request-level (1) vs client-level maxNetworkRetries (0)', (done) => {
+        let nReceivedRequests = 0;
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .reply((_1, _2, callback) => {
+            nReceivedRequests += 1;
+            callback(new Error('bad stuff'));
+          })
+          .post(options.path, options.params)
+          .reply((_1, _2, callback) => {
+            nReceivedRequests += 1;
+            callback(new Error('worse stuff'));
+          });
+
+        realStripe._setApiNumberField('maxNetworkRetries', 0);
+
+        realStripe.charges.create(
+          options.data,
+          {maxNetworkRetries: 1},
+          (err) => {
+            const errorMessage = RequestSender._generateConnectionErrorMessage(
+              1
+            );
+            expect(err.message).to.equal(errorMessage);
+            expect(err.detail.message).to.deep.equal('worse stuff');
+            expect(nReceivedRequests).to.equal(2);
+            done();
+          }
+        );
+      });
+
+      it('should give precedence to request-level (0) vs client-level maxNetworkRetries (1)', (done) => {
+        nock(`https://${options.host}`)
+          .post(options.path, options.params)
+          .reply((_1, _2, callback) => {
+            callback(new Error('bad stuff'));
+          });
+
+        realStripe._setApiNumberField('maxNetworkRetries', 1);
+
+        realStripe.charges.create(
+          options.data,
+          {maxNetworkRetries: 0},
+          (err) => {
+            expect(err.detail.message).to.deep.equal('bad stuff');
+            const errorMessage = RequestSender._generateConnectionErrorMessage(
+              0
+            );
+            expect(err.message).to.equal(errorMessage);
+            done();
+          }
+        );
+      });
+
       it('should retry on a 409 error', (done) => {
+        global.debug = true;
         nock(`https://${options.host}`)
           .post(options.path, options.params)
           .reply(409, {
@@ -621,6 +672,7 @@ describe('RequestSender', () => {
         realStripe._setApiNumberField('maxNetworkRetries', 1);
 
         realStripe.charges.create(options.data, (err, charge) => {
+          global.debug = false;
           expect(charge.id).to.equal('ch_123');
           done(err);
         });
