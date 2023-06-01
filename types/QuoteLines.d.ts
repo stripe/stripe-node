@@ -42,6 +42,11 @@ declare module 'stripe' {
       proration_behavior: QuoteLine.ProrationBehavior | null;
 
       /**
+       * Details to modify the pause_collection behavior of the subscription schedule.
+       */
+      set_pause_collection?: QuoteLine.SetPauseCollection | null;
+
+      /**
        * Timestamp helper to end the underlying schedule early, based on the acompanying line's start or end date.
        */
       set_schedule_end?: QuoteLine.SetScheduleEnd | null;
@@ -469,6 +474,33 @@ declare module 'stripe' {
       }
 
       type ProrationBehavior = 'always_invoice' | 'create_prorations' | 'none';
+
+      interface SetPauseCollection {
+        /**
+         * If specified, payment collection for this subscription will be paused.
+         */
+        set?: SetPauseCollection.Set | null;
+
+        /**
+         * Defines the type of the pause_collection behavior for the quote line.
+         */
+        type: SetPauseCollection.Type;
+      }
+
+      namespace SetPauseCollection {
+        interface Set {
+          /**
+           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           */
+          behavior: Set.Behavior;
+        }
+
+        namespace Set {
+          type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        }
+
+        type Type = 'remove' | 'set';
+      }
 
       type SetScheduleEnd = 'line_ends_at' | 'line_starts_at';
 

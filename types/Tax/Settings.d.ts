@@ -27,11 +27,6 @@ declare module 'stripe' {
         livemode: boolean;
 
         /**
-         * The deprecated places where your business is located.
-         */
-        locations?: Array<Settings.Location>;
-
-        /**
          * The `active` status indicates you have all required settings to calculate tax. A status can transition out of `active` when new required settings are introduced.
          */
         status: Settings.Status;
@@ -58,15 +53,6 @@ declare module 'stripe' {
 
         interface HeadOffice {
           address: Stripe.Address;
-        }
-
-        interface Location {
-          address: Stripe.Address;
-
-          /**
-           * The role of this location address.
-           */
-          role: 'head_office';
         }
 
         type Status = 'active' | 'pending';

@@ -1218,17 +1218,20 @@ declare module 'stripe' {
               }
 
               type RequestedAddressType =
+                | 'aba'
                 | 'iban'
                 | 'sepa'
                 | 'sort_code'
                 | 'spei'
+                | 'swift'
                 | 'zengin';
 
               type Type =
                 | 'eu_bank_transfer'
                 | 'gb_bank_transfer'
                 | 'jp_bank_transfer'
-                | 'mx_bank_transfer';
+                | 'mx_bank_transfer'
+                | 'us_bank_transfer';
             }
           }
 

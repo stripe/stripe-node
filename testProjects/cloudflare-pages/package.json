@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "wrangler pages functions build && rm _worker.js"
+    "build": "wrangler pages functions build"
   },
   "keywords": [],
   "author": "",

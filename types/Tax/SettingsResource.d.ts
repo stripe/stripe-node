@@ -25,11 +25,6 @@ declare module 'stripe' {
          * The place where your business is located.
          */
         head_office?: SettingUpdateParams.HeadOffice;
-
-        /**
-         * The deprecated places where your business is located.
-         */
-        locations?: Array<SettingUpdateParams.Location>;
       }
 
       namespace SettingUpdateParams {
@@ -54,18 +49,6 @@ declare module 'stripe' {
            * The location of the business for tax purposes.
            */
           address: Stripe.AddressParam;
-        }
-
-        interface Location {
-          /**
-           * The location of the business for tax purposes.
-           */
-          address: Stripe.AddressParam;
-
-          /**
-           * The role of this location address.
-           */
-          role: 'head_office';
         }
       }
 
