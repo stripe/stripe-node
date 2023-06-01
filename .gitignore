@@ -8,3 +8,4 @@ coverage
 .idea
 testProjects/**/node_modules
 testProjects/**/package-lock.json
+testProjects/**/_worker.*

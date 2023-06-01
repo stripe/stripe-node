@@ -376,6 +376,11 @@ declare module 'stripe' {
       subscription: string | Stripe.Subscription | null;
 
       /**
+       * Details about the subscription that created this invoice.
+       */
+      subscription_details?: Invoice.SubscriptionDetails | null;
+
+      /**
        * Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
        */
       subscription_proration_date?: number;
@@ -990,7 +995,7 @@ declare module 'stripe' {
               eu_bank_transfer?: BankTransfer.EuBankTransfer;
 
               /**
-               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+               * The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
                */
               type: string | null;
             }
@@ -1206,6 +1211,31 @@ declare module 'stripe' {
          * The time that the invoice was voided.
          */
         voided_at: number | null;
+      }
+
+      interface SubscriptionDetails {
+        /**
+         * If specified, payment collection for this subscription will be paused.
+         */
+        pause_collection: SubscriptionDetails.PauseCollection | null;
+      }
+
+      namespace SubscriptionDetails {
+        interface PauseCollection {
+          /**
+           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           */
+          behavior: PauseCollection.Behavior;
+
+          /**
+           * The time after which the subscription will resume collecting payments.
+           */
+          resumes_at: number | null;
+        }
+
+        namespace PauseCollection {
+          type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        }
       }
 
       interface ThresholdReason {

@@ -1058,6 +1058,11 @@ declare module 'stripe' {
 
           interface Us {
             /**
+             * Options for the local amusement tax registration.
+             */
+            local_amusement_tax?: Us.LocalAmusementTax;
+
+            /**
              * Options for the local lease tax registration.
              */
             local_lease_tax?: Us.LocalLeaseTax;
@@ -1074,6 +1079,13 @@ declare module 'stripe' {
           }
 
           namespace Us {
+            interface LocalAmusementTax {
+              /**
+               * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.
+               */
+              jurisdiction: string;
+            }
+
             interface LocalLeaseTax {
               /**
                * A [FIPS code](https://www.census.gov/library/reference/code-lists/ansi.html) representing the local jurisdiction.

@@ -249,6 +249,11 @@ declare module 'stripe' {
         on_behalf_of?: string;
 
         /**
+         * If specified, payment collection for this subscription will be paused.
+         */
+        pause_collection?: Phase.PauseCollection;
+
+        /**
          * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`. This setting controls prorations when a phase is started asynchronously and it is persisted as a field on the phase. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration of the current phase.
          */
         proration_behavior?: Phase.ProrationBehavior;
@@ -662,6 +667,17 @@ declare module 'stripe' {
           }
         }
 
+        interface PauseCollection {
+          /**
+           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           */
+          behavior: PauseCollection.Behavior;
+        }
+
+        namespace PauseCollection {
+          type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        }
+
         type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
@@ -961,6 +977,11 @@ declare module 'stripe' {
          * The account on behalf of which to charge, for each of the associated subscription's invoices.
          */
         on_behalf_of?: string;
+
+        /**
+         * If specified, payment collection for this subscription will be paused.
+         */
+        pause_collection?: Phase.PauseCollection;
 
         /**
          * Whether the subscription schedule will create [prorations](https://stripe.com/docs/billing/subscriptions/prorations) when transitioning to this phase. The default value is `create_prorations`. This setting controls prorations when a phase is started asynchronously and it is persisted as a field on the phase. It's different from the request-level [proration_behavior](https://stripe.com/docs/api/subscription_schedules/update#update_subscription_schedule-proration_behavior) parameter which controls what happens if the update request affects the billing configuration of the current phase.
@@ -1381,6 +1402,17 @@ declare module 'stripe' {
           }
         }
 
+        interface PauseCollection {
+          /**
+           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           */
+          behavior: PauseCollection.Behavior;
+        }
+
+        namespace PauseCollection {
+          type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+        }
+
         type ProrationBehavior =
           | 'always_invoice'
           | 'create_prorations'
@@ -1543,6 +1575,11 @@ declare module 'stripe' {
          * Changes to how Stripe handles prorations during the amendment time span. Affects if and how prorations are created when a future phase starts. In cases where the amendment changes the currently active phase, it is used to determine whether or how to prorate now, at the time of the request. Also supported as a point-in-time operation when `amendment_end` is `null`.
          */
         proration_behavior?: Amendment.ProrationBehavior;
+
+        /**
+         * Defines how to pause collection for the underlying subscription throughout the duration of the amendment.
+         */
+        set_pause_collection?: Amendment.SetPauseCollection;
 
         /**
          * Ends the subscription schedule early as dictated by either the accompanying amendment's start or end.
@@ -2022,6 +2059,33 @@ declare module 'stripe' {
           | 'always_invoice'
           | 'create_prorations'
           | 'none';
+
+        interface SetPauseCollection {
+          /**
+           * Details of the pause_collection behavior to apply to the amendment.
+           */
+          set?: SetPauseCollection.Set;
+
+          /**
+           * Determines the type of the pause_collection amendment.
+           */
+          type: SetPauseCollection.Type;
+        }
+
+        namespace SetPauseCollection {
+          interface Set {
+            /**
+             * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+             */
+            behavior: Set.Behavior;
+          }
+
+          namespace Set {
+            type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
+          }
+
+          type Type = 'remove' | 'set';
+        }
 
         type SetScheduleEnd = 'amendment_end' | 'amendment_start';
 

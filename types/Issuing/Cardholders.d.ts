@@ -61,6 +61,12 @@ declare module 'stripe' {
          */
         phone_number: string | null;
 
+        /**
+         * The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
+         *  This changes the language of the [3D Secure flow](https://stripe.com/docs/issuing/3d-secure) and one-time password messages sent to the cardholder.
+         */
+        preferred_locales: Array<Cardholder.PreferredLocale> | null;
+
         requirements: Cardholder.Requirements;
 
         /**
@@ -183,6 +189,8 @@ declare module 'stripe' {
             }
           }
         }
+
+        type PreferredLocale = 'de' | 'en' | 'es' | 'fr' | 'it';
 
         interface Requirements {
           /**

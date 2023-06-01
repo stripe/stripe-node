@@ -327,6 +327,11 @@ declare module 'stripe' {
         on_behalf_of: string | Stripe.Account | null;
 
         /**
+         * If specified, payment collection for this subscription will be paused.
+         */
+        pause_collection?: Phase.PauseCollection | null;
+
+        /**
          * If the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
          */
         proration_behavior: Phase.ProrationBehavior;
@@ -567,6 +572,17 @@ declare module 'stripe' {
           namespace Trial {
             type Type = 'free' | 'paid';
           }
+        }
+
+        interface PauseCollection {
+          /**
+           * The payment collection behavior for this subscription while paused. One of `keep_as_draft`, `mark_uncollectible`, or `void`.
+           */
+          behavior: PauseCollection.Behavior;
+        }
+
+        namespace PauseCollection {
+          type Behavior = 'keep_as_draft' | 'mark_uncollectible' | 'void';
         }
 
         type ProrationBehavior =
