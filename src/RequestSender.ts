@@ -287,7 +287,7 @@ export class RequestSender {
 
   // Max retries can be set on a per request basis. Favor those over the global setting
   _getMaxNetworkRetries(settings: RequestSettings = {}): number {
-    return settings.maxNetworkRetries &&
+    return settings.maxNetworkRetries !== undefined &&
       Number.isInteger(settings.maxNetworkRetries)
       ? settings.maxNetworkRetries
       : this._stripe.getMaxNetworkRetries();
@@ -474,7 +474,6 @@ export class RequestSender {
       const requestRetries = numRetries || 0;
 
       const maxRetries = this._getMaxNetworkRetries(options.settings || {});
-
       this._stripe._emitter.emit('request', requestEvent);
 
       req
