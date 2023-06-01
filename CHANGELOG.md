@@ -1,5 +1,19 @@
 # Changelog
 
+## 12.9.0-beta.1 - 2023-06-01
+* [#1801](https://github.com/stripe/stripe-node/pull/1801) Update generated code for beta
+  * Add support for `subscription_details` on `Invoice`
+  * Add support for new values `aba` and `swift` on enums `Order.payment.settings.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, `OrderCreateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`, and `OrderUpdateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.requested_address_types[]`
+  * Add support for new value `us_bank_transfer` on enums `Order.payment.settings.payment_method_options.customer_balance.bank_transfer.type`, `OrderCreateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.type`, and `OrderUpdateParams.payment.settings.payment_method_options.customer_balance.bank_transfer.type`
+  * Add support for `set_pause_collection` on `QuoteCreateParams.lines[]`, `QuoteLine`, `QuoteUpdateParams.lines[]`, and `SubscriptionScheduleAmendParams.amendments[]`
+  * Add support for new value `pause_collection_start` on enums `Quote.subscription_data.bill_on_acceptance.bill_from.type`, `Quote.subscription_data_overrides[].bill_on_acceptance.bill_from.type`, `QuoteCreateParams.subscription_data.bill_on_acceptance.bill_from.type`, `QuoteCreateParams.subscription_data_overrides[].bill_on_acceptance.bill_from.type`, `QuoteUpdateParams.subscription_data.bill_on_acceptance.bill_from.type`, and `QuoteUpdateParams.subscription_data_overrides[].bill_on_acceptance.bill_from.type`
+  * Add support for `pause_collection` on `SubscriptionSchedule.phases[]`, `SubscriptionScheduleCreateParams.phases[]`, and `SubscriptionScheduleUpdateParams.phases[]`
+  * Add support for `local_amusement_tax` on `Tax.Registration.country_options.us` and `TaxRegistrationCreateParams.country_options.us`
+  * Remove support for `locations` on `Tax.Settings` and `TaxSettingUpdateParams`
+  * Add support for new values `customer.subscription.collection_paused` and `customer.subscription.collection_resumed` on enums `WebhookEndpointCreateParams.enabled_events[]` and `WebhookEndpointUpdateParams.enabled_events[]`
+* [#1775](https://github.com/stripe/stripe-node/pull/1775) Introduce stripe.rawRequest as a canonical way to request APIs without definitions
+  * Please refer to the [Custom Requests README section](https://github.com/stripe/stripe-node/tree/beta#custom-requests) for usage instructions.
+
 ## 12.8.0-beta.1 - 2023-05-25
 * [#1795](https://github.com/stripe/stripe-node/pull/1795) Update generated code for beta
 
